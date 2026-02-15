@@ -56,10 +56,10 @@ def decode_token(token: str, *, secret: str) -> TokenPayload:
             user_id=UUID(data["sub"]),
             org_id=UUID(data["org"]),
         )
-    except jwt.ExpiredSignatureError:
-        raise AuthenticationError("Token expired")
+    except jwt.ExpiredSignatureError as exc:
+        raise AuthenticationError("Token expired") from exc
     except (jwt.InvalidTokenError, KeyError, ValueError) as exc:
-        raise AuthenticationError(f"Invalid token: {exc}")
+        raise AuthenticationError(f"Invalid token: {exc}") from exc
 
 
 class JWTAuthMiddleware:
@@ -77,9 +77,7 @@ class JWTAuthMiddleware:
         self._secret = secret
         self._exempt_paths = set(exempt_paths or [])
 
-    def authenticate(
-        self, *, token: str | None, path: str
-    ) -> TokenPayload | None:
+    def authenticate(self, *, token: str | None, path: str) -> TokenPayload | None:
         """Authenticate request. Returns None for exempt paths.
 
         Raises AuthenticationError for missing/invalid tokens on

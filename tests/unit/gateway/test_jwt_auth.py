@@ -1,3 +1,4 @@
+# ruff: noqa: S106  -- test fixtures require hardcoded secret values
 """JWT authentication middleware tests.
 
 Phase 1 gate check: p1-gateway-auth
@@ -121,8 +122,6 @@ class TestJWTAuthMiddleware:
         assert result is None
 
     def test_expired_token_returns_401(self, mw: JWTAuthMiddleware, secret: str) -> None:
-        token = encode_token(
-            user_id=uuid4(), org_id=uuid4(), secret=secret, ttl_seconds=-1
-        )
+        token = encode_token(user_id=uuid4(), org_id=uuid4(), secret=secret, ttl_seconds=-1)
         with pytest.raises(AuthenticationError):
             mw.authenticate(token=token, path="/api/v1/resource")
