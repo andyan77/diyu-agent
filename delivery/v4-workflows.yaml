@@ -101,7 +101,11 @@ workflows:
       - "G1-5"
       - "G1-6"
     checks:
-      - name: "Gateway auth tests"
+      - name: "JWT auth middleware tests (G1-1)"
+        command: "uv run pytest tests/unit/gateway/test_jwt_auth.py -q"
+      - name: "RBAC permission tests (G1-3)"
+        command: "uv run pytest tests/unit/gateway/test_rbac.py -q"
+      - name: "Gateway auth tests (all)"
         command: "uv run pytest tests/unit/gateway/ -q"
       - name: "Port contract tests"
         command: "uv run pytest tests/unit/ports/ -q"
