@@ -1,0 +1,513 @@
+# DIYU Agent Milestone Matrix (Machine-Readable)
+# Human-readable version: docs/governance/milestone-matrix*.md
+# Schema: delivery/milestone-matrix.schema.yaml
+# Usage: python3 scripts/verify_phase.py --phase 0 --json
+
+schema_version: "1.0"
+current_phase: "phase_0"
+
+phases:
+  phase_0:
+    name: "Governance Minimum + Delivery Skeleton"
+    milestones:
+      # Backend (milestone-matrix-backend.md)
+      - {id: "B0-1", layer: "Brain", summary: "Brain module skeleton"}
+      - {id: "B0-2", layer: "Brain", summary: "Brain Port interface references"}
+      - {id: "B0-3", layer: "Brain", summary: "Conversation engine shell"}
+      - {id: "MC0-1", layer: "MemoryCore", summary: "MemoryCorePort interface"}
+      - {id: "MC0-2", layer: "MemoryCore", summary: "MemoryCorePort Stub (SQLite)"}
+      - {id: "MC0-3", layer: "MemoryCore", summary: "MemoryItem v1 Schema"}
+      - {id: "K0-1", layer: "Knowledge", summary: "KnowledgePort interface"}
+      - {id: "K0-2", layer: "Knowledge", summary: "KnowledgePort Stub"}
+      - {id: "K0-3", layer: "Knowledge", summary: "KnowledgeBundle v1 Schema"}
+      - {id: "S0-1", layer: "Skill", summary: "SkillProtocol base class"}
+      - {id: "S0-2", layer: "Skill", summary: "SkillRegistry Stub"}
+      - {id: "T0-1", layer: "Tool", summary: "LLMCallPort interface"}
+      - {id: "T0-2", layer: "Tool", summary: "LLMCallPort Stub"}
+      - {id: "T0-3", layer: "Tool", summary: "ToolProtocol base class"}
+      - {id: "G0-1", layer: "Gateway", summary: "FastAPI minimal healthz"}
+      - {id: "G0-2", layer: "Gateway", summary: "OpenAPI spec auto-gen"}
+      - {id: "G0-3", layer: "Gateway", summary: "Request logging middleware"}
+      - {id: "I0-1", layer: "Infra", summary: "Docker Compose full-stack"}
+      - {id: "I0-2", layer: "Infra", summary: "pyproject.toml + uv.lock"}
+      - {id: "I0-3", layer: "Infra", summary: "Alembic migration skeleton"}
+      - {id: "I0-4", layer: "Infra", summary: "Makefile standard commands"}
+      - {id: "I0-5", layer: "Infra", summary: ".env.example"}
+      - {id: "I0-6", layer: "Infra", summary: "ruff + mypy strict config"}
+      # Frontend (milestone-matrix-frontend.md)
+      - {id: "FW0-1", layer: "FE-Web", summary: "Next.js 15 + TS strict + Tailwind"}
+      - {id: "FW0-2", layer: "FE-Web", summary: "Turborepo + pnpm workspace"}
+      - {id: "FW0-3", layer: "FE-Web", summary: "packages/ui base components"}
+      - {id: "FW0-4", layer: "FE-Web", summary: "packages/api-client"}
+      - {id: "FW0-5", layer: "FE-Web", summary: "packages/shared"}
+      - {id: "FW0-6", layer: "FE-Web", summary: "ESLint + Prettier + a11y"}
+      - {id: "FW0-7", layer: "FE-Web", summary: "Vitest config"}
+      - {id: "FW0-8", layer: "FE-Web", summary: "Playwright E2E infra"}
+      - {id: "FA0-1", layer: "FE-Admin", summary: "Next.js Admin App"}
+      - {id: "FA0-2", layer: "FE-Admin", summary: "Admin Layout"}
+      - {id: "FA0-3", layer: "FE-Admin", summary: "TierGate redirect"}
+      # Crosscutting (milestone-matrix-crosscutting.md)
+      - {id: "D0-1", layer: "Delivery", summary: "manifest.yaml skeleton"}
+      - {id: "D0-2", layer: "Delivery", summary: "milestone-matrix.schema.yaml"}
+      - {id: "D0-3", layer: "Delivery", summary: "preflight.sh"}
+      - {id: "D0-4", layer: "Delivery", summary: "ci.yml hard gates"}
+      - {id: "D0-5", layer: "Delivery", summary: "check_layer_deps.sh"}
+      - {id: "D0-6", layer: "Delivery", summary: "check_port_compat.sh"}
+      - {id: "D0-7", layer: "Delivery", summary: "check_migration.sh"}
+      - {id: "D0-8", layer: "Delivery", summary: "change_impact_router.sh"}
+      - {id: "D0-9", layer: "Delivery", summary: "PR template + CODEOWNERS"}
+      - {id: "D0-10", layer: "Delivery", summary: "verify-phase-0"}
+      - {id: "MM0-1", layer: "Multimodal", summary: "ContentBlock Schema v1.1"}
+      - {id: "MM0-2", layer: "Multimodal", summary: "ObjectStoragePort"}
+      - {id: "MM0-3", layer: "Multimodal", summary: "media_objects DDL + RLS"}
+      - {id: "MM0-4", layer: "Multimodal", summary: "tool_usage_records DDL"}
+      - {id: "MM0-5", layer: "Multimodal", summary: "content_schema_version column"}
+      - {id: "MM0-6", layer: "Multimodal", summary: "LLMCallPort content_parts expand"}
+      - {id: "MM0-7", layer: "Multimodal", summary: "Security pipeline Stage 1"}
+      - {id: "MM0-8", layer: "Multimodal", summary: "Contract tests L1-4"}
+      - {id: "OS0-1", layer: "Observability", summary: "Unified log format"}
+      - {id: "OS0-2", layer: "Observability", summary: "ruff + mypy CI"}
+      - {id: "OS0-3", layer: "Observability", summary: "Secret scanning"}
+      - {id: "OS0-4", layer: "Observability", summary: "SAST baseline"}
+      - {id: "OS0-5", layer: "Observability", summary: "Dependency vuln scan"}
+      - {id: "OS0-6", layer: "Observability", summary: "FE security lint + audit"}
+    exit_criteria:
+      hard:
+        - id: "p0-toolchain"
+          description: "Dev toolchain healthy (0 FAIL)"
+          check: "python3 scripts/doctor.py --json | python3 -c \"import sys,json; d=json.load(sys.stdin); sys.exit(0 if d['summary']['fail']==0 else 1)\""
+
+        - id: "p0-backend-skeleton"
+          description: "Python project config exists"
+          check: "test -f pyproject.toml"
+
+        - id: "p0-frontend-skeleton"
+          description: "Frontend monorepo config exists"
+          check: "test -f frontend/pnpm-workspace.yaml"
+
+        - id: "p0-guards"
+          description: "Guard scripts exist and are executable"
+          check: "test -x scripts/check_layer_deps.sh && test -x scripts/check_port_compat.sh"
+
+        - id: "p0-makefile"
+          description: "Makefile with lifecycle commands"
+          check: "test -f Makefile && grep -q 'bootstrap' Makefile && grep -q 'doctor' Makefile"
+
+        - id: "p0-claude-md"
+          description: "CLAUDE.md exists and <= 80 lines"
+          check: "test -f CLAUDE.md && [ $(wc -l < CLAUDE.md) -le 80 ]"
+
+        - id: "p0-milestone-matrix"
+          description: "Milestone matrix YAML parseable"
+          check: "python3 -c \"import yaml; yaml.safe_load(open('delivery/milestone-matrix.yaml'))\""
+
+        - id: "p0-schema-validation"
+          description: "Task card schema and validation scripts exist"
+          check: "test -f docs/governance/task-card-schema-v1.0.md && test -f scripts/check_task_schema.py"
+
+        - id: "p0-env-template"
+          description: "Environment template exists"
+          check: "test -f .env.example"
+
+        - id: "p0-gitignore"
+          description: "Gitignore configured"
+          check: "test -f .gitignore && grep -q '__pycache__' .gitignore"
+
+      soft:
+        - id: "p0-hooks"
+          description: "Claude Code hooks configured"
+          check: "test -f .claude/settings.json"
+
+        - id: "p0-adr-index"
+          description: "ADR index exists"
+          check: "test -f docs/adr/README.md"
+
+    go_no_go:
+      hard_pass_rate: 1.0
+      approver: "architect"
+
+  phase_1:
+    name: "Security & Tenant Foundation"
+    depends_on: ["phase_0"]
+    milestones:
+      # Backend
+      - {id: "G1-1", layer: "Gateway", summary: "JWT auth middleware"}
+      - {id: "G1-2", layer: "Gateway", summary: "OrgContext middleware"}
+      - {id: "G1-3", layer: "Gateway", summary: "RBAC permission check"}
+      - {id: "G1-4", layer: "Gateway", summary: "RLS policy baseline"}
+      - {id: "G1-5", layer: "Gateway", summary: "API partition rules"}
+      - {id: "G1-6", layer: "Gateway", summary: "Security headers"}
+      - {id: "I1-1", layer: "Infra", summary: "org/users/org_members DDL"}
+      - {id: "I1-2", layer: "Infra", summary: "org_settings inheritance"}
+      - {id: "I1-3", layer: "Infra", summary: "RLS policies all tables"}
+      - {id: "I1-4", layer: "Infra", summary: "RBAC skeleton"}
+      - {id: "I1-5", layer: "Infra", summary: "audit_events table"}
+      - {id: "I1-6", layer: "Infra", summary: "event_outbox pattern"}
+      - {id: "I1-7", layer: "Infra", summary: "Secret/SAST/dep scanning"}
+      # Frontend
+      - {id: "FW1-1", layer: "FE-Web", summary: "Login page"}
+      - {id: "FW1-2", layer: "FE-Web", summary: "AuthProvider + PermissionGate"}
+      - {id: "FW1-3", layer: "FE-Web", summary: "Org switcher"}
+      - {id: "FW1-4", layer: "FE-Web", summary: "SaaS/Private token modes"}
+      - {id: "FA1-1", layer: "FE-Admin", summary: "Admin login with 2FA slot"}
+      - {id: "FA1-2", layer: "FE-Admin", summary: "Permission matrix mgmt"}
+      # Crosscutting
+      - {id: "D1-1", layer: "Delivery", summary: "Image security scan"}
+      - {id: "D1-2", layer: "Delivery", summary: "SBOM generation"}
+      - {id: "D1-3", layer: "Delivery", summary: "verify-phase-1"}
+      - {id: "OS1-1", layer: "Observability", summary: "RLS isolation test framework"}
+      - {id: "OS1-2", layer: "Observability", summary: "Isolation smoke CI gate"}
+      - {id: "OS1-3", layer: "Observability", summary: "audit_events baseline"}
+      - {id: "OS1-4", layer: "Observability", summary: "JWT security tests"}
+      - {id: "OS1-5", layer: "Observability", summary: "CORS + security headers"}
+      - {id: "OS1-6", layer: "Observability", summary: "FE XSS protection"}
+    exit_criteria:
+      hard:
+        - id: "p1-org-migration"
+          description: "Organization DDL migration exists"
+          check: "ls migrations/versions/*organization* 2>/dev/null | head -1 | grep -q ."
+
+        - id: "p1-rls"
+          description: "RLS isolation smoke tests pass"
+          check: "uv run pytest tests/isolation/smoke/ --tb=short -q"
+
+        - id: "p1-orgcontext"
+          description: "OrgContext gateway test passes"
+          check: "uv run pytest tests/unit/gateway/test_org_context.py -q"
+
+        - id: "p1-audit"
+          description: "Audit events migration exists"
+          check: "ls migrations/versions/*audit_events* 2>/dev/null | head -1 | grep -q ."
+
+        - id: "p1-port-contracts"
+          description: "Port contract tests pass"
+          check: "uv run pytest tests/unit/ports/ -q"
+
+      soft:
+        - id: "p1-sbom"
+          description: "SBOM generated"
+          check: "test -f delivery/sbom.json"
+
+    go_no_go:
+      hard_pass_rate: 1.0
+      approver: "architect"
+
+  phase_2:
+    name: "Core Conversation + Knowledge"
+    depends_on: ["phase_1"]
+    milestones:
+      # Backend
+      - {id: "B2-1", layer: "Brain", summary: "Conversation engine full impl"}
+      - {id: "B2-2", layer: "Brain", summary: "Intent understanding"}
+      - {id: "B2-3", layer: "Brain", summary: "Context Assembler v1"}
+      - {id: "B2-4", layer: "Brain", summary: "Context Assembler CE (RRF)"}
+      - {id: "B2-5", layer: "Brain", summary: "Memory write pipeline"}
+      - {id: "B2-6", layer: "Brain", summary: "injection/retrieval receipts"}
+      - {id: "B2-7", layer: "Brain", summary: "Graceful degradation"}
+      - {id: "B2-8", layer: "Brain", summary: "WebSocket real-time chat"}
+      - {id: "MC2-1", layer: "MemoryCore", summary: "PG adapter replaces Stub"}
+      - {id: "MC2-2", layer: "MemoryCore", summary: "conversation_events CRUD"}
+      - {id: "MC2-3", layer: "MemoryCore", summary: "memory_items CRUD versioned"}
+      - {id: "MC2-4", layer: "MemoryCore", summary: "pgvector semantic search"}
+      - {id: "MC2-5", layer: "MemoryCore", summary: "Evolution Pipeline"}
+      - {id: "MC2-6", layer: "MemoryCore", summary: "injection/retrieval receipts"}
+      - {id: "MC2-7", layer: "MemoryCore", summary: "confidence_effective decay"}
+      - {id: "T2-1", layer: "Tool", summary: "LLMCallPort real impl"}
+      - {id: "T2-2", layer: "Tool", summary: "Model Registry + Fallback"}
+      - {id: "T2-3", layer: "Tool", summary: "Token metering"}
+      - {id: "G2-1", layer: "Gateway", summary: "Conversation REST API"}
+      - {id: "G2-2", layer: "Gateway", summary: "WebSocket streaming"}
+      - {id: "G2-3", layer: "Gateway", summary: "LLM Gateway (LiteLLM)"}
+      - {id: "G2-4", layer: "Gateway", summary: "Token budget pre-check"}
+      - {id: "G2-5", layer: "Gateway", summary: "Rate limiting middleware"}
+      - {id: "G2-6", layer: "Gateway", summary: "3-step file upload"}
+      - {id: "G2-7", layer: "Gateway", summary: "SSE notification endpoint"}
+      - {id: "I2-1", layer: "Infra", summary: "Redis cache + session"}
+      - {id: "I2-2", layer: "Infra", summary: "Celery Worker + Redis Broker"}
+      - {id: "I2-3", layer: "Infra", summary: "Token billing minimal loop"}
+      - {id: "I2-4", layer: "Infra", summary: "conversation_events table"}
+      - {id: "I2-5", layer: "Infra", summary: "memory_items + pgvector"}
+      # Frontend
+      - {id: "FW2-1", layer: "FE-Web", summary: "Chat dual-pane layout"}
+      - {id: "FW2-2", layer: "FE-Web", summary: "Streaming message render"}
+      - {id: "FW2-3", layer: "FE-Web", summary: "Chat history management"}
+      - {id: "FW2-4", layer: "FE-Web", summary: "Memory context panel"}
+      - {id: "FW2-5", layer: "FE-Web", summary: "Message actions"}
+      - {id: "FW2-6", layer: "FE-Web", summary: "File upload (drag + progress)"}
+      - {id: "FW2-7", layer: "FE-Web", summary: "WS connection management"}
+      - {id: "FW2-8", layer: "FE-Web", summary: "OpenAPI type sync"}
+      - {id: "FW2-9", layer: "FE-Web", summary: "SSE EventSource client"}
+      - {id: "FA2-1", layer: "FE-Admin", summary: "User management DataTable"}
+      - {id: "FA2-2", layer: "FE-Admin", summary: "Organization management"}
+      - {id: "FA2-3", layer: "FE-Admin", summary: "Audit log viewer"}
+      # Crosscutting
+      - {id: "D2-1", layer: "Delivery", summary: "Frontend CI pipeline"}
+      - {id: "D2-2", layer: "Delivery", summary: "OpenAPI type sync CI gate"}
+      - {id: "D2-3", layer: "Delivery", summary: "Dogfooding environment"}
+      - {id: "D2-4", layer: "Delivery", summary: "Resource consumption data"}
+      - {id: "D2-5", layer: "Delivery", summary: "verify-phase-2"}
+      - {id: "OS2-1", layer: "Observability", summary: "4 golden signals"}
+      - {id: "OS2-2", layer: "Observability", summary: "Basic alert rules"}
+      - {id: "OS2-3", layer: "Observability", summary: "Token anomaly alert"}
+      - {id: "OS2-4", layer: "Observability", summary: "Structured error logging"}
+      - {id: "OS2-5", layer: "Observability", summary: "FE error boundary + Sentry"}
+    exit_criteria:
+      hard:
+        - id: "p2-brain-engine"
+          description: "Brain conversation engine tests pass"
+          check: "uv run pytest tests/unit/brain/ -q"
+
+        - id: "p2-memory-core"
+          description: "MemoryCore CRUD tests pass"
+          check: "uv run pytest tests/unit/memory/ -q"
+
+        - id: "p2-gateway-ws"
+          description: "WebSocket gateway tests pass"
+          check: "uv run pytest tests/unit/gateway/test_websocket.py -q"
+
+        - id: "p2-fe-chat"
+          description: "Frontend chat page builds"
+          check: "cd frontend && pnpm run build --filter web"
+
+        - id: "p2-knowledge-port"
+          description: "Knowledge port integration tests"
+          check: "uv run pytest tests/unit/knowledge/ -q"
+
+      soft:
+        - id: "p2-streaming"
+          description: "SSE streaming e2e test"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/web/chat/streaming.spec.ts"
+
+    go_no_go:
+      hard_pass_rate: 1.0
+      approver: "architect"
+
+  phase_3:
+    name: "Knowledge & Skill Ecosystem"
+    depends_on: ["phase_2"]
+    milestones:
+      # Backend
+      - {id: "B3-1", layer: "Brain", summary: "Skill Router"}
+      - {id: "B3-2", layer: "Brain", summary: "Skill orchestration flow"}
+      - {id: "B3-3", layer: "Brain", summary: "Role adaptation module"}
+      - {id: "B3-4", layer: "Brain", summary: "Negative feedback fuse"}
+      - {id: "MC3-1", layer: "MemoryCore", summary: "Promotion Pipeline"}
+      - {id: "MC3-2", layer: "MemoryCore", summary: "promotion_receipt"}
+      - {id: "K3-1", layer: "Knowledge", summary: "Neo4j schema + seed data"}
+      - {id: "K3-2", layer: "Knowledge", summary: "Qdrant init + seed data"}
+      - {id: "K3-3", layer: "Knowledge", summary: "FK linkage mechanism"}
+      - {id: "K3-4", layer: "Knowledge", summary: "Knowledge Write API"}
+      - {id: "K3-5", layer: "Knowledge", summary: "Diyu Resolver minimal"}
+      - {id: "K3-6", layer: "Knowledge", summary: "Entity type registration"}
+      - {id: "K3-7", layer: "Knowledge", summary: "ERP/PIM ChangeSet interface"}
+      - {id: "S3-1", layer: "Skill", summary: "ContentWriterSkill"}
+      - {id: "S3-2", layer: "Skill", summary: "MerchandisingSkill"}
+      - {id: "S3-3", layer: "Skill", summary: "Skill lifecycle management"}
+      - {id: "S3-4", layer: "Skill", summary: "Skill param validation"}
+      - {id: "T3-1", layer: "Tool", summary: "WebSearch Tool"}
+      - {id: "T3-2", layer: "Tool", summary: "ImageAnalyze Tool"}
+      - {id: "T3-3", layer: "Tool", summary: "AudioTranscribe Tool"}
+      - {id: "G3-1", layer: "Gateway", summary: "Knowledge Admin API"}
+      - {id: "G3-2", layer: "Gateway", summary: "Skill API"}
+      - {id: "G3-3", layer: "Gateway", summary: "Content security check"}
+      - {id: "I3-1", layer: "Infra", summary: "Neo4j connection + CRUD"}
+      - {id: "I3-2", layer: "Infra", summary: "Qdrant connection + CRUD"}
+      - {id: "I3-3", layer: "Infra", summary: "ObjectStoragePort (S3/MinIO)"}
+      - {id: "I3-4", layer: "Infra", summary: "tool_usage_records DDL"}
+      # Frontend
+      - {id: "FW3-1", layer: "FE-Web", summary: "Knowledge browse page"}
+      - {id: "FW3-2", layer: "FE-Web", summary: "Skill artifact render"}
+      - {id: "FW3-3", layer: "FE-Web", summary: "Product components"}
+      - {id: "FA3-1", layer: "FE-Admin", summary: "Knowledge editor workbench"}
+      - {id: "FA3-2", layer: "FE-Admin", summary: "Content review queue"}
+      - {id: "FA3-3", layer: "FE-Admin", summary: "org_settings config mgmt"}
+      # Crosscutting
+      - {id: "D3-1", layer: "Delivery", summary: "manifest.yaml real values"}
+      - {id: "D3-2", layer: "Delivery", summary: "Installer productization"}
+      - {id: "D3-3", layer: "Delivery", summary: "deploy/manifest drift check"}
+      - {id: "D3-4", layer: "Delivery", summary: "verify-phase-3"}
+      - {id: "MM1-1", layer: "Multimodal", summary: "Personal media upload API"}
+      - {id: "MM1-2", layer: "Multimodal", summary: "WS payload media extension"}
+      - {id: "MM1-3", layer: "Multimodal", summary: "ImageAnalyze + AudioTranscribe"}
+      - {id: "MM1-4", layer: "Multimodal", summary: "Brain multimodal model selection"}
+      - {id: "MM1-5", layer: "Multimodal", summary: "security_status 3-layer intercept"}
+      - {id: "MM1-6", layer: "Multimodal", summary: "Personal media delete tombstone"}
+      - {id: "OS3-1", layer: "Observability", summary: "Content security pipeline"}
+      - {id: "OS3-2", layer: "Observability", summary: "Audit loop all CRUD"}
+      - {id: "OS3-3", layer: "Observability", summary: "Knowledge write XSS protection"}
+      - {id: "OS3-4", layer: "Observability", summary: "Resolver query audit"}
+      - {id: "OS3-5", layer: "Observability", summary: "API rate limit alert"}
+    exit_criteria:
+      hard:
+        - id: "p3-knowledge-crud"
+          description: "Knowledge CRUD API tests"
+          check: "uv run pytest tests/unit/knowledge/ tests/integration/knowledge/ -q"
+
+        - id: "p3-skill-registry"
+          description: "Skill registry tests"
+          check: "uv run pytest tests/unit/skill/ -q"
+
+        - id: "p3-tool-execution"
+          description: "Tool execution sandbox tests"
+          check: "uv run pytest tests/unit/tool/ -q"
+
+        - id: "p3-fe-knowledge"
+          description: "Frontend knowledge page builds"
+          check: "cd frontend && pnpm run build"
+
+      soft:
+        - id: "p3-graph-perf"
+          description: "Knowledge graph query p95 < 200ms"
+          check: "uv run pytest tests/perf/test_knowledge_query.py -q"
+
+    go_no_go:
+      hard_pass_rate: 1.0
+      approver: "architect"
+
+  phase_4:
+    name: "Full Feature + Performance"
+    depends_on: ["phase_3"]
+    milestones:
+      # Backend
+      - {id: "B4-1", layer: "Brain", summary: "Context Assembler perf P95<200ms"}
+      - {id: "B4-2", layer: "Brain", summary: "Dynamic budget allocator v1"}
+      - {id: "B4-3", layer: "Brain", summary: "TruncationPolicy"}
+      - {id: "B4-4", layer: "Brain", summary: "7 SLI instrumentation"}
+      - {id: "B4-5", layer: "Brain", summary: "Sanitization pattern-based"}
+      - {id: "MC4-1", layer: "MemoryCore", summary: "Delete pipeline 8-state FSM"}
+      - {id: "MC4-2", layer: "MemoryCore", summary: "Backup restore drill"}
+      - {id: "MC4-3", layer: "MemoryCore", summary: "deletion_timeout_rate SLI=0%"}
+      - {id: "K4-1", layer: "Knowledge", summary: "Graph query perf baseline"}
+      - {id: "K4-2", layer: "Knowledge", summary: "Vector search perf baseline"}
+      - {id: "K4-3", layer: "Knowledge", summary: "FK Reconciliation Job"}
+      - {id: "S4-1", layer: "Skill", summary: "Skill circuit breaker"}
+      - {id: "S4-2", layer: "Skill", summary: "Skill execution timeout"}
+      - {id: "T4-1", layer: "Tool", summary: "Tool independent billing"}
+      - {id: "T4-2", layer: "Tool", summary: "Tool retry + exponential backoff"}
+      - {id: "G4-1", layer: "Gateway", summary: "SLO metrics + alerts"}
+      - {id: "G4-2", layer: "Gateway", summary: "HA validation"}
+      - {id: "G4-3", layer: "Gateway", summary: "Per-org/user rate limiting"}
+      - {id: "I4-1", layer: "Infra", summary: "Prometheus + Grafana stack"}
+      - {id: "I4-2", layer: "Infra", summary: "PG failover drill"}
+      - {id: "I4-3", layer: "Infra", summary: "Backup restore drill PG"}
+      - {id: "I4-4", layer: "Infra", summary: "Fault injection tests"}
+      - {id: "I4-5", layer: "Infra", summary: "PIPL/GDPR delete pipeline"}
+      # Frontend
+      - {id: "FW4-1", layer: "FE-Web", summary: "Performance budget pass"}
+      - {id: "FW4-2", layer: "FE-Web", summary: "a11y check pass"}
+      - {id: "FW4-3", layer: "FE-Web", summary: "Dark/light mode"}
+      - {id: "FW4-4", layer: "FE-Web", summary: "Keyboard shortcuts"}
+      - {id: "FW4-5", layer: "FE-Web", summary: "Billing recharge page"}
+      - {id: "FA4-1", layer: "FE-Admin", summary: "System monitoring dashboard"}
+      - {id: "FA4-2", layer: "FE-Admin", summary: "Quota management"}
+      - {id: "FA4-3", layer: "FE-Admin", summary: "Backup management"}
+      # Crosscutting
+      - {id: "D4-1", layer: "Delivery", summary: "Upgrade rollback process"}
+      - {id: "D4-2", layer: "Delivery", summary: "Backup restore drill gate"}
+      - {id: "D4-3", layer: "Delivery", summary: "One-click diag package"}
+      - {id: "D4-4", layer: "Delivery", summary: "Key rotation + cert mgmt"}
+      - {id: "D4-5", layer: "Delivery", summary: "Lightweight offline deploy"}
+      - {id: "D4-6", layer: "Delivery", summary: "verify-phase-4"}
+      - {id: "MM2-1", layer: "Multimodal", summary: "Enterprise media upload API"}
+      - {id: "MM2-2", layer: "Multimodal", summary: "KnowledgeBundle media extension"}
+      - {id: "MM2-3", layer: "Multimodal", summary: "enterprise_media Neo4j FK"}
+      - {id: "MM2-4", layer: "Multimodal", summary: "Skill multimodal capability"}
+      - {id: "MM2-5", layer: "Multimodal", summary: "DocumentExtract Tool"}
+      - {id: "MM2-6", layer: "Multimodal", summary: "Enterprise media delete cascade"}
+      - {id: "OS4-1", layer: "Observability", summary: "7 Brain SLI Grafana dashboard"}
+      - {id: "OS4-2", layer: "Observability", summary: "SLO definition"}
+      - {id: "OS4-3", layer: "Observability", summary: "Alert tiering P0/P1/P2"}
+      - {id: "OS4-4", layer: "Observability", summary: "Full-chain trace_id"}
+      - {id: "OS4-5", layer: "Observability", summary: "Fault injection delete pipeline"}
+      - {id: "OS4-6", layer: "Observability", summary: "Fault injection LLM provider"}
+      - {id: "OS4-7", layer: "Observability", summary: "Pentest OWASP Top 10"}
+      - {id: "OS4-8", layer: "Observability", summary: "FE a11y axe-core audit"}
+    exit_criteria:
+      hard:
+        - id: "p4-lighthouse"
+          description: "Lighthouse CI budget pass"
+          check: "cd frontend && pnpm exec lhci autorun"
+
+        - id: "p4-a11y"
+          description: "Zero critical a11y violations"
+          check: "cd frontend && pnpm exec axe-core-cli --exit"
+
+        - id: "p4-coverage"
+          description: "Test coverage >= 80%"
+          check: "uv run pytest tests/ --cov=src --cov-fail-under=80 -q"
+
+        - id: "p4-fe-build"
+          description: "Full frontend build passes"
+          check: "cd frontend && pnpm run build"
+
+      soft:
+        - id: "p4-billing"
+          description: "Billing flow e2e"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/web/billing/"
+
+    go_no_go:
+      hard_pass_rate: 1.0
+      approver: "architect"
+
+  phase_5:
+    name: "Advanced Experience + Compliance"
+    depends_on: ["phase_4"]
+    milestones:
+      # Backend
+      - {id: "B5-1", layer: "Brain", summary: "Memory Governor"}
+      - {id: "B5-2", layer: "Brain", summary: "Confidence Calibration"}
+      - {id: "B5-3", layer: "Brain", summary: "AssemblyProfile multi-LLM"}
+      - {id: "B5-4", layer: "Brain", summary: "Memory Consolidation"}
+      - {id: "MC5-1", layer: "MemoryCore", summary: "Auto merge similar memories"}
+      - {id: "MC5-2", layer: "MemoryCore", summary: "Contextual Chunking embedding"}
+      - {id: "MC5-3", layer: "MemoryCore", summary: "Crypto Shredding per-user"}
+      - {id: "K5-1", layer: "Knowledge", summary: "Capability Registry"}
+      - {id: "K5-2", layer: "Knowledge", summary: "Explainability panel"}
+      - {id: "S5-1", layer: "Skill", summary: "Skill A/B Testing"}
+      - {id: "S5-2", layer: "Skill", summary: "Skill multimodal declaration"}
+      - {id: "T5-1", layer: "Tool", summary: "Tool cost dashboard"}
+      - {id: "T5-2", layer: "Tool", summary: "LLMCallPort Contract evaluation"}
+      - {id: "G5-1", layer: "Gateway", summary: "API version negotiation"}
+      - {id: "G5-2", layer: "Gateway", summary: "API deprecation warning"}
+      - {id: "I5-1", layer: "Infra", summary: "Event Mesh evolution"}
+      - {id: "I5-2", layer: "Infra", summary: "Schema Registry"}
+      # Frontend
+      - {id: "FW5-1", layer: "FE-Web", summary: "Voice interaction"}
+      - {id: "FA5-1", layer: "FE-Admin", summary: "Compliance report"}
+      - {id: "FA5-2", layer: "FE-Admin", summary: "Exception Register UI"}
+      # Crosscutting
+      - {id: "D5-1", layer: "Delivery", summary: "3 SSOT auto consistency"}
+      - {id: "D5-2", layer: "Delivery", summary: "Exception Register audit"}
+      - {id: "D5-3", layer: "Delivery", summary: "Monthly arch audit template"}
+      - {id: "D5-4", layer: "Delivery", summary: "verify-phase-5"}
+      - {id: "MM3-1", layer: "Multimodal", summary: "Copyright risk detection"}
+      - {id: "MM3-2", layer: "Multimodal", summary: "Cross-modal semantic search"}
+      - {id: "MM3-3", layer: "Multimodal", summary: "LLMCallPort Contract eval"}
+      - {id: "OS5-1", layer: "Observability", summary: "3 SSOT auto consistency check"}
+      - {id: "OS5-2", layer: "Observability", summary: "Guard auto-block strategy"}
+      - {id: "OS5-3", layer: "Observability", summary: "Exception Register expiry audit"}
+      - {id: "OS5-4", layer: "Observability", summary: "Monthly arch deviation audit"}
+      - {id: "OS5-5", layer: "Observability", summary: "GDPR/PIPL compliance report"}
+      - {id: "OS5-6", layer: "Observability", summary: "Security incident runbook"}
+    exit_criteria:
+      hard:
+        - id: "p5-compliance-report"
+          description: "Compliance report generation"
+          check: "uv run pytest tests/unit/compliance/ -q"
+
+        - id: "p5-backup-drill"
+          description: "Backup-restore drill evidence exists"
+          check: "test -f evidence/release/backup-drill.json"
+
+        - id: "p5-full-e2e"
+          description: "Full e2e test suite passes"
+          check: "cd frontend && pnpm exec playwright test"
+
+      soft:
+        - id: "p5-voice"
+          description: "Voice interaction available"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/web/voice/"
+
+    go_no_go:
+      hard_pass_rate: 1.0
+      approver: "architect"

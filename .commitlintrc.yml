@@ -1,0 +1,75 @@
+# Conventional Commits configuration for DIYU Agent
+# Source of truth: docs/reviews/治理规范.md Section 4
+# Task card: TASK-D0-9
+#
+# Format: <type>(<scope>): <description>
+# Example: feat(brain): add memory evolution pipeline
+
+rules:
+  # Type must be one of the governance-defined values
+  type-enum:
+    - 2          # error
+    - "always"
+    - - feat
+      - fix
+      - refactor
+      - test
+      - docs
+      - chore
+      - perf
+      - security
+
+  type-empty:
+    - 2
+    - "never"
+
+  # Scope is optional but when present must match a layer/module
+  scope-enum:
+    - 2
+    - "always"
+    - - brain
+      - knowledge
+      - skill
+      - tool
+      - gateway
+      - infra
+      - ports
+      - shared
+      - migration
+      - delivery
+
+  scope-empty:
+    - 0          # disabled -- scope is optional
+
+  # Subject (description) rules
+  subject-empty:
+    - 2
+    - "never"
+
+  subject-case:
+    - 2
+    - "never"
+    - - "sentence-case"
+      - "start-case"
+      - "pascal-case"
+      - "upper-case"
+
+  subject-full-stop:
+    - 2
+    - "never"
+    - "."
+
+  # Header length limit
+  header-max-length:
+    - 2
+    - "always"
+    - 100
+
+  # Body and footer
+  body-leading-blank:
+    - 1          # warning
+    - "always"
+
+  footer-leading-blank:
+    - 1
+    - "always"

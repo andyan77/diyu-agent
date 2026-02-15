@@ -1,0 +1,123 @@
+# Task Card Schema Validation Pipeline
+# Full Block Mode: BLOCK > 0 fails the job (per execution-plan-v1.0.md Stage 2.3)
+# History: Warning (Stage 2.1) -> Incremental (Stage 2.2) -> Full Block (Stage 2.3, current)
+
+name: Task Card Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "docs/task-cards/**/*.md"
+      - "docs/governance/milestone-matrix*.md"
+      - "delivery/milestone-matrix.yaml"
+      - "scripts/check_task_schema.py"
+      - "scripts/count_task_cards.py"
+      - "scripts/verify_phase.py"
+      - "scripts/task_card_traceability_check.py"
+  push:
+    branches: [main]
+    paths:
+      - "docs/task-cards/**/*.md"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: task-card-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+  EVIDENCE_DIR: evidence/${{ github.sha }}
+
+jobs:
+  schema-check:
+    name: "L3: Task Card Schema (Full Block)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Schema validation (full block)
+        run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          uv run python scripts/check_task_schema.py --mode full --json \
+            | tee ${{ env.EVIDENCE_DIR }}/schema-check.json
+          uv run python scripts/check_task_schema.py --mode full
+      - name: Card census
+        run: |
+          uv run python scripts/count_task_cards.py --json \
+            | tee ${{ env.EVIDENCE_DIR }}/card-count.json
+          uv run python scripts/count_task_cards.py --json > /dev/null
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: task-card-reports
+          path: ${{ env.EVIDENCE_DIR }}/
+
+  traceability-check:
+    name: "L3: Milestone Traceability"
+    runs-on: ubuntu-latest
+    needs: [schema-check]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Traceability check (hard gate, threshold 98%)
+        run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          uv run python scripts/task_card_traceability_check.py --threshold 98 --json \
+            | tee ${{ env.EVIDENCE_DIR }}/traceability-check.json
+          uv run python scripts/task_card_traceability_check.py --threshold 98
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: traceability-report
+          path: ${{ env.EVIDENCE_DIR }}/traceability-check.json
+
+  acceptance-check:
+    name: "L3: Acceptance Command Gate"
+    runs-on: ubuntu-latest
+    needs: [schema-check]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Acceptance gate (hard block)
+        run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          uv run python scripts/check_acceptance_gate.py --json \
+            | tee ${{ env.EVIDENCE_DIR }}/acceptance-check.json
+          uv run python scripts/check_acceptance_gate.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: acceptance-report
+          path: ${{ env.EVIDENCE_DIR }}/acceptance-check.json
+
+  phase-gate:
+    name: "L3: Phase Gate"
+    runs-on: ubuntu-latest
+    needs: [schema-check, acceptance-check]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Phase gate verification
+        run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          uv run python scripts/verify_phase.py --current --json \
+            | tee ${{ env.EVIDENCE_DIR }}/phase-gate.json
+          uv run python scripts/verify_phase.py --current --json > /dev/null
+      - name: Scaffold integrity
+        run: |
+          uv run python scripts/scaffold_phase0.py --check --json \
+            | tee ${{ env.EVIDENCE_DIR }}/scaffold-check.json
+          uv run python scripts/scaffold_phase0.py --check --json > /dev/null
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase-gate-evidence
+          path: ${{ env.EVIDENCE_DIR }}/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard: Migration Safety"
+  short_description: "Validate database migration rollback and destructive DDL safety"
+  default_prompt: "Run $guard-migration-safety to validate all migration files follow safety rules"

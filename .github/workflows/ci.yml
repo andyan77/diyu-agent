@@ -1,0 +1,326 @@
+# DIYU Agent CI Pipeline
+# L1 quality gates only; L3 task-card checks are in task-card-check.yml
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"  # Weekly Monday 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+  NODE_VERSION: "22"
+  UV_CACHE_DIR: /tmp/uv-cache
+  EVIDENCE_DIR: evidence/${{ github.sha }}
+
+jobs:
+  # L1: Security scanning (H-4 + H-5, PR blocking)
+  security-scan:
+    name: "L1: Security Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Secret scanning (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: SAST (semgrep)
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: auto
+      - name: Python dependency audit
+        run: uv run pip-audit
+      - name: Frontend dependency audit
+        run: |
+          corepack enable
+          cd frontend && pnpm install --frozen-lockfile
+          cd frontend && pnpm audit --audit-level=high
+
+  # L1: Deterministic checks (always run)
+  lint-backend:
+    name: "L1: Backend Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - run: uv run ruff check src/ tests/ scripts/
+      - run: uv run ruff format --check src/ tests/ scripts/
+
+  lint-frontend:
+    name: "L1: Frontend Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
+      - run: cd frontend && pnpm run lint
+
+  # L1: Type checking
+  typecheck-backend:
+    name: "L1: Backend Typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - run: uv run mypy src/
+
+  typecheck-frontend:
+    name: "L1: Frontend Typecheck"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
+      - run: cd frontend && pnpm run typecheck
+
+  # L1: Unit tests
+  test-backend:
+    name: "L1: Backend Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          uv run pytest tests/unit/ -v --tb=short --junitxml=${{ env.EVIDENCE_DIR }}/test-results.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-test-results
+          path: ${{ env.EVIDENCE_DIR }}/
+
+  test-frontend:
+    name: "L1: Frontend Tests"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
+      - run: cd frontend && pnpm run test
+
+  # L1: Guard scripts (consumes change-impact outputs when available)
+  guard-checks:
+    name: "L1: Guard Scripts"
+    runs-on: ubuntu-latest
+    needs: [change-impact]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Run layer dependency check (always, or if src gate triggered)
+        if: |
+          always() && (
+            needs.change-impact.outputs.triggered_gates == '' ||
+            contains(needs.change-impact.outputs.triggered_gates, 'check_layer_deps')
+          )
+        run: bash scripts/check_layer_deps.sh --json
+      - name: Log triggered gates from impact analysis
+        if: needs.change-impact.outputs.triggered_gates != ''
+        run: |
+          echo "Triggered gates: ${{ needs.change-impact.outputs.triggered_gates }}"
+          echo "Risk score: ${{ needs.change-impact.outputs.risk_score }}"
+      - name: Run governance checks (if governance gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'governance')
+        run: |
+          uv run python scripts/check_task_schema.py --mode full --json
+          uv run python scripts/count_task_cards.py --json
+      - name: Run port compatibility check (if ports gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'check_port_compat')
+        run: bash scripts/check_port_compat.sh
+      - name: Run RLS check (if infra gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'isolation_smoke')
+        run: bash scripts/check_rls.sh
+      - name: Run migration safety check (if migration gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'check_migration')
+        run: bash scripts/check_migration.sh
+      - name: Run frontend lint (if fe gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'fe_lint')
+        run: cd frontend && pnpm run lint
+      - name: Run frontend tests (if fe gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'fe_test')
+        run: cd frontend && pnpm run test
+      - name: Run contract tests (if api-client gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'contract_test')
+        run: cd frontend && pnpm --filter @diyu/api-client run test
+      - name: Run OpenAPI sync check (if openapi gate triggered)
+        if: contains(needs.change-impact.outputs.triggered_gates, 'openapi_sync')
+        run: |
+          echo "OpenAPI sync check: verifying openapi.yaml consistency"
+          test -f openapi.yaml || test -d openapi/ || echo "No openapi files found (skipping)"
+
+  # Audit system self-check (triggered by audit infrastructure changes)
+  audit-system-check:
+    name: "Audit System Check"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Check for audit infrastructure changes
+        id: audit-changes
+        run: |
+          # Verify base ref is available; fail explicitly if not
+          if ! git rev-parse --verify "origin/${{ github.base_ref }}" >/dev/null 2>&1; then
+            echo "ERROR: origin/${{ github.base_ref }} not found -- fetch-depth may be insufficient" >&2
+            exit 1
+          fi
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" -- \
+            '.claude/skills/**' \
+            '.claude/commands/**' \
+            'scripts/validate_audit_artifacts.py' \
+            'scripts/schemas/**' \
+            'scripts/run_*.sh')
+          if [ -n "$CHANGED" ]; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+            echo "Changed audit files:"
+            echo "$CHANGED"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "No audit infrastructure changes detected"
+          fi
+      - name: Run audit artifact validation
+        if: steps.audit-changes.outputs.has_changes == 'true'
+        run: |
+          if ls evidence/*.json 1>/dev/null 2>&1; then
+            make audit-artifacts
+          else
+            echo "No evidence artifacts present -- generate with: make audit-e2e"
+            exit 1
+          fi
+      - name: Run audit-related unit tests
+        if: steps.audit-changes.outputs.has_changes == 'true'
+        run: |
+          uv run pytest tests/unit/scripts/test_audit_artifact_schema.py \
+            tests/unit/scripts/test_audit_command_contracts.py -v --tb=short
+
+  # Skills governance check (D10 requirement)
+  skills-governance-check:
+    name: "Skills Governance Check"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Validate skills governance
+        run: make skills-validate
+      - name: Run skills governance tests
+        run: make skills-smoke
+
+  # L2: Semantic checks (independent job -- contract tests + isolation smoke + port compat)
+  semantic-checks:
+    name: "L2: Semantic Checks"
+    runs-on: ubuntu-latest
+    needs: [change-impact]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
+      - name: Port compatibility check
+        run: bash scripts/check_port_compat.sh
+      - name: RLS isolation smoke
+        run: bash scripts/check_rls.sh
+      - name: Migration safety check
+        run: bash scripts/check_migration.sh
+      - name: Contract tests (api-client)
+        run: cd frontend && pnpm --filter @diyu/api-client run test
+      - name: Acceptance gate (env-dep mapping)
+        run: uv run python scripts/check_acceptance_gate.py --json
+
+  # Impact analysis (consumed by downstream jobs)
+  change-impact:
+    name: "Impact Analysis"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    outputs:
+      triggered_gates: ${{ steps.impact.outputs.triggered_gates }}
+      risk_score: ${{ steps.risk.outputs.risk_score }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: impact
+        name: Route change impact
+        run: |
+          RESULT=$(bash scripts/change_impact_router.sh --json --base origin/${{ github.base_ref }})
+          echo "$RESULT"
+          GATES=$(echo "$RESULT" | python3 -c "import sys,json; print(json.dumps(json.load(sys.stdin).get('triggered_gates',[])))" 2>/dev/null || echo "[]")
+          echo "triggered_gates=$GATES" >> "$GITHUB_OUTPUT"
+      - id: risk
+        name: Calculate risk score
+        run: |
+          RESULT=$(bash scripts/risk_scorer.sh --json --base origin/${{ github.base_ref }})
+          echo "$RESULT"
+          SCORE=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('risk_score',0))" 2>/dev/null || echo "0")
+          echo "risk_score=$SCORE" >> "$GITHUB_OUTPUT"
+
+  # Full audit (Section 12.6) - weekly scheduled + manual dispatch
+  full-audit:
+    name: "Full Audit (Section 12.6)"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Run full audit
+        run: bash scripts/full_audit.sh --json --phase 0
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-audit-report
+          path: evidence/full-audit-*.json

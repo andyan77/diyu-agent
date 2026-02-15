@@ -1,0 +1,104 @@
+# DIYU Agent Cost Model
+# Version: 1.0 (Draft)
+# Purpose: Resource baseline and token cost estimation
+
+schema_version: "1.0"
+
+# --- Infrastructure Baseline ---
+infrastructure:
+  compute:
+    api_server:
+      type: "container"
+      cpu: "2 vCPU"
+      memory: "4 GB"
+      replicas: 2
+      notes: "FastAPI + Uvicorn"
+    celery_worker:
+      type: "container"
+      cpu: "2 vCPU"
+      memory: "4 GB"
+      replicas: 2
+      notes: "Background job processing"
+    frontend:
+      type: "container"
+      cpu: "1 vCPU"
+      memory: "2 GB"
+      replicas: 2
+      notes: "Next.js SSR (web + admin)"
+
+  storage:
+    postgresql:
+      type: "managed"
+      size: "50 GB initial"
+      growth_rate: "~5 GB/month per 1K active users"
+      notes: "pgvector extension required"
+    redis:
+      type: "managed"
+      size: "2 GB"
+      notes: "Session cache + Celery broker"
+    qdrant:
+      type: "self-hosted"
+      size: "20 GB initial"
+      growth_rate: "~2 GB/month per 1K active users"
+      notes: "Vector similarity search"
+    neo4j:
+      type: "self-hosted"
+      size: "10 GB initial"
+      notes: "Knowledge graph"
+    minio:
+      type: "self-hosted or S3-compatible"
+      size: "100 GB initial"
+      growth_rate: "~10 GB/month per 1K active users"
+      notes: "File uploads, media storage"
+
+# --- LLM Token Costs ---
+llm_costs:
+  models:
+    - name: "gpt-4o"
+      input_per_1k: 0.0025
+      output_per_1k: 0.01
+      currency: "USD"
+    - name: "gpt-4o-mini"
+      input_per_1k: 0.00015
+      output_per_1k: 0.0006
+      currency: "USD"
+    - name: "claude-sonnet-4-20250514"
+      input_per_1k: 0.003
+      output_per_1k: 0.015
+      currency: "USD"
+
+  usage_estimates:
+    avg_tokens_per_conversation: 2000
+    avg_conversations_per_user_per_day: 5
+    input_output_ratio: "60:40"
+
+# --- Per-User Monthly Cost Estimate ---
+cost_tiers:
+  - tier: "small"
+    active_users: 100
+    estimated_monthly_usd: 500
+    breakdown:
+      infrastructure: 200
+      llm_tokens: 250
+      storage: 50
+  - tier: "medium"
+    active_users: 1000
+    estimated_monthly_usd: 3500
+    breakdown:
+      infrastructure: 800
+      llm_tokens: 2200
+      storage: 500
+  - tier: "large"
+    active_users: 10000
+    estimated_monthly_usd: 28000
+    breakdown:
+      infrastructure: 5000
+      llm_tokens: 18000
+      storage: 5000
+
+# --- Notes ---
+notes:
+  - "All costs are estimates and vary by region, provider, and usage pattern"
+  - "LLM costs dominate at scale; model selection has 10x impact"
+  - "Self-hosted options (Qdrant, Neo4j, MinIO) reduce managed service costs"
+  - "Token costs tracked per-org via Tool billing (ADR-047)"

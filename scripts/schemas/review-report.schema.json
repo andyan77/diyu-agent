@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Systematic Review Report",
+  "description": "Structured output from /systematic-review command.",
+  "type": "object",
+  "required": ["version", "timestamp", "reviewer", "scope", "findings", "summary"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "required": ["directories", "file_count"],
+      "properties": {
+        "directories": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "file_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "category", "description", "files"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z][0-9]+$" },
+          "severity": { "type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "SUGGESTION", "NOTE"] },
+          "category": { "type": "string" },
+          "description": { "type": "string" },
+          "files": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_findings", "by_severity"],
+      "properties": {
+        "total_findings": { "type": "integer", "minimum": 0 },
+        "by_severity": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

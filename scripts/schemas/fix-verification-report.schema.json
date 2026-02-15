@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Fix Verification Report",
+  "description": "Structured output from /adversarial-fix-verify command. Each finding must have adversarial evidence.",
+  "type": "object",
+  "required": ["version", "timestamp", "source_review", "findings", "summary"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_review": {
+      "type": "string",
+      "description": "Path to the review report this verification is based on."
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "criterion", "scope", "evidence", "verdict"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z][0-9]+$",
+            "description": "Finding ID matching the source review."
+          },
+          "criterion": {
+            "type": "string",
+            "description": "Exact pass/fail criterion for this finding."
+          },
+          "scope": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "description": "File paths in scope for verification."
+          },
+          "evidence": {
+            "type": "object",
+            "required": ["command", "output_summary"],
+            "properties": {
+              "command": {
+                "type": "string",
+                "description": "Exact command executed to verify."
+              },
+              "output_summary": {
+                "type": "string",
+                "description": "Relevant output excerpt (not full dump)."
+              }
+            }
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["CLOSED", "OPEN", "PRE_RESOLVED"],
+            "description": "CLOSED=fix verified, OPEN=not fixed, PRE_RESOLVED=was already correct."
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total", "closed", "open", "pre_resolved"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "closed": { "type": "integer", "minimum": 0 },
+        "open": { "type": "integer", "minimum": 0 },
+        "pre_resolved": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "additionalProperties": false
+}

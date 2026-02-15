@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cross-Reference Audit Report",
+  "description": "Structured output from /cross-reference-audit command.",
+  "type": "object",
+  "required": ["version", "timestamp", "pairs_checked", "mismatches", "summary"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "pairs_checked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "claim", "actual", "match"],
+        "properties": {
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "claim": { "type": "string" },
+          "actual": { "type": "string" },
+          "match": { "type": "boolean" }
+        }
+      }
+    },
+    "mismatches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "claim", "actual"],
+        "properties": {
+          "source": { "type": "string" },
+          "target": { "type": "string" },
+          "claim": { "type": "string" },
+          "actual": { "type": "string" }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_pairs", "matches", "mismatches_count"],
+      "properties": {
+        "total_pairs": { "type": "integer", "minimum": 0 },
+        "matches": { "type": "integer", "minimum": 0 },
+        "mismatches_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "additionalProperties": false
+}

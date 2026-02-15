@@ -1,0 +1,227 @@
+#!/usr/bin/env python3
+"""Task Card Traceability Check.
+
+Verifies bidirectional traceability between milestone-matrix entries
+(milestone-matrix.yaml milestones[]) and task cards (docs/task-cards/).
+
+Checks:
+  1. Every milestone ID in YAML has at least one task card referencing it.
+  2. Every task card's matrix_ref points to a valid milestone ID.
+
+Outputs dual coverage metrics:
+  - main_coverage: only primary "> 矩阵条目:" / "> Matrix" refs
+  - all_coverage:  primary refs + M-Track cross-references
+
+Independent from check_task_schema.py (schema compliance) and
+milestone_aggregator.py (coverage statistics).
+
+Usage:
+    python3 scripts/task_card_traceability_check.py          # human
+    python3 scripts/task_card_traceability_check.py --json   # JSON
+    python3 scripts/task_card_traceability_check.py --phase 0  # filter
+    python3 scripts/task_card_traceability_check.py --threshold 98  # custom
+
+Exit codes:
+    0: All checks pass (or no milestones defined yet)
+    1: Traceability gaps found
+    2: Configuration error
+"""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+
+import yaml
+
+MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
+TASK_CARDS_DIR = Path("docs/task-cards")
+
+# Primary matrix reference: Chinese or English format
+MATRIX_REF_RE = re.compile(r">\s*(?:矩阵条目|[Mm]atrix\s*\S*?):\s*(\S+)")
+TASK_HEADING_RE = re.compile(r"^###\s+(TASK-\S+)")
+# M-Track cross-reference within a line
+M_TRACK_RE = re.compile(r"M-Track:\s*(MM\S+)")
+
+DEFAULT_THRESHOLD = 98.0
+
+
+def load_milestone_ids(phase_filter: int | None = None) -> set[str]:
+    """Extract all milestone IDs from YAML milestones[] arrays."""
+    if not MATRIX_PATH.exists():
+        print(f"ERROR: {MATRIX_PATH} not found", file=sys.stderr)
+        sys.exit(2)
+    with MATRIX_PATH.open() as f:
+        data = yaml.safe_load(f)
+
+    ids: set[str] = set()
+    for phase_key, phase in data.get("phases", {}).items():
+        if phase_filter is not None:
+            phase_num = int(phase_key.replace("phase_", ""))
+            if phase_num != phase_filter:
+                continue
+        for m in phase.get("milestones", []):
+            mid = m.get("id")
+            if mid:
+                ids.add(mid)
+    return ids
+
+
+def scan_task_cards() -> dict[str, dict[str, list[str]]]:
+    """Scan task cards for primary refs and M-Track cross-refs.
+
+    Returns:
+        {
+            "main_refs": {milestone_id: [task_card_ids...]},
+            "m_track_refs": {milestone_id: [task_card_ids...]},
+        }
+    """
+    main_refs: dict[str, list[str]] = {}
+    m_track_refs: dict[str, list[str]] = {}
+
+    if not TASK_CARDS_DIR.exists():
+        return {"main_refs": main_refs, "m_track_refs": m_track_refs}
+
+    for md_file in TASK_CARDS_DIR.rglob("*.md"):
+        current_task: str | None = None
+        for line in md_file.read_text(errors="replace").splitlines():
+            heading = TASK_HEADING_RE.match(line)
+            if heading:
+                current_task = heading.group(1)
+
+            ref_match = MATRIX_REF_RE.match(line)
+            if ref_match:
+                ref_id = ref_match.group(1)
+                source = current_task or md_file.stem
+                main_refs.setdefault(ref_id, []).append(source)
+
+            m_track_match = M_TRACK_RE.search(line)
+            if m_track_match:
+                m_id = m_track_match.group(1)
+                source = current_task or md_file.stem
+                m_track_refs.setdefault(m_id, []).append(source)
+
+    return {"main_refs": main_refs, "m_track_refs": m_track_refs}
+
+
+def _coverage_block(
+    milestone_ids: set[str],
+    covered_ids: set[str],
+) -> dict:
+    orphans = sorted(milestone_ids - covered_ids)
+    total = len(milestone_ids)
+    covered = total - len(orphans)
+    pct = (covered / total * 100) if total > 0 else 0.0
+    return {
+        "total": total,
+        "covered": covered,
+        "coverage_pct": round(pct, 1),
+        "orphan_milestones": orphans,
+    }
+
+
+def compute_result(
+    milestone_ids: set[str],
+    card_data: dict[str, dict[str, list[str]]],
+    threshold: float = DEFAULT_THRESHOLD,
+) -> dict:
+    """Compute dual coverage result.
+
+    Returns dict with main_coverage, all_coverage, status, dangling_refs.
+    """
+    main_refs = card_data["main_refs"]
+    m_track_refs = card_data["m_track_refs"]
+
+    main_covered = milestone_ids & set(main_refs.keys())
+    all_covered = main_covered | (milestone_ids & set(m_track_refs.keys()))
+
+    main_block = _coverage_block(milestone_ids, main_covered)
+    all_block = _coverage_block(milestone_ids, all_covered)
+
+    # Dangling: refs in cards that point to no YAML milestone
+    all_card_refs = set(main_refs.keys()) | set(m_track_refs.keys())
+    dangling = sorted(all_card_refs - milestone_ids)
+
+    # Status based on all_coverage (main + M-Track) threshold
+    status = "FAIL" if all_block["coverage_pct"] < threshold else "PASS"
+
+    return {
+        "status": status,
+        "threshold": threshold,
+        "main_coverage": main_block,
+        "all_coverage": all_block,
+        "dangling_refs": dangling,
+    }
+
+
+def main() -> None:
+    json_mode = "--json" in sys.argv
+    phase_filter: int | None = None
+    threshold = DEFAULT_THRESHOLD
+
+    if "--phase" in sys.argv:
+        idx = sys.argv.index("--phase")
+        if idx + 1 < len(sys.argv):
+            try:
+                phase_filter = int(sys.argv[idx + 1])
+            except ValueError:
+                print("ERROR: --phase requires integer", file=sys.stderr)
+                sys.exit(2)
+
+    if "--threshold" in sys.argv:
+        idx = sys.argv.index("--threshold")
+        if idx + 1 < len(sys.argv):
+            try:
+                threshold = float(sys.argv[idx + 1])
+            except ValueError:
+                print("ERROR: --threshold requires number", file=sys.stderr)
+                sys.exit(2)
+
+    milestone_ids = load_milestone_ids(phase_filter)
+    if not milestone_ids:
+        msg = "No milestones defined"
+        if phase_filter is not None:
+            msg += f" for phase_{phase_filter}"
+        if json_mode:
+            json.dump({"status": "SKIP", "detail": msg}, sys.stdout)
+            print()
+        else:
+            print(f"SKIP: {msg}")
+        sys.exit(0)
+
+    card_data = scan_task_cards()
+    result = compute_result(milestone_ids, card_data, threshold)
+
+    if phase_filter is not None:
+        result["phase_filter"] = phase_filter
+
+    if json_mode:
+        json.dump(result, sys.stdout, indent=2, ensure_ascii=False)
+        print()
+    else:
+        mc = result["main_coverage"]
+        ac = result["all_coverage"]
+        status = result["status"]
+        print(
+            f"{status}: main {mc['covered']}/{mc['total']} "
+            f"({mc['coverage_pct']:.1f}%), "
+            f"all {ac['covered']}/{ac['total']} "
+            f"({ac['coverage_pct']:.1f}%) "
+            f"[threshold: {threshold}%]"
+        )
+        if mc["orphan_milestones"]:
+            print("\n  Orphan milestones (no primary task card ref):")
+            for mid in mc["orphan_milestones"]:
+                print(f"    - {mid}")
+        if result["dangling_refs"]:
+            print("\n  Dangling refs (card -> unknown milestone):")
+            for ref in result["dangling_refs"]:
+                print(f"    - {ref}")
+
+    sys.exit(0 if result["status"] == "PASS" else 1)
+
+
+if __name__ == "__main__":
+    main()

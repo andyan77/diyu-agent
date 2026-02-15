@@ -1,0 +1,139 @@
+# JSON Schema for delivery/milestone-matrix.yaml validation
+# Usage: python3 -c "import yaml,jsonschema; ..."
+# Or: ajv validate -s delivery/milestone-matrix.schema.yaml -d delivery/milestone-matrix.yaml
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "DIYU Agent Milestone Matrix Schema"
+description: "Validates the structure of delivery/milestone-matrix.yaml"
+type: object
+
+required:
+  - schema_version
+  - current_phase
+  - phases
+
+properties:
+  schema_version:
+    type: string
+    pattern: "^\\d+\\.\\d+$"
+    description: "Schema version (semver major.minor)"
+
+  current_phase:
+    type: string
+    pattern: "^phase_\\d+$"
+    description: "Currently active phase identifier"
+
+  phases:
+    type: object
+    additionalProperties:
+      $ref: "#/definitions/Phase"
+    minProperties: 1
+
+definitions:
+  Phase:
+    type: object
+    required:
+      - name
+      - exit_criteria
+      - go_no_go
+    properties:
+      name:
+        type: string
+        minLength: 1
+        description: "Human-readable phase name"
+
+      depends_on:
+        type: array
+        items:
+          type: string
+          pattern: "^phase_\\d+$"
+        description: "Phases that must be completed before this one"
+
+      milestones:
+        type: array
+        items:
+          $ref: "#/definitions/Milestone"
+        description: "Optional detailed milestones within the phase"
+
+      exit_criteria:
+        type: object
+        properties:
+          hard:
+            type: array
+            items:
+              $ref: "#/definitions/Criterion"
+            description: "Must all pass for Go decision"
+          soft:
+            type: array
+            items:
+              $ref: "#/definitions/Criterion"
+            description: "Should pass, does not block Go"
+        required:
+          - hard
+
+      go_no_go:
+        type: object
+        required:
+          - hard_pass_rate
+          - approver
+        properties:
+          hard_pass_rate:
+            type: number
+            minimum: 0
+            maximum: 1
+            description: "Required pass rate for hard criteria (0.0 to 1.0)"
+          approver:
+            type: string
+            minLength: 1
+            description: "Role authorized to approve gate passage"
+
+  Criterion:
+    type: object
+    required:
+      - id
+      - check
+    properties:
+      id:
+        type: string
+        pattern: "^p\\d+-[a-z][a-z0-9-]*$"
+        description: "Unique criterion identifier (e.g., p0-toolchain)"
+      description:
+        type: string
+        description: "Human-readable description of what is checked"
+      check:
+        type: string
+        minLength: 1
+        description: "Shell command to execute (exit 0 = pass)"
+
+  Milestone:
+    type: object
+    required:
+      - id
+      - layer
+      - summary
+    properties:
+      id:
+        type: string
+        pattern: "^[A-Z]+\\d+-\\d+$"
+        description: "Unique milestone identifier (e.g., B0-1, MC2-3, MM1-4)"
+      layer:
+        type: string
+        minLength: 1
+        description: "Architecture layer (e.g., Brain, MemoryCore, Gateway, Multimodal)"
+      summary:
+        type: string
+        minLength: 1
+        description: "Brief description of the milestone deliverable"
+      deliverable:
+        type: string
+        minLength: 1
+        description: "What must be delivered (optional, for detailed milestones)"
+      acceptance:
+        type: array
+        items:
+          type: string
+        description: "Acceptance criteria descriptions"
+      risk_level:
+        type: string
+        enum: [critical, high, medium, low]
+        description: "Risk classification for this milestone"

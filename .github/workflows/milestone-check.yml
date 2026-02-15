@@ -1,0 +1,61 @@
+# Milestone matrix validation
+# Checks YAML integrity, milestone aggregation, and acceptance command quality.
+# Informational gate (does not block merge).
+
+name: Milestone Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "delivery/milestone-matrix.yaml"
+      - "docs/governance/milestone-matrix*.md"
+      - "scripts/milestone_aggregator.py"
+      - "scripts/check_acceptance_commands.sh"
+
+permissions:
+  contents: read
+
+env:
+  EVIDENCE_DIR: evidence/${{ github.sha }}
+
+jobs:
+  yaml-integrity:
+    name: "YAML Parseable"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Validate YAML syntax
+        run: uv run python -c "import yaml; yaml.safe_load(open('delivery/milestone-matrix.yaml'))"
+
+  milestone-aggregation:
+    name: "Milestone Aggregation"
+    runs-on: ubuntu-latest
+    needs: yaml-integrity
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Run aggregator (JSON)
+        run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          uv run python scripts/milestone_aggregator.py --json > ${{ env.EVIDENCE_DIR }}/milestone-report.json
+      - name: Run aggregator (human)
+        run: uv run python scripts/milestone_aggregator.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: milestone-report
+          path: ${{ env.EVIDENCE_DIR }}/milestone-report.json
+
+  acceptance-commands:
+    name: "E2E Acceptance Commands"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check acceptance command quality
+        run: bash scripts/check_acceptance_commands.sh

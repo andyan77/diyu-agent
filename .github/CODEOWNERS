@@ -1,0 +1,24 @@
+# DIYU Agent CODEOWNERS
+# See: docs/governance/execution-plan-v1.0.md Section E.3
+
+# Default owner
+*                                @faye
+
+# Architecture (Port changes = architect review)
+src/ports/                       @faye
+docs/architecture/               @faye
+
+# Infrastructure (migrations, RLS = security review)
+migrations/                      @faye
+src/infra/org/                   @faye
+
+# Frontend
+frontend/                        @faye
+
+# Governance
+docs/governance/                 @faye
+docs/task-cards/                 @faye
+delivery/                        @faye
+
+# CI/CD
+.github/                         @faye
