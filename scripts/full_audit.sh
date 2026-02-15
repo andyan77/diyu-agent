@@ -25,12 +25,13 @@ TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 EVIDENCE_DIR="evidence"
 REPORT_FILE="${EVIDENCE_DIR}/full-audit-${TIMESTAMP//[:.]/-}.json"
 
-for arg in "$@"; do
-  case "$arg" in
+while [ $# -gt 0 ]; do
+  case "$1" in
     --json)      JSON_OUTPUT=true ;;
     --phase)     shift; PHASE="${1:-0}" ;;
-    --phase=*)   PHASE="${arg#--phase=}" ;;
+    --phase=*)   PHASE="${1#--phase=}" ;;
   esac
+  shift
 done
 
 mkdir -p "$EVIDENCE_DIR"
@@ -99,9 +100,9 @@ if [ "$JSON_OUTPUT" = false ]; then
   echo ""
   echo "=== Phase 2: Skill Audits ==="
 fi
-run_check "run_systematic_review" "skills" "bash scripts/run_systematic_review.sh 2>&1 || true"
-run_check "run_cross_audit" "skills" "bash scripts/run_cross_audit.sh 2>&1 || true"
-run_check "run_fix_verify" "skills" "bash scripts/run_fix_verify.sh 2>&1 || true"
+run_check "run_systematic_review" "skills" "bash scripts/run_systematic_review.sh 2>&1"
+run_check "run_cross_audit" "skills" "bash scripts/run_cross_audit.sh 2>&1"
+run_check "run_fix_verify" "skills" "bash scripts/run_fix_verify.sh 2>&1"
 
 # ============================================================
 # 3. Agent tests
@@ -110,7 +111,7 @@ if [ "$JSON_OUTPUT" = false ]; then
   echo ""
   echo "=== Phase 3: Agent Tests ==="
 fi
-run_check "test_agent_permissions" "agents" "uv run pytest tests/unit/scripts/ -k 'agent' --tb=short -q 2>&1 || true"
+run_check "test_agent_permissions" "agents" "uv run pytest tests/unit/scripts/ -k 'agent' --tb=short -q 2>&1"
 
 # ============================================================
 # 4. Hook tests
