@@ -93,12 +93,14 @@ addopts = [
     "--strict-markers",
     "--tb=short",
 ]
+asyncio_mode = "auto"
 markers = [
     "unit: Unit tests (no external deps)",
     "isolation: Isolation/RLS tests (needs DB)",
     "smoke: Smoke tests (fast subset)",
     "integration: Integration tests (needs services)",
     "e2e: End-to-end tests",
+    "asyncio: Async tests (pytest-asyncio)",
 ]
 
 [tool.coverage.run]
