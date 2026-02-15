@@ -259,6 +259,7 @@ wf_id = sys.argv[1]
 checks = json.loads(sys.argv[2])
 evidence_dir = sys.argv[3]
 json_output = sys.argv[4] == 'true'
+root_dir = sys.argv[5]
 
 os.makedirs(f'{evidence_dir}/{wf_id}', exist_ok=True)
 
@@ -277,7 +278,7 @@ for check in checks:
     try:
         r = subprocess.run(
             cmd, shell=True, capture_output=True, text=True,
-            timeout=120, cwd=os.path.dirname(evidence_dir).rstrip('/v4-phase1') or '.'
+            timeout=120, cwd=root_dir
         )
         if r.returncode == 0:
             results.append({'name': name, 'status': 'pass'})
@@ -307,7 +308,7 @@ if not json_output:
         print(f'    [{icon}] {r[\"name\"]}')
 
 sys.exit(1 if failed_count > 0 else 0)
-" "$wf_id" "$checks_json" "$EVIDENCE_DIR" "$JSON_OUTPUT"
+" "$wf_id" "$checks_json" "$EVIDENCE_DIR" "$JSON_OUTPUT" "$ROOT_DIR"
 }
 
 # --- Dry run ---

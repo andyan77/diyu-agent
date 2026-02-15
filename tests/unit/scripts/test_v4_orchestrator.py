@@ -141,6 +141,16 @@ class TestV4OrchestratorScript:
         """Must use evidence/v4-phase1/ directory."""
         assert "evidence/v4-phase1" in self.text
 
+    def test_cwd_uses_root_dir_not_rstrip(self) -> None:
+        """cwd for subprocess must use ROOT_DIR, not rstrip-based path derivation.
+
+        rstrip('/v4-phase1') on 'evidence/v4-phase1' strips characters
+        (not substring), producing 'evidenc' -- a nonexistent path.
+        """
+        assert "rstrip" not in self.text, "Orchestrator still uses rstrip for cwd calculation"
+        # Must pass ROOT_DIR to the python check runner
+        assert "root_dir" in self.text, "Orchestrator must pass root_dir to check runner"
+
     def test_user_agents_are_optional(self) -> None:
         """User-level agents (/plan, /tdd, code-reviewer) must not be hard deps.
 
