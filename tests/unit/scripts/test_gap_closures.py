@@ -157,8 +157,7 @@ class TestGap4EvidenceDirectoryNaming:
         # Only assert when phase dirs are actually present (local dev).
         # CI creates evidence/<sha> but not the phase-N subdirs.
         phase_dirs = [
-            d for d in EVIDENCE_DIR.iterdir()
-            if d.is_dir() and d.name.startswith("phase-")
+            d for d in EVIDENCE_DIR.iterdir() if d.is_dir() and d.name.startswith("phase-")
         ]
         if not phase_dirs:
             pytest.skip("No phase-* directories present (CI or fresh clone)")
