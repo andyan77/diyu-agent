@@ -11,7 +11,7 @@ See: docs/architecture/01-Brain Section 2.3.1 (MemoryItem)
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -37,7 +37,7 @@ class MemoryItem:
     source_sessions: list[UUID] = field(default_factory=list)
     superseded_by: UUID | None = None
     version: int = 1
-    provenance: dict | None = None
+    provenance: dict[str, Any] | None = None
     epistemic_type: str = "fact"  # fact | opinion | preference | outdated (v3.5.2)
 
 
@@ -70,11 +70,11 @@ class KnowledgeBundle:
     See: 02-Knowledge Section 5.4.1
     """
 
-    entities: dict[str, list[dict]] = field(default_factory=dict)
-    relationships: list[dict] = field(default_factory=list)
-    semantic_contents: list[dict] = field(default_factory=list)
-    media_contents: list[dict] = field(default_factory=list)  # v3.6 optional
-    org_context: dict | None = None
+    entities: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+    relationships: list[dict[str, Any]] = field(default_factory=list)
+    semantic_contents: list[dict[str, Any]] = field(default_factory=list)
+    media_contents: list[dict[str, Any]] = field(default_factory=list)  # v3.6 optional
+    org_context: dict[str, Any] | None = None
     metadata: ResolutionMetadata | None = None
 
 
@@ -89,7 +89,7 @@ class ResolutionMetadata:
     graph_hits: int = 0
     vector_hits: int = 0
     fk_enrichments: int = 0
-    warnings: list[dict] = field(default_factory=list)
+    warnings: list[dict[str, Any]] = field(default_factory=list)
 
 
 # -- Organization context types --
@@ -120,9 +120,9 @@ class OrganizationContext:
     brand_id: UUID | None = None
     role: str = ""
     permissions: frozenset[str] = field(default_factory=frozenset)
-    org_settings: dict | None = None
+    org_settings: dict[str, Any] | None = None
     model_access: ModelAccess | None = None
-    experiment_context: dict | None = None
+    experiment_context: dict[str, Any] | None = None
 
 
 __all__ = [
