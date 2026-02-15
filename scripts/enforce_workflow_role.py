@@ -16,11 +16,10 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 VALID_ROLES = {"W1", "W2", "W3", "W4"}
-UTC = timezone.utc
 
 
 def main() -> None:

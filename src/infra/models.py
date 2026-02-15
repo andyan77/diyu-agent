@@ -13,6 +13,10 @@ See: docs/architecture/00-*.md Section 6 (Infrastructure)
 
 from __future__ import annotations
 
+import uuid as _uuid  # noqa: TC003 -- SQLAlchemy resolves Mapped[] annotations at runtime
+from datetime import datetime  # noqa: TC003
+from typing import Any
+
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
@@ -34,7 +38,7 @@ class Organization(Base):
 
     __tablename__ = "organizations"
 
-    id: Mapped[sa.Uuid] = mapped_column(
+    id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         primary_key=True,
         server_default=_GEN_UUID,
@@ -51,7 +55,7 @@ class Organization(Base):
         nullable=False,
         comment="ltree-style hierarchy path",
     )
-    parent_id: Mapped[sa.Uuid | None] = mapped_column(
+    parent_id: Mapped[_uuid.UUID | None] = mapped_column(
         _UUID,
         sa.ForeignKey("organizations.id"),
         nullable=True,
@@ -61,12 +65,12 @@ class Organization(Base):
         nullable=False,
         server_default=sa.text("true"),
     )
-    created_at: Mapped[sa.DateTime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
     )
-    updated_at: Mapped[sa.DateTime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
@@ -105,7 +109,7 @@ class User(Base):
 
     __tablename__ = "users"
 
-    id: Mapped[sa.Uuid] = mapped_column(
+    id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         primary_key=True,
         server_default=_GEN_UUID,
@@ -117,12 +121,12 @@ class User(Base):
         nullable=False,
         server_default=sa.text("true"),
     )
-    created_at: Mapped[sa.DateTime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
     )
-    updated_at: Mapped[sa.DateTime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
@@ -145,17 +149,17 @@ class OrgMember(Base):
 
     __tablename__ = "org_members"
 
-    id: Mapped[sa.Uuid] = mapped_column(
+    id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         primary_key=True,
         server_default=_GEN_UUID,
     )
-    org_id: Mapped[sa.Uuid] = mapped_column(
+    org_id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         sa.ForeignKey("organizations.id", ondelete="CASCADE"),
         nullable=False,
     )
-    user_id: Mapped[sa.Uuid] = mapped_column(
+    user_id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         sa.ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
@@ -165,7 +169,7 @@ class OrgMember(Base):
         nullable=False,
         server_default="member",
     )
-    permissions: Mapped[dict] = mapped_column(
+    permissions: Mapped[dict[str, Any]] = mapped_column(
         postgresql.JSONB,
         nullable=False,
         server_default=sa.text("'[]'::jsonb"),
@@ -175,12 +179,12 @@ class OrgMember(Base):
         nullable=False,
         server_default=sa.text("true"),
     )
-    created_at: Mapped[sa.DateTime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
     )
-    updated_at: Mapped[sa.DateTime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
@@ -213,23 +217,23 @@ class OrgSettings(Base):
 
     __tablename__ = "org_settings"
 
-    id: Mapped[sa.Uuid] = mapped_column(
+    id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         primary_key=True,
         server_default=_GEN_UUID,
     )
-    org_id: Mapped[sa.Uuid] = mapped_column(
+    org_id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         sa.ForeignKey("organizations.id", ondelete="CASCADE"),
         nullable=False,
         unique=True,
     )
-    settings: Mapped[dict] = mapped_column(
+    settings: Mapped[dict[str, Any]] = mapped_column(
         postgresql.JSONB,
         nullable=False,
         server_default=sa.text("'{}'::jsonb"),
     )
-    model_access: Mapped[dict] = mapped_column(
+    model_access: Mapped[dict[str, Any]] = mapped_column(
         postgresql.JSONB,
         nullable=False,
         server_default=sa.text("'{}'::jsonb"),
@@ -239,7 +243,7 @@ class OrgSettings(Base):
         nullable=False,
         server_default=sa.text("true"),
     )
-    updated_at: Mapped[sa.DateTime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
@@ -265,17 +269,17 @@ class AuditEvent(Base):
 
     __tablename__ = "audit_events"
 
-    id: Mapped[sa.Uuid] = mapped_column(
+    id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         primary_key=True,
         server_default=_GEN_UUID,
     )
-    org_id: Mapped[sa.Uuid] = mapped_column(
+    org_id: Mapped[_uuid.UUID] = mapped_column(
         _UUID,
         sa.ForeignKey("organizations.id", ondelete="CASCADE"),
         nullable=False,
     )
-    user_id: Mapped[sa.Uuid | None] = mapped_column(
+    user_id: Mapped[_uuid.UUID | None] = mapped_column(
         _UUID,
         sa.ForeignKey("users.id", ondelete="SET NULL"),
         nullable=True,
@@ -290,15 +294,15 @@ class AuditEvent(Base):
         nullable=True,
         comment="e.g. organization, user, conversation",
     )
-    resource_id: Mapped[sa.Uuid | None] = mapped_column(_UUID, nullable=True)
-    detail: Mapped[dict] = mapped_column(
+    resource_id: Mapped[_uuid.UUID | None] = mapped_column(_UUID, nullable=True)
+    detail: Mapped[dict[str, Any]] = mapped_column(
         postgresql.JSONB,
         nullable=False,
         server_default=sa.text("'{}'::jsonb"),
     )
     ip_address: Mapped[str | None] = mapped_column(sa.String(45), nullable=True)
     user_agent: Mapped[str | None] = mapped_column(sa.String(512), nullable=True)
-    created_at: Mapped[sa.DateTime] = mapped_column(
+    created_at: Mapped[datetime] = mapped_column(
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=_NOW,
