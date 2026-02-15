@@ -18,15 +18,12 @@ from pathlib import Path
 
 import pytest
 
+from src.shared.rls_tables import PHASE_1_RLS_TABLES
+
 MIGRATIONS_DIR = Path(__file__).resolve().parents[3] / "migrations" / "versions"
 
-# Tables that MUST have RLS enabled (Phase 1 scope)
-PHASE1_RLS_TABLES = [
-    "organizations",
-    "org_members",
-    "org_settings",
-    "audit_events",
-]
+# SSOT: imported from src/shared/rls_tables.py
+PHASE1_RLS_TABLES = PHASE_1_RLS_TABLES
 
 
 def _read_migration_sources() -> str:
