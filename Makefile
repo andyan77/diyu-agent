@@ -1,7 +1,7 @@
 .PHONY: bootstrap doctor lint test test-smoke test-isolation verify-phase-% \
        scaffold-phase-0 scaffold-adr audit-report audit-artifacts audit-e2e \
        full-audit skills-validate skills-smoke check-acceptance-commands \
-       replay-skill-session sbom sbom-json clean help
+       replay-skill-session sbom sbom-json v4-status v4-plan v4-run v4-resume clean help
 
 PYTHON := python3
 SCRIPTS := scripts
@@ -149,6 +149,22 @@ sbom: ## Generate SPDX 2.3 SBOM (delivery/sbom.json)
 
 sbom-json: ## Generate SBOM with JSON status output
 	@bash $(SCRIPTS)/generate_sbom.sh --json
+
+# ============================================================
+# V4 Build Orchestration
+# ============================================================
+
+v4-status: ## Show V4 Phase 1 pipeline status
+	@bash $(SCRIPTS)/run_phase1_v4.sh --status
+
+v4-plan: ## Show V4 execution plan (dry-run)
+	@bash $(SCRIPTS)/run_phase1_v4.sh --dry-run
+
+v4-run: ## Run V4 pipeline (all pending workflows)
+	@bash $(SCRIPTS)/run_phase1_v4.sh --json
+
+v4-resume: ## Resume V4 from last checkpoint
+	@bash $(SCRIPTS)/run_phase1_v4.sh --resume
 
 # ============================================================
 # Utilities
