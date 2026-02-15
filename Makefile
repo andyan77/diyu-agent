@@ -1,7 +1,7 @@
 .PHONY: bootstrap doctor lint test test-smoke test-isolation verify-phase-% \
        scaffold-phase-0 scaffold-adr audit-report audit-artifacts audit-e2e \
        full-audit skills-validate skills-smoke check-acceptance-commands \
-       replay-skill-session clean help
+       replay-skill-session sbom sbom-json clean help
 
 PYTHON := python3
 SCRIPTS := scripts
@@ -139,6 +139,16 @@ skills-smoke: ## Run skills governance test suite
 
 replay-skill-session: ## Replay latest skill session log (or FILE=path for specific)
 	@$(PYTHON) $(SCRIPTS)/skills/replay_skill_session.py $(if $(FILE),--file $(FILE),--latest)
+
+# ============================================================
+# SBOM
+# ============================================================
+
+sbom: ## Generate SPDX 2.3 SBOM (delivery/sbom.json)
+	@bash $(SCRIPTS)/generate_sbom.sh --validate
+
+sbom-json: ## Generate SBOM with JSON status output
+	@bash $(SCRIPTS)/generate_sbom.sh --json
 
 # ============================================================
 # Utilities

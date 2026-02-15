@@ -281,6 +281,8 @@ jobs:
         run: cd frontend && pnpm --filter @diyu/api-client run test
       - name: Acceptance gate (env-dep mapping)
         run: uv run python scripts/check_acceptance_gate.py --json
+      - name: SBOM generation and validation
+        run: bash scripts/generate_sbom.sh --validate
 
   # Impact analysis (consumed by downstream jobs)
   change-impact:
