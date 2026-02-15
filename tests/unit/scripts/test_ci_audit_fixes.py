@@ -307,3 +307,133 @@ class TestM3PromptGuardBlocks:
             f"user_prompt_guard.sh returned {result.returncode} on private key, "
             "expected exit 2 (block)."
         )
+
+
+# ---------------------------------------------------------------------------
+# Batch 1+2 pre-existing CI fixes (mypy, frontend typecheck, gitleaks,
+# audit system check, skills governance)
+# ---------------------------------------------------------------------------
+TYPES_INIT = ROOT / "src" / "shared" / "types" / "__init__.py"
+GITLEAKS_TOML = ROOT / ".gitleaks.toml"
+FE_API_CLIENT_TSCONFIG = ROOT / "frontend" / "packages" / "api-client" / "tsconfig.json"
+FE_SHARED_TSCONFIG = ROOT / "frontend" / "packages" / "shared" / "tsconfig.json"
+SKILLS_VALIDATE = ROOT / "scripts" / "skills" / "validate_skills_governance.py"
+
+
+class TestMypyDictGenericParams:
+    """All dict annotations in types/__init__.py must have generic parameters."""
+
+    def test_no_bare_dict_annotations(self):
+        """mypy strict mode requires dict[K, V], not bare dict."""
+        text = TYPES_INIT.read_text()
+        # Check that there are no bare 'dict' in annotations (quick heuristic)
+        # A bare dict appears as `: dict` or `dict |` without `[` after it
+        lines = text.splitlines()
+        bare_dicts = []
+        for i, line in enumerate(lines, 1):
+            stripped = line.strip()
+            # Skip imports
+            if stripped.startswith(("from ", "import ", "#", '"""', "if ")):
+                continue
+            # Match patterns like `: dict |`, `: dict =`, `list[dict]`
+            import re as _re
+
+            # Bare dict as type annotation (not dict[...])
+            matches = _re.findall(r"\bdict\b(?!\[)", stripped)
+            if matches and "default_factory=dict" not in stripped:
+                bare_dicts.append((i, stripped))
+        assert len(bare_dicts) == 0, (
+            f"Found {len(bare_dicts)} bare dict annotations (need generic params):\n"
+            + "\n".join(f"  L{ln}: {s}" for ln, s in bare_dicts)
+        )
+
+
+class TestFrontendTsconfigLib:
+    """Frontend packages must include 'dom' in tsconfig lib for Vite compatibility."""
+
+    @pytest.mark.parametrize(
+        "tsconfig_path",
+        [FE_API_CLIENT_TSCONFIG, FE_SHARED_TSCONFIG],
+        ids=["api-client", "shared"],
+    )
+    def test_tsconfig_includes_dom_lib(self, tsconfig_path: Path):
+        import json as _json
+
+        config = _json.loads(tsconfig_path.read_text())
+        lib = config.get("compilerOptions", {}).get("lib", [])
+        assert "dom" in [entry.lower() for entry in lib], (
+            f"{tsconfig_path.name} lib={lib} missing 'dom'. "
+            "Vite type definitions require Web Worker globals from 'dom'."
+        )
+
+
+class TestGitleaksConfig:
+    """Gitleaks must have a config file to manage false positives."""
+
+    def test_gitleaks_toml_exists(self):
+        assert GITLEAKS_TOML.exists(), (
+            ".gitleaks.toml missing. Required for managing test fixture false positives."
+        )
+
+    def test_gitleaks_toml_has_allowlist(self):
+        text = GITLEAKS_TOML.read_text()
+        assert "[allowlist]" in text, ".gitleaks.toml must have an [allowlist] section"
+
+    def test_ci_references_gitleaks_config(self, ci_text):
+        """CI gitleaks step must reference config file via GITLEAKS_CONFIG env."""
+        assert "GITLEAKS_CONFIG" in ci_text, (
+            "CI gitleaks step does not reference GITLEAKS_CONFIG. "
+            "Must set env var to pick up .gitleaks.toml."
+        )
+
+
+class TestAuditSystemCheckGraceful:
+    """Audit system check must not hard-fail when evidence/ is missing (gitignored)."""
+
+    def test_audit_check_no_exit_1_on_missing_evidence(self, ci_text):
+        """The audit artifact validation step must not 'exit 1' when evidence is missing."""
+        # Find the audit artifact validation block
+        in_audit_block = False
+        found_graceful = False
+        for line in ci_text.splitlines():
+            if "Run audit artifact validation" in line:
+                in_audit_block = True
+            elif in_audit_block:
+                if line.strip().startswith("- name:"):
+                    break
+                if "exit 1" in line:
+                    pytest.fail(
+                        "Audit artifact validation still has 'exit 1' for missing evidence. "
+                        "Should gracefully skip since evidence/ is gitignored."
+                    )
+                if "warning" in line.lower() or "skip" in line.lower():
+                    found_graceful = True
+        assert found_graceful, (
+            "Audit artifact validation block should emit a warning/skip message "
+            "when evidence is not present."
+        )
+
+
+class TestSkillsValidateCIAware:
+    """skills governance validator must handle CI environment gracefully."""
+
+    def test_validator_imports_os(self):
+        """Validator must import os to check CI environment variable."""
+        text = SKILLS_VALIDATE.read_text()
+        assert "import os" in text, (
+            "validate_skills_governance.py must import os to detect CI environment"
+        )
+
+    def test_validator_checks_ci_env(self):
+        """Validator must check CI environment variable."""
+        text = SKILLS_VALIDATE.read_text()
+        assert 'os.environ.get("CI"' in text or "os.environ.get('CI'" in text, (
+            "validate_skills_governance.py must check CI env var for session-log check"
+        )
+
+    def test_validator_supports_warn_status(self):
+        """check_result must support warn status for CI-only checks."""
+        text = SKILLS_VALIDATE.read_text()
+        assert '"warn"' in text, (
+            "validate_skills_governance.py must support 'warn' status for CI-degraded checks"
+        )

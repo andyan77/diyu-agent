@@ -1,0 +1,12 @@
+# Gitleaks configuration for DIYU Agent
+# See: https://github.com/gitleaks/gitleaks#configuration
+
+title = "DIYU Agent gitleaks config"
+
+[allowlist]
+  description = "Test fixtures containing intentional fake secret patterns"
+  paths = [
+    '''tests/unit/scripts/test_ci_audit_fixes\.py''',
+    '''tests/unit/gateway/test_jwt_auth\.py''',
+    '''frontend/packages/api-client/src/client\.test\.ts''',
+  ]

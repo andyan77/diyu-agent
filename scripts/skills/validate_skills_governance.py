@@ -19,6 +19,7 @@ Exit codes: 0 = all pass, 1 = failures found
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -63,8 +64,14 @@ OPENAI_REQUIRED_FIELDS = [
 ]
 
 
-def check_result(name: str, passed: bool, detail: str = "") -> dict:
-    return {"check": name, "status": "pass" if passed else "fail", "detail": detail}
+def check_result(name: str, passed: bool, detail: str = "", *, warn: bool = False) -> dict:
+    if passed:
+        status = "pass"
+    elif warn:
+        status = "warn"
+    else:
+        status = "fail"
+    return {"check": name, "status": status, "detail": detail}
 
 
 def validate_all() -> list[dict]:
@@ -176,14 +183,21 @@ def validate_all() -> list[dict]:
             )
 
     # 5. Session log replayable
+    # In CI (no .audit/ dir), this is a warning, not a hard failure.
     audit_dir = ROOT / ".audit"
+    is_ci = os.environ.get("CI", "").lower() == "true"
     logs = (
         sorted(audit_dir.glob("skill-session-*.jsonl"), reverse=True) if audit_dir.exists() else []
     )
     has_log = len(logs) > 0
     results.append(
         check_result(
-            "session-log-exists", has_log, str(logs[0]) if has_log else "no logs in .audit/"
+            "session-log-exists",
+            has_log,
+            str(logs[0])
+            if has_log
+            else ("no logs in .audit/ (CI environment)" if is_ci else "no logs in .audit/"),
+            warn=not has_log and is_ci,
         )
     )
     if has_log:
@@ -221,12 +235,14 @@ def main() -> None:
     results = validate_all()
 
     failures = [r for r in results if r["status"] == "fail"]
+    warnings = [r for r in results if r["status"] == "warn"]
     passes = [r for r in results if r["status"] == "pass"]
 
     if as_json:
         output = {
             "total": len(results),
             "passed": len(passes),
+            "warned": len(warnings),
             "failed": len(failures),
             "results": results,
         }
@@ -237,8 +253,17 @@ def main() -> None:
         print("=" * 60)
         print(f"  Total checks: {len(results)}")
         print(f"  Passed:       {len(passes)}")
+        if warnings:
+            print(f"  Warnings:     {len(warnings)}")
         print(f"  Failed:       {len(failures)}")
         print()
+
+        if warnings:
+            print("WARNINGS:")
+            for w in warnings:
+                detail = f" -- {w['detail']}" if w["detail"] else ""
+                print(f"  WARN: {w['check']}{detail}")
+            print()
 
         if failures:
             print("FAILURES:")
@@ -250,6 +275,8 @@ def main() -> None:
         print("=" * 60)
         if failures:
             print(f"  RESULT: FAIL ({len(failures)} checks failed)")
+        elif warnings:
+            print(f"  RESULT: PASS with warnings ({len(warnings)} warnings)")
         else:
             print(f"  RESULT: PASS (all {len(results)} checks passed)")
         print("=" * 60)
