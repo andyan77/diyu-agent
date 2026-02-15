@@ -71,9 +71,7 @@ class TestRBACMiddleware:
         rbac.check_access(
             path="/api/v1/admin/users",
             role=Role.ADMIN,
-            permissions=frozenset(
-                {Permission.READ, Permission.WRITE, Permission.ADMIN_ACCESS}
-            ),
+            permissions=frozenset({Permission.READ, Permission.WRITE, Permission.ADMIN_ACCESS}),
         )
 
     def test_regular_api_allowed_for_member(self, rbac: RBACMiddleware) -> None:

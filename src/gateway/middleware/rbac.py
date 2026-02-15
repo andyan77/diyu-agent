@@ -53,9 +53,8 @@ class RBACMiddleware:
         permissions: frozenset[str],
     ) -> None:
         """Check access. Raises AuthorizationError if denied."""
-        if path.startswith(self._admin_prefix):
-            if Permission.ADMIN_ACCESS not in permissions:
-                raise AuthorizationError(Permission.ADMIN_ACCESS)
+        if path.startswith(self._admin_prefix) and Permission.ADMIN_ACCESS not in permissions:
+            raise AuthorizationError(Permission.ADMIN_ACCESS)
 
     @staticmethod
     def get_role_permissions(role: str) -> frozenset[str]:
