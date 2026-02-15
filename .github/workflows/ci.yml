@@ -52,7 +52,7 @@ jobs:
         run: |
           corepack enable
           cd frontend && pnpm install --frozen-lockfile
-          cd frontend && pnpm audit --audit-level=high
+          pnpm audit --audit-level=high
 
   # L1: Deterministic checks (always run)
   lint-backend:
