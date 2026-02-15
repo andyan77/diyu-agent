@@ -188,9 +188,11 @@ def _check_command(
     if version_output is None:
         return CheckResult(name, "WARN", f"{cmd} found but version check failed", required_phase)
 
-    # Extract version number from output
-    version_str = version_output.split()[-1] if version_output else "unknown"
-    version_clean = version_str.lstrip("v")
+    # Extract version number from output (find first semver-like token)
+    version_clean = "unknown"
+    if version_output:
+        match = re.search(r"v?(\d+\.\d+[\.\d]*)", version_output)
+        version_clean = match.group(1) if match else version_output.split()[-1].lstrip("v")
 
     actual = _parse_version(version_clean)
     required = _parse_version(min_version_prefix)
