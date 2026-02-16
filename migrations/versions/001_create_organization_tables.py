@@ -257,5 +257,7 @@ def _enable_rls(table: str) -> None:
     if table not in _RLS_TABLES:
         msg = f"Unexpected table for RLS: {table}"
         raise ValueError(msg)
-    op.execute(sa.text(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY"))
-    op.execute(sa.text(f"ALTER TABLE {table} FORCE ROW LEVEL SECURITY"))
+    # nosemgrep: python.lang.security.audit.formatted-sql-query.formatted-sql-query, python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query
+    op.execute(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY")
+    # nosemgrep: python.lang.security.audit.formatted-sql-query.formatted-sql-query, python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query
+    op.execute(f"ALTER TABLE {table} FORCE ROW LEVEL SECURITY")
