@@ -117,13 +117,19 @@ class TestC1SecurityGates:
         assert found, "No dependency audit step found in any CI job."
 
     def test_security_job_not_continue_on_error(self, ci_yaml):
-        """Security scanning job must NOT have continue-on-error."""
+        """Security scanning job must NOT have continue-on-error (except SARIF upload)."""
+        # SARIF upload is an optional result upload, not a security gate itself.
+        # It may fail if GitHub Code Scanning is not enabled on the repo.
+        sarif_upload_exceptions = {"Upload SARIF to GitHub Code Scanning"}
         jobs = ci_yaml.get("jobs", {})
         for job_name, job_config in jobs.items():
             if "security" in job_name.lower() or "secret" in job_name.lower():
                 for step in job_config.get("steps", []):
+                    step_name = step.get("name", "")
+                    if step_name in sarif_upload_exceptions:
+                        continue
                     assert step.get("continue-on-error") is not True, (
-                        f"Security job '{job_name}' step '{step.get('name', '')}' "
+                        f"Security job '{job_name}' step '{step_name}' "
                         "has continue-on-error: true. Security gates must block."
                     )
 
