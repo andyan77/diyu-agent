@@ -122,7 +122,7 @@ check_disk "/" 5
 # --- Output ---
 if [ -n "$JSON" ]; then
   printf '{"pass":%d,"fail":%d,"warn":%d,"items":[%s]}\n' \
-    "$PASS" "$FAIL" "$WARN" "$(IFS=,; echo "${RESULTS[*]}")"
+    "$PASS" "$FAIL" "$WARN" "$(printf '%s,' "${RESULTS[@]}" | sed 's/,$//')"
 else
   echo ""
   printf "  Summary: %d PASS, %d FAIL, %d WARN\n" "$PASS" "$FAIL" "$WARN"
