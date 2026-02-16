@@ -16,7 +16,7 @@ bootstrap: ## Install toolchain + dependencies + verify
 	@command -v uv >/dev/null 2>&1          || (echo "NEED: uv (https://docs.astral.sh/uv/)"; exit 1)
 	@command -v node >/dev/null 2>&1        || (echo "NEED: Node.js 22 LTS"; exit 1)
 	@command -v pnpm >/dev/null 2>&1        || (echo "NEED: pnpm (https://pnpm.io/)"; exit 1)
-	uv sync
+	uv sync --dev
 	cd frontend && pnpm install
 	cp -n .env.example .env 2>/dev/null || true
 	@$(MAKE) doctor
