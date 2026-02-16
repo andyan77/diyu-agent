@@ -60,8 +60,9 @@ def _run_check(check_cmd: str) -> CriterionResult:
     """Execute a single check command and return result."""
     start = time.monotonic()
     try:
-        result = subprocess.run(  # noqa: S602 -- check_cmd from trusted YAML config, not user input  # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+        result = subprocess.run(  # noqa: S602
             check_cmd,
+            # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
             shell=True,
             capture_output=True,
             text=True,
