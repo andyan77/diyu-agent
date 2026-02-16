@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # full_audit.sh - Unified audit entry point (Section 12.6)
 #
-# Runs all 7 audit categories:
+# Runs all 8 audit categories:
 #   1. Guards: check_layer_deps, check_port_compat, check_rls
 #   2. Skill audits: run_systematic_review, run_cross_audit, run_fix_verify
 #   3. Agent tests: test_agent_permissions
 #   4. Hook tests: test_hook_behavior
 #   5. Workflow tests: test_workflow_completeness
 #   6. Governance: test_governance_consistency
-#   7. Report aggregation
+#   7. Security: security_scan --full
+#   8. Report aggregation
 #
 # Exit codes: 0 = all pass, 1 = failures found, 2 = critical error
 #
@@ -141,7 +142,16 @@ fi
 run_check "test_governance_consistency" "governance" "uv run pytest tests/unit/scripts/test_governance_consistency.py --tb=short -q"
 
 # ============================================================
-# 7. Report aggregation
+# 7. Security scanning
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 7: Security ==="
+fi
+run_check "security_scan" "security" "bash scripts/security_scan.sh --full"
+
+# ============================================================
+# 8. Report aggregation
 # ============================================================
 OVERALL="pass"
 if [ "$FAILED" -gt 0 ]; then

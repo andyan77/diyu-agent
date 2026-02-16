@@ -195,6 +195,12 @@ phases:
           description: "SPDX SBOM generated and valid"
           check: "bash scripts/generate_sbom.sh --validate"
 
+        - id: "p1-security-scan"
+          description: "Security scan passes (semgrep + pip-audit)"
+          # Phase Gate = local verification supplement.
+          # Merge blocking relies on CI required check ("L1: Security Scan").
+          check: "bash scripts/security_scan.sh --full"
+
       soft: []
 
     go_no_go:

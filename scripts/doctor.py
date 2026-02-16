@@ -277,6 +277,10 @@ def run_doctor() -> DoctorReport:
     report.results.append(_check_service("PostgreSQL", "localhost", 5432, 1))
     report.results.append(_check_service("Redis", "localhost", 6379, 1))
 
+    # Phase 1+: Security tooling (WARN if missing, CI will catch)
+    report.results.append(_check_command("semgrep", "semgrep", ["--version"], "1", 1))
+    report.results.append(_check_command("gitleaks", "gitleaks", ["version"], "8", 1))
+
     # Phase 2+: Optional tooling
     report.results.append(_check_command("gh (GitHub CLI)", "gh", ["--version"], "2", 2))
 

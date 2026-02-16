@@ -66,7 +66,7 @@ def _run_check(check_cmd: str) -> CriterionResult:
             shell=True,
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=180,
             cwd=Path.cwd(),
         )
         duration_ms = int((time.monotonic() - start) * 1000)

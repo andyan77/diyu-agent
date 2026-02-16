@@ -105,6 +105,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v4
       - run: uv sync --dev --frozen
+      - name: Install semgrep (required by p1-security-scan criterion)
+        run: uv tool install semgrep
       - name: Phase gate verification
         run: |
           mkdir -p ${{ env.EVIDENCE_DIR }}
