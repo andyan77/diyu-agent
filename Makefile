@@ -1,7 +1,7 @@
 .PHONY: bootstrap doctor lint test test-smoke test-isolation verify-phase-% \
        scaffold-phase-0 scaffold-adr audit-report audit-artifacts audit-e2e \
        full-audit skills-validate skills-smoke check-acceptance-commands \
-       replay-skill-session clean help
+       replay-skill-session sbom sbom-json v4-status v4-plan v4-run v4-resume clean help
 
 PYTHON := python3
 SCRIPTS := scripts
@@ -16,7 +16,7 @@ bootstrap: ## Install toolchain + dependencies + verify
 	@command -v uv >/dev/null 2>&1          || (echo "NEED: uv (https://docs.astral.sh/uv/)"; exit 1)
 	@command -v node >/dev/null 2>&1        || (echo "NEED: Node.js 22 LTS"; exit 1)
 	@command -v pnpm >/dev/null 2>&1        || (echo "NEED: pnpm (https://pnpm.io/)"; exit 1)
-	uv sync
+	uv sync --dev
 	cd frontend && pnpm install
 	cp -n .env.example .env 2>/dev/null || true
 	@$(MAKE) doctor
@@ -139,6 +139,49 @@ skills-smoke: ## Run skills governance test suite
 
 replay-skill-session: ## Replay latest skill session log (or FILE=path for specific)
 	@$(PYTHON) $(SCRIPTS)/skills/replay_skill_session.py $(if $(FILE),--file $(FILE),--latest)
+
+# ============================================================
+# SBOM
+# ============================================================
+
+sbom: ## Generate SPDX 2.3 SBOM (delivery/sbom.json)
+	@bash $(SCRIPTS)/generate_sbom.sh --validate
+
+sbom-json: ## Generate SBOM with JSON status output
+	@bash $(SCRIPTS)/generate_sbom.sh --json
+
+# ============================================================
+# V4 Build Orchestration
+# ============================================================
+
+v4-status: ## Show V4 Phase 1 pipeline status
+	@bash $(SCRIPTS)/run_phase1_v4.sh --status
+
+v4-plan: ## Show V4 execution plan (dry-run)
+	@bash $(SCRIPTS)/run_phase1_v4.sh --dry-run
+
+v4-run: ## Run V4 pipeline (all pending workflows)
+	@bash $(SCRIPTS)/run_phase1_v4.sh --json
+
+v4-resume: ## Resume V4 from last checkpoint
+	@bash $(SCRIPTS)/run_phase1_v4.sh --resume
+
+# ============================================================
+# Security Scanning (I1-7, D1-1)
+# ============================================================
+
+security-scan: ## Run gitleaks + bandit/semgrep + pip-audit (local)
+	@echo "=== Secret Scanning (gitleaks) ==="
+	gitleaks detect --source . --no-git || echo "WARN: gitleaks not installed (CI will run it)"
+	@echo "=== SAST (bandit) ==="
+	uv run bandit -r src/ -q || echo "WARN: bandit not installed (CI runs semgrep)"
+	@echo "=== Dependency Audit (pip-audit) ==="
+	uv run pip-audit || echo "WARN: pip-audit not installed"
+
+image-scan: ## Scan Docker images with trivy (D1-1)
+	@echo "=== Container Image Scan (trivy) ==="
+	trivy image --exit-code 0 --severity HIGH,CRITICAL diyu-agent:latest || \
+		echo "WARN: trivy not installed or image not built (CI soft gate)"
 
 # ============================================================
 # Utilities

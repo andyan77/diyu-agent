@@ -476,6 +476,25 @@ evidence/
 | 环境诊断 | `scripts/doctor.py` | `make doctor` 实现 |
 | Phase 验收 | `scripts/verify_phase.py` | `make verify-phase-N` 实现 |
 
+### E.1.1 技术决策: Python 依赖管理分层
+
+> ADR-E1: `[dependency-groups]` vs `[project.optional-dependencies]`
+> Date: 2026-02-15
+> Status: Decided
+
+**决策:** 开发依赖使用 PEP 735 `[dependency-groups]`，可选功能依赖使用 `[project.optional-dependencies]`。
+
+| 类别 | pyproject.toml Section | 安装命令 | 示例 |
+|------|----------------------|---------|------|
+| 核心运行依赖 | `[project] dependencies` | `uv sync` | fastapi, sqlalchemy, pydantic |
+| 开发工具依赖 | `[dependency-groups] dev` | `uv sync --dev` | pytest, ruff, mypy, pip-audit |
+| 可选功能依赖 | `[project.optional-dependencies]` | `uv sync --extra vector` | pgvector |
+
+**理由:** `uv sync --dev` 映射到 `[dependency-groups] dev`，而非 `[project.optional-dependencies] dev`。
+混用会导致 CI 环境中 dev 工具未安装（`uv sync --dev --frozen` 找不到 dev 组），本地环境因缓存而不暴露问题。
+
+**CI 约束:** 所有 CI job 使用 `uv sync --dev --frozen`，`--frozen` 禁止修改锁文件，`--dev` 安装开发依赖组。
+
 ### E.2 里程碑矩阵 YAML (已落盘)
 
 | 产出 | 路径 | 说明 |

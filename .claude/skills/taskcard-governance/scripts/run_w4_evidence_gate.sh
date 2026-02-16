@@ -26,7 +26,7 @@ cat > "$OUT_DIR/input.json" <<INPUTEOF
 {
   "workflow": "W4",
   "session_id": "$SESSION_ID",
-  "scope": "Full phase gate: schema + traceability + acceptance + evidence",
+  "scope": "Phase gate: schema + inventory + layer boundary + port compat + migration safety",
   "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 }
 INPUTEOF
@@ -125,7 +125,11 @@ layer_fails = results.get('layer_boundary', {}).get('count', 0)
 port_fails = results.get('port_compat', {}).get('count', 0)
 migration_fails = results.get('migration_safety', {}).get('count', 0)
 
-overall = 'pass' if (blocks == 0 and layer_fails == 0 and port_fails == 0 and migration_fails == 0) else 'fail'
+# Detect sub-check errors (exception caught -> dict has 'error' key but no summary)
+check_keys = ['schema', 'inventory', 'layer_boundary', 'port_compat', 'migration_safety']
+has_errors = any('error' in results.get(k, {}) for k in check_keys)
+
+overall = 'fail' if (has_errors or blocks > 0 or layer_fails > 0 or port_fails > 0 or migration_fails > 0) else 'pass'
 
 gate_report = {
     'session_id': '$SESSION_ID',
@@ -135,14 +139,15 @@ gate_report = {
         'schema_blocks': blocks,
         'layer_violations': layer_fails,
         'port_breaking_changes': port_fails,
-        'migration_violations': migration_fails
+        'migration_violations': migration_fails,
+        'sub_check_errors': has_errors
     }
 }
 
 with open('$RESULT_FILE', 'w') as f:
     json.dump(gate_report, f, indent=2, ensure_ascii=False)
 
-print(json.dumps({'status': overall, 'blocks': blocks, 'layer': layer_fails, 'port': port_fails, 'migration': migration_fails}))
+print(json.dumps({'status': overall, 'blocks': blocks, 'layer': layer_fails, 'port': port_fails, 'migration': migration_fails, 'sub_check_errors': has_errors}))
 sys.exit(0 if overall == 'pass' else 1)
 " 2>"$OUT_DIR/stderr.log"
 

@@ -437,3 +437,97 @@ class TestSkillsValidateCIAware:
         assert '"warn"' in text, (
             "validate_skills_governance.py must support 'warn' status for CI-degraded checks"
         )
+
+
+# ---------------------------------------------------------------------------
+# Governance sync: Makefile bootstrap, dependency-groups documentation
+# ---------------------------------------------------------------------------
+MAKEFILE = ROOT / "Makefile"
+PYPROJECT = ROOT / "pyproject.toml"
+EXECUTION_PLAN = ROOT / "docs" / "governance" / "execution-plan-v1.0.md"
+
+
+class TestMakefileBootstrapDevDeps:
+    """Makefile bootstrap must install dev dependencies via uv sync --dev."""
+
+    def test_bootstrap_uses_uv_sync_dev(self):
+        """make bootstrap must run 'uv sync --dev' not bare 'uv sync'."""
+        text = MAKEFILE.read_text()
+        # Find the bootstrap target block
+        in_bootstrap = False
+        found_dev = False
+        for line in text.splitlines():
+            if line.startswith("bootstrap:"):
+                in_bootstrap = True
+                continue
+            if in_bootstrap:
+                if not line.startswith("\t") and line.strip():
+                    break
+                if "uv sync" in line:
+                    found_dev = "--dev" in line
+                    break
+        assert found_dev, (
+            "Makefile bootstrap 'uv sync' must include --dev flag. "
+            "Without it, [dependency-groups] dev deps are not installed."
+        )
+
+
+class TestDependencyGroupsConfig:
+    """pyproject.toml must use [dependency-groups] for dev deps."""
+
+    def test_dependency_groups_dev_exists(self):
+        """[dependency-groups] dev section must exist in pyproject.toml."""
+        text = PYPROJECT.read_text()
+        assert "[dependency-groups]" in text, (
+            "pyproject.toml missing [dependency-groups]. "
+            "PEP 735 dependency groups required for 'uv sync --dev'."
+        )
+
+    def test_optional_deps_no_dev(self):
+        """[project.optional-dependencies] must NOT have a 'dev' key."""
+        text = PYPROJECT.read_text()
+        # Check that optional-dependencies section doesn't contain dev
+        in_optional = False
+        for line in text.splitlines():
+            if line.strip() == "[project.optional-dependencies]":
+                in_optional = True
+                continue
+            if in_optional:
+                if line.strip().startswith("["):
+                    break
+                if line.strip().startswith("dev"):
+                    pytest.fail(
+                        "pyproject.toml has 'dev' in [project.optional-dependencies]. "
+                        "Dev deps must be in [dependency-groups] for 'uv sync --dev' to work."
+                    )
+
+    def test_dev_group_has_core_tools(self):
+        """[dependency-groups] dev must include pytest, ruff, mypy."""
+        text = PYPROJECT.read_text()
+        in_dev = False
+        dev_content = ""
+        for line in text.splitlines():
+            if line.strip() == "dev = [":
+                in_dev = True
+                continue
+            if in_dev:
+                if line.strip() == "]":
+                    break
+                dev_content += line
+        for tool in ("pytest", "ruff", "mypy"):
+            assert tool in dev_content, (
+                f"[dependency-groups] dev missing '{tool}'. "
+                "Core dev tools must be in dependency-groups."
+            )
+
+
+class TestDependencyGroupsDocumented:
+    """execution-plan must document the [dependency-groups] technical decision."""
+
+    def test_execution_plan_has_adr_e1(self):
+        """execution-plan-v1.0.md must contain ADR-E1 dependency-groups decision."""
+        text = EXECUTION_PLAN.read_text()
+        assert "dependency-groups" in text and "optional-dependencies" in text, (
+            "execution-plan-v1.0.md must document the [dependency-groups] vs "
+            "[project.optional-dependencies] technical decision (ADR-E1)."
+        )
