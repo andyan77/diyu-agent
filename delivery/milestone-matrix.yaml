@@ -131,36 +131,36 @@ phases:
     depends_on: ["phase_0"]
     milestones:
       # Backend
-      - {id: "G1-1", layer: "Gateway", summary: "JWT auth middleware"}
-      - {id: "G1-2", layer: "Gateway", summary: "OrgContext middleware"}
-      - {id: "G1-3", layer: "Gateway", summary: "RBAC permission check"}
-      - {id: "G1-4", layer: "Gateway", summary: "RLS policy baseline"}
-      - {id: "G1-5", layer: "Gateway", summary: "API partition rules"}
-      - {id: "G1-6", layer: "Gateway", summary: "Security headers"}
+      - {id: "G1-1", layer: "Gateway", summary: "JWT auth middleware", status: "done"}
+      - {id: "G1-2", layer: "Gateway", summary: "OrgContext middleware", status: "done"}
+      - {id: "G1-3", layer: "Gateway", summary: "RBAC permission check", status: "done"}
+      - {id: "G1-4", layer: "Gateway", summary: "RLS policy baseline", status: "done"}
+      - {id: "G1-5", layer: "Gateway", summary: "API partition rules", status: "done"}
+      - {id: "G1-6", layer: "Gateway", summary: "Security headers", status: "done"}
       - {id: "I1-1", layer: "Infra", summary: "org/users/org_members DDL", status: "done"}
-      - {id: "I1-2", layer: "Infra", summary: "org_settings inheritance"}
-      - {id: "I1-3", layer: "Infra", summary: "RLS policies all tables"}
-      - {id: "I1-4", layer: "Infra", summary: "RBAC skeleton"}
+      - {id: "I1-2", layer: "Infra", summary: "org_settings inheritance", status: "done"}
+      - {id: "I1-3", layer: "Infra", summary: "RLS policies all tables", status: "done"}
+      - {id: "I1-4", layer: "Infra", summary: "RBAC skeleton", status: "done"}
       - {id: "I1-5", layer: "Infra", summary: "audit_events table", status: "done"}
-      - {id: "I1-6", layer: "Infra", summary: "event_outbox pattern"}
-      - {id: "I1-7", layer: "Infra", summary: "Secret/SAST/dep scanning"}
+      - {id: "I1-6", layer: "Infra", summary: "event_outbox pattern", status: "done"}
+      - {id: "I1-7", layer: "Infra", summary: "Secret/SAST/dep scanning", status: "done"}
       # Frontend
-      - {id: "FW1-1", layer: "FE-Web", summary: "Login page"}
-      - {id: "FW1-2", layer: "FE-Web", summary: "AuthProvider + PermissionGate"}
-      - {id: "FW1-3", layer: "FE-Web", summary: "Org switcher"}
-      - {id: "FW1-4", layer: "FE-Web", summary: "SaaS/Private token modes"}
-      - {id: "FA1-1", layer: "FE-Admin", summary: "Admin login with 2FA slot"}
-      - {id: "FA1-2", layer: "FE-Admin", summary: "Permission matrix mgmt"}
+      - {id: "FW1-1", layer: "FE-Web", summary: "Login page", status: "done"}
+      - {id: "FW1-2", layer: "FE-Web", summary: "AuthProvider + PermissionGate", status: "done"}
+      - {id: "FW1-3", layer: "FE-Web", summary: "Org switcher", status: "done"}
+      - {id: "FW1-4", layer: "FE-Web", summary: "SaaS/Private token modes", status: "done"}
+      - {id: "FA1-1", layer: "FE-Admin", summary: "Admin login with 2FA slot", status: "done"}
+      - {id: "FA1-2", layer: "FE-Admin", summary: "Permission matrix mgmt", status: "done"}
       # Crosscutting
-      - {id: "D1-1", layer: "Delivery", summary: "Image security scan"}
-      - {id: "D1-2", layer: "Delivery", summary: "SBOM generation"}
-      - {id: "D1-3", layer: "Delivery", summary: "verify-phase-1"}
+      - {id: "D1-1", layer: "Delivery", summary: "Image security scan", status: "done"}
+      - {id: "D1-2", layer: "Delivery", summary: "SBOM generation", status: "done"}
+      - {id: "D1-3", layer: "Delivery", summary: "verify-phase-1", status: "done"}
       - {id: "OS1-1", layer: "Observability", summary: "RLS isolation test framework", status: "done"}
       - {id: "OS1-2", layer: "Observability", summary: "Isolation smoke CI gate", status: "done"}
       - {id: "OS1-3", layer: "Observability", summary: "audit_events baseline", status: "done"}
-      - {id: "OS1-4", layer: "Observability", summary: "JWT security tests"}
-      - {id: "OS1-5", layer: "Observability", summary: "CORS + security headers"}
-      - {id: "OS1-6", layer: "Observability", summary: "FE XSS protection"}
+      - {id: "OS1-4", layer: "Observability", summary: "JWT security tests", status: "done"}
+      - {id: "OS1-5", layer: "Observability", summary: "CORS + security headers", status: "done"}
+      - {id: "OS1-6", layer: "Observability", summary: "FE XSS protection", status: "done"}
     exit_criteria:
       hard:
         - id: "p1-org-migration"

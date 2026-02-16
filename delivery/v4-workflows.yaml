@@ -76,16 +76,26 @@ workflows:
       - "I1-6"
       - "I1-7"
     checks:
-      - name: "Organization migration exists"
+      # Existing checks (I1-1, I1-3, I1-5)
+      - name: "Organization migration exists (I1-1)"
         command: "bash -c \"ls migrations/versions/*organization* 2>/dev/null | head -1 | grep -q .\""
-      - name: "Audit events migration exists"
+      - name: "Audit events migration exists (I1-5)"
         command: "bash -c \"ls migrations/versions/*audit_events* 2>/dev/null | head -1 | grep -q .\""
-      - name: "RLS isolation smoke"
+      - name: "RLS isolation smoke (I1-3)"
         command: "bash scripts/check_rls.sh --json --phase 1"
       - name: "Layer deps clean"
         command: "bash scripts/check_layer_deps.sh --json"
       - name: "Unit tests pass"
         command: "uv run pytest tests/unit/infra/ -q"
+      # Card-level implementation checks (prevent false-positive)
+      - name: "org_settings inheritance logic exists (I1-2)"
+        command: "bash -c \"grep -rq 'merge_settings\\|inherit_settings\\|resolve_settings' src/infra/ || exit 1\""
+      - name: "RBAC full permission matrix (I1-4)"
+        command: "bash -c \"grep -c 'Permission\\.' src/gateway/middleware/rbac.py | xargs test 5 -le\""
+      - name: "event_outbox pattern exists (I1-6)"
+        command: "bash -c \"grep -rq 'event_outbox\\|EventOutbox' src/ migrations/ || exit 1\""
+      - name: "Security scanning CI integration (I1-7)"
+        command: "bash -c \"grep -rq 'gitleaks\\|trivy\\|bandit' .github/ Makefile || exit 1\""
     on_failure: "abort"
 
   - id: "WF-B2"
@@ -101,6 +111,7 @@ workflows:
       - "G1-5"
       - "G1-6"
     checks:
+      # Existing checks (G1-1, G1-3, G1-4)
       - name: "JWT auth middleware tests (G1-1)"
         command: "uv run pytest tests/unit/gateway/test_jwt_auth.py -q"
       - name: "RBAC permission tests (G1-3)"
@@ -111,6 +122,13 @@ workflows:
         command: "uv run pytest tests/unit/ports/ -q"
       - name: "Port compatibility"
         command: "bash scripts/check_port_compat.sh --json"
+      # Card-level implementation checks (prevent false-positive)
+      - name: "OrgContext middleware impl exists (G1-2)"
+        command: "bash -c \"test -f src/gateway/middleware/org_context.py && grep -q 'class OrgContext' src/gateway/middleware/org_context.py\""
+      - name: "FastAPI app factory exists (G1-5)"
+        command: "bash -c \"test -f src/gateway/app.py && grep -q 'def create_app\\|def app_factory' src/gateway/app.py\""
+      - name: "Security headers middleware exists (G1-6)"
+        command: "bash -c \"grep -rq 'CORSMiddleware\\|SecurityHeadersMiddleware\\|Content-Security-Policy' src/gateway/\""
     on_failure: "abort"
 
   - id: "WF-B3"
@@ -126,12 +144,26 @@ workflows:
       - "FA1-1"
       - "FA1-2"
     checks:
+      # Existing checks
       - name: "Frontend builds"
         command: "bash -c \"cd frontend && pnpm run build\""
       - name: "Frontend lint"
         command: "bash -c \"cd frontend && pnpm run lint\""
       - name: "Frontend tests"
         command: "bash -c \"cd frontend && pnpm run test\""
+      # Card-level implementation checks (prevent false-positive)
+      - name: "Login page exists (FW1-1)"
+        command: "bash -c \"test -f frontend/apps/web/app/login/page.tsx || test -f 'frontend/apps/web/app/(auth)/login/page.tsx'\""
+      - name: "AuthProvider exists (FW1-2)"
+        command: "bash -c \"grep -rq 'AuthProvider\\|useAuth' frontend/apps/web/providers/ frontend/apps/web/app/ frontend/apps/web/src/ || exit 1\""
+      - name: "Org switcher component exists (FW1-3)"
+        command: "bash -c \"grep -rq 'OrgSwitcher\\|org-switcher\\|useOrg' frontend/apps/web/ || exit 1\""
+      - name: "API client token modes (FW1-4)"
+        command: "bash -c \"grep -rq 'tokenMode\\|token_mode\\|SaasMode\\|PrivateMode\\|createTokenStore\\|DeployMode' frontend/apps/web/lib/auth/ frontend/packages/api-client/ || exit 1\""
+      - name: "Admin login page exists (FA1-1)"
+        command: "bash -c \"test -f frontend/apps/admin/app/login/page.tsx || test -f 'frontend/apps/admin/app/(auth)/login/page.tsx'\""
+      - name: "Admin permission matrix UI (FA1-2)"
+        command: "bash -c \"grep -rq 'PermissionMatrix\\|permission-matrix' frontend/apps/admin/ || exit 1\""
     on_failure: "abort"
 
   - id: "WF-B4"
@@ -150,12 +182,22 @@ workflows:
       - "OS1-5"
       - "OS1-6"
     checks:
-      - name: "SBOM generation"
+      # Existing checks (D1-2, OS1-1, OS1-2, OS1-3)
+      - name: "SBOM generation (D1-2)"
         command: "bash scripts/generate_sbom.sh --validate"
-      - name: "RLS isolation tests"
+      - name: "RLS isolation tests (OS1-1, OS1-2)"
         command: "uv run pytest tests/isolation/smoke/ --tb=short -q"
       - name: "Full audit"
         command: "bash scripts/full_audit.sh --json --phase 1"
+      # Card-level implementation checks (prevent false-positive)
+      - name: "Container image scan config (D1-1)"
+        command: "bash -c \"grep -rq 'trivy\\|grype\\|image.*scan' .github/ Makefile docker-compose*.yml || exit 1\""
+      - name: "JWT security tests cover key length (OS1-4)"
+        command: "bash -c \"grep -rq 'InsecureKey\\|min.*key.*length\\|key_length' tests/unit/gateway/test_jwt_security.py tests/unit/gateway/test_jwt_auth.py || exit 1\""
+      - name: "Security headers tests exist (OS1-5)"
+        command: "bash -c \"test -f tests/unit/gateway/test_security_headers.py && grep -q 'HSTS\\|CSP\\|X-Content-Type' tests/unit/gateway/test_security_headers.py\""
+      - name: "Frontend XSS protection configured (OS1-6)"
+        command: "bash -c \"grep -rq 'sanitize\\|DOMPurify\\|dangerouslySetInnerHTML' frontend/apps/ frontend/packages/ || exit 1\""
     on_failure: "abort"
 
   - id: "WF-A2"

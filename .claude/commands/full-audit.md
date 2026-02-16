@@ -1,3 +1,8 @@
+---
+description: Run full unified audit for DIYU Agent (Section 12.6). Executes guard scripts, skill audits, agent/hook/workflow tests, and governance checks.
+allowed-tools: ["Bash", "Read", "Grep", "Glob"]
+---
+
 Run the full unified audit for DIYU Agent (Section 12.6).
 
 Execute `make full-audit` which runs:

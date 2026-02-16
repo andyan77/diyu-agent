@@ -1,3 +1,8 @@
+---
+description: Execute V4 Phase 1 build pipeline (Security & Tenant Foundation). Supports --status, --dry-run, --resume, --wf WF-XX.
+allowed-tools: ["Bash", "Read", "Write", "Edit", "Grep", "Glob"]
+---
+
 # Phase 1 Build Orchestrator
 
 Execute V4 Phase 1 ("Security & Tenant Foundation") build pipeline.

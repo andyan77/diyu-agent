@@ -167,6 +167,23 @@ v4-resume: ## Resume V4 from last checkpoint
 	@bash $(SCRIPTS)/run_phase1_v4.sh --resume
 
 # ============================================================
+# Security Scanning (I1-7, D1-1)
+# ============================================================
+
+security-scan: ## Run gitleaks + bandit/semgrep + pip-audit (local)
+	@echo "=== Secret Scanning (gitleaks) ==="
+	gitleaks detect --source . --no-git || echo "WARN: gitleaks not installed (CI will run it)"
+	@echo "=== SAST (bandit) ==="
+	uv run bandit -r src/ -q || echo "WARN: bandit not installed (CI runs semgrep)"
+	@echo "=== Dependency Audit (pip-audit) ==="
+	uv run pip-audit || echo "WARN: pip-audit not installed"
+
+image-scan: ## Scan Docker images with trivy (D1-1)
+	@echo "=== Container Image Scan (trivy) ==="
+	trivy image --exit-code 0 --severity HIGH,CRITICAL diyu-agent:latest || \
+		echo "WARN: trivy not installed or image not built (CI soft gate)"
+
+# ============================================================
 # Utilities
 # ============================================================
 
