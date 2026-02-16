@@ -12,10 +12,11 @@ ADR-029: API partition for clear permission boundaries + independent rate limiti
 from __future__ import annotations
 
 import os
+from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 
 from src.gateway.middleware.auth import JWTAuthMiddleware, TokenPayload, decode_token
 from src.gateway.middleware.security_headers import (
@@ -134,11 +135,11 @@ def create_app(
     # -- Auth middleware (ASGI) --
 
     @app.middleware("http")
-    async def jwt_auth_middleware(request: Request, call_next):
+    async def jwt_auth_middleware(request: Request, call_next: Any) -> Response:
         path = request.url.path
 
         # Security headers applied to ALL responses
-        def _add_security_headers(response):
+        def _add_security_headers(response: Response) -> Response:
             for name, value in _sec_headers.get_headers().items():
                 response.headers[name] = value
             return response
@@ -183,13 +184,13 @@ def create_app(
     # -- Exempt routes --
 
     @app.get("/healthz", tags=["system"])
-    async def healthz():
+    async def healthz() -> dict[str, str]:
         return {"status": "ok"}
 
     # -- User API: /api/v1/* --
 
     @app.get("/api/v1/me", tags=["user"])
-    async def get_me(request: Request):
+    async def get_me(request: Request) -> dict[str, str]:
         """Return current authenticated user info."""
         return {
             "user_id": str(request.state.user_id),
@@ -199,7 +200,7 @@ def create_app(
     # -- Admin API: /api/v1/admin/* --
 
     @app.get("/api/v1/admin/status", tags=["admin"])
-    async def admin_status(request: Request):
+    async def admin_status(request: Request) -> dict[str, object]:
         """Admin-only system status endpoint."""
         return {
             "status": "ok",
