@@ -20,6 +20,7 @@ DRY_RUN=false
 JSON_OUTPUT=false
 VIOLATIONS=0
 VIOLATION_LIST=""
+VIOLATION_JSON="[]"
 
 for arg in "$@"; do
   case "$arg" in
@@ -54,6 +55,12 @@ add_violation() {
   local detail="$3"
   VIOLATIONS=$((VIOLATIONS + 1))
   VIOLATION_LIST="${VIOLATION_LIST}  [$rule] $file: $detail\n"
+  VIOLATION_JSON=$(python3 -c "
+import json,sys
+v=json.loads(sys.argv[1])
+v.append({'file':sys.argv[2],'rule':sys.argv[3],'detail':sys.argv[4]})
+print(json.dumps(v))
+" "$VIOLATION_JSON" "$file" "$rule" "$detail" 2>/dev/null || echo "$VIOLATION_JSON")
 }
 
 # Check each migration file
@@ -106,7 +113,7 @@ if [ "$JSON_OUTPUT" = true ]; then
   if [ "$VIOLATIONS" -eq 0 ]; then
     echo '{"status":"pass","violations":[],"count":0}'
   else
-    echo "{\"status\":\"fail\",\"count\":$VIOLATIONS,\"message\":\"$VIOLATIONS migration safety violation(s)\"}"
+    echo "{\"status\":\"fail\",\"count\":$VIOLATIONS,\"violations\":$VIOLATION_JSON}"
   fi
 else
   if [ "$VIOLATIONS" -eq 0 ]; then

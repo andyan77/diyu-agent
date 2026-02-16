@@ -1,0 +1,207 @@
+# V4 Phase 1 Build Orchestration Workflows
+# Machine-readable definitions for the 7-WF pipeline.
+#
+# Architecture:
+#   WF-P0 (prereq) -> WF-A1 (gate entry) -> WF-B{1..4} (build) -> WF-A2 (gate exit)
+#
+# Relation to existing governance pipeline (W1-W4 in taskcard-governance):
+#   W1-W4 is a VALIDATION pipeline (schema + traceability + acceptance + evidence gate).
+#   WF-P0~A2 is a BUILD pipeline (fix + validate + implement + verify).
+#   WF-A1 and WF-A2 invoke the W1-W4 governance pipeline as part of their checks.
+#
+# User-level agents (/plan, /tdd, code-reviewer, etc.) are optional enhancements.
+# The pipeline MUST work without them. When available, they improve quality.
+
+schema_version: "1.0"
+phase: "phase_1"
+phase_name: "Security & Tenant Foundation"
+
+# Evidence root for all V4 artifacts
+evidence_root: "evidence/v4-phase1"
+
+# Checkpoint file for resume support
+checkpoint_file: "evidence/v4-phase1/checkpoint.json"
+
+workflows:
+  - id: "WF-P0"
+    name: "Prerequisite Fixes"
+    description: "Fix audit-identified guard script bugs before any Phase 1 implementation"
+    depends_on: []
+    task_cards:
+      - "P0.1"
+      - "P0.2"
+      - "P0.3"
+      - "P0.4"
+      - "P0.5"
+      - "P0.6"
+    checks:
+      - name: "Guard scripts pass"
+        command: "bash scripts/check_layer_deps.sh --json"
+      - name: "RLS check passes"
+        command: "bash scripts/check_rls.sh --json --phase 1"
+      - name: "Migration check passes"
+        command: "bash scripts/check_migration.sh --json"
+      - name: "Unit tests pass"
+        command: "uv run pytest tests/unit/scripts/test_p0_guard_fixes.py -q"
+    on_failure: "abort"
+
+  - id: "WF-A1"
+    name: "Gate Entry"
+    description: "Validate Phase 0 complete, Phase 1 cards ready, risk assessment"
+    depends_on:
+      - "WF-P0"
+    task_cards: []
+    checks:
+      - name: "Phase 0 gate passed"
+        command: "uv run python scripts/verify_phase.py --phase 0 --json"
+      - name: "Governance pipeline (W1-W4)"
+        command: "bash .claude/skills/taskcard-governance/scripts/run_all.sh"
+      - name: "Task card schema valid"
+        command: "uv run python scripts/check_task_schema.py --mode full --json"
+      - name: "Milestone matrix parseable"
+        command: "uv run python -c \"import yaml; yaml.safe_load(open('delivery/milestone-matrix.yaml'))\""
+    on_failure: "abort"
+
+  - id: "WF-B1"
+    name: "Infrastructure Implementation"
+    description: "Database models, migrations, RLS policies, audit events, event outbox"
+    depends_on:
+      - "WF-A1"
+    task_cards:
+      - "I1-1"
+      - "I1-2"
+      - "I1-3"
+      - "I1-4"
+      - "I1-5"
+      - "I1-6"
+      - "I1-7"
+    checks:
+      - name: "Organization migration exists"
+        command: "bash -c \"ls migrations/versions/*organization* 2>/dev/null | head -1 | grep -q .\""
+      - name: "Audit events migration exists"
+        command: "bash -c \"ls migrations/versions/*audit_events* 2>/dev/null | head -1 | grep -q .\""
+      - name: "RLS isolation smoke"
+        command: "bash scripts/check_rls.sh --json --phase 1"
+      - name: "Layer deps clean"
+        command: "bash scripts/check_layer_deps.sh --json"
+      - name: "Unit tests pass"
+        command: "uv run pytest tests/unit/infra/ -q"
+    on_failure: "abort"
+
+  - id: "WF-B2"
+    name: "Gateway Implementation"
+    description: "JWT auth, OrgContext, RBAC, RLS policy enforcement, security headers"
+    depends_on:
+      - "WF-A1"
+    task_cards:
+      - "G1-1"
+      - "G1-2"
+      - "G1-3"
+      - "G1-4"
+      - "G1-5"
+      - "G1-6"
+    checks:
+      - name: "JWT auth middleware tests (G1-1)"
+        command: "uv run pytest tests/unit/gateway/test_jwt_auth.py -q"
+      - name: "RBAC permission tests (G1-3)"
+        command: "uv run pytest tests/unit/gateway/test_rbac.py -q"
+      - name: "Gateway auth tests (all)"
+        command: "uv run pytest tests/unit/gateway/ -q"
+      - name: "Port contract tests"
+        command: "uv run pytest tests/unit/ports/ -q"
+      - name: "Port compatibility"
+        command: "bash scripts/check_port_compat.sh --json"
+    on_failure: "abort"
+
+  - id: "WF-B3"
+    name: "Frontend Implementation"
+    description: "Login page, AuthProvider, org switcher, token modes, admin auth"
+    depends_on:
+      - "WF-A1"
+    task_cards:
+      - "FW1-1"
+      - "FW1-2"
+      - "FW1-3"
+      - "FW1-4"
+      - "FA1-1"
+      - "FA1-2"
+    checks:
+      - name: "Frontend builds"
+        command: "bash -c \"cd frontend && pnpm run build\""
+      - name: "Frontend lint"
+        command: "bash -c \"cd frontend && pnpm run lint\""
+      - name: "Frontend tests"
+        command: "bash -c \"cd frontend && pnpm run test\""
+    on_failure: "abort"
+
+  - id: "WF-B4"
+    name: "Crosscutting Implementation"
+    description: "Image scan, SBOM, verify-phase-1, RLS test framework, security tests"
+    depends_on:
+      - "WF-A1"
+    task_cards:
+      - "D1-1"
+      - "D1-2"
+      - "D1-3"
+      - "OS1-1"
+      - "OS1-2"
+      - "OS1-3"
+      - "OS1-4"
+      - "OS1-5"
+      - "OS1-6"
+    checks:
+      - name: "SBOM generation"
+        command: "bash scripts/generate_sbom.sh --validate"
+      - name: "RLS isolation tests"
+        command: "uv run pytest tests/isolation/smoke/ --tb=short -q"
+      - name: "Full audit"
+        command: "bash scripts/full_audit.sh --json --phase 1"
+    on_failure: "abort"
+
+  - id: "WF-A2"
+    name: "Gate Exit"
+    description: "Verify all 8 hard exit criteria pass, archive evidence, update status"
+    depends_on:
+      - "WF-B1"
+      - "WF-B2"
+      - "WF-B3"
+      - "WF-B4"
+    task_cards: []
+    checks:
+      - name: "Phase 1 gate verification"
+        command: "uv run python scripts/verify_phase.py --phase 1 --json"
+      - name: "All unit tests pass"
+        command: "uv run pytest tests/unit/ -q"
+      - name: "Governance pipeline (W1-W4)"
+        command: "bash .claude/skills/taskcard-governance/scripts/run_all.sh"
+      - name: "Full audit clean"
+        command: "bash scripts/full_audit.sh --json --phase 1"
+    on_failure: "abort"
+
+# Optional enhancement plugins (user-level, NOT hard dependencies)
+# These improve quality when available but the pipeline runs without them.
+optional_plugins:
+  - name: "/plan"
+    description: "Planning agent for complex task cards"
+    usage: "Invoke before implementing multi-file task cards"
+    fallback: "Manual planning based on task card description"
+
+  - name: "/tdd"
+    description: "Test-driven development enforcement"
+    usage: "Invoke for each task card implementation"
+    fallback: "Write tests manually following RED-GREEN-REFACTOR"
+
+  - name: "code-reviewer"
+    description: "Automated code review agent"
+    usage: "Invoke after implementing each task card"
+    fallback: "Manual review against CLAUDE.md constraints"
+
+  - name: "security-reviewer"
+    description: "Security vulnerability scanner"
+    usage: "Invoke after gateway/auth implementations"
+    fallback: "Manual OWASP Top 10 checklist review"
+
+  - name: "database-reviewer"
+    description: "SQL/migration review specialist"
+    usage: "Invoke after migration changes"
+    fallback: "Manual migration safety review"

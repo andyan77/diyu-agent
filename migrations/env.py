@@ -23,9 +23,9 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Import metadata for autogenerate support
-# from src.infra.models import Base
-# target_metadata = Base.metadata
-target_metadata = None
+from src.infra.models import Base
+
+target_metadata = Base.metadata
 
 # Override sqlalchemy.url from environment
 database_url = os.environ.get("DATABASE_URL", "")

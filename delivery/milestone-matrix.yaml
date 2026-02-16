@@ -4,7 +4,7 @@
 # Usage: python3 scripts/verify_phase.py --phase 0 --json
 
 schema_version: "1.0"
-current_phase: "phase_0"
+current_phase: "phase_1"
 
 phases:
   phase_0:
@@ -137,11 +137,11 @@ phases:
       - {id: "G1-4", layer: "Gateway", summary: "RLS policy baseline"}
       - {id: "G1-5", layer: "Gateway", summary: "API partition rules"}
       - {id: "G1-6", layer: "Gateway", summary: "Security headers"}
-      - {id: "I1-1", layer: "Infra", summary: "org/users/org_members DDL"}
+      - {id: "I1-1", layer: "Infra", summary: "org/users/org_members DDL", status: "done"}
       - {id: "I1-2", layer: "Infra", summary: "org_settings inheritance"}
       - {id: "I1-3", layer: "Infra", summary: "RLS policies all tables"}
       - {id: "I1-4", layer: "Infra", summary: "RBAC skeleton"}
-      - {id: "I1-5", layer: "Infra", summary: "audit_events table"}
+      - {id: "I1-5", layer: "Infra", summary: "audit_events table", status: "done"}
       - {id: "I1-6", layer: "Infra", summary: "event_outbox pattern"}
       - {id: "I1-7", layer: "Infra", summary: "Secret/SAST/dep scanning"}
       # Frontend
@@ -155,9 +155,9 @@ phases:
       - {id: "D1-1", layer: "Delivery", summary: "Image security scan"}
       - {id: "D1-2", layer: "Delivery", summary: "SBOM generation"}
       - {id: "D1-3", layer: "Delivery", summary: "verify-phase-1"}
-      - {id: "OS1-1", layer: "Observability", summary: "RLS isolation test framework"}
-      - {id: "OS1-2", layer: "Observability", summary: "Isolation smoke CI gate"}
-      - {id: "OS1-3", layer: "Observability", summary: "audit_events baseline"}
+      - {id: "OS1-1", layer: "Observability", summary: "RLS isolation test framework", status: "done"}
+      - {id: "OS1-2", layer: "Observability", summary: "Isolation smoke CI gate", status: "done"}
+      - {id: "OS1-3", layer: "Observability", summary: "audit_events baseline", status: "done"}
       - {id: "OS1-4", layer: "Observability", summary: "JWT security tests"}
       - {id: "OS1-5", layer: "Observability", summary: "CORS + security headers"}
       - {id: "OS1-6", layer: "Observability", summary: "FE XSS protection"}
@@ -183,10 +183,19 @@ phases:
           description: "Port contract tests pass"
           check: "uv run pytest tests/unit/ports/ -q"
 
-      soft:
+        - id: "p1-gateway-auth"
+          description: "JWT auth middleware tests pass"
+          check: "uv run pytest tests/unit/gateway/test_jwt_auth.py -q"
+
+        - id: "p1-rbac"
+          description: "RBAC permission check tests pass"
+          check: "uv run pytest tests/unit/gateway/test_rbac.py -q"
+
         - id: "p1-sbom"
-          description: "SBOM generated"
-          check: "test -f delivery/sbom.json"
+          description: "SPDX SBOM generated and valid"
+          check: "bash scripts/generate_sbom.sh --validate"
+
+      soft: []
 
     go_no_go:
       hard_pass_rate: 1.0
