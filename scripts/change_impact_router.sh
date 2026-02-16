@@ -181,8 +181,8 @@ if [ -x "scripts/risk_scorer.sh" ]; then
 fi
 
 # Build output
-GATE_LIST=$(IFS=,; echo "${!GATES[*]}" | tr ',' '\n' | sort | tr '\n' ',' | sed 's/,$//')
-REVIEWER_LIST=$(IFS=,; echo "${!REVIEWERS[*]}" | tr ',' '\n' | sort | tr '\n' ',' | sed 's/,$//')
+GATE_LIST=$(printf '%s\n' "${!GATES[@]}" | sort | tr '\n' ',' | sed 's/,$//')
+REVIEWER_LIST=$(printf '%s\n' "${!REVIEWERS[@]}" | sort | tr '\n' ',' | sed 's/,$//')
 FILE_COUNT=$(echo "$CHANGED_FILES" | wc -l)
 
 if [ "$JSON_OUTPUT" = true ]; then

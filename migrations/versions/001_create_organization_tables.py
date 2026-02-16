@@ -250,6 +250,12 @@ def downgrade() -> None:
     op.drop_table("organizations")
 
 
+_RLS_TABLES = frozenset({"organizations", "users", "org_members", "org_settings"})
+
+
 def _enable_rls(table: str) -> None:
-    op.execute(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY")
-    op.execute(f"ALTER TABLE {table} FORCE ROW LEVEL SECURITY")
+    if table not in _RLS_TABLES:
+        msg = f"Unexpected table for RLS: {table}"
+        raise ValueError(msg)
+    op.execute(sa.text(f"ALTER TABLE {table} ENABLE ROW LEVEL SECURITY"))
+    op.execute(sa.text(f"ALTER TABLE {table} FORCE ROW LEVEL SECURITY"))

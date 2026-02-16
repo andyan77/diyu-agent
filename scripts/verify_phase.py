@@ -17,6 +17,7 @@ Exit codes:
 from __future__ import annotations
 
 import json
+import shlex
 import subprocess
 import sys
 import time
@@ -60,9 +61,9 @@ def _run_check(check_cmd: str) -> CriterionResult:
     """Execute a single check command and return result."""
     start = time.monotonic()
     try:
-        result = subprocess.run(  # noqa: S602
-            check_cmd,
-            shell=True,
+        result = subprocess.run(  # noqa: S603 -- check_cmd from trusted YAML config
+            shlex.split(check_cmd),
+            shell=False,
             capture_output=True,
             text=True,
             timeout=60,
