@@ -15,6 +15,7 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  security-events: write  # required for SARIF upload to GitHub Code Scanning
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -28,6 +29,10 @@ env:
 
 jobs:
   # L1: Security scanning (H-4 + H-5, PR blocking)
+  # REQUIRED: GitHub Settings > Branches > main >
+  #   Require status checks > Add "L1: Security Scan"
+  # Verification: gh api repos/{owner}/{repo}/rules
+  #   or: gh api repos/{owner}/{repo}/branches/main/protection
   security-scan:
     name: "L1: Security Scan"
     runs-on: ubuntu-latest
@@ -37,22 +42,33 @@ jobs:
           fetch-depth: 0
       - uses: astral-sh/setup-uv@v4
       - run: uv sync --dev --frozen
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
       - name: Secret scanning (gitleaks)
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_CONFIG: .gitleaks.toml
-      - name: SAST (semgrep)
-        uses: semgrep/semgrep-action@v1
+      - name: SAST + dependency audit (unified)
+        run: bash scripts/security_scan.sh --ci
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('evidence/security-scan.sarif') != ''
         with:
-          config: auto
-      - name: Python dependency audit
-        run: uv run pip-audit
-      - name: Frontend dependency audit
-        run: |
-          corepack enable
-          cd frontend && pnpm install --frozen-lockfile
-          pnpm audit --audit-level=high
+          sarif_file: evidence/security-scan.sarif
+      - name: Upload security evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-scan-evidence
+          path: evidence/security-scan.*
 
   # L1: Deterministic checks (always run)
   lint-backend:

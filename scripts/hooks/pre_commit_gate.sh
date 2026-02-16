@@ -155,6 +155,20 @@ if [ -n "$STAGED_SRC" ]; then
     echo "[gate] Coverage: PASS (>=80%)" >&2
 fi
 
+# Gate 7: Security scan (staged files, quick mode -- tool missing = WARN not block)
+echo "[gate] Running security scan..." >&2
+SCAN_JSON=$(mktemp /tmp/security-scan-XXXXXX.json)
+trap 'rm -f "$SCAN_JSON"' EXIT
+SCAN_EXIT=0
+bash scripts/security_scan.sh --quick > "$SCAN_JSON" 2>&2 || SCAN_EXIT=$?
+if [ "$SCAN_EXIT" -eq 1 ]; then
+    python3 -c "import json; print(json.dumps({'timestamp':'$TIMESTAMP','tool':'Bash','cmd':'git commit','blocked':True,'reason':'security scan found issues','session':'$SESSION_ID'}))" >> "$LOGFILE"
+    echo "[gate] BLOCKED: security scan found issues" >&2
+    echo "[gate] Run: bash scripts/security_scan.sh --quick" >&2
+    exit 2
+fi
+echo "[gate] Security scan: PASS" >&2
+
 # GAP-M1: structured audit entry for commit gate
 python3 -c "
 import json
