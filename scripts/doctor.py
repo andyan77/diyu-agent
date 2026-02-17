@@ -19,6 +19,10 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 @dataclass
@@ -172,19 +176,29 @@ def _check_command(
     version_args: list[str],
     min_version_prefix: str,
     required_phase: int = 0,
+    _version_getter: Callable[[list[str]], str | None] | None = None,
+    _which: Callable[[str], str | None] | None = None,
 ) -> CheckResult:
     """Check if a command exists and meets minimum version.
 
     For Python: falls back to ``uv run python3`` when system python3
     is below the required version (common in WSL/system-Python setups
     where the project venv has the correct version).
+
+    Args:
+        _version_getter: Injectable version fetcher for testing.
+            Defaults to ``_get_version``.
+        _which: Injectable command-lookup for testing.
+            Defaults to ``shutil.which``.
     """
-    path = shutil.which(cmd)
+    get_ver = _version_getter or _get_version
+    which = _which or shutil.which
+    path = which(cmd)
     if path is None:
         status = "FAIL" if required_phase == 0 else "WARN"
         return CheckResult(name, status, f"{cmd} not found", required_phase)
 
-    version_output = _get_version([cmd, *version_args])
+    version_output = get_ver([cmd, *version_args])
     if version_output is None:
         return CheckResult(name, "WARN", f"{cmd} found but version check failed", required_phase)
 
@@ -201,8 +215,8 @@ def _check_command(
         return CheckResult(name, "OK", f"{version_clean}", required_phase)
 
     # Fallback: try uv-managed Python when system python3 is too old
-    if cmd == "python3" and shutil.which("uv"):
-        uv_output = _get_version(["uv", "run", cmd, *version_args])
+    if cmd == "python3" and which("uv"):
+        uv_output = get_ver(["uv", "run", cmd, *version_args])
         if uv_output:
             uv_ver_str = uv_output.split()[-1].lstrip("v")
             uv_actual = _parse_version(uv_ver_str)

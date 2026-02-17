@@ -13,7 +13,6 @@ Validates:
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock
 from uuid import uuid4
 
 import pytest
@@ -23,12 +22,21 @@ from src.infra.models import AuditEvent
 from src.shared.errors import ValidationError
 
 
-def _make_session() -> AsyncMock:
-    """Create a mock AsyncSession."""
-    session = AsyncMock()
-    session.add = MagicMock()
-    session.flush = AsyncMock()
-    return session
+class FakeAsyncSession:
+    """DI adapter replacing AsyncMock for AsyncSession.
+
+    Records add() calls and provides an async flush() stub.
+    """
+
+    def __init__(self) -> None:
+        self.added: list[object] = []
+        self.flush_count: int = 0
+
+    def add(self, obj: object) -> None:
+        self.added.append(obj)
+
+    async def flush(self) -> None:
+        self.flush_count += 1
 
 
 @pytest.mark.unit
@@ -60,12 +68,12 @@ class TestAuditEventWriterBehavior:
     """Verify write_event creates correct AuditEvent records."""
 
     @pytest.fixture
-    def session(self) -> AsyncMock:
-        return _make_session()
+    def session(self) -> FakeAsyncSession:
+        return FakeAsyncSession()
 
     @pytest.fixture
-    def writer(self, session: AsyncMock) -> AuditEventWriter:
-        return AuditEventWriter(session)
+    def writer(self, session: FakeAsyncSession) -> AuditEventWriter:
+        return AuditEventWriter(session)  # type: ignore[arg-type]
 
     @pytest.fixture
     def org_id(self):
@@ -92,9 +100,8 @@ class TestAuditEventWriterBehavior:
             action="user.login",
             detail={},
         )
-        session.add.assert_called_once()
-        added_obj = session.add.call_args[0][0]
-        assert isinstance(added_obj, AuditEvent)
+        assert len(session.added) == 1
+        assert isinstance(session.added[0], AuditEvent)
 
     @pytest.mark.asyncio
     async def test_write_event_flushes_session(self, writer, session, org_id) -> None:
@@ -103,7 +110,7 @@ class TestAuditEventWriterBehavior:
             action="user.login",
             detail={},
         )
-        session.flush.assert_awaited_once()
+        assert session.flush_count == 1
 
     @pytest.mark.asyncio
     async def test_write_event_sets_org_id(self, writer, session, org_id) -> None:
@@ -112,7 +119,7 @@ class TestAuditEventWriterBehavior:
             action="org.update",
             detail={"field": "name"},
         )
-        added_obj = session.add.call_args[0][0]
+        added_obj = session.added[0]
         assert added_obj.org_id == org_id
 
     @pytest.mark.asyncio
@@ -122,7 +129,7 @@ class TestAuditEventWriterBehavior:
             action="data.export",
             detail={},
         )
-        added_obj = session.add.call_args[0][0]
+        added_obj = session.added[0]
         assert added_obj.action == "data.export"
 
     @pytest.mark.asyncio
@@ -133,7 +140,7 @@ class TestAuditEventWriterBehavior:
             action="data.export",
             detail=detail,
         )
-        added_obj = session.add.call_args[0][0]
+        added_obj = session.added[0]
         assert added_obj.detail == detail
 
     @pytest.mark.asyncio
@@ -144,7 +151,7 @@ class TestAuditEventWriterBehavior:
             detail={},
             user_id=user_id,
         )
-        added_obj = session.add.call_args[0][0]
+        added_obj = session.added[0]
         assert added_obj.user_id == user_id
 
     @pytest.mark.asyncio
@@ -159,7 +166,7 @@ class TestAuditEventWriterBehavior:
             action="system.startup",
             detail={},
         )
-        added_obj = session.add.call_args[0][0]
+        added_obj = session.added[0]
         assert added_obj.user_id is None
 
     @pytest.mark.asyncio
@@ -181,7 +188,7 @@ class TestAuditEventWriterBehavior:
             ip_address="192.168.1.1",
             user_agent="Mozilla/5.0",
         )
-        added_obj = session.add.call_args[0][0]
+        added_obj = session.added[0]
         assert added_obj.resource_type == "conversation"
         assert added_obj.resource_id == resource_id
         assert added_obj.ip_address == "192.168.1.1"
@@ -193,12 +200,12 @@ class TestAuditEventWriterValidation:
     """Verify input validation enforces RLS compliance."""
 
     @pytest.fixture
-    def session(self) -> AsyncMock:
-        return _make_session()
+    def session(self) -> FakeAsyncSession:
+        return FakeAsyncSession()
 
     @pytest.fixture
-    def writer(self, session: AsyncMock) -> AuditEventWriter:
-        return AuditEventWriter(session)
+    def writer(self, session: FakeAsyncSession) -> AuditEventWriter:
+        return AuditEventWriter(session)  # type: ignore[arg-type]
 
     @pytest.mark.smoke
     @pytest.mark.asyncio

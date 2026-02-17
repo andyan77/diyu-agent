@@ -2,6 +2,8 @@
 
 TDD RED: These tests verify semantic version comparison,
 not just major version prefix matching.
+
+Uses DI parameters (_version_getter, _which) instead of runtime mocking.
 """
 
 from __future__ import annotations
@@ -20,27 +22,38 @@ class TestVersionComparison:
 
     def test_version_below_minimum_is_not_ok(self):
         """A version below min must return FAIL, not OK."""
-        from unittest.mock import patch
-
-        # Mock _get_version to return "Python 3.10.12"
-        with patch.object(doctor, "_get_version", return_value="Python 3.10.12"):
-            result = doctor._check_command("Python", "python3", ["--version"], "3.12")
+        result = doctor._check_command(
+            "Python",
+            "python3",
+            ["--version"],
+            "3.12",
+            _version_getter=lambda cmd: "Python 3.10.12",
+            _which=lambda cmd: "/usr/bin/python3",
+        )
         assert result.status != "OK", f"3.10.12 should not pass >=3.12 check, got {result.status}"
 
     def test_version_at_minimum_is_ok(self):
         """A version at min must return OK."""
-        from unittest.mock import patch
-
-        with patch.object(doctor, "_get_version", return_value="Python 3.12.0"):
-            result = doctor._check_command("Python", "python3", ["--version"], "3.12")
+        result = doctor._check_command(
+            "Python",
+            "python3",
+            ["--version"],
+            "3.12",
+            _version_getter=lambda cmd: "Python 3.12.0",
+            _which=lambda cmd: "/usr/bin/python3",
+        )
         assert result.status == "OK"
 
     def test_version_above_minimum_is_ok(self):
         """A version above min must return OK."""
-        from unittest.mock import patch
-
-        with patch.object(doctor, "_get_version", return_value="v22.5.1"):
-            result = doctor._check_command("Node.js", "node", ["--version"], "22")
+        result = doctor._check_command(
+            "Node.js",
+            "node",
+            ["--version"],
+            "22",
+            _version_getter=lambda cmd: "v22.5.1",
+            _which=lambda cmd: "/usr/bin/node",
+        )
         assert result.status == "OK"
 
 
@@ -82,11 +95,9 @@ class TestPythonUvFallback:
 
     def test_python_check_uses_uv_fallback(self):
         """If python3 < 3.12 but uv run python3 >= 3.12, result should be OK."""
-        from unittest.mock import patch
+        call_log: list[list[str]] = []
 
-        call_log = []
-
-        def mock_get_version(cmd):
+        def fake_get_version(cmd: list[str]) -> str | None:
             call_log.append(cmd)
             if cmd == ["python3", "--version"]:
                 return "Python 3.10.12"
@@ -94,11 +105,14 @@ class TestPythonUvFallback:
                 return "Python 3.12.10"
             return None
 
-        with (
-            patch.object(doctor, "_get_version", side_effect=mock_get_version),
-            patch("shutil.which", return_value="/usr/bin/python3"),
-        ):
-            result = doctor._check_command("Python", "python3", ["--version"], "3.12")
+        result = doctor._check_command(
+            "Python",
+            "python3",
+            ["--version"],
+            "3.12",
+            _version_getter=fake_get_version,
+            _which=lambda cmd: f"/usr/bin/{cmd}",
+        )
 
         assert result.status == "OK", (
             f"Expected OK from uv fallback, got {result.status}: {result.detail}"
@@ -107,20 +121,22 @@ class TestPythonUvFallback:
 
     def test_python_check_fails_when_both_too_old(self):
         """If both python3 and uv run python3 are < 3.12, result should be FAIL."""
-        from unittest.mock import patch
 
-        def mock_get_version(cmd):
+        def fake_get_version(cmd: list[str]) -> str | None:
             if cmd == ["python3", "--version"]:
                 return "Python 3.10.12"
             if cmd == ["uv", "run", "python3", "--version"]:
                 return "Python 3.10.12"
             return None
 
-        with (
-            patch.object(doctor, "_get_version", side_effect=mock_get_version),
-            patch("shutil.which", return_value="/usr/bin/python3"),
-        ):
-            result = doctor._check_command("Python", "python3", ["--version"], "3.12")
+        result = doctor._check_command(
+            "Python",
+            "python3",
+            ["--version"],
+            "3.12",
+            _version_getter=fake_get_version,
+            _which=lambda cmd: f"/usr/bin/{cmd}",
+        )
 
         assert result.status == "FAIL"
 

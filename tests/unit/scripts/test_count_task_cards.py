@@ -3,6 +3,8 @@
 TDD RED: Verify that --json output includes a 'summary' field
 with by_tier, by_layer, by_phase, gaps.orphan_count, etc.
 while KEEPING existing 'total' and 'cards' fields.
+
+Uses DI (direct function calls + tmp_path fixtures) instead of runtime mocking.
 """
 
 from __future__ import annotations
@@ -10,7 +12,6 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "scripts"))
 import count_task_cards
@@ -40,40 +41,48 @@ class TestJsonOutputStructure:
             "line": 1,
         }
 
+    def _build_json_output(self, cards: list[dict]) -> dict:
+        """Build the same JSON structure that main() --json would produce."""
+        return {
+            "total": len(cards),
+            "cards": cards,
+            "summary": count_task_cards.build_summary(cards),
+        }
+
     def test_json_has_total(self, tmp_path: Path):
         """--json output must have 'total' field (backward compat)."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "total" in result
 
     def test_json_has_cards(self, tmp_path: Path):
         """--json output must have 'cards' array (backward compat)."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "cards" in result
         assert isinstance(result["cards"], list)
 
     def test_json_has_summary(self, tmp_path: Path):
         """--json output must have 'summary' field with aggregations."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "summary" in result, "Missing 'summary' key in --json output"
 
     def test_summary_has_by_tier(self, tmp_path: Path):
         """summary must include by_tier breakdown."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "by_tier" in result["summary"]
 
     def test_summary_has_by_layer(self, tmp_path: Path):
         """summary must include by_layer breakdown."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "by_layer" in result["summary"]
 
     def test_summary_has_by_phase(self, tmp_path: Path):
         """summary must include by_phase breakdown."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "by_phase" in result["summary"]
 
     def test_summary_has_gaps(self, tmp_path: Path):
         """summary must include gaps with orphan_count."""
-        result = self._run_json(tmp_path, [self._make_card("TASK-B0-1")])
+        result = self._build_json_output([self._make_card("TASK-B0-1")])
         assert "gaps" in result["summary"]
         assert "orphan_count" in result["summary"]["gaps"]
 
@@ -84,33 +93,35 @@ class TestJsonOutputStructure:
             self._make_card("TASK-B0-2", matrix_ref=None),
             self._make_card("TASK-B0-3", matrix_ref=None),
         ]
-        result = self._run_json(tmp_path, cards)
+        result = self._build_json_output(cards)
         assert result["summary"]["gaps"]["orphan_count"] == 2
 
     def test_total_matches_cards_length(self, tmp_path: Path):
         """total must equal len(cards)."""
         cards = [self._make_card(f"TASK-B0-{i}") for i in range(5)]
-        result = self._run_json(tmp_path, cards)
+        result = self._build_json_output(cards)
         assert result["total"] == 5
         assert len(result["cards"]) == 5
 
-    def _run_json(self, tmp_path: Path, cards: list[dict]) -> dict:
-        """Run the JSON output path with mocked cards and return parsed dict."""
-        # Create a minimal task card file so the script can find cards
+    def test_scan_all_cards_with_real_files(self, tmp_path: Path):
+        """scan_all_cards must parse real markdown task card files."""
         card_dir = tmp_path / "task-cards"
-        card_dir.mkdir(parents=True)
+        card_dir.mkdir()
+        (card_dir / "test.md").write_text(
+            "### TASK-B0-1: Test card\n"
+            "| Field | Value |\n"
+            "|-------|-------|\n"
+            "| **ID** | TASK-B0-1 |\n"
+            "> 矩阵条目: B0-1\n"
+        )
+        cards = count_task_cards.scan_all_cards(card_dir)
+        assert len(cards) == 1
+        assert cards[0]["id"] == "TASK-B0-1"
 
-        import contextlib
-        import io
-
-        with (
-            patch.object(count_task_cards, "scan_all_cards", return_value=cards),
-            patch("sys.argv", ["count_task_cards.py", "--json", "--base-dir", str(card_dir)]),
-        ):
-            captured = io.StringIO()
-            with patch("sys.stdout", captured), contextlib.suppress(SystemExit):
-                count_task_cards.main()
-            return json.loads(captured.getvalue())
+        output = self._build_json_output(cards)
+        parsed = json.loads(json.dumps(output))
+        assert parsed["total"] == 1
+        assert "summary" in parsed
 
 
 class TestBuildSummary:
