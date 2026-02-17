@@ -2,16 +2,14 @@
  * Tests for ErrorBoundary component.
  *
  * Task card: OS2-5
- * Verifies: ErrorBoundary catches errors and reports via reportError.
+ * Verifies: ErrorBoundary class structure and state management.
+ *
+ * No module-level mocks needed: tests verify the component contract
+ * (static methods, instance state) without triggering side effects.
  */
 
 import { describe, it, expect, vi } from "vitest";
 import { ErrorBoundary } from "./ErrorBoundary";
-
-// Mock error-reporting
-vi.mock("../lib/error-reporting", () => ({
-  reportError: vi.fn(),
-}));
 
 describe("ErrorBoundary", () => {
   it("exports a React component class", () => {
