@@ -159,6 +159,40 @@ jobs:
       - run: cd frontend && pnpm install --frozen-lockfile
       - run: cd frontend && pnpm run test
 
+  # D2-1: Frontend a11y check (eslint-plugin-jsx-a11y via lint)
+  a11y-frontend:
+    name: "L1: Frontend A11y"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
+      - run: cd frontend && pnpm run lint -- --rule 'jsx-a11y/alt-text:error' --rule 'jsx-a11y/aria-props:error'
+
+  # D2-2: OpenAPI type sync CI gate
+  openapi-sync:
+    name: "L1: OpenAPI Sync"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
+      - run: bash scripts/check_openapi_sync.sh
+
   # L1: Guard scripts (consumes change-impact outputs when available)
   guard-checks:
     name: "L1: Guard Scripts"
@@ -230,9 +264,7 @@ jobs:
         run: cd frontend && pnpm --filter @diyu/api-client run test
       - name: Run OpenAPI sync check (if openapi gate triggered)
         if: contains(needs.change-impact.outputs.triggered_gates, 'openapi_sync')
-        run: |
-          echo "OpenAPI sync check: verifying openapi.yaml consistency"
-          test -f openapi.yaml || test -d openapi/ || echo "No openapi files found (skipping)"
+        run: bash scripts/check_openapi_sync.sh
       # V4 Phase 2 guards (always run)
       - name: Phase 2 gate verification (soft)
         run: uv run python scripts/verify_phase.py --phase 2 --json || true

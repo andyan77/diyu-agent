@@ -1,0 +1,64 @@
+# DIYU Agent Staging / Dogfooding Environment
+# Task card: D2-3
+#
+# Usage:
+#   docker compose -f deploy/staging/docker-compose.staging.yml up -d
+#
+# Purpose:
+#   Internal dogfooding environment for team members to use
+#   the system for actual conversations.
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: diyu_staging
+      POSTGRES_USER: diyu
+      POSTGRES_PASSWORD: ${STAGING_PG_PASSWORD:-staging_secret}
+    ports:
+      - "5433:5432"
+    volumes:
+      - staging_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U diyu -d diyu_staging"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://diyu:${STAGING_PG_PASSWORD:-staging_secret}@postgres:5432/diyu_staging
+      REDIS_URL: redis://redis:6379/0
+      DIYU_ENV: staging
+      LOG_LEVEL: info
+    ports:
+      - "8001:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    volumes:
+      - ../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../monitoring/alerts.yml:/etc/prometheus/rules/alerts.yml:ro
+    ports:
+      - "9091:9090"
+
+volumes:
+  staging_pgdata:

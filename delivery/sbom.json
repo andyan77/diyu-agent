@@ -5,13 +5,43 @@
   "name": "diyu-agent",
   "documentNamespace": "https://diyu.dev/spdx/diyu-agent",
   "creationInfo": {
-    "created": "2026-02-16T09:01:54Z",
+    "created": "2026-02-17T16:14:49Z",
     "creators": [
       "Tool: diyu-agent/scripts/generate_sbom.sh"
     ],
     "licenseListVersion": "3.22"
   },
   "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-aiohappyeyeballs",
+      "name": "aiohappyeyeballs",
+      "versionInfo": "2.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-aiohttp",
+      "name": "aiohttp",
+      "versionInfo": "3.13.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-aiosignal",
+      "name": "aiosignal",
+      "versionInfo": "1.4.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
     {
       "SPDXID": "SPDXRef-Package-alembic",
       "name": "alembic",
@@ -313,6 +343,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-distro",
+      "name": "distro",
+      "versionInfo": "1.9.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-diyu-agent",
       "name": "diyu-agent",
       "versionInfo": "0.1.0",
@@ -363,9 +403,39 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-fastuuid",
+      "name": "fastuuid",
+      "versionInfo": "0.14.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-filelock",
       "name": "filelock",
       "versionInfo": "3.21.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-frozenlist",
+      "name": "frozenlist",
+      "versionInfo": "1.8.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fsspec",
+      "name": "fsspec",
+      "versionInfo": "2026.2.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -413,6 +483,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-hf-xet",
+      "name": "hf-xet",
+      "versionInfo": "1.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-httpcore",
       "name": "httpcore",
       "versionInfo": "1.0.9",
@@ -446,6 +526,16 @@
       "SPDXID": "SPDXRef-Package-httpx-sse",
       "name": "httpx-sse",
       "versionInfo": "0.4.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-huggingface-hub",
+      "name": "huggingface-hub",
+      "versionInfo": "1.4.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -523,6 +613,26 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-jinja2",
+      "name": "jinja2",
+      "versionInfo": "3.1.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-jiter",
+      "name": "jiter",
+      "versionInfo": "0.13.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-jsonschema",
       "name": "jsonschema",
       "versionInfo": "4.26.0",
@@ -566,6 +676,16 @@
       "SPDXID": "SPDXRef-Package-license-expression",
       "name": "license-expression",
       "versionInfo": "30.4.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-litellm",
+      "name": "litellm",
+      "versionInfo": "1.81.13",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -643,6 +763,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-multidict",
+      "name": "multidict",
+      "versionInfo": "6.7.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-mypy",
       "name": "mypy",
       "versionInfo": "1.19.1",
@@ -666,6 +796,16 @@
       "SPDXID": "SPDXRef-Package-nodeenv",
       "name": "nodeenv",
       "versionInfo": "1.10.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-openai",
+      "name": "openai",
+      "versionInfo": "2.21.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -903,9 +1043,29 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-prometheus-client",
+      "name": "prometheus-client",
+      "versionInfo": "0.24.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-prompt-toolkit",
       "name": "prompt-toolkit",
       "versionInfo": "3.0.52",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-propcache",
+      "name": "propcache",
+      "versionInfo": "0.4.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1113,6 +1273,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-regex",
+      "name": "regex",
+      "versionInfo": "2026.1.15",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-requests",
       "name": "requests",
       "versionInfo": "2.32.5",
@@ -1193,9 +1363,29 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-shellingham",
+      "name": "shellingham",
+      "versionInfo": "1.5.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-six",
       "name": "six",
       "versionInfo": "1.17.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-sniffio",
+      "name": "sniffio",
+      "versionInfo": "1.3.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1263,6 +1453,26 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-tiktoken",
+      "name": "tiktoken",
+      "versionInfo": "0.12.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-tokenizers",
+      "name": "tokenizers",
+      "versionInfo": "0.22.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-tomli",
       "name": "tomli",
       "versionInfo": "2.4.0",
@@ -1283,9 +1493,39 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-tqdm",
+      "name": "tqdm",
+      "versionInfo": "4.67.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-traitlets",
       "name": "traitlets",
       "versionInfo": "5.14.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-typer",
+      "name": "typer",
+      "versionInfo": "0.24.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-typer-slim",
+      "name": "typer-slim",
+      "versionInfo": "0.24.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1426,6 +1666,16 @@
       "SPDXID": "SPDXRef-Package-wrapt",
       "name": "wrapt",
       "versionInfo": "1.17.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-yarl",
+      "name": "yarl",
+      "versionInfo": "1.22.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
