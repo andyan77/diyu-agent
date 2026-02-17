@@ -98,6 +98,14 @@ for migration in "$MIGRATIONS_DIR"/*.py; do
     fi
   fi
 
+  # Rule 5: Migration metadata keys (治理规范 v1.1 Section 8)
+  for meta_key in reversible_type rollback_artifact drill_evidence_id; do
+    has_key=$(grep -cE "^${meta_key}\s*=" "$migration" || true)
+    if [ "$has_key" -eq 0 ]; then
+      add_violation "$basename" "METADATA" "Missing required migration metadata: $meta_key"
+    fi
+  done
+
   # Rule 4: downgrade() must not be empty pass
   if [ "$has_downgrade" -gt 0 ]; then
     # Check if downgrade body is just 'pass'

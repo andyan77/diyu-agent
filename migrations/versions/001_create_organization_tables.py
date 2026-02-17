@@ -20,6 +20,11 @@ down_revision = None
 branch_labels = None
 depends_on = None
 
+# -- Migration metadata (治理规范 v1.1 Section 8) --
+reversible_type = "full"  # DDL fully reversible via downgrade()
+rollback_artifact = "alembic downgrade -1"
+drill_evidence_id = None  # populated after upgrade->downgrade->upgrade drill
+
 _UUID = postgresql.UUID(as_uuid=True)
 _NOW = sa.text("now()")
 _GEN_UUID = sa.text("gen_random_uuid()")
