@@ -243,18 +243,18 @@ phases:
       - {id: "I2-4", layer: "Infra", summary: "conversation_events table"}
       - {id: "I2-5", layer: "Infra", summary: "memory_items + pgvector"}
       # Frontend
-      - {id: "FW2-1", layer: "FE-Web", summary: "Chat dual-pane layout"}
-      - {id: "FW2-2", layer: "FE-Web", summary: "Streaming message render"}
-      - {id: "FW2-3", layer: "FE-Web", summary: "Chat history management"}
-      - {id: "FW2-4", layer: "FE-Web", summary: "Memory context panel"}
-      - {id: "FW2-5", layer: "FE-Web", summary: "Message actions"}
-      - {id: "FW2-6", layer: "FE-Web", summary: "File upload (drag + progress)"}
-      - {id: "FW2-7", layer: "FE-Web", summary: "WS connection management"}
-      - {id: "FW2-8", layer: "FE-Web", summary: "OpenAPI type sync"}
-      - {id: "FW2-9", layer: "FE-Web", summary: "SSE EventSource client"}
-      - {id: "FA2-1", layer: "FE-Admin", summary: "User management DataTable"}
-      - {id: "FA2-2", layer: "FE-Admin", summary: "Organization management"}
-      - {id: "FA2-3", layer: "FE-Admin", summary: "Audit log viewer"}
+      - {id: "FW2-1", layer: "FE-Web", summary: "Chat dual-pane layout", status: "done"}
+      - {id: "FW2-2", layer: "FE-Web", summary: "Streaming message render", status: "done"}
+      - {id: "FW2-3", layer: "FE-Web", summary: "Chat history management", status: "done"}
+      - {id: "FW2-4", layer: "FE-Web", summary: "Memory context panel", status: "done"}
+      - {id: "FW2-5", layer: "FE-Web", summary: "Message actions", status: "done"}
+      - {id: "FW2-6", layer: "FE-Web", summary: "File upload (drag + progress)", status: "done"}
+      - {id: "FW2-7", layer: "FE-Web", summary: "WS connection management", status: "done"}
+      - {id: "FW2-8", layer: "FE-Web", summary: "OpenAPI type sync", status: "done"}
+      - {id: "FW2-9", layer: "FE-Web", summary: "SSE EventSource client", status: "done"}
+      - {id: "FA2-1", layer: "FE-Admin", summary: "User management DataTable", status: "done"}
+      - {id: "FA2-2", layer: "FE-Admin", summary: "Organization management", status: "done"}
+      - {id: "FA2-3", layer: "FE-Admin", summary: "Audit log viewer", status: "done"}
       # Crosscutting
       - {id: "D2-1", layer: "Delivery", summary: "Frontend CI pipeline"}
       - {id: "D2-2", layer: "Delivery", summary: "OpenAPI type sync CI gate"}
