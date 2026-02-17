@@ -11,8 +11,9 @@ Architecture: delivery/phase2-runtime-config.yaml (realtime section)
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Protocol
+from typing import TYPE_CHECKING, Any
+
+from src.ports.conversation_port import WebSocketSender, WSMessage, WSResponse
 
 if TYPE_CHECKING:
     from uuid import UUID
@@ -21,37 +22,6 @@ if TYPE_CHECKING:
     from src.shared.types import OrganizationContext
 
 logger = logging.getLogger(__name__)
-
-
-class WebSocketSender(Protocol):
-    """Protocol for sending messages over WebSocket."""
-
-    async def send(self, data: dict[str, Any]) -> None:
-        """Send a message to the connected client."""
-        ...
-
-
-@dataclass(frozen=True)
-class WSMessage:
-    """A WebSocket message from client."""
-
-    type: str  # "message" | "ping" | "close"
-    session_id: UUID
-    user_id: UUID
-    org_id: UUID
-    content: str = ""
-    metadata: dict[str, Any] = field(default_factory=dict)
-
-
-@dataclass(frozen=True)
-class WSResponse:
-    """A WebSocket response to client."""
-
-    type: str  # "message" | "pong" | "error" | "stream_start" | "stream_end"
-    session_id: UUID
-    content: str = ""
-    turn_id: UUID | None = None
-    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class WSChatHandler:

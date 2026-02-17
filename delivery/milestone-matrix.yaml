@@ -230,13 +230,13 @@ phases:
       - {id: "T2-1", layer: "Tool", summary: "LLMCallPort real impl"}
       - {id: "T2-2", layer: "Tool", summary: "Model Registry + Fallback"}
       - {id: "T2-3", layer: "Tool", summary: "Token metering"}
-      - {id: "G2-1", layer: "Gateway", summary: "Conversation REST API"}
-      - {id: "G2-2", layer: "Gateway", summary: "WebSocket streaming"}
-      - {id: "G2-3", layer: "Gateway", summary: "LLM Gateway (LiteLLM)"}
-      - {id: "G2-4", layer: "Gateway", summary: "Token budget pre-check"}
-      - {id: "G2-5", layer: "Gateway", summary: "Rate limiting middleware"}
-      - {id: "G2-6", layer: "Gateway", summary: "3-step file upload"}
-      - {id: "G2-7", layer: "Gateway", summary: "SSE notification endpoint"}
+      - {id: "G2-1", layer: "Gateway", summary: "Conversation REST API", status: "done"}
+      - {id: "G2-2", layer: "Gateway", summary: "WebSocket streaming", status: "done"}
+      - {id: "G2-3", layer: "Gateway", summary: "LLM Gateway (LiteLLM)", status: "done"}
+      - {id: "G2-4", layer: "Gateway", summary: "Token budget pre-check", status: "done"}
+      - {id: "G2-5", layer: "Gateway", summary: "Rate limiting middleware", status: "done"}
+      - {id: "G2-6", layer: "Gateway", summary: "3-step file upload", status: "done"}
+      - {id: "G2-7", layer: "Gateway", summary: "SSE notification endpoint", status: "done"}
       - {id: "I2-1", layer: "Infra", summary: "Redis cache + session"}
       - {id: "I2-2", layer: "Infra", summary: "Celery Worker + Redis Broker"}
       - {id: "I2-3", layer: "Infra", summary: "Token billing minimal loop"}

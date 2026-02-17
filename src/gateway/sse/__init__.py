@@ -1,0 +1,1 @@
+"""Gateway SSE endpoints."""
