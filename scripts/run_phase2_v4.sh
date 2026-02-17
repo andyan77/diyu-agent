@@ -504,6 +504,23 @@ execute_workflow() {
 
   # Run checks
   if run_wf_checks "$wf_id"; then
+    # Inter-workflow CI gate: run repo-level lint+test after B-series builds.
+    # Phase 2 workflows handle functional verification; the repo Makefile
+    # handles code quality (ruff check, ruff format, frontend lint, pytest).
+    # Running both ensures no code escapes without quality checks, even if
+    # the pipeline is interrupted before WF2-B6 (which also runs make lint).
+    if [[ "$wf_id" == WF2-B* ]]; then
+      if [ "$JSON_OUTPUT" = false ]; then
+        echo "  Running repo CI gate (make lint && make test)..."
+      fi
+      if ! make -C "$ROOT_DIR" lint || ! make -C "$ROOT_DIR" test; then
+        save_checkpoint "$wf_id" "failed"
+        if [ "$JSON_OUTPUT" = false ]; then
+          echo "  -> FAIL (repo CI gate)"
+        fi
+        return 1
+      fi
+    fi
     save_checkpoint "$wf_id" "done"
     if [ "$JSON_OUTPUT" = false ]; then
       echo "  -> PASS"
