@@ -147,7 +147,7 @@ class MeteringLossTracker:
     """
 
     lost_count: int = 0
-    _failures: list[dict] = field(default_factory=list)
+    _failures: list[dict[str, str]] = field(default_factory=list)
 
     def record_failure(
         self,
