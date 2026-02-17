@@ -56,7 +56,7 @@ function walkDir(dir) {
   for (const entry of entries) {
     if (SKIP_DIRS.has(entry) || entry.startsWith(".")) continue;
 
-    const fullPath = join(dir, entry);
+    const fullPath = join(dir, entry); // nosemgrep: path-join-resolve-traversal -- entry from readdirSync, not user input
     let stat;
     try {
       stat = statSync(fullPath);
