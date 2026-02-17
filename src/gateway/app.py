@@ -12,6 +12,7 @@ ADR-029: API partition for clear permission boundaries + independent rate limiti
 from __future__ import annotations
 
 import os
+from collections.abc import Awaitable, Callable
 from typing import Any
 
 from fastapi import FastAPI, Request
@@ -32,6 +33,11 @@ from src.shared.errors import (
 
 _EXEMPT_PATHS = frozenset({"/healthz", "/docs", "/openapi.json", "/redoc"})
 
+# Type alias for post-auth middleware callables
+PostAuthMiddleware = Callable[
+    [Request, Callable[[Request], Awaitable[Response]]], Awaitable[Response]
+]
+
 
 def _extract_token(request: Request) -> TokenPayload:
     """FastAPI dependency: extract and validate JWT from Authorization header."""
@@ -49,12 +55,16 @@ def create_app(
     *,
     jwt_secret: str | None = None,
     cors_origins: list[str] | None = None,
+    post_auth_middlewares: list[PostAuthMiddleware] | None = None,
 ) -> FastAPI:
     """Create and configure the FastAPI application.
 
     Args:
         jwt_secret: JWT signing secret. Falls back to JWT_SECRET env var.
         cors_origins: Allowed CORS origins. Falls back to CORS_ORIGINS env var.
+        post_auth_middlewares: Middleware callables that run after JWT auth.
+            Each has signature (request, call_next) -> Response.
+            They can intercept (return 402/429) or add headers to responses.
 
     Returns:
         Configured FastAPI application with partitioned routers.
@@ -67,6 +77,7 @@ def create_app(
     origins = cors_origins or [
         o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()
     ]
+    _post_auth = post_auth_middlewares or []
 
     app = FastAPI(
         title="Diyu Agent API",
@@ -178,7 +189,25 @@ def create_app(
 
         request.state.user_id = payload.user_id
         request.state.org_id = payload.org_id
-        response = await call_next(request)
+
+        # Chain post-auth middlewares (budget check, rate limit, etc.)
+        # Build a call chain: mw_n(... mw_1(call_next) ...)
+        # Each middleware can intercept (return 402/429) or modify response
+        chained = call_next
+        for mw in reversed(_post_auth):
+            outer = chained
+
+            async def _make_chained(
+                req: Request,
+                *,
+                _mw: PostAuthMiddleware = mw,
+                _next: Any = outer,
+            ) -> Response:
+                return await _mw(req, _next)
+
+            chained = _make_chained
+
+        response = await chained(request)
         return _add_security_headers(response)
 
     # -- Exempt routes --
