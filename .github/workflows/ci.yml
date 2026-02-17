@@ -234,6 +234,8 @@ jobs:
           echo "OpenAPI sync check: verifying openapi.yaml consistency"
           test -f openapi.yaml || test -d openapi/ || echo "No openapi files found (skipping)"
       # V4 Phase 2 guards (always run)
+      - name: Phase 2 gate verification (soft)
+        run: uv run python scripts/verify_phase.py --phase 2 --json || true
       - name: Python no-mock check
         run: uv run python scripts/check_no_mock.py src/ tests/
       - name: TypeScript no-mock check

@@ -31,24 +31,54 @@ from pathlib import Path
 import yaml
 
 
-def load_required_dispatches(workflow_path: Path) -> list[dict[str, str]]:
-    """Extract all required agent dispatches from workflow YAML."""
+def load_required_dispatches(
+    workflow_path: Path,
+    *,
+    cards_dir: Path | None = None,
+) -> list[dict[str, str]]:
+    """Extract all required agent dispatches from workflow YAML.
+
+    When cards_dir is provided, expands "all cards" and scoped dispatches
+    to per-card entries using the task_cards list from each workflow.
+    """
     with workflow_path.open() as f:
         data = yaml.safe_load(f)
 
     required: list[dict[str, str]] = []
     for wf in data.get("workflows", []):
         wf_id = wf.get("id", "")
+        wf_cards = wf.get("task_cards", [])
+
         for dispatch in wf.get("agent_dispatch", []):
             agent = dispatch.get("agent", "")
             scope = dispatch.get("scope", "all cards")
-            required.append(
-                {
-                    "workflow": wf_id,
-                    "agent": agent,
-                    "scope": scope,
-                }
-            )
+
+            if cards_dir is None or not wf_cards:
+                required.append(
+                    {
+                        "workflow": wf_id,
+                        "agent": agent,
+                        "scope": scope,
+                    }
+                )
+                continue
+
+            # Expand to per-card entries
+            if scope == "all cards":
+                target_cards = wf_cards
+            else:
+                scope_ids = {s.strip() for s in scope.split(",")}
+                target_cards = [c for c in wf_cards if c in scope_ids]
+
+            for card_id in target_cards:
+                required.append(
+                    {
+                        "workflow": wf_id,
+                        "agent": agent,
+                        "scope": scope,
+                        "card_id": card_id,
+                    }
+                )
     return required
 
 

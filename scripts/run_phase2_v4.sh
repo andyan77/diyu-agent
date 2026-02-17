@@ -372,17 +372,21 @@ for check in checks:
         })
         failed_count += 1
 
-# Write per-WF evidence
+# Write per-WF evidence with wf-{id}-{ts}.json naming
+import datetime
+ts = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
 evidence = {
     'workflow': wf_id,
     'commit_sha': sha,
+    'timestamp': ts,
     'checks': results,
     'total': total,
     'passed': passed_count,
     'failed': failed_count,
     'per_check_timeout_s': per_check_timeout,
 }
-with open(f'{evidence_dir}/{wf_id}/checks.json', 'w') as f:
+evidence_filename = f'wf-{wf_id.lower()}-{ts}.json'
+with open(f'{evidence_dir}/{wf_id}/{evidence_filename}', 'w') as f:
     json.dump(evidence, f, indent=2)
 
 if not json_output:

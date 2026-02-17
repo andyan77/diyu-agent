@@ -129,13 +129,19 @@ def scan_file(filepath: Path) -> list[dict[str, object]]:
     return detector.violations
 
 
-def scan_dirs(directories: list[str]) -> list[dict[str, object]]:
+def scan_dirs(
+    directories: list[str],
+    *,
+    skip_conftest: bool = True,
+) -> list[dict[str, object]]:
     all_violations: list[dict[str, object]] = []
     for d in directories:
         root = Path(d)
         if not root.exists():
             continue
         for py_file in sorted(root.rglob("*.py")):
+            if skip_conftest and py_file.name == "conftest.py":
+                continue
             all_violations.extend(scan_file(py_file))
     return all_violations
 

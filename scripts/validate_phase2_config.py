@@ -19,17 +19,22 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import yaml
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 CONFIG_PATH = Path("delivery/phase2-runtime-config.yaml")
 ENV_FILE = Path(".env")
 
 
-def load_config() -> dict:
-    if not CONFIG_PATH.exists():
-        return {"_error": f"{CONFIG_PATH} not found"}
-    with CONFIG_PATH.open() as f:
+def load_config(*, config_path: Path | None = None) -> dict:
+    path = config_path or CONFIG_PATH
+    if not path.exists():
+        return {"_error": f"{path} not found"}
+    with path.open() as f:
         return yaml.safe_load(f)
 
 
@@ -48,7 +53,11 @@ def load_env_keys() -> set[str]:
     return keys
 
 
-def validate(config: dict) -> list[dict[str, str]]:
+def validate(
+    config: dict,
+    *,
+    tcp_prober: Callable[[str, int], bool] | None = None,
+) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
 
     if "_error" in config:
@@ -166,6 +175,28 @@ def validate(config: dict) -> list[dict[str, str]]:
                 "message": "test db must be 15",
             }
         )
+
+    # --- TCP probes (only when tcp_prober is provided) ---
+    if tcp_prober is not None:
+        db_host = db.get("primary", {}).get("host", "localhost")
+        db_port = db.get("primary", {}).get("port", 5432)
+        if not tcp_prober(db_host, db_port):
+            errors.append(
+                {
+                    "section": "database",
+                    "message": f"database unreachable at {db_host}:{db_port}",
+                }
+            )
+
+        redis_host = redis_cfg.get("host", "localhost")
+        redis_port = redis_cfg.get("port", 6379)
+        if not tcp_prober(redis_host, redis_port):
+            errors.append(
+                {
+                    "section": "redis",
+                    "message": f"redis unreachable at {redis_host}:{redis_port}",
+                }
+            )
 
     return errors
 

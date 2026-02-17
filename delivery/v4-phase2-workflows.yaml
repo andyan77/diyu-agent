@@ -65,6 +65,8 @@ workflows:
         desc: "Acceptance gate (env-dep mapping)"
       - cmd: "uv run mypy src/"
         desc: "Backend typecheck (mypy)"
+      - cmd: "uv run python scripts/skills/validate_skills_governance.py"
+        desc: "Skills governance validation"
     on_failure: "abort"
 
   # ── WF2-B1: Infrastructure + MemoryCore ────────────
