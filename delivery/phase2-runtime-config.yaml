@@ -1,0 +1,138 @@
+# Phase 2 Runtime Configuration
+# Validated by scripts/validate_phase2_config.py (fail-closed).
+# Rule: validate primary + fallback_chain members ONLY. Unused providers are ignored.
+#
+# This file defines the EXPECTED runtime configuration shape for Phase 2.
+# Actual values come from .env + vault. This file defines structure + constraints.
+
+schema_version: "1.0"
+phase: "phase_2"
+
+# --- LLM Configuration ---
+llm:
+  primary: "openai"
+  fallback_chain: ["anthropic"]
+  providers:
+    openai:
+      env_key: "OPENAI_API_KEY"
+      models: ["gpt-4o", "gpt-4o-mini"]
+      default_model: "gpt-4o"
+      timeout_s: 30
+      max_retries: 2
+    anthropic:
+      env_key: "ANTHROPIC_API_KEY"
+      models: ["claude-sonnet-4-20250514"]
+      default_model: "claude-sonnet-4-20250514"
+      timeout_s: 30
+      max_retries: 2
+    # deepseek defined but NOT in primary/fallback_chain -> not validated
+    deepseek:
+      env_key: "DEEPSEEK_API_KEY"
+      models: ["deepseek-chat"]
+      default_model: "deepseek-chat"
+      timeout_s: 60
+      max_retries: 1
+
+# --- Token Billing ---
+billing:
+  metering_mode: "per_token"
+  token_types:
+    llm:
+      unit: "per_token"
+      dimensions: ["input", "output"]
+    tool:
+      unit: "per_call"
+    image:
+      unit: "per_image"
+    audio:
+      unit: "per_minute"
+  enforcement:
+    pre_check: true
+    post_settle: true
+    zero_tolerance: true
+  budget:
+    default_monthly_tokens: 1_000_000
+    hard_limit_action: "reject"
+
+# --- Real-time Communication ---
+realtime:
+  primary: "websocket"
+  websocket:
+    path: "/ws/chat"
+    ping_interval_s: 30
+    max_connections_per_user: 3
+    auth: "jwt_query_param"
+  sse:
+    path: "/api/v1/notifications/stream"
+    retry_ms: 3000
+    auth: "bearer_header"
+
+# --- Storage ---
+storage:
+  file_upload:
+    backend: "minio"
+    env_keys:
+      endpoint: "MINIO_ENDPOINT"
+      access_key: "MINIO_ACCESS_KEY"
+      secret_key: "MINIO_SECRET_KEY"
+    bucket: "diyu-uploads"
+    max_size_mb: 50
+    allowed_types: ["image/*", "application/pdf", "text/*"]
+    flow: "3-step"  # presign -> upload -> confirm
+
+# --- Embedding ---
+embedding:
+  ddl_dimension: 1024
+  provider: "openai"
+  model: "text-embedding-3-large"
+  env_key: "OPENAI_API_KEY"
+  projection:
+    enabled: true
+    note: "DDL fixed vector(1024); application-layer projects higher dims"
+
+# --- Database ---
+database:
+  primary:
+    env_key: "DATABASE_URL"
+    pool_size: 10
+    max_overflow: 5
+  test:
+    database_name: "diyu_test"
+    note: "Separate database, not schema isolation"
+
+# --- Redis ---
+redis:
+  env_key: "REDIS_URL"
+  default_db: 0
+  test:
+    db: 15
+    prefix: "diyu_test:"
+  session:
+    prefix: "session:"
+    ttl_s: 86400
+  cache:
+    prefix: "cache:"
+    default_ttl_s: 300
+
+# --- Celery ---
+celery:
+  broker_env: "CELERY_BROKER_URL"
+  result_backend_env: "CELERY_RESULT_BACKEND"
+  task_queues:
+    - name: "default"
+      routing_key: "default"
+    - name: "memory"
+      routing_key: "memory.*"
+    - name: "billing"
+      routing_key: "billing.*"
+
+# --- Rate Limiting ---
+rate_limiting:
+  backend: "redis"
+  default_limits:
+    - endpoint: "/api/v1/conversations/*/messages"
+      rate: "30/minute"
+    - endpoint: "/api/v1/upload/*"
+      rate: "10/minute"
+    - endpoint: "/ws/chat"
+      rate: "60/minute"

@@ -233,6 +233,20 @@ jobs:
         run: |
           echo "OpenAPI sync check: verifying openapi.yaml consistency"
           test -f openapi.yaml || test -d openapi/ || echo "No openapi files found (skipping)"
+      # V4 Phase 2 guards (always run)
+      - name: Python no-mock check
+        run: uv run python scripts/check_no_mock.py src/ tests/
+      - name: TypeScript no-mock check
+        run: node scripts/check_no_mock_ts.mjs frontend/
+      - name: Validate Phase 2 runtime config
+        run: uv run python scripts/validate_phase2_config.py
+      - name: Lint workflow check commands
+        run: |
+          for f in delivery/v4-workflows.yaml delivery/v4-phase2-workflows.yaml; do
+            if [ -f "$f" ]; then
+              uv run python scripts/lint_workflow_checks.py "$f"
+            fi
+          done
 
   # Audit system self-check (triggered by audit infrastructure changes)
   audit-system-check:
