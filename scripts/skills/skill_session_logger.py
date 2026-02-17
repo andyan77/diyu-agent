@@ -20,7 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -45,7 +45,7 @@ def log_step(
     log_path = get_session_log_path()
 
     entry = {
-        "timestamp": datetime.now(UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),  # noqa: UP017 - runs on system Python 3.10
         "skill": skill,
         "step": step,
         "status": status,
