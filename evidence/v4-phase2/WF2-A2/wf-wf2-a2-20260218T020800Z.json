@@ -1,0 +1,75 @@
+{
+  "workflow": "WF2-A2",
+  "type": "gate_exit",
+  "commit_sha": "384e7f6",
+  "timestamp": "20260218T020800Z",
+  "checks": [
+    {
+      "id": "verify_phase",
+      "desc": "verify_phase.py --phase 2 (12 hard + 1 soft)",
+      "status": "pass",
+      "detail": {
+        "hard_total": 12,
+        "hard_pass": 12,
+        "soft_total": 1,
+        "soft_pass": 1,
+        "soft_skip": 0,
+        "pass_rate": 1.0,
+        "go_no_go": "GO"
+      }
+    },
+    {
+      "id": "governance",
+      "desc": "taskcard-governance pipeline (W1-W4)",
+      "status": "pass",
+      "detail": {
+        "passed": 4,
+        "total": 4,
+        "steps": ["W1:schema_normalization", "W2:traceability_link", "W3:acceptance_normalizer", "W4:evidence_gate"]
+      }
+    },
+    {
+      "id": "security_scan",
+      "desc": "security_scan.sh --full (semgrep + pip-audit)",
+      "status": "pass",
+      "detail": {
+        "semgrep_findings": 0,
+        "semgrep_rules": 313,
+        "semgrep_files": 133,
+        "pip_audit": "PASS"
+      }
+    },
+    {
+      "id": "audit_e2e",
+      "desc": "make audit-e2e (cross-ref + fix-verify + validate)",
+      "status": "pass",
+      "detail": {
+        "review_report": "PASS",
+        "cross_audit_report": "PASS",
+        "fix_verification_report": "PASS"
+      }
+    },
+    {
+      "id": "agent_dispatch",
+      "desc": "check_agent_dispatch.py (dispatch coverage)",
+      "status": "pass",
+      "detail": {
+        "dispatches_verified": 8,
+        "dispatches_expected": 8
+      }
+    }
+  ],
+  "total": 5,
+  "passed": 5,
+  "failed": 0,
+  "gate_result": "GO",
+  "branch_protection": {
+    "status": "compensated",
+    "reason": "private repo + GitHub Free plan (HTTP 403)",
+    "compensating_controls": [
+      "CI pipeline (14 jobs)",
+      "pre-push hook (scripts/pre-push-guard.sh)",
+      "verify_phase.py gate checks"
+    ]
+  }
+}
