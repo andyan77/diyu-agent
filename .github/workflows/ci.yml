@@ -174,7 +174,7 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: frontend/pnpm-lock.yaml
       - run: cd frontend && pnpm install --frozen-lockfile
-      - run: cd frontend && pnpm run lint -- --rule 'jsx-a11y/alt-text:error' --rule 'jsx-a11y/aria-props:error'
+      - run: cd frontend && pnpm run lint
 
   # D2-2: OpenAPI type sync CI gate
   openapi-sync:
