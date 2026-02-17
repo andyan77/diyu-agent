@@ -256,16 +256,16 @@ phases:
       - {id: "FA2-2", layer: "FE-Admin", summary: "Organization management", status: "done"}
       - {id: "FA2-3", layer: "FE-Admin", summary: "Audit log viewer", status: "done"}
       # Crosscutting
-      - {id: "D2-1", layer: "Delivery", summary: "Frontend CI pipeline"}
-      - {id: "D2-2", layer: "Delivery", summary: "OpenAPI type sync CI gate"}
-      - {id: "D2-3", layer: "Delivery", summary: "Dogfooding environment"}
-      - {id: "D2-4", layer: "Delivery", summary: "Resource consumption data"}
-      - {id: "D2-5", layer: "Delivery", summary: "verify-phase-2"}
-      - {id: "OS2-1", layer: "Observability", summary: "4 golden signals"}
-      - {id: "OS2-2", layer: "Observability", summary: "Basic alert rules"}
-      - {id: "OS2-3", layer: "Observability", summary: "Token anomaly alert"}
-      - {id: "OS2-4", layer: "Observability", summary: "Structured error logging"}
-      - {id: "OS2-5", layer: "Observability", summary: "FE error boundary + Sentry"}
+      - {id: "D2-1", layer: "Delivery", summary: "Frontend CI pipeline", status: "done"}
+      - {id: "D2-2", layer: "Delivery", summary: "OpenAPI type sync CI gate", status: "done"}
+      - {id: "D2-3", layer: "Delivery", summary: "Dogfooding environment", status: "done"}
+      - {id: "D2-4", layer: "Delivery", summary: "Resource consumption data", status: "done"}
+      - {id: "D2-5", layer: "Delivery", summary: "verify-phase-2", status: "done"}
+      - {id: "OS2-1", layer: "Observability", summary: "4 golden signals", status: "done"}
+      - {id: "OS2-2", layer: "Observability", summary: "Basic alert rules", status: "done"}
+      - {id: "OS2-3", layer: "Observability", summary: "Token anomaly alert", status: "done"}
+      - {id: "OS2-4", layer: "Observability", summary: "Structured error logging", status: "done"}
+      - {id: "OS2-5", layer: "Observability", summary: "FE error boundary + Sentry", status: "done"}
     exit_criteria:
       hard:
         - id: "p2-brain-engine"

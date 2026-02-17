@@ -1,0 +1,75 @@
+# DIYU Agent Prometheus Alert Rules
+# Task cards: OS2-2 (basic alerts), OS2-3 (token anomaly)
+#
+# Alert levels: P0-Critical, P1-Warning, P2-Info
+
+groups:
+  - name: diyu_golden_signals
+    rules:
+      # OS2-2: Error rate > 1% over 5 minutes
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_errors_total[5m]))
+          / sum(rate(http_requests_total[5m]))
+          > 0.01
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "HTTP error rate above 1%"
+          description: >
+            Error rate is {{ $value | humanizePercentage }} over the last 5 minutes.
+            Threshold: 1%.
+
+      # OS2-2: P95 latency > 2s over 5 minutes
+      - alert: HighP95Latency
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
+          > 2
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "P95 latency above 2 seconds"
+          description: >
+            P95 request latency is {{ $value | humanizeDuration }}.
+            Threshold: 2 seconds.
+
+      # OS2-2: Service down (no traffic for 5 minutes)
+      - alert: ServiceDown
+        expr: |
+          sum(rate(http_requests_total[5m])) == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "No HTTP traffic detected"
+          description: "No requests received in the last 5 minutes."
+
+  - name: diyu_token_alerts
+    rules:
+      # OS2-3: Token consumption anomaly - single conversation exceeds threshold
+      - alert: TokenConsumptionAnomaly
+        expr: |
+          max(llm_tokens_per_conversation) > 50000
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Abnormal token consumption detected"
+          description: >
+            A single conversation consumed {{ $value }} tokens.
+            Threshold: 50,000 tokens.
+
+      # OS2-3: Aggregate token rate anomaly
+      - alert: TokenRateAnomaly
+        expr: |
+          sum(rate(llm_tokens_total[10m])) > 100000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High aggregate token consumption rate"
+          description: >
+            Token consumption rate is {{ $value }} tokens/s over 10 minutes.
+            Threshold: 100,000 tokens/10min.
