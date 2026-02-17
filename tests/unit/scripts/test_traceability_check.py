@@ -7,19 +7,20 @@ Tests cover:
   - M-Track cross-reference extraction
   - Dual coverage output (main_coverage vs all_coverage)
   - Threshold-based PASS/FAIL
+
+Uses DI parameters (matrix_path, cards_dir) instead of runtime mocking.
 """
 
 from __future__ import annotations
 
 # ---------------------------------------------------------------------------
-# Import the module under test.  We patch MATRIX_PATH / TASK_CARDS_DIR
-# in each test so that real filesystem paths are not required.
+# Import the module under test.  We pass matrix_path / cards_dir
+# via DI parameters so that real filesystem paths are not required.
 # ---------------------------------------------------------------------------
 import importlib
 import sys
 import textwrap
 from pathlib import Path
-from unittest.mock import patch
 
 import yaml
 
@@ -120,8 +121,7 @@ class TestScanTaskCards:
         cards_dir.mkdir()
         (cards_dir / "brain.md").write_text(self.SAMPLE_CARD)
 
-        with patch.object(traceability, "TASK_CARDS_DIR", cards_dir):
-            result = traceability.scan_task_cards()
+        result = traceability.scan_task_cards(cards_dir=cards_dir)
 
         assert "B0-1" in result["main_refs"]
         assert "B2-1" in result["main_refs"]
@@ -133,8 +133,7 @@ class TestScanTaskCards:
         cards_dir.mkdir()
         (cards_dir / "brain.md").write_text(self.SAMPLE_CARD)
 
-        with patch.object(traceability, "TASK_CARDS_DIR", cards_dir):
-            result = traceability.scan_task_cards()
+        result = traceability.scan_task_cards(cards_dir=cards_dir)
 
         assert "MM1-4" in result["m_track_refs"]
 
@@ -144,8 +143,7 @@ class TestScanTaskCards:
         cards_dir.mkdir()
         (cards_dir / "test.md").write_text("> 矩阵条目: T0-1\n")
 
-        with patch.object(traceability, "TASK_CARDS_DIR", cards_dir):
-            result = traceability.scan_task_cards()
+        result = traceability.scan_task_cards(cards_dir=cards_dir)
 
         assert "main_refs" in result
         assert "m_track_refs" in result
@@ -193,13 +191,9 @@ class TestDualCoverage:
         """)
         cards_dir = self._make_cards(tmp_path, card_content)
 
-        with (
-            patch.object(traceability, "MATRIX_PATH", yaml_path),
-            patch.object(traceability, "TASK_CARDS_DIR", cards_dir),
-        ):
-            milestone_ids = traceability.load_milestone_ids()
-            card_data = traceability.scan_task_cards()
-            result = traceability.compute_result(milestone_ids, card_data)
+        milestone_ids = traceability.load_milestone_ids(matrix_path=yaml_path)
+        card_data = traceability.scan_task_cards(cards_dir=cards_dir)
+        result = traceability.compute_result(milestone_ids, card_data)
 
         # main_coverage: A-1 and A-2 are primary refs = 2/3
         assert result["main_coverage"]["covered"] == 2
@@ -221,13 +215,9 @@ class TestDualCoverage:
             lines.append(f"> 矩阵条目: X-{i}")
         cards_dir = self._make_cards(tmp_path, "\n".join(lines))
 
-        with (
-            patch.object(traceability, "MATRIX_PATH", yaml_path),
-            patch.object(traceability, "TASK_CARDS_DIR", cards_dir),
-        ):
-            milestone_ids = traceability.load_milestone_ids()
-            card_data = traceability.scan_task_cards()
-            result = traceability.compute_result(milestone_ids, card_data)
+        milestone_ids = traceability.load_milestone_ids(matrix_path=yaml_path)
+        card_data = traceability.scan_task_cards(cards_dir=cards_dir)
+        result = traceability.compute_result(milestone_ids, card_data)
 
         assert result["status"] == "FAIL"
         assert result["all_coverage"]["coverage_pct"] == 95.0
@@ -241,13 +231,9 @@ class TestDualCoverage:
         card_content = "### TASK-1\n> 矩阵条目: Z-1\n### TASK-2\n> 矩阵条目: Z-2\n"
         cards_dir = self._make_cards(tmp_path, card_content)
 
-        with (
-            patch.object(traceability, "MATRIX_PATH", yaml_path),
-            patch.object(traceability, "TASK_CARDS_DIR", cards_dir),
-        ):
-            milestone_ids = traceability.load_milestone_ids()
-            card_data = traceability.scan_task_cards()
-            result = traceability.compute_result(milestone_ids, card_data)
+        milestone_ids = traceability.load_milestone_ids(matrix_path=yaml_path)
+        card_data = traceability.scan_task_cards(cards_dir=cards_dir)
+        result = traceability.compute_result(milestone_ids, card_data)
 
         assert result["status"] == "PASS"
         assert result["main_coverage"]["coverage_pct"] == 100.0
@@ -267,7 +253,6 @@ class TestLoadMilestoneIds:
         yaml_path = tmp_path / "matrix.yaml"
         yaml_path.write_text(yaml.dump(data))
 
-        with patch.object(traceability, "MATRIX_PATH", yaml_path):
-            ids = traceability.load_milestone_ids(phase_filter=0)
+        ids = traceability.load_milestone_ids(phase_filter=0, matrix_path=yaml_path)
 
         assert ids == {"A-1"}

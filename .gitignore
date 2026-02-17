@@ -59,7 +59,10 @@ Thumbs.db
 .audit/
 
 # Evidence (CI-generated, not committed manually)
-evidence/
+evidence/*
+!evidence/v4-phase2/
+evidence/v4-phase2/*
+!evidence/v4-phase2/.gitkeep
 
 # OS
 *.log

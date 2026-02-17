@@ -48,12 +48,17 @@ M_TRACK_RE = re.compile(r"M-Track:\s*(MM\S+)")
 DEFAULT_THRESHOLD = 98.0
 
 
-def load_milestone_ids(phase_filter: int | None = None) -> set[str]:
+def load_milestone_ids(
+    phase_filter: int | None = None,
+    *,
+    matrix_path: Path | None = None,
+) -> set[str]:
     """Extract all milestone IDs from YAML milestones[] arrays."""
-    if not MATRIX_PATH.exists():
-        print(f"ERROR: {MATRIX_PATH} not found", file=sys.stderr)
+    path = matrix_path or MATRIX_PATH
+    if not path.exists():
+        print(f"ERROR: {path} not found", file=sys.stderr)
         sys.exit(2)
-    with MATRIX_PATH.open() as f:
+    with path.open() as f:
         data = yaml.safe_load(f)
 
     ids: set[str] = set()
@@ -69,7 +74,10 @@ def load_milestone_ids(phase_filter: int | None = None) -> set[str]:
     return ids
 
 
-def scan_task_cards() -> dict[str, dict[str, list[str]]]:
+def scan_task_cards(
+    *,
+    cards_dir: Path | None = None,
+) -> dict[str, dict[str, list[str]]]:
     """Scan task cards for primary refs and M-Track cross-refs.
 
     Returns:
@@ -81,10 +89,11 @@ def scan_task_cards() -> dict[str, dict[str, list[str]]]:
     main_refs: dict[str, list[str]] = {}
     m_track_refs: dict[str, list[str]] = {}
 
-    if not TASK_CARDS_DIR.exists():
+    base = cards_dir or TASK_CARDS_DIR
+    if not base.exists():
         return {"main_refs": main_refs, "m_track_refs": m_track_refs}
 
-    for md_file in TASK_CARDS_DIR.rglob("*.md"):
+    for md_file in base.rglob("*.md"):
         current_task: str | None = None
         for line in md_file.read_text(errors="replace").splitlines():
             heading = TASK_HEADING_RE.match(line)

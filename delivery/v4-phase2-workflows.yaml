@@ -1,0 +1,277 @@
+# V4 Phase 2 Build Orchestration Workflows
+# Machine-readable definitions for the 9-WF pipeline.
+#
+# Architecture:
+#   WF2-P0 (prereq) -> WF2-A1 (gate entry)
+#   -> WF2-B1 (infra+memory) -> WF2-B2 (brain+tool) -> WF2-B3 (gateway)
+#   -> WF2-B4 (fe-web) + WF2-B5 (fe-admin) -> WF2-B6 (crosscutting)
+#   -> WF2-A2 (gate exit)
+#
+# Relation to existing governance pipeline (W1-W4 in taskcard-governance):
+#   W1-W4 is a VALIDATION pipeline (schema + traceability + acceptance + evidence gate).
+#   WF2-P0~A2 is a BUILD pipeline (prereq + validate + implement + verify).
+#   WF2-A1 and WF2-A2 invoke the W1-W4 governance pipeline as part of their checks.
+#
+# Agent dispatch is MANDATORY, not optional.
+# Guard scripts are hard gates -- WF fails if any guard fails.
+
+schema_version: "1.0"
+phase: "phase_2"
+phase_name: "Core Conversation + Knowledge"
+
+evidence_root: "evidence/v4-phase2"
+checkpoint_file: "evidence/v4-phase2/checkpoint.json"
+execution_mode: "serial"
+
+workflows:
+
+  # ── WF2-P0: Prerequisites ──────────────────────────
+  - id: "WF2-P0"
+    name: "Phase 2 Prerequisites"
+    description: "Phase 1 gate + Docker services + runtime config validation"
+    depends_on: []
+    timeout_s: 300
+    task_cards: []
+    agent_dispatch: []
+    checks:
+      - cmd: "uv run python scripts/verify_phase.py --phase 1 --json"
+        desc: "Phase 1 gate GO"
+      - cmd: "uv run python scripts/validate_phase2_config.py"
+        desc: "Runtime config validation (primary + enabled fallback)"
+      - cmd: "docker compose exec postgres pg_isready -U diyu"
+        desc: "PostgreSQL ready"
+      - cmd: "docker compose exec redis redis-cli ping"
+        desc: "Redis ready"
+    on_failure: "abort"
+
+  # ── WF2-A1: Gate Entry ─────────────────────────────
+  - id: "WF2-A1"
+    name: "Phase 2 Gate Entry"
+    description: "Governance pipeline + no-mock baseline + workflow lint"
+    depends_on: ["WF2-P0"]
+    timeout_s: 300
+    task_cards: []
+    agent_dispatch: []
+    checks:
+      - cmd: "bash .claude/skills/taskcard-governance/scripts/run_all.sh"
+        desc: "W1-W4 governance pipeline [taskcard-governance]"
+      - cmd: "uv run python scripts/check_task_schema.py --mode full --json"
+        desc: "Task card schema [guard-taskcard-schema]"
+      - cmd: "uv run python scripts/check_no_mock.py src/ tests/"
+        desc: "Python no-mock baseline"
+      - cmd: "uv run python scripts/lint_workflow_checks.py delivery/v4-phase2-workflows.yaml"
+        desc: "Workflow check whitelist validation"
+      - cmd: "uv run python scripts/check_acceptance_gate.py --json"
+        desc: "Acceptance gate (env-dep mapping)"
+      - cmd: "uv run mypy src/"
+        desc: "Backend typecheck (mypy)"
+      - cmd: "uv run python scripts/skills/validate_skills_governance.py"
+        desc: "Skills governance validation"
+    on_failure: "abort"
+
+  # ── WF2-B1: Infrastructure + MemoryCore ────────────
+  - id: "WF2-B1"
+    name: "Infrastructure + MemoryCore"
+    description: "I2-1~5, MC2-1~7: DB tables, Redis, Celery, MemoryCore CRUD, pgvector"
+    depends_on: ["WF2-A1"]
+    timeout_s: 600
+    task_cards:
+      - "I2-1"   # Redis cache + session
+      - "I2-2"   # Celery Worker + Redis Broker
+      - "I2-3"   # Token billing minimal loop
+      - "I2-4"   # conversation_events table
+      - "I2-5"   # memory_items + pgvector
+      - "MC2-1"  # PG adapter replaces Stub
+      - "MC2-2"  # conversation_events CRUD
+      - "MC2-3"  # memory_items CRUD versioned
+      - "MC2-4"  # pgvector semantic search
+      - "MC2-5"  # Evolution Pipeline
+      - "MC2-6"  # injection/retrieval receipts
+      - "MC2-7"  # confidence_effective decay
+    agent_dispatch:
+      - agent: "diyu-tdd-guide"
+        scope: "all cards"
+    checks:
+      - cmd: "uv run pytest tests/unit/memory/ -q --tb=short"
+        desc: "MemoryCore unit tests"
+      - cmd: "uv run pytest tests/unit/infra/ -q --tb=short -k phase2"
+        desc: "Infra unit tests"
+      - cmd: "uv run pytest tests/integration/ -q --tb=short -k 'memory or redis or celery'"
+        desc: "MemoryCore + Infra integration"
+      - cmd: "bash scripts/check_migration.sh --json"
+        desc: "Migration safety [guard-migration-safety]"
+      - cmd: "bash scripts/check_rls.sh --json"
+        desc: "RLS isolation"
+      - cmd: "bash scripts/check_layer_deps.sh --json"
+        desc: "Layer boundary [guard-layer-boundary]"
+    on_failure: "abort"
+
+  # ── WF2-B2: Brain + Tool Layer ─────────────────────
+  - id: "WF2-B2"
+    name: "Brain + Tool Layer"
+    description: "T2-1~3, B2-1~8: LLM integration, conversation engine, context assembler"
+    depends_on: ["WF2-B1"]
+    timeout_s: 600
+    task_cards:
+      - "T2-1"   # LLMCallPort real impl
+      - "T2-2"   # Model Registry + Fallback
+      - "T2-3"   # Token metering
+      - "B2-1"   # Conversation engine full impl
+      - "B2-2"   # Intent understanding
+      - "B2-3"   # Context Assembler v1
+      - "B2-4"   # Context Assembler CE (RRF)
+      - "B2-5"   # Memory write pipeline
+      - "B2-6"   # injection/retrieval receipts
+      - "B2-7"   # Graceful degradation
+      - "B2-8"   # WebSocket real-time chat
+    agent_dispatch:
+      - agent: "diyu-tdd-guide"
+        scope: "all cards"
+      - agent: "diyu-architect"
+        scope: "B2-1, B2-3, B2-4, T2-1"
+        reason: "conversation engine architecture, context assembler design, LLMCallPort impl"
+    checks:
+      - cmd: "uv run pytest tests/unit/brain/ -q --tb=short"
+        desc: "Brain unit tests"
+      - cmd: "uv run pytest tests/unit/tool/ -q --tb=short"
+        desc: "Tool layer unit tests"
+      - cmd: "uv run pytest tests/integration/ -q --tb=short -k 'brain or llm'"
+        desc: "Brain + Tool integration"
+      - cmd: "bash scripts/check_layer_deps.sh --json"
+        desc: "Layer boundary [guard-layer-boundary]"
+      - cmd: "bash scripts/check_port_compat.sh --json"
+        desc: "Port compatibility [guard-port-compat]"
+    on_failure: "abort"
+
+  # ── WF2-B3: Gateway Layer ──────────────────────────
+  - id: "WF2-B3"
+    name: "Gateway Layer"
+    description: "G2-1~7: REST API, WebSocket, LLM Gateway, Rate limiting, File upload, SSE"
+    depends_on: ["WF2-B2"]
+    timeout_s: 600
+    task_cards:
+      - "G2-1"   # Conversation REST API
+      - "G2-2"   # WebSocket streaming
+      - "G2-3"   # LLM Gateway (LiteLLM)
+      - "G2-4"   # Token budget pre-check
+      - "G2-5"   # Rate limiting middleware
+      - "G2-6"   # 3-step file upload
+      - "G2-7"   # SSE notification endpoint
+    agent_dispatch:
+      - agent: "diyu-tdd-guide"
+        scope: "all cards"
+      - agent: "diyu-security-reviewer"
+        scope: "G2-1, G2-2, G2-4, G2-5, G2-6"
+        reason: "REST/WS auth, token budget bypass, rate limiting bypass, file upload injection"
+    checks:
+      - cmd: "uv run pytest tests/unit/gateway/ -q --tb=short"
+        desc: "Gateway unit tests"
+      - cmd: "uv run pytest tests/integration/ -q --tb=short -k 'rest or sse or upload or websocket'"
+        desc: "Gateway integration"
+      - cmd: "bash scripts/check_layer_deps.sh --json"
+        desc: "Layer boundary [guard-layer-boundary]"
+    on_failure: "abort"
+
+  # ── WF2-B4: Frontend Web ───────────────────────────
+  - id: "WF2-B4"
+    name: "Frontend Web"
+    description: "FW2-1~9: Chat UI, Streaming, History, Memory panel, WS/SSE client"
+    depends_on: ["WF2-B3"]
+    timeout_s: 600
+    task_cards:
+      - "FW2-1"  # Chat dual-pane layout
+      - "FW2-2"  # Streaming message render
+      - "FW2-3"  # Chat history management
+      - "FW2-4"  # Memory context panel
+      - "FW2-5"  # Message actions
+      - "FW2-6"  # File upload (drag + progress)
+      - "FW2-7"  # WS connection management
+      - "FW2-8"  # OpenAPI type sync
+      - "FW2-9"  # SSE EventSource client
+    agent_dispatch:
+      - agent: "diyu-tdd-guide"
+        scope: "all cards"
+    checks:
+      - cmd: "cd frontend && pnpm run build --filter web"
+        desc: "Frontend web build"
+      - cmd: "cd frontend && pnpm run typecheck --filter web"
+        desc: "Frontend web typecheck"
+      - cmd: "cd frontend && pnpm run test --filter web"
+        desc: "Frontend web tests"
+      - cmd: "cd frontend && pnpm --filter @diyu/api-client run test"
+        desc: "Contract tests (api-client)"
+    on_failure: "abort"
+
+  # ── WF2-B5: Frontend Admin ─────────────────────────
+  - id: "WF2-B5"
+    name: "Frontend Admin"
+    description: "FA2-1~3: User management, Org management, Audit log"
+    depends_on: ["WF2-B3"]
+    timeout_s: 300
+    task_cards:
+      - "FA2-1"  # User management DataTable
+      - "FA2-2"  # Organization management
+      - "FA2-3"  # Audit log viewer
+    agent_dispatch:
+      - agent: "diyu-tdd-guide"
+        scope: "all cards"
+    checks:
+      - cmd: "cd frontend && pnpm run build --filter admin"
+        desc: "Frontend admin build"
+      - cmd: "cd frontend && pnpm run typecheck --filter admin"
+        desc: "Frontend admin typecheck"
+      - cmd: "cd frontend && pnpm run test --filter admin"
+        desc: "Frontend admin tests"
+    on_failure: "abort"
+
+  # ── WF2-B6: Crosscutting ───────────────────────────
+  - id: "WF2-B6"
+    name: "Crosscutting"
+    description: "D2-1~5, OS2-1~5: CI, Dogfood, Monitoring, Alerting, Error handling"
+    depends_on: ["WF2-B4", "WF2-B5"]
+    timeout_s: 600
+    task_cards:
+      - "D2-1"   # Frontend CI pipeline
+      - "D2-2"   # OpenAPI type sync CI gate
+      - "D2-3"   # Dogfooding environment
+      - "D2-4"   # Resource consumption data
+      - "D2-5"   # verify-phase-2
+      - "OS2-1"  # 4 golden signals
+      - "OS2-2"  # Basic alert rules
+      - "OS2-3"  # Token anomaly alert
+      - "OS2-4"  # Structured error logging
+      - "OS2-5"  # FE error boundary + Sentry
+    agent_dispatch:
+      - agent: "diyu-tdd-guide"
+        scope: "all cards"
+    checks:
+      - cmd: "make lint"
+        desc: "Full lint"
+      - cmd: "make test"
+        desc: "Full test suite"
+      - cmd: "bash scripts/check_layer_deps.sh --json"
+        desc: "Layer boundary [guard-layer-boundary]"
+      - cmd: "bash scripts/generate_sbom.sh --validate"
+        desc: "SBOM generation + validation"
+    on_failure: "abort"
+
+  # ── WF2-A2: Gate Exit ──────────────────────────────
+  - id: "WF2-A2"
+    name: "Phase 2 Gate Exit"
+    description: "Phase 2 final gate: exit criteria + governance + audit + dispatch audit"
+    depends_on: ["WF2-B6"]
+    timeout_s: 900
+    task_cards: []
+    agent_dispatch: []
+    checks:
+      - cmd: "uv run python scripts/verify_phase.py --phase 2 --json"
+        desc: "Phase 2 exit criteria -- 12 hard (sole truth source)"
+      - cmd: "bash .claude/skills/taskcard-governance/scripts/run_all.sh"
+        desc: "W1-W4 governance pipeline [taskcard-governance]"
+      - cmd: "bash scripts/security_scan.sh --full"
+        desc: "Security scan (semgrep + pip-audit)"
+      - cmd: "make audit-e2e"
+        desc: "systematic-review + cross-reference-audit + adversarial-fix-verify + validate_artifacts"
+      - cmd: "uv run python scripts/check_agent_dispatch.py evidence/v4-phase2/agent-dispatch.jsonl delivery/v4-phase2-workflows.yaml"
+        desc: "Agent dispatch completeness audit"
+    on_failure: "abort"

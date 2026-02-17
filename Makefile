@@ -2,6 +2,7 @@
        scaffold-phase-0 scaffold-adr audit-report audit-artifacts audit-e2e \
        full-audit skills-validate skills-smoke check-acceptance-commands \
        replay-skill-session sbom sbom-json v4-status v4-plan v4-run v4-resume \
+       v4p2-status v4p2-plan v4p2-run v4p2-resume v4p2-reset v4p2-validate-config \
        security-scan security-scan-quick clean help
 
 PYTHON := python3
@@ -166,6 +167,28 @@ v4-run: ## Run V4 pipeline (all pending workflows)
 
 v4-resume: ## Resume V4 from last checkpoint
 	@bash $(SCRIPTS)/run_phase1_v4.sh --resume
+
+# ============================================================
+# V4 Phase 2 Build Orchestration
+# ============================================================
+
+v4p2-status: ## Show V4 Phase 2 pipeline status
+	@bash $(SCRIPTS)/run_phase2_v4.sh --status
+
+v4p2-plan: ## Show V4 Phase 2 execution plan (dry-run)
+	@bash $(SCRIPTS)/run_phase2_v4.sh --dry-run
+
+v4p2-run: ## Run V4 Phase 2 pipeline (all pending workflows)
+	@bash $(SCRIPTS)/run_phase2_v4.sh --json
+
+v4p2-resume: ## Resume V4 Phase 2 from last checkpoint
+	@bash $(SCRIPTS)/run_phase2_v4.sh --resume
+
+v4p2-reset: ## Clear V4 Phase 2 checkpoint (start fresh)
+	@bash $(SCRIPTS)/run_phase2_v4.sh --reset
+
+v4p2-validate-config: ## Validate Phase 2 runtime config
+	@uv run python $(SCRIPTS)/validate_phase2_config.py
 
 # ============================================================
 # Security Scanning (I1-7, D1-1)

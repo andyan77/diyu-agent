@@ -270,23 +270,51 @@ phases:
       hard:
         - id: "p2-brain-engine"
           description: "Brain conversation engine tests pass"
-          check: "uv run pytest tests/unit/brain/ -q"
+          check: "uv run pytest tests/unit/brain/ -q --tb=short"
 
         - id: "p2-memory-core"
-          description: "MemoryCore CRUD tests pass"
-          check: "uv run pytest tests/unit/memory/ -q"
+          description: "MemoryCore CRUD + pgvector tests pass"
+          check: "uv run pytest tests/unit/memory/ -q --tb=short"
 
-        - id: "p2-gateway-ws"
-          description: "WebSocket gateway tests pass"
-          check: "uv run pytest tests/unit/gateway/test_websocket.py -q"
+        - id: "p2-gateway-all"
+          description: "Gateway unit tests pass (REST + WS + SSE + auth + rate limit)"
+          check: "uv run pytest tests/unit/gateway/ -q --tb=short"
 
-        - id: "p2-fe-chat"
-          description: "Frontend chat page builds"
+        - id: "p2-fe-web-build"
+          description: "Frontend web app builds"
           check: "cd frontend && pnpm run build --filter web"
 
+        - id: "p2-fe-admin-build"
+          description: "Frontend admin app builds"
+          check: "cd frontend && pnpm run build --filter admin"
+
         - id: "p2-knowledge-port"
-          description: "Knowledge port integration tests"
-          check: "uv run pytest tests/unit/knowledge/ -q"
+          description: "Knowledge port unit tests pass"
+          check: "uv run pytest tests/unit/knowledge/ -q --tb=short"
+
+        - id: "p2-integration"
+          description: "Integration tests pass (memory + redis + celery + brain + llm)"
+          check: "uv run pytest tests/integration/ -q --tb=short"
+
+        - id: "p2-lint"
+          description: "Full lint (ruff + frontend ESLint)"
+          check: "make lint"
+
+        - id: "p2-no-mock-py"
+          description: "No banned mock patterns in Python"
+          check: "uv run python scripts/check_no_mock.py src/ tests/"
+
+        - id: "p2-no-mock-ts"
+          description: "No banned mock patterns in TypeScript"
+          check: "cd frontend && node ../scripts/check_no_mock_ts.mjs ."
+
+        - id: "p2-layer-boundary"
+          description: "Layer boundary violations = 0"
+          check: "bash scripts/check_layer_deps.sh --json"
+
+        - id: "p2-security-scan"
+          description: "Security scan (semgrep + pip-audit)"
+          check: "bash scripts/security_scan.sh --full"
 
       soft:
         - id: "p2-streaming"
