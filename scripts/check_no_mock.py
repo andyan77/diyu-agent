@@ -10,6 +10,10 @@ Allowed patterns (Port DI adapters):
   - Classes implementing Port ABCs with preset return values
   - Fixture functions returning dataclass instances
 
+Line-level exemption:
+  Add ``# no-mock-exempt`` (optionally followed by ``: <reason>``) to any
+  source line to suppress violations on that line.
+
 Usage:
     uv run python scripts/check_no_mock.py src/ tests/
     uv run python scripts/check_no_mock.py --json src/ tests/
@@ -46,46 +50,54 @@ BANNED_ATTR_CALLS = {
 }
 
 
+EXEMPT_MARKER = "# no-mock-exempt"
+
+
 class MockDetector(ast.NodeVisitor):
-    def __init__(self, filepath: str) -> None:
+    def __init__(self, filepath: str, source_lines: list[str]) -> None:
         self.filepath = filepath
+        self.source_lines = source_lines
         self.violations: list[dict[str, object]] = []
+
+    def _is_exempt(self, lineno: int) -> bool:
+        """Return True if the source line contains the exemption marker."""
+        if 1 <= lineno <= len(self.source_lines):
+            return EXEMPT_MARKER in self.source_lines[lineno - 1]
+        return False
+
+    def _add_violation(self, lineno: int, pattern: str, rule: str) -> None:
+        if not self._is_exempt(lineno):
+            self.violations.append(
+                {
+                    "file": self.filepath,
+                    "line": lineno,
+                    "pattern": pattern,
+                    "rule": rule,
+                }
+            )
 
     def visit_Import(self, node: ast.Import) -> None:
         for alias in node.names:
             if alias.name in BANNED_IMPORTS or alias.name.startswith("unittest.mock"):
-                self.violations.append(
-                    {
-                        "file": self.filepath,
-                        "line": node.lineno,
-                        "pattern": f"import {alias.name}",
-                        "rule": "banned-import",
-                    }
-                )
+                self._add_violation(node.lineno, f"import {alias.name}", "banned-import")
         self.generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         module = node.module or ""
         if module in BANNED_IMPORTS or module.startswith("unittest.mock"):
             for alias in node.names:
-                self.violations.append(
-                    {
-                        "file": self.filepath,
-                        "line": node.lineno,
-                        "pattern": f"from {module} import {alias.name}",
-                        "rule": "banned-import",
-                    }
+                self._add_violation(
+                    node.lineno,
+                    f"from {module} import {alias.name}",
+                    "banned-import",
                 )
         # Check for `from X import MagicMock` even from other modules
         for alias in node.names:
             if alias.name in BANNED_NAMES:
-                self.violations.append(
-                    {
-                        "file": self.filepath,
-                        "line": node.lineno,
-                        "pattern": f"from {module} import {alias.name}",
-                        "rule": "banned-name",
-                    }
+                self._add_violation(
+                    node.lineno,
+                    f"from {module} import {alias.name}",
+                    "banned-name",
                 )
         self.generic_visit(node)
 
@@ -94,26 +106,12 @@ class MockDetector(ast.NodeVisitor):
         if isinstance(node.value, ast.Name):
             full = f"{node.value.id}.{node.attr}"
             if full in BANNED_ATTR_CALLS:
-                self.violations.append(
-                    {
-                        "file": self.filepath,
-                        "line": node.lineno,
-                        "pattern": full,
-                        "rule": "banned-call",
-                    }
-                )
+                self._add_violation(node.lineno, full, "banned-call")
         self.generic_visit(node)
 
     def visit_Name(self, node: ast.Name) -> None:
         if node.id in BANNED_NAMES:
-            self.violations.append(
-                {
-                    "file": self.filepath,
-                    "line": node.lineno,
-                    "pattern": node.id,
-                    "rule": "banned-name",
-                }
-            )
+            self._add_violation(node.lineno, node.id, "banned-name")
         self.generic_visit(node)
 
 
@@ -124,7 +122,7 @@ def scan_file(filepath: Path) -> list[dict[str, object]]:
     except (SyntaxError, UnicodeDecodeError):
         return []
 
-    detector = MockDetector(str(filepath))
+    detector = MockDetector(str(filepath), source.splitlines())
     detector.visit(tree)
     return detector.violations
 

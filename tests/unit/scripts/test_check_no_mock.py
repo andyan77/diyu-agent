@@ -65,3 +65,54 @@ class TestConftestSkip:
 
         violations = check_no_mock.scan_dirs([str(tmp_path / "tests")])
         assert len(violations) == 0
+
+
+class TestNoMockExempt:
+    """Verify # no-mock-exempt line-level exemption."""
+
+    def test_exempt_import_skipped(self, tmp_path: Path):
+        """Line with # no-mock-exempt must not produce a violation."""
+        f = tmp_path / "test_ex.py"
+        f.write_text("from unittest.mock import patch  # no-mock-exempt: legacy SDK\n")
+
+        violations = check_no_mock.scan_file(f)
+        assert len(violations) == 0
+
+    def test_exempt_name_skipped(self, tmp_path: Path):
+        """MagicMock usage with # no-mock-exempt must be skipped."""
+        f = tmp_path / "test_ex.py"
+        f.write_text(
+            "from unittest.mock import MagicMock  # no-mock-exempt: third-party\n"
+            "x = MagicMock()  # no-mock-exempt: no DI available\n"
+        )
+
+        violations = check_no_mock.scan_file(f)
+        assert len(violations) == 0
+
+    def test_non_exempt_still_caught(self, tmp_path: Path):
+        """Lines WITHOUT # no-mock-exempt must still produce violations."""
+        f = tmp_path / "test_ex.py"
+        f.write_text(
+            "from unittest.mock import patch  # no-mock-exempt: ok\n"
+            "from unittest.mock import MagicMock\n"
+        )
+
+        violations = check_no_mock.scan_file(f)
+        assert len(violations) >= 1
+        assert all(v["line"] == 2 for v in violations)
+
+    def test_exempt_attr_call_skipped(self, tmp_path: Path):
+        """monkeypatch.setattr with # no-mock-exempt must be skipped."""
+        f = tmp_path / "test_ex.py"
+        f.write_text("monkeypatch.setattr(obj, 'x', 1)  # no-mock-exempt: fixture\n")
+
+        violations = check_no_mock.scan_file(f)
+        assert len(violations) == 0
+
+    def test_exempt_requires_reason(self, tmp_path: Path):
+        """Bare # no-mock-exempt (no colon+reason) must still suppress."""
+        f = tmp_path / "test_ex.py"
+        f.write_text("from unittest.mock import patch  # no-mock-exempt\n")
+
+        violations = check_no_mock.scan_file(f)
+        assert len(violations) == 0
