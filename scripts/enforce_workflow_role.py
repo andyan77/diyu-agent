@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 VALID_ROLES = {"W1", "W2", "W3", "W4"}
@@ -58,7 +58,7 @@ def main() -> None:
     match = actual == expected
 
     record = {
-        "timestamp": datetime.now(UTC).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),  # noqa: UP017 - runs on system Python 3.10
         "event": "role_check",
         "expected": expected,
         "actual": actual,
