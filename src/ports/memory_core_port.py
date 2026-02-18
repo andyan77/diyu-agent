@@ -28,6 +28,8 @@ class MemoryCorePort(ABC):
         user_id: UUID,
         query: str,
         top_k: int = 10,
+        *,
+        org_id: UUID | None = None,
     ) -> list[MemoryItem]:
         """Retrieve personal memories relevant to query.
 
@@ -35,6 +37,7 @@ class MemoryCorePort(ABC):
             user_id: Owner of the memories.
             query: Semantic query string.
             top_k: Maximum number of results.
+            org_id: Organization scope (required for PG adapter, optional for tests).
 
         Returns:
             List of MemoryItem sorted by relevance.
@@ -45,12 +48,15 @@ class MemoryCorePort(ABC):
         self,
         user_id: UUID,
         observation: Observation,
+        *,
+        org_id: UUID | None = None,
     ) -> WriteReceipt:
         """Write a new observation to memory.
 
         Args:
             user_id: Owner of the memory.
             observation: Observation to persist.
+            org_id: Organization scope (required for PG adapter, optional for tests).
 
         Returns:
             WriteReceipt with memory_id and version.

@@ -5,7 +5,8 @@ Acceptance: pytest tests/unit/gateway/test_ws.py -v
 
 from __future__ import annotations
 
-from uuid import uuid4
+from datetime import UTC, datetime
+from uuid import UUID, uuid4
 
 import pytest
 from starlette.testclient import TestClient
@@ -14,32 +15,60 @@ from src.brain.engine.ws_handler import WSChatHandler
 from src.gateway.app import create_app
 from src.gateway.middleware.auth import encode_token
 from src.gateway.ws.conversation import create_ws_router
-from src.memory.pg_adapter import PgMemoryCoreAdapter
 from src.ports.llm_call_port import LLMCallPort, LLMResponse
-from src.ports.storage_port import StoragePort
+from src.ports.memory_core_port import MemoryCorePort
+from src.shared.types import MemoryItem, Observation, WriteReceipt
 
 _JWT_SECRET = "test-secret-for-g2-2"  # noqa: S105
 
 
-class FakeStoragePort(StoragePort):
-    """In-memory storage for testing."""
+class FakeMemoryCore(MemoryCorePort):
+    """In-memory MemoryCorePort for testing."""
 
     def __init__(self) -> None:
-        self._data: dict[str, object] = {}
+        self._items: list[MemoryItem] = []
 
-    async def put(self, key, value, ttl=None):
-        self._data[key] = value
+    async def read_personal_memories(
+        self,
+        user_id: UUID,
+        query: str,
+        top_k: int = 10,
+        *,
+        org_id: UUID | None = None,
+    ) -> list[MemoryItem]:
+        results = [m for m in self._items if m.user_id == user_id]
+        if query:
+            results = [m for m in results if query.lower() in m.content.lower()]
+        return sorted(results, key=lambda m: m.confidence, reverse=True)[:top_k]
 
-    async def get(self, key):
-        return self._data.get(key)
+    async def write_observation(
+        self,
+        user_id: UUID,
+        observation: Observation,
+        *,
+        org_id: UUID | None = None,
+    ) -> WriteReceipt:
+        memory_id = uuid4()
+        now = datetime.now(UTC)
+        item = MemoryItem(
+            memory_id=memory_id,
+            user_id=user_id,
+            memory_type=observation.memory_type,
+            content=observation.content,
+            confidence=observation.confidence,
+            valid_at=now,
+            source_sessions=(
+                [observation.source_session_id] if observation.source_session_id else []
+            ),
+        )
+        self._items.append(item)
+        return WriteReceipt(memory_id=memory_id, version=1, written_at=now)
 
-    async def delete(self, key):
-        self._data.pop(key, None)
+    async def get_session(self, session_id: UUID) -> object:
+        return None
 
-    async def list_keys(self, pattern):
-        import fnmatch
-
-        return [k for k in self._data if fnmatch.fnmatch(k, pattern)]
+    async def archive_session(self, session_id: UUID) -> object:
+        return None
 
 
 class FakeLLM(LLMCallPort):
@@ -55,8 +84,7 @@ class FakeLLM(LLMCallPort):
 
 @pytest.fixture()
 def ws_handler():
-    storage = FakeStoragePort()
-    memory_core = PgMemoryCoreAdapter(storage=storage)
+    memory_core = FakeMemoryCore()
     llm = FakeLLM()
     from src.brain.engine.conversation import ConversationEngine
 

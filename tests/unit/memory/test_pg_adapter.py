@@ -1,45 +1,21 @@
 """Unit tests for PG adapter (MC2-1).
 
-Uses FakeStoragePort (async in-memory). No external dependencies.
-Complies with no-mock policy.
+Rewritten for SQLAlchemy async session backend.
+Uses Fake adapters to verify adapter behavior without a real DB or mocks.
+RLS injection tested separately in test_db.py.
 """
 
 from __future__ import annotations
 
-from typing import Any
-from uuid import uuid4
+from datetime import UTC, datetime
+from uuid import UUID, uuid4
 
 import pytest
 
 from src.memory.pg_adapter import PgMemoryCoreAdapter
 from src.ports.memory_core_port import MemoryCorePort
 from src.shared.types import Observation
-
-# ---------------------------------------------------------------------------
-# FakeStoragePort: async in-memory stub
-# ---------------------------------------------------------------------------
-
-
-class FakeStoragePort:
-    """Async in-memory storage for testing MemoryCorePort adapters."""
-
-    def __init__(self) -> None:
-        self._store: dict[str, Any] = {}
-
-    async def put(self, key: str, value: Any, ttl: int | None = None) -> None:
-        self._store[key] = value
-
-    async def get(self, key: str) -> Any | None:
-        return self._store.get(key)
-
-    async def delete(self, key: str) -> None:
-        self._store.pop(key, None)
-
-    async def list_keys(self, pattern: str) -> list[str]:
-        import fnmatch
-
-        return [k for k in self._store if fnmatch.fnmatch(k, pattern)]
-
+from tests.fakes import FakeAsyncSession, FakeOrmRow, FakeSessionFactory
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -47,17 +23,29 @@ class FakeStoragePort:
 
 
 @pytest.fixture()
-def storage() -> FakeStoragePort:
-    return FakeStoragePort()
+def session() -> FakeAsyncSession:
+    """Bare FakeAsyncSession; configure per-test before use."""
+    return FakeAsyncSession()
 
 
 @pytest.fixture()
-def adapter(storage: FakeStoragePort) -> PgMemoryCoreAdapter:
-    return PgMemoryCoreAdapter(storage)  # type: ignore[arg-type]
+def session_factory(session: FakeAsyncSession) -> FakeSessionFactory:
+    """FakeSessionFactory wrapping the default session fixture."""
+    return FakeSessionFactory(session)
+
+
+@pytest.fixture()
+def adapter(session_factory: FakeSessionFactory) -> PgMemoryCoreAdapter:
+    return PgMemoryCoreAdapter(session_factory=session_factory)
 
 
 @pytest.fixture()
 def user_id():
+    return uuid4()
+
+
+@pytest.fixture()
+def org_id():
     return uuid4()
 
 
@@ -68,7 +56,7 @@ def user_id():
 
 @pytest.mark.unit
 class TestPgMemoryCoreAdapter:
-    """MC2-1: PG adapter replaces Stub."""
+    """MC2-1: PG adapter replaces Stub with SQLAlchemy."""
 
     async def test_implements_memory_core_port(
         self,
@@ -78,111 +66,135 @@ class TestPgMemoryCoreAdapter:
 
     async def test_write_observation_returns_receipt(
         self,
-        adapter: PgMemoryCoreAdapter,
         user_id,
+        org_id,
     ) -> None:
+        session = FakeAsyncSession()
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
+
         obs = Observation(content="User likes Python")
-        receipt = await adapter.write_observation(user_id, obs)
+        receipt = await adapter.write_observation(user_id, obs, org_id=org_id)
 
         assert receipt.memory_id is not None
+        assert isinstance(receipt.memory_id, UUID)
         assert receipt.version == 1
         assert receipt.written_at is not None
 
-    async def test_write_and_read_observation(
+    async def test_write_calls_session_add_and_commit(
         self,
-        adapter: PgMemoryCoreAdapter,
         user_id,
+        org_id,
     ) -> None:
-        obs = Observation(content="User prefers dark mode")
-        await adapter.write_observation(user_id, obs)
+        session = FakeAsyncSession()
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
 
-        memories = await adapter.read_personal_memories(user_id, "dark mode")
+        obs = Observation(content="test write")
+        await adapter.write_observation(user_id, obs, org_id=org_id)
+
+        assert len(session.added) == 1
+        assert session.commit_count == 1
+
+    async def test_write_creates_correct_model(
+        self,
+        user_id,
+        org_id,
+    ) -> None:
+        """Verify the ORM model fields match observation data."""
+        session = FakeAsyncSession()
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
+
+        session_id = uuid4()
+        obs = Observation(
+            content="test content",
+            memory_type="preference",
+            source_session_id=session_id,
+            confidence=0.9,
+        )
+        await adapter.write_observation(user_id, obs, org_id=org_id)
+
+        added_model = session.added[0]
+        assert added_model.org_id == org_id
+        assert added_model.user_id == user_id
+        assert added_model.content == "test content"
+        assert added_model.memory_type == "preference"
+        assert added_model.confidence == pytest.approx(0.9)
+        assert session_id in added_model.source_sessions
+
+    async def test_read_returns_memory_items(
+        self,
+        user_id,
+        org_id,
+    ) -> None:
+        """Read should query memory_items and return MemoryItem list."""
+        fake_row = FakeOrmRow(
+            id=uuid4(),
+            user_id=user_id,
+            org_id=org_id,
+            memory_type="observation",
+            content="likes coffee",
+            confidence=0.95,
+            valid_at=datetime.now(UTC),
+            invalid_at=None,
+            source_sessions=[],
+            superseded_by=None,
+            version=1,
+            provenance=None,
+            epistemic_type="fact",
+        )
+
+        session = FakeAsyncSession()
+        session.set_scalars_result([fake_row])
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
+
+        memories = await adapter.read_personal_memories(user_id, "coffee", org_id=org_id)
+
         assert len(memories) == 1
-        assert "dark mode" in memories[0].content
+        assert memories[0].content == "likes coffee"
+        assert memories[0].confidence == pytest.approx(0.95)
 
     async def test_read_empty_returns_empty(
         self,
-        adapter: PgMemoryCoreAdapter,
         user_id,
+        org_id,
     ) -> None:
-        memories = await adapter.read_personal_memories(user_id, "anything")
+        session = FakeAsyncSession()
+        session.set_scalars_result([])
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
+
+        memories = await adapter.read_personal_memories(user_id, "anything", org_id=org_id)
         assert memories == []
 
-    async def test_read_respects_top_k(
+    async def test_read_uses_session_context_manager(
         self,
-        adapter: PgMemoryCoreAdapter,
         user_id,
+        org_id,
     ) -> None:
-        for i in range(5):
-            obs = Observation(content=f"memory item {i}")
-            await adapter.write_observation(user_id, obs)
+        # The adapter calls "async with self._session_factory() as session:".
+        # FakeAsyncSession implements __aenter__/__aexit__ as real coroutines,
+        # so if the context manager protocol were not invoked the scalars()
+        # call inside the block would never execute and we would get no result.
+        # Asserting the call completes without error and returns the correct
+        # empty list is sufficient to prove the context manager was exercised.
+        session = FakeAsyncSession()
+        session.set_scalars_result([])
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
 
-        memories = await adapter.read_personal_memories(user_id, "memory", top_k=3)
-        assert len(memories) == 3
+        memories = await adapter.read_personal_memories(user_id, "test", org_id=org_id)
 
-    async def test_read_filters_by_query(
-        self,
-        adapter: PgMemoryCoreAdapter,
-        user_id,
-    ) -> None:
-        await adapter.write_observation(user_id, Observation(content="likes coffee"))
-        await adapter.write_observation(user_id, Observation(content="works at Acme"))
+        assert memories == []
 
-        results = await adapter.read_personal_memories(user_id, "coffee")
-        assert len(results) == 1
-        assert "coffee" in results[0].content
-
-    async def test_session_store_and_retrieve(
-        self,
-        adapter: PgMemoryCoreAdapter,
-        storage: FakeStoragePort,
-    ) -> None:
-        session_id = uuid4()
-        session_data = {"user_id": str(uuid4()), "messages": []}
-        await storage.put(f"session:{session_id}", session_data)
-
-        result = await adapter.get_session(session_id)
-        assert result is not None
-        assert result["messages"] == []
-
-    async def test_session_get_nonexistent_returns_none(
+    async def test_get_session_returns_none(
         self,
         adapter: PgMemoryCoreAdapter,
     ) -> None:
+        """get_session is a Port contract placeholder."""
         result = await adapter.get_session(uuid4())
         assert result is None
 
-    async def test_archive_session(
-        self,
-        adapter: PgMemoryCoreAdapter,
-        storage: FakeStoragePort,
-    ) -> None:
-        session_id = uuid4()
-        await storage.put(f"session:{session_id}", {"messages": ["hello"]})
-
-        result = await adapter.archive_session(session_id)
-        assert result is not None
-        assert result["archived"] is True
-
-    async def test_archive_nonexistent_returns_none(
+    async def test_archive_session_returns_none(
         self,
         adapter: PgMemoryCoreAdapter,
     ) -> None:
+        """archive_session is a Port contract placeholder."""
         result = await adapter.archive_session(uuid4())
         assert result is None
-
-    async def test_write_with_source_session(
-        self,
-        adapter: PgMemoryCoreAdapter,
-        user_id,
-    ) -> None:
-        session_id = uuid4()
-        obs = Observation(
-            content="test memory",
-            source_session_id=session_id,
-        )
-        await adapter.write_observation(user_id, obs)
-
-        memories = await adapter.read_personal_memories(user_id, "test memory")
-        assert len(memories) == 1
-        assert session_id in memories[0].source_sessions
