@@ -83,6 +83,53 @@ class FakeLLM(LLMCallPort):
         )
 
 
+class FakeEventStore:
+    """In-memory event store satisfying EventStoreProtocol for WS tests."""
+
+    def __init__(self) -> None:
+        self.events: list[dict[str, Any]] = []
+        self._seq_counters: dict[UUID, int] = {}
+
+    async def append_event(
+        self,
+        *,
+        org_id: UUID,
+        session_id: UUID,
+        user_id: UUID | None = None,
+        event_type: str,
+        role: str = "user",
+        content: dict[str, Any] | None = None,
+        parent_event_id: UUID | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        seq = self._seq_counters.get(session_id, 0) + 1
+        self._seq_counters[session_id] = seq
+        event = {
+            "id": uuid4(),
+            "org_id": org_id,
+            "session_id": session_id,
+            "user_id": user_id,
+            "event_type": event_type,
+            "role": role,
+            "content": content or {},
+            "sequence_number": seq,
+        }
+        self.events.append(event)
+        return event
+
+    async def get_session_events(
+        self,
+        session_id: UUID,
+        *,
+        limit: int | None = None,
+    ) -> list[dict[str, Any]]:
+        result = [e for e in self.events if e["session_id"] == session_id]
+        result.sort(key=lambda e: e["sequence_number"])
+        if limit:
+            result = result[:limit]
+        return result
+
+
 class FakeWSsender:
     """Captures sent WebSocket messages."""
 
@@ -98,12 +145,17 @@ class TestWSChatHandler:
     """B2-8: WebSocket real-time chat."""
 
     @pytest.fixture()
-    def handler(self) -> WSChatHandler:
+    def event_store(self) -> FakeEventStore:
+        return FakeEventStore()
+
+    @pytest.fixture()
+    def handler(self, event_store: FakeEventStore) -> WSChatHandler:
         memory_core = FakeMemoryCore()
         llm = FakeLLM()
         engine = ConversationEngine(
             llm=llm,
             memory_core=memory_core,
+            event_store=event_store,
             default_model="gpt-4o",
         )
         return WSChatHandler(engine=engine)
@@ -171,6 +223,7 @@ class TestWSChatHandler:
         self,
         handler: WSChatHandler,
         sender: FakeWSsender,
+        event_store: FakeEventStore,
     ) -> None:
         session_id = uuid4()
         user_id = uuid4()
@@ -186,7 +239,7 @@ class TestWSChatHandler:
         )
         await handler.handle_message(msg1, sender)
 
-        # Turn 2 -- should have history from turn 1
+        # Turn 2 -- should have history from turn 1 via event_store
         msg2 = WSMessage(
             type="message",
             session_id=session_id,
@@ -196,8 +249,51 @@ class TestWSChatHandler:
         )
         await handler.handle_message(msg2, sender)
 
-        assert session_id in handler._sessions
-        assert len(handler._sessions[session_id]) == 4  # 2 user + 2 assistant
+        # Verify events persisted in event_store (2 turns x 2 events each)
+        events = await event_store.get_session_events(session_id)
+        assert len(events) == 4
+        assert events[0]["role"] == "user"
+        assert events[1]["role"] == "assistant"
+
+    @pytest.mark.asyncio()
+    async def test_history_recoverable_after_restart(
+        self,
+        event_store: FakeEventStore,
+        sender: FakeWSsender,
+    ) -> None:
+        """History should be available via event_store even with a new handler."""
+        session_id = uuid4()
+        user_id = uuid4()
+        org_id = uuid4()
+
+        # Turn 1 with original handler
+        engine1 = ConversationEngine(
+            llm=FakeLLM(),
+            memory_core=FakeMemoryCore(),
+            event_store=event_store,
+            default_model="gpt-4o",
+        )
+        handler1 = WSChatHandler(engine=engine1)
+        msg1 = WSMessage(
+            type="message",
+            session_id=session_id,
+            user_id=user_id,
+            org_id=org_id,
+            content="Hello",
+        )
+        await handler1.handle_message(msg1, sender)
+
+        # Simulate restart: new engine, same event_store
+        engine2 = ConversationEngine(
+            llm=FakeLLM(),
+            memory_core=FakeMemoryCore(),
+            event_store=event_store,
+            default_model="gpt-4o",
+        )
+        history = await engine2.get_session_history(session_id)
+        assert len(history) == 2
+        assert history[0] == {"role": "user", "content": "Hello"}
+        assert history[1] == {"role": "assistant", "content": "WS response"}
 
     @pytest.mark.asyncio()
     async def test_first_byte_latency(

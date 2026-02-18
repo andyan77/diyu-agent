@@ -19,7 +19,7 @@ from pydantic import BaseModel
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from src.tool.llm.gateway_adapter import LiteLLMGatewayAdapter
+    from src.ports.llm_call_port import LLMCallPort
     from src.tool.llm.usage_tracker import UsageTracker
 
 logger = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ _DEFAULT_MODELS: list[dict[str, str]] = [
 
 def create_llm_router(
     *,
-    llm_adapter: LiteLLMGatewayAdapter,
+    llm_adapter: LLMCallPort,
     usage_tracker: UsageTracker | None = None,
 ) -> APIRouter:
     """Create LLM gateway router with dependency injection."""

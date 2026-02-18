@@ -1,4 +1,8 @@
-"""E2E test: conversation loop state cycle.
+"""Integration-level E2E test: conversation loop state cycle.
+
+NOTE: This test uses Fake adapters (FakeLLM, FakeMemoryCore, FakeEventStore)
+rather than real PostgreSQL or external services. It validates the complete
+state loop wiring at the integration level, not true end-to-end.
 
 Validates the Phase 2 delivery target:
   chat -> observe -> write memory -> next chat -> retrieve memory -> inject context -> affect reply
@@ -10,7 +14,7 @@ Assertions A1-A7:
   A4: Multi-turn sequence works
   A5: Event store persistence (events written)
   A6: Receipt recording
-  A7: Restart simulation (new stores from fresh session_factory, recover history)
+  A7: Restart simulation (new engine from shared event_store, recover history)
 
 Uses FakeLLM (deterministic, no external API).
 Uses FakeSessionFactory (no live PostgreSQL required for gate check).

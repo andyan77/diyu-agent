@@ -11,13 +11,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol, runtime_checkable
 from uuid import UUID, uuid4
 
 import sqlalchemy as sa
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
+    from src.infra.models import MemoryReceiptModel
 
 
 @dataclass(frozen=True)
@@ -38,6 +40,39 @@ class MemoryReceipt:
     guardrail_hit: bool
     context_position: int | None
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
+
+
+@runtime_checkable
+class ReceiptStoreProtocol(Protocol):
+    """Protocol for receipt storage (structural typing).
+
+    Both ReceiptStore (in-memory) and PgReceiptStore satisfy this protocol.
+    Used by MemoryWritePipeline to avoid binding to concrete implementations.
+    """
+
+    async def record_injection(
+        self,
+        *,
+        memory_item_id: UUID,
+        org_id: UUID,
+        candidate_score: float,
+        decision_reason: str,
+        policy_version: str = ...,
+        guardrail_hit: bool = ...,
+        context_position: int | None = ...,
+    ) -> MemoryReceipt: ...
+
+    async def record_retrieval(
+        self,
+        *,
+        memory_item_id: UUID,
+        org_id: UUID,
+        candidate_score: float,
+        decision_reason: str,
+        policy_version: str = ...,
+        guardrail_hit: bool = ...,
+        context_position: int | None = ...,
+    ) -> MemoryReceipt: ...
 
 
 class ReceiptStore:
@@ -274,17 +309,17 @@ class PgReceiptStore:
         )
 
 
-def _orm_to_domain(row: object) -> MemoryReceipt:
+def _orm_to_domain(row: MemoryReceiptModel) -> MemoryReceipt:
     """Convert a MemoryReceiptModel ORM row to MemoryReceipt domain dataclass."""
     return MemoryReceipt(
-        id=row.id,  # type: ignore[union-attr]
-        memory_item_id=row.memory_item_id,  # type: ignore[union-attr]
-        org_id=row.org_id,  # type: ignore[union-attr]
-        receipt_type=row.receipt_type,  # type: ignore[union-attr]
-        candidate_score=row.candidate_score,  # type: ignore[union-attr]
-        decision_reason=row.decision_reason,  # type: ignore[union-attr]
-        policy_version=row.policy_version,  # type: ignore[union-attr]
-        guardrail_hit=row.guardrail_hit,  # type: ignore[union-attr]
-        context_position=row.context_position,  # type: ignore[union-attr]
-        created_at=row.created_at,  # type: ignore[union-attr]
+        id=row.id,
+        memory_item_id=row.memory_item_id,
+        org_id=row.org_id,
+        receipt_type=row.receipt_type,
+        candidate_score=row.candidate_score or 0.0,
+        decision_reason=row.decision_reason or "",
+        policy_version=row.policy_version or "",
+        guardrail_hit=row.guardrail_hit,
+        context_position=row.context_position,
+        created_at=row.created_at,
     )

@@ -245,7 +245,8 @@ class PgConversationEventStore:
         async with self._session_factory() as session:
             result = await session.execute(stmt)
             await session.commit()
-            return result.rowcount
+            count: int = result.rowcount  # type: ignore[attr-defined]
+            return count
 
 
 def _row_to_event(row: ConversationEventModel) -> ConversationEvent:

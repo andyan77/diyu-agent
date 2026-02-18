@@ -150,7 +150,7 @@ def build_app() -> FastAPI:
         create_sse_router(broadcaster=sse_broadcaster, jwt_secret=jwt_secret),
     )
     application.include_router(
-        create_llm_router(llm_adapter=model_registry, usage_tracker=usage_tracker),
+        create_llm_router(llm_adapter=llm_adapter, usage_tracker=usage_tracker),
     )
     application.include_router(
         create_upload_router(storage_base_url=storage_base_url),

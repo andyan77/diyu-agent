@@ -74,15 +74,13 @@ class MessageItem(BaseModel):
     timestamp: str | None = None
 
 
-# In-memory stores for Phase 2 (Redis/PG adapter in production)
+# Session metadata store (in-memory for Phase 2; event_store handles message history)
 _conversations: dict[tuple[UUID, UUID], dict[str, Any]] = {}
-_messages: dict[tuple[UUID, UUID], list[dict[str, str]]] = {}
 
 
 def _reset_stores() -> None:
     """Reset in-memory stores (for testing)."""
     _conversations.clear()
-    _messages.clear()
 
 
 def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
@@ -104,7 +102,6 @@ def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
             "created_at": now,
             "message_count": 0,
         }
-        _messages[(org_id, session_id)] = []
 
         logger.info(
             "Created conversation session_id=%s org_id=%s",
@@ -143,7 +140,7 @@ def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
         user_id: UUID = request.state.user_id
         key = (org_id, session_id)
 
-        # Auto-create conversation if not exists
+        # Auto-create session metadata if not exists
         if key not in _conversations:
             now = datetime.now(UTC).isoformat()
             _conversations[key] = {
@@ -153,9 +150,9 @@ def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
                 "created_at": now,
                 "message_count": 0,
             }
-            _messages[key] = []
 
-        history = [{"role": m["role"], "content": m["content"]} for m in _messages.get(key, [])]
+        # Load history from event store (PG-backed persistence)
+        history = await engine.get_session_history(session_id)
 
         try:
             turn = await engine.process_message(
@@ -169,11 +166,6 @@ def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
         except Exception:
             logger.exception("Error processing message session_id=%s", session_id)
             raise HTTPException(status_code=500, detail="Failed to process message") from None
-
-        now = datetime.now(UTC).isoformat()
-        _messages[key].append({"role": "user", "content": body.message, "ts": now})
-        _messages[key].append({"role": "assistant", "content": turn.assistant_response, "ts": now})
-        _conversations[key]["message_count"] = len(_messages[key])
 
         return SendMessageResponse(
             turn_id=str(turn.turn_id),
@@ -189,11 +181,8 @@ def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
         session_id: UUID,
         request: Request,
     ) -> list[MessageItem]:
-        """Get conversation message history."""
-        org_id: UUID = request.state.org_id
-        msgs = _messages.get((org_id, session_id), [])
-        return [
-            MessageItem(role=m["role"], content=m["content"], timestamp=m.get("ts")) for m in msgs
-        ]
+        """Get conversation message history from event store."""
+        history = await engine.get_session_history(session_id)
+        return [MessageItem(role=m["role"], content=m["content"]) for m in history]
 
     return router

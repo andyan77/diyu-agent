@@ -21,9 +21,25 @@ if TYPE_CHECKING:
     from src.brain.intent.classifier import IntentClassifier
     from src.brain.memory.pipeline import MemoryWritePipeline
     from src.ports.knowledge_port import KnowledgePort
-    from src.ports.llm_call_port import LLMCallPort
+    from src.ports.llm_call_port import ContentBlock, LLMResponse
     from src.ports.memory_core_port import MemoryCorePort
     from src.shared.types import OrganizationContext
+
+
+class LLMCallProtocol(Protocol):
+    """Protocol for LLM invocation (structural typing).
+
+    Both LLMCallPort implementations and ModelRegistry satisfy this protocol.
+    Brain depends on the protocol, never concrete classes.
+    """
+
+    async def call(
+        self,
+        prompt: str,
+        model_id: str = ...,
+        content_parts: list[ContentBlock] | None = ...,
+        parameters: dict[str, Any] | None = ...,
+    ) -> LLMResponse: ...
 
 
 class UsageRecorder(Protocol):
@@ -109,7 +125,7 @@ class ConversationEngine:
     def __init__(
         self,
         *,
-        llm: LLMCallPort,
+        llm: LLMCallProtocol,
         memory_core: MemoryCorePort,
         knowledge: KnowledgePort | None = None,
         intent_classifier: IntentClassifier | None = None,

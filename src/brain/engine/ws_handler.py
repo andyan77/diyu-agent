@@ -11,13 +11,11 @@ Architecture: delivery/phase2-runtime-config.yaml (realtime section)
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from src.ports.conversation_port import WebSocketSender, WSMessage, WSResponse
 
 if TYPE_CHECKING:
-    from uuid import UUID
-
     from src.brain.engine.conversation import ConversationEngine
     from src.shared.types import OrganizationContext
 
@@ -36,7 +34,6 @@ class WSChatHandler:
         engine: ConversationEngine,
     ) -> None:
         self._engine = engine
-        self._sessions: dict[UUID, list[dict[str, Any]]] = {}
 
     async def handle_message(
         self,
@@ -60,14 +57,13 @@ class WSChatHandler:
             return response
 
         if message.type == "close":
-            self._sessions.pop(message.session_id, None)
             return WSResponse(
                 type="close",
                 session_id=message.session_id,
             )
 
-        # Process message through conversation engine
-        history = self._sessions.get(message.session_id, [])
+        # Load history from event store (PG-backed persistence)
+        history = await self._engine.get_session_history(message.session_id)
 
         # Send stream_start
         await sender.send(
@@ -86,12 +82,7 @@ class WSChatHandler:
             conversation_history=history,
         )
 
-        # Update session history
-        history.append({"role": "user", "content": message.content})
-        history.append({"role": "assistant", "content": turn.assistant_response})
-        self._sessions[message.session_id] = history
-
-        # Send response
+        # Send response (event_store already persisted in process_message)
         response_data = {
             "type": "message",
             "session_id": str(message.session_id),

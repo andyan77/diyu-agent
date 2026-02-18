@@ -9,6 +9,7 @@ Uses in-memory adapters (no external services required).
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from typing import Any
 from uuid import UUID, uuid4
 
 import pytest
@@ -89,6 +90,53 @@ class FakeLLMPort(LLMCallPort):
         )
 
 
+class FakeEventStore:
+    """In-memory event store satisfying EventStoreProtocol for integration tests."""
+
+    def __init__(self) -> None:
+        self.events: list[dict[str, Any]] = []
+        self._seq_counters: dict[UUID, int] = {}
+
+    async def append_event(
+        self,
+        *,
+        org_id: UUID,
+        session_id: UUID,
+        user_id: UUID | None = None,
+        event_type: str,
+        role: str = "user",
+        content: dict[str, Any] | None = None,
+        parent_event_id: UUID | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        seq = self._seq_counters.get(session_id, 0) + 1
+        self._seq_counters[session_id] = seq
+        event = {
+            "id": uuid4(),
+            "org_id": org_id,
+            "session_id": session_id,
+            "user_id": user_id,
+            "event_type": event_type,
+            "role": role,
+            "content": content or {},
+            "sequence_number": seq,
+        }
+        self.events.append(event)
+        return event
+
+    async def get_session_events(
+        self,
+        session_id: UUID,
+        *,
+        limit: int | None = None,
+    ) -> list[dict[str, Any]]:
+        result = [e for e in self.events if e["session_id"] == session_id]
+        result.sort(key=lambda e: e["sequence_number"])
+        if limit:
+            result = result[:limit]
+        return result
+
+
 @pytest.fixture(autouse=True)
 def _clean():
     _reset_stores()
@@ -100,7 +148,13 @@ def _clean():
 def engine():
     memory_core = FakeMemoryCore()
     llm = FakeLLMPort()
-    return ConversationEngine(llm=llm, memory_core=memory_core, default_model="gpt-4o")
+    event_store = FakeEventStore()
+    return ConversationEngine(
+        llm=llm,
+        memory_core=memory_core,
+        event_store=event_store,
+        default_model="gpt-4o",
+    )
 
 
 @pytest.fixture()

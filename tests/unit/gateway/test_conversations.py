@@ -37,6 +37,7 @@ class FakeConversationEngine:
     def __init__(self, turn: ConversationTurn = _FIXED_TURN) -> None:
         self._turn = turn
         self.calls: list[dict[str, Any]] = []
+        self._history: dict[UUID, list[dict[str, str]]] = {}
 
     async def process_message(
         self,
@@ -59,7 +60,15 @@ class FakeConversationEngine:
                 "model_id": model_id,
             }
         )
+        self._history.setdefault(session_id, [])
+        self._history[session_id].append({"role": "user", "content": message})
+        self._history[session_id].append(
+            {"role": "assistant", "content": self._turn.assistant_response}
+        )
         return self._turn
+
+    async def get_session_history(self, session_id: UUID) -> list[dict[str, Any]]:
+        return list(self._history.get(session_id, []))
 
 
 @pytest.fixture(autouse=True)

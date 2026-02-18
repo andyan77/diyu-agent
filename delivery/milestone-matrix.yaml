@@ -317,7 +317,7 @@ phases:
           check: "bash scripts/security_scan.sh --full"
 
         - id: "p2-e2e-conversation-loop"
-          description: "E2E conversation loop: chat -> remember -> recall -> inject"
+          description: "E2E conversation loop (integration-level, Fake adapters): chat -> remember -> recall -> inject"
           check: "uv run pytest tests/e2e/test_conversation_loop.py -q --tb=short"
 
       soft:

@@ -308,10 +308,18 @@ class TestPhasePointerAndExitCriteria:
         self.text = MILESTONE_MATRIX.read_text()
         self.data = yaml.safe_load(self.text)
 
-    def test_current_phase_is_phase_1(self) -> None:
-        """current_phase must be phase_1 during Phase 1 development."""
-        assert self.data["current_phase"] == "phase_1", (
-            f"current_phase is '{self.data['current_phase']}', expected 'phase_1'"
+    def test_current_phase_is_phase_2(self) -> None:
+        """current_phase must be phase_2 during Phase 2 development."""
+        assert self.data["current_phase"] == "phase_2", (
+            f"current_phase is '{self.data['current_phase']}', expected 'phase_2'"
+        )
+
+    def test_current_phase_in_phases_keys(self) -> None:
+        """current_phase must reference an existing phase definition."""
+        current = self.data["current_phase"]
+        phases = self.data["phases"]
+        assert current in phases, (
+            f"current_phase '{current}' not found in phases keys: {list(phases.keys())}"
         )
 
     def test_phase1_has_gateway_auth_exit_criterion(self) -> None:
