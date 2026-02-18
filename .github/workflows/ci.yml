@@ -143,6 +143,20 @@ jobs:
           name: backend-test-results
           path: ${{ env.EVIDENCE_DIR }}/
 
+  # P2 E2E: Conversation loop state cycle
+  # REQUIRED: GitHub Settings > Branches > main >
+  #   Require status checks > Add "P2: E2E Conversation Loop"
+  # NOTE: Branch protection "required check" needs manual configuration
+  #   in GitHub Settings after this workflow is merged.
+  test-e2e:
+    name: "P2: E2E Conversation Loop"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - run: uv run pytest tests/e2e/test_conversation_loop.py -v --tb=short
+
   test-frontend:
     name: "L1: Frontend Tests"
     runs-on: ubuntu-latest
