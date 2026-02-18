@@ -4,7 +4,7 @@
 # Usage: python3 scripts/verify_phase.py --phase 0 --json
 
 schema_version: "1.0"
-current_phase: "phase_1"
+current_phase: "phase_2"
 
 phases:
   phase_0:
@@ -315,6 +315,10 @@ phases:
         - id: "p2-security-scan"
           description: "Security scan (semgrep + pip-audit)"
           check: "bash scripts/security_scan.sh --full"
+
+        - id: "p2-e2e-conversation-loop"
+          description: "E2E conversation loop: chat -> remember -> recall -> inject"
+          check: "uv run pytest tests/e2e/test_conversation_loop.py -q --tb=short"
 
       soft:
         - id: "p2-streaming"

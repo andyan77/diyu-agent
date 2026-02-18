@@ -23,7 +23,7 @@ depends_on = None
 # -- Migration metadata (治理规范 v1.1 Section 8) --
 reversible_type = "full"  # DDL fully reversible via downgrade()
 rollback_artifact = "alembic downgrade -1"
-drill_evidence_id = None  # populated after upgrade->downgrade->upgrade drill
+drill_evidence_id = "3b15a26bb5cc5e4b"  # upgrade->downgrade->upgrade 20260218T074302Z
 
 _UUID = postgresql.UUID(as_uuid=True)
 _NOW = sa.text("now()")
