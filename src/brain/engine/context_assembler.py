@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from uuid import UUID
 
+    from src.memory.receipt import ReceiptStoreProtocol
     from src.ports.knowledge_port import KnowledgePort
     from src.ports.memory_core_port import MemoryCorePort
     from src.shared.types import KnowledgeBundle, MemoryItem, OrganizationContext
@@ -75,9 +76,11 @@ class ContextAssembler:
         self,
         memory_core: MemoryCorePort,
         knowledge: KnowledgePort | None = None,
+        receipt_store: ReceiptStoreProtocol | None = None,
     ) -> None:
         self._memory_core = memory_core
         self._knowledge = knowledge
+        self._receipt_store = receipt_store
 
     async def assemble(
         self,
@@ -100,6 +103,13 @@ class ContextAssembler:
             query=query,
             top_k=top_k_memories,
         )
+
+        # Step 1b: Record retrieval receipts (non-blocking)
+        if self._receipt_store and personal_memories:
+            await self._record_retrieval_receipts(
+                memories=personal_memories,
+                org_id=org_context.org_id if org_context else None,
+            )
 
         # Step 2: Knowledge (soft dependency, graceful degradation)
         knowledge_bundle = None
@@ -190,6 +200,35 @@ class ContextAssembler:
         if context_parts:
             return f"{' '.join(context_parts[-2:])} {query}"
         return query
+
+    async def _record_retrieval_receipts(
+        self,
+        memories: list[MemoryItem],
+        org_id: UUID | None,
+    ) -> None:
+        """Record a retrieval receipt for each memory retrieved.
+
+        Non-blocking: failures are logged and swallowed so they never
+        break the main conversation path.
+        """
+        if not self._receipt_store or not org_id:
+            return
+
+        for position, memory in enumerate(memories):
+            try:
+                await self._receipt_store.record_retrieval(
+                    memory_item_id=memory.memory_id,
+                    org_id=org_id,
+                    candidate_score=memory.confidence,
+                    decision_reason="retrieved_for_context",
+                    context_position=position,
+                )
+            except Exception:
+                logger.warning(
+                    "Failed to record retrieval receipt for %s",
+                    memory.memory_id,
+                    exc_info=True,
+                )
 
     def _build_system_prompt(
         self,

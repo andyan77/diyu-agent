@@ -15,6 +15,7 @@ from uuid import UUID, uuid4
 import pytest
 
 from src.brain.engine.context_assembler import AssembledContext, ContextAssembler
+from src.memory.receipt import ReceiptStore
 from src.ports.knowledge_port import KnowledgePort
 from src.ports.memory_core_port import MemoryCorePort
 from src.shared.types import (
@@ -196,3 +197,81 @@ class TestContextAssembler:
         ctx = await assembler.assemble(user_id=user_id, query="coffee")
         prompt_ctx = ctx.to_prompt_context()
         assert "coffee" in prompt_ctx.lower()
+
+
+@pytest.mark.unit
+class TestRetrievalReceipts:
+    """B2-6: Retrieval receipts recorded in ContextAssembler."""
+
+    @pytest.mark.asyncio()
+    async def test_retrieval_receipt_recorded_per_memory(self) -> None:
+        """Each retrieved memory gets a retrieval receipt."""
+        memory_core = FakeMemoryCore()
+        receipt_store = ReceiptStore()
+        user_id = uuid4()
+        org_id = uuid4()
+
+        await memory_core.write_observation(
+            user_id=user_id,
+            observation=Observation(content="User likes Python"),
+        )
+        await memory_core.write_observation(
+            user_id=user_id,
+            observation=Observation(content="User likes Python frameworks"),
+        )
+
+        assembler = ContextAssembler(
+            memory_core=memory_core,
+            receipt_store=receipt_store,
+        )
+        org_context = OrganizationContext(
+            user_id=user_id,
+            org_id=org_id,
+            org_tier="brand_hq",
+            org_path="root",
+        )
+
+        ctx = await assembler.assemble(
+            user_id=user_id,
+            query="Python",
+            org_context=org_context,
+        )
+
+        # Each retrieved memory should have a retrieval receipt
+        all_receipts = list(receipt_store._receipts.values())
+        assert len(all_receipts) == len(ctx.personal_memories)
+        assert all(r.receipt_type == "retrieval" for r in all_receipts)
+        # context_position should be sequential
+        positions = sorted(r.context_position for r in all_receipts)
+        assert positions == list(range(len(all_receipts)))
+
+    @pytest.mark.asyncio()
+    async def test_no_receipt_without_receipt_store(self) -> None:
+        """No crash when receipt_store is None."""
+        memory_core = FakeMemoryCore()
+        user_id = uuid4()
+        await memory_core.write_observation(
+            user_id=user_id,
+            observation=Observation(content="test"),
+        )
+        assembler = ContextAssembler(memory_core=memory_core)
+        ctx = await assembler.assemble(user_id=user_id, query="test")
+        assert len(ctx.personal_memories) >= 1  # works without crash
+
+    @pytest.mark.asyncio()
+    async def test_no_receipt_without_org_context(self) -> None:
+        """No receipts recorded when org_context is missing (no org_id)."""
+        memory_core = FakeMemoryCore()
+        receipt_store = ReceiptStore()
+        user_id = uuid4()
+        await memory_core.write_observation(
+            user_id=user_id,
+            observation=Observation(content="test"),
+        )
+        assembler = ContextAssembler(
+            memory_core=memory_core,
+            receipt_store=receipt_store,
+        )
+        await assembler.assemble(user_id=user_id, query="test")
+        # No org_context -> no org_id -> no receipts
+        assert len(receipt_store._receipts) == 0

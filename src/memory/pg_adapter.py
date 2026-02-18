@@ -1,18 +1,20 @@
 """PostgreSQL adapter implementing MemoryCorePort via SQLAlchemy.
 
-Task card: MC2-1
+Task card: MC2-1, MC2-4
 - Replaces KV-backed stub with real PG/SQLAlchemy implementation
 - Uses async_sessionmaker for database access
 - RLS SET LOCAL is handled by src.infra.db.get_db_session (not here)
 - Adapter implements Port interface; consumers unchanged
+- Hybrid retrieval: pgvector semantic search + ILIKE keyword, fused via RRF
 
 Architecture: Section 2.1 (PostgreSQL as Memory Core primary storage)
 """
 
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol
 from uuid import uuid4
 
 import sqlalchemy as sa
@@ -26,16 +28,38 @@ if TYPE_CHECKING:
 
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
+    from src.memory.vector_search import PgVectorSearchEngine
+
+logger = logging.getLogger(__name__)
+
+
+class QueryEmbedderProtocol(Protocol):
+    """Protocol for query text -> embedding vector conversion."""
+
+    async def embed(self, text: str) -> list[float]: ...
+
 
 class PgMemoryCoreAdapter(MemoryCorePort):
     """PostgreSQL-backed implementation of MemoryCorePort.
 
     Uses SQLAlchemy async sessions for persistence.
     Queries filter by user_id and org_id; RLS provides defense-in-depth.
+
+    When a PgVectorSearchEngine and query_embedder are provided, the main
+    retrieval path uses hybrid search (pgvector + ILIKE via RRF fusion).
+    Falls back to ILIKE-only when vector search is unavailable.
     """
 
-    def __init__(self, *, session_factory: async_sessionmaker[AsyncSession]) -> None:
+    def __init__(
+        self,
+        *,
+        session_factory: async_sessionmaker[AsyncSession],
+        vector_engine: PgVectorSearchEngine | None = None,
+        query_embedder: QueryEmbedderProtocol | None = None,
+    ) -> None:
         self._session_factory = session_factory
+        self._vector_engine = vector_engine
+        self._query_embedder = query_embedder
 
     async def read_personal_memories(
         self,
@@ -45,11 +69,77 @@ class PgMemoryCoreAdapter(MemoryCorePort):
         *,
         org_id: UUID | None = None,
     ) -> list[MemoryItem]:
-        """Retrieve personal memories by user, filtered by keyword match.
+        """Retrieve personal memories by user using hybrid search.
 
-        Filters: user_id match, not superseded, not expired.
-        Day-1: simple ILIKE keyword matching. MC2-4 adds vector search.
+        Primary path (MC2-4): RRF fusion of pgvector semantic + ILIKE keyword.
+        Fallback: ILIKE keyword-only when vector engine is unavailable.
         """
+        # Primary path: hybrid search when vector engine + embedder are available
+        if self._vector_engine and self._query_embedder and org_id and query:
+            try:
+                return await self._hybrid_retrieval(
+                    user_id=user_id,
+                    query=query,
+                    org_id=org_id,
+                    top_k=top_k,
+                )
+            except Exception:
+                logger.warning(
+                    "Hybrid search failed, falling back to keyword-only",
+                    exc_info=True,
+                )
+
+        # Fallback: ILIKE keyword-only
+        return await self._keyword_retrieval(
+            user_id=user_id,
+            query=query,
+            org_id=org_id,
+            top_k=top_k,
+        )
+
+    async def _hybrid_retrieval(
+        self,
+        *,
+        user_id: UUID,
+        query: str,
+        org_id: UUID,
+        top_k: int,
+    ) -> list[MemoryItem]:
+        """RRF-fused hybrid retrieval: pgvector + ILIKE."""
+        assert self._vector_engine is not None
+        assert self._query_embedder is not None
+
+        embedding = await self._query_embedder.embed(query)
+        fused = await self._vector_engine.hybrid_search(
+            embedding=embedding,
+            query=query,
+            org_id=org_id,
+            user_id=user_id,
+            top_k=top_k,
+        )
+
+        if not fused:
+            return []
+
+        # Fetch full MemoryItemModel rows for the fused IDs
+        fused_ids = [f.memory_id for f in fused]
+        stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id.in_(fused_ids))
+        async with self._session_factory() as session:
+            result = await session.scalars(stmt)
+            rows_by_id = {row.id: row for row in result.all()}
+
+        # Return in RRF rank order
+        return [_row_to_memory_item(rows_by_id[mid]) for mid in fused_ids if mid in rows_by_id]
+
+    async def _keyword_retrieval(
+        self,
+        *,
+        user_id: UUID,
+        query: str,
+        org_id: UUID | None,
+        top_k: int,
+    ) -> list[MemoryItem]:
+        """ILIKE keyword-only retrieval (fallback path)."""
         stmt = (
             sa.select(MemoryItemModel)
             .where(

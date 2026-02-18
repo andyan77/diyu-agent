@@ -1,4 +1,4 @@
-"""Unit tests for PG adapter (MC2-1).
+"""Unit tests for PG adapter (MC2-1, MC2-4).
 
 Rewritten for SQLAlchemy async session backend.
 Uses Fake adapters to verify adapter behavior without a real DB or mocks.
@@ -13,6 +13,7 @@ from uuid import UUID, uuid4
 import pytest
 
 from src.memory.pg_adapter import PgMemoryCoreAdapter
+from src.memory.vector_search import FusedResult
 from src.ports.memory_core_port import MemoryCorePort
 from src.shared.types import Observation
 from tests.fakes import FakeAsyncSession, FakeOrmRow, FakeSessionFactory
@@ -198,3 +199,237 @@ class TestPgMemoryCoreAdapter:
         """archive_session is a Port contract placeholder."""
         result = await adapter.archive_session(uuid4())
         assert result is None
+
+
+# ---------------------------------------------------------------------------
+# Fake embedder + vector engine for hybrid search tests
+# ---------------------------------------------------------------------------
+
+
+class FakeQueryEmbedder:
+    """Fake embedder returning a fixed vector."""
+
+    def __init__(self, vector: list[float] | None = None) -> None:
+        self._vector = vector or [0.1, 0.2, 0.3]
+        self.calls: list[str] = []
+
+    async def embed(self, text: str) -> list[float]:
+        self.calls.append(text)
+        return self._vector
+
+
+class FakeVectorEngine:
+    """Fake PgVectorSearchEngine returning preconfigured FusedResults."""
+
+    def __init__(self, results: list[FusedResult] | None = None) -> None:
+        self._results = results or []
+        self.calls: list[dict] = []
+
+    async def hybrid_search(
+        self,
+        embedding: list[float],
+        query: str,
+        org_id: UUID,
+        user_id: UUID,
+        top_k: int = 5,
+    ) -> list[FusedResult]:
+        self.calls.append(
+            {
+                "embedding": embedding,
+                "query": query,
+                "org_id": org_id,
+                "user_id": user_id,
+                "top_k": top_k,
+            }
+        )
+        return self._results
+
+
+class FailingVectorEngine:
+    """Vector engine that always raises."""
+
+    async def hybrid_search(self, **_kwargs) -> list[FusedResult]:
+        msg = "Vector search unavailable"
+        raise ConnectionError(msg)
+
+
+# ---------------------------------------------------------------------------
+# MC2-4: Hybrid retrieval tests
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.unit
+class TestPgAdapterHybridRetrieval:
+    """MC2-4: pgvector hybrid search wired into main retrieval path."""
+
+    async def test_hybrid_path_used_when_vector_engine_provided(
+        self,
+        user_id,
+        org_id,
+    ) -> None:
+        """When vector_engine + embedder are present, hybrid_search is called."""
+        mid = uuid4()
+        fused = [FusedResult(memory_id=mid, content="", rrf_score=0.5)]
+        vec_engine = FakeVectorEngine(results=fused)
+        embedder = FakeQueryEmbedder()
+
+        fake_row = FakeOrmRow(
+            id=mid,
+            user_id=user_id,
+            org_id=org_id,
+            memory_type="observation",
+            content="likes coffee",
+            confidence=0.9,
+            valid_at=datetime.now(UTC),
+            invalid_at=None,
+            source_sessions=[],
+            superseded_by=None,
+            version=1,
+            provenance=None,
+            epistemic_type="fact",
+        )
+        session = FakeAsyncSession()
+        session.set_scalars_result([fake_row])
+
+        adapter = PgMemoryCoreAdapter(
+            session_factory=FakeSessionFactory(session),
+            vector_engine=vec_engine,
+            query_embedder=embedder,
+        )
+
+        results = await adapter.read_personal_memories(
+            user_id,
+            "coffee",
+            org_id=org_id,
+        )
+
+        assert len(results) == 1
+        assert results[0].content == "likes coffee"
+        assert len(vec_engine.calls) == 1
+        assert len(embedder.calls) == 1
+        assert embedder.calls[0] == "coffee"
+
+    async def test_fallback_to_keyword_when_no_vector_engine(
+        self,
+        user_id,
+        org_id,
+    ) -> None:
+        """Without vector_engine, falls back to ILIKE keyword search."""
+        session = FakeAsyncSession()
+        session.set_scalars_result([])
+        adapter = PgMemoryCoreAdapter(session_factory=FakeSessionFactory(session))
+
+        results = await adapter.read_personal_memories(
+            user_id,
+            "test",
+            org_id=org_id,
+        )
+
+        assert results == []
+
+    async def test_fallback_on_hybrid_failure(
+        self,
+        user_id,
+        org_id,
+    ) -> None:
+        """If hybrid_search raises, gracefully falls back to keyword."""
+        session = FakeAsyncSession()
+        session.set_scalars_result([])
+        adapter = PgMemoryCoreAdapter(
+            session_factory=FakeSessionFactory(session),
+            vector_engine=FailingVectorEngine(),
+            query_embedder=FakeQueryEmbedder(),
+        )
+
+        results = await adapter.read_personal_memories(
+            user_id,
+            "test",
+            org_id=org_id,
+        )
+
+        assert results == []
+
+    async def test_fallback_when_no_org_id(
+        self,
+        user_id,
+    ) -> None:
+        """Hybrid search requires org_id; without it, use keyword fallback."""
+        vec_engine = FakeVectorEngine()
+        embedder = FakeQueryEmbedder()
+        session = FakeAsyncSession()
+        session.set_scalars_result([])
+
+        adapter = PgMemoryCoreAdapter(
+            session_factory=FakeSessionFactory(session),
+            vector_engine=vec_engine,
+            query_embedder=embedder,
+        )
+
+        results = await adapter.read_personal_memories(user_id, "test")
+
+        assert results == []
+        assert len(vec_engine.calls) == 0  # hybrid NOT called
+
+    async def test_hybrid_returns_results_in_rrf_order(
+        self,
+        user_id,
+        org_id,
+    ) -> None:
+        """Results are returned in RRF rank order, not DB order."""
+        mid_a = uuid4()
+        mid_b = uuid4()
+        # RRF order: B first, A second
+        fused = [
+            FusedResult(memory_id=mid_b, content="", rrf_score=0.8),
+            FusedResult(memory_id=mid_a, content="", rrf_score=0.3),
+        ]
+
+        row_a = FakeOrmRow(
+            id=mid_a,
+            user_id=user_id,
+            org_id=org_id,
+            memory_type="observation",
+            content="fact A",
+            confidence=0.9,
+            valid_at=datetime.now(UTC),
+            invalid_at=None,
+            source_sessions=[],
+            superseded_by=None,
+            version=1,
+            provenance=None,
+            epistemic_type="fact",
+        )
+        row_b = FakeOrmRow(
+            id=mid_b,
+            user_id=user_id,
+            org_id=org_id,
+            memory_type="observation",
+            content="fact B",
+            confidence=0.7,
+            valid_at=datetime.now(UTC),
+            invalid_at=None,
+            source_sessions=[],
+            superseded_by=None,
+            version=1,
+            provenance=None,
+            epistemic_type="fact",
+        )
+
+        session = FakeAsyncSession()
+        session.set_scalars_result([row_a, row_b])
+
+        adapter = PgMemoryCoreAdapter(
+            session_factory=FakeSessionFactory(session),
+            vector_engine=FakeVectorEngine(results=fused),
+            query_embedder=FakeQueryEmbedder(),
+        )
+
+        results = await adapter.read_personal_memories(
+            user_id,
+            "fact",
+            org_id=org_id,
+        )
+
+        assert len(results) == 2
+        assert results[0].content == "fact B"  # higher RRF score
+        assert results[1].content == "fact A"
