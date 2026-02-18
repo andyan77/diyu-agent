@@ -212,24 +212,24 @@ phases:
     depends_on: ["phase_1"]
     milestones:
       # Backend
-      - {id: "B2-1", layer: "Brain", summary: "Conversation engine full impl"}
-      - {id: "B2-2", layer: "Brain", summary: "Intent understanding"}
-      - {id: "B2-3", layer: "Brain", summary: "Context Assembler v1"}
-      - {id: "B2-4", layer: "Brain", summary: "Context Assembler CE (RRF)"}
-      - {id: "B2-5", layer: "Brain", summary: "Memory write pipeline"}
-      - {id: "B2-6", layer: "Brain", summary: "injection/retrieval receipts"}
-      - {id: "B2-7", layer: "Brain", summary: "Graceful degradation"}
-      - {id: "B2-8", layer: "Brain", summary: "WebSocket real-time chat"}
-      - {id: "MC2-1", layer: "MemoryCore", summary: "PG adapter replaces Stub"}
-      - {id: "MC2-2", layer: "MemoryCore", summary: "conversation_events CRUD"}
-      - {id: "MC2-3", layer: "MemoryCore", summary: "memory_items CRUD versioned"}
-      - {id: "MC2-4", layer: "MemoryCore", summary: "pgvector semantic search"}
-      - {id: "MC2-5", layer: "MemoryCore", summary: "Evolution Pipeline"}
-      - {id: "MC2-6", layer: "MemoryCore", summary: "injection/retrieval receipts"}
-      - {id: "MC2-7", layer: "MemoryCore", summary: "confidence_effective decay"}
-      - {id: "T2-1", layer: "Tool", summary: "LLMCallPort real impl"}
-      - {id: "T2-2", layer: "Tool", summary: "Model Registry + Fallback"}
-      - {id: "T2-3", layer: "Tool", summary: "Token metering"}
+      - {id: "B2-1", layer: "Brain", summary: "Conversation engine full impl", status: "done"}
+      - {id: "B2-2", layer: "Brain", summary: "Intent understanding", status: "done"}
+      - {id: "B2-3", layer: "Brain", summary: "Context Assembler v1", status: "done"}
+      - {id: "B2-4", layer: "Brain", summary: "Context Assembler CE (RRF)", status: "done"}
+      - {id: "B2-5", layer: "Brain", summary: "Memory write pipeline", status: "done"}
+      - {id: "B2-6", layer: "Brain", summary: "injection/retrieval receipts", status: "done"}
+      - {id: "B2-7", layer: "Brain", summary: "Graceful degradation", status: "done"}
+      - {id: "B2-8", layer: "Brain", summary: "WebSocket real-time chat", status: "done"}
+      - {id: "MC2-1", layer: "MemoryCore", summary: "PG adapter replaces Stub", status: "done"}
+      - {id: "MC2-2", layer: "MemoryCore", summary: "conversation_events CRUD", status: "done"}
+      - {id: "MC2-3", layer: "MemoryCore", summary: "memory_items CRUD versioned", status: "done"}
+      - {id: "MC2-4", layer: "MemoryCore", summary: "pgvector semantic search", status: "done"}
+      - {id: "MC2-5", layer: "MemoryCore", summary: "Evolution Pipeline", status: "done"}
+      - {id: "MC2-6", layer: "MemoryCore", summary: "injection/retrieval receipts", status: "done"}
+      - {id: "MC2-7", layer: "MemoryCore", summary: "confidence_effective decay", status: "done"}
+      - {id: "T2-1", layer: "Tool", summary: "LLMCallPort real impl", status: "done"}
+      - {id: "T2-2", layer: "Tool", summary: "Model Registry + Fallback", status: "done"}
+      - {id: "T2-3", layer: "Tool", summary: "Token metering", status: "done"}
       - {id: "G2-1", layer: "Gateway", summary: "Conversation REST API", status: "done"}
       - {id: "G2-2", layer: "Gateway", summary: "WebSocket streaming", status: "done"}
       - {id: "G2-3", layer: "Gateway", summary: "LLM Gateway (LiteLLM)", status: "done"}
@@ -237,11 +237,11 @@ phases:
       - {id: "G2-5", layer: "Gateway", summary: "Rate limiting middleware", status: "done"}
       - {id: "G2-6", layer: "Gateway", summary: "3-step file upload", status: "done"}
       - {id: "G2-7", layer: "Gateway", summary: "SSE notification endpoint", status: "done"}
-      - {id: "I2-1", layer: "Infra", summary: "Redis cache + session"}
-      - {id: "I2-2", layer: "Infra", summary: "Celery Worker + Redis Broker"}
-      - {id: "I2-3", layer: "Infra", summary: "Token billing minimal loop"}
-      - {id: "I2-4", layer: "Infra", summary: "conversation_events table"}
-      - {id: "I2-5", layer: "Infra", summary: "memory_items + pgvector"}
+      - {id: "I2-1", layer: "Infra", summary: "Redis cache + session", status: "done"}
+      - {id: "I2-2", layer: "Infra", summary: "Celery Worker + Redis Broker", status: "done"}
+      - {id: "I2-3", layer: "Infra", summary: "Token billing minimal loop", status: "done"}
+      - {id: "I2-4", layer: "Infra", summary: "conversation_events table", status: "done"}
+      - {id: "I2-5", layer: "Infra", summary: "memory_items + pgvector", status: "done"}
       # Frontend
       - {id: "FW2-1", layer: "FE-Web", summary: "Chat dual-pane layout", status: "done"}
       - {id: "FW2-2", layer: "FE-Web", summary: "Streaming message render", status: "done"}
