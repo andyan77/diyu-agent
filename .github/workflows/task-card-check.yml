@@ -107,6 +107,15 @@ jobs:
       - run: uv sync --dev --frozen
       - name: Install semgrep (required by p1-security-scan criterion)
         run: uv tool install semgrep
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: cd frontend && pnpm install --frozen-lockfile
       - name: Phase gate verification
         run: |
           mkdir -p ${{ env.EVIDENCE_DIR }}

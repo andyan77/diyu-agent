@@ -15,7 +15,7 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 from src.memory.evolution.pipeline import EvolutionPipeline
-from src.memory.receipt import ReceiptStore
+from src.memory.receipt import ReceiptStore, ReceiptStoreProtocol
 from src.shared.types import Observation
 
 if TYPE_CHECKING:
@@ -41,11 +41,11 @@ class MemoryWritePipeline:
     def __init__(
         self,
         memory_core: MemoryCorePort,
-        receipt_store: ReceiptStore | None = None,
+        receipt_store: ReceiptStoreProtocol | None = None,
         evolution_pipeline: EvolutionPipeline | None = None,
     ) -> None:
         self._memory_core = memory_core
-        self._receipt_store = receipt_store or ReceiptStore()
+        self._receipt_store: ReceiptStoreProtocol = receipt_store or ReceiptStore()
         self._evolution_pipeline = evolution_pipeline or EvolutionPipeline()
 
     async def process_turn(
@@ -102,7 +102,7 @@ class MemoryWritePipeline:
 
                 # Record injection receipt
                 if self._receipt_store:
-                    self._receipt_store.record_injection(
+                    await self._receipt_store.record_injection(
                         memory_item_id=receipt.memory_id,
                         org_id=org_id,
                         candidate_score=0.6,
@@ -134,7 +134,7 @@ class MemoryWritePipeline:
 
         return write_results
 
-    def record_retrieval_receipt(
+    async def record_retrieval_receipt(
         self,
         *,
         memory_item_id: UUID,
@@ -147,7 +147,7 @@ class MemoryWritePipeline:
         Called by ContextAssembler when memories are used in a prompt.
         """
         if self._receipt_store:
-            self._receipt_store.record_retrieval(
+            await self._receipt_store.record_retrieval(
                 memory_item_id=memory_item_id,
                 org_id=org_id,
                 candidate_score=candidate_score,

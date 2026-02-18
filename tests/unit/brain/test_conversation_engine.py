@@ -6,40 +6,72 @@ Validates:
 - LLM call through Port
 - Memory pipeline integration (non-blocking)
 - Usage tracking
+- Event store write path (append_event on each turn)
+- Event store read path (session history recovery)
 """
 
 from __future__ import annotations
 
-from uuid import uuid4
+from datetime import UTC, datetime
+from typing import Any
+from uuid import UUID, uuid4
 
 import pytest
 
 from src.brain.engine.conversation import ConversationEngine, ConversationTurn
-from src.memory.pg_adapter import PgMemoryCoreAdapter
 from src.ports.llm_call_port import LLMCallPort, LLMResponse
-from src.ports.storage_port import StoragePort
+from src.ports.memory_core_port import MemoryCorePort
+from src.shared.types import MemoryItem, Observation, WriteReceipt
 from src.tool.llm.usage_tracker import UsageTracker
 
 
-class FakeStoragePort(StoragePort):
-    """In-memory storage for testing."""
+class FakeMemoryCore(MemoryCorePort):
+    """In-memory MemoryCorePort for testing."""
 
     def __init__(self) -> None:
-        self._data: dict[str, object] = {}
+        self._items: list[MemoryItem] = []
 
-    async def put(self, key, value, ttl=None):
-        self._data[key] = value
+    async def read_personal_memories(
+        self,
+        user_id: UUID,
+        query: str,
+        top_k: int = 10,
+        *,
+        org_id: UUID | None = None,
+    ) -> list[MemoryItem]:
+        results = [m for m in self._items if m.user_id == user_id]
+        if query:
+            results = [m for m in results if query.lower() in m.content.lower()]
+        return sorted(results, key=lambda m: m.confidence, reverse=True)[:top_k]
 
-    async def get(self, key):
-        return self._data.get(key)
+    async def write_observation(
+        self,
+        user_id: UUID,
+        observation: Observation,
+        *,
+        org_id: UUID | None = None,
+    ) -> WriteReceipt:
+        memory_id = uuid4()
+        now = datetime.now(UTC)
+        item = MemoryItem(
+            memory_id=memory_id,
+            user_id=user_id,
+            memory_type=observation.memory_type,
+            content=observation.content,
+            confidence=observation.confidence,
+            valid_at=now,
+            source_sessions=(
+                [observation.source_session_id] if observation.source_session_id else []
+            ),
+        )
+        self._items.append(item)
+        return WriteReceipt(memory_id=memory_id, version=1, written_at=now)
 
-    async def delete(self, key):
-        self._data.pop(key, None)
+    async def get_session(self, session_id: UUID) -> object:
+        return None
 
-    async def list_keys(self, pattern):
-        import fnmatch
-
-        return [k for k in self._data if fnmatch.fnmatch(k, pattern)]
+    async def archive_session(self, session_id: UUID) -> object:
+        return None
 
 
 class FakeLLM(LLMCallPort):
@@ -59,14 +91,60 @@ class FakeLLM(LLMCallPort):
         )
 
 
+class FakeEventStore:
+    """In-memory event store satisfying EventStoreProtocol for testing."""
+
+    def __init__(self) -> None:
+        self.events: list[dict[str, Any]] = []
+        self._seq_counters: dict[UUID, int] = {}
+
+    async def append_event(
+        self,
+        *,
+        org_id: UUID,
+        session_id: UUID,
+        user_id: UUID | None = None,
+        event_type: str,
+        role: str = "user",
+        content: dict[str, Any] | None = None,
+        parent_event_id: UUID | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> object:
+        seq = self._seq_counters.get(session_id, 0) + 1
+        self._seq_counters[session_id] = seq
+        event = {
+            "id": uuid4(),
+            "org_id": org_id,
+            "session_id": session_id,
+            "user_id": user_id,
+            "event_type": event_type,
+            "role": role,
+            "content": content or {},
+            "sequence_number": seq,
+        }
+        self.events.append(event)
+        return event
+
+    async def get_session_events(
+        self,
+        session_id: UUID,
+        *,
+        limit: int | None = None,
+    ) -> list[object]:
+        events = [e for e in self.events if e["session_id"] == session_id]
+        events.sort(key=lambda e: e["sequence_number"])
+        if limit is not None:
+            events = events[:limit]
+        return events
+
+
 @pytest.mark.unit
 class TestConversationEngine:
     """B2-1: Conversation engine full impl."""
 
     @pytest.fixture()
     def engine(self) -> ConversationEngine:
-        storage = FakeStoragePort()
-        memory_core = PgMemoryCoreAdapter(storage=storage)
+        memory_core = FakeMemoryCore()
         llm = FakeLLM(response="Hello! I'm here to help.")
         usage_tracker = UsageTracker()
         return ConversationEngine(
@@ -163,3 +241,226 @@ class TestConversationEngine:
                 message=msg,
             )
             assert turn.assistant_response is not None
+
+
+@pytest.mark.unit
+class TestConversationEngineEventStore:
+    """Event store integration: write path + read path."""
+
+    @pytest.fixture()
+    def event_store(self) -> FakeEventStore:
+        return FakeEventStore()
+
+    @pytest.fixture()
+    def engine_with_events(self, event_store: FakeEventStore) -> ConversationEngine:
+        return ConversationEngine(
+            llm=FakeLLM(response="Got it."),
+            memory_core=FakeMemoryCore(),
+            event_store=event_store,
+            default_model="gpt-4o",
+        )
+
+    @pytest.fixture()
+    def engine_without_events(self) -> ConversationEngine:
+        """Engine with no event_store -- backward compat."""
+        return ConversationEngine(
+            llm=FakeLLM(response="Got it."),
+            memory_core=FakeMemoryCore(),
+            default_model="gpt-4o",
+        )
+
+    # ---- Write path ----
+
+    @pytest.mark.asyncio()
+    async def test_append_events_on_turn(
+        self,
+        engine_with_events: ConversationEngine,
+        event_store: FakeEventStore,
+    ) -> None:
+        """process_message appends user_message + assistant_message events."""
+        session_id = uuid4()
+        org_id = uuid4()
+        user_id = uuid4()
+
+        await engine_with_events.process_message(
+            session_id=session_id,
+            user_id=user_id,
+            org_id=org_id,
+            message="Hello",
+        )
+
+        assert len(event_store.events) == 2
+        user_ev = event_store.events[0]
+        asst_ev = event_store.events[1]
+
+        assert user_ev["event_type"] == "user_message"
+        assert user_ev["role"] == "user"
+        assert user_ev["content"]["text"] == "Hello"
+        assert user_ev["session_id"] == session_id
+        assert user_ev["org_id"] == org_id
+
+        assert asst_ev["event_type"] == "assistant_message"
+        assert asst_ev["role"] == "assistant"
+        assert asst_ev["content"]["text"] == "Got it."
+
+    @pytest.mark.asyncio()
+    async def test_sequence_numbers_increment(
+        self,
+        engine_with_events: ConversationEngine,
+        event_store: FakeEventStore,
+    ) -> None:
+        """Each turn appends 2 events; sequence numbers auto-increment."""
+        session_id = uuid4()
+        org_id = uuid4()
+        user_id = uuid4()
+
+        await engine_with_events.process_message(
+            session_id=session_id,
+            user_id=user_id,
+            org_id=org_id,
+            message="One",
+        )
+        await engine_with_events.process_message(
+            session_id=session_id,
+            user_id=user_id,
+            org_id=org_id,
+            message="Two",
+        )
+
+        assert len(event_store.events) == 4
+        seqs = [e["sequence_number"] for e in event_store.events]
+        assert seqs == [1, 2, 3, 4]
+
+    @pytest.mark.asyncio()
+    async def test_no_event_store_backward_compat(
+        self,
+        engine_without_events: ConversationEngine,
+    ) -> None:
+        """Without event_store, process_message still works normally."""
+        turn = await engine_without_events.process_message(
+            session_id=uuid4(),
+            user_id=uuid4(),
+            org_id=uuid4(),
+            message="Hello",
+        )
+        assert turn.assistant_response == "Got it."
+
+    @pytest.mark.asyncio()
+    async def test_event_store_failure_non_blocking(
+        self,
+        event_store: FakeEventStore,
+    ) -> None:
+        """Event store errors are swallowed (non-blocking, like memory pipeline)."""
+
+        class FailingEventStore(FakeEventStore):
+            async def append_event(self, **kwargs: Any) -> object:
+                msg = "DB connection lost"
+                raise RuntimeError(msg)
+
+        engine = ConversationEngine(
+            llm=FakeLLM(response="Still works."),
+            memory_core=FakeMemoryCore(),
+            event_store=FailingEventStore(),
+            default_model="gpt-4o",
+        )
+
+        turn = await engine.process_message(
+            session_id=uuid4(),
+            user_id=uuid4(),
+            org_id=uuid4(),
+            message="Hello",
+        )
+        assert turn.assistant_response == "Still works."
+
+    # ---- Read path ----
+
+    @pytest.mark.asyncio()
+    async def test_load_session_history_from_event_store(
+        self,
+        event_store: FakeEventStore,
+    ) -> None:
+        """get_session_history returns conversation_history format from events."""
+        engine = ConversationEngine(
+            llm=FakeLLM(response="Got it."),
+            memory_core=FakeMemoryCore(),
+            event_store=event_store,
+            default_model="gpt-4o",
+        )
+
+        session_id = uuid4()
+        org_id = uuid4()
+        user_id = uuid4()
+
+        # Simulate two prior turns stored in event_store
+        await event_store.append_event(
+            org_id=org_id,
+            session_id=session_id,
+            user_id=user_id,
+            event_type="user_message",
+            role="user",
+            content={"text": "Hi"},
+        )
+        await event_store.append_event(
+            org_id=org_id,
+            session_id=session_id,
+            user_id=user_id,
+            event_type="assistant_message",
+            role="assistant",
+            content={"text": "Hello!"},
+        )
+
+        history = await engine.get_session_history(session_id)
+
+        assert len(history) == 2
+        assert history[0] == {"role": "user", "content": "Hi"}
+        assert history[1] == {"role": "assistant", "content": "Hello!"}
+
+    @pytest.mark.asyncio()
+    async def test_get_session_history_empty(
+        self,
+        engine_with_events: ConversationEngine,
+    ) -> None:
+        """get_session_history returns empty list for new session."""
+        history = await engine_with_events.get_session_history(uuid4())
+        assert history == []
+
+    @pytest.mark.asyncio()
+    async def test_get_session_history_no_event_store(
+        self,
+        engine_without_events: ConversationEngine,
+    ) -> None:
+        """get_session_history returns empty list when no event_store configured."""
+        history = await engine_without_events.get_session_history(uuid4())
+        assert history == []
+
+    @pytest.mark.asyncio()
+    async def test_process_then_recover_history(
+        self,
+        event_store: FakeEventStore,
+    ) -> None:
+        """Full round-trip: process_message writes events, get_session_history reads them."""
+        engine = ConversationEngine(
+            llm=FakeLLM(response="Remembered."),
+            memory_core=FakeMemoryCore(),
+            event_store=event_store,
+            default_model="gpt-4o",
+        )
+
+        session_id = uuid4()
+        org_id = uuid4()
+        user_id = uuid4()
+
+        await engine.process_message(
+            session_id=session_id,
+            user_id=user_id,
+            org_id=org_id,
+            message="Remember this",
+        )
+
+        history = await engine.get_session_history(session_id)
+
+        assert len(history) == 2
+        assert history[0]["role"] == "user"
+        assert history[0]["content"] == "Remember this"
+        assert history[1]["role"] == "assistant"
+        assert history[1]["content"] == "Remembered."

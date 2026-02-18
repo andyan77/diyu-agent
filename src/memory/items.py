@@ -10,9 +10,16 @@ Architecture: ADR-033, Section 2.3.1 (MemoryItem versioning)
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from typing import TYPE_CHECKING
 from uuid import UUID, uuid4
 
+import sqlalchemy as sa
+
+from src.infra.models import MemoryItemModel
 from src.shared.types import MemoryItem
+
+if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 
 class MemoryItemStore:
@@ -154,3 +161,213 @@ class MemoryItemStore:
             if memory_id in chain:
                 return root
         return memory_id
+
+
+class PgMemoryItemStore:
+    """PostgreSQL-backed memory item store using SQLAlchemy.
+
+    All methods are async. Uses async_sessionmaker for DB access.
+    RLS SET LOCAL is handled externally by src.infra.db.get_db_session.
+    """
+
+    def __init__(self, *, session_factory: async_sessionmaker[AsyncSession]) -> None:
+        self._session_factory = session_factory
+
+    async def add_item(
+        self,
+        *,
+        user_id: UUID,
+        org_id: UUID,
+        memory_type: str,
+        content: str,
+        confidence: float = 1.0,
+        epistemic_type: str = "fact",
+        source_session_id: UUID | None = None,
+    ) -> MemoryItem:
+        """Create a new memory item row (version 1) and return domain object."""
+        memory_id = uuid4()
+        now = datetime.now(UTC)
+        source_sessions = [source_session_id] if source_session_id else []
+
+        model = MemoryItemModel(
+            id=memory_id,
+            org_id=org_id,
+            user_id=user_id,
+            memory_type=memory_type,
+            content=content,
+            confidence=confidence,
+            epistemic_type=epistemic_type,
+            version=1,
+            superseded_by=None,
+            source_sessions=source_sessions,
+            provenance=None,
+            valid_at=now,
+            invalid_at=None,
+        )
+
+        async with self._session_factory() as session:
+            session.add(model)
+            await session.commit()
+
+        return MemoryItem(
+            memory_id=memory_id,
+            user_id=user_id,
+            memory_type=memory_type,
+            content=content,
+            confidence=confidence,
+            valid_at=now,
+            invalid_at=None,
+            source_sessions=source_sessions,
+            superseded_by=None,
+            version=1,
+            provenance=None,
+            epistemic_type=epistemic_type,
+        )
+
+    async def get_item(self, memory_id: UUID) -> MemoryItem | None:
+        """Get a memory item by ID. Returns None if not found."""
+        stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id == memory_id)
+        async with self._session_factory() as session:
+            result = await session.execute(stmt)
+            row = result.scalar_one_or_none()
+
+        if row is None:
+            return None
+        return _row_to_memory_item(row)
+
+    async def get_items_for_user(
+        self,
+        user_id: UUID,
+        *,
+        active_only: bool = False,
+    ) -> list[MemoryItem]:
+        """Get all memory items for a user.
+
+        Args:
+            user_id: The user whose items to fetch.
+            active_only: If True, only return non-superseded items.
+        """
+        stmt = sa.select(MemoryItemModel).where(MemoryItemModel.user_id == user_id)
+        if active_only:
+            stmt = stmt.where(MemoryItemModel.superseded_by.is_(None))
+
+        async with self._session_factory() as session:
+            result = await session.scalars(stmt)
+            rows = result.all()
+
+        return [_row_to_memory_item(row) for row in rows]
+
+    async def update_item(
+        self,
+        memory_id: UUID,
+        *,
+        content: str | None = None,
+        confidence: float | None = None,
+        epistemic_type: str | None = None,
+    ) -> MemoryItem:
+        """Create a new version of an existing memory item.
+
+        Fetches the existing row, inserts a new row with version+1,
+        and marks the old row as superseded.
+
+        Raises:
+            KeyError: If memory_id is not found.
+        """
+        stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id == memory_id)
+
+        async with self._session_factory() as session:
+            result = await session.execute(stmt)
+            old_row = result.scalar_one_or_none()
+
+            if old_row is None:
+                msg = f"MemoryItem {memory_id} not found"
+                raise KeyError(msg)
+
+            new_id = uuid4()
+            now = datetime.now(UTC)
+
+            new_model = MemoryItemModel(
+                id=new_id,
+                org_id=old_row.org_id,
+                user_id=old_row.user_id,
+                memory_type=old_row.memory_type,
+                content=content if content is not None else old_row.content,
+                confidence=confidence if confidence is not None else old_row.confidence,
+                epistemic_type=(
+                    epistemic_type if epistemic_type is not None else old_row.epistemic_type
+                ),
+                version=old_row.version + 1,
+                superseded_by=None,
+                source_sessions=list(old_row.source_sessions or []),
+                provenance=old_row.provenance,
+                valid_at=now,
+                invalid_at=None,
+            )
+
+            # Mark old row as superseded
+            old_row.superseded_by = new_id
+            old_row.invalid_at = now
+
+            session.add(new_model)
+            await session.commit()
+
+        return MemoryItem(
+            memory_id=new_id,
+            user_id=new_model.user_id,
+            memory_type=new_model.memory_type,
+            content=new_model.content,
+            confidence=new_model.confidence,
+            valid_at=now,
+            invalid_at=None,
+            source_sessions=list(new_model.source_sessions or []),
+            superseded_by=None,
+            version=new_model.version,
+            provenance=new_model.provenance,
+            epistemic_type=new_model.epistemic_type,
+        )
+
+    async def supersede_item(
+        self,
+        memory_id: UUID,
+        *,
+        new_memory_id: UUID,
+    ) -> None:
+        """Mark an existing memory item as superseded by new_memory_id.
+
+        Sets superseded_by and invalid_at on the target row.
+
+        Raises:
+            KeyError: If memory_id is not found.
+        """
+        stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id == memory_id)
+
+        async with self._session_factory() as session:
+            result = await session.execute(stmt)
+            row = result.scalar_one_or_none()
+
+            if row is None:
+                msg = f"MemoryItem {memory_id} not found"
+                raise KeyError(msg)
+
+            now = datetime.now(UTC)
+            row.superseded_by = new_memory_id
+            row.invalid_at = now
+            await session.commit()
+
+
+def _row_to_memory_item(row: MemoryItemModel) -> MemoryItem:
+    """Convert an ORM row to a domain MemoryItem."""
+    return MemoryItem(
+        memory_id=row.id,
+        user_id=row.user_id,
+        memory_type=row.memory_type,
+        content=row.content,
+        confidence=row.confidence,
+        valid_at=row.valid_at,
+        invalid_at=row.invalid_at,
+        source_sessions=list(row.source_sessions) if row.source_sessions else [],
+        superseded_by=row.superseded_by,
+        version=row.version,
+        provenance=row.provenance,
+        epistemic_type=row.epistemic_type,
+    )

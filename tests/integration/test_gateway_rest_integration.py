@@ -8,8 +8,9 @@ Uses in-memory adapters (no external services required).
 
 from __future__ import annotations
 
-import fnmatch
-from uuid import uuid4
+from datetime import UTC, datetime
+from typing import Any
+from uuid import UUID, uuid4
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -18,30 +19,60 @@ from src.brain.engine.conversation import ConversationEngine
 from src.gateway.api.conversations import _reset_stores, create_conversation_router
 from src.gateway.app import create_app
 from src.gateway.middleware.auth import encode_token
-from src.memory.pg_adapter import PgMemoryCoreAdapter
 from src.ports.llm_call_port import LLMCallPort, LLMResponse
-from src.ports.storage_port import StoragePort
+from src.ports.memory_core_port import MemoryCorePort
+from src.shared.types import MemoryItem, Observation, WriteReceipt
 
 _JWT_SECRET = "test-integration-gateway-rest-secret-32b"  # noqa: S105
 
 
-class InMemoryStorage(StoragePort):
-    """In-memory storage for integration testing."""
+class FakeMemoryCore(MemoryCorePort):
+    """In-memory MemoryCorePort for integration testing."""
 
     def __init__(self) -> None:
-        self._data: dict[str, object] = {}
+        self._items: list[MemoryItem] = []
 
-    async def put(self, key, value, ttl=None):
-        self._data[key] = value
+    async def read_personal_memories(
+        self,
+        user_id: UUID,
+        query: str,
+        top_k: int = 10,
+        *,
+        org_id: UUID | None = None,
+    ) -> list[MemoryItem]:
+        results = [m for m in self._items if m.user_id == user_id]
+        if query:
+            results = [m for m in results if query.lower() in m.content.lower()]
+        return sorted(results, key=lambda m: m.confidence, reverse=True)[:top_k]
 
-    async def get(self, key):
-        return self._data.get(key)
+    async def write_observation(
+        self,
+        user_id: UUID,
+        observation: Observation,
+        *,
+        org_id: UUID | None = None,
+    ) -> WriteReceipt:
+        memory_id = uuid4()
+        now = datetime.now(UTC)
+        item = MemoryItem(
+            memory_id=memory_id,
+            user_id=user_id,
+            memory_type=observation.memory_type,
+            content=observation.content,
+            confidence=observation.confidence,
+            valid_at=now,
+            source_sessions=(
+                [observation.source_session_id] if observation.source_session_id else []
+            ),
+        )
+        self._items.append(item)
+        return WriteReceipt(memory_id=memory_id, version=1, written_at=now)
 
-    async def delete(self, key):
-        self._data.pop(key, None)
+    async def get_session(self, session_id: UUID) -> object:
+        return None
 
-    async def list_keys(self, pattern):
-        return [k for k in self._data if fnmatch.fnmatch(k, pattern)]
+    async def archive_session(self, session_id: UUID) -> object:
+        return None
 
 
 class FakeLLMPort(LLMCallPort):
@@ -59,6 +90,53 @@ class FakeLLMPort(LLMCallPort):
         )
 
 
+class FakeEventStore:
+    """In-memory event store satisfying EventStoreProtocol for integration tests."""
+
+    def __init__(self) -> None:
+        self.events: list[dict[str, Any]] = []
+        self._seq_counters: dict[UUID, int] = {}
+
+    async def append_event(
+        self,
+        *,
+        org_id: UUID,
+        session_id: UUID,
+        user_id: UUID | None = None,
+        event_type: str,
+        role: str = "user",
+        content: dict[str, Any] | None = None,
+        parent_event_id: UUID | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        seq = self._seq_counters.get(session_id, 0) + 1
+        self._seq_counters[session_id] = seq
+        event = {
+            "id": uuid4(),
+            "org_id": org_id,
+            "session_id": session_id,
+            "user_id": user_id,
+            "event_type": event_type,
+            "role": role,
+            "content": content or {},
+            "sequence_number": seq,
+        }
+        self.events.append(event)
+        return event
+
+    async def get_session_events(
+        self,
+        session_id: UUID,
+        *,
+        limit: int | None = None,
+    ) -> list[dict[str, Any]]:
+        result = [e for e in self.events if e["session_id"] == session_id]
+        result.sort(key=lambda e: e["sequence_number"])
+        if limit:
+            result = result[:limit]
+        return result
+
+
 @pytest.fixture(autouse=True)
 def _clean():
     _reset_stores()
@@ -68,10 +146,15 @@ def _clean():
 
 @pytest.fixture()
 def engine():
-    storage = InMemoryStorage()
-    memory_core = PgMemoryCoreAdapter(storage=storage)
+    memory_core = FakeMemoryCore()
     llm = FakeLLMPort()
-    return ConversationEngine(llm=llm, memory_core=memory_core, default_model="gpt-4o")
+    event_store = FakeEventStore()
+    return ConversationEngine(
+        llm=llm,
+        memory_core=memory_core,
+        event_store=event_store,
+        default_model="gpt-4o",
+    )
 
 
 @pytest.fixture()

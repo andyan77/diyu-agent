@@ -41,13 +41,13 @@ def memory_item_id():
 class TestReceiptStore:
     """MC2-6: injection/retrieval receipts with 5-tuple."""
 
-    def test_record_injection_receipt(
+    async def test_record_injection_receipt(
         self,
         store: ReceiptStore,
         org_id,
         memory_item_id,
     ) -> None:
-        receipt = store.record_injection(
+        receipt = await store.record_injection(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.85,
@@ -64,13 +64,13 @@ class TestReceiptStore:
         assert receipt.guardrail_hit is False
         assert receipt.context_position == 3
 
-    def test_record_retrieval_receipt(
+    async def test_record_retrieval_receipt(
         self,
         store: ReceiptStore,
         org_id,
         memory_item_id,
     ) -> None:
-        receipt = store.record_retrieval(
+        receipt = await store.record_retrieval(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.72,
@@ -78,14 +78,14 @@ class TestReceiptStore:
         )
         assert receipt.receipt_type == "retrieval"
 
-    def test_five_tuple_completeness(
+    async def test_five_tuple_completeness(
         self,
         store: ReceiptStore,
         org_id,
         memory_item_id,
     ) -> None:
         """Every receipt must have all 5 tuple fields."""
-        receipt = store.record_injection(
+        receipt = await store.record_injection(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.9,
@@ -100,65 +100,65 @@ class TestReceiptStore:
         assert receipt.guardrail_hit is not None
         assert receipt.context_position is not None
 
-    def test_get_receipts_for_item(
+    async def test_get_receipts_for_item(
         self,
         store: ReceiptStore,
         org_id,
         memory_item_id,
     ) -> None:
-        store.record_injection(
+        await store.record_injection(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.8,
             decision_reason="r1",
         )
-        store.record_retrieval(
+        await store.record_retrieval(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.7,
             decision_reason="r2",
         )
-        receipts = store.get_receipts_for_item(memory_item_id)
+        receipts = await store.get_receipts_for_item(memory_item_id)
         assert len(receipts) == 2
 
-    def test_get_receipts_empty(self, store: ReceiptStore) -> None:
-        assert store.get_receipts_for_item(uuid4()) == []
+    async def test_get_receipts_empty(self, store: ReceiptStore) -> None:
+        assert await store.get_receipts_for_item(uuid4()) == []
 
-    def test_count_by_type(
+    async def test_count_by_type(
         self,
         store: ReceiptStore,
         org_id,
         memory_item_id,
     ) -> None:
-        store.record_injection(
+        await store.record_injection(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.8,
             decision_reason="r1",
         )
-        store.record_injection(
+        await store.record_injection(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.7,
             decision_reason="r2",
         )
-        store.record_retrieval(
+        await store.record_retrieval(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.6,
             decision_reason="r3",
         )
-        counts = store.count_by_type(memory_item_id)
+        counts = await store.count_by_type(memory_item_id)
         assert counts["injection"] == 2
         assert counts["retrieval"] == 1
 
-    def test_guardrail_hit_recorded(
+    async def test_guardrail_hit_recorded(
         self,
         store: ReceiptStore,
         org_id,
         memory_item_id,
     ) -> None:
-        receipt = store.record_injection(
+        receipt = await store.record_injection(
             memory_item_id=memory_item_id,
             org_id=org_id,
             candidate_score=0.9,
@@ -167,24 +167,24 @@ class TestReceiptStore:
         )
         assert receipt.guardrail_hit is True
 
-    def test_receipts_isolated_between_items(
+    async def test_receipts_isolated_between_items(
         self,
         store: ReceiptStore,
         org_id,
     ) -> None:
         mid1 = uuid4()
         mid2 = uuid4()
-        store.record_injection(
+        await store.record_injection(
             memory_item_id=mid1,
             org_id=org_id,
             candidate_score=0.8,
             decision_reason="r1",
         )
-        store.record_injection(
+        await store.record_injection(
             memory_item_id=mid2,
             org_id=org_id,
             candidate_score=0.7,
             decision_reason="r2",
         )
-        assert len(store.get_receipts_for_item(mid1)) == 1
-        assert len(store.get_receipts_for_item(mid2)) == 1
+        assert len(await store.get_receipts_for_item(mid1)) == 1
+        assert len(await store.get_receipts_for_item(mid2)) == 1

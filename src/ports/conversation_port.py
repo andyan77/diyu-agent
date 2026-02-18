@@ -40,6 +40,13 @@ class ConversationPort(Protocol):
         """Process a user message and return a conversation turn."""
         ...
 
+    async def get_session_history(
+        self,
+        session_id: UUID,
+    ) -> list[dict[str, Any]]:
+        """Load conversation history from the event store."""
+        ...
+
 
 class WebSocketSender(Protocol):
     """Protocol for sending messages over WebSocket."""

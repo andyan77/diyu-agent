@@ -72,7 +72,7 @@ class ModelRegistry:
     async def call(
         self,
         prompt: str,
-        model_id: str | None = None,
+        model_id: str = "",
         content_parts: list[ContentBlock] | None = None,
         parameters: dict[str, Any] | None = None,
     ) -> LLMResponse:
@@ -80,6 +80,9 @@ class ModelRegistry:
 
         Tries primary provider first, then each fallback in order.
         Uses circuit breaker to skip known-failed providers.
+
+        Args:
+            model_id: Target model. Empty string uses provider default.
         """
         chain = [self.primary, *self.fallback_chain]
         last_error: Exception | None = None

@@ -9,36 +9,70 @@ Validates:
 
 from __future__ import annotations
 
-from uuid import uuid4
+from datetime import UTC, datetime
+from uuid import UUID, uuid4
 
 import pytest
 
 from src.brain.engine.context_assembler import AssembledContext, ContextAssembler
-from src.memory.pg_adapter import PgMemoryCoreAdapter
 from src.ports.knowledge_port import KnowledgePort
-from src.ports.storage_port import StoragePort
-from src.shared.types import KnowledgeBundle, Observation, OrganizationContext
+from src.ports.memory_core_port import MemoryCorePort
+from src.shared.types import (
+    KnowledgeBundle,
+    MemoryItem,
+    Observation,
+    OrganizationContext,
+    WriteReceipt,
+)
 
 
-class FakeStoragePort(StoragePort):
-    """In-memory storage for testing."""
+class FakeMemoryCore(MemoryCorePort):
+    """In-memory MemoryCorePort for testing."""
 
     def __init__(self) -> None:
-        self._data: dict[str, object] = {}
+        self._items: list[MemoryItem] = []
 
-    async def put(self, key, value, ttl=None):
-        self._data[key] = value
+    async def read_personal_memories(
+        self,
+        user_id: UUID,
+        query: str,
+        top_k: int = 10,
+        *,
+        org_id: UUID | None = None,
+    ) -> list[MemoryItem]:
+        results = [m for m in self._items if m.user_id == user_id]
+        if query:
+            results = [m for m in results if query.lower() in m.content.lower()]
+        return sorted(results, key=lambda m: m.confidence, reverse=True)[:top_k]
 
-    async def get(self, key):
-        return self._data.get(key)
+    async def write_observation(
+        self,
+        user_id: UUID,
+        observation: Observation,
+        *,
+        org_id: UUID | None = None,
+    ) -> WriteReceipt:
+        memory_id = uuid4()
+        now = datetime.now(UTC)
+        item = MemoryItem(
+            memory_id=memory_id,
+            user_id=user_id,
+            memory_type=observation.memory_type,
+            content=observation.content,
+            confidence=observation.confidence,
+            valid_at=now,
+            source_sessions=(
+                [observation.source_session_id] if observation.source_session_id else []
+            ),
+        )
+        self._items.append(item)
+        return WriteReceipt(memory_id=memory_id, version=1, written_at=now)
 
-    async def delete(self, key):
-        self._data.pop(key, None)
+    async def get_session(self, session_id: UUID) -> object:
+        return None
 
-    async def list_keys(self, pattern):
-        import fnmatch
-
-        return [k for k in self._data if fnmatch.fnmatch(k, pattern)]
+    async def archive_session(self, session_id: UUID) -> object:
+        return None
 
 
 class FakeKnowledgePort(KnowledgePort):
@@ -70,12 +104,8 @@ class TestContextAssembler:
     """B2-3: Context Assembler v1."""
 
     @pytest.fixture()
-    def storage(self) -> FakeStoragePort:
-        return FakeStoragePort()
-
-    @pytest.fixture()
-    def memory_core(self, storage: FakeStoragePort) -> PgMemoryCoreAdapter:
-        return PgMemoryCoreAdapter(storage=storage)
+    def memory_core(self) -> FakeMemoryCore:
+        return FakeMemoryCore()
 
     @pytest.fixture()
     def org_context(self) -> OrganizationContext:
@@ -89,7 +119,7 @@ class TestContextAssembler:
     @pytest.mark.asyncio()
     async def test_assembled_context_non_empty(
         self,
-        memory_core: PgMemoryCoreAdapter,
+        memory_core: FakeMemoryCore,
     ) -> None:
         """assembled_context must be non-empty even without data."""
         assembler = ContextAssembler(memory_core=memory_core)
@@ -103,7 +133,7 @@ class TestContextAssembler:
     @pytest.mark.asyncio()
     async def test_personal_memories_included(
         self,
-        memory_core: PgMemoryCoreAdapter,
+        memory_core: FakeMemoryCore,
     ) -> None:
         user_id = uuid4()
         await memory_core.write_observation(
@@ -118,7 +148,7 @@ class TestContextAssembler:
     @pytest.mark.asyncio()
     async def test_knowledge_bundle_included(
         self,
-        memory_core: PgMemoryCoreAdapter,
+        memory_core: FakeMemoryCore,
         org_context: OrganizationContext,
     ) -> None:
         kb = KnowledgeBundle(
@@ -141,7 +171,7 @@ class TestContextAssembler:
     @pytest.mark.asyncio()
     async def test_system_prompt_contains_memories(
         self,
-        memory_core: PgMemoryCoreAdapter,
+        memory_core: FakeMemoryCore,
     ) -> None:
         user_id = uuid4()
         await memory_core.write_observation(
@@ -155,7 +185,7 @@ class TestContextAssembler:
     @pytest.mark.asyncio()
     async def test_to_prompt_context(
         self,
-        memory_core: PgMemoryCoreAdapter,
+        memory_core: FakeMemoryCore,
     ) -> None:
         user_id = uuid4()
         await memory_core.write_observation(
