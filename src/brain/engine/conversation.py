@@ -20,6 +20,7 @@ from src.brain.engine.context_assembler import AssembledContext, ContextAssemble
 if TYPE_CHECKING:
     from src.brain.intent.classifier import IntentClassifier
     from src.brain.memory.pipeline import MemoryWritePipeline
+    from src.memory.receipt import ReceiptStoreProtocol
     from src.ports.knowledge_port import KnowledgePort
     from src.ports.llm_call_port import ContentBlock, LLMResponse
     from src.ports.memory_core_port import MemoryCorePort
@@ -132,6 +133,7 @@ class ConversationEngine:
         memory_pipeline: MemoryWritePipeline | None = None,
         usage_tracker: UsageRecorder | None = None,
         event_store: EventStoreProtocol | None = None,
+        receipt_store: ReceiptStoreProtocol | None = None,
         default_model: str = "gpt-4o",
     ) -> None:
         self._llm = llm
@@ -145,6 +147,7 @@ class ConversationEngine:
         self._context_assembler = ContextAssembler(
             memory_core=memory_core,
             knowledge=knowledge,
+            receipt_store=receipt_store,
         )
 
     async def process_message(
