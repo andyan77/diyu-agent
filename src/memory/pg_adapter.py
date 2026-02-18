@@ -1,8 +1,9 @@
-"""PostgreSQL adapter implementing MemoryCorePort.
+"""PostgreSQL adapter implementing MemoryCorePort via SQLAlchemy.
 
 Task card: MC2-1
-- Replaces SQLite stub with real PG implementation
-- All Stub tests must pass against PG adapter
+- Replaces KV-backed stub with real PG/SQLAlchemy implementation
+- Uses async_sessionmaker for database access
+- RLS SET LOCAL is handled by src.infra.db.get_db_session (not here)
 - Adapter implements Port interface; consumers unchanged
 
 Architecture: Section 2.1 (PostgreSQL as Memory Core primary storage)
@@ -11,124 +12,137 @@ Architecture: Section 2.1 (PostgreSQL as Memory Core primary storage)
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING, Any
-from uuid import UUID, uuid4
+from typing import TYPE_CHECKING
+from uuid import uuid4
 
+import sqlalchemy as sa
+
+from src.infra.models import MemoryItemModel
 from src.ports.memory_core_port import MemoryCorePort
 from src.shared.types import MemoryItem, Observation, WriteReceipt
 
 if TYPE_CHECKING:
-    from src.ports.storage_port import StoragePort
+    from uuid import UUID
+
+    from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 
 class PgMemoryCoreAdapter(MemoryCorePort):
     """PostgreSQL-backed implementation of MemoryCorePort.
 
-    Uses StoragePort for persistence, allowing in-memory testing
-    without a real database connection.
+    Uses SQLAlchemy async sessions for persistence.
+    Queries filter by user_id and org_id; RLS provides defense-in-depth.
     """
 
-    def __init__(self, storage: StoragePort) -> None:
-        self._storage = storage
+    def __init__(self, *, session_factory: async_sessionmaker[AsyncSession]) -> None:
+        self._session_factory = session_factory
 
     async def read_personal_memories(
         self,
         user_id: UUID,
         query: str,
         top_k: int = 10,
+        *,
+        org_id: UUID | None = None,
     ) -> list[MemoryItem]:
-        """Retrieve personal memories by user, optionally filtered by query.
+        """Retrieve personal memories by user, filtered by keyword match.
 
-        Simple keyword matching for Day-1. MC2-4 adds vector search.
+        Filters: user_id match, not superseded, not expired.
+        Day-1: simple ILIKE keyword matching. MC2-4 adds vector search.
         """
-        all_keys = await self._storage.list_keys(f"memory:{user_id}:*")
-        results: list[MemoryItem] = []
+        stmt = (
+            sa.select(MemoryItemModel)
+            .where(
+                MemoryItemModel.user_id == user_id,
+                MemoryItemModel.superseded_by.is_(None),
+                sa.or_(
+                    MemoryItemModel.invalid_at.is_(None),
+                    MemoryItemModel.invalid_at > datetime.now(UTC),
+                ),
+            )
+            .order_by(MemoryItemModel.confidence.desc())
+            .limit(top_k)
+        )
 
-        for key in all_keys:
-            raw = await self._storage.get(key)
-            if raw is None:
-                continue
-            item = _dict_to_memory_item(raw)
-            if item.superseded_by is not None:
-                continue
-            if item.invalid_at is not None and item.invalid_at <= datetime.now(UTC):
-                continue
-            if query and query.lower() not in item.content.lower():
-                continue
-            results.append(item)
+        if org_id is not None:
+            stmt = stmt.where(MemoryItemModel.org_id == org_id)
 
-        results.sort(key=lambda m: m.confidence, reverse=True)
-        return results[:top_k]
+        if query:
+            stmt = stmt.where(MemoryItemModel.content.ilike(f"%{query}%"))
+
+        async with self._session_factory() as session:
+            result = await session.scalars(stmt)
+            rows = result.all()
+
+        return [_row_to_memory_item(row) for row in rows]
 
     async def write_observation(
         self,
         user_id: UUID,
         observation: Observation,
+        *,
+        org_id: UUID | None = None,
     ) -> WriteReceipt:
-        """Write a new observation as a MemoryItem."""
-        memory_id = uuid4()
+        """Write a new observation as a MemoryItemModel row."""
+        if org_id is None:
+            msg = "org_id is required for PG write operations"
+            raise ValueError(msg)
+
         now = datetime.now(UTC)
-
-        item_dict: dict[str, Any] = {
-            "memory_id": str(memory_id),
-            "user_id": str(user_id),
-            "memory_type": observation.memory_type,
-            "content": observation.content,
-            "confidence": observation.confidence,
-            "valid_at": now.isoformat(),
-            "invalid_at": None,
-            "source_sessions": (
-                [str(observation.source_session_id)] if observation.source_session_id else []
+        memory_id = uuid4()
+        model = MemoryItemModel(
+            id=memory_id,
+            org_id=org_id,
+            user_id=user_id,
+            memory_type=observation.memory_type,
+            content=observation.content,
+            confidence=observation.confidence,
+            epistemic_type="fact",
+            version=1,
+            source_sessions=(
+                [observation.source_session_id] if observation.source_session_id else []
             ),
-            "superseded_by": None,
-            "version": 1,
-            "provenance": None,
-            "epistemic_type": "fact",
-        }
+            valid_at=now,
+        )
 
-        key = f"memory:{user_id}:{memory_id}"
-        await self._storage.put(key, item_dict)
+        async with self._session_factory() as session:
+            session.add(model)
+            await session.commit()
 
         return WriteReceipt(
-            memory_id=memory_id,
+            memory_id=model.id,
             version=1,
             written_at=now,
         )
 
-    async def get_session(self, session_id: UUID) -> dict[str, Any] | None:
-        """Retrieve a conversation session by ID."""
-        result = await self._storage.get(f"session:{session_id}")
-        return result if isinstance(result, dict) else None
+    async def get_session(self, session_id: UUID) -> object:
+        """Retrieve a conversation session by ID.
 
-    async def archive_session(self, session_id: UUID) -> dict[str, Any] | None:
-        """Archive a completed session."""
-        session = await self._storage.get(f"session:{session_id}")
-        if session is None:
-            return None
-        if isinstance(session, dict):
-            session["archived"] = True
-            session["archived_at"] = datetime.now(UTC).isoformat()
-            await self._storage.put(f"session:{session_id}", session)
-        return session if isinstance(session, dict) else None
+        Placeholder: session retrieval is handled by ConversationEventStore.
+        """
+        return None
+
+    async def archive_session(self, session_id: UUID) -> object:
+        """Archive a completed session.
+
+        Placeholder: session archival is handled by ConversationEventStore.
+        """
+        return None
 
 
-def _dict_to_memory_item(raw: Any) -> MemoryItem:
-    """Convert a stored dict back to MemoryItem."""
-    if not isinstance(raw, dict):
-        msg = f"Expected dict, got {type(raw)}"
-        raise TypeError(msg)
-
+def _row_to_memory_item(row: MemoryItemModel) -> MemoryItem:
+    """Convert an ORM row to a domain MemoryItem."""
     return MemoryItem(
-        memory_id=UUID(raw["memory_id"]),
-        user_id=UUID(raw["user_id"]),
-        memory_type=raw["memory_type"],
-        content=raw["content"],
-        confidence=raw.get("confidence", 1.0),
-        valid_at=datetime.fromisoformat(raw["valid_at"]),
-        invalid_at=(datetime.fromisoformat(raw["invalid_at"]) if raw.get("invalid_at") else None),
-        source_sessions=[UUID(s) for s in raw.get("source_sessions", [])],
-        superseded_by=(UUID(raw["superseded_by"]) if raw.get("superseded_by") else None),
-        version=raw.get("version", 1),
-        provenance=raw.get("provenance"),
-        epistemic_type=raw.get("epistemic_type", "fact"),
+        memory_id=row.id,
+        user_id=row.user_id,
+        memory_type=row.memory_type,
+        content=row.content,
+        confidence=row.confidence,
+        valid_at=row.valid_at,
+        invalid_at=row.invalid_at,
+        source_sessions=list(row.source_sessions) if row.source_sessions else [],
+        superseded_by=row.superseded_by,
+        version=row.version,
+        provenance=row.provenance,
+        epistemic_type=row.epistemic_type,
     )

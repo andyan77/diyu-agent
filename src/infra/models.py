@@ -3,6 +3,8 @@
 Maps to migration DDL in migrations/versions/:
   001_create_organization_tables.py  -> Organization, User, OrgMember, OrgSettings
   002_create_audit_events_table.py   -> AuditEvent
+  003_create_conversation_events.py  -> ConversationEvent
+  004_create_memory_items.py         -> MemoryItemModel, MemoryReceiptModel
 
 These models live in the Infrastructure layer and implement
 persistence for Port interfaces. Brain/Knowledge/Skill layers
@@ -322,9 +324,222 @@ class AuditEvent(Base):
     )
 
 
+class ConversationEvent(Base):
+    """Conversation event (message/turn record).
+
+    See: 003_create_conversation_events migration
+    """
+
+    __tablename__ = "conversation_events"
+
+    id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        primary_key=True,
+        server_default=_GEN_UUID,
+    )
+    org_id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    session_id: Mapped[_uuid.UUID] = mapped_column(_UUID, nullable=False)
+    user_id: Mapped[_uuid.UUID | None] = mapped_column(
+        _UUID,
+        sa.ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    event_type: Mapped[str] = mapped_column(sa.String(64), nullable=False)
+    role: Mapped[str] = mapped_column(
+        sa.String(32),
+        nullable=False,
+        server_default="user",
+    )
+    content: Mapped[dict[str, Any]] = mapped_column(
+        postgresql.JSONB,
+        nullable=False,
+        server_default=sa.text("'{}'::jsonb"),
+    )
+    content_schema_version: Mapped[str] = mapped_column(
+        sa.String(16),
+        nullable=False,
+        server_default="v3.6",
+    )
+    sequence_number: Mapped[int] = mapped_column(sa.Integer(), nullable=False)
+    parent_event_id: Mapped[_uuid.UUID | None] = mapped_column(_UUID, nullable=True)
+    metadata_: Mapped[dict[str, Any]] = mapped_column(
+        "metadata",
+        postgresql.JSONB,
+        nullable=False,
+        server_default=sa.text("'{}'::jsonb"),
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=False,
+        server_default=_NOW,
+    )
+
+    __table_args__ = (
+        sa.Index("ix_conversation_events_org_id", "org_id"),
+        sa.Index("ix_conversation_events_session_id", "session_id"),
+        sa.Index("ix_conversation_events_user_id", "user_id"),
+        sa.UniqueConstraint(
+            "session_id",
+            "sequence_number",
+            name="ix_conversation_events_session_seq",
+        ),
+        sa.Index("ix_conversation_events_created_at", "created_at"),
+    )
+
+
+class MemoryItemModel(Base):
+    """Persistent memory item with optional pgvector embedding.
+
+    See: 004_create_memory_items migration
+    """
+
+    __tablename__ = "memory_items"
+
+    id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        primary_key=True,
+        server_default=_GEN_UUID,
+    )
+    org_id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    user_id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        sa.ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    memory_type: Mapped[str] = mapped_column(sa.String(64), nullable=False)
+    content: Mapped[str] = mapped_column(sa.Text(), nullable=False)
+    confidence: Mapped[float] = mapped_column(
+        sa.Float(),
+        nullable=False,
+        server_default=sa.text("1.0"),
+    )
+    epistemic_type: Mapped[str] = mapped_column(
+        sa.String(32),
+        nullable=False,
+        server_default="fact",
+    )
+    version: Mapped[int] = mapped_column(
+        sa.Integer(),
+        nullable=False,
+        server_default=sa.text("1"),
+    )
+    superseded_by: Mapped[_uuid.UUID | None] = mapped_column(_UUID, nullable=True)
+    source_sessions: Mapped[list[_uuid.UUID]] = mapped_column(
+        postgresql.ARRAY(postgresql.UUID(as_uuid=True)),
+        nullable=False,
+        server_default=sa.text("'{}'::uuid[]"),
+    )
+    provenance: Mapped[dict[str, Any] | None] = mapped_column(
+        postgresql.JSONB,
+        nullable=True,
+    )
+    # Note: embedding column is vector(1536), managed via raw SQL in migration 004.
+    # Access via raw SQL or pgvector-sqlalchemy extension.
+    valid_at: Mapped[datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=False,
+        server_default=_NOW,
+    )
+    invalid_at: Mapped[datetime | None] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=True,
+    )
+    last_validated_at: Mapped[datetime | None] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=True,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=False,
+        server_default=_NOW,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=False,
+        server_default=_NOW,
+    )
+
+    receipts: Mapped[list[MemoryReceiptModel]] = relationship(
+        "MemoryReceiptModel",
+        back_populates="memory_item",
+        lazy="select",
+    )
+
+    __table_args__ = (
+        sa.Index("ix_memory_items_org_id", "org_id"),
+        sa.Index("ix_memory_items_user_id", "user_id"),
+        sa.Index("ix_memory_items_org_user", "org_id", "user_id"),
+        sa.Index("ix_memory_items_memory_type", "memory_type"),
+        sa.Index("ix_memory_items_valid_at", "valid_at"),
+        sa.Index("ix_memory_items_superseded_by", "superseded_by"),
+    )
+
+
+class MemoryReceiptModel(Base):
+    """Receipt for memory injection/retrieval (confidence calibration).
+
+    See: 004_create_memory_items migration
+    """
+
+    __tablename__ = "memory_receipts"
+
+    id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        primary_key=True,
+        server_default=_GEN_UUID,
+    )
+    org_id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    memory_item_id: Mapped[_uuid.UUID] = mapped_column(
+        _UUID,
+        sa.ForeignKey("memory_items.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    receipt_type: Mapped[str] = mapped_column(sa.String(32), nullable=False)
+    candidate_score: Mapped[float | None] = mapped_column(sa.Float(), nullable=True)
+    decision_reason: Mapped[str | None] = mapped_column(sa.String(256), nullable=True)
+    policy_version: Mapped[str | None] = mapped_column(sa.String(16), nullable=True)
+    guardrail_hit: Mapped[bool] = mapped_column(
+        sa.Boolean(),
+        nullable=False,
+        server_default=sa.text("false"),
+    )
+    context_position: Mapped[int | None] = mapped_column(sa.Integer(), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        sa.DateTime(timezone=True),
+        nullable=False,
+        server_default=_NOW,
+    )
+
+    memory_item: Mapped[MemoryItemModel] = relationship(
+        "MemoryItemModel",
+        back_populates="receipts",
+        lazy="select",
+    )
+
+    __table_args__ = (
+        sa.Index("ix_memory_receipts_org_id", "org_id"),
+        sa.Index("ix_memory_receipts_memory_item_id", "memory_item_id"),
+    )
+
+
 __all__ = [
     "AuditEvent",
     "Base",
+    "ConversationEvent",
+    "MemoryItemModel",
+    "MemoryReceiptModel",
     "OrgMember",
     "OrgSettings",
     "Organization",

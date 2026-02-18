@@ -13,8 +13,12 @@ import math
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
+import sqlalchemy as sa
+
 if TYPE_CHECKING:
     from uuid import UUID
+
+    from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 
 @dataclass(frozen=True)
@@ -173,3 +177,174 @@ class VectorSearchEngine:
         vector_results = self.search_vector(query_embedding, top_k=top_k * 2)
         keyword_results = self.search_keyword(query, top_k=top_k * 2)
         return rrf_fuse([vector_results, keyword_results], top_n=top_k)
+
+
+class PgVectorSearchEngine:
+    """PostgreSQL-backed vector search engine using pgvector.
+
+    Uses the <=> cosine distance operator from pgvector for embedding search
+    and ILIKE for keyword search.  Results from both are combined via RRF fusion
+    in hybrid_search.
+
+    Args:
+        session_factory: An async_sessionmaker[AsyncSession] that produces async
+            database sessions as context managers.
+    """
+
+    def __init__(
+        self,
+        session_factory: async_sessionmaker[AsyncSession],
+    ) -> None:
+        self._session_factory = session_factory
+
+    # ------------------------------------------------------------------
+    # Embedding search
+    # ------------------------------------------------------------------
+
+    async def search_by_embedding(
+        self,
+        embedding: list[float],
+        org_id: UUID,
+        user_id: UUID,
+        top_k: int = 5,
+    ) -> list[tuple[UUID, float]]:
+        """Search memory items by cosine distance using pgvector.
+
+        Args:
+            embedding: Query embedding vector.
+            org_id: Tenant organisation UUID (RLS scope).
+            user_id: User UUID (RLS scope).
+            top_k: Maximum number of results to return.
+
+        Returns:
+            List of (memory_item_id, cosine_distance) tuples, ordered by
+            ascending distance (most similar first).
+        """
+        embedding_literal = f"[{', '.join(str(v) for v in embedding)}]"
+        sql = sa.text(
+            """
+            SELECT id, content, embedding <=> CAST(:query_embedding AS vector) AS distance
+            FROM memory_items
+            WHERE org_id = :org_id
+              AND user_id = :user_id
+              AND embedding IS NOT NULL
+              AND invalid_at IS NULL
+            ORDER BY distance ASC
+            LIMIT :top_k
+            """
+        )
+        async with self._session_factory() as session:
+            cursor = await session.execute(
+                sql,
+                {
+                    "query_embedding": embedding_literal,
+                    "org_id": str(org_id),
+                    "user_id": str(user_id),
+                    "top_k": top_k,
+                },
+            )
+            rows = cursor.fetchall()
+
+        return [(row[0], float(row[2])) for row in rows]
+
+    # ------------------------------------------------------------------
+    # Keyword search
+    # ------------------------------------------------------------------
+
+    async def search_by_keyword(
+        self,
+        query: str,
+        org_id: UUID,
+        user_id: UUID,
+        top_k: int = 5,
+    ) -> list[tuple[UUID, float]]:
+        """Search memory items by keyword using ILIKE on the content column.
+
+        Args:
+            query: Keyword or phrase to search for.
+            org_id: Tenant organisation UUID (RLS scope).
+            user_id: User UUID (RLS scope).
+            top_k: Maximum number of results to return.
+
+        Returns:
+            List of (memory_item_id, score) tuples.  Score is a fixed 1.0 for
+            all matches (presence-only relevance; ranking relies on RRF fusion).
+        """
+        sql = sa.text(
+            """
+            SELECT id, content
+            FROM memory_items
+            WHERE org_id = :org_id
+              AND user_id = :user_id
+              AND content ILIKE :pattern
+              AND invalid_at IS NULL
+            LIMIT :top_k
+            """
+        )
+        async with self._session_factory() as session:
+            cursor = await session.execute(
+                sql,
+                {
+                    "org_id": str(org_id),
+                    "user_id": str(user_id),
+                    "pattern": f"%{query}%",
+                    "top_k": top_k,
+                },
+            )
+            rows = cursor.fetchall()
+
+        return [(row[0], 1.0) for row in rows]
+
+    # ------------------------------------------------------------------
+    # Hybrid search
+    # ------------------------------------------------------------------
+
+    async def hybrid_search(
+        self,
+        embedding: list[float],
+        query: str,
+        org_id: UUID,
+        user_id: UUID,
+        top_k: int = 5,
+    ) -> list[FusedResult]:
+        """RRF-fused hybrid search combining pgvector and keyword retrieval.
+
+        Runs search_by_embedding and search_by_keyword concurrently (sequential
+        DB calls), then fuses the ranked lists with rrf_fuse.
+
+        Args:
+            embedding: Query embedding vector.
+            query: Keyword or phrase for keyword search.
+            org_id: Tenant organisation UUID (RLS scope).
+            user_id: User UUID (RLS scope).
+            top_k: Maximum number of fused results to return.
+
+        Returns:
+            Top-N FusedResult items sorted by RRF score descending.
+        """
+        fetch_k = top_k * 2
+
+        vec_pairs = await self.search_by_embedding(
+            embedding=embedding, org_id=org_id, user_id=user_id, top_k=fetch_k
+        )
+        kw_pairs = await self.search_by_keyword(
+            query=query, org_id=org_id, user_id=user_id, top_k=fetch_k
+        )
+
+        # Build SearchResult lists for rrf_fuse.
+        # Content is not available after the raw SQL query; use empty string as
+        # placeholder so FusedResult can be constructed.  Callers that need
+        # content should fetch the full MemoryItemModel separately.
+        vec_results: list[SearchResult] = [
+            SearchResult(memory_id=mid, content="", score=score, source="vector")
+            for mid, score in vec_pairs
+        ]
+        kw_results: list[SearchResult] = [
+            SearchResult(memory_id=mid, content="", score=score, source="keyword")
+            for mid, score in kw_pairs
+        ]
+
+        if not vec_results and not kw_results:
+            return []
+
+        return rrf_fuse([vec_results, kw_results], top_n=top_k)

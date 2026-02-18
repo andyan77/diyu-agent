@@ -4,6 +4,11 @@ Task card: MC2-2
 - Write conversation event -> query by session_id -> return time-ordered list
 - Events are append-mostly, ordered by sequence_number within session
 
+Provides:
+- ConversationEvent: domain dataclass
+- ConversationEventStore: in-memory store (for tests / Day-1)
+- PgConversationEventStore: SQLAlchemy async store (production)
+
 Architecture: Section 2.1 (conversation_events table)
 """
 
@@ -11,8 +16,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from uuid import UUID, uuid4
+
+import sqlalchemy as sa
+
+from src.infra.models import ConversationEvent as ConversationEventModel
+
+if TYPE_CHECKING:
+    from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 
 @dataclass
@@ -112,3 +124,143 @@ class ConversationEventStore:
                 count += 1
         self._sequence_counters.pop(session_id, None)
         return count
+
+
+class PgConversationEventStore:
+    """PostgreSQL-backed conversation event store using SQLAlchemy.
+
+    All methods are async. Uses async_sessionmaker for DB access.
+    RLS SET LOCAL is handled externally by src.infra.db.get_db_session.
+    """
+
+    def __init__(self, *, session_factory: async_sessionmaker[AsyncSession]) -> None:
+        self._session_factory = session_factory
+
+    async def append_event(
+        self,
+        *,
+        org_id: UUID,
+        session_id: UUID,
+        user_id: UUID | None = None,
+        event_type: str,
+        role: str = "user",
+        content: dict[str, Any] | None = None,
+        parent_event_id: UUID | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> ConversationEvent:
+        """Append a new event to a conversation session.
+
+        Determines next sequence_number by counting existing events.
+        """
+        async with self._session_factory() as session:
+            # Get current max sequence number for this session
+            count_stmt = sa.select(sa.func.count()).where(
+                ConversationEventModel.session_id == session_id,
+            )
+            result = await session.execute(count_stmt)
+            current_count = result.scalar_one()
+            seq = current_count + 1
+
+            event_id = uuid4()
+            now = datetime.now(UTC)
+            model = ConversationEventModel(
+                id=event_id,
+                org_id=org_id,
+                session_id=session_id,
+                user_id=user_id,
+                event_type=event_type,
+                role=role,
+                content=content or {},
+                content_schema_version="v3.6",
+                sequence_number=seq,
+                parent_event_id=parent_event_id,
+                metadata_=metadata or {},
+                created_at=now,
+            )
+            session.add(model)
+            await session.commit()
+
+        return ConversationEvent(
+            id=event_id,
+            org_id=org_id,
+            session_id=session_id,
+            user_id=user_id,
+            event_type=event_type,
+            role=role,
+            content=content or {},
+            sequence_number=seq,
+            parent_event_id=parent_event_id,
+            metadata=metadata or {},
+            created_at=now,
+        )
+
+    async def get_session_events(
+        self,
+        session_id: UUID,
+        *,
+        limit: int | None = None,
+    ) -> list[ConversationEvent]:
+        """Get events for a session, ordered by sequence_number."""
+        stmt = (
+            sa.select(ConversationEventModel)
+            .where(ConversationEventModel.session_id == session_id)
+            .order_by(ConversationEventModel.sequence_number)
+        )
+        if limit is not None:
+            stmt = stmt.limit(limit)
+
+        async with self._session_factory() as session:
+            result = await session.scalars(stmt)
+            rows = result.all()
+
+        return [_row_to_event(row) for row in rows]
+
+    async def get_event(self, event_id: UUID) -> ConversationEvent | None:
+        """Get a single event by ID."""
+        stmt = sa.select(ConversationEventModel).where(
+            ConversationEventModel.id == event_id,
+        )
+        async with self._session_factory() as session:
+            result = await session.execute(stmt)
+            row = result.scalar_one_or_none()
+
+        if row is None:
+            return None
+        return _row_to_event(row)
+
+    async def count_session_events(self, session_id: UUID) -> int:
+        """Count events in a session."""
+        stmt = sa.select(sa.func.count()).where(
+            ConversationEventModel.session_id == session_id,
+        )
+        async with self._session_factory() as session:
+            result = await session.execute(stmt)
+            return result.scalar_one()
+
+    async def delete_session(self, session_id: UUID) -> int:
+        """Delete all events for a session. Returns count deleted."""
+        stmt = sa.delete(ConversationEventModel).where(
+            ConversationEventModel.session_id == session_id,
+        )
+        async with self._session_factory() as session:
+            result = await session.execute(stmt)
+            await session.commit()
+            return result.rowcount
+
+
+def _row_to_event(row: ConversationEventModel) -> ConversationEvent:
+    """Convert an ORM row to domain ConversationEvent."""
+    return ConversationEvent(
+        id=row.id,
+        org_id=row.org_id,
+        session_id=row.session_id,
+        user_id=row.user_id,
+        event_type=row.event_type,
+        role=row.role,
+        content=row.content,
+        sequence_number=row.sequence_number,
+        content_schema_version=row.content_schema_version,
+        parent_event_id=row.parent_event_id,
+        metadata=row.metadata_,
+        created_at=row.created_at,
+    )

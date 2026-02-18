@@ -3,7 +3,7 @@
        full-audit skills-validate skills-smoke check-acceptance-commands \
        replay-skill-session sbom sbom-json v4-status v4-plan v4-run v4-resume \
        v4p2-status v4p2-plan v4p2-run v4p2-resume v4p2-reset v4p2-validate-config \
-       security-scan security-scan-quick clean help
+       security-scan security-scan-quick dev dev-infra clean help
 
 PYTHON := python3
 SCRIPTS := scripts
@@ -25,6 +25,12 @@ bootstrap: ## Install toolchain + dependencies + verify
 
 doctor: ## Diagnose dev environment health
 	@$(PYTHON) $(SCRIPTS)/doctor.py
+
+dev-infra: ## Start infrastructure services (postgres, redis, minio)
+	docker compose up -d postgres redis minio
+
+dev: ## Run backend server (uvicorn with auto-reload)
+	uv run uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
 # ============================================================
 # Quality Gates

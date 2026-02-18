@@ -44,6 +44,34 @@ class UsageRecorder(Protocol):
     ) -> Any: ...
 
 
+class EventStoreProtocol(Protocol):
+    """Protocol for conversation event persistence (structural typing).
+
+    Both ConversationEventStore (in-memory) and PgConversationEventStore
+    satisfy this protocol. Brain depends on the protocol, never concrete classes.
+    """
+
+    async def append_event(
+        self,
+        *,
+        org_id: UUID,
+        session_id: UUID,
+        user_id: UUID | None = None,
+        event_type: str,
+        role: str = "user",
+        content: dict[str, Any] | None = None,
+        parent_event_id: UUID | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> Any: ...
+
+    async def get_session_events(
+        self,
+        session_id: UUID,
+        *,
+        limit: int | None = None,
+    ) -> list[Any]: ...
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -87,6 +115,7 @@ class ConversationEngine:
         intent_classifier: IntentClassifier | None = None,
         memory_pipeline: MemoryWritePipeline | None = None,
         usage_tracker: UsageRecorder | None = None,
+        event_store: EventStoreProtocol | None = None,
         default_model: str = "gpt-4o",
     ) -> None:
         self._llm = llm
@@ -95,6 +124,7 @@ class ConversationEngine:
         self._intent_classifier = intent_classifier
         self._memory_pipeline = memory_pipeline
         self._usage_tracker = usage_tracker
+        self._event_store = event_store
         self._default_model = default_model
         self._context_assembler = ContextAssembler(
             memory_core=memory_core,
@@ -155,7 +185,32 @@ class ConversationEngine:
                 output_tokens=llm_response.tokens_used.get("output", 0),
             )
 
-        # Step 6: Memory write pipeline (async, non-blocking)
+        # Step 6: Persist conversation events (non-blocking)
+        if self._event_store:
+            try:
+                await self._event_store.append_event(
+                    org_id=org_id,
+                    session_id=session_id,
+                    user_id=user_id,
+                    event_type="user_message",
+                    role="user",
+                    content={"text": message},
+                )
+                await self._event_store.append_event(
+                    org_id=org_id,
+                    session_id=session_id,
+                    user_id=user_id,
+                    event_type="assistant_message",
+                    role="assistant",
+                    content={"text": llm_response.text},
+                )
+            except Exception:
+                logger.warning(
+                    "Event store write failed (non-blocking)",
+                    exc_info=True,
+                )
+
+        # Step 7: Memory write pipeline (async, non-blocking)
         if self._memory_pipeline:
             try:
                 await self._memory_pipeline.process_turn(
@@ -181,6 +236,31 @@ class ConversationEngine:
             model_id=llm_response.model_id,
             intent_type=intent_type,
         )
+
+    async def get_session_history(
+        self,
+        session_id: UUID,
+    ) -> list[dict[str, Any]]:
+        """Load conversation history from the event store.
+
+        Returns list of {"role": ..., "content": ...} dicts suitable for
+        passing as conversation_history to process_message().
+        Returns [] if no event_store is configured or the session is empty.
+        """
+        if not self._event_store:
+            return []
+
+        events = await self._event_store.get_session_events(session_id)
+        history: list[dict[str, Any]] = []
+        for event in events:
+            role = getattr(event, "role", None) or event.get("role", "user")
+            content_obj = getattr(event, "content", None) or event.get("content", {})
+            if isinstance(content_obj, dict):
+                text = content_obj.get("text", "")
+            else:
+                text = str(content_obj)
+            history.append({"role": role, "content": text})
+        return history
 
     def _build_llm_messages(
         self,
