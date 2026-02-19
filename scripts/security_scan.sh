@@ -10,9 +10,15 @@
 #   --ci      Full scan + SARIF output + pnpm audit. Tool missing = exit 2.
 #
 # Exit codes:
-#   0 = Pass (includes: no scannable files)
+#   0 = Pass (includes: no scannable files, or degraded with no findings)
 #   1 = Blocking findings found
 #   2 = Tool/config error (--full and --ci only)
+#
+# External service resilience:
+#   pnpm audit and pip-audit depend on external registries (npmjs.org, pypi.org).
+#   Infrastructure failures (HTTP 500, DNS, timeout) are distinguished from real
+#   vulnerability findings. On infra failure: retry once, then WARN (not FAIL).
+#   Emits GitHub Actions ::warning:: annotation when degraded.
 #
 # Severity: WARNING + ERROR block, INFO is informational only.
 # Rule sets: p/default + p/python + p/docker-compose (no --config auto)
@@ -244,6 +250,8 @@ fi
 
 TOTAL_FINDINGS=0
 HAD_ERROR=false
+PNPM_DEGRADED=false
+PA_DEGRADED=false
 
 # --- Semgrep ---
 echo "=== SAST (semgrep ${SEMGREP_VER}) ===" >&2
@@ -329,31 +337,90 @@ if [ -z "$PIP_AUDIT_VER" ]; then
   echo "ERROR: pip-audit not available" >&2
   HAD_ERROR=true
 else
+  PA_INFRA_ERROR_PATTERNS="ConnectionError|ReadTimeout|ECONNREFUSED|ETIMEDOUT|ENOTFOUND|ServiceUnavailable|HTTPError.*50[0-9]|Connection aborted"
+  PA_OUTPUT_FILE=$(mktemp /tmp/pip-audit-XXXXXX.log)
   PA_EXIT=0
-  run_pip_audit 2>&2 || PA_EXIT=$?
-  if [ "$PA_EXIT" -ne 0 ]; then
+  run_pip_audit >"$PA_OUTPUT_FILE" 2>&1 || PA_EXIT=$?
+  if [ "$PA_EXIT" -eq 0 ]; then
+    cat "$PA_OUTPUT_FILE" >&2
+    echo "  pip-audit: PASS" >&2
+  elif grep -qiE "$PA_INFRA_ERROR_PATTERNS" "$PA_OUTPUT_FILE"; then
+    echo "  pip-audit: WARN (PyPI unavailable, degraded)" >&2
+    cat "$PA_OUTPUT_FILE" >&2
+    PA_DEGRADED=true
+  else
+    cat "$PA_OUTPUT_FILE" >&2
     echo "  pip-audit: FAIL (vulnerable dependencies found)" >&2
     TOTAL_FINDINGS=$((TOTAL_FINDINGS + 1))
-  else
-    echo "  pip-audit: PASS" >&2
   fi
+  rm -f "$PA_OUTPUT_FILE"
 fi
 
 # --- pnpm audit (--ci only) ---
+# NOTE: pnpm audit depends on registry.npmjs.org which can have outages.
+# We distinguish infrastructure failures (HTTP 500, DNS, timeout) from
+# real vulnerability findings to avoid false CI blocks.
 if [ "$MODE" = "ci" ]; then
   echo "=== Frontend Dependency Audit (pnpm audit) ===" >&2
   if command -v pnpm >/dev/null 2>&1 && [ -d "frontend" ]; then
-    PNPM_EXIT=0
-    (cd frontend && pnpm audit --audit-level=high) 2>&2 || PNPM_EXIT=$?
-    if [ "$PNPM_EXIT" -ne 0 ]; then
-      echo "  pnpm audit: FAIL (high+ vulnerabilities)" >&2
-      TOTAL_FINDINGS=$((TOTAL_FINDINGS + 1))
-    else
-      echo "  pnpm audit: PASS" >&2
+    PNPM_INFRA_ERROR_PATTERNS="ERR_PNPM_AUDIT_BAD_RESPONSE|ECONNREFUSED|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|Internal Server Error|fetch failed|socket hang up"
+    PNPM_MAX_RETRIES=2
+    PNPM_RETRY_DELAY=15
+    PNPM_RESOLVED=false
+
+    for attempt in $(seq 1 "$PNPM_MAX_RETRIES"); do
+      PNPM_OUTPUT_FILE=$(mktemp /tmp/pnpm-audit-XXXXXX.log)
+      PNPM_EXIT=0
+      (cd frontend && pnpm audit --audit-level=high) \
+        >"$PNPM_OUTPUT_FILE" 2>&1 || PNPM_EXIT=$?
+
+      if [ "$PNPM_EXIT" -eq 0 ]; then
+        echo "  pnpm audit: PASS" >&2
+        PNPM_RESOLVED=true
+        rm -f "$PNPM_OUTPUT_FILE"
+        break
+      fi
+
+      # Check if failure is infrastructure (not a real finding)
+      if grep -qiE "$PNPM_INFRA_ERROR_PATTERNS" "$PNPM_OUTPUT_FILE"; then
+        if [ "$attempt" -lt "$PNPM_MAX_RETRIES" ]; then
+          echo "  pnpm audit: registry error (attempt $attempt/$PNPM_MAX_RETRIES), retrying in ${PNPM_RETRY_DELAY}s..." >&2
+          sleep "$PNPM_RETRY_DELAY"
+          rm -f "$PNPM_OUTPUT_FILE"
+          continue
+        fi
+        # All retries exhausted -- infrastructure failure, not a finding
+        echo "  pnpm audit: WARN (registry unavailable after $PNPM_MAX_RETRIES attempts, degraded)" >&2
+        cat "$PNPM_OUTPUT_FILE" >&2
+        PNPM_DEGRADED=true
+        PNPM_RESOLVED=true
+        rm -f "$PNPM_OUTPUT_FILE"
+        break
+      else
+        # Real vulnerability finding (not infra error)
+        echo "  pnpm audit: FAIL (high+ vulnerabilities)" >&2
+        cat "$PNPM_OUTPUT_FILE" >&2
+        TOTAL_FINDINGS=$((TOTAL_FINDINGS + 1))
+        PNPM_RESOLVED=true
+        rm -f "$PNPM_OUTPUT_FILE"
+        break
+      fi
+    done
+
+    if [ "$PNPM_RESOLVED" != true ]; then
+      echo "  pnpm audit: WARN (unresolved, treating as degraded)" >&2
     fi
   else
     echo "  pnpm audit: SKIP (pnpm or frontend/ not found)" >&2
   fi
+fi
+
+# --- Degradation report ---
+if [ "$PNPM_DEGRADED" = true ] || [ "$PA_DEGRADED" = true ]; then
+  DEGRADED_TOOLS=""
+  [ "$PNPM_DEGRADED" = true ] && DEGRADED_TOOLS="pnpm-audit"
+  [ "$PA_DEGRADED" = true ] && DEGRADED_TOOLS="${DEGRADED_TOOLS:+$DEGRADED_TOOLS,}pip-audit"
+  echo "::warning::Security scan degraded (external registry unavailable): $DEGRADED_TOOLS" >&2
 fi
 
 # --- Summary ---
