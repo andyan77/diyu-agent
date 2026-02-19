@@ -1,6 +1,7 @@
 # Milestone matrix validation
 # Checks YAML integrity, milestone aggregation, and acceptance command quality.
-# Informational gate (does not block merge).
+# Supplementary gate: xnode-coverage is enforced in ci.yml guard-checks;
+# this workflow provides --all informational report + path-triggered checks.
 
 name: Milestone Check
 

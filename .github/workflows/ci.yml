@@ -275,6 +275,8 @@ jobs:
       # V4 Phase 2 guards (always run, blocking)
       - name: Phase 2 gate verification
         run: uv run python scripts/verify_phase.py --phase 2 --json
+      - name: Cross-layer xnode coverage gate
+        run: uv run python scripts/check_xnode_coverage.py --current --json
       - name: Python no-mock check
         run: uv run python scripts/check_no_mock.py src/ tests/
       - name: TypeScript no-mock check
