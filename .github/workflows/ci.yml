@@ -291,6 +291,67 @@ jobs:
             fi
           done
 
+  # L2: Integration tests with service containers (PG + Redis)
+  # Phase 2: informational (not in merge-readiness); Phase 3+: promote to required
+  integration-tests:
+    name: "L2: Integration Tests"
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: diyu
+          POSTGRES_PASSWORD: test_ci
+          POSTGRES_DB: diyu_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --dev --frozen
+      - name: Run isolation tests (RLS runtime)
+        env:
+          DATABASE_URL: postgresql+asyncpg://diyu:test_ci@localhost:5432/diyu_test
+          REDIS_URL: redis://localhost:6379/0
+        run: uv run pytest tests/isolation/ -v --tb=short
+      - name: Run integration tests
+        env:
+          DATABASE_URL: postgresql+asyncpg://diyu:test_ci@localhost:5432/diyu_test
+          REDIS_URL: redis://localhost:6379/0
+        run: uv run pytest tests/integration/ -v --tb=short
+
+  # L2: Container image build + security scan
+  # Builds Dockerfile and runs trivy HIGH/CRITICAL scan
+  # Phase 2: informational; Phase 3+: promote to merge-readiness
+  build-image:
+    name: "L2: Image Build + Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build container image
+        run: docker build -t diyu-agent:ci-${{ github.sha }} .
+      - name: Install trivy
+        run: |
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+      - name: Scan image for vulnerabilities
+        run: trivy image --exit-code 1 --severity HIGH,CRITICAL diyu-agent:ci-${{ github.sha }}
+
   # Audit system self-check (triggered by audit infrastructure changes)
   audit-system-check:
     name: "Audit System Check"
