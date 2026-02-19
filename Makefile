@@ -3,7 +3,7 @@
        full-audit skills-validate skills-smoke check-acceptance-commands \
        replay-skill-session sbom sbom-json v4-status v4-plan v4-run v4-resume \
        v4p2-status v4p2-plan v4p2-run v4p2-resume v4p2-reset v4p2-validate-config \
-       security-scan security-scan-quick dev dev-infra clean help
+       security-scan security-scan-quick image-build image-scan dev dev-infra clean help
 
 PYTHON := python3
 SCRIPTS := scripts
@@ -219,9 +219,14 @@ security-scan: ## Run semgrep + pip-audit (full local scan)
 security-scan-quick: ## Quick security scan (staged files only)
 	@bash $(SCRIPTS)/security_scan.sh --quick
 
-image-scan: ## Scan Docker images with trivy (D1-1)
-	@echo "=== Container Image Scan (trivy) ==="
-	trivy image --exit-code 1 --severity HIGH,CRITICAL diyu-agent:latest
+image-build: ## Build production container image
+	@echo "=== Building Container Image ==="
+	docker build -t diyu-agent:latest .
+
+image-scan: ## Build + scan Docker image with trivy (D1-1)
+	@echo "=== Container Image Build + Scan (trivy) ==="
+	docker build -t diyu-agent:latest .
+	trivy image --exit-code 1 --severity HIGH,CRITICAL --ignorefile .trivyignore diyu-agent:latest
 
 # ============================================================
 # Utilities
