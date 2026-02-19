@@ -17,6 +17,8 @@ Exit codes:
 from __future__ import annotations
 
 import json
+import re
+import shlex
 import subprocess
 import sys
 import time
@@ -56,18 +58,38 @@ class PhaseReport:
         }
 
 
+_CD_PREFIX_RE = re.compile(r"^cd\s+(\S+)\s*&&\s*(.+)$")
+
+
+def _parse_check_cmd(check_cmd: str) -> tuple[list[str], Path]:
+    """Parse check command into (args, cwd), avoiding shell=True.
+
+    Handles 'cd dir && cmd ...' by extracting cwd and the real command.
+    For simple commands, uses shlex.split directly.
+    """
+    cmd = check_cmd.strip()
+    cwd = Path.cwd()
+
+    m = _CD_PREFIX_RE.match(cmd)
+    if m:
+        cwd = Path.cwd() / m.group(1)
+        cmd = m.group(2).strip()
+
+    return shlex.split(cmd), cwd
+
+
 def _run_check(check_cmd: str) -> CriterionResult:
     """Execute a single check command and return result."""
     start = time.monotonic()
     try:
-        result = subprocess.run(  # noqa: S602
-            check_cmd,
-            # nosemgrep: python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
-            shell=True,
+        args, cwd = _parse_check_cmd(check_cmd)
+        result = subprocess.run(  # noqa: S603 -- commands from trusted milestone-matrix.yaml
+            args,
+            shell=False,
             capture_output=True,
             text=True,
             timeout=180,
-            cwd=Path.cwd(),
+            cwd=cwd,
         )
         duration_ms = int((time.monotonic() - start) * 1000)
         if result.returncode == 0:
