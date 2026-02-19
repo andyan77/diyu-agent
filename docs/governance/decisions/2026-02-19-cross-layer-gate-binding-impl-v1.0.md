@@ -1,7 +1,8 @@
 # 跨层集成承接链补全 -- 实施计划 v1.0
 
 > 日期: 2026-02-19
-> 状态: Proposed (待终审后落盘执行)
+> 状态: Approved (终审通过, Phase 2 已落盘执行)
+> 终审日期: 2026-02-20
 > 上游决议: `docs/governance/decisions/2026-02-19-cross-layer-gate-binding.md`
 > 审查证据: `evidence/governance-reviews/cross-layer-integration-gap-v1.3-20260219.md`
 > 变更范围: 治理体系增强 (不另建系统)
@@ -851,3 +852,38 @@ Step 5-6: Phase 4/5 同 Step 4 模式
 |------|------|------|
 | v1.0 | 2026-02-19 | 初始版本, 含兼容前置修复包 (G0) + 框架 (G1-G7) + Phase 2 补全 (P2) + Phase 3-5 框架 |
 | v1.0.1 | 2026-02-19 | 修正 4 项兼容性问题: (1) 2.1 traceability whitelist-only; (2) 2.2 matrix_ref->list[str] 完整数据结构升级; (3) 4.2 Phase 2 hard/soft 分级 (CI 环境依赖); (4) --all 硬编码 exit(0) 强约束 |
+| v1.0.2 | 2026-02-20 | 终审落盘: Proposed → Approved; 补充终审记录与实施证据链 |
+
+---
+
+## 16. 终审记录
+
+| 步骤 | 产物 | 实施状态 | 证据 |
+|------|------|---------|------|
+| G0 兼容前置修复 (4项) | task_card_traceability_check.py, check_task_schema.py, .gitignore, schema 1.1 | 已落盘 | PR #25 |
+| G1 YAML Schema xnodes | milestone-matrix.schema.yaml:85-89 | 已落盘 | PR #25 |
+| G2-G3 xnodes 绑定+阈值 | milestone-matrix.yaml P2 7 criteria, P2=0.40 | 已落盘 | PR #25 |
+| G4 check_xnode_coverage.py | 315 行, py3.10 兼容 (UTC=timezone.utc) | 已落盘 | PR #25 + #26 (UTC fix) |
+| G5 Makefile targets | 3 targets: check-xnode-coverage / -% / -all | 已落盘 | PR #25 |
+| G6 CI xnode-coverage job | milestone-check.yml:68-78 | 已落盘 | PR #25 |
+| G7 Phase 0-1 回溯审计 | evidence/retrospective/phase-0-1-xnode-audit.json | 已落盘 | PR #25 |
+| P2 集成任务卡 (5张) | docs/task-cards/00-跨层集成/phase-2-integration.md | 已落盘 | PR #25 |
+| T-BE 后端 E2E (4文件) | tests/e2e/cross/ — 11 tests, 0 skip, 全部 PASS | 已落盘 | PR #26 |
+| T-FE 前端 E2E (4文件) | frontend/tests/e2e/cross/web/ — 11 tests, 0 skip, 全部 PASS | 已落盘 | PR #26 |
+| verify_phase.py shell 兼容 | shell 元字符支持 (&&, pipe, redirect) | 已落盘 | PR #26 |
+| Makefile PYTHON 统一 | `PYTHON := uv run python` | 已落盘 | PR #26 |
+| env completeness gate | p2-env-completeness + p2-no-vacuous-pass 接入 milestone-matrix | 已落盘 | PR #26 |
+| Phase 0-2 证据归档 | evidence/ 同日新产证据 | 已落盘 | PR #27 |
+
+### 终审 Gate 验证结果
+
+```
+make verify-phase-0  → GO (10/10 hard, 2/2 soft)
+make verify-phase-1  → GO (9/9 hard)
+make verify-phase-2  → GO (17/17 hard, 6/6 soft)
+check_xnode_coverage --phase 2 → GO (threshold 0.40)
+check_env_completeness → PASS (8/8 keys)
+check_no_vacuous_pass → PASS (8 files, 0 skip)
+Backend E2E cross  → 11 passed
+Frontend E2E cross → 11 passed
+```
