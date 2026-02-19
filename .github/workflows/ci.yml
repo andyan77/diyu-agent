@@ -292,7 +292,7 @@ jobs:
           done
 
   # L2: Integration tests with service containers (PG + Redis)
-  # Phase 2: informational (not in merge-readiness); Phase 3+: promote to required
+  # Required: included in merge-readiness dependency chain
   integration-tests:
     name: "L2: Integration Tests"
     runs-on: ubuntu-latest
@@ -333,8 +333,8 @@ jobs:
         run: uv run pytest tests/integration/ -v --tb=short
 
   # L2: Container image build + security scan
-  # Builds Dockerfile and runs trivy HIGH/CRITICAL scan
-  # Phase 2: informational; Phase 3+: promote to merge-readiness
+  # Builds Dockerfile and runs trivy HIGH/CRITICAL scan (hard gate)
+  # Required: included in merge-readiness dependency chain
   build-image:
     name: "L2: Image Build + Scan"
     runs-on: ubuntu-latest
@@ -490,6 +490,8 @@ jobs:
       - guard-checks
       - skills-governance-check
       - semantic-checks
+      - integration-tests
+      - build-image
     if: github.event_name == 'pull_request'
     steps:
       - run: echo "All required checks passed"
