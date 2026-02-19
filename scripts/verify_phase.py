@@ -59,33 +59,51 @@ class PhaseReport:
 
 
 _CD_PREFIX_RE = re.compile(r"^cd\s+(\S+)\s*&&\s*(.+)$")
+_SHELL_META_RE = re.compile(r"[|&;$`<>]")
 
 
-def _parse_check_cmd(check_cmd: str) -> tuple[list[str], Path]:
-    """Parse check command into (args, cwd), avoiding shell=True.
+def _needs_shell(cmd: str) -> bool:
+    """Detect whether a command requires shell interpretation.
 
-    Handles 'cd dir && cmd ...' by extracting cwd and the real command.
-    For simple commands, uses shlex.split directly.
+    Returns True for pipes, logical operators, subshells, redirections, etc.
+    Commands from milestone-matrix.yaml are trusted, so shell=True is safe.
+    """
+    return bool(_SHELL_META_RE.search(cmd))
+
+
+def _parse_check_cmd(check_cmd: str) -> tuple[list[str] | str, Path, bool]:
+    """Parse check command into (args, cwd, use_shell).
+
+    For commands needing shell interpretation (pipes, &&, etc.):
+        returns (shell_string, cwd, True)
+    For simple commands:
+        returns (shlex_list, cwd, False)
+    Handles 'cd dir && cmd ...' by extracting cwd in both modes.
     """
     cmd = check_cmd.strip()
     cwd = Path.cwd()
+    use_shell = _needs_shell(cmd)
 
     m = _CD_PREFIX_RE.match(cmd)
     if m:
         cwd = Path.cwd() / m.group(1)
         cmd = m.group(2).strip()
+        # Re-evaluate: the remaining command may or may not need shell
+        use_shell = _needs_shell(cmd)
 
-    return shlex.split(cmd), cwd
+    if use_shell:
+        return cmd, cwd, True
+    return shlex.split(cmd), cwd, False
 
 
 def _run_check(check_cmd: str) -> CriterionResult:
     """Execute a single check command and return result."""
     start = time.monotonic()
     try:
-        args, cwd = _parse_check_cmd(check_cmd)
+        args, cwd, use_shell = _parse_check_cmd(check_cmd)
         result = subprocess.run(  # noqa: S603 -- commands from trusted milestone-matrix.yaml
             args,
-            shell=False,
+            shell=use_shell,
             capture_output=True,
             text=True,
             timeout=180,

@@ -283,6 +283,10 @@ jobs:
         run: node scripts/check_no_mock_ts.mjs frontend/
       - name: Validate Phase 2 runtime config
         run: uv run python scripts/validate_phase2_config.py
+      - name: Env completeness check
+        run: uv run python scripts/check_env_completeness.py
+      - name: No vacuous pass check (E2E cross-layer)
+        run: uv run python scripts/check_no_vacuous_pass.py tests/e2e/cross/ frontend/tests/e2e/cross/
       - name: Lint workflow check commands
         run: |
           for f in delivery/v4-workflows.yaml delivery/v4-phase2-workflows.yaml; do
