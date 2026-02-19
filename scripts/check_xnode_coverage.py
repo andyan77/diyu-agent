@@ -24,10 +24,12 @@ from __future__ import annotations
 import json
 import re
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
+
+UTC = timezone.utc  # noqa: UP017 -- compat with Python <3.11 runtime
 
 MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
 CROSSCUTTING_PATH = Path("docs/governance/milestone-matrix-crosscutting.md")

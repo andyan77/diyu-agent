@@ -5,7 +5,7 @@
        v4p2-status v4p2-plan v4p2-run v4p2-resume v4p2-reset v4p2-validate-config \
        security-scan security-scan-quick image-build image-scan dev dev-infra clean help
 
-PYTHON := python3
+PYTHON := uv run python
 SCRIPTS := scripts
 
 # ============================================================
