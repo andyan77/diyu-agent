@@ -3,7 +3,8 @@
 # 生产级商业工程化交付 + 运维闭环落地
 
 > 日期: 2026-02-19
-> 状态: Proposed (待终审后执行)
+> 状态: Approved (终审通过, Phase 2 范围已执行)
+> 终审日期: 2026-02-20
 > 上游决议: `docs/governance/decisions/2026-02-19-cross-layer-gate-binding.md`
 > 子计划: `docs/governance/decisions/2026-02-19-cross-layer-gate-binding-impl-v1.0.md`
 > 审查证据: `evidence/governance-reviews/cross-layer-integration-gap-v1.3-20260219.md`
@@ -816,3 +817,46 @@ Step 8: Phase 5 激活 (Dim-B P5 + Dim-C CC-*)
 | 版本 | 日期 | 变更 |
 |------|------|------|
 | v1.0 | 2026-02-19 | 初始版本: 三维度统一计划 (Dim-A 7项 + Dim-B 引用子计划 + Dim-C 14维度3档) |
+| v1.0.1 | 2026-02-20 | 终审落盘: Proposed → Approved; 补充终审记录与各维度实施进度 |
+
+---
+
+## 12. 终审记录
+
+### 终审日期: 2026-02-20
+
+### 各维度 Phase 2 实施进度
+
+| 维度 | 计划项 (Phase 2 范围) | 实施状态 | 证据 |
+|------|----------------------|---------|------|
+| **Dim-A F1** | CI merge-readiness job | 已落盘 | ci.yml:491 merge-readiness job |
+| **Dim-A F2** | CI 覆盖率 gate --cov-fail-under=80 | 已落盘 | ci.yml:140-141 |
+| **Dim-A F3** | CI PG/Redis service container | 已落盘 | ci.yml integration-tests job |
+| **Dim-B G0-G7** | 跨层集成框架全套 | 已落盘 | 见子计划终审记录 |
+| **Dim-B P2** | Phase 2 集成任务卡 + E2E 测试 | 已落盘 | 22/22 tests PASS, 0 skip |
+| **Dim-C CA-2** | check_env_completeness.py | 已落盘 | PASS (8/8 keys), 接入 CI + milestone-matrix |
+
+### 后续 Phase 待实施项 (不阻断当前终审)
+
+| 维度 | 计划项 | 目标 Phase |
+|------|--------|-----------|
+| Dim-A F4 | lint_workflow_checks.py 扩展 | P3 |
+| Dim-A F5 | Dockerfile 多阶段构建 | P3 |
+| Dim-A F6 | 证据持久归档 CI step | P4 |
+| Dim-A F7 | 前端 Playwright CI job | P3-4 |
+| Dim-C CA-1 | test_tenant_crossover.py | P3 |
+| Dim-C CA-3 | sign_sbom.sh | P3 |
+| Dim-C CB-1~6 | 运维 B 档 6 项 | P4 |
+| Dim-C CC-1~3 | 运维 C 档 3 项 | P5 |
+
+### Gate 验证结果
+
+```
+make verify-phase-0  → GO (10/10 hard, 2/2 soft)
+make verify-phase-1  → GO (9/9 hard)
+make verify-phase-2  → GO (17/17 hard, 6/6 soft)
+check_xnode_coverage --phase 2 → GO (threshold 0.40)
+check_env_completeness → PASS
+check_no_vacuous_pass → PASS (8 files, 0 skip)
+CI merge-readiness → 27/27 checks green (PR #26)
+```
