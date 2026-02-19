@@ -3,7 +3,7 @@
 # Schema: delivery/milestone-matrix.schema.yaml
 # Usage: python3 scripts/verify_phase.py --phase 0 --json
 
-schema_version: "1.0"
+schema_version: "1.1"
 current_phase: "phase_2"
 
 phases:
@@ -320,13 +320,51 @@ phases:
           description: "E2E conversation loop (integration-level, Fake adapters): chat -> remember -> recall -> inject"
           check: "uv run pytest tests/e2e/test_conversation_loop.py -q --tb=short"
 
+        # --- Cross-layer integration gate (hard = Fake adapter, no external services) ---
+        - id: "p2-x2-1-conversation-loop"
+          description: "Cross-layer: full conversation loop + streaming E2E (X2-1, X2-2)"
+          check: "uv run pytest tests/e2e/cross/test_conversation_loop.py -v --tb=short"
+          xnodes: [X2-1, X2-2]
+
+        - id: "p2-xf2-4-openapi-sync"
+          description: "Cross-layer FE: OpenAPI type consistency (XF2-4)"
+          check: "bash scripts/check_openapi_sync.sh"
+          xnodes: [XF2-4]
+
       soft:
         - id: "p2-streaming"
           description: "SSE streaming e2e test"
           check: "cd frontend && pnpm exec playwright test tests/e2e/web/chat/streaming.spec.ts"
 
+        # --- Cross-layer integration gate (soft = needs external services) ---
+        - id: "p2-x2-3-memory-evolution"
+          description: "Cross-layer: memory evolution closed loop (X2-3)"
+          check: "uv run pytest tests/e2e/cross/test_memory_evolution.py -v --tb=short"
+          xnodes: [X2-3]
+
+        - id: "p2-x2-4-token-backpressure"
+          description: "Cross-layer: token budget backpressure (X2-4)"
+          check: "uv run pytest tests/e2e/cross/test_token_backpressure.py -v --tb=short"
+          xnodes: [X2-4]
+
+        - id: "p2-xf2-1-login-to-streaming"
+          description: "Cross-layer FE: login -> org -> chat -> streaming (XF2-1/2/3)"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/cross/web/login-to-streaming.spec.ts"
+          xnodes: [XF2-1, XF2-2, XF2-3]
+
+        - id: "p2-x2-5-golden-signals"
+          description: "Cross-layer: 4 golden signals e2e (X2-5)"
+          check: "uv run pytest tests/e2e/cross/test_golden_signals.py -v --tb=short"
+          xnodes: [X2-5]
+
+        - id: "p2-x2-6-fe-error-boundary"
+          description: "Cross-layer: FE error boundary closed loop (X2-6)"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/cross/web/error-boundary.spec.ts"
+          xnodes: [X2-6]
+
     go_no_go:
       hard_pass_rate: 1.0
+      xnode_coverage_min: 0.40
       approver: "architect"
 
   phase_3:
@@ -409,6 +447,7 @@ phases:
 
     go_no_go:
       hard_pass_rate: 1.0
+      xnode_coverage_min: 0.70
       approver: "architect"
 
   phase_4:
@@ -494,6 +533,7 @@ phases:
 
     go_no_go:
       hard_pass_rate: 1.0
+      xnode_coverage_min: 0.90
       approver: "architect"
 
   phase_5:
@@ -557,4 +597,5 @@ phases:
 
     go_no_go:
       hard_pass_rate: 1.0
+      xnode_coverage_min: 1.0
       approver: "architect"

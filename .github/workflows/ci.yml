@@ -136,7 +136,10 @@ jobs:
       - run: uv sync --dev --frozen
       - run: |
           mkdir -p ${{ env.EVIDENCE_DIR }}
-          uv run pytest tests/unit/ -v --tb=short --junitxml=${{ env.EVIDENCE_DIR }}/test-results.xml
+          uv run pytest tests/unit/ -v --tb=short \
+            --cov=src --cov-report=xml:${{ env.EVIDENCE_DIR }}/coverage.xml \
+            --cov-report=term-missing --cov-fail-under=80 \
+            --junitxml=${{ env.EVIDENCE_DIR }}/test-results.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -415,6 +418,24 @@ jobs:
           echo "$RESULT"
           SCORE=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('risk_score',0))" 2>/dev/null || echo "0")
           echo "risk_score=$SCORE" >> "$GITHUB_OUTPUT"
+
+  # Merge readiness gate (aggregates all required checks for branch protection equivalent)
+  merge-readiness:
+    name: "Merge Readiness"
+    runs-on: ubuntu-latest
+    needs:
+      - security-scan
+      - lint-backend
+      - lint-frontend
+      - typecheck-backend
+      - typecheck-frontend
+      - test-backend
+      - test-frontend
+      - test-e2e
+      - semantic-checks
+    if: github.event_name == 'pull_request'
+    steps:
+      - run: echo "All required checks passed"
 
   # Full audit (Section 12.6) - weekly scheduled + manual dispatch
   full-audit:
