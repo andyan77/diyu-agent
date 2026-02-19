@@ -1,0 +1,81 @@
+# Frozen Delivery Manifest for v0.1.0
+# Generated: 2026-02-14
+# Source: delivery/manifest.yaml (snapshot at release gate)
+# This file is immutable after release sign-off.
+
+schema_version: "1.0"
+release_version: "0.1.0"
+frozen_at: "2026-02-14T12:57:36+00:00"
+
+product:
+  name: "Diyu Agent"
+  version: "0.1.0"
+  description: "AI-powered intelligent work assistant platform"
+
+deployment_modes:
+  - id: saas
+    description: "Multi-tenant SaaS deployment"
+    auth: "HttpOnly Cookie"
+  - id: private
+    description: "Single-tenant private deployment"
+    auth: "In-memory token"
+
+architecture:
+  layers:
+    - brain_memory
+    - knowledge
+    - skill
+    - tool
+    - gateway
+    - infrastructure
+  day1_ports:
+    - MemoryCorePort
+    - KnowledgePort
+    - LLMCallPort
+    - SkillRegistry
+    - OrgContext
+    - StoragePort
+
+tech_stack:
+  backend:
+    language: "Python 3.12"
+    framework: "FastAPI"
+    orm: "SQLAlchemy 2.0"
+    migration: "Alembic"
+    package_manager: "uv"
+  frontend:
+    framework: "Next.js 15"
+    language: "TypeScript 5.x (strict)"
+    monorepo: "Turborepo + pnpm"
+    apps:
+      - web
+      - admin
+    packages:
+      - "@diyu/ui"
+      - "@diyu/api-client"
+      - "@diyu/shared"
+  database:
+    primary: "PostgreSQL 16 + pgvector"
+    cache: "Redis"
+    knowledge_graph: "Neo4j"
+    vector_store: "Qdrant"
+
+phase_at_release: "phase_1"
+gates_passed:
+  phase_0:
+    go_no_go: "GO"
+    hard_pass: 10
+    hard_total: 10
+  phase_1:
+    go_no_go: "GO"
+    hard_pass: 5
+    hard_total: 5
+
+references:
+  milestone_matrix: "delivery/milestone-matrix.yaml"
+  governance_spec: "docs/governance/task-card-schema-v1.0.md"
+  execution_plan: "docs/governance/execution-plan-v1.0.md"
+  all_gates_pass: "evidence/release/v0.1.0/all-gates-pass.json"
+  sbom: "evidence/release/v0.1.0/sbom.json"
+  perf_baseline: "evidence/release/v0.1.0/perf-baseline.json"
+  backup_drill: "evidence/release/v0.1.0/backup-drill.json"

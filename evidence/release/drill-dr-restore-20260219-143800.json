@@ -1,0 +1,20 @@
+{
+  "drill_type": "disaster-recovery-restore",
+  "gate_id": "p4-dr-restore-drill",
+  "timestamp": "2026-02-19T14:38:00Z",
+  "dry_run": true,
+  "steps": [{"name":"check_prerequisites","status":"PASS","duration_ms":2},{"name":"assess_failure_scope","status":"PASS","duration_ms":1003},{"name":"restore_postgresql","status":"PASS","duration_ms":1005},{"name":"restore_redis","status":"PASS","duration_ms":1005},{"name":"restore_application","status":"PASS","duration_ms":1004},{"name":"verify_data_consistency","status":"PASS","duration_ms":1006}],
+  "targets": {
+    "rto": {
+      "target_s": 1800,
+      "actual_s": 5,
+      "within_target": true
+    },
+    "rpo": {
+      "target_s": 3600,
+      "note": "WAL archiving interval 60s, max loss window bounded by backup frequency"
+    }
+  },
+  "result": "PASS",
+  "runbook_ref": "delivery/commercial/runbook/dr-restore.md"
+}

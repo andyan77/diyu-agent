@@ -1,0 +1,81 @@
+{
+  "phase": "phase_0",
+  "timestamp": "2026-02-14T08:50:28.508800+00:00",
+  "results": {
+    "hard": [
+      {
+        "id": "p0-toolchain",
+        "status": "PASS",
+        "duration_ms": 906
+      },
+      {
+        "id": "p0-backend-skeleton",
+        "status": "PASS",
+        "duration_ms": 0
+      },
+      {
+        "id": "p0-frontend-skeleton",
+        "status": "PASS",
+        "duration_ms": 0
+      },
+      {
+        "id": "p0-guards",
+        "status": "PASS",
+        "duration_ms": 0
+      },
+      {
+        "id": "p0-makefile",
+        "status": "PASS",
+        "duration_ms": 2
+      },
+      {
+        "id": "p0-claude-md",
+        "status": "PASS",
+        "duration_ms": 1
+      },
+      {
+        "id": "p0-milestone-matrix",
+        "status": "PASS",
+        "duration_ms": 81
+      },
+      {
+        "id": "p0-schema-validation",
+        "status": "PASS",
+        "duration_ms": 0
+      },
+      {
+        "id": "p0-env-template",
+        "status": "PASS",
+        "duration_ms": 0
+      },
+      {
+        "id": "p0-gitignore",
+        "status": "PASS",
+        "duration_ms": 1
+      }
+    ],
+    "soft": [
+      {
+        "id": "p0-hooks",
+        "status": "PASS",
+        "duration_ms": 0
+      },
+      {
+        "id": "p0-adr-index",
+        "status": "PASS",
+        "duration_ms": 0
+      }
+    ]
+  },
+  "summary": {
+    "hard_total": 10,
+    "hard_pass": 10,
+    "hard_fail": 0,
+    "soft_total": 2,
+    "soft_pass": 2,
+    "soft_skip": 0,
+    "pass_rate": 1.0,
+    "go_no_go": "GO",
+    "blocking_items": []
+  }
+}
