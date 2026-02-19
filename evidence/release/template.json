@@ -1,0 +1,29 @@
+{
+  "version": "",
+  "release_date": "",
+  "git_sha": "",
+  "gate_evidence": {
+    "phase_gate": "evidence/ci/phase-gate.json",
+    "coverage": "evidence/ci/coverage.xml",
+    "security_scan": "evidence/ci/security-scan.json",
+    "image_scan": "evidence/ci/trivy-report.json",
+    "sbom": "delivery/sbom.json",
+    "sbom_signature": "delivery/sbom.json.bundle"
+  },
+  "drill_evidence": {
+    "release_rollback": "",
+    "dr_restore": ""
+  },
+  "ci_run": {
+    "url": "",
+    "merge_readiness": "",
+    "integration_tests": "",
+    "build_image": ""
+  },
+  "sign_off": {
+    "engineering": "",
+    "security": "",
+    "operations": ""
+  },
+  "notes": ""
+}

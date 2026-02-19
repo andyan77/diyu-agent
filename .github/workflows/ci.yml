@@ -444,6 +444,17 @@ jobs:
         run: uv run python scripts/check_acceptance_gate.py --json
       - name: SBOM generation and validation
         run: bash scripts/generate_sbom.sh --validate
+      # Station 6: Operations closure checks (CB-3, CB-5, CB-6)
+      - name: Incident readiness check
+        run: uv run python scripts/check_incident_readiness.py --json
+      - name: Alert routing check
+        run: uv run python scripts/check_alert_routing.py --json
+      - name: Compliance artifacts check
+        run: uv run python scripts/check_compliance_artifacts.py --json
+      - name: Release rollback drill (dry-run)
+        run: bash scripts/drill_release.sh --dry-run
+      - name: DR restore drill (dry-run)
+        run: bash scripts/drill_dr_restore.sh --dry-run
 
   # Impact analysis (consumed by downstream jobs)
   change-impact:

@@ -1,0 +1,38 @@
+# DIYU Agent Incident Management SLA
+# Gate ID: p4-incident-readiness
+# Validation: scripts/check_incident_readiness.py
+
+incident_levels:
+  P0:
+    description: "Service outage affecting all users"
+    response_time: "15min"
+    resolution_target: "4h"
+    escalation: ["on-call-engineer", "engineering-lead", "CTO"]
+    communication: "Status page update within 15min, hourly updates"
+  P1:
+    description: "Major feature degradation or data integrity risk"
+    response_time: "30min"
+    resolution_target: "8h"
+    escalation: ["on-call-engineer", "engineering-lead"]
+    communication: "Status page update within 30min"
+  P2:
+    description: "Minor feature issue or performance degradation"
+    response_time: "4h"
+    resolution_target: "3d"
+    escalation: ["team-lead"]
+    communication: "Ticket update within 4h"
+
+metrics:
+  mtta_target: "15min"
+  mttr_target_p0: "4h"
+  mttr_target_p1: "8h"
+
+on_call:
+  rotation: "weekly"
+  coverage: "24x7"
+  suppression_rules: "deploy/monitoring/alerts.yml#suppression"
+
+post_incident:
+  blameless_review: "within 48h"
+  action_items_deadline: "1 sprint"
+  evidence_archive: "evidence/incidents/"
