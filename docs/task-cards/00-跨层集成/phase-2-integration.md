@@ -57,7 +57,7 @@
 | **依赖** | TASK-OS2-1, TASK-OS2-5 |
 | **风险** | 环境依赖: 需要 Prometheus 可查询 [ENV-DEP]; 指标延迟: 异步采集可能导致测试 flaky; 前端运行时: 需要 Frontend dev server; 上报丢失: 错误上报到后端的链路可能断裂 |
 | **兼容策略** | 新增测试文件 |
-| **验收命令** | `uv run pytest tests/e2e/cross/test_golden_signals.py -v --tb=short` [ENV-DEP] |
+| **验收命令** | [ENV-DEP] `uv run pytest tests/e2e/cross/test_golden_signals.py -v --tb=short` (CI: P2: E2E Conversation Loop) |
 | **回滚方案** | `git revert` |
 | **证据** | CI artifact |
 | **决策记录** | -- |

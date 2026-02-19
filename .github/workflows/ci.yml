@@ -220,6 +220,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v4
       - run: uv sync --dev --frozen
+      - name: Install semgrep (needed by verify_phase security gate)
+        run: uv tool install semgrep
       - name: Run layer dependency check (always, or if src gate triggered)
         if: |
           always() && (
