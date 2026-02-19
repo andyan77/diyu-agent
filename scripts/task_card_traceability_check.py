@@ -38,14 +38,42 @@ import yaml
 
 MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
 TASK_CARDS_DIR = Path("docs/task-cards")
+CROSSCUTTING_PATH = Path("docs/governance/milestone-matrix-crosscutting.md")
 
 # Primary matrix reference: Chinese or English format
 MATRIX_REF_RE = re.compile(r">\s*(?:矩阵条目|[Mm]atrix\s*\S*?):\s*(\S+)")
 TASK_HEADING_RE = re.compile(r"^###\s+(TASK-\S+)")
 # M-Track cross-reference within a line
 M_TRACK_RE = re.compile(r"M-Track:\s*(MM\S+)")
+# X/XF/XM node IDs in crosscutting Section 4
+XNODE_RE = re.compile(r"\|\s*(X[FM]?\d+-\d+)\s*\|")
 
 DEFAULT_THRESHOLD = 98.0
+
+
+def load_xnode_ids(
+    *,
+    crosscutting_path: Path | None = None,
+) -> set[str]:
+    """Extract X/XF/XM node IDs from crosscutting.md Section 4.
+
+    Used ONLY for dangling_refs whitelist -- not merged into milestone_ids
+    to avoid inflating the coverage denominator.
+    """
+    path = crosscutting_path or CROSSCUTTING_PATH
+    if not path.exists():
+        return set()
+    ids: set[str] = set()
+    in_section4 = False
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## 4."):
+            in_section4 = True
+        elif line.startswith("## ") and not line.startswith("## 4.") and in_section4:
+            break
+        if in_section4:
+            for m in XNODE_RE.finditer(line):
+                ids.add(m.group(1))
+    return ids
 
 
 def load_milestone_ids(
@@ -149,9 +177,13 @@ def compute_result(
     main_block = _coverage_block(milestone_ids, main_covered)
     all_block = _coverage_block(milestone_ids, all_covered)
 
-    # Dangling: refs in cards that point to no YAML milestone
+    # Dangling: refs in cards that point to no known ID.
+    # Whitelist includes milestone_ids + xnode_ids (X/XF/XM from crosscutting).
+    # xnode_ids is NOT merged into milestone_ids to preserve coverage denominator.
+    xnode_ids = load_xnode_ids()
+    known_valid_ids = milestone_ids | xnode_ids
     all_card_refs = set(main_refs.keys()) | set(m_track_refs.keys())
-    dangling = sorted(all_card_refs - milestone_ids)
+    dangling = sorted(all_card_refs - known_valid_ids)
 
     # Status based on all_coverage (main + M-Track) threshold
     status = "FAIL" if all_block["coverage_pct"] < threshold else "PASS"
@@ -194,11 +226,11 @@ def main() -> None:
         if phase_filter is not None:
             msg += f" for phase_{phase_filter}"
         if json_mode:
-            json.dump({"status": "SKIP", "detail": msg}, sys.stdout)
+            json.dump({"status": "ERROR", "detail": msg}, sys.stdout)
             print()
         else:
-            print(f"SKIP: {msg}")
-        sys.exit(0)
+            print(f"ERROR: {msg}", file=sys.stderr)
+        sys.exit(2)
 
     card_data = scan_task_cards()
     result = compute_result(milestone_ids, card_data, threshold)

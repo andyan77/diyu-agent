@@ -21,6 +21,10 @@ bootstrap: ## Install toolchain + dependencies + verify
 	uv sync --dev
 	cd frontend && pnpm install
 	cp -n .env.example .env 2>/dev/null || true
+	@if [ -d .git ] && [ -f scripts/pre-push-guard.sh ]; then \
+		ln -sf ../../scripts/pre-push-guard.sh .git/hooks/pre-push; \
+		echo "[bootstrap] pre-push hook installed"; \
+	fi
 	@$(MAKE) doctor
 
 doctor: ## Diagnose dev environment health
@@ -113,6 +117,15 @@ check-schema-full: ## Full task card schema validation
 
 count-cards: ## Count and analyze task cards
 	@$(PYTHON) $(SCRIPTS)/count_task_cards.py --json
+
+check-xnode-coverage: ## Check X/XF/XM node coverage (current phase)
+	@$(PYTHON) $(SCRIPTS)/check_xnode_coverage.py --current --json
+
+check-xnode-coverage-%: ## Check xnode coverage for phase N (e.g., make check-xnode-coverage-3)
+	@$(PYTHON) $(SCRIPTS)/check_xnode_coverage.py --phase $* --json
+
+check-xnode-coverage-all: ## Report xnode coverage for all phases (informational)
+	@$(PYTHON) $(SCRIPTS)/check_xnode_coverage.py --all --json
 
 # ============================================================
 # Audit
@@ -208,8 +221,7 @@ security-scan-quick: ## Quick security scan (staged files only)
 
 image-scan: ## Scan Docker images with trivy (D1-1)
 	@echo "=== Container Image Scan (trivy) ==="
-	trivy image --exit-code 0 --severity HIGH,CRITICAL diyu-agent:latest || \
-		echo "WARN: trivy not installed or image not built (CI soft gate)"
+	trivy image --exit-code 1 --severity HIGH,CRITICAL diyu-agent:latest
 
 # ============================================================
 # Utilities

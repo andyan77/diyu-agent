@@ -82,6 +82,11 @@ definitions:
             minimum: 0
             maximum: 1
             description: "Required pass rate for hard criteria (0.0 to 1.0)"
+          xnode_coverage_min:
+            type: number
+            minimum: 0
+            maximum: 1
+            description: "Minimum xnode coverage rate for Go decision (0.0 to 1.0)"
           approver:
             type: string
             minLength: 1
@@ -104,6 +109,12 @@ definitions:
         type: string
         minLength: 1
         description: "Shell command to execute (exit 0 = pass)"
+      xnodes:
+        type: array
+        items:
+          type: string
+          pattern: "^X[FM]?\\d+-\\d+$"
+        description: "Cross-layer verification nodes covered by this criterion"
 
   Milestone:
     type: object

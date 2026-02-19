@@ -5,12 +5,12 @@
 # Called by: Makefile, CI workflow, pre-commit hook, full_audit.sh, verify_phase.py
 #
 # Modes:
-#   --quick   Scan staged files only (pre-commit). Tool missing = WARN + exit 0.
+#   --quick   Scan staged files only (pre-commit). Tool missing = exit 2 (fail-closed).
 #   --full    Full scan: semgrep + pip-audit. Tool missing = exit 2 (fail-closed).
 #   --ci      Full scan + SARIF output + pnpm audit. Tool missing = exit 2.
 #
 # Exit codes:
-#   0 = Pass (includes: no scannable files, tool missing in --quick mode)
+#   0 = Pass (includes: no scannable files)
 #   1 = Blocking findings found
 #   2 = Tool/config error (--full and --ci only)
 #
@@ -156,9 +156,9 @@ if [ "$MODE" = "quick" ]; then
   SEMGREP_VER=$(check_semgrep 2>/dev/null) || true
 
   if [ -z "$SEMGREP_VER" ]; then
-    echo "WARN: semgrep not installed; CI required check will catch issues" >&2
-    json_summary "tool_missing_degraded" 0 "n/a"
-    exit 0
+    echo "ERROR: semgrep not installed (install: uv tool install semgrep)" >&2
+    json_summary "tool_missing" 0 "n/a"
+    exit 2
   fi
 
   # Collect staged files safely (handles spaces/special chars)

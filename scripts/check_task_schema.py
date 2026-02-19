@@ -92,7 +92,7 @@ class CardInfo:
     tier: str
     phase: int
     fields: dict = field(default_factory=dict)
-    matrix_ref: str | None = None
+    matrix_refs: list = field(default_factory=list)
     exceptions: list = field(default_factory=list)
     raw_lines: list = field(default_factory=list)
 
@@ -146,7 +146,7 @@ def parse_card(lines: list[str], heading_idx: int, filepath: str) -> CardInfo:
     title = lines[heading_idx].split(":", 1)[1].strip() if ":" in lines[heading_idx] else ""
 
     fields = {}
-    matrix_ref = None
+    matrix_refs = []
     exceptions = []
     raw_lines = []
 
@@ -162,10 +162,10 @@ def parse_card(lines: list[str], heading_idx: int, filepath: str) -> CardInfo:
         if line.startswith("## Phase") or line.startswith("## ---"):
             break
 
-        # Matrix reference
+        # Matrix reference (accumulate -- one ID per line)
         mat_match = MATRIX_REF_RE.search(line)
         if mat_match:
-            matrix_ref = mat_match.group(1)
+            matrix_refs.append(mat_match.group(1))
 
         # Exception declaration
         exc_match = EXCEPTION_RE.search(line)
@@ -215,7 +215,7 @@ def parse_card(lines: list[str], heading_idx: int, filepath: str) -> CardInfo:
         tier=tier,
         phase=extract_phase(task_id),
         fields=fields,
-        matrix_ref=matrix_ref,
+        matrix_refs=matrix_refs,
         exceptions=exceptions,
         raw_lines=raw_lines,
     )
@@ -295,8 +295,8 @@ def validate_card(card: CardInfo, matrix_ids: set[str]) -> list[Violation]:
             )
         )
 
-    # Matrix reference
-    if not card.matrix_ref:
+    # Matrix reference (list -- one ID per "> 矩阵条目:" line)
+    if not card.matrix_refs:
         violations.append(
             Violation(
                 card_id=card.task_id,
@@ -307,22 +307,21 @@ def validate_card(card: CardInfo, matrix_ids: set[str]) -> list[Violation]:
                 message="No matrix reference found within 20 lines of heading",
             )
         )
-    elif matrix_ids and card.matrix_ref not in matrix_ids:
-        # Allow sub-references like "D3-2 (前端子实现)"
-        base_ref = card.matrix_ref.split()[0] if " " in card.matrix_ref else card.matrix_ref
-        if base_ref not in matrix_ids:
-            violations.append(
-                Violation(
-                    card_id=card.task_id,
-                    file=card.file,
-                    line=card.line,
-                    severity=Severity.BLOCK,
-                    rule="matrix-invalid",
-                    message=(
-                        f"Matrix reference '{card.matrix_ref}' not found in milestone-matrix files"
-                    ),
+    elif matrix_ids:
+        for ref in card.matrix_refs:
+            # Allow sub-references like "D3-2 (前端子实现)"
+            base_ref = ref.split()[0] if " " in ref else ref
+            if base_ref not in matrix_ids:
+                violations.append(
+                    Violation(
+                        card_id=card.task_id,
+                        file=card.file,
+                        line=card.line,
+                        severity=Severity.BLOCK,
+                        rule="matrix-invalid",
+                        message=f"Matrix reference '{ref}' not found in milestone-matrix files",
+                    )
                 )
-            )
 
     # Acceptance command validation
     acc = card.fields.get("验收命令", "")

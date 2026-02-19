@@ -14,31 +14,47 @@ while read -r _local_ref _local_sha remote_ref _remote_sha; do
   if [ "$branch_name" = "$PROTECTED_BRANCH" ]; then
     echo "[pre-push-guard] Push to '$PROTECTED_BRANCH' detected. Running checks..."
 
-    echo "  [1/4] ruff check..."
+    echo "  [1/6] ruff check..."
     uv run ruff check src/ scripts/ tests/ --quiet || {
       echo "BLOCKED: ruff check failed. Fix lint errors before pushing to $PROTECTED_BRANCH."
       exit 1
     }
 
-    echo "  [2/4] ruff format --check..."
+    echo "  [2/6] ruff format --check..."
     uv run ruff format --check src/ scripts/ tests/ --quiet || {
       echo "BLOCKED: ruff format failed. Run 'uv run ruff format' before pushing to $PROTECTED_BRANCH."
       exit 1
     }
 
-    echo "  [3/4] pytest (unit)..."
+    echo "  [3/6] pytest (unit)..."
     uv run pytest tests/unit/ -q --tb=line -x || {
       echo "BLOCKED: unit tests failed. Fix tests before pushing to $PROTECTED_BRANCH."
       exit 1
     }
 
-    echo "  [4/4] layer boundary check..."
+    echo "  [4/6] layer boundary check..."
     bash scripts/check_layer_deps.sh --quiet 2>/dev/null || {
       echo "BLOCKED: layer boundary violations. Fix imports before pushing to $PROTECTED_BRANCH."
       exit 1
     }
 
-    echo "[pre-push-guard] All checks passed. Push to '$PROTECTED_BRANCH' allowed."
+    echo "  [5/6] type check (mypy)..."
+    uv run mypy src/ --ignore-missing-imports --no-error-summary --quiet 2>/dev/null || {
+      echo "BLOCKED: mypy type check failed. Fix type errors before pushing to $PROTECTED_BRANCH."
+      exit 1
+    }
+
+    echo "  [6/6] security scan (quick)..."
+    SCAN_EXIT=0
+    bash scripts/security_scan.sh --quick > /dev/null 2>&1 || SCAN_EXIT=$?
+    if [ "$SCAN_EXIT" -eq 1 ]; then
+      echo "BLOCKED: security scan found issues. Run 'bash scripts/security_scan.sh --quick' before pushing to $PROTECTED_BRANCH."
+      exit 1
+    elif [ "$SCAN_EXIT" -eq 2 ]; then
+      echo "WARN: security scan tool missing (semgrep). CI will enforce. Allowing push with warning."
+    fi
+
+    echo "[pre-push-guard] All checks passed (6/6). Push to '$PROTECTED_BRANCH' allowed."
   fi
 done
 

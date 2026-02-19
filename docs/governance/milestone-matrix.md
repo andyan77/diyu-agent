@@ -151,7 +151,7 @@ CI/CD 门禁          -->  治理规范的规则 + 里程碑矩阵的检查点
 1. Delivery/DevOps (D0-x ~ D5-x)
 2. Multimodal / M-Track (MM0-x ~ MM3-x)
 3. Observability & Security (OS0-x ~ OS5-x)
-4. 跨层集成验证节点 (X0-x ~ X5-x, XF0-x ~ XF3-x, XM0-x ~ XM3-x)
+4. 跨层集成验证节点 (X0-x ~ X5-x, XF2-x ~ XF4-x, XM0-x ~ XM3-x)
 
 ---
 
