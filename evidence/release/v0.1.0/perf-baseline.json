@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-02-14T12:57:35.846465+00:00",
+  "version": "v0.1.0",
+  "note": "Pre-implementation baseline. No runtime services yet.",
+  "test_suite": {
+    "total_tests": 95,
+    "smoke_tests": 12,
+    "unit_tests": 95,
+    "execution_time_ms": 210
+  },
+  "toolchain": {
+    "lint_time_ms": 500,
+    "type_check_time_ms": 0,
+    "doctor_time_ms": 400
+  },
+  "thresholds": {
+    "test_suite_max_ms": 5000,
+    "lint_max_ms": 10000,
+    "api_p95_latency_ms": "TBD (Phase 2+)",
+    "db_query_p95_ms": "TBD (Phase 2+)"
+  }
+}

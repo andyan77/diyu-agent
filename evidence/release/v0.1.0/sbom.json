@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-02-14T12:56:34.820143+00:00",
+  "version": "v0.1.0",
+  "format": "diyu-sbom-v1",
+  "components": {
+    "backend": {
+      "runtime": "python",
+      "runtime_version": "3.12+",
+      "package_manager": "uv",
+      "dependencies": [
+        "--strict-markers",
+        "-v",
+        "A",
+        "B",
+        "C4",
+        "E",
+        "F",
+        "Faye",
+        "I",
+        "N",
+        "PROPRIETARY",
+        "RUF",
+        "S",
+        "S101",
+        "S104",
+        "SIM",
+        "T20",
+        "TCH",
+        "UP",
+        "W",
+        "alembic",
+        "asyncpg",
+        "auto",
+        "celery",
+        "fastapi",
+        "hatchling",
+        "httpx",
+        "ipython",
+        "jsonschema",
+        "mypy",
+        "pgvector",
+        "pre-commit",
+        "py312",
+        "pydantic",
+        "pyjwt",
+        "pytest",
+        "pytest-asyncio",
+        "pytest-cov",
+        "pyyaml",
+        "redis",
+        "ruff",
+        "sqlalchemy",
+        "src",
+        "structlog",
+        "tests",
+        "uvicorn"
+      ]
+    },
+    "frontend": {
+      "runtime": "node",
+      "runtime_version": "22+",
+      "package_manager": "pnpm",
+      "framework": "next.js 15"
+    },
+    "database": {
+      "engine": "postgresql",
+      "version": "16+",
+      "extensions": [
+        "pgvector"
+      ]
+    },
+    "cache": {
+      "engine": "redis"
+    }
+  }
+}

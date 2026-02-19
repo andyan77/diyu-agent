@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-02-14T12:57:35.864260+00:00",
+  "version": "v0.1.0",
+  "status": "not_applicable",
+  "reason": "No production database deployed yet (Phase 0-1). Drill planned for Phase 2.",
+  "migration_rollback_verified": true,
+  "rollback_evidence": {
+    "migration_001": "downgrade() function present, drops tables in reverse order",
+    "migration_002": "downgrade() function present, drops audit_events and RLS policies"
+  },
+  "next_drill_phase": "phase_2"
+}
