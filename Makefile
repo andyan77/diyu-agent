@@ -226,7 +226,7 @@ image-build: ## Build production container image
 image-scan: ## Build + scan Docker image with trivy (D1-1)
 	@echo "=== Container Image Build + Scan (trivy) ==="
 	docker build -t diyu-agent:latest .
-	trivy image --exit-code 1 --severity HIGH,CRITICAL diyu-agent:latest
+	trivy image --exit-code 1 --severity HIGH,CRITICAL --ignorefile .trivyignore diyu-agent:latest
 
 # ============================================================
 # Utilities

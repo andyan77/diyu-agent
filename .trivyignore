@@ -1,0 +1,8 @@
+# Trivy vulnerability suppressions
+# Only suppress CVEs with no available fix in upstream base image.
+# Review and remove entries when fixes become available.
+
+# glibc integer overflow in memalign (Debian base image, no fix available)
+# Status: affected, no fixed version as of 2026-02-19
+# Base image: python:3.12-slim (debian 13.3)
+CVE-2026-0861
