@@ -221,8 +221,7 @@ security-scan-quick: ## Quick security scan (staged files only)
 
 image-scan: ## Scan Docker images with trivy (D1-1)
 	@echo "=== Container Image Scan (trivy) ==="
-	trivy image --exit-code 0 --severity HIGH,CRITICAL diyu-agent:latest || \
-		echo "WARN: trivy not installed or image not built (CI soft gate)"
+	trivy image --exit-code 1 --severity HIGH,CRITICAL diyu-agent:latest
 
 # ============================================================
 # Utilities

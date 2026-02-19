@@ -197,9 +197,14 @@ def check_phase(
     go_no_go = yaml_data.get("phases", {}).get(phase_key, {}).get("go_no_go", {})
     threshold = go_no_go.get("xnode_coverage_min")
 
-    gate_decision = "N/A"
+    gate_decision = "NO-THRESHOLD"
     if threshold is not None:
         gate_decision = "GO" if direct_rate >= threshold else "NO-GO"
+    elif total > 0:
+        print(
+            f"WARN: {phase_key} has {total} xnodes but no xnode_coverage_min threshold",
+            file=sys.stderr,
+        )
 
     return {
         "phase": phase_key,

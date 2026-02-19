@@ -226,11 +226,11 @@ def main() -> None:
         if phase_filter is not None:
             msg += f" for phase_{phase_filter}"
         if json_mode:
-            json.dump({"status": "SKIP", "detail": msg}, sys.stdout)
+            json.dump({"status": "ERROR", "detail": msg}, sys.stdout)
             print()
         else:
-            print(f"SKIP: {msg}")
-        sys.exit(0)
+            print(f"ERROR: {msg}", file=sys.stderr)
+        sys.exit(2)
 
     card_data = scan_task_cards()
     result = compute_result(milestone_ids, card_data, threshold)

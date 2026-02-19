@@ -282,9 +282,9 @@ jobs:
       - name: Run OpenAPI sync check (if openapi gate triggered)
         if: contains(needs.change-impact.outputs.triggered_gates, 'openapi_sync')
         run: bash scripts/check_openapi_sync.sh
-      # V4 Phase 2 guards (always run)
-      - name: Phase 2 gate verification (soft)
-        run: uv run python scripts/verify_phase.py --phase 2 --json || true
+      # V4 Phase 2 guards (always run, blocking)
+      - name: Phase 2 gate verification
+        run: uv run python scripts/verify_phase.py --phase 2 --json
       - name: Python no-mock check
         run: uv run python scripts/check_no_mock.py src/ tests/
       - name: TypeScript no-mock check
@@ -432,6 +432,10 @@ jobs:
       - test-backend
       - test-frontend
       - test-e2e
+      - a11y-frontend
+      - openapi-sync
+      - guard-checks
+      - skills-governance-check
       - semantic-checks
     if: github.event_name == 'pull_request'
     steps:

@@ -118,7 +118,7 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
             }
         )
 
-    # Check soft criteria
+    # Check soft criteria (failures recorded truthfully, never block go_no_go)
     for criterion in exit_criteria.get("soft", []):
         cid = criterion["id"]
         check_cmd = criterion["check"]
@@ -127,11 +127,11 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
         entry: dict = {
             "id": cid,
             "status": result.status,
+            "blocking": False,
             "duration_ms": result.duration_ms,
         }
-        if result.status == "FAIL":
-            entry["status"] = "SKIP"
-            entry["reason"] = result.error or "soft criterion not met"
+        if result.error:
+            entry["reason"] = result.error
         soft_results.append(entry)
 
     report.results = {"hard": hard_results, "soft": soft_results}
@@ -142,6 +142,7 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
     hard_fail = hard_total - hard_pass
     soft_total = len(soft_results)
     soft_pass = sum(1 for r in soft_results if r["status"] == "PASS")
+    soft_fail = sum(1 for r in soft_results if r["status"] == "FAIL")
     soft_skip = sum(1 for r in soft_results if r["status"] == "SKIP")
     pass_rate = hard_pass / hard_total if hard_total > 0 else 1.0
 
@@ -157,6 +158,7 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
         "hard_fail": hard_fail,
         "soft_total": soft_total,
         "soft_pass": soft_pass,
+        "soft_fail": soft_fail,
         "soft_skip": soft_skip,
         "pass_rate": round(pass_rate, 4),
         "go_no_go": "GO" if is_go else "BLOCKED",
@@ -239,7 +241,9 @@ def main() -> None:
         print()
         s = report.summary
         print(f"  Hard: {s.get('hard_pass', 0)}/{s.get('hard_total', 0)} passed")
-        print(f"  Soft: {s.get('soft_pass', 0)}/{s.get('soft_total', 0)} passed")
+        soft_fail_count = s.get("soft_fail", 0)
+        soft_suffix = f" ({soft_fail_count} failed, non-blocking)" if soft_fail_count else ""
+        print(f"  Soft: {s.get('soft_pass', 0)}/{s.get('soft_total', 0)} passed{soft_suffix}")
         print(f"  Go/No-Go: {s.get('go_no_go', 'UNKNOWN')}")
         if s.get("blocking_items"):
             print(f"  Blocking: {', '.join(s['blocking_items'])}")

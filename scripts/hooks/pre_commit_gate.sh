@@ -155,7 +155,7 @@ if [ -n "$STAGED_SRC" ]; then
     echo "[gate] Coverage: PASS (>=80%)" >&2
 fi
 
-# Gate 7: Security scan (staged files, quick mode -- tool missing = WARN not block)
+# Gate 7: Security scan (staged files, quick mode)
 echo "[gate] Running security scan..." >&2
 SCAN_JSON=$(mktemp /tmp/security-scan-XXXXXX.json)
 trap 'rm -f "$SCAN_JSON"' EXIT
@@ -166,6 +166,9 @@ if [ "$SCAN_EXIT" -eq 1 ]; then
     echo "[gate] BLOCKED: security scan found issues" >&2
     echo "[gate] Run: bash scripts/security_scan.sh --quick" >&2
     exit 2
+elif [ "$SCAN_EXIT" -eq 2 ]; then
+    echo "[gate] WARN: security scan tool missing (install: uv tool install semgrep)" >&2
+    echo "[gate] CI will run full scan; local commit allowed with warning" >&2
 fi
 echo "[gate] Security scan: PASS" >&2
 

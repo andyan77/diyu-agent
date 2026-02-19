@@ -36,7 +36,7 @@ gh api repos/{owner}/{repo}/rules
 | 控制层 | 机制 | 覆盖范围 |
 |--------|------|---------|
 | CI | `.github/workflows/ci.yml` 含 14 个必需 job | 每次 push/PR 自动执行 |
-| 本地 | `scripts/pre-push-guard.sh` (pre-push hook) | 推送前强制检查 |
+| 本地 | `scripts/pre-push-guard.sh` (pre-push hook, 6/6) | 推送前强制检查 (lint+format+test+layer+mypy+security) |
 | 治理 | `scripts/verify_phase.py --phase N` | 阶段门禁 12 项硬检查 |
 | 审计 | `make audit-e2e` + governance pipeline | 证据链完整性 |
 
