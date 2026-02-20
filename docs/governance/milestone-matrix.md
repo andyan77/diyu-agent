@@ -309,8 +309,11 @@ make verify-phase-3
 [PASS] 安装器可在全新服务器部署
 [PASS] 内容安全管线 security_status 6 态安全检查子集可用 (OS3-1, ADR-051)
 [PASS] 审计闭环: 关键操作 100% 有审计记录 (OS3-2)
+[PASS] 租户隔离 runtime: 跨 org 查询阻断 100% (OS3-6)
+[PASS] SBOM attestation 签名验证 (D3-5, soft)
+[PASS] env vars 完整性检查通过
 
-Phase 3 完成度: 9/9 (100%)
+Phase 3 完成度: 12/12 (100%)
 ```
 
 ### Phase 4 检查清单

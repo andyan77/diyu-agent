@@ -430,8 +430,11 @@ phases:
       - {id: "OS3-3", layer: "Observability", summary: "Knowledge write XSS protection"}
       - {id: "OS3-4", layer: "Observability", summary: "Resolver query audit"}
       - {id: "OS3-5", layer: "Observability", summary: "API rate limit alert"}
+      - {id: "OS3-6", layer: "Observability", summary: "Tenant isolation runtime"}
+      - {id: "D3-5", layer: "Delivery", summary: "SBOM attestation"}
     exit_criteria:
       hard:
+        # --- Phase 3 专属 (7 项) ---
         - id: "p3-knowledge-crud"
           description: "Knowledge CRUD API tests (FK linkage + admin API)"
           check: "uv run pytest tests/unit/knowledge/ tests/integration/knowledge/ -q"
@@ -443,13 +446,13 @@ phases:
           xnodes: ["X3-1"]
 
         - id: "p3-tool-execution"
-          description: "Tool execution sandbox tests"
-          check: "uv run pytest tests/unit/tool/ -q"
+          description: "Tool execution sandbox tests (Phase 3 new tools only)"
+          check: "uv run pytest tests/unit/tool/test_web_search.py tests/unit/tool/test_image_analyze.py tests/unit/tool/test_audio_transcribe.py -q"
           xnodes: ["XM1-1"]
 
         - id: "p3-fe-knowledge"
-          description: "Frontend knowledge + skill + admin pages build"
-          check: "cd frontend && pnpm run build"
+          description: "Frontend knowledge + skill + admin pages build + exist"
+          check: "cd frontend && pnpm run build && test -f apps/web/app/knowledge/page.tsx && test -f apps/admin/app/knowledge/page.tsx && test -f apps/admin/app/knowledge/review/page.tsx"
           xnodes: ["XF3-1", "XF3-2", "XF3-3"]
 
         - id: "p3-promotion-pipeline"
@@ -459,7 +462,7 @@ phases:
 
         - id: "p3-content-security"
           description: "Content security pipeline (security_status 6-state)"
-          check: "uv run pytest tests/unit/gateway/test_content_security.py -q"
+          check: "uv run pytest tests/unit/gateway/test_content_pipeline.py -q"
           xnodes: ["X3-5", "XM1-2"]
 
         - id: "p3-resolver-audit"
@@ -467,10 +470,44 @@ phases:
           check: "uv run pytest tests/unit/knowledge/test_resolver_audit.py -q"
           xnodes: ["X3-6"]
 
+        # --- 决策文档新增 (2 项) ---
+        - id: "p3-tenant-isolation-runtime"
+          description: "Runtime tenant isolation (cross-org blocked)"
+          check: "uv run pytest tests/isolation/test_tenant_crossover.py -q"
+
+        - id: "p3-env-completeness"
+          description: "All source-referenced env vars present in .env.example"
+          check: "uv run python scripts/check_env_completeness.py"
+
+        # --- 继承 Phase 2 通用质量门禁 (5 项) ---
+        - id: "p3-lint"
+          description: "Full lint (ruff + frontend ESLint)"
+          check: "make lint"
+
+        - id: "p3-security-scan"
+          description: "Security scan (semgrep + pip-audit)"
+          check: "bash scripts/security_scan.sh --full"
+
+        - id: "p3-layer-boundary"
+          description: "Layer boundary violations = 0"
+          check: "bash scripts/check_layer_deps.sh --json"
+
+        - id: "p3-no-mock-py"
+          description: "No banned mock patterns in Python"
+          check: "uv run python scripts/check_no_mock.py src/ tests/"
+
+        - id: "p3-integration"
+          description: "Integration tests pass"
+          check: "uv run pytest tests/integration/ -q --tb=short"
+
       soft:
         - id: "p3-graph-perf"
           description: "Knowledge graph query p95 < 200ms"
           check: "uv run pytest tests/perf/test_knowledge_query.py -q"
+
+        - id: "p3-sbom-attestation"
+          description: "SBOM signed with cosign (Phase 3 soft, Phase 4 hard)"
+          check: "bash scripts/sign_sbom.sh"
 
     go_no_go:
       hard_pass_rate: 1.0

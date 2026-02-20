@@ -57,6 +57,7 @@
 | D3-2 | 安装器 + preflight 产品化 | [CMD] 全新服务器运行安装脚本 -> 系统可用 | 安装脚本可执行 | -- | -- | 全新机器可部署 | -- |
 | D3-3 | `deploy/*` 与 manifest 一致性检查 | [CMD] `scripts/check_manifest_drift.sh` 通过 | 漂移检测脚本可用 | X4-3 | -- | 漂移 = 0 | -- |
 | D3-4 | `make verify-phase-3` | [CMD] 运行 -> 所有 P3 检查项输出 PASS | 全项通过 | -- | -- | 完成度 100% | -- |
+| D3-5 | SBOM attestation 签名验证 (cosign) | [CMD] `bash scripts/sign_sbom.sh` exit 0 | 签名验证通过 | -- | -- | SBOM 签名有效 | D1-2 |
 
 ### Phase 4 -- 运维产品化
 
@@ -174,6 +175,7 @@
 | OS3-3 | 知识写入安全校验 (XSS/注入防护) | [TEST] 知识条目含脚本标签 -> 写入时被净化 | 注入防护单测 | -- | -- | 净化率 100% | Knowledge |
 | OS3-4 | Resolver 查询审计 (who/when/what/why) | [TEST] 每次 Resolver 查询 -> 审计日志含 4W | 审计单测 | X3-6 | -- | 4W 齐全 | Knowledge |
 | OS3-5 | API 限流告警 (429 频率监控) | [METRIC] 429 响应率超阈值 -> 告警 | 告警触发 | -- | -- | 告警可触发 | Gateway |
+| OS3-6 | 租户隔离 runtime 验证 (跨 org 查询阻断) | [TEST] 跨 org 查询 100% 阻断 | 隔离测试通过 | -- | -- | 跨 org 泄露 = 0 | PG RLS |
 
 ### Phase 4 -- SLI/SLO + 告警分级 + 故障注入
 
