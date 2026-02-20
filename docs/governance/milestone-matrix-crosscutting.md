@@ -89,7 +89,7 @@
 | # | D | AC | V-in | V-x | V-fb | M | DEP | Phase |
 |---|---|----|----|-----|------|---|-----|-------|
 | MM0-1 | ContentBlock Schema v1.1 + JSON Schema 验证 (ADR-043) | [TEST] Schema 验证通过 | Schema 完整性 | -- | -- | 验证通过 | -- | 0 |
-| MM0-2 | ObjectStoragePort 接口 + S3/MinIO 实现 | [TEST] 6 个方法全部通过契约测试 | 6 方法契约测试 | X0-1 | XF2-3 | 6 方法全通过 | -- | 0 |
+| MM0-2 | ObjectStoragePort 接口 + S3/MinIO 实现 | [TEST] 5 个方法全部通过契约测试 | 5 方法契约测试 | X0-1 | XF2-3 | 5 方法全通过 | -- | 0 |
 | MM0-3 | personal_media_objects / enterprise_media_objects DDL + RLS | [CMD] 表存在 + RLS 测试通过 | DDL + RLS 测试 | X1-1 | -- | 表存在 + 隔离通过 | -- | 0 |
 | MM0-4 | tool_usage_records DDL | [CMD] 表存在 | DDL 对齐架构文档 | -- | -- | 表存在 | -- | 0 |
 | MM0-5 | conversation_events.content_schema_version 列 | [CMD] 列存在 | DDL 完整性 | -- | -- | 列存在 | -- | 0 |

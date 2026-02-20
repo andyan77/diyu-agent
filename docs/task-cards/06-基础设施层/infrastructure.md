@@ -401,16 +401,16 @@
 
 | 字段 | 内容 |
 |------|------|
-| **目标** | generate_upload_url -> upload -> generate_download_url -> download，6 方法全通过 |
+| **目标** | generate_upload_url -> upload -> generate_download_url -> download，5 方法全通过 |
 | **范围 (In Scope)** | `src/infra/storage/s3_adapter.py`, `tests/unit/infra/test_storage.py` |
 | **范围外 (Out of Scope)** | Gateway 上传 API / 安全扫描流水线 / 前端上传组件 / Knowledge 媒体索引 |
 | **依赖** | MinIO (docker-compose) |
 | **兼容策略** | 新增 adapter |
-| **验收命令** | [ENV-DEP] `pytest tests/unit/infra/test_storage.py -v` (6 方法全通过) |
+| **验收命令** | [ENV-DEP] `pytest tests/unit/infra/test_storage.py -v` (5 方法全通过) |
 | **回滚方案** | `git revert <commit>` |
-| **证据** | 6 方法契约测试通过 |
+| **证据** | 5 方法契约测试通过 |
 | **风险** | 依赖: MinIO (Docker Compose) / 数据: presigned_url 禁止持久化 (LAW 约束), 外部接口禁止暴露 ObjectRef / 兼容: 新增 adapter / 回滚: git revert |
-| **决策记录** | 决策: ObjectStoragePort + S3/MinIO Adapter 实现 6 方法契约 / 理由: Port/Adapter 模式解耦存储实现, 支持 S3/MinIO 切换 / 来源: ADR-045, 架构文档 06 Section 2 |
+| **决策记录** | 决策: ObjectStoragePort + S3/MinIO Adapter 实现 5 方法契约 / 理由: Port/Adapter 模式解耦存储实现, 支持 S3/MinIO 切换 / 来源: ADR-045, 架构文档 06 Section 2 |
 
 > 矩阵条目: I3-3 | V-fb: XF2-3 | M-Track: MM0-2
 
