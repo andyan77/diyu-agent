@@ -165,7 +165,8 @@ class FKRegistry:
                 await self._qdrant.delete_point(vid)
             del self._mappings[str(node_id)]
 
-        return await self._neo4j.delete_node(node_id)
+        result: bool = await self._neo4j.delete_node(node_id)
+        return result
 
     def get_mapping(self, node_id: UUID) -> FKMapping | None:
         """Look up FK mapping for a node."""
