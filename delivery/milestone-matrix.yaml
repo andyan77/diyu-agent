@@ -433,20 +433,39 @@ phases:
     exit_criteria:
       hard:
         - id: "p3-knowledge-crud"
-          description: "Knowledge CRUD API tests"
+          description: "Knowledge CRUD API tests (FK linkage + admin API)"
           check: "uv run pytest tests/unit/knowledge/ tests/integration/knowledge/ -q"
+          xnodes: ["X3-2", "X3-4"]
 
         - id: "p3-skill-registry"
-          description: "Skill registry tests"
+          description: "Skill registry + E2E skill loop tests"
           check: "uv run pytest tests/unit/skill/ -q"
+          xnodes: ["X3-1"]
 
         - id: "p3-tool-execution"
           description: "Tool execution sandbox tests"
           check: "uv run pytest tests/unit/tool/ -q"
+          xnodes: ["XM1-1"]
 
         - id: "p3-fe-knowledge"
-          description: "Frontend knowledge page builds"
+          description: "Frontend knowledge + skill + admin pages build"
           check: "cd frontend && pnpm run build"
+          xnodes: ["XF3-1", "XF3-2", "XF3-3"]
+
+        - id: "p3-promotion-pipeline"
+          description: "Memory->Knowledge promotion pipeline cross-SSOT"
+          check: "uv run pytest tests/unit/memory/test_promotion.py tests/integration/test_promotion.py -q"
+          xnodes: ["X3-3"]
+
+        - id: "p3-content-security"
+          description: "Content security pipeline (security_status 6-state)"
+          check: "uv run pytest tests/unit/gateway/test_content_security.py -q"
+          xnodes: ["X3-5", "XM1-2"]
+
+        - id: "p3-resolver-audit"
+          description: "Resolver query audit (who/when/what/why)"
+          check: "uv run pytest tests/unit/knowledge/test_resolver_audit.py -q"
+          xnodes: ["X3-6"]
 
       soft:
         - id: "p3-graph-perf"

@@ -4,7 +4,7 @@ version: "3.9"
 services:
   postgres:
     image: pgvector/pgvector:pg16
-    ports: ["5432:5432"]
+    ports: ["25432:5432"]
     environment:
       POSTGRES_USER: diyu
       POSTGRES_PASSWORD: diyu_dev

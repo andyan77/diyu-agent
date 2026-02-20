@@ -23,6 +23,7 @@ from src.brain.engine.conversation import ConversationEngine
 from src.brain.engine.ws_handler import WSChatHandler
 from src.brain.intent.classifier import IntentClassifier
 from src.brain.memory.pipeline import MemoryWritePipeline
+from src.gateway.api.auth import create_auth_router
 from src.gateway.api.conversations import create_conversation_router
 from src.gateway.api.upload import create_upload_router
 from src.gateway.app import create_app
@@ -61,7 +62,7 @@ def build_app() -> FastAPI:
     storage_base_url = os.environ.get("STORAGE_BASE_URL", "http://localhost:9000")
     database_url = os.environ.get(
         "DATABASE_URL",
-        "postgresql+asyncpg://diyu:diyu_dev@localhost:5432/diyu",
+        "postgresql+asyncpg://diyu:diyu_dev@localhost:25432/diyu",
     )
 
     if not jwt_secret:
@@ -140,6 +141,7 @@ def build_app() -> FastAPI:
     application.state.usage_tracker = usage_tracker
 
     # -- Mount P2 routers --
+    application.include_router(create_auth_router())
     application.include_router(
         create_conversation_router(engine=engine),
     )

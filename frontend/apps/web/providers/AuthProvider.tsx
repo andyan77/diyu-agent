@@ -100,7 +100,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({
         userId: payload.sub,
-        orgId: payload.org_id,
+        orgId: payload.org,
         role: payload.role ?? "member",
         permissions: payload.permissions ?? [],
       });

@@ -133,7 +133,17 @@ class Observer:
                 break
 
         # Fact/statement detection
-        fact_signals = ["i am", "i work", "my name", "i live", "i have"]
+        fact_signals = [
+            "i am",
+            "i work",
+            "my name",
+            "i live",
+            "i have",
+            "my pet",
+            "my dog",
+            "my cat",
+            "remember",
+        ]
         for signal in fact_signals:
             if signal in content_lower:
                 observations.append(
