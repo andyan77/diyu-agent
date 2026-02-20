@@ -125,12 +125,77 @@ class OrganizationContext:
     experiment_context: dict[str, Any] | None = None
 
 
+# -- Promotion types (Cross-SSOT: Memory Core -> Knowledge Stores) --
+
+
+@dataclass(frozen=True)
+class PromotionReceipt:
+    """Receipt from a memory-to-knowledge promotion operation.
+
+    See: 02-Knowledge Section 7.2 (Promotion Pipeline)
+    """
+
+    proposal_id: UUID
+    source_memory_id: UUID
+    target_knowledge_id: UUID | None  # None if promotion failed/rejected
+    status: str  # promoted | sanitize_failed | expired | rejected | write_failed
+    promoted_at: datetime | None = None
+    rejection_reason: str | None = None
+
+
+# -- Object Storage types (v3.6 Extension Port) --
+
+
+@dataclass(frozen=True)
+class PresignedUploadURL:
+    """Presigned URL for object upload.
+
+    See: 00-Overview Section 12.3.1 (ObjectStoragePort)
+    """
+
+    url: str
+    expires_at: datetime
+    conditions: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class PresignedDownloadURL:
+    """Presigned URL for object download."""
+
+    url: str
+    expires_at: datetime
+
+
+@dataclass(frozen=True)
+class BatchDeleteResult:
+    """Result of a batch delete operation."""
+
+    deleted: list[str] = field(default_factory=list)
+    errors: list[dict[str, str]] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class ObjectMetadata:
+    """Metadata about a stored object."""
+
+    size_bytes: int
+    mime_type: str
+    checksum_sha256: str
+    last_modified: datetime
+    storage_class: str = "STANDARD"
+
+
 __all__ = [
+    "BatchDeleteResult",
     "KnowledgeBundle",
     "MemoryItem",
     "ModelAccess",
+    "ObjectMetadata",
     "Observation",
     "OrganizationContext",
+    "PresignedDownloadURL",
+    "PresignedUploadURL",
+    "PromotionReceipt",
     "ResolutionMetadata",
     "WriteReceipt",
 ]

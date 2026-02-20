@@ -21,7 +21,7 @@ import sqlalchemy as sa
 
 from src.infra.models import MemoryItemModel
 from src.ports.memory_core_port import MemoryCorePort
-from src.shared.types import MemoryItem, Observation, WriteReceipt
+from src.shared.types import MemoryItem, Observation, PromotionReceipt, WriteReceipt
 
 if TYPE_CHECKING:
     from uuid import UUID
@@ -223,6 +223,27 @@ class PgMemoryCoreAdapter(MemoryCorePort):
         Placeholder: session archival is handled by ConversationEventStore.
         """
         return None
+
+    async def promote_to_knowledge(
+        self,
+        memory_id: UUID,
+        target_org_id: UUID,
+        target_visibility: str,
+        *,
+        user_id: UUID | None = None,
+    ) -> PromotionReceipt:
+        """Promote a personal memory to organizational knowledge.
+
+        Placeholder stub: Phase 3 implementation will integrate with
+        Knowledge Stores via the Promotion Pipeline.
+        """
+        return PromotionReceipt(
+            proposal_id=memory_id,
+            source_memory_id=memory_id,
+            target_knowledge_id=None,
+            status="promoted",
+            promoted_at=datetime.now(UTC),
+        )
 
 
 def _row_to_memory_item(row: MemoryItemModel) -> MemoryItem:

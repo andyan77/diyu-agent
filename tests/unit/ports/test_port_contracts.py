@@ -15,6 +15,7 @@ import pytest
 from src.ports.knowledge_port import KnowledgePort
 from src.ports.llm_call_port import LLMCallPort
 from src.ports.memory_core_port import MemoryCorePort
+from src.ports.object_storage_port import ObjectStoragePort
 from src.ports.org_context import OrgContextPort
 from src.ports.skill_registry import SkillRegistry
 from src.ports.storage_port import StoragePort
@@ -44,6 +45,14 @@ class TestMemoryCorePortContract:
 
     def test_has_archive_session(self) -> None:
         assert hasattr(MemoryCorePort, "archive_session")
+
+    def test_has_promote_to_knowledge(self) -> None:
+        assert hasattr(MemoryCorePort, "promote_to_knowledge")
+        sig = inspect.signature(MemoryCorePort.promote_to_knowledge)
+        params = list(sig.parameters.keys())
+        assert "memory_id" in params
+        assert "target_org_id" in params
+        assert "target_visibility" in params
 
 
 @pytest.mark.unit
@@ -97,6 +106,25 @@ class TestSkillRegistryContract:
         assert "skill_id" in params
         assert "knowledge" in params
 
+    def test_has_register(self) -> None:
+        assert hasattr(SkillRegistry, "register")
+        sig = inspect.signature(SkillRegistry.register)
+        params = list(sig.parameters.keys())
+        assert "definition" in params
+
+    def test_has_deregister(self) -> None:
+        assert hasattr(SkillRegistry, "deregister")
+        sig = inspect.signature(SkillRegistry.deregister)
+        params = list(sig.parameters.keys())
+        assert "skill_id" in params
+
+    def test_has_update_status(self) -> None:
+        assert hasattr(SkillRegistry, "update_status")
+        sig = inspect.signature(SkillRegistry.update_status)
+        params = list(sig.parameters.keys())
+        assert "skill_id" in params
+        assert "new_status" in params
+
 
 @pytest.mark.unit
 class TestOrgContextPortContract:
@@ -131,3 +159,48 @@ class TestStoragePortContract:
 
     def test_has_list_keys(self) -> None:
         assert hasattr(StoragePort, "list_keys")
+
+
+@pytest.mark.unit
+class TestObjectStoragePortContract:
+    """ObjectStoragePort must expose 5 methods (v3.6 Extension Port)."""
+
+    def test_has_generate_upload_url(self) -> None:
+        assert hasattr(ObjectStoragePort, "generate_upload_url")
+        sig = inspect.signature(ObjectStoragePort.generate_upload_url)
+        params = list(sig.parameters.keys())
+        assert "bucket" in params
+        assert "key" in params
+        assert "mime_type" in params
+        assert "max_size" in params
+        assert "checksum_sha256" in params
+        assert "expires_in" in params
+
+    def test_has_generate_download_url(self) -> None:
+        assert hasattr(ObjectStoragePort, "generate_download_url")
+        sig = inspect.signature(ObjectStoragePort.generate_download_url)
+        params = list(sig.parameters.keys())
+        assert "bucket" in params
+        assert "key" in params
+        assert "expires_in" in params
+
+    def test_has_delete_object(self) -> None:
+        assert hasattr(ObjectStoragePort, "delete_object")
+        sig = inspect.signature(ObjectStoragePort.delete_object)
+        params = list(sig.parameters.keys())
+        assert "bucket" in params
+        assert "key" in params
+
+    def test_has_delete_objects(self) -> None:
+        assert hasattr(ObjectStoragePort, "delete_objects")
+        sig = inspect.signature(ObjectStoragePort.delete_objects)
+        params = list(sig.parameters.keys())
+        assert "bucket" in params
+        assert "keys" in params
+
+    def test_has_head_object(self) -> None:
+        assert hasattr(ObjectStoragePort, "head_object")
+        sig = inspect.signature(ObjectStoragePort.head_object)
+        params = list(sig.parameters.keys())
+        assert "bucket" in params
+        assert "key" in params

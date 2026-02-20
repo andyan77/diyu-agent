@@ -26,6 +26,7 @@ from src.ports.conversation_port import (
 from src.ports.knowledge_port import KnowledgePort
 from src.ports.llm_call_port import LLMCallPort
 from src.ports.memory_core_port import MemoryCorePort
+from src.ports.object_storage_port import ObjectStoragePort
 from src.ports.org_context import OrgContextPort
 from src.ports.skill_registry import SkillRegistry
 from src.ports.storage_port import StoragePort
@@ -35,6 +36,7 @@ __all__ = [
     "KnowledgePort",
     "LLMCallPort",
     "MemoryCorePort",
+    "ObjectStoragePort",
     "OrgContextPort",
     "SkillRegistry",
     "StoragePort",

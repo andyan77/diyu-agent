@@ -21,7 +21,7 @@ from src.gateway.app import create_app
 from src.gateway.middleware.auth import encode_token
 from src.ports.llm_call_port import LLMCallPort, LLMResponse
 from src.ports.memory_core_port import MemoryCorePort
-from src.shared.types import MemoryItem, Observation, WriteReceipt
+from src.shared.types import MemoryItem, Observation, PromotionReceipt, WriteReceipt
 
 _JWT_SECRET = "test-integration-gateway-rest-secret-32b"  # noqa: S105
 
@@ -73,6 +73,24 @@ class FakeMemoryCore(MemoryCorePort):
 
     async def archive_session(self, session_id: UUID) -> object:
         return None
+
+    async def promote_to_knowledge(
+        self,
+        memory_id: UUID,
+        target_org_id: UUID,
+        target_visibility: str,
+        *,
+        user_id: UUID | None = None,
+    ) -> PromotionReceipt:
+        from datetime import UTC, datetime
+
+        return PromotionReceipt(
+            proposal_id=memory_id,
+            source_memory_id=memory_id,
+            target_knowledge_id=None,
+            status="promoted",
+            promoted_at=datetime.now(UTC),
+        )
 
 
 class FakeLLMPort(LLMCallPort):

@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from src.shared.types import MemoryItem, Observation, WriteReceipt
+    from src.shared.types import MemoryItem, Observation, PromotionReceipt, WriteReceipt
 
 
 class MemoryCorePort(ABC):
@@ -69,3 +69,32 @@ class MemoryCorePort(ABC):
     @abstractmethod
     async def archive_session(self, session_id: UUID) -> object:
         """Archive a completed session."""
+
+    # -- Phase 3 promotion method (MC3-1: Memory -> Knowledge) --
+
+    @abstractmethod
+    async def promote_to_knowledge(
+        self,
+        memory_id: UUID,
+        target_org_id: UUID,
+        target_visibility: str,
+        *,
+        user_id: UUID | None = None,
+    ) -> PromotionReceipt:
+        """Promote a personal memory to organizational knowledge.
+
+        This is a cross-SSOT operation (Memory Core -> Knowledge Stores)
+        via the Promotion Pipeline. The memory content is sanitized,
+        scanned, and submitted for approval before writing to Knowledge.
+
+        Args:
+            memory_id: Source memory item to promote.
+            target_org_id: Target organization for the knowledge entry.
+            target_visibility: Visibility level (store|region|brand|global).
+            user_id: Promoting user (for audit trail).
+
+        Returns:
+            PromotionReceipt with proposal status and target knowledge ID.
+
+        See: docs/architecture/02-Knowledge Section 7.2
+        """
