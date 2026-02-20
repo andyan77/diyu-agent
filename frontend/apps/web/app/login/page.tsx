@@ -39,7 +39,7 @@ export default function LoginPage() {
 
       const data: { token: string } = await res.json();
       if (typeof window !== "undefined") {
-        sessionStorage.setItem("diyu_token", data.token);
+        sessionStorage.setItem("token", data.token);
       }
 
       window.location.href = "/";

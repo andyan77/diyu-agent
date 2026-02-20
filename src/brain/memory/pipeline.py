@@ -98,6 +98,7 @@ class MemoryWritePipeline:
                         source_session_id=session_id,
                         confidence=0.6,
                     ),
+                    org_id=org_id,
                 )
 
                 # Record injection receipt

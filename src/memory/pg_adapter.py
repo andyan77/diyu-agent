@@ -158,7 +158,12 @@ class PgMemoryCoreAdapter(MemoryCorePort):
             stmt = stmt.where(MemoryItemModel.org_id == org_id)
 
         if query:
-            stmt = stmt.where(MemoryItemModel.content.ilike(f"%{query}%"))
+            # Extract key terms for ILIKE matching rather than using the full query
+            # (full query as substring match is too restrictive)
+            terms = [w for w in query.lower().split() if len(w) > 3]
+            if terms:
+                conditions = [MemoryItemModel.content.ilike(f"%{t}%") for t in terms[:5]]
+                stmt = stmt.where(sa.or_(*conditions))
 
         async with self._session_factory() as session:
             result = await session.scalars(stmt)

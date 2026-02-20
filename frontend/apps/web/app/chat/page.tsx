@@ -9,6 +9,7 @@
  */
 
 import { useCallback, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ChatLayout } from "@/components/chat/Layout";
 import { FileUpload } from "@/components/chat/FileUpload";
 import { History, type ConversationItem } from "@/components/chat/History";
@@ -17,10 +18,12 @@ import { MessageActions } from "@/components/chat/MessageActions";
 import { StreamMessage, type ChatMessage } from "@/components/chat/StreamMessage";
 
 export default function ChatPage() {
+  const router = useRouter();
   const [conversations, setConversations] = useState<ConversationItem[]>([]);
   const [activeConv, setActiveConv] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
+  const [sending, setSending] = useState(false);
   const [memoryOpen, setMemoryOpen] = useState(false);
   const [memoryItems] = useState<MemoryItem[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -37,8 +40,8 @@ export default function ChatPage() {
     setMessages([]);
   }, [conversations.length]);
 
-  const handleSend = useCallback(() => {
-    if (!input.trim() || !activeConv) return;
+  const handleSend = useCallback(async () => {
+    if (!input.trim() || !activeConv || sending) return;
 
     const userMsg: ChatMessage = {
       id: crypto.randomUUID(),
@@ -47,29 +50,87 @@ export default function ChatPage() {
       timestamp: new Date().toISOString(),
     };
 
+    const messageText = input.trim();
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
+    setSending(true);
 
-    // Simulate assistant response (replaced by WS in production)
-    const assistantMsg: ChatMessage = {
-      id: crypto.randomUUID(),
-      role: "assistant",
-      content: "",
-      isStreaming: true,
-      timestamp: new Date().toISOString(),
-    };
-    setMessages((prev) => [...prev, assistantMsg]);
+    // Streaming placeholder while waiting for backend
+    const placeholderId = crypto.randomUUID();
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: placeholderId,
+        role: "assistant",
+        content: "",
+        isStreaming: true,
+        timestamp: new Date().toISOString(),
+      },
+    ]);
 
-    setTimeout(() => {
+    try {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
+      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+      const res = await fetch(
+        `${apiBase}/api/v1/conversations/${activeConv}/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ message: messageText }),
+        },
+      );
+
+      if (res.status === 401) {
+        sessionStorage.removeItem("token");
+        router.push("/login");
+        return;
+      }
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message ?? `Request failed (${res.status})`);
+      }
+
+      const data: {
+        assistant_response: string;
+        tokens_used: { input: number; output: number };
+        model_id: string;
+      } = await res.json();
+
       setMessages((prev) =>
         prev.map((m) =>
-          m.id === assistantMsg.id
-            ? { ...m, content: "This is a placeholder response.", isStreaming: false }
+          m.id === placeholderId
+            ? {
+                ...m,
+                content: data.assistant_response,
+                isStreaming: false,
+                tokensUsed: data.tokens_used,
+                modelId: data.model_id,
+              }
             : m,
         ),
       );
-    }, 300);
-  }, [input, activeConv]);
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Something went wrong";
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.id === placeholderId
+            ? { ...m, content: `Error: ${errMsg}`, isStreaming: false }
+            : m,
+        ),
+      );
+    } finally {
+      setSending(false);
+    }
+  }, [input, activeConv, sending, router]);
 
   const handleUpload = useCallback(async (_file: File): Promise<string> => {
     // Placeholder: would call G2-6 3-step upload
@@ -170,7 +231,7 @@ export default function ChatPage() {
               <button
                 data-testid="send-button"
                 onClick={handleSend}
-                disabled={!activeConv || !input.trim()}
+                disabled={!activeConv || !input.trim() || sending}
                 aria-label="Send message"
                 style={{
                   padding: "8px 16px",
@@ -178,11 +239,11 @@ export default function ChatPage() {
                   color: "white",
                   border: "none",
                   borderRadius: 8,
-                  cursor: activeConv && input.trim() ? "pointer" : "not-allowed",
-                  opacity: activeConv && input.trim() ? 1 : 0.5,
+                  cursor: activeConv && input.trim() && !sending ? "pointer" : "not-allowed",
+                  opacity: activeConv && input.trim() && !sending ? 1 : 0.5,
                 }}
               >
-                Send
+                {sending ? "Sending..." : "Send"}
               </button>
             </div>
           </div>

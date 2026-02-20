@@ -68,6 +68,10 @@ class LiteLLMGatewayAdapter(LLMCallPort):
             optional_params["api_key"] = self._api_key
         if self._base_url:
             optional_params["api_base"] = self._base_url
+            # When using a custom base_url (OpenAI-compatible API), prefix model
+            # with "openai/" so LiteLLM routes to the OpenAI provider.
+            if "/" not in model:
+                model = f"openai/{model}"
 
         try:
             response = await litellm.acompletion(

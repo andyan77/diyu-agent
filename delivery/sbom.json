@@ -5,7 +5,7 @@
   "name": "diyu-agent",
   "documentNamespace": "https://diyu.dev/spdx/diyu-agent",
   "creationInfo": {
-    "created": "2026-02-19T18:35:48Z",
+    "created": "2026-02-20T05:29:22Z",
     "creators": [
       "Tool: diyu-agent/scripts/generate_sbom.sh"
     ],
@@ -133,6 +133,16 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-bcrypt",
+      "name": "bcrypt",
+      "versionInfo": "5.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-billiard",
       "name": "billiard",
       "versionInfo": "4.2.4",
@@ -235,7 +245,7 @@
     {
       "SPDXID": "SPDXRef-Package-click",
       "name": "click",
-      "versionInfo": "8.3.1",
+      "versionInfo": "8.1.8",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -315,7 +325,7 @@
     {
       "SPDXID": "SPDXRef-Package-cyclonedx-python-lib",
       "name": "cyclonedx-python-lib",
-      "versionInfo": "11.6.0",
+      "versionInfo": "9.1.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -366,6 +376,26 @@
       "SPDXID": "SPDXRef-Package-diyu-agent",
       "name": "diyu-agent",
       "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-dnspython",
+      "name": "dnspython",
+      "versionInfo": "2.8.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-email-validator",
+      "name": "email-validator",
+      "versionInfo": "2.3.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -645,7 +675,7 @@
     {
       "SPDXID": "SPDXRef-Package-jsonschema",
       "name": "jsonschema",
-      "versionInfo": "4.26.0",
+      "versionInfo": "4.25.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1005,7 +1035,7 @@
     {
       "SPDXID": "SPDXRef-Package-pip-audit",
       "name": "pip-audit",
-      "versionInfo": "2.10.0",
+      "versionInfo": "2.9.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1093,16 +1123,6 @@
       "copyrightText": "NOASSERTION"
     },
     {
-      "SPDXID": "SPDXRef-Package-psycopg2-binary",
-      "name": "psycopg2-binary",
-      "versionInfo": "2.9.11",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "copyrightText": "NOASSERTION"
-    },
-    {
       "SPDXID": "SPDXRef-Package-ptyprocess",
       "name": "ptyprocess",
       "versionInfo": "0.7.0",
@@ -1165,7 +1185,7 @@
     {
       "SPDXID": "SPDXRef-Package-pydantic-settings",
       "name": "pydantic-settings",
-      "versionInfo": "2.13.0",
+      "versionInfo": "2.13.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1315,7 +1335,7 @@
     {
       "SPDXID": "SPDXRef-Package-rich",
       "name": "rich",
-      "versionInfo": "14.3.2",
+      "versionInfo": "13.5.3",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1375,7 +1395,7 @@
     {
       "SPDXID": "SPDXRef-Package-semgrep",
       "name": "semgrep",
-      "versionInfo": "1.151.0",
+      "versionInfo": "1.152.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1493,9 +1513,19 @@
       "copyrightText": "NOASSERTION"
     },
     {
+      "SPDXID": "SPDXRef-Package-toml",
+      "name": "toml",
+      "versionInfo": "0.10.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
       "SPDXID": "SPDXRef-Package-tomli",
       "name": "tomli",
-      "versionInfo": "2.4.0",
+      "versionInfo": "2.0.2",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1535,7 +1565,7 @@
     {
       "SPDXID": "SPDXRef-Package-typer",
       "name": "typer",
-      "versionInfo": "0.24.0",
+      "versionInfo": "0.23.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1545,7 +1575,7 @@
     {
       "SPDXID": "SPDXRef-Package-typer-slim",
       "name": "typer-slim",
-      "versionInfo": "0.24.0",
+      "versionInfo": "0.23.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",

@@ -117,6 +117,7 @@ class User(Base):
         server_default=_GEN_UUID,
     )
     email: Mapped[str] = mapped_column(sa.String(320), nullable=False, unique=True)
+    password_hash: Mapped[str | None] = mapped_column(sa.String(255), nullable=True)
     display_name: Mapped[str | None] = mapped_column(sa.String(255), nullable=True)
     is_active: Mapped[bool] = mapped_column(
         sa.Boolean(),

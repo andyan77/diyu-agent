@@ -31,7 +31,16 @@ from src.shared.errors import (
     ValidationError,
 )
 
-_EXEMPT_PATHS = frozenset({"/healthz", "/docs", "/openapi.json", "/redoc"})
+_EXEMPT_PATHS = frozenset(
+    {
+        "/healthz",
+        "/docs",
+        "/openapi.json",
+        "/redoc",
+        "/api/v1/auth/login",
+        "/api/v1/auth/register",
+    }
+)
 
 # Type alias for post-auth middleware callables
 PostAuthMiddleware = Callable[
