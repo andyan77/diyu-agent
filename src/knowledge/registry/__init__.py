@@ -1,0 +1,1 @@
+"""Knowledge entity type registry."""
