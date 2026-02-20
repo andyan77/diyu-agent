@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import logging
 import os
-from dataclasses import dataclass, field
 from typing import Any, cast
 from uuid import UUID
 
@@ -25,18 +24,12 @@ from qdrant_client.models import (
     VectorParams,
 )
 
+from src.shared.types import VectorPoint
+
 logger = logging.getLogger(__name__)
 
-
-@dataclass(frozen=True)
-class VectorPoint:
-    """Representation of a vector store point."""
-
-    point_id: UUID
-    vector: list[float]
-    payload: dict[str, Any] = field(default_factory=dict)
-    graph_node_id: UUID | None = None  # FK to Neo4j node
-    score: float = 0.0
+# Re-export for backward compatibility
+__all__ = ["QdrantAdapter", "VectorPoint"]
 
 
 class QdrantAdapter:

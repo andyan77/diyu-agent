@@ -14,34 +14,17 @@ from __future__ import annotations
 
 import logging
 import os
-from dataclasses import dataclass, field
 from typing import Any
 from uuid import UUID
 
 from neo4j import AsyncDriver, AsyncGraphDatabase
 
+from src.shared.types import GraphNode, GraphRelationship
+
 logger = logging.getLogger(__name__)
 
-
-@dataclass(frozen=True)
-class GraphNode:
-    """Representation of a knowledge graph node."""
-
-    node_id: UUID
-    entity_type: str
-    properties: dict[str, Any] = field(default_factory=dict)
-    org_id: UUID | None = None
-    sync_status: str = "synced"  # synced | pending_vector_sync
-
-
-@dataclass(frozen=True)
-class GraphRelationship:
-    """Representation of a knowledge graph relationship."""
-
-    source_id: UUID
-    target_id: UUID
-    rel_type: str
-    properties: dict[str, Any] = field(default_factory=dict)
+# Re-export for backward compatibility
+__all__ = ["GraphNode", "GraphRelationship", "Neo4jAdapter"]
 
 
 class Neo4jAdapter:

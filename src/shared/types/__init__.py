@@ -60,6 +60,41 @@ class WriteReceipt:
     written_at: datetime
 
 
+# -- Knowledge Store DTOs (shared between Knowledge + Infrastructure) --
+
+
+@dataclass(frozen=True)
+class GraphNode:
+    """Representation of a knowledge graph node."""
+
+    node_id: UUID
+    entity_type: str
+    properties: dict[str, Any] = field(default_factory=dict)
+    org_id: UUID | None = None
+    sync_status: str = "synced"  # synced | pending_vector_sync
+
+
+@dataclass(frozen=True)
+class GraphRelationship:
+    """Representation of a knowledge graph relationship."""
+
+    source_id: UUID
+    target_id: UUID
+    rel_type: str
+    properties: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class VectorPoint:
+    """Representation of a vector store point."""
+
+    point_id: UUID
+    vector: list[float]
+    payload: dict[str, Any] = field(default_factory=dict)
+    graph_node_id: UUID | None = None  # FK to Neo4j node
+    score: float = 0.0
+
+
 # -- Knowledge types (SSOT-B) --
 
 
@@ -187,6 +222,8 @@ class ObjectMetadata:
 
 __all__ = [
     "BatchDeleteResult",
+    "GraphNode",
+    "GraphRelationship",
     "KnowledgeBundle",
     "MemoryItem",
     "ModelAccess",
@@ -197,5 +234,6 @@ __all__ = [
     "PresignedUploadURL",
     "PromotionReceipt",
     "ResolutionMetadata",
+    "VectorPoint",
     "WriteReceipt",
 ]
