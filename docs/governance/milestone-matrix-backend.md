@@ -356,7 +356,7 @@
 |---|---|----|----|-----|------|---|-----|
 | I3-1 | Neo4j 连接 + 基础 CRUD adapter | [TEST] 写入节点 -> 查询 -> 删除 | 连接池单测 | X3-2 | -- | CRUD 全操作通过 | Neo4j 5.x |
 | I3-2 | Qdrant 连接 + 基础 CRUD adapter | [TEST] 写入向量 -> 相似度查询 -> 返回结果 | 连接池单测 | X3-2 | -- | 查询结果非空 | Qdrant 1.x |
-| I3-3 | ObjectStoragePort 实现 (S3/MinIO) | [TEST] generate_upload_url -> upload -> generate_download_url -> download | 6 方法契约测试 | -- | XF2-3 | 6 方法全通过 | MinIO |
+| I3-3 | ObjectStoragePort 实现 (S3/MinIO) | [TEST] generate_upload_url -> upload -> generate_download_url -> download | 5 方法契约测试 | -- | XF2-3 | 5 方法全通过 | MinIO |
 | I3-4 | tool_usage_records DDL (v3.6) | [CMD] 表存在 | DDL 对齐架构文档 | -- | -- | 表存在 | -- |
 
 ### Phase 4 -- 可靠性
