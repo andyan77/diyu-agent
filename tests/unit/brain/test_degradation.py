@@ -16,7 +16,13 @@ import pytest
 from src.brain.engine.context_assembler import ContextAssembler
 from src.ports.knowledge_port import KnowledgePort
 from src.ports.memory_core_port import MemoryCorePort
-from src.shared.types import MemoryItem, Observation, OrganizationContext, WriteReceipt
+from src.shared.types import (
+    MemoryItem,
+    Observation,
+    OrganizationContext,
+    PromotionReceipt,
+    WriteReceipt,
+)
 
 
 class FakeMemoryCore(MemoryCorePort):
@@ -66,6 +72,24 @@ class FakeMemoryCore(MemoryCorePort):
 
     async def archive_session(self, session_id: UUID) -> object:
         return None
+
+    async def promote_to_knowledge(
+        self,
+        memory_id: UUID,
+        target_org_id: UUID,
+        target_visibility: str,
+        *,
+        user_id: UUID | None = None,
+    ) -> PromotionReceipt:
+        from datetime import UTC, datetime
+
+        return PromotionReceipt(
+            proposal_id=memory_id,
+            source_memory_id=memory_id,
+            target_knowledge_id=None,
+            status="promoted",
+            promoted_at=datetime.now(UTC),
+        )
 
 
 class FailingKnowledgePort(KnowledgePort):
