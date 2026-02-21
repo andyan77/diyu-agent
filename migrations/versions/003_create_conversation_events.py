@@ -122,12 +122,12 @@ def upgrade() -> None:
         "conversation_events",
         ["user_id"],
     )
+    # Unique ordering within a session
     op.create_index(
         "ix_conversation_events_session_seq",
         "conversation_events",
         ["session_id", "sequence_number"],
         unique=True,
-        comment="Unique ordering within a session",
     )
     op.create_index(
         "ix_conversation_events_created_at",
