@@ -1,10 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { loginAndSetToken } from "../../helpers/auth";
 
 /**
  * Cross-layer FE E2E: Login -> Chat -> Streaming (XF2-1/2/3).
  *
- * Phase 2 hard gate (p2-xf2-1-login-to-streaming).
- * Uses page.route() to mock auth API — no live backend required.
+ * Phase 2 soft gate (p2-xf2-1-login-to-streaming).
+ * Uses real backend -- NO mocks.
  *
  * Covers:
  *   XF2-1: Login flow renders and authenticates
@@ -13,20 +14,6 @@ import { test, expect } from "@playwright/test";
  */
 
 test.describe("Cross-layer: Login to Streaming", () => {
-  test.beforeEach(async ({ page }) => {
-    // Mock auth API endpoint
-    await page.route("**/api/v1/auth/**", (route) =>
-      route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify({
-          token: "test-jwt-token",
-          user: { id: "user-1", email: "test@diyu.ai" },
-        }),
-      }),
-    );
-  });
-
   test("XF2-1: login page renders with auth form", async ({ page }) => {
     await page.goto("/login");
 
@@ -44,7 +31,10 @@ test.describe("Cross-layer: Login to Streaming", () => {
   test("XF2-2: chat page renders with conversation sidebar", async ({
     page,
   }) => {
+    // Navigate first to set origin, then inject token
     await page.goto("/chat");
+    await loginAndSetToken(page);
+    await page.reload();
 
     // Chat layout renders with sidebar containing history
     const chatLayout = page.getByTestId("chat-layout");
@@ -58,7 +48,10 @@ test.describe("Cross-layer: Login to Streaming", () => {
   test("XF2-3: chat page streams after conversation creation", async ({
     page,
   }) => {
+    // Navigate first to set origin, then inject token
     await page.goto("/chat");
+    await loginAndSetToken(page);
+    await page.reload();
 
     // Input is disabled until a conversation exists
     const input = page.getByTestId("message-input");
@@ -79,7 +72,8 @@ test.describe("Cross-layer: Login to Streaming", () => {
     await expect(streamingIndicator).toBeVisible({ timeout: 5000 });
 
     // After completion, assistant message should render with content
-    await expect(streamingIndicator).toBeHidden({ timeout: 10000 });
+    // LLM response may take up to 30s
+    await expect(streamingIndicator).toBeHidden({ timeout: 30000 });
     const assistantMessage = page.locator('[data-role="assistant"]');
     await expect(assistantMessage).toBeVisible();
     await expect(

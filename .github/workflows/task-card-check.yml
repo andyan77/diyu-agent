@@ -15,6 +15,9 @@ on:
       - "scripts/count_task_cards.py"
       - "scripts/verify_phase.py"
       - "scripts/task_card_traceability_check.py"
+      - "frontend/playwright.config.ts"
+      - "frontend/tests/e2e/**"
+      - "scripts/e2e_setup.sh"
   push:
     branches: [main]
     paths:
@@ -101,6 +104,36 @@ jobs:
     name: "L3: Phase Gate"
     runs-on: ubuntu-latest
     needs: [schema-check, acceptance-check]
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: diyu
+          POSTGRES_PASSWORD: diyu_dev
+          POSTGRES_DB: diyu
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql+asyncpg://diyu:diyu_dev@localhost:5432/diyu
+      REDIS_URL: redis://localhost:6379/0
+      JWT_SECRET_KEY: ci-test-secret-key-not-for-production
+      JWT_SECRET: ci-test-secret-key-not-for-production
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+      LLM_MODEL: qwen-plus
+      LLM_BASE_URL: https://dashscope.aliyuncs.com/compatible-mode/v1
+      E2E_API_PORT: "8001"
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v4
@@ -116,6 +149,12 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: frontend/pnpm-lock.yaml
       - run: cd frontend && pnpm install --frozen-lockfile
+      - name: Install Playwright browsers
+        run: cd frontend && pnpm exec playwright install --with-deps chromium
+      - name: Run database migrations
+        run: uv run alembic upgrade head
+      - name: Seed dev user for E2E tests
+        run: uv run python scripts/seed_dev_user.py
       - name: Phase gate verification
         run: |
           mkdir -p ${{ env.EVIDENCE_DIR }}
