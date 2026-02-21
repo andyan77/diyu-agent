@@ -7,9 +7,7 @@ const nextConfig: NextConfig = {
   // Private mode: static export for on-premise deployment
   ...(deployMode === "private" ? { output: "export" } : {}),
   reactStrictMode: true,
-  experimental: {
-    typedRoutes: true,
-  },
+  typedRoutes: true,
 };
 
 export default nextConfig;

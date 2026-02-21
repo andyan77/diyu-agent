@@ -395,6 +395,23 @@
 
 > 矩阵条目: D3-4
 
+### TASK-D3-5: SBOM 签名与 attestation
+
+| 字段 | 内容 |
+|------|------|
+| **目标** | `scripts/sign_sbom.sh` 生成 SBOM 并签名，Phase 3 软门禁通过，Phase 4 升级为硬门禁 |
+| **范围 (In Scope)** | `scripts/sign_sbom.sh`, `evidence/sbom.json` |
+| **范围外 (Out of Scope)** | manifest 漂移检查 / 安装器逻辑 / CI 流水线配置 / 依赖漏洞修复 |
+| **依赖** | TASK-D1-2 (SBOM 生成) |
+| **风险** | 依赖: cosign 工具可选 (无 cosign 时降级为仅生成) / 数据: SBOM 需包含完整依赖清单 / 兼容: 纯新增签名步骤 / 回滚: git revert |
+| **兼容策略** | 纯新增签名脚本 |
+| **验收命令** | `bash scripts/sign_sbom.sh` (SBOM 生成成功，cosign 可选) |
+| **回滚方案** | `git revert <commit>` |
+| **证据** | `evidence/sbom.json` 存在且非空 |
+| **决策记录** | 决策: SBOM 签名 Phase 3 软门禁 / 理由: 供应链安全合规渐进上线，Phase 3 验证流程，Phase 4 强制签名 / 来源: 架构文档 07 Section 1 |
+
+> 矩阵条目: D3-5
+
 ---
 
 ## Phase 4 -- 运维产品化
