@@ -61,6 +61,24 @@ _HARMFUL_KEYWORDS = frozenset(
     }
 )
 
+_XSS_PATTERNS = [
+    re.compile(r"<script[\s>]", re.IGNORECASE),
+    re.compile(r"on(?:load|error|click|focus|mouseover)\s*=", re.IGNORECASE),
+    re.compile(r"javascript\s*:", re.IGNORECASE),
+    re.compile(r"<iframe[\s>]", re.IGNORECASE),
+    re.compile(
+        r"<(?:img|svg|body|input|form|link|meta|marquee)\b[^>]*(?:src|href|action|content|rel)\s*=",
+        re.IGNORECASE,
+    ),
+    re.compile(r"<(?:img|svg|body|input)\b", re.IGNORECASE),
+    re.compile(r"\{\{.*constructor", re.IGNORECASE),
+    re.compile(r"<form\b", re.IGNORECASE),
+    re.compile(r"<link\b", re.IGNORECASE),
+    re.compile(r"<meta\b", re.IGNORECASE),
+    re.compile(r"<marquee\b", re.IGNORECASE),
+    re.compile(r"<h[1-6]\b.*>.*</h[1-6]>", re.IGNORECASE),
+]
+
 _PII_PATTERNS = [
     re.compile(r"\b\d{3}[-.]?\d{2}[-.]?\d{4}\b"),  # SSN-like
     re.compile(r"\b\d{15,19}\b"),  # Credit card-like
@@ -68,9 +86,10 @@ _PII_PATTERNS = [
 
 
 class ContentSecurityChecker:
-    """Three-layer content security pipeline.
+    """Four-layer content security pipeline.
 
     Layer 1: Pattern matching (injection, jailbreak)
+    Layer 1.5: XSS / HTML injection detection (OS3-3)
     Layer 2: Keyword detection (harmful content)
     Layer 3: PII detection (data leakage prevention)
 
@@ -103,6 +122,17 @@ class ContentSecurityChecker:
                     confidence=0.95,
                     reasons=reasons,
                     metadata={"layer": "injection", "pattern": pattern.pattern},
+                )
+
+        # Layer 1.5: XSS / HTML injection patterns (OS3-3)
+        for pattern in _XSS_PATTERNS:
+            if pattern.search(content):
+                reasons.append(f"XSS/HTML injection detected: {pattern.pattern}")
+                return ContentCheckResult(
+                    status=SecurityStatus.BLOCKED,
+                    confidence=0.95,
+                    reasons=reasons,
+                    metadata={"layer": "xss", "pattern": pattern.pattern},
                 )
 
         # Layer 2: Harmful content keywords
