@@ -308,10 +308,10 @@ class TestPhasePointerAndExitCriteria:
         self.text = MILESTONE_MATRIX.read_text()
         self.data = yaml.safe_load(self.text)
 
-    def test_current_phase_is_phase_2(self) -> None:
-        """current_phase must be phase_2 during Phase 2 development."""
-        assert self.data["current_phase"] == "phase_2", (
-            f"current_phase is '{self.data['current_phase']}', expected 'phase_2'"
+    def test_current_phase_is_phase_3(self) -> None:
+        """current_phase must be phase_3 during Phase 3 development."""
+        assert self.data["current_phase"] == "phase_3", (
+            f"current_phase is '{self.data['current_phase']}', expected 'phase_3'"
         )
 
     def test_current_phase_in_phases_keys(self) -> None:
