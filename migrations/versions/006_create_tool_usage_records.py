@@ -38,7 +38,7 @@ def upgrade() -> None:
         sa.Column(
             "org_id",
             sa.Uuid,
-            sa.ForeignKey("organizations.org_id"),
+            sa.ForeignKey("organizations.id"),
             nullable=False,
         ),
         sa.Column("user_id", sa.Uuid, nullable=False),
@@ -75,10 +75,7 @@ def upgrade() -> None:
     )
     op.execute(
         "CREATE POLICY org_isolation ON tool_usage_records "
-        "USING (org_id IN ("
-        "  SELECT org_id FROM organizations "
-        "  WHERE path <@ current_setting('app.current_org_path')::ltree"
-        "))"
+        "USING (org_id = current_setting('app.current_org_id')::uuid)"
     )
 
     # Performance indexes

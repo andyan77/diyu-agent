@@ -4,6 +4,7 @@
 Validates task card acceptance commands for:
   1. acceptance-not-executable: natural language without tags or backticks
   2. acceptance-empty: acceptance field present but empty
+  2b. acceptance-path-missing: file paths in commands that do not exist on disk
   3. manual-verify-no-alt: [MANUAL-VERIFY] without alternative (>= 5 chars)
   4. env-dep-no-mapping: [ENV-DEP] without a resolvable CI/staging job reference
 
@@ -55,6 +56,14 @@ CI_JOB_PATTERNS = [
 ]
 CI_JOB_RE = re.compile("|".join(CI_JOB_PATTERNS), re.IGNORECASE)
 
+# Patterns to extract file paths from acceptance commands inside backticks
+# Matches: tests/..., scripts/..., frontend/tests/..., src/...
+FILE_PATH_RE = re.compile(r"(?:^|\s)((?:tests|scripts|frontend/tests|src)/\S+\.(?:py|ts|sh|mjs))")
+
+
+# Rules that produce warnings (reported but non-blocking)
+WARNING_RULES: set[str] = {"acceptance-path-missing"}
+
 
 @dataclass
 class Violation:
@@ -63,6 +72,10 @@ class Violation:
     line: int
     rule: str
     message: str
+
+    @property
+    def is_warning(self) -> bool:
+        return self.rule in WARNING_RULES
 
 
 @dataclass
@@ -159,6 +172,30 @@ def validate_acceptance(card: CardAcceptance) -> list[Violation]:
             )
         )
 
+    # Rule 2b: acceptance-path-missing
+    # Extract file paths from backtick-delimited commands and verify they exist.
+    if has_backtick:
+        # Strip tags before path extraction
+        cmd_clean = acc.replace("[ENV-DEP]", "").replace("[E2E]", "")
+        # Detect cd-prefix (e.g. "cd frontend &&") to resolve relative paths
+        cd_prefix = ""
+        cd_match = re.search(r"cd\s+(\S+)\s*&&", cmd_clean)
+        if cd_match:
+            cd_prefix = cd_match.group(1).rstrip("/") + "/"
+        for path_match in FILE_PATH_RE.finditer(cmd_clean):
+            fpath = path_match.group(1)
+            resolved = cd_prefix + fpath if cd_prefix else fpath
+            if not Path(resolved).exists():
+                violations.append(
+                    Violation(
+                        card_id=card.task_id,
+                        file=card.file,
+                        line=card.line,
+                        rule="acceptance-path-missing",
+                        message=f"Acceptance command references non-existent path: {resolved}",
+                    )
+                )
+
     # Rule 3: manual-verify-no-alt
     if "[MANUAL-VERIFY]" in acc:
         mv_idx = acc.index("[MANUAL-VERIFY]") + len("[MANUAL-VERIFY]")
@@ -245,9 +282,13 @@ def main() -> None:
     for v in all_violations:
         by_rule[v.rule] = by_rule.get(v.rule, 0) + 1
 
+    blocking = [v for v in all_violations if not v.is_warning]
+    warnings = [v for v in all_violations if v.is_warning]
+
     report = {
         "total_cards": len(all_cards),
-        "total_violations": len(all_violations),
+        "total_violations": len(blocking),
+        "total_warnings": len(warnings),
         "violations_by_rule": by_rule,
         "violations": [
             {
@@ -256,29 +297,34 @@ def main() -> None:
                 "line": v.line,
                 "rule": v.rule,
                 "message": v.message,
+                "level": "warning" if v.is_warning else "error",
             }
             for v in all_violations
         ],
-        "status": "FAIL" if all_violations else "PASS",
+        "status": "FAIL" if blocking else "PASS",
     }
 
     if args.json:
         print(json.dumps(report, indent=2, ensure_ascii=False))
     else:
         print(f"Acceptance Gate: {report['status']}")
-        print(f"  Cards: {len(all_cards)}, Violations: {len(all_violations)}")
+        print(f"  Cards: {len(all_cards)}, Violations: {len(blocking)}, Warnings: {len(warnings)}")
         if by_rule:
             for rule, count in sorted(by_rule.items()):
-                print(f"    {rule}: {count}")
-        if all_violations:
-            print()
-            for v in all_violations[:20]:
-                print(f"  [{v.rule}] {v.file}:{v.line} {v.card_id}")
-                print(f"    {v.message}")
-            if len(all_violations) > 20:
-                print(f"  ... and {len(all_violations) - 20} more")
+                level = "WARN" if rule in WARNING_RULES else "FAIL"
+                print(f"    [{level}] {rule}: {count}")
+        for v in blocking[:20]:
+            print(f"  [ERR] {v.file}:{v.line} {v.card_id}")
+            print(f"    {v.message}")
+        if len(blocking) > 20:
+            print(f"  ... and {len(blocking) - 20} more errors")
+        for v in warnings[:10]:
+            print(f"  [WARN] {v.file}:{v.line} {v.card_id}")
+            print(f"    {v.message}")
+        if len(warnings) > 10:
+            print(f"  ... and {len(warnings) - 10} more warnings")
 
-    sys.exit(1 if all_violations else 0)
+    sys.exit(1 if blocking else 0)
 
 
 if __name__ == "__main__":

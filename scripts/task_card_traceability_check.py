@@ -43,6 +43,7 @@ CROSSCUTTING_PATH = Path("docs/governance/milestone-matrix-crosscutting.md")
 # Primary matrix reference: Chinese or English format
 MATRIX_REF_RE = re.compile(r">\s*(?:矩阵条目|[Mm]atrix\s*\S*?):\s*(\S+)")
 TASK_HEADING_RE = re.compile(r"^###\s+(TASK-\S+)")
+PHASE_HEADING_RE = re.compile(r"^##\s+Phase\s+(\d+)")
 # M-Track cross-reference within a line
 M_TRACK_RE = re.compile(r"M-Track:\s*(MM\S+)")
 # X/XF/XM node IDs in crosscutting Section 4
@@ -102,11 +103,26 @@ def load_milestone_ids(
     return ids
 
 
+def _extract_phase_from_filename(md_file: Path) -> int | None:
+    """Extract phase number from cross-layer integration filenames.
+
+    e.g. phase-3-integration.md -> 3
+    """
+    m = re.match(r"phase-(\d+)", md_file.stem)
+    return int(m.group(1)) if m else None
+
+
 def scan_task_cards(
     *,
     cards_dir: Path | None = None,
+    phase_filter: int | None = None,
 ) -> dict[str, dict[str, list[str]]]:
     """Scan task cards for primary refs and M-Track cross-refs.
+
+    When phase_filter is set, only refs from tasks belonging to that phase
+    are included. Phase membership is determined by:
+      1. ``## Phase N`` headings within multi-phase files, or
+      2. Filename pattern (e.g. ``phase-3-integration.md``).
 
     Returns:
         {
@@ -122,11 +138,22 @@ def scan_task_cards(
         return {"main_refs": main_refs, "m_track_refs": m_track_refs}
 
     for md_file in base.rglob("*.md"):
+        file_phase = _extract_phase_from_filename(md_file)
         current_task: str | None = None
+        current_section_phase: int | None = file_phase
         for line in md_file.read_text(errors="replace").splitlines():
+            # Track ## Phase N section headings
+            phase_match = PHASE_HEADING_RE.match(line)
+            if phase_match:
+                current_section_phase = int(phase_match.group(1))
+
             heading = TASK_HEADING_RE.match(line)
             if heading:
                 current_task = heading.group(1)
+
+            # Skip refs not in the requested phase
+            if phase_filter is not None and current_section_phase != phase_filter:
+                continue
 
             ref_match = MATRIX_REF_RE.match(line)
             if ref_match:
@@ -232,7 +259,7 @@ def main() -> None:
             print(f"ERROR: {msg}", file=sys.stderr)
         sys.exit(2)
 
-    card_data = scan_task_cards()
+    card_data = scan_task_cards(phase_filter=phase_filter)
     result = compute_result(milestone_ids, card_data, threshold)
 
     if phase_filter is not None:

@@ -96,11 +96,11 @@ def upgrade() -> None:
         "audit_events",
         ["created_at"],
     )
+    # Composite index for org-scoped audit queries
     op.create_index(
         "ix_audit_events_org_action_time",
         "audit_events",
         ["org_id", "action", "created_at"],
-        comment="Composite index for org-scoped audit queries",
     )
 
     # RLS

@@ -23,7 +23,7 @@ from sqlalchemy.orm import sessionmaker
 
 DATABASE_URL = os.environ.get(
     "DATABASE_URL",
-    "postgresql+asyncpg://diyu:diyu_dev@localhost:5432/diyu",
+    "postgresql+asyncpg://diyu:diyu_dev@localhost:25432/diyu",
 )
 
 DEV_EMAIL = os.environ.get("DEV_EMAIL", "dev@diyu.ai")

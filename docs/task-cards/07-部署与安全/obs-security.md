@@ -437,6 +437,23 @@
 
 > 矩阵条目: OS3-5
 
+### TASK-OS3-6: 租户隔离运行时验证
+
+| 字段 | 内容 |
+|------|------|
+| **目标** | 跨租户数据访问在运行时被拦截，`tests/isolation/test_tenant_crossover.py` 全部通过 |
+| **范围 (In Scope)** | `tests/isolation/test_tenant_crossover.py`, `src/gateway/middleware/auth.py` (org_id 隔离验证) |
+| **范围外 (Out of Scope)** | RLS 策略 DDL / 前端权限 UI / RBAC 角色定义 / 审计写入实现 |
+| **依赖** | TASK-OS1-1 (RLS 隔离测试框架) |
+| **风险** | 依赖: RLS 策略就绪 / 数据: 隔离失败=跨租户数据泄露 (安全红线) / 兼容: 纯测试验证 / 回滚: 不适用 (纯测试) |
+| **兼容策略** | 纯新增测试验证 |
+| **验收命令** | `uv run pytest tests/isolation/test_tenant_crossover.py -q` |
+| **回滚方案** | 不适用 (纯测试文件) |
+| **证据** | Phase 3 硬门禁 `p3-tenant-isolation-runtime` 通过 |
+| **决策记录** | 决策: 跨租户运行时隔离验证升级为 Phase 3 硬门禁 / 理由: 多租户数据隔离是安全基石，Phase 1 框架 + Phase 3 运行时验证双重保障 / 来源: 架构文档 06 Section 1.6 |
+
+> 矩阵条目: OS3-6
+
 ---
 
 ## Phase 4 -- SLI/SLO + 告警分级 + 故障注入
