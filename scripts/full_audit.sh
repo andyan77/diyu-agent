@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # full_audit.sh - Unified audit entry point (Section 12.6)
 #
-# Runs all 8 audit categories:
+# Runs all 9 audit categories:
 #   1. Guards: check_layer_deps, check_port_compat, check_rls
 #   2. Skill audits: run_systematic_review, run_cross_audit, run_fix_verify
 #   3. Agent tests: test_agent_permissions
@@ -9,7 +9,8 @@
 #   5. Workflow tests: test_workflow_completeness
 #   6. Governance: test_governance_consistency
 #   7. Security: security_scan --full
-#   8. Report aggregation
+#   8. Phase gate: verify_phase --current
+#   9. Report aggregation
 #
 # Exit codes: 0 = all pass, 1 = failures found, 2 = critical error
 #
@@ -151,7 +152,16 @@ fi
 run_check "security_scan" "security" "bash scripts/security_scan.sh --full"
 
 # ============================================================
-# 8. Report aggregation
+# 8. Phase gate status
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 8: Phase Gate Status ==="
+fi
+run_check "verify_phase_gate" "phase_gate" "uv run python scripts/verify_phase.py --current --json 2>&1"
+
+# ============================================================
+# 9. Report aggregation
 # ============================================================
 OVERALL="pass"
 if [ "$FAILED" -gt 0 ]; then

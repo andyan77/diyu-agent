@@ -118,6 +118,7 @@ markers = [
     "integration: Integration tests (needs services)",
     "e2e: End-to-end tests",
     "asyncio: Async tests (pytest-asyncio)",
+    "perf: Performance tests (p95 < 200ms threshold)",
 ]
 
 [tool.coverage.run]

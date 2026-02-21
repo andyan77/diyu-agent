@@ -6,8 +6,8 @@ services:
     image: pgvector/pgvector:pg16
     ports: ["25432:5432"]
     environment:
-      POSTGRES_USER: diyu
-      POSTGRES_PASSWORD: diyu_dev
+      POSTGRES_USER: ${POSTGRES_USER:-diyu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-diyu_dev}
       POSTGRES_DB: diyu
     volumes: ["pgdata:/var/lib/postgresql/data"]
     read_only: true
@@ -40,7 +40,7 @@ services:
     image: neo4j:5-community
     ports: ["7474:7474", "7687:7687"]
     environment:
-      NEO4J_AUTH: neo4j/diyu_dev
+      NEO4J_AUTH: ${NEO4J_AUTH:-neo4j/diyu_dev}
     volumes: ["neo4j_data:/data"]
     read_only: true
     tmpfs:
@@ -53,8 +53,8 @@ services:
     ports: ["9000:9000", "9001:9001"]
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: diyu
-      MINIO_ROOT_PASSWORD: diyu_dev_minio
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-diyu}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-diyu_dev_minio}
     volumes: ["minio_data:/data"]
     read_only: true
     tmpfs:
