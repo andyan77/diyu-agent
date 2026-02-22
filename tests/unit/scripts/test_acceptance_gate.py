@@ -6,7 +6,8 @@ import sys
 import textwrap
 from pathlib import Path
 
-SCRIPT = Path("scripts/check_acceptance_gate.py")
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+SCRIPT = _REPO_ROOT / "scripts" / "check_acceptance_gate.py"
 
 
 def _run_gate(*args: str) -> subprocess.CompletedProcess:
@@ -15,6 +16,7 @@ def _run_gate(*args: str) -> subprocess.CompletedProcess:
         capture_output=True,
         text=True,
         timeout=30,
+        cwd=str(_REPO_ROOT),
     )
 
 

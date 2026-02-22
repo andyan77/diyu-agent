@@ -234,6 +234,20 @@ def validate_acceptance(card: CardAcceptance) -> list[Violation]:
     return violations
 
 
+def _load_known_future_paths(path: Path | None) -> set[str]:
+    """Load allowlist of paths expected to be created in future phases."""
+    if path is None:
+        default = Path("scripts/known_future_paths.txt")
+        if default.exists():
+            path = default
+        else:
+            return set()
+    if not path.exists():
+        return set()
+    lines = path.read_text().splitlines()
+    return {line.strip() for line in lines if line.strip() and not line.strip().startswith("#")}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Acceptance command hard gate")
     parser.add_argument("--json", action="store_true", help="Output JSON report")
@@ -249,6 +263,12 @@ def main() -> None:
         default=TASK_CARDS_DIR,
         help="Base directory for task cards",
     )
+    parser.add_argument(
+        "--known-future-paths",
+        type=Path,
+        default=None,
+        help="File listing paths expected in future phases (suppresses path-missing)",
+    )
     args = parser.parse_args()
 
     if not args.base_dir.exists():
@@ -262,6 +282,8 @@ def main() -> None:
         md_files = [args.filter_file]
     else:
         md_files = sorted(args.base_dir.rglob("*.md"))
+
+    known_future = _load_known_future_paths(args.known_future_paths)
 
     all_cards: list[CardAcceptance] = []
     all_violations: list[Violation] = []
@@ -277,6 +299,19 @@ def main() -> None:
         for card in cards:
             all_violations.extend(validate_acceptance(card))
 
+    # Suppress path-missing warnings for known future paths
+    suppressed = 0
+    if known_future:
+        filtered: list[Violation] = []
+        for v in all_violations:
+            if v.rule == "acceptance-path-missing":
+                m = re.search(r"non-existent path: (.+)", v.message)
+                if m and m.group(1) in known_future:
+                    suppressed += 1
+                    continue
+            filtered.append(v)
+        all_violations = filtered
+
     # Group violations by rule
     by_rule: dict[str, int] = {}
     for v in all_violations:
@@ -289,6 +324,7 @@ def main() -> None:
         "total_cards": len(all_cards),
         "total_violations": len(blocking),
         "total_warnings": len(warnings),
+        "suppressed_future_paths": suppressed,
         "violations_by_rule": by_rule,
         "violations": [
             {

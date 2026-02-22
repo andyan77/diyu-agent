@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eval Diversity Variant File",
+  "description": "多样性变体文件 Schema（Gemini Antigravity 产出）",
+  "type": "object",
+  "required": ["eval_set_id", "eval_set_name", "generator", "generated_at", "source_version", "variants", "coverage_summary"],
+  "properties": {
+    "eval_set_id": { "type": "string", "pattern": "^E-\\d{2}$" },
+    "eval_set_name": { "type": "string" },
+    "generator": { "type": "string", "const": "gemini-antigravity" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "source_version": { "type": "string", "const": "v3.0" },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["seed_id", "seed_message", "seed_answer", "variants"],
+        "properties": {
+          "seed_id": { "type": "string" },
+          "seed_message": { "type": "string" },
+          "seed_answer": { "type": ["string", "object"] },
+          "variants": {
+            "type": "array",
+            "minItems": 6,
+            "items": {
+              "type": "object",
+              "required": ["id", "variant_type", "user_message", "industry", "answer_preserved"],
+              "properties": {
+                "id": { "type": "string" },
+                "variant_type": {
+                  "type": "string",
+                  "enum": ["口语极简", "东北方言化", "南方口语化", "关键词罗列", "礼貌书面化", "网络用语化", "带情绪的", "反向表达"]
+                },
+                "user_message": { "type": "string", "minLength": 1 },
+                "industry": {
+                  "type": "string",
+                  "enum": ["通用", "服装", "美妆", "餐饮", "数码", "家居"]
+                },
+                "answer_preserved": { "type": "boolean" },
+                "semantic_shift_warning": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "cross_industry_variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "source_industry", "target_industry", "user_message", "answer_preserved"],
+              "properties": {
+                "id": { "type": "string" },
+                "source_industry": { "type": "string" },
+                "target_industry": { "type": "string" },
+                "user_message": { "type": "string" },
+                "answer_preserved": { "type": "boolean" },
+                "semantic_shift_warning": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "coverage_summary": {
+      "type": "object",
+      "required": ["total_variants", "total_cross_industry"],
+      "properties": {
+        "total_variants": { "type": "integer" },
+        "total_cross_industry": { "type": "integer" },
+        "variant_type_distribution": { "type": "object" },
+        "semantic_shift_warnings": { "type": "integer" }
+      }
+    }
+  }
+}

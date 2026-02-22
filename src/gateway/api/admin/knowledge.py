@@ -50,7 +50,7 @@ class KnowledgeWritePort(Protocol):
         entry_id: UUID,
         properties: dict[str, Any],
         user_id: UUID,
-    ) -> dict[str, Any]: ...
+    ) -> dict[str, Any] | None: ...
 
     async def delete_entry(
         self,
@@ -90,11 +90,46 @@ class UpdateKnowledgeRequest(BaseModel):
     properties: dict[str, Any]
 
 
+class StatusChangeRequest(BaseModel):
+    status: str
+
+    @field_validator("status")
+    @classmethod
+    def status_valid(cls, v: str) -> str:
+        allowed = {"draft", "published", "archived"}
+        if v not in allowed:
+            msg = f"status must be one of {allowed}"
+            raise ValueError(msg)
+        return v
+
+
+class ReviewActionRequest(BaseModel):
+    action: str
+    comment: str = ""
+
+    @field_validator("action")
+    @classmethod
+    def action_valid(cls, v: str) -> str:
+        allowed = {"approve", "reject", "escalate"}
+        if v not in allowed:
+            msg = f"action must be one of {allowed}"
+            raise ValueError(msg)
+        return v
+
+
 class KnowledgeEntryResponse(BaseModel):
     entry_id: str
     entity_type: str
     properties: dict[str, Any]
     org_id: str
+    status: str = "draft"
+
+
+class ReviewActionResponse(BaseModel):
+    entry_id: str
+    action: str
+    new_status: str
+    reviewed_by: str
 
 
 class KnowledgeListResponse(BaseModel):
@@ -153,6 +188,7 @@ def create_knowledge_admin_router(*, knowledge_writer: KnowledgeWritePort) -> AP
                     entity_type=e.get("entity_type", ""),
                     properties=e.get("properties", {}),
                     org_id=str(org_id),
+                    status=e.get("properties", {}).get("status", "draft"),
                 )
                 for e in entries
             ],
@@ -194,6 +230,8 @@ def create_knowledge_admin_router(*, knowledge_writer: KnowledgeWritePort) -> AP
             properties=body.properties,
             user_id=user_id,
         )
+        if result is None:
+            raise HTTPException(status_code=404, detail="Knowledge entry not found")
 
         return KnowledgeEntryResponse(
             entry_id=str(result.get("entry_id", result.get("node_id", ""))),
@@ -218,5 +256,74 @@ def create_knowledge_admin_router(*, knowledge_writer: KnowledgeWritePort) -> AP
         )
         if not deleted:
             raise HTTPException(status_code=404, detail="Knowledge entry not found")
+
+    @router.patch("/{entry_id}/status", response_model=KnowledgeEntryResponse)
+    async def change_status(
+        entry_id: UUID,
+        body: StatusChangeRequest,
+        request: Request,
+    ) -> KnowledgeEntryResponse:
+        """Change the status of a knowledge entry (publish/archive/draft)."""
+        org_id: UUID = request.state.org_id
+        user_id: UUID = request.state.user_id
+
+        result = await knowledge_writer.update_entry(
+            org_id=org_id,
+            entry_id=entry_id,
+            properties={"status": body.status},
+            user_id=user_id,
+        )
+        if result is None:
+            raise HTTPException(status_code=404, detail="Knowledge entry not found")
+
+        return KnowledgeEntryResponse(
+            entry_id=str(result.get("entry_id", result.get("node_id", ""))),
+            entity_type=result.get("entity_type", ""),
+            properties=result.get("properties", {}),
+            org_id=str(org_id),
+            status=body.status,
+        )
+
+    @router.post("/{entry_id}/review", response_model=ReviewActionResponse)
+    async def review_action(
+        entry_id: UUID,
+        body: ReviewActionRequest,
+        request: Request,
+    ) -> ReviewActionResponse:
+        """Perform a review action on a knowledge entry (approve/reject/escalate)."""
+        org_id: UUID = request.state.org_id
+        user_id: UUID = request.state.user_id
+
+        # Map review action to status
+        action_status_map = {
+            "approve": "published",
+            "reject": "rejected",
+            "escalate": "escalated",
+        }
+        new_status = action_status_map[body.action]
+
+        props: dict[str, Any] = {
+            "status": new_status,
+            "review_action": body.action,
+            "reviewed_by": str(user_id),
+        }
+        if body.comment:
+            props["review_comment"] = body.comment
+
+        result = await knowledge_writer.update_entry(
+            org_id=org_id,
+            entry_id=entry_id,
+            properties=props,
+            user_id=user_id,
+        )
+        if result is None:
+            raise HTTPException(status_code=404, detail="Knowledge entry not found")
+
+        return ReviewActionResponse(
+            entry_id=str(result.get("entry_id", result.get("node_id", ""))),
+            action=body.action,
+            new_status=new_status,
+            reviewed_by=str(user_id),
+        )
 
     return router

@@ -6,7 +6,8 @@
  * Task card: FA2-2
  */
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getAdminClient } from "@/lib/api";
 
 interface Organization {
   id: string;
@@ -16,61 +17,95 @@ interface Organization {
   createdAt: string;
 }
 
-const MOCK_ORGS: Organization[] = [
-  {
-    id: "org-1",
-    name: "Acme Corp",
-    memberCount: 12,
-    tokenUsage: 150000,
-    createdAt: "2026-01-15T00:00:00Z",
-  },
-  {
-    id: "org-2",
-    name: "Globex Inc",
-    memberCount: 5,
-    tokenUsage: 42000,
-    createdAt: "2026-02-01T00:00:00Z",
-  },
-];
-
 export default function OrganizationsPage() {
-  const [orgs, setOrgs] = useState<Organization[]>(MOCK_ORGS);
+  const [orgs, setOrgs] = useState<Organization[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [formName, setFormName] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const handleCreate = useCallback(() => {
-    if (!formName.trim()) return;
-    const newOrg: Organization = {
-      id: `org-${crypto.randomUUID().slice(0, 8)}`,
-      name: formName.trim(),
-      memberCount: 0,
-      tokenUsage: 0,
-      createdAt: new Date().toISOString(),
+  useEffect(() => {
+    const fetchOrgs = async () => {
+      try {
+        setLoading(true);
+        const client = getAdminClient();
+        const data = await client.get<Organization[]>("/admin/organizations");
+        setOrgs(data);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load organizations");
+      } finally {
+        setLoading(false);
+      }
     };
-    setOrgs((prev) => [...prev, newOrg]);
-    setFormName("");
-    setShowForm(false);
+
+    void fetchOrgs();
+  }, []);
+
+  const handleCreate = useCallback(async () => {
+    if (!formName.trim()) return;
+    try {
+      const client = getAdminClient();
+      const newOrg = await client.post<Organization>("/admin/organizations", {
+        name: formName.trim(),
+      });
+      setOrgs((prev) => [...prev, newOrg]);
+      setFormName("");
+      setShowForm(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create organization");
+    }
   }, [formName]);
 
   const handleUpdate = useCallback(
-    (id: string) => {
+    async (id: string) => {
       if (!formName.trim()) return;
-      setOrgs((prev) =>
-        prev.map((o) => (o.id === id ? { ...o, name: formName.trim() } : o)),
-      );
-      setFormName("");
-      setEditingId(null);
+      try {
+        const client = getAdminClient();
+        const updated = await client.put<Organization>(`/admin/organizations/${id}`, {
+          name: formName.trim(),
+        });
+        setOrgs((prev) =>
+          prev.map((o) => (o.id === id ? updated : o)),
+        );
+        setFormName("");
+        setEditingId(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to update organization");
+      }
     },
     [formName],
   );
 
-  const handleDelete = useCallback((id: string) => {
-    setOrgs((prev) => prev.filter((o) => o.id !== id));
+  const handleDelete = useCallback(async (id: string) => {
+    try {
+      const client = getAdminClient();
+      await client.delete(`/admin/organizations/${id}`);
+      setOrgs((prev) => prev.filter((o) => o.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete organization");
+    }
   }, []);
+
+  if (loading) {
+    return (
+      <div style={{ padding: 24, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>
+          Organizations
+        </h1>
+        <p>Loading organizations...</p>
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: 24, maxWidth: 1200 }}>
+      {error && (
+        <div style={{ padding: 12, marginBottom: 16, background: "#fee2e2", color: "#dc2626", borderRadius: 4 }}>
+          {error}
+        </div>
+      )}
       <div
         style={{
           display: "flex",

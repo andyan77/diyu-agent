@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eval Adversarial Sample File",
+  "description": "对抗性样本文件 Schema（GPT Codex 产出）",
+  "type": "object",
+  "required": ["eval_set_id", "eval_set_name", "layer", "phase", "generator", "generated_at", "source_version", "samples", "coverage_summary"],
+  "properties": {
+    "eval_set_id": {
+      "type": "string",
+      "pattern": "^E-\\d{2}$"
+    },
+    "eval_set_name": { "type": "string" },
+    "layer": {
+      "type": "string",
+      "enum": ["Brain", "Knowledge", "Skill", "跨层闭环", "安全与对抗", "v1.1新增"]
+    },
+    "phase": { "type": "string", "pattern": "^Phase \\d" },
+    "generator": { "type": "string", "const": "gpt-codex" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "source_version": { "type": "string", "const": "v3.0" },
+    "samples": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "industry", "user_message", "org_tier", "expected_answer", "trap_type", "why_misleading", "misclassification_consequence", "difficulty"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^E\\d{2}-A\\d{3}$"
+          },
+          "industry": {
+            "type": "string",
+            "enum": ["服装", "美妆", "餐饮", "数码", "家居", "通用"]
+          },
+          "user_message": { "type": "string", "minLength": 1 },
+          "org_tier": {
+            "type": "string",
+            "enum": ["brand_hq", "brand_dept", "regional_agent", "franchise_store", "any"]
+          },
+          "context": {
+            "type": "object",
+            "properties": {
+              "previous_turns": { "type": "array" },
+              "memory_items": { "type": "array" },
+              "knowledge_items": { "type": "array" },
+              "tool_list": { "type": "array" }
+            }
+          },
+          "expected_answer": { "type": ["string", "object"] },
+          "trap_type": { "type": "string" },
+          "why_misleading": { "type": "string" },
+          "misclassification_consequence": { "type": "string" },
+          "difficulty": {
+            "type": "string",
+            "enum": ["困难", "对抗性"]
+          },
+          "reasoning_chain": { "type": "string" }
+        }
+      }
+    },
+    "coverage_summary": {
+      "type": "object",
+      "required": ["total_samples", "industry_distribution", "trap_types_covered", "difficulty_distribution"],
+      "properties": {
+        "total_samples": { "type": "integer", "minimum": 10 },
+        "industry_distribution": { "type": "object" },
+        "trap_types_covered": { "type": "array", "items": { "type": "string" } },
+        "difficulty_distribution": { "type": "object" }
+      }
+    }
+  }
+}

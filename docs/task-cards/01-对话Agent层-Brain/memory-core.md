@@ -31,11 +31,11 @@
 | 字段 | 内容 |
 |------|------|
 | **目标** | 提供内存级 Stub 实现，使 Brain 层可在无 PG 环境下进行单元测试 |
-| **范围 (In Scope)** | `src/memory/stub.py`, `tests/unit/memory/test_stub.py` |
-| **范围外 (Out of Scope)** | PG 真实实现 / 向量检索 / 性能基准测试 |
+| **范围 (In Scope)** | `src/memory/pg_adapter.py`, `tests/unit/memory/test_pg_adapter.py` |
+| **范围外 (Out of Scope)** | 向量检索 / 性能基准测试 |
 | **依赖** | TASK-MC0-1 |
-| **兼容策略** | Stub 实现所有方法，Phase 2 被 PG Adapter 替换 |
-| **验收命令** | `pytest tests/unit/memory/test_stub.py -v` (Stub 覆盖率 100%) |
+| **兼容策略** | Phase 0 Stub 已被 PgMemoryCoreAdapter 替换 (Phase 2) |
+| **验收命令** | `pytest tests/unit/memory/test_pg_adapter.py -v` |
 | **回滚方案** | `git revert <commit>` |
 | **证据** | pytest 通过日志 |
 

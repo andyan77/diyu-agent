@@ -129,7 +129,6 @@ jobs:
       DATABASE_URL: postgresql+asyncpg://diyu:diyu_dev@localhost:5432/diyu
       REDIS_URL: redis://localhost:6379/0
       JWT_SECRET_KEY: ci-test-secret-key-not-for-production
-      JWT_SECRET: ci-test-secret-key-not-for-production
       LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
       LLM_MODEL: qwen-plus
       LLM_BASE_URL: https://dashscope.aliyuncs.com/compatible-mode/v1

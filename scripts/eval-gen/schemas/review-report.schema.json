@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eval Review Report File",
+  "description": "质量审核报告文件 Schema（交叉审核产出）",
+  "type": "object",
+  "required": ["eval_set_id", "source_file", "reviewer", "reviewed_at", "reviews", "summary"],
+  "properties": {
+    "eval_set_id": { "type": "string", "pattern": "^E-\\d{2}$" },
+    "source_file": { "type": "string" },
+    "reviewer": {
+      "type": "string",
+      "enum": ["gemini-antigravity", "claude-code-max", "gpt-codex"]
+    },
+    "reviewed_at": { "type": "string", "format": "date-time" },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sample_id", "answer_quality", "industry_label", "dedup_status", "difficulty", "case_type_novelty", "naturalness", "industry_knowledge"],
+        "properties": {
+          "sample_id": { "type": "string" },
+          "answer_quality": {
+            "type": "string",
+            "enum": ["pass", "disputed", "error"]
+          },
+          "correction": { "type": ["string", "null"] },
+          "industry_label": {
+            "type": "string",
+            "enum": ["pass", "error"]
+          },
+          "dedup_status": { "type": "string" },
+          "difficulty": {
+            "type": "string",
+            "enum": ["简单", "中等", "困难", "对抗性"]
+          },
+          "case_type_novelty": { "type": "string" },
+          "naturalness": {
+            "type": "string",
+            "enum": ["realistic", "bookish", "unnatural"]
+          },
+          "industry_knowledge": {
+            "type": "string",
+            "enum": ["accurate", "inaccurate", "severe_error"]
+          },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total_reviewed", "pass_rate", "disputed_count", "error_count"],
+      "properties": {
+        "total_reviewed": { "type": "integer" },
+        "pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "disputed_count": { "type": "integer" },
+        "error_count": { "type": "integer" },
+        "duplicate_count": { "type": "integer" },
+        "unnatural_count": { "type": "integer" },
+        "industry_knowledge_issues": { "type": "integer" }
+      }
+    }
+  }
+}

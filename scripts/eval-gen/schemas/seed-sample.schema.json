@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eval Seed Sample File",
+  "description": "种子样本文件 Schema（Claude Code 产出）",
+  "type": "object",
+  "required": ["eval_set_id", "eval_set_name", "layer", "phase", "generator", "generated_at", "source_version", "samples", "coverage_summary"],
+  "properties": {
+    "eval_set_id": {
+      "type": "string",
+      "pattern": "^E-\\d{2}$",
+      "description": "评测集 ID，如 E-01"
+    },
+    "eval_set_name": {
+      "type": "string",
+      "description": "评测集名称"
+    },
+    "layer": {
+      "type": "string",
+      "enum": ["Brain", "Knowledge", "Skill", "跨层闭环", "安全与对抗", "v1.1新增"],
+      "description": "所属层级"
+    },
+    "phase": {
+      "type": "string",
+      "pattern": "^Phase \\d",
+      "description": "所属 Phase"
+    },
+    "generator": {
+      "type": "string",
+      "const": "claude-code-max",
+      "description": "生成器标识"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_version": {
+      "type": "string",
+      "const": "v3.0"
+    },
+    "samples": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "industry", "user_message", "org_tier", "expected_answer", "architecture_anchor", "case_type", "difficulty"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^E\\d{2}-S\\d{3}$",
+            "description": "样本 ID，如 E01-S001"
+          },
+          "industry": {
+            "type": "string",
+            "enum": ["服装", "美妆", "餐饮", "数码", "家居", "通用"]
+          },
+          "user_message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "org_tier": {
+            "type": "string",
+            "enum": ["brand_hq", "brand_dept", "regional_agent", "franchise_store", "any"]
+          },
+          "context": {
+            "type": "object",
+            "properties": {
+              "previous_turns": { "type": "array" },
+              "memory_items": { "type": "array" },
+              "knowledge_items": { "type": "array" },
+              "tool_list": { "type": "array" }
+            }
+          },
+          "expected_answer": {
+            "type": ["string", "object"],
+            "description": "明确可判定的标准答案"
+          },
+          "architecture_anchor": {
+            "type": "string",
+            "description": "架构锚点，精确到 src/ 文件:行号"
+          },
+          "case_type": {
+            "type": "string",
+            "description": "对应规格中'必须覆盖'的 case 类型"
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": ["简单", "中等", "困难", "对抗性"]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "coverage_summary": {
+      "type": "object",
+      "required": ["total_samples", "industry_distribution", "difficulty_distribution", "case_types_covered"],
+      "properties": {
+        "total_samples": { "type": "integer", "minimum": 10 },
+        "industry_distribution": { "type": "object" },
+        "difficulty_distribution": { "type": "object" },
+        "case_types_covered": { "type": "array", "items": { "type": "string" } },
+        "case_types_missing": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

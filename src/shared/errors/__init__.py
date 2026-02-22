@@ -114,6 +114,17 @@ class QuotaExceededError(DiyuError):
         )
 
 
+class ServiceUnavailableError(DiyuError):
+    """A required backend service is temporarily unavailable (DB, cache, etc.)."""
+
+    def __init__(self, service: str, message: str = "") -> None:
+        self.service = service
+        super().__init__(
+            message or f"Service temporarily unavailable: {service}",
+            code="SERVICE_UNAVAILABLE",
+        )
+
+
 __all__ = [
     "AuthenticationError",
     "AuthorizationError",
@@ -124,5 +135,6 @@ __all__ = [
     "PortTimeoutError",
     "PortUnavailableError",
     "QuotaExceededError",
+    "ServiceUnavailableError",
     "ValidationError",
 ]

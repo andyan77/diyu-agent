@@ -15,6 +15,8 @@ WORKDIR /build
 COPY pyproject.toml uv.lock ./
 
 # Install production dependencies only (no dev)
+# Use /app/.venv so shebangs match the runtime stage path
+ENV UV_PROJECT_ENVIRONMENT=/app/.venv
 RUN uv sync --frozen --no-dev --no-install-project
 
 # Copy application source
@@ -31,13 +33,13 @@ RUN groupadd --gid 1000 diyu && \
 
 WORKDIR /app
 
-# Copy virtual environment from builder
-COPY --from=builder /build/.venv /app/.venv
+# Copy virtual environment from builder (built at /app/.venv via UV_PROJECT_ENVIRONMENT)
+COPY --from=builder --chown=diyu:diyu /app/.venv /app/.venv
 
 # Copy application source
-COPY --from=builder /build/src /app/src
-COPY --from=builder /build/migrations /app/migrations
-COPY --from=builder /build/alembic.ini /app/alembic.ini
+COPY --from=builder --chown=diyu:diyu /build/src /app/src
+COPY --from=builder --chown=diyu:diyu /build/migrations /app/migrations
+COPY --from=builder --chown=diyu:diyu /build/alembic.ini /app/alembic.ini
 
 # Ensure venv binaries are on PATH
 ENV PATH="/app/.venv/bin:$PATH" \

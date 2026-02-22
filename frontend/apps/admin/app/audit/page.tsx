@@ -7,7 +7,8 @@
  * Dependencies: audit_events (I1-5)
  */
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { getAdminClient } from "@/lib/api";
 
 interface AuditEntry {
   id: string;
@@ -19,24 +20,34 @@ interface AuditEntry {
   details?: string;
 }
 
-const MOCK_ENTRIES: AuditEntry[] = Array.from({ length: 50 }, (_, i) => ({
-  id: `audit-${i + 1}`,
-  userId: `user-${(i % 5) + 1}`,
-  userName: `User ${(i % 5) + 1}`,
-  action: ["create", "update", "delete", "login", "logout"][i % 5],
-  resource: ["conversation", "user", "organization", "setting", "file"][i % 5],
-  timestamp: new Date(Date.now() - i * 3600000).toISOString(),
-  details: i % 3 === 0 ? `Detail for entry ${i + 1}` : undefined,
-}));
-
 const ACTION_TYPES = ["all", "create", "update", "delete", "login", "logout"];
 
 export default function AuditPage() {
-  const [entries] = useState<AuditEntry[]>(MOCK_ENTRIES);
+  const [entries, setEntries] = useState<AuditEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [actionFilter, setActionFilter] = useState("all");
   const [userFilter, setUserFilter] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
+
+  useEffect(() => {
+    const fetchAuditLogs = async () => {
+      try {
+        setLoading(true);
+        const client = getAdminClient();
+        const data = await client.get<AuditEntry[]>("/admin/audit-logs");
+        setEntries(data);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load audit logs");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void fetchAuditLogs();
+  }, []);
 
   const filtered = useMemo(() => {
     let result = entries;
@@ -62,6 +73,28 @@ export default function AuditPage() {
 
     return result;
   }, [entries, actionFilter, userFilter, dateFrom, dateTo]);
+
+  if (loading) {
+    return (
+      <div style={{ padding: 24, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>
+          Audit Log
+        </h1>
+        <p>Loading audit logs...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ padding: 24, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>
+          Audit Log
+        </h1>
+        <p style={{ color: "#ef4444" }}>Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: 24, maxWidth: 1200 }}>

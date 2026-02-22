@@ -39,6 +39,7 @@ _EXEMPT_PATHS = frozenset(
         "/redoc",
         "/api/v1/auth/login",
         "/api/v1/auth/register",
+        "/api/v1/admin/auth/login",
     }
 )
 
@@ -198,6 +199,7 @@ def create_app(
 
         request.state.user_id = payload.user_id
         request.state.org_id = payload.org_id
+        request.state.role = payload.role
 
         # Chain post-auth middlewares (budget check, rate limit, etc.)
         # Build a call chain: mw_n(... mw_1(call_next) ...)

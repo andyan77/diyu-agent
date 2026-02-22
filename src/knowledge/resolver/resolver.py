@@ -35,7 +35,7 @@ class ResolverProfile:
     description: str = ""
 
 
-# Built-in profiles (minimum 2 for K3-5)
+# Built-in profiles (minimum 2 for K3-5, plus "default" alias)
 BUILTIN_PROFILES: dict[str, ResolverProfile] = {
     "core:role_adaptation": ResolverProfile(
         profile_id="core:role_adaptation",
@@ -61,6 +61,21 @@ BUILTIN_PROFILES: dict[str, ResolverProfile] = {
         vector_search=True,
         limit=20,
         description="Graph-first + FK vector enrichment for brand context",
+    ),
+    # "default" profile used by ContextAssembler when no specific profile is requested.
+    # Delegates to the brand_context strategy as the most broadly useful resolution.
+    "default": ResolverProfile(
+        profile_id="default",
+        fk_strategy="graph_first",
+        graph_query_template=(
+            "MATCH (n:BrandKnowledge) "
+            "WHERE n.org_id IN $org_chain "
+            "OR n.visibility IN ['global', 'brand'] "
+            "RETURN n, labels(n) as labels LIMIT $limit"
+        ),
+        vector_search=True,
+        limit=20,
+        description="Default profile (aliases core:brand_context)",
     ),
 }
 

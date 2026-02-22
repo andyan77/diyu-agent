@@ -19,7 +19,7 @@ interface DataTableProps<T extends { id: string }> {
   columns: Column<T>[];
   searchField?: keyof T;
   pageSize?: number;
-  bulkActions?: { label: string; action: (ids: string[]) => void }[];
+  bulkActions?: { label: string; action: (ids: string[]) => void | Promise<void> }[];
 }
 
 export function DataTable<T extends { id: string }>({

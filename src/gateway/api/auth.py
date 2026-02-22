@@ -82,6 +82,22 @@ async def _get_first_org_id(session: AsyncSession, user_id: UUID) -> UUID | None
     return row
 
 
+async def _get_first_org_role(session: AsyncSession, user_id: UUID, org_id: UUID) -> str:
+    """Return the user's role within the given org, defaulting to 'member'."""
+    stmt = (
+        select(OrgMember.role)
+        .where(
+            OrgMember.user_id == user_id,
+            OrgMember.org_id == org_id,
+            OrgMember.is_active == True,  # noqa: E712
+        )
+        .limit(1)
+    )
+    result = await session.execute(stmt)
+    role = result.scalar_one_or_none()
+    return role or "member"
+
+
 # -- Router factory --
 
 
@@ -115,10 +131,14 @@ def create_auth_router() -> APIRouter:
                 # Allow login without org for dev; use user_id as fallback
                 org_id = user.id
 
+            # Resolve org role for RBAC
+            role = await _get_first_org_role(session, user.id, org_id)
+
             token = encode_token(
                 user_id=user.id,
                 org_id=org_id,
                 secret=secret,
+                role=role,
             )
 
         logger.info("User login: email=%s user_id=%s", body.email, user.id)

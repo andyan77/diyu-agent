@@ -8,7 +8,8 @@
  * for human review with approve/reject/escalate actions.
  */
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getAdminClient } from "@/lib/api";
 
 interface ReviewItem {
   id: string;
@@ -21,16 +22,16 @@ interface ReviewItem {
   submitted_at: string;
 }
 
-const MOCK_REVIEW_ITEMS: ReviewItem[] = Array.from({ length: 12 }, (_, i) => ({
-  id: `review-${i + 1}`,
-  entity_type: ["product", "brand", "category"][i % 3] ?? "product",
-  name: `Pending Item ${i + 1}`,
-  content_preview: `Content preview for item ${i + 1}. This entry requires manual review due to automated flagging.`,
-  security_status: (["flagged", "suspicious", "under_review"][i % 3] ?? "flagged") as ReviewItem["security_status"],
-  flagged_reason: ["PII detected", "Suspicious content", "Injection pattern"][i % 3] ?? "PII detected",
-  submitted_by: `user-${(i % 5) + 1}`,
-  submitted_at: new Date(Date.now() - i * 3600000).toISOString(),
-}));
+interface KnowledgeListResponse {
+  entries: {
+    entry_id: string;
+    entity_type: string;
+    properties: Record<string, unknown>;
+    org_id: string;
+    status: string;
+  }[];
+  total: number;
+}
 
 const STATUS_COLORS: Record<string, string> = {
   flagged: "#ef4444",
@@ -39,11 +40,53 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export default function ContentReviewPage() {
-  const [items, setItems] = useState<ReviewItem[]>(MOCK_REVIEW_ITEMS);
+  const [items, setItems] = useState<ReviewItem[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
+  useEffect(() => {
+    async function loadReviewItems() {
+      try {
+        const api = getAdminClient();
+        const data = await api.get<KnowledgeListResponse>(
+          "/v1/admin/knowledge?limit=50",
+        );
+        setItems(
+          data.entries
+            .filter((e) => e.properties.security_status)
+            .map((e) => ({
+              id: e.entry_id,
+              entity_type: e.entity_type,
+              name: (e.properties.name as string) ?? e.entry_id,
+              content_preview:
+                (e.properties.content_preview as string) ??
+                "No preview available.",
+              security_status: ((e.properties.security_status as string) ??
+                "flagged") as ReviewItem["security_status"],
+              flagged_reason:
+                (e.properties.flagged_reason as string) ?? "Pending review",
+              submitted_by:
+                (e.properties.submitted_by as string) ?? "unknown",
+              submitted_at:
+                (e.properties.submitted_at as string) ??
+                new Date().toISOString(),
+            })),
+        );
+      } catch {
+        // API unreachable -- leave empty list
+      }
+    }
+    void loadReviewItems();
+  }, []);
+
   const handleAction = useCallback(
-    (itemId: string, action: "approve" | "reject" | "escalate") => {
+    async (itemId: string, action: "approve" | "reject" | "escalate") => {
+      try {
+        const api = getAdminClient();
+        await api.post(`/v1/admin/knowledge/${itemId}/review`, { action });
+      } catch {
+        // API unreachable -- still update UI optimistically
+      }
+
       if (action === "approve" || action === "reject") {
         setItems((prev) => prev.filter((item) => item.id !== itemId));
         if (selectedId === itemId) setSelectedId(null);

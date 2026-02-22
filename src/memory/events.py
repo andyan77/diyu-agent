@@ -21,10 +21,10 @@ from uuid import UUID, uuid4
 
 import sqlalchemy as sa
 
-from src.infra.models import ConversationEvent as ConversationEventModel
-
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
+    from src.infra.models import ConversationEvent as ConversationEventModel
 
 
 @dataclass
@@ -152,6 +152,8 @@ class PgConversationEventStore:
 
         Determines next sequence_number by counting existing events.
         """
+        from src.infra.models import ConversationEvent as ConversationEventModel
+
         async with self._session_factory() as session:
             # Get current max sequence number for this session
             count_stmt = sa.select(sa.func.count()).where(
@@ -201,6 +203,8 @@ class PgConversationEventStore:
         limit: int | None = None,
     ) -> list[ConversationEvent]:
         """Get events for a session, ordered by sequence_number."""
+        from src.infra.models import ConversationEvent as ConversationEventModel
+
         stmt = (
             sa.select(ConversationEventModel)
             .where(ConversationEventModel.session_id == session_id)
@@ -217,6 +221,8 @@ class PgConversationEventStore:
 
     async def get_event(self, event_id: UUID) -> ConversationEvent | None:
         """Get a single event by ID."""
+        from src.infra.models import ConversationEvent as ConversationEventModel
+
         stmt = sa.select(ConversationEventModel).where(
             ConversationEventModel.id == event_id,
         )
@@ -230,6 +236,8 @@ class PgConversationEventStore:
 
     async def count_session_events(self, session_id: UUID) -> int:
         """Count events in a session."""
+        from src.infra.models import ConversationEvent as ConversationEventModel
+
         stmt = sa.select(sa.func.count()).where(
             ConversationEventModel.session_id == session_id,
         )
@@ -239,6 +247,8 @@ class PgConversationEventStore:
 
     async def delete_session(self, session_id: UUID) -> int:
         """Delete all events for a session. Returns count deleted."""
+        from src.infra.models import ConversationEvent as ConversationEventModel
+
         stmt = sa.delete(ConversationEventModel).where(
             ConversationEventModel.session_id == session_id,
         )

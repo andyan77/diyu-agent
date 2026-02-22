@@ -31,11 +31,11 @@
 | 字段 | 内容 |
 |------|------|
 | **目标** | 空注册表 Stub，匹配任何请求返回"未找到"，使 Brain 在 Phase 0-2 可调用 |
-| **范围 (In Scope)** | `src/skill/registry/stub.py`, `tests/unit/skill/test_stub.py` |
-| **范围外 (Out of Scope)** | Brain 调度逻辑 / Knowledge Stores / Tool 层 / 真实注册表实现 |
+| **范围 (In Scope)** | `src/skill/registry/lifecycle.py`, `tests/unit/skill/test_lifecycle.py` |
+| **范围外 (Out of Scope)** | Brain 调度逻辑 / Knowledge Stores / Tool 层 |
 | **依赖** | TASK-S0-1 |
-| **兼容策略** | Stub 实现全部方法；Phase 3 被真实注册表替换 |
-| **验收命令** | `pytest tests/unit/skill/test_stub.py -v` |
+| **兼容策略** | Phase 0 Stub 已被 LifecycleRegistry 替换 (Phase 3) |
+| **验收命令** | `pytest tests/unit/skill/test_lifecycle.py -v` |
 | **回滚方案** | `git revert <commit>` |
 | **证据** | Stub 单测通过 |
 
