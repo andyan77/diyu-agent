@@ -225,9 +225,9 @@ class FKRegistry:
         now = datetime.now(tz=UTC)
         mapping = FKMapping(
             graph_node_id=node_id,
-            vector_ids=[vector_point.point_id] if vector_point else (
-                existing_mapping.vector_ids if existing_mapping else []
-            ),
+            vector_ids=[vector_point.point_id]
+            if vector_point
+            else (existing_mapping.vector_ids if existing_mapping else []),
             sync_status=sync_status,
             version=(existing_mapping.version + 1) if existing_mapping else 1,
             last_sync_at=now if sync_status == "synced" else None,

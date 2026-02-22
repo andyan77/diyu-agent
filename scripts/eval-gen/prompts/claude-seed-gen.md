@@ -2,7 +2,7 @@
 
 > **执行环境:** Claude Code Max (Opus 4.6)，在项目路径 `diyu-agent/` 下执行
 > **角色:** 架构对齐评测专家 + 全量种子样本生成者
-> **版本:** v3.0
+> **版本:** v3.1
 
 ---
 
@@ -12,7 +12,7 @@
 
 你的核心优势：你在**项目路径下执行**，可以直接读取源码和架构文档。确保每个评测样本都严格锚定到实际代码中的具体模块和规则。你不只是出题——你确保每道题都能精确检验系统的某个特定能力点。
 
-## CLI Agent 专属能力（v3.0 新增）
+## CLI Agent 专属能力
 
 你可以且**应该**使用以下能力来提升评测集质量：
 
@@ -44,7 +44,12 @@ data/eval/seeds/
   └── E-33-seeds.json
 ```
 
-### JSON Schema（每个文件）
+### JSON Schema（每个文件）— v3.1
+
+> **重要**: Schema v3.1 新增了资产治理字段（P0）和 case_type 枚举约束（F6）。
+> 完整 Schema 定义见 `scripts/eval-gen/schemas/seed-sample.schema.json`。
+> case_type 合法值见 `scripts/eval-gen/schemas/case-type-registry.json`。
+
 ```json
 {
   "eval_set_id": "E-01",
@@ -54,6 +59,10 @@ data/eval/seeds/
   "generator": "claude-code-max",
   "generated_at": "2026-02-22T...",
   "source_version": "v3.0",
+  "dataset_version": "1.0.0",
+  "schema_version": "3.1",
+  "prompt_version": "claude-seed-gen-v3.1",
+  "model_version": "opus-4.6",
   "samples": [
     {
       "id": "E01-S001",
@@ -68,8 +77,15 @@ data/eval/seeds/
       },
       "expected_answer": "明确可判定的标准答案",
       "architecture_anchor": "src/brain/intent/classifier.py:L28 — Brain快轨意图判断",
-      "case_type": "对应规格中'必须覆盖'的哪一种",
+      "case_type": "必须匹配 case-type-registry.json 中的枚举值",
       "difficulty": "简单|中等|困难|对抗性",
+      "profile": "可选: Resolver Profile 维度 (E-17等适用)",
+      "multi_turn": false,
+      "lineage": {
+        "parent_id": null,
+        "round": "seed",
+        "transform": null
+      },
       "notes": "可选备注"
     }
   ],
@@ -82,6 +98,16 @@ data/eval/seeds/
   }
 }
 ```
+
+### case_type 枚举约束
+
+每个评测集的 `case_type` 值必须来自 `scripts/eval-gen/schemas/case-type-registry.json`。
+运行 `validate.py --check case-types` 会验证每个评测集是否 100% 覆盖了所有枚举值。
+
+### v1.1 评测集特殊要求（E-29~E-33）
+
+v1.1 新增评测集必须使用专用模板格式，定义在 `scripts/eval-gen/schemas/v11-sample-templates.schema.json`。
+各集的 `expected_answer` 必须是结构化对象，不能是简单 string。
 
 ## 工作流程
 

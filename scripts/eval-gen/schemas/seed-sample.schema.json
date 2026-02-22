@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Eval Seed Sample File",
-  "description": "种子样本文件 Schema（Claude Code 产出）",
+  "description": "种子样本文件 Schema v3.1（Claude Code 产出）— F8+P0 资产治理 + profile 字段",
   "type": "object",
-  "required": ["eval_set_id", "eval_set_name", "layer", "phase", "generator", "generated_at", "source_version", "samples", "coverage_summary"],
+  "required": ["eval_set_id", "eval_set_name", "layer", "phase", "generator", "generated_at", "source_version", "dataset_version", "schema_version", "samples", "coverage_summary"],
   "properties": {
     "eval_set_id": {
       "type": "string",
@@ -36,6 +36,24 @@
     "source_version": {
       "type": "string",
       "const": "v3.0"
+    },
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "P0 资产治理: 数据集语义版本号 (SemVer)"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "P0 资产治理: Schema 版本号"
+    },
+    "prompt_version": {
+      "type": "string",
+      "description": "P0 资产治理: 生成 prompt 版本标识"
+    },
+    "model_version": {
+      "type": "string",
+      "description": "P0 资产治理: 生成模型版本标识"
     },
     "samples": {
       "type": "array",
@@ -80,11 +98,28 @@
           },
           "case_type": {
             "type": "string",
-            "description": "对应规格中'必须覆盖'的 case 类型"
+            "description": "必须匹配 case-type-registry.json 中的枚举值"
           },
           "difficulty": {
             "type": "string",
             "enum": ["简单", "中等", "困难", "对抗性"]
+          },
+          "profile": {
+            "type": "string",
+            "description": "F8: E-17 等需要的 Resolver Profile 维度"
+          },
+          "multi_turn": {
+            "type": "boolean",
+            "description": "F8: 是否为多轮对话样本"
+          },
+          "lineage": {
+            "type": "object",
+            "properties": {
+              "parent_id": { "type": ["string", "null"], "description": "来源样本 ID (如从 seed 派生)" },
+              "round": { "type": "string", "enum": ["seed", "adversarial", "diversity", "review", "final"] },
+              "transform": { "type": ["string", "null"], "description": "派生变换类型" }
+            },
+            "description": "P0 资产治理: 样本血统可追溯"
           },
           "notes": {
             "type": "string"

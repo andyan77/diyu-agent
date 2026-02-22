@@ -1,15 +1,33 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Eval Diversity Variant File",
-  "description": "多样性变体文件 Schema（Gemini Antigravity 产出）",
+  "description": "多样性变体文件 Schema v3.1（Gemini Antigravity 产出）— P0 资产治理字段",
   "type": "object",
-  "required": ["eval_set_id", "eval_set_name", "generator", "generated_at", "source_version", "variants", "coverage_summary"],
+  "required": ["eval_set_id", "eval_set_name", "generator", "generated_at", "source_version", "dataset_version", "schema_version", "variants", "coverage_summary"],
   "properties": {
     "eval_set_id": { "type": "string", "pattern": "^E-\\d{2}$" },
     "eval_set_name": { "type": "string" },
     "generator": { "type": "string", "const": "gemini-antigravity" },
     "generated_at": { "type": "string", "format": "date-time" },
     "source_version": { "type": "string", "const": "v3.0" },
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "P0 资产治理: 数据集语义版本号 (SemVer)"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "P0 资产治理: Schema 版本号"
+    },
+    "prompt_version": {
+      "type": "string",
+      "description": "P0 资产治理: 生成 prompt 版本标识"
+    },
+    "model_version": {
+      "type": "string",
+      "description": "P0 资产治理: 生成模型版本标识"
+    },
     "variants": {
       "type": "array",
       "items": {
@@ -37,7 +55,16 @@
                   "enum": ["通用", "服装", "美妆", "餐饮", "数码", "家居"]
                 },
                 "answer_preserved": { "type": "boolean" },
-                "semantic_shift_warning": { "type": ["string", "null"] }
+                "semantic_shift_warning": { "type": ["string", "null"] },
+                "lineage": {
+                  "type": "object",
+                  "properties": {
+                    "parent_id": { "type": ["string", "null"] },
+                    "round": { "type": "string" },
+                    "transform": { "type": ["string", "null"] }
+                  },
+                  "description": "P0 资产治理: 变体血统"
+                }
               }
             }
           },
@@ -52,7 +79,15 @@
                 "target_industry": { "type": "string" },
                 "user_message": { "type": "string" },
                 "answer_preserved": { "type": "boolean" },
-                "semantic_shift_warning": { "type": ["string", "null"] }
+                "semantic_shift_warning": { "type": ["string", "null"] },
+                "lineage": {
+                  "type": "object",
+                  "properties": {
+                    "parent_id": { "type": ["string", "null"] },
+                    "round": { "type": "string" },
+                    "transform": { "type": ["string", "null"] }
+                  }
+                }
               }
             }
           }

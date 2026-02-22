@@ -2,7 +2,7 @@
 
 > **执行环境:** Gemini Antigravity (3.1 Pro)，在项目路径 `diyu-agent/` 下执行
 > **角色:** 评测集质量工程师（多样性扩充 + 质量审核）
-> **版本:** v3.0
+> **版本:** v3.1
 
 ---
 
@@ -12,7 +12,7 @@
 1. 多样性扩充：基于种子样本生成大量表达变体
 2. 质量审核：审核其他 AI 生成的评测样本
 
-## CLI Agent 专属能力（v3.0 新增）
+## CLI Agent 专属能力
 
 你在**项目路径下执行**，可以：
 
@@ -103,7 +103,11 @@ data/eval/diversity/
   └── E-33-diversity.json
 ```
 
-### JSON Schema（每个文件）
+### JSON Schema（每个文件）— v3.1
+
+> **重要**: Schema v3.1 新增了资产治理字段（P0）和血统追溯（lineage）。
+> 完整 Schema 定义见 `scripts/eval-gen/schemas/diversity-variant.schema.json`。
+
 ```json
 {
   "eval_set_id": "E-01",
@@ -111,6 +115,10 @@ data/eval/diversity/
   "generator": "gemini-antigravity",
   "generated_at": "2026-02-22T...",
   "source_version": "v3.0",
+  "dataset_version": "1.0.0",
+  "schema_version": "3.1",
+  "prompt_version": "gemini-diversity-gen-v3.1",
+  "model_version": "gemini-3.1-pro",
   "variants": [
     {
       "seed_id": "E01-S001",
@@ -123,7 +131,12 @@ data/eval/diversity/
           "user_message": "变体消息",
           "industry": "通用|服装|美妆|餐饮|数码|家居",
           "answer_preserved": true,
-          "semantic_shift_warning": null
+          "semantic_shift_warning": null,
+          "lineage": {
+            "parent_id": "E01-S001",
+            "round": "diversity",
+            "transform": "口语极简"
+          }
         }
       ],
       "cross_industry_variants": [
@@ -133,7 +146,12 @@ data/eval/diversity/
           "target_industry": "美妆",
           "user_message": "跨行业等价变体消息",
           "answer_preserved": true,
-          "semantic_shift_warning": null
+          "semantic_shift_warning": null,
+          "lineage": {
+            "parent_id": "E01-S001",
+            "round": "diversity",
+            "transform": "cross_industry:服装→美妆"
+          }
         }
       ]
     }
@@ -189,13 +207,19 @@ data/eval/review/
   └── review-summary.json
 ```
 
-### JSON Schema（每个审核文件）
+### JSON Schema（每个审核文件）— v3.1
+
+> 完整 Schema 定义见 `scripts/eval-gen/schemas/review-report.schema.json`。
+
 ```json
 {
   "eval_set_id": "E-01",
   "source_file": "data/eval/seeds/E-01-seeds.json",
   "reviewer": "gemini-antigravity",
   "reviewed_at": "2026-02-22T...",
+  "dataset_version": "1.0.0",
+  "schema_version": "3.1",
+  "judge_version": "gemini-3.1-pro-review-v3.1",
   "reviews": [
     {
       "sample_id": "E01-S001",
@@ -228,6 +252,8 @@ data/eval/review/
   "total_files_reviewed": 66,
   "total_samples_reviewed": 2555,
   "overall_pass_rate": 0.85,
+  "dataset_version": "1.0.0",
+  "schema_version": "3.1",
   "disputed_samples": [],
   "error_samples": [],
   "duplicate_pairs": [],
@@ -249,5 +275,5 @@ python3 scripts/eval-gen/validate.py --round review
 1. **语义偏移检测**：变体生成时，如果语义可能发生偏移（标准答案可能变化），在 semantic_shift_warning 中说明
 2. **跨行业变体质量**：行业词汇替换后必须在目标行业中仍然合理（参考背景文档 Section 7 各行业知识体系）
 3. **口语真实度是核心审核维度**——参考背景文档第 8 节语言模式
-4. **行业知识准确性是 v3.0 核心审核维度**——利用 CLI 能力读取源码验证
+4. **行业知识准确性是核心审核维度**——利用 CLI 能力读取源码验证
 5. **分批执行**：按额度管理策略分 3 周执行，每周一批

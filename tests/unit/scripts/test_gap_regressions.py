@@ -17,6 +17,7 @@ def _repo_path(rel: str) -> Path:
     """Resolve a repo-relative path regardless of pytest cwd."""
     return _REPO_ROOT / rel
 
+
 # ---------------------------------------------------------------------------
 # GAP-H3: Security reviewer read-only
 # ---------------------------------------------------------------------------

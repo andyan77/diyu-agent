@@ -13,9 +13,14 @@ from __future__ import annotations
 
 import os
 from collections.abc import Awaitable, Callable
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fastapi import FastAPI, Request
+from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.routing import Match
+
+if TYPE_CHECKING:
+    from contextlib import AbstractAsyncContextManager
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 
@@ -28,12 +33,14 @@ from src.shared.errors import (
     AuthorizationError,
     DiyuError,
     NotFoundError,
+    ServiceUnavailableError,
     ValidationError,
 )
 
 _EXEMPT_PATHS = frozenset(
     {
         "/healthz",
+        "/metrics",
         "/docs",
         "/openapi.json",
         "/redoc",
@@ -66,22 +73,24 @@ def create_app(
     jwt_secret: str | None = None,
     cors_origins: list[str] | None = None,
     post_auth_middlewares: list[PostAuthMiddleware] | None = None,
+    lifespan: Callable[[FastAPI], AbstractAsyncContextManager[None]] | None = None,
 ) -> FastAPI:
     """Create and configure the FastAPI application.
 
     Args:
-        jwt_secret: JWT signing secret. Falls back to JWT_SECRET env var.
+        jwt_secret: JWT signing secret. Falls back to JWT_SECRET_KEY env var.
         cors_origins: Allowed CORS origins. Falls back to CORS_ORIGINS env var.
         post_auth_middlewares: Middleware callables that run after JWT auth.
             Each has signature (request, call_next) -> Response.
             They can intercept (return 402/429) or add headers to responses.
+        lifespan: Async context manager factory for startup/shutdown lifecycle.
 
     Returns:
         Configured FastAPI application with partitioned routers.
     """
-    secret = jwt_secret or os.environ.get("JWT_SECRET", "")
+    secret = jwt_secret or os.environ.get("JWT_SECRET_KEY", "")
     if not secret:
-        msg = "JWT_SECRET must be provided via argument or environment variable"
+        msg = "JWT_SECRET_KEY must be provided via argument or environment variable"
         raise ValueError(msg)
 
     origins = cors_origins or [
@@ -95,6 +104,7 @@ def create_app(
         version="0.1.0",
         docs_url="/docs",
         openapi_url="/openapi.json",
+        lifespan=lifespan,
     )
     app.state.jwt_secret = secret
     app.state.jwt_middleware = JWTAuthMiddleware(
@@ -146,11 +156,33 @@ def create_app(
             content={"error": exc.code, "message": str(exc)},
         )
 
+    @app.exception_handler(ServiceUnavailableError)
+    async def _service_unavailable(_: Request, exc: ServiceUnavailableError) -> JSONResponse:
+        return JSONResponse(
+            status_code=503,
+            content={"error": exc.code, "message": str(exc)},
+        )
+
     @app.exception_handler(DiyuError)
     async def _diyu_error(_: Request, exc: DiyuError) -> JSONResponse:
         return JSONResponse(
             status_code=500,
             content={"error": exc.code, "message": str(exc)},
+        )
+
+    # -- Override Starlette default HTTP errors for uniform {error, message} schema (F-10) --
+    @app.exception_handler(StarletteHTTPException)
+    async def _http_exception(_: Request, exc: StarletteHTTPException) -> JSONResponse:
+        code_map = {
+            404: "NOT_FOUND",
+            405: "METHOD_NOT_ALLOWED",
+        }
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "error": code_map.get(exc.status_code, "HTTP_ERROR"),
+                "message": exc.detail or f"HTTP {exc.status_code}",
+            },
         )
 
     # -- Auth middleware (ASGI) --
@@ -174,8 +206,24 @@ def create_app(
             response = await call_next(request)
             return _add_security_headers(response)
 
+        # F-1: Check if path matches a registered route before requiring auth.
+        # Unknown paths should return 404, not 401 (information leak).
+        route_matched = any(route.matches(request.scope)[0] != Match.NONE for route in app.routes)
+        if not route_matched:
+            response = await call_next(request)
+            return _add_security_headers(response)
+
         auth_header = request.headers.get("authorization", "")
-        if not auth_header.startswith("Bearer "):
+
+        # F-3: SSE/WebSocket query-token fallback for EventSource clients
+        # that cannot set Authorization headers.
+        token: str | None = None
+        if auth_header.startswith("Bearer "):
+            token = auth_header[7:]
+        elif request.query_params.get("token"):
+            token = request.query_params["token"]
+
+        if not token:
             return _add_security_headers(
                 JSONResponse(
                     status_code=401,
@@ -185,8 +233,6 @@ def create_app(
                     },
                 )
             )
-
-        token = auth_header[7:]
         try:
             payload = decode_token(token, secret=secret)
         except AuthenticationError as exc:
@@ -226,6 +272,16 @@ def create_app(
     @app.get("/healthz", tags=["system"])
     async def healthz() -> dict[str, str]:
         return {"status": "ok"}
+
+    # F-12: Prometheus metrics endpoint (exempt from auth)
+    @app.get("/metrics", tags=["system"], include_in_schema=False)
+    async def metrics() -> Response:
+        from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+
+        return Response(
+            content=generate_latest(),
+            media_type=CONTENT_TYPE_LATEST,
+        )
 
     # -- User API: /api/v1/* --
 

@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Eval Review Report File",
-  "description": "质量审核报告文件 Schema（交叉审核产出）",
+  "description": "质量审核报告文件 Schema v3.1（交叉审核产出）— P0 资产治理字段",
   "type": "object",
-  "required": ["eval_set_id", "source_file", "reviewer", "reviewed_at", "reviews", "summary"],
+  "required": ["eval_set_id", "source_file", "reviewer", "reviewed_at", "dataset_version", "schema_version", "reviews", "summary"],
   "properties": {
     "eval_set_id": { "type": "string", "pattern": "^E-\\d{2}$" },
     "source_file": { "type": "string" },
@@ -12,6 +12,18 @@
       "enum": ["gemini-antigravity", "claude-code-max", "gpt-codex"]
     },
     "reviewed_at": { "type": "string", "format": "date-time" },
+    "dataset_version": {
+      "type": "string",
+      "description": "P0 资产治理: 被审核的数据集版本"
+    },
+    "schema_version": {
+      "type": "string",
+      "description": "P0 资产治理: 审核报告 Schema 版本"
+    },
+    "judge_version": {
+      "type": "string",
+      "description": "P0 资产治理: 审核模型/Prompt 版本"
+    },
     "reviews": {
       "type": "array",
       "items": {

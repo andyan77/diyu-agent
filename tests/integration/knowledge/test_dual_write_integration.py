@@ -53,9 +53,7 @@ class InMemoryNeo4j:
     async def get_node(self, node_id: UUID) -> GraphNode | None:
         return self._nodes.get(str(node_id))
 
-    async def update_node(
-        self, node_id: UUID, properties: dict[str, Any]
-    ) -> GraphNode | None:
+    async def update_node(self, node_id: UUID, properties: dict[str, Any]) -> GraphNode | None:
         existing = self._nodes.get(str(node_id))
         if existing is None:
             return None
@@ -82,8 +80,7 @@ class InMemoryNeo4j:
         results = [
             n
             for n in self._nodes.values()
-            if n.org_id == org_id
-            and (entity_type is None or n.entity_type == entity_type)
+            if n.org_id == org_id and (entity_type is None or n.entity_type == entity_type)
         ]
         return results[:limit]
 

@@ -2,7 +2,7 @@
 
 > **执行环境:** GPT Codex (5.2+)，在项目路径 `diyu-agent/` 下执行
 > **角色:** 对抗性测试专家
-> **版本:** v3.0
+> **版本:** v3.1
 
 ---
 
@@ -16,7 +16,7 @@
 你的工作方式：对每个样本，先用思维链推理"这个输入为什么会导致误判"，
 然后再确定标准答案。标准答案必须基于项目背景知识文档中的规则。
 
-## CLI Agent 专属能力（v3.0 新增）
+## CLI Agent 专属能力
 
 你在**项目路径下执行**，可以：
 
@@ -49,7 +49,12 @@ data/eval/adversarial/
   └── E-33-adversarial.json
 ```
 
-### JSON Schema（每个文件）
+### JSON Schema（每个文件）— v3.1
+
+> **重要**: Schema v3.1 新增了资产治理字段（P0）和 case_type 枚举约束（F6）。
+> 完整 Schema 定义见 `scripts/eval-gen/schemas/adversarial-sample.schema.json`。
+> case_type 合法值见 `scripts/eval-gen/schemas/case-type-registry.json`。
+
 ```json
 {
   "eval_set_id": "E-01",
@@ -59,6 +64,10 @@ data/eval/adversarial/
   "generator": "gpt-codex",
   "generated_at": "2026-02-22T...",
   "source_version": "v3.0",
+  "dataset_version": "1.0.0",
+  "schema_version": "3.1",
+  "prompt_version": "gpt-adversarial-gen-v3.1",
+  "model_version": "gpt-5.2",
   "samples": [
     {
       "id": "E01-A001",
@@ -75,8 +84,14 @@ data/eval/adversarial/
       "trap_type": "用简短标签描述陷阱（如'感慨伪装成请求'）",
       "why_misleading": "用 1-2 句话解释 LLM 可能怎么判错",
       "misclassification_consequence": "误判会导致什么用户体验问题",
+      "case_type": "必须匹配 case-type-registry.json 中的枚举值",
       "difficulty": "困难|对抗性",
-      "reasoning_chain": "思维链：为什么这个输入会导致误判的推理过程"
+      "reasoning_chain": "思维链：为什么这个输入会导致误判的推理过程",
+      "lineage": {
+        "parent_id": null,
+        "round": "adversarial",
+        "transform": null
+      }
     }
   ],
   "coverage_summary": {
@@ -87,6 +102,14 @@ data/eval/adversarial/
   }
 }
 ```
+
+### case_type 枚举约束
+
+每个评测集的 `case_type` 值必须来自 `scripts/eval-gen/schemas/case-type-registry.json`。
+
+### v1.1 评测集特殊要求（E-29~E-33）
+
+v1.1 新增评测集必须使用专用模板格式，见 `scripts/eval-gen/schemas/v11-sample-templates.schema.json`。
 
 ## 工作流程
 

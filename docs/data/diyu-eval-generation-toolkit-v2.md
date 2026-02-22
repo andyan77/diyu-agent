@@ -1361,11 +1361,14 @@ diyu-agent/
 │   │   ├── gpt-adversarial-gen.md      # GPT Codex 对抗样本指令
 │   │   └── gemini-diversity-gen.md     # Gemini Antigravity 扩充+审核指令
 │   ├── schemas/
-│   │   ├── seed-sample.schema.json     # 种子样本 JSON Schema
-│   │   ├── adversarial-sample.schema.json
-│   │   ├── diversity-variant.schema.json
-│   │   └── review-report.schema.json
-│   └── validate.py                     # 统一校验脚本
+│   │   ├── seed-sample.schema.json     # 种子样本 JSON Schema v3.1
+│   │   ├── adversarial-sample.schema.json  # 对抗样本 Schema v3.1
+│   │   ├── diversity-variant.schema.json   # 多样性变体 Schema v3.1
+│   │   ├── review-report.schema.json       # 审核报告 Schema v3.1 (per-eval-set)
+│   │   ├── review-summary.schema.json      # 审核汇总 Schema v3.1 (review-summary.json 专用)
+│   │   ├── case-type-registry.json         # F6: case_type 枚举注册表
+│   │   └── v11-sample-templates.schema.json # F5: v1.1 专用模板 Schema
+│   └── validate.py                     # 统一校验脚本 v3.1 (10 项检查)
 ├── data/eval/
 │   ├── seeds/                          # 第一轮：Claude Code 产出
 │   │   ├── E-01-seeds.json
@@ -1459,16 +1462,48 @@ diyu-agent/
 | 可复现性 | 不可复现 | Git 跟踪全部产出 |
 | 行业知识验证 | 凭文档描述 | 读取 src/knowledge/ 源码验证 |
 
-## 质量验收标准
+## 质量验收标准（v3.1 — Production Audit F1~F9 修复后）
 
-| 维度 | 标准 | 校验方式 |
+> **validate.py v3.1**: 10 项检查全部可执行、可阻断。`--mode gate` 模式下任何 error 返回 exit 1。
+> 安装 `pip install jsonschema` 可启用严格 Schema 校验（F3 修复）。
+
+| # | 维度 | 标准 | 校验方式 | 门禁级别 |
+|---|------|------|---------|---------|
+| 1 | JSON Schema 合规 | 所有文件通过 Schema 严格校验 | `validate.py --check schema` | BLOCK |
+| 2 | 总样本量 | ≥ 2,555 条（各评测集达最低标准） | `validate.py --round final --check count` | BLOCK |
+| 3 | 行业覆盖 | 上层评测集 5 行业各 ≥ 15%（F2 硬化） | `validate.py --check industry` | BLOCK |
+| 4 | 架构锚点有效性 | 文件存在 + 行号有效（F4 强化） | `validate.py --check anchors` | WARN |
+| 5 | 难度分布 | 四区间均在目标范围内（F7 完善） | `validate.py --check difficulty` | BLOCK |
+| 6 | 去重 | exact + 标点归一化模糊匹配（F9 升级） | `validate.py --check dedup` | WARN |
+| 7 | case_type 覆盖 | 每个评测集枚举 100% 覆盖（F1+F6） | `validate.py --check case-types` | BLOCK |
+| 8 | 口语真实度 | franchise_store 样本 ≥ 80% realistic（F3 口径修正） | `validate.py --check naturalness` | BLOCK |
+| 9 | 交叉审核一致率 | 争议率 ≤ 15%（F1 新增） | `validate.py --check agreement` | BLOCK |
+| 10 | v1.1 格式合规 | E-29~E-33 模板字段 100% 完整（F1+F5） | `validate.py --check v11-format` | BLOCK |
+
+### 新增 Schema 文件说明
+
+| 文件 | 用途 | 对应修复 |
 |------|------|---------|
-| 总样本量 | ≥ 2,555 条 | `validate.py --round final --check count` |
-| 行业覆盖 | 每个上层评测集 5 行业各 ≥ 15% | `validate.py --check industry` |
-| case 类型覆盖 | 每个评测集"必须覆盖"类型 100% | `validate.py --check case-types` |
-| 难度分布 | 简单 20% / 中等 40% / 困难 25% / 对抗性 15% | `validate.py --check difficulty` |
-| 口语真实度 | 门店用户样本 ≥ 80% 标注 realistic | `validate.py --check naturalness` |
-| 交叉审核一致率 | 标准答案争议率 ≤ 15% | `validate.py --check agreement` |
-| v1.1 格式合规 | E-29~E-33 100% JSON 模板格式 | `validate.py --check v11-format` |
-| JSON Schema 合规 | 所有文件通过 Schema 校验 | `validate.py --check schema` |
-| 架构锚点有效性 | 所有锚点文件:行号真实存在 | `validate.py --check anchors` |
+| `case-type-registry.json` | 33 个评测集的 case_type 枚举值注册表 | F6 |
+| `v11-sample-templates.schema.json` | E-29~E-33 专用样本模板结构约束 | F5 |
+| `review-summary.schema.json` | review-summary.json 独立 Schema（与 review-report 结构不同） | Round2-F1 |
+
+### P0 资产治理字段（所有 Schema v3.1 新增）
+
+所有 Schema 新增以下顶层字段（`dataset_version` / `schema_version` 为 required）：
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `dataset_version` | SemVer string | 数据集语义版本号，每次生成后递增 |
+| `schema_version` | string | Schema 版本号（当前 3.1） |
+| `prompt_version` | string | 生成 prompt 的版本标识 |
+| `model_version` | string | 生成模型版本标识 |
+
+样本级新增：
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `lineage.parent_id` | string/null | 来源样本 ID（可追溯血统） |
+| `lineage.round` | string | 来源轮次 |
+| `lineage.transform` | string/null | 派生变换类型 |
+| `profile` | string | Resolver Profile 维度（F8，E-17 等适用） |
+| `multi_turn` | boolean | 是否为多轮对话样本（F8） |

@@ -15,9 +15,12 @@ from __future__ import annotations
 
 import logging
 import os
+from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from collections.abc import AsyncIterator
+
     from fastapi import FastAPI
 
 from src.brain.engine.conversation import ConversationEngine
@@ -210,12 +213,59 @@ def build_app() -> FastAPI:
         budget_resolver=budget_resolver,
     )
 
+    # -- Knowledge store connection mode (Decision 2-C) --
+    # "required" = startup fails if stores unavailable (production)
+    # "optional" = degrade to in-memory silently (dev/CI)
+    knowledge_store_mode = os.environ.get("KNOWLEDGE_STORE_MODE", "optional")
+
+    # -- Lifespan: connect knowledge stores + bootstrap skills on startup --
+    @asynccontextmanager
+    async def _lifespan(_app: FastAPI) -> AsyncIterator[None]:
+        # --- Startup ---
+        try:
+            await neo4j_adapter.connect()
+            await qdrant_adapter.connect()
+            logger.info("Knowledge stores connected (Neo4j + Qdrant)")
+        except Exception:
+            if knowledge_store_mode == "required":
+                logger.error(
+                    "Knowledge stores unavailable and KNOWLEDGE_STORE_MODE=required. "
+                    "Aborting startup."
+                )
+                raise
+            logger.warning(
+                "Knowledge stores unavailable — falling back to in-memory adapter. "
+                "Set NEO4J_URI / QDRANT_URL env vars or start docker-compose. "
+                "Set KNOWLEDGE_STORE_MODE=required to make this a fatal error.",
+                exc_info=True,
+            )
+            # Clear references so write_adapter degrades to in-memory
+            knowledge_writer._neo4j = None
+            knowledge_writer._qdrant = None
+            knowledge_writer._fk_registry = None
+
+        await _bootstrap_skill_registry(skill_registry)
+        logger.info("Startup bootstrap complete: %d skills", len(skill_registry.list_skills()))
+
+        yield
+
+        # --- Shutdown ---
+        try:
+            await neo4j_adapter.close()
+        except Exception:
+            logger.debug("Neo4j close failed", exc_info=True)
+        try:
+            await qdrant_adapter.close()
+        except Exception:
+            logger.debug("Qdrant close failed", exc_info=True)
+
     # -- Create FastAPI app with middleware chain --
     # Order: rate_limit (cheapest check first), RBAC (auth boundary), then budget
     application = create_app(
         jwt_secret=jwt_secret,
         cors_origins=cors_origins,
         post_auth_middlewares=[rate_limit_mw, rbac_mw, budget_mw],
+        lifespan=_lifespan,
     )
 
     # -- Store references on app.state for lifespan management --
@@ -257,51 +307,6 @@ def build_app() -> FastAPI:
     application.include_router(
         create_admin_auth_router(),
     )
-
-    # -- Knowledge store connection mode (Decision 2-C) --
-    # "required" = startup fails if stores unavailable (production)
-    # "optional" = degrade to in-memory silently (dev/CI)
-    knowledge_store_mode = os.environ.get("KNOWLEDGE_STORE_MODE", "optional")
-
-    # -- Lifespan: connect knowledge stores + bootstrap skills on startup --
-    @application.on_event("startup")
-    async def _startup_bootstrap() -> None:
-        # Connect Neo4j + Qdrant
-        try:
-            await neo4j_adapter.connect()
-            await qdrant_adapter.connect()
-            logger.info("Knowledge stores connected (Neo4j + Qdrant)")
-        except Exception:
-            if knowledge_store_mode == "required":
-                logger.error(
-                    "Knowledge stores unavailable and KNOWLEDGE_STORE_MODE=required. "
-                    "Aborting startup."
-                )
-                raise
-            logger.warning(
-                "Knowledge stores unavailable — falling back to in-memory adapter. "
-                "Set NEO4J_URI / QDRANT_URL env vars or start docker-compose. "
-                "Set KNOWLEDGE_STORE_MODE=required to make this a fatal error.",
-                exc_info=True,
-            )
-            # Clear references so write_adapter degrades to in-memory
-            knowledge_writer._neo4j = None
-            knowledge_writer._qdrant = None
-            knowledge_writer._fk_registry = None
-
-        await _bootstrap_skill_registry(skill_registry)
-        logger.info("Startup bootstrap complete: %d skills", len(skill_registry.list_skills()))
-
-    @application.on_event("shutdown")
-    async def _shutdown_cleanup() -> None:
-        try:
-            await neo4j_adapter.close()
-        except Exception:
-            logger.debug("Neo4j close failed", exc_info=True)
-        try:
-            await qdrant_adapter.close()
-        except Exception:
-            logger.debug("Qdrant close failed", exc_info=True)
 
     logger.info(
         "DIYU Agent app assembled: %d routes mounted",

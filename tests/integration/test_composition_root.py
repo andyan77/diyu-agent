@@ -256,8 +256,11 @@ class TestCompositionRoot:
         self, client: AsyncClient, auth_headers: dict[str, str], app
     ) -> None:
         """After startup bootstrap, skill list endpoint returns registered skills."""
-        # Trigger startup event to bootstrap skills
-        await app.router.startup()
+        # Bootstrap skills directly (lifespan handles this in production,
+        # but also tries Neo4j/Qdrant connect which isn't available in tests)
+        from src.main import _bootstrap_skill_registry
+
+        await _bootstrap_skill_registry(app.state.skill_registry)
 
         resp = await client.get("/api/v1/skills/", headers=auth_headers)
         assert resp.status_code == 200

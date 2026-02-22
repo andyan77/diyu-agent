@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Eval Adversarial Sample File",
-  "description": "对抗性样本文件 Schema（GPT Codex 产出）",
+  "description": "对抗性样本文件 Schema v3.1（GPT Codex 产出）— P0 资产治理字段",
   "type": "object",
-  "required": ["eval_set_id", "eval_set_name", "layer", "phase", "generator", "generated_at", "source_version", "samples", "coverage_summary"],
+  "required": ["eval_set_id", "eval_set_name", "layer", "phase", "generator", "generated_at", "source_version", "dataset_version", "schema_version", "samples", "coverage_summary"],
   "properties": {
     "eval_set_id": {
       "type": "string",
@@ -18,12 +18,30 @@
     "generator": { "type": "string", "const": "gpt-codex" },
     "generated_at": { "type": "string", "format": "date-time" },
     "source_version": { "type": "string", "const": "v3.0" },
+    "dataset_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "P0 资产治理: 数据集语义版本号 (SemVer)"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "P0 资产治理: Schema 版本号"
+    },
+    "prompt_version": {
+      "type": "string",
+      "description": "P0 资产治理: 生成 prompt 版本标识"
+    },
+    "model_version": {
+      "type": "string",
+      "description": "P0 资产治理: 生成模型版本标识"
+    },
     "samples": {
       "type": "array",
       "minItems": 10,
       "items": {
         "type": "object",
-        "required": ["id", "industry", "user_message", "org_tier", "expected_answer", "trap_type", "why_misleading", "misclassification_consequence", "difficulty"],
+        "required": ["id", "industry", "user_message", "org_tier", "expected_answer", "trap_type", "why_misleading", "misclassification_consequence", "case_type", "difficulty"],
         "properties": {
           "id": {
             "type": "string",
@@ -51,11 +69,24 @@
           "trap_type": { "type": "string" },
           "why_misleading": { "type": "string" },
           "misclassification_consequence": { "type": "string" },
+          "case_type": {
+            "type": "string",
+            "description": "必须匹配 case-type-registry.json 中的枚举值"
+          },
           "difficulty": {
             "type": "string",
             "enum": ["困难", "对抗性"]
           },
-          "reasoning_chain": { "type": "string" }
+          "reasoning_chain": { "type": "string" },
+          "lineage": {
+            "type": "object",
+            "properties": {
+              "parent_id": { "type": ["string", "null"] },
+              "round": { "type": "string" },
+              "transform": { "type": ["string", "null"] }
+            },
+            "description": "P0 资产治理: 样本血统可追溯"
+          }
         }
       }
     },

@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 from src.infra.models import OrgMember, User
-from src.shared.errors import AuthenticationError, ConflictError
+from src.shared.errors import AuthenticationError, ConflictError, ServiceUnavailableError
 
 logger = logging.getLogger(__name__)
 
@@ -111,35 +111,42 @@ def create_auth_router() -> APIRouter:
         sf: async_sessionmaker[AsyncSession] = request.app.state.session_factory
         secret: str = request.app.state.jwt_secret
 
-        async with sf() as session:
-            stmt = select(User).where(User.email == body.email)
-            result = await session.execute(stmt)
-            user = result.scalar_one_or_none()
+        try:
+            async with sf() as session:
+                stmt = select(User).where(User.email == body.email)
+                result = await session.execute(stmt)
+                user = result.scalar_one_or_none()
 
-            if user is None or user.password_hash is None:
-                raise AuthenticationError("Invalid email or password")
+                if user is None or user.password_hash is None:
+                    raise AuthenticationError("Invalid email or password")
 
-            if not _verify_password(body.password, user.password_hash):
-                raise AuthenticationError("Invalid email or password")
+                if not _verify_password(body.password, user.password_hash):
+                    raise AuthenticationError("Invalid email or password")
 
-            if not user.is_active:
-                raise AuthenticationError("Account is disabled")
+                if not user.is_active:
+                    raise AuthenticationError("Account is disabled")
 
-            # Resolve org membership
-            org_id = await _get_first_org_id(session, user.id)
-            if org_id is None:
-                # Allow login without org for dev; use user_id as fallback
-                org_id = user.id
+                # Resolve org membership
+                org_id = await _get_first_org_id(session, user.id)
+                if org_id is None:
+                    # Allow login without org for dev; use user_id as fallback
+                    org_id = user.id
 
-            # Resolve org role for RBAC
-            role = await _get_first_org_role(session, user.id, org_id)
+                # Resolve org role for RBAC
+                role = await _get_first_org_role(session, user.id, org_id)
 
-            token = encode_token(
-                user_id=user.id,
-                org_id=org_id,
-                secret=secret,
-                role=role,
-            )
+                token = encode_token(
+                    user_id=user.id,
+                    org_id=org_id,
+                    secret=secret,
+                    role=role,
+                )
+        except (AuthenticationError, ServiceUnavailableError):
+            raise
+        except Exception as exc:
+            logger.error("Login DB error: %s", exc)
+            msg = "Database is temporarily unavailable"
+            raise ServiceUnavailableError("database", msg) from exc
 
         logger.info("User login: email=%s user_id=%s", body.email, user.id)
         return LoginResponse(token=token)
@@ -150,26 +157,33 @@ def create_auth_router() -> APIRouter:
         sf: async_sessionmaker[AsyncSession] = request.app.state.session_factory
         secret: str = request.app.state.jwt_secret
 
-        async with sf() as session:
-            # Check duplicate
-            dup = await session.execute(select(User.id).where(User.email == body.email))
-            if dup.scalar_one_or_none() is not None:
-                raise ConflictError(f"Email already registered: {body.email}")
+        try:
+            async with sf() as session:
+                # Check duplicate
+                dup = await session.execute(select(User.id).where(User.email == body.email))
+                if dup.scalar_one_or_none() is not None:
+                    raise ConflictError(f"Email already registered: {body.email}")
 
-            user = User(
-                email=body.email,
-                password_hash=_hash_password(body.password),
-                display_name=body.display_name,
-            )
-            session.add(user)
-            await session.commit()
-            await session.refresh(user)
+                user = User(
+                    email=body.email,
+                    password_hash=_hash_password(body.password),
+                    display_name=body.display_name,
+                )
+                session.add(user)
+                await session.commit()
+                await session.refresh(user)
 
-            token = encode_token(
-                user_id=user.id,
-                org_id=user.id,  # No org yet; use user_id as placeholder
-                secret=secret,
-            )
+                token = encode_token(
+                    user_id=user.id,
+                    org_id=user.id,  # No org yet; use user_id as placeholder
+                    secret=secret,
+                )
+        except (ConflictError, ServiceUnavailableError):
+            raise
+        except Exception as exc:
+            logger.error("Register DB error: %s", exc)
+            msg = "Database is temporarily unavailable"
+            raise ServiceUnavailableError("database", msg) from exc
 
         logger.info("User registered: email=%s user_id=%s", body.email, user.id)
         return RegisterResponse(token=token, user_id=str(user.id))

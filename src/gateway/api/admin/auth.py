@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from src.infra.models import OrgMember, User
-from src.shared.errors import AuthenticationError
+from src.shared.errors import AuthenticationError, ServiceUnavailableError
 
 logger = logging.getLogger(__name__)
 
@@ -82,32 +82,39 @@ def create_admin_auth_router() -> APIRouter:
         sf: async_sessionmaker[AsyncSession] = request.app.state.session_factory
         secret: str = request.app.state.jwt_secret
 
-        async with sf() as session:
-            stmt = select(User).where(User.email == body.email)
-            result = await session.execute(stmt)
-            user = result.scalar_one_or_none()
+        try:
+            async with sf() as session:
+                stmt = select(User).where(User.email == body.email)
+                result = await session.execute(stmt)
+                user = result.scalar_one_or_none()
 
-            if user is None or user.password_hash is None:
-                raise AuthenticationError("Invalid email or password")
+                if user is None or user.password_hash is None:
+                    raise AuthenticationError("Invalid email or password")
 
-            if not _verify_password(body.password, user.password_hash):
-                raise AuthenticationError("Invalid email or password")
+                if not _verify_password(body.password, user.password_hash):
+                    raise AuthenticationError("Invalid email or password")
 
-            if not user.is_active:
-                raise AuthenticationError("Account is disabled")
+                if not user.is_active:
+                    raise AuthenticationError("Account is disabled")
 
-            org_id = await _get_first_org_id(session, user.id)
-            if org_id is None:
-                org_id = user.id
+                org_id = await _get_first_org_id(session, user.id)
+                if org_id is None:
+                    org_id = user.id
 
-            role = await _get_org_role(session, user.id, org_id)
+                role = await _get_org_role(session, user.id, org_id)
 
-            token = encode_token(
-                user_id=user.id,
-                org_id=org_id,
-                secret=secret,
-                role=role,
-            )
+                token = encode_token(
+                    user_id=user.id,
+                    org_id=org_id,
+                    secret=secret,
+                    role=role,
+                )
+        except (AuthenticationError, ServiceUnavailableError):
+            raise
+        except Exception as exc:
+            logger.error("Admin login DB error: %s", exc)
+            msg = "Database is temporarily unavailable"
+            raise ServiceUnavailableError("database", msg) from exc
 
         logger.info("Admin login: email=%s user_id=%s", body.email, user.id)
         return AdminLoginResponse(token=token)
