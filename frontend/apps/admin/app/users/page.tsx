@@ -6,8 +6,9 @@
  * Task card: FA2-1
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTable, type Column } from "@/components/DataTable";
+import { getAdminClient } from "@/lib/api";
 
 interface User {
   id: string;
@@ -17,15 +18,6 @@ interface User {
   status: "active" | "disabled";
   createdAt: string;
 }
-
-const MOCK_USERS: User[] = Array.from({ length: 25 }, (_, i) => ({
-  id: `user-${i + 1}`,
-  name: `User ${i + 1}`,
-  email: `user${i + 1}@example.com`,
-  role: i === 0 ? "admin" : "member",
-  status: i % 5 === 0 ? "disabled" : "active",
-  createdAt: new Date(Date.now() - i * 86400000).toISOString(),
-}));
 
 const columns: Column<User>[] = [
   { key: "name", header: "Name" },
@@ -49,7 +41,49 @@ const columns: Column<User>[] = [
 ];
 
 export default function UsersPage() {
-  const [users] = useState<User[]>(MOCK_USERS);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const client = getAdminClient();
+        const data = await client.get<User[]>("/admin/users");
+        setUsers(data);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load users");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void fetchUsers();
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{ padding: 24, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>
+          User Management
+        </h1>
+        <p>Loading users...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ padding: 24, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>
+          User Management
+        </h1>
+        <p style={{ color: "#ef4444" }}>Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: 24, maxWidth: 1200 }}>

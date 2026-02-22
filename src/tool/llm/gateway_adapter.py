@@ -12,11 +12,15 @@ from __future__ import annotations
 
 import logging
 import os
+from collections.abc import Callable, Coroutine
 from typing import Any
 
 import litellm
 
 from src.ports.llm_call_port import ContentBlock, LLMCallPort, LLMResponse
+
+# Type alias for the async completion callable (DI seam for testing)
+ACompletionFn = Callable[..., Coroutine[Any, Any, Any]]
 
 logger = logging.getLogger(__name__)
 
@@ -37,12 +41,14 @@ class LiteLLMGatewayAdapter(LLMCallPort):
         max_retries: int = 2,
         api_key: str | None = None,
         base_url: str | None = None,
+        acompletion_fn: ACompletionFn | None = None,
     ) -> None:
         self._default_model = default_model or os.environ.get("LLM_MODEL", "gpt-4o")
         self._timeout_s = timeout_s
         self._max_retries = max_retries
         self._api_key = api_key
         self._base_url = base_url
+        self._acompletion = acompletion_fn or litellm.acompletion
 
         litellm.drop_params = True
 
@@ -74,7 +80,7 @@ class LiteLLMGatewayAdapter(LLMCallPort):
                 model = f"openai/{model}"
 
         try:
-            response = await litellm.acompletion(
+            response = await self._acompletion(
                 model=model,
                 messages=messages,
                 timeout=self._timeout_s,

@@ -10,6 +10,14 @@ from pathlib import Path
 import pytest
 import yaml
 
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+
+
+def _repo_path(rel: str) -> Path:
+    """Resolve a repo-relative path regardless of pytest cwd."""
+    return _REPO_ROOT / rel
+
+
 # ---------------------------------------------------------------------------
 # GAP-H3: Security reviewer read-only
 # ---------------------------------------------------------------------------
@@ -17,7 +25,7 @@ import yaml
 
 class TestGapH3SecurityReviewerReadOnly:
     def test_no_write_edit_tools(self) -> None:
-        path = Path(".claude/agents/diyu-security-reviewer.md")
+        path = _repo_path(".claude/agents/diyu-security-reviewer.md")
         if not path.exists():
             pytest.skip("agent file not found")
         text = path.read_text()
@@ -35,7 +43,7 @@ class TestGapH3SecurityReviewerReadOnly:
 
 class TestGapM1SessionTracking:
     def test_pre_edit_audit_no_unknown_fallback(self) -> None:
-        path = Path("scripts/hooks/pre_edit_audit.sh")
+        path = _repo_path("scripts/hooks/pre_edit_audit.sh")
         if not path.exists():
             pytest.skip("hook not found")
         text = path.read_text()
@@ -45,7 +53,7 @@ class TestGapM1SessionTracking:
         )
 
     def test_post_tool_failure_log_no_unknown_session(self) -> None:
-        path = Path("scripts/hooks/post_tool_failure_log.sh")
+        path = _repo_path("scripts/hooks/post_tool_failure_log.sh")
         if not path.exists():
             pytest.skip("hook not found")
         text = path.read_text()
@@ -54,7 +62,7 @@ class TestGapM1SessionTracking:
         )
 
     def test_pre_commit_gate_writes_audit_log(self) -> None:
-        path = Path("scripts/hooks/pre_commit_gate.sh")
+        path = _repo_path("scripts/hooks/pre_commit_gate.sh")
         if not path.exists():
             pytest.skip("hook not found")
         text = path.read_text()
@@ -76,7 +84,7 @@ class TestGapM2RoleIsolation:
             "W3": "run_w3_acceptance_normalizer.sh",
             "W4": "run_w4_evidence_gate.sh",
         }
-        path = Path(f".claude/skills/taskcard-governance/scripts/{script_map[step]}")
+        path = _repo_path(f".claude/skills/taskcard-governance/scripts/{script_map[step]}")
         if not path.exists():
             pytest.skip(f"{path} not found")
         text = path.read_text()
@@ -86,7 +94,7 @@ class TestGapM2RoleIsolation:
         )
 
     def test_run_all_passes_workflow_role(self) -> None:
-        path = Path(".claude/skills/taskcard-governance/scripts/run_all.sh")
+        path = _repo_path(".claude/skills/taskcard-governance/scripts/run_all.sh")
         if not path.exists():
             pytest.skip("run_all.sh not found")
         text = path.read_text()
@@ -100,7 +108,7 @@ class TestGapM2RoleIsolation:
 
 class TestGapM5W4FailureHandling:
     def test_w4_has_trap(self) -> None:
-        path = Path(".claude/skills/taskcard-governance/scripts/run_w4_evidence_gate.sh")
+        path = _repo_path(".claude/skills/taskcard-governance/scripts/run_w4_evidence_gate.sh")
         if not path.exists():
             pytest.skip("W4 script not found")
         text = path.read_text()
@@ -116,7 +124,7 @@ class TestGapM5W4FailureHandling:
 
 class TestGapM6EvidenceArchival:
     def test_verify_phase_has_archive_flag(self) -> None:
-        path = Path("scripts/verify_phase.py")
+        path = _repo_path("scripts/verify_phase.py")
         if not path.exists():
             pytest.skip("verify_phase.py not found")
         text = path.read_text()
@@ -131,7 +139,7 @@ class TestGapM6EvidenceArchival:
 
 class TestGapM8PRTemplate:
     def test_pr_template_has_risk_fields(self) -> None:
-        path = Path(".github/PULL_REQUEST_TEMPLATE.md")
+        path = _repo_path(".github/PULL_REQUEST_TEMPLATE.md")
         if not path.exists():
             pytest.skip("PR template not found")
         text = path.read_text()
@@ -147,7 +155,7 @@ class TestGapM8PRTemplate:
 
 class TestGapM10Permissions:
     def test_settings_has_permissions(self) -> None:
-        path = Path(".claude/settings.json")
+        path = _repo_path(".claude/settings.json")
         if not path.exists():
             pytest.skip("settings.json not found")
         data = json.loads(path.read_text())
@@ -163,11 +171,11 @@ class TestGapM10Permissions:
 
 class TestGapM11HookNaming:
     def test_new_hook_exists(self) -> None:
-        path = Path("scripts/hooks/post_edit_schema_check.sh")
+        path = _repo_path("scripts/hooks/post_edit_schema_check.sh")
         assert path.exists(), "post_edit_schema_check.sh must exist"
 
     def test_settings_references_new_hook(self) -> None:
-        path = Path(".claude/settings.json")
+        path = _repo_path(".claude/settings.json")
         if not path.exists():
             pytest.skip("settings.json not found")
         text = path.read_text()
@@ -183,7 +191,7 @@ class TestGapM11HookNaming:
 
 class TestGapH2NoGrepFallback:
     def test_w2_no_grep_fallback_default(self) -> None:
-        path = Path(".claude/skills/taskcard-governance/scripts/run_w2_traceability_link.sh")
+        path = _repo_path(".claude/skills/taskcard-governance/scripts/run_w2_traceability_link.sh")
         if not path.exists():
             pytest.skip("W2 script not found")
         text = path.read_text()

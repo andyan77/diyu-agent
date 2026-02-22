@@ -150,6 +150,97 @@ class FKRegistry:
             fk_mapping=mapping,
         )
 
+    async def update_with_fk(
+        self,
+        node_id: UUID,
+        properties: dict[str, Any],
+        *,
+        semantic_content: str | None = None,
+        embedding: list[float] | None = None,
+    ) -> DoubleWriteResult:
+        """Update Neo4j node and re-sync Qdrant vector with FK consistency.
+
+        Graph-first protocol:
+        1. Update Neo4j node properties
+        2. If embedding provided, upsert Qdrant (re-use existing FK mapping point_id)
+        3. On Qdrant failure: mark pending_vector_sync
+
+        Args:
+            node_id: Node to update.
+            properties: Properties to set/merge.
+            semantic_content: Updated text for vector payload.
+            embedding: Updated embedding vector.
+
+        Returns:
+            DoubleWriteResult with updated graph node and vector point.
+        """
+        # Step 1: Update Neo4j (graph-first)
+        updated_node = await self._neo4j.update_node(node_id, properties)
+        if updated_node is None:
+            msg = f"Node {node_id} not found in Neo4j during update_with_fk"
+            raise ValueError(msg)
+
+        # Step 2: Update Qdrant (if embedding provided)
+        vector_point = None
+        sync_status = "synced"
+
+        if embedding is not None:
+            # Re-use existing point_id if we have a mapping, otherwise create new
+            existing_mapping = self._mappings.get(str(node_id))
+            point_id = (
+                existing_mapping.vector_ids[0]
+                if existing_mapping and existing_mapping.vector_ids
+                else uuid4()
+            )
+
+            payload: dict[str, Any] = {
+                "entity_type": updated_node.entity_type,
+                "text": semantic_content or "",
+            }
+            if updated_node.org_id is not None:
+                payload["org_id"] = str(updated_node.org_id)
+
+            retries = 0
+            while retries < _MAX_RETRIES:
+                try:
+                    vector_point = await self._qdrant.upsert_point(
+                        point_id=point_id,
+                        vector=embedding,
+                        payload=payload,
+                        graph_node_id=node_id,
+                    )
+                    break
+                except Exception:
+                    retries += 1
+                    if retries >= _MAX_RETRIES:
+                        logger.warning(
+                            "Qdrant update failed after %d retries for node %s",
+                            _MAX_RETRIES,
+                            node_id,
+                        )
+                        sync_status = "pending_vector_sync"
+                        await self._neo4j.mark_sync_status(node_id, "pending_vector_sync")
+
+        # Step 3: Update FK mapping
+        now = datetime.now(tz=UTC)
+        mapping = FKMapping(
+            graph_node_id=node_id,
+            vector_ids=[vector_point.point_id]
+            if vector_point
+            else (existing_mapping.vector_ids if existing_mapping else []),
+            sync_status=sync_status,
+            version=(existing_mapping.version + 1) if existing_mapping else 1,
+            last_sync_at=now if sync_status == "synced" else None,
+        )
+        self._mappings[str(node_id)] = mapping
+
+        return DoubleWriteResult(
+            graph_node=updated_node,
+            vector_point=vector_point,
+            sync_status=sync_status,
+            fk_mapping=mapping,
+        )
+
     async def delete_with_fk(self, node_id: UUID) -> bool:
         """Delete a node from both Neo4j and Qdrant.
 

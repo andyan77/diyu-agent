@@ -28,6 +28,7 @@ class TokenPayload:
 
     user_id: UUID
     org_id: UUID
+    role: str = "member"
 
 
 def encode_token(
@@ -35,13 +36,15 @@ def encode_token(
     user_id: UUID,
     org_id: UUID,
     secret: str,
+    role: str = "member",
     ttl_seconds: int = 3600,
 ) -> str:
-    """Create a signed JWT containing user_id and org_id."""
+    """Create a signed JWT containing user_id, org_id, and role."""
     now = int(time.time())
     payload = {
         "sub": str(user_id),
         "org": str(org_id),
+        "role": role,
         "iat": now,
         "exp": now + ttl_seconds,
     }
@@ -55,6 +58,7 @@ def decode_token(token: str, *, secret: str) -> TokenPayload:
         return TokenPayload(
             user_id=UUID(data["sub"]),
             org_id=UUID(data["org"]),
+            role=data.get("role", "member"),
         )
     except jwt.ExpiredSignatureError as exc:
         raise AuthenticationError("Token expired") from exc

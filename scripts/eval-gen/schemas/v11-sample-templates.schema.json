@@ -1,0 +1,252 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "v1.1 Eval Set Sample Templates",
+  "description": "E-29~E-33 v1.1 新增评测集专用样本模板结构约束",
+  "version": "3.0",
+  "definitions": {
+    "E-29_expected_answer": {
+      "type": "object",
+      "required": ["must_supported_claims", "required_evidence_ids", "forbidden_claims"],
+      "properties": {
+        "must_supported_claims": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "必须由证据支撑的结论列表"
+        },
+        "required_evidence_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "必须引用的证据 ID 列表"
+        },
+        "forbidden_claims": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "禁止出现的无证据断言"
+        }
+      },
+      "additionalProperties": false
+    },
+    "E-29_sample": {
+      "type": "object",
+      "required": ["id", "user_message", "knowledge_context", "personal_context", "expected_answer", "case_type", "difficulty"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^E29-" },
+        "user_message": { "type": "string", "minLength": 1 },
+        "industry": { "type": "string", "enum": ["服装", "美妆", "餐饮", "数码", "家居", "通用"] },
+        "knowledge_context": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "personal_context": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "expected_answer": { "$ref": "#/definitions/E-29_expected_answer" },
+        "case_type": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["简单", "中等", "困难", "对抗性"] },
+        "architecture_anchor": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "E-30_expected_answer": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["answer", "clarify", "refuse", "safe_rewrite", "handoff"],
+          "description": "预期应答策略"
+        },
+        "need_clarification": {
+          "type": "boolean",
+          "description": "是否需要澄清"
+        }
+      },
+      "additionalProperties": false
+    },
+    "E-30_sample": {
+      "type": "object",
+      "required": ["id", "user_message", "risk_level", "evidence_available", "expected_answer", "case_type", "difficulty"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^E30-" },
+        "user_message": { "type": "string", "minLength": 1 },
+        "industry": { "type": "string", "enum": ["服装", "美妆", "餐饮", "数码", "家居", "通用"] },
+        "risk_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "风险等级"
+        },
+        "evidence_available": {
+          "type": "boolean",
+          "description": "是否有可用证据"
+        },
+        "expected_answer": { "$ref": "#/definitions/E-30_expected_answer" },
+        "case_type": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["简单", "中等", "困难", "对抗性"] },
+        "architecture_anchor": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "E-31_expected_answer": {
+      "type": "object",
+      "required": ["tool_sequence"],
+      "properties": {
+        "tool_sequence": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "预期工具调用序列"
+        },
+        "args_constraints": {
+          "type": "object",
+          "description": "参数约束映射"
+        }
+      },
+      "additionalProperties": false
+    },
+    "E-31_sample": {
+      "type": "object",
+      "required": ["id", "user_message", "tools", "expected_answer", "case_type", "difficulty"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^E31-" },
+        "user_message": { "type": "string", "minLength": 1 },
+        "industry": { "type": "string", "enum": ["服装", "美妆", "餐饮", "数码", "家居", "通用"] },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "schema"],
+            "properties": {
+              "name": { "type": "string" },
+              "schema": { "type": "object" }
+            }
+          },
+          "minItems": 1,
+          "description": "可用工具清单"
+        },
+        "expected_answer": { "$ref": "#/definitions/E-31_expected_answer" },
+        "case_type": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["简单", "中等", "困难", "对抗性"] },
+        "architecture_anchor": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "E-32_sample": {
+      "type": "object",
+      "required": ["id", "task", "candidate_output", "human_gold", "judge_output", "case_type", "difficulty"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^E32-" },
+        "task": { "type": "string", "description": "评测任务类型" },
+        "candidate_output": { "type": "string", "description": "待评估的模型输出" },
+        "human_gold": {
+          "type": "object",
+          "required": ["overall", "dimensions"],
+          "properties": {
+            "overall": { "type": "number", "minimum": 1, "maximum": 5 },
+            "dimensions": {
+              "type": "object",
+              "properties": {
+                "relevance": { "type": "number" },
+                "accuracy": { "type": "number" },
+                "tone": { "type": "number" },
+                "conciseness": { "type": "number" }
+              }
+            }
+          }
+        },
+        "judge_output": {
+          "type": "object",
+          "required": ["overall", "dimensions"],
+          "properties": {
+            "overall": { "type": "number", "minimum": 1, "maximum": 5 },
+            "dimensions": {
+              "type": "object",
+              "properties": {
+                "relevance": { "type": "number" },
+                "accuracy": { "type": "number" },
+                "tone": { "type": "number" },
+                "conciseness": { "type": "number" }
+              }
+            }
+          }
+        },
+        "case_type": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["简单", "中等", "困难", "对抗性"] },
+        "notes": { "type": "string" }
+      }
+    },
+    "E-33_sample": {
+      "type": "object",
+      "required": ["id", "pre_memory_items", "operation", "followup_query", "expected_answer", "case_type", "difficulty"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^E33-" },
+        "pre_memory_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "text"],
+            "properties": {
+              "id": { "type": "string" },
+              "text": { "type": "string" },
+              "pii": { "type": "boolean" },
+              "ttl": { "type": "string", "format": "date" }
+            }
+          },
+          "minItems": 1
+        },
+        "operation": {
+          "type": "object",
+          "required": ["type", "target_ids"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["delete", "anonymize", "expire", "soft_delete"],
+              "description": "生命周期操作类型"
+            },
+            "target_ids": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1
+            }
+          }
+        },
+        "followup_query": { "type": "string", "minLength": 1 },
+        "expected_answer": {
+          "type": "object",
+          "required": ["should_retrieve_ids", "pii_exposed"],
+          "properties": {
+            "should_retrieve_ids": { "type": "array", "items": { "type": "string" } },
+            "pii_exposed": { "type": "boolean" }
+          }
+        },
+        "case_type": { "type": "string" },
+        "difficulty": { "type": "string", "enum": ["简单", "中等", "困难", "对抗性"] },
+        "notes": { "type": "string" }
+      }
+    }
+  },
+  "v11_eval_sets": ["E-29", "E-30", "E-31", "E-32", "E-33"],
+  "v11_required_fields": {
+    "E-29": ["knowledge_context", "personal_context"],
+    "E-30": ["risk_level", "evidence_available"],
+    "E-31": ["tools"],
+    "E-32": ["human_gold", "judge_output"],
+    "E-33": ["pre_memory_items", "operation", "followup_query"]
+  }
+}

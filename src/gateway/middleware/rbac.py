@@ -13,7 +13,16 @@ Role hierarchy:
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
+from fastapi.responses import JSONResponse, Response
+
 from src.shared.errors import AuthorizationError
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable, Callable
+
+    from fastapi import Request
 
 
 class Role:
@@ -40,10 +49,41 @@ _ROLE_PERMISSIONS: dict[str, frozenset[str]] = {
 
 
 class RBACMiddleware:
-    """Enforce role-based access control on admin paths."""
+    """Enforce role-based access control on admin paths.
+
+    Can be used as a standalone checker (check_access) or as a
+    PostAuthMiddleware callable for the gateway middleware chain.
+    """
 
     def __init__(self, *, admin_path_prefix: str = "/api/v1/admin/") -> None:
         self._admin_prefix = admin_path_prefix
+
+    async def __call__(
+        self,
+        request: Request,
+        call_next: Callable[[Request], Awaitable[Response]],
+    ) -> Response:
+        """PostAuthMiddleware entry point.
+
+        Reads role from request.state (set by JWT middleware),
+        checks RBAC, and either passes through or returns 403.
+        """
+        path = request.url.path
+        role = getattr(request.state, "role", "member")
+        permissions = self.get_role_permissions(role)
+
+        try:
+            self.check_access(path=path, role=role, permissions=permissions)
+        except AuthorizationError:
+            return JSONResponse(
+                status_code=403,
+                content={
+                    "error": "FORBIDDEN",
+                    "message": f"Admin access required (role={role})",
+                },
+            )
+
+        return await call_next(request)
 
     def check_access(
         self,

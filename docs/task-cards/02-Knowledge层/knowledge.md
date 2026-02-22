@@ -31,11 +31,11 @@
 | 字段 | 内容 |
 |------|------|
 | **目标** | 返回空 KnowledgeBundle 的 Stub 实现，使 Brain 在 Phase 0-2 降级运行 |
-| **范围 (In Scope)** | `src/knowledge/stub.py`, `tests/unit/knowledge/test_stub.py` |
-| **范围外 (Out of Scope)** | Brain 调度逻辑 / Memory Core 内部存储 / Skill 实现 / 真实数据存储 |
+| **范围 (In Scope)** | `src/knowledge/resolver/resolver.py`, `tests/unit/knowledge/test_resolver.py` |
+| **范围外 (Out of Scope)** | Brain 调度逻辑 / Memory Core 内部存储 / Skill 实现 |
 | **依赖** | TASK-K0-1 |
-| **兼容策略** | Stub 实现所有方法；Phase 3 被真实实现替换 |
-| **验收命令** | `pytest tests/unit/knowledge/test_stub.py -v` (Stub 覆盖率 100%) |
+| **兼容策略** | Phase 0 Stub 已被 DiyuResolver 替换 (Phase 3) |
+| **验收命令** | `pytest tests/unit/knowledge/test_resolver.py -v` |
 | **回滚方案** | `git revert <commit>` |
 | **证据** | pytest 通过日志 |
 

@@ -19,6 +19,8 @@ from uuid import UUID, uuid4
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, field_validator
 
+from src.shared.types import OrganizationContext
+
 if TYPE_CHECKING:
     from src.ports.conversation_port import ConversationPort
 
@@ -154,12 +156,22 @@ def create_conversation_router(*, engine: ConversationPort) -> APIRouter:
         # Load history from event store (PG-backed persistence)
         history = await engine.get_session_history(session_id)
 
+        # Build org_context from authenticated request state
+        org_context = OrganizationContext(
+            user_id=user_id,
+            org_id=org_id,
+            org_tier=getattr(request.state, "org_tier", "platform"),
+            org_path=str(org_id),
+            role=getattr(request.state, "role", "member"),
+        )
+
         try:
             turn = await engine.process_message(
                 session_id=session_id,
                 user_id=user_id,
                 org_id=org_id,
                 message=body.message,
+                org_context=org_context,
                 conversation_history=history,
                 model_id=body.model_id,
             )

@@ -1,0 +1,151 @@
+# Known Future Paths -- acceptance-path-missing allowlist
+# These test/script files are referenced in task card acceptance commands
+# but belong to features planned for Phase 4+.
+# Each path will be removed from this list once the file is created.
+#
+# Generated: 2026-02-22
+# Total: 104 paths across 15 task card files
+
+# -- scripts (Phase 4+) --
+scripts/check_ssot_drift.sh
+scripts/rotate_secrets.sh
+scripts/seed_vectors.py
+
+# -- src types (consolidated into src/shared/types/__init__.py) --
+src/shared/types/content_block.py
+src/shared/types/knowledge_bundle.py
+src/shared/types/memory_item.py
+src/tool/core/protocol.py
+
+# -- tests/audit --
+tests/audit/test_audit_coverage.py
+
+# -- tests/chaos --
+tests/chaos/failover_test.sh
+tests/chaos/test_deletion_fault.py
+tests/chaos/test_llm_fault.py
+
+# -- tests/contract --
+tests/contract/test_m0_contracts.py
+
+# -- tests/e2e/admin --
+tests/e2e/admin/audit/log-viewer.spec.ts
+tests/e2e/admin/auth/login.spec.ts
+tests/e2e/admin/auth/permissions.spec.ts
+tests/e2e/admin/compliance/exception-register.spec.ts
+tests/e2e/admin/compliance/report.spec.ts
+tests/e2e/admin/knowledge/editor.spec.ts
+tests/e2e/admin/knowledge/explanation-trace.spec.ts
+tests/e2e/admin/knowledge/org-settings.spec.ts
+tests/e2e/admin/knowledge/review-queue.spec.ts
+tests/e2e/admin/layout/navigation.spec.ts
+tests/e2e/admin/ops/backup.spec.ts
+tests/e2e/admin/ops/monitoring.spec.ts
+tests/e2e/admin/ops/quota.spec.ts
+tests/e2e/admin/orgs/management.spec.ts
+tests/e2e/admin/users/datatable.spec.ts
+
+# -- tests/e2e/cross --
+tests/e2e/cross/test_dogfooding_env.py
+tests/e2e/cross/test_trace_id_propagation.py
+
+# -- tests/e2e/web --
+tests/e2e/web/auth/login.spec.ts
+tests/e2e/web/auth/org-switch.spec.ts
+tests/e2e/web/billing/recharge.spec.ts
+tests/e2e/web/chat/file-upload.spec.ts
+tests/e2e/web/chat/history.spec.ts
+tests/e2e/web/chat/layout.spec.ts
+tests/e2e/web/chat/memory-panel.spec.ts
+tests/e2e/web/chat/message-actions.spec.ts
+tests/e2e/web/chat/streaming.spec.ts
+tests/e2e/web/knowledge/browse.spec.ts
+tests/e2e/web/knowledge/skill-artifact.spec.ts
+tests/e2e/web/settings/keyboard-shortcuts.spec.ts
+tests/e2e/web/settings/theme.spec.ts
+tests/e2e/web/voice/interaction.spec.ts
+
+# -- tests/integration --
+tests/integration/test_media_analysis.py
+tests/integration/tool/test_llm_gateway.py
+
+# -- tests/isolation --
+tests/isolation/perf/test_event_latency.py
+tests/isolation/test_media_rls.py
+tests/isolation/test_rls.py
+
+# -- tests/perf --
+tests/perf/knowledge/test_graph_perf.py
+tests/perf/knowledge/test_vector_perf.py
+tests/perf/test_assembler_latency.py
+
+# -- tests/unit/brain --
+tests/unit/brain/test_assembly_profile.py
+tests/unit/brain/test_budget.py
+tests/unit/brain/test_calibration.py
+tests/unit/brain/test_consolidation.py
+tests/unit/brain/test_feedback.py
+tests/unit/brain/test_governor.py
+tests/unit/brain/test_model_selector.py
+tests/unit/brain/test_persona.py
+tests/unit/brain/test_sanitizer.py
+tests/unit/brain/test_truncation.py
+
+# -- tests/unit/gateway --
+tests/unit/gateway/test_auth.py
+tests/unit/gateway/test_content_check.py
+tests/unit/gateway/test_copyright_detect.py
+tests/unit/gateway/test_deprecation.py
+tests/unit/gateway/test_logging.py
+tests/unit/gateway/test_media_delete.py
+tests/unit/gateway/test_media_security.py
+tests/unit/gateway/test_media_upload.py
+tests/unit/gateway/test_precheck.py
+tests/unit/gateway/test_rate_limit_multi.py
+tests/unit/gateway/test_versioning.py
+tests/unit/gateway/test_ws_media.py
+
+# -- tests/unit/governance --
+tests/unit/governance/test_exception_audit.py
+tests/unit/governance/test_exception_expiry.py
+
+# -- tests/unit/infra --
+tests/unit/infra/test_audit_write.py
+tests/unit/infra/test_billing.py
+tests/unit/infra/test_celery.py
+tests/unit/infra/test_compliance_deletion.py
+tests/unit/infra/test_neo4j.py
+tests/unit/infra/test_qdrant.py
+tests/unit/infra/test_schema_registry.py
+tests/unit/infra/test_storage.py
+
+# -- tests/unit/knowledge --
+tests/unit/knowledge/test_capability.py
+tests/unit/knowledge/test_entity_registry.py
+tests/unit/knowledge/test_fk.py
+tests/unit/knowledge/test_reconciliation.py
+tests/unit/knowledge/test_sanitizer.py
+tests/unit/knowledge/test_write.py
+
+# -- tests/unit/memory --
+tests/unit/memory/test_chunking.py
+tests/unit/memory/test_consolidation.py
+tests/unit/memory/test_crypto.py
+tests/unit/memory/test_deletion.py
+
+# -- tests/unit/shared --
+tests/unit/shared/test_error_handler.py
+
+# -- tests/unit/skill --
+tests/unit/skill/test_ab.py
+tests/unit/skill/test_circuit_breaker.py
+tests/unit/skill/test_multimodal_declare.py
+tests/unit/skill/test_timeout.py
+tests/unit/skill/test_validation.py
+
+# -- tests/unit/tool --
+tests/unit/tool/test_billing.py
+tests/unit/tool/test_document_extract.py
+tests/unit/tool/test_llm_port_compat.py
+tests/unit/tool/test_llm_stub.py
+tests/unit/tool/test_retry.py

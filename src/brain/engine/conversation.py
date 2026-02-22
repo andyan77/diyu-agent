@@ -16,15 +16,16 @@ from typing import TYPE_CHECKING, Any, Protocol
 from uuid import UUID, uuid4
 
 from src.brain.engine.context_assembler import AssembledContext, ContextAssembler
+from src.shared.types import OrganizationContext
 
 if TYPE_CHECKING:
     from src.brain.intent.classifier import IntentClassifier
     from src.brain.memory.pipeline import MemoryWritePipeline
+    from src.brain.skill.orchestrator import SkillOrchestrator
     from src.memory.receipt import ReceiptStoreProtocol
     from src.ports.knowledge_port import KnowledgePort
     from src.ports.llm_call_port import ContentBlock, LLMResponse
     from src.ports.memory_core_port import MemoryCorePort
-    from src.shared.types import OrganizationContext
 
 
 class LLMCallProtocol(Protocol):
@@ -92,6 +93,16 @@ class EventStoreProtocol(Protocol):
 logger = logging.getLogger(__name__)
 
 
+def _default_org_context(org_id: UUID, user_id: UUID) -> OrganizationContext:
+    """Build a minimal OrganizationContext when the caller doesn't supply one."""
+    return OrganizationContext(
+        user_id=user_id,
+        org_id=org_id,
+        org_tier="platform",
+        org_path=str(org_id),
+    )
+
+
 @dataclass(frozen=True)
 class ConversationTurn:
     """A single conversation turn (request + response)."""
@@ -134,6 +145,7 @@ class ConversationEngine:
         usage_tracker: UsageRecorder | None = None,
         event_store: EventStoreProtocol | None = None,
         receipt_store: ReceiptStoreProtocol | None = None,
+        skill_orchestrator: SkillOrchestrator | None = None,
         default_model: str = "gpt-4o",
     ) -> None:
         self._llm = llm
@@ -143,6 +155,7 @@ class ConversationEngine:
         self._memory_pipeline = memory_pipeline
         self._usage_tracker = usage_tracker
         self._event_store = event_store
+        self._skill_orchestrator = skill_orchestrator
         self._default_model = default_model
         self._context_assembler = ContextAssembler(
             memory_core=memory_core,
@@ -167,12 +180,42 @@ class ConversationEngine:
         """
         turn_id = uuid4()
 
-        # Step 1: Intent classification
+        # Step 1: Intent classification (use detailed result for skill hint)
         intent_type = "chat"
+        matched_skill_hint: str | None = None
         if self._intent_classifier:
-            intent_type = await self._intent_classifier.classify(message)
+            intent_result = await self._intent_classifier.classify_detailed(message)
+            intent_type = intent_result.intent_type
+            matched_skill_hint = intent_result.matched_skill
 
-        # Step 2: Context assembly
+        # Step 2: Skill orchestration (if intent != chat and orchestrator available)
+        skill_response_text: str | None = None
+        resolved_model = model_id or self._default_model
+
+        if intent_type != "chat" and self._skill_orchestrator:
+            try:
+                orch_result = await self._skill_orchestrator.orchestrate(
+                    intent_type=intent_type,
+                    org_context=org_context or _default_org_context(org_id, user_id),
+                    user_message=message,
+                    matched_skill_hint=matched_skill_hint,
+                )
+                if orch_result.executed and orch_result.skill_result:
+                    if orch_result.skill_result.success:
+                        skill_response_text = str(orch_result.skill_result.output or "")
+                    else:
+                        logger.warning(
+                            "Skill '%s' failed: %s, falling back to LLM",
+                            orch_result.skill_id,
+                            orch_result.skill_result.error,
+                        )
+            except Exception:
+                logger.warning(
+                    "Skill orchestration failed, falling back to LLM",
+                    exc_info=True,
+                )
+
+        # Step 3: Context assembly
         context = await self._context_assembler.assemble(
             user_id=user_id,
             query=message,
@@ -180,31 +223,39 @@ class ConversationEngine:
             conversation_history=conversation_history,
         )
 
-        # Step 3: Build messages for LLM
-        messages = self._build_llm_messages(
-            message=message,
-            context=context,
-            conversation_history=conversation_history,
-        )
+        if skill_response_text is not None:
+            # Skill produced a response -- skip LLM call
+            response_text = skill_response_text
+            tokens_used: dict[str, int] = {}
+            response_model_id = f"skill:{intent_type}"
+        else:
+            # Step 4: Build messages for LLM
+            messages = self._build_llm_messages(
+                message=message,
+                context=context,
+                conversation_history=conversation_history,
+            )
 
-        # Step 4: Call LLM
-        resolved_model = model_id or self._default_model
-        llm_response = await self._llm.call(
-            prompt=messages,
-            model_id=resolved_model,
-        )
+            # Step 5: Call LLM
+            llm_response = await self._llm.call(
+                prompt=messages,
+                model_id=resolved_model,
+            )
+            response_text = llm_response.text
+            tokens_used = llm_response.tokens_used
+            response_model_id = llm_response.model_id
 
-        # Step 5: Record usage (zero metering loss)
-        if self._usage_tracker:
+        # Step 6: Record usage (zero metering loss)
+        if self._usage_tracker and tokens_used:
             self._usage_tracker.record_usage(
                 org_id=org_id,
                 user_id=user_id,
-                model_id=llm_response.model_id or resolved_model,
-                input_tokens=llm_response.tokens_used.get("input", 0),
-                output_tokens=llm_response.tokens_used.get("output", 0),
+                model_id=response_model_id or resolved_model,
+                input_tokens=tokens_used.get("input", 0),
+                output_tokens=tokens_used.get("output", 0),
             )
 
-        # Step 6: Persist conversation events (non-blocking)
+        # Step 7: Persist conversation events (non-blocking)
         if self._event_store:
             try:
                 await self._event_store.append_event(
@@ -221,7 +272,7 @@ class ConversationEngine:
                     user_id=user_id,
                     event_type="assistant_message",
                     role="assistant",
-                    content={"text": llm_response.text},
+                    content={"text": response_text},
                 )
             except Exception:
                 logger.warning(
@@ -229,7 +280,7 @@ class ConversationEngine:
                     exc_info=True,
                 )
 
-        # Step 7: Memory write pipeline (async, non-blocking)
+        # Step 8: Memory write pipeline (async, non-blocking)
         if self._memory_pipeline:
             try:
                 await self._memory_pipeline.process_turn(
@@ -237,7 +288,7 @@ class ConversationEngine:
                     user_id=user_id,
                     org_id=org_id,
                     user_message=message,
-                    assistant_response=llm_response.text,
+                    assistant_response=response_text,
                 )
             except Exception:
                 logger.warning(
@@ -249,10 +300,10 @@ class ConversationEngine:
             turn_id=turn_id,
             session_id=session_id,
             user_message=message,
-            assistant_response=llm_response.text,
+            assistant_response=response_text,
             context=context,
-            tokens_used=llm_response.tokens_used,
-            model_id=llm_response.model_id,
+            tokens_used=tokens_used,
+            model_id=response_model_id,
             intent_type=intent_type,
         )
 

@@ -19,7 +19,6 @@ from uuid import uuid4
 
 import sqlalchemy as sa
 
-from src.infra.models import MemoryItemModel
 from src.ports.memory_core_port import MemoryCorePort
 from src.shared.types import MemoryItem, Observation, PromotionReceipt, WriteReceipt
 
@@ -28,6 +27,7 @@ if TYPE_CHECKING:
 
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
+    from src.infra.models import MemoryItemModel
     from src.memory.vector_search import PgVectorSearchEngine
 
 logger = logging.getLogger(__name__)
@@ -106,6 +106,8 @@ class PgMemoryCoreAdapter(MemoryCorePort):
         top_k: int,
     ) -> list[MemoryItem]:
         """RRF-fused hybrid retrieval: pgvector + ILIKE."""
+        from src.infra.models import MemoryItemModel
+
         assert self._vector_engine is not None
         assert self._query_embedder is not None
 
@@ -140,6 +142,8 @@ class PgMemoryCoreAdapter(MemoryCorePort):
         top_k: int,
     ) -> list[MemoryItem]:
         """ILIKE keyword-only retrieval (fallback path)."""
+        from src.infra.models import MemoryItemModel
+
         stmt = (
             sa.select(MemoryItemModel)
             .where(
@@ -179,6 +183,8 @@ class PgMemoryCoreAdapter(MemoryCorePort):
         org_id: UUID | None = None,
     ) -> WriteReceipt:
         """Write a new observation as a MemoryItemModel row."""
+        from src.infra.models import MemoryItemModel
+
         if org_id is None:
             msg = "org_id is required for PG write operations"
             raise ValueError(msg)

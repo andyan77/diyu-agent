@@ -19,6 +19,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from src.gateway.middleware.auth import decode_token
 from src.ports.conversation_port import WSMessage
 from src.shared.errors import AuthenticationError
+from src.shared.types import OrganizationContext
 
 if TYPE_CHECKING:
     from src.ports.conversation_port import WSChatPort
@@ -70,6 +71,15 @@ def create_ws_router(*, handler: WSChatPort, jwt_secret: str) -> APIRouter:
         await websocket.accept()
         sender = _FastAPIWebSocketSender(websocket)
 
+        # Build org_context from JWT payload for the session
+        org_context = OrganizationContext(
+            user_id=payload.user_id,
+            org_id=payload.org_id,
+            org_tier="platform",
+            org_path=str(payload.org_id),
+            role=payload.role,
+        )
+
         logger.info(
             "WS connected session_id=%s user_id=%s org_id=%s",
             session_id,
@@ -91,7 +101,7 @@ def create_ws_router(*, handler: WSChatPort, jwt_secret: str) -> APIRouter:
                     metadata=data.get("metadata", {}),
                 )
 
-                response = await handler.handle_message(msg, sender)
+                response = await handler.handle_message(msg, sender, org_context=org_context)
 
                 if response.type == "close":
                     break

@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eval Review Summary File",
+  "description": "质量审核汇总报告 Schema v3.1 — 与 review-report.schema.json 结构不同",
+  "type": "object",
+  "required": ["total_files_reviewed", "total_samples_reviewed", "overall_pass_rate", "dataset_version", "schema_version"],
+  "properties": {
+    "total_files_reviewed": { "type": "integer", "minimum": 0 },
+    "total_samples_reviewed": { "type": "integer", "minimum": 0 },
+    "overall_pass_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+    "disputed_samples": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "error_samples": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "duplicate_pairs": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "industry_knowledge_issues": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "naturalness_issues": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "recommendations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "dataset_version": { "type": "string" },
+    "schema_version": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date-time" }
+  }
+}

@@ -15,11 +15,12 @@ from uuid import UUID, uuid4
 
 import sqlalchemy as sa
 
-from src.infra.models import MemoryItemModel
 from src.shared.types import MemoryItem
 
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
+
+    from src.infra.models import MemoryItemModel
 
 
 class MemoryItemStore:
@@ -185,6 +186,8 @@ class PgMemoryItemStore:
         source_session_id: UUID | None = None,
     ) -> MemoryItem:
         """Create a new memory item row (version 1) and return domain object."""
+        from src.infra.models import MemoryItemModel
+
         memory_id = uuid4()
         now = datetime.now(UTC)
         source_sessions = [source_session_id] if source_session_id else []
@@ -226,6 +229,8 @@ class PgMemoryItemStore:
 
     async def get_item(self, memory_id: UUID) -> MemoryItem | None:
         """Get a memory item by ID. Returns None if not found."""
+        from src.infra.models import MemoryItemModel
+
         stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id == memory_id)
         async with self._session_factory() as session:
             result = await session.execute(stmt)
@@ -247,6 +252,8 @@ class PgMemoryItemStore:
             user_id: The user whose items to fetch.
             active_only: If True, only return non-superseded items.
         """
+        from src.infra.models import MemoryItemModel
+
         stmt = sa.select(MemoryItemModel).where(MemoryItemModel.user_id == user_id)
         if active_only:
             stmt = stmt.where(MemoryItemModel.superseded_by.is_(None))
@@ -273,6 +280,8 @@ class PgMemoryItemStore:
         Raises:
             KeyError: If memory_id is not found.
         """
+        from src.infra.models import MemoryItemModel
+
         stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id == memory_id)
 
         async with self._session_factory() as session:
@@ -339,6 +348,8 @@ class PgMemoryItemStore:
         Raises:
             KeyError: If memory_id is not found.
         """
+        from src.infra.models import MemoryItemModel
+
         stmt = sa.select(MemoryItemModel).where(MemoryItemModel.id == memory_id)
 
         async with self._session_factory() as session:

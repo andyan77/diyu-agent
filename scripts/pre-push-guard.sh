@@ -39,7 +39,7 @@ while read -r _local_ref _local_sha remote_ref _remote_sha; do
     }
 
     echo "  [5/6] type check (mypy)..."
-    uv run mypy src/ --ignore-missing-imports --no-error-summary --quiet 2>/dev/null || {
+    uv run mypy src/ > /dev/null 2>&1 || {
       echo "BLOCKED: mypy type check failed. Fix type errors before pushing to $PROTECTED_BRANCH."
       exit 1
     }

@@ -9,6 +9,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { DataTable, type Column } from "@/components/DataTable";
+import { getAdminClient } from "@/lib/api";
 
 interface KnowledgeEntry {
   id: string;
@@ -18,13 +19,22 @@ interface KnowledgeEntry {
   updatedAt: string;
 }
 
-const MOCK_ENTRIES: KnowledgeEntry[] = Array.from({ length: 30 }, (_, i) => ({
-  id: `entry-${i + 1}`,
-  entity_type: ["product", "brand", "category", "style"][i % 4] ?? "product",
-  name: `Knowledge Entry ${i + 1}`,
-  status: (["published", "draft", "archived"][i % 3] ?? "published") as KnowledgeEntry["status"],
-  updatedAt: new Date(Date.now() - i * 86400000).toISOString().slice(0, 10),
-}));
+interface KnowledgeListResponse {
+  entries: {
+    entry_id: string;
+    entity_type: string;
+    properties: Record<string, unknown>;
+    org_id: string;
+    status: string;
+  }[];
+  total: number;
+}
+
+interface KnowledgeCreateResponse {
+  entry_id: string;
+  entity_type: string;
+  properties: Record<string, unknown>;
+}
 
 const columns: Column<KnowledgeEntry>[] = [
   { key: "name", header: "Name" },
@@ -55,20 +65,56 @@ export default function KnowledgeEditorPage() {
   const [newType, setNewType] = useState("product");
 
   useEffect(() => {
-    // Placeholder: would fetch from Knowledge Admin API (G3-1)
-    setEntries(MOCK_ENTRIES);
+    async function loadEntries() {
+      try {
+        const api = getAdminClient();
+        const data = await api.get<KnowledgeListResponse>(
+          "/v1/admin/knowledge?limit=50",
+        );
+        setEntries(
+          data.entries.map((e) => ({
+            id: e.entry_id,
+            entity_type: e.entity_type,
+            name: (e.properties.name as string) ?? e.entry_id,
+            status: (e.status ?? "draft") as KnowledgeEntry["status"],
+            updatedAt:
+              (e.properties.updatedAt as string) ??
+              new Date().toISOString().slice(0, 10),
+          })),
+        );
+      } catch {
+        // API unreachable -- leave empty list
+      }
+    }
+    void loadEntries();
   }, []);
 
-  const handleCreate = useCallback(() => {
+  const handleCreate = useCallback(async () => {
     if (!newName.trim()) return;
-    const entry: KnowledgeEntry = {
-      id: `entry-${Date.now()}`,
-      entity_type: newType,
-      name: newName.trim(),
-      status: "draft",
-      updatedAt: new Date().toISOString().slice(0, 10),
-    };
-    setEntries((prev) => [entry, ...prev]);
+    try {
+      const api = getAdminClient();
+      const created = await api.post<KnowledgeCreateResponse>(
+        "/v1/admin/knowledge/",
+        {
+          entity_type: newType,
+          properties: {
+            name: newName.trim(),
+            status: "draft",
+            updatedAt: new Date().toISOString().slice(0, 10),
+          },
+        },
+      );
+      const entry: KnowledgeEntry = {
+        id: created.entry_id,
+        entity_type: created.entity_type,
+        name: (created.properties.name as string) ?? newName.trim(),
+        status: "draft",
+        updatedAt: new Date().toISOString().slice(0, 10),
+      };
+      setEntries((prev) => [entry, ...prev]);
+    } catch {
+      // Silently fail on network error
+    }
     setNewName("");
     setShowCreate(false);
   }, [newName, newType]);
@@ -186,7 +232,13 @@ export default function KnowledgeEditorPage() {
         bulkActions={[
           {
             label: "Publish",
-            action: (ids) => {
+            action: async (ids) => {
+              const api = getAdminClient();
+              await Promise.all(
+                ids.map((id) =>
+                  api.patch(`/v1/admin/knowledge/${id}/status`, { status: "published" }),
+                ),
+              );
               setEntries((prev) =>
                 prev.map((e) => (ids.includes(e.id) ? { ...e, status: "published" as const } : e)),
               );
@@ -194,7 +246,13 @@ export default function KnowledgeEditorPage() {
           },
           {
             label: "Archive",
-            action: (ids) => {
+            action: async (ids) => {
+              const api = getAdminClient();
+              await Promise.all(
+                ids.map((id) =>
+                  api.patch(`/v1/admin/knowledge/${id}/status`, { status: "archived" }),
+                ),
+              );
               setEntries((prev) =>
                 prev.map((e) => (ids.includes(e.id) ? { ...e, status: "archived" as const } : e)),
               );
@@ -202,7 +260,11 @@ export default function KnowledgeEditorPage() {
           },
           {
             label: "Delete",
-            action: (ids) => {
+            action: async (ids) => {
+              const api = getAdminClient();
+              await Promise.all(
+                ids.map((id) => api.delete(`/v1/admin/knowledge/${id}`)),
+              );
               setEntries((prev) => prev.filter((e) => !ids.includes(e.id)));
             },
           },

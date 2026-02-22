@@ -43,14 +43,19 @@ class IntentClassifier:
     - Data query patterns
     """
 
-    # Skill trigger keywords (Phase 3 expansion)
-    _SKILL_TRIGGERS: ClassVar[list[str]] = [
-        "generate content",
-        "create article",
-        "write product",
-        "merchandising",
-        "product description",
-    ]
+    # Trigger keyword -> normalized intent_type for SkillRegistry lookup.
+    # Keys are matched against lowercased user message; values are the
+    # intent_type strings registered in SkillDefinition.intent_types.
+    _TRIGGER_TO_INTENT: ClassVar[dict[str, str]] = {
+        "generate content": "content_writing",
+        "create article": "content_writing",
+        "write product": "content_writing",
+        "merchandising": "merchandising",
+        "product description": "product_recommendation",
+    }
+
+    # Ordered trigger list for matching priority
+    _SKILL_TRIGGERS: ClassVar[list[str]] = list(_TRIGGER_TO_INTENT.keys())
 
     async def classify(self, message: str) -> str:
         """Classify user message intent.
@@ -78,11 +83,12 @@ class IntentClassifier:
         # Check for skill trigger patterns
         for trigger in self._SKILL_TRIGGERS:
             if trigger in message_lower:
+                normalized = self._TRIGGER_TO_INTENT[trigger]
                 return IntentResult(
                     intent_type=INTENT_SKILL,
                     confidence=0.7,
-                    matched_skill=trigger,
-                    reasoning=f"Matched skill trigger: {trigger}",
+                    matched_skill=normalized,
+                    reasoning=f"Matched skill trigger: {trigger} -> {normalized}",
                 )
 
         # Default: pure chat

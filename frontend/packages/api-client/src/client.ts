@@ -5,6 +5,7 @@ export interface ApiClient {
   get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
   post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
   put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
+  patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
   delete<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
 }
 
@@ -38,6 +39,14 @@ export function createApiClient(baseURL: string, token?: string): ApiClient {
       config?: AxiosRequestConfig,
     ): Promise<T> {
       const res = await instance.put<T>(url, data, config);
+      return res.data;
+    },
+    async patch<T>(
+      url: string,
+      data?: unknown,
+      config?: AxiosRequestConfig,
+    ): Promise<T> {
+      const res = await instance.patch<T>(url, data, config);
       return res.data;
     },
     async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
