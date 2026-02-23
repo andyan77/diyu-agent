@@ -73,3 +73,65 @@ groups:
           description: >
             Token consumption rate is {{ $value }} tokens/s over 10 minutes.
             Threshold: 100,000 tokens/10min.
+
+  # Phase 4: SLO burn-rate alerts (Google SRE Workbook, decision C-3/C-5)
+  # SLO target: 99.5% availability, 30-day window, error budget = 216 min/month
+  - name: diyu_slo_burn_rate
+    rules:
+      # Fast burn: 14.4x rate over 1h window -> P0 page
+      # At 14.4x burn, entire monthly budget consumed in ~15 hours
+      - alert: SLOBurnRateFast
+        expr: |
+          (
+            sum(rate(http_errors_total[1h]))
+            / sum(rate(http_requests_total[1h]))
+          ) > (14.4 * 0.005)
+        for: 2m
+        labels:
+          severity: critical
+          slo: "availability"
+          burn_rate: "fast"
+        annotations:
+          summary: "SLO fast burn: error budget depleting rapidly (14.4x)"
+          description: >
+            Error rate is {{ $value | humanizePercentage }} over the last 1 hour,
+            which is 14.4x the SLO error budget rate.
+            At this rate, monthly error budget (216 min) will be exhausted in ~15 hours.
+            Action: Page founder immediately.
+
+      # Slow burn: 6x rate over 6h window -> P1 alert
+      # At 6x burn, entire monthly budget consumed in ~36 hours
+      - alert: SLOBurnRateSlow
+        expr: |
+          (
+            sum(rate(http_errors_total[6h]))
+            / sum(rate(http_requests_total[6h]))
+          ) > (6 * 0.005)
+        for: 5m
+        labels:
+          severity: warning
+          slo: "availability"
+          burn_rate: "slow"
+        annotations:
+          summary: "SLO slow burn: error budget depleting steadily (6x)"
+          description: >
+            Error rate is {{ $value | humanizePercentage }} over the last 6 hours,
+            which is 6x the SLO error budget rate.
+            At this rate, monthly error budget (216 min) will be exhausted in ~36 hours.
+            Action: Investigate within 1 hour.
+
+      # Latency SLO burn: P95 latency exceeding 500ms target
+      - alert: SLOLatencyBurn
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[1h])) by (le))
+          > 0.5
+        for: 5m
+        labels:
+          severity: warning
+          slo: "latency"
+          burn_rate: "sustained"
+        annotations:
+          summary: "SLO latency burn: P95 latency exceeds 500ms target"
+          description: >
+            P95 request latency is {{ $value | humanizeDuration }} over the last hour.
+            SLO target: 500ms. Sustained degradation will erode user experience.

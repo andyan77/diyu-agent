@@ -574,14 +574,7 @@ phases:
       - {id: "OS4-8", layer: "Observability", summary: "FE a11y axe-core audit"}
     exit_criteria:
       hard:
-        - id: "p4-lighthouse"
-          description: "Lighthouse CI budget pass"
-          check: "cd frontend && pnpm exec lhci autorun"
-
-        - id: "p4-a11y"
-          description: "Zero critical a11y violations"
-          check: "cd frontend && pnpm exec axe-core-cli --exit"
-
+        # === Group 1: Core Quality Gates (4) ===
         - id: "p4-coverage"
           description: "Test coverage >= 80%"
           check: "uv run pytest tests/ --cov=src --cov-fail-under=80 -q"
@@ -590,10 +583,136 @@ phases:
           description: "Full frontend build passes"
           check: "cd frontend && pnpm run build"
 
-      soft:
-        - id: "p4-billing"
-          description: "Billing flow e2e"
-          check: "cd frontend && pnpm exec playwright test tests/e2e/web/billing/"
+        - id: "p4-lighthouse"
+          description: "Lighthouse CI performance budget (LCP<2.5s/FID<100ms/CLS<0.1/200KB)"
+          check: "cd frontend && pnpm exec lhci autorun"
+          xnodes: ["XF4-1"]
+
+        - id: "p4-a11y"
+          description: "Zero critical a11y violations (axe-core)"
+          check: "cd frontend && pnpm exec axe-core-cli --exit"
+
+        # === Group 2: Cross-Layer E2E Verification (6) ===
+        - id: "p4-trace-e2e"
+          description: "Full-chain trace_id propagation E2E"
+          check: "uv run pytest tests/e2e/cross/test_trace_id_full_stack.py -v"
+          xnodes: ["X4-1"]
+
+        - id: "p4-ssot-drift"
+          description: "Triple SSOT consistency check (Decision docs <-> Port signatures <-> manifest)"
+          check: "bash scripts/check_ssot_drift.sh"
+          xnodes: ["X4-3"]
+
+        - id: "p4-delete-e2e"
+          description: "Delete pipeline E2E (request -> tombstone -> physical delete -> audit -> storage cleanup)"
+          check: "uv run pytest tests/e2e/cross/test_delete_pipeline_e2e.py -v"
+          xnodes: ["X4-4"]
+
+        - id: "p4-fault-injection"
+          description: "Fault injection + recovery (delete pipeline + LLM provider)"
+          check: "uv run pytest tests/e2e/cross/test_fault_injection.py -v"
+          xnodes: ["X4-6"]
+
+        - id: "p4-billing-e2e"
+          description: "Billing flow E2E (quota exhaustion -> recharge -> balance update)"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/cross/web/billing-flow.spec.ts"
+          xnodes: ["XF4-1"]
+
+        - id: "p4-memory-privacy-e2e"
+          description: "Memory privacy E2E (view AI memory -> delete -> confirm deletion)"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/cross/web/memory-privacy.spec.ts"
+          xnodes: ["XF4-3"]
+
+        # === Group 3: Operational Hardening (6) ===
+        - id: "p4-release-drill"
+          description: "Upgrade/rollback drill (upgrade -> downgrade -> upgrade, data integrity verified)"
+          check: "bash scripts/drill_release.sh"
+          xnodes: ["X4-2"]
+
+        - id: "p4-dr-restore"
+          description: "Backup restore drill (PG + evidence integrity)"
+          check: "bash scripts/drill_dr_restore.sh"
+
+        - id: "p4-dependency-chaos"
+          description: "Dependency chaos testing (CB-4 scenarios)"
+          check: "uv run pytest tests/e2e/cross/test_dependency_chaos.py -v"
+
+        - id: "p4-incident-readiness"
+          description: "Incident management readiness (SLA + alerts + runbooks + on-call)"
+          check: "python3 scripts/check_incident_readiness.py"
+
+        - id: "p4-alert-routing"
+          description: "Alert routing validation (severity labels + routing rules)"
+          check: "python3 scripts/check_alert_routing.py"
+
+        - id: "p4-compliance-artifacts"
+          description: "Compliance artifacts complete (SBOM + ADR + threat model)"
+          check: "python3 scripts/check_compliance_artifacts.py"
+
+        # === Group 4: SLO / Observability (4) ===
+        - id: "p4-slo-metrics"
+          description: "SLI/SLO metrics + alerts operational (7 Brain SLI + API SLO in Grafana)"
+          check: "python3 scripts/check_slo_budget.py"
+          xnodes: ["X4-5"]
+
+        - id: "p4-slo-burn-rate"
+          description: "SLO burn-rate alert rules configured (fast 14.4x + slow 6x)"
+          check: "python3 scripts/check_alert_routing.py --verify-burn-rate"
+
+        - id: "p4-monitoring-dashboard"
+          description: "Admin monitoring dashboard E2E"
+          check: "cd frontend && pnpm exec playwright test tests/e2e/cross/admin/monitoring-dashboard.spec.ts"
+          xnodes: ["XF4-2"]
+
+        - id: "p4-xnode-coverage"
+          description: "XNode result coverage >= 90%"
+          check: "python3 scripts/check_xnode_coverage.py --phase 4 --verify-results"
+
+        # === Group 5: Security + Compliance (2) ===
+        - id: "p4-pentest-report"
+          description: "Pentest OWASP Top 10 report: zero Critical/High (OWASP ZAP)"
+          check: "python3 scripts/check_pentest_report.py"
+          xnodes: ["X4-7"]
+
+        - id: "p4-sbom-attestation"
+          description: "SBOM cosign attestation (hard gate, signing required)"
+          check: "bash scripts/sign_sbom.sh"
+
+        # === Group 6: Performance + HA (2) ===
+        - id: "p4-perf-baseline"
+          description: "Performance baseline (Assembler P95<200ms, Graph P95<100ms, Vector P95<50ms)"
+          check: "uv run pytest tests/perf/ -v --timeout=600"
+
+        - id: "p4-ha-validation"
+          description: "HA failover validation (<30s recovery, 2 app + nginx + PG primary/standby)"
+          check: "bash scripts/check_ha_validation.sh"
+
+        # === Group 7: Delivery Completeness (2) ===
+        - id: "p4-diag-package"
+          description: "One-click diagnostic package (diyu_diagnose.sh collects logs+metrics+config)"
+          check: "bash scripts/diyu_diagnose.sh --dry-run"
+
+        - id: "p4-key-rotation"
+          description: "Key rotation + cert management (rotate_secrets.sh covers JWT+DB+MinIO+LLM)"
+          check: "bash scripts/rotate_secrets.sh --dry-run"
+
+        # === Group 8: Multimodal (2) ===
+        - id: "p4-enterprise-media"
+          description: "Enterprise media dual-write + FK verification (Neo4j + Qdrant consistency)"
+          check: "uv run pytest tests/integration/knowledge/test_enterprise_media_fk.py -v"
+          xnodes: ["XM2-1"]
+
+        - id: "p4-media-safety"
+          description: "Enterprise media NSFW + copyright precheck"
+          check: "uv run pytest tests/integration/test_media_safety.py -v"
+          xnodes: ["XM2-2"]
+
+        # === Group 9: Postmortem + CAPA (1) ===
+        - id: "p4-postmortem-capa"
+          description: "Postmortem template + CAPA register exist and schema-valid"
+          check: "python3 scripts/check_postmortem_capa.py"
+
+      soft: []
 
     go_no_go:
       hard_pass_rate: 1.0

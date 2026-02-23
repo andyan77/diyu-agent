@@ -192,6 +192,46 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
 
     blocking_items = [r["id"] for r in hard_results if r["status"] != "PASS"]
 
+    # XNode result coverage enforcement
+    xnode_coverage_min = go_no_go_config.get("xnode_coverage_min")
+    xnode_summary: dict = {}
+    if xnode_coverage_min is not None:
+        try:
+            from check_xnode_coverage import check_phase as xnode_check_phase
+            from check_xnode_coverage import load_xnodes_by_phase, load_yaml_data
+
+            xnode_yaml = load_yaml_data()
+            xnodes_by_phase = load_xnodes_by_phase()
+            phase_num = int(phase_key.replace("phase_", ""))
+            xnode_report = xnode_check_phase(
+                xnode_yaml,
+                xnodes_by_phase,
+                phase_num,
+                verify_results=True,
+            )
+            rc = xnode_report.get("result_coverage") or xnode_report.get("direct_coverage", {})
+            xnode_rate = rc.get("rate", 0.0)
+            xnode_pass = xnode_rate >= xnode_coverage_min
+            if not xnode_pass:
+                is_go = False
+                blocking_items.append(f"xnode_coverage({xnode_rate:.0%}<{xnode_coverage_min:.0%})")
+            xnode_summary = {
+                "xnode_coverage_rate": xnode_rate,
+                "xnode_coverage_min": xnode_coverage_min,
+                "xnode_pass": xnode_pass,
+                "basis": xnode_report.get("gate", {}).get("basis", "direct"),
+            }
+        except Exception as exc:
+            # If xnode check fails, don't block but record the error
+            xnode_summary = {
+                "xnode_coverage_rate": 0.0,
+                "xnode_coverage_min": xnode_coverage_min,
+                "xnode_pass": False,
+                "error": str(exc),
+            }
+            is_go = False
+            blocking_items.append(f"xnode_coverage_error({exc})")
+
     report.summary = {
         "hard_total": hard_total,
         "hard_pass": hard_pass,
@@ -203,6 +243,7 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
         "pass_rate": round(pass_rate, 4),
         "go_no_go": "GO" if is_go else "BLOCKED",
         "blocking_items": blocking_items,
+        **({"xnode": xnode_summary} if xnode_summary else {}),
     }
 
     return report

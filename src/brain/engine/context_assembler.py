@@ -1,9 +1,11 @@
 """Context Assembler -- assembles context for LLM input.
 
 Task cards: B2-3 (v1), B2-4 (CE enhanced with RRF), B2-7 (graceful degradation)
+            B4-1 (P95<200ms parallel optimization + SLI instrumentation)
 - Reads MemoryCore personal_context + Knowledge (graceful degrade)
 - Assembles into assembled_context for LLM
 - CE enhancement: Query Rewriting + Hybrid Retrieval (FTS+pgvector+RRF)
+- B4-1: Memory + Knowledge queries run in parallel via asyncio.gather
 
 Architecture: Section 2.2 (Context Assembly Pipeline)
              ADR-022 (Privacy boundary: Knowledge cannot access MemoryCore)
@@ -11,6 +13,7 @@ Architecture: Section 2.2 (Context Assembly Pipeline)
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
@@ -18,6 +21,7 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from uuid import UUID
 
+    from src.brain.metrics.sli import BrainSLI
     from src.memory.receipt import ReceiptStoreProtocol
     from src.ports.knowledge_port import KnowledgePort
     from src.ports.memory_core_port import MemoryCorePort
@@ -77,10 +81,12 @@ class ContextAssembler:
         memory_core: MemoryCorePort,
         knowledge: KnowledgePort | None = None,
         receipt_store: ReceiptStoreProtocol | None = None,
+        sli: BrainSLI | None = None,
     ) -> None:
         self._memory_core = memory_core
         self._knowledge = knowledge
         self._receipt_store = receipt_store
+        self._sli = sli
 
     async def assemble(
         self,
@@ -93,65 +99,98 @@ class ContextAssembler:
     ) -> AssembledContext:
         """Assemble context for an LLM call.
 
-        1. Read personal memories from MemoryCore (hard dependency)
-        2. Resolve knowledge from KnowledgePort (soft dependency, degradable)
-        3. Combine into AssembledContext
+        B4-1: Memory + Knowledge queries run in parallel via asyncio.gather.
+        1. Fire Memory + Knowledge queries concurrently
+        2. Combine results into AssembledContext
+        3. Record SLI metrics (if sli provided)
         """
-        # Step 1: Personal memories (hard dependency)
-        personal_memories = await self._memory_core.read_personal_memories(
+        from contextlib import nullcontext
+
+        timer_ctx = (
+            self._sli.timer(self._sli.context_assembly_duration) if self._sli else nullcontext()
+        )
+
+        with timer_ctx:
+            # Step 1: Parallel retrieval — Memory (hard) + Knowledge (soft)
+            personal_memories, knowledge_result = await asyncio.gather(
+                self._fetch_memories(user_id=user_id, query=query, top_k=top_k_memories),
+                self._fetch_knowledge(query=query, org_context=org_context),
+            )
+
+            # Step 1b: Record retrieval receipts (non-blocking)
+            if self._receipt_store and personal_memories:
+                await self._record_retrieval_receipts(
+                    memories=personal_memories,
+                    org_id=org_context.org_id if org_context else None,
+                )
+
+            # Step 1c: Record memory retrieval hit/miss SLI
+            if self._sli:
+                if personal_memories:
+                    self._sli.memory_retrieval_count.labels(status="hit").inc()
+                else:
+                    self._sli.memory_retrieval_count.labels(status="miss").inc()
+
+            # Step 2: Unpack knowledge result
+            knowledge_bundle, degraded, degraded_reason = knowledge_result
+
+            # Step 3: Build system prompt
+            system_prompt = self._build_system_prompt(
+                personal_memories=personal_memories,
+                knowledge_bundle=knowledge_bundle,
+            )
+
+            return AssembledContext(
+                personal_memories=personal_memories,
+                knowledge_bundle=knowledge_bundle,
+                conversation_history=conversation_history or [],
+                system_prompt=system_prompt,
+                degraded=degraded,
+                degraded_reason=degraded_reason,
+            )
+
+    async def _fetch_memories(
+        self,
+        *,
+        user_id: UUID,
+        query: str,
+        top_k: int,
+    ) -> list[MemoryItem]:
+        """Fetch personal memories from MemoryCorePort."""
+        return await self._memory_core.read_personal_memories(
             user_id=user_id,
             query=query,
-            top_k=top_k_memories,
+            top_k=top_k,
         )
 
-        # Step 1b: Record retrieval receipts (non-blocking)
-        if self._receipt_store and personal_memories:
-            await self._record_retrieval_receipts(
-                memories=personal_memories,
-                org_id=org_context.org_id if org_context else None,
+    async def _fetch_knowledge(
+        self,
+        *,
+        query: str,
+        org_context: OrganizationContext | None,
+    ) -> tuple[KnowledgeBundle | None, bool, str]:
+        """Fetch knowledge from KnowledgePort with graceful degradation.
+
+        Returns (knowledge_bundle, degraded, degraded_reason).
+        """
+        if self._knowledge is None:
+            return None, True, "Knowledge port not configured"
+        if org_context is None:
+            return None, True, "No org context provided"
+
+        try:
+            bundle = await self._knowledge.resolve(
+                profile_id="default",
+                query=query,
+                org_context=org_context,
             )
-
-        # Step 2: Knowledge (soft dependency, graceful degradation)
-        knowledge_bundle = None
-        degraded = False
-        degraded_reason = ""
-
-        if self._knowledge is not None and org_context is not None:
-            try:
-                knowledge_bundle = await self._knowledge.resolve(
-                    profile_id="default",
-                    query=query,
-                    org_context=org_context,
-                )
-            except Exception:
-                logger.warning(
-                    "Knowledge resolution failed, degrading gracefully",
-                    exc_info=True,
-                )
-                degraded = True
-                degraded_reason = "Knowledge backend unavailable"
-        else:
-            degraded = True
-            degraded_reason = (
-                "Knowledge port not configured"
-                if self._knowledge is None
-                else "No org context provided"
+            return bundle, False, ""
+        except Exception:
+            logger.warning(
+                "Knowledge resolution failed, degrading gracefully",
+                exc_info=True,
             )
-
-        # Step 3: Build system prompt
-        system_prompt = self._build_system_prompt(
-            personal_memories=personal_memories,
-            knowledge_bundle=knowledge_bundle,
-        )
-
-        return AssembledContext(
-            personal_memories=personal_memories,
-            knowledge_bundle=knowledge_bundle,
-            conversation_history=conversation_history or [],
-            system_prompt=system_prompt,
-            degraded=degraded,
-            degraded_reason=degraded_reason,
-        )
+            return None, True, "Knowledge backend unavailable"
 
     async def assemble_enhanced(
         self,
