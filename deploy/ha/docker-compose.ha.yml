@@ -1,0 +1,129 @@
+# DIYU Agent HA Topology (Decision R-4)
+#
+# 2 app instances + nginx upstream + PG primary/standby
+# No Patroni — uses pg_basebackup + manual promote (deploy/ha/pg_promote.sh)
+#
+# Usage:
+#   docker compose -f deploy/ha/docker-compose.ha.yml up -d
+#   docker compose -f deploy/ha/docker-compose.ha.yml down
+
+services:
+  # --- PostgreSQL Primary ---
+  pg-primary:
+    image: pgvector/pgvector:pg16
+    ports: ["25432:5432"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-diyu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-diyu_dev}
+      POSTGRES_DB: diyu
+    volumes:
+      - pg_primary_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U diyu"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+
+  # --- PostgreSQL Standby (streaming replication) ---
+  pg-standby:
+    image: pgvector/pgvector:pg16
+    ports: ["25433:5432"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-diyu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-diyu_dev}
+      POSTGRES_DB: diyu
+      # pg_basebackup replication setup via entrypoint override
+      PGDATA: /var/lib/postgresql/data
+    depends_on:
+      pg-primary:
+        condition: service_healthy
+    volumes:
+      - pg_standby_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U diyu"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+
+  # --- Redis ---
+  redis:
+    image: redis:7-alpine
+    ports: ["6380:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+
+  # --- App Instance 1 ---
+  app-1:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://diyu:diyu_dev@pg-primary:5432/diyu
+      REDIS_URL: redis://redis:6379/0
+      INSTANCE_ID: app-1
+    depends_on:
+      pg-primary:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/healthz || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+
+  # --- App Instance 2 ---
+  app-2:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://diyu:diyu_dev@pg-primary:5432/diyu
+      REDIS_URL: redis://redis:6379/0
+      INSTANCE_ID: app-2
+    depends_on:
+      pg-primary:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/healthz || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+
+  # --- Nginx Load Balancer ---
+  nginx:
+    image: nginx:1.27-alpine
+    ports: ["8000:80"]
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      app-1:
+        condition: service_healthy
+      app-2:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:80/healthz || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  pg_primary_data:
+  pg_standby_data:

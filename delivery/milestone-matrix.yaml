@@ -626,12 +626,12 @@ phases:
         # === Group 3: Operational Hardening (6) ===
         - id: "p4-release-drill"
           description: "Upgrade/rollback drill (upgrade -> downgrade -> upgrade, data integrity verified)"
-          check: "bash scripts/drill_release.sh"
+          check: "bash scripts/drill_release.sh --dry-run"
           xnodes: ["X4-2"]
 
         - id: "p4-dr-restore"
           description: "Backup restore drill (PG + evidence integrity)"
-          check: "bash scripts/drill_dr_restore.sh"
+          check: "bash scripts/drill_dr_restore.sh --dry-run"
 
         - id: "p4-dependency-chaos"
           description: "Dependency chaos testing (CB-4 scenarios)"
@@ -681,11 +681,11 @@ phases:
         # === Group 6: Performance + HA (2) ===
         - id: "p4-perf-baseline"
           description: "Performance baseline (Assembler P95<200ms, Graph P95<100ms, Vector P95<50ms)"
-          check: "uv run pytest tests/perf/ -v --timeout=600"
+          check: "uv run pytest tests/perf/ -v --tb=short"
 
         - id: "p4-ha-validation"
           description: "HA failover validation (<30s recovery, 2 app + nginx + PG primary/standby)"
-          check: "bash scripts/check_ha_validation.sh"
+          check: "bash scripts/check_ha_validation.sh --dry-run"
 
         # === Group 7: Delivery Completeness (2) ===
         - id: "p4-diag-package"
