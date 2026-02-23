@@ -4,12 +4,14 @@ Task card: OS4-4
 - Gateway sets trace_id on request entry
 - All layers read it via get_trace_id() for structured logging & metrics
 - Uses Python contextvars: zero dependency, async-safe
+- TraceIdFilter auto-injects trace_id into log records
 
 Architecture: Section 7 (Observability)
 """
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Generator  # noqa: TC003 -- used at runtime by contextmanager
 from contextlib import contextmanager
 from contextvars import ContextVar, Token
@@ -50,3 +52,19 @@ def trace_context(trace_id: str | None = None) -> Generator[str, None, None]:
         yield effective_id
     finally:
         current_trace_id.reset(token)
+
+
+class TraceIdFilter(logging.Filter):
+    """Logging filter that injects trace_id from contextvars into log records.
+
+    Attach to any handler or logger to auto-populate ``record.trace_id``::
+
+        handler.addFilter(TraceIdFilter())
+        # then use %(trace_id)s in format strings
+
+    If no trace_id is set, the field defaults to ``"-"``.
+    """
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        record.trace_id = get_trace_id() or "-"
+        return True
