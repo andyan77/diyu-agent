@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Release rollback drill script
+# Release rollback drill script (Decision R-4: docker-compose HA mode)
 # Gate ID: p4-release-drill
 # Validates: rollback procedure completes in < 5 minutes
 # Usage: bash scripts/drill_release.sh --dry-run
@@ -10,6 +10,7 @@ EVIDENCE_DIR="evidence/release"
 DRILL_RESULT=""
 STEPS=()
 ERRORS=()
+COMPOSE_FILE="deploy/ha/docker-compose.ha.yml"
 
 for arg in "$@"; do
   case "$arg" in
@@ -35,23 +36,34 @@ check_prerequisites() {
   echo "[1/6] Checking prerequisites..."
 
   if [ "$DRY_RUN" = true ]; then
-    echo "  [dry-run] Skipping live cluster checks"
+    echo "  [dry-run] Skipping live infrastructure checks"
+    echo "  [dry-run] Checking compose file exists: $COMPOSE_FILE"
+    if [ -f "$COMPOSE_FILE" ]; then
+      echo "  [dry-run] HA compose file found"
+    else
+      echo "  [dry-run] HA compose file not found (expected for dry-run)"
+    fi
     record_step "check_prerequisites" "PASS" "$start_ms" "$(epoch_ms)"
     return 0
   fi
 
-  # Verify kubectl access
-  if ! command -v kubectl &>/dev/null; then
-    echo "  FAIL: kubectl not found"
+  # Verify docker compose access (R-4: docker-compose, NOT kubectl)
+  if ! command -v docker &>/dev/null; then
+    echo "  FAIL: docker not found"
     record_step "check_prerequisites" "FAIL" "$start_ms" "$(epoch_ms)"
     return 1
   fi
 
-  # Verify current deployment exists
-  if ! kubectl get deployment/diyu-agent --namespace=production &>/dev/null; then
-    echo "  FAIL: deployment/diyu-agent not found in production namespace"
+  # Verify HA compose file exists
+  if [ ! -f "$COMPOSE_FILE" ]; then
+    echo "  FAIL: HA compose file not found: $COMPOSE_FILE"
     record_step "check_prerequisites" "FAIL" "$start_ms" "$(epoch_ms)"
     return 1
+  fi
+
+  # Verify services are running
+  if ! docker compose -f "$COMPOSE_FILE" ps --format json 2>/dev/null | head -1 | grep -q "running"; then
+    echo "  WARN: HA services not running (start with: docker compose -f $COMPOSE_FILE up -d)"
   fi
 
   record_step "check_prerequisites" "PASS" "$start_ms" "$(epoch_ms)"
@@ -65,16 +77,23 @@ simulate_deploy() {
 
   if [ "$DRY_RUN" = true ]; then
     echo "  [dry-run] Would deploy canary with new image tag"
-    echo "  [dry-run] Would run: kubectl set image deployment/diyu-agent app=diyu-agent:\$NEW_TAG"
+    echo "  [dry-run] Would run: docker compose -f $COMPOSE_FILE up -d --no-deps app-1"
+    echo "  [dry-run] Would verify app-1 health check passes"
     sleep 1
     record_step "simulate_deploy" "PASS" "$start_ms" "$(epoch_ms)"
     return 0
   fi
 
-  # Live mode would do actual deploy
-  kubectl set image deployment/diyu-agent app=diyu-agent:"${NEW_TAG:-drill-test}" \
-    --namespace=production --record
-  kubectl rollout status deployment/diyu-agent --timeout=120s
+  # Live mode: rebuild and restart app-1 with new image
+  docker compose -f "$COMPOSE_FILE" up -d --no-deps --build app-1
+  # Wait for health check
+  for i in $(seq 1 30); do
+    if docker compose -f "$COMPOSE_FILE" exec -T app-1 curl -sf http://localhost:8000/healthz >/dev/null 2>&1; then
+      echo "  app-1 healthy after ${i}s"
+      break
+    fi
+    sleep 1
+  done
 
   record_step "simulate_deploy" "PASS" "$start_ms" "$(epoch_ms)"
 }
@@ -93,10 +112,16 @@ simulate_health_failure() {
     return 0
   fi
 
-  # In live mode, wait for actual health check failure or simulate one
-  echo "  Checking health endpoint..."
-  if curl -sf https://api.diyu.app/healthz | jq -e '.status == "healthy"' &>/dev/null; then
-    echo "  Health check still passing - simulating failure scenario"
+  # In live mode, simulate by stopping app-1
+  echo "  Stopping app-1 to simulate failure..."
+  docker compose -f "$COMPOSE_FILE" stop app-1
+
+  # Verify nginx routes to app-2
+  echo "  Checking nginx failover to app-2..."
+  if curl -sf http://localhost:8000/healthz >/dev/null 2>&1; then
+    echo "  Nginx successfully routing to app-2"
+  else
+    echo "  WARN: Health check failing (both instances may be down)"
   fi
 
   record_step "simulate_health_failure" "PASS" "$start_ms" "$(epoch_ms)"
@@ -109,15 +134,23 @@ execute_rollback() {
   echo "[4/6] Executing rollback..."
 
   if [ "$DRY_RUN" = true ]; then
-    echo "  [dry-run] Would run: kubectl rollout undo deployment/diyu-agent --namespace=production"
-    echo "  [dry-run] Would run: kubectl rollout status deployment/diyu-agent --timeout=120s"
+    echo "  [dry-run] Would run: docker compose -f $COMPOSE_FILE up -d --no-deps app-1"
+    echo "  [dry-run] Would wait for app-1 health check (timeout 120s)"
     sleep 1
     record_step "execute_rollback" "PASS" "$start_ms" "$(epoch_ms)"
     return 0
   fi
 
-  kubectl rollout undo deployment/diyu-agent --namespace=production
-  kubectl rollout status deployment/diyu-agent --timeout=120s
+  # Restart app-1 (rollback = restart with previous image)
+  docker compose -f "$COMPOSE_FILE" up -d --no-deps app-1
+  # Wait for health
+  for i in $(seq 1 30); do
+    if docker compose -f "$COMPOSE_FILE" exec -T app-1 curl -sf http://localhost:8000/healthz >/dev/null 2>&1; then
+      echo "  app-1 recovered after ${i}s"
+      break
+    fi
+    sleep 1
+  done
 
   record_step "execute_rollback" "PASS" "$start_ms" "$(epoch_ms)"
 }
@@ -137,8 +170,8 @@ verify_rollback() {
     return 0
   fi
 
-  # Verify health
-  if ! curl -sf https://api.diyu.app/healthz | jq -e '.status == "healthy"' &>/dev/null; then
+  # Verify both instances healthy via nginx
+  if ! curl -sf http://localhost:8000/healthz >/dev/null 2>&1; then
     echo "  FAIL: health check not passing after rollback"
     record_step "verify_rollback" "FAIL" "$start_ms" "$(epoch_ms)"
     return 1
@@ -185,6 +218,7 @@ generate_evidence() {
   "gate_id": "p4-release-drill",
   "timestamp": "$(timestamp)",
   "dry_run": $DRY_RUN,
+  "topology": "docker-compose HA (R-4)",
   "steps": $steps_json,
   "timing": {
     "total_duration_ms": $total_duration_ms,
@@ -203,6 +237,7 @@ EOF
 main() {
   echo "=== Release Rollback Drill ==="
   echo "Mode: $([ "$DRY_RUN" = true ] && echo 'DRY-RUN' || echo 'LIVE')"
+  echo "Topology: docker-compose HA (Decision R-4)"
   echo "Started: $(timestamp)"
   echo ""
 

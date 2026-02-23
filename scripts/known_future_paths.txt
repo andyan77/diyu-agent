@@ -4,10 +4,9 @@
 # Each path will be removed from this list once the file is created.
 #
 # Generated: 2026-02-22
-# Total: 103 paths across 15 task card files (2 created in Stage 0.9, 1 added for p4-dr-restore)
+# Total: 99 paths (4 removed: drill_dr_restore.sh + 3 perf tests created in Stage 2)
 
 # -- scripts (Phase 4+) --
-scripts/drill_dr_restore.sh
 scripts/seed_vectors.py
 
 # -- src types (consolidated into src/shared/types/__init__.py) --
@@ -74,9 +73,7 @@ tests/isolation/test_media_rls.py
 tests/isolation/test_rls.py
 
 # -- tests/perf --
-tests/perf/knowledge/test_graph_perf.py
-tests/perf/knowledge/test_vector_perf.py
-tests/perf/test_assembler_latency.py
+# (test_graph_perf.py, test_vector_perf.py, test_assembler_latency.py created in Stage 2)
 
 # -- tests/unit/brain --
 tests/unit/brain/test_assembly_profile.py
