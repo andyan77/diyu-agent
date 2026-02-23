@@ -158,7 +158,7 @@ if [ "$JSON_OUTPUT" = false ]; then
   echo ""
   echo "=== Phase 8: Phase Gate Status ==="
 fi
-run_check "verify_phase_gate" "phase_gate" "uv run python scripts/verify_phase.py --current --json 2>&1"
+run_check "verify_phase_gate" "phase_gate" "uv run python scripts/verify_phase.py --phase $PHASE --json 2>&1"
 
 # ============================================================
 # 9. Report aggregation
