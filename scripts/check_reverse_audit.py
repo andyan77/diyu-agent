@@ -90,9 +90,10 @@ class AuditResult:
     name: str
     artifact_type: str
     layer: str
-    status: str  # mapped, shadow, dead
+    status: str  # mapped, shadow, drift, dead
     architecture_ref: str = ""
     task_card_ref: str = ""
+    drift_detail: str = ""
 
     def to_dict(self) -> dict:
         d: dict = {
@@ -106,6 +107,8 @@ class AuditResult:
             d["architecture_ref"] = self.architecture_ref
         if self.task_card_ref:
             d["task_card_ref"] = self.task_card_ref
+        if self.drift_detail:
+            d["drift_detail"] = self.drift_detail
         return d
 
 
@@ -280,6 +283,142 @@ def _find_reference(name: str, text: str) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Drift detection: Port ABC vs implementation method comparison
+# ---------------------------------------------------------------------------
+
+# Regex to extract class-like names from architecture doc text
+_ARCH_CLASS_RE = re.compile(
+    r"\b([A-Z][a-zA-Z0-9]{3,}(?:Port|Adapter|Engine|Resolver|Pipeline"
+    r"|Router|Registry|Context|Item|Bundle|Skill|FSM|Protocol|Manager"
+    r"|Service|Handler|Provider|Factory|Store|Core))\b"
+)
+
+
+def _extract_port_methods(filepath: Path) -> dict[str, set[str]]:
+    """Extract ABC method names from Port definition files.
+
+    Returns {ClassName: {method_name, ...}}.
+    """
+    try:
+        source = filepath.read_text(encoding="utf-8")
+        tree = ast.parse(source, filename=str(filepath))
+    except (SyntaxError, UnicodeDecodeError):
+        return {}
+
+    result: dict[str, set[str]] = {}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef):
+            bases = _extract_base_names(node)
+            if _is_port_class(bases):
+                methods: set[str] = set()
+                for item in node.body:
+                    if isinstance(
+                        item, (ast.FunctionDef, ast.AsyncFunctionDef)
+                    ) and not item.name.startswith("_"):
+                        methods.add(item.name)
+                if methods:
+                    result[node.name] = methods
+    return result
+
+
+def _extract_impl_methods(filepath: Path) -> dict[str, set[str]]:
+    """Extract public method names from implementation classes.
+
+    Returns {ClassName: {method_name, ...}}.
+    """
+    try:
+        source = filepath.read_text(encoding="utf-8")
+        tree = ast.parse(source, filename=str(filepath))
+    except (SyntaxError, UnicodeDecodeError):
+        return {}
+
+    result: dict[str, set[str]] = {}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef):
+            methods: set[str] = set()
+            for item in node.body:
+                if isinstance(
+                    item, (ast.FunctionDef, ast.AsyncFunctionDef)
+                ) and not item.name.startswith("_"):
+                    methods.add(item.name)
+            if methods:
+                result[node.name] = methods
+    return result
+
+
+def build_port_contracts(
+    *,
+    src_dir: Path | None = None,
+) -> dict[str, set[str]]:
+    """Build {PortName: {required_methods}} from src/ports/."""
+    effective_src = src_dir if src_dir is not None else SRC_DIR
+    ports_dir = effective_src / "ports"
+    contracts: dict[str, set[str]] = {}
+    if not ports_dir.exists():
+        return contracts
+    for py_file in sorted(ports_dir.glob("*.py")):
+        if py_file.name in SKIP_FILES:
+            continue
+        contracts.update(_extract_port_methods(py_file))
+    return contracts
+
+
+def detect_drift(
+    artifact: CodeArtifact,
+    port_contracts: dict[str, set[str]],
+    *,
+    src_dir: Path | None = None,
+) -> str:
+    """Detect drift for Port implementations.
+
+    Returns drift detail string (empty if no drift).
+    """
+    if artifact.artifact_type != "port_impl":
+        return ""
+    # Find which Port ABC this class implements
+    for base_name in artifact.bases:
+        if base_name in port_contracts:
+            required = port_contracts[base_name]
+            filepath = Path(artifact.file)
+            impl_methods = _extract_impl_methods(filepath)
+            impl = impl_methods.get(artifact.name, set())
+            missing = required - impl
+            if missing:
+                return f"Missing methods from {base_name}: {', '.join(sorted(missing))}"
+    return ""
+
+
+def extract_arch_artifact_names(arch_text: str) -> set[str]:
+    """Extract artifact names referenced in architecture docs."""
+    return set(_ARCH_CLASS_RE.findall(arch_text))
+
+
+def find_dead_references(
+    arch_names: set[str],
+    code_names: set[str],
+    arch_text: str,
+) -> list[AuditResult]:
+    """Find architecture-referenced artifacts not present in code.
+
+    Returns AuditResult entries with status='dead'.
+    """
+    dead: list[AuditResult] = []
+    for name in sorted(arch_names - code_names):
+        ref = _find_reference(name, arch_text)
+        dead.append(
+            AuditResult(
+                file="(not found in src/)",
+                name=name,
+                artifact_type="unknown",
+                layer="unknown",
+                status="dead",
+                architecture_ref=ref,
+            )
+        )
+    return dead
+
+
+# ---------------------------------------------------------------------------
 # Reverse audit engine
 # ---------------------------------------------------------------------------
 
@@ -289,20 +428,30 @@ def run_audit(
     *,
     arch_text: str = "",
     task_card_text: str = "",
+    port_contracts: dict[str, set[str]] | None = None,
 ) -> list[AuditResult]:
-    """Cross-reference code artifacts against architecture docs and task cards."""
+    """Cross-reference code artifacts against architecture docs and task cards.
+
+    Classification:
+      - mapped: code has architecture doc reference
+      - shadow: code exists but no architecture backing
+      - drift: code exists with arch backing but implementation diverges
+      - dead: architecture mentions artifact but no implementation found
+    """
     results: list[AuditResult] = []
+    effective_contracts = port_contracts if port_contracts is not None else {}
 
     for art in artifacts:
         arch_ref = _find_reference(art.name, arch_text)
         tc_ref = _find_reference(art.name, task_card_text)
 
-        if arch_ref and tc_ref:
-            status = "mapped"
-        elif arch_ref:
-            status = "mapped"  # Has arch backing even without explicit task card
+        if arch_ref:
+            # Check for drift (Port method mismatch)
+            drift = detect_drift(art, effective_contracts)
+            status = "drift" if drift else "mapped"
         else:
             status = "shadow"
+            drift = ""
 
         results.append(
             AuditResult(
@@ -313,8 +462,14 @@ def run_audit(
                 status=status,
                 architecture_ref=arch_ref,
                 task_card_ref=tc_ref,
+                drift_detail=drift,
             )
         )
+
+    # Dead references: arch mentions artifacts not in code
+    code_names = {a.name for a in artifacts}
+    arch_names = extract_arch_artifact_names(arch_text)
+    results.extend(find_dead_references(arch_names, code_names, arch_text))
 
     return results
 
@@ -333,13 +488,19 @@ def generate_report(
     total = len(results)
     mapped = [r for r in results if r.status == "mapped"]
     shadows = [r for r in results if r.status == "shadow"]
+    drifted = [r for r in results if r.status == "drift"]
     dead = [r for r in results if r.status == "dead"]
 
     shadow_by_layer: dict[str, int] = {}
     for s in shadows:
         shadow_by_layer[s.layer] = shadow_by_layer.get(s.layer, 0) + 1
 
-    status = "WARN" if shadows else "PASS"
+    if drifted or dead:
+        status = "FAIL"
+    elif shadows:
+        status = "WARN"
+    else:
+        status = "PASS"
 
     report: dict = {
         "status": status,
@@ -347,10 +508,13 @@ def generate_report(
             "total_artifacts": total,
             "mapped_count": len(mapped),
             "shadow_count": len(shadows),
+            "drift_count": len(drifted),
             "dead_count": len(dead),
             "shadow_by_layer": shadow_by_layer,
         },
         "shadows": [s.to_dict() for s in shadows],
+        "drifted": [d.to_dict() for d in drifted],
+        "dead": [d.to_dict() for d in dead],
     }
 
     if verbose:
@@ -380,8 +544,16 @@ def main() -> None:
     arch_text = _load_arch_text()
     tc_text = _load_task_card_text()
 
+    # Build Port contracts for drift detection
+    contracts = build_port_contracts()
+
     # Run audit
-    results = run_audit(artifacts, arch_text=arch_text, task_card_text=tc_text)
+    results = run_audit(
+        artifacts,
+        arch_text=arch_text,
+        task_card_text=tc_text,
+        port_contracts=contracts,
+    )
     report = generate_report(results, verbose=verbose)
 
     if use_json:
@@ -390,12 +562,21 @@ def main() -> None:
         s = report["summary"]
         print(
             f"\nTotal: {s['total_artifacts']}, Mapped: {s['mapped_count']}, "
-            f"Shadow: {s['shadow_count']}, Dead: {s['dead_count']}"
+            f"Shadow: {s['shadow_count']}, Drift: {s['drift_count']}, "
+            f"Dead: {s['dead_count']}"
         )
         if report["shadows"]:
             print("\nShadow features (no architecture backing):")
             for sh in report["shadows"]:
                 print(f"  [{sh['layer']}] {sh['name']} ({sh['artifact_type']}) in {sh['file']}")
+        if report["drifted"]:
+            print("\nDrifted (code diverges from spec):")
+            for dr in report["drifted"]:
+                print(f"  [{dr['layer']}] {dr['name']}: {dr.get('drift_detail', '')}")
+        if report["dead"]:
+            print("\nDead (in docs, not in code):")
+            for dd in report["dead"]:
+                print(f"  {dd['name']}: {dd.get('architecture_ref', '')}")
         print(f"\n=== Result: {report['status']} ===")
 
     if report["status"] == "FAIL":

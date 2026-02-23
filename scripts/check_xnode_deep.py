@@ -39,6 +39,10 @@ import yaml
 
 MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
 EVIDENCE_DIR = Path("evidence")
+SRC_DIR = Path("src")
+
+# Evidence older than this many hours is considered stale
+STALE_THRESHOLD_HOURS = 168  # 7 days
 
 # Commands that are trivially true / vacuous
 TRIVIAL_PATTERNS = [
@@ -91,7 +95,8 @@ class XNodeResult:
     execution_error: str = ""
     is_trivial: bool = False
     evidence_paths: list[str] = field(default_factory=list)
-    evidence_status: str = "missing"  # present, empty, missing
+    evidence_status: str = "missing"  # present, empty, missing, stale
+    evidence_age_hours: float = -1  # hours since evidence last modified
     findings: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
@@ -104,11 +109,40 @@ class XNodeResult:
             "is_trivial": self.is_trivial,
             "evidence_status": self.evidence_status,
             "evidence_paths": self.evidence_paths,
+            "evidence_age_hours": round(self.evidence_age_hours, 1),
             "findings": self.findings,
         }
         if self.execution_error:
             d["execution_error"] = self.execution_error
         return d
+
+
+@dataclass
+class XNodeVerification:
+    """Per-X-node aggregated verification result."""
+
+    node_id: str
+    phase: str
+    gate_ids: list[str] = field(default_factory=list)
+    execution_status: str = "SKIP"  # best gate status
+    evidence_path: str = ""
+    evidence_age_hours: float = -1
+    evidence_status: str = "missing"
+    verdict: str = "unverified"  # pass, fail, stale, unverified
+    findings: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict:
+        return {
+            "node_id": self.node_id,
+            "phase": self.phase,
+            "gate_ids": self.gate_ids,
+            "execution_status": self.execution_status,
+            "evidence_path": self.evidence_path,
+            "evidence_age_hours": round(self.evidence_age_hours, 1),
+            "evidence_status": self.evidence_status,
+            "verdict": self.verdict,
+            "findings": self.findings,
+        }
 
 
 # ---------------------------------------------------------------------------
@@ -231,14 +265,41 @@ def execute_gate(gate: XNodeGate, *, timeout: int = 120) -> XNodeResult:
 # ---------------------------------------------------------------------------
 
 
+def _latest_src_mtime(*, src_dir: Path | None = None) -> float:
+    """Return the most recent mtime among src/**/*.py files, or 0."""
+    effective = src_dir if src_dir is not None else SRC_DIR
+    if not effective.exists():
+        return 0.0
+    latest = 0.0
+    for py in effective.rglob("*.py"):
+        try:
+            mt = py.stat().st_mtime
+            if mt > latest:
+                latest = mt
+        except OSError:
+            continue
+    return latest
+
+
 def check_evidence(
     result: XNodeResult,
     gate: XNodeGate,
     *,
     evidence_dir: Path | None = None,
+    src_dir: Path | None = None,
+    stale_threshold_hours: float | None = None,
 ) -> None:
-    """Check for evidence files related to the X-node gate."""
+    """Check for evidence files related to the X-node gate.
+
+    Checks:
+      - Evidence file exists and is non-empty
+      - Evidence mtime vs latest src/ mtime (stale detection)
+      - Evidence age in hours
+    """
     effective_dir = evidence_dir if evidence_dir is not None else EVIDENCE_DIR
+    threshold = (
+        stale_threshold_hours if stale_threshold_hours is not None else STALE_THRESHOLD_HOURS
+    )
     if not effective_dir.exists():
         result.evidence_status = "missing"
         result.findings.append("Evidence directory not found")
@@ -265,16 +326,103 @@ def check_evidence(
 
     # Check if evidence files are non-empty
     all_empty = True
+    newest_mtime = 0.0
     for ef in found_files:
-        if ef.stat().st_size > 2:  # > 2 bytes (not just "{}")
-            all_empty = False
-            break
+        try:
+            st = ef.stat()
+            if st.st_size > 2:  # > 2 bytes (not just "{}")
+                all_empty = False
+            if st.st_mtime > newest_mtime:
+                newest_mtime = st.st_mtime
+        except OSError:
+            continue
 
     if all_empty:
         result.evidence_status = "empty"
         result.findings.append("Evidence files exist but are empty")
+        return
+
+    # Compute evidence age
+    now = time.time()
+    if newest_mtime > 0:
+        result.evidence_age_hours = (now - newest_mtime) / 3600
+
+    # Check stale: evidence older than threshold OR older than src/ changes
+    src_mtime = _latest_src_mtime(src_dir=src_dir)
+    if newest_mtime > 0 and src_mtime > 0 and newest_mtime < src_mtime:
+        result.evidence_status = "stale"
+        result.findings.append("Evidence is older than latest source code change")
+    elif result.evidence_age_hours > threshold:
+        result.evidence_status = "stale"
+        result.findings.append(
+            f"Evidence age ({result.evidence_age_hours:.0f}h) exceeds threshold ({threshold:.0f}h)"
+        )
     else:
         result.evidence_status = "present"
+
+
+# ---------------------------------------------------------------------------
+# Per-X-node aggregation
+# ---------------------------------------------------------------------------
+
+
+_EXEC_STATUS_RANK = {"PASS": 0, "FAIL": 1, "TIMEOUT": 2, "ERROR": 3, "SKIP": 4}
+
+
+def aggregate_per_node(results: list[XNodeResult]) -> list[XNodeVerification]:
+    """Aggregate gate-level results into per-X-node verifications."""
+    node_map: dict[str, XNodeVerification] = {}
+    node_has_fail: dict[str, bool] = {}
+
+    for r in results:
+        for node_id in r.xnodes:
+            if node_id not in node_map:
+                node_map[node_id] = XNodeVerification(
+                    node_id=node_id,
+                    phase=r.phase,
+                )
+                node_has_fail[node_id] = False
+            nv = node_map[node_id]
+            nv.gate_ids.append(r.gate_id)
+
+            # Track failures explicitly
+            if r.execution_status == "FAIL":
+                node_has_fail[node_id] = True
+
+            # Best execution status (PASS > FAIL > TIMEOUT > ERROR > SKIP)
+            cur_rank = _EXEC_STATUS_RANK.get(nv.execution_status, 99)
+            new_rank = _EXEC_STATUS_RANK.get(r.execution_status, 99)
+            if new_rank < cur_rank:
+                nv.execution_status = r.execution_status
+
+            # Evidence: take the best (present > stale > empty > missing)
+            ev_rank = {"present": 0, "stale": 1, "empty": 2, "missing": 3}
+            cur_ev = ev_rank.get(nv.evidence_status, 99)
+            new_ev = ev_rank.get(r.evidence_status, 99)
+            if new_ev < cur_ev:
+                nv.evidence_status = r.evidence_status
+                nv.evidence_age_hours = r.evidence_age_hours
+                if r.evidence_paths:
+                    nv.evidence_path = r.evidence_paths[0]
+
+            nv.findings.extend(r.findings)
+
+    # Determine verdict per node
+    for node_id, nv in node_map.items():
+        if node_has_fail[node_id]:
+            nv.verdict = "fail"
+        elif nv.evidence_status == "stale":
+            nv.verdict = "stale"
+        elif nv.evidence_status == "missing":
+            nv.verdict = "unverified"
+        elif nv.execution_status == "PASS" and nv.evidence_status == "present":
+            nv.verdict = "pass"
+        elif nv.execution_status == "SKIP":
+            nv.verdict = "unverified"
+        else:
+            nv.verdict = "unverified"
+
+    return sorted(node_map.values(), key=lambda v: v.node_id)
 
 
 # ---------------------------------------------------------------------------
@@ -287,23 +435,32 @@ def generate_report(
     *,
     verbose: bool = False,
 ) -> dict:
-    """Build the JSON report."""
-    total = len(results)
+    """Build the JSON report with per-X-node output."""
+    total_gates = len(results)
     passed = sum(1 for r in results if r.execution_status == "PASS")
     failed = sum(1 for r in results if r.execution_status == "FAIL")
     skipped = sum(1 for r in results if r.execution_status == "SKIP")
     trivial = sum(1 for r in results if r.is_trivial)
     evidence_present = sum(1 for r in results if r.evidence_status == "present")
     evidence_missing = sum(1 for r in results if r.evidence_status == "missing")
+    evidence_stale = sum(1 for r in results if r.evidence_status == "stale")
 
-    # Collect all unique X-node IDs
-    all_xnodes: set[str] = set()
-    for r in results:
-        all_xnodes.update(r.xnodes)
+    # Per-node aggregation
+    nodes = aggregate_per_node(results)
 
-    if failed > 0:
+    node_pass = sum(1 for n in nodes if n.verdict == "pass")
+    node_fail = sum(1 for n in nodes if n.verdict == "fail")
+    node_stale = sum(1 for n in nodes if n.verdict == "stale")
+    node_unverified = sum(1 for n in nodes if n.verdict == "unverified")
+
+    if failed > 0 or node_fail > 0:
         status = "FAIL"
-    elif trivial > total * 0.5 or evidence_missing > total * 0.5:
+    elif (
+        node_stale > 0
+        or evidence_stale > 0
+        or trivial > total_gates * 0.5
+        or evidence_missing > total_gates * 0.5
+    ):
         status = "WARN"
     else:
         status = "PASS"
@@ -311,18 +468,28 @@ def generate_report(
     report: dict = {
         "status": status,
         "summary": {
-            "total_xnode_gates": total,
-            "unique_xnodes": len(all_xnodes),
+            "total_xnode_gates": total_gates,
+            "unique_xnodes": len(nodes),
             "executed_pass": passed,
             "executed_fail": failed,
             "skipped": skipped,
             "trivial_count": trivial,
             "evidence_present": evidence_present,
             "evidence_missing": evidence_missing,
+            "evidence_stale": evidence_stale,
+            "node_pass": node_pass,
+            "node_fail": node_fail,
+            "node_stale": node_stale,
+            "node_unverified": node_unverified,
         },
+        "nodes": [n.to_dict() for n in nodes],
         "failed_gates": [r.to_dict() for r in results if r.execution_status == "FAIL"],
         "trivial_gates": [
-            {"gate_id": r.gate_id, "xnodes": r.xnodes, "findings": r.findings}
+            {
+                "gate_id": r.gate_id,
+                "xnodes": r.xnodes,
+                "findings": r.findings,
+            }
             for r in results
             if r.is_trivial
         ],
@@ -379,13 +546,29 @@ def main() -> None:
             f"Fail: {s['executed_fail']}, Skip: {s['skipped']}"
         )
         print(
-            f"Trivial: {s['trivial_count']}, Evidence present: {s['evidence_present']}, "
-            f"missing: {s['evidence_missing']}"
+            f"Trivial: {s['trivial_count']}, "
+            f"Evidence: present={s['evidence_present']}, "
+            f"missing={s['evidence_missing']}, stale={s['evidence_stale']}"
         )
+        print(
+            f"\nX-Nodes: {s['unique_xnodes']} total, "
+            f"pass={s['node_pass']}, fail={s['node_fail']}, "
+            f"stale={s['node_stale']}, unverified={s['node_unverified']}"
+        )
+        for node in report["nodes"]:
+            marker = {"pass": "+", "fail": "!", "stale": "~", "unverified": "?"}
+            m = marker.get(node["verdict"], "?")
+            print(
+                f"  [{m}] {node['node_id']}: "
+                f"{node['verdict']} "
+                f"(evidence={node['evidence_status']}, "
+                f"age={node['evidence_age_hours']}h)"
+            )
         if report["failed_gates"]:
             print("\nFailed gates:")
             for fg in report["failed_gates"]:
-                print(f"  {fg['gate_id']}: {fg.get('execution_error', 'unknown')}")
+                err = fg.get("execution_error", "unknown")
+                print(f"  {fg['gate_id']}: {err}")
         print(f"\n=== Result: {report['status']} ===")
 
     if report["status"] == "FAIL":

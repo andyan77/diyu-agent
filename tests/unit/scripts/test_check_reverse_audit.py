@@ -188,22 +188,9 @@ class TestRunAudit:
 
     def test_mapped_artifact(self) -> None:
         arts = [
-            ra.CodeArtifact("src/brain/engine.py", "ConversationEngine", "class", 1, "brain"),
-        ]
-        results = ra.run_audit(
-            arts,
-            arch_text="The ConversationEngine manages dialogue flow.",
-            task_card_text="### TASK-B2-1: ConversationEngine implementation",
-        )
-        assert results[0].status == "mapped"
-        assert results[0].architecture_ref != ""
-        assert results[0].task_card_ref != ""
-
-    def test_shadow_artifact(self) -> None:
-        arts = [
             ra.CodeArtifact(
-                "src/brain/skill/orchestrator.py",
-                "SkillOrchestrator",
+                "src/brain/engine.py",
+                "ConversationEngine",
                 "class",
                 1,
                 "brain",
@@ -211,38 +198,192 @@ class TestRunAudit:
         ]
         results = ra.run_audit(
             arts,
-            arch_text="The Brain layer handles conversations and intent routing.",
-            task_card_text="### TASK-B2-1: Conversation engine implementation",
+            arch_text="The ConversationEngine manages dialogue flow.",
+            task_card_text="### TASK-B2-1: ConversationEngine implementation",
         )
-        # "SkillOrchestrator" not found in either text
-        assert results[0].status == "shadow"
+        code_results = [r for r in results if r.status != "dead"]
+        assert code_results[0].status == "mapped"
+        assert code_results[0].architecture_ref != ""
+        assert code_results[0].task_card_ref != ""
+
+    def test_shadow_artifact(self) -> None:
+        arts = [
+            ra.CodeArtifact(
+                "src/brain/skill/orchestrator.py",
+                "Xyzzy",
+                "class",
+                1,
+                "brain",
+            ),
+        ]
+        results = ra.run_audit(
+            arts,
+            arch_text="The Brain layer handles conversations.",
+            task_card_text="### TASK-B2-1: Conversation engine",
+        )
+        code_results = [r for r in results if r.status != "dead"]
+        assert code_results[0].status == "shadow"
 
     def test_arch_only_is_mapped(self) -> None:
-        """Artifact referenced in arch docs but not task cards is still mapped."""
+        """Artifact referenced in arch docs but not task cards."""
         arts = [
-            ra.CodeArtifact("src/memory/pg_adapter.py", "PgAdapter", "port_impl", 1, "memory"),
+            ra.CodeArtifact(
+                "src/memory/pg_adapter.py",
+                "PgAdapter",
+                "port_impl",
+                1,
+                "memory",
+                bases=["MemoryCorePort"],
+            ),
         ]
         results = ra.run_audit(
             arts,
             arch_text="PgAdapter implements MemoryCorePort.",
             task_card_text="No mention.",
         )
-        assert results[0].status == "mapped"
+        code_results = [r for r in results if r.status != "dead"]
+        assert code_results[0].status == "mapped"
 
     def test_multiple_artifacts_mixed(self) -> None:
         arts = [
-            ra.CodeArtifact("src/brain/engine.py", "ConversationEngine", "class", 1, "brain"),
-            ra.CodeArtifact("src/shared/rls_tables.py", "SomethingUnique123", "class", 1, "shared"),
+            ra.CodeArtifact(
+                "src/brain/engine.py",
+                "ConversationEngine",
+                "class",
+                1,
+                "brain",
+            ),
+            ra.CodeArtifact(
+                "src/shared/rls_tables.py",
+                "SomethingUnique123",
+                "class",
+                1,
+                "shared",
+            ),
         ]
         results = ra.run_audit(
             arts,
             arch_text="ConversationEngine is the main engine.",
             task_card_text="",
         )
-        mapped = [r for r in results if r.status == "mapped"]
-        shadows = [r for r in results if r.status == "shadow"]
+        code_results = [r for r in results if r.status != "dead"]
+        mapped = [r for r in code_results if r.status == "mapped"]
+        shadows = [r for r in code_results if r.status == "shadow"]
         assert len(mapped) == 1
         assert len(shadows) == 1
+
+    def test_drift_detected(self, tmp_path: Path) -> None:
+        """Port impl missing required methods is drift."""
+        src = _make_src(
+            tmp_path,
+            {
+                "ports/memory_port.py": textwrap.dedent("""\
+                from abc import ABC, abstractmethod
+                class MemoryPort(ABC):
+                    @abstractmethod
+                    def read(self): pass
+                    @abstractmethod
+                    def write(self): pass
+            """),
+                "memory/adapter.py": textwrap.dedent("""\
+                class MyAdapter(MemoryPort):
+                    def read(self): return []
+            """),
+            },
+        )
+        contracts = ra.build_port_contracts(src_dir=src)
+        arts = [
+            ra.CodeArtifact(
+                str(src / "memory/adapter.py"),
+                "MyAdapter",
+                "port_impl",
+                1,
+                "memory",
+                bases=["MemoryPort"],
+            ),
+        ]
+        results = ra.run_audit(
+            arts,
+            arch_text="MyAdapter implements MemoryPort.",
+            port_contracts=contracts,
+        )
+        code_results = [r for r in results if r.status != "dead"]
+        assert code_results[0].status == "drift"
+        assert "write" in code_results[0].drift_detail
+
+    def test_no_drift_when_all_methods_present(self, tmp_path: Path) -> None:
+        """Complete Port implementation is not drift."""
+        src = _make_src(
+            tmp_path,
+            {
+                "ports/storage_port.py": textwrap.dedent("""\
+                from abc import ABC, abstractmethod
+                class StoragePort(ABC):
+                    @abstractmethod
+                    def save(self): pass
+            """),
+                "infra/s3.py": textwrap.dedent("""\
+                class S3Adapter(StoragePort):
+                    def save(self): return True
+            """),
+            },
+        )
+        contracts = ra.build_port_contracts(src_dir=src)
+        arts = [
+            ra.CodeArtifact(
+                str(src / "infra/s3.py"),
+                "S3Adapter",
+                "port_impl",
+                1,
+                "infra",
+                bases=["StoragePort"],
+            ),
+        ]
+        results = ra.run_audit(
+            arts,
+            arch_text="S3Adapter implements StoragePort.",
+            port_contracts=contracts,
+        )
+        code_results = [r for r in results if r.status != "dead"]
+        assert code_results[0].status == "mapped"
+
+    def test_dead_reference_detected(self) -> None:
+        """Arch doc mentions artifact not present in code."""
+        arts = [
+            ra.CodeArtifact(
+                "src/brain/engine.py",
+                "RealEngine",
+                "class",
+                1,
+                "brain",
+            ),
+        ]
+        results = ra.run_audit(
+            arts,
+            arch_text="The FooBarHandler processes incoming requests.",
+        )
+        dead = [r for r in results if r.status == "dead"]
+        dead_names = [d.name for d in dead]
+        assert "FooBarHandler" in dead_names
+
+    def test_no_dead_when_artifact_exists(self) -> None:
+        """Arch doc references that exist in code are not dead."""
+        arts = [
+            ra.CodeArtifact(
+                "src/brain/engine.py",
+                "ConversationEngine",
+                "class",
+                1,
+                "brain",
+            ),
+        ]
+        results = ra.run_audit(
+            arts,
+            arch_text="ConversationEngine manages dialogue.",
+        )
+        dead = [r for r in results if r.status == "dead"]
+        dead_names = [d.name for d in dead]
+        assert "ConversationEngine" not in dead_names
 
 
 # ---------------------------------------------------------------------------
@@ -253,13 +394,15 @@ class TestRunAudit:
 class TestGenerateReport:
     """Test report structure."""
 
-    def test_pass_no_shadows(self) -> None:
+    def test_pass_no_findings(self) -> None:
         results = [
-            ra.AuditResult("f.py", "Engine", "class", "brain", "mapped", "arch ref"),
+            ra.AuditResult("f.py", "Engine", "class", "brain", "mapped", "ref"),
         ]
         report = ra.generate_report(results)
         assert report["status"] == "PASS"
         assert report["summary"]["shadow_count"] == 0
+        assert report["summary"]["drift_count"] == 0
+        assert report["summary"]["dead_count"] == 0
 
     def test_warn_on_shadows(self) -> None:
         results = [
@@ -269,6 +412,38 @@ class TestGenerateReport:
         assert report["status"] == "WARN"
         assert report["summary"]["shadow_count"] == 1
         assert len(report["shadows"]) == 1
+
+    def test_fail_on_drift(self) -> None:
+        results = [
+            ra.AuditResult(
+                "f.py",
+                "Adapter",
+                "port_impl",
+                "memory",
+                "drift",
+                drift_detail="Missing methods from FooPort: bar",
+            ),
+        ]
+        report = ra.generate_report(results)
+        assert report["status"] == "FAIL"
+        assert report["summary"]["drift_count"] == 1
+        assert len(report["drifted"]) == 1
+
+    def test_fail_on_dead(self) -> None:
+        results = [
+            ra.AuditResult(
+                "(not found)",
+                "GhostHandler",
+                "unknown",
+                "unknown",
+                "dead",
+                "ref in arch",
+            ),
+        ]
+        report = ra.generate_report(results)
+        assert report["status"] == "FAIL"
+        assert report["summary"]["dead_count"] == 1
+        assert len(report["dead"]) == 1
 
     def test_verbose_includes_all(self) -> None:
         results = [
@@ -313,28 +488,42 @@ class TestScriptExecution:
         assert "total_artifacts" in s
         assert "mapped_count" in s
         assert "shadow_count" in s
+        assert "drift_count" in s
+        assert "dead_count" in s
+
+    def test_report_has_all_sections(self) -> None:
+        result = _run_script("--json")
+        report = json.loads(result.stdout)
+        assert "shadows" in report
+        assert "drifted" in report
+        assert "dead" in report
 
     def test_detects_known_shadows(self) -> None:
-        """Validation fixture: must detect known shadow files (plan line 337).
+        """Validation fixture: must detect known shadow baseline set.
 
-        Known shadows: orchestrator.py, write_adapter.py, rls_tables.py, trace_context.py.
-        At least some of these should appear as shadow artifacts (not all class names
-        may be unique enough to avoid matching arch docs).
+        Known shadow baseline (plan §C2):
+          - src/brain/skill/orchestrator.py
+          - src/knowledge/api/write_adapter.py
+          - src/shared/rls_tables.py
+          - src/shared/trace_context.py
+
+        Must detect at least 2 of these 4 as shadows.
         """
         result = _run_script("--json")
         report = json.loads(result.stdout)
         shadow_files = [s["file"] for s in report["shadows"]]
-        # At least one of the known shadow files should be detected
         known_shadow_fragments = [
+            "orchestrator.py",
+            "write_adapter.py",
             "rls_tables.py",
             "trace_context.py",
         ]
-        found_any = False
-        for frag in known_shadow_fragments:
-            if any(frag in f for f in shadow_files):
-                found_any = True
-                break
-        assert found_any, f"No known shadow files detected. Shadow files: {shadow_files[:10]}"
+        found_count = sum(
+            1 for frag in known_shadow_fragments if any(frag in f for f in shadow_files)
+        )
+        assert found_count >= 2, (
+            f"Only {found_count}/4 known shadow files detected. Shadow files: {shadow_files[:15]}"
+        )
 
     def test_human_readable_output(self) -> None:
         result = _run_script()
