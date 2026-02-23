@@ -90,7 +90,9 @@
 
 ### TASK-INT-P4-FE: 前端跨层集成 E2E
 
-> 矩阵条目: XF4-1, XF4-2, XF4-3
+> 矩阵条目: XF4-1
+> 矩阵条目: XF4-2
+> 矩阵条目: XF4-3
 > Gate: p4-billing-e2e, p4-monitoring-dashboard, p4-memory-privacy-e2e
 
 | Field | Value |
@@ -110,7 +112,8 @@
 
 ### TASK-INT-P4-MEDIA: 企业多模态 Cross-Layer E2E
 
-> 矩阵条目: XM2-1, XM2-2
+> 矩阵条目: XM2-1
+> 矩阵条目: XM2-2
 > Gate: p4-enterprise-media, p4-media-safety
 
 | Field | Value |

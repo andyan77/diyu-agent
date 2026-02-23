@@ -18,15 +18,34 @@ from __future__ import annotations
 import time
 from collections.abc import Generator  # noqa: TC003 -- used at runtime by contextmanager
 from contextlib import contextmanager
-from typing import TYPE_CHECKING
 
-from prometheus_client import Counter, Histogram
-
-if TYPE_CHECKING:
-    from prometheus_client import CollectorRegistry
+from prometheus_client import CollectorRegistry, Counter, Histogram
 
 # Latency buckets: 10ms to 10s (tuned for Brain layer operations)
 _LATENCY_BUCKETS = (0.01, 0.025, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0)
+
+
+def _histogram(
+    name: str,
+    documentation: str,
+    registry: CollectorRegistry | None,
+) -> Histogram:
+    """Create a Histogram with optional registry."""
+    if registry is not None:
+        return Histogram(name, documentation, buckets=_LATENCY_BUCKETS, registry=registry)
+    return Histogram(name, documentation, buckets=_LATENCY_BUCKETS)
+
+
+def _counter(
+    name: str,
+    documentation: str,
+    labelnames: list[str],
+    registry: CollectorRegistry | None,
+) -> Counter:
+    """Create a Counter with optional registry."""
+    if registry is not None:
+        return Counter(name, documentation, labelnames, registry=registry)
+    return Counter(name, documentation, labelnames)
 
 
 class BrainSLI:
@@ -37,57 +56,47 @@ class BrainSLI:
     """
 
     def __init__(self, *, registry: CollectorRegistry | None = None) -> None:
-        kw: dict = {}
-        if registry is not None:
-            kw["registry"] = registry
-
-        self.context_assembly_duration = Histogram(
+        self.context_assembly_duration = _histogram(
             "brain_context_assembly_duration_seconds",
             "Time spent assembling context (Memory + Knowledge)",
-            buckets=_LATENCY_BUCKETS,
-            **kw,
+            registry,
         )
 
-        self.llm_call_duration = Histogram(
+        self.llm_call_duration = _histogram(
             "brain_llm_call_duration_seconds",
             "Time spent in LLM call (prompt → response)",
-            buckets=_LATENCY_BUCKETS,
-            **kw,
+            registry,
         )
 
-        self.memory_write_duration = Histogram(
+        self.memory_write_duration = _histogram(
             "brain_memory_write_duration_seconds",
             "Time spent writing to memory pipeline",
-            buckets=_LATENCY_BUCKETS,
-            **kw,
+            registry,
         )
 
-        self.skill_execution_duration = Histogram(
+        self.skill_execution_duration = _histogram(
             "brain_skill_execution_duration_seconds",
             "Time spent executing a skill",
-            buckets=_LATENCY_BUCKETS,
-            **kw,
+            registry,
         )
 
-        self.conversation_turn_duration = Histogram(
+        self.conversation_turn_duration = _histogram(
             "brain_conversation_turn_duration_seconds",
             "Total time for a full conversation turn",
-            buckets=_LATENCY_BUCKETS,
-            **kw,
+            registry,
         )
 
-        self.knowledge_resolution_duration = Histogram(
+        self.knowledge_resolution_duration = _histogram(
             "brain_knowledge_resolution_duration_seconds",
             "Time spent resolving knowledge from KnowledgePort",
-            buckets=_LATENCY_BUCKETS,
-            **kw,
+            registry,
         )
 
-        self.memory_retrieval_count = Counter(
+        self.memory_retrieval_count = _counter(
             "brain_memory_retrieval_total",
             "Memory retrieval attempts",
             ["status"],
-            **kw,
+            registry,
         )
 
     @contextmanager
