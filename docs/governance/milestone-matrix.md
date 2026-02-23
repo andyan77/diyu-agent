@@ -322,21 +322,46 @@ Phase 3 完成度: 12/12 (100%)
 make verify-phase-4
 ```
 
-期望输出:
+期望输出 (29 hard + 0 soft, 12 X-nodes bound):
 
 ```
-[PASS] SLI/SLO 指标与告警规则存在
-[PASS] 全链路 trace_id 可追踪
-[PASS] 备份恢复演练通过
-[PASS] 升级回滚演练通过 (upgrade->downgrade->upgrade)
-[PASS] 故障注入测试 (关键路径) 通过
-[PASS] 删除管线端到端通过
-[PASS] 性能基线不低于上一版本
-[PASS] 三 SSOT 一致性检查无偏差
-[PASS] SLI/SLO 指标 + 告警分级可用 (OS4-1/2/3)
-[PASS] 渗透测试 OWASP Top 10 无 Critical/High (OS4-7)
+  [HARD]
+    [PASS] p4-coverage: Test coverage >= 80%
+    [PASS] p4-fe-build: Full frontend build passes
+    [PASS] p4-lighthouse: Lighthouse CI performance budget (LCP<2.5s/FID<100ms/CLS<0.1/200KB) [XF4-1]
+    [PASS] p4-a11y: Zero critical a11y violations (axe-core)
+    [PASS] p4-trace-e2e: Full-chain trace_id propagation E2E [X4-1]
+    [PASS] p4-ssot-drift: Triple SSOT consistency check [X4-3]
+    [PASS] p4-delete-e2e: Delete pipeline E2E [X4-4]
+    [PASS] p4-fault-injection: Fault injection + recovery [X4-6]
+    [PASS] p4-billing-e2e: Billing flow E2E [XF4-1]
+    [PASS] p4-memory-privacy-e2e: Memory privacy E2E [XF4-3]
+    [PASS] p4-release-drill: Upgrade/rollback drill [X4-2]
+    [PASS] p4-dr-restore: Backup restore drill
+    [PASS] p4-dependency-chaos: Dependency chaos testing (CB-4)
+    [PASS] p4-incident-readiness: Incident management readiness
+    [PASS] p4-alert-routing: Alert routing validation
+    [PASS] p4-compliance-artifacts: Compliance artifacts complete
+    [PASS] p4-slo-metrics: SLI/SLO metrics + alerts operational [X4-5]
+    [PASS] p4-slo-burn-rate: SLO burn-rate alert rules configured
+    [PASS] p4-monitoring-dashboard: Admin monitoring dashboard E2E [XF4-2]
+    [PASS] p4-xnode-coverage: XNode result coverage >= 90%
+    [PASS] p4-pentest-report: Pentest OWASP Top 10 zero Critical/High [X4-7]
+    [PASS] p4-sbom-attestation: SBOM cosign attestation (hard)
+    [PASS] p4-perf-baseline: Performance baseline (Assembler/Graph/Vector P95)
+    [PASS] p4-ha-validation: HA failover validation (<30s recovery)
+    [PASS] p4-diag-package: One-click diagnostic package
+    [PASS] p4-key-rotation: Key rotation + cert management
+    [PASS] p4-enterprise-media: Enterprise media dual-write + FK [XM2-1]
+    [PASS] p4-media-safety: Enterprise media NSFW + copyright precheck [XM2-2]
+    [PASS] p4-postmortem-capa: Postmortem template + CAPA register
 
-Phase 4 完成度: 10/10 (100%)
+  Hard: 29/29 passed
+  Soft: 0/0 passed
+  XNode result coverage: 12/12 (100%) >= 90% threshold
+  Go/No-Go: GO
+
+Phase 4 完成度: 29/29 (100%)
 ```
 
 ### Phase 5 检查清单

@@ -244,8 +244,68 @@ def check_oncall_schedule(results: list[dict]) -> bool:
     return True
 
 
+def check_burn_rate_rules(results: list[dict]) -> bool:
+    """Verify SLO burn-rate alert rules exist (fast + slow)."""
+    data = _load_yaml(ALERTS_PATH)
+    if data is None:
+        results.append(
+            {
+                "check": "burn_rate_rules",
+                "status": "FAIL",
+                "detail": f"{ALERTS_PATH} not found",
+            }
+        )
+        return False
+
+    if "_raw" in data:
+        results.append(
+            {
+                "check": "burn_rate_rules",
+                "status": "FAIL",
+                "detail": "PyYAML not available for burn-rate check",
+            }
+        )
+        return False
+
+    groups = data.get("groups", [])
+    burn_rates_found: dict[str, str] = {}  # burn_rate_label -> alert_name
+
+    for group in groups:
+        for rule in group.get("rules", []):
+            labels = rule.get("labels", {})
+            br = labels.get("burn_rate")
+            if br:
+                burn_rates_found[br] = rule.get("alert", "unknown")
+
+    required = {"fast", "slow"}
+    missing = required - set(burn_rates_found.keys())
+
+    if missing:
+        results.append(
+            {
+                "check": "burn_rate_rules",
+                "status": "FAIL",
+                "detail": f"Missing burn-rate tiers: {sorted(missing)} (found: {burn_rates_found})",
+            }
+        )
+        return False
+
+    results.append(
+        {
+            "check": "burn_rate_rules",
+            "status": "PASS",
+            "detail": (
+                "Burn-rate rules present: "
+                + ", ".join(f"{k}={v}" for k, v in sorted(burn_rates_found.items()))
+            ),
+        }
+    )
+    return True
+
+
 def main() -> int:
     use_json = "--json" in sys.argv
+    verify_burn_rate = "--verify-burn-rate" in sys.argv
 
     results: list[dict] = []
     all_pass = True
@@ -254,9 +314,14 @@ def main() -> int:
     all_pass = check_suppression_reference(results) and all_pass
     all_pass = check_oncall_schedule(results) and all_pass
 
+    if verify_burn_rate:
+        all_pass = check_burn_rate_rules(results) and all_pass
+
+    gate_id = "p4-slo-burn-rate" if verify_burn_rate else "p4-alert-routing"
+
     if use_json:
         output = {
-            "gate_id": "p4-alert-routing",
+            "gate_id": gate_id,
             "status": "PASS" if all_pass else "FAIL",
             "checks": results,
         }
@@ -266,7 +331,8 @@ def main() -> int:
             marker = "OK" if r["status"] == "PASS" else "FAIL"
             print(f"  [{marker}] {r['check']}: {r['detail']}")
         print()
-        print(f"Alert routing: {'PASS' if all_pass else 'FAIL'}")
+        label = "Alert routing + burn-rate" if verify_burn_rate else "Alert routing"
+        print(f"{label}: {'PASS' if all_pass else 'FAIL'}")
 
     return 0 if all_pass else 1
 

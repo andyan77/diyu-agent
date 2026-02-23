@@ -1,0 +1,38 @@
+# DIYU Agent CAPA (Corrective and Preventive Action) Register
+# Gate: p4-postmortem-capa
+# Validation: scripts/check_postmortem_capa.py
+#
+# Each entry links an incident postmortem action item to its resolution.
+# Action items from postmortems MUST be registered here for traceability.
+#
+# Status lifecycle: open -> in_progress -> verified -> closed
+# Entries are never deleted; closed entries serve as audit trail.
+
+version: "1.0"
+
+# Schema for each entry:
+#   incident_id: INC-YYYY-NNN
+#   action_id: AI-N (from postmortem action items table)
+#   description: What corrective/preventive action is required
+#   owner: Person responsible
+#   priority: P0 / P1 / P2
+#   created: YYYY-MM-DD
+#   deadline: YYYY-MM-DD
+#   status: open / in_progress / verified / closed
+#   resolution: Description of what was done (filled on completion)
+#   evidence: Path to evidence file or PR link
+#   gate_binding: Optional exit_criteria gate ID that validates this CAPA
+
+entries: []
+# Example entry (uncomment when first incident occurs):
+#   - incident_id: "INC-2026-001"
+#     action_id: "AI-1"
+#     description: "Add circuit breaker to LLM provider fallback path"
+#     owner: "faye"
+#     priority: "P1"
+#     created: "2026-03-01"
+#     deadline: "2026-03-15"
+#     status: "open"
+#     resolution: ""
+#     evidence: ""
+#     gate_binding: ""

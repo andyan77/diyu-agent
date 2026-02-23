@@ -4,11 +4,10 @@
 # Each path will be removed from this list once the file is created.
 #
 # Generated: 2026-02-22
-# Total: 104 paths across 15 task card files
+# Total: 103 paths across 15 task card files (2 created in Stage 0.9, 1 added for p4-dr-restore)
 
 # -- scripts (Phase 4+) --
-scripts/check_ssot_drift.sh
-scripts/rotate_secrets.sh
+scripts/drill_dr_restore.sh
 scripts/seed_vectors.py
 
 # -- src types (consolidated into src/shared/types/__init__.py) --

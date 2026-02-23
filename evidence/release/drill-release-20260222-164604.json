@@ -1,0 +1,14 @@
+{
+  "drill_type": "release-rollback",
+  "gate_id": "p4-release-drill",
+  "timestamp": "2026-02-22T16:46:04Z",
+  "dry_run": false,
+  "steps": [{"name":"check_prerequisites","status":"FAIL","duration_ms":92},{"name":"simulate_deploy","status":"PASS","duration_ms":172},{"name":"simulate_health_failure","status":"PASS","duration_ms":2411},{"name":"execute_rollback","status":"PASS","duration_ms":171},{"name":"verify_rollback","status":"FAIL","duration_ms":2513}],
+  "timing": {
+    "total_duration_ms": 5375,
+    "target_ms": 300000,
+    "within_target": true
+  },
+  "result": "FAIL",
+  "runbook_ref": "delivery/commercial/runbook/release-rollback.md"
+}

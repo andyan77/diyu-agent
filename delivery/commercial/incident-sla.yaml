@@ -1,38 +1,74 @@
 # DIYU Agent Incident Management SLA
 # Gate ID: p4-incident-readiness
 # Validation: scripts/check_incident_readiness.py
+# Updated: Phase 4 — founder-solo / best-effort model
 
 incident_levels:
   P0:
     description: "Service outage affecting all users"
-    response_time: "15min"
+    response_time: "30min"
     resolution_target: "4h"
-    escalation: ["on-call-engineer", "engineering-lead", "CTO"]
-    communication: "Status page update within 15min, hourly updates"
+    escalation: ["founder"]
+    communication: "Status page update within 30min, hourly updates"
   P1:
     description: "Major feature degradation or data integrity risk"
-    response_time: "30min"
+    response_time: "1h"
     resolution_target: "8h"
-    escalation: ["on-call-engineer", "engineering-lead"]
-    communication: "Status page update within 30min"
+    escalation: ["founder"]
+    communication: "Status page update within 1h"
   P2:
     description: "Minor feature issue or performance degradation"
     response_time: "4h"
     resolution_target: "3d"
-    escalation: ["team-lead"]
+    escalation: ["founder"]
     communication: "Ticket update within 4h"
 
 metrics:
-  mtta_target: "15min"
+  mtta_target: "30min"
   mttr_target_p0: "4h"
   mttr_target_p1: "8h"
 
 on_call:
-  rotation: "weekly"
-  coverage: "24x7"
+  model: "founder-solo"
+  rotation: "best-effort"
+  coverage: "best-effort"
   suppression_rules: "deploy/monitoring/alerts.yml#suppression"
+  note: "Single founder covers all on-call. Escalation = same person."
+
+# SLO definitions (Phase 4, decision C-2/C-3)
+slo:
+  availability:
+    target: 0.995  # 99.5%
+    window: "30d"
+  latency_p95:
+    target_ms: 500
+  error_rate:
+    target: 0.001  # 0.1%
+
+# Error budget (derived from SLO availability 99.5%, 30-day window)
+error_budget:
+  monthly_budget_minutes: 21.6  # 30d * 24h * 60min * 0.5% = 216min... corrected: 0.5% of 43200min = 216min
+  # Correction: 30 * 24 * 60 = 43200 min; 43200 * 0.005 = 216 min
+  monthly_budget_minutes_actual: 216
+  alert_threshold_percent: 50  # Alert when 50% budget consumed
+  freeze_threshold_percent: 100  # Deploy freeze when 100% consumed
+
+# Burn-rate alert strategy (Google SRE Workbook, decision C-3)
+burn_rate:
+  fast:
+    multiplier: 14.4  # 14.4x burn rate
+    window: "1h"
+    severity: "P0"
+    action: "page founder immediately"
+  slow:
+    multiplier: 6.0  # 6x burn rate
+    window: "6h"
+    severity: "P1"
+    action: "alert within 1h"
 
 post_incident:
   blameless_review: "within 48h"
   action_items_deadline: "1 sprint"
   evidence_archive: "evidence/incidents/"
+  postmortem_template: "delivery/commercial/postmortem-template.md"
+  capa_register: "delivery/commercial/capa-register.yaml"

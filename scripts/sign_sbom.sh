@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
-# DIYU Agent SBOM signing script (D3-5, soft gate).
+# DIYU Agent SBOM signing script (D3-5 soft -> Phase 4 hard gate).
 #
 # Purpose: Generate Software Bill of Materials (SBOM) and sign it using cosign.
-# This is a soft gate: if cosign is unavailable, SBOM is still generated but unsigned.
+# Phase 4 hard gate: cosign MUST be available and signing MUST succeed.
+# Key pair location: .keys/cosign.key (gitignored)
 #
 # Usage:
 #   bash scripts/sign_sbom.sh
 #
 # Outputs:
 #   - evidence/sbom.json (combined Python + frontend SBOM)
-#   - evidence/sbom.json.bundle (cosign signature, if cosign available)
+#   - evidence/sbom.json.bundle (cosign signature)
 #
 # Exit codes:
-#   0 - SBOM generated (and signed if cosign available)
-#   1 - SBOM generation failed
+#   0 - SBOM generated AND signed successfully
+#   1 - SBOM generation failed OR cosign unavailable OR signing failed
 
 set -euo pipefail
 
@@ -89,25 +90,42 @@ EOF
 
 echo "  ✓ SBOM written to $SBOM_FILE"
 
-# --- Step 5: Sign SBOM with cosign (soft gate) ---
-if command -v cosign >/dev/null 2>&1; then
-  echo ""
-  echo "[Bonus] Signing SBOM with cosign..."
+# --- Step 5: Sign SBOM with cosign (HARD gate since Phase 4) ---
+COSIGN_KEY="${PROJECT_ROOT}/.keys/cosign.key"
 
-  if cosign sign-blob --bundle "${SBOM_FILE}.bundle" "$SBOM_FILE" 2>/dev/null; then
-    echo "  ✓ SBOM signed successfully"
-    echo "  ✓ Signature bundle: ${SBOM_FILE}.bundle"
-  else
-    echo "  WARNING: cosign signing failed (requires keyless mode or key setup)"
-    echo "  SBOM generated but unsigned"
-  fi
-else
+if ! command -v cosign >/dev/null 2>&1; then
   echo ""
-  echo "[Info] cosign not found - SBOM generated but unsigned"
-  echo "  This is a soft gate. Install cosign for signed SBOMs in production."
+  echo "[FAIL] cosign not found. Phase 4 requires SBOM signing."
+  echo "  Install: https://docs.sigstore.dev/cosign/system_config/installation/"
+  echo "  Generate key pair: cosign generate-key-pair --output-key-prefix=.keys/cosign"
+  exit 1
 fi
 
 echo ""
-echo "=== SBOM Generation Complete ==="
+echo "[4/4] Signing SBOM with cosign..."
+
+if [ -f "$COSIGN_KEY" ]; then
+  # Local key pair signing
+  if cosign sign-blob --key "$COSIGN_KEY" --bundle "${SBOM_FILE}.bundle" "$SBOM_FILE" 2>/dev/null; then
+    echo "  ✓ SBOM signed successfully (local key)"
+    echo "  ✓ Signature bundle: ${SBOM_FILE}.bundle"
+  else
+    echo "  [FAIL] cosign signing failed with local key: $COSIGN_KEY"
+    exit 1
+  fi
+else
+  # Keyless signing (CI/CD with OIDC)
+  if cosign sign-blob --bundle "${SBOM_FILE}.bundle" "$SBOM_FILE" 2>/dev/null; then
+    echo "  ✓ SBOM signed successfully (keyless)"
+    echo "  ✓ Signature bundle: ${SBOM_FILE}.bundle"
+  else
+    echo "  [FAIL] cosign signing failed. Ensure key pair at $COSIGN_KEY or OIDC keyless setup."
+    echo "  Generate key pair: cosign generate-key-pair --output-key-prefix=.keys/cosign"
+    exit 1
+  fi
+fi
+
+echo ""
+echo "=== SBOM Generation + Signing Complete ==="
 
 exit 0
