@@ -14,6 +14,7 @@ from uuid import UUID
 import pytest
 
 from src.shared.trace_context import (
+    TraceIdFilter,
     current_trace_id,
     get_trace_id,
     set_trace_id,
@@ -80,6 +81,39 @@ class TestCurrentTraceId:
     def test_is_the_same_context_var(self) -> None:
         set_trace_id("via-setter")
         assert current_trace_id.get() == "via-setter"
+
+
+class TestTraceIdFilter:
+    """TraceIdFilter injects trace_id into log records."""
+
+    def test_injects_trace_id_into_record(self) -> None:
+        import logging
+
+        f = TraceIdFilter()
+        record = logging.LogRecord("test", logging.INFO, "", 0, "msg", (), None)
+
+        set_trace_id("filter-test-123")
+        assert f.filter(record) is True
+        assert record.trace_id == "filter-test-123"  # type: ignore[attr-defined]
+
+    def test_defaults_to_dash_when_empty(self) -> None:
+        import logging
+
+        f = TraceIdFilter()
+        record = logging.LogRecord("test", logging.INFO, "", 0, "msg", (), None)
+
+        set_trace_id("")
+        assert f.filter(record) is True
+        assert record.trace_id == "-"  # type: ignore[attr-defined]
+
+    def test_always_returns_true(self) -> None:
+        """Filter should never suppress log records, only add trace_id."""
+        import logging
+
+        f = TraceIdFilter()
+        record = logging.LogRecord("test", logging.WARNING, "", 0, "warn", (), None)
+        set_trace_id("any")
+        assert f.filter(record) is True
 
 
 class TestAsyncPropagation:

@@ -36,6 +36,7 @@ from src.shared.errors import (
     ServiceUnavailableError,
     ValidationError,
 )
+from src.shared.trace_context import trace_context
 
 _EXEMPT_PATHS = frozenset(
     {
@@ -191,81 +192,93 @@ def create_app(
     async def jwt_auth_middleware(request: Request, call_next: Any) -> Response:
         path = request.url.path
 
+        # OS4-4: Extract or generate trace_id for full-chain propagation.
+        # X-Trace-ID header takes precedence; auto-generate UUID4 if absent.
+        incoming_trace_id = request.headers.get("x-trace-id") or None
+
         # Security headers applied to ALL responses
-        def _add_security_headers(response: Response) -> Response:
+        def _add_security_headers(response: Response, *, tid: str = "") -> Response:
             for name, value in _sec_headers.get_headers().items():
                 response.headers[name] = value
+            if tid:
+                response.headers["X-Trace-ID"] = tid
             return response
 
-        # CORS preflight (OPTIONS) must pass through to CORSMiddleware
-        if request.method == "OPTIONS":
-            response = await call_next(request)
-            return _add_security_headers(response)
+        # Wrap entire request processing in trace_context for contextvars propagation
+        with trace_context(incoming_trace_id) as effective_tid:
+            # CORS preflight (OPTIONS) must pass through to CORSMiddleware
+            if request.method == "OPTIONS":
+                response = await call_next(request)
+                return _add_security_headers(response, tid=effective_tid)
 
-        if path in _EXEMPT_PATHS:
-            response = await call_next(request)
-            return _add_security_headers(response)
+            if path in _EXEMPT_PATHS:
+                response = await call_next(request)
+                return _add_security_headers(response, tid=effective_tid)
 
-        # F-1: Check if path matches a registered route before requiring auth.
-        # Unknown paths should return 404, not 401 (information leak).
-        route_matched = any(route.matches(request.scope)[0] != Match.NONE for route in app.routes)
-        if not route_matched:
-            response = await call_next(request)
-            return _add_security_headers(response)
-
-        auth_header = request.headers.get("authorization", "")
-
-        # F-3: SSE/WebSocket query-token fallback for EventSource clients
-        # that cannot set Authorization headers.
-        token: str | None = None
-        if auth_header.startswith("Bearer "):
-            token = auth_header[7:]
-        elif request.query_params.get("token"):
-            token = request.query_params["token"]
-
-        if not token:
-            return _add_security_headers(
-                JSONResponse(
-                    status_code=401,
-                    content={
-                        "error": "AUTH_FAILED",
-                        "message": "Missing or malformed Authorization header",
-                    },
-                )
+            # F-1: Check if path matches a registered route before requiring auth.
+            # Unknown paths should return 404, not 401 (information leak).
+            route_matched = any(
+                route.matches(request.scope)[0] != Match.NONE for route in app.routes
             )
-        try:
-            payload = decode_token(token, secret=secret)
-        except AuthenticationError as exc:
-            return _add_security_headers(
-                JSONResponse(
-                    status_code=401,
-                    content={"error": exc.code, "message": str(exc)},
+            if not route_matched:
+                response = await call_next(request)
+                return _add_security_headers(response, tid=effective_tid)
+
+            auth_header = request.headers.get("authorization", "")
+
+            # F-3: SSE/WebSocket query-token fallback for EventSource clients
+            # that cannot set Authorization headers.
+            token: str | None = None
+            if auth_header.startswith("Bearer "):
+                token = auth_header[7:]
+            elif request.query_params.get("token"):
+                token = request.query_params["token"]
+
+            if not token:
+                return _add_security_headers(
+                    JSONResponse(
+                        status_code=401,
+                        content={
+                            "error": "AUTH_FAILED",
+                            "message": "Missing or malformed Authorization header",
+                        },
+                    ),
+                    tid=effective_tid,
                 )
-            )
+            try:
+                payload = decode_token(token, secret=secret)
+            except AuthenticationError as exc:
+                return _add_security_headers(
+                    JSONResponse(
+                        status_code=401,
+                        content={"error": exc.code, "message": str(exc)},
+                    ),
+                    tid=effective_tid,
+                )
 
-        request.state.user_id = payload.user_id
-        request.state.org_id = payload.org_id
-        request.state.role = payload.role
+            request.state.user_id = payload.user_id
+            request.state.org_id = payload.org_id
+            request.state.role = payload.role
 
-        # Chain post-auth middlewares (budget check, rate limit, etc.)
-        # Build a call chain: mw_n(... mw_1(call_next) ...)
-        # Each middleware can intercept (return 402/429) or modify response
-        chained = call_next
-        for mw in reversed(_post_auth):
-            outer = chained
+            # Chain post-auth middlewares (budget check, rate limit, etc.)
+            # Build a call chain: mw_n(... mw_1(call_next) ...)
+            # Each middleware can intercept (return 402/429) or modify response
+            chained = call_next
+            for mw in reversed(_post_auth):
+                outer = chained
 
-            async def _make_chained(
-                req: Request,
-                *,
-                _mw: PostAuthMiddleware = mw,
-                _next: Any = outer,
-            ) -> Response:
-                return await _mw(req, _next)
+                async def _make_chained(
+                    req: Request,
+                    *,
+                    _mw: PostAuthMiddleware = mw,
+                    _next: Any = outer,
+                ) -> Response:
+                    return await _mw(req, _next)
 
-            chained = _make_chained
+                chained = _make_chained
 
-        response = await chained(request)
-        return _add_security_headers(response)
+            response = await chained(request)
+            return _add_security_headers(response, tid=effective_tid)
 
     # -- Exempt routes --
 
