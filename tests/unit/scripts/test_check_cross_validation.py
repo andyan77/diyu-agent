@@ -351,76 +351,334 @@ class TestConsistency:
 
 
 # ---------------------------------------------------------------------------
-# Report Assembly
+# Check 6: Call Graph (Business -> Infra)
+# ---------------------------------------------------------------------------
+
+
+class TestCallGraph:
+    """Check 6: Business layers should not import infra directly."""
+
+    def test_clean_src_no_violations(self, tmp_path: Path) -> None:
+        """Business layers using ports only = 0 violations."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "engine.py").write_text("from src.ports.memory import MemoryCorePort\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_call_graph(ctx, src_dir=src)
+        data = result.to_dict()
+        assert data["violations"] == []
+
+    def test_brain_importing_infra_db(self, tmp_path: Path) -> None:
+        """Brain importing src.infra.db should be a call graph violation."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "bad.py").write_text("from src.infra.db import get_session\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_call_graph(ctx, src_dir=src)
+        data = result.to_dict()
+        assert len(data["violations"]) == 1
+        assert data["violations"][0]["layer"] == "brain"
+        assert "infra" in data["violations"][0]["infra_module"]
+
+    def test_skill_importing_infra_cache(self, tmp_path: Path) -> None:
+        """Skill importing infra.cache is a violation."""
+        src = tmp_path / "src"
+        skill = src / "skill"
+        skill.mkdir(parents=True)
+        (skill / "__init__.py").write_text("")
+        (skill / "handler.py").write_text("from src.infra.cache import redis_client\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_call_graph(ctx, src_dir=src)
+        data = result.to_dict()
+        assert len(data["violations"]) == 1
+
+    def test_missing_src_empty(self) -> None:
+        """Missing src/ returns empty result."""
+        ctx = cv.ValidationContext()
+        result = cv.check_call_graph(ctx, src_dir=Path("/nonexistent"))
+        assert result.to_dict()["violations"] == []
+
+    def test_layers_checked_listed(self, tmp_path: Path) -> None:
+        """Existing layers are reported in layers_checked."""
+        src = tmp_path / "src"
+        for layer in ("brain", "knowledge"):
+            d = src / layer
+            d.mkdir(parents=True)
+            (d / "__init__.py").write_text("")
+            (d / "mod.py").write_text("import os\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_call_graph(ctx, src_dir=src)
+        data = result.to_dict()
+        assert "brain" in data["layers_checked"]
+        assert "knowledge" in data["layers_checked"]
+
+
+# ---------------------------------------------------------------------------
+# Check 7: Stub Detection
+# ---------------------------------------------------------------------------
+
+
+class TestStubDetection:
+    """Check 7: AST scan for stubs/placeholders."""
+
+    def test_detects_pass_only_body(self, tmp_path: Path) -> None:
+        """Function with only `pass` body is a stub."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "stub.py").write_text("def placeholder():\n    pass\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_stub_detection(ctx, src_dir=src)
+        data = result.to_dict()
+        assert data["total_stubs"] >= 1
+        stub_types = [s["type"] for s in data["stubs"]]
+        assert "pass_body" in stub_types
+
+    def test_detects_not_implemented(self, tmp_path: Path) -> None:
+        """Function raising NotImplementedError is a stub."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "wip.py").write_text("def future_feature():\n    raise NotImplementedError()\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_stub_detection(ctx, src_dir=src)
+        data = result.to_dict()
+        stub_types = [s["type"] for s in data["stubs"]]
+        assert "not_implemented" in stub_types
+
+    def test_detects_todo_comment(self, tmp_path: Path) -> None:
+        """# TODO comments are flagged as stubs."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "todo.py").write_text(
+            "def real_function():\n    # TODO: implement this properly\n    return 42\n"
+        )
+
+        ctx = cv.ValidationContext()
+        result = cv.check_stub_detection(ctx, src_dir=src)
+        data = result.to_dict()
+        stub_types = [s["type"] for s in data["stubs"]]
+        assert "comment_stub" in stub_types
+
+    def test_real_function_not_stub(self, tmp_path: Path) -> None:
+        """A function with real logic is not flagged."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "real.py").write_text("def compute(x: int) -> int:\n    return x * 2\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_stub_detection(ctx, src_dir=src)
+        data = result.to_dict()
+        assert data["total_stubs"] == 0
+
+    def test_pass_with_docstring_is_stub(self, tmp_path: Path) -> None:
+        """Function with docstring + pass is still a stub."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "doc_stub.py").write_text(
+            'def documented_stub():\n    """Does nothing yet."""\n    pass\n'
+        )
+
+        ctx = cv.ValidationContext()
+        result = cv.check_stub_detection(ctx, src_dir=src)
+        data = result.to_dict()
+        assert data["total_stubs"] >= 1
+
+    def test_missing_src_empty(self) -> None:
+        """Missing src/ returns empty result."""
+        ctx = cv.ValidationContext()
+        result = cv.check_stub_detection(ctx, src_dir=Path("/nonexistent"))
+        assert result.to_dict()["total_stubs"] == 0
+
+
+# ---------------------------------------------------------------------------
+# Check 8: LLM Call Verification
+# ---------------------------------------------------------------------------
+
+
+class TestLLMCallVerification:
+    """Check 8: Direct LLM library imports in business layers."""
+
+    def test_clean_no_violations(self, tmp_path: Path) -> None:
+        """No direct LLM imports = no violations."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "engine.py").write_text("from src.ports.llm import LLMCallPort\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_llm_calls(ctx, src_dir=src)
+        data = result.to_dict()
+        assert data["violations"] == []
+
+    def test_detects_openai_import(self, tmp_path: Path) -> None:
+        """Direct openai import in brain layer is a violation."""
+        src = tmp_path / "src"
+        brain = src / "brain"
+        brain.mkdir(parents=True)
+        (brain / "__init__.py").write_text("")
+        (brain / "direct.py").write_text("import openai\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_llm_calls(ctx, src_dir=src)
+        data = result.to_dict()
+        assert len(data["violations"]) == 1
+        assert data["violations"][0]["layer"] == "brain"
+
+    def test_detects_anthropic_from_import(self, tmp_path: Path) -> None:
+        """from anthropic.client import... in knowledge is a violation."""
+        src = tmp_path / "src"
+        knowledge = src / "knowledge"
+        knowledge.mkdir(parents=True)
+        (knowledge / "__init__.py").write_text("")
+        (knowledge / "bad.py").write_text("from anthropic.client import Client\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_llm_calls(ctx, src_dir=src)
+        data = result.to_dict()
+        assert len(data["violations"]) == 1
+
+    def test_detects_httpx_import(self, tmp_path: Path) -> None:
+        """httpx import in skill layer is a violation."""
+        src = tmp_path / "src"
+        skill = src / "skill"
+        skill.mkdir(parents=True)
+        (skill / "__init__.py").write_text("")
+        (skill / "caller.py").write_text("import httpx\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_llm_calls(ctx, src_dir=src)
+        data = result.to_dict()
+        assert len(data["violations"]) == 1
+
+    def test_tool_layer_not_checked(self, tmp_path: Path) -> None:
+        """Tool layer is allowed to import LLM libraries directly."""
+        src = tmp_path / "src"
+        tool = src / "tool"
+        tool.mkdir(parents=True)
+        (tool / "__init__.py").write_text("")
+        (tool / "llm_wrapper.py").write_text("import openai\nimport anthropic\n")
+
+        ctx = cv.ValidationContext()
+        result = cv.check_llm_calls(ctx, src_dir=src)
+        data = result.to_dict()
+        assert data["violations"] == []
+
+    def test_missing_src_empty(self) -> None:
+        """Missing src/ returns empty result."""
+        ctx = cv.ValidationContext()
+        result = cv.check_llm_calls(ctx, src_dir=Path("/nonexistent"))
+        assert result.to_dict()["violations"] == []
+
+
+# ---------------------------------------------------------------------------
+# Report Assembly (updated for 8 checks)
 # ---------------------------------------------------------------------------
 
 
 class TestReportAssembly:
     """Report status determination."""
 
-    def test_pass_status(self) -> None:
-        checks = {
+    @staticmethod
+    def _clean_checks(**overrides: dict) -> dict:
+        """Build a clean (all-pass) checks dict, then apply overrides."""
+        base: dict[str, dict] = {
             "gate_coverage": {"coverage_rate": 0.95, "uncovered": []},
             "architecture_boundary": {"violations": [], "privacy_boundary_intact": True},
             "acceptance_execution": {"failed": 0},
             "design_claims": {"unverified": []},
             "consistency": {"mismatched": []},
+            "call_graph": {"violations": []},
+            "stub_detection": {"total_stubs": 0},
+            "llm_call_verification": {"violations": []},
         }
+        base.update(overrides)
+        return base
+
+    def test_pass_status(self) -> None:
+        checks = self._clean_checks()
         status, critical, _ = cv.determine_status(checks)
         assert status == "PASS"
         assert critical == 0
 
     def test_fail_on_arch_violations(self) -> None:
-        checks = {
-            "gate_coverage": {"coverage_rate": 0.90, "uncovered": []},
-            "architecture_boundary": {
+        checks = self._clean_checks(
+            architecture_boundary={
                 "violations": [{"file": "x.py", "line": 1}],
                 "privacy_boundary_intact": True,
             },
-            "acceptance_execution": {"failed": 0},
-            "design_claims": {"unverified": []},
-            "consistency": {"mismatched": []},
-        }
+        )
         status, critical, _ = cv.determine_status(checks)
         assert status == "FAIL"
         assert critical >= 1
 
     def test_fail_on_privacy_violation(self) -> None:
-        checks = {
-            "gate_coverage": {"coverage_rate": 0.90, "uncovered": []},
-            "architecture_boundary": {"violations": [], "privacy_boundary_intact": False},
-            "acceptance_execution": {"failed": 0},
-            "design_claims": {"unverified": []},
-            "consistency": {"mismatched": []},
-        }
+        checks = self._clean_checks(
+            architecture_boundary={"violations": [], "privacy_boundary_intact": False},
+        )
         status, _critical, _ = cv.determine_status(checks)
         assert status == "FAIL"
         assert _critical >= 1
 
     def test_fail_on_unverified_high_risk(self) -> None:
-        checks = {
-            "gate_coverage": {"coverage_rate": 0.90, "uncovered": []},
-            "architecture_boundary": {"violations": [], "privacy_boundary_intact": True},
-            "acceptance_execution": {"failed": 0},
-            "design_claims": {
-                "unverified": [{"id": "DC-X", "risk": "HIGH"}],
-            },
-            "consistency": {"mismatched": []},
-        }
+        checks = self._clean_checks(
+            design_claims={"unverified": [{"id": "DC-X", "risk": "HIGH"}]},
+        )
         status, _critical, _ = cv.determine_status(checks)
         assert status == "FAIL"
 
     def test_warn_on_low_coverage(self) -> None:
-        checks = {
-            "gate_coverage": {"coverage_rate": 0.65, "uncovered": [{"id": "X"}]},
-            "architecture_boundary": {"violations": [], "privacy_boundary_intact": True},
-            "acceptance_execution": {"failed": 0},
-            "design_claims": {"unverified": []},
-            "consistency": {"mismatched": []},
-        }
+        checks = self._clean_checks(
+            gate_coverage={"coverage_rate": 0.65, "uncovered": [{"id": "X"}]},
+        )
         status, _critical, recs = cv.determine_status(checks)
         assert status == "WARN"
         assert any("coverage" in r.lower() for r in recs)
+
+    def test_fail_on_call_graph_violations(self) -> None:
+        checks = self._clean_checks(
+            call_graph={"violations": [{"file": "x.py", "line": 1}]},
+        )
+        status, critical, recs = cv.determine_status(checks)
+        assert status == "FAIL"
+        assert critical >= 1
+        assert any("call-graph" in r for r in recs)
+
+    def test_warn_on_stubs(self) -> None:
+        checks = self._clean_checks(
+            stub_detection={"total_stubs": 5},
+        )
+        status, _critical, recs = cv.determine_status(checks)
+        assert status == "WARN"
+        assert any("stub" in r.lower() for r in recs)
+
+    def test_fail_on_llm_violations(self) -> None:
+        checks = self._clean_checks(
+            llm_call_verification={"violations": [{"file": "x.py"}]},
+        )
+        status, critical, recs = cv.determine_status(checks)
+        assert status == "FAIL"
+        assert critical >= 1
+        assert any("LLMCallPort" in r for r in recs)
 
 
 # ---------------------------------------------------------------------------
@@ -441,8 +699,8 @@ class TestScriptExecution:
         assert "summary" in report
         assert report["summary"]["status"] in ("PASS", "WARN", "FAIL")
 
-    def test_json_has_all_five_checks(self) -> None:
-        """All 5 checks are present in output."""
+    def test_json_has_all_eight_checks(self) -> None:
+        """All 8 checks are present in output."""
         result = _run_script("--json", "--skip-execution")
         report = json.loads(result.stdout)
         expected_checks = {
@@ -451,6 +709,9 @@ class TestScriptExecution:
             "consistency",
             "architecture_boundary",
             "design_claims",
+            "call_graph",
+            "stub_detection",
+            "llm_call_verification",
         }
         assert set(report["checks"].keys()) == expected_checks
 
@@ -471,8 +732,8 @@ class TestScriptExecution:
         result = _run_script("--skip-execution")
         assert result.returncode in (0, 1)
         assert "Cross-Validation Diagnostic" in result.stdout
-        assert "[1/5]" in result.stdout
-        assert "[5/5]" in result.stdout
+        assert "[1/8]" in result.stdout
+        assert "[8/8]" in result.stdout
 
 
 # ---------------------------------------------------------------------------

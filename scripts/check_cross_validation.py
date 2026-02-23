@@ -4,12 +4,15 @@
 Detects disconnections between gate scripts, task cards, milestone matrix,
 and design docs -- each self-certifying without cross-verification.
 
-5-Category Diagnostic:
+8-Category Diagnostic:
   1. Gate Coverage: Are "done" milestones covered by exit_criteria?
   2. Acceptance Execution: Do task card acceptance commands actually run?
   3. Gate-vs-Acceptance Consistency: Do gate and acceptance point to same things?
   4. Architecture Boundary: AST-based layer import validation (extends check_layer_deps.sh)
   5. Design Claim Audit: Are architecture promises verified by any gate/test?
+  6. Call Graph: Do business layers import infra directly? (should use Ports)
+  7. Stub Detection: AST scan for pass-only bodies, NotImplementedError, TODO/FIXME
+  8. LLM Call Verification: Do business layers import LLM libraries directly?
 
 Usage:
     python scripts/check_cross_validation.py --json
@@ -860,6 +863,250 @@ def check_design_claims(ctx: ValidationContext) -> CheckResult:
 
 
 # ---------------------------------------------------------------------------
+# Check 6: Call Graph Verification
+# ---------------------------------------------------------------------------
+
+
+# Infra module prefixes that should NOT be directly imported by business layers
+_INFRA_DIRECT_IMPORTS = {
+    "src.infra.db",
+    "src.infra.cache",
+    "src.infra.storage",
+    "src.infra.vector",
+    "src.infra.graph",
+    "src.infra.events",
+    "src.infra.tasks",
+}
+
+# Layers that MUST use Ports, never direct infra imports
+_PORT_REQUIRED_LAYERS = {"brain", "knowledge", "skill"}
+
+
+def check_call_graph(
+    ctx: ValidationContext,
+    *,
+    src_dir: Path | None = None,
+) -> CheckResult:
+    """Verify business layers call infra through Port interfaces, not directly."""
+    effective_src = src_dir if src_dir is not None else SRC_DIR
+    violations: list[dict] = []
+
+    if not effective_src.exists():
+        return CheckResult(
+            name="call_graph",
+            data={"violations": [], "layers_checked": [], "note": "src/ not found"},
+        )
+
+    layers_checked: list[str] = []
+    for layer_name in _PORT_REQUIRED_LAYERS:
+        layer_dir = effective_src / layer_name
+        if not layer_dir.exists():
+            continue
+        layers_checked.append(layer_name)
+
+        for py_file in layer_dir.rglob("*.py"):
+            imports = _extract_imports(py_file)
+            for module_path, lineno in imports:
+                for infra_prefix in _INFRA_DIRECT_IMPORTS:
+                    if module_path.startswith(infra_prefix):
+                        violations.append(
+                            {
+                                "file": str(py_file),
+                                "line": lineno,
+                                "layer": layer_name,
+                                "import": module_path,
+                                "infra_module": infra_prefix,
+                                "recommendation": "Use Port interface instead"
+                                " of direct infra import",
+                            }
+                        )
+
+    return CheckResult(
+        name="call_graph",
+        data={
+            "violations": violations,
+            "layers_checked": sorted(layers_checked),
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# Check 7: Stub Detection
+# ---------------------------------------------------------------------------
+
+# Patterns indicating stub/placeholder code
+_STUB_AST_PATTERNS = {
+    "pass_body",  # function/method with only `pass`
+    "not_implemented",  # raise NotImplementedError
+}
+
+_COMMENT_STUB_RE = re.compile(
+    r"#\s*(?:TODO|FIXME|HACK|Placeholder|STUB)\b",
+    re.IGNORECASE,
+)
+
+
+def check_stub_detection(
+    ctx: ValidationContext,
+    *,
+    src_dir: Path | None = None,
+) -> CheckResult:
+    """AST scan production code for stub/placeholder patterns."""
+    effective_src = src_dir if src_dir is not None else SRC_DIR
+    stubs: list[dict] = []
+
+    if not effective_src.exists():
+        return CheckResult(
+            name="stub_detection",
+            data={"stubs": [], "total_stubs": 0, "total_files_scanned": 0},
+        )
+
+    files_scanned = 0
+    for layer_name in LAYER_RULES:
+        layer_dir = effective_src / layer_name
+        if not layer_dir.exists():
+            continue
+
+        for py_file in layer_dir.rglob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            files_scanned += 1
+
+            try:
+                source = py_file.read_text(encoding="utf-8")
+                tree = ast.parse(source, filename=str(py_file))
+            except (SyntaxError, UnicodeDecodeError):
+                continue
+
+            # AST checks: pass-only bodies and NotImplementedError
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    body = node.body
+                    # pass-only body (excluding docstrings)
+                    non_doc = [
+                        n
+                        for n in body
+                        if not (isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant))
+                    ]
+                    if len(non_doc) == 1 and isinstance(non_doc[0], ast.Pass):
+                        stubs.append(
+                            {
+                                "file": str(py_file),
+                                "line": node.lineno,
+                                "name": node.name,
+                                "type": "pass_body",
+                                "layer": layer_name,
+                            }
+                        )
+
+                    # raise NotImplementedError
+                    for child in body:
+                        if (
+                            isinstance(child, ast.Raise)
+                            and child.exc
+                            and isinstance(child.exc, ast.Call)
+                            and isinstance(child.exc.func, ast.Name)
+                            and child.exc.func.id == "NotImplementedError"
+                        ):
+                            stubs.append(
+                                {
+                                    "file": str(py_file),
+                                    "line": child.lineno,
+                                    "name": node.name,
+                                    "type": "not_implemented",
+                                    "layer": layer_name,
+                                }
+                            )
+
+            # Comment-based stubs
+            lines = source.splitlines()
+            for i, line in enumerate(lines, 1):
+                if _COMMENT_STUB_RE.search(line):
+                    stubs.append(
+                        {
+                            "file": str(py_file),
+                            "line": i,
+                            "name": line.strip()[:60],
+                            "type": "comment_stub",
+                            "layer": layer_name,
+                        }
+                    )
+
+    return CheckResult(
+        name="stub_detection",
+        data={
+            "stubs": stubs,
+            "total_stubs": len(stubs),
+            "total_files_scanned": files_scanned,
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
+# Check 8: LLM Call Verification
+# ---------------------------------------------------------------------------
+
+# Direct LLM library imports that should NOT appear in business layers
+_LLM_DIRECT_IMPORTS = {
+    "openai",
+    "anthropic",
+    "litellm",
+    "httpx",
+}
+
+# Only brain/knowledge/skill layers are checked (tool layer legitimately wraps LLM)
+_LLM_CHECK_LAYERS = {"brain", "knowledge", "skill"}
+
+
+def check_llm_calls(
+    ctx: ValidationContext,
+    *,
+    src_dir: Path | None = None,
+) -> CheckResult:
+    """Verify all LLM calls go through LLMCallPort, not direct imports."""
+    effective_src = src_dir if src_dir is not None else SRC_DIR
+    violations: list[dict] = []
+
+    if not effective_src.exists():
+        return CheckResult(
+            name="llm_call_verification",
+            data={"violations": [], "layers_checked": []},
+        )
+
+    layers_checked: list[str] = []
+    for layer_name in _LLM_CHECK_LAYERS:
+        layer_dir = effective_src / layer_name
+        if not layer_dir.exists():
+            continue
+        layers_checked.append(layer_name)
+
+        for py_file in layer_dir.rglob("*.py"):
+            imports = _extract_imports(py_file)
+            for module_path, lineno in imports:
+                # Check top-level module
+                top_module = module_path.split(".")[0]
+                if top_module in _LLM_DIRECT_IMPORTS:
+                    violations.append(
+                        {
+                            "file": str(py_file),
+                            "line": lineno,
+                            "layer": layer_name,
+                            "import": module_path,
+                            "recommendation": "Use LLMCallPort instead"
+                            " of direct LLM library import",
+                        }
+                    )
+
+    return CheckResult(
+        name="llm_call_verification",
+        data={
+            "violations": violations,
+            "layers_checked": sorted(layers_checked),
+        },
+    )
+
+
+# ---------------------------------------------------------------------------
 # Report Assembly
 # ---------------------------------------------------------------------------
 
@@ -911,6 +1158,30 @@ def determine_status(checks: dict[str, dict]) -> tuple[str, int, list[str]]:
     con = checks.get("consistency", {})
     if con.get("mismatched"):
         recommendations.append(f"{len(con['mismatched'])} gate-vs-acceptance path mismatch(es)")
+
+    # Call graph violations (direct infra imports from business layers)
+    cg = checks.get("call_graph", {})
+    cg_violations = cg.get("violations", [])
+    if cg_violations:
+        critical += len(cg_violations)
+        recommendations.append(
+            f"{len(cg_violations)} call-graph violation(s): business layer imports infra directly"
+        )
+
+    # Stub detection (informational, not critical)
+    sd = checks.get("stub_detection", {})
+    total_stubs = sd.get("total_stubs", 0)
+    if total_stubs > 0:
+        recommendations.append(f"{total_stubs} stub(s)/placeholder(s) detected in production code")
+
+    # LLM call violations (direct LLM library imports)
+    lc = checks.get("llm_call_verification", {})
+    lc_violations = lc.get("violations", [])
+    if lc_violations:
+        critical += len(lc_violations)
+        recommendations.append(
+            f"{len(lc_violations)} direct LLM library import(s) bypassing LLMCallPort"
+        )
 
     if critical > 0:
         status = "FAIL"
@@ -979,11 +1250,11 @@ def main() -> None:
         print(f"Task cards: {len(task_cards)}")
         print()
 
-    # Run all 5 checks
+    # Run all 8 checks
     checks: dict[str, dict] = {}
 
     if not use_json:
-        print("[1/5] Gate Coverage...")
+        print("[1/8] Gate Coverage...")
     result1 = check_gate_coverage(ctx)
     checks[result1.name] = result1.to_dict()
 
@@ -996,7 +1267,7 @@ def main() -> None:
         print()
 
     if not use_json:
-        print("[2/5] Acceptance Command Execution...")
+        print("[2/8] Acceptance Command Execution...")
     result2 = check_acceptance_execution(ctx)
     checks[result2.name] = result2.to_dict()
 
@@ -1009,7 +1280,7 @@ def main() -> None:
         print()
 
     if not use_json:
-        print("[3/5] Gate-vs-Acceptance Consistency...")
+        print("[3/8] Gate-vs-Acceptance Consistency...")
     result3 = check_consistency(ctx)
     checks[result3.name] = result3.to_dict()
 
@@ -1022,7 +1293,7 @@ def main() -> None:
         print()
 
     if not use_json:
-        print("[4/5] Architecture Boundary (AST)...")
+        print("[4/8] Architecture Boundary (AST)...")
     result4 = check_architecture_boundary(ctx)
     checks[result4.name] = result4.to_dict()
 
@@ -1036,7 +1307,7 @@ def main() -> None:
         print()
 
     if not use_json:
-        print("[5/5] Design Claim Audit...")
+        print("[5/8] Design Claim Audit...")
     result5 = check_design_claims(ctx)
     checks[result5.name] = result5.to_dict()
 
@@ -1046,6 +1317,36 @@ def main() -> None:
             f"  Claims: {dc['total_claims']}, Verified: {dc['verified']}, "
             f"Unverified: {len(dc['unverified'])}"
         )
+        print()
+
+    if not use_json:
+        print("[6/8] Call Graph (Business->Infra)...")
+    result6 = check_call_graph(ctx)
+    checks[result6.name] = result6.to_dict()
+
+    if not use_json:
+        cg = result6.to_dict()
+        print(f"  Layers checked: {len(cg['layers_checked'])}, Violations: {len(cg['violations'])}")
+        print()
+
+    if not use_json:
+        print("[7/8] Stub Detection...")
+    result7 = check_stub_detection(ctx)
+    checks[result7.name] = result7.to_dict()
+
+    if not use_json:
+        sd = result7.to_dict()
+        print(f"  Files scanned: {sd['total_files_scanned']}, Stubs found: {sd['total_stubs']}")
+        print()
+
+    if not use_json:
+        print("[8/8] LLM Call Verification...")
+    result8 = check_llm_calls(ctx)
+    checks[result8.name] = result8.to_dict()
+
+    if not use_json:
+        lc = result8.to_dict()
+        print(f"  Layers checked: {len(lc['layers_checked'])}, Violations: {len(lc['violations'])}")
         print()
 
     # Assemble report
