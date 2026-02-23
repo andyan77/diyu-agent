@@ -134,6 +134,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v4
       - run: uv sync --dev --frozen
+      # NOTE: Coverage gate scope is unit-only (tests/unit/).
+      # ACs requiring integration/E2E evidence get grade C (unit-tested) in evidence grading.
+      # See: docs/governance/guardian-system-completion-plan-v1.0.md §D2
       - run: |
           mkdir -p ${{ env.EVIDENCE_DIR }}
           uv run pytest tests/unit/ -v --tb=short \

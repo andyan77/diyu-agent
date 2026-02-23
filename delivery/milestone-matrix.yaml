@@ -78,12 +78,12 @@ phases:
           check: "uv run python scripts/doctor.py --json | uv run python -c \"import sys,json; d=json.load(sys.stdin); sys.exit(0 if d['summary']['fail']==0 else 1)\""
 
         - id: "p0-backend-skeleton"
-          description: "Python project config exists"
-          check: "test -f pyproject.toml"
+          description: "Python project config valid (has project.name)"
+          check: "uv run python -c \"import tomllib; d=tomllib.load(open('pyproject.toml','rb')); assert 'project' in d and 'name' in d['project'], 'missing project.name'\""
 
         - id: "p0-frontend-skeleton"
-          description: "Frontend monorepo config exists"
-          check: "test -f frontend/pnpm-workspace.yaml"
+          description: "Frontend monorepo config valid (has packages)"
+          check: "uv run python -c \"import yaml; d=yaml.safe_load(open('frontend/pnpm-workspace.yaml')); assert 'packages' in d, 'missing packages key'\""
 
         - id: "p0-guards"
           description: "Guard scripts exist and are executable"
@@ -102,12 +102,12 @@ phases:
           check: "uv run python -c \"import yaml; yaml.safe_load(open('delivery/milestone-matrix.yaml'))\""
 
         - id: "p0-schema-validation"
-          description: "Task card schema and validation scripts exist"
-          check: "test -f docs/governance/task-card-schema-v1.0.md && test -f scripts/check_task_schema.py"
+          description: "Task card schema exists and validation script importable"
+          check: "test -f docs/governance/task-card-schema-v1.0.md && uv run python -c \"import scripts.check_task_schema\""
 
         - id: "p0-env-template"
-          description: "Environment template exists"
-          check: "test -f .env.example"
+          description: "Environment template has required vars"
+          check: "uv run python -c \"lines=[l.split('=')[0].strip() for l in open('.env.example') if l.strip() and not l.startswith('#')]; assert len(lines)>=3, f'only {len(lines)} env vars'\""
 
         - id: "p0-gitignore"
           description: "Gitignore configured"
@@ -115,12 +115,12 @@ phases:
 
       soft:
         - id: "p0-hooks"
-          description: "Claude Code hooks configured"
-          check: "test -f .claude/settings.json"
+          description: "Claude Code hooks configured (valid JSON)"
+          check: "uv run python -c \"import json; json.load(open('.claude/settings.json'))\""
 
         - id: "p0-adr-index"
-          description: "ADR index exists"
-          check: "test -f docs/adr/README.md"
+          description: "ADR index exists and references ADRs"
+          check: "test -f docs/adr/README.md && uv run python -c \"c=open('docs/adr/README.md').read(); assert 'ADR-' in c, 'no ADR references in index'\""
 
     go_no_go:
       hard_pass_rate: 1.0
