@@ -305,6 +305,13 @@ jobs:
               uv run python scripts/lint_workflow_checks.py "$f"
             fi
           done
+      # Guardian Phase D: promoted from informational to L2 blocking
+      - name: Cross-validation diagnostic (L2 gate)
+        run: uv run python scripts/check_cross_validation.py --skip-execution --json
+      - name: Contract alignment check
+        run: uv run python scripts/check_contract_alignment.py --json
+      - name: Temporal integrity check
+        run: uv run python scripts/check_temporal_integrity.py --json
 
   # L2: Integration tests with service containers (PG + Redis)
   # Required: included in merge-readiness dependency chain

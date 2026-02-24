@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # full_audit.sh - Unified audit entry point (Section 12.6)
 #
-# Runs all 9 audit categories:
+# Runs all 14 audit categories:
 #   1. Guards: check_layer_deps, check_port_compat, check_rls
 #   2. Skill audits: run_systematic_review, run_cross_audit, run_fix_verify
 #   3. Agent tests: test_agent_permissions
@@ -10,7 +10,12 @@
 #   6. Governance: test_governance_consistency
 #   7. Security: security_scan --full
 #   8. Phase gate: verify_phase --current
-#   9. Report aggregation
+#   9. Cross-validation: check_cross_validation (8-category diagnostic)
+#  10. Promise Registry: check_promise_registry
+#  11. ADR Consistency: check_adr_consistency
+#  12. Contract Alignment: check_contract_alignment (6-type)
+#  13. Evidence Grading: check_evidence_grade (A-F)
+#  14. Temporal Integrity: check_temporal_integrity (migration chain)
 #
 # Exit codes: 0 = all pass, 1 = failures found, 2 = critical error
 #
@@ -161,7 +166,61 @@ fi
 run_check "verify_phase_gate" "phase_gate" "uv run python scripts/verify_phase.py --phase $PHASE --json 2>&1"
 
 # ============================================================
-# 9. Report aggregation
+# 9. Cross-validation diagnostic
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 9: Cross-Validation ==="
+fi
+run_check "cross_validation" "cross_validation" "uv run python scripts/check_cross_validation.py --skip-execution --json 2>&1"
+
+# ============================================================
+# 10. Promise Registry
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 10: Promise Registry ==="
+fi
+run_check "promise_registry" "promise_registry" "uv run python scripts/check_promise_registry.py --json 2>&1"
+
+# ============================================================
+# 11. ADR Consistency
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 11: ADR Consistency ==="
+fi
+run_check "adr_consistency" "adr_consistency" "uv run python scripts/check_adr_consistency.py --json 2>&1"
+
+# ============================================================
+# 12. Contract Alignment
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 12: Contract Alignment ==="
+fi
+run_check "contract_alignment" "contract_alignment" "uv run python scripts/check_contract_alignment.py --json 2>&1"
+
+# ============================================================
+# 13. Evidence Grading
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 13: Evidence Grading ==="
+fi
+run_check "evidence_grade" "evidence_grade" "uv run python scripts/check_evidence_grade.py --json 2>&1"
+
+# ============================================================
+# 14. Temporal Integrity
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 14: Temporal Integrity ==="
+fi
+run_check "temporal_integrity" "temporal_integrity" "uv run python scripts/check_temporal_integrity.py --json 2>&1"
+
+# ============================================================
+# Report aggregation
 # ============================================================
 OVERALL="pass"
 if [ "$FAILED" -gt 0 ]; then

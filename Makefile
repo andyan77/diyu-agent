@@ -3,7 +3,10 @@
        full-audit skills-validate skills-smoke check-acceptance-commands \
        replay-skill-session sbom sbom-json v4-status v4-plan v4-run v4-resume \
        v4p2-status v4p2-plan v4p2-run v4p2-resume v4p2-reset v4p2-validate-config \
-       security-scan security-scan-quick image-build image-scan dev dev-infra clean help
+       security-scan security-scan-quick image-build image-scan dev dev-infra \
+       cross-validate check-promises check-adr check-contracts check-evidence-grade \
+       check-temporal check-frontend-depth check-reverse-audit check-xnode-deep \
+       clean help
 
 PYTHON := uv run python
 SCRIPTS := scripts
@@ -143,8 +146,42 @@ audit-e2e: ## End-to-end: generate all audit artifacts + validate
 	bash $(SCRIPTS)/run_fix_verify.sh
 	uv run python $(SCRIPTS)/validate_audit_artifacts.py
 
-full-audit: ## Run unified full audit (Section 12.6)
+cross-validate: ## Cross-validation diagnostic (gate/acceptance/arch/claims)
+	@$(PYTHON) $(SCRIPTS)/check_cross_validation.py --json
+
+cross-validate-fast: ## Cross-validation diagnostic (skip command execution)
+	@$(PYTHON) $(SCRIPTS)/check_cross_validation.py --skip-execution --json
+
+full-audit: ## Run unified full audit (Section 12.6, 14 categories)
 	@bash $(SCRIPTS)/full_audit.sh
+
+# ============================================================
+# Guardian Scripts (Phase B-D)
+# ============================================================
+
+check-promises: ## Check promise traceability (architecture -> task card -> gate)
+	@$(PYTHON) $(SCRIPTS)/check_promise_registry.py --json
+
+check-adr: ## Check ADR consistency (53 ADRs -> gate/test refs)
+	@$(PYTHON) $(SCRIPTS)/check_adr_consistency.py --json
+
+check-contracts: ## Check 6-type contract alignment (port/API/event/DDL/ACL/payload)
+	@$(PYTHON) $(SCRIPTS)/check_contract_alignment.py --json
+
+check-evidence-grade: ## Grade evidence quality (A-F taxonomy for all exit_criteria)
+	@$(PYTHON) $(SCRIPTS)/check_evidence_grade.py --json
+
+check-temporal: ## Check migration chain integrity + rollback coverage
+	@$(PYTHON) $(SCRIPTS)/check_temporal_integrity.py --json
+
+check-frontend-depth: ## Frontend task card depth audit (L1-L4)
+	@$(PYTHON) $(SCRIPTS)/check_frontend_depth.py --json
+
+check-reverse-audit: ## Reverse audit: code -> design (shadow/drift detection)
+	@$(PYTHON) $(SCRIPTS)/check_reverse_audit.py --json
+
+check-xnode-deep: ## Deep X-node verification (beyond exit code checking)
+	@$(PYTHON) $(SCRIPTS)/check_xnode_deep.py --json
 
 # ============================================================
 # Skills Governance
