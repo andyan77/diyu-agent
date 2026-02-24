@@ -178,7 +178,11 @@ class TestExtractPhaseFromId:
             ("X2-3", 2),
             ("X4-1", 4),
             ("XF4-1", 4),
-            ("XM3-2", 3),
+            # XM prefix: M-track batch number, NOT phase number.
+            # _extract_phase_from_id returns None so Rule 2 skips key-phase check.
+            ("XM0-1", None),
+            ("XM1-1", None),
+            ("XM3-2", None),
             ("invalid", None),
             ("", None),
         ],
@@ -227,6 +231,22 @@ class TestValidateRegistry:
         issues = validate_registry(registry, matrix)
         errors = [i for i in issues if "X4-1" in i and "phase=" in i]
         assert len(errors) == 1
+
+    def test_rule2_xm_exempt_from_key_phase_check(self) -> None:
+        """XM prefix uses M-track batch number, not phase number.
+
+        XM1-1 has phase=3 (actual execution phase), but the '1' in XM1
+        is the M-track batch. Rule 2 must NOT flag this as inconsistent.
+        """
+        registry = {
+            "XM1-1": {"phase": 3, "guard_status": "in_progress"},
+            "XM2-1": {"phase": 4, "guard_status": "in_progress"},
+            "XM3-2": {"phase": 5, "guard_status": "pending"},
+        }
+        matrix = {"phases": {}}
+        issues = validate_registry(registry, matrix)
+        phase_errors = [i for i in issues if "phase=" in i and i.startswith("ERROR:")]
+        assert phase_errors == [], f"XM nodes should be exempt: {phase_errors}"
 
     def test_rule2_valid_status(self, tmp_path: Path) -> None:
         registry = {

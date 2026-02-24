@@ -495,6 +495,41 @@ class TestGenerateReport:
         assert report["summary"]["shadow_by_layer"]["brain"] == 2
         assert report["summary"]["shadow_by_layer"]["shared"] == 1
 
+    def test_report_has_findings_key(self) -> None:
+        """Report must include a standardized 'findings' array.
+
+        Aggregates shadows + drifted + dead results.
+        """
+        results = [
+            ra.AuditResult("f.py", "A", "class", "brain", "shadow"),
+            ra.AuditResult("g.py", "B", "class", "shared", "dead"),
+            ra.AuditResult("h.py", "C", "class", "brain", "mapped"),
+        ]
+        report = ra.generate_report(results)
+        assert "findings" in report
+        assert len(report["findings"]) == 2  # shadow + dead, not mapped
+
+    def test_findings_aggregates_non_mapped(self) -> None:
+        """findings must aggregate shadows, drifted, and dead but not mapped."""
+        results = [
+            ra.AuditResult("f.py", "A", "class", "brain", "mapped"),
+            ra.AuditResult("g.py", "B", "class", "brain", "shadow"),
+            ra.AuditResult("h.py", "C", "class", "brain", "drift", drift_detail="mismatch"),
+            ra.AuditResult("i.py", "D", "class", "shared", "dead"),
+        ]
+        report = ra.generate_report(results)
+        assert len(report["findings"]) == 3
+        finding_names = {f["name"] for f in report["findings"]}
+        assert finding_names == {"B", "C", "D"}
+
+    def test_summary_has_findings_count(self) -> None:
+        """summary must include a findings_count field."""
+        results = [
+            ra.AuditResult("f.py", "A", "class", "brain", "shadow"),
+        ]
+        report = ra.generate_report(results)
+        assert report["summary"]["findings_count"] == 1
+
 
 # ---------------------------------------------------------------------------
 # Integration: Script execution

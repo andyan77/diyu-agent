@@ -311,9 +311,14 @@ jobs:
       - name: Contract alignment gate
         run: uv run python scripts/check_contract_alignment.py --json --ci-baseline 8
       - name: Temporal integrity gate
-        run: uv run python scripts/check_temporal_integrity.py --json
+        run: uv run python scripts/check_temporal_integrity.py --json --skip-db
       - name: Evidence grade gate
         run: uv run python scripts/check_evidence_grade.py --json
+      # Milestone ruling: warm-up phase (--ci-baseline for known no_claim count)
+      # Upgrade condition: when no_claim_count reduces, lower baseline accordingly.
+      # unguarded_count > 0 always fails regardless of baseline.
+      - name: Milestone ruling gate (warm-up)
+        run: uv run python scripts/check_milestone_ruling.py --json --ci-baseline 192
 
   # L2: Integration tests with service containers (PG + Redis)
   # Required: included in merge-readiness dependency chain

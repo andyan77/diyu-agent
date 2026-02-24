@@ -6,6 +6,8 @@ Verifies migration chain integrity + rollback coverage:
   2. Rollback coverage: Every upgrade() has a corresponding non-empty downgrade()
   3. Idempotency check: Static analysis of up/down symmetry (--skip-db mode)
   4. Schema version monotonicity: Version fields only increment, never decrement
+  5. DB idempotency: upgrade→downgrade→upgrade cycle produces identical schema
+     (requires DATABASE_URL; skipped with --skip-db)
 
 Red line alignment: "NO migrations without rollback plan" (CLAUDE.md)
 
@@ -13,6 +15,11 @@ Usage:
     python scripts/check_temporal_integrity.py --json
     python scripts/check_temporal_integrity.py --json --verbose
     python scripts/check_temporal_integrity.py --json --skip-db
+
+Modes:
+    --skip-db       Force static-only analysis (no DB connection)
+    (default)       Attempts DB idempotency check if DATABASE_URL is set;
+                    falls back to static analysis if unavailable
 
 Exit codes:
     0: PASS (all checks pass)
@@ -23,9 +30,11 @@ from __future__ import annotations
 
 import ast
 import json
+import os
 import re
+import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -89,18 +98,22 @@ class MigrationInfo:
 class IntegrityFinding:
     """A single integrity finding."""
 
-    check_type: str  # chain, rollback, symmetry, version
-    severity: str  # error, warning
+    check_type: str  # chain, rollback, symmetry, version, idempotency
+    severity: str  # error, warning, info
     file: str
     message: str
+    details: dict | None = field(default=None)
 
     def to_dict(self) -> dict:
-        return {
+        d: dict = {
             "check_type": self.check_type,
             "severity": self.severity,
             "file": self.file,
             "message": self.message,
         }
+        if self.details is not None:
+            d["details"] = self.details
+        return d
 
 
 # ---------------------------------------------------------------------------
@@ -574,6 +587,306 @@ def check_version_monotonicity(
 
 
 # ---------------------------------------------------------------------------
+# Check 5: DB Idempotency (requires DATABASE_URL)
+# ---------------------------------------------------------------------------
+
+# SQL to snapshot public schema structure (tables, columns, types, constraints)
+_SCHEMA_SNAPSHOT_SQL = """\
+SELECT
+    c.table_name,
+    c.column_name,
+    c.data_type,
+    c.column_default,
+    c.is_nullable,
+    c.character_maximum_length,
+    c.numeric_precision
+FROM information_schema.columns c
+WHERE c.table_schema = 'public'
+  AND c.table_name NOT IN ('alembic_version')
+ORDER BY c.table_name, c.ordinal_position;
+"""
+
+_INDEX_SNAPSHOT_SQL = """\
+SELECT
+    indexname,
+    tablename,
+    indexdef
+FROM pg_indexes
+WHERE schemaname = 'public'
+  AND tablename NOT IN ('alembic_version')
+ORDER BY tablename, indexname;
+"""
+
+_CONSTRAINT_SNAPSHOT_SQL = """\
+SELECT
+    tc.table_name,
+    tc.constraint_name,
+    tc.constraint_type,
+    kcu.column_name
+FROM information_schema.table_constraints tc
+JOIN information_schema.key_column_usage kcu
+    ON tc.constraint_name = kcu.constraint_name
+    AND tc.table_schema = kcu.table_schema
+WHERE tc.table_schema = 'public'
+  AND tc.table_name NOT IN ('alembic_version')
+ORDER BY tc.table_name, tc.constraint_name, kcu.ordinal_position;
+"""
+
+
+@dataclass
+class SchemaSnapshot:
+    """Captured database schema state."""
+
+    columns: list[tuple]
+    indexes: list[tuple]
+    constraints: list[tuple]
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SchemaSnapshot):
+            return NotImplemented
+        return (
+            self.columns == other.columns
+            and self.indexes == other.indexes
+            and self.constraints == other.constraints
+        )
+
+    def diff(self, other: SchemaSnapshot) -> dict:
+        """Compute structured diff between two snapshots."""
+        diffs: dict[str, list[str]] = {"columns": [], "indexes": [], "constraints": []}
+
+        cols_a = set(self.columns)
+        cols_b = set(other.columns)
+        for c in sorted(cols_a - cols_b):
+            diffs["columns"].append(f"- {c}")
+        for c in sorted(cols_b - cols_a):
+            diffs["columns"].append(f"+ {c}")
+
+        idx_a = set(self.indexes)
+        idx_b = set(other.indexes)
+        for i in sorted(idx_a - idx_b):
+            diffs["indexes"].append(f"- {i}")
+        for i in sorted(idx_b - idx_a):
+            diffs["indexes"].append(f"+ {i}")
+
+        con_a = set(self.constraints)
+        con_b = set(other.constraints)
+        for c in sorted(con_a - con_b):
+            diffs["constraints"].append(f"- {c}")
+        for c in sorted(con_b - con_a):
+            diffs["constraints"].append(f"+ {c}")
+
+        return {k: v for k, v in diffs.items() if v}
+
+
+def _try_connect(database_url: str) -> object | None:
+    """Attempt to create a sync SQLAlchemy connection.
+
+    Returns (engine, connection) tuple or None if unavailable.
+    Converts asyncpg URLs to psycopg2/sync URLs automatically.
+    """
+    try:
+        from sqlalchemy import create_engine, text
+    except ImportError:
+        return None
+
+    # Convert async URLs to sync for schema introspection
+    sync_url = database_url
+    if "+asyncpg" in sync_url:
+        sync_url = sync_url.replace("+asyncpg", "")
+
+    try:
+        engine = create_engine(sync_url, pool_pre_ping=True)
+        conn = engine.connect()
+        # Quick connectivity test
+        conn.execute(text("SELECT 1"))
+        return (engine, conn)
+    except Exception:
+        return None
+
+
+def _snapshot_schema(conn: object) -> SchemaSnapshot:
+    """Capture current schema state from a live connection."""
+    from sqlalchemy import text
+
+    columns = [tuple(row) for row in conn.execute(text(_SCHEMA_SNAPSHOT_SQL))]  # type: ignore[union-attr]
+    indexes = [tuple(row) for row in conn.execute(text(_INDEX_SNAPSHOT_SQL))]  # type: ignore[union-attr]
+    constraints = [tuple(row) for row in conn.execute(text(_CONSTRAINT_SNAPSHOT_SQL))]  # type: ignore[union-attr]
+    return SchemaSnapshot(columns=columns, indexes=indexes, constraints=constraints)
+
+
+def _run_alembic(command: list[str], cwd: str | None = None) -> subprocess.CompletedProcess:
+    """Run an alembic command via subprocess."""
+    return subprocess.run(  # noqa: S603
+        [sys.executable, "-m", "alembic", *command],
+        capture_output=True,
+        text=True,
+        timeout=120,
+        cwd=cwd,
+    )
+
+
+def check_db_idempotency(
+    database_url: str,
+    *,
+    project_root: str | None = None,
+) -> list[IntegrityFinding]:
+    """Check migration up-down-up cycle produces identical schema.
+
+    Steps:
+        1. alembic downgrade base (clean slate)
+        2. alembic upgrade head  → snapshot A
+        3. alembic downgrade base
+        4. alembic upgrade head  → snapshot B
+        5. Compare A == B
+
+    Requires DATABASE_URL pointing to a **disposable** test database.
+    """
+    findings: list[IntegrityFinding] = []
+    cwd = project_root or str(Path.cwd())
+
+    # Step 1: downgrade base (clean slate)
+    result = _run_alembic(["downgrade", "base"], cwd=cwd)
+    if result.returncode != 0:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(alembic)",
+                message=f"Initial downgrade base failed: {result.stderr[:500]}",
+            )
+        )
+        return findings
+
+    # Step 2: upgrade head → snapshot A
+    result = _run_alembic(["upgrade", "head"], cwd=cwd)
+    if result.returncode != 0:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(alembic)",
+                message=f"First upgrade head failed: {result.stderr[:500]}",
+            )
+        )
+        return findings
+
+    pair = _try_connect(database_url)
+    if pair is None:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(db)",
+                message="Cannot connect to database for schema snapshot",
+            )
+        )
+        return findings
+
+    engine, conn = pair  # type: ignore[misc]
+    try:
+        snapshot_a = _snapshot_schema(conn)
+    finally:
+        conn.close()  # type: ignore[union-attr]
+
+    # Step 3: downgrade base
+    result = _run_alembic(["downgrade", "base"], cwd=cwd)
+    if result.returncode != 0:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(alembic)",
+                message=f"Downgrade base (round-trip) failed: {result.stderr[:500]}",
+            )
+        )
+        engine.dispose()  # type: ignore[union-attr]
+        return findings
+
+    # Step 4: upgrade head → snapshot B
+    result = _run_alembic(["upgrade", "head"], cwd=cwd)
+    if result.returncode != 0:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(alembic)",
+                message=f"Second upgrade head failed: {result.stderr[:500]}",
+            )
+        )
+        engine.dispose()  # type: ignore[union-attr]
+        return findings
+
+    pair2 = _try_connect(database_url)
+    if pair2 is None:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(db)",
+                message="Cannot reconnect to database for second snapshot",
+            )
+        )
+        engine.dispose()  # type: ignore[union-attr]
+        return findings
+
+    _, conn2 = pair2  # type: ignore[misc]
+    try:
+        snapshot_b = _snapshot_schema(conn2)
+    finally:
+        conn2.close()  # type: ignore[union-attr]
+    engine.dispose()  # type: ignore[union-attr]
+
+    # Step 5: compare
+    if snapshot_a == snapshot_b:
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="info",
+                file="(all)",
+                message="DB idempotency OK: upgrade→downgrade→upgrade produces identical schema",
+            )
+        )
+    else:
+        schema_diff = snapshot_a.diff(snapshot_b)
+        findings.append(
+            IntegrityFinding(
+                check_type="idempotency",
+                severity="error",
+                file="(schema)",
+                message=(
+                    "DB idempotency FAILED: upgrade→downgrade→upgrade produces different schema"
+                ),
+                details=schema_diff,
+            )
+        )
+
+    return findings
+
+
+def resolve_mode(*, skip_db: bool) -> tuple[str, str | None]:
+    """Determine execution mode and database URL.
+
+    Returns:
+        (mode, database_url) where mode is "db" or "static".
+    """
+    if skip_db:
+        return "static", None
+
+    database_url = os.environ.get("DATABASE_URL", "")
+    if not database_url:
+        return "static", None
+
+    # Verify connectivity before committing to DB mode
+    pair = _try_connect(database_url)
+    if pair is None:
+        return "static", None
+
+    _, conn = pair  # type: ignore[misc]
+    conn.close()  # type: ignore[union-attr]
+    return "db", database_url
+
+
+# ---------------------------------------------------------------------------
 # Report generation
 # ---------------------------------------------------------------------------
 
@@ -583,6 +896,7 @@ def generate_report(
     migrations: list[MigrationInfo],
     *,
     verbose: bool = False,
+    mode: str = "static",
 ) -> dict:
     """Build the JSON report."""
     errors = [f for f in findings if f.severity == "error"]
@@ -601,13 +915,19 @@ def generate_report(
     else:
         status = "PASS"
 
+    checks_run = ["chain", "rollback", "symmetry", "version"]
+    if mode == "db":
+        checks_run.append("idempotency")
+
     report: dict = {
         "status": status,
+        "mode": mode,
         "summary": {
             "total_migrations": len(migrations),
             "total_findings": len(findings),
             "errors": len(errors),
             "warnings": len(warnings),
+            "checks_run": checks_run,
             "by_check": by_check,
         },
         "errors": [f.to_dict() for f in errors],
@@ -631,16 +951,22 @@ def main() -> None:
     verbose = "--verbose" in sys.argv
     skip_db = "--skip-db" in sys.argv
 
+    # Resolve execution mode
+    mode, database_url = resolve_mode(skip_db=skip_db)
+
     if not use_json:
         print("=== Temporal Integrity Verification ===")
-        if skip_db:
+        if mode == "db":
+            print("Mode: db (idempotency check enabled)")
+        elif skip_db:
             print("Mode: static analysis (--skip-db)")
         else:
-            # DB mode not yet implemented; default to static analysis
-            print("Mode: static analysis (DB mode not yet implemented)")
+            print("Mode: static analysis (DATABASE_URL not available)")
 
     # Parse migrations
     migrations = parse_all_migrations()
+
+    total_checks = 5 if mode == "db" else 4
 
     if not use_json:
         print(f"Found {len(migrations)} migration files")
@@ -649,22 +975,27 @@ def main() -> None:
     findings: list[IntegrityFinding] = []
 
     if not use_json:
-        print("\n[1/4] Chain integrity...")
+        print(f"\n[1/{total_checks}] Chain integrity...")
     findings.extend(check_chain_integrity(migrations))
 
     if not use_json:
-        print("[2/4] Rollback coverage...")
+        print(f"[2/{total_checks}] Rollback coverage...")
     findings.extend(check_rollback_coverage(migrations))
 
     if not use_json:
-        print("[3/4] Up/down symmetry...")
+        print(f"[3/{total_checks}] Up/down symmetry...")
     findings.extend(check_symmetry(migrations))
 
     if not use_json:
-        print("[4/4] Version monotonicity...")
+        print(f"[4/{total_checks}] Version monotonicity...")
     findings.extend(check_version_monotonicity(migrations))
 
-    report = generate_report(findings, migrations, verbose=verbose)
+    if mode == "db" and database_url:
+        if not use_json:
+            print(f"[5/{total_checks}] DB idempotency (upgrade→downgrade→upgrade)...")
+        findings.extend(check_db_idempotency(database_url))
+
+    report = generate_report(findings, migrations, verbose=verbose, mode=mode)
 
     if use_json:
         print(json.dumps(report, indent=2, ensure_ascii=False))
@@ -675,6 +1006,7 @@ def main() -> None:
             f"Findings: {s['total_findings']} "
             f"(errors={s['errors']}, warnings={s['warnings']})"
         )
+        print(f"Checks run: {', '.join(s['checks_run'])}")
         if report["errors"]:
             print("\nErrors:")
             for e in report["errors"]:

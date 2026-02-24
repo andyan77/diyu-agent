@@ -27,8 +27,10 @@ import yaml
 
 MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
 
-# Pattern to extract phase number from X-node ID: X4-1 -> 4, XF4-1 -> 4, XM3-2 -> 3
-_XNODE_PHASE_RE = re.compile(r"^X[FM]?(\d+)-\d+$")
+# Pattern to extract phase number from X-node ID: X4-1 -> 4, XF4-1 -> 4
+# XM prefix is EXCLUDED: XM's digit is the M-track batch number, not the phase.
+# E.g. XM1-1 means "Multimodal batch 1, node 1" and may belong to phase 3.
+_XNODE_PHASE_RE = re.compile(r"^XF?(\d+)-\d+$")
 
 # Valid guard_status values (must match schema enum)
 VALID_GUARD_STATUSES = frozenset({"done", "in_progress", "blocked_env", "pending", "skipped"})

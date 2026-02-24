@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # full_audit.sh - Unified audit entry point (Section 12.6)
 #
-# Runs all 14 audit categories:
+# Runs all 18 audit categories:
 #   1. Guards: check_layer_deps, check_port_compat, check_rls
 #   2. Skill audits: run_systematic_review, run_cross_audit, run_fix_verify
 #   3. Agent tests: test_agent_permissions
@@ -16,6 +16,10 @@
 #  12. Contract Alignment: check_contract_alignment (6-type)
 #  13. Evidence Grading: check_evidence_grade (A-F)
 #  14. Temporal Integrity: check_temporal_integrity (migration chain)
+#  15. Decomposition Audit (C1): check_frontend_depth (stub/auth detection)
+#  16. Reverse Audit (C2): check_reverse_audit (shadow function detection)
+#  17. X-Node Deep Verify (C3): check_xnode_deep (evidence quality)
+#  18. Milestone Ruling: check_milestone_ruling (evidence-chain guard ruling)
 #
 # Exit codes: 0 = all pass, 1 = failures found, 2 = critical error
 #
@@ -220,6 +224,42 @@ fi
 run_check "temporal_integrity" "temporal_integrity" "uv run python scripts/check_temporal_integrity.py --json 2>&1"
 
 # ============================================================
+# 15. Decomposition Audit (C1)
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 15: Decomposition Audit (C1) ==="
+fi
+run_check "frontend_depth" "decomposition_audit" "uv run python scripts/check_frontend_depth.py --json 2>&1"
+
+# ============================================================
+# 16. Reverse Audit (C2)
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 16: Reverse Audit (C2) ==="
+fi
+run_check "reverse_audit" "reverse_audit" "uv run python scripts/check_reverse_audit.py --json 2>&1"
+
+# ============================================================
+# 17. X-Node Deep Verify (C3)
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 17: X-Node Deep Verify (C3) ==="
+fi
+run_check "xnode_deep" "xnode_deep" "uv run python scripts/check_xnode_deep.py --all-phases --json 2>&1"
+
+# ============================================================
+# 18. Milestone Ruling (evidence-chain guard ruling)
+# ============================================================
+if [ "$JSON_OUTPUT" = false ]; then
+  echo ""
+  echo "=== Phase 18: Milestone Ruling ==="
+fi
+run_check "milestone_ruling" "milestone_ruling" "uv run python scripts/check_milestone_ruling.py --json 2>&1"
+
+# ============================================================
 # Report aggregation
 # ============================================================
 OVERALL="pass"
@@ -236,7 +276,7 @@ report = {
     'phase': int(sys.argv[2]),
     'results': json.loads(sys.argv[3]),
     'summary': {
-        'total_categories': 14,
+        'total_categories': 18,
         'total_sub_checks': int(sys.argv[4]),
         'passed': int(sys.argv[5]),
         'failed': int(sys.argv[6]),

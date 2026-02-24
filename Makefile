@@ -183,6 +183,9 @@ check-reverse-audit: ## Reverse audit: code -> design (shadow/drift detection)
 check-xnode-deep: ## Deep X-node verification (beyond exit code checking)
 	@$(PYTHON) $(SCRIPTS)/check_xnode_deep.py --json
 
+check-milestone-ruling: ## Full milestone delivery guard ruling (V1: phase proxy)
+	@$(PYTHON) $(SCRIPTS)/check_milestone_ruling.py --json
+
 # ============================================================
 # Skills Governance
 # ============================================================

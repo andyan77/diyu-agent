@@ -517,6 +517,11 @@ def generate_report(
     else:
         status = "PASS"
 
+    shadows_list = [s.to_dict() for s in shadows]
+    drifted_list = [d.to_dict() for d in drifted]
+    dead_list = [d.to_dict() for d in dead]
+    findings_list = shadows_list + drifted_list + dead_list
+
     report: dict = {
         "status": status,
         "summary": {
@@ -526,10 +531,12 @@ def generate_report(
             "drift_count": len(drifted),
             "dead_count": len(dead),
             "shadow_by_layer": shadow_by_layer,
+            "findings_count": len(findings_list),
         },
-        "shadows": [s.to_dict() for s in shadows],
-        "drifted": [d.to_dict() for d in drifted],
-        "dead": [d.to_dict() for d in dead],
+        "shadows": shadows_list,
+        "drifted": drifted_list,
+        "dead": dead_list,
+        "findings": findings_list,
     }
 
     if verbose:

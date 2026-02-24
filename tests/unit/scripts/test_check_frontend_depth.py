@@ -419,6 +419,27 @@ class TestReportGeneration:
         assert "all_results" in report
         assert report["all_results"][0]["task_id"] == "TASK-1"
 
+    def test_report_has_findings_key(self) -> None:
+        """Report must include a standardized 'findings' array."""
+        results = [fd.DepthResult("TASK-1", "L3")]
+        sf = [fd.SecurityFinding("stub", "warning", "a.tsx", 1, "placeholder")]
+        report = fd.generate_report(results, sf)
+        assert "findings" in report
+        assert len(report["findings"]) == len(report["security_findings"])
+
+    def test_findings_equals_security_findings(self) -> None:
+        """findings array must mirror security_findings content."""
+        results = [fd.DepthResult("TASK-1", "L3")]
+        report = fd.generate_report(results, [])
+        assert report["findings"] == report["security_findings"]
+
+    def test_summary_has_findings_count(self) -> None:
+        """summary must include a findings_count field."""
+        results = [fd.DepthResult("TASK-1", "L3")]
+        sf = [fd.SecurityFinding("stub", "warning", "a.tsx", 1, "placeholder")]
+        report = fd.generate_report(results, sf)
+        assert report["summary"]["findings_count"] == 1
+
 
 # ---------------------------------------------------------------------------
 # Integration: Script execution

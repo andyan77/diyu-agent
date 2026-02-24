@@ -597,6 +597,8 @@ def generate_report(
     else:
         status = "PASS"
 
+    findings_list = [sf.to_dict() for sf in security_findings]
+
     report: dict = {
         "status": status,
         "summary": {
@@ -607,8 +609,10 @@ def generate_report(
             "security_findings_count": len(security_findings),
             "critical_security_count": critical_sec,
             "security_by_category": sec_by_cat,
+            "findings_count": len(findings_list),
         },
-        "security_findings": [sf.to_dict() for sf in security_findings],
+        "security_findings": findings_list,
+        "findings": findings_list,
     }
 
     if verbose:
