@@ -338,7 +338,7 @@ All criteria use **validation fixtures** (known sample sets) rather than hard-co
 - [ ] `check_contract_alignment.py`: covers all 6 contract types with at least 1 test case each
 - [ ] `check_evidence_grade.py`: classifies 100% of milestone-matrix exit_criteria into A-F grades
 - [ ] `check_temporal_integrity.py`: verifies migration chain has zero gaps + all downgrade() are non-pass
-- [ ] `full_audit.sh` runs all 14 categories end-to-end
+- [ ] `full_audit.sh` runs all 18 categories end-to-end (14 original + C1/C2/C3 + Milestone Ruling)
 - [ ] CI `cross-validation` job promoted to L2 blocking gate
 
 ---
@@ -351,3 +351,38 @@ All criteria use **validation fixtures** (known sample sets) rather than hard-co
 | `docs/governance/architecture-phase-delivery-map.md` | **Input**: Promise mapping baseline |
 | `delivery/milestone-matrix.yaml` | **Modified by**: Phase A (gate upgrades), Phase D (new categories) |
 | `docs/governance/execution-plan-v1.0.md` | **Sibling**: That covers feature delivery; this covers guardian infrastructure |
+
+---
+
+## Appendix A: X-Node Ruling Rules (固化裁决口径)
+
+Canonical source: `delivery/milestone-matrix.yaml` xnode_registry comment block (lines 790-799).
+
+These rules govern how `guard_status` and `deep_verdict` are determined for each X-node in the registry:
+
+| # | Rule | Rationale |
+|---|------|-----------|
+| 1 | **guard_status progression**: `pending` -> `in_progress` -> `done` | One-way promotion; no regression without explicit revert. |
+| 2 | **Promotion rule**: `in_progress` -> `done` requires `deep_verdict=pass` AND `evidence_grade>=C` | Prevents false "done" claims from gate-pass-only without evidence quality. |
+| 3 | **PASS != done**: Gate command pass proves "check succeeds NOW", not "delivery complete" | Gate commands are point-in-time checks; guard_status tracks cumulative delivery state. |
+| 4 | **Milestones without status field** => `guard_status` CANNOT be `done` | Phase 0/1 milestones that lack explicit `status: done` in YAML are implicitly incomplete for guardian purposes. |
+| 5 | **XM prefix digit** = M-track batch number (NOT phase number) | `XM1-1` means "Multimodal batch 1, node 1"; actual phase stored in `phase` field. Key-phase validation skips XM nodes. |
+| 6 | **evidence_grade** is by gate command TYPE (A/B/C/D/F), NOT by artifact existence | A=runtime/E2E/playwright, B=integration, C=unit, D=static/grep/test-f, F=no gate binding. Artifact absence => `deep_verdict` stays `unverified`. |
+| 7 | **blocked_env** can be promoted to `done(CI)` with `ci_evidence` record | For nodes blocked by local environment (e.g., Chrome in WSL), CI evidence substitutes local execution. |
+
+### Evidence Grade Taxonomy
+
+| Grade | Gate Command Type | Example |
+|-------|-------------------|---------|
+| **A** | Runtime / E2E / Playwright | `cd frontend && pnpm exec playwright test ...` |
+| **B** | Integration test | `uv run pytest tests/integration/ ...` |
+| **C** | Unit test | `uv run pytest tests/unit/ ...` |
+| **D** | Static analysis / grep / test -f | `ruff check ...`, `grep -q ...`, `test -f ...` |
+| **F** | No gate binding | X-node has no `yaml_binding` |
+
+### Implementation Locations
+
+- YAML comment block: `delivery/milestone-matrix.yaml` lines 790-799
+- Schema validation: `delivery/milestone-matrix.schema.yaml` (XNodeEntry definition)
+- Runtime validation: `scripts/lib/xnode_utils.py` (4 validation rules)
+- Deep verification: `scripts/check_xnode_deep.py` (evidence quality checks)

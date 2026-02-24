@@ -3,7 +3,7 @@
 # Schema: delivery/milestone-matrix.schema.yaml
 # Usage: uv run python scripts/verify_phase.py --phase 0 --json
 
-schema_version: "1.2"
+schema_version: "1.3"
 current_phase: "phase_3"
 
 phases:
@@ -131,19 +131,19 @@ phases:
     depends_on: ["phase_0"]
     milestones:
       # Backend
-      - {id: "G1-1", layer: "Gateway", summary: "JWT auth middleware", status: "done"}
-      - {id: "G1-2", layer: "Gateway", summary: "OrgContext middleware", status: "done"}
-      - {id: "G1-3", layer: "Gateway", summary: "RBAC permission check", status: "done"}
-      - {id: "G1-4", layer: "Gateway", summary: "RLS policy baseline", status: "done"}
-      - {id: "G1-5", layer: "Gateway", summary: "API partition rules", status: "done"}
-      - {id: "G1-6", layer: "Gateway", summary: "Security headers", status: "done"}
-      - {id: "I1-1", layer: "Infra", summary: "org/users/org_members DDL", status: "done"}
-      - {id: "I1-2", layer: "Infra", summary: "org_settings inheritance", status: "done"}
-      - {id: "I1-3", layer: "Infra", summary: "RLS policies all tables", status: "done"}
-      - {id: "I1-4", layer: "Infra", summary: "RBAC skeleton", status: "done"}
-      - {id: "I1-5", layer: "Infra", summary: "audit_events table", status: "done"}
-      - {id: "I1-6", layer: "Infra", summary: "event_outbox pattern", status: "done"}
-      - {id: "I1-7", layer: "Infra", summary: "Secret/SAST/dep scanning", status: "done"}
+      - {id: "G1-1", layer: "Gateway", summary: "JWT auth middleware", status: "done", gate_criteria: ["p1-gateway-auth"]}
+      - {id: "G1-2", layer: "Gateway", summary: "OrgContext middleware", status: "done", gate_criteria: ["p1-orgcontext"]}
+      - {id: "G1-3", layer: "Gateway", summary: "RBAC permission check", status: "done", gate_criteria: ["p1-rbac"]}
+      - {id: "G1-4", layer: "Gateway", summary: "RLS policy baseline", status: "done", gate_criteria: ["p1-rls"]}
+      - {id: "G1-5", layer: "Gateway", summary: "API partition rules", status: "done", gate_criteria: ["p1-gateway-auth"]}
+      - {id: "G1-6", layer: "Gateway", summary: "Security headers", status: "done", gate_criteria: ["p1-security-scan"]}
+      - {id: "I1-1", layer: "Infra", summary: "org/users/org_members DDL", status: "done", gate_criteria: ["p1-org-migration"]}
+      - {id: "I1-2", layer: "Infra", summary: "org_settings inheritance", status: "done", gate_criteria: ["p1-org-migration"]}
+      - {id: "I1-3", layer: "Infra", summary: "RLS policies all tables", status: "done", gate_criteria: ["p1-rls"]}
+      - {id: "I1-4", layer: "Infra", summary: "RBAC skeleton", status: "done", gate_criteria: ["p1-rbac", "p1-port-contracts"]}
+      - {id: "I1-5", layer: "Infra", summary: "audit_events table", status: "done", gate_criteria: ["p1-audit"]}
+      - {id: "I1-6", layer: "Infra", summary: "event_outbox pattern", status: "done", gate_criteria: ["p1-port-contracts"]}
+      - {id: "I1-7", layer: "Infra", summary: "Secret/SAST/dep scanning", status: "done", gate_criteria: ["p1-security-scan"]}
       # Frontend
       - {id: "FW1-1", layer: "FE-Web", summary: "Login page", status: "done"}
       - {id: "FW1-2", layer: "FE-Web", summary: "AuthProvider + PermissionGate", status: "done"}
@@ -152,15 +152,15 @@ phases:
       - {id: "FA1-1", layer: "FE-Admin", summary: "Admin login with 2FA slot", status: "done"}
       - {id: "FA1-2", layer: "FE-Admin", summary: "Permission matrix mgmt", status: "done"}
       # Crosscutting
-      - {id: "D1-1", layer: "Delivery", summary: "Image security scan", status: "done"}
-      - {id: "D1-2", layer: "Delivery", summary: "SBOM generation", status: "done"}
+      - {id: "D1-1", layer: "Delivery", summary: "Image security scan", status: "done", gate_criteria: ["p1-security-scan"]}
+      - {id: "D1-2", layer: "Delivery", summary: "SBOM generation", status: "done", gate_criteria: ["p1-sbom"]}
       - {id: "D1-3", layer: "Delivery", summary: "verify-phase-1", status: "done"}
-      - {id: "OS1-1", layer: "Observability", summary: "RLS isolation test framework", status: "done"}
-      - {id: "OS1-2", layer: "Observability", summary: "Isolation smoke CI gate", status: "done"}
-      - {id: "OS1-3", layer: "Observability", summary: "audit_events baseline", status: "done"}
-      - {id: "OS1-4", layer: "Observability", summary: "JWT security tests", status: "done"}
-      - {id: "OS1-5", layer: "Observability", summary: "CORS + security headers", status: "done"}
-      - {id: "OS1-6", layer: "Observability", summary: "FE XSS protection", status: "done"}
+      - {id: "OS1-1", layer: "Observability", summary: "RLS isolation test framework", status: "done", gate_criteria: ["p1-rls"]}
+      - {id: "OS1-2", layer: "Observability", summary: "Isolation smoke CI gate", status: "done", gate_criteria: ["p1-rls"]}
+      - {id: "OS1-3", layer: "Observability", summary: "audit_events baseline", status: "done", gate_criteria: ["p1-audit"]}
+      - {id: "OS1-4", layer: "Observability", summary: "JWT security tests", status: "done", gate_criteria: ["p1-gateway-auth"]}
+      - {id: "OS1-5", layer: "Observability", summary: "CORS + security headers", status: "done", gate_criteria: ["p1-security-scan"]}
+      - {id: "OS1-6", layer: "Observability", summary: "FE XSS protection", status: "done", gate_criteria: ["p1-security-scan"]}
     exit_criteria:
       hard:
         - id: "p1-org-migration"
@@ -212,60 +212,60 @@ phases:
     depends_on: ["phase_1"]
     milestones:
       # Backend
-      - {id: "B2-1", layer: "Brain", summary: "Conversation engine full impl", status: "done"}
-      - {id: "B2-2", layer: "Brain", summary: "Intent understanding", status: "done"}
-      - {id: "B2-3", layer: "Brain", summary: "Context Assembler v1", status: "done"}
-      - {id: "B2-4", layer: "Brain", summary: "Context Assembler CE (RRF)", status: "done"}
-      - {id: "B2-5", layer: "Brain", summary: "Memory write pipeline", status: "done"}
-      - {id: "B2-6", layer: "Brain", summary: "injection/retrieval receipts", status: "done"}
-      - {id: "B2-7", layer: "Brain", summary: "Graceful degradation", status: "done"}
-      - {id: "B2-8", layer: "Brain", summary: "WebSocket real-time chat", status: "done"}
-      - {id: "MC2-1", layer: "MemoryCore", summary: "PG adapter replaces Stub", status: "done"}
-      - {id: "MC2-2", layer: "MemoryCore", summary: "conversation_events CRUD", status: "done"}
-      - {id: "MC2-3", layer: "MemoryCore", summary: "memory_items CRUD versioned", status: "done"}
-      - {id: "MC2-4", layer: "MemoryCore", summary: "pgvector semantic search", status: "done"}
-      - {id: "MC2-5", layer: "MemoryCore", summary: "Evolution Pipeline", status: "done"}
-      - {id: "MC2-6", layer: "MemoryCore", summary: "injection/retrieval receipts", status: "done"}
-      - {id: "MC2-7", layer: "MemoryCore", summary: "confidence_effective decay", status: "done"}
-      - {id: "T2-1", layer: "Tool", summary: "LLMCallPort real impl", status: "done"}
-      - {id: "T2-2", layer: "Tool", summary: "Model Registry + Fallback", status: "done"}
-      - {id: "T2-3", layer: "Tool", summary: "Token metering", status: "done"}
-      - {id: "G2-1", layer: "Gateway", summary: "Conversation REST API", status: "done"}
-      - {id: "G2-2", layer: "Gateway", summary: "WebSocket streaming", status: "done"}
-      - {id: "G2-3", layer: "Gateway", summary: "LLM Gateway (LiteLLM)", status: "done"}
-      - {id: "G2-4", layer: "Gateway", summary: "Token budget pre-check", status: "done"}
-      - {id: "G2-5", layer: "Gateway", summary: "Rate limiting middleware", status: "done"}
-      - {id: "G2-6", layer: "Gateway", summary: "3-step file upload", status: "done"}
-      - {id: "G2-7", layer: "Gateway", summary: "SSE notification endpoint", status: "done"}
-      - {id: "I2-1", layer: "Infra", summary: "Redis cache + session", status: "done"}
-      - {id: "I2-2", layer: "Infra", summary: "Celery Worker + Redis Broker", status: "done"}
-      - {id: "I2-3", layer: "Infra", summary: "Token billing minimal loop", status: "done"}
-      - {id: "I2-4", layer: "Infra", summary: "conversation_events table", status: "done"}
-      - {id: "I2-5", layer: "Infra", summary: "memory_items + pgvector", status: "done"}
+      - {id: "B2-1", layer: "Brain", summary: "Conversation engine full impl", status: "done", gate_criteria: ["p2-brain-engine", "p2-x2-1-conversation-loop"]}
+      - {id: "B2-2", layer: "Brain", summary: "Intent understanding", status: "done", gate_criteria: ["p2-brain-engine"]}
+      - {id: "B2-3", layer: "Brain", summary: "Context Assembler v1", status: "done", gate_criteria: ["p2-brain-engine"]}
+      - {id: "B2-4", layer: "Brain", summary: "Context Assembler CE (RRF)", status: "done", gate_criteria: ["p2-brain-engine"]}
+      - {id: "B2-5", layer: "Brain", summary: "Memory write pipeline", status: "done", gate_criteria: ["p2-brain-engine", "p2-integration"]}
+      - {id: "B2-6", layer: "Brain", summary: "injection/retrieval receipts", status: "done", gate_criteria: ["p2-brain-engine"]}
+      - {id: "B2-7", layer: "Brain", summary: "Graceful degradation", status: "done", gate_criteria: ["p2-brain-engine"]}
+      - {id: "B2-8", layer: "Brain", summary: "WebSocket real-time chat", status: "done", gate_criteria: ["p2-x2-1-conversation-loop"]}
+      - {id: "MC2-1", layer: "MemoryCore", summary: "PG adapter replaces Stub", status: "done", gate_criteria: ["p2-memory-core", "p2-integration"]}
+      - {id: "MC2-2", layer: "MemoryCore", summary: "conversation_events CRUD", status: "done", gate_criteria: ["p2-memory-core"]}
+      - {id: "MC2-3", layer: "MemoryCore", summary: "memory_items CRUD versioned", status: "done", gate_criteria: ["p2-memory-core"]}
+      - {id: "MC2-4", layer: "MemoryCore", summary: "pgvector semantic search", status: "done", gate_criteria: ["p2-memory-core"]}
+      - {id: "MC2-5", layer: "MemoryCore", summary: "Evolution Pipeline", status: "done", gate_criteria: ["p2-memory-core", "p2-x2-3-memory-evolution"]}
+      - {id: "MC2-6", layer: "MemoryCore", summary: "injection/retrieval receipts", status: "done", gate_criteria: ["p2-memory-core"]}
+      - {id: "MC2-7", layer: "MemoryCore", summary: "confidence_effective decay", status: "done", gate_criteria: ["p2-memory-core"]}
+      - {id: "T2-1", layer: "Tool", summary: "LLMCallPort real impl", status: "done", gate_criteria: ["p2-brain-engine", "p2-integration"]}
+      - {id: "T2-2", layer: "Tool", summary: "Model Registry + Fallback", status: "done", gate_criteria: ["p2-brain-engine"]}
+      - {id: "T2-3", layer: "Tool", summary: "Token metering", status: "done", gate_criteria: ["p2-x2-4-token-backpressure"]}
+      - {id: "G2-1", layer: "Gateway", summary: "Conversation REST API", status: "done", gate_criteria: ["p2-gateway-all"]}
+      - {id: "G2-2", layer: "Gateway", summary: "WebSocket streaming", status: "done", gate_criteria: ["p2-gateway-all", "p2-x2-1-conversation-loop"]}
+      - {id: "G2-3", layer: "Gateway", summary: "LLM Gateway (LiteLLM)", status: "done", gate_criteria: ["p2-gateway-all"]}
+      - {id: "G2-4", layer: "Gateway", summary: "Token budget pre-check", status: "done", gate_criteria: ["p2-gateway-all", "p2-x2-4-token-backpressure"]}
+      - {id: "G2-5", layer: "Gateway", summary: "Rate limiting middleware", status: "done", gate_criteria: ["p2-gateway-all"]}
+      - {id: "G2-6", layer: "Gateway", summary: "3-step file upload", status: "done", gate_criteria: ["p2-gateway-all"]}
+      - {id: "G2-7", layer: "Gateway", summary: "SSE notification endpoint", status: "done", gate_criteria: ["p2-gateway-all"]}
+      - {id: "I2-1", layer: "Infra", summary: "Redis cache + session", status: "done", gate_criteria: ["p2-integration"]}
+      - {id: "I2-2", layer: "Infra", summary: "Celery Worker + Redis Broker", status: "done", gate_criteria: ["p2-integration"]}
+      - {id: "I2-3", layer: "Infra", summary: "Token billing minimal loop", status: "done", gate_criteria: ["p2-integration"]}
+      - {id: "I2-4", layer: "Infra", summary: "conversation_events table", status: "done", gate_criteria: ["p2-memory-core"]}
+      - {id: "I2-5", layer: "Infra", summary: "memory_items + pgvector", status: "done", gate_criteria: ["p2-memory-core"]}
       # Frontend
-      - {id: "FW2-1", layer: "FE-Web", summary: "Chat dual-pane layout", status: "done"}
-      - {id: "FW2-2", layer: "FE-Web", summary: "Streaming message render", status: "done"}
-      - {id: "FW2-3", layer: "FE-Web", summary: "Chat history management", status: "done"}
-      - {id: "FW2-4", layer: "FE-Web", summary: "Memory context panel", status: "done"}
-      - {id: "FW2-5", layer: "FE-Web", summary: "Message actions", status: "done"}
-      - {id: "FW2-6", layer: "FE-Web", summary: "File upload (drag + progress)", status: "done"}
-      - {id: "FW2-7", layer: "FE-Web", summary: "WS connection management", status: "done"}
-      - {id: "FW2-8", layer: "FE-Web", summary: "OpenAPI type sync", status: "done"}
-      - {id: "FW2-9", layer: "FE-Web", summary: "SSE EventSource client", status: "done"}
-      - {id: "FA2-1", layer: "FE-Admin", summary: "User management DataTable", status: "done"}
-      - {id: "FA2-2", layer: "FE-Admin", summary: "Organization management", status: "done"}
-      - {id: "FA2-3", layer: "FE-Admin", summary: "Audit log viewer", status: "done"}
+      - {id: "FW2-1", layer: "FE-Web", summary: "Chat dual-pane layout", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FW2-2", layer: "FE-Web", summary: "Streaming message render", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FW2-3", layer: "FE-Web", summary: "Chat history management", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FW2-4", layer: "FE-Web", summary: "Memory context panel", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FW2-5", layer: "FE-Web", summary: "Message actions", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FW2-6", layer: "FE-Web", summary: "File upload (drag + progress)", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FW2-7", layer: "FE-Web", summary: "WS connection management", status: "done", gate_criteria: ["p2-fe-web-build", "p2-xf2-1-login-to-streaming"]}
+      - {id: "FW2-8", layer: "FE-Web", summary: "OpenAPI type sync", status: "done", gate_criteria: ["p2-fe-web-build", "p2-xf2-4-openapi-sync"]}
+      - {id: "FW2-9", layer: "FE-Web", summary: "SSE EventSource client", status: "done", gate_criteria: ["p2-fe-web-build"]}
+      - {id: "FA2-1", layer: "FE-Admin", summary: "User management DataTable", status: "done", gate_criteria: ["p2-fe-admin-build"]}
+      - {id: "FA2-2", layer: "FE-Admin", summary: "Organization management", status: "done", gate_criteria: ["p2-fe-admin-build"]}
+      - {id: "FA2-3", layer: "FE-Admin", summary: "Audit log viewer", status: "done", gate_criteria: ["p2-fe-admin-build"]}
       # Crosscutting
-      - {id: "D2-1", layer: "Delivery", summary: "Frontend CI pipeline", status: "done"}
-      - {id: "D2-2", layer: "Delivery", summary: "OpenAPI type sync CI gate", status: "done"}
-      - {id: "D2-3", layer: "Delivery", summary: "Dogfooding environment", status: "done"}
-      - {id: "D2-4", layer: "Delivery", summary: "Resource consumption data", status: "done"}
+      - {id: "D2-1", layer: "Delivery", summary: "Frontend CI pipeline", status: "done", gate_criteria: ["p2-fe-web-build", "p2-fe-admin-build"]}
+      - {id: "D2-2", layer: "Delivery", summary: "OpenAPI type sync CI gate", status: "done", gate_criteria: ["p2-xf2-4-openapi-sync"]}
+      - {id: "D2-3", layer: "Delivery", summary: "Dogfooding environment", status: "done", gate_criteria: ["p2-env-completeness"]}
+      - {id: "D2-4", layer: "Delivery", summary: "Resource consumption data", status: "done", gate_criteria: ["p2-integration"]}
       - {id: "D2-5", layer: "Delivery", summary: "verify-phase-2", status: "done"}
-      - {id: "OS2-1", layer: "Observability", summary: "4 golden signals", status: "done"}
-      - {id: "OS2-2", layer: "Observability", summary: "Basic alert rules", status: "done"}
-      - {id: "OS2-3", layer: "Observability", summary: "Token anomaly alert", status: "done"}
-      - {id: "OS2-4", layer: "Observability", summary: "Structured error logging", status: "done"}
-      - {id: "OS2-5", layer: "Observability", summary: "FE error boundary + Sentry", status: "done"}
+      - {id: "OS2-1", layer: "Observability", summary: "4 golden signals", status: "done", gate_criteria: ["p2-x2-5-golden-signals"]}
+      - {id: "OS2-2", layer: "Observability", summary: "Basic alert rules", status: "done", gate_criteria: ["p2-x2-5-golden-signals"]}
+      - {id: "OS2-3", layer: "Observability", summary: "Token anomaly alert", status: "done", gate_criteria: ["p2-x2-4-token-backpressure"]}
+      - {id: "OS2-4", layer: "Observability", summary: "Structured error logging", status: "done", gate_criteria: ["p2-lint"]}
+      - {id: "OS2-5", layer: "Observability", summary: "FE error boundary + Sentry", status: "done", gate_criteria: ["p2-x2-6-fe-error-boundary"]}
     exit_criteria:
       hard:
         - id: "p2-brain-engine"
@@ -786,8 +786,17 @@ phases:
 # =============================================================================
 # X-node Registry (SSOT for guard verification status)
 # Key = X-node ID, value = XNodeEntry
-# guard_status progression: pending -> in_progress -> done
-# Promotion rule: in_progress -> done requires deep_verdict=pass + evidence_grade>=C
+#
+# RULING RULES (固化裁决口径):
+#   1. guard_status progression: pending -> in_progress -> done
+#   2. Promotion rule: in_progress -> done requires deep_verdict=pass + evidence_grade>=C
+#   3. PASS != done: gate command pass proves "check succeeds NOW", not "delivery complete"
+#   4. milestones without status field => guard_status CANNOT be done
+#   5. XM prefix digit = M-track batch number (NOT phase number)
+#      e.g. XM1-1 = "Multimodal batch 1, node 1", may belong to phase 3
+#   6. evidence_grade is by gate command TYPE (A/B/C/D/F), NOT by artifact existence
+#      artifact absence => deep_verdict stays unverified, guard_status stays in_progress
+#   7. blocked_env can be promoted to done(CI) with ci_evidence record
 # =============================================================================
 xnode_registry:
   # --- Phase 0: Skeleton & Port Definition (6 nodes) ---
@@ -798,54 +807,71 @@ xnode_registry:
     gate_result: not_bound
     deep_verdict: unverified
     evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones implicit done (no status field, current_phase > phase_0)"
     verdict_reason: "P0 milestones lack status field; no gate binding for deep verification"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X0-2:
     phase: 0
     guard_status: in_progress
     summary: "CI hard gates complete run"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones implicit done, no gate binding"
     verdict_reason: "P0 milestones lack status; no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X0-3:
     phase: 0
     guard_status: in_progress
     summary: "Docker Compose full-stack startup"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones implicit done, no gate binding"
     verdict_reason: "P0 milestones lack status; no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X0-4:
     phase: 0
     guard_status: in_progress
     summary: "Security scan triple CI integration"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones implicit done, no gate binding"
     verdict_reason: "P0 milestones lack status; no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X0-5:
     phase: 0
     guard_status: in_progress
     summary: "Log format standardization verification"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones implicit done, no gate binding"
     verdict_reason: "P0 milestones lack status; no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   XM0-1:
     phase: 0
     guard_status: in_progress
     summary: "M0 contract tests all pass"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones implicit done, no gate binding"
     verdict_reason: "P0 milestones lack status; no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
 
   # --- Phase 1: Security & Tenant Foundation (5 nodes) ---
   X1-1:
@@ -854,45 +880,60 @@ xnode_registry:
     summary: "JWT -> OrgContext -> RLS full chain"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones 28/28 done, no gate binding"
     verdict_reason: "P1 milestones done but no gate binding for deep verification"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X1-2:
     phase: 1
     guard_status: in_progress
     summary: "RBAC permission chain"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones 28/28 done, no gate binding"
     verdict_reason: "P1 milestones done but no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X1-3:
     phase: 1
     guard_status: in_progress
     summary: "Isolation test CI run"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones 28/28 done, no gate binding"
     verdict_reason: "P1 milestones done but no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X1-4:
     phase: 1
     guard_status: in_progress
     summary: "Audit write full chain"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones 28/28 done, no gate binding"
     verdict_reason: "P1 milestones done but no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
   X1-5:
     phase: 1
     guard_status: in_progress
     summary: "Frontend security protection verification"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    evidence_grade: F
     status_basis: "milestones 28/28 done, no gate binding"
     verdict_reason: "P1 milestones done but no gate binding"
     promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+    yaml_binding: []
 
   # --- Phase 2: Core Conversation Loop (10 nodes) ---
   X2-1:
@@ -901,100 +942,120 @@ xnode_registry:
     summary: "Conversation complete loop"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (pytest e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-x2-1-conversation-loop PASS"
     verdict_reason: "Gate PASS but evidence artifact missing for deep verification"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-x2-1-conversation-loop"]
   X2-2:
     phase: 2
     guard_status: in_progress
     summary: "Streaming reply full chain"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (pytest e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-x2-1-conversation-loop PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-x2-1-conversation-loop"]
   X2-3:
     phase: 2
     guard_status: in_progress
     summary: "Memory Evolution loop"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (pytest e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-x2-3-memory-evolution PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-x2-3-memory-evolution"]
   X2-4:
     phase: 2
     guard_status: in_progress
     summary: "Token budget backpressure (Loop D)"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (pytest e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-x2-4-token-backpressure PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-x2-4-token-backpressure"]
   X2-5:
     phase: 2
     guard_status: in_progress
     summary: "4 golden signals e2e verification"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (pytest e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-x2-5-golden-signals PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-x2-5-golden-signals"]
   X2-6:
     phase: 2
     guard_status: in_progress
     summary: "Frontend error reporting loop"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (playwright e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-x2-6-fe-error-boundary PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-x2-6-fe-error-boundary"]
   XF2-1:
     phase: 2
     guard_status: in_progress
     summary: "Login -> org select -> chat -> streaming"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (playwright e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-xf2-1-login-to-streaming PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-xf2-1-login-to-streaming"]
   XF2-2:
     phase: 2
     guard_status: in_progress
     summary: "Memory panel view and delete"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (playwright e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-xf2-1-login-to-streaming PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-xf2-1-login-to-streaming"]
   XF2-3:
     phase: 2
     guard_status: in_progress
     summary: "File upload loop"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (playwright e2e), no per-xnode evidence artifact"
+    evidence_grade: A
     status_basis: "milestones 52/52 done, gate p2-xf2-1-login-to-streaming PASS"
     verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    promotion_rule: "deep verify pass + evidence artifact"
+    yaml_binding: ["p2-xf2-1-login-to-streaming"]
   XF2-4:
     phase: 2
     guard_status: in_progress
     summary: "OpenAPI type consistency"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    evidence_scope: "gate command pass (bash script), no per-xnode evidence artifact"
+    evidence_grade: D
     status_basis: "milestones 52/52 done, gate p2-xf2-4-openapi-sync PASS"
-    verdict_reason: "Gate PASS but evidence artifact missing"
-    promotion_rule: "generate evidence artifact + evidence grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); evidence artifact missing"
+    promotion_rule: "upgrade gate to pytest/integration + deep verify pass"
+    yaml_binding: ["p2-xf2-4-openapi-sync"]
 
   # --- Phase 3: Knowledge & Skill Ecosystem (11 nodes) ---
   X3-1:
@@ -1003,100 +1064,132 @@ xnode_registry:
     summary: "Chat triggers Skill complete loop"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, milestones lack status field"
+    evidence_scope: "gate command pass (pytest unit), milestones lack status field"
+    evidence_grade: C
     status_basis: "current phase, gate p3-skill-registry PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-skill-registry"]
   X3-2:
     phase: 3
     guard_status: in_progress
     summary: "FK consistency verification (Neo4j + Qdrant)"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit+integration), milestones lack status field"
+    evidence_grade: B
     status_basis: "current phase, gate p3-knowledge-crud PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-knowledge-crud"]
   X3-3:
     phase: 3
     guard_status: in_progress
     summary: "Promotion Pipeline cross SSOT"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit+integration), milestones lack status field"
+    evidence_grade: B
     status_basis: "current phase, gate p3-promotion-pipeline PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-promotion-pipeline"]
   X3-4:
     phase: 3
     guard_status: in_progress
     summary: "Knowledge Admin API full chain"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit+integration), milestones lack status field"
+    evidence_grade: B
     status_basis: "current phase, gate p3-knowledge-crud PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-knowledge-crud"]
   X3-5:
     phase: 3
     guard_status: in_progress
     summary: "Content security pipeline loop"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit), milestones lack status field"
+    evidence_grade: C
     status_basis: "current phase, gate p3-content-security PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-content-security"]
   X3-6:
     phase: 3
     guard_status: in_progress
     summary: "Resolver query audit loop"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit), milestones lack status field"
+    evidence_grade: C
     status_basis: "current phase, gate p3-resolver-audit PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-resolver-audit"]
   XF3-1:
     phase: 3
     guard_status: in_progress
     summary: "Chat triggers Skill -> Artifact rendering"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (build + file existence), milestones lack status field"
+    evidence_grade: D
     status_basis: "current phase, gate p3-fe-knowledge PASS, milestones 0/50 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to playwright + milestones done + deep verify pass"
+    yaml_binding: ["p3-fe-knowledge"]
   XF3-2:
     phase: 3
     guard_status: in_progress
     summary: "Knowledge edit -> submit -> HQ view"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (build + file existence), milestones lack status field"
+    evidence_grade: D
     status_basis: "current phase, gate p3-fe-knowledge PASS, milestones 0/50 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to playwright + milestones done + deep verify pass"
+    yaml_binding: ["p3-fe-knowledge"]
   XF3-3:
     phase: 3
     guard_status: in_progress
     summary: "Org config inheritance verification"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (build + file existence), milestones lack status field"
+    evidence_grade: D
     status_basis: "current phase, gate p3-fe-knowledge PASS, milestones 0/50 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to playwright + milestones done + deep verify pass"
+    yaml_binding: ["p3-fe-knowledge"]
   XM1-1:
     phase: 3
     guard_status: in_progress
     summary: "M1 personal media upload loop"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit), milestones lack status field"
+    evidence_grade: C
     status_basis: "current phase, gate p3-tool-execution PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-tool-execution"]
   XM1-2:
     phase: 3
     guard_status: in_progress
     summary: "M1 media security scan loop"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest unit), milestones lack status field"
+    evidence_grade: C
     status_basis: "current phase, gate p3-content-security PASS, milestones 0/50 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p3-content-security"]
 
   # --- Phase 4: Reliability & Full Feature (12 nodes) ---
   X4-1:
@@ -1105,110 +1198,144 @@ xnode_registry:
     summary: "Full-chain trace_id tracking"
     gate_result: pass
     deep_verdict: unverified
-    evidence_scope: "gate command pass, milestones lack status field"
+    evidence_scope: "gate command pass (pytest e2e), milestones lack status field"
+    evidence_grade: A
     status_basis: "gate p4-trace-e2e PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-trace-e2e"]
   X4-2:
     phase: 4
     guard_status: in_progress
     summary: "Upgrade/rollback drill"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (bash script), milestones lack status field"
+    evidence_grade: D
     status_basis: "gate p4-release-drill PASS, milestones 0/51 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to integration test + milestones done + deep verify"
+    yaml_binding: ["p4-release-drill"]
   X4-3:
     phase: 4
     guard_status: in_progress
     summary: "Triple SSOT consistency"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (bash script), milestones lack status field"
+    evidence_grade: D
     status_basis: "gate p4-ssot-drift PASS, milestones 0/51 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to integration test + milestones done + deep verify"
+    yaml_binding: ["p4-ssot-drift"]
   X4-4:
     phase: 4
     guard_status: in_progress
     summary: "Delete pipeline e2e"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest e2e), milestones lack status field"
+    evidence_grade: A
     status_basis: "gate p4-delete-e2e PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-delete-e2e"]
   X4-5:
     phase: 4
     guard_status: in_progress
     summary: "SLI/SLO metrics e2e verification"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (python script), milestones lack status field"
+    evidence_grade: D
     status_basis: "gate p4-slo-metrics PASS, milestones 0/51 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to integration test + milestones done + deep verify"
+    yaml_binding: ["p4-slo-metrics"]
   X4-6:
     phase: 4
     guard_status: in_progress
     summary: "Fault injection and recovery verification"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest e2e), milestones lack status field"
+    evidence_grade: A
     status_basis: "gate p4-fault-injection PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-fault-injection"]
   X4-7:
     phase: 4
     guard_status: in_progress
     summary: "Pentest OWASP Top 10"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (python script), milestones lack status field"
+    evidence_grade: D
     status_basis: "gate p4-pentest-report PASS, milestones 0/51 done"
-    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    verdict_reason: "Gate PASS but static check only (D); milestones lack status"
+    promotion_rule: "upgrade gate to integration test + milestones done + deep verify"
+    yaml_binding: ["p4-pentest-report"]
   XF4-1:
     phase: 4
     guard_status: blocked_env
     summary: "Quota exhaustion -> recharge -> balance update"
     gate_result: fail
-    deep_verdict: unverified
-    evidence_scope: "p4-lighthouse FAIL (Chrome unavailable in WSL); CI may pass"
-    status_basis: "gate p4-lighthouse FAIL in local WSL env"
+    deep_verdict: fail
+    evidence_scope: "p4-lighthouse FAIL (Chrome unavailable in WSL); p4-billing-e2e bound"
+    evidence_grade: A
+    status_basis: "gate p4-lighthouse FAIL in local WSL env; p4-billing-e2e is playwright A-grade"
     verdict_reason: "Lighthouse cannot connect to Chrome in WSL2; environment-specific blocker"
-    promotion_rule: "resolve env issue or accept CI-only evidence + grade >= C"
+    promotion_rule: "resolve env issue or accept CI-only evidence via ci_evidence record"
+    yaml_binding: ["p4-lighthouse", "p4-billing-e2e"]
   XF4-2:
     phase: 4
     guard_status: in_progress
     summary: "System monitoring dashboard"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (playwright e2e), milestones lack status field"
+    evidence_grade: A
     status_basis: "gate p4-monitoring-dashboard PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-monitoring-dashboard"]
   XF4-3:
     phase: 4
     guard_status: in_progress
     summary: "View AI memory -> delete -> confirm deletion"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (playwright e2e), milestones lack status field"
+    evidence_grade: A
     status_basis: "gate p4-memory-privacy-e2e PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-memory-privacy-e2e"]
   XM2-1:
     phase: 4
     guard_status: in_progress
     summary: "M2 enterprise media dual-write + FK verification"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest integration), milestones lack status field"
+    evidence_grade: B
     status_basis: "gate p4-enterprise-media PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-enterprise-media"]
   XM2-2:
     phase: 4
     guard_status: in_progress
     summary: "M2 NSFW + copyright precheck"
     gate_result: pass
     deep_verdict: unverified
+    evidence_scope: "gate command pass (pytest integration), milestones lack status field"
+    evidence_grade: B
     status_basis: "gate p4-media-safety PASS, milestones 0/51 done"
     verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
-    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+    promotion_rule: "milestones marked done + deep verify pass + evidence artifact"
+    yaml_binding: ["p4-media-safety"]
 
   # --- Phase 5: Governance & Automation (6 nodes) ---
   X5-1:
@@ -1217,51 +1344,69 @@ xnode_registry:
     summary: "Guard auto-block policy effective"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "Phase 5 not started"
+    evidence_grade: F
     status_basis: "Phase 5 not started"
     verdict_reason: "Phase 5 not started; no milestones, no gate binding"
     promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+    yaml_binding: []
   X5-2:
     phase: 5
     guard_status: pending
     summary: "Monthly architecture drift audit"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "Phase 5 not started"
+    evidence_grade: F
     status_basis: "Phase 5 not started"
     verdict_reason: "Phase 5 not started"
     promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+    yaml_binding: []
   X5-3:
     phase: 5
     guard_status: pending
     summary: "Triple SSOT auto-consistency + Guard linkage"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "Phase 5 not started"
+    evidence_grade: F
     status_basis: "Phase 5 not started"
     verdict_reason: "Phase 5 not started"
     promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+    yaml_binding: []
   X5-4:
     phase: 5
     guard_status: pending
     summary: "GDPR/PIPL compliance e2e verification"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "Phase 5 not started"
+    evidence_grade: F
     status_basis: "Phase 5 not started"
     verdict_reason: "Phase 5 not started"
     promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+    yaml_binding: []
   XM3-1:
     phase: 5
     guard_status: pending
     summary: "M3 cross-modal semantic search"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "Phase 5 not started"
+    evidence_grade: F
     status_basis: "Phase 5 not started"
     verdict_reason: "Phase 5 not started"
     promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+    yaml_binding: []
   XM3-2:
     phase: 5
     guard_status: pending
     summary: "M3 copyright compliance audit"
     gate_result: not_bound
     deep_verdict: unverified
+    evidence_scope: "Phase 5 not started"
+    evidence_grade: F
     status_basis: "Phase 5 not started"
     verdict_reason: "Phase 5 not started"
     promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+    yaml_binding: []
