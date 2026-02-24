@@ -1,6 +1,9 @@
 {
   "name": "diyu-frontend",
   "private": true,
+  "bin": {
+    "axe-core-cli": "./scripts/axe-core-cli"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -13,6 +16,9 @@
     "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
+    "@axe-core/cli": "^4.11.1",
+    "@axe-core/playwright": "^4.11.1",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.58.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "^15.1.0",

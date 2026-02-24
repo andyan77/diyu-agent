@@ -46,7 +46,7 @@ export default function KnowledgeBrowsePage() {
         return;
       }
 
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8001";
       const params = new URLSearchParams({
         limit: String(pageSize),
         offset: String(page * pageSize),

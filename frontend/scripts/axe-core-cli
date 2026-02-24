@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+/**
+ * axe-core-cli wrapper using @axe-core/playwright.
+ *
+ * Phase 4 hard gate: p4-a11y
+ * Uses Playwright + @axe-core/playwright instead of Selenium-based @axe-core/cli,
+ * so it works with the Playwright Chromium browser already installed.
+ *
+ * Usage: pnpm exec axe-core-cli [--exit] [urls...]
+ *
+ * If no URLs are provided, scans the default pages of the web app.
+ * --exit flag makes the process exit with code 1 on violations.
+ */
+
+const { chromium } = require("@playwright/test");
+const AxeBuilder = require("@axe-core/playwright").default;
+
+async function main() {
+  const args = process.argv.slice(2);
+
+  // Parse flags
+  const exitOnViolation = args.includes("--exit");
+  const urls = args.filter((a) => !a.startsWith("-"));
+
+  // Default URLs if none provided
+  if (urls.length === 0) {
+    const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+    urls.push(`${baseUrl}/login`, `${baseUrl}/billing`, `${baseUrl}/memory`);
+  }
+
+  console.log(`Running axe-core via Playwright on ${urls.length} URL(s)`);
+
+  const browser = await chromium.launch({ headless: true });
+  let totalViolations = 0;
+
+  try {
+    for (const url of urls) {
+      const context = await browser.newContext();
+      const page = await context.newPage();
+
+      console.log(`\nScanning: ${url}`);
+      await page.goto(url, { waitUntil: "networkidle", timeout: 15000 });
+
+      const results = await new AxeBuilder({ page }).analyze();
+
+      if (results.violations.length === 0) {
+        console.log(`  ✓ No accessibility violations found`);
+      } else {
+        console.log(
+          `  ✗ ${results.violations.length} violation(s) found:`,
+        );
+        for (const v of results.violations) {
+          console.log(
+            `    - [${v.impact}] ${v.id}: ${v.description} (${v.nodes.length} node(s))`,
+          );
+        }
+        totalViolations += results.violations.length;
+      }
+
+      await context.close();
+    }
+  } finally {
+    await browser.close();
+  }
+
+  console.log(`\nTotal violations: ${totalViolations}`);
+
+  if (exitOnViolation && totalViolations > 0) {
+    process.exit(1);
+  }
+  process.exit(0);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

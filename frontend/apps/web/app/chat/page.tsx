@@ -75,7 +75,7 @@ export default function ChatPage() {
         return;
       }
 
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8001";
       const res = await fetch(
         `${apiBase}/api/v1/conversations/${activeConv}/messages`,
         {
