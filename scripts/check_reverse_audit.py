@@ -194,7 +194,7 @@ def scan_file(filepath: Path, *, src_dir: Path | None = None) -> list[CodeArtifa
             )
 
         elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            # Only top-level functions and decorated functions (routers)
+            # Router-decorated functions
             has_router = False
             for dec in node.decorator_list:
                 dec_str = ast.dump(dec)
@@ -208,6 +208,21 @@ def scan_file(filepath: Path, *, src_dir: Path | None = None) -> list[CodeArtifa
                         file=file_str,
                         name=node.name,
                         artifact_type="router",
+                        line=node.lineno,
+                        layer=layer,
+                    )
+                )
+            elif (
+                isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                and not node.name.startswith("_")
+                and node.col_offset == 0
+            ):
+                # Top-level public function (not a method)
+                artifacts.append(
+                    CodeArtifact(
+                        file=file_str,
+                        name=node.name,
+                        artifact_type="function",
                         line=node.lineno,
                         layer=layer,
                     )

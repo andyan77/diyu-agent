@@ -131,6 +131,37 @@ class TestScanFile:
         assert len(models) == 1
         assert models[0].name == "Organization"
 
+    def test_detects_top_level_function(self, tmp_path: Path) -> None:
+        src = _make_src(
+            tmp_path,
+            {
+                "shared/rls_tables.py": textwrap.dedent("""\
+                PHASE_1_TABLES = ["organizations"]
+                def get_rls_tables(phase="all"):
+                    return PHASE_1_TABLES
+            """),
+            },
+        )
+        arts = ra.scan_file(src / "shared" / "rls_tables.py", src_dir=src)
+        funcs = [a for a in arts if a.artifact_type == "function"]
+        assert len(funcs) == 1
+        assert funcs[0].name == "get_rls_tables"
+
+    def test_skips_private_functions(self, tmp_path: Path) -> None:
+        src = _make_src(
+            tmp_path,
+            {
+                "shared/helpers.py": textwrap.dedent("""\
+                def _internal(): pass
+                def public_api(): pass
+            """),
+            },
+        )
+        arts = ra.scan_file(src / "shared" / "helpers.py", src_dir=src)
+        names = [a.name for a in arts]
+        assert "public_api" in names
+        assert "_internal" not in names
+
     def test_handles_syntax_error(self, tmp_path: Path) -> None:
         src = _make_src(
             tmp_path,
@@ -507,7 +538,7 @@ class TestScriptExecution:
           - src/shared/rls_tables.py
           - src/shared/trace_context.py
 
-        Must detect at least 2 of these 4 as shadows.
+        Must detect all 4 known shadow files at baseline commit.
         """
         result = _run_script("--json")
         report = json.loads(result.stdout)
@@ -518,11 +549,12 @@ class TestScriptExecution:
             "rls_tables.py",
             "trace_context.py",
         ]
-        found_count = sum(
-            1 for frag in known_shadow_fragments if any(frag in f for f in shadow_files)
-        )
-        assert found_count >= 2, (
-            f"Only {found_count}/4 known shadow files detected. Shadow files: {shadow_files[:15]}"
+        missing = [
+            frag for frag in known_shadow_fragments if not any(frag in f for f in shadow_files)
+        ]
+        assert not missing, (
+            f"Known shadow files not detected: {missing}. "
+            f"Shadow files (first 15): {shadow_files[:15]}"
         )
 
     def test_human_readable_output(self) -> None:

@@ -14,6 +14,7 @@ Usage:
     python scripts/check_xnode_deep.py --json
     python scripts/check_xnode_deep.py --json --skip-execution
     python scripts/check_xnode_deep.py --json --verbose
+    python scripts/check_xnode_deep.py --json --all-phases
 
 Exit codes:
     0: PASS or WARN
@@ -150,11 +151,49 @@ class XNodeVerification:
 # ---------------------------------------------------------------------------
 
 
+def get_done_phases(matrix: dict) -> set[str]:
+    """Return set of phase keys where ALL milestones have status='done'.
+
+    Phase 0 milestones may lack an explicit status field (implicitly done
+    if phase_1 depends on it and has been started).
+    """
+    done_phases: set[str] = set()
+    current = matrix.get("current_phase", "")
+
+    for phase_key, phase_data in matrix.get("phases", {}).items():
+        if not isinstance(phase_data, dict):
+            continue
+        milestones = phase_data.get("milestones", [])
+        if not milestones:
+            continue
+
+        # A phase is done if all milestones have status="done"
+        all_done = all(
+            m.get("status", "").lower() == "done" for m in milestones if isinstance(m, dict)
+        )
+        # Phase 0 special case: milestones may lack status field if
+        # the project has moved past phase 0
+        if not all_done and phase_key == "phase_0" and current and current != "phase_0":
+            all_done = True
+
+        if all_done:
+            done_phases.add(phase_key)
+
+    return done_phases
+
+
 def parse_xnode_gates(
     *,
     matrix_path: Path | None = None,
+    done_only: bool = False,
 ) -> list[XNodeGate]:
-    """Parse exit_criteria entries that have xnodes defined."""
+    """Parse exit_criteria entries that have xnodes defined.
+
+    Args:
+        matrix_path: Override path to milestone-matrix.yaml.
+        done_only: If True, only return gates from phases where ALL
+                   milestones have status='done'.
+    """
     effective_path = matrix_path if matrix_path is not None else MATRIX_PATH
     if not effective_path.exists():
         return []
@@ -162,9 +201,13 @@ def parse_xnode_gates(
     with open(effective_path) as f:
         matrix = yaml.safe_load(f)
 
+    done_phases = get_done_phases(matrix) if done_only else None
+
     gates: list[XNodeGate] = []
     for phase_key, phase_data in matrix.get("phases", {}).items():
         if not isinstance(phase_data, dict):
+            continue
+        if done_phases is not None and phase_key not in done_phases:
             continue
         ec = phase_data.get("exit_criteria", {})
         for tier in ("hard", "soft"):
@@ -510,11 +553,12 @@ def main() -> None:
     use_json = "--json" in sys.argv
     verbose = "--verbose" in sys.argv
     skip_execution = "--skip-execution" in sys.argv
+    all_phases = "--all-phases" in sys.argv
 
     if not use_json:
         print("=== X-Node Deep Verification ===")
 
-    gates = parse_xnode_gates()
+    gates = parse_xnode_gates(done_only=not all_phases)
     if not use_json:
         print(f"X-node gates: {len(gates)}")
 

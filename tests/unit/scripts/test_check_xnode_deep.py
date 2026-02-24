@@ -126,6 +126,112 @@ class TestParseXNodeGates:
         gates = xn.parse_xnode_gates(matrix_path=tmp_path / "nonexistent.yaml")
         assert gates == []
 
+    def test_done_only_filters_to_done_phases(self, tmp_path: Path) -> None:
+        """done_only=True only returns gates from phases with all milestones done."""
+        matrix = _make_matrix(
+            tmp_path,
+            textwrap.dedent("""\
+                schema_version: "1.1"
+                current_phase: "phase_2"
+                phases:
+                  phase_1:
+                    milestones:
+                      - {id: "G1-1", summary: "JWT", status: "done"}
+                      - {id: "G1-2", summary: "Org", status: "done"}
+                    exit_criteria:
+                      hard:
+                        - id: "p1-x1-1"
+                          check: "echo ok"
+                          xnodes: [X1-1]
+                      soft: []
+                  phase_2:
+                    milestones:
+                      - {id: "B2-1", summary: "Conv engine"}
+                    exit_criteria:
+                      hard:
+                        - id: "p2-x2-1"
+                          check: "echo ok"
+                          xnodes: [X2-1]
+                      soft: []
+            """),
+        )
+        # Without filter: returns both phases
+        all_gates = xn.parse_xnode_gates(matrix_path=matrix, done_only=False)
+        assert len(all_gates) == 2
+
+        # With filter: only phase_1 (all milestones done)
+        done_gates = xn.parse_xnode_gates(matrix_path=matrix, done_only=True)
+        assert len(done_gates) == 1
+        assert done_gates[0].phase == "phase_1"
+
+    def test_done_only_phase0_implicit(self, tmp_path: Path) -> None:
+        """Phase 0 milestones without status are treated as done when current > 0."""
+        matrix = _make_matrix(
+            tmp_path,
+            textwrap.dedent("""\
+                schema_version: "1.1"
+                current_phase: "phase_1"
+                phases:
+                  phase_0:
+                    milestones:
+                      - {id: "B0-1", summary: "Brain skeleton"}
+                    exit_criteria:
+                      hard:
+                        - id: "p0-x0-1"
+                          check: "echo ok"
+                          xnodes: [X0-1]
+                      soft: []
+            """),
+        )
+        done_gates = xn.parse_xnode_gates(matrix_path=matrix, done_only=True)
+        assert len(done_gates) == 1
+        assert done_gates[0].phase == "phase_0"
+
+
+class TestGetDonePhases:
+    """Test done phase detection from milestone-matrix."""
+
+    def test_all_done(self) -> None:
+        matrix = {
+            "current_phase": "phase_2",
+            "phases": {
+                "phase_1": {
+                    "milestones": [
+                        {"id": "G1-1", "status": "done"},
+                        {"id": "G1-2", "status": "done"},
+                    ],
+                },
+            },
+        }
+        assert "phase_1" in xn.get_done_phases(matrix)
+
+    def test_not_done_when_missing_status(self) -> None:
+        matrix = {
+            "current_phase": "phase_2",
+            "phases": {
+                "phase_2": {
+                    "milestones": [
+                        {"id": "B2-1", "summary": "Conv engine"},
+                    ],
+                },
+            },
+        }
+        assert "phase_2" not in xn.get_done_phases(matrix)
+
+    def test_partial_done_excluded(self) -> None:
+        matrix = {
+            "current_phase": "phase_2",
+            "phases": {
+                "phase_2": {
+                    "milestones": [
+                        {"id": "B2-1", "status": "done"},
+                        {"id": "B2-2"},
+                    ],
+                },
+            },
+        }
+        assert "phase_2" not in xn.get_done_phases(matrix)
+
 
 # ---------------------------------------------------------------------------
 # Trivial Command Detection
