@@ -36,6 +36,10 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -729,6 +733,9 @@ def check_db_idempotency(
     database_url: str,
     *,
     project_root: str | None = None,
+    run_alembic_fn: Callable[..., Any] | None = None,
+    try_connect_fn: Callable[[str], Any] | None = None,
+    snapshot_schema_fn: Callable[..., SchemaSnapshot] | None = None,
 ) -> list[IntegrityFinding]:
     """Check migration up-down-up cycle produces identical schema.
 
@@ -740,12 +747,21 @@ def check_db_idempotency(
         5. Compare A == B
 
     Requires DATABASE_URL pointing to a **disposable** test database.
+
+    DI parameters allow testing without real DB/alembic:
+        run_alembic_fn: Override for _run_alembic.
+        try_connect_fn: Override for _try_connect.
+        snapshot_schema_fn: Override for _snapshot_schema.
     """
+    _alembic = run_alembic_fn or _run_alembic
+    _connect = try_connect_fn or _try_connect
+    _snapshot = snapshot_schema_fn or _snapshot_schema
+
     findings: list[IntegrityFinding] = []
     cwd = project_root or str(Path.cwd())
 
     # Step 1: downgrade base (clean slate)
-    result = _run_alembic(["downgrade", "base"], cwd=cwd)
+    result = _alembic(["downgrade", "base"], cwd=cwd)
     if result.returncode != 0:
         findings.append(
             IntegrityFinding(
@@ -758,7 +774,7 @@ def check_db_idempotency(
         return findings
 
     # Step 2: upgrade head → snapshot A
-    result = _run_alembic(["upgrade", "head"], cwd=cwd)
+    result = _alembic(["upgrade", "head"], cwd=cwd)
     if result.returncode != 0:
         findings.append(
             IntegrityFinding(
@@ -770,7 +786,7 @@ def check_db_idempotency(
         )
         return findings
 
-    pair = _try_connect(database_url)
+    pair = _connect(database_url)
     if pair is None:
         findings.append(
             IntegrityFinding(
@@ -784,12 +800,12 @@ def check_db_idempotency(
 
     engine, conn = pair  # type: ignore[misc]
     try:
-        snapshot_a = _snapshot_schema(conn)
+        snapshot_a = _snapshot(conn)
     finally:
         conn.close()  # type: ignore[union-attr]
 
     # Step 3: downgrade base
-    result = _run_alembic(["downgrade", "base"], cwd=cwd)
+    result = _alembic(["downgrade", "base"], cwd=cwd)
     if result.returncode != 0:
         findings.append(
             IntegrityFinding(
@@ -803,7 +819,7 @@ def check_db_idempotency(
         return findings
 
     # Step 4: upgrade head → snapshot B
-    result = _run_alembic(["upgrade", "head"], cwd=cwd)
+    result = _alembic(["upgrade", "head"], cwd=cwd)
     if result.returncode != 0:
         findings.append(
             IntegrityFinding(
@@ -816,7 +832,7 @@ def check_db_idempotency(
         engine.dispose()  # type: ignore[union-attr]
         return findings
 
-    pair2 = _try_connect(database_url)
+    pair2 = _connect(database_url)
     if pair2 is None:
         findings.append(
             IntegrityFinding(
@@ -831,7 +847,7 @@ def check_db_idempotency(
 
     _, conn2 = pair2  # type: ignore[misc]
     try:
-        snapshot_b = _snapshot_schema(conn2)
+        snapshot_b = _snapshot(conn2)
     finally:
         conn2.close()  # type: ignore[union-attr]
     engine.dispose()  # type: ignore[union-attr]
@@ -863,8 +879,18 @@ def check_db_idempotency(
     return findings
 
 
-def resolve_mode(*, skip_db: bool) -> tuple[str, str | None]:
+def resolve_mode(
+    *,
+    skip_db: bool,
+    environ: dict[str, str] | None = None,
+    try_connect_fn: Callable[[str], Any] | None = None,
+) -> tuple[str, str | None]:
     """Determine execution mode and database URL.
+
+    Args:
+        skip_db: Force static-only mode.
+        environ: Environment dict (defaults to os.environ).
+        try_connect_fn: Callable to test DB connectivity (defaults to _try_connect).
 
     Returns:
         (mode, database_url) where mode is "db" or "static".
@@ -872,12 +898,14 @@ def resolve_mode(*, skip_db: bool) -> tuple[str, str | None]:
     if skip_db:
         return "static", None
 
-    database_url = os.environ.get("DATABASE_URL", "")
+    env = environ if environ is not None else os.environ
+    database_url = env.get("DATABASE_URL", "")
     if not database_url:
         return "static", None
 
     # Verify connectivity before committing to DB mode
-    pair = _try_connect(database_url)
+    connector = try_connect_fn or _try_connect
+    pair = connector(database_url)
     if pair is None:
         return "static", None
 

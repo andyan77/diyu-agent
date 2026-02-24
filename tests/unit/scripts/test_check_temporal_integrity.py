@@ -7,8 +7,8 @@ import json
 import subprocess
 import sys
 import textwrap
+from dataclasses import dataclass
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 SCRIPT = _REPO_ROOT / "scripts" / "check_temporal_integrity.py"
@@ -16,6 +16,100 @@ SCRIPT = _REPO_ROOT / "scripts" / "check_temporal_integrity.py"
 # Ensure scripts/ is importable
 sys.path.insert(0, str(_REPO_ROOT / "scripts"))
 ti = importlib.import_module("check_temporal_integrity")
+
+
+# ---------------------------------------------------------------------------
+# DI test doubles (replace unittest.mock usage)
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class FakeConn:
+    """Fake DB connection for DI testing."""
+
+    closed: bool = False
+
+    def close(self) -> None:
+        self.closed = True
+
+
+@dataclass
+class FakeEngine:
+    """Fake SQLAlchemy engine for DI testing."""
+
+    disposed: bool = False
+
+    def dispose(self) -> None:
+        self.disposed = True
+
+
+@dataclass
+class FakeAlembicResult:
+    """Fake subprocess.CompletedProcess for alembic commands."""
+
+    returncode: int = 0
+    stderr: str = ""
+    stdout: str = ""
+
+
+def make_connect_fn(
+    *,
+    return_value: tuple | None = None,
+    side_effect: list | None = None,
+) -> callable:
+    """Create a fake try_connect function."""
+    calls: list[str] = []
+    call_idx = 0
+
+    def _connect(url: str) -> tuple | None:
+        nonlocal call_idx
+        calls.append(url)
+        if side_effect is not None:
+            result = side_effect[call_idx]
+            call_idx += 1
+            return result
+        return return_value
+
+    _connect.calls = calls  # type: ignore[attr-defined]
+    return _connect
+
+
+def make_alembic_fn(
+    *,
+    return_value: FakeAlembicResult | None = None,
+    side_effect: list[FakeAlembicResult] | None = None,
+) -> callable:
+    """Create a fake run_alembic function."""
+    call_idx = 0
+
+    def _alembic(command: list[str], cwd: str | None = None) -> FakeAlembicResult:
+        nonlocal call_idx
+        if side_effect is not None:
+            result = side_effect[call_idx]
+            call_idx += 1
+            return result
+        return return_value or FakeAlembicResult()
+
+    return _alembic
+
+
+def make_snapshot_fn(
+    *,
+    return_value: ti.SchemaSnapshot | None = None,
+    side_effect: list[ti.SchemaSnapshot] | None = None,
+) -> callable:
+    """Create a fake snapshot_schema function."""
+    call_idx = 0
+
+    def _snapshot(conn: object) -> ti.SchemaSnapshot:
+        nonlocal call_idx
+        if side_effect is not None:
+            result = side_effect[call_idx]
+            call_idx += 1
+            return result
+        return return_value or ti.SchemaSnapshot(columns=[], indexes=[], constraints=[])
+
+    return _snapshot
 
 
 # ---------------------------------------------------------------------------
@@ -442,43 +536,38 @@ class TestResolveMode:
 
     def test_no_database_url(self) -> None:
         """Missing DATABASE_URL should produce static mode."""
-        with patch.dict("os.environ", {}, clear=True):
-            mode, url = ti.resolve_mode(skip_db=False)
+        mode, url = ti.resolve_mode(skip_db=False, environ={})
         assert mode == "static"
         assert url is None
 
     def test_empty_database_url(self) -> None:
         """Empty DATABASE_URL should produce static mode."""
-        with patch.dict("os.environ", {"DATABASE_URL": ""}):
-            mode, url = ti.resolve_mode(skip_db=False)
+        mode, url = ti.resolve_mode(skip_db=False, environ={"DATABASE_URL": ""})
         assert mode == "static"
         assert url is None
 
     def test_unreachable_database_url(self) -> None:
         """DATABASE_URL set but unreachable should produce static mode."""
-        with (
-            patch.dict(
-                "os.environ",
-                {"DATABASE_URL": "postgresql://bad:bad@localhost:59999/nonexistent"},
-            ),
-            patch.object(ti, "_try_connect", return_value=None),
-        ):
-            mode, url = ti.resolve_mode(skip_db=False)
+        mode, url = ti.resolve_mode(
+            skip_db=False,
+            environ={"DATABASE_URL": "postgresql://bad:bad@localhost:59999/nonexistent"},
+            try_connect_fn=make_connect_fn(return_value=None),
+        )
         assert mode == "static"
         assert url is None
 
     def test_reachable_database_url(self) -> None:
         """DATABASE_URL set and reachable should produce db mode."""
-        mock_conn = MagicMock()
+        fake_conn = FakeConn()
         db_url = "postgresql://user:pass@localhost:5432/test"
-        with (
-            patch.dict("os.environ", {"DATABASE_URL": db_url}),
-            patch.object(ti, "_try_connect", return_value=(MagicMock(), mock_conn)),
-        ):
-            mode, url = ti.resolve_mode(skip_db=False)
+        mode, url = ti.resolve_mode(
+            skip_db=False,
+            environ={"DATABASE_URL": db_url},
+            try_connect_fn=make_connect_fn(return_value=(FakeEngine(), fake_conn)),
+        )
         assert mode == "db"
         assert url == db_url
-        mock_conn.close.assert_called_once()
+        assert fake_conn.closed
 
 
 # ---------------------------------------------------------------------------
@@ -570,12 +659,12 @@ class TestIntegrityFindingDetails:
 
 
 # ---------------------------------------------------------------------------
-# DB Idempotency Check (mocked)
+# DB Idempotency Check (DI-based)
 # ---------------------------------------------------------------------------
 
 
 class TestCheckDbIdempotency:
-    """Test DB idempotency check with mocked subprocess and DB."""
+    """Test DB idempotency check with DI test doubles."""
 
     def test_idempotent_migrations(self) -> None:
         """Identical snapshots after up-down-up should produce info."""
@@ -584,19 +673,12 @@ class TestCheckDbIdempotency:
             indexes=[],
             constraints=[],
         )
-        ok_result = MagicMock()
-        ok_result.returncode = 0
-        ok_result.stderr = ""
-
-        mock_conn = MagicMock()
-        mock_engine = MagicMock()
-
-        with (
-            patch.object(ti, "_run_alembic", return_value=ok_result),
-            patch.object(ti, "_try_connect", return_value=(mock_engine, mock_conn)),
-            patch.object(ti, "_snapshot_schema", return_value=snapshot),
-        ):
-            findings = ti.check_db_idempotency("postgresql://test")
+        findings = ti.check_db_idempotency(
+            "postgresql://test",
+            run_alembic_fn=make_alembic_fn(return_value=FakeAlembicResult()),
+            try_connect_fn=make_connect_fn(return_value=(FakeEngine(), FakeConn())),
+            snapshot_schema_fn=make_snapshot_fn(return_value=snapshot),
+        )
 
         info = [f for f in findings if f.severity == "info"]
         errors = [f for f in findings if f.severity == "error"]
@@ -616,28 +698,17 @@ class TestCheckDbIdempotency:
             indexes=[],
             constraints=[],
         )
-        ok_result = MagicMock()
-        ok_result.returncode = 0
-        ok_result.stderr = ""
-
-        mock_engine = MagicMock()
-
-        def side_effect_connect(url: str):
-            return (mock_engine, MagicMock())
-
-        snap_call = 0
-
-        def side_effect_snapshot(conn):
-            nonlocal snap_call
-            snap_call += 1
-            return snap_a if snap_call == 1 else snap_b
-
-        with (
-            patch.object(ti, "_run_alembic", return_value=ok_result),
-            patch.object(ti, "_try_connect", side_effect=side_effect_connect),
-            patch.object(ti, "_snapshot_schema", side_effect=side_effect_snapshot),
-        ):
-            findings = ti.check_db_idempotency("postgresql://test")
+        findings = ti.check_db_idempotency(
+            "postgresql://test",
+            run_alembic_fn=make_alembic_fn(return_value=FakeAlembicResult()),
+            try_connect_fn=make_connect_fn(
+                side_effect=[
+                    (FakeEngine(), FakeConn()),
+                    (FakeEngine(), FakeConn()),
+                ],
+            ),
+            snapshot_schema_fn=make_snapshot_fn(side_effect=[snap_a, snap_b]),
+        )
 
         errors = [f for f in findings if f.severity == "error"]
         assert len(errors) == 1
@@ -647,12 +718,12 @@ class TestCheckDbIdempotency:
 
     def test_alembic_downgrade_failure(self) -> None:
         """Failed alembic downgrade should produce error."""
-        fail_result = MagicMock()
-        fail_result.returncode = 1
-        fail_result.stderr = "ERROR: cannot downgrade"
-
-        with patch.object(ti, "_run_alembic", return_value=fail_result):
-            findings = ti.check_db_idempotency("postgresql://test")
+        findings = ti.check_db_idempotency(
+            "postgresql://test",
+            run_alembic_fn=make_alembic_fn(
+                return_value=FakeAlembicResult(returncode=1, stderr="ERROR: cannot downgrade"),
+            ),
+        )
 
         errors = [f for f in findings if f.severity == "error"]
         assert len(errors) == 1
@@ -660,15 +731,15 @@ class TestCheckDbIdempotency:
 
     def test_alembic_first_upgrade_failure(self) -> None:
         """Failed first upgrade should produce error."""
-        results = iter(
-            [
-                MagicMock(returncode=0, stderr=""),  # downgrade ok
-                MagicMock(returncode=1, stderr="ERROR: upgrade failed"),  # upgrade fail
-            ]
+        findings = ti.check_db_idempotency(
+            "postgresql://test",
+            run_alembic_fn=make_alembic_fn(
+                side_effect=[
+                    FakeAlembicResult(returncode=0),  # downgrade ok
+                    FakeAlembicResult(returncode=1, stderr="ERROR: upgrade failed"),
+                ],
+            ),
         )
-
-        with patch.object(ti, "_run_alembic", side_effect=lambda *a, **k: next(results)):
-            findings = ti.check_db_idempotency("postgresql://test")
 
         errors = [f for f in findings if f.severity == "error"]
         assert len(errors) == 1
@@ -676,13 +747,11 @@ class TestCheckDbIdempotency:
 
     def test_connection_failure_after_first_upgrade(self) -> None:
         """Connection failure after first upgrade should produce error."""
-        ok_result = MagicMock(returncode=0, stderr="")
-
-        with (
-            patch.object(ti, "_run_alembic", return_value=ok_result),
-            patch.object(ti, "_try_connect", return_value=None),
-        ):
-            findings = ti.check_db_idempotency("postgresql://test")
+        findings = ti.check_db_idempotency(
+            "postgresql://test",
+            run_alembic_fn=make_alembic_fn(return_value=FakeAlembicResult()),
+            try_connect_fn=make_connect_fn(return_value=None),
+        )
 
         errors = [f for f in findings if f.severity == "error"]
         assert len(errors) == 1
