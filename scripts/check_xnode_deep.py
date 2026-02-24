@@ -34,6 +34,10 @@ from pathlib import Path
 
 import yaml
 
+# Ensure scripts/ root is importable for lib.xnode_utils
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.xnode_utils import load_xnode_registry
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -156,6 +160,11 @@ def get_done_phases(matrix: dict) -> set[str]:
 
     Phase 0 milestones may lack an explicit status field (implicitly done
     if phase_1 depends on it and has been started).
+
+    .. deprecated::
+        Prefer registry-based filtering via ``done_only_registry``.
+        Retained for backward compatibility with callers that do not yet
+        use xnode_registry.
     """
     done_phases: set[str] = set()
     current = matrix.get("current_phase", "")
@@ -182,17 +191,30 @@ def get_done_phases(matrix: dict) -> set[str]:
     return done_phases
 
 
+def _get_done_xnode_ids(registry: dict[str, dict]) -> set[str]:
+    """Return X-node IDs with guard_status='done' from registry."""
+    return {
+        xid
+        for xid, entry in registry.items()
+        if isinstance(entry, dict) and entry.get("guard_status") == "done"
+    }
+
+
 def parse_xnode_gates(
     *,
     matrix_path: Path | None = None,
     done_only: bool = False,
+    done_only_registry: bool = False,
 ) -> list[XNodeGate]:
     """Parse exit_criteria entries that have xnodes defined.
 
     Args:
         matrix_path: Override path to milestone-matrix.yaml.
         done_only: If True, only return gates from phases where ALL
-                   milestones have status='done'.
+                   milestones have status='done' (legacy phase-level filter).
+        done_only_registry: If True, only return gates whose ALL referenced
+                            xnodes have guard_status='done' in xnode_registry.
+                            This is the preferred X-node-level filter.
     """
     effective_path = matrix_path if matrix_path is not None else MATRIX_PATH
     if not effective_path.exists():
@@ -202,6 +224,14 @@ def parse_xnode_gates(
         matrix = yaml.safe_load(f)
 
     done_phases = get_done_phases(matrix) if done_only else None
+
+    # Registry-based filter
+    done_xnode_ids: set[str] | None = None
+    if done_only_registry:
+        registry = matrix.get("xnode_registry", {})
+        if not registry:
+            registry = load_xnode_registry(matrix_path=effective_path)
+        done_xnode_ids = _get_done_xnode_ids(registry)
 
     gates: list[XNodeGate] = []
     for phase_key, phase_data in matrix.get("phases", {}).items():
@@ -217,6 +247,13 @@ def parse_xnode_gates(
                     continue
                 # Normalize xnodes to strings
                 xnodes_str = [str(x) for x in xnodes]
+
+                # Registry filter: skip gate if any referenced xnode is not done
+                if done_xnode_ids is not None and not all(
+                    xid in done_xnode_ids for xid in xnodes_str
+                ):
+                    continue
+
                 gates.append(
                     XNodeGate(
                         gate_id=crit.get("id", ""),
@@ -558,7 +595,9 @@ def main() -> None:
     if not use_json:
         print("=== X-Node Deep Verification ===")
 
-    gates = parse_xnode_gates(done_only=not all_phases)
+    # Default: filter to X-nodes with guard_status='done' (registry-based).
+    # --all-phases: include all gates regardless of status.
+    gates = parse_xnode_gates(done_only_registry=not all_phases)
     if not use_json:
         print(f"X-node gates: {len(gates)}")
 

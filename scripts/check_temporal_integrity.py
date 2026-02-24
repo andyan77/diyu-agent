@@ -629,9 +629,15 @@ def generate_report(
 def main() -> None:
     use_json = "--json" in sys.argv
     verbose = "--verbose" in sys.argv
+    skip_db = "--skip-db" in sys.argv
 
     if not use_json:
         print("=== Temporal Integrity Verification ===")
+        if skip_db:
+            print("Mode: static analysis (--skip-db)")
+        else:
+            # DB mode not yet implemented; default to static analysis
+            print("Mode: static analysis (DB mode not yet implemented)")
 
     # Parse migrations
     migrations = parse_all_migrations()

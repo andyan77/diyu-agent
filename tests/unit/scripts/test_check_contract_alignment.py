@@ -49,6 +49,23 @@ def _make_impl_file(tmp_path: Path, rel_path: str, content: str) -> Path:
     return f
 
 
+def _make_gateway_file(tmp_path: Path, name: str, content: str) -> Path:
+    """Create a gateway Python file."""
+    gw = tmp_path / "src" / "gateway"
+    gw.mkdir(parents=True, exist_ok=True)
+    f = gw / name
+    f.write_text(content, encoding="utf-8")
+    return f
+
+
+def _make_frontend_file(tmp_path: Path, rel_path: str, content: str) -> Path:
+    """Create a frontend TypeScript file."""
+    f = tmp_path / "frontend" / rel_path
+    f.parent.mkdir(parents=True, exist_ok=True)
+    f.write_text(content, encoding="utf-8")
+    return f
+
+
 def _make_migration_file(tmp_path: Path, name: str, content: str) -> Path:
     """Create a migration file."""
     mig = tmp_path / "migrations" / "versions"
@@ -325,7 +342,213 @@ class TestDDLContracts:
 
 
 # ---------------------------------------------------------------------------
+# Check 2: API Contracts
+# ---------------------------------------------------------------------------
+
+
+class TestAPIContracts:
+    """Test Backend Pydantic <-> Frontend TypeScript alignment."""
+
+    def test_aligned_api(self, tmp_path: Path) -> None:
+        """Backend model matching frontend TS type should be aligned."""
+        _make_gateway_file(
+            tmp_path,
+            "routes.py",
+            textwrap.dedent("""\
+                from pydantic import BaseModel
+
+                class UserResponse(BaseModel):
+                    id: str
+                    email: str
+                    name: str
+            """),
+        )
+        _make_frontend_file(
+            tmp_path,
+            "api/types.ts",
+            textwrap.dedent("""\
+                export interface UserResponse {
+                    id: string;
+                    email: string;
+                    name: string;
+                }
+            """),
+        )
+
+        findings = ca.check_api_contracts(
+            gateway_dir=tmp_path / "src" / "gateway",
+            api_client_dir=tmp_path / "frontend" / "api",
+        )
+        aligned = [f for f in findings if f.status == "aligned"]
+        assert len(aligned) == 1
+        assert aligned[0].contract_type == "api"
+
+    def test_drifted_api_missing_field(self, tmp_path: Path) -> None:
+        """Frontend type missing a backend field should be drifted."""
+        _make_gateway_file(
+            tmp_path,
+            "routes.py",
+            textwrap.dedent("""\
+                from pydantic import BaseModel
+
+                class UserResponse(BaseModel):
+                    id: str
+                    email: str
+                    name: str
+                    avatar_url: str
+            """),
+        )
+        _make_frontend_file(
+            tmp_path,
+            "api/types.ts",
+            textwrap.dedent("""\
+                export interface UserResponse {
+                    id: string;
+                    email: string;
+                    name: string;
+                }
+            """),
+        )
+
+        findings = ca.check_api_contracts(
+            gateway_dir=tmp_path / "src" / "gateway",
+            api_client_dir=tmp_path / "frontend" / "api",
+        )
+        drifted = [f for f in findings if f.status == "drifted"]
+        assert len(drifted) == 1
+        assert "avatar_url" in drifted[0].diff_details
+
+
+# ---------------------------------------------------------------------------
+# Check 3: Event Contracts
+# ---------------------------------------------------------------------------
+
+
+class TestEventContracts:
+    """Test event producer <-> consumer alignment."""
+
+    def test_aligned_event(self, tmp_path: Path) -> None:
+        """Event type with both producer and consumer should be aligned."""
+        _make_impl_file(
+            tmp_path,
+            "brain/service.py",
+            textwrap.dedent("""\
+                class BrainService:
+                    def process(self):
+                        outbox.append(event_type="user_created", payload={})
+            """),
+        )
+        _make_impl_file(
+            tmp_path,
+            "skill/handler.py",
+            textwrap.dedent("""\
+                class EventHandler:
+                    def handle_event(self):
+                        if event_type="user_created":
+                            pass
+            """),
+        )
+
+        findings = ca.check_event_contracts(src_dir=tmp_path / "src")
+        aligned = [f for f in findings if f.status == "aligned"]
+        assert len(aligned) == 1
+        assert aligned[0].contract_type == "event"
+
+    def test_missing_consumer(self, tmp_path: Path) -> None:
+        """Event type with producer but no consumer should be missing."""
+        _make_impl_file(
+            tmp_path,
+            "brain/service.py",
+            textwrap.dedent("""\
+                class BrainService:
+                    def emit(self):
+                        outbox.append(event_type="orphan_event", payload={})
+            """),
+        )
+
+        findings = ca.check_event_contracts(src_dir=tmp_path / "src")
+        missing = [f for f in findings if f.status == "missing"]
+        assert len(missing) == 1
+        assert "orphan_event" in missing[0].diff_details
+
+
+# ---------------------------------------------------------------------------
 # Check 5: ACL Contracts
+# ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Check 6: Payload Contracts
+# ---------------------------------------------------------------------------
+
+
+class TestPayloadContracts:
+    """Test backend response payload <-> frontend type alignment."""
+
+    def test_aligned_payload(self, tmp_path: Path) -> None:
+        """Response model referenced in frontend should be aligned."""
+        _make_gateway_file(
+            tmp_path,
+            "api.py",
+            textwrap.dedent("""\
+                from pydantic import BaseModel
+
+                class ChatResponse(BaseModel):
+                    message: str
+                    tokens: int
+            """),
+        )
+        _make_frontend_file(
+            tmp_path,
+            "components/Chat.tsx",
+            textwrap.dedent("""\
+                import { ChatResponse } from '../api/types';
+
+                function Chat() {
+                    const data: ChatResponse = await fetch('/api/chat');
+                }
+            """),
+        )
+
+        findings = ca.check_payload_contracts(
+            gateway_dir=tmp_path / "src" / "gateway",
+            frontend_dir=tmp_path / "frontend",
+        )
+        aligned = [f for f in findings if f.status == "aligned"]
+        assert len(aligned) == 1
+        assert aligned[0].contract_type == "payload"
+
+    def test_no_frontend_reference(self, tmp_path: Path) -> None:
+        """Response model not referenced in frontend produces no finding."""
+        _make_gateway_file(
+            tmp_path,
+            "api.py",
+            textwrap.dedent("""\
+                from pydantic import BaseModel
+
+                class InternalResponse(BaseModel):
+                    status: str
+            """),
+        )
+        # Frontend exists but doesn't reference InternalResponse
+        _make_frontend_file(
+            tmp_path,
+            "components/App.tsx",
+            textwrap.dedent("""\
+                function App() { return <div>Hello</div>; }
+            """),
+        )
+
+        findings = ca.check_payload_contracts(
+            gateway_dir=tmp_path / "src" / "gateway",
+            frontend_dir=tmp_path / "frontend",
+        )
+        # InternalResponse not referenced — no finding produced (by design)
+        assert len(findings) == 0
+
+
+# ---------------------------------------------------------------------------
+# Check 5: ACL Contracts (continued)
 # ---------------------------------------------------------------------------
 
 
@@ -438,9 +661,11 @@ class TestScriptExecution:
         assert "all_findings" in data
 
     def test_covers_all_6_types(self) -> None:
-        """Script should check all 6 contract types."""
+        """Script should report all 6 contract types in by_type."""
         result = _run_script("--json", "--verbose")
         data = json.loads(result.stdout)
         by_type = data["summary"].get("by_type", {})
-        # At minimum port and ddl should have results on the real repo
-        assert "port" in by_type or "ddl" in by_type or "acl" in by_type
+        expected_types = {"port", "api", "event", "ddl", "acl", "payload"}
+        assert expected_types.issubset(set(by_type.keys())), (
+            f"by_type missing types: {expected_types - set(by_type.keys())}"
+        )

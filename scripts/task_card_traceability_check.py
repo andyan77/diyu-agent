@@ -36,6 +36,10 @@ from pathlib import Path
 
 import yaml
 
+# Ensure scripts/ root is importable for lib.xnode_utils
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.xnode_utils import load_xnode_registry
+
 MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
 TASK_CARDS_DIR = Path("docs/task-cards")
 CROSSCUTTING_PATH = Path("docs/governance/milestone-matrix-crosscutting.md")
@@ -55,12 +59,20 @@ DEFAULT_THRESHOLD = 98.0
 def load_xnode_ids(
     *,
     crosscutting_path: Path | None = None,
+    matrix_path: Path | None = None,
 ) -> set[str]:
-    """Extract X/XF/XM node IDs from crosscutting.md Section 4.
+    """Extract X/XF/XM node IDs for dangling_refs whitelist.
 
-    Used ONLY for dangling_refs whitelist -- not merged into milestone_ids
-    to avoid inflating the coverage denominator.
+    Prefers YAML xnode_registry (SSOT), falls back to crosscutting.md
+    Section 4 parsing. NOT merged into milestone_ids to avoid inflating
+    the coverage denominator.
     """
+    # Try registry first
+    registry = load_xnode_registry(matrix_path=matrix_path)
+    if registry:
+        return set(registry.keys())
+
+    # Fallback: parse crosscutting.md
     path = crosscutting_path or CROSSCUTTING_PATH
     if not path.exists():
         return set()

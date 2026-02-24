@@ -944,7 +944,11 @@ def generate_report(
     verbose: bool = False,
 ) -> dict:
     """Build the JSON report from all findings."""
-    by_type: dict[str, dict[str, int]] = {}
+    # Pre-initialize all 6 contract types so they always appear in the report
+    all_types = ("port", "api", "event", "ddl", "acl", "payload")
+    by_type: dict[str, dict[str, int]] = {
+        t: {"aligned": 0, "drifted": 0, "missing": 0, "total": 0} for t in all_types
+    }
     for f in findings:
         t = f.contract_type
         if t not in by_type:
@@ -991,6 +995,13 @@ def generate_report(
 def main() -> None:
     use_json = "--json" in sys.argv
     verbose = "--verbose" in sys.argv
+
+    # --ci-baseline N: if drifted <= N, exit 0 (block only on regression)
+    ci_baseline: int | None = None
+    for i, arg in enumerate(sys.argv):
+        if arg == "--ci-baseline" and i + 1 < len(sys.argv):
+            ci_baseline = int(sys.argv[i + 1])
+            break
 
     if not use_json:
         print("=== Contract Alignment Check (6 Types) ===")
@@ -1049,6 +1060,19 @@ def main() -> None:
         print(f"\n=== Result: {report['status']} ===")
 
     if report["status"] == "FAIL":
+        if ci_baseline is not None:
+            actual = report["summary"]["drifted"]
+            if actual <= ci_baseline:
+                if not use_json:
+                    print(
+                        f"CI baseline: {actual} drifted <= {ci_baseline} "
+                        f"(within baseline, not blocking)"
+                    )
+                return
+            if not use_json:
+                print(
+                    f"CI baseline EXCEEDED: {actual} drifted > {ci_baseline} (regression detected!)"
+                )
         sys.exit(1)
 
 

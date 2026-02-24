@@ -236,7 +236,8 @@ report = {
     'phase': int(sys.argv[2]),
     'results': json.loads(sys.argv[3]),
     'summary': {
-        'total_checks': int(sys.argv[4]),
+        'total_categories': 14,
+        'total_sub_checks': int(sys.argv[4]),
         'passed': int(sys.argv[5]),
         'failed': int(sys.argv[6]),
         'skipped': int(sys.argv[7])

@@ -37,6 +37,10 @@ from pathlib import Path
 
 import yaml
 
+# Ensure scripts/ root is importable for lib.xnode_utils
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.xnode_utils import load_xnode_registry
+
 UTC = timezone.utc  # noqa: UP017 -- compat with Python <3.11 runtime
 
 MATRIX_PATH = Path("delivery/milestone-matrix.yaml")
@@ -80,6 +84,37 @@ def load_xnodes_by_phase(
                 node_id = m.group(1)
                 if node_id not in result[current_phase]:
                     result[current_phase].append(node_id)
+
+    return result
+
+
+def load_xnodes_by_phase_from_registry(
+    *,
+    matrix_path: Path | None = None,
+) -> dict[int, list[str]]:
+    """Load X-node IDs grouped by phase from YAML xnode_registry.
+
+    This is the preferred source (SSOT) over crosscutting.md parsing.
+    Falls back to crosscutting.md if registry is empty.
+    """
+    registry = load_xnode_registry(matrix_path=matrix_path)
+    if not registry:
+        return load_xnodes_by_phase()
+
+    result: dict[int, list[str]] = {}
+    for xid, entry in registry.items():
+        if not isinstance(entry, dict):
+            continue
+        phase_num = entry.get("phase")
+        if not isinstance(phase_num, int):
+            continue
+        result.setdefault(phase_num, [])
+        if xid not in result[phase_num]:
+            result[phase_num].append(xid)
+
+    # Sort each phase's list for deterministic output
+    for phase_num in result:
+        result[phase_num].sort()
 
     return result
 
@@ -389,7 +424,8 @@ def main() -> None:
                 sys.exit(2)
 
     yaml_data = load_yaml_data()
-    xnodes_by_phase = load_xnodes_by_phase()
+    # Prefer YAML registry as SSOT; falls back to crosscutting.md
+    xnodes_by_phase = load_xnodes_by_phase_from_registry()
 
     if all_mode:
         # --all: informational only, NEVER blocks

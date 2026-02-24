@@ -1232,6 +1232,13 @@ def main() -> None:
     use_archive = "--archive" in sys.argv
     skip_execution = "--skip-execution" in sys.argv
 
+    # --ci-baseline N: if critical_findings <= N, exit 0 (block only on regression)
+    ci_baseline: int | None = None
+    for i, arg in enumerate(sys.argv):
+        if arg == "--ci-baseline" and i + 1 < len(sys.argv):
+            ci_baseline = int(sys.argv[i + 1])
+            break
+
     # Load data
     matrix = load_matrix()
     current_phase = matrix.get("current_phase", "phase_0")
@@ -1369,7 +1376,24 @@ def main() -> None:
                 print(f"  - {r}")
 
     # Exit code: 0 for PASS/WARN, 1 for FAIL
+    # With --ci-baseline N: exit 0 if critical_findings <= N (known baseline)
     if report["summary"]["status"] == "FAIL":
+        if ci_baseline is not None:
+            actual = report["summary"]["critical_findings"]
+            if actual <= ci_baseline:
+                # Within known baseline — do not block CI
+                if not use_json:
+                    print(
+                        f"CI baseline: {actual} critical <= {ci_baseline} "
+                        f"(within baseline, not blocking)"
+                    )
+                return
+            # Exceeds baseline — new regressions detected
+            if not use_json:
+                print(
+                    f"CI baseline EXCEEDED: {actual} critical > {ci_baseline} "
+                    f"(regression detected!)"
+                )
         sys.exit(1)
 
 
