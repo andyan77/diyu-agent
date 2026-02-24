@@ -3,7 +3,7 @@
 # Schema: delivery/milestone-matrix.schema.yaml
 # Usage: uv run python scripts/verify_phase.py --phase 0 --json
 
-schema_version: "1.1"
+schema_version: "1.2"
 current_phase: "phase_3"
 
 phases:
@@ -782,3 +782,486 @@ phases:
       hard_pass_rate: 1.0
       xnode_coverage_min: 1.0
       approver: "architect"
+
+# =============================================================================
+# X-node Registry (SSOT for guard verification status)
+# Key = X-node ID, value = XNodeEntry
+# guard_status progression: pending -> in_progress -> done
+# Promotion rule: in_progress -> done requires deep_verdict=pass + evidence_grade>=C
+# =============================================================================
+xnode_registry:
+  # --- Phase 0: Skeleton & Port Definition (6 nodes) ---
+  X0-1:
+    phase: 0
+    guard_status: in_progress
+    summary: "All Port Stubs independently instantiable"
+    gate_result: not_bound
+    deep_verdict: unverified
+    evidence_scope: "no gate binding in YAML"
+    status_basis: "milestones implicit done (no status field, current_phase > phase_0)"
+    verdict_reason: "P0 milestones lack status field; no gate binding for deep verification"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X0-2:
+    phase: 0
+    guard_status: in_progress
+    summary: "CI hard gates complete run"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones implicit done, no gate binding"
+    verdict_reason: "P0 milestones lack status; no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X0-3:
+    phase: 0
+    guard_status: in_progress
+    summary: "Docker Compose full-stack startup"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones implicit done, no gate binding"
+    verdict_reason: "P0 milestones lack status; no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X0-4:
+    phase: 0
+    guard_status: in_progress
+    summary: "Security scan triple CI integration"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones implicit done, no gate binding"
+    verdict_reason: "P0 milestones lack status; no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X0-5:
+    phase: 0
+    guard_status: in_progress
+    summary: "Log format standardization verification"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones implicit done, no gate binding"
+    verdict_reason: "P0 milestones lack status; no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  XM0-1:
+    phase: 0
+    guard_status: in_progress
+    summary: "M0 contract tests all pass"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones implicit done, no gate binding"
+    verdict_reason: "P0 milestones lack status; no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+
+  # --- Phase 1: Security & Tenant Foundation (5 nodes) ---
+  X1-1:
+    phase: 1
+    guard_status: in_progress
+    summary: "JWT -> OrgContext -> RLS full chain"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones 28/28 done, no gate binding"
+    verdict_reason: "P1 milestones done but no gate binding for deep verification"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X1-2:
+    phase: 1
+    guard_status: in_progress
+    summary: "RBAC permission chain"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones 28/28 done, no gate binding"
+    verdict_reason: "P1 milestones done but no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X1-3:
+    phase: 1
+    guard_status: in_progress
+    summary: "Isolation test CI run"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones 28/28 done, no gate binding"
+    verdict_reason: "P1 milestones done but no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X1-4:
+    phase: 1
+    guard_status: in_progress
+    summary: "Audit write full chain"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones 28/28 done, no gate binding"
+    verdict_reason: "P1 milestones done but no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+  X1-5:
+    phase: 1
+    guard_status: in_progress
+    summary: "Frontend security protection verification"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "milestones 28/28 done, no gate binding"
+    verdict_reason: "P1 milestones done but no gate binding"
+    promotion_rule: "bind to gate + deep verify + evidence grade >= C"
+
+  # --- Phase 2: Core Conversation Loop (10 nodes) ---
+  X2-1:
+    phase: 2
+    guard_status: in_progress
+    summary: "Conversation complete loop"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-x2-1-conversation-loop PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing for deep verification"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  X2-2:
+    phase: 2
+    guard_status: in_progress
+    summary: "Streaming reply full chain"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-x2-1-conversation-loop PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  X2-3:
+    phase: 2
+    guard_status: in_progress
+    summary: "Memory Evolution loop"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-x2-3-memory-evolution PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  X2-4:
+    phase: 2
+    guard_status: in_progress
+    summary: "Token budget backpressure (Loop D)"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-x2-4-token-backpressure PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  X2-5:
+    phase: 2
+    guard_status: in_progress
+    summary: "4 golden signals e2e verification"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-x2-5-golden-signals PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  X2-6:
+    phase: 2
+    guard_status: in_progress
+    summary: "Frontend error reporting loop"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-x2-6-fe-error-boundary PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  XF2-1:
+    phase: 2
+    guard_status: in_progress
+    summary: "Login -> org select -> chat -> streaming"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-xf2-1-login-to-streaming PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  XF2-2:
+    phase: 2
+    guard_status: in_progress
+    summary: "Memory panel view and delete"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-xf2-1-login-to-streaming PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  XF2-3:
+    phase: 2
+    guard_status: in_progress
+    summary: "File upload loop"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-xf2-1-login-to-streaming PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+  XF2-4:
+    phase: 2
+    guard_status: in_progress
+    summary: "OpenAPI type consistency"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, no per-xnode evidence artifact"
+    status_basis: "milestones 52/52 done, gate p2-xf2-4-openapi-sync PASS"
+    verdict_reason: "Gate PASS but evidence artifact missing"
+    promotion_rule: "generate evidence artifact + evidence grade >= C"
+
+  # --- Phase 3: Knowledge & Skill Ecosystem (11 nodes) ---
+  X3-1:
+    phase: 3
+    guard_status: in_progress
+    summary: "Chat triggers Skill complete loop"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, milestones lack status field"
+    status_basis: "current phase, gate p3-skill-registry PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X3-2:
+    phase: 3
+    guard_status: in_progress
+    summary: "FK consistency verification (Neo4j + Qdrant)"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-knowledge-crud PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X3-3:
+    phase: 3
+    guard_status: in_progress
+    summary: "Promotion Pipeline cross SSOT"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-promotion-pipeline PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X3-4:
+    phase: 3
+    guard_status: in_progress
+    summary: "Knowledge Admin API full chain"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-knowledge-crud PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X3-5:
+    phase: 3
+    guard_status: in_progress
+    summary: "Content security pipeline loop"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-content-security PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X3-6:
+    phase: 3
+    guard_status: in_progress
+    summary: "Resolver query audit loop"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-resolver-audit PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XF3-1:
+    phase: 3
+    guard_status: in_progress
+    summary: "Chat triggers Skill -> Artifact rendering"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-fe-knowledge PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XF3-2:
+    phase: 3
+    guard_status: in_progress
+    summary: "Knowledge edit -> submit -> HQ view"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-fe-knowledge PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XF3-3:
+    phase: 3
+    guard_status: in_progress
+    summary: "Org config inheritance verification"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-fe-knowledge PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XM1-1:
+    phase: 3
+    guard_status: in_progress
+    summary: "M1 personal media upload loop"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-tool-execution PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XM1-2:
+    phase: 3
+    guard_status: in_progress
+    summary: "M1 media security scan loop"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "current phase, gate p3-content-security PASS, milestones 0/50 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+
+  # --- Phase 4: Reliability & Full Feature (12 nodes) ---
+  X4-1:
+    phase: 4
+    guard_status: in_progress
+    summary: "Full-chain trace_id tracking"
+    gate_result: pass
+    deep_verdict: unverified
+    evidence_scope: "gate command pass, milestones lack status field"
+    status_basis: "gate p4-trace-e2e PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X4-2:
+    phase: 4
+    guard_status: in_progress
+    summary: "Upgrade/rollback drill"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-release-drill PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X4-3:
+    phase: 4
+    guard_status: in_progress
+    summary: "Triple SSOT consistency"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-ssot-drift PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X4-4:
+    phase: 4
+    guard_status: in_progress
+    summary: "Delete pipeline e2e"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-delete-e2e PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X4-5:
+    phase: 4
+    guard_status: in_progress
+    summary: "SLI/SLO metrics e2e verification"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-slo-metrics PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X4-6:
+    phase: 4
+    guard_status: in_progress
+    summary: "Fault injection and recovery verification"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-fault-injection PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  X4-7:
+    phase: 4
+    guard_status: in_progress
+    summary: "Pentest OWASP Top 10"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-pentest-report PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XF4-1:
+    phase: 4
+    guard_status: blocked_env
+    summary: "Quota exhaustion -> recharge -> balance update"
+    gate_result: fail
+    deep_verdict: unverified
+    evidence_scope: "p4-lighthouse FAIL (Chrome unavailable in WSL); CI may pass"
+    status_basis: "gate p4-lighthouse FAIL in local WSL env"
+    verdict_reason: "Lighthouse cannot connect to Chrome in WSL2; environment-specific blocker"
+    promotion_rule: "resolve env issue or accept CI-only evidence + grade >= C"
+  XF4-2:
+    phase: 4
+    guard_status: in_progress
+    summary: "System monitoring dashboard"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-monitoring-dashboard PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XF4-3:
+    phase: 4
+    guard_status: in_progress
+    summary: "View AI memory -> delete -> confirm deletion"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-memory-privacy-e2e PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XM2-1:
+    phase: 4
+    guard_status: in_progress
+    summary: "M2 enterprise media dual-write + FK verification"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-enterprise-media PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+  XM2-2:
+    phase: 4
+    guard_status: in_progress
+    summary: "M2 NSFW + copyright precheck"
+    gate_result: pass
+    deep_verdict: unverified
+    status_basis: "gate p4-media-safety PASS, milestones 0/51 done"
+    verdict_reason: "Gate PASS but milestones lack status; evidence artifact missing"
+    promotion_rule: "milestones marked done + evidence artifact + grade >= C"
+
+  # --- Phase 5: Governance & Automation (6 nodes) ---
+  X5-1:
+    phase: 5
+    guard_status: pending
+    summary: "Guard auto-block policy effective"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "Phase 5 not started"
+    verdict_reason: "Phase 5 not started; no milestones, no gate binding"
+    promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+  X5-2:
+    phase: 5
+    guard_status: pending
+    summary: "Monthly architecture drift audit"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "Phase 5 not started"
+    verdict_reason: "Phase 5 not started"
+    promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+  X5-3:
+    phase: 5
+    guard_status: pending
+    summary: "Triple SSOT auto-consistency + Guard linkage"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "Phase 5 not started"
+    verdict_reason: "Phase 5 not started"
+    promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+  X5-4:
+    phase: 5
+    guard_status: pending
+    summary: "GDPR/PIPL compliance e2e verification"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "Phase 5 not started"
+    verdict_reason: "Phase 5 not started"
+    promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+  XM3-1:
+    phase: 5
+    guard_status: pending
+    summary: "M3 cross-modal semantic search"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "Phase 5 not started"
+    verdict_reason: "Phase 5 not started"
+    promotion_rule: "Phase 5 kickoff + gate binding + deep verify"
+  XM3-2:
+    phase: 5
+    guard_status: pending
+    summary: "M3 copyright compliance audit"
+    gate_result: not_bound
+    deep_verdict: unverified
+    status_basis: "Phase 5 not started"
+    verdict_reason: "Phase 5 not started"
+    promotion_rule: "Phase 5 kickoff + gate binding + deep verify"

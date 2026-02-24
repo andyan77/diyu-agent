@@ -11,6 +11,7 @@ required:
   - schema_version
   - current_phase
   - phases
+  - xnode_registry
 
 properties:
   schema_version:
@@ -27,6 +28,15 @@ properties:
     type: object
     additionalProperties:
       $ref: "#/definitions/Phase"
+    minProperties: 1
+
+  xnode_registry:
+    type: object
+    description: "SSOT for X-node guard status. Key = X-node ID, value = XNodeEntry."
+    propertyNames:
+      pattern: "^X[FM]?\\d+-\\d+$"
+    additionalProperties:
+      $ref: "#/definitions/XNodeEntry"
     minProperties: 1
 
 definitions:
@@ -115,6 +125,48 @@ definitions:
           type: string
           pattern: "^X[FM]?\\d+-\\d+$"
         description: "Cross-layer verification nodes covered by this criterion"
+
+  XNodeEntry:
+    type: object
+    required:
+      - phase
+      - guard_status
+    properties:
+      phase:
+        type: integer
+        minimum: 0
+        description: "Phase number this X-node belongs to (must match ID prefix)"
+      guard_status:
+        type: string
+        enum: [done, in_progress, blocked_env, pending, skipped]
+        description: "Guard verification status (promotion: pending->in_progress->done)"
+      summary:
+        type: string
+        description: "Brief description of the verification scenario"
+      gate_result:
+        type: string
+        enum: [pass, fail, not_bound, not_executed]
+        description: "Latest gate command execution result"
+      deep_verdict:
+        type: string
+        enum: [pass, fail, unverified, stale]
+        description: "Deep verification verdict from check_xnode_deep.py"
+      evidence_scope:
+        type: string
+        description: "What the evidence covers (e.g., 'unit+integration', 'CI-only')"
+      evidence_grade:
+        type: string
+        enum: [A, B, C, D, E, F]
+        description: "Evidence quality grade per guardian system"
+      status_basis:
+        type: string
+        description: "Source of truth for current guard_status determination"
+      verdict_reason:
+        type: string
+        description: "Human-readable reason for the current verdict"
+      promotion_rule:
+        type: string
+        description: "Condition required to promote to next guard_status level"
 
   Milestone:
     type: object

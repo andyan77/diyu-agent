@@ -198,10 +198,13 @@ def verify_phase(phase_key: str, matrix: dict) -> PhaseReport:
     if xnode_coverage_min is not None:
         try:
             from check_xnode_coverage import check_phase as xnode_check_phase
-            from check_xnode_coverage import load_xnodes_by_phase, load_yaml_data
+            from check_xnode_coverage import (
+                load_xnodes_by_phase_from_registry,
+                load_yaml_data,
+            )
 
             xnode_yaml = load_yaml_data()
-            xnodes_by_phase = load_xnodes_by_phase()
+            xnodes_by_phase = load_xnodes_by_phase_from_registry()
             phase_num = int(phase_key.replace("phase_", ""))
             xnode_report = xnode_check_phase(
                 xnode_yaml,

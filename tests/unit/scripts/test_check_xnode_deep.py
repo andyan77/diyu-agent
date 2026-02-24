@@ -187,6 +187,94 @@ class TestParseXNodeGates:
         assert len(done_gates) == 1
         assert done_gates[0].phase == "phase_0"
 
+    def test_done_only_registry_filters_by_guard_status(self, tmp_path: Path) -> None:
+        """done_only_registry=True filters to gates whose all xnodes are guard_status=done."""
+        matrix = _make_matrix(
+            tmp_path,
+            textwrap.dedent("""\
+                schema_version: "1.2"
+                current_phase: "phase_2"
+                phases:
+                  phase_1:
+                    exit_criteria:
+                      hard:
+                        - id: "p1-x1-1"
+                          check: "echo ok"
+                          xnodes: [X1-1]
+                      soft: []
+                  phase_2:
+                    exit_criteria:
+                      hard:
+                        - id: "p2-x2-1"
+                          check: "echo ok"
+                          xnodes: [X2-1]
+                      soft: []
+                xnode_registry:
+                  X1-1:
+                    phase: 1
+                    guard_status: done
+                  X2-1:
+                    phase: 2
+                    guard_status: in_progress
+            """),
+        )
+        # Registry filter: only X1-1 is done
+        done_gates = xn.parse_xnode_gates(matrix_path=matrix, done_only_registry=True)
+        assert len(done_gates) == 1
+        assert done_gates[0].gate_id == "p1-x1-1"
+
+    def test_done_only_registry_no_done_returns_empty(self, tmp_path: Path) -> None:
+        """When no xnodes are done, done_only_registry returns no gates."""
+        matrix = _make_matrix(
+            tmp_path,
+            textwrap.dedent("""\
+                schema_version: "1.2"
+                current_phase: "phase_2"
+                phases:
+                  phase_2:
+                    exit_criteria:
+                      hard:
+                        - id: "p2-x2-1"
+                          check: "echo ok"
+                          xnodes: [X2-1]
+                      soft: []
+                xnode_registry:
+                  X2-1:
+                    phase: 2
+                    guard_status: in_progress
+            """),
+        )
+        done_gates = xn.parse_xnode_gates(matrix_path=matrix, done_only_registry=True)
+        assert len(done_gates) == 0
+
+    def test_done_only_registry_multi_xnode_gate(self, tmp_path: Path) -> None:
+        """Gate with multiple xnodes only included if ALL are done."""
+        matrix = _make_matrix(
+            tmp_path,
+            textwrap.dedent("""\
+                schema_version: "1.2"
+                current_phase: "phase_2"
+                phases:
+                  phase_2:
+                    exit_criteria:
+                      hard:
+                        - id: "p2-multi"
+                          check: "echo ok"
+                          xnodes: [X2-1, X2-2]
+                      soft: []
+                xnode_registry:
+                  X2-1:
+                    phase: 2
+                    guard_status: done
+                  X2-2:
+                    phase: 2
+                    guard_status: in_progress
+            """),
+        )
+        # X2-2 is not done, so gate is excluded
+        done_gates = xn.parse_xnode_gates(matrix_path=matrix, done_only_registry=True)
+        assert len(done_gates) == 0
+
 
 class TestGetDonePhases:
     """Test done phase detection from milestone-matrix."""
@@ -748,8 +836,12 @@ class TestScriptExecution:
             assert "gate_ids" in node
 
     def test_detects_xnode_gates(self) -> None:
-        """Must find X-node gates in the real milestone-matrix."""
-        result = _run_script("--json", "--skip-execution")
+        """Must find X-node gates in the real milestone-matrix.
+
+        Uses --all-phases because the default mode filters to done xnodes
+        via registry, and the real registry currently has 0 done xnodes.
+        """
+        result = _run_script("--json", "--skip-execution", "--all-phases")
         report = json.loads(result.stdout)
         assert report["summary"]["total_xnode_gates"] > 0
         assert report["summary"]["unique_xnodes"] > 0
