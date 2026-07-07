@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001",
+  "source_repo_live_accessed": false,
+  "external_drive_accessed": false,
+  "semantic_pilot_v3_structured_draft_count": 20,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "category_counts": {
+    "content_method": 5,
+    "apparel_claim_boundary": 5,
+    "display_to_content": 5,
+    "control_plane_governance": 5
+  },
+  "chinese_canonical_body_result": "PASS",
+  "W7_alignment_result": "PASS",
+  "forbidden_audit_phrase_count": 0,
+  "normalized_proposition_duplicate_count": 0,
+  "normalized_body_duplicate_count": 0,
+  "semantic_fingerprint_duplicate_count": 0,
+  "industry_density_result": "PASS",
+  "relation_graph_quality_result": "PASS",
+  "source_status_disambiguation_result": "PASS",
+  "source_status_disambiguation_pass_count": 20,
+  "target_owner_single_assignment_result": "PASS",
+  "target_owner_single_assignment_count": 20,
+  "hard_claim_leak_count": 0,
+  "real_instance_fact_leak_count": 0,
+  "judge_review_queue_created": true,
+  "judge_protocol_created": true,
+  "relation_count": 40,
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 23,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "readiness_flags_result": "all_false",
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001",
+  "negative_results": {
+    "negative_wrong_count.yaml": [
+      "semantic pilot v3 count must be 20"
+    ],
+    "negative_english_primary_body.yaml": [
+      "english_primary_body_count must be 0"
+    ],
+    "negative_missing_chinese_body.yaml": [
+      "canonical_body_zh_present_count must be 20"
+    ],
+    "negative_forbidden_audit_phrase_in_body.yaml": [
+      "forbidden_audit_phrase_count must be 0"
+    ],
+    "negative_W7_topic_mismatch.yaml": [
+      "W7_mismatched_count must be 0"
+    ],
+    "negative_duplicate_proposition_signature.yaml": [
+      "normalized_proposition_duplicate_count must be 0"
+    ],
+    "negative_duplicate_normalized_body.yaml": [
+      "normalized_body_duplicate_count must be 0"
+    ],
+    "negative_hash_only_fingerprint.yaml": [
+      "semantic_fingerprint_duplicate_count must be 0"
+    ],
+    "negative_low_industry_density.yaml": [
+      "industry_density_pass_count must be 20"
+    ],
+    "negative_generic_relation_predicate.yaml": [
+      "forbidden_relation_predicate_count must be 0"
+    ],
+    "negative_candidate_to_cluster_relation.yaml": [
+      "candidate_to_cluster_trace_edge_count must be 0"
+    ],
+    "negative_missing_min_two_relations.yaml": [
+      "candidates_with_min_two_relations must be 20"
+    ],
+    "negative_multiple_primary_target_owners.yaml": [
+      "single_primary_target_owner_count must be 20"
+    ],
+    "negative_control_plane_targets_GKB.yaml": [
+      "control_plane_GKB_target_count must be 0"
+    ],
+    "negative_source_status_conflation.yaml": [
+      "source_status_disambiguation_pass_count must be 20"
+    ],
+    "negative_hard_claim_expert_synthesis.yaml": [
+      "hard_claim_leak_count must be 0"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "real_instance_fact_leak_count must be 0"
+    ],
+    "negative_batch_generation_unlocked.yaml": [
+      "batch generation must remain locked"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted domain knowledge count must be 0"
+    ],
+    "negative_source_repo_dependency_true.yaml": [
+      "source repo dependency/access must be false"
+    ],
+    "negative_google_drive_dependency_true.yaml": [
+      "external drive dependency/access must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness must remain all false"
+    ],
+    "negative_missing_judge_queue.yaml": [
+      "judge review queue required"
+    ]
+  }
+}

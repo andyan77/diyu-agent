@@ -1,0 +1,445 @@
+semantic_pilot_v3_judge_review_queue:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001
+  item_count: 20
+  items:
+  - candidate_id: SEM-V3-CONTENT-METHOD-001
+    canonical_label_zh: 材质触点转内容承诺边界
+    pilot_category: content_method
+    canonical_cluster_id: mkc_009
+    primary_target_owner: L2_PlayCardCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTENT-METHOD-002
+    canonical_label_zh: 场景任务到叙事顺序
+    pilot_category: content_method
+    canonical_cluster_id: mkc_019
+    primary_target_owner: GeneralKnowledgeBase
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTENT-METHOD-003
+    canonical_label_zh: 角色口吻的权限边界
+    pilot_category: content_method
+    canonical_cluster_id: mkc_022
+    primary_target_owner: L2_PlayCardCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTENT-METHOD-004
+    canonical_label_zh: 失败场景先行的搭配解释
+    pilot_category: content_method
+    canonical_cluster_id: mkc_043
+    primary_target_owner: GeneralKnowledgeBase
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTENT-METHOD-005
+    canonical_label_zh: 锚点单品生成系列内容
+    pilot_category: content_method
+    canonical_cluster_id: mkc_039
+    primary_target_owner: L2_PlayCardCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-001
+    canonical_label_zh: 垂坠语言的证据边界
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_015
+    primary_target_owner: EvidencePolicyCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-002
+    canonical_label_zh: 工艺细节的说法阶梯
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_008
+    primary_target_owner: EvidencePolicyCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-003
+    canonical_label_zh: 舒适措辞降级路径
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_017
+    primary_target_owner: EvidencePolicyCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-004
+    canonical_label_zh: 面料属性到允许说法映射
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_025
+    primary_target_owner: EvidencePolicyCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-005
+    canonical_label_zh: 版型比较不触碰身体效果
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_015
+    primary_target_owner: EvidencePolicyCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-DISPLAY-TO-CONTENT-001
+    canonical_label_zh: 陈列锚点转内容角度
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_004
+    primary_target_owner: L3_ExecutionAssetCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-DISPLAY-TO-CONTENT-002
+    canonical_label_zh: 试穿路径到内容顺序
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_010
+    primary_target_owner: L3_ExecutionAssetCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-DISPLAY-TO-CONTENT-003
+    canonical_label_zh: 组合展示转选择理由
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_016
+    primary_target_owner: L3_ExecutionAssetCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-DISPLAY-TO-CONTENT-004
+    canonical_label_zh: 色组陈列转叙事证据
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_021
+    primary_target_owner: L3_ExecutionAssetCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-DISPLAY-TO-CONTENT-005
+    canonical_label_zh: 货架层级转导购话术
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_026
+    primary_target_owner: L3_ExecutionAssetCandidate
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-001
+    canonical_label_zh: 控制面规则禁止混入通用知识
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_027
+    primary_target_owner: ControlPlaneContractSource
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-002
+    canonical_label_zh: 来源缺口触发补证工单
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_010
+    primary_target_owner: SourceGapLedger
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-003
+    canonical_label_zh: 落层不确定时进入决策包
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_021
+    primary_target_owner: DecisionPacketLedger
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-004
+    canonical_label_zh: 批量生成前的语义样板门槛
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_004
+    primary_target_owner: ControlPlaneContractSource
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation
+  - candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-005
+    canonical_label_zh: 证据不足时输出降级路由
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_026
+    primary_target_owner: DecisionPacketLedger
+    review_status: pending
+    required_judgment_dimensions:
+    - W7_cluster_topic_alignment
+    - proposition_independence
+    - chinese_body_domain_quality
+    - industry_density
+    - relation_graph_value
+    - source_boundary_correctness
+    - target_owner_correctness
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_W7_mismatch
+    - reject_as_relation_placeholder
+    - reject_as_boundary_violation

@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001
-  previous_step: CODEX-SEMANTIC-PILOT-REGEN-001
+  current_next_step: CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001
+  previous_step: CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -64,3 +64,11 @@ route_policy:
   microbatch_required: true
   candidatepack_direct_creation_allowed: false
   KE_RAG_DIFY_direct_creation_allowed: false
+semantic_pilot_v3:
+  task_id: CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001
+  status: completed
+  semantic_pilot_v3_structured_draft_count: 20
+  accepted_domain_knowledge_count: 0
+  ready_for_semantic_pilot_v3_judge_review: true
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false

@@ -13,6 +13,7 @@ import yaml
 TASK_ID = "CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001"
 NEXT_TASK_ID = "CODEX-SEMANTIC-PILOT-REGEN-001"
 SEMANTIC_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001"
+SEMANTIC_V3_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
 BATCH_TASK_ID = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_BATCH_IDS = [f"batch_{idx:03d}" for idx in range(1, 15)]
 GATE_KEYS = [
@@ -232,8 +233,18 @@ def validate_live(
             fail("semantic judge route requires accepted_domain_knowledge_count 0")
         assert_false(semantic_regen.get("batch_generation_unlocked"), "semantic judge route batch_generation_unlocked")
         assert_false(semantic_regen.get("ready_for_first_batch_generation"), "semantic judge route ready_for_first_batch_generation")
+    elif current_next_step == SEMANTIC_V3_JUDGE_NEXT_STEP:
+        semantic_v3 = status.get("semantic_pilot_v3", {})
+        if semantic_v3.get("status") != "completed":
+            fail("semantic v3 judge route requires completed semantic_pilot_v3 block")
+        if semantic_v3.get("semantic_pilot_v3_structured_draft_count") != 20:
+            fail("semantic v3 judge route requires 20 v3 semantic pilot drafts")
+        if semantic_v3.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v3 judge route requires accepted_domain_knowledge_count 0")
+        assert_false(semantic_v3.get("batch_generation_unlocked"), "semantic v3 judge route batch_generation_unlocked")
+        assert_false(semantic_v3.get("ready_for_first_batch_generation"), "semantic v3 judge route ready_for_first_batch_generation")
     elif current_next_step != NEXT_TASK_ID:
-        fail("current_next_step must be semantic pilot regen or semantic pilot judge go/no-go")
+        fail("current_next_step must be semantic pilot regen, semantic pilot judge go/no-go, or semantic pilot v3 judge go/no-go")
     readiness = status.get("readiness", {})
     bad = {key: value for key, value in readiness.items() if value is True or str(value).lower() == "true"}
     if bad:

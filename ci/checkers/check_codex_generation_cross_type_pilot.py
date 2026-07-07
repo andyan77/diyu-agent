@@ -28,6 +28,7 @@ EXPECTED_ASSIGNMENTS = {f"GA-{idx:03d}" for idx in range(1, 15)}
 PILOT_JUDGE_NEXT_STEP = "CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001"
 SEMANTIC_REGEN_NEXT_STEP = "CODEX-SEMANTIC-PILOT-REGEN-001"
 SEMANTIC_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001"
+SEMANTIC_V3_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
 BATCH_GENERATION_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 SMOKE_FIXTURE_CLASSIFICATION = "schema_route_provenance_smoke_fixture"
 SELF_CHECK_TERMS = {
@@ -292,8 +293,14 @@ def validate_fixture_model(model: dict[str, Any], schema: dict[str, Any]) -> lis
     current_next_step = data.get("current_next_step", PILOT_JUDGE_NEXT_STEP)
     if current_next_step == BATCH_GENERATION_NEXT_STEP:
         errors.append("batch generation task cannot be current next step")
-    if current_next_step not in {PILOT_JUDGE_NEXT_STEP, SEMANTIC_REGEN_NEXT_STEP, SEMANTIC_JUDGE_NEXT_STEP}:
-        errors.append("current next step must be pilot judge review, semantic pilot regen, or semantic judge go/no-go")
+    allowed_next_steps = {
+        PILOT_JUDGE_NEXT_STEP,
+        SEMANTIC_REGEN_NEXT_STEP,
+        SEMANTIC_JUDGE_NEXT_STEP,
+        SEMANTIC_V3_JUDGE_NEXT_STEP,
+    }
+    if current_next_step not in allowed_next_steps:
+        errors.append("current next step must be pilot judge review, semantic pilot regen, semantic judge go/no-go, or semantic v3 judge go/no-go")
     if data.get("ready_for_pilot_review") is not True:
         errors.append("pilot review should be true")
     if data.get("category_counts") != EXPECTED_CATEGORY_COUNTS:
@@ -375,7 +382,28 @@ def validate_workspace_route(status: dict[str, Any]) -> dict[str, Any]:
             "accepted_domain_knowledge_count": regen.get("accepted_domain_knowledge_count"),
             "batch_generation_unlocked": regen.get("batch_generation_unlocked"),
         }
-    fail("workspace next step must be pilot judge review, semantic pilot regen, or semantic judge go/no-go")
+    if current_next_step == SEMANTIC_V3_JUDGE_NEXT_STEP:
+        v3 = status.get("semantic_pilot_v3", {})
+        if v3.get("status") != "completed":
+            fail("semantic v3 judge route requires completed semantic_pilot_v3 block")
+        if v3.get("semantic_pilot_v3_structured_draft_count") != 20:
+            fail("semantic v3 judge route requires 20 regenerated v3 pilot drafts")
+        if v3.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v3 judge route requires accepted_domain_knowledge_count 0")
+        if v3.get("batch_generation_unlocked") is True:
+            fail("semantic v3 judge route must keep batch_generation_unlocked false")
+        if v3.get("ready_for_first_batch_generation") is True:
+            fail("semantic v3 judge route must keep ready_for_first_batch_generation false")
+        if v3.get("ready_for_semantic_pilot_v3_judge_review") is not True:
+            fail("semantic v3 judge route requires ready_for_semantic_pilot_v3_judge_review true")
+        return {
+            "route_validation_mode": "post_semantic_v3_judge_go_nogo",
+            "current_workspace_next_step": current_next_step,
+            "semantic_pilot_v3_structured_draft_count": v3.get("semantic_pilot_v3_structured_draft_count"),
+            "accepted_domain_knowledge_count": v3.get("accepted_domain_knowledge_count"),
+            "batch_generation_unlocked": v3.get("batch_generation_unlocked"),
+        }
+    fail("workspace next step must be pilot judge review, semantic pilot regen, semantic judge go/no-go, or semantic v3 judge go/no-go")
 
 
 def validate_live(

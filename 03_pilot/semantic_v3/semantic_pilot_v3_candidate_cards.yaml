@@ -1,0 +1,2972 @@
+semantic_pilot_v3_candidate_cards:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001
+  candidate_count: 20
+  category_counts:
+    content_method: 5
+    apparel_claim_boundary: 5
+    display_to_content: 5
+    control_plane_governance: 5
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  external_drive_dependency: false
+  external_drive_accessed: false
+  candidates:
+  - pilot_category: content_method
+    batch_id: batch_002
+    candidate_id: SEM-V3-CONTENT-METHOD-001
+    canonical_label_zh: 材质触点转内容承诺边界
+    canonical_body_zh: 材质触点转内容承诺边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以针织袖口、斜纹口袋盖、垂落下摆为对象，把罗纹、斜纹、轻垂面料、袖口厚薄与下摆垂量和可触摸样衣架旁的桌面组合放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，可触摸材质细节如何进入内容承诺成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把袖口、袋盖、下摆放在手能触到的位置时，操作者可以执行的动作是把触感词降级成可见材质描述。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到针织袖口、斜纹口袋盖、垂落下摆，并且需要把它转成可审的内容或流程判断；同时，可触摸样衣架旁的桌面组合提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能描述看得见的织纹、厚薄和垂落，不得承诺真实穿着感受。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把手感词写成舒适、亲肤、耐穿等未经证据支持的结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，材质触点转内容承诺边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成一段可审的材质描述，并把性能类承诺留给补证流程。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 材质触点转内容承诺边界
+    - 可触摸材质细节如何进入内容承诺
+    - 把触感词降级成可见材质描述
+    english_aliases:
+    - Material touchpoint promise boundary
+    retrieval_aliases_en:
+    - Material touchpoint promise boundary
+    target_owner_decision:
+      primary_target_owner: L2_PlayCardCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L3_ExecutionAssetCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L2_PlayCardCandidate; strict schema maps it to GeneralKnowledgeBase with layer
+        L2_PlayCard_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L2_PlayCardCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: L2_PlayCard_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: content_method|材质触点转内容承诺边界|mkc_009|可触摸材质细节如何进入内容承诺|把触感词降级成可见材质描述|只能描述看得见的织纹、厚薄和垂落，不得承诺真实穿着感受|形成一段可审的材质描述，并把性能类承诺留给补证流程
+      normalized_body_signature: 70d28caab9c3a56ee04bf6a6d89ce57b
+      normalized_body_mechanism_signature: 9d9c584558fc9305a3a00c39d596f1c6
+      semantic_fingerprint: 0f9c6f71741349e3a752db68e477b873
+    industry_density:
+      body_zh_char_count: 949
+      boilerplate_ratio: 0.04
+      element_types_present: &id001
+      - apparel_object
+      - material_or_fabric_property
+      - fit_or_silhouette_observation
+      - retail_scene
+      - display_or_styling_action
+      - content_action
+      - claim_or_evidence_boundary
+      - operator_decision
+      - downstream_output_implication
+      - failure_mode
+      evidence:
+        apparel_object: 针织袖口、斜纹口袋盖、垂落下摆
+        material_or_fabric_property: 罗纹、斜纹、轻垂面料
+        fit_or_silhouette_observation: 袖口厚薄与下摆垂量
+        retail_scene: 可触摸样衣架旁的桌面组合
+        display_or_styling_action: 把袖口、袋盖、下摆放在手能触到的位置
+        content_action: 把触感词降级成可见材质描述
+        claim_or_evidence_boundary: 只能描述看得见的织纹、厚薄和垂落，不得承诺真实穿着感受
+        operator_decision: 把触感词降级成可见材质描述
+        downstream_output_implication: 形成一段可审的材质描述，并把性能类承诺留给补证流程
+        failure_mode: 把手感词写成舒适、亲肤、耐穿等未经证据支持的结果
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTENT-METHOD-001
+        candidate_name: 材质触点转内容承诺边界
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_009
+        generation_assignment_id: GA-002
+        input_digest: 0f9c6f71741349e3a752db68e477b873ba0b46d757b522a79a09421d58fd5d66
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is L2_PlayCardCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer L2_PlayCard_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_002/batch_002_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: content_method semantic v3 draft pending judge review
+        target_layer_candidate: L2_PlayCard_candidate
+        allowed_landing_layers:
+        - L2_PlayCard_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 材质触点转内容承诺边界是用于处理“可触摸材质细节如何进入内容承诺”的中文语义知识单元，核心对象是针织袖口、斜纹口袋盖、垂落下摆。
+        applicable_when: 当可触摸样衣架旁的桌面组合中需要把触感词降级成可见材质描述，且观察对象来自针织袖口、斜纹口袋盖、垂落下摆时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成一段可审的材质描述，并把性能类承诺留给补证流程
+        risk_boundary: 把手感词写成舒适、亲肤、耐穿等未经证据支持的结果
+        evidence_requirement: 只能描述看得见的织纹、厚薄和垂落，不得承诺真实穿着感受
+      rich_body:
+        body_text: 材质触点转内容承诺边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以针织袖口、斜纹口袋盖、垂落下摆为对象，把罗纹、斜纹、轻垂面料、袖口厚薄与下摆垂量和可触摸样衣架旁的桌面组合放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，可触摸材质细节如何进入内容承诺成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把袖口、袋盖、下摆放在手能触到的位置时，操作者可以执行的动作是把触感词降级成可见材质描述。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到针织袖口、斜纹口袋盖、垂落下摆，并且需要把它转成可审的内容或流程判断；同时，可触摸样衣架旁的桌面组合提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能描述看得见的织纹、厚薄和垂落，不得承诺真实穿着感受。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把手感词写成舒适、亲肤、耐穿等未经证据支持的结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，材质触点转内容承诺边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成一段可审的材质描述，并把性能类承诺留给补证流程。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 材质触点转内容承诺边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以针织袖口、斜纹口袋盖、垂落下摆为对象，把罗纹、斜纹、轻垂面料、袖口厚薄与下摆垂量和可触摸样衣架旁的桌面组合放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，可触摸材质细节如何进入内容承诺成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把袖口、袋盖、下摆放在手能触到的位置时，操作者可以执行的动作是把触感词降级成可见材质描述。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到针织袖口、斜纹口袋盖、垂落下摆，并且需要把它转成可审的内容或流程判断；同时，可触摸样衣架旁的桌面组合提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。只能描述看得见的织纹、厚薄和垂落，不得承诺真实穿着感受。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把手感词写成舒适、亲肤、耐穿等未经证据支持的结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，材质触点转内容承诺边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成一段可审的材质描述，并把性能类承诺留给补证流程。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-content_method-mkc_009-GA-002-001
+        semantic_fingerprint: 0f9c6f71741349e3a752db68e477b873
+        proposition_fingerprint: 88421807d56b511d607f409987a60851
+        runtime_effect_fingerprint: 9628b65a6236f873d44b257b064aa8be
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: content_method
+    batch_id: batch_001
+    candidate_id: SEM-V3-CONTENT-METHOD-002
+    canonical_label_zh: 场景任务到叙事顺序
+    canonical_body_zh: 场景任务到叙事顺序讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以轻外套、直筒裤、内搭层为对象，把挺括外层与柔软内搭的层次差、外套长度和裤型直线感和通勤与周末混合陈列区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，服装场景任务如何决定内容叙事顺序成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主外套、支撑单品、替换层分开摆放时，操作者可以执行的动作是先问场景任务，再写搭配动作，最后给选择提示。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到轻外套、直筒裤、内搭层，并且需要把它转成可审的内容或流程判断；同时，通勤与周末混合陈列区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能依据可见搭配关系说明用途，不推断具体人群结果。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：从情绪词或季节词直接开写，导致场景选择没有服装依据。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，场景任务到叙事顺序才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：生成从场景需要到搭配选择的三步内容提纲。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 场景任务到叙事顺序
+    - 服装场景任务如何决定内容叙事顺序
+    - 先问场景任务，再写搭配动作，最后给选择提示
+    english_aliases:
+    - Scene task narrative order
+    retrieval_aliases_en:
+    - Scene task narrative order
+    target_owner_decision:
+      primary_target_owner: GeneralKnowledgeBase
+      rejected_target_owners:
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is GeneralKnowledgeBase; strict schema maps it to GeneralKnowledgeBase with layer
+        TBox_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: GeneralKnowledgeBase
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: TBox_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: content_method|场景任务到叙事顺序|mkc_019|服装场景任务如何决定内容叙事顺序|先问场景任务，再写搭配动作，最后给选择提示|只能依据可见搭配关系说明用途，不推断具体人群结果|生成从场景需要到搭配选择的三步内容提纲
+      normalized_body_signature: 6a050d97b615bdb4551074f9e73bf04c
+      normalized_body_mechanism_signature: 14ccf4b8c3520720af86392f181b278e
+      semantic_fingerprint: 27cc48b5ee348edc681ab0ff16522a53
+    industry_density:
+      body_zh_char_count: 940
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 轻外套、直筒裤、内搭层
+        material_or_fabric_property: 挺括外层与柔软内搭的层次差
+        fit_or_silhouette_observation: 外套长度和裤型直线感
+        retail_scene: 通勤与周末混合陈列区
+        display_or_styling_action: 把主外套、支撑单品、替换层分开摆放
+        content_action: 先问场景任务，再写搭配动作，最后给选择提示
+        claim_or_evidence_boundary: 只能依据可见搭配关系说明用途，不推断具体人群结果
+        operator_decision: 先问场景任务，再写搭配动作，最后给选择提示
+        downstream_output_implication: 生成从场景需要到搭配选择的三步内容提纲
+        failure_mode: 从情绪词或季节词直接开写，导致场景选择没有服装依据
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTENT-METHOD-002
+        candidate_name: 场景任务到叙事顺序
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_019
+        generation_assignment_id: GA-001
+        input_digest: 27cc48b5ee348edc681ab0ff16522a53f89e5d733bb7e6c23c78b6f308d4f2e9
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is GeneralKnowledgeBase; strict schema maps it to GeneralKnowledgeBase
+          with layer TBox_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_001/batch_001_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: content_method semantic v3 draft pending judge review
+        target_layer_candidate: TBox_candidate
+        allowed_landing_layers:
+        - TBox_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 场景任务到叙事顺序是用于处理“服装场景任务如何决定内容叙事顺序”的中文语义知识单元，核心对象是轻外套、直筒裤、内搭层。
+        applicable_when: 当通勤与周末混合陈列区中需要先问场景任务，再写搭配动作，最后给选择提示，且观察对象来自轻外套、直筒裤、内搭层时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 生成从场景需要到搭配选择的三步内容提纲
+        risk_boundary: 从情绪词或季节词直接开写，导致场景选择没有服装依据
+        evidence_requirement: 只能依据可见搭配关系说明用途，不推断具体人群结果
+      rich_body:
+        body_text: 场景任务到叙事顺序讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以轻外套、直筒裤、内搭层为对象，把挺括外层与柔软内搭的层次差、外套长度和裤型直线感和通勤与周末混合陈列区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，服装场景任务如何决定内容叙事顺序成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主外套、支撑单品、替换层分开摆放时，操作者可以执行的动作是先问场景任务，再写搭配动作，最后给选择提示。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到轻外套、直筒裤、内搭层，并且需要把它转成可审的内容或流程判断；同时，通勤与周末混合陈列区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能依据可见搭配关系说明用途，不推断具体人群结果。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：从情绪词或季节词直接开写，导致场景选择没有服装依据。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，场景任务到叙事顺序才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：生成从场景需要到搭配选择的三步内容提纲。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 场景任务到叙事顺序讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以轻外套、直筒裤、内搭层为对象，把挺括外层与柔软内搭的层次差、外套长度和裤型直线感和通勤与周末混合陈列区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，服装场景任务如何决定内容叙事顺序成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主外套、支撑单品、替换层分开摆放时，操作者可以执行的动作是先问场景任务，再写搭配动作，最后给选择提示。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到轻外套、直筒裤、内搭层，并且需要把它转成可审的内容或流程判断；同时，通勤与周末混合陈列区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。只能依据可见搭配关系说明用途，不推断具体人群结果。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：从情绪词或季节词直接开写，导致场景选择没有服装依据。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，场景任务到叙事顺序才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：生成从场景需要到搭配选择的三步内容提纲。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-content_method-mkc_019-GA-001-002
+        semantic_fingerprint: 27cc48b5ee348edc681ab0ff16522a53
+        proposition_fingerprint: ebb9ddf7473554713d2af3c8c6bb11ea
+        runtime_effect_fingerprint: 9e416431fcf09416a911aa5e0f329a63
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: content_method
+    batch_id: batch_003
+    candidate_id: SEM-V3-CONTENT-METHOD-003
+    canonical_label_zh: 角色口吻的权限边界
+    canonical_body_zh: 角色口吻的权限边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以层搭衬衫、工装口袋外套、宽松长裤为对象，把棉感表面与口袋结构、层搭空间和活动余量和造型台旁的角色化搭配轨放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，内容角色口吻如何不冒充事实权威成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当按工作、出行、整理三个任务放置服装时，操作者可以执行的动作是先声明口吻范围，再写搭配建议。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到层搭衬衫、工装口袋外套、宽松长裤，并且需要把它转成可审的内容或流程判断；同时，造型台旁的角色化搭配轨提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。角色只能表达造型经验和观察，不得代替检测或真实反馈。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：用专家或顾客口吻包装未经审查的事实判断。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，角色口吻的权限边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：得到有角色感但不过界的导购或内容脚本。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 角色口吻的权限边界
+    - 内容角色口吻如何不冒充事实权威
+    - 先声明口吻范围，再写搭配建议
+    english_aliases:
+    - Role voice authority boundary
+    retrieval_aliases_en:
+    - Role voice authority boundary
+    target_owner_decision:
+      primary_target_owner: L2_PlayCardCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L3_ExecutionAssetCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L2_PlayCardCandidate; strict schema maps it to GeneralKnowledgeBase with layer
+        L2_PlayCard_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L2_PlayCardCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: L2_PlayCard_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: content_method|角色口吻的权限边界|mkc_022|内容角色口吻如何不冒充事实权威|先声明口吻范围，再写搭配建议|角色只能表达造型经验和观察，不得代替检测或真实反馈|得到有角色感但不过界的导购或内容脚本
+      normalized_body_signature: 017bd68b5fc36d47453e9180dfc0ae53
+      normalized_body_mechanism_signature: f00f796ae89cc9f591a923b87822249a
+      semantic_fingerprint: f4fdf4ee3367feabd4cecccd3b6441e8
+    industry_density:
+      body_zh_char_count: 935
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 层搭衬衫、工装口袋外套、宽松长裤
+        material_or_fabric_property: 棉感表面与口袋结构
+        fit_or_silhouette_observation: 层搭空间和活动余量
+        retail_scene: 造型台旁的角色化搭配轨
+        display_or_styling_action: 按工作、出行、整理三个任务放置服装
+        content_action: 先声明口吻范围，再写搭配建议
+        claim_or_evidence_boundary: 角色只能表达造型经验和观察，不得代替检测或真实反馈
+        operator_decision: 先声明口吻范围，再写搭配建议
+        downstream_output_implication: 得到有角色感但不过界的导购或内容脚本
+        failure_mode: 用专家或顾客口吻包装未经审查的事实判断
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTENT-METHOD-003
+        candidate_name: 角色口吻的权限边界
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_022
+        generation_assignment_id: GA-003
+        input_digest: f4fdf4ee3367feabd4cecccd3b6441e8aa72184e305a05a89db2968d2b24c262
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is L2_PlayCardCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer L2_PlayCard_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_003/batch_003_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: content_method semantic v3 draft pending judge review
+        target_layer_candidate: L2_PlayCard_candidate
+        allowed_landing_layers:
+        - L2_PlayCard_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 角色口吻的权限边界是用于处理“内容角色口吻如何不冒充事实权威”的中文语义知识单元，核心对象是层搭衬衫、工装口袋外套、宽松长裤。
+        applicable_when: 当造型台旁的角色化搭配轨中需要先声明口吻范围，再写搭配建议，且观察对象来自层搭衬衫、工装口袋外套、宽松长裤时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 得到有角色感但不过界的导购或内容脚本
+        risk_boundary: 用专家或顾客口吻包装未经审查的事实判断
+        evidence_requirement: 角色只能表达造型经验和观察，不得代替检测或真实反馈
+      rich_body:
+        body_text: 角色口吻的权限边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以层搭衬衫、工装口袋外套、宽松长裤为对象，把棉感表面与口袋结构、层搭空间和活动余量和造型台旁的角色化搭配轨放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，内容角色口吻如何不冒充事实权威成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当按工作、出行、整理三个任务放置服装时，操作者可以执行的动作是先声明口吻范围，再写搭配建议。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到层搭衬衫、工装口袋外套、宽松长裤，并且需要把它转成可审的内容或流程判断；同时，造型台旁的角色化搭配轨提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。角色只能表达造型经验和观察，不得代替检测或真实反馈。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：用专家或顾客口吻包装未经审查的事实判断。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，角色口吻的权限边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：得到有角色感但不过界的导购或内容脚本。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 角色口吻的权限边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以层搭衬衫、工装口袋外套、宽松长裤为对象，把棉感表面与口袋结构、层搭空间和活动余量和造型台旁的角色化搭配轨放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，内容角色口吻如何不冒充事实权威成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当按工作、出行、整理三个任务放置服装时，操作者可以执行的动作是先声明口吻范围，再写搭配建议。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到层搭衬衫、工装口袋外套、宽松长裤，并且需要把它转成可审的内容或流程判断；同时，造型台旁的角色化搭配轨提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。角色只能表达造型经验和观察，不得代替检测或真实反馈。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：用专家或顾客口吻包装未经审查的事实判断。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，角色口吻的权限边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：得到有角色感但不过界的导购或内容脚本。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-content_method-mkc_022-GA-003-003
+        semantic_fingerprint: f4fdf4ee3367feabd4cecccd3b6441e8
+        proposition_fingerprint: e3dd2735a5ecbbc21d4fe9d723b2cda5
+        runtime_effect_fingerprint: cc69ae4d08e500fa0fa3b36efac37473
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: content_method
+    batch_id: batch_004
+    candidate_id: SEM-V3-CONTENT-METHOD-004
+    canonical_label_zh: 失败场景先行的搭配解释
+    canonical_body_zh: 失败场景先行的搭配解释讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以短上衣、长外层、小体量包袋为对象，把轻薄上衣与较硬挺外层、上短下长、外长内短的比例关系和镜前替换搭配区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，从常见搭配失败反推出安全解释成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可替换层长并排展示时，操作者可以执行的动作是先指出服装安排失败，再给可逆调整。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到短上衣、长外层、小体量包袋，并且需要把它转成可审的内容或流程判断；同时，镜前替换搭配区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。失败只能归因于服装安排，不得评价身体或真实穿着者。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把比例问题写成身材修饰或个人缺陷。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，失败场景先行的搭配解释才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成以服装任务为中心的纠错型内容卡。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 失败场景先行的搭配解释
+    - 从常见搭配失败反推出安全解释
+    - 先指出服装安排失败，再给可逆调整
+    english_aliases:
+    - Failure-first styling explanation
+    retrieval_aliases_en:
+    - Failure-first styling explanation
+    target_owner_decision:
+      primary_target_owner: GeneralKnowledgeBase
+      rejected_target_owners:
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is GeneralKnowledgeBase; strict schema maps it to GeneralKnowledgeBase with layer
+        TBox_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: GeneralKnowledgeBase
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: TBox_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: content_method|失败场景先行的搭配解释|mkc_043|从常见搭配失败反推出安全解释|先指出服装安排失败，再给可逆调整|失败只能归因于服装安排，不得评价身体或真实穿着者|形成以服装任务为中心的纠错型内容卡
+      normalized_body_signature: fdaa3fa1758b59a25ba97ce5c1bece48
+      normalized_body_mechanism_signature: e174cb30f6cfe3c0da6139973f4671d9
+      semantic_fingerprint: 8b88b6e15dd54850b88cf14dea64946f
+    industry_density:
+      body_zh_char_count: 921
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 短上衣、长外层、小体量包袋
+        material_or_fabric_property: 轻薄上衣与较硬挺外层
+        fit_or_silhouette_observation: 上短下长、外长内短的比例关系
+        retail_scene: 镜前替换搭配区
+        display_or_styling_action: 把可替换层长并排展示
+        content_action: 先指出服装安排失败，再给可逆调整
+        claim_or_evidence_boundary: 失败只能归因于服装安排，不得评价身体或真实穿着者
+        operator_decision: 先指出服装安排失败，再给可逆调整
+        downstream_output_implication: 形成以服装任务为中心的纠错型内容卡
+        failure_mode: 把比例问题写成身材修饰或个人缺陷
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTENT-METHOD-004
+        candidate_name: 失败场景先行的搭配解释
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_043
+        generation_assignment_id: GA-004
+        input_digest: 8b88b6e15dd54850b88cf14dea64946fccdbd90b74dad033d058984bc29815ed
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is GeneralKnowledgeBase; strict schema maps it to GeneralKnowledgeBase
+          with layer TBox_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_004/batch_004_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: content_method semantic v3 draft pending judge review
+        target_layer_candidate: TBox_candidate
+        allowed_landing_layers:
+        - TBox_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 失败场景先行的搭配解释是用于处理“从常见搭配失败反推出安全解释”的中文语义知识单元，核心对象是短上衣、长外层、小体量包袋。
+        applicable_when: 当镜前替换搭配区中需要先指出服装安排失败，再给可逆调整，且观察对象来自短上衣、长外层、小体量包袋时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成以服装任务为中心的纠错型内容卡
+        risk_boundary: 把比例问题写成身材修饰或个人缺陷
+        evidence_requirement: 失败只能归因于服装安排，不得评价身体或真实穿着者
+      rich_body:
+        body_text: 失败场景先行的搭配解释讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以短上衣、长外层、小体量包袋为对象，把轻薄上衣与较硬挺外层、上短下长、外长内短的比例关系和镜前替换搭配区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，从常见搭配失败反推出安全解释成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可替换层长并排展示时，操作者可以执行的动作是先指出服装安排失败，再给可逆调整。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到短上衣、长外层、小体量包袋，并且需要把它转成可审的内容或流程判断；同时，镜前替换搭配区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。失败只能归因于服装安排，不得评价身体或真实穿着者。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把比例问题写成身材修饰或个人缺陷。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，失败场景先行的搭配解释才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成以服装任务为中心的纠错型内容卡。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 失败场景先行的搭配解释讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以短上衣、长外层、小体量包袋为对象，把轻薄上衣与较硬挺外层、上短下长、外长内短的比例关系和镜前替换搭配区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，从常见搭配失败反推出安全解释成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可替换层长并排展示时，操作者可以执行的动作是先指出服装安排失败，再给可逆调整。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到短上衣、长外层、小体量包袋，并且需要把它转成可审的内容或流程判断；同时，镜前替换搭配区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。失败只能归因于服装安排，不得评价身体或真实穿着者。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把比例问题写成身材修饰或个人缺陷。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，失败场景先行的搭配解释才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成以服装任务为中心的纠错型内容卡。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-content_method-mkc_043-GA-004-004
+        semantic_fingerprint: 8b88b6e15dd54850b88cf14dea64946f
+        proposition_fingerprint: e53816a91aede9772ed45e84e76bb544
+        runtime_effect_fingerprint: 135cf0a319d925d7ab0e57adcabfe075
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: content_method
+    batch_id: batch_005
+    candidate_id: SEM-V3-CONTENT-METHOD-005
+    canonical_label_zh: 锚点单品生成系列内容
+    canonical_body_zh: 锚点单品生成系列内容讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以衬衫夹克、模块化内搭、可替换下装为对象，把棉混外层与轻薄内搭、外搭廓形和内搭露出比例和按任务卡组织的小胶囊陈列放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，一个锚点单品如何支撑连续内容成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当同一锚点在工作、旅行、周末区轮换时，操作者可以执行的动作是每一篇只改变一个任务约束。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到衬衫夹克、模块化内搭、可替换下装，并且需要把它转成可审的内容或流程判断；同时，按任务卡组织的小胶囊陈列提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。每次续写必须有新的场景条件或搭配动作。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只换标题和形容词，内容机制没有变化。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，锚点单品生成系列内容才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成可连续但不重复的单品内容系列。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 锚点单品生成系列内容
+    - 一个锚点单品如何支撑连续内容
+    - 每一篇只改变一个任务约束
+    english_aliases:
+    - Anchor item story series
+    retrieval_aliases_en:
+    - Anchor item story series
+    target_owner_decision:
+      primary_target_owner: L2_PlayCardCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L3_ExecutionAssetCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L2_PlayCardCandidate; strict schema maps it to GeneralKnowledgeBase with layer
+        L2_PlayCard_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L2_PlayCardCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: L2_PlayCard_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: content_method|锚点单品生成系列内容|mkc_039|一个锚点单品如何支撑连续内容|每一篇只改变一个任务约束|每次续写必须有新的场景条件或搭配动作|形成可连续但不重复的单品内容系列
+      normalized_body_signature: a53c6d018e8c26e52f74f5d361fed3e4
+      normalized_body_mechanism_signature: 2e053385016b5797c2b9324b5fa64f18
+      semantic_fingerprint: 5e1b38c292b29727e8f3603590542336
+    industry_density:
+      body_zh_char_count: 927
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 衬衫夹克、模块化内搭、可替换下装
+        material_or_fabric_property: 棉混外层与轻薄内搭
+        fit_or_silhouette_observation: 外搭廓形和内搭露出比例
+        retail_scene: 按任务卡组织的小胶囊陈列
+        display_or_styling_action: 同一锚点在工作、旅行、周末区轮换
+        content_action: 每一篇只改变一个任务约束
+        claim_or_evidence_boundary: 每次续写必须有新的场景条件或搭配动作
+        operator_decision: 每一篇只改变一个任务约束
+        downstream_output_implication: 形成可连续但不重复的单品内容系列
+        failure_mode: 只换标题和形容词，内容机制没有变化
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTENT-METHOD-005
+        candidate_name: 锚点单品生成系列内容
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_039
+        generation_assignment_id: GA-005
+        input_digest: 5e1b38c292b29727e8f360359054233634dd0f1732403d206babaebdf3c223e1
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is L2_PlayCardCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer L2_PlayCard_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_005/batch_005_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: content_method semantic v3 draft pending judge review
+        target_layer_candidate: L2_PlayCard_candidate
+        allowed_landing_layers:
+        - L2_PlayCard_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 锚点单品生成系列内容是用于处理“一个锚点单品如何支撑连续内容”的中文语义知识单元，核心对象是衬衫夹克、模块化内搭、可替换下装。
+        applicable_when: 当按任务卡组织的小胶囊陈列中需要每一篇只改变一个任务约束，且观察对象来自衬衫夹克、模块化内搭、可替换下装时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成可连续但不重复的单品内容系列
+        risk_boundary: 只换标题和形容词，内容机制没有变化
+        evidence_requirement: 每次续写必须有新的场景条件或搭配动作
+      rich_body:
+        body_text: 锚点单品生成系列内容讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以衬衫夹克、模块化内搭、可替换下装为对象，把棉混外层与轻薄内搭、外搭廓形和内搭露出比例和按任务卡组织的小胶囊陈列放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，一个锚点单品如何支撑连续内容成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当同一锚点在工作、旅行、周末区轮换时，操作者可以执行的动作是每一篇只改变一个任务约束。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到衬衫夹克、模块化内搭、可替换下装，并且需要把它转成可审的内容或流程判断；同时，按任务卡组织的小胶囊陈列提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。每次续写必须有新的场景条件或搭配动作。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只换标题和形容词，内容机制没有变化。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，锚点单品生成系列内容才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成可连续但不重复的单品内容系列。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 锚点单品生成系列内容讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以衬衫夹克、模块化内搭、可替换下装为对象，把棉混外层与轻薄内搭、外搭廓形和内搭露出比例和按任务卡组织的小胶囊陈列放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，一个锚点单品如何支撑连续内容成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当同一锚点在工作、旅行、周末区轮换时，操作者可以执行的动作是每一篇只改变一个任务约束。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到衬衫夹克、模块化内搭、可替换下装，并且需要把它转成可审的内容或流程判断；同时，按任务卡组织的小胶囊陈列提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。每次续写必须有新的场景条件或搭配动作。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只换标题和形容词，内容机制没有变化。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，锚点单品生成系列内容才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成可连续但不重复的单品内容系列。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-content_method-mkc_039-GA-005-005
+        semantic_fingerprint: 5e1b38c292b29727e8f3603590542336
+        proposition_fingerprint: dfb413b5cca64459e24d2c2c90c90b57
+        runtime_effect_fingerprint: 5ae6172318314935581c927286840af3
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: apparel_claim_boundary
+    batch_id: batch_006
+    candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-001
+    canonical_label_zh: 垂坠语言的证据边界
+    canonical_body_zh: 垂坠语言的证据边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以软裙片、宽松裤腿、弧形下摆为对象，把柔软垂感面料与顺滑表面、自然下垂和摆量变化和动态试穿提示旁的挂装展示放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，垂坠描述与身体效果承诺的边界成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当展示衣片悬垂而不展示身体变化承诺时，操作者可以执行的动作是把垂坠写成可见衣片行为。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到软裙片、宽松裤腿、弧形下摆，并且需要把它转成可审的内容或流程判断；同时，动态试穿提示旁的挂装展示提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。可以说衣片如何落下，不能说身体比例改变、轮廓结果或穿着者体态改变。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把布料悬垂写成身体结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，垂坠语言的证据边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成垂坠可说、身体效果待证的说法边界。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 垂坠语言的证据边界
+    - 垂坠描述与身体效果承诺的边界
+    - 把垂坠写成可见衣片行为
+    english_aliases:
+    - Drape wording evidence boundary
+    retrieval_aliases_en:
+    - Drape wording evidence boundary
+    target_owner_decision:
+      primary_target_owner: EvidencePolicyCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase with
+        layer EvidencePolicy_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: EvidencePolicyCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: apparel_claim_boundary|垂坠语言的证据边界|mkc_015|垂坠描述与身体效果承诺的边界|把垂坠写成可见衣片行为|可以说衣片如何落下，不能说身体比例改变、轮廓结果或穿着者体态改变|形成垂坠可说、身体效果待证的说法边界
+      normalized_body_signature: a18f2d8882a3d7e035cb2831e9fa63be
+      normalized_body_mechanism_signature: 505a785456250d75b0c77d8cad3d88ce
+      semantic_fingerprint: 7493d99eadaf21c10fc423cb28ea07ae
+    industry_density:
+      body_zh_char_count: 919
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 软裙片、宽松裤腿、弧形下摆
+        material_or_fabric_property: 柔软垂感面料与顺滑表面
+        fit_or_silhouette_observation: 自然下垂和摆量变化
+        retail_scene: 动态试穿提示旁的挂装展示
+        display_or_styling_action: 展示衣片悬垂而不展示身体变化承诺
+        content_action: 把垂坠写成可见衣片行为
+        claim_or_evidence_boundary: 可以说衣片如何落下，不能说身体比例改变、轮廓结果或穿着者体态改变
+        operator_decision: 把垂坠写成可见衣片行为
+        downstream_output_implication: 形成垂坠可说、身体效果待证的说法边界
+        failure_mode: 把布料悬垂写成身体结果
+    candidate:
+      identity:
+        candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-001
+        candidate_name: 垂坠语言的证据边界
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_015
+        generation_assignment_id: GA-006
+        input_digest: 7493d99eadaf21c10fc423cb28ea07aeaf4c9a0e6a7ddb016c4ec29ccf15dfc4
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer EvidencePolicy_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_006/batch_006_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: apparel_claim_boundary semantic v3 draft pending judge review
+        target_layer_candidate: EvidencePolicy_candidate
+        allowed_landing_layers:
+        - EvidencePolicy_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 垂坠语言的证据边界是用于处理“垂坠描述与身体效果承诺的边界”的中文语义知识单元，核心对象是软裙片、宽松裤腿、弧形下摆。
+        applicable_when: 当动态试穿提示旁的挂装展示中需要把垂坠写成可见衣片行为，且观察对象来自软裙片、宽松裤腿、弧形下摆时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成垂坠可说、身体效果待证的说法边界
+        risk_boundary: 把布料悬垂写成身体结果
+        evidence_requirement: 可以说衣片如何落下，不能说身体比例改变、轮廓结果或穿着者体态改变
+      rich_body:
+        body_text: 垂坠语言的证据边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以软裙片、宽松裤腿、弧形下摆为对象，把柔软垂感面料与顺滑表面、自然下垂和摆量变化和动态试穿提示旁的挂装展示放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，垂坠描述与身体效果承诺的边界成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当展示衣片悬垂而不展示身体变化承诺时，操作者可以执行的动作是把垂坠写成可见衣片行为。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到软裙片、宽松裤腿、弧形下摆，并且需要把它转成可审的内容或流程判断；同时，动态试穿提示旁的挂装展示提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。可以说衣片如何落下，不能说身体比例改变、轮廓结果或穿着者体态改变。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把布料悬垂写成身体结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，垂坠语言的证据边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成垂坠可说、身体效果待证的说法边界。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 垂坠语言的证据边界讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以软裙片、宽松裤腿、弧形下摆为对象，把柔软垂感面料与顺滑表面、自然下垂和摆量变化和动态试穿提示旁的挂装展示放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，垂坠描述与身体效果承诺的边界成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当展示衣片悬垂而不展示身体变化承诺时，操作者可以执行的动作是把垂坠写成可见衣片行为。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到软裙片、宽松裤腿、弧形下摆，并且需要把它转成可审的内容或流程判断；同时，动态试穿提示旁的挂装展示提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。可以说衣片如何落下，不能说身体比例改变、轮廓结果或穿着者体态改变。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把布料悬垂写成身体结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，垂坠语言的证据边界才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成垂坠可说、身体效果待证的说法边界。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-apparel_claim_boundary-mkc_015-GA-006-001
+        semantic_fingerprint: 7493d99eadaf21c10fc423cb28ea07ae
+        proposition_fingerprint: c359595d527445b0037aa73034e9cbcb
+        runtime_effect_fingerprint: 4a63dde0561ab8b7636b67522f4d46a8
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: apparel_claim_boundary
+    batch_id: batch_007
+    candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-002
+    canonical_label_zh: 工艺细节的说法阶梯
+    canonical_body_zh: 工艺细节的说法阶梯讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以加固缝线、纽扣连接、包边位置为对象，把较厚缝份与平整包边、细节位置对外观线条的影响和细节近看台和对照架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，工艺细节从描述到性能承诺的阶梯成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把缝线、包边、纽扣靠近说明牌展示时，操作者可以执行的动作是先命名可见工艺，再区分是否需要证据。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到加固缝线、纽扣连接、包边位置，并且需要把它转成可审的内容或流程判断；同时，细节近看台和对照架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。耐用、抗拉、寿命等说法必须有来源，不得由肉眼细节直接推出。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：看见缝线就承诺耐穿或高性能。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，工艺细节的说法阶梯才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从可见描述到证据要求的说法阶梯。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 工艺细节的说法阶梯
+    - 工艺细节从描述到性能承诺的阶梯
+    - 先命名可见工艺，再区分是否需要证据
+    english_aliases:
+    - Construction detail claim ladder
+    retrieval_aliases_en:
+    - Construction detail claim ladder
+    target_owner_decision:
+      primary_target_owner: EvidencePolicyCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase with
+        layer EvidencePolicy_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: EvidencePolicyCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: apparel_claim_boundary|工艺细节的说法阶梯|mkc_008|工艺细节从描述到性能承诺的阶梯|先命名可见工艺，再区分是否需要证据|耐用、抗拉、寿命等说法必须有来源，不得由肉眼细节直接推出|形成从可见描述到证据要求的说法阶梯
+      normalized_body_signature: e320daf2991398fdfffd49635d364cc2
+      normalized_body_mechanism_signature: 6becfaa4f2d3330ec7d6d26d44895ecb
+      semantic_fingerprint: 3e0bb47ea4ca506034fdfda078071fff
+    industry_density:
+      body_zh_char_count: 926
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 加固缝线、纽扣连接、包边位置
+        material_or_fabric_property: 较厚缝份与平整包边
+        fit_or_silhouette_observation: 细节位置对外观线条的影响
+        retail_scene: 细节近看台和对照架
+        display_or_styling_action: 把缝线、包边、纽扣靠近说明牌展示
+        content_action: 先命名可见工艺，再区分是否需要证据
+        claim_or_evidence_boundary: 耐用、抗拉、寿命等说法必须有来源，不得由肉眼细节直接推出
+        operator_decision: 先命名可见工艺，再区分是否需要证据
+        downstream_output_implication: 形成从可见描述到证据要求的说法阶梯
+        failure_mode: 看见缝线就承诺耐穿或高性能
+    candidate:
+      identity:
+        candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-002
+        candidate_name: 工艺细节的说法阶梯
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_008
+        generation_assignment_id: GA-007
+        input_digest: 3e0bb47ea4ca506034fdfda078071fff97a48432abb954c763ce574715dd821f
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer EvidencePolicy_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_007/batch_007_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: apparel_claim_boundary semantic v3 draft pending judge review
+        target_layer_candidate: EvidencePolicy_candidate
+        allowed_landing_layers:
+        - EvidencePolicy_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 工艺细节的说法阶梯是用于处理“工艺细节从描述到性能承诺的阶梯”的中文语义知识单元，核心对象是加固缝线、纽扣连接、包边位置。
+        applicable_when: 当细节近看台和对照架中需要先命名可见工艺，再区分是否需要证据，且观察对象来自加固缝线、纽扣连接、包边位置时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成从可见描述到证据要求的说法阶梯
+        risk_boundary: 看见缝线就承诺耐穿或高性能
+        evidence_requirement: 耐用、抗拉、寿命等说法必须有来源，不得由肉眼细节直接推出
+      rich_body:
+        body_text: 工艺细节的说法阶梯讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以加固缝线、纽扣连接、包边位置为对象，把较厚缝份与平整包边、细节位置对外观线条的影响和细节近看台和对照架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，工艺细节从描述到性能承诺的阶梯成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把缝线、包边、纽扣靠近说明牌展示时，操作者可以执行的动作是先命名可见工艺，再区分是否需要证据。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到加固缝线、纽扣连接、包边位置，并且需要把它转成可审的内容或流程判断；同时，细节近看台和对照架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。耐用、抗拉、寿命等说法必须有来源，不得由肉眼细节直接推出。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：看见缝线就承诺耐穿或高性能。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，工艺细节的说法阶梯才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从可见描述到证据要求的说法阶梯。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 工艺细节的说法阶梯讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以加固缝线、纽扣连接、包边位置为对象，把较厚缝份与平整包边、细节位置对外观线条的影响和细节近看台和对照架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，工艺细节从描述到性能承诺的阶梯成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把缝线、包边、纽扣靠近说明牌展示时，操作者可以执行的动作是先命名可见工艺，再区分是否需要证据。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到加固缝线、纽扣连接、包边位置，并且需要把它转成可审的内容或流程判断；同时，细节近看台和对照架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。耐用、抗拉、寿命等说法必须有来源，不得由肉眼细节直接推出。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：看见缝线就承诺耐穿或高性能。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，工艺细节的说法阶梯才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成从可见描述到证据要求的说法阶梯。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-apparel_claim_boundary-mkc_008-GA-007-002
+        semantic_fingerprint: 3e0bb47ea4ca506034fdfda078071fff
+        proposition_fingerprint: fd8a073e3d619c01281263eeb2ffdd1f
+        runtime_effect_fingerprint: 0f7fc705c6c6aa778879a744e36d41a4
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: apparel_claim_boundary
+    batch_id: batch_008
+    candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-003
+    canonical_label_zh: 舒适措辞降级路径
+    canonical_body_zh: 舒适措辞降级路径讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以腰头、肩缝、面料手感、活动褶量为对象，把弹性结构与柔软表面、肩部余量和腰部空间和试穿引导区和尺码替换架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，舒适词如何降级为观察词成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当展示余量线索而不写穿着感受结论时，操作者可以执行的动作是把舒适改写成宽松、柔软、活动空间等可观察表述。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到腰头、肩缝、面料手感、活动褶量，并且需要把它转成可审的内容或流程判断；同时，试穿引导区和尺码替换架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。真实舒适感需要评测或反馈，未审查时只能说衣物线索。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：直接替穿着者声明舒适、轻松、无负担。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，舒适措辞降级路径才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从主观感受词到可审观察词的降级路径。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 舒适措辞降级路径
+    - 舒适词如何降级为观察词
+    - 把舒适改写成宽松、柔软、活动空间等可观察表述
+    english_aliases:
+    - Comfort wording downgrade path
+    retrieval_aliases_en:
+    - Comfort wording downgrade path
+    target_owner_decision:
+      primary_target_owner: EvidencePolicyCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase with
+        layer EvidencePolicy_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: EvidencePolicyCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: apparel_claim_boundary|舒适措辞降级路径|mkc_017|舒适词如何降级为观察词|把舒适改写成宽松、柔软、活动空间等可观察表述|真实舒适感需要评测或反馈，未审查时只能说衣物线索|形成从主观感受词到可审观察词的降级路径
+      normalized_body_signature: e0acfb1400f9c6c6b104e98c13169b90
+      normalized_body_mechanism_signature: df65c6918f1eb44d09862ba9ce3c6b47
+      semantic_fingerprint: 0778fcd725bdd5a18ddceb05cec1f1a1
+    industry_density:
+      body_zh_char_count: 928
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 腰头、肩缝、面料手感、活动褶量
+        material_or_fabric_property: 弹性结构与柔软表面
+        fit_or_silhouette_observation: 肩部余量和腰部空间
+        retail_scene: 试穿引导区和尺码替换架
+        display_or_styling_action: 展示余量线索而不写穿着感受结论
+        content_action: 把舒适改写成宽松、柔软、活动空间等可观察表述
+        claim_or_evidence_boundary: 真实舒适感需要评测或反馈，未审查时只能说衣物线索
+        operator_decision: 把舒适改写成宽松、柔软、活动空间等可观察表述
+        downstream_output_implication: 形成从主观感受词到可审观察词的降级路径
+        failure_mode: 直接替穿着者声明舒适、轻松、无负担
+    candidate:
+      identity:
+        candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-003
+        candidate_name: 舒适措辞降级路径
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_017
+        generation_assignment_id: GA-008
+        input_digest: 0778fcd725bdd5a18ddceb05cec1f1a19ece03183ef148756e53a6e5ec49a99e
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer EvidencePolicy_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_008/batch_008_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: apparel_claim_boundary semantic v3 draft pending judge review
+        target_layer_candidate: EvidencePolicy_candidate
+        allowed_landing_layers:
+        - EvidencePolicy_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 舒适措辞降级路径是用于处理“舒适词如何降级为观察词”的中文语义知识单元，核心对象是腰头、肩缝、面料手感、活动褶量。
+        applicable_when: 当试穿引导区和尺码替换架中需要把舒适改写成宽松、柔软、活动空间等可观察表述，且观察对象来自腰头、肩缝、面料手感、活动褶量时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成从主观感受词到可审观察词的降级路径
+        risk_boundary: 直接替穿着者声明舒适、轻松、无负担
+        evidence_requirement: 真实舒适感需要评测或反馈，未审查时只能说衣物线索
+      rich_body:
+        body_text: 舒适措辞降级路径讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以腰头、肩缝、面料手感、活动褶量为对象，把弹性结构与柔软表面、肩部余量和腰部空间和试穿引导区和尺码替换架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，舒适词如何降级为观察词成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当展示余量线索而不写穿着感受结论时，操作者可以执行的动作是把舒适改写成宽松、柔软、活动空间等可观察表述。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到腰头、肩缝、面料手感、活动褶量，并且需要把它转成可审的内容或流程判断；同时，试穿引导区和尺码替换架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。真实舒适感需要评测或反馈，未审查时只能说衣物线索。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：直接替穿着者声明舒适、轻松、无负担。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，舒适措辞降级路径才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从主观感受词到可审观察词的降级路径。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 舒适措辞降级路径讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以腰头、肩缝、面料手感、活动褶量为对象，把弹性结构与柔软表面、肩部余量和腰部空间和试穿引导区和尺码替换架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，舒适词如何降级为观察词成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当展示余量线索而不写穿着感受结论时，操作者可以执行的动作是把舒适改写成宽松、柔软、活动空间等可观察表述。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到腰头、肩缝、面料手感、活动褶量，并且需要把它转成可审的内容或流程判断；同时，试穿引导区和尺码替换架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。真实舒适感需要评测或反馈，未审查时只能说衣物线索。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：直接替穿着者声明舒适、轻松、无负担。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，舒适措辞降级路径才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成从主观感受词到可审观察词的降级路径。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-apparel_claim_boundary-mkc_017-GA-008-003
+        semantic_fingerprint: 0778fcd725bdd5a18ddceb05cec1f1a1
+        proposition_fingerprint: 12369c3e179dd70b27e7a24f5c8936d5
+        runtime_effect_fingerprint: a9eac9013e5d0eb7b3d980bd96ec745a
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: apparel_claim_boundary
+    batch_id: batch_009
+    candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-004
+    canonical_label_zh: 面料属性到允许说法映射
+    canonical_body_zh: 面料属性到允许说法映射讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以罗纹表面、哑光梭织、平滑袖片为对象，把纹理、光泽、厚薄、挺度、面料支撑出的轮廓线和面料故事桌和分组样片放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，面料属性词如何映射到允许说法成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把表面特征与中性描述放在一起时，操作者可以执行的动作是把属性词分为观察、推测、需证据三层。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到罗纹表面、哑光梭织、平滑袖片，并且需要把它转成可审的内容或流程判断；同时，面料故事桌和分组样片提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。抗皱、保暖、凉感、耐磨等性能词必须进入来源工单。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：从表面质感推导性能或真实检测结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，面料属性到允许说法映射才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成面料词到内容说法强度的映射表。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 面料属性到允许说法映射
+    - 面料属性词如何映射到允许说法
+    - 把属性词分为观察、推测、需证据三层
+    english_aliases:
+    - Fabric property allowed claim map
+    retrieval_aliases_en:
+    - Fabric property allowed claim map
+    target_owner_decision:
+      primary_target_owner: EvidencePolicyCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase with
+        layer EvidencePolicy_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: EvidencePolicyCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: apparel_claim_boundary|面料属性到允许说法映射|mkc_025|面料属性词如何映射到允许说法|把属性词分为观察、推测、需证据三层|抗皱、保暖、凉感、耐磨等性能词必须进入来源工单|形成面料词到内容说法强度的映射表
+      normalized_body_signature: 4bd77432fa9b7e2a3c2e2db779060cf8
+      normalized_body_mechanism_signature: 95ee373a985ec5e8cdb2a7f8314547f1
+      semantic_fingerprint: fe68a85510fb5330d812b2f902076fc7
+    industry_density:
+      body_zh_char_count: 923
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 罗纹表面、哑光梭织、平滑袖片
+        material_or_fabric_property: 纹理、光泽、厚薄、挺度
+        fit_or_silhouette_observation: 面料支撑出的轮廓线
+        retail_scene: 面料故事桌和分组样片
+        display_or_styling_action: 把表面特征与中性描述放在一起
+        content_action: 把属性词分为观察、推测、需证据三层
+        claim_or_evidence_boundary: 抗皱、保暖、凉感、耐磨等性能词必须进入来源工单
+        operator_decision: 把属性词分为观察、推测、需证据三层
+        downstream_output_implication: 形成面料词到内容说法强度的映射表
+        failure_mode: 从表面质感推导性能或真实检测结果
+    candidate:
+      identity:
+        candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-004
+        candidate_name: 面料属性到允许说法映射
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_025
+        generation_assignment_id: GA-009
+        input_digest: fe68a85510fb5330d812b2f902076fc75481377771cbb5d317fee94933f53788
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer EvidencePolicy_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_009/batch_009_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: apparel_claim_boundary semantic v3 draft pending judge review
+        target_layer_candidate: EvidencePolicy_candidate
+        allowed_landing_layers:
+        - EvidencePolicy_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 面料属性到允许说法映射是用于处理“面料属性词如何映射到允许说法”的中文语义知识单元，核心对象是罗纹表面、哑光梭织、平滑袖片。
+        applicable_when: 当面料故事桌和分组样片中需要把属性词分为观察、推测、需证据三层，且观察对象来自罗纹表面、哑光梭织、平滑袖片时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成面料词到内容说法强度的映射表
+        risk_boundary: 从表面质感推导性能或真实检测结果
+        evidence_requirement: 抗皱、保暖、凉感、耐磨等性能词必须进入来源工单
+      rich_body:
+        body_text: 面料属性到允许说法映射讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以罗纹表面、哑光梭织、平滑袖片为对象，把纹理、光泽、厚薄、挺度、面料支撑出的轮廓线和面料故事桌和分组样片放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，面料属性词如何映射到允许说法成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把表面特征与中性描述放在一起时，操作者可以执行的动作是把属性词分为观察、推测、需证据三层。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到罗纹表面、哑光梭织、平滑袖片，并且需要把它转成可审的内容或流程判断；同时，面料故事桌和分组样片提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。抗皱、保暖、凉感、耐磨等性能词必须进入来源工单。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：从表面质感推导性能或真实检测结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，面料属性到允许说法映射才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成面料词到内容说法强度的映射表。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 面料属性到允许说法映射讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以罗纹表面、哑光梭织、平滑袖片为对象，把纹理、光泽、厚薄、挺度、面料支撑出的轮廓线和面料故事桌和分组样片放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，面料属性词如何映射到允许说法成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把表面特征与中性描述放在一起时，操作者可以执行的动作是把属性词分为观察、推测、需证据三层。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到罗纹表面、哑光梭织、平滑袖片，并且需要把它转成可审的内容或流程判断；同时，面料故事桌和分组样片提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。抗皱、保暖、凉感、耐磨等性能词必须进入来源工单。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：从表面质感推导性能或真实检测结果。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，面料属性到允许说法映射才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成面料词到内容说法强度的映射表。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-apparel_claim_boundary-mkc_025-GA-009-004
+        semantic_fingerprint: fe68a85510fb5330d812b2f902076fc7
+        proposition_fingerprint: e65ecf9ffd4f2f0d5ec80177679a43b5
+        runtime_effect_fingerprint: 9d3de8a0e0b36de4a0a77f3ae5e52044
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: apparel_claim_boundary
+    batch_id: batch_010
+    candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-005
+    canonical_label_zh: 版型比较不触碰身体效果
+    canonical_body_zh: 版型比较不触碰身体效果讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以直筒裤、锥形裤、短款下摆为对象，把牛仔斜纹与垂顺裤料、裤腿线条、裤脚长度、腰臀空间和按几何线条分组的裤装墙放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，版型比较如何避开身体效果成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当用裤型线条和下摆长度做对照时，操作者可以执行的动作是比较服装几何，而不是评价穿着者身体。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到直筒裤、锥形裤、短款下摆，并且需要把它转成可审的内容或流程判断；同时，按几何线条分组的裤装墙提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。可以说裤型线条变化，不能承诺身体比例改变、视觉拉长或穿着者身形改变。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把版型选择写成身体排名或身材修饰。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，版型比较不触碰身体效果才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成中性版型比较规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 版型比较不触碰身体效果
+    - 版型比较如何避开身体效果
+    - 比较服装几何，而不是评价穿着者身体
+    english_aliases:
+    - Fit comparison without body effect
+    retrieval_aliases_en:
+    - Fit comparison without body effect
+    target_owner_decision:
+      primary_target_owner: EvidencePolicyCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase with
+        layer EvidencePolicy_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: EvidencePolicyCandidate
+      strict_schema_candidate_kind: general_knowledge_candidate
+      strict_schema_proposed_target_owner: GeneralKnowledgeBase
+      strict_schema_target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: apparel_claim_boundary|版型比较不触碰身体效果|mkc_015|版型比较如何避开身体效果|比较服装几何，而不是评价穿着者身体|可以说裤型线条变化，不能承诺身体比例改变、视觉拉长或穿着者身形改变|形成中性版型比较规则
+      normalized_body_signature: bc20f796e53f4d9ec31d654dafc3a333
+      normalized_body_mechanism_signature: 9e8c88018f1cc2f4ad6be7c0d2851065
+      semantic_fingerprint: 92f2e7f00f48107db41b6a2dd0b89595
+    industry_density:
+      body_zh_char_count: 919
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 直筒裤、锥形裤、短款下摆
+        material_or_fabric_property: 牛仔斜纹与垂顺裤料
+        fit_or_silhouette_observation: 裤腿线条、裤脚长度、腰臀空间
+        retail_scene: 按几何线条分组的裤装墙
+        display_or_styling_action: 用裤型线条和下摆长度做对照
+        content_action: 比较服装几何，而不是评价穿着者身体
+        claim_or_evidence_boundary: 可以说裤型线条变化，不能承诺身体比例改变、视觉拉长或穿着者身形改变
+        operator_decision: 比较服装几何，而不是评价穿着者身体
+        downstream_output_implication: 形成中性版型比较规则
+        failure_mode: 把版型选择写成身体排名或身材修饰
+    candidate:
+      identity:
+        candidate_id: SEM-V3-APPAREL-CLAIM-BOUNDARY-005
+        candidate_name: 版型比较不触碰身体效果
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_015
+        generation_assignment_id: GA-010
+        input_digest: 92f2e7f00f48107db41b6a2dd0b895955222fe2969c7ddc0bbb4f50f14dacd67
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: V3 wrapper primary owner is EvidencePolicyCandidate; strict schema maps it to GeneralKnowledgeBase
+          with layer EvidencePolicy_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_010/batch_010_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: apparel_claim_boundary semantic v3 draft pending judge review
+        target_layer_candidate: EvidencePolicy_candidate
+        allowed_landing_layers:
+        - EvidencePolicy_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 版型比较不触碰身体效果是用于处理“版型比较如何避开身体效果”的中文语义知识单元，核心对象是直筒裤、锥形裤、短款下摆。
+        applicable_when: 当按几何线条分组的裤装墙中需要比较服装几何，而不是评价穿着者身体，且观察对象来自直筒裤、锥形裤、短款下摆时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成中性版型比较规则
+        risk_boundary: 把版型选择写成身体排名或身材修饰
+        evidence_requirement: 可以说裤型线条变化，不能承诺身体比例改变、视觉拉长或穿着者身形改变
+      rich_body:
+        body_text: 版型比较不触碰身体效果讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以直筒裤、锥形裤、短款下摆为对象，把牛仔斜纹与垂顺裤料、裤腿线条、裤脚长度、腰臀空间和按几何线条分组的裤装墙放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，版型比较如何避开身体效果成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当用裤型线条和下摆长度做对照时，操作者可以执行的动作是比较服装几何，而不是评价穿着者身体。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到直筒裤、锥形裤、短款下摆，并且需要把它转成可审的内容或流程判断；同时，按几何线条分组的裤装墙提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。可以说裤型线条变化，不能承诺身体比例改变、视觉拉长或穿着者身形改变。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把版型选择写成身体排名或身材修饰。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，版型比较不触碰身体效果才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成中性版型比较规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 版型比较不触碰身体效果讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以直筒裤、锥形裤、短款下摆为对象，把牛仔斜纹与垂顺裤料、裤腿线条、裤脚长度、腰臀空间和按几何线条分组的裤装墙放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，版型比较如何避开身体效果成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当用裤型线条和下摆长度做对照时，操作者可以执行的动作是比较服装几何，而不是评价穿着者身体。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到直筒裤、锥形裤、短款下摆，并且需要把它转成可审的内容或流程判断；同时，按几何线条分组的裤装墙提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。可以说裤型线条变化，不能承诺身体比例改变、视觉拉长或穿着者身形改变。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把版型选择写成身体排名或身材修饰。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，版型比较不触碰身体效果才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成中性版型比较规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-apparel_claim_boundary-mkc_015-GA-010-005
+        semantic_fingerprint: 92f2e7f00f48107db41b6a2dd0b89595
+        proposition_fingerprint: 4ffe855c19d8aedf7c41069566208cd2
+        runtime_effect_fingerprint: d8f69a47ebe7af32e6a735e4f2f0d527
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: display_to_content
+    batch_id: batch_011
+    candidate_id: SEM-V3-DISPLAY-TO-CONTENT-001
+    canonical_label_zh: 陈列锚点转内容角度
+    canonical_body_zh: 陈列锚点转内容角度讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以主推外套、支撑内搭、替换配件为对象，把外套挺度和内搭柔软度的对比、主件体量和支撑件比例和入口主题台和侧挂支撑区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，陈列锚点如何转成内容角度成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主件放在视觉中心，支撑件保持低干扰时，操作者可以执行的动作是把陈列中心解释为内容主角。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到主推外套、支撑内搭、替换配件，并且需要把它转成可审的内容或流程判断；同时，入口主题台和侧挂支撑区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能使用陈列关系和可见搭配动作作为依据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把视觉中心误写成销量、真实偏好或权威推荐。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，陈列锚点转内容角度才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从陈列主次到内容主角的转译规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 陈列锚点转内容角度
+    - 陈列锚点如何转成内容角度
+    - 把陈列中心解释为内容主角
+    english_aliases:
+    - Display anchor to content angle
+    retrieval_aliases_en:
+    - Display anchor to content angle
+    target_owner_decision:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+        with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L3_ExecutionAssetCandidate
+      strict_schema_candidate_kind: execution_asset_outbox_candidate
+      strict_schema_proposed_target_owner: ExecutionAssetOutbox
+      strict_schema_target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: display_to_content|陈列锚点转内容角度|mkc_004|陈列锚点如何转成内容角度|把陈列中心解释为内容主角|只能使用陈列关系和可见搭配动作作为依据|形成从陈列主次到内容主角的转译规则
+      normalized_body_signature: 6d6a9d116f04aef77d7f66afbada45cc
+      normalized_body_mechanism_signature: 7ae73a61694c2cd5091e701d623ce42c
+      semantic_fingerprint: 44fa44140e8533dc91d71620b5a54bda
+    industry_density:
+      body_zh_char_count: 928
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 主推外套、支撑内搭、替换配件
+        material_or_fabric_property: 外套挺度和内搭柔软度的对比
+        fit_or_silhouette_observation: 主件体量和支撑件比例
+        retail_scene: 入口主题台和侧挂支撑区
+        display_or_styling_action: 把主件放在视觉中心，支撑件保持低干扰
+        content_action: 把陈列中心解释为内容主角
+        claim_or_evidence_boundary: 只能使用陈列关系和可见搭配动作作为依据
+        operator_decision: 把陈列中心解释为内容主角
+        downstream_output_implication: 形成从陈列主次到内容主角的转译规则
+        failure_mode: 把视觉中心误写成销量、真实偏好或权威推荐
+    candidate:
+      identity:
+        candidate_id: SEM-V3-DISPLAY-TO-CONTENT-001
+        candidate_name: 陈列锚点转内容角度
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_004
+        generation_assignment_id: GA-011
+        input_digest: 44fa44140e8533dc91d71620b5a54bdad2d3ab1d10e7d6c55cc3e550f3f8f5d8
+      ownership:
+        candidate_kind: execution_asset_outbox_candidate
+        proposed_target_owner: ExecutionAssetOutbox
+        target_owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+          with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_011/batch_011_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: display_to_content semantic v3 draft pending judge review
+        target_layer_candidate: L3_ExecutionAsset_candidate
+        allowed_landing_layers:
+        - L3_ExecutionAsset_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 陈列锚点转内容角度是用于处理“陈列锚点如何转成内容角度”的中文语义知识单元，核心对象是主推外套、支撑内搭、替换配件。
+        applicable_when: 当入口主题台和侧挂支撑区中需要把陈列中心解释为内容主角，且观察对象来自主推外套、支撑内搭、替换配件时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成从陈列主次到内容主角的转译规则
+        risk_boundary: 把视觉中心误写成销量、真实偏好或权威推荐
+        evidence_requirement: 只能使用陈列关系和可见搭配动作作为依据
+      rich_body:
+        body_text: 陈列锚点转内容角度讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以主推外套、支撑内搭、替换配件为对象，把外套挺度和内搭柔软度的对比、主件体量和支撑件比例和入口主题台和侧挂支撑区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，陈列锚点如何转成内容角度成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主件放在视觉中心，支撑件保持低干扰时，操作者可以执行的动作是把陈列中心解释为内容主角。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到主推外套、支撑内搭、替换配件，并且需要把它转成可审的内容或流程判断；同时，入口主题台和侧挂支撑区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能使用陈列关系和可见搭配动作作为依据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把视觉中心误写成销量、真实偏好或权威推荐。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，陈列锚点转内容角度才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从陈列主次到内容主角的转译规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 陈列锚点转内容角度讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以主推外套、支撑内搭、替换配件为对象，把外套挺度和内搭柔软度的对比、主件体量和支撑件比例和入口主题台和侧挂支撑区放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，陈列锚点如何转成内容角度成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主件放在视觉中心，支撑件保持低干扰时，操作者可以执行的动作是把陈列中心解释为内容主角。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到主推外套、支撑内搭、替换配件，并且需要把它转成可审的内容或流程判断；同时，入口主题台和侧挂支撑区提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。只能使用陈列关系和可见搭配动作作为依据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把视觉中心误写成销量、真实偏好或权威推荐。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，陈列锚点转内容角度才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成从陈列主次到内容主角的转译规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-display_to_content-mkc_004-GA-011-001
+        semantic_fingerprint: 44fa44140e8533dc91d71620b5a54bda
+        proposition_fingerprint: a5bbaa180c27db84d8f2783f044f9630
+        runtime_effect_fingerprint: 70c3341befac59aa8d7c35feb143e652
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: display_to_content
+    batch_id: batch_012
+    candidate_id: SEM-V3-DISPLAY-TO-CONTENT-002
+    canonical_label_zh: 试穿路径到内容顺序
+    canonical_body_zh: 试穿路径到内容顺序讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以试穿外层、替换尺码、搭配下装为对象，把外层挺度和内搭贴合度、尺码余量与层搭空间和试衣间前的组合推荐轨放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，试穿路径如何组织内容顺序成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当按拿取、试穿、替换、确认的顺序摆放时，操作者可以执行的动作是把店内路径转成内容段落顺序。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到试穿外层、替换尺码、搭配下装，并且需要把它转成可审的内容或流程判断；同时，试衣间前的组合推荐轨提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。可以描述试穿动作链，不得引用真实顾客结果。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把路径写成个人体验或门店反馈事实。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，试穿路径到内容顺序才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从试穿动作到内容段落的执行顺序。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 试穿路径到内容顺序
+    - 试穿路径如何组织内容顺序
+    - 把店内路径转成内容段落顺序
+    english_aliases:
+    - Try-on route to content sequence
+    retrieval_aliases_en:
+    - Try-on route to content sequence
+    target_owner_decision:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+        with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L3_ExecutionAssetCandidate
+      strict_schema_candidate_kind: execution_asset_outbox_candidate
+      strict_schema_proposed_target_owner: ExecutionAssetOutbox
+      strict_schema_target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: display_to_content|试穿路径到内容顺序|mkc_010|试穿路径如何组织内容顺序|把店内路径转成内容段落顺序|可以描述试穿动作链，不得引用真实顾客结果|形成从试穿动作到内容段落的执行顺序
+      normalized_body_signature: 44343ff4ca201510589f3db6b212cca0
+      normalized_body_mechanism_signature: be1ae1c1feffae0033e8c0bc241d0f67
+      semantic_fingerprint: 5829acacb02fefba26b8b0d0e50eee6f
+    industry_density:
+      body_zh_char_count: 917
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 试穿外层、替换尺码、搭配下装
+        material_or_fabric_property: 外层挺度和内搭贴合度
+        fit_or_silhouette_observation: 尺码余量与层搭空间
+        retail_scene: 试衣间前的组合推荐轨
+        display_or_styling_action: 按拿取、试穿、替换、确认的顺序摆放
+        content_action: 把店内路径转成内容段落顺序
+        claim_or_evidence_boundary: 可以描述试穿动作链，不得引用真实顾客结果
+        operator_decision: 把店内路径转成内容段落顺序
+        downstream_output_implication: 形成从试穿动作到内容段落的执行顺序
+        failure_mode: 把路径写成个人体验或门店反馈事实
+    candidate:
+      identity:
+        candidate_id: SEM-V3-DISPLAY-TO-CONTENT-002
+        candidate_name: 试穿路径到内容顺序
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_010
+        generation_assignment_id: GA-012
+        input_digest: 5829acacb02fefba26b8b0d0e50eee6f4558e171d55ae42cd056fc081323848f
+      ownership:
+        candidate_kind: execution_asset_outbox_candidate
+        proposed_target_owner: ExecutionAssetOutbox
+        target_owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+          with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_012/batch_012_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: display_to_content semantic v3 draft pending judge review
+        target_layer_candidate: L3_ExecutionAsset_candidate
+        allowed_landing_layers:
+        - L3_ExecutionAsset_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 试穿路径到内容顺序是用于处理“试穿路径如何组织内容顺序”的中文语义知识单元，核心对象是试穿外层、替换尺码、搭配下装。
+        applicable_when: 当试衣间前的组合推荐轨中需要把店内路径转成内容段落顺序，且观察对象来自试穿外层、替换尺码、搭配下装时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成从试穿动作到内容段落的执行顺序
+        risk_boundary: 把路径写成个人体验或门店反馈事实
+        evidence_requirement: 可以描述试穿动作链，不得引用真实顾客结果
+      rich_body:
+        body_text: 试穿路径到内容顺序讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以试穿外层、替换尺码、搭配下装为对象，把外层挺度和内搭贴合度、尺码余量与层搭空间和试衣间前的组合推荐轨放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，试穿路径如何组织内容顺序成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当按拿取、试穿、替换、确认的顺序摆放时，操作者可以执行的动作是把店内路径转成内容段落顺序。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到试穿外层、替换尺码、搭配下装，并且需要把它转成可审的内容或流程判断；同时，试衣间前的组合推荐轨提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。可以描述试穿动作链，不得引用真实顾客结果。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把路径写成个人体验或门店反馈事实。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，试穿路径到内容顺序才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从试穿动作到内容段落的执行顺序。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 试穿路径到内容顺序讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以试穿外层、替换尺码、搭配下装为对象，把外层挺度和内搭贴合度、尺码余量与层搭空间和试衣间前的组合推荐轨放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，试穿路径如何组织内容顺序成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当按拿取、试穿、替换、确认的顺序摆放时，操作者可以执行的动作是把店内路径转成内容段落顺序。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到试穿外层、替换尺码、搭配下装，并且需要把它转成可审的内容或流程判断；同时，试衣间前的组合推荐轨提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。可以描述试穿动作链，不得引用真实顾客结果。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把路径写成个人体验或门店反馈事实。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，试穿路径到内容顺序才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成从试穿动作到内容段落的执行顺序。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-display_to_content-mkc_010-GA-012-002
+        semantic_fingerprint: 5829acacb02fefba26b8b0d0e50eee6f
+        proposition_fingerprint: 95eef803b893ef421c2befb3ea83baee
+        runtime_effect_fingerprint: 331d9732866f8ca51653cf535d111229
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: display_to_content
+    batch_id: batch_013
+    candidate_id: SEM-V3-DISPLAY-TO-CONTENT-003
+    canonical_label_zh: 组合展示转选择理由
+    canonical_body_zh: 组合展示转选择理由讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以同色上装、对比下装、轻配件为对象，把同色织物与对比纹理、上装统一感和下装支撑感和组合挂架与镜前展示点放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，组合展示如何产生选择理由成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把同色、对比、配件三个层级分开时，操作者可以执行的动作是把组合层级写成选择理由。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到同色上装、对比下装、轻配件，并且需要把它转成可审的内容或流程判断；同时，组合挂架与镜前展示点提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。理由必须来自可见组合关系，不能来自真实销售数据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只说好看、百搭、推荐，缺少组合机制。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，组合展示转选择理由才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成可被导购和内容共同使用的选择理由。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 组合展示转选择理由
+    - 组合展示如何产生选择理由
+    - 把组合层级写成选择理由
+    english_aliases:
+    - Combination display to choice rationale
+    retrieval_aliases_en:
+    - Combination display to choice rationale
+    target_owner_decision:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+        with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L3_ExecutionAssetCandidate
+      strict_schema_candidate_kind: execution_asset_outbox_candidate
+      strict_schema_proposed_target_owner: ExecutionAssetOutbox
+      strict_schema_target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: display_to_content|组合展示转选择理由|mkc_016|组合展示如何产生选择理由|把组合层级写成选择理由|理由必须来自可见组合关系，不能来自真实销售数据|形成可被导购和内容共同使用的选择理由
+      normalized_body_signature: 88b39e361051df9dd3f3a2a56a723415
+      normalized_body_mechanism_signature: 3e51caaaff1e0ddbf88316f79cac5263
+      semantic_fingerprint: ddbc49fbc85a1a7c8d11fc87d322f725
+    industry_density:
+      body_zh_char_count: 915
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 同色上装、对比下装、轻配件
+        material_or_fabric_property: 同色织物与对比纹理
+        fit_or_silhouette_observation: 上装统一感和下装支撑感
+        retail_scene: 组合挂架与镜前展示点
+        display_or_styling_action: 把同色、对比、配件三个层级分开
+        content_action: 把组合层级写成选择理由
+        claim_or_evidence_boundary: 理由必须来自可见组合关系，不能来自真实销售数据
+        operator_decision: 把组合层级写成选择理由
+        downstream_output_implication: 形成可被导购和内容共同使用的选择理由
+        failure_mode: 只说好看、百搭、推荐，缺少组合机制
+    candidate:
+      identity:
+        candidate_id: SEM-V3-DISPLAY-TO-CONTENT-003
+        candidate_name: 组合展示转选择理由
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_016
+        generation_assignment_id: GA-013
+        input_digest: ddbc49fbc85a1a7c8d11fc87d322f725a02e7ea203b48182d8ecc7a10c8dba88
+      ownership:
+        candidate_kind: execution_asset_outbox_candidate
+        proposed_target_owner: ExecutionAssetOutbox
+        target_owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+          with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_013/batch_013_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: display_to_content semantic v3 draft pending judge review
+        target_layer_candidate: L3_ExecutionAsset_candidate
+        allowed_landing_layers:
+        - L3_ExecutionAsset_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 组合展示转选择理由是用于处理“组合展示如何产生选择理由”的中文语义知识单元，核心对象是同色上装、对比下装、轻配件。
+        applicable_when: 当组合挂架与镜前展示点中需要把组合层级写成选择理由，且观察对象来自同色上装、对比下装、轻配件时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成可被导购和内容共同使用的选择理由
+        risk_boundary: 只说好看、百搭、推荐，缺少组合机制
+        evidence_requirement: 理由必须来自可见组合关系，不能来自真实销售数据
+      rich_body:
+        body_text: 组合展示转选择理由讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以同色上装、对比下装、轻配件为对象，把同色织物与对比纹理、上装统一感和下装支撑感和组合挂架与镜前展示点放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，组合展示如何产生选择理由成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把同色、对比、配件三个层级分开时，操作者可以执行的动作是把组合层级写成选择理由。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到同色上装、对比下装、轻配件，并且需要把它转成可审的内容或流程判断；同时，组合挂架与镜前展示点提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。理由必须来自可见组合关系，不能来自真实销售数据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只说好看、百搭、推荐，缺少组合机制。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，组合展示转选择理由才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成可被导购和内容共同使用的选择理由。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 组合展示转选择理由讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以同色上装、对比下装、轻配件为对象，把同色织物与对比纹理、上装统一感和下装支撑感和组合挂架与镜前展示点放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，组合展示如何产生选择理由成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把同色、对比、配件三个层级分开时，操作者可以执行的动作是把组合层级写成选择理由。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到同色上装、对比下装、轻配件，并且需要把它转成可审的内容或流程判断；同时，组合挂架与镜前展示点提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。理由必须来自可见组合关系，不能来自真实销售数据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只说好看、百搭、推荐，缺少组合机制。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，组合展示转选择理由才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成可被导购和内容共同使用的选择理由。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-display_to_content-mkc_016-GA-013-003
+        semantic_fingerprint: ddbc49fbc85a1a7c8d11fc87d322f725
+        proposition_fingerprint: 579bbec792f089592820f718e4b66cd7
+        runtime_effect_fingerprint: e4f79cc8cc7c6729c0c15f8ea2e6a4e5
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: display_to_content
+    batch_id: batch_014
+    candidate_id: SEM-V3-DISPLAY-TO-CONTENT-004
+    canonical_label_zh: 色组陈列转叙事证据
+    canonical_body_zh: 色组陈列转叙事证据讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以同色系针织、深色外层、浅色下装为对象，把哑光表面和柔和色差、色块面积和上下装比例和按色组展开的主题墙放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，色组陈列如何变成叙事证据成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主色、过渡色、压色单品按层级摆放时，操作者可以执行的动作是用色组关系支撑内容叙事。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到同色系针织、深色外层、浅色下装，并且需要把它转成可审的内容或流程判断；同时，按色组展开的主题墙提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能说视觉层次和搭配秩序，不得声称真实偏好。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把色组写成情绪标签，无法说明服装关系。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，色组陈列转叙事证据才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成色组到内容证据的转译方法。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 色组陈列转叙事证据
+    - 色组陈列如何变成叙事证据
+    - 用色组关系支撑内容叙事
+    english_aliases:
+    - Color group display to story proof
+    retrieval_aliases_en:
+    - Color group display to story proof
+    target_owner_decision:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+        with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L3_ExecutionAssetCandidate
+      strict_schema_candidate_kind: execution_asset_outbox_candidate
+      strict_schema_proposed_target_owner: ExecutionAssetOutbox
+      strict_schema_target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: display_to_content|色组陈列转叙事证据|mkc_021|色组陈列如何变成叙事证据|用色组关系支撑内容叙事|只能说视觉层次和搭配秩序，不得声称真实偏好|形成色组到内容证据的转译方法
+      normalized_body_signature: 204d55cae56ec4973cd1633f8b43467f
+      normalized_body_mechanism_signature: c68ca974ed34fe7ad0aa06ea05760d0b
+      semantic_fingerprint: 1c29033f36819c5d2335f5e33176b54e
+    industry_density:
+      body_zh_char_count: 915
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 同色系针织、深色外层、浅色下装
+        material_or_fabric_property: 哑光表面和柔和色差
+        fit_or_silhouette_observation: 色块面积和上下装比例
+        retail_scene: 按色组展开的主题墙
+        display_or_styling_action: 把主色、过渡色、压色单品按层级摆放
+        content_action: 用色组关系支撑内容叙事
+        claim_or_evidence_boundary: 只能说视觉层次和搭配秩序，不得声称真实偏好
+        operator_decision: 用色组关系支撑内容叙事
+        downstream_output_implication: 形成色组到内容证据的转译方法
+        failure_mode: 把色组写成情绪标签，无法说明服装关系
+    candidate:
+      identity:
+        candidate_id: SEM-V3-DISPLAY-TO-CONTENT-004
+        candidate_name: 色组陈列转叙事证据
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_021
+        generation_assignment_id: GA-014
+        input_digest: 1c29033f36819c5d2335f5e33176b54e1e7c5fb357203fd8ec0914c50595ef1c
+      ownership:
+        candidate_kind: execution_asset_outbox_candidate
+        proposed_target_owner: ExecutionAssetOutbox
+        target_owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+          with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_014/batch_014_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: display_to_content semantic v3 draft pending judge review
+        target_layer_candidate: L3_ExecutionAsset_candidate
+        allowed_landing_layers:
+        - L3_ExecutionAsset_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 色组陈列转叙事证据是用于处理“色组陈列如何变成叙事证据”的中文语义知识单元，核心对象是同色系针织、深色外层、浅色下装。
+        applicable_when: 当按色组展开的主题墙中需要用色组关系支撑内容叙事，且观察对象来自同色系针织、深色外层、浅色下装时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成色组到内容证据的转译方法
+        risk_boundary: 把色组写成情绪标签，无法说明服装关系
+        evidence_requirement: 只能说视觉层次和搭配秩序，不得声称真实偏好
+      rich_body:
+        body_text: 色组陈列转叙事证据讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以同色系针织、深色外层、浅色下装为对象，把哑光表面和柔和色差、色块面积和上下装比例和按色组展开的主题墙放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，色组陈列如何变成叙事证据成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主色、过渡色、压色单品按层级摆放时，操作者可以执行的动作是用色组关系支撑内容叙事。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到同色系针织、深色外层、浅色下装，并且需要把它转成可审的内容或流程判断；同时，按色组展开的主题墙提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。只能说视觉层次和搭配秩序，不得声称真实偏好。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把色组写成情绪标签，无法说明服装关系。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，色组陈列转叙事证据才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成色组到内容证据的转译方法。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 色组陈列转叙事证据讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以同色系针织、深色外层、浅色下装为对象，把哑光表面和柔和色差、色块面积和上下装比例和按色组展开的主题墙放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，色组陈列如何变成叙事证据成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把主色、过渡色、压色单品按层级摆放时，操作者可以执行的动作是用色组关系支撑内容叙事。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到同色系针织、深色外层、浅色下装，并且需要把它转成可审的内容或流程判断；同时，按色组展开的主题墙提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。只能说视觉层次和搭配秩序，不得声称真实偏好。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把色组写成情绪标签，无法说明服装关系。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，色组陈列转叙事证据才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成色组到内容证据的转译方法。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-display_to_content-mkc_021-GA-014-004
+        semantic_fingerprint: 1c29033f36819c5d2335f5e33176b54e
+        proposition_fingerprint: 1a52dea963424772bf157d2fb1d012c6
+        runtime_effect_fingerprint: 98aa53cec1b5b2a6e46765b684985fb6
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: display_to_content
+    batch_id: batch_011
+    candidate_id: SEM-V3-DISPLAY-TO-CONTENT-005
+    canonical_label_zh: 货架层级转导购话术
+    canonical_body_zh: 货架层级转导购话术讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以主挂款、补充款、替换尺码为对象，把主挂面料和补充单品质感差异、主款廓形和替换款线条差异和正挂、侧挂、叠装组成的货架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，货架层级如何转成导购话术成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当用正挂说明主推，用侧挂提供替换选择时，操作者可以执行的动作是把货架层级转成先后话术。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到主挂款、补充款、替换尺码，并且需要把它转成可审的内容或流程判断；同时，正挂、侧挂、叠装组成的货架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。话术只描述可见货架安排和搭配逻辑，不替代真实销售证明。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：导购话术变成空泛推荐，不能解释为什么先看某一件。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，货架层级转导购话术才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从货架结构到导购表达的执行资产。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 货架层级转导购话术
+    - 货架层级如何转成导购话术
+    - 把货架层级转成先后话术
+    english_aliases:
+    - Rack hierarchy to sales script
+    retrieval_aliases_en:
+    - Rack hierarchy to sales script
+    target_owner_decision:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - EvidencePolicyCandidate
+      owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+        with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: L3_ExecutionAssetCandidate
+      strict_schema_candidate_kind: execution_asset_outbox_candidate
+      strict_schema_proposed_target_owner: ExecutionAssetOutbox
+      strict_schema_target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: draft_backlog
+    semantic_distinctness:
+      normalized_proposition_signature: display_to_content|货架层级转导购话术|mkc_026|货架层级如何转成导购话术|把货架层级转成先后话术|话术只描述可见货架安排和搭配逻辑，不替代真实销售证明|形成从货架结构到导购表达的执行资产
+      normalized_body_signature: 06fc42e2688bb6a38fc0cd45dddb8dfe
+      normalized_body_mechanism_signature: 6cdd180890afa28c93b786947be0d226
+      semantic_fingerprint: 492637ed6e36e9e1cae3f00270c42b92
+    industry_density:
+      body_zh_char_count: 933
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 主挂款、补充款、替换尺码
+        material_or_fabric_property: 主挂面料和补充单品质感差异
+        fit_or_silhouette_observation: 主款廓形和替换款线条差异
+        retail_scene: 正挂、侧挂、叠装组成的货架
+        display_or_styling_action: 用正挂说明主推，用侧挂提供替换选择
+        content_action: 把货架层级转成先后话术
+        claim_or_evidence_boundary: 话术只描述可见货架安排和搭配逻辑，不替代真实销售证明
+        operator_decision: 把货架层级转成先后话术
+        downstream_output_implication: 形成从货架结构到导购表达的执行资产
+        failure_mode: 导购话术变成空泛推荐，不能解释为什么先看某一件
+    candidate:
+      identity:
+        candidate_id: SEM-V3-DISPLAY-TO-CONTENT-005
+        candidate_name: 货架层级转导购话术
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_026
+        generation_assignment_id: GA-011
+        input_digest: 492637ed6e36e9e1cae3f00270c42b92c5c0d389d97b676e2f9f3afd0bbab514
+      ownership:
+        candidate_kind: execution_asset_outbox_candidate
+        proposed_target_owner: ExecutionAssetOutbox
+        target_owner_reason: V3 wrapper primary owner is L3_ExecutionAssetCandidate; strict schema maps it to ExecutionAssetOutbox
+          with layer L3_ExecutionAsset_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_011/batch_011_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: display_to_content semantic v3 draft pending judge review
+        target_layer_candidate: L3_ExecutionAsset_candidate
+        allowed_landing_layers:
+        - L3_ExecutionAsset_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - Excluded
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 货架层级转导购话术是用于处理“货架层级如何转成导购话术”的中文语义知识单元，核心对象是主挂款、补充款、替换尺码。
+        applicable_when: 当正挂、侧挂、叠装组成的货架中需要把货架层级转成先后话术，且观察对象来自主挂款、补充款、替换尺码时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成从货架结构到导购表达的执行资产
+        risk_boundary: 导购话术变成空泛推荐，不能解释为什么先看某一件
+        evidence_requirement: 话术只描述可见货架安排和搭配逻辑，不替代真实销售证明
+      rich_body:
+        body_text: 货架层级转导购话术讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以主挂款、补充款、替换尺码为对象，把主挂面料和补充单品质感差异、主款廓形和替换款线条差异和正挂、侧挂、叠装组成的货架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，货架层级如何转成导购话术成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当用正挂说明主推，用侧挂提供替换选择时，操作者可以执行的动作是把货架层级转成先后话术。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到主挂款、补充款、替换尺码，并且需要把它转成可审的内容或流程判断；同时，正挂、侧挂、叠装组成的货架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。话术只描述可见货架安排和搭配逻辑，不替代真实销售证明。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：导购话术变成空泛推荐，不能解释为什么先看某一件。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，货架层级转导购话术才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成从货架结构到导购表达的执行资产。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 货架层级转导购话术讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以主挂款、补充款、替换尺码为对象，把主挂面料和补充单品质感差异、主款廓形和替换款线条差异和正挂、侧挂、叠装组成的货架放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，货架层级如何转成导购话术成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当用正挂说明主推，用侧挂提供替换选择时，操作者可以执行的动作是把货架层级转成先后话术。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到主挂款、补充款、替换尺码，并且需要把它转成可审的内容或流程判断；同时，正挂、侧挂、叠装组成的货架提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。话术只描述可见货架安排和搭配逻辑，不替代真实销售证明。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：导购话术变成空泛推荐，不能解释为什么先看某一件。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，货架层级转导购话术才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成从货架结构到导购表达的执行资产。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-display_to_content-mkc_026-GA-011-005
+        semantic_fingerprint: 492637ed6e36e9e1cae3f00270c42b92
+        proposition_fingerprint: 136768fcedd60a4005e6b49ded48fca3
+        runtime_effect_fingerprint: f260fa0e9581ac1fb3d2b8dcf6ac1135
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: control_plane_governance
+    batch_id: batch_012
+    candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-001
+    canonical_label_zh: 控制面规则禁止混入通用知识
+    canonical_body_zh: 控制面规则禁止混入通用知识讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以路由规则、状态字段、生成权限为对象，把不适用面料属性、不适用版型观察和生成准备线的状态管理界面放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，控制面规则不得落入通用知识成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把规则、报告、产物分开登记时，操作者可以执行的动作是把控制规则留在契约或状态清单。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到路由规则、状态字段、生成权限，并且需要把它转成可审的内容或流程判断；同时，生成准备线的状态管理界面提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。控制规则需要任务授权和状态证据，不得写成服装知识。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把权限规则伪装成通用方法，导致下游误消费。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，控制面规则禁止混入通用知识才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成控制面与知识正文的隔离规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 控制面规则禁止混入通用知识
+    - 控制面规则不得落入通用知识
+    - 把控制规则留在契约或状态清单
+    english_aliases:
+    - Control-plane rule exclusion from GKB
+    retrieval_aliases_en:
+    - Control-plane rule exclusion from GKB
+    target_owner_decision:
+      primary_target_owner: ControlPlaneContractSource
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is ControlPlaneContractSource; strict schema maps it to ControlPlaneContractSource
+        with layer GovernanceContract_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: ControlPlaneContractSource
+      strict_schema_candidate_kind: control_plane_candidate
+      strict_schema_proposed_target_owner: ControlPlaneContractSource
+      strict_schema_target_layer_candidate: GovernanceContract_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: decision_required
+    semantic_distinctness:
+      normalized_proposition_signature: control_plane_governance|控制面规则禁止混入通用知识|mkc_027|控制面规则不得落入通用知识|把控制规则留在契约或状态清单|控制规则需要任务授权和状态证据，不得写成服装知识|形成控制面与知识正文的隔离规则
+      normalized_body_signature: e34d25585b2abafb17a50d95461dbffa
+      normalized_body_mechanism_signature: 4c5a8dfce010cc37ce9d511cee701aac
+      semantic_fingerprint: efb0d620743e853d74e583667e06042b
+    industry_density:
+      body_zh_char_count: 928
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 路由规则、状态字段、生成权限
+        material_or_fabric_property: 不适用面料属性
+        fit_or_silhouette_observation: 不适用版型观察
+        retail_scene: 生成准备线的状态管理界面
+        display_or_styling_action: 把规则、报告、产物分开登记
+        content_action: 把控制规则留在契约或状态清单
+        claim_or_evidence_boundary: 控制规则需要任务授权和状态证据，不得写成服装知识
+        operator_decision: 把控制规则留在契约或状态清单
+        downstream_output_implication: 形成控制面与知识正文的隔离规则
+        failure_mode: 把权限规则伪装成通用方法，导致下游误消费
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-001
+        candidate_name: 控制面规则禁止混入通用知识
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_027
+        generation_assignment_id: GA-012
+        input_digest: efb0d620743e853d74e583667e06042bac4bf2e8e45f6815fbe8f51518a0639c
+      ownership:
+        candidate_kind: control_plane_candidate
+        proposed_target_owner: ControlPlaneContractSource
+        target_owner_reason: V3 wrapper primary owner is ControlPlaneContractSource; strict schema maps it to ControlPlaneContractSource
+          with layer GovernanceContract_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_012/batch_012_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: control_plane_governance semantic v3 draft pending judge review
+        target_layer_candidate: GovernanceContract_candidate
+        allowed_landing_layers:
+        - GovernanceContract_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - TBox_candidate
+        - L2_PlayCard_candidate
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 控制面规则禁止混入通用知识是用于处理“控制面规则不得落入通用知识”的中文语义知识单元，核心对象是路由规则、状态字段、生成权限。
+        applicable_when: 当生成准备线的状态管理界面中需要把控制规则留在契约或状态清单，且观察对象来自路由规则、状态字段、生成权限时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成控制面与知识正文的隔离规则
+        risk_boundary: 把权限规则伪装成通用方法，导致下游误消费
+        evidence_requirement: 控制规则需要任务授权和状态证据，不得写成服装知识
+      rich_body:
+        body_text: 控制面规则禁止混入通用知识讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以路由规则、状态字段、生成权限为对象，把不适用面料属性、不适用版型观察和生成准备线的状态管理界面放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，控制面规则不得落入通用知识成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把规则、报告、产物分开登记时，操作者可以执行的动作是把控制规则留在契约或状态清单。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到路由规则、状态字段、生成权限，并且需要把它转成可审的内容或流程判断；同时，生成准备线的状态管理界面提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。控制规则需要任务授权和状态证据，不得写成服装知识。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把权限规则伪装成通用方法，导致下游误消费。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，控制面规则禁止混入通用知识才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成控制面与知识正文的隔离规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 控制面规则禁止混入通用知识讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以路由规则、状态字段、生成权限为对象，把不适用面料属性、不适用版型观察和生成准备线的状态管理界面放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，控制面规则不得落入通用知识成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把规则、报告、产物分开登记时，操作者可以执行的动作是把控制规则留在契约或状态清单。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到路由规则、状态字段、生成权限，并且需要把它转成可审的内容或流程判断；同时，生成准备线的状态管理界面提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。控制规则需要任务授权和状态证据，不得写成服装知识。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把权限规则伪装成通用方法，导致下游误消费。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，控制面规则禁止混入通用知识才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成控制面与知识正文的隔离规则。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-control_plane_governance-mkc_027-GA-012-001
+        semantic_fingerprint: efb0d620743e853d74e583667e06042b
+        proposition_fingerprint: 390f16e42a5707666f5c9d2ac014debc
+        runtime_effect_fingerprint: 3e13fef9b8b97f3a657a623a991f9706
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: decision_required
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: control_plane_governance
+    batch_id: batch_013
+    candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-002
+    canonical_label_zh: 来源缺口触发补证工单
+    canonical_body_zh: 来源缺口触发补证工单讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以证据缺口、待证说法、来源工单为对象，把只作为待证对象属性，不作为已证事实、只作为观察线索，不形成结果承诺和审查队列中的来源缺口登记放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，证据缺口如何触发补证工单成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把缺口和可继续生成的观察文本分开时，操作者可以执行的动作是把硬事实需求路由到来源工单。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到证据缺口、待证说法、来源工单，并且需要把它转成可审的内容或流程判断；同时，审查队列中的来源缺口登记提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。缺口本身不是证据，只能说明需要补证。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：用专家合成填补真实事实或性能事实。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，来源缺口触发补证工单才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成待证事实的阻断与补证路径。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 来源缺口触发补证工单
+    - 证据缺口如何触发补证工单
+    - 把硬事实需求路由到来源工单
+    english_aliases:
+    - Source gap triggers evidence workorder
+    retrieval_aliases_en:
+    - Source gap triggers evidence workorder
+    target_owner_decision:
+      primary_target_owner: SourceGapLedger
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is SourceGapLedger; strict schema maps it to SourceGapLedger with layer SourceGapLedger
+        until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: SourceGapLedger
+      strict_schema_candidate_kind: source_gap
+      strict_schema_proposed_target_owner: SourceGapLedger
+      strict_schema_target_layer_candidate: SourceGapLedger
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: source_workorder_needed
+    semantic_distinctness:
+      normalized_proposition_signature: control_plane_governance|来源缺口触发补证工单|mkc_010|证据缺口如何触发补证工单|把硬事实需求路由到来源工单|缺口本身不是证据，只能说明需要补证|形成待证事实的阻断与补证路径
+      normalized_body_signature: 0bc2c66787f5c8f593f9e273a08d4d43
+      normalized_body_mechanism_signature: f3f2fd9bca912e154341082946b09d02
+      semantic_fingerprint: 3a9be9dd0ec01689674802abf1688f83
+    industry_density:
+      body_zh_char_count: 930
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 证据缺口、待证说法、来源工单
+        material_or_fabric_property: 只作为待证对象属性，不作为已证事实
+        fit_or_silhouette_observation: 只作为观察线索，不形成结果承诺
+        retail_scene: 审查队列中的来源缺口登记
+        display_or_styling_action: 把缺口和可继续生成的观察文本分开
+        content_action: 把硬事实需求路由到来源工单
+        claim_or_evidence_boundary: 缺口本身不是证据，只能说明需要补证
+        operator_decision: 把硬事实需求路由到来源工单
+        downstream_output_implication: 形成待证事实的阻断与补证路径
+        failure_mode: 用专家合成填补真实事实或性能事实
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-002
+        candidate_name: 来源缺口触发补证工单
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_010
+        generation_assignment_id: GA-013
+        input_digest: 3a9be9dd0ec01689674802abf1688f83226a33355857469025d37fc4710ccc28
+      ownership:
+        candidate_kind: source_gap
+        proposed_target_owner: SourceGapLedger
+        target_owner_reason: V3 wrapper primary owner is SourceGapLedger; strict schema maps it to SourceGapLedger with layer
+          SourceGapLedger until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_013/batch_013_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: control_plane_governance semantic v3 draft pending judge review
+        target_layer_candidate: SourceGapLedger
+        allowed_landing_layers:
+        - SourceGapLedger
+        - DraftBacklog
+        forbidden_landing_layers:
+        - TBox_candidate
+        - L2_PlayCard_candidate
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 来源缺口触发补证工单是用于处理“证据缺口如何触发补证工单”的中文语义知识单元，核心对象是证据缺口、待证说法、来源工单。
+        applicable_when: 当审查队列中的来源缺口登记中需要把硬事实需求路由到来源工单，且观察对象来自证据缺口、待证说法、来源工单时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成待证事实的阻断与补证路径
+        risk_boundary: 用专家合成填补真实事实或性能事实
+        evidence_requirement: 缺口本身不是证据，只能说明需要补证
+      rich_body:
+        body_text: 来源缺口触发补证工单讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以证据缺口、待证说法、来源工单为对象，把只作为待证对象属性，不作为已证事实、只作为观察线索，不形成结果承诺和审查队列中的来源缺口登记放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，证据缺口如何触发补证工单成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把缺口和可继续生成的观察文本分开时，操作者可以执行的动作是把硬事实需求路由到来源工单。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到证据缺口、待证说法、来源工单，并且需要把它转成可审的内容或流程判断；同时，审查队列中的来源缺口登记提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。缺口本身不是证据，只能说明需要补证。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：用专家合成填补真实事实或性能事实。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，来源缺口触发补证工单才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成待证事实的阻断与补证路径。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 来源缺口触发补证工单讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以证据缺口、待证说法、来源工单为对象，把只作为待证对象属性，不作为已证事实、只作为观察线索，不形成结果承诺和审查队列中的来源缺口登记放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，证据缺口如何触发补证工单成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把缺口和可继续生成的观察文本分开时，操作者可以执行的动作是把硬事实需求路由到来源工单。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到证据缺口、待证说法、来源工单，并且需要把它转成可审的内容或流程判断；同时，审查队列中的来源缺口登记提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。缺口本身不是证据，只能说明需要补证。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：用专家合成填补真实事实或性能事实。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，来源缺口触发补证工单才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成待证事实的阻断与补证路径。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-control_plane_governance-mkc_010-GA-013-002
+        semantic_fingerprint: 3a9be9dd0ec01689674802abf1688f83
+        proposition_fingerprint: 3316b43fb6c9840c9b5a3453d4c8e384
+        runtime_effect_fingerprint: 6fc857b883d4b1d8123be97ad19f2df4
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: source_workorder_needed
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: control_plane_governance
+    batch_id: batch_014
+    candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-003
+    canonical_label_zh: 落层不确定时进入决策包
+    canonical_body_zh: 落层不确定时进入决策包讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以目标归属、落层候选、人工裁决为对象，把作为内容对象时可观察，作为控制决策时不入正文、作为内容线索时可写，作为落层依据时需裁决和候选产物进入审查前的路由表放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，落层不确定时如何进入决策包成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可写内容、证据规则、控制规则拆成不同出口时，操作者可以执行的动作是当归属冲突时生成决策包。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到目标归属、落层候选、人工裁决，并且需要把它转成可审的内容或流程判断；同时，候选产物进入审查前的路由表提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。落层需要候选类型、目标归属、层注记和审查结果共同决定。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只凭来源类型或题目名称决定落层。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，落层不确定时进入决策包才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成不确定归属的裁决入口。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 落层不确定时进入决策包
+    - 落层不确定时如何进入决策包
+    - 当归属冲突时生成决策包
+    english_aliases:
+    - Uncertain landing routes to decision packet
+    retrieval_aliases_en:
+    - Uncertain landing routes to decision packet
+    target_owner_decision:
+      primary_target_owner: DecisionPacketLedger
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is DecisionPacketLedger; strict schema maps it to DecisionPacketLedger with layer
+        DecisionPacketLedger until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: DecisionPacketLedger
+      strict_schema_candidate_kind: decision_packet
+      strict_schema_proposed_target_owner: DecisionPacketLedger
+      strict_schema_target_layer_candidate: DecisionPacketLedger
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: decision_required
+    semantic_distinctness:
+      normalized_proposition_signature: control_plane_governance|落层不确定时进入决策包|mkc_021|落层不确定时如何进入决策包|当归属冲突时生成决策包|落层需要候选类型、目标归属、层注记和审查结果共同决定|形成不确定归属的裁决入口
+      normalized_body_signature: daf3ce52da055dd29e16a1789be97bcb
+      normalized_body_mechanism_signature: 728d16d72679e65ca71b0eae3c665cfb
+      semantic_fingerprint: df43899a7f755b1d83669cce735cc281
+    industry_density:
+      body_zh_char_count: 951
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 目标归属、落层候选、人工裁决
+        material_or_fabric_property: 作为内容对象时可观察，作为控制决策时不入正文
+        fit_or_silhouette_observation: 作为内容线索时可写，作为落层依据时需裁决
+        retail_scene: 候选产物进入审查前的路由表
+        display_or_styling_action: 把可写内容、证据规则、控制规则拆成不同出口
+        content_action: 当归属冲突时生成决策包
+        claim_or_evidence_boundary: 落层需要候选类型、目标归属、层注记和审查结果共同决定
+        operator_decision: 当归属冲突时生成决策包
+        downstream_output_implication: 形成不确定归属的裁决入口
+        failure_mode: 只凭来源类型或题目名称决定落层
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-003
+        candidate_name: 落层不确定时进入决策包
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_021
+        generation_assignment_id: GA-014
+        input_digest: df43899a7f755b1d83669cce735cc2816b6791062b9837ca3de474650ad73546
+      ownership:
+        candidate_kind: decision_packet
+        proposed_target_owner: DecisionPacketLedger
+        target_owner_reason: V3 wrapper primary owner is DecisionPacketLedger; strict schema maps it to DecisionPacketLedger
+          with layer DecisionPacketLedger until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_014/batch_014_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: control_plane_governance semantic v3 draft pending judge review
+        target_layer_candidate: DecisionPacketLedger
+        allowed_landing_layers:
+        - DecisionPacketLedger
+        - DraftBacklog
+        forbidden_landing_layers:
+        - TBox_candidate
+        - L2_PlayCard_candidate
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 落层不确定时进入决策包是用于处理“落层不确定时如何进入决策包”的中文语义知识单元，核心对象是目标归属、落层候选、人工裁决。
+        applicable_when: 当候选产物进入审查前的路由表中需要当归属冲突时生成决策包，且观察对象来自目标归属、落层候选、人工裁决时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成不确定归属的裁决入口
+        risk_boundary: 只凭来源类型或题目名称决定落层
+        evidence_requirement: 落层需要候选类型、目标归属、层注记和审查结果共同决定
+      rich_body:
+        body_text: 落层不确定时进入决策包讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以目标归属、落层候选、人工裁决为对象，把作为内容对象时可观察，作为控制决策时不入正文、作为内容线索时可写，作为落层依据时需裁决和候选产物进入审查前的路由表放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，落层不确定时如何进入决策包成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可写内容、证据规则、控制规则拆成不同出口时，操作者可以执行的动作是当归属冲突时生成决策包。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到目标归属、落层候选、人工裁决，并且需要把它转成可审的内容或流程判断；同时，候选产物进入审查前的路由表提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。落层需要候选类型、目标归属、层注记和审查结果共同决定。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只凭来源类型或题目名称决定落层。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，落层不确定时进入决策包才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成不确定归属的裁决入口。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 落层不确定时进入决策包讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以目标归属、落层候选、人工裁决为对象，把作为内容对象时可观察，作为控制决策时不入正文、作为内容线索时可写，作为落层依据时需裁决和候选产物进入审查前的路由表放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，落层不确定时如何进入决策包成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可写内容、证据规则、控制规则拆成不同出口时，操作者可以执行的动作是当归属冲突时生成决策包。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到目标归属、落层候选、人工裁决，并且需要把它转成可审的内容或流程判断；同时，候选产物进入审查前的路由表提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。落层需要候选类型、目标归属、层注记和审查结果共同决定。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：只凭来源类型或题目名称决定落层。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，落层不确定时进入决策包才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成不确定归属的裁决入口。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-control_plane_governance-mkc_021-GA-014-003
+        semantic_fingerprint: df43899a7f755b1d83669cce735cc281
+        proposition_fingerprint: 0c77311404e4284d3b09d9aa3ed4660d
+        runtime_effect_fingerprint: efe56f3dd41600bebc5fc69e46b145cf
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: decision_required
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: control_plane_governance
+    batch_id: batch_001
+    candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-004
+    canonical_label_zh: 批量生成前的语义样板门槛
+    canonical_body_zh: 批量生成前的语义样板门槛讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以样板门槛、批次锁、审查结果为对象，把不直接描述具体面料，只约束生成条件、不直接描述体型或版型结果和批量生成前的门禁检查放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，批量生成前必须先过语义样板成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把样板、报告、状态分别记录时，操作者可以执行的动作是只有语义样板通过后才讨论批量生成。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到样板门槛、批次锁、审查结果，并且需要把它转成可审的内容或流程判断；同时，批量生成前的门禁检查提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。必须有审查结论、负例通过和状态锁证据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把工程通过误当成质量通过。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，批量生成前的语义样板门槛才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成批量生成前的硬门槛。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 批量生成前的语义样板门槛
+    - 批量生成前必须先过语义样板
+    - 只有语义样板通过后才讨论批量生成
+    english_aliases:
+    - Semantic exemplar gate before batch
+    retrieval_aliases_en:
+    - Semantic exemplar gate before batch
+    target_owner_decision:
+      primary_target_owner: ControlPlaneContractSource
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is ControlPlaneContractSource; strict schema maps it to ControlPlaneContractSource
+        with layer GovernanceContract_candidate until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: ControlPlaneContractSource
+      strict_schema_candidate_kind: control_plane_candidate
+      strict_schema_proposed_target_owner: ControlPlaneContractSource
+      strict_schema_target_layer_candidate: GovernanceContract_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: decision_required
+    semantic_distinctness:
+      normalized_proposition_signature: control_plane_governance|批量生成前的语义样板门槛|mkc_004|批量生成前必须先过语义样板|只有语义样板通过后才讨论批量生成|必须有审查结论、负例通过和状态锁证据|形成批量生成前的硬门槛
+      normalized_body_signature: a40657909cc15cd8d9d07f7a5822db55
+      normalized_body_mechanism_signature: f93885e287dde084d96ae9aaecef7a12
+      semantic_fingerprint: 5ccfe854e58d073b4853c64937339d16
+    industry_density:
+      body_zh_char_count: 919
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 样板门槛、批次锁、审查结果
+        material_or_fabric_property: 不直接描述具体面料，只约束生成条件
+        fit_or_silhouette_observation: 不直接描述体型或版型结果
+        retail_scene: 批量生成前的门禁检查
+        display_or_styling_action: 把样板、报告、状态分别记录
+        content_action: 只有语义样板通过后才讨论批量生成
+        claim_or_evidence_boundary: 必须有审查结论、负例通过和状态锁证据
+        operator_decision: 只有语义样板通过后才讨论批量生成
+        downstream_output_implication: 形成批量生成前的硬门槛
+        failure_mode: 把工程通过误当成质量通过
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-004
+        candidate_name: 批量生成前的语义样板门槛
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_004
+        generation_assignment_id: GA-001
+        input_digest: 5ccfe854e58d073b4853c64937339d169c4836f06ce9127bc3bb8fa1db17f0e6
+      ownership:
+        candidate_kind: control_plane_candidate
+        proposed_target_owner: ControlPlaneContractSource
+        target_owner_reason: V3 wrapper primary owner is ControlPlaneContractSource; strict schema maps it to ControlPlaneContractSource
+          with layer GovernanceContract_candidate until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_001/batch_001_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: control_plane_governance semantic v3 draft pending judge review
+        target_layer_candidate: GovernanceContract_candidate
+        allowed_landing_layers:
+        - GovernanceContract_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - TBox_candidate
+        - L2_PlayCard_candidate
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 批量生成前的语义样板门槛是用于处理“批量生成前必须先过语义样板”的中文语义知识单元，核心对象是样板门槛、批次锁、审查结果。
+        applicable_when: 当批量生成前的门禁检查中需要只有语义样板通过后才讨论批量生成，且观察对象来自样板门槛、批次锁、审查结果时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成批量生成前的硬门槛
+        risk_boundary: 把工程通过误当成质量通过
+        evidence_requirement: 必须有审查结论、负例通过和状态锁证据
+      rich_body:
+        body_text: 批量生成前的语义样板门槛讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以样板门槛、批次锁、审查结果为对象，把不直接描述具体面料，只约束生成条件、不直接描述体型或版型结果和批量生成前的门禁检查放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，批量生成前必须先过语义样板成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把样板、报告、状态分别记录时，操作者可以执行的动作是只有语义样板通过后才讨论批量生成。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到样板门槛、批次锁、审查结果，并且需要把它转成可审的内容或流程判断；同时，批量生成前的门禁检查提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。必须有审查结论、负例通过和状态锁证据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把工程通过误当成质量通过。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，批量生成前的语义样板门槛才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成批量生成前的硬门槛。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 批量生成前的语义样板门槛讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以样板门槛、批次锁、审查结果为对象，把不直接描述具体面料，只约束生成条件、不直接描述体型或版型结果和批量生成前的门禁检查放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，批量生成前必须先过语义样板成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把样板、报告、状态分别记录时，操作者可以执行的动作是只有语义样板通过后才讨论批量生成。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到样板门槛、批次锁、审查结果，并且需要把它转成可审的内容或流程判断；同时，批量生成前的门禁检查提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。必须有审查结论、负例通过和状态锁证据。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：把工程通过误当成质量通过。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，批量生成前的语义样板门槛才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成批量生成前的硬门槛。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-control_plane_governance-mkc_004-GA-001-004
+        semantic_fingerprint: 5ccfe854e58d073b4853c64937339d16
+        proposition_fingerprint: 2cbb27ea66f4052d8428ddbc3e1ef820
+        runtime_effect_fingerprint: f353aae23f08e3093a28cf1de0b82e2f
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: decision_required
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review
+  - pilot_category: control_plane_governance
+    batch_id: batch_002
+    candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-005
+    canonical_label_zh: 证据不足时输出降级路由
+    canonical_body_zh: 证据不足时输出降级路由讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以降级规则、来源缺口、可保留观察为对象，把面料属性只能作为观察线索、版型线条只能作为观察线索和内容生成后的边界复核放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，证据不足时如何降级输出成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可保留描述和必须阻断的承诺分开时，操作者可以执行的动作是把缺证硬说法降级为观察或路由到补证。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到降级规则、来源缺口、可保留观察，并且需要把它转成可审的内容或流程判断；同时，内容生成后的边界复核提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。没有来源时不能保留性能、身体效果、真实实例说法。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：为了保持文案完整而保留未经证明的承诺。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，证据不足时输出降级路由才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成缺证情况下的安全输出路由。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+    retrieval_aliases_zh:
+    - 证据不足时输出降级路由
+    - 证据不足时如何降级输出
+    - 把缺证硬说法降级为观察或路由到补证
+    english_aliases:
+    - Evidence-missing output downgrade route
+    retrieval_aliases_en:
+    - Evidence-missing output downgrade route
+    target_owner_decision:
+      primary_target_owner: DecisionPacketLedger
+      rejected_target_owners:
+      - GeneralKnowledgeBase
+      - L2_PlayCardCandidate
+      - L3_ExecutionAssetCandidate
+      owner_reason: V3 wrapper primary owner is DecisionPacketLedger; strict schema maps it to DecisionPacketLedger with layer
+        DecisionPacketLedger until judge review confirms landing.
+    target_owner_schema_mapping:
+      v3_primary_target_owner: DecisionPacketLedger
+      strict_schema_candidate_kind: decision_packet
+      strict_schema_proposed_target_owner: DecisionPacketLedger
+      strict_schema_target_layer_candidate: DecisionPacketLedger
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      route_after_review: decision_required
+    semantic_distinctness:
+      normalized_proposition_signature: control_plane_governance|证据不足时输出降级路由|mkc_026|证据不足时如何降级输出|把缺证硬说法降级为观察或路由到补证|没有来源时不能保留性能、身体效果、真实实例说法|形成缺证情况下的安全输出路由
+      normalized_body_signature: 2d4bc82f55dd956a9c51d523e56efbc2
+      normalized_body_mechanism_signature: b593f319869295035c5f673f42be4a9d
+      semantic_fingerprint: b77ec32c5552416bbf3e6e362b983bb5
+    industry_density:
+      body_zh_char_count: 934
+      boilerplate_ratio: 0.04
+      element_types_present: *id001
+      evidence:
+        apparel_object: 降级规则、来源缺口、可保留观察
+        material_or_fabric_property: 面料属性只能作为观察线索
+        fit_or_silhouette_observation: 版型线条只能作为观察线索
+        retail_scene: 内容生成后的边界复核
+        display_or_styling_action: 把可保留描述和必须阻断的承诺分开
+        content_action: 把缺证硬说法降级为观察或路由到补证
+        claim_or_evidence_boundary: 没有来源时不能保留性能、身体效果、真实实例说法
+        operator_decision: 把缺证硬说法降级为观察或路由到补证
+        downstream_output_implication: 形成缺证情况下的安全输出路由
+        failure_mode: 为了保持文案完整而保留未经证明的承诺
+    candidate:
+      identity:
+        candidate_id: SEM-V3-CONTROL-PLANE-GOVERNANCE-005
+        candidate_name: 证据不足时输出降级路由
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_026
+        generation_assignment_id: GA-002
+        input_digest: b77ec32c5552416bbf3e6e362b983bb5d4e36dded71cc3bbf14b9783a94e9d72
+      ownership:
+        candidate_kind: decision_packet
+        proposed_target_owner: DecisionPacketLedger
+        target_owner_reason: V3 wrapper primary owner is DecisionPacketLedger; strict schema maps it to DecisionPacketLedger
+          with layer DecisionPacketLedger until judge review confirms landing.
+      source_policy:
+        source_type: provenance_only
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
+        - 02_generation_brief_pack/batch_002/batch_002_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: control_plane_governance semantic v3 draft pending judge review
+        target_layer_candidate: DecisionPacketLedger
+        allowed_landing_layers:
+        - DecisionPacketLedger
+        - DraftBacklog
+        forbidden_landing_layers:
+        - TBox_candidate
+        - L2_PlayCard_candidate
+        layer_confidence: 0.76
+        layer_boundary_note: V3 wrapper carries Chinese canonical fields and owner decision; strict schema candidate remains
+          provisional until judge review.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: 证据不足时输出降级路由是用于处理“证据不足时如何降级输出”的中文语义知识单元，核心对象是降级规则、来源缺口、可保留观察。
+        applicable_when: 当内容生成后的边界复核中需要把缺证硬说法降级为观察或路由到补证，且观察对象来自降级规则、来源缺口、可保留观察时适用。
+        not_applicable_when: 当任务需要真实品牌、真实SKU、真实门店反馈、真实人物经验、检测结果或身体效果承诺时不可直接适用。
+        output_effect: 形成缺证情况下的安全输出路由
+        risk_boundary: 为了保持文案完整而保留未经证明的承诺
+        evidence_requirement: 没有来源时不能保留性能、身体效果、真实实例说法
+      rich_body:
+        body_text: 证据不足时输出降级路由讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以降级规则、来源缺口、可保留观察为对象，把面料属性只能作为观察线索、版型线条只能作为观察线索和内容生成后的边界复核放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。机制上，证据不足时如何降级输出成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可保留描述和必须阻断的承诺分开时，操作者可以执行的动作是把缺证硬说法降级为观察或路由到补证。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到降级规则、来源缺口、可保留观察，并且需要把它转成可审的内容或流程判断；同时，内容生成后的边界复核提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。证据边界是本单元最重要的部分。没有来源时不能保留性能、身体效果、真实实例说法。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：为了保持文案完整而保留未经证明的承诺。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，证据不足时输出降级路由才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。对输出的影响是：形成缺证情况下的安全输出路由。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+        body_sections:
+        - heading: 对象定义
+          text: 证据不足时输出降级路由讨论的不是一句单品卖点，而是一条可复用的服装零售判断。它以降级规则、来源缺口、可保留观察为对象，把面料属性只能作为观察线索、版型线条只能作为观察线索和内容生成后的边界复核放在同一个工作情境里理解。该知识单元先确认服装或规则本身能被观察到什么，再判断这些观察可以怎样进入内容、陈列、导购或流程控制。它的核心不是追求更响亮的表达，而是让操作者知道什么可以写、什么只能作为线索、什么必须等待证据。
+          proposition_refs:
+          - definition
+        - heading: 机制与适用条件
+          text: 机制上，证据不足时如何降级输出成立，是因为店铺里的视觉安排、材料细节和内容承诺之间存在层级关系。当把可保留描述和必须阻断的承诺分开时，操作者可以执行的动作是把缺证硬说法降级为观察或路由到补证。如果直接跳到形容词或结果承诺，正文会失去服装对象的约束；如果先说明对象、场景、动作和边界，读者就能分辨这是方法、规则还是待证事实。这个机制要求内容把观察链条写清楚，而不是用情绪化赞美替代判断。适用条件是：任务中已经能看到降级规则、来源缺口、可保留观察，并且需要把它转成可审的内容或流程判断；同时，内容生成后的边界复核提供了足够的上下文，使操作者能说明为什么要这样摆放、这样描述或这样降级。不适用条件是：只有标题、风格词、主观感受或未经来源确认的结论；也不适用于需要真实检测、真实销量、真实门店反馈、真实人物经验才能成立的说法。
+          proposition_refs:
+          - applicable_when
+          - output_effect
+        - heading: 证据边界与误用风险
+          text: 证据边界是本单元最重要的部分。没有来源时不能保留性能、身体效果、真实实例说法。这意味着正文可以处理可见结构、动作顺序、展示层级和说法强度，但不能把观察改写成性能事实、身体结果、真实实例或已验证承诺。若需要更强结论，正确做法是进入来源缺口、决策包或人工复核，而不是在正文里补想象出来的事实。典型误用是：为了保持文案完整而保留未经证明的承诺。一旦出现这种误用，文本看似完整，实际会把边界、证据和归属混在一起，使后续批次复制出大量只换名称的内容。修正方式是回到对象、场景、动作、证据要求和输出影响五个环节，逐项确认每一句话是否由当前服装任务支撑。只有这些环节同时成立，证据不足时输出降级路由才适合进入下一轮审查，而不是直接成为可发布知识或下游资产。
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        - heading: 输出影响
+          text: 对输出的影响是：形成缺证情况下的安全输出路由。对于内容生产，它能减少同质化标题和空泛推荐；对于陈列或导购，它能让动作顺序、物件位置和话术理由互相对应；对于审查，它能把可继续加工的观察文本与必须阻断的硬说法分开。操作者因此可以在不制造事实的前提下，保留服装行业判断的密度。
+          proposition_refs:
+          - output_effect
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - not_applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: v3-control_plane_governance-mkc_026-GA-002-005
+        semantic_fingerprint: b77ec32c5552416bbf3e6e362b983bb5
+        proposition_fingerprint: 5e9bf6d79de981a704c5af0b5faf573e
+        runtime_effect_fingerprint: 9cafebdcda6b1d8a0b9257ec203c0463
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: decision_required
+        route_reason: V3 semantic pilot requires judge go/no-go before any batch, CandidatePack, or downstream landing.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review

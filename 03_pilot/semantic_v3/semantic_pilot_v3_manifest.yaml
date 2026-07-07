@@ -1,0 +1,68 @@
+semantic_pilot_v3_manifest:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001
+  workspace_HEAD_before: d13891318150859e9cb0dee4f31a278d721604a3
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: v2_semantic_pilot_failed_as_high_quality_domain_knowledge_and_v3_rewrite_authorized
+  schema_compatibility_mapping:
+    strict_candidate_schema_additionalProperties_false: true
+    v3_only_fields_stay_in_wrapper_or_sidecar: true
+    canonical_label_zh: wrapper.canonical_label_zh and candidate.identity.candidate_name
+    canonical_body_zh: wrapper.canonical_body_zh and candidate.rich_body.body_text
+    primary_target_owner: wrapper.target_owner_decision.primary_target_owner mapped
+      to strict candidate.ownership fields
+    target_owner_enum_mapping:
+      GeneralKnowledgeBase:
+        candidate_kind: general_knowledge_candidate
+        schema_owner: GeneralKnowledgeBase
+        layer: TBox_candidate
+      L2_PlayCardCandidate:
+        candidate_kind: general_knowledge_candidate
+        schema_owner: GeneralKnowledgeBase
+        layer: L2_PlayCard_candidate
+      L3_ExecutionAssetCandidate:
+        candidate_kind: execution_asset_outbox_candidate
+        schema_owner: ExecutionAssetOutbox
+        layer: L3_ExecutionAsset_candidate
+      EvidencePolicyCandidate:
+        candidate_kind: general_knowledge_candidate
+        schema_owner: GeneralKnowledgeBase
+        layer: EvidencePolicy_candidate
+      ControlPlaneContractSource:
+        candidate_kind: control_plane_candidate
+        schema_owner: ControlPlaneContractSource
+        layer: GovernanceContract_candidate
+      DecisionPacketLedger:
+        candidate_kind: decision_packet
+        schema_owner: DecisionPacketLedger
+        layer: DecisionPacketLedger
+      SourceGapLedger:
+        candidate_kind: source_gap
+        schema_owner: SourceGapLedger
+        layer: SourceGapLedger
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  external_drive_dependency: false
+  external_drive_accessed: false
+  v2_semantic_pilot_status: conditional_pass_for_generation_mechanics__fail_as_high_quality_domain_knowledge
+  semantic_pilot_v3_structured_draft_count: 20
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  ready_for_semantic_pilot_v3_judge_review: true
+  category_counts:
+    content_method: 5
+    apparel_claim_boundary: 5
+    display_to_content: 5
+    control_plane_governance: 5
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001
+  assertions:
+    generated_3600: false
+    candidatepack_created: false
+    KE_touched: false
+    serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+    readiness_all_false: true
