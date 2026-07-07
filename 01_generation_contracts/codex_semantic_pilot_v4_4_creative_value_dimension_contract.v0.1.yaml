@@ -1,0 +1,61 @@
+codex_semantic_pilot_v4_4_creative_value_dimension_contract:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
+  creative_value_dimensions:
+    sensory_or_visual_anchor:
+      required_for:
+      - content_method
+      - display_to_content
+      - product_role_narrative
+      description: 能看见、拍到、感到一个具体对象、动作、材质、光线、空间关系或穿着状态。
+    aesthetic_tension:
+      required_for:
+      - content_method
+      - display_to_content
+      - styling_or_visual_method
+      description: 存在对比、取舍、节奏、留白、层次、前后台、粗细软硬、动静关系等美学张力。
+    emotional_or_human_motive:
+      required_for:
+      - content_method
+      - role_expression
+      - display_to_content
+      description: 能表达照顾、犹豫、选择、等待、亲近、克制、庆祝、珍惜等真实人类动机；不得虚构人物事实。
+    cross_domain_transfer:
+      required_for:
+      - content_method
+      - display_to_content
+      - product_role_narrative
+      description: 能把商品、工艺、陈列、角色、门店动作转译成内容角度或表达资产。
+    generative_option_space:
+      required_for:
+      - all_creative_capsules
+      description: 不是一条固定话术，而是能产生多个不同表达方向、镜头方向、导购讲解方向或训练问题。
+    audience_cognition_shift:
+      required_for:
+      - content_method
+      - display_to_content
+      - claim_boundary_safe_alternative
+      description: 明确观众从“看见什么”走到“理解什么、感受什么、愿意如何再看一眼”。
+  value_weight_policy:
+    creative_content_and_display_knowledge:
+      inspiration_aesthetic_emotion_min: 0.6
+      inspiration_aesthetic_emotion_target: 0.65
+      inspiration_aesthetic_emotion_max: 0.7
+      method_structure_and_execution: 0.20_to_0.25
+      evidence_boundary_and_risk: 0.10_to_0.20
+    claim_boundary:
+      boundary_and_evidence_dominant: true
+      must_include_safe_creative_alternatives: true
+      inspiration_weight_not_forced_to_0_65: true
+    control_plane_and_governance:
+      precision_boundary_and_traceability_dominant: true
+      creative_weight_not_applicable: true
+  quality_guards:
+    generative_options_min: 3
+    synonym_only_options_forbidden: true
+    creative_transfer_must_reference_observable_material: true
+    generic_audience_shift_forbidden_examples:
+    - 提升认知
+    - 增强理解
+    - 更有感觉
+    pure_aesthetic_adjective_stack_forbidden: true

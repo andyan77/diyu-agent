@@ -13,7 +13,9 @@ import yaml
 
 TASK_ID = "CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001"
 PREVIOUS_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001"
+V4_4_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_3-JUDGE-GO-NOGO-001"
+V4_4_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 8
 EXPECTED_DISTRIBUTION = {
@@ -202,10 +204,13 @@ def validate_status(workspace: Path) -> None:
     phase = status.get("phase", {})
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
-    if phase.get("current_next_step") != NEXT_STEP:
-        fail("workspace next step must be semantic pilot V4.3 judge go/no-go")
-    if phase.get("previous_step") != TASK_ID:
+    current_next_step = phase.get("current_next_step")
+    if current_next_step not in {NEXT_STEP, V4_4_NEXT_STEP}:
+        fail("workspace next step must be semantic pilot V4.3 judge go/no-go or semantic pilot V4.4 judge go/no-go")
+    if current_next_step == NEXT_STEP and phase.get("previous_step") != TASK_ID:
         fail("workspace previous step must be V4.3 targeted repair task")
+    if current_next_step == V4_4_NEXT_STEP and phase.get("previous_step") != V4_4_TASK_ID:
+        fail("workspace previous step must be V4.4 creative capsule task")
     closeout = status.get("v4_2_no_go_closeout", {})
     if closeout.get("task_id") != TASK_ID or closeout.get("status") != "completed":
         fail("v4_2_no_go_closeout status block missing")
@@ -224,6 +229,20 @@ def validate_status(workspace: Path) -> None:
         fail("semantic_pilot_v4_3 accepted_domain_knowledge_count must be 0")
     assert_false(v43.get("batch_generation_unlocked"), "semantic_pilot_v4_3 batch_generation_unlocked")
     assert_false(v43.get("ready_for_first_batch_generation"), "semantic_pilot_v4_3 ready_for_first_batch_generation")
+    if current_next_step == V4_4_NEXT_STEP:
+        v44 = status.get("semantic_pilot_v4_4", {})
+        if v44.get("status") != "completed":
+            fail("semantic v4.4 judge route requires completed semantic_pilot_v4_4 block")
+        if v44.get("semantic_pilot_v4_4_count") != 8:
+            fail("semantic v4.4 judge route requires 8 v4.4 semantic revision drafts")
+        if v44.get("one_to_one_revision_of_v4_3") is not True:
+            fail("semantic v4.4 judge route requires one-to-one revision of V4.3")
+        if v44.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v4.4 judge route requires accepted_domain_knowledge_count 0")
+        if v44.get("batch_generation_unlocked") is True:
+            fail("semantic v4.4 judge route must keep batch_generation_unlocked false")
+        if v44.get("ready_for_first_batch_generation") is True:
+            fail("semantic v4.4 judge route must keep ready_for_first_batch_generation false")
     bad = {key: value for key, value in status.get("readiness", {}).items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"readiness true flags: {bad}")

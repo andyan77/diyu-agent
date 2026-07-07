@@ -1,0 +1,37 @@
+codex_semantic_pilot_v4_4_creative_knowledge_capsule_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.3 NO_GO_FOR_BATCH; authorize closeout plus V4.4 creative capsule rewrite only
+    batch_generation_authorized: false
+    candidatepack_authorized: false
+    KE_landing_authorized: false
+  knowledge_capsule:
+    definition: A knowledge capsule is a self-contained, recallable, generative knowledge unit. It must change a downstream creative or operational decision, not merely define a term or list a risk.
+    required_sections:
+      capsule_question:
+        cn: 这颗知识回答什么问题
+      core_mechanism:
+        cn: 它改变什么判断机制
+      observable_material:
+        cn: 可观察对象 / 动作 / 材质 / 空间 / 人物关系
+      creative_transfer:
+        cn: 它如何从事实转成内容角度、视觉角度、陈列角度或表达方向
+      boundary_guardrail:
+        cn: 不可越过的证据 / 合规 / 授权 / 状态边界
+      generative_options:
+        cn: 至少 2-3 个不同表达方向或下游调用方式
+      failure_signal:
+        cn: 什么情况下这颗知识不能被使用
+      downstream_effect:
+        cn: 对 RAG / DIFY / L2 / L3 / 人审的消费影响
+    forbidden_capsule_shapes:
+    - pure_definition_only
+    - pure_review_checklist
+    - pure_risk_warning
+    - pure_execution_sop_without_content_transfer
+    - pure_aesthetic_adjective_stack
+    - direct_publish_script
+    - real_instance_fact_story

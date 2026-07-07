@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001",
+  "v4_4_draft_count": 8,
+  "v4_4_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "knowledge_capsule_valid_count": 8,
+  "creative_value_dimension_coverage_by_creative_card": {
+    "SEM-V4_4-CONTENT-METHOD-001": 6,
+    "SEM-V4_4-CONTENT-METHOD-002": 6,
+    "SEM-V4_4-DISPLAY-TO-CONTENT-001": 6,
+    "SEM-V4_4-DISPLAY-TO-CONTENT-002": 6
+  },
+  "safe_creative_alternatives_count": 10,
+  "display_content_angle_transfer_valid_count": 2,
+  "claim_boundary_observation_experience_performance_split_valid_count": 2,
+  "control_plane_creative_weight_not_applicable_count": 2,
+  "relation_design_hints_count": 23,
+  "relation_registry_valid_count": 23,
+  "real_instance_fact_leak_count": 0,
+  "direct_publish_script_count": 0,
+  "generative_options_synonym_only_count": 0,
+  "pure_aesthetic_adjective_stack_count": 0,
+  "audience_cognition_shift_generic_count": 0,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "Serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "readiness_flags_result": "all_false",
+  "source_repo_live_accessed": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 17,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_creative_card_missing_aesthetic_tension.yaml": [
+      "creative_cards_missing_aesthetic_tension_count must be 0"
+    ],
+    "negative_creative_card_missing_generative_option_space.yaml": [
+      "creative_cards_missing_generative_option_space_count must be 0"
+    ],
+    "negative_content_method_treats_emotion_as_evidence.yaml": [
+      "content_method_emotion_as_evidence_count must be 0"
+    ],
+    "negative_display_card_only_observation_checklist.yaml": [
+      "display_observation_checklist_only_count must be 0"
+    ],
+    "negative_display_card_missing_content_angle_transfer.yaml": [
+      "two display content-angle transfers required"
+    ],
+    "negative_claim_boundary_only_says_forbidden_without_safe_alternatives.yaml": [
+      "claim boundary safe alternatives must include at least 10 entries total"
+    ],
+    "negative_claim_boundary_allows_unconditioned_body_effect_claim.yaml": [
+      "claim_boundary_unconditioned_body_effect_claim_count must be 0"
+    ],
+    "negative_claim_boundary_treats_experience_as_direct_observation.yaml": [
+      "claim_boundary_experience_as_direct_observation_count must be 0"
+    ],
+    "negative_control_plane_forced_into_creative_value_weight.yaml": [
+      "control_plane_creative_weight_forced_count must be 0"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "real_instance_fact_leak_count must be 0"
+    ],
+    "negative_direct_publish_script_leak.yaml": [
+      "direct_publish_script_count must be 0"
+    ],
+    "negative_generative_options_synonym_only.yaml": [
+      "generative_options_synonym_only_count must be 0"
+    ],
+    "negative_pure_aesthetic_adjective_stack.yaml": [
+      "pure_aesthetic_adjective_stack_count must be 0"
+    ],
+    "negative_audience_cognition_shift_generic.yaml": [
+      "audience_cognition_shift_generic_count must be 0"
+    ]
+  }
+}

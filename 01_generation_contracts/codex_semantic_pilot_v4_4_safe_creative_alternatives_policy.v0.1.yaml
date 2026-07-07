@@ -1,0 +1,25 @@
+codex_semantic_pilot_v4_4_safe_creative_alternatives_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
+  safe_creative_alternatives:
+    required_for:
+    - claim_boundary
+    - evidence_boundary
+    - compliance_boundary
+    alternative_types:
+      direct_observation_sentence:
+        cn: 可观察画面句
+      conditional_experience_sentence:
+        cn: 带条件的主观体验句
+      styling_context_sentence:
+        cn: 搭配条件下的比例 / 视觉描述
+      scene_or_role_expression:
+        cn: 角色或场景化的非结论表达
+      aesthetic_direction:
+        cn: 情绪与审美方向，而非功能保证
+    forbidden:
+    - turning_creative_alternative_into_performance_claim
+    - replacing_evidence_with_emotion
+    - using_body_effect_as_guarantee
+    - using_real_brand_sku_store_person_customer_fact
+    - creating_direct_publish_script

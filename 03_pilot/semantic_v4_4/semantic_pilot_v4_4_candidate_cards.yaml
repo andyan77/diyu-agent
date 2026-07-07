@@ -1,0 +1,535 @@
+semantic_pilot_v4_4_candidate_cards:
+  candidates:
+  - draft_id: SEM-V4_4-CONTENT-METHOD-001
+    revision_lineage:
+      draft_id: SEM-V4_4-CONTENT-METHOD-001
+      revision_of: SEM-V4_3-CONTENT-METHOD-001
+      v4_2_ref: SEM-V4_2-CONTENT-METHOD-001
+      v4_1_ref: SEM-V4_1-CONTENT-METHOD-001
+      original_v4_ref: SEM-V4-CONTENT-METHOD-001
+      referenced_mkc_id: mkc_009
+      w7_authority_record_digest: 8eba1b63c9eac0fe354222175c298711f9a0159bf3f791a58c5cfc9dbc66de06
+      v4_3_no_go_reason_refs: &id001
+      - creative_aesthetic_inspiration_insufficient
+      - content_method_overweighted_to_risk_control
+      - display_to_content_lacks_aesthetic_and_emotional_translation
+      - claim_boundary_lacks_safe_creative_alternatives
+      - high_quality_knowledge_capsule_contract_missing
+    pilot_category: content_method
+    canonical_cluster_id: mkc_009
+    canonical_cluster_title_from_authority: 故事弧线适用边界
+    canonical_label_zh: 故事弧线的情绪证据采集胶囊 V4.4
+    candidate_topic: 把同一组素材转成多条有证据边界的叙事角度
+    type_specific_body_shape: general_knowledge
+    predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'capsule_question：同一组素材为什么可以产生多个叙事角度，而不是只套一个故事模板？
+
+
+      core_mechanism：先拆证据强度，再选择弧线强度；证据只够一个瞬间时，用留白和观察保留情绪，不补因果。
+
+
+      observable_material：衣物边线、袖口折痕、面料垂坠、手把衣架推回原位的动作、光线落在表面的停顿。
+
+
+      creative_transfer：把这些可观察材料转成“先看见一个细节，再判断它能不能撑起故事”的内容角度。
+
+
+      boundary_guardrail：情绪只能作为表达方向，不能当作品牌事实、顾客反馈或效果证据。
+
+
+      generative_options：过程弧线：从材料细节进入选择理由；选择弧线：从取舍动作进入价值表达；留白观察：只保留一个可见瞬间和一个开放问题
+
+
+      failure_signal：只有情绪词、没有对象动作或证据强度时，不使用故事弧线。
+
+
+      downstream_effect：L2 可据此生成选题问题；L3 可生成素材采集提示；人审判断情绪是否越界为事实。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-CONTENT-METHOD-002
+    revision_lineage:
+      draft_id: SEM-V4_4-CONTENT-METHOD-002
+      revision_of: SEM-V4_3-CONTENT-METHOD-002
+      v4_2_ref: SEM-V4_2-CONTENT-METHOD-002
+      v4_1_ref: SEM-V4_1-CONTENT-METHOD-002
+      original_v4_ref: SEM-V4-CONTENT-METHOD-002
+      referenced_mkc_id: mkc_010
+      w7_authority_record_digest: 5e62f930e7caa258f628e5f40ecfe9470618bbd62160a697b5ea54edaf314622
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: content_method
+    canonical_cluster_id: mkc_010
+    canonical_cluster_title_from_authority: 反模板叙事锚点
+    canonical_label_zh: 反模板对象锚点的内容节奏胶囊 V4.4
+    candidate_topic: 把对象、动作、关系、时间和空间组合成内容节奏
+    type_specific_body_shape: general_knowledge
+    predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'capsule_question：情绪标签如何转为对象、动作、光线、空间和关系采集任务？
+
+
+      core_mechanism：把抽象词拆成五个采集槽：对象、动作、关系、时间、空间；每个槽都必须能被观察或复述。
+
+
+      observable_material：衬衫下摆、半裙腰线、鞋面距离、衣架排列、导购手势和顾客视线移动方向的通用观察。
+
+
+      creative_transfer：将风格词转成“哪个对象先出现、哪个动作改变比例、哪个空间关系制造节奏”的内容框架。
+
+
+      boundary_guardrail：不得虚构真实人物、真实顾客反馈或具体门店情节。
+
+
+      generative_options：对象路径：从一件衣物的结构进入表达；动作路径：从一个整理或试穿动作进入表达；关系路径：从主次搭配和空间距离进入表达
+
+
+      failure_signal：如果只能写高级、氛围、松弛等形容词而没有对象动作，则停止扩写。
+
+
+      downstream_effect：为 L2 提供反模板选题，为 L3 提供观察任务，为人审提供虚构实例拦截点。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-APPAREL-CLAIM-BOUNDARY-001
+    revision_lineage:
+      draft_id: SEM-V4_4-APPAREL-CLAIM-BOUNDARY-001
+      revision_of: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-001
+      v4_2_ref: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-001
+      v4_1_ref: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-001
+      original_v4_ref: SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+      referenced_mkc_id: mkc_026
+      w7_authority_record_digest: 852b02654bae2233959726f4ba01a26660aa3f2bc7b648dc266cee1fc71a68e6
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_026
+    canonical_cluster_title_from_authority: 身材效果语言阶梯与场景化观察
+    canonical_label_zh: 身材效果表达的安全创意替代胶囊 V4.4
+    candidate_topic: 把身材效果风险句改成可观察、可条件化、可审美化的表达路径
+    type_specific_body_shape: claim_boundary
+    predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'capsule_question：不能说身体结果时，内容还能怎样保留美感和使用价值？
+
+
+      core_mechanism：把结果承诺拆成观察句、条件体验句、搭配语境句和审美方向句；边界主导，创意只提供安全替代。
+
+
+      observable_material：腰线位置、外套开合、裤管垂坠、内搭比例、上下装颜色分界。
+
+
+      creative_transfer：将显瘦显高类冲动转为“线条更清楚、比例关系更明确、视觉重心更稳定”的观察路径。
+
+
+      boundary_guardrail：不得把主观体验写成直接观察，不得把身体效果写成保证。
+
+
+      generative_options：观察句：腰线位置更清楚；条件体验句：在上短下长搭配中更容易感到比例被拉开；审美方向句：让视觉重心更克制地停在上半身
+
+
+      failure_signal：出现无条件身体结果、保证句或需平台法务来源的性能句时，转 source workorder。
+
+
+      downstream_effect：人审判断句子层级；L2 使用安全替代方向；不得进入 CandidatePack。'
+    owner_model:
+      semantic_owner: apparel_claim_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: source_workorder_needed
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-APPAREL-CLAIM-BOUNDARY-002
+    revision_lineage:
+      draft_id: SEM-V4_4-APPAREL-CLAIM-BOUNDARY-002
+      revision_of: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-002
+      v4_2_ref: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-002
+      v4_1_ref: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-002
+      original_v4_ref: SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+      referenced_mkc_id: mkc_027
+      w7_authority_record_digest: 52db1e47463300f9ad661c36383e182e450454d7a9ee1e33982a1ec2dcaac07a
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_027
+    canonical_cluster_title_from_authority: 舒适性能耐用品质证据阶梯
+    canonical_label_zh: 舒适性能主张的安全创意替代胶囊 V4.4
+    candidate_topic: 把舒适、性能、耐用主张改写为观察、条件体验和补源路径
+    type_specific_body_shape: claim_boundary
+    predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'capsule_question：缺少测试或标准时，舒适性能内容如何不失去表达空间？
+
+
+      core_mechanism：把性能词先降为体感条件和结构观察，再把需要证明的部分标记为 source workorder。
+
+
+      observable_material：面料触感、内里接触面、缝线位置、活动留量、衣摆回弹的可见状态。
+
+
+      creative_transfer：将抗皱、耐穿、透气等冲动转为“触感、活动余量、贴肤条件、使用场景”的安全表达。
+
+
+      boundary_guardrail：专家综合不能替代平台规则、测试方法或品牌政策来源。
+
+
+      generative_options：观察句：面料表面更平整；条件体验句：在长时间坐立切换时更关注留量；审美方向句：把舒适感转为轻、缓、少束缚的画面节奏
+
+
+      failure_signal：出现检测证明、永久耐用、医学级或保证体验时必须阻断。
+
+
+      downstream_effect：L2 只消费安全表达方向，人审处理证据层级，source workorder 追踪需证实主张。'
+    owner_model:
+      semantic_owner: apparel_claim_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: source_workorder_needed
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-DISPLAY-TO-CONTENT-001
+    revision_lineage:
+      draft_id: SEM-V4_4-DISPLAY-TO-CONTENT-001
+      revision_of: SEM-V4_3-DISPLAY-TO-CONTENT-001
+      v4_2_ref: SEM-V4_2-DISPLAY-TO-CONTENT-001
+      v4_1_ref: SEM-V4_1-DISPLAY-TO-CONTENT-001
+      original_v4_ref: SEM-V4-DISPLAY-TO-CONTENT-001
+      referenced_mkc_id: mkc_032
+      w7_authority_record_digest: b3d04225085d20f8a3e5fb4cc055be0a409b0752b77ceedee378140aa5e3d8cd
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_032
+    canonical_cluster_title_from_authority: 陈列区位与可拍摄视觉锚点
+    canonical_label_zh: 陈列区位到内容角度的视觉转译胶囊 V4.4
+    candidate_topic: 把第一眼停留、主次关系和视觉情绪转为多输出内容资产
+    type_specific_body_shape: execution_asset
+    predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    artifact_kind: execution_asset_outbox_candidate
+    canonical_body_zh: 'capsule_question：第一眼为什么停留，陈列区位如何转成内容角度？
+
+
+      core_mechanism：把区位信号拆成焦点、陪体、距离和停顿，再选择内容输出形态。
+
+
+      observable_material：前后层级、灯光边缘、挂通间距、材质反差、主搭和陪体的距离。
+
+
+      creative_transfer：从空间观察转译为内容角度、画面开场、说明顺序、导购提问和训练观察。
+
+
+      boundary_guardrail：不使用真实门店、真实人员或未授权素材；不生成面向发布的完整成稿。
+
+
+      generative_options：短视频：先远景停留再近景解释；小红书笔记：用主搭和陪体关系组织段落；导购讲解卡：用第一眼焦点引出款式关系；训练观察题：让新人找出停留点和陪体
+
+
+      failure_signal：只有拍摄前检查清单而没有内容角度转译时，不作为 V4.4 合格样本。
+
+
+      downstream_effect：L3 生成执行资产候选；L2 提取内容角度；人审检查授权边界。'
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-DISPLAY-TO-CONTENT-002
+    revision_lineage:
+      draft_id: SEM-V4_4-DISPLAY-TO-CONTENT-002
+      revision_of: SEM-V4_3-DISPLAY-TO-CONTENT-002
+      v4_2_ref: SEM-V4_2-DISPLAY-TO-CONTENT-002
+      v4_1_ref: SEM-V4_1-DISPLAY-TO-CONTENT-002
+      original_v4_ref: SEM-V4-DISPLAY-TO-CONTENT-002
+      referenced_mkc_id: mkc_034
+      w7_authority_record_digest: 76a113c4eb8a5244d7bf27b4f0401ebfcc730ca3fc13043001b61ec01735c89d
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_034
+    canonical_cluster_title_from_authority: 动作转内容槽位与演示三段式
+    canonical_label_zh: 门店动作到内容片段的情绪转译胶囊 V4.4
+    candidate_topic: 把整理、比对、递示等动作转成内容片段而不是普通 SOP
+    type_specific_body_shape: execution_asset
+    predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    artifact_kind: execution_asset_outbox_candidate
+    canonical_body_zh: 'capsule_question：哪个门店动作可变成内容片段，而不是普通整理动作？
+
+
+      core_mechanism：动作必须同时具备对象、前提、变化和结束标志，才可转成内容片段。
+
+
+      observable_material：整理衣摆、并排比较、递示衣架、手势停顿、视线从整体移向细节。
+
+
+      creative_transfer：把动作顺序转成内容角度和情绪节奏：为什么停、为什么比、为什么递给对方看。
+
+
+      boundary_guardrail：不虚构真实顾客反馈，不写真实人员故事，不输出面向发布的完整成稿。
+
+
+      generative_options：短视频：动作前后对比；笔记：把动作理由写成观察问题；导购卡：用递示动作解释选择条件；训练题：判断动作是否有结束标志
+
+
+      failure_signal：如果动作只剩执行步骤，没有内容角度和人类动机，则退回执行资产草案。
+
+
+      downstream_effect：L3 获得动作槽位，L2 获得内容角度，人审检查是否虚构真实互动。'
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-CONTROL-PLANE-GOVERNANCE-001
+    revision_lineage:
+      draft_id: SEM-V4_4-CONTROL-PLANE-GOVERNANCE-001
+      revision_of: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-001
+      v4_2_ref: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-001
+      v4_1_ref: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-001
+      original_v4_ref: SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+      referenced_mkc_id: mkc_004
+      w7_authority_record_digest: ff43b069259148ef4adb23d22d2dec558f0a5cd18ba588746246851457316774
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_004
+    canonical_cluster_title_from_authority: 异常分发与再进入规则
+    canonical_label_zh: 风险敏感路由的防假生成治理胶囊 V4.4
+    candidate_topic: 确保风险敏感项进入 founder_review 并阻断未决生成
+    type_specific_body_shape: control_plane
+    predicate_profile_id: control_plane_candidate
+    relation_profile_id: relation_profile_control_plane
+    artifact_kind: control_plane_candidate
+    canonical_body_zh: 'capsule_question：什么状态必须阻断生成并进入 founder_review？
+
+
+      core_mechanism：当 source gap、建模冲突、风险敏感 claim 或 owner 不明时，路由优先级高于内容产出。
+
+
+      observable_material：可观察的是状态字段、ledger 写入、route target 和 reentry 条件，不是美学素材。
+
+
+      creative_transfer：not_applicable_for_control_plane; this capsule protects generation quality by preventing false creative continuation.
+
+
+      boundary_guardrail：不得从 unresolved route 直接进入 batch generation、CandidatePack 或 KE。
+
+
+      generative_options：source gap 路由说明；founder_review 阻断说明；reentry 条件说明
+
+
+      failure_signal：route target 不是 founder_review 或 ledger 缺失时必须失败。
+
+
+      downstream_effect：checker 和人审使用本胶囊防止假绿；不作为创意质量 pass 计数。'
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: ControlPlaneContractSource
+      artifact_kind: control_plane_candidate
+      consumer_layer: GenerationContract
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false
+  - draft_id: SEM-V4_4-CONTROL-PLANE-GOVERNANCE-002
+    revision_lineage:
+      draft_id: SEM-V4_4-CONTROL-PLANE-GOVERNANCE-002
+      revision_of: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+      v4_2_ref: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002
+      v4_1_ref: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-002
+      original_v4_ref: SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+      referenced_mkc_id: mkc_006
+      w7_authority_record_digest: a9ea7dc9d2c5a4d56d73e7e8742fa600364ea5454e94e00684c6f9029a61fb66
+      v4_3_no_go_reason_refs: *id001
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_006
+    canonical_cluster_title_from_authority: 研究资产绑定与非生产封印
+    canonical_label_zh: 研究资产绑定非生产封印治理胶囊 V4.4
+    candidate_topic: 把资产绑定限制为 review-only governance outbox 候选
+    type_specific_body_shape: asset_binding_policy
+    predicate_profile_id: asset_binding_policy_candidate
+    relation_profile_id: relation_profile_asset_binding_policy
+    artifact_kind: governance_outbox_candidate
+    canonical_body_zh: 'capsule_question：研究资产什么时候只能形成 review-only 绑定候选？
+
+
+      core_mechanism：绑定需要来源路径、owner、用途边界和非生产封印同时存在；缺任一项都不能向生产链路移动。
+
+
+      observable_material：可观察的是 source path digest、owner 字段、review_only 标签和 not_production_ready 状态。
+
+
+      creative_transfer：not_applicable_for_control_plane; it keeps creative materials from being treated as production assets before review.
+
+
+      boundary_guardrail：不得写 CandidatePack、KE、RAG、DIFY 或生产运行文件。
+
+
+      generative_options：review-only stub 说明；binding block reason；reentry review condition
+
+
+      failure_signal：缺 source、owner 或非生产封印时绑定候选无效。
+
+
+      downstream_effect：GovernanceOutbox 接收候选，checker 阻断生产态误用；不作为创意质量 pass 计数。'
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: GovernanceOutbox
+      artifact_kind: governance_outbox_candidate
+      consumer_layer: GenerationContract
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    direct_publish_script: false

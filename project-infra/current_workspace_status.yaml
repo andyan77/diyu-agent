@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-SEMANTIC-PILOT-V4_3-JUDGE-GO-NOGO-001
-  previous_step: CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001
+  current_next_step: CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001
+  previous_step: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -154,5 +154,28 @@ semantic_pilot_v4_3:
   predicate_registry_status: draft_not_formal_ontology
   accepted_domain_knowledge_count: 0
   ready_for_semantic_pilot_v4_3_judge_review: true
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+v4_3_no_go_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
+  status: completed
+  engineering_delivery: PASS
+  semantic_verdict: NO_GO_FOR_BATCH
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+semantic_pilot_v4_4:
+  task_id: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
+  status: completed
+  semantic_pilot_v4_4_count: 8
+  distribution:
+    content_method: 2
+    apparel_claim_boundary: 2
+    display_to_content: 2
+    control_plane_governance: 2
+  one_to_one_revision_of_v4_3: true
+  knowledge_capsule_valid_count: 8
+  accepted_domain_knowledge_count: 0
+  ready_for_semantic_pilot_v4_4_judge_review: true
   batch_generation_unlocked: false
   ready_for_first_batch_generation: false
