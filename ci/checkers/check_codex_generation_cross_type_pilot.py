@@ -25,6 +25,10 @@ EXPECTED_CATEGORY_COUNTS = {
 EXPECTED_W7_DIGEST = "dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c"
 EXPECTED_FOUNDER_DIGEST = "823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48"
 EXPECTED_ASSIGNMENTS = {f"GA-{idx:03d}" for idx in range(1, 15)}
+PILOT_JUDGE_NEXT_STEP = "CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001"
+SEMANTIC_REGEN_NEXT_STEP = "CODEX-SEMANTIC-PILOT-REGEN-001"
+BATCH_GENERATION_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
+SMOKE_FIXTURE_CLASSIFICATION = "schema_route_provenance_smoke_fixture"
 SELF_CHECK_TERMS = {
     "candidate_kind",
     "target_owner",
@@ -74,6 +78,7 @@ NEGATIVE_FIXTURES = [
     "negative_candidatepack_created.yaml",
     "negative_source_repo_dependency_true.yaml",
     "negative_relation_unknown_candidate.yaml",
+    "negative_batch_generation_next_step.yaml",
 ]
 
 
@@ -281,6 +286,13 @@ def validate_fixture_model(model: dict[str, Any], schema: dict[str, Any]) -> lis
         errors.append("candidatepack_created must be false")
     if data.get("ready_for_first_batch_generation") is not False:
         errors.append("first batch generation must remain false")
+    if data.get("batch_generation_unlocked") is True:
+        errors.append("batch generation must remain locked")
+    current_next_step = data.get("current_next_step", PILOT_JUDGE_NEXT_STEP)
+    if current_next_step == BATCH_GENERATION_NEXT_STEP:
+        errors.append("batch generation task cannot be current next step")
+    if current_next_step not in {PILOT_JUDGE_NEXT_STEP, SEMANTIC_REGEN_NEXT_STEP}:
+        errors.append("current next step must be pilot judge review or semantic pilot regen")
     if data.get("ready_for_pilot_review") is not True:
         errors.append("pilot review should be true")
     if data.get("category_counts") != EXPECTED_CATEGORY_COUNTS:
@@ -303,6 +315,45 @@ def validate_fixture_model(model: dict[str, Any], schema: dict[str, Any]) -> lis
         candidate = candidate_entry.get("candidate", {})
         errors.extend(validate_candidate(candidate, schema, category))
     return errors
+
+
+def validate_workspace_route(status: dict[str, Any]) -> dict[str, Any]:
+    phase = status.get("phase", {})
+    current_next_step = phase.get("current_next_step")
+    if current_next_step == BATCH_GENERATION_NEXT_STEP:
+        fail("workspace next step must not be batch generation")
+    pilot_status = status.get("pilot", {})
+    if pilot_status.get("ready_for_first_batch_generation") is not False:
+        fail("workspace status must not unlock first batch generation")
+    if current_next_step == PILOT_JUDGE_NEXT_STEP:
+        if pilot_status.get("ready_for_pilot_review") is not True:
+            fail("workspace status should route to pilot review")
+        return {
+            "route_validation_mode": "pre_semantic_closeout_pilot_review",
+            "current_workspace_next_step": current_next_step,
+        }
+    if current_next_step == SEMANTIC_REGEN_NEXT_STEP:
+        closeout = status.get("pilot_semantic_closeout", {})
+        if closeout.get("status") != "completed":
+            fail("semantic closeout route requires completed closeout block")
+        if closeout.get("semantic_pilot_status") != "failed":
+            fail("semantic closeout route requires semantic_pilot_status failed")
+        if closeout.get("current_44_reclassified_as") != SMOKE_FIXTURE_CLASSIFICATION:
+            fail("semantic closeout route requires current 44 smoke fixture reclassification")
+        if closeout.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic closeout route requires accepted_domain_knowledge_count 0")
+        if closeout.get("batch_generation_unlocked") is True:
+            fail("semantic closeout route must keep batch_generation_unlocked false")
+        if closeout.get("ready_for_first_batch_generation") is True:
+            fail("semantic closeout route must keep ready_for_first_batch_generation false")
+        return {
+            "route_validation_mode": "post_semantic_closeout_regen",
+            "current_workspace_next_step": current_next_step,
+            "current_44_reclassified_as": closeout.get("current_44_reclassified_as"),
+            "accepted_domain_knowledge_count": closeout.get("accepted_domain_knowledge_count"),
+            "batch_generation_unlocked": closeout.get("batch_generation_unlocked"),
+        }
+    fail("workspace next step must be pilot judge review or semantic pilot regen")
 
 
 def validate_live(
@@ -416,13 +467,7 @@ def validate_live(
     bad = {key: value for key, value in status.get("readiness", {}).items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"workspace readiness true flags: {bad}")
-    pilot_status = status.get("pilot", {})
-    if pilot_status.get("ready_for_first_batch_generation") is not False:
-        fail("workspace status must not unlock first batch generation")
-    if pilot_status.get("ready_for_pilot_review") is not True:
-        fail("workspace status should route to pilot review")
-    if status.get("phase", {}).get("current_next_step") != "CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001":
-        fail("workspace next step must be pilot judge review")
+    route_result = validate_workspace_route(status)
 
     positive = load_yaml(fixtures_root / "positive_valid_pilot_minimal.yaml")
     positive_errors = validate_fixture_model(positive, schema)
@@ -462,7 +507,9 @@ def validate_live(
         "DIFY_touched": False,
         "ready_for_pilot_review": True,
         "ready_for_first_batch_generation": False,
-        "recommended_next_step": "CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001",
+        "historical_pilot_recommended_next_step": PILOT_JUDGE_NEXT_STEP,
+        "recommended_next_step": route_result["current_workspace_next_step"],
+        **route_result,
         "positive_fixture_count": 1,
         "negative_fixture_count": len(NEGATIVE_FIXTURES),
         "positive_fixture_passed": True,
@@ -614,6 +661,8 @@ def build_fixture_model() -> dict[str, Any]:
             "candidatepack_created": False,
             "ready_for_pilot_review": True,
             "ready_for_first_batch_generation": False,
+            "batch_generation_unlocked": False,
+            "current_next_step": PILOT_JUDGE_NEXT_STEP,
             "category_counts": EXPECTED_CATEGORY_COUNTS,
             "review_queue_present": True,
             "independent_judge_protocol_present": True,
@@ -658,6 +707,8 @@ def mutate_fixture_for_negative(model: dict[str, Any], name: str) -> None:
         data["source_repo_live_dependency"] = True
     elif name == "negative_relation_unknown_candidate.yaml":
         data["relation_candidates_valid"] = False
+    elif name == "negative_batch_generation_next_step.yaml":
+        data["current_next_step"] = BATCH_GENERATION_NEXT_STEP
 
 
 def main() -> int:
