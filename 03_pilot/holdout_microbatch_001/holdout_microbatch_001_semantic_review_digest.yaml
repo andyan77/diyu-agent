@@ -1,0 +1,23 @@
+holdout_microbatch_001_semantic_review_digest:
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  review_input: founder_current_request
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision_scope: holdout_mb001_no_go_for_batch_and_repair_authorized
+    decision_effect:
+    - supersede_report_only_judge
+    - allow_failure_closeout
+    - allow_same_14_cluster_repair
+    does_not_authorize:
+    - batch_generation
+    - candidatepack
+    - KE
+    - RAG
+    - DIFY
+  structural_delivery: PASS
+  semantic_delivery: NO_GO_FOR_BATCH
+  holdout_count_14_confirmed_compliant: true
+  same_14_cluster_repair_authorized: true
+  original_holdout_artifacts_modified: false
+  next_step: HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001

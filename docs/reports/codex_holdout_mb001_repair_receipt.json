@@ -1,0 +1,202 @@
+{
+  "task_id": "HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001",
+  "repository": "/home/diyu/笛语领域通用数据库",
+  "commit_before": "f1c240e5ed9113a054dc177de13e459c63611943",
+  "recommended_next_step": "HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001",
+  "human_decision_authorization": {
+    "human_decision_present": true,
+    "authorized_by": "founder_current_request",
+    "decision_scope": "holdout_mb001_no_go_for_batch_and_repair_authorized",
+    "decision_effect": [
+      "supersede_report_only_judge",
+      "allow_failure_closeout",
+      "allow_same_14_cluster_repair"
+    ],
+    "does_not_authorize": [
+      "batch_generation",
+      "candidatepack",
+      "KE",
+      "RAG",
+      "DIFY"
+    ]
+  },
+  "original_holdout_artifact_digests_before": [
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_manifest.yaml",
+      "sha256_before": "90641838c31915be4e23ec6c3e6e22e62cfc87bc0f2f3e92da66c381530eee22",
+      "sha256_after_expected": "90641838c31915be4e23ec6c3e6e22e62cfc87bc0f2f3e92da66c381530eee22",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_selection_matrix.yaml",
+      "sha256_before": "3d4afb061a4116afb0b09436930b3efd9f78e70dacd4bf1c23912e1aa85daf14",
+      "sha256_after_expected": "3d4afb061a4116afb0b09436930b3efd9f78e70dacd4bf1c23912e1aa85daf14",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_candidate_cards.yaml",
+      "sha256_before": "6f3f182fc062568b6c2edf3d8ae11c62a412d1120d9de215dcec561e3be255cb",
+      "sha256_after_expected": "6f3f182fc062568b6c2edf3d8ae11c62a412d1120d9de215dcec561e3be255cb",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_knowledge_capsules.yaml",
+      "sha256_before": "3aba2b953851c6fc819839a89393544144a18dfbd40b97aa2e694abe658f8fb2",
+      "sha256_after_expected": "3aba2b953851c6fc819839a89393544144a18dfbd40b97aa2e694abe658f8fb2",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_complete_rich_bodies.yaml",
+      "sha256_before": "168deea1b2a93d379010dc54e9b98e2615aa831f7e21df032334f6ee604b5236",
+      "sha256_after_expected": "168deea1b2a93d379010dc54e9b98e2615aa831f7e21df032334f6ee604b5236",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_creative_value_blocks.yaml",
+      "sha256_before": "c4af3e3cdb62ad57d67699771a5fd432364c79146419c5170f25e9f7c35b38fd",
+      "sha256_after_expected": "c4af3e3cdb62ad57d67699771a5fd432364c79146419c5170f25e9f7c35b38fd",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_epistemic_labels.yaml",
+      "sha256_before": "e9596f29ef7f00a04719f1506ce6e9aeabcf152155404f867282c5f8b42a302d",
+      "sha256_after_expected": "e9596f29ef7f00a04719f1506ce6e9aeabcf152155404f867282c5f8b42a302d",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_relation_design_hints.csv",
+      "sha256_before": "ac0077eeb05318bf234640f3d33e451616095cc1801c37c938a76797a3353308",
+      "sha256_after_expected": "ac0077eeb05318bf234640f3d33e451616095cc1801c37c938a76797a3353308",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_sidecars.yaml",
+      "sha256_before": "ecdc84455e2aa7b01ce66b121e629b075a7ea893553e1b27bd812da0baef8d93",
+      "sha256_after_expected": "ecdc84455e2aa7b01ce66b121e629b075a7ea893553e1b27bd812da0baef8d93",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_transferability_report.json",
+      "sha256_before": "e84fe6dad18448635c2fcc8836c6e24c9f0bc93cde2552291d22be3844603ec1",
+      "sha256_after_expected": "e84fe6dad18448635c2fcc8836c6e24c9f0bc93cde2552291d22be3844603ec1",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_quality_report.json",
+      "sha256_before": "a9c122dbbee740697e7f75c411e48d1207e51b16d0a9763cb77291d8492f25a6",
+      "sha256_after_expected": "a9c122dbbee740697e7f75c411e48d1207e51b16d0a9763cb77291d8492f25a6",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_judge_review_queue.yaml",
+      "sha256_before": "1c3c124f0ce550ff09bd1aecf5a801c55749f9579564a6688f88755fd31c59c4",
+      "sha256_after_expected": "1c3c124f0ce550ff09bd1aecf5a801c55749f9579564a6688f88755fd31c59c4",
+      "immutable": true
+    },
+    {
+      "path": "03_pilot/holdout_microbatch_001/holdout_microbatch_001_judge_protocol.md",
+      "sha256_before": "57b131735c5d519eff4f2235548aac480533e734848e03d1785e4c35bc901506",
+      "sha256_after_expected": "57b131735c5d519eff4f2235548aac480533e734848e03d1785e4c35bc901506",
+      "immutable": true
+    }
+  ],
+  "original_holdout_artifacts_modified": false,
+  "repair_count": 14,
+  "same_cluster_ids_as_original": true,
+  "expected_topic_coverage_count": 56,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "Serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "source_repo_live_accessed": false,
+  "exact_commands_run": [
+    "git status --short",
+    "git rev-parse --abbrev-ref HEAD",
+    "git rev-parse HEAD",
+    "python3 -m py_compile ci/checkers/check_codex_holdout_mb001_repair.py and route-sync checkers",
+    "git diff --name-only -- original holdout 13 artifacts",
+    "python3 ci/checkers/check_codex_holdout_mb001_repair.py --live --report-out ci/reports/codex_holdout_mb001_repair_report.json",
+    "python3 ci/checkers/check_codex_holdout_mb001_repair.py --selftest",
+    "python3 -O ci/checkers/check_codex_holdout_mb001_repair.py --live",
+    "python3 ci/checkers/check_codex_holdout_microbatch_001.py --live",
+    "python3 ci/checkers/check_codex_holdout_microbatch_001.py --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_7.py --live",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_7.py --selftest",
+    "python3 ci/checkers/check_codex_generation_contract_lock.py",
+    "python3 ci/checkers/check_codex_generation_cross_type_pilot.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_regen.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v3.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_1.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_2.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_3.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_4.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_5.py and --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_6.py and --selftest",
+    "python3 ci/checkers/check_pilot_semantic_fail_closeout_and_brief_hardening.py and --selftest",
+    "parse YAML/JSON/CSV required files",
+    "expanded forbidden true scan",
+    "git diff --name-only",
+    "git diff --cached --name-only"
+  ],
+  "human_decision_needed_next": "holdout repair judge go/no-go before any formal batch generation decision",
+  "status": "PASS",
+  "holdout_count": 14,
+  "original_holdout_count_compliant": true,
+  "cluster_brief_count": 14,
+  "mechanism_plan_count": 14,
+  "candidate_card_count": 14,
+  "knowledge_capsule_count": 14,
+  "complete_rich_body_count": 14,
+  "creative_or_control_block_count": 14,
+  "expected_topic_uncovered_count": 0,
+  "writer_instruction_in_body_count": 0,
+  "pilot_or_revision_language_in_body_count": 0,
+  "normalized_sentence_reuse_violation_count": 0,
+  "compiler_shape_mismatch_count": 0,
+  "boundary_only_body_count": 0,
+  "owner_routing_risk_unresolved_count": 0,
+  "P0_00_or_global_claim_evidence_routed_to_GKB_count": 0,
+  "relation_design_hints_count": 28,
+  "formal_graph_claim_count": 0,
+  "readiness_flags_result": "all_false",
+  "commit_after": "pending_until_commit",
+  "commit_created": "pending_until_commit",
+  "route_sync_files_changed": [
+    "ci/checkers/check_codex_generation_cross_type_pilot.py",
+    "ci/checkers/check_codex_semantic_pilot_regen.py",
+    "ci/checkers/check_codex_semantic_pilot_v3.py",
+    "ci/checkers/check_codex_semantic_pilot_v4.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_1.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_2.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_3.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_4.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_5.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_6.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_7.py",
+    "ci/checkers/check_codex_holdout_microbatch_001.py",
+    "ci/checkers/check_pilot_semantic_fail_closeout_and_brief_hardening.py"
+  ],
+  "old_checker_selftest_results": {
+    "ci/checkers/check_codex_generation_cross_type_pilot.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_regen.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v3.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_1.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_2.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_3.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_4.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_5.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_6.py": "PASS",
+    "ci/checkers/check_codex_semantic_pilot_v4_7.py": "PASS",
+    "ci/checkers/check_codex_holdout_microbatch_001.py": "PASS",
+    "ci/checkers/check_pilot_semantic_fail_closeout_and_brief_hardening.py": "PASS"
+  },
+  "external_resources_touched": false,
+  "forbidden_scope_touched": false,
+  "stop_conditions_triggered": []
+}

@@ -1,0 +1,97 @@
+holdout_microbatch_001_closeout:
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  previous_commit: f1c240e5ed9113a054dc177de13e459c63611943
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision_scope: holdout_mb001_no_go_for_batch_and_repair_authorized
+    decision_effect:
+    - supersede_report_only_judge
+    - allow_failure_closeout
+    - allow_same_14_cluster_repair
+    does_not_authorize:
+    - batch_generation
+    - candidatepack
+    - KE
+    - RAG
+    - DIFY
+  engineering_delivery: PASS
+  structural_transfer: PASS
+  count_validation:
+    actual_count: 14
+    requested_range: 12_to_16
+    status: COMPLIANT_NOT_MISMATCH
+  semantic_transfer: FAIL
+  semantic_verdict: NO_GO_FOR_BATCH
+  retained_as: holdout_failure_fixture
+  no_go_reasons:
+  - writer_instruction_or_pilot_language_in_rich_body
+  - governance_generation_instructions_in_capsule
+  - normalized_sentence_reuse_across_multiple_cards
+  - compiler_shape_not_match_artifact_kind
+  - expected_body_topics_not_semantically_covered
+  - possible_P0_00_control_or_claim_evidence_item_routed_to_GKB
+  - checker_false_green_on_governance_dump_and_mechanism_coverage
+  not_yet:
+  - accepted_domain_knowledge
+  - candidatepack_eligible
+  - KE_or_serving_ready
+  - batch_generation_template
+  - formal_relation_graph
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  original_holdout_artifacts_immutable: true
+  original_holdout_artifact_digests:
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_manifest.yaml
+    sha256_before: 90641838c31915be4e23ec6c3e6e22e62cfc87bc0f2f3e92da66c381530eee22
+    sha256_after_expected: 90641838c31915be4e23ec6c3e6e22e62cfc87bc0f2f3e92da66c381530eee22
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_selection_matrix.yaml
+    sha256_before: 3d4afb061a4116afb0b09436930b3efd9f78e70dacd4bf1c23912e1aa85daf14
+    sha256_after_expected: 3d4afb061a4116afb0b09436930b3efd9f78e70dacd4bf1c23912e1aa85daf14
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_candidate_cards.yaml
+    sha256_before: 6f3f182fc062568b6c2edf3d8ae11c62a412d1120d9de215dcec561e3be255cb
+    sha256_after_expected: 6f3f182fc062568b6c2edf3d8ae11c62a412d1120d9de215dcec561e3be255cb
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_knowledge_capsules.yaml
+    sha256_before: 3aba2b953851c6fc819839a89393544144a18dfbd40b97aa2e694abe658f8fb2
+    sha256_after_expected: 3aba2b953851c6fc819839a89393544144a18dfbd40b97aa2e694abe658f8fb2
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_complete_rich_bodies.yaml
+    sha256_before: 168deea1b2a93d379010dc54e9b98e2615aa831f7e21df032334f6ee604b5236
+    sha256_after_expected: 168deea1b2a93d379010dc54e9b98e2615aa831f7e21df032334f6ee604b5236
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_creative_value_blocks.yaml
+    sha256_before: c4af3e3cdb62ad57d67699771a5fd432364c79146419c5170f25e9f7c35b38fd
+    sha256_after_expected: c4af3e3cdb62ad57d67699771a5fd432364c79146419c5170f25e9f7c35b38fd
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_epistemic_labels.yaml
+    sha256_before: e9596f29ef7f00a04719f1506ce6e9aeabcf152155404f867282c5f8b42a302d
+    sha256_after_expected: e9596f29ef7f00a04719f1506ce6e9aeabcf152155404f867282c5f8b42a302d
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_relation_design_hints.csv
+    sha256_before: ac0077eeb05318bf234640f3d33e451616095cc1801c37c938a76797a3353308
+    sha256_after_expected: ac0077eeb05318bf234640f3d33e451616095cc1801c37c938a76797a3353308
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_sidecars.yaml
+    sha256_before: ecdc84455e2aa7b01ce66b121e629b075a7ea893553e1b27bd812da0baef8d93
+    sha256_after_expected: ecdc84455e2aa7b01ce66b121e629b075a7ea893553e1b27bd812da0baef8d93
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_transferability_report.json
+    sha256_before: e84fe6dad18448635c2fcc8836c6e24c9f0bc93cde2552291d22be3844603ec1
+    sha256_after_expected: e84fe6dad18448635c2fcc8836c6e24c9f0bc93cde2552291d22be3844603ec1
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_quality_report.json
+    sha256_before: a9c122dbbee740697e7f75c411e48d1207e51b16d0a9763cb77291d8492f25a6
+    sha256_after_expected: a9c122dbbee740697e7f75c411e48d1207e51b16d0a9763cb77291d8492f25a6
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_judge_review_queue.yaml
+    sha256_before: 1c3c124f0ce550ff09bd1aecf5a801c55749f9579564a6688f88755fd31c59c4
+    sha256_after_expected: 1c3c124f0ce550ff09bd1aecf5a801c55749f9579564a6688f88755fd31c59c4
+    immutable: true
+  - path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_judge_protocol.md
+    sha256_before: 57b131735c5d519eff4f2235548aac480533e734848e03d1785e4c35bc901506
+    sha256_after_expected: 57b131735c5d519eff4f2235548aac480533e734848e03d1785e4c35bc901506
+    immutable: true

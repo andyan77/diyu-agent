@@ -1,0 +1,31 @@
+anti_boilerplate_policy:
+  schema_version: v0.1
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  forbidden_in_capsule_and_rich_body:
+  - 对于 mkc_
+  - 正文还要
+  - 先说明
+  - 再说明
+  - 这个补充保证
+  - 用于待审迁移验证
+  - 不进入正式产线
+  - 当前可用的领域机制
+  - 基础正文现在已经存在
+  - 后续可以补充来源
+  - 这条知识应该
+  - pilot
+  - revision
+  - migration validation
+  normalized_sentence_reuse:
+    max_reuse_across_cards: 1
+    ignore_only:
+    - explicitly_registered_shared_doctrine_refs
+    - sidecar_status_terms
+    - standard_readiness_false_flags
+  hard_reject:
+  - meta_generation_template
+  - writer_instruction_body
+  - governance_status_body
+  - future_promise_body
+  - index_only_capsule
+  - fat_pseudo_rich_body

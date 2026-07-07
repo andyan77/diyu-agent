@@ -1,0 +1,29 @@
+holdout_mb001_repair_fixture:
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  current_next_step: HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001
+  holdout_count: 14
+  count_validation_status: COMPLIANT_NOT_MISMATCH
+  repair_count: 14
+  same_cluster_ids_as_original: true
+  cluster_brief_count: 14
+  mechanism_plan_count: 14
+  candidate_card_count: 14
+  knowledge_capsule_count: 14
+  complete_rich_body_count: 14
+  creative_or_control_block_count: 14
+  expected_topic_coverage_count: 56
+  expected_topic_uncovered_count: 0
+  sample_capsule_text: 该簇说明观察对象、判断条件、边界信号与下游用途之间的机制闭环。
+  sample_body_text: 机制链把观察对象转成判断条件，再用边界信号决定分流。每个 expected topic 都有具体命题。
+  normalized_sentence_reuse_max: 1
+  compiler_shape_mismatch_count: 0
+  mechanism_or_transformation_proposition_count_min: 3
+  boundary_only_proposition_ratio_max: 0.4
+  control_or_global_claim_to_GKB_without_decision_count: 0
+  index_only_capsule_count: 1
+  fat_pseudo_rich_body_count: 0
+  relation_status: design_hint_not_ontology_edge
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  readiness_all_false: true

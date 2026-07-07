@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001
-  previous_step: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  current_next_step: HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001
+  previous_step: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -296,5 +296,41 @@ holdout_microbatch_001:
   body_compiler_family_count: 9
   accepted_domain_knowledge_count: 0
   ready_for_holdout_microbatch_001_judge_review: true
+  ready_for_first_batch_generation: false
+  batch_generation_unlocked: false
+holdout_mb001_failure_closeout:
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  status: completed
+  semantic_verdict: NO_GO_FOR_BATCH
+  holdout_count_14_confirmed_compliant: true
+  original_holdout_artifacts_modified: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+holdout_mb001_repair:
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  status: completed
+  repair_scope: same_14_cluster_repair_only
+  repair_count: 14
+  same_cluster_ids_as_original: true
+  selected_w7_cluster_ids:
+  - mkc_002
+  - mkc_005
+  - mkc_007
+  - mkc_012
+  - mkc_013
+  - mkc_003
+  - mkc_021
+  - mkc_028
+  - mkc_030
+  - mkc_033
+  - mkc_036
+  - mkc_020
+  - mkc_022
+  - mkc_024
+  expected_topic_coverage_count: 56
+  expected_topic_uncovered_count: 0
+  accepted_domain_knowledge_count: 0
+  ready_for_holdout_mb001_repair_judge_review: true
   ready_for_first_batch_generation: false
   batch_generation_unlocked: false

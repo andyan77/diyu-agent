@@ -1,0 +1,812 @@
+holdout_mb001_repair_candidate_cards:
+  candidates:
+  - draft_id: HOLDOUT-MB001-REPAIR-001
+    source_holdout_draft_id: HOLDOUT-MB001-001
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_002
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-00
+    body_compiler_family: control_plane_route
+    canonical_cluster_title_from_authority: 路由阶梯与降级触发
+    canonical_label_zh: 路由阶梯与降级触发
+    candidate_topic: route 梯级定义 / degradation 类型
+    cluster_specific_domain_question: 路由阶梯与降级触发 要回答的是：当输入材料只给出 route 梯级定义 与 degradation 类型 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 路由阶梯与降级触发 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 route 梯级定义 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'cluster_mechanism_chain: 先把 route 梯级定义 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 degradation 类型 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      soft fallback 与 hard block 区分 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 checker_result -> route_decision 与 evidence_need_missing
+      -> source_gap 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: route 梯级定义：route 梯级定义 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；degradation 类型：degradation 类型
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；soft fallback 与 hard block 区分：soft fallback 与 hard block 区分 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；review-only
+      与 source-gap 分流：review-only 与 source-gap 分流 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      operational_input: 输入对象是规则片段、证据缺口、归属冲突和组合请求，本条锚定《路由阶梯与降级触发》。路由阶梯与降级触发 不读取真实实例事实，只读取结构信号、缺项信号和冲突信号。
+
+      decision_transformation: 转换规则先判定触发源，再判定归属层，最后选择保留、分流、阻断或请求裁决，本条锚定《路由阶梯与降级触发》；route 梯级定义 是第一层触发，review-only 与 source-gap
+      分流 是最终分流依据。
+
+      boundary_logic: 边界逻辑要求 P0-00 或全局控制项默认留在控制面，本条锚定《路由阶梯与降级触发》。若出现 GeneralKnowledgeBase 目标，必须有显式 owner decision，否则保持阻断。
+
+      anti_pattern_and_consequence: 反例是把控制项写成领域方法，或把缺来源写成可用知识，本条锚定《路由阶梯与降级触发》；后果是下游误以为已经具备正式落地条件，本条锚定《路由阶梯与降级触发》。
+
+      downstream_use: 下游只消费为 route_decision、governance_outbox_write 或 reentry_validation 的判断材料，不作为正式领域知识，本条锚定《路由阶梯与降级触发》。'
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: ControlPlaneContractSource
+      artifact_kind: control_plane_candidate
+      consumer_layer: GenerationContract
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-002
+    source_holdout_draft_id: HOLDOUT-MB001-002
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_005
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-00
+    body_compiler_family: asset_binding_policy
+    canonical_cluster_title_from_authority: 能力组合与 strictest-wins 裁定
+    canonical_label_zh: 能力组合与 strictest-wins 裁定
+    candidate_topic: strictest-wins 原则 / control-plane 保留条件
+    cluster_specific_domain_question: 能力组合与 strictest-wins 裁定 要回答的是：当输入材料只给出 strictest-wins 原则 与 control-plane 保留条件 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 能力组合与 strictest-wins 裁定 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 strictest-wins 原则
+      转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'cluster_mechanism_chain: 先把 strictest-wins 原则 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 control-plane
+      保留条件 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用 shared cluster 拆分条件 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 multi_capability_request
+      -> composition_check 与 composition_conflict -> decision_required 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: strictest-wins 原则：strictest-wins 原则 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；control-plane 保留条件：control-plane
+      保留条件 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；shared cluster 拆分条件：shared cluster 拆分条件 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；新轴新增禁令：新轴新增禁令
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      operational_input: 输入对象是规则片段、证据缺口、归属冲突和组合请求，本条锚定《能力组合与 strictest-wins 裁定》。能力组合与 strictest-wins 裁定 不读取真实实例事实，只读取结构信号、缺项信号和冲突信号。
+
+      decision_transformation: 转换规则先判定触发源，再判定归属层，最后选择保留、分流、阻断或请求裁决，本条锚定《能力组合与 strictest-wins 裁定》；strictest-wins 原则 是第一层触发，新轴新增禁令
+      是最终分流依据。
+
+      boundary_logic: 边界逻辑要求 P0-00 或全局控制项默认留在控制面，本条锚定《能力组合与 strictest-wins 裁定》。若出现 GeneralKnowledgeBase 目标，必须有显式 owner decision，否则保持阻断。
+
+      anti_pattern_and_consequence: 反例是把控制项写成领域方法，或把缺来源写成可用知识，本条锚定《能力组合与 strictest-wins 裁定》；后果是下游误以为已经具备正式落地条件，本条锚定《能力组合与
+      strictest-wins 裁定》。
+
+      downstream_use: 下游只消费为 route_decision、governance_outbox_write 或 reentry_validation 的判断材料，不作为正式领域知识，本条锚定《能力组合与 strictest-wins
+      裁定》。'
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: GovernanceOutbox
+      artifact_kind: governance_outbox_candidate
+      consumer_layer: GenerationContract
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-003
+    source_holdout_draft_id: HOLDOUT-MB001-003
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_007
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-01
+    body_compiler_family: content_story_method
+    canonical_cluster_title_from_authority: 企业叙事骨架
+    canonical_label_zh: 企业叙事骨架
+    candidate_topic: 企业所回应的问题场景 / 组织性方法与长期选择
+    cluster_specific_domain_question: 企业叙事骨架 要回答的是：当输入材料只给出 企业所回应的问题场景 与 组织性方法与长期选择 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 企业叙事骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 企业所回应的问题场景 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'content_mechanism_chain: 先把 企业所回应的问题场景 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 组织性方法与长期选择 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      供应链 / 组织 / 过程证明的预留槽位 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 problem_domain -> operating_method 与 operating_method
+      -> proof_slot 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 企业所回应的问题场景：企业所回应的问题场景 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；组织性方法与长期选择：组织性方法与长期选择 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；供应链
+      / 组织 / 过程证明的预留槽位：供应链 / 组织 / 过程证明的预留槽位 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；价值表达与可观察差异：价值表达与可观察差异 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是问题场景、叙事轴、角色站位、证明槽位和价值表达，本条锚定《企业叙事骨架》。企业叙事骨架 通过这些输入判断内容结构，不写真实品牌故事。
+
+      narrative_transformation: 转换规则先确定问题，再选择叙述站位，随后把证明槽位和表达边界分配到段落，本条锚定《企业叙事骨架》；每个段落都要对应一个可复核功能。
+
+      boundary_logic: 边界逻辑禁止把组织方法写成真实企业事实，禁止把角色表达写成真实人物反馈，本条锚定《企业叙事骨架》；缺来源时保留方法结构和待补证据槽。
+
+      micro_scenario: 微场景是一个内容策划者拿到素材后，先识别问题，再选择角色语气或系列轴，最后判断哪些证明槽位需要来源，本条锚定《企业叙事骨架》。
+
+      downstream_use: 下游用于 content_angle_selection、review_focus 和 brief_generation_hint 的草案判断，不成为正式知识结论，本条锚定《企业叙事骨架》。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-004
+    source_holdout_draft_id: HOLDOUT-MB001-004
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_012
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-01
+    body_compiler_family: content_story_method
+    canonical_cluster_title_from_authority: 系列轴与跨形态资产单元
+    canonical_label_zh: 系列轴与跨形态资产单元
+    candidate_topic: 系列轴的类型与选用条件 / 序列编排逻辑与去重复机制
+    cluster_specific_domain_question: 系列轴与跨形态资产单元 要回答的是：当输入材料只给出 系列轴的类型与选用条件 与 序列编排逻辑与去重复机制 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 系列轴与跨形态资产单元 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 系列轴的类型与选用条件 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'content_mechanism_chain: 先把 系列轴的类型与选用条件 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 序列编排逻辑与去重复机制 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      proof cadence 与 topic cascade 的绑定 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 master_narrative -> series_axis 与 series_axis
+      -> episode_unit 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 系列轴的类型与选用条件：系列轴的类型与选用条件 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；序列编排逻辑与去重复机制：序列编排逻辑与去重复机制 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；proof
+      cadence 与 topic cascade 的绑定：proof cadence 与 topic cascade 的绑定 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；前台价值与后台能力穿插规则：前台价值与后台能力穿插规则
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是问题场景、叙事轴、角色站位、证明槽位和价值表达，本条锚定《系列轴与跨形态资产单元》。系列轴与跨形态资产单元 通过这些输入判断内容结构，不写真实品牌故事。
+
+      narrative_transformation: 转换规则先确定问题，再选择叙述站位，随后把证明槽位和表达边界分配到段落，本条锚定《系列轴与跨形态资产单元》；每个段落都要对应一个可复核功能。
+
+      boundary_logic: 边界逻辑禁止把组织方法写成真实企业事实，禁止把角色表达写成真实人物反馈，本条锚定《系列轴与跨形态资产单元》；缺来源时保留方法结构和待补证据槽。
+
+      micro_scenario: 微场景是一个内容策划者拿到素材后，先识别问题，再选择角色语气或系列轴，最后判断哪些证明槽位需要来源，本条锚定《系列轴与跨形态资产单元》。
+
+      downstream_use: 下游用于 content_angle_selection、review_focus 和 brief_generation_hint 的草案判断，不成为正式知识结论，本条锚定《系列轴与跨形态资产单元》。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-005
+    source_holdout_draft_id: HOLDOUT-MB001-005
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_013
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-02
+    body_compiler_family: anchor_composition_method
+    canonical_cluster_title_from_authority: 角色发声寄存器
+    canonical_label_zh: 角色发声寄存器
+    candidate_topic: 主语选择与叙述站位 / 信息密度与限制语
+    cluster_specific_domain_question: 角色发声寄存器 要回答的是：当输入材料只给出 主语选择与叙述站位 与 信息密度与限制语 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 角色发声寄存器 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 主语选择与叙述站位 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'content_mechanism_chain: 先把 主语选择与叙述站位 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 信息密度与限制语 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      动作词、观察词、解释词边界 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 depends_on:P0-02-RS04-C01 与 modulated_by:P0-02-RS03-C01 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 主语选择与叙述站位：主语选择与叙述站位 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；信息密度与限制语：信息密度与限制语 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；动作词、观察词、解释词边界：动作词、观察词、解释词边界
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；apparel / retail 场景中的 role anchor：apparel / retail 场景中的 role anchor 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是问题场景、叙事轴、角色站位、证明槽位和价值表达，本条锚定《角色发声寄存器》。角色发声寄存器 通过这些输入判断内容结构，不写真实品牌故事。
+
+      narrative_transformation: 转换规则先确定问题，再选择叙述站位，随后把证明槽位和表达边界分配到段落，本条锚定《角色发声寄存器》；每个段落都要对应一个可复核功能。
+
+      boundary_logic: 边界逻辑禁止把组织方法写成真实企业事实，禁止把角色表达写成真实人物反馈，本条锚定《角色发声寄存器》；缺来源时保留方法结构和待补证据槽。
+
+      micro_scenario: 微场景是一个内容策划者拿到素材后，先识别问题，再选择角色语气或系列轴，最后判断哪些证明槽位需要来源，本条锚定《角色发声寄存器》。
+
+      downstream_use: 下游用于 content_angle_selection、review_focus 和 brief_generation_hint 的草案判断，不成为正式知识结论，本条锚定《角色发声寄存器》。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-006
+    source_holdout_draft_id: HOLDOUT-MB001-006
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_003
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-00
+    body_compiler_family: claim_boundary
+    canonical_cluster_title_from_authority: 全局 claim 与证据边界检查
+    canonical_label_zh: 全局 claim 与证据边界检查
+    candidate_topic: claim 强度分层 / 方法陈述与事实断言切分
+    cluster_specific_domain_question: 全局 claim 与证据边界检查 要回答的是：当输入材料只给出 claim 强度分层 与 方法陈述与事实断言切分 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 全局 claim 与证据边界检查 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 claim 强度分层 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'claim_layer: 先把 claim 强度分层 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 方法陈述与事实断言切分 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      source support 与 evidence support 区分 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 claim_strength -> evidence_need_class
+      与 evidence_absence -> source_gap 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: claim 强度分层：claim 强度分层 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；方法陈述与事实断言切分：方法陈述与事实断言切分 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；source
+      support 与 evidence support 区分：source support 与 evidence support 区分 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；GPT 草稿不可作
+      source anchor：GPT 草稿不可作 source anchor 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是话术中的断言强度、证明类型、比较对象、来源缺口和证据等级，本条锚定《全局 claim 与证据边界检查》；全局 claim 与证据边界检查 不承接真实品牌、SKU、门店、人物或顾客反馈事实。
+
+      evidence_transformation: 转换规则把方法陈述、事实断言、效果暗示和证明需求拆开，本条锚定《全局 claim 与证据边界检查》。只有方法层表达可保留为草案，硬事实与效果断言都转入证据需求或缺口，本条锚定《全局
+      claim 与证据边界检查》。
+
+      boundary_logic: 边界逻辑禁止把无来源效果、整体保证、认证暗示和真实实例事实写成正文结论，本条锚定《全局 claim 与证据边界检查》；缺证明时只保留问题结构和证明槽位。
+
+      anti_pattern_and_consequence: 反例是把比较维度写成优劣结论，或把品质观察写成性能保证，本条锚定《全局 claim 与证据边界检查》；后果是方法草案越界成硬 claim。
+
+      downstream_use: 下游用于 evidence_policy_review、claim_boundary_check 和 source_gap_routing，不能直接形成发布稿或正式图谱边，本条锚定《全局 claim
+      与证据边界检查》。'
+    owner_model:
+      semantic_owner: evidence_policy_boundary
+      storage_target: EvidencePolicyOutbox
+      artifact_kind: evidence_policy_candidate
+      consumer_layer: EvidencePolicyOutbox
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-007
+    source_holdout_draft_id: HOLDOUT-MB001-007
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_021
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-03
+    body_compiler_family: claim_boundary
+    canonical_cluster_title_from_authority: 同类比较维度与禁比边界
+    canonical_label_zh: 同类比较维度与禁比边界
+    candidate_topic: 同类之间可比的维度 / 不可直接比较的维度
+    cluster_specific_domain_question: 同类比较维度与禁比边界 要回答的是：当输入材料只给出 同类之间可比的维度 与 不可直接比较的维度 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 同类比较维度与禁比边界 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 同类之间可比的维度 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'claim_layer: 先把 同类之间可比的维度 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 不可直接比较的维度 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      比较时如何显示未知项 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 依赖 RS01-CL02 属性槽位 与 与 RS03-CL02 claim 证据阶梯联动 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 同类之间可比的维度：同类之间可比的维度 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；不可直接比较的维度：不可直接比较的维度 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；比较时如何显示未知项：比较时如何显示未知项
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；何时必须触发 source gap：何时必须触发 source gap 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是话术中的断言强度、证明类型、比较对象、来源缺口和证据等级，本条锚定《同类比较维度与禁比边界》；同类比较维度与禁比边界 不承接真实品牌、SKU、门店、人物或顾客反馈事实。
+
+      evidence_transformation: 转换规则把方法陈述、事实断言、效果暗示和证明需求拆开，本条锚定《同类比较维度与禁比边界》。只有方法层表达可保留为草案，硬事实与效果断言都转入证据需求或缺口，本条锚定《同类比较维度与禁比边界》。
+
+      boundary_logic: 边界逻辑禁止把无来源效果、整体保证、认证暗示和真实实例事实写成正文结论，本条锚定《同类比较维度与禁比边界》；缺证明时只保留问题结构和证明槽位。
+
+      anti_pattern_and_consequence: 反例是把比较维度写成优劣结论，或把品质观察写成性能保证，本条锚定《同类比较维度与禁比边界》；后果是方法草案越界成硬 claim。
+
+      downstream_use: 下游用于 evidence_policy_review、claim_boundary_check 和 source_gap_routing，不能直接形成发布稿或正式图谱边，本条锚定《同类比较维度与禁比边界》。'
+    owner_model:
+      semantic_owner: evidence_policy_boundary
+      storage_target: EvidencePolicyOutbox
+      artifact_kind: evidence_policy_candidate
+      consumer_layer: EvidencePolicyOutbox
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-008
+    source_holdout_draft_id: HOLDOUT-MB001-008
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_028
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-03
+    body_compiler_family: claim_boundary
+    canonical_cluster_title_from_authority: 品质观察项与证明类型路由
+    canonical_label_zh: 品质观察项与证明类型路由
+    candidate_topic: 可观察品质线索 / proof-type taxonomy
+    cluster_specific_domain_question: 品质观察项与证明类型路由 要回答的是：当输入材料只给出 可观察品质线索 与 proof-type taxonomy 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 品质观察项与证明类型路由 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 可观察品质线索 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'claim_layer: 先把 可观察品质线索 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 proof-type taxonomy 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      certification / standard claim 的 route-away 规则 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 quality_observation -> proof_type
+      与 proof_type -> claim_routing 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 可观察品质线索：可观察品质线索 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；proof-type taxonomy：proof-type taxonomy
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；certification / standard claim 的 route-away 规则：certification / standard claim
+      的 route-away 规则 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；不得把局部观察写成整体保证：不得把局部观察写成整体保证 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是话术中的断言强度、证明类型、比较对象、来源缺口和证据等级，本条锚定《品质观察项与证明类型路由》；品质观察项与证明类型路由 不承接真实品牌、SKU、门店、人物或顾客反馈事实。
+
+      evidence_transformation: 转换规则把方法陈述、事实断言、效果暗示和证明需求拆开，本条锚定《品质观察项与证明类型路由》。只有方法层表达可保留为草案，硬事实与效果断言都转入证据需求或缺口，本条锚定《品质观察项与证明类型路由》。
+
+      boundary_logic: 边界逻辑禁止把无来源效果、整体保证、认证暗示和真实实例事实写成正文结论，本条锚定《品质观察项与证明类型路由》；缺证明时只保留问题结构和证明槽位。
+
+      anti_pattern_and_consequence: 反例是把比较维度写成优劣结论，或把品质观察写成性能保证，本条锚定《品质观察项与证明类型路由》；后果是方法草案越界成硬 claim。
+
+      downstream_use: 下游用于 evidence_policy_review、claim_boundary_check 和 source_gap_routing，不能直接形成发布稿或正式图谱边，本条锚定《品质观察项与证明类型路由》。'
+    owner_model:
+      semantic_owner: evidence_policy_boundary
+      storage_target: EvidencePolicyOutbox
+      artifact_kind: evidence_policy_candidate
+      consumer_layer: EvidencePolicyOutbox
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-009
+    source_holdout_draft_id: HOLDOUT-MB001-009
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_030
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-04
+    body_compiler_family: display_spatial_execution
+    canonical_cluster_title_from_authority: Look 拆解观察骨架
+    canonical_label_zh: Look 拆解观察骨架
+    candidate_topic: Look层级拆解维度 / 单套搭配与成组陈列的观察节点
+    cluster_specific_domain_question: Look 拆解观察骨架 要回答的是：当输入材料只给出 Look层级拆解维度 与 单套搭配与成组陈列的观察节点 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: Look 拆解观察骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 Look层级拆解维度 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'visual_mechanism_chain: 先把 Look层级拆解维度 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 单套搭配与成组陈列的观察节点 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      轮廓/层次/搭配位的命名边界 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 关联色彩故事节点 与 关联陈列区位节点 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: Look层级拆解维度：Look层级拆解维度 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；单套搭配与成组陈列的观察节点：单套搭配与成组陈列的观察节点
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；轮廓/层次/搭配位的命名边界：轮廓/层次/搭配位的命名边界 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；可拍摄的前景-主体-陪体结构：可拍摄的前景-主体-陪体结构
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是视觉焦点、动线节点、前景主体陪体关系、陈列区位和可拍摄动作，本条锚定《Look 拆解观察骨架》。Look 拆解观察骨架 只处理结构化观察，不写真实门店事实。
+
+      spatial_or_temporal_transformation: 转换规则把空间或时间顺序拆成“先看什么、如何命名、何时换层、如何连到内容角度”，本条锚定《Look 拆解观察骨架》；每一步都要能回到可观察对象。
+
+      boundary_logic: 边界逻辑禁止把陈列动作写成固定 SOP 事实，也禁止把观察提示当作正式执行指令，本条锚定《Look 拆解观察骨架》；缺少场景来源时保留为观察方法。
+
+      micro_scenario: 微场景是从入口远看发现主搭层级，再到近看识别陪体与动作节点，本条锚定《Look 拆解观察骨架》；若焦点、层级或动作缺失，正文转为问题清单，本条锚定《Look 拆解观察骨架》。
+
+      downstream_use: 下游用于 content_angle_selection、review_focus 和 execution_asset_hint 的草案判断，不写入正式执行资产，本条锚定《Look 拆解观察骨架》。'
+    owner_model:
+      semantic_owner: retail_display_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-010
+    source_holdout_draft_id: HOLDOUT-MB001-010
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_033
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-04
+    body_compiler_family: display_temporal_execution
+    canonical_cluster_title_from_authority: 门店日常动作观察切片
+    canonical_label_zh: 门店日常动作观察切片
+    candidate_topic: 开场准备类动作 / 整理/比对/讲解/递示等一般化动作
+    cluster_specific_domain_question: 门店日常动作观察切片 要回答的是：当输入材料只给出 开场准备类动作 与 整理/比对/讲解/递示等一般化动作 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 门店日常动作观察切片 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 开场准备类动作 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'visual_mechanism_chain: 先把 开场准备类动作 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 整理/比对/讲解/递示等一般化动作 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      动作前提与结束标志 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 连接陈列区位锚点 与 连接SOP节点 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 开场准备类动作：开场准备类动作 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；整理/比对/讲解/递示等一般化动作：整理/比对/讲解/递示等一般化动作
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；动作前提与结束标志：动作前提与结束标志 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；动作与场景道具的最小关系：动作与场景道具的最小关系
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是视觉焦点、动线节点、前景主体陪体关系、陈列区位和可拍摄动作，本条锚定《门店日常动作观察切片》。门店日常动作观察切片 只处理结构化观察，不写真实门店事实。
+
+      spatial_or_temporal_transformation: 转换规则把空间或时间顺序拆成“先看什么、如何命名、何时换层、如何连到内容角度”，本条锚定《门店日常动作观察切片》；每一步都要能回到可观察对象。
+
+      boundary_logic: 边界逻辑禁止把陈列动作写成固定 SOP 事实，也禁止把观察提示当作正式执行指令，本条锚定《门店日常动作观察切片》；缺少场景来源时保留为观察方法。
+
+      micro_scenario: 微场景是从入口远看发现主搭层级，再到近看识别陪体与动作节点，本条锚定《门店日常动作观察切片》；若焦点、层级或动作缺失，正文转为问题清单，本条锚定《门店日常动作观察切片》。
+
+      downstream_use: 下游用于 content_angle_selection、review_focus 和 execution_asset_hint 的草案判断，不写入正式执行资产，本条锚定《门店日常动作观察切片》。'
+    owner_model:
+      semantic_owner: retail_display_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-011
+    source_holdout_draft_id: HOLDOUT-MB001-011
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_036
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-04
+    body_compiler_family: display_temporal_execution
+    canonical_cluster_title_from_authority: 陈列动作 SOP 节点框架
+    canonical_label_zh: 陈列动作 SOP 节点框架
+    candidate_topic: 陈列前检查/实施/复核的一般节点 / 节点输入与节点输出
+    cluster_specific_domain_question: 陈列动作 SOP 节点框架 要回答的是：当输入材料只给出 陈列前检查/实施/复核的一般节点 与 节点输入与节点输出 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 陈列动作 SOP 节点框架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 陈列前检查/实施/复核的一般节点 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'visual_mechanism_chain: 先把 陈列前检查/实施/复核的一般节点 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 节点输入与节点输出 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      节点之间的依赖顺序 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 连接日常动作观察 与 连接培训演示结构 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 陈列前检查/实施/复核的一般节点：陈列前检查/实施/复核的一般节点 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；节点输入与节点输出：节点输入与节点输出
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；节点之间的依赖顺序：节点之间的依赖顺序 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；节点可见化表达：节点可见化表达
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是视觉焦点、动线节点、前景主体陪体关系、陈列区位和可拍摄动作，本条锚定《陈列动作 SOP 节点框架》。陈列动作 SOP 节点框架 只处理结构化观察，不写真实门店事实。
+
+      spatial_or_temporal_transformation: 转换规则把空间或时间顺序拆成“先看什么、如何命名、何时换层、如何连到内容角度”，本条锚定《陈列动作 SOP 节点框架》；每一步都要能回到可观察对象。
+
+      boundary_logic: 边界逻辑禁止把陈列动作写成固定 SOP 事实，也禁止把观察提示当作正式执行指令，本条锚定《陈列动作 SOP 节点框架》；缺少场景来源时保留为观察方法。
+
+      micro_scenario: 微场景是从入口远看发现主搭层级，再到近看识别陪体与动作节点，本条锚定《陈列动作 SOP 节点框架》；若焦点、层级或动作缺失，正文转为问题清单，本条锚定《陈列动作 SOP 节点框架》。
+
+      downstream_use: 下游用于 content_angle_selection、review_focus 和 execution_asset_hint 的草案判断，不写入正式执行资产，本条锚定《陈列动作 SOP 节点框架》。'
+    owner_model:
+      semantic_owner: retail_display_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-012
+    source_holdout_draft_id: HOLDOUT-MB001-012
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_020
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-03
+    body_compiler_family: product_material_observation_method
+    canonical_cluster_title_from_authority: 品类解释与属性槽位骨架
+    canonical_label_zh: 品类解释与属性槽位骨架
+    candidate_topic: 上装/下装/连衣类/外搭类等抽象品类分层 / 单品解释时可使用的通用属性槽位
+    cluster_specific_domain_question: 品类解释与属性槽位骨架 要回答的是：当输入材料只给出 上装/下装/连衣类/外搭类等抽象品类分层 与 单品解释时可使用的通用属性槽位 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 品类解释与属性槽位骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 上装/下装/连衣类/外搭类等抽象品类分层 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'product_mechanism_chain: 先把 上装/下装/连衣类/外搭类等抽象品类分层 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 单品解释时可使用的通用属性槽位
+      转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用 品类说明与真实 SKU 事实的切断规则 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 连接 RS01-CL02 属性槽位体系
+      与 为 RS02 面料/工艺与 RS03 claim 边界提供对象入口 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 上装/下装/连衣类/外搭类等抽象品类分层：上装/下装/连衣类/外搭类等抽象品类分层 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；单品解释时可使用的通用属性槽位：单品解释时可使用的通用属性槽位
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；品类说明与真实 SKU 事实的切断规则：品类说明与真实 SKU 事实的切断规则 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；面料/材质槽位：面料/材质槽位
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是品类名、属性槽位、面料家族、廓形线条、剪裁位置和搭配约束，本条锚定《品类解释与属性槽位骨架》。品类解释与属性槽位骨架 只处理可描述属性，不声明真实商品性能。
+
+      attribute_transformation: 转换规则把属性词拆成可观察形态、命名边界、组合条件和禁用推论，本条锚定《品类解释与属性槽位骨架》；当属性需要测试或来源时，正文只保留证明需求，本条锚定《品类解释与属性槽位骨架》。
+
+      boundary_logic: 边界逻辑禁止把面料、版型或剪裁术语写成体感保证、耐用保证或效果保证，本条锚定《品类解释与属性槽位骨架》；缺证据时保留为解释路径。
+
+      micro_scenario: 微场景是从单品外观识别轮廓，再把属性放入搭配语境，本条锚定《品类解释与属性槽位骨架》；如果属性无法观察或只能靠测试证明，则转入来源缺口，本条锚定《品类解释与属性槽位骨架》。
+
+      downstream_use: 下游用于 product_explainer_draft、styling_review_focus 和 safe_creative_alternative，不进入正式商品事实库，本条锚定《品类解释与属性槽位骨架》。'
+    owner_model:
+      semantic_owner: product_expression_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-013
+    source_holdout_draft_id: HOLDOUT-MB001-013
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_022
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-03
+    body_compiler_family: product_material_observation_method
+    canonical_cluster_title_from_authority: 面料家族与属性边界
+    canonical_label_zh: 面料家族与属性边界
+    candidate_topic: 纤维/纱线/面料层级区分 / 梭织/针织等结构差异的解释入口
+    cluster_specific_domain_question: 面料家族与属性边界 要回答的是：当输入材料只给出 纤维/纱线/面料层级区分 与 梭织/针织等结构差异的解释入口 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 面料家族与属性边界 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 纤维/纱线/面料层级区分 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'product_mechanism_chain: 先把 纤维/纱线/面料层级区分 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 梭织/针织等结构差异的解释入口
+      转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用 常见观察项与不可直接外推的性能项 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 承接 RS01-CL02 面料槽位
+      与 向 RS03-CL02 传递性能 claim 风险 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 纤维/纱线/面料层级区分：纤维/纱线/面料层级区分 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；梭织/针织等结构差异的解释入口：梭织/针织等结构差异的解释入口
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；常见观察项与不可直接外推的性能项：常见观察项与不可直接外推的性能项 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；手感词与事实词的边界：手感词与事实词的边界
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是品类名、属性槽位、面料家族、廓形线条、剪裁位置和搭配约束，本条锚定《面料家族与属性边界》。面料家族与属性边界 只处理可描述属性，不声明真实商品性能。
+
+      attribute_transformation: 转换规则把属性词拆成可观察形态、命名边界、组合条件和禁用推论，本条锚定《面料家族与属性边界》；当属性需要测试或来源时，正文只保留证明需求，本条锚定《面料家族与属性边界》。
+
+      boundary_logic: 边界逻辑禁止把面料、版型或剪裁术语写成体感保证、耐用保证或效果保证，本条锚定《面料家族与属性边界》；缺证据时保留为解释路径。
+
+      micro_scenario: 微场景是从单品外观识别轮廓，再把属性放入搭配语境，本条锚定《面料家族与属性边界》；如果属性无法观察或只能靠测试证明，则转入来源缺口，本条锚定《面料家族与属性边界》。
+
+      downstream_use: 下游用于 product_explainer_draft、styling_review_focus 和 safe_creative_alternative，不进入正式商品事实库，本条锚定《面料家族与属性边界》。'
+    owner_model:
+      semantic_owner: product_expression_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-REPAIR-014
+    source_holdout_draft_id: HOLDOUT-MB001-014
+    holdout_microbatch_id: holdout_microbatch_001_repair
+    selected_w7_cluster_id: mkc_024
+    selected_from_W7_authority: true
+    same_cluster_as_original_holdout: true
+    owner_capability_group: P0-03
+    body_compiler_family: styling_or_outfit_composition_method
+    canonical_cluster_title_from_authority: 版型廓形剪裁术语
+    canonical_label_zh: 版型廓形剪裁术语
+    candidate_topic: 版型与廓形区别 / 轮廓线、长度、宽窄、松量、重心等表达
+    cluster_specific_domain_question: 版型廓形剪裁术语 要回答的是：当输入材料只给出 版型与廓形区别 与 轮廓线、长度、宽窄、松量、重心等表达 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 版型廓形剪裁术语 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 版型与廓形区别 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    canonical_body_zh: 'product_mechanism_chain: 先把 版型与廓形区别 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。；再把 轮廓线、长度、宽窄、松量、重心等表达 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。；然后用
+      结构节点与视觉结果的关系提示 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。；最后把关系提示 连接 RS01-CL02 版型槽位 与 连接 RS03-CL01 体型效果语言阶梯 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+
+      expected_topic_coverage: 版型与廓形区别：版型与廓形区别 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；轮廓线、长度、宽窄、松量、重心等表达：轮廓线、长度、宽窄、松量、重心等表达
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；结构节点与视觉结果的关系提示：结构节点与视觉结果的关系提示 被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。；版型词与身材效果承诺的切断：版型词与身材效果承诺的切断
+      被写成一个可执行判断：将观察对象、判断条件和越界处理信号写成同一个可复核命题。
+
+      observable_input: 观察输入是品类名、属性槽位、面料家族、廓形线条、剪裁位置和搭配约束，本条锚定《版型廓形剪裁术语》。版型廓形剪裁术语 只处理可描述属性，不声明真实商品性能。
+
+      attribute_transformation: 转换规则把属性词拆成可观察形态、命名边界、组合条件和禁用推论，本条锚定《版型廓形剪裁术语》；当属性需要测试或来源时，正文只保留证明需求，本条锚定《版型廓形剪裁术语》。
+
+      boundary_logic: 边界逻辑禁止把面料、版型或剪裁术语写成体感保证、耐用保证或效果保证，本条锚定《版型廓形剪裁术语》；缺证据时保留为解释路径。
+
+      micro_scenario: 微场景是从单品外观识别轮廓，再把属性放入搭配语境，本条锚定《版型廓形剪裁术语》；如果属性无法观察或只能靠测试证明，则转入来源缺口，本条锚定《版型廓形剪裁术语》。
+
+      downstream_use: 下游用于 product_explainer_draft、styling_review_focus 和 safe_creative_alternative，不进入正式商品事实库，本条锚定《版型廓形剪裁术语》。'
+    owner_model:
+      semantic_owner: product_expression_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_status_marker: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    accepted_domain_knowledge: false
+    candidatepack_eligible: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    direct_publish_script: false

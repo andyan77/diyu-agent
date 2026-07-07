@@ -1,0 +1,275 @@
+holdout_mb001_repair_cluster_briefs:
+  items:
+  - draft_id: HOLDOUT-MB001-REPAIR-001
+    source_holdout_draft_id: HOLDOUT-MB001-001
+    canonical_cluster_id: mkc_002
+    canonical_title: 路由阶梯与降级触发
+    owner_capability_group: P0-00
+    expected_body_topics: &id001
+    - route 梯级定义
+    - degradation 类型
+    - soft fallback 与 hard block 区分
+    - review-only 与 source-gap 分流
+    required_relations:
+    - checker_result -> route_decision
+    - evidence_need_missing -> source_gap
+    - ontology_conflict -> decision_required
+    - risk_sensitive_override -> founder_review
+    cluster_domain_question: 路由阶梯与降级触发 要回答的是：当输入材料只给出 route 梯级定义 与 degradation 类型 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 路由阶梯与降级触发 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 route 梯级定义 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id001
+    must_not_be_only_boundary: true
+    owner_routing_risk: control_or_global_claim_boundary
+  - draft_id: HOLDOUT-MB001-REPAIR-002
+    source_holdout_draft_id: HOLDOUT-MB001-002
+    canonical_cluster_id: mkc_005
+    canonical_title: 能力组合与 strictest-wins 裁定
+    owner_capability_group: P0-00
+    expected_body_topics: &id002
+    - strictest-wins 原则
+    - control-plane 保留条件
+    - shared cluster 拆分条件
+    - 新轴新增禁令
+    required_relations:
+    - multi_capability_request -> composition_check
+    - composition_conflict -> decision_required
+    - support_only_context -> no_full_ontology
+    - strictest_rule -> final_route
+    cluster_domain_question: 能力组合与 strictest-wins 裁定 要回答的是：当输入材料只给出 strictest-wins 原则 与 control-plane 保留条件 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 能力组合与 strictest-wins 裁定 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 strictest-wins 原则
+      转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id002
+    must_not_be_only_boundary: true
+    owner_routing_risk: control_or_global_claim_boundary
+  - draft_id: HOLDOUT-MB001-REPAIR-003
+    source_holdout_draft_id: HOLDOUT-MB001-003
+    canonical_cluster_id: mkc_007
+    canonical_title: 企业叙事骨架
+    owner_capability_group: P0-01
+    expected_body_topics: &id003
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - 供应链 / 组织 / 过程证明的预留槽位
+    - 价值表达与可观察差异
+    required_relations:
+    - problem_domain -> operating_method
+    - operating_method -> proof_slot
+    - proof_slot -> value_expression
+    - value_expression -> series_axis
+    cluster_domain_question: 企业叙事骨架 要回答的是：当输入材料只给出 企业所回应的问题场景 与 组织性方法与长期选择 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 企业叙事骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 企业所回应的问题场景 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id003
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-004
+    source_holdout_draft_id: HOLDOUT-MB001-004
+    canonical_cluster_id: mkc_012
+    canonical_title: 系列轴与跨形态资产单元
+    owner_capability_group: P0-01
+    expected_body_topics: &id004
+    - 系列轴的类型与选用条件
+    - 序列编排逻辑与去重复机制
+    - proof cadence 与 topic cascade 的绑定
+    - 前台价值与后台能力穿插规则
+    required_relations:
+    - master_narrative -> series_axis
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - sequence_order -> repetition_control
+    cluster_domain_question: 系列轴与跨形态资产单元 要回答的是：当输入材料只给出 系列轴的类型与选用条件 与 序列编排逻辑与去重复机制 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 系列轴与跨形态资产单元 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 系列轴的类型与选用条件 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id004
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-005
+    source_holdout_draft_id: HOLDOUT-MB001-005
+    canonical_cluster_id: mkc_013
+    canonical_title: 角色发声寄存器
+    owner_capability_group: P0-02
+    expected_body_topics: &id005
+    - 主语选择与叙述站位
+    - 信息密度与限制语
+    - 动作词、观察词、解释词边界
+    - apparel / retail 场景中的 role anchor
+    required_relations:
+    - depends_on:P0-02-RS04-C01
+    - modulated_by:P0-02-RS03-C01
+    - shares_boundary_with:P0-01
+    cluster_domain_question: 角色发声寄存器 要回答的是：当输入材料只给出 主语选择与叙述站位 与 信息密度与限制语 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 角色发声寄存器 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 主语选择与叙述站位 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id005
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-006
+    source_holdout_draft_id: HOLDOUT-MB001-006
+    canonical_cluster_id: mkc_003
+    canonical_title: 全局 claim 与证据边界检查
+    owner_capability_group: P0-00
+    expected_body_topics: &id006
+    - claim 强度分层
+    - 方法陈述与事实断言切分
+    - source support 与 evidence support 区分
+    - GPT 草稿不可作 source anchor
+    required_relations:
+    - claim_strength -> evidence_need_class
+    - evidence_absence -> source_gap
+    - instance_fact -> excluded_or_decision_required
+    - claim_risk_override -> founder_review
+    cluster_domain_question: 全局 claim 与证据边界检查 要回答的是：当输入材料只给出 claim 强度分层 与 方法陈述与事实断言切分 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 全局 claim 与证据边界检查 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 claim 强度分层 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id006
+    must_not_be_only_boundary: true
+    owner_routing_risk: control_or_global_claim_boundary
+  - draft_id: HOLDOUT-MB001-REPAIR-007
+    source_holdout_draft_id: HOLDOUT-MB001-007
+    canonical_cluster_id: mkc_021
+    canonical_title: 同类比较维度与禁比边界
+    owner_capability_group: P0-03
+    expected_body_topics: &id007
+    - 同类之间可比的维度
+    - 不可直接比较的维度
+    - 比较时如何显示未知项
+    - 何时必须触发 source gap
+    required_relations:
+    - 依赖 RS01-CL02 属性槽位
+    - 与 RS03-CL02 claim 证据阶梯联动
+    cluster_domain_question: 同类比较维度与禁比边界 要回答的是：当输入材料只给出 同类之间可比的维度 与 不可直接比较的维度 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 同类比较维度与禁比边界 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 同类之间可比的维度 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id007
+    must_not_be_only_boundary: true
+    owner_routing_risk: control_or_global_claim_boundary
+  - draft_id: HOLDOUT-MB001-REPAIR-008
+    source_holdout_draft_id: HOLDOUT-MB001-008
+    canonical_cluster_id: mkc_028
+    canonical_title: 品质观察项与证明类型路由
+    owner_capability_group: P0-03
+    expected_body_topics: &id008
+    - 可观察品质线索
+    - proof-type taxonomy
+    - certification / standard claim 的 route-away 规则
+    - 不得把局部观察写成整体保证
+    required_relations:
+    - quality_observation -> proof_type
+    - proof_type -> claim_routing
+    - certification_signal -> higher_evidence_need
+    - unsupported_proof -> source_gap
+    cluster_domain_question: 品质观察项与证明类型路由 要回答的是：当输入材料只给出 可观察品质线索 与 proof-type taxonomy 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 品质观察项与证明类型路由 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 可观察品质线索 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id008
+    must_not_be_only_boundary: true
+    owner_routing_risk: control_or_global_claim_boundary
+  - draft_id: HOLDOUT-MB001-REPAIR-009
+    source_holdout_draft_id: HOLDOUT-MB001-009
+    canonical_cluster_id: mkc_030
+    canonical_title: Look 拆解观察骨架
+    owner_capability_group: P0-04
+    expected_body_topics: &id009
+    - Look层级拆解维度
+    - 单套搭配与成组陈列的观察节点
+    - 轮廓/层次/搭配位的命名边界
+    - 可拍摄的前景-主体-陪体结构
+    required_relations:
+    - 关联色彩故事节点
+    - 关联陈列区位节点
+    - 关联可拍摄动作节点
+    cluster_domain_question: Look 拆解观察骨架 要回答的是：当输入材料只给出 Look层级拆解维度 与 单套搭配与成组陈列的观察节点 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: Look 拆解观察骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 Look层级拆解维度 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id009
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-010
+    source_holdout_draft_id: HOLDOUT-MB001-010
+    canonical_cluster_id: mkc_033
+    canonical_title: 门店日常动作观察切片
+    owner_capability_group: P0-04
+    expected_body_topics: &id010
+    - 开场准备类动作
+    - 整理/比对/讲解/递示等一般化动作
+    - 动作前提与结束标志
+    - 动作与场景道具的最小关系
+    required_relations:
+    - 连接陈列区位锚点
+    - 连接SOP节点
+    - 连接风险边界cluster
+    cluster_domain_question: 门店日常动作观察切片 要回答的是：当输入材料只给出 开场准备类动作 与 整理/比对/讲解/递示等一般化动作 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 门店日常动作观察切片 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 开场准备类动作 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id010
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-011
+    source_holdout_draft_id: HOLDOUT-MB001-011
+    canonical_cluster_id: mkc_036
+    canonical_title: 陈列动作 SOP 节点框架
+    owner_capability_group: P0-04
+    expected_body_topics: &id011
+    - 陈列前检查/实施/复核的一般节点
+    - 节点输入与节点输出
+    - 节点之间的依赖顺序
+    - 节点可见化表达
+    required_relations:
+    - 连接日常动作观察
+    - 连接培训演示结构
+    - 连接异常处理cluster
+    cluster_domain_question: 陈列动作 SOP 节点框架 要回答的是：当输入材料只给出 陈列前检查/实施/复核的一般节点 与 节点输入与节点输出 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 陈列动作 SOP 节点框架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 陈列前检查/实施/复核的一般节点 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id011
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-012
+    source_holdout_draft_id: HOLDOUT-MB001-012
+    canonical_cluster_id: mkc_020
+    canonical_title: 品类解释与属性槽位骨架
+    owner_capability_group: P0-03
+    expected_body_topics: &id012
+    - 上装/下装/连衣类/外搭类等抽象品类分层
+    - 单品解释时可使用的通用属性槽位
+    - 品类说明与真实 SKU 事实的切断规则
+    - 面料/材质槽位
+    required_relations:
+    - 连接 RS01-CL02 属性槽位体系
+    - 为 RS02 面料/工艺与 RS03 claim 边界提供对象入口
+    - 承接 RS01-CL01 的品类入口
+    - 向 RS02/RS03/RS04 分发属性研究任务
+    cluster_domain_question: 品类解释与属性槽位骨架 要回答的是：当输入材料只给出 上装/下装/连衣类/外搭类等抽象品类分层 与 单品解释时可使用的通用属性槽位 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 品类解释与属性槽位骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 上装/下装/连衣类/外搭类等抽象品类分层 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id012
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-013
+    source_holdout_draft_id: HOLDOUT-MB001-013
+    canonical_cluster_id: mkc_022
+    canonical_title: 面料家族与属性边界
+    owner_capability_group: P0-03
+    expected_body_topics: &id013
+    - 纤维/纱线/面料层级区分
+    - 梭织/针织等结构差异的解释入口
+    - 常见观察项与不可直接外推的性能项
+    - 手感词与事实词的边界
+    required_relations:
+    - 承接 RS01-CL02 面料槽位
+    - 向 RS03-CL02 传递性能 claim 风险
+    - 向 RS04-CL02 提供质量观察项
+    cluster_domain_question: 面料家族与属性边界 要回答的是：当输入材料只给出 纤维/纱线/面料层级区分 与 梭织/针织等结构差异的解释入口 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 面料家族与属性边界 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 纤维/纱线/面料层级区分 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id013
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft
+  - draft_id: HOLDOUT-MB001-REPAIR-014
+    source_holdout_draft_id: HOLDOUT-MB001-014
+    canonical_cluster_id: mkc_024
+    canonical_title: 版型廓形剪裁术语
+    owner_capability_group: P0-03
+    expected_body_topics: &id014
+    - 版型与廓形区别
+    - 轮廓线、长度、宽窄、松量、重心等表达
+    - 结构节点与视觉结果的关系提示
+    - 版型词与身材效果承诺的切断
+    required_relations:
+    - 连接 RS01-CL02 版型槽位
+    - 连接 RS03-CL01 体型效果语言阶梯
+    - 连接 RS04-CL04 画面示意方式
+    cluster_domain_question: 版型廓形剪裁术语 要回答的是：当输入材料只给出 版型与廓形区别 与 轮廓线、长度、宽窄、松量、重心等表达 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    cluster_specific_mechanism_claim: 版型廓形剪裁术语 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 版型与廓形区别 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    must_cover_topics: *id014
+    must_not_be_only_boundary: true
+    owner_routing_risk: standard_method_draft

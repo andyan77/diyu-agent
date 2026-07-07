@@ -15,6 +15,7 @@ import yaml
 TASK_ID = "CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001"
 PREVIOUS_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001"
 NEXT_STEP = "CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001"
+REPAIR_NEXT_STEP = "HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_MIN = 12
 EXPECTED_MAX = 16
@@ -115,8 +116,8 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("task_id mismatch")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") != NEXT_STEP:
-        errors.append("current_next_step must be holdout microbatch judge")
+    if data.get("current_next_step") not in {NEXT_STEP, REPAIR_NEXT_STEP}:
+        errors.append("current_next_step must be holdout microbatch judge or repair judge")
     count = int(data.get("holdout_count", 0))
     if count < EXPECTED_MIN or count > EXPECTED_MAX:
         errors.append("holdout_count must be 12..16")
@@ -182,10 +183,21 @@ def validate_status(workspace: Path) -> dict[str, Any]:
     phase = status.get("phase", {})
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
-    if phase.get("current_next_step") != NEXT_STEP:
-        fail("workspace next step must be holdout microbatch judge")
-    if phase.get("previous_step") != TASK_ID:
+    current_next_step = phase.get("current_next_step")
+    if current_next_step not in {NEXT_STEP, REPAIR_NEXT_STEP}:
+        fail("workspace next step must be holdout microbatch judge or repair judge")
+    if current_next_step == NEXT_STEP and phase.get("previous_step") != TASK_ID:
         fail("workspace previous step must be holdout task")
+    if current_next_step == REPAIR_NEXT_STEP:
+        repair = status.get("holdout_mb001_repair", {})
+        if repair.get("task_id") != "HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001" or repair.get("status") != "completed":
+            fail("repair judge route requires completed holdout_mb001_repair block")
+        if repair.get("repair_count") != 14:
+            fail("repair judge route requires 14 repair drafts")
+        if repair.get("accepted_domain_knowledge_count") != 0:
+            fail("repair judge route requires accepted_domain_knowledge_count 0")
+        assert_false(repair.get("batch_generation_unlocked"), "repair batch_generation_unlocked")
+        assert_false(repair.get("ready_for_first_batch_generation"), "repair ready_for_first_batch_generation")
     closeout = status.get("v4_7_pass_closeout", {})
     if closeout.get("task_id") != TASK_ID or closeout.get("status") != "completed":
         fail("v4_7_pass_closeout block missing")

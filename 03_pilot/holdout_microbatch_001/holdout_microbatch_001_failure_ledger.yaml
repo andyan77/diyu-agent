@@ -1,0 +1,41 @@
+holdout_microbatch_001_failure_ledger:
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision_scope: holdout_mb001_no_go_for_batch_and_repair_authorized
+    decision_effect:
+    - supersede_report_only_judge
+    - allow_failure_closeout
+    - allow_same_14_cluster_repair
+    does_not_authorize:
+    - batch_generation
+    - candidatepack
+    - KE
+    - RAG
+    - DIFY
+  failure_codes:
+    HB001_WRITER_INSTRUCTION_IN_BODY:
+      blocking: true
+      description: Rich Body contains instructions about how the body should be generated or reviewed.
+    HB002_PILOT_OR_REVISION_LANGUAGE_IN_BODY:
+      blocking: true
+      description: Rich Body or capsule contains stage, validation, migration, or status narration.
+    HB003_NORMALIZED_SENTENCE_REUSE:
+      blocking: true
+      description: Normalized sentence reused across multiple cards beyond shared doctrine allowance.
+    HB004_COMPILER_SHAPE_MISMATCH:
+      blocking: true
+      description: Declared body_compiler_family does not match actual Rich Body section structure.
+    HB005_EXPECTED_BODY_TOPICS_NOT_ENTAILED:
+      blocking: true
+      description: W7 expected body topics are mentioned as obligations but not semantically expanded.
+    HB006_CONTROL_OR_EVIDENCE_OWNER_MISROUTED_TO_GKB:
+      blocking: true
+      description: P0-00/control/claim-evidence governance item is routed to GeneralKnowledgeBase without explicit owner decision.
+    HB007_INDEX_CAPSULE_OR_META_TEMPLATE:
+      blocking: true
+      description: Capsule describes processing steps rather than cluster-specific domain mechanism.
+    HB008_CHECKER_FALSE_GREEN:
+      blocking: true
+      description: Existing checker passed while semantic transfer failed.

@@ -1,0 +1,464 @@
+holdout_mb001_repair_mechanism_plans:
+  items:
+  - draft_id: HOLDOUT-MB001-REPAIR-001
+    selected_w7_cluster_id: mkc_002
+    body_compiler_family: control_plane_route
+    mechanism_chain:
+    - 先把 route 梯级定义 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 degradation 类型 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 soft fallback 与 hard block 区分 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 checker_result -> route_decision 与 evidence_need_missing -> source_gap 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - route 梯级定义
+    - degradation 类型
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - GenerationContract
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_002 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-002
+    selected_w7_cluster_id: mkc_005
+    body_compiler_family: asset_binding_policy
+    mechanism_chain:
+    - 先把 strictest-wins 原则 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 control-plane 保留条件 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 shared cluster 拆分条件 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 multi_capability_request -> composition_check 与 composition_conflict -> decision_required 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - strictest-wins 原则
+    - control-plane 保留条件
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - GenerationContract
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_005 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-003
+    selected_w7_cluster_id: mkc_007
+    body_compiler_family: content_story_method
+    mechanism_chain:
+    - 先把 企业所回应的问题场景 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 组织性方法与长期选择 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 供应链 / 组织 / 过程证明的预留槽位 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 problem_domain -> operating_method 与 operating_method -> proof_slot 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_007 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-004
+    selected_w7_cluster_id: mkc_012
+    body_compiler_family: content_story_method
+    mechanism_chain:
+    - 先把 系列轴的类型与选用条件 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 序列编排逻辑与去重复机制 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 proof cadence 与 topic cascade 的绑定 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 master_narrative -> series_axis 与 series_axis -> episode_unit 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 系列轴的类型与选用条件
+    - 序列编排逻辑与去重复机制
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_012 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-005
+    selected_w7_cluster_id: mkc_013
+    body_compiler_family: anchor_composition_method
+    mechanism_chain:
+    - 先把 主语选择与叙述站位 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 信息密度与限制语 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 动作词、观察词、解释词边界 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 depends_on:P0-02-RS04-C01 与 modulated_by:P0-02-RS03-C01 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 主语选择与叙述站位
+    - 信息密度与限制语
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_013 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-006
+    selected_w7_cluster_id: mkc_003
+    body_compiler_family: claim_boundary
+    mechanism_chain:
+    - 先把 claim 强度分层 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 方法陈述与事实断言切分 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 source support 与 evidence support 区分 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 claim_strength -> evidence_need_class 与 evidence_absence -> source_gap 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - claim 强度分层
+    - 方法陈述与事实断言切分
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - EvidencePolicyOutbox
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_003 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-007
+    selected_w7_cluster_id: mkc_021
+    body_compiler_family: claim_boundary
+    mechanism_chain:
+    - 先把 同类之间可比的维度 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 不可直接比较的维度 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 比较时如何显示未知项 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 依赖 RS01-CL02 属性槽位 与 与 RS03-CL02 claim 证据阶梯联动 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 同类之间可比的维度
+    - 不可直接比较的维度
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - EvidencePolicyOutbox
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_021 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-008
+    selected_w7_cluster_id: mkc_028
+    body_compiler_family: claim_boundary
+    mechanism_chain:
+    - 先把 可观察品质线索 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 proof-type taxonomy 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 certification / standard claim 的 route-away 规则 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 quality_observation -> proof_type 与 proof_type -> claim_routing 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 可观察品质线索
+    - proof-type taxonomy
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - EvidencePolicyOutbox
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_028 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-009
+    selected_w7_cluster_id: mkc_030
+    body_compiler_family: display_spatial_execution
+    mechanism_chain:
+    - 先把 Look层级拆解维度 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 单套搭配与成组陈列的观察节点 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 轮廓/层次/搭配位的命名边界 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 关联色彩故事节点 与 关联陈列区位节点 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - Look层级拆解维度
+    - 单套搭配与成组陈列的观察节点
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_030 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-010
+    selected_w7_cluster_id: mkc_033
+    body_compiler_family: display_temporal_execution
+    mechanism_chain:
+    - 先把 开场准备类动作 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 整理/比对/讲解/递示等一般化动作 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 动作前提与结束标志 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 连接陈列区位锚点 与 连接SOP节点 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 开场准备类动作
+    - 整理/比对/讲解/递示等一般化动作
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_033 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-011
+    selected_w7_cluster_id: mkc_036
+    body_compiler_family: display_temporal_execution
+    mechanism_chain:
+    - 先把 陈列前检查/实施/复核的一般节点 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 节点输入与节点输出 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 节点之间的依赖顺序 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 连接日常动作观察 与 连接培训演示结构 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 陈列前检查/实施/复核的一般节点
+    - 节点输入与节点输出
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_036 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-012
+    selected_w7_cluster_id: mkc_020
+    body_compiler_family: product_material_observation_method
+    mechanism_chain:
+    - 先把 上装/下装/连衣类/外搭类等抽象品类分层 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 单品解释时可使用的通用属性槽位 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 品类说明与真实 SKU 事实的切断规则 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 连接 RS01-CL02 属性槽位体系 与 为 RS02 面料/工艺与 RS03 claim 边界提供对象入口 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 上装/下装/连衣类/外搭类等抽象品类分层
+    - 单品解释时可使用的通用属性槽位
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_020 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-013
+    selected_w7_cluster_id: mkc_022
+    body_compiler_family: product_material_observation_method
+    mechanism_chain:
+    - 先把 纤维/纱线/面料层级区分 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 梭织/针织等结构差异的解释入口 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 常见观察项与不可直接外推的性能项 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 承接 RS01-CL02 面料槽位 与 向 RS03-CL02 传递性能 claim 风险 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 纤维/纱线/面料层级区分
+    - 梭织/针织等结构差异的解释入口
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_022 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.
+  - draft_id: HOLDOUT-MB001-REPAIR-014
+    selected_w7_cluster_id: mkc_024
+    body_compiler_family: styling_or_outfit_composition_method
+    mechanism_chain:
+    - 先把 版型与廓形区别 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 轮廓线、长度、宽窄、松量、重心等表达 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 结构节点与视觉结果的关系提示 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    - 最后把关系提示 连接 RS01-CL02 版型槽位 与 连接 RS03-CL01 体型效果语言阶梯 降为设计线索，正文只解释机制路径，不声明正式图谱边。
+    observable_objects_or_inputs:
+    - 版型与廓形区别
+    - 轮廓线、长度、宽窄、松量、重心等表达
+    - source_gap_signal
+    - owner_boundary_signal
+    transformation_rules:
+    - turn topic into observable object or operational trigger
+    - turn relation hint into design-only reasoning path
+    - route unsupported fact or global control item away from formal landing
+    boundary_conditions:
+    - no_real_instance_fact
+    - no_direct_publish_script
+    - no_formal_relation_graph
+    - no_batch_unlock
+    failure_modes:
+    - writer_instruction_body
+    - index_only_capsule
+    - topic_named_without_proposition
+    - boundary_only_body
+    downstream_consumers:
+    - judge_review_queue
+    - method_review_focus
+    - L2_PlayCardCandidate
+    contrast_with_nearest_holdout_or_sampled_cluster: mkc_024 keeps its own expected topics and does not reuse the repaired
+      8-sample wording.

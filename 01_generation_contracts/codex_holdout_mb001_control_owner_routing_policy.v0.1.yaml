@@ -1,0 +1,25 @@
+control_owner_routing_policy:
+  schema_version: v0.1
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  p0_00_or_global_control_items:
+    default_storage_target:
+    - ControlPlaneContractSource
+    - GovernanceOutbox
+    - EvidencePolicyOutbox
+    forbidden_without_decision:
+    - GeneralKnowledgeBase
+  claim_evidence_global_boundary_items:
+    allowed_storage_targets:
+    - EvidencePolicyOutbox
+    - ControlPlaneContractSource
+    - GovernanceOutbox
+    requires_decision_if:
+    - proposed_storage_target_is_GeneralKnowledgeBase
+  decision_required_record:
+    required_fields:
+    - item_id
+    - mkc_id
+    - proposed_owner
+    - reason_for_risk
+    - safe_default_owner
+    - downstream_blocked_until_decision

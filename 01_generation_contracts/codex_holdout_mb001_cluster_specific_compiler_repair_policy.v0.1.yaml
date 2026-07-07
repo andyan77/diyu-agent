@@ -1,0 +1,45 @@
+cluster_specific_compiler_repair_policy:
+  schema_version: v0.1
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  cluster_specific_compiler_pipeline:
+    step_1_w7_cluster_brief:
+      input:
+      - canonical_cluster_id
+      - canonical_title
+      - owner_capability_group
+      - expected_body_topics
+      - required_relations
+      - forbidden_owner_or_storage_target_if_any
+      output:
+      - cluster_domain_question
+      - cluster_specific_mechanism_claim
+      - must_cover_topics
+      - must_not_be_only_boundary
+      - owner_routing_risk
+    step_2_type_specific_mechanism_plan:
+      output:
+      - mechanism_chain
+      - observable_objects_or_inputs
+      - transformation_rules
+      - boundary_conditions
+      - failure_modes
+      - downstream_consumers
+      - contrast_with_nearest_holdout_or_sampled_cluster
+    step_3_rich_body_compiler:
+      output:
+      - knowledge_capsule
+      - complete_rich_body
+      - creative_value_block_or_control_body
+      - epistemic_labels
+      - governance_sidecar
+      - relation_design_hints
+      hard_rule: The rich body must explain the cluster-specific domain mechanism now. It must not say that a later stage
+        should explain it.
+    step_4_entailment_and_anti_boilerplate_checker:
+      must_fail:
+      - body_contains_writer_instruction
+      - body_contains_pilot_or_revision_language
+      - normalized_sentence_reused_across_multiple_cards
+      - compiler_shape_not_match_artifact_kind
+      - expected_body_topics_not_semantically_covered
+      - owner_routing_risk_unresolved

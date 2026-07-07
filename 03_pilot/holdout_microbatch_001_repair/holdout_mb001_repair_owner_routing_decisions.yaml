@@ -1,0 +1,156 @@
+holdout_mb001_repair_owner_routing_decisions:
+  items:
+  - draft_id: HOLDOUT-MB001-REPAIR-001
+    mkc_id: mkc_002
+    owner_capability_group: P0-00
+    body_compiler_family: control_plane_route
+    proposed_owner: governance_control_plane
+    proposed_storage_target: ControlPlaneContractSource
+    risk_class: control_or_global_claim_boundary
+    reason_for_risk: P0-00 control or claim evidence boundary requires non-GKB safe default
+    safe_default_owner: ControlPlaneContractSource
+    downstream_blocked_until_decision: true
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-002
+    mkc_id: mkc_005
+    owner_capability_group: P0-00
+    body_compiler_family: asset_binding_policy
+    proposed_owner: governance_control_plane
+    proposed_storage_target: GovernanceOutbox
+    risk_class: control_or_global_claim_boundary
+    reason_for_risk: P0-00 control or claim evidence boundary requires non-GKB safe default
+    safe_default_owner: GovernanceOutbox
+    downstream_blocked_until_decision: true
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-003
+    mkc_id: mkc_007
+    owner_capability_group: P0-01
+    body_compiler_family: content_story_method
+    proposed_owner: creative_content_operating
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-004
+    mkc_id: mkc_012
+    owner_capability_group: P0-01
+    body_compiler_family: content_story_method
+    proposed_owner: creative_content_operating
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-005
+    mkc_id: mkc_013
+    owner_capability_group: P0-02
+    body_compiler_family: anchor_composition_method
+    proposed_owner: creative_content_operating
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-006
+    mkc_id: mkc_003
+    owner_capability_group: P0-00
+    body_compiler_family: claim_boundary
+    proposed_owner: evidence_policy_boundary
+    proposed_storage_target: EvidencePolicyOutbox
+    risk_class: control_or_global_claim_boundary
+    reason_for_risk: P0-00 control or claim evidence boundary requires non-GKB safe default
+    safe_default_owner: EvidencePolicyOutbox
+    downstream_blocked_until_decision: true
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-007
+    mkc_id: mkc_021
+    owner_capability_group: P0-03
+    body_compiler_family: claim_boundary
+    proposed_owner: evidence_policy_boundary
+    proposed_storage_target: EvidencePolicyOutbox
+    risk_class: control_or_global_claim_boundary
+    reason_for_risk: P0-00 control or claim evidence boundary requires non-GKB safe default
+    safe_default_owner: EvidencePolicyOutbox
+    downstream_blocked_until_decision: true
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-008
+    mkc_id: mkc_028
+    owner_capability_group: P0-03
+    body_compiler_family: claim_boundary
+    proposed_owner: evidence_policy_boundary
+    proposed_storage_target: EvidencePolicyOutbox
+    risk_class: control_or_global_claim_boundary
+    reason_for_risk: P0-00 control or claim evidence boundary requires non-GKB safe default
+    safe_default_owner: EvidencePolicyOutbox
+    downstream_blocked_until_decision: true
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-009
+    mkc_id: mkc_030
+    owner_capability_group: P0-04
+    body_compiler_family: display_spatial_execution
+    proposed_owner: retail_display_method
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-010
+    mkc_id: mkc_033
+    owner_capability_group: P0-04
+    body_compiler_family: display_temporal_execution
+    proposed_owner: retail_display_method
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-011
+    mkc_id: mkc_036
+    owner_capability_group: P0-04
+    body_compiler_family: display_temporal_execution
+    proposed_owner: retail_display_method
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-012
+    mkc_id: mkc_020
+    owner_capability_group: P0-03
+    body_compiler_family: product_material_observation_method
+    proposed_owner: product_expression_method
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-013
+    mkc_id: mkc_022
+    owner_capability_group: P0-03
+    body_compiler_family: product_material_observation_method
+    proposed_owner: product_expression_method
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false
+  - draft_id: HOLDOUT-MB001-REPAIR-014
+    mkc_id: mkc_024
+    owner_capability_group: P0-03
+    body_compiler_family: styling_or_outfit_composition_method
+    proposed_owner: product_expression_method
+    proposed_storage_target: GeneralKnowledgeBase
+    risk_class: standard_method_draft
+    reason_for_risk: ''
+    safe_default_owner: GeneralKnowledgeBase
+    downstream_blocked_until_decision: false
+    GeneralKnowledgeBase_without_decision: false

@@ -38,6 +38,7 @@ SEMANTIC_V4_5_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_6_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_7_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001"
 HOLDOUT_MICROBATCH_JUDGE_NEXT_STEP = "CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001"
+HOLDOUT_REPAIR_JUDGE_NEXT_STEP = "HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001"
 BATCH_GENERATION_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 SMOKE_FIXTURE_CLASSIFICATION = "schema_route_provenance_smoke_fixture"
 SELF_CHECK_TERMS = {
@@ -316,6 +317,7 @@ def validate_fixture_model(model: dict[str, Any], schema: dict[str, Any]) -> lis
         SEMANTIC_V4_6_JUDGE_NEXT_STEP,
         SEMANTIC_V4_7_JUDGE_NEXT_STEP,
         HOLDOUT_MICROBATCH_JUDGE_NEXT_STEP,
+        HOLDOUT_REPAIR_JUDGE_NEXT_STEP,
     }
     if current_next_step not in allowed_next_steps:
         errors.append("current next step must be pilot judge review, semantic pilot regen, semantic judge go/no-go, semantic v3 judge go/no-go, semantic v4 judge go/no-go, semantic v4.1 judge go/no-go, semantic v4.2 judge go/no-go, or semantic v4.3 judge go/no-go or semantic v4.4 judge go/no-go")
@@ -640,6 +642,28 @@ def validate_workspace_route(status: dict[str, Any]) -> dict[str, Any]:
             "holdout_count": holdout.get("holdout_count"),
             "accepted_domain_knowledge_count": holdout.get("accepted_domain_knowledge_count"),
             "batch_generation_unlocked": holdout.get("batch_generation_unlocked"),
+        }
+
+    if current_next_step == HOLDOUT_REPAIR_JUDGE_NEXT_STEP:
+        repair = status.get("holdout_mb001_repair", {})
+        if repair.get("task_id") != "HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001" or repair.get("status") != "completed":
+            fail("holdout repair judge route requires completed holdout_mb001_repair block")
+        if repair.get("repair_count") != 14:
+            fail("holdout repair judge route requires 14 repair drafts")
+        if repair.get("same_cluster_ids_as_original") is not True:
+            fail("holdout repair judge route requires same original cluster ids")
+        if repair.get("accepted_domain_knowledge_count") != 0:
+            fail("holdout repair judge route requires accepted_domain_knowledge_count 0")
+        if repair.get("batch_generation_unlocked") is True:
+            fail("holdout repair judge route must keep batch_generation_unlocked false")
+        if repair.get("ready_for_first_batch_generation") is True:
+            fail("holdout repair judge route must keep ready_for_first_batch_generation false")
+        return {
+            "route_validation_mode": "post_holdout_mb001_repair_judge_go_nogo",
+            "current_workspace_next_step": current_next_step,
+            "repair_count": repair.get("repair_count"),
+            "accepted_domain_knowledge_count": repair.get("accepted_domain_knowledge_count"),
+            "batch_generation_unlocked": repair.get("batch_generation_unlocked"),
         }
     fail("workspace next step must be a known pilot/semantic judge handoff and must not be batch generation")
 

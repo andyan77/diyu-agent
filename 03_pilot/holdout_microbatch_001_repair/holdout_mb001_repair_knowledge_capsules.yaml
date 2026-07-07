@@ -1,0 +1,296 @@
+holdout_mb001_repair_knowledge_capsules:
+  items:
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-001
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-001
+    selected_w7_cluster_id: mkc_002
+    canonical_title: 路由阶梯与降级触发
+    domain_question: 路由阶梯与降级触发 要回答的是：当输入材料只给出 route 梯级定义 与 degradation 类型 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 路由阶梯与降级触发 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 route 梯级定义 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - route 梯级定义
+    - degradation 类型
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 route 梯级定义 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 degradation 类型 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 soft fallback 与 hard block 区分 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-002
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-002
+    selected_w7_cluster_id: mkc_005
+    canonical_title: 能力组合与 strictest-wins 裁定
+    domain_question: 能力组合与 strictest-wins 裁定 要回答的是：当输入材料只给出 strictest-wins 原则 与 control-plane 保留条件 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 能力组合与 strictest-wins 裁定 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 strictest-wins 原则 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - strictest-wins 原则
+    - control-plane 保留条件
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 strictest-wins 原则 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 control-plane 保留条件 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 shared cluster 拆分条件 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-003
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-003
+    selected_w7_cluster_id: mkc_007
+    canonical_title: 企业叙事骨架
+    domain_question: 企业叙事骨架 要回答的是：当输入材料只给出 企业所回应的问题场景 与 组织性方法与长期选择 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 企业叙事骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 企业所回应的问题场景 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 企业所回应的问题场景 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 组织性方法与长期选择 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 供应链 / 组织 / 过程证明的预留槽位 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-004
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-004
+    selected_w7_cluster_id: mkc_012
+    canonical_title: 系列轴与跨形态资产单元
+    domain_question: 系列轴与跨形态资产单元 要回答的是：当输入材料只给出 系列轴的类型与选用条件 与 序列编排逻辑与去重复机制 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 系列轴与跨形态资产单元 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 系列轴的类型与选用条件 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 系列轴的类型与选用条件
+    - 序列编排逻辑与去重复机制
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 系列轴的类型与选用条件 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 序列编排逻辑与去重复机制 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 proof cadence 与 topic cascade 的绑定 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-005
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-005
+    selected_w7_cluster_id: mkc_013
+    canonical_title: 角色发声寄存器
+    domain_question: 角色发声寄存器 要回答的是：当输入材料只给出 主语选择与叙述站位 与 信息密度与限制语 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 角色发声寄存器 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 主语选择与叙述站位 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 主语选择与叙述站位
+    - 信息密度与限制语
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 主语选择与叙述站位 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 信息密度与限制语 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 动作词、观察词、解释词边界 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-006
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-006
+    selected_w7_cluster_id: mkc_003
+    canonical_title: 全局 claim 与证据边界检查
+    domain_question: 全局 claim 与证据边界检查 要回答的是：当输入材料只给出 claim 强度分层 与 方法陈述与事实断言切分 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 全局 claim 与证据边界检查 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 claim 强度分层 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - claim 强度分层
+    - 方法陈述与事实断言切分
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 claim 强度分层 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 方法陈述与事实断言切分 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 source support 与 evidence support 区分 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-007
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-007
+    selected_w7_cluster_id: mkc_021
+    canonical_title: 同类比较维度与禁比边界
+    domain_question: 同类比较维度与禁比边界 要回答的是：当输入材料只给出 同类之间可比的维度 与 不可直接比较的维度 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 同类比较维度与禁比边界 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 同类之间可比的维度 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 同类之间可比的维度
+    - 不可直接比较的维度
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 同类之间可比的维度 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 不可直接比较的维度 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 比较时如何显示未知项 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-008
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-008
+    selected_w7_cluster_id: mkc_028
+    canonical_title: 品质观察项与证明类型路由
+    domain_question: 品质观察项与证明类型路由 要回答的是：当输入材料只给出 可观察品质线索 与 proof-type taxonomy 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 品质观察项与证明类型路由 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 可观察品质线索 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 可观察品质线索
+    - proof-type taxonomy
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 可观察品质线索 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 proof-type taxonomy 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 certification / standard claim 的 route-away 规则 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-009
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-009
+    selected_w7_cluster_id: mkc_030
+    canonical_title: Look 拆解观察骨架
+    domain_question: Look 拆解观察骨架 要回答的是：当输入材料只给出 Look层级拆解维度 与 单套搭配与成组陈列的观察节点 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: Look 拆解观察骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 Look层级拆解维度 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - Look层级拆解维度
+    - 单套搭配与成组陈列的观察节点
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 Look层级拆解维度 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 单套搭配与成组陈列的观察节点 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 轮廓/层次/搭配位的命名边界 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-010
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-010
+    selected_w7_cluster_id: mkc_033
+    canonical_title: 门店日常动作观察切片
+    domain_question: 门店日常动作观察切片 要回答的是：当输入材料只给出 开场准备类动作 与 整理/比对/讲解/递示等一般化动作 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 门店日常动作观察切片 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 开场准备类动作 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 开场准备类动作
+    - 整理/比对/讲解/递示等一般化动作
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 开场准备类动作 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 整理/比对/讲解/递示等一般化动作 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 动作前提与结束标志 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-011
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-011
+    selected_w7_cluster_id: mkc_036
+    canonical_title: 陈列动作 SOP 节点框架
+    domain_question: 陈列动作 SOP 节点框架 要回答的是：当输入材料只给出 陈列前检查/实施/复核的一般节点 与 节点输入与节点输出 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 陈列动作 SOP 节点框架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 陈列前检查/实施/复核的一般节点 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 陈列前检查/实施/复核的一般节点
+    - 节点输入与节点输出
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 陈列前检查/实施/复核的一般节点 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 节点输入与节点输出 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 节点之间的依赖顺序 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-012
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-012
+    selected_w7_cluster_id: mkc_020
+    canonical_title: 品类解释与属性槽位骨架
+    domain_question: 品类解释与属性槽位骨架 要回答的是：当输入材料只给出 上装/下装/连衣类/外搭类等抽象品类分层 与 单品解释时可使用的通用属性槽位 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 品类解释与属性槽位骨架 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 上装/下装/连衣类/外搭类等抽象品类分层 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 上装/下装/连衣类/外搭类等抽象品类分层
+    - 单品解释时可使用的通用属性槽位
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 上装/下装/连衣类/外搭类等抽象品类分层 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 单品解释时可使用的通用属性槽位 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 品类说明与真实 SKU 事实的切断规则 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-013
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-013
+    selected_w7_cluster_id: mkc_022
+    canonical_title: 面料家族与属性边界
+    domain_question: 面料家族与属性边界 要回答的是：当输入材料只给出 纤维/纱线/面料层级区分 与 梭织/针织等结构差异的解释入口 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 面料家族与属性边界 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 纤维/纱线/面料层级区分 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 纤维/纱线/面料层级区分
+    - 梭织/针织等结构差异的解释入口
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 纤维/纱线/面料层级区分 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 梭织/针织等结构差异的解释入口 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 常见观察项与不可直接外推的性能项 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。
+  - draft_id: HOLDOUT-MB001-REPAIR-REPAIR-014
+    source_holdout_draft_id: HOLDOUT-MB001-REPAIR-014
+    selected_w7_cluster_id: mkc_024
+    canonical_title: 版型廓形剪裁术语
+    domain_question: 版型廓形剪裁术语 要回答的是：当输入材料只给出 版型与廓形区别 与 轮廓线、长度、宽窄、松量、重心等表达 时，如何判断它应形成哪一种结构化判断，而不是停留在题名索引。
+    core_mechanism: 版型廓形剪裁术语 的核心机制是把“观察对象、判断条件、边界信号、下游用途”连成一个闭环；每个判断都要把 版型与廓形区别 转化为可复核的中间规则，再由边界信号决定是否保留为方法、证据边界或控制项。
+    observable_or_operational_inputs:
+    - 版型与廓形区别
+    - 轮廓线、长度、宽窄、松量、重心等表达
+    - owner_routing_signal
+    - source_gap_signal
+    transformation_or_decision_rule:
+    - 先把 版型与廓形区别 转成可观察对象：它说明输入材料里哪些词、结构、动作或证据槽位真正参与判断。
+    - 再把 轮廓线、长度、宽窄、松量、重心等表达 转成判断条件：只有当条件能解释对象之间的差异时，正文才保留该条件。
+    - 然后用 结构节点与视觉结果的关系提示 标记失败信号：来源不足、归属冲突、效果断言或对象混淆都会触发边界处理。
+    boundary_or_failure_signal:
+    - owner_conflict
+    - source_gap
+    - hard_claim_without_support
+    - formal_landing_attempt
+    downstream_consumer_effect: 只提供人工复核前的结构化方法材料；正式落地、证据归属和资产归属仍保持关闭。

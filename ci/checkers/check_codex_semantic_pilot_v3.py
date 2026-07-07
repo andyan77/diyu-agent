@@ -32,6 +32,7 @@ V4_5_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
 V4_6_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001"
 V4_7_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001"
 HOLDOUT_NEXT_STEP = "CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001"
+HOLDOUT_REPAIR_NEXT_STEP = "HOLDOUT-MB001-REPAIR-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 20
 EXPECTED_CATEGORY_COUNTS = {
@@ -258,7 +259,7 @@ def validate_status(status: dict[str, Any]) -> None:
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
     current_next_step = phase.get("current_next_step")
-    if current_next_step not in {NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP, V4_5_NEXT_STEP, V4_6_NEXT_STEP, V4_7_NEXT_STEP, HOLDOUT_NEXT_STEP}:
+    if current_next_step not in {NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP, V4_5_NEXT_STEP, V4_6_NEXT_STEP, V4_7_NEXT_STEP, HOLDOUT_NEXT_STEP, HOLDOUT_REPAIR_NEXT_STEP}:
         fail("workspace next step must be semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, semantic pilot v4.1 judge go/no-go, semantic pilot v4.2 judge go/no-go, or semantic pilot v4.3 judge go/no-go or semantic pilot v4.4 judge go/no-go")
     previous_step = phase.get("previous_step")
     if current_next_step == NEXT_STEP and previous_step != TASK_ID:
@@ -362,6 +363,8 @@ def validate_status(status: dict[str, Any]) -> None:
         validate_v47_status_block(status)
     if current_next_step == HOLDOUT_NEXT_STEP:
         validate_holdout_microbatch_status_block(status)
+    if current_next_step == HOLDOUT_REPAIR_NEXT_STEP:
+        validate_holdout_mb001_repair_status_block(status)
     bad = {key: value for key, value in status.get("readiness", {}).items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"readiness true flags: {bad}")
@@ -583,7 +586,7 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("first batch generation must remain false")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") not in {NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP, V4_5_NEXT_STEP, V4_6_NEXT_STEP, V4_7_NEXT_STEP, HOLDOUT_NEXT_STEP}:
+    if data.get("current_next_step") not in {NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP, V4_5_NEXT_STEP, V4_6_NEXT_STEP, V4_7_NEXT_STEP, HOLDOUT_NEXT_STEP, HOLDOUT_REPAIR_NEXT_STEP}:
         errors.append("next step must be semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, semantic pilot v4.1 judge go/no-go, semantic pilot v4.2 judge go/no-go, or semantic pilot v4.3 judge go/no-go or semantic pilot v4.4 judge go/no-go")
     expected_zero = [
         "english_primary_body_count",
@@ -901,6 +904,23 @@ def run_selftest() -> dict[str, Any]:
         "negative_fixtures_fail_closed": True,
     }
 
+
+
+def validate_holdout_mb001_repair_status_block(status: dict[str, Any]) -> None:
+    phase = status.get("phase", {})
+    if phase.get("previous_step") != "HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001":
+        fail("holdout repair judge route requires holdout repair task as previous_step")
+    repair = status.get("holdout_mb001_repair", {})
+    if repair.get("task_id") != "HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001" or repair.get("status") != "completed":
+        fail("holdout repair judge route requires completed holdout_mb001_repair block")
+    if repair.get("repair_count") != 14:
+        fail("holdout repair judge route requires 14 repair drafts")
+    if repair.get("same_cluster_ids_as_original") is not True:
+        fail("holdout repair judge route requires same original cluster ids")
+    if repair.get("accepted_domain_knowledge_count") != 0:
+        fail("holdout repair judge route requires accepted_domain_knowledge_count 0")
+    assert_false(repair.get("batch_generation_unlocked"), "holdout repair judge route batch_generation_unlocked")
+    assert_false(repair.get("ready_for_first_batch_generation"), "holdout repair judge route ready_for_first_batch_generation")
 
 def main() -> int:
     if not __debug__:

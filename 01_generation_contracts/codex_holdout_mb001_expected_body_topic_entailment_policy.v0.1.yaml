@@ -1,0 +1,27 @@
+expected_body_topic_entailment:
+  schema_version: v0.1
+  task_id: HOLDOUT-MB001-FAIL-CLOSEOUT-AND-CLUSTER-SPECIFIC-COMPILER-REPAIR-001
+  rule: Each expected_body_topic from W7 must be semantically covered by concrete body propositions. Mentioning that the topic
+    should be covered is not coverage.
+  coverage_record_required:
+  - expected_body_topic
+  - rich_body_section_ref
+  - body_proposition
+  - coverage_type
+  - evidence_status
+  - gap_if_not_covered
+  valid_coverage_type:
+  - mechanism_explained
+  - boundary_defined
+  - transformation_rule_given
+  - observable_input_given
+  - downstream_use_defined
+  - source_gap_routed
+  invalid_coverage_type:
+  - TODO
+  - should_explain_later
+  - writer_instruction
+  - governance_statement
+  - mentioned_as_required_topic_only
+  minimum:
+    every_expected_body_topic_must_have_non_invalid_coverage: true
