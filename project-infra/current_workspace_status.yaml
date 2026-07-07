@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-GENERATION-CROSS-TYPE-PILOT-001
-  previous_step: MASTER-MAP-TO-CODEX-GENERATION-BRIEF-PACK-001
+  current_next_step: CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001
+  previous_step: CODEX-GENERATION-CROSS-TYPE-PILOT-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -27,6 +27,12 @@ contract_lock:
 brief_pack:
   task_id: MASTER-MAP-TO-CODEX-GENERATION-BRIEF-PACK-001
   status: completed
+pilot:
+  task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+  status: completed
+  pilot_structured_draft_count: 44
+  ready_for_pilot_review: true
+  ready_for_first_batch_generation: false
 readiness:
   candidatepack_ready: false
   KE_ready: false

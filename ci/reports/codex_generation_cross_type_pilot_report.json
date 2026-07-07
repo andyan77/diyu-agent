@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-GENERATION-CROSS-TYPE-PILOT-001",
+  "expected_HEAD_before": "8db429a2a3650a4f31d9e8b6fa72e88f6647e4c1",
+  "pilot_structured_draft_count": 44,
+  "production_knowledge_count": 0,
+  "pilot_category_counts": {
+    "content_method": 11,
+    "apparel_claim_boundary": 11,
+    "display_to_content": 11,
+    "control_plane_governance": 11
+  },
+  "generation_assignment_coverage_count": 14,
+  "canonical_cluster_coverage_count": 44,
+  "schema_validation_result": "PASS",
+  "rich_body_quality_result": "PASS",
+  "body_entailment_structural_result": "PASS",
+  "body_entailment_review_queue": "present",
+  "independent_judge_protocol": "present",
+  "dedupe_result": "PASS",
+  "relation_candidates_result": {
+    "relation_count": 22,
+    "unknown_refs": 0,
+    "real_instance_fact_leak_count": 0
+  },
+  "hard_claim_leak_count": 0,
+  "real_instance_fact_leak_count": 0,
+  "P0_00_general_kb_leak_count": 0,
+  "source_repo_live_accessed": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "ready_for_pilot_review": true,
+  "ready_for_first_batch_generation": false,
+  "recommended_next_step": "CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 13,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_wrong_count.yaml": [
+      "pilot count must be 44"
+    ],
+    "negative_missing_category.yaml": [
+      "category counts must be 11 each"
+    ],
+    "negative_readiness_true.yaml": [
+      "$.readiness_flags.generation_eligible: expected const False"
+    ],
+    "negative_schema_invalid_candidate.yaml": [
+      "$.ownership.candidate_kind: missing required"
+    ],
+    "negative_empty_rich_body.yaml": [
+      "$.rich_body.body_text: string too short"
+    ],
+    "negative_body_without_proposition_refs.yaml": [
+      "$.rich_body.body_sections[0].proposition_refs: too few items"
+    ],
+    "negative_missing_judge_queue.yaml": [
+      "review queue required"
+    ],
+    "negative_hard_claim_expert_synthesis.yaml": [
+      "PILOT-CONTENT-METHOD-001: hard claim expert synthesis leak"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "PILOT-CONTENT-METHOD-001: real instance fact leak"
+    ],
+    "negative_p0_00_general_kb_leak.yaml": [
+      "PILOT-CONTENT-METHOD-001: P0-00/control-plane routed to GeneralKnowledgeBase",
+      "PILOT-CONTENT-METHOD-001: control-plane sample landed in knowledge layer"
+    ],
+    "negative_candidatepack_created.yaml": [
+      "candidatepack_created must be false"
+    ],
+    "negative_source_repo_dependency_true.yaml": [
+      "source repo live dependency must be false"
+    ],
+    "negative_relation_unknown_candidate.yaml": [
+      "relation candidates must be valid"
+    ]
+  }
+}

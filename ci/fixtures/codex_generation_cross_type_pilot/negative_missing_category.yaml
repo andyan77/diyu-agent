@@ -1,0 +1,107 @@
+pilot_fixture:
+  task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  pilot_structured_draft_count: 44
+  production_knowledge_count: 0
+  candidatepack_created: false
+  ready_for_pilot_review: true
+  ready_for_first_batch_generation: false
+  category_counts:
+    content_method: 44
+  review_queue_present: true
+  independent_judge_protocol_present: true
+  relation_candidates_valid: true
+  hard_claim_leak_count: 0
+  real_instance_fact_leak_count: 0
+  P0_00_general_kb_leak_count: 0
+  sample_candidates:
+  - pilot_category: content_method
+    batch_id: batch_001
+    source_cluster_refs:
+    - source_cluster_ref_001
+    candidate:
+      identity:
+        candidate_id: PILOT-CONTENT-METHOD-001
+        candidate_name: Topic angle ladder
+        schema_version: v0.1
+        generation_status: gpt_generated_structured_draft
+      w7_trace:
+        w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+        founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+        canonical_cluster_id: mkc_019
+        generation_assignment_id: GA-001
+        input_digest: 2dcce68d24150b010d0b68c3cc1329c2413ccf41f81f72a339473594669908bb
+      ownership:
+        candidate_kind: general_knowledge_candidate
+        proposed_target_owner: GeneralKnowledgeBase
+        target_owner_reason: Pilot routing remains provisional and requires review before any later use.
+      source_policy:
+        source_type: human_reviewed_expert_synthesis
+        source_type_boundary_status: source_type_is_intake_classification_only
+        source_refs:
+        - 02_generation_brief_pack/00_pilot_sampling_plan.yaml
+        - 02_generation_brief_pack/batch_001/batch_001_generation_brief.yaml
+        expert_synthesis_allowed: true
+        expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+      layer_annotation:
+        declared_layer: content method draft pending review
+        target_layer_candidate: L2_PlayCard_candidate
+        allowed_landing_layers:
+        - L2_PlayCard_candidate
+        - DraftBacklog
+        forbidden_landing_layers:
+        - GovernanceContract_candidate
+        - SourceGapLedger
+        layer_confidence: 0.74
+        layer_boundary_note: Landing is provisional until judge and human review complete.
+        if_layer_uncertain_route: decision_required
+      semantic_structure:
+        definition: A neutral planning method that turns a content idea into a reviewable draft without claiming verified facts.
+        applicable_when: Use when the team needs a structured theme, scene, or role expression before review.
+        not_applicable_when: Do not use when a measured fact, named example, or final landing decision is required.
+        output_effect: Creates a safe draft for judge and human review with visible boundaries.
+        risk_boundary: Unsupported facts and downstream status changes must remain outside the draft.
+        evidence_requirement: Needs review evidence before any later operational use.
+      rich_body:
+        body_text: Topic angle ladder is a pilot draft pattern for turning a broad content idea into a careful review note. The writer begins with a neutral shopper question, chooses one scene or role angle, and keeps the wording at the level of method rather than verified fact. The draft is useful when the team needs structure for later judgment, because it separates the creative path from any claim that would require evidence. It is not suitable for product proof, operational status, or downstream publication. Reviewers should check whether the structure is clear, whether the example stays generic, and whether unresolved facts are still waiting for review. This sample number 1 therefore remains a planning artifact only.
+        body_sections:
+        - heading: Use case
+          text: Use this draft only as a reviewable pilot note with clear evidence boundaries.
+          proposition_refs:
+          - definition
+          - applicable_when
+          - output_effect
+        - heading: Review boundary
+          text: Hold unsupported facts, named examples, and downstream status decisions for later review.
+          proposition_refs:
+          - not_applicable_when
+          - risk_boundary
+          - evidence_requirement
+        body_proposition_refs:
+        - definition
+        - applicable_when
+        - output_effect
+        - risk_boundary
+        - evidence_requirement
+      dedupe:
+        duplicate_check_key: content_method-mkc_019-GA-001-001
+        semantic_fingerprint: f456621c2b23e27e044dce45
+        proposition_fingerprint: 5bfa243968d0607b0b8718f1
+        runtime_effect_fingerprint: 4e2faf1cc668cf9de1a41fba
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        serving_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_eligible: false
+        production_servable: false
+        production_ready: false
+      state_machine:
+        current_state: gpt_generated_structured_draft
+        route_after_review: draft_backlog
+        route_reason: Pilot output waits for judge and human review before any next-stage action.
+      review:
+        human_review_required: true
+        reviewer_status: pending_human_review

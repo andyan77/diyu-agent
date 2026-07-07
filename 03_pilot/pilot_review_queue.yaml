@@ -1,0 +1,319 @@
+pilot_review_queue:
+  schema_version: v0.1
+  task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+  ready_for_pilot_review: true
+  ready_for_first_batch_generation: false
+  recommended_next_step: CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001
+  review_policy:
+    structural_checker_is_not_true_semantic_proof: true
+    independent_judge_or_human_review_required: true
+    batch_generation_blocked_until_review_pass: true
+  items:
+  - candidate_id: PILOT-CONTENT-METHOD-001
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-002
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-003
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-004
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-005
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-006
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-007
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-008
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-009
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-010
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTENT-METHOD-011
+    pilot_category: content_method
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-001
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-002
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-003
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-004
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-005
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-006
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-007
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-008
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-009
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-010
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-APPAREL-CLAIM-BOUNDARY-011
+    pilot_category: apparel_claim_boundary
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-001
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-002
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-003
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-004
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-005
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-006
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-007
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-008
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-009
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-010
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-DISPLAY-TO-CONTENT-011
+    pilot_category: display_to_content
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-001
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-002
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-003
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-004
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-005
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-006
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-007
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-008
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-009
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-010
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
+  - candidate_id: PILOT-CONTROL-PLANE-GOVERNANCE-011
+    pilot_category: control_plane_governance
+    review_status: pending_judge_or_human_review
+    review_questions:
+    - Does the body stay supported by structured propositions?
+    - Does the draft avoid hard claims and named-instance facts?
+    - Is the proposed landing still only provisional?
