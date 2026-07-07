@@ -14,8 +14,10 @@ import yaml
 
 TASK_ID = "CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001"
 V4_TASK_ID = "CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001"
+V4_1_TASK_ID = "CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
 V4_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001"
+V4_1_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 20
 EXPECTED_CATEGORY_COUNTS = {
@@ -237,13 +239,15 @@ def validate_status(status: dict[str, Any]) -> None:
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
     current_next_step = phase.get("current_next_step")
-    if current_next_step not in {NEXT_STEP, V4_NEXT_STEP}:
-        fail("workspace next step must be semantic pilot v3 judge go/no-go or semantic pilot v4 judge go/no-go")
+    if current_next_step not in {NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP}:
+        fail("workspace next step must be semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, or semantic pilot v4.1 judge go/no-go")
     previous_step = phase.get("previous_step")
     if current_next_step == NEXT_STEP and previous_step != TASK_ID:
         fail("workspace previous step must be semantic pilot v3 task")
     if current_next_step == V4_NEXT_STEP and previous_step != V4_TASK_ID:
         fail("workspace previous step must be semantic pilot v4 task")
+    if current_next_step == V4_1_NEXT_STEP and previous_step != V4_1_TASK_ID:
+        fail("workspace previous step must be semantic pilot v4.1 revision task")
     v3 = status.get("semantic_pilot_v3", {})
     if v3.get("task_id") != TASK_ID or v3.get("status") != "completed":
         fail("semantic_pilot_v3 status block missing")
@@ -269,6 +273,20 @@ def validate_status(status: dict[str, Any]) -> None:
             fail("semantic v4 judge route must keep batch_generation_unlocked false")
         if v4.get("ready_for_first_batch_generation") is True:
             fail("semantic v4 judge route must keep ready_for_first_batch_generation false")
+    if current_next_step == V4_1_NEXT_STEP:
+        v41 = status.get("semantic_pilot_v4_1", {})
+        if v41.get("status") != "completed":
+            fail("semantic v4.1 judge route requires completed semantic_pilot_v4_1 block")
+        if v41.get("semantic_pilot_v4_1_count") != 8:
+            fail("semantic v4.1 judge route requires 8 v4.1 semantic revision drafts")
+        if v41.get("one_to_one_revision_of_v4") is not True:
+            fail("semantic v4.1 judge route requires one-to-one revision of V4")
+        if v41.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v4.1 judge route requires accepted_domain_knowledge_count 0")
+        if v41.get("batch_generation_unlocked") is True:
+            fail("semantic v4.1 judge route must keep batch_generation_unlocked false")
+        if v41.get("ready_for_first_batch_generation") is True:
+            fail("semantic v4.1 judge route must keep ready_for_first_batch_generation false")
     bad = {key: value for key, value in status.get("readiness", {}).items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"readiness true flags: {bad}")
@@ -402,8 +420,8 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("first batch generation must remain false")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") not in {NEXT_STEP, V4_NEXT_STEP}:
-        errors.append("next step must be semantic pilot v3 judge go/no-go or semantic pilot v4 judge go/no-go")
+    if data.get("current_next_step") not in {NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP}:
+        errors.append("next step must be semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, or semantic pilot v4.1 judge go/no-go")
     expected_zero = [
         "english_primary_body_count",
         "forbidden_audit_phrase_count",

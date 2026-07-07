@@ -1,0 +1,102 @@
+{
+  "task_id": "CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001",
+  "repository": "/home/diyu/笛语领域通用数据库",
+  "workspace_HEAD_before": "dac35869b74298ca68b4e197db7716743d3a9e34",
+  "human_decision_present": true,
+  "authorized_by": "founder_current_request",
+  "v4_no_go_closeout_recorded": true,
+  "v4_1_revision_drafts_created": true,
+  "status": "PASS",
+  "v4_1_draft_count": 8,
+  "distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "forbidden_body_token_count": 0,
+  "body_placeholder_count": 0,
+  "audit_scaffolding_ratio_max": 0.038,
+  "min_body_zh_chars": 1043,
+  "relation_design_hints_count": 24,
+  "relation_schema_valid_count": 24,
+  "owner_model_valid_count": 8,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001",
+  "readiness_flags_result": "all_false",
+  "source_repo_live_accessed": false,
+  "external_drive_accessed": false,
+  "ready_for_semantic_pilot_v4_1_judge_review": true,
+  "facts_required_for_next_planning": {
+    "target_workspace_path": "/home/diyu/笛语领域通用数据库",
+    "semantic_pilot_v4_1_path": "03_pilot/semantic_v4_1",
+    "ready_for_semantic_pilot_v4_1_judge_review": true,
+    "ready_for_first_batch_generation": false,
+    "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001"
+  },
+  "forbidden_body_token_hits": [],
+  "body_placeholder_hits": [],
+  "v4_1_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 12,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_body_contains_authority_item.yaml": [
+      "forbidden_body_token_count must be 0"
+    ],
+    "negative_body_contains_authority_relation.yaml": [
+      "forbidden_body_token_count must be 0"
+    ],
+    "negative_body_contains_low_quality_risk.yaml": [
+      "forbidden_body_token_count must be 0"
+    ],
+    "negative_body_placeholder_unresolved.yaml": [
+      "body_placeholder_count must be 0"
+    ],
+    "negative_missing_w7_topic_coverage_sidecar.yaml": [
+      "missing_w7_topic_coverage_sidecar_count must be 0"
+    ],
+    "negative_owner_model_missing_storage_target.yaml": [
+      "owner_model_missing_storage_target_count must be 0",
+      "owner_model_valid_count must be 8"
+    ],
+    "negative_control_plane_storage_target_GKB.yaml": [
+      "control_plane_GKB_storage_target_count must be 0"
+    ],
+    "negative_relation_uses_node_mkc_subject.yaml": [
+      "relation_uses_node_mkc_subject_count must be 0"
+    ],
+    "negative_relation_uses_candidate_to_cluster_trace.yaml": [
+      "forbidden_relation_predicate_count must be 0"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  },
+  "checker_live_result": "PASS",
+  "checker_selftest_result": "PASS",
+  "python_optimized_mode_result": "FAIL-CLOSED exit_code_2",
+  "old_v4_checker_cli_replacement_reason": "current old V4 checker does not support --live; used repository --workspace-root/--semantic-v4-root/--contracts-root/--fixtures-root equivalent command",
+  "contract_lock_checker_result": "PASS",
+  "old_route_checkers_result": "PASS"
+}

@@ -1,0 +1,560 @@
+semantic_pilot_v4_1_candidate_cards:
+  candidates:
+  - draft_id: SEM-V4_1-CONTENT-METHOD-001
+    revision_lineage:
+      draft_id: SEM-V4_1-CONTENT-METHOD-001
+      revision_of: SEM-V4-CONTENT-METHOD-001
+      referenced_mkc_id: mkc_009
+      w7_authority_record_digest: 8eba1b63c9eac0fe354222175c298711f9a0159bf3f791a58c5cfc9dbc66de06
+      source_record_sha256: e01905e21aa0b7fdbcee7714b0ba523cd8e0ae20ceceaff0693d9d87e9d5a0f2
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: content_method
+    canonical_cluster_id: mkc_009
+    canonical_cluster_title_from_authority: 故事弧线适用边界
+    candidate_topic: 根据问题类型、证据强度和价值表达选择故事弧线
+    canonical_label_zh: 内容任务中的故事弧线选择边界
+    canonical_body_zh: 'p1：内容任务中的故事弧线选择边界解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以故事弧线适用边界为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨不同叙事弧线对应的问题类型、弧线与证据要求的绑定和弧线与价值表达、proof
+      slot 的兼容性之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，问题类型识别通常先发生在素材筛选阶段。操作者要看见新品上架说明、工艺能力介绍和系列主题介绍这些具体线索，而不是只凭抽象风格词下判断。接着进入证据强度匹配：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是价值表达约束。这一层决定正文能否形成可复用知识，而不是临时口号。先判断任务是在解释选择、说明过程还是呈现变化，再确定证据是否足以支撑起承转合，最后把不能支撑的内容退回资料补充。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由不适用信号分流承担。如果只有情绪词而没有过程、证据或对象变化，弧线会把内容推向空泛故事，应该降级为要点说明。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，内容任务中的故事弧线选择边界需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了根据问题类型、证据强度和价值表达选择故事弧线。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。仅提供
+      arc taxonomy、适用条件与 downgrade routing，不输出 story scripts。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在内容方法场景里，这类知识还要处理协作语言。企划、导购、陈列和拍摄人员常常使用不同词汇描述同一件事，容易把对象、动作和结果混在一起。更稳的做法是把对象词放在句首，把动作词放在判断中段，把限制词放在句尾。这样一来，听者能知道先看什么、再比较什么、最后在哪个条件下停止扩写。若素材只有模糊气质，没有动作和证据，就保留为主题备忘；若素材已有对象、过程和可见差异，才进入完整表达。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    legacy_aliases:
+      primary_target_owner: L2_PlayCardCandidate
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: L2_PlayCardCandidate
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-CONTENT-METHOD-002
+    revision_lineage:
+      draft_id: SEM-V4_1-CONTENT-METHOD-002
+      revision_of: SEM-V4-CONTENT-METHOD-002
+      referenced_mkc_id: mkc_010
+      w7_authority_record_digest: 5e62f930e7caa258f628e5f40ecfe9470618bbd62160a697b5ea54edaf314622
+      source_record_sha256: 02526a1a29adedfcf75e06b9f03b458ce5b2c4c041be38c90f7abc9b40ba6364
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: content_method
+    canonical_cluster_id: mkc_010
+    canonical_cluster_title_from_authority: 反模板叙事锚点
+    candidate_topic: 用对象、动作、约束和流程节点组织非套话内容
+    canonical_label_zh: 反模板叙事的对象锚点组织
+    canonical_body_zh: 'p1：反模板叙事的对象锚点组织解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以反模板叙事锚点为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨对象锚点类型、动作锚点与处理逻辑和约束锚点与取舍表达之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，对象锚点选择通常先发生在素材筛选阶段。操作者要看见版型差异、搭配动作和陈列调整这些具体线索，而不是只凭抽象风格词下判断。接着进入动作锚点展开：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是约束取舍表达。这一层决定正文能否形成可复用知识，而不是临时口号。先锁定被说明的对象，再把对象放进可观察动作，最后用取舍关系替代泛泛形容。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由流程节点承接承担。如果正文只剩风格口号、流行词或人格化包装，而没有对象和动作，内容会回到模板话术。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，反模板叙事的对象锚点组织需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了用对象、动作、约束和流程节点组织非套话内容。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。用于
+      DQ gate 的 narrative anchor checklist、anti-template split 规则与 sceneability hints。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在内容方法场景里，这类知识还要处理协作语言。企划、导购、陈列和拍摄人员常常使用不同词汇描述同一件事，容易把对象、动作和结果混在一起。更稳的做法是把对象词放在句首，把动作词放在判断中段，把限制词放在句尾。这样一来，听者能知道先看什么、再比较什么、最后在哪个条件下停止扩写。若素材只有模糊气质，没有动作和证据，就保留为主题备忘；若素材已有对象、过程和可见差异，才进入完整表达。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    legacy_aliases:
+      primary_target_owner: L2_PlayCardCandidate
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: L2_PlayCardCandidate
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-001
+    revision_lineage:
+      draft_id: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-001
+      revision_of: SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+      referenced_mkc_id: mkc_026
+      w7_authority_record_digest: 852b02654bae2233959726f4ba01a26660aa3f2bc7b648dc266cee1fc71a68e6
+      source_record_sha256: c3623ffdf4a1e31a2ab4953c6817a36279b81b59aaa4e4c8abea49c77d10928f
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_026
+    canonical_cluster_title_from_authority: 身材效果语言阶梯与场景化观察
+    candidate_topic: 把视觉线条观察和身体结果承诺分开处理
+    canonical_label_zh: 身材效果语言的观察边界
+    canonical_body_zh: 'p1：身材效果语言的观察边界解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以身材效果语言阶梯与场景化观察为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨观察词/关系词/结果词分层、能说视觉线条变化与不能保证身体结果的边界和替代表达与回避表达之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，观察词分层通常先发生在素材筛选阶段。操作者要看见腰线位置、肩线方向和裤管垂坠这些具体线索，而不是只凭抽象风格词下判断。接着进入关系词限位：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是结果词回避。这一层决定正文能否形成可复用知识，而不是临时口号。先描述可见线条和比例关系，再说明观察发生的穿搭场景，最后避开身体改变或效果保证。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由场景化观察承担。如果把显得利落写成改变身材，或把镜头角度写成身体结果，表达就越过了观察边界。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，身材效果语言的观察边界需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了把视觉线条观察和身体结果承诺分开处理。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。约束后续候选内容优先使用观察语言，降低敏感断言风险。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在服装表达场景里，这类知识还要处理顾客能感知但不能被承诺的差异。面料、版型、松量和搭配方式可以形成视觉观察，也可以形成穿着体验描述，但二者都不能自动变成性能结论。较稳的写法是先给出观察位置，再说明观察条件，最后标出不能推出的结果。这样既保留导购和内容人员需要的表达空间，也避免把一次场景观察写成确定功效。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: apparel_claim_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    legacy_aliases:
+      primary_target_owner: HumanReview
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: HumanReview
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-002
+    revision_lineage:
+      draft_id: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-002
+      revision_of: SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+      referenced_mkc_id: mkc_027
+      w7_authority_record_digest: 52db1e47463300f9ad661c36383e182e450454d7a9ee1e33982a1ec2dcaac07a
+      source_record_sha256: 0055faf0ea352810af2ab47aaa1bb6329e24219985198b9f6f11035532bed0a6
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_027
+    canonical_cluster_title_from_authority: 舒适性能耐用品质证据阶梯
+    candidate_topic: 按证据层级区分观察、经验说明和待补源主张
+    canonical_label_zh: 舒适耐用品质表达的证据阶梯
+    canonical_body_zh: 'p1：舒适耐用品质表达的证据阶梯解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以舒适性能耐用品质证据阶梯为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨claim
+      分级、不同 claim 对应的证据类别和无证据时允许保留的最低表达层级之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，主张分级通常先发生在素材筛选阶段。操作者要看见面料触感、缝线密度和弹力恢复这些具体线索，而不是只凭抽象风格词下判断。接着进入证据类别匹配：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是最低表达保留。这一层决定正文能否形成可复用知识，而不是临时口号。先判断句子属于体验、材料还是性能，再匹配可用证据层级，最后把证据不足的句子改成观察或待补源。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由待补源触发承担。如果没有测试、标准或可追溯资料，却写成确定性能，句子必须降级。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，舒适耐用品质表达的证据阶梯需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了按证据层级区分观察、经验说明和待补源主张。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。直接决定后续候选内容哪些句子只能写成观察、哪些必须标注待补源、哪些必须禁出。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在服装表达场景里，这类知识还要处理顾客能感知但不能被承诺的差异。面料、版型、松量和搭配方式可以形成视觉观察，也可以形成穿着体验描述，但二者都不能自动变成性能结论。较稳的写法是先给出观察位置，再说明观察条件，最后标出不能推出的结果。这样既保留导购和内容人员需要的表达空间，也避免把一次场景观察写成确定功效。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: apparel_claim_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    legacy_aliases:
+      primary_target_owner: HumanReview
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: HumanReview
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-DISPLAY-TO-CONTENT-001
+    revision_lineage:
+      draft_id: SEM-V4_1-DISPLAY-TO-CONTENT-001
+      revision_of: SEM-V4-DISPLAY-TO-CONTENT-001
+      referenced_mkc_id: mkc_032
+      w7_authority_record_digest: b3d04225085d20f8a3e5fb4cc055be0a409b0752b77ceedee378140aa5e3d8cd
+      source_record_sha256: 78f32b7450fc13cc45e26c65cf0dcdc223135e10a1abd5ac63bba4710862fefe
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_032
+    canonical_cluster_title_from_authority: 陈列区位与可拍摄视觉锚点
+    candidate_topic: 把零售区位转换为可拍摄的观察入口和画面重心
+    canonical_label_zh: 陈列区位到镜头观察的转换
+    canonical_body_zh: 'p1：陈列区位到镜头观察的转换解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以陈列区位与可拍摄视觉锚点为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨入口区/中岛/端架/挂通等一般化区位表达、远景-中景-近景的观察切换和静态陈列中的可拍摄重点之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，区位识别通常先发生在素材筛选阶段。操作者要看见入口区第一眼、中岛组合和端架重点这些具体线索，而不是只凭抽象风格词下判断。接着进入远中近景切换：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是静态重点提取。这一层决定正文能否形成可复用知识，而不是临时口号。先判断顾客视线从哪里进入，再安排远景、中景、近景的观察顺序，最后让镜头服务于商品关系而不是炫技。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由区位到镜头映射承担。如果只记录摆放位置而没有画面重心，内容无法转成可执行拍摄结构。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，陈列区位到镜头观察的转换需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了把零售区位转换为可拍摄的观察入口和画面重心。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。影响候选研究条目如何设置观察入口、镜头顺序与画面重心，提升filmability而不输出脚本。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在门店内容场景里，这类知识还要处理空间和动作之间的转换。陈列位置决定第一眼，动作顺序决定观看节奏，解释槽位决定信息密度。若画面只展示商品而没有观察入口，内容会变成静态陈列记录；若动作很多却没有解释槽位，内容又会变成无意义过程。较稳的做法是让区位负责开场，让动作负责变化，让解释负责收束。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    legacy_aliases:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      proposed_target_owner: ExecutionAssetOutbox
+      target_layer_candidate: L3_ExecutionAssetCandidate
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-DISPLAY-TO-CONTENT-002
+    revision_lineage:
+      draft_id: SEM-V4_1-DISPLAY-TO-CONTENT-002
+      revision_of: SEM-V4-DISPLAY-TO-CONTENT-002
+      referenced_mkc_id: mkc_034
+      w7_authority_record_digest: 76a113c4eb8a5244d7bf27b4f0401ebfcc730ca3fc13043001b61ec01735c89d
+      source_record_sha256: cc1ebb6311b118a42d1a78570edc9ff35cdbb6d8593b608ec0061fb24e88e7da
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_034
+    canonical_cluster_title_from_authority: 动作转内容槽位与演示三段式
+    candidate_topic: 把整理、试穿、对比和讲解动作转成演示内容槽位
+    canonical_label_zh: 门店动作到演示三段式的承接
+    canonical_body_zh: 'p1：门店动作到演示三段式的承接解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以动作转内容槽位与演示三段式为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨动作镜头起承转合、动作对应的解释槽位和强观察/弱解释的组合方式之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，动作起承转合通常先发生在素材筛选阶段。操作者要看见取下衣架、整理领口和比较面料这些具体线索，而不是只凭抽象风格词下判断。接着进入解释槽位配置：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是强观察弱解释。这一层决定正文能否形成可复用知识，而不是临时口号。先把动作拆成开始、变化和结果，再给每个动作配一个解释槽位，最后控制讲解不压过观察。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由演示节点串联承担。如果只有口播解释而没有动作变化，演示会失去可看性；如果只有动作没有解释，信息又难以被复用。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，门店动作到演示三段式的承接需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了把整理、试穿、对比和讲解动作转成演示内容槽位。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。影响候选研究条目如何描述“动作-解释-镜头”的映射关系，为后续CandidatePack准备研究结构而非生产内容。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在门店内容场景里，这类知识还要处理空间和动作之间的转换。陈列位置决定第一眼，动作顺序决定观看节奏，解释槽位决定信息密度。若画面只展示商品而没有观察入口，内容会变成静态陈列记录；若动作很多却没有解释槽位，内容又会变成无意义过程。较稳的做法是让区位负责开场，让动作负责变化，让解释负责收束。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    legacy_aliases:
+      primary_target_owner: L3_ExecutionAssetCandidate
+      proposed_target_owner: ExecutionAssetOutbox
+      target_layer_candidate: L3_ExecutionAssetCandidate
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-001
+    revision_lineage:
+      draft_id: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-001
+      revision_of: SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+      referenced_mkc_id: mkc_004
+      w7_authority_record_digest: ff43b069259148ef4adb23d22d2dec558f0a5cd18ba588746246851457316774
+      source_record_sha256: 4a34d69d030c598cc5aabba03bcc8e42ce554f09bfd4a1a2b12eea577794accd
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_004
+    canonical_cluster_title_from_authority: 异常分发与再进入规则
+    candidate_topic: 按缺源、冲突、风险和禁出请求把异常项分发到不同处理路径
+    canonical_label_zh: 异常研究项的分流与再进入规则
+    canonical_body_zh: 'p1：异常研究项的分流与再进入规则解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以异常分发与再进入规则为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨source_gap
+      触发模式、decision_required 触发模式和founder_review 触发模式之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，缺源触发通常先发生在素材筛选阶段。操作者要看见缺少来源标记、模型冲突标记和敏感风险标记这些具体线索，而不是只凭抽象风格词下判断。接着进入建模冲突触发：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是风险人工确认触发。这一层决定正文能否形成可复用知识，而不是临时口号。先标记异常原因，再选择账本或人工确认路径，最后在条件满足前阻止重新进入生成链路。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由禁出排除承担。如果异常项只被写进说明文字而没有分流标签，后续任务会误以为问题已经解决。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，异常研究项的分流与再进入规则需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了按缺源、冲突、风险和禁出请求把异常项分发到不同处理路径。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。将异常研究项分发到后续可验证的不同账本，避免控制面地图把问题隐藏在模糊说明里。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在治理场景里，这类知识还要处理异常项的可追踪性。异常不是一句备注，而是一组可以被分流、阻断、拆分或等待资料补齐的状态。缺少来源、条件冲突、风险过高和用途不明，都需要不同处理路径。较稳的做法是先记录触发原因，再记录暂存位置，最后记录重新进入工作的条件。这样能够避免问题被包装成普通知识，也避免研究材料越过用途边界。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: ControlPlaneContractSource
+      artifact_kind: control_plane_candidate
+      consumer_layer: GenerationContract
+    legacy_aliases:
+      primary_target_owner: GenerationContract
+      proposed_target_owner: ControlPlaneContractSource
+      target_layer_candidate: GenerationContract
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+  - draft_id: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-002
+    revision_lineage:
+      draft_id: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-002
+      revision_of: SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+      referenced_mkc_id: mkc_006
+      w7_authority_record_digest: a9ea7dc9d2c5a4d56d73e7e8742fa600364ea5454e94e00684c6f9029a61fb66
+      source_record_sha256: 70914d5bb538b1df9ec16a6212a0eedd8b3599041a257c5cd12b7d0c0f0db11f
+      v4_no_go_reason_refs:
+      - canonical_body_zh_contains_audit_scaffolding
+      - relation_candidates_not_stable_parseable_edges
+      - owner_layer_semantics_mixed
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_006
+    canonical_cluster_title_from_authority: 研究资产绑定与非生产封印
+    candidate_topic: 把研究型资产限制在可绑定槽位和非生产用途内
+    canonical_label_zh: 研究资产绑定与非生产封印
+    canonical_body_zh: 'p1：研究资产绑定与非生产封印解决的是日常内容生产中最容易被混在一起的判断：先看对象处在什么场景，再看它能提供哪一种可观察材料，最后决定能写到什么层级。以研究资产绑定与非生产封印为背景时，重点不在于把概念摆进正文，而是让操作者能够在具体任务里分辨研究型资产类型、资产前置槽位和资产绑定排他条件之间的顺序。这样写出的内容会先处理事实可见性，再处理表达强度，最后处理不能继续展开的边界。
+
+
+      p2：实际操作时，资产类型识别通常先发生在素材筛选阶段。操作者要看见研究说明、资产草稿体和非生产标签这些具体线索，而不是只凭抽象风格词下判断。接着进入前置槽位完整性：如果素材能支撑过程、位置、动作或证据，就可以写成方法说明；如果只能支撑局部观察，就只能保留观察句；如果连观察对象都不稳定，就应转成待补充资料。
+
+
+      p3：第三步是绑定排他条件。这一层决定正文能否形成可复用知识，而不是临时口号。先确认资产是否只是研究材料，再检查槽位是否完整，最后对冲突组合执行阻断或拆分。这三个动作让内容从感受性表达回到可执行判断。比如在服装、门店和内容任务里，同一句话既可能是观察，也可能是主张；差别取决于它有没有对象、场景、证据和可反驳条件。
+
+
+      p4：边界处理由多资产冲突拆分承担。如果研究材料被当成成品知识使用，系统会绕过人工确认和生产边界。因此，正文应当保留清楚的降级路径：证据不足时降为观察，关系不足时降为任务提示，风险过高时进入人工判断，缺少来源时进入补源队列。这个路径让研究材料、方法说明和成品表达保持分层，避免一次观察被扩成普遍承诺。
+
+
+      p5：在质量判断上，研究资产绑定与非生产封印需要同时覆盖行业机制、可观察锚点、操作者动作和失败模式。行业机制说明为什么要这样分流；可观察锚点说明判断来自哪里；操作者动作说明下一步怎么做；失败模式说明什么情况下必须停下。四者同时出现时，正文才不像模板句，也不会把方法、证据和治理边界混成一个含糊字段。
+
+
+      p6：落到后续使用时，它可以帮助人审人员判断一条草案是否真正回应了把研究型资产限制在可绑定槽位和非生产用途内。可保留的句子应当能指出场景中的对象、动作或证据；需要修改的句子通常只有评价词、目标词或夸张结果；必须阻断的句子则会绕过证据层级，或把控制性质的限制写成领域知识结论。把研究输出限制在控制面允许组合的
+      research-only 资产草稿体，避免越权产生成品化知识。这类影响只用于说明表达边界，不能替代证据、场景和人工判断。
+
+
+      p7：在治理场景里，这类知识还要处理异常项的可追踪性。异常不是一句备注，而是一组可以被分流、阻断、拆分或等待资料补齐的状态。缺少来源、条件冲突、风险过高和用途不明，都需要不同处理路径。较稳的做法是先记录触发原因，再记录暂存位置，最后记录重新进入工作的条件。这样能够避免问题被包装成普通知识，也避免研究材料越过用途边界。'
+    body_paragraph_ids:
+    - p1
+    - p2
+    - p3
+    - p4
+    - p5
+    - p6
+    - p7
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: DecisionPacketLedger
+      artifact_kind: decision_packet
+      consumer_layer: GenerationContract
+    legacy_aliases:
+      primary_target_owner: GenerationContract
+      proposed_target_owner: DecisionPacketLedger
+      target_layer_candidate: GenerationContract
+      alias_of: owner_model
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false

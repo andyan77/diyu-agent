@@ -1,0 +1,27 @@
+v4_revision_requirements:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+  applies_to_previous_v4_drafts:
+  - SEM-V4-CONTENT-METHOD-001
+  - SEM-V4-CONTENT-METHOD-002
+  - SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+  - SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+  - SEM-V4-DISPLAY-TO-CONTENT-001
+  - SEM-V4-DISPLAY-TO-CONTENT-002
+  - SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+  - SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+  must_preserve_previous_v4_artifacts: true
+  revision_requirements:
+    one_to_one_revision_count: 8
+    canonical_body_zh_only_domain_knowledge: true
+    forbidden_body_tokens:
+    - 权威项
+    - 权威关系项
+    - 专属段
+    - 本条低质风险
+    - 逐句检查
+    - 进入下一步审查
+    owner_model_split_required: true
+    relation_design_hints_not_ontology_edges: true
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false

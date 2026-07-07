@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001
-  previous_step: CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001
+  current_next_step: CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001
+  previous_step: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -87,5 +87,26 @@ semantic_pilot_v4:
   semantic_pilot_v4_count: 8
   accepted_domain_knowledge_count: 0
   ready_for_v4_judge_review: true
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+v4_no_go_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+  status: completed
+  semantic_verdict: NO_GO
+  all_v4_drafts_revise_required: true
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+semantic_pilot_v4_1:
+  task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+  status: completed
+  semantic_pilot_v4_1_count: 8
+  distribution:
+    content_method: 2
+    apparel_claim_boundary: 2
+    display_to_content: 2
+    control_plane_governance: 2
+  one_to_one_revision_of_v4: true
+  accepted_domain_knowledge_count: 0
+  ready_for_semantic_pilot_v4_1_judge_review: true
   batch_generation_unlocked: false
   ready_for_first_batch_generation: false

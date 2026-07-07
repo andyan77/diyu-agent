@@ -1,0 +1,31 @@
+v4_no_go_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4 is no-go as batch exemplar; create one-to-one V4.1 revisions
+  previous_task_id: CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001
+  previous_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+  engineering_delivery: PASS
+  semantic_verdict: NO_GO
+  disposition:
+    SEM-V4-CONTENT-METHOD-001: revise_required
+    SEM-V4-CONTENT-METHOD-002: revise_required
+    SEM-V4-APPAREL-CLAIM-BOUNDARY-001: revise_required
+    SEM-V4-APPAREL-CLAIM-BOUNDARY-002: revise_required
+    SEM-V4-DISPLAY-TO-CONTENT-001: revise_required
+    SEM-V4-DISPLAY-TO-CONTENT-002: revise_required
+    SEM-V4-CONTROL-PLANE-GOVERNANCE-001: revise_required
+    SEM-V4-CONTROL-PLANE-GOVERNANCE-002: revise_required
+  not_rejected_for:
+  - W7_id_reference
+  - readiness_boundary
+  - batch_lock_boundary
+  rejected_for_batch_template_because:
+  - canonical_body_zh_contains_audit_scaffolding
+  - canonical_body_zh_contains_placeholder_or_unresolved_rendering
+  - body_industry_mechanism_density_too_low
+  - relation_candidates_not_stable_parseable_edges
+  - owner_layer_semantics_mixed
+  batch_generation_unlocked: false
+  accepted_domain_knowledge_count: 0

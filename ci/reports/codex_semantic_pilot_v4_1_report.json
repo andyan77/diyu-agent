@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001",
+  "v4_no_go_closeout_recorded": true,
+  "v4_1_draft_count": 8,
+  "v4_1_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "forbidden_body_token_count": 0,
+  "body_placeholder_count": 0,
+  "audit_scaffolding_ratio_max": 0.038,
+  "relation_design_hints_count": 24,
+  "relation_schema_valid_count": 24,
+  "owner_model_valid_count": 8,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "readiness_flags_result": "all_false",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 12,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001",
+  "negative_results": {
+    "negative_body_contains_authority_item.yaml": [
+      "forbidden_body_token_count must be 0"
+    ],
+    "negative_body_contains_authority_relation.yaml": [
+      "forbidden_body_token_count must be 0"
+    ],
+    "negative_body_contains_low_quality_risk.yaml": [
+      "forbidden_body_token_count must be 0"
+    ],
+    "negative_body_placeholder_unresolved.yaml": [
+      "body_placeholder_count must be 0"
+    ],
+    "negative_missing_w7_topic_coverage_sidecar.yaml": [
+      "missing_w7_topic_coverage_sidecar_count must be 0"
+    ],
+    "negative_owner_model_missing_storage_target.yaml": [
+      "owner_model_missing_storage_target_count must be 0",
+      "owner_model_valid_count must be 8"
+    ],
+    "negative_control_plane_storage_target_GKB.yaml": [
+      "control_plane_GKB_storage_target_count must be 0"
+    ],
+    "negative_relation_uses_node_mkc_subject.yaml": [
+      "relation_uses_node_mkc_subject_count must be 0"
+    ],
+    "negative_relation_uses_candidate_to_cluster_trace.yaml": [
+      "forbidden_relation_predicate_count must be 0"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  }
+}

@@ -15,6 +15,7 @@ NEXT_TASK_ID = "CODEX-SEMANTIC-PILOT-REGEN-001"
 SEMANTIC_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001"
 SEMANTIC_V3_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001"
+SEMANTIC_V4_1_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001"
 BATCH_TASK_ID = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_BATCH_IDS = [f"batch_{idx:03d}" for idx in range(1, 15)]
 GATE_KEYS = [
@@ -124,8 +125,8 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("batch generation must remain locked")
     if data.get("ready_for_first_batch_generation") is not False:
         errors.append("first batch generation must remain false")
-    if data.get("current_next_step") != NEXT_TASK_ID:
-        errors.append("next step must be semantic pilot regen")
+    if data.get("current_next_step") not in {NEXT_TASK_ID, SEMANTIC_JUDGE_NEXT_STEP, SEMANTIC_V3_JUDGE_NEXT_STEP, SEMANTIC_V4_JUDGE_NEXT_STEP, SEMANTIC_V4_1_JUDGE_NEXT_STEP}:
+        errors.append("next step must be semantic pilot regen, semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, or semantic pilot v4.1 judge go/no-go")
     if data.get("current_next_step") == BATCH_TASK_ID:
         errors.append("batch generation task cannot be next step")
     if data.get("batch_briefs_hardened_count") != 14:
@@ -256,8 +257,20 @@ def validate_live(
             fail("semantic v4 judge route requires accepted_domain_knowledge_count 0")
         assert_false(semantic_v4.get("batch_generation_unlocked"), "semantic v4 judge route batch_generation_unlocked")
         assert_false(semantic_v4.get("ready_for_first_batch_generation"), "semantic v4 judge route ready_for_first_batch_generation")
+    elif current_next_step == SEMANTIC_V4_1_JUDGE_NEXT_STEP:
+        semantic_v41 = status.get("semantic_pilot_v4_1", {})
+        if semantic_v41.get("status") != "completed":
+            fail("semantic v4.1 judge route requires completed semantic_pilot_v4_1 block")
+        if semantic_v41.get("semantic_pilot_v4_1_count") != 8:
+            fail("semantic v4.1 judge route requires 8 v4.1 semantic revision drafts")
+        if semantic_v41.get("one_to_one_revision_of_v4") is not True:
+            fail("semantic v4.1 judge route requires one-to-one revision of V4")
+        if semantic_v41.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v4.1 judge route requires accepted_domain_knowledge_count 0")
+        assert_false(semantic_v41.get("batch_generation_unlocked"), "semantic v4.1 judge route batch_generation_unlocked")
+        assert_false(semantic_v41.get("ready_for_first_batch_generation"), "semantic v4.1 judge route ready_for_first_batch_generation")
     elif current_next_step != NEXT_TASK_ID:
-        fail("current_next_step must be semantic pilot regen, semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, or semantic pilot v4 judge go/no-go")
+        fail("current_next_step must be semantic pilot regen, semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, or semantic pilot v4.1 judge go/no-go")
     readiness = status.get("readiness", {})
     bad = {key: value for key, value in readiness.items() if value is True or str(value).lower() == "true"}
     if bad:

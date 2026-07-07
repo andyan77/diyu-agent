@@ -1,0 +1,51 @@
+codex_semantic_pilot_v4_1_revision_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+  purpose: Define the V4.1 semantic revision rules after V4 no-go closeout.
+  human_decision_required: true
+  canonical_body_zh_policy:
+    domain_knowledge_only: true
+    forbidden_tokens:
+    - 权威项
+    - 权威关系项
+    - 专属段
+    - 本条低质风险
+    - 逐句检查
+    - 进入下一步审查
+    audit_scaffolding_ratio_max: 0.1
+    min_body_zh_chars: 1000
+  schema_compatibility_mapping:
+    v4_1_only_fields_location: wrapper_or_sidecar
+    owner_model: wrapper
+    revision_lineage: wrapper
+    w7_expected_topic_coverage: sidecar
+    legacy_aliases: derived_from_owner_model
+  owner_model:
+    fields:
+    - semantic_owner
+    - storage_target
+    - artifact_kind
+    - consumer_layer
+    control_plane_storage_target_must_not_be: GeneralKnowledgeBase
+  relation_design_hints:
+    relation_status: design_hint_not_ontology_edge
+    minimum_total: 24
+    minimum_per_draft: 3
+    forbidden_predicates:
+    - review_adjacent_method_boundary
+    - candidate_to_cluster_trace
+    - related_to
+    - adjacent_to
+    forbidden_node_patterns:
+    - node_mkc_*_subject
+    - node_mkc_*_object
+    - freeform_sentence_as_node
+  status_policy:
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false

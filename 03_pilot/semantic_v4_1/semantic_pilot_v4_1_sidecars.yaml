@@ -1,0 +1,810 @@
+semantic_pilot_v4_1_sidecars:
+  sidecars:
+  - draft_id: SEM-V4_1-CONTENT-METHOD-001
+    revision_of: SEM-V4-CONTENT-METHOD-001
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_009
+      canonical_title_from_authority: 故事弧线适用边界
+      expected_body_topics:
+      - topic: 不同叙事弧线对应的问题类型
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过问题类型识别和新品上架说明说明该主题的适用方式。
+      - topic: 弧线与证据要求的绑定
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过证据强度匹配和工艺能力介绍说明该主题的适用方式。
+      - topic: 弧线与价值表达、proof slot 的兼容性
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过价值表达约束和系列主题介绍说明该主题的适用方式。
+      - topic: 不适用弧线的识别信号
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过不适用信号分流和门店讲解提纲说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: 8eba1b63c9eac0fe354222175c298711f9a0159bf3f791a58c5cfc9dbc66de06
+    provenance:
+      previous_v4_draft_id: SEM-V4-CONTENT-METHOD-001
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 问题类型识别
+      - 证据强度匹配
+      - 价值表达约束
+      - 不适用信号分流
+      observable_anchor_refs:
+      - 新品上架说明
+      - 工艺能力介绍
+      - 系列主题介绍
+      - 门店讲解提纲
+      operator_action_refs:
+      - 先判断任务是在解释选择、说明过程还是呈现变化
+      - 再确定证据是否足以支撑起承转合
+      - 最后把不能支撑的内容退回资料补充
+      boundary_or_failure_mode: 如果只有情绪词而没有过程、证据或对象变化，弧线会把内容推向空泛故事，应该降级为要点说明。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-CONTENT-METHOD-002
+    revision_of: SEM-V4-CONTENT-METHOD-002
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_010
+      canonical_title_from_authority: 反模板叙事锚点
+      expected_body_topics:
+      - topic: 对象锚点类型
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过对象锚点选择和版型差异说明该主题的适用方式。
+      - topic: 动作锚点与处理逻辑
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过动作锚点展开和搭配动作说明该主题的适用方式。
+      - topic: 约束锚点与取舍表达
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过约束取舍表达和陈列调整说明该主题的适用方式。
+      - topic: 节点锚点与前后台衔接
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过流程节点承接和导购说明节点说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: 5e62f930e7caa258f628e5f40ecfe9470618bbd62160a697b5ea54edaf314622
+    provenance:
+      previous_v4_draft_id: SEM-V4-CONTENT-METHOD-002
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 对象锚点选择
+      - 动作锚点展开
+      - 约束取舍表达
+      - 流程节点承接
+      observable_anchor_refs:
+      - 版型差异
+      - 搭配动作
+      - 陈列调整
+      - 导购说明节点
+      operator_action_refs:
+      - 先锁定被说明的对象
+      - 再把对象放进可观察动作
+      - 最后用取舍关系替代泛泛形容
+      boundary_or_failure_mode: 如果正文只剩风格口号、流行词或人格化包装，而没有对象和动作，内容会回到模板话术。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-001
+    revision_of: SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_026
+      canonical_title_from_authority: 身材效果语言阶梯与场景化观察
+      expected_body_topics:
+      - topic: 观察词/关系词/结果词分层
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过观察词分层和腰线位置说明该主题的适用方式。
+      - topic: 能说视觉线条变化与不能保证身体结果的边界
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过关系词限位和肩线方向说明该主题的适用方式。
+      - topic: 替代表达与回避表达
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过结果词回避和裤管垂坠说明该主题的适用方式。
+      - topic: 场景化但非结论化的观察方式
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过场景化观察和外套开合状态说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: 852b02654bae2233959726f4ba01a26660aa3f2bc7b648dc266cee1fc71a68e6
+    provenance:
+      previous_v4_draft_id: SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 观察词分层
+      - 关系词限位
+      - 结果词回避
+      - 场景化观察
+      observable_anchor_refs:
+      - 腰线位置
+      - 肩线方向
+      - 裤管垂坠
+      - 外套开合状态
+      operator_action_refs:
+      - 先描述可见线条和比例关系
+      - 再说明观察发生的穿搭场景
+      - 最后避开身体改变或效果保证
+      boundary_or_failure_mode: 如果把显得利落写成改变身材，或把镜头角度写成身体结果，表达就越过了观察边界。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-002
+    revision_of: SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_027
+      canonical_title_from_authority: 舒适性能耐用品质证据阶梯
+      expected_body_topics:
+      - topic: claim 分级
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过主张分级和面料触感说明该主题的适用方式。
+      - topic: 不同 claim 对应的证据类别
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过证据类别匹配和缝线密度说明该主题的适用方式。
+      - topic: 无证据时允许保留的最低表达层级
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过最低表达保留和弹力恢复说明该主题的适用方式。
+      - topic: source gap 触发阈值
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过待补源触发和洗后形态观察说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: 52db1e47463300f9ad661c36383e182e450454d7a9ee1e33982a1ec2dcaac07a
+    provenance:
+      previous_v4_draft_id: SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 主张分级
+      - 证据类别匹配
+      - 最低表达保留
+      - 待补源触发
+      observable_anchor_refs:
+      - 面料触感
+      - 缝线密度
+      - 弹力恢复
+      - 洗后形态观察
+      operator_action_refs:
+      - 先判断句子属于体验、材料还是性能
+      - 再匹配可用证据层级
+      - 最后把证据不足的句子改成观察或待补源
+      boundary_or_failure_mode: 如果没有测试、标准或可追溯资料，却写成确定性能，句子必须降级。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-DISPLAY-TO-CONTENT-001
+    revision_of: SEM-V4-DISPLAY-TO-CONTENT-001
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_032
+      canonical_title_from_authority: 陈列区位与可拍摄视觉锚点
+      expected_body_topics:
+      - topic: 入口区/中岛/端架/挂通等一般化区位表达
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过区位识别和入口区第一眼说明该主题的适用方式。
+      - topic: 远景-中景-近景的观察切换
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过远中近景切换和中岛组合说明该主题的适用方式。
+      - topic: 静态陈列中的可拍摄重点
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过静态重点提取和端架重点说明该主题的适用方式。
+      - topic: 从区位到镜头的最小映射
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过区位到镜头映射和挂通层次说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: b3d04225085d20f8a3e5fb4cc055be0a409b0752b77ceedee378140aa5e3d8cd
+    provenance:
+      previous_v4_draft_id: SEM-V4-DISPLAY-TO-CONTENT-001
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 区位识别
+      - 远中近景切换
+      - 静态重点提取
+      - 区位到镜头映射
+      observable_anchor_refs:
+      - 入口区第一眼
+      - 中岛组合
+      - 端架重点
+      - 挂通层次
+      operator_action_refs:
+      - 先判断顾客视线从哪里进入
+      - 再安排远景、中景、近景的观察顺序
+      - 最后让镜头服务于商品关系而不是炫技
+      boundary_or_failure_mode: 如果只记录摆放位置而没有画面重心，内容无法转成可执行拍摄结构。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-DISPLAY-TO-CONTENT-002
+    revision_of: SEM-V4-DISPLAY-TO-CONTENT-002
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_034
+      canonical_title_from_authority: 动作转内容槽位与演示三段式
+      expected_body_topics:
+      - topic: 动作镜头起承转合
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过动作起承转合和取下衣架说明该主题的适用方式。
+      - topic: 动作对应的解释槽位
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过解释槽位配置和整理领口说明该主题的适用方式。
+      - topic: 强观察/弱解释的组合方式
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过强观察弱解释和比较面料说明该主题的适用方式。
+      - topic: 平台提示仅作为研究注释
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过演示节点串联和示范搭配动作说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: 76a113c4eb8a5244d7bf27b4f0401ebfcc730ca3fc13043001b61ec01735c89d
+    provenance:
+      previous_v4_draft_id: SEM-V4-DISPLAY-TO-CONTENT-002
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 动作起承转合
+      - 解释槽位配置
+      - 强观察弱解释
+      - 演示节点串联
+      observable_anchor_refs:
+      - 取下衣架
+      - 整理领口
+      - 比较面料
+      - 示范搭配动作
+      operator_action_refs:
+      - 先把动作拆成开始、变化和结果
+      - 再给每个动作配一个解释槽位
+      - 最后控制讲解不压过观察
+      boundary_or_failure_mode: 如果只有口播解释而没有动作变化，演示会失去可看性；如果只有动作没有解释，信息又难以被复用。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-001
+    revision_of: SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_004
+      canonical_title_from_authority: 异常分发与再进入规则
+      expected_body_topics:
+      - topic: source_gap 触发模式
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过缺源触发和缺少来源标记说明该主题的适用方式。
+      - topic: decision_required 触发模式
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过建模冲突触发和模型冲突标记说明该主题的适用方式。
+      - topic: founder_review 触发模式
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过风险人工确认触发和敏感风险标记说明该主题的适用方式。
+      - topic: excluded 触发模式
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过禁出排除和禁止输出请求说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: ff43b069259148ef4adb23d22d2dec558f0a5cd18ba588746246851457316774
+    provenance:
+      previous_v4_draft_id: SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 缺源触发
+      - 建模冲突触发
+      - 风险人工确认触发
+      - 禁出排除
+      observable_anchor_refs:
+      - 缺少来源标记
+      - 模型冲突标记
+      - 敏感风险标记
+      - 禁止输出请求
+      operator_action_refs:
+      - 先标记异常原因
+      - 再选择账本或人工确认路径
+      - 最后在条件满足前阻止重新进入生成链路
+      boundary_or_failure_mode: 如果异常项只被写进说明文字而没有分流标签，后续任务会误以为问题已经解决。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-002
+    revision_of: SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+    wrapper_only_fields:
+    - owner_model
+    - revision_lineage
+    - legacy_aliases
+    w7_expected_topic_coverage:
+      referenced_mkc_id: mkc_006
+      canonical_title_from_authority: 研究资产绑定与非生产封印
+      expected_body_topics:
+      - topic: 研究型资产类型
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过资产类型识别和研究说明说明该主题的适用方式。
+      - topic: 资产前置槽位
+        coverage_status: covered
+        body_paragraph_refs:
+        - p1
+        - p2
+        - p7
+        mechanism_summary: 正文通过前置槽位完整性和资产草稿体说明该主题的适用方式。
+      - topic: 资产绑定排他条件
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过绑定排他条件和非生产标签说明该主题的适用方式。
+      - topic: 多资产冲突处理
+        coverage_status: covered
+        body_paragraph_refs:
+        - p3
+        - p4
+        - p7
+        mechanism_summary: 正文通过多资产冲突拆分和冲突配对记录说明该主题的适用方式。
+    w7_alignment:
+      authority_source: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+      canonical_title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+      authority_record_digest: a9ea7dc9d2c5a4d56d73e7e8742fa600364ea5454e94e00684c6f9029a61fb66
+    provenance:
+      previous_v4_draft_id: SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+      previous_v4_commit: dac35869b74298ca68b4e197db7716743d3a9e34
+      revision_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+      source_repo_live_dependency: false
+      external_drive_dependency: false
+    body_entailment:
+      paragraph_refs:
+      - p1
+      - p2
+      - p3
+      - p4
+      - p5
+      - p6
+      - p7
+      mechanism_refs:
+      - 资产类型识别
+      - 前置槽位完整性
+      - 绑定排他条件
+      - 多资产冲突拆分
+      observable_anchor_refs:
+      - 研究说明
+      - 资产草稿体
+      - 非生产标签
+      - 冲突配对记录
+      operator_action_refs:
+      - 先确认资产是否只是研究材料
+      - 再检查槽位是否完整
+      - 最后对冲突组合执行阻断或拆分
+      boundary_or_failure_mode: 如果研究材料被当成成品知识使用，系统会绕过人工确认和生产边界。
+    review_checklist:
+      body_contains_only_domain_knowledge: true
+      owner_model_split_verified: true
+      relation_design_hints_not_ontology_edges: true
+      requires_human_judge_before_acceptance: true
+    no_go_fix_trace:
+      removed_from_body:
+      - authority alignment narration
+      - placeholder wording
+      - segment labels
+      - checker-facing review prose
+      moved_to_sidecar:
+      - w7_alignment
+      - provenance
+      - body_entailment
+      - review_checklist
+      - source_boundary
+    duplicate_check:
+      normalized_body_duplicate: false
+      shared_sentence_ratio_over_threshold: false
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
