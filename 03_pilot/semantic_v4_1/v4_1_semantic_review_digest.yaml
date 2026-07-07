@@ -1,0 +1,17 @@
+v4_1_semantic_review_digest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001
+  source: founder_current_request
+  human_decision_present: true
+  authorized_scope: V4.1 no-go closeout + V4.2 one-to-one rewrite only
+  carry_forward_findings:
+  - V4.1 fixed governance and schema repair but still used a uniform body frame.
+  - Claim-boundary content needs a language ladder and evidence threshold rather than
+    generic moderation prose.
+  - Execution assets need ordered steps and completion conditions.
+  - Control-plane and decision-packet items need state and decision structures, not
+    content-production prose.
+  - Relation design hints must not be fixed at three per card when semantic need differs.
+  not_allowed_to_assume:
+  - V4.2 is accepted domain knowledge
+  - V4.2 unlocks batch generation
+  - V4.2 can enter CandidatePack

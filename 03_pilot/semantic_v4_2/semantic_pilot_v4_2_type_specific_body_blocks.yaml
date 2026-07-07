@@ -1,0 +1,192 @@
+semantic_pilot_v4_2_type_specific_body_blocks:
+  items:
+  - draft_id: SEM-V4_2-CONTENT-METHOD-001
+    type_specific_body_shape: general_knowledge
+    required_blocks: &id001
+    - definition
+    - differentiation_mechanism
+    - applicable_conditions
+    - not_applicable_conditions
+    - positive_example_minimum
+    - negative_example_minimum
+    - observable_apparel_or_retail_anchor
+    - downstream_consumption_effect
+    blocks:
+    - block_id: definition
+      block_text: 故事弧线选择边界是一套任务判定知识，用来决定内容应该解释过程、呈现变化、说明取舍，还是只保留事实清单。它不提供脚本句式，而是先识别问题类型，再判断证据强度能否支撑某种叙事弧线。
+    - block_id: differentiation_mechanism
+      block_text: 使用这个知识簇后，系统会把为什么这样做、发生了什么变化、这个选择带来什么代价拆成不同弧线入口。不使用时，系统容易把所有内容都写成情绪化故事，导致证据很弱的材料被包装成完整叙事。
+    - block_id: applicable_conditions
+      block_text: 适用条件包括：素材包含明确过程、选择理由、阶段变化或能力说明；表达目标需要把事件顺序和证据强度绑定；操作者能说明哪一种价值表达不会越过事实边界。
+    - block_id: not_applicable_conditions
+      block_text: 不适用条件包括：只有单个口号、单张氛围图、无法验证的结果承诺，或任务本身只需要列出款式、颜色、区位等事实。此时继续套故事弧线会制造不存在的因果。
+    - block_id: positive_example_minimum
+      block_text: 最低正例是：导购说明一个新品系列为何先讲材质再讲搭配，因为材质差异有观察依据，搭配建议只是使用场景，二者不能反过来写成性能结论。
+    - block_id: negative_example_minimum
+      block_text: 最低反例是：看到一组陈列图就写成品牌成长故事，既没有过程证据，也没有人物或组织动作，最后只剩抽象情绪。
+    - block_id: observable_apparel_or_retail_anchor
+      block_text: 可观察锚点可以是面料处理顺序、版型取舍、陈列动线、系列主题信息层级，或门店人员讲解时先后出现的证据材料。
+    - block_id: downstream_consumption_effect
+      block_text: 下游使用时，内容说明会先选择问题类型，再选择弧线强度；若证据不足，则转成说明清单或补源任务，避免把弱材料推进成完整故事。
+  - draft_id: SEM-V4_2-CONTENT-METHOD-002
+    type_specific_body_shape: general_knowledge
+    required_blocks: *id001
+    blocks:
+    - block_id: definition
+      block_text: 反模板叙事锚点是一套内容组织知识，用来把抽象风格描述拉回具体对象。它要求先找到被说明的衣物、动作、约束或流程节点，再围绕这些锚点建立句子顺序。
+    - block_id: differentiation_mechanism
+      block_text: 使用这个知识簇后，系统会把高级、松弛、适合日常拆成可见对象、处理动作和取舍关系。不使用时，内容会重复流行形容词，无法说明为什么这件衣服或这个陈列值得被讲。
+    - block_id: applicable_conditions
+      block_text: 适用于对象清楚、动作可见、约束明确的内容任务，例如讲领口处理、裤管长度、挂通调整、搭配取舍或门店流程节点。
+    - block_id: not_applicable_conditions
+      block_text: 不适用于完全没有对象和动作的口号，也不适用于需要硬事实证明的品质主张。若任务只给出价值词，必须先补充对象材料。
+    - block_id: positive_example_minimum
+      block_text: 最低正例是：用衬衫下摆如何塞进半裙解释比例变化，而不是只说显得利落。对象是衬衫和半裙，动作是塞入，约束是腰线位置。
+    - block_id: negative_example_minimum
+      block_text: 最低反例是：把所有图文都写成自在、松弛、有氛围，没有对象、动作和取舍，读者无法复用。
+    - block_id: observable_apparel_or_retail_anchor
+      block_text: 锚点可以来自袖口翻折、鞋包呼应、试衣动作、叠搭层次、陈列焦点或导购手势。
+    - block_id: downstream_consumption_effect
+      block_text: 下游会把内容说明转成锚点清单，先要求对象和动作，再生成表达；缺少锚点时不得进入正文扩写。
+  - draft_id: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-001
+    type_specific_body_shape: claim_boundary
+    required_blocks: &id002
+    - claim_type_ladder
+    - allowed_expression_examples
+    - restricted_expression_examples
+    - prohibited_expression_examples
+    - minimum_contrast_examples
+    - evidence_threshold_by_claim_strength
+    - source_gap_route
+    - downgrade_expression_rule
+    blocks:
+    - block_id: claim_type_ladder
+      block_text: 语言阶梯从低到高依次是观察词、关系词、结果词和身体承诺词。观察词描述可见状态，例如腰线更清楚；关系词描述搭配关系，例如上短下长形成比例；结果词暗示效果，例如显瘦；身体承诺词声称身体改变，必须禁用。
+    - block_id: allowed_expression_examples
+      block_text: 允许表达包括腰线位置更明确、裤管垂坠让腿部线条更顺、外套开穿时内搭比例更清楚。这些句子只描述视觉关系和穿搭条件。
+    - block_id: restricted_expression_examples
+      block_text: 受限表达包括显高、显瘦、修饰身形。若必须使用，只能放在场景化观察中，并说明来自版型、长度、颜色或搭配关系，不能写成确定结果。
+    - block_id: prohibited_expression_examples
+      block_text: 禁止表达包括保证瘦十斤、改变身材比例、穿上就瘦腿。这些句子把穿搭观察变成身体结果承诺。
+    - block_id: minimum_contrast_examples
+      block_text: 最小对比是：腰线更清楚可以保留；让腰变细必须删除；视觉上更利落需要补充具体条件。
+    - block_id: evidence_threshold_by_claim_strength
+      block_text: 观察词只需要图片或试穿场景；关系词需要搭配条件；结果词需要风险标记和改写；身体承诺词即使有单次反馈也不能进入正文。
+    - block_id: source_gap_route
+      block_text: 当句子需要证明身体结果、长期效果或顾客普遍感受时，应进入补源路径，而不是用内容经验补足。
+    - block_id: downgrade_expression_rule
+      block_text: 降级规则是把结果词改成观察词，把保证句改成条件句，把身体改变改成服装结构或搭配关系。
+  - draft_id: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-002
+    type_specific_body_shape: claim_boundary
+    required_blocks: *id002
+    blocks:
+    - block_id: claim_type_ladder
+      block_text: 语言阶梯从低到高依次是触感观察、穿着体验、材料性能、测试结论和耐用承诺。触感观察可以来自现场感知；性能和耐用承诺必须有方法、标准或可追溯资料。
+    - block_id: allowed_expression_examples
+      block_text: 允许表达包括手感偏柔、面料有一定回弹感、缝线排列较整齐。这些句子停留在观察或有限体验。
+    - block_id: restricted_expression_examples
+      block_text: 受限表达包括久穿不变形、透气性好、耐磨。若没有测试或标准，只能改为适合观察回弹状态或需补充测试依据。
+    - block_id: prohibited_expression_examples
+      block_text: 禁止表达包括永久不变形、医学级舒适、经过测试但无来源。这些句子把未证实材料写成硬事实。
+    - block_id: minimum_contrast_examples
+      block_text: 最小对比是：面料摸起来更柔可以保留；长时间穿着绝不闷必须补源；耐穿需要拆成缝线、面料和护理条件。
+    - block_id: evidence_threshold_by_claim_strength
+      block_text: 触感观察需要场景说明；体验判断需要使用条件；性能主张需要方法或标准；耐用结论需要测试或长期资料。
+    - block_id: source_gap_route
+      block_text: 当证据无法支撑性能或耐用主张时，句子进入补源路径；若补源失败，就保留为观察，不得继续上升。
+    - block_id: downgrade_expression_rule
+      block_text: 降级规则是把性能结论改成观察对象，把耐用承诺改成待验证条件，把泛化顾客反馈改成单次场景描述。
+  - draft_id: SEM-V4_2-DISPLAY-TO-CONTENT-001
+    type_specific_body_shape: execution_asset
+    required_blocks: &id003
+    - input_signal
+    - spatial_or_temporal_logic
+    - ordered_steps
+    - observable_completion_condition
+    - failure_or_stop_condition
+    - shot_or_action_slot_mapping
+    - downstream_output_asset_shape
+    blocks:
+    - block_id: input_signal
+      block_text: 输入信号是门店空间中的区位差异，例如入口区、中岛、端架、挂通或橱窗。每个区位都带着不同的顾客视线入口。
+    - block_id: spatial_or_temporal_logic
+      block_text: 空间逻辑是区位先于镜头：入口区负责第一眼，中岛负责组合关系，端架负责重点推荐，挂通负责纵向层次。
+    - block_id: ordered_steps
+      block_text: 步骤一确认区位，步骤二确定观察目标，步骤三选择远景、中景或近景，步骤四把镜头动作绑定到信息任务。
+    - block_id: observable_completion_condition
+      block_text: 完成条件是镜头能让观看者知道看哪里、为什么看、看完后得到什么商品关系。
+    - block_id: failure_or_stop_condition
+      block_text: 停止条件是画面只展示摆放位置，却没有商品关系、视觉重心或信息任务。
+    - block_id: shot_or_action_slot_mapping
+      block_text: 镜头映射为：远景交代区位，中景展示组合，近景捕捉材质、层次或搭配细节。
+    - block_id: downstream_output_asset_shape
+      block_text: 下游产物是空间拍摄提示卡，包含区位、观察目标、镜头动作和信息任务四列。
+  - draft_id: SEM-V4_2-DISPLAY-TO-CONTENT-002
+    type_specific_body_shape: execution_asset
+    required_blocks: *id003
+    blocks:
+    - block_id: input_signal
+      block_text: 输入信号是门店人员或顾客可以观察到的动作，例如取下衣架、整理领口、对比面料、转身展示或放回陈列。
+    - block_id: spatial_or_temporal_logic
+      block_text: 时间逻辑是动作先于解释：先出现动作开始，再进入解释节点，随后镜头跟随变化，最后用完成状态收束。
+    - block_id: ordered_steps
+      block_text: 步骤一记录动作起点，步骤二标注动作改变了什么，步骤三给出一句解释，步骤四确认动作是否产生可见完成状态。
+    - block_id: observable_completion_condition
+      block_text: 完成条件是观看者能复述动作顺序，并理解每个动作对应的商品信息。
+    - block_id: failure_or_stop_condition
+      block_text: 停止条件是只有口播没有动作，或动作很多但没有解释槽位，导致演示不可复用。
+    - block_id: shot_or_action_slot_mapping
+      block_text: 槽位映射为：开始镜头看动作起点，跟随镜头看变化，中段解释说明原因，收束镜头确认结果。
+    - block_id: downstream_output_asset_shape
+      block_text: 下游产物是动作演示提示卡，包含动作、解释、镜头跟随和完成判断四列。
+  - draft_id: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-001
+    type_specific_body_shape: control_plane
+    required_blocks:
+    - trigger_condition
+    - state_transition
+    - route_target
+    - ledger_write
+    - reentry_condition
+    - prohibited_transition
+    - fail_closed_default
+    blocks:
+    - block_id: trigger_condition
+      block_text: 触发条件包括缺少来源、建模冲突、风险敏感和禁止输出请求。每一种触发都对应不同状态，而不是同一个备注字段。
+    - block_id: state_transition
+      block_text: 状态转移为：缺源进入 source_gap，冲突进入 decision_required，风险进入 human_review，禁出进入
+        excluded。
+    - block_id: route_target
+      block_text: 路由目标分别是补源队列、决策记录、人工判断队列和排除清单。路由目标只记录状态，不生成领域正文。
+    - block_id: ledger_write
+      block_text: 账本写入必须包含触发原因、当前状态、禁止动作和重新进入条件，避免异常项在后续任务里失踪。
+    - block_id: reentry_condition
+      block_text: 重新进入条件是来源补齐、决策完成、风险解除或请求改写为允许范围。
+    - block_id: prohibited_transition
+      block_text: 禁止从 excluded 直接进入生成，也禁止从 source_gap 直接变成已接受知识。
+    - block_id: fail_closed_default
+      block_text: 默认动作是停在当前状态并等待明确条件，不用经验判断替代缺失来源或风险决策。
+  - draft_id: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002
+    type_specific_body_shape: decision_packet
+    required_blocks:
+    - decision_question
+    - options
+    - decision_owner
+    - impacted_contract_or_layer
+    - default_safe_action
+    - unresolved_inputs
+    - next_review_condition
+    blocks:
+    - block_id: decision_question
+      block_text: 决策问题是：这份研究材料能否只作为非生产用途绑定到指定槽位，还是必须拆分、暂存或拒绝绑定。
+    - block_id: options
+      block_text: 选项包括允许绑定、补齐槽位后绑定、拆分冲突材料、维持研究状态、拒绝进入后续用途。
+    - block_id: decision_owner
+      block_text: 决策责任方是知识生成治理侧，不是内容撰写者或运行系统。内容人员只能提供材料说明，不能替代绑定决策。
+    - block_id: impacted_contract_or_layer
+      block_text: 受影响层包括生成契约、研究资产清单、决策记录和后续资格判断；它不直接改写通用知识库。
+    - block_id: default_safe_action
+      block_text: 默认安全动作是维持研究状态并阻止成品化使用，直到槽位、用途和冲突关系被明确记录。
+    - block_id: unresolved_inputs
+      block_text: 未解决输入包括材料来源、用途范围、绑定排他条件、与其他资产的冲突关系。
+    - block_id: next_review_condition
+      block_text: 下一次判断条件是来源补齐、用途收窄、冲突拆分或负责人给出明确选择。

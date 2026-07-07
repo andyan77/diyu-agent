@@ -1,0 +1,30 @@
+v4_1_no_go_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    authorized_scope: V4.1 no-go closeout + V4.2 one-to-one rewrite only
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4-NOGO-CLOSEOUT-AND-V4_1-REVISION-001
+  previous_commit: c984e00cd6ad6c5a7d45fab71130fd6980b109ff
+  engineering_delivery: PASS
+  governance_and_schema_repair: PASS
+  semantic_verdict: NO_GO
+  all_8_cards:
+    disposition:
+      SEM-V4_1-CONTENT-METHOD-001: revise_required
+      SEM-V4_1-CONTENT-METHOD-002: revise_required
+      SEM-V4_1-APPAREL-CLAIM-BOUNDARY-001: revise_required
+      SEM-V4_1-APPAREL-CLAIM-BOUNDARY-002: revise_required
+      SEM-V4_1-DISPLAY-TO-CONTENT-001: revise_required
+      SEM-V4_1-DISPLAY-TO-CONTENT-002: revise_required
+      SEM-V4_1-CONTROL-PLANE-GOVERNANCE-001: revise_required
+      SEM-V4_1-CONTROL-PLANE-GOVERNANCE-002: revise_required
+  no_go_reasons:
+  - rich_body_semantic_independence_fail
+  - type_specific_domain_mechanism_fail
+  - review_prose_leaked_into_body
+  - same_category_body_similarity_too_high
+  - relation_design_hint_predicate_reuse_too_high
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false

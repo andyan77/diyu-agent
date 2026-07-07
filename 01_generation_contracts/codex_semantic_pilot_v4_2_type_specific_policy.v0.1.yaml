@@ -1,0 +1,75 @@
+codex_semantic_pilot_v4_2_type_specific_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001
+  human_decision_present: true
+  authorized_scope: V4.1 no-go closeout + V4.2 one-to-one rewrite only
+  type_specific_body_shape:
+  - general_knowledge
+  - claim_boundary
+  - execution_asset
+  - control_plane
+  - decision_packet
+  artifact_kind_semantic_note: claim_boundary is a V4.2 body shape, not a strict schema
+    artifact_kind or candidate_kind enum.
+  required_blocks_by_shape:
+    general_knowledge:
+    - definition
+    - differentiation_mechanism
+    - applicable_conditions
+    - not_applicable_conditions
+    - positive_example_minimum
+    - negative_example_minimum
+    - observable_apparel_or_retail_anchor
+    - downstream_consumption_effect
+    claim_boundary:
+    - claim_type_ladder
+    - allowed_expression_examples
+    - restricted_expression_examples
+    - prohibited_expression_examples
+    - minimum_contrast_examples
+    - evidence_threshold_by_claim_strength
+    - source_gap_route
+    - downgrade_expression_rule
+    execution_asset:
+    - input_signal
+    - spatial_or_temporal_logic
+    - ordered_steps
+    - observable_completion_condition
+    - failure_or_stop_condition
+    - shot_or_action_slot_mapping
+    - downstream_output_asset_shape
+    control_plane:
+    - trigger_condition
+    - state_transition
+    - route_target
+    - ledger_write
+    - reentry_condition
+    - prohibited_transition
+    - fail_closed_default
+    decision_packet:
+    - decision_question
+    - options
+    - decision_owner
+    - impacted_contract_or_layer
+    - default_safe_action
+    - unresolved_inputs
+    - next_review_condition
+  relation_design_hint_count:
+    per_card_min: 2
+    per_card_max: 5
+    total_min: 20
+    total_max: 32
+    fixed_three_per_card_forbidden: true
+  similarity_limits:
+    same_category_body_similarity_max: 0.55
+    cross_category_body_similarity_max: 0.45
+    exact_paragraph_duplicate_count: 0
+  status_policy:
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false

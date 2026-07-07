@@ -1,0 +1,48 @@
+{
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001",
+  "status": "PASS",
+  "v4_2_draft_count": 8,
+  "v4_2_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "artifact_kind_specific_body_shape_valid_count": 8,
+  "type_specific_body_shape_values": [
+    "claim_boundary",
+    "control_plane",
+    "decision_packet",
+    "execution_asset",
+    "general_knowledge"
+  ],
+  "forbidden_review_prose_count": 0,
+  "exact_paragraph_duplicate_count": 0,
+  "same_category_body_similarity_max": 0.147,
+  "cross_category_body_similarity_max": 0.07,
+  "relation_design_hints_count": 29,
+  "relation_count_by_card": {
+    "SEM-V4_2-CONTENT-METHOD-001": 2,
+    "SEM-V4_2-CONTENT-METHOD-002": 4,
+    "SEM-V4_2-APPAREL-CLAIM-BOUNDARY-001": 5,
+    "SEM-V4_2-APPAREL-CLAIM-BOUNDARY-002": 2,
+    "SEM-V4_2-DISPLAY-TO-CONTENT-001": 4,
+    "SEM-V4_2-DISPLAY-TO-CONTENT-002": 5,
+    "SEM-V4_2-CONTROL-PLANE-GOVERNANCE-001": 3,
+    "SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002": 4
+  },
+  "fixed_three_relations_per_card": false,
+  "distinct_predicate_id_count": 29,
+  "max_same_predicate_usage_ratio": 0.034,
+  "owner_model_valid_count": 8,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_2-JUDGE-GO-NOGO-001"
+}

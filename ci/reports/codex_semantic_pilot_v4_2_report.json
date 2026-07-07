@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001",
+  "v4_2_draft_count": 8,
+  "v4_2_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "artifact_kind_specific_body_shape_valid_count": 8,
+  "forbidden_review_prose_count": 0,
+  "exact_paragraph_duplicate_count": 0,
+  "same_category_body_similarity_max": 0.147,
+  "cross_category_body_similarity_max": 0.07,
+  "relation_design_hints_count": 29,
+  "distinct_predicate_id_count": 29,
+  "max_same_predicate_usage_ratio": 0.034,
+  "owner_model_valid_count": 8,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "readiness_flags_result": "all_false",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 14,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_2-JUDGE-GO-NOGO-001",
+  "negative_results": {
+    "negative_same_category_similarity_over_0_55.yaml": [
+      "same_category_body_similarity_max must be <= 0.55"
+    ],
+    "negative_cross_category_similarity_over_0_45.yaml": [
+      "cross_category_body_similarity_max must be <= 0.45"
+    ],
+    "negative_exact_paragraph_duplicate.yaml": [
+      "exact_paragraph_duplicate_count must be 0"
+    ],
+    "negative_body_contains_review_prose.yaml": [
+      "forbidden_review_prose_count must be 0"
+    ],
+    "negative_general_knowledge_missing_differentiation_mechanism.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_claim_boundary_missing_expression_ladder.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_execution_asset_missing_ordered_steps.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_control_plane_missing_route_target.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_decision_packet_missing_default_safe_action.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_relation_predicate_reuse_too_high.yaml": [
+      "max_same_predicate_usage_ratio must be <= 0.25"
+    ],
+    "negative_fixed_three_relations_per_card_even_if_total_24.yaml": [
+      "relation hints must not be fixed three per card"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  }
+}

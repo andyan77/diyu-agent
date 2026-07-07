@@ -1,0 +1,136 @@
+{
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001",
+  "repository": "/home/diyu/笛语领域通用数据库",
+  "workspace_HEAD_before": "c984e00cd6ad6c5a7d45fab71130fd6980b109ff",
+  "human_decision_present": true,
+  "authorized_scope": "V4.1 no-go closeout + V4.2 one-to-one rewrite only",
+  "source_repo_live_accessed": false,
+  "external_drive_accessed": false,
+  "v4_1_no_go_closeout_recorded": true,
+  "v4_2_type_specific_revision_drafts_created": true,
+  "v4_2_semantic_checker_landed": true,
+  "status": "PASS",
+  "v4_2_draft_count": 8,
+  "v4_2_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "artifact_kind_specific_body_shape_valid_count": 8,
+  "type_specific_body_shape_values": [
+    "claim_boundary",
+    "control_plane",
+    "decision_packet",
+    "execution_asset",
+    "general_knowledge"
+  ],
+  "forbidden_review_prose_count": 0,
+  "exact_paragraph_duplicate_count": 0,
+  "same_category_body_similarity_max": 0.147,
+  "cross_category_body_similarity_max": 0.07,
+  "relation_design_hints_count": 29,
+  "relation_count_by_card": {
+    "SEM-V4_2-CONTENT-METHOD-001": 2,
+    "SEM-V4_2-CONTENT-METHOD-002": 4,
+    "SEM-V4_2-APPAREL-CLAIM-BOUNDARY-001": 5,
+    "SEM-V4_2-APPAREL-CLAIM-BOUNDARY-002": 2,
+    "SEM-V4_2-DISPLAY-TO-CONTENT-001": 4,
+    "SEM-V4_2-DISPLAY-TO-CONTENT-002": 5,
+    "SEM-V4_2-CONTROL-PLANE-GOVERNANCE-001": 3,
+    "SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002": 4
+  },
+  "fixed_three_relations_per_card": false,
+  "distinct_predicate_id_count": 29,
+  "max_same_predicate_usage_ratio": 0.034,
+  "owner_model_valid_count": 8,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_2-JUDGE-GO-NOGO-001",
+  "readiness_flags_result": "all_false",
+  "ready_for_semantic_pilot_v4_2_judge_review": true,
+  "route_sync_files_changed": [
+    "ci/checkers/check_codex_generation_cross_type_pilot.py",
+    "ci/checkers/check_codex_semantic_pilot_regen.py",
+    "ci/checkers/check_codex_semantic_pilot_v3.py",
+    "ci/checkers/check_codex_semantic_pilot_v4.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_1.py",
+    "ci/checkers/check_pilot_semantic_fail_closeout_and_brief_hardening.py"
+  ],
+  "carry_forward_findings": [
+    "V4.1 fixed governance and schema repair but still used a uniform body frame.",
+    "Claim-boundary content needs a language ladder and evidence threshold rather than generic moderation prose.",
+    "Execution assets need ordered steps and completion conditions.",
+    "Control-plane and decision-packet items need state and decision structures, not content-production prose.",
+    "Relation design hints must not be fixed at three per card when semantic need differs."
+  ],
+  "facts_required_for_next_planning": {
+    "target_workspace_path": "/home/diyu/笛语领域通用数据库",
+    "semantic_pilot_v4_2_path": "03_pilot/semantic_v4_2",
+    "ready_for_semantic_pilot_v4_2_judge_review": true,
+    "ready_for_first_batch_generation": false,
+    "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_2-JUDGE-GO-NOGO-001"
+  },
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 14,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_same_category_similarity_over_0_55.yaml": [
+      "same_category_body_similarity_max must be <= 0.55"
+    ],
+    "negative_cross_category_similarity_over_0_45.yaml": [
+      "cross_category_body_similarity_max must be <= 0.45"
+    ],
+    "negative_exact_paragraph_duplicate.yaml": [
+      "exact_paragraph_duplicate_count must be 0"
+    ],
+    "negative_body_contains_review_prose.yaml": [
+      "forbidden_review_prose_count must be 0"
+    ],
+    "negative_general_knowledge_missing_differentiation_mechanism.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_claim_boundary_missing_expression_ladder.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_execution_asset_missing_ordered_steps.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_control_plane_missing_route_target.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_decision_packet_missing_default_safe_action.yaml": [
+      "required_block_missing_count must be 0"
+    ],
+    "negative_relation_predicate_reuse_too_high.yaml": [
+      "max_same_predicate_usage_ratio must be <= 0.25"
+    ],
+    "negative_fixed_three_relations_per_card_even_if_total_24.yaml": [
+      "relation hints must not be fixed three per card"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  },
+  "checker_live_result": "PASS",
+  "checker_selftest_result": "PASS",
+  "python_optimized_mode_result": "FAIL-CLOSED exit_code_2",
+  "contract_lock_checker_result": "PASS",
+  "old_checkers_route_sync_result": "PASS",
+  "external_resources_touched": false,
+  "generated_knowledge_count": 0
+}
