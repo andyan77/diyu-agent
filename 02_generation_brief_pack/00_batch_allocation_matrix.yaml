@@ -1,0 +1,208 @@
+batch_allocation_matrix:
+  schema_version: v0.1
+  macro_batch_count: 14
+  total_budget: 3600
+  budget_not_kpi: true
+  quality_over_count: true
+  count_policy:
+    total_budget_is_planning_budget_not_kpi: true
+    lower_actual_count_allowed_if_quality_gate_blocks: true
+  shared_assignment_rule:
+    canonical_cluster_refs_may_repeat_across_batches: true
+    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters
+      across planning contexts.
+    generation_assignment_refs_must_be_exactly_once: true
+    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014
+      by numeric suffix for brief planning.
+  batches:
+  - batch_id: batch_001
+    generation_assignment_id: GA-001
+    target_count_budget: 100
+    canonical_cluster_refs:
+    - mkc_019
+    - mkc_026
+    - mkc_027
+    canonical_cluster_count: 3
+  - batch_id: batch_002
+    generation_assignment_id: GA-002
+    target_count_budget: 200
+    canonical_cluster_refs:
+    - mkc_008
+    - mkc_009
+    - mkc_020
+    - mkc_021
+    - mkc_039
+    - mkc_040
+    canonical_cluster_count: 6
+  - batch_id: batch_003
+    generation_assignment_id: GA-003
+    target_count_budget: 280
+    canonical_cluster_refs:
+    - mkc_020
+    - mkc_021
+    - mkc_022
+    - mkc_023
+    - mkc_024
+    - mkc_025
+    - mkc_028
+    - mkc_029
+    - mkc_030
+    - mkc_031
+    - mkc_045
+    - mkc_046
+    canonical_cluster_count: 12
+  - batch_id: batch_004
+    generation_assignment_id: GA-004
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_021
+    - mkc_026
+    - mkc_027
+    - mkc_043
+    - mkc_044
+    canonical_cluster_count: 5
+  - batch_id: batch_005
+    generation_assignment_id: GA-005
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_008
+    - mkc_022
+    - mkc_024
+    - mkc_025
+    - mkc_039
+    - mkc_040
+    - mkc_041
+    - mkc_042
+    canonical_cluster_count: 8
+  - batch_id: batch_006
+    generation_assignment_id: GA-006
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_015
+    - mkc_016
+    - mkc_036
+    canonical_cluster_count: 3
+  - batch_id: batch_007
+    generation_assignment_id: GA-007
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_007
+    - mkc_008
+    - mkc_012
+    - mkc_013
+    - mkc_014
+    - mkc_037
+    - mkc_038
+    canonical_cluster_count: 7
+  - batch_id: batch_008
+    generation_assignment_id: GA-008
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_013
+    - mkc_014
+    - mkc_017
+    - mkc_018
+    - mkc_043
+    - mkc_044
+    canonical_cluster_count: 6
+  - batch_id: batch_009
+    generation_assignment_id: GA-009
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_007
+    - mkc_008
+    - mkc_012
+    - mkc_025
+    - mkc_028
+    - mkc_029
+    - mkc_017
+    - mkc_018
+    - mkc_039
+    - mkc_040
+    - mkc_043
+    - mkc_044
+    canonical_cluster_count: 12
+  - batch_id: batch_010
+    generation_assignment_id: GA-010
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_010
+    - mkc_011
+    - mkc_013
+    - mkc_014
+    - mkc_015
+    - mkc_016
+    - mkc_033
+    - mkc_034
+    - mkc_035
+    canonical_cluster_count: 9
+  - batch_id: batch_011
+    generation_assignment_id: GA-011
+    target_count_budget: 360
+    canonical_cluster_refs:
+    - mkc_010
+    - mkc_011
+    - mkc_017
+    - mkc_018
+    - mkc_023
+    - mkc_024
+    - mkc_025
+    - mkc_030
+    - mkc_031
+    - mkc_032
+    - mkc_036
+    - mkc_045
+    - mkc_046
+    canonical_cluster_count: 13
+  - batch_id: batch_012
+    generation_assignment_id: GA-012
+    target_count_budget: 360
+    canonical_cluster_refs:
+    - mkc_012
+    - mkc_025
+    - mkc_028
+    - mkc_029
+    - mkc_030
+    - mkc_032
+    - mkc_033
+    - mkc_034
+    - mkc_036
+    - mkc_038
+    canonical_cluster_count: 10
+  - batch_id: batch_013
+    generation_assignment_id: GA-013
+    target_count_budget: 380
+    canonical_cluster_refs:
+    - mkc_007
+    - mkc_008
+    - mkc_015
+    - mkc_016
+    - mkc_019
+    - mkc_034
+    - mkc_035
+    - mkc_037
+    - mkc_038
+    - mkc_041
+    - mkc_042
+    canonical_cluster_count: 11
+  - batch_id: batch_014
+    generation_assignment_id: GA-014
+    target_count_budget: 240
+    canonical_cluster_refs:
+    - mkc_001
+    - mkc_002
+    - mkc_003
+    - mkc_004
+    - mkc_005
+    - mkc_006
+    - mkc_010
+    - mkc_011
+    - mkc_019
+    - mkc_020
+    - mkc_026
+    - mkc_027
+    - mkc_035
+    - mkc_038
+    - mkc_045
+    - mkc_046
+    canonical_cluster_count: 16

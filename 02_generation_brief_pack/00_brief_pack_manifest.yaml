@@ -1,0 +1,93 @@
+brief_pack_manifest:
+  schema_version: v0.1
+  task_id: MASTER-MAP-TO-CODEX-GENERATION-BRIEF-PACK-001
+  workspace_HEAD_at_creation: 5105af462dcaa16c245b5545914c673b54d3c11b
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  shared_assignment_rule:
+    canonical_cluster_refs_may_repeat_across_batches: true
+    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters
+      across planning contexts.
+    generation_assignment_refs_must_be_exactly_once: true
+    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014
+      by numeric suffix for brief planning.
+  inputs:
+  - path: 00_source_inputs/W7_master_map/shared_knowledge_cluster_registry.yaml
+    sha256: a3efeaded4e5b06a54fa12c5b802f5a295df8bd94b9a1f2e02e8f32976c3daf0
+    role: current_workspace_input
+  - path: 00_source_inputs/W7_master_map/batch_to_cluster_crosswalk.csv
+    sha256: f0af122acf929f8ed0b856d8a60b60b3054545aeca63a3798b8bafae7b184f1a
+    role: current_workspace_input
+  - path: 00_source_inputs/generation_assignments/generation_assignment_plan.yaml
+    sha256: afa70abbf4664ed8973c62c233c217c2f9b353a29324700636400952ce641d70
+    role: current_workspace_input
+  - path: 00_source_inputs/source_gap_seeds/source_gap_seed_ledger.yaml
+    sha256: f8bbece2e0a2070fbb323de5cbbfba4cca6e6b0afc40c6961ffb21a412fbeb53
+    role: current_workspace_input
+  - path: 00_source_inputs/unresolved_decisions/unresolved_decision_ledger.yaml
+    sha256: ef37e4fc3475a3da437b17c4015e10cfec5c58e941990f47284d75f2f56fbfe1
+    role: current_workspace_input
+  - path: 01_generation_contracts/w7_generation_baseline_lock.v0.1.yaml
+    sha256: 3253dfcbf69266e459758233a6e1873fea4d7f36b395e7a0fa920a5af3f810ea
+    role: current_workspace_input
+  - path: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    sha256: 10375963039440e681e100e367a92fe0629615315867b653ae7293c756e5d19c
+    role: current_workspace_input
+  - path: 01_generation_contracts/codex_microbatch_execution_policy.v0.1.yaml
+    sha256: 403286e820455eb4243ba8407edb7b6e00b9b02660560f9535b16458288d367a
+    role: current_workspace_input
+  - path: 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    sha256: 82a45f142c2a6a23922e7b55bcd7580b6a07dc9f688092e950649c4f8908e260
+    role: current_workspace_input
+  outputs:
+    macro_batch_briefs:
+      count: 14
+      paths:
+      - 02_generation_brief_pack/batch_001/batch_001_generation_brief.yaml
+      - 02_generation_brief_pack/batch_002/batch_002_generation_brief.yaml
+      - 02_generation_brief_pack/batch_003/batch_003_generation_brief.yaml
+      - 02_generation_brief_pack/batch_004/batch_004_generation_brief.yaml
+      - 02_generation_brief_pack/batch_005/batch_005_generation_brief.yaml
+      - 02_generation_brief_pack/batch_006/batch_006_generation_brief.yaml
+      - 02_generation_brief_pack/batch_007/batch_007_generation_brief.yaml
+      - 02_generation_brief_pack/batch_008/batch_008_generation_brief.yaml
+      - 02_generation_brief_pack/batch_009/batch_009_generation_brief.yaml
+      - 02_generation_brief_pack/batch_010/batch_010_generation_brief.yaml
+      - 02_generation_brief_pack/batch_011/batch_011_generation_brief.yaml
+      - 02_generation_brief_pack/batch_012/batch_012_generation_brief.yaml
+      - 02_generation_brief_pack/batch_013/batch_013_generation_brief.yaml
+      - 02_generation_brief_pack/batch_014/batch_014_generation_brief.yaml
+    microbatch_manifests:
+      count: 14
+      paths:
+      - 02_generation_brief_pack/microbatch_manifest/batch_001_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_002_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_003_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_004_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_005_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_006_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_007_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_008_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_009_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_010_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_011_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_012_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_013_microbatch_manifest.yaml
+      - 02_generation_brief_pack/microbatch_manifest/batch_014_microbatch_manifest.yaml
+    shared_rules:
+      path: 02_generation_brief_pack/00_shared_generation_rules.yaml
+    generation_baseline_lock:
+      path: 02_generation_brief_pack/00_generation_baseline_lock.yaml
+    pilot_sampling_plan:
+      path: 02_generation_brief_pack/00_pilot_sampling_plan.yaml
+    batch_allocation_matrix:
+      path: 02_generation_brief_pack/00_batch_allocation_matrix.yaml
+    microbatch_plan:
+      path: 02_generation_brief_pack/00_microbatch_plan.csv
+  assertions:
+    no_generated_knowledge: true
+    no_candidatepack_created: true
+    no_KE_RAG_DIFY_touched: true
+    readiness_all_false: true
+    total_budget: 3600
+    budget_not_kpi: true

@@ -1,0 +1,36 @@
+shared_generation_rules:
+  schema_version: v0.1
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  W7_baseline_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+  founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+  output_contract_ref: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+  candidate_kind_policy_ref: 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+  source_type_boundary_policy_ref: 01_generation_contracts/codex_source_type_boundary_policy.v0.1.yaml
+  layer_annotation_policy_ref: 01_generation_contracts/codex_layer_annotation_policy.v0.1.yaml
+  rich_body_quality_standard_ref: 01_generation_contracts/codex_rich_body_quality_standard.v0.1.md
+  body_entailment_policy_ref: 01_generation_contracts/codex_body_entailment_policy.v0.1.yaml
+  dedupe_policy_ref: 01_generation_contracts/codex_dedupe_fingerprint_policy.v0.1.yaml
+  expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+  microbatch_policy_ref: 01_generation_contracts/codex_microbatch_execution_policy.v0.1.yaml
+  state_machine_policy_ref: 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+  global_forbidden:
+  - direct_3600_generation
+  - generate_without_pilot
+  - create_candidatepack
+  - write_KE
+  - write_serving_projection
+  - write_RAG_context_bundle
+  - write_DIFY_workflow
+  - readiness_true
+  - hard_claim_expert_synthesis
+  - real_instance_fact_expert_synthesis
+  - P0_00_general_kb_leak
+  - source_type_decides_layer
+  shared_assignment_rule:
+    canonical_cluster_refs_may_repeat_across_batches: true
+    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters
+      across planning contexts.
+    generation_assignment_refs_must_be_exactly_once: true
+    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014
+      by numeric suffix for brief planning.

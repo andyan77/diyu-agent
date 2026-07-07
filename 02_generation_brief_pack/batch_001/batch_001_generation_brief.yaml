@@ -1,0 +1,94 @@
+batch_generation_brief:
+  schema_version: v0.1
+  batch_id: batch_001
+  batch_theme: 角色授权表面与人物故事红线 / 身材效果语言阶梯与场景化观察 / 舒适性能耐用品质证据阶梯
+  target_count_budget: 100
+  budget_not_kpi: true
+  W7_trace:
+    W7_baseline_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+    founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+    canonical_cluster_refs:
+    - mkc_019
+    - mkc_026
+    - mkc_027
+    generation_assignment_refs:
+    - GA-001
+    source_cluster_refs:
+    - P0-00-RS01-C01
+    - P0-00-RS01-C02
+    - P0-00-RS02-C01
+    - P0-02-RS04-C01
+    - P0-02-RS04-C02
+    - P0-03-RS03-CL01
+    - P0-03-RS03-CL02
+    - P0-03-RS03-CL03
+    owner_capability_groups:
+    - P0-02
+    - P0-03
+  scope:
+    allowed_knowledge_types:
+    - boundary_rule
+    - decision_required_candidate
+    - evidence_requirement
+    - general_method
+    - routing_hint
+    - source_gap_candidate
+    forbidden_outputs:
+    - CandidatePack
+    - DIFY workflow
+    - KE
+    - RAG context_bundle
+    - Serving Projection
+    - production readiness
+    - release readiness
+    - route mutation
+    candidate_kind_distribution:
+      general_knowledge_candidate: primary
+      source_gap: route_only_if_source_missing
+      decision_packet: route_only_if_owner_or_layer_unclear
+    proposed_target_owner_distribution:
+      GeneralKnowledgeBase: draft_target_only_after_review
+      SourceGapLedger: gap_route_only
+      DecisionPacketLedger: decision_route_only
+    layer_candidate_distribution:
+      TBox_candidate: allowed
+      Rule_candidate: allowed_if_not_control_plane
+      SourceGapLedger: allowed_for_gaps
+      DecisionPacketLedger: allowed_for_decisions
+      Excluded: allowed_for_violations
+  generation_requirements:
+    output_schema_ref: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    rich_body_requirements: 01_generation_contracts/codex_rich_body_quality_standard.v0.1.md
+    semantic_alignment_requirements: must trace W7 cluster, assignment, source refs,
+      and contract lock digest
+    layer_annotation_requirements: 01_generation_contracts/codex_layer_annotation_policy.v0.1.yaml
+    body_entailment_requirements: 01_generation_contracts/codex_body_entailment_policy.v0.1.yaml
+    dedupe_requirements: 01_generation_contracts/codex_dedupe_fingerprint_policy.v0.1.yaml
+    expert_synthesis_policy: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+    source_type_boundary: 01_generation_contracts/codex_source_type_boundary_policy.v0.1.yaml
+    state_machine_mapping: 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+  risk_controls:
+    hard_claim_policy: hard claims require source refs or route to SourceGapLedger/Excluded
+    real_instance_fact_policy: real brand/SKU/store/person/customer/fabric/body-effect
+      facts cannot be invented by expert synthesis
+    P0_00_boundary_policy: P0-00 control-plane content cannot land in GeneralKnowledgeBase
+    provenance_safety_policy: historical provenance true flags are not active readiness
+      authority
+    readiness_all_false: true
+  microbatch_plan_ref: 02_generation_brief_pack/microbatch_manifest/batch_001_microbatch_manifest.yaml
+  pilot_relevance: eligible for cross-type pilot sampling if selected by 00_pilot_sampling_plan.yaml
+  source_gap_seed_policy_inherited: true
+  unresolved_decision_policy_inherited: true
+  prerequisite_source_gaps:
+  - SG-001
+  - SG-002
+  prerequisite_decisions:
+  - UD-005
+  stop_conditions:
+  - readiness_true
+  - CandidatePack_claim
+  - KE_RAG_DIFY_claim
+  - hard_claim_without_evidence
+  - real_instance_fact_leak
+  - P0_00_general_kb_leak
+  - source_type_decides_layer

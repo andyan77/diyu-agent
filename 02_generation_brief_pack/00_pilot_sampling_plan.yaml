@@ -1,0 +1,40 @@
+pilot_sampling_plan:
+  schema_version: v0.1
+  source_repo_live_dependency: false
+  total_count_range: 40_to_50
+  do_not_generate_in_this_task: true
+  categories:
+    content_method:
+      target_count_range: 10_to_12
+      examples:
+      - 选题
+      - 叙事
+      - 角色表达
+      - 内容策略
+    apparel_claim_boundary:
+      target_count_range: 10_to_12
+      examples:
+      - 面料
+      - 版型
+      - 工艺
+      - 身材效果边界
+      - claim_evidence
+    display_to_content:
+      target_count_range: 10_to_12
+      examples:
+      - Look
+      - 陈列动作
+      - 色彩故事
+      - 门店日常转内容
+    control_plane_governance:
+      target_count_range: 8_to_12
+      examples:
+      - P0_00_route
+      - downgrade
+      - source_gap
+      - candidate_kind
+      - target_owner
+  pilot_review_carry_forward:
+    body_entailment_requires_human_or_independent_judge_review: true
+    structural_checker_is_not_true_semantic_proof: true
+    pilot_must_measure_body_entailment_quality: true

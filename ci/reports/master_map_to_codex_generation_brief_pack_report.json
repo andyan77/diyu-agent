@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "macro_batch_count": 14,
+  "microbatch_manifest_count": 14,
+  "microbatch_row_count": 91,
+  "total_budget": 3600,
+  "budget_not_kpi": true,
+  "canonical_cluster_coverage_count": 46,
+  "generation_assignment_coverage_count": 14,
+  "negative_fixture_count": 11,
+  "positive_fixture_count": 1,
+  "negative_fixtures_fail_closed": true,
+  "positive_fixture_passed": true,
+  "source_repo_live_accessed_reported": false,
+  "generated_knowledge_count": 0,
+  "candidatepack_created": false,
+  "readiness_false_preserved": true,
+  "negative_results": {
+    "negative_missing_batch.yaml": [
+      "macro_batch_count must be 14",
+      "batch ids must be batch_001..batch_014"
+    ],
+    "negative_total_budget_wrong.yaml": [
+      "total_budget must be 3600"
+    ],
+    "negative_budget_as_kpi.yaml": [
+      "budget_not_kpi must be true"
+    ],
+    "negative_missing_cluster_assignment.yaml": [
+      "canonical cluster coverage must be 46"
+    ],
+    "negative_unknown_generation_assignment.yaml": [
+      "assignments must be GA-001..GA-014 exactly once"
+    ],
+    "negative_missing_contract_ref.yaml": [
+      "contract refs must be present"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ],
+    "negative_generated_knowledge_present.yaml": [
+      "generated_knowledge_count must be 0"
+    ],
+    "negative_candidatepack_claim.yaml": [
+      "candidatepack_created must be false"
+    ],
+    "negative_source_repo_dependency_true.yaml": [
+      "source repo live access/dependency must be false"
+    ],
+    "negative_pilot_missing_entailment_review.yaml": [
+      "pilot entailment review carry-forward is required"
+    ]
+  }
+}
