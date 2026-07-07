@@ -1,0 +1,38 @@
+v4_7_closeout:
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  previous_commit: 51d25bbe21778f3d2a856ebf04044e24234db04a
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.7 is PASS_FOR_REPAIR_DIRECTION; same 8 rewrite loop is closed; metadata cleanup plus holdout transferability
+      validation is authorized.
+    authorized_scope:
+    - V4.7 pass closeout
+    - V4.7 metadata cleanup patch
+    - holdout microbatch validation only
+    not_authorized:
+    - 3600_generation
+    - batch_001
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+  engineering_delivery: PASS
+  semantic_verdict: PASS_FOR_REPAIR_DIRECTION
+  retained_as: holdout_validation_baseline
+  not_yet:
+  - accepted_domain_knowledge
+  - candidatepack_eligible
+  - KE_or_serving_ready
+  - batch_generation_template
+  - formal_relation_graph
+  remaining_metadata_cleanup:
+  - remove_revision_history_from_canonical_label
+  - field_level_creative_hypothesis_typing
+  - type_specific_epistemic_check_fields
+  next_validation: holdout_microbatch_001
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  V4_7_original_artifacts_modified: false

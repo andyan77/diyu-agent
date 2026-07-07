@@ -15,6 +15,8 @@ import yaml
 TASK_ID = "CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001"
 PREVIOUS_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001"
+HOLDOUT_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001"
+HOLDOUT_NEXT_STEP = "CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 8
 EXPECTED_DISTRIBUTION = {
@@ -168,8 +170,8 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("task_id mismatch")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") != NEXT_STEP:
-        errors.append("current_next_step must be semantic pilot V4.7 judge go/no-go")
+    if data.get("current_next_step") not in {NEXT_STEP, HOLDOUT_NEXT_STEP}:
+        errors.append("current_next_step must be semantic pilot V4.7 judge or holdout microbatch judge")
     if data.get("v4_7_draft_count") != EXPECTED_TOTAL:
         errors.append("v4_7_draft_count must be 8")
     if data.get("v4_7_distribution") != EXPECTED_DISTRIBUTION:
@@ -222,15 +224,41 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
     return errors
 
 
+
+def validate_holdout_microbatch_status_block(status: dict[str, Any]) -> None:
+    phase = status.get("phase", {})
+    if phase.get("previous_step") != HOLDOUT_TASK_ID:
+        fail("holdout judge route requires holdout microbatch task as previous_step")
+    holdout = status.get("holdout_microbatch_001", {})
+    if holdout.get("task_id") != HOLDOUT_TASK_ID or holdout.get("status") != "completed":
+        fail("holdout judge route requires completed holdout_microbatch_001 block")
+    if holdout.get("holdout_scope") != "pilot_validation_only":
+        fail("holdout judge route requires pilot_validation_only scope")
+    if holdout.get("not_formal_microbatch_generation") is not True:
+        fail("holdout judge route must not be formal microbatch generation")
+    if int(holdout.get("holdout_count", 0)) < 12 or int(holdout.get("holdout_count", 99)) > 16:
+        fail("holdout judge route requires 12..16 holdout drafts")
+    if int(holdout.get("body_compiler_family_count", 0)) < 4:
+        fail("holdout judge route requires at least four compiler families")
+    if holdout.get("accepted_domain_knowledge_count") != 0:
+        fail("holdout judge route requires accepted_domain_knowledge_count 0")
+    assert_false(holdout.get("batch_generation_unlocked"), "holdout judge route batch_generation_unlocked")
+    assert_false(holdout.get("ready_for_first_batch_generation"), "holdout judge route ready_for_first_batch_generation")
+    if holdout.get("ready_for_holdout_microbatch_001_judge_review") is not True:
+        fail("holdout judge route requires ready_for_holdout_microbatch_001_judge_review true")
+
 def validate_status(workspace: Path) -> dict[str, Any]:
     status = load_yaml(workspace / "project-infra/current_workspace_status.yaml")
     phase = status.get("phase", {})
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
-    if phase.get("current_next_step") != NEXT_STEP:
-        fail("workspace next step must be semantic pilot V4.7 judge go/no-go")
-    if phase.get("previous_step") != TASK_ID:
+    current_next_step = phase.get("current_next_step")
+    if current_next_step not in {NEXT_STEP, HOLDOUT_NEXT_STEP}:
+        fail("workspace next step must be semantic pilot V4.7 or holdout microbatch judge")
+    if current_next_step == NEXT_STEP and phase.get("previous_step") != TASK_ID:
         fail("workspace previous step must be V4.7 semantic cleanup task")
+    if current_next_step == HOLDOUT_NEXT_STEP:
+        validate_holdout_microbatch_status_block(status)
     closeout = status.get("v4_6_conditional_repair_closeout", {})
     if closeout.get("task_id") != TASK_ID or closeout.get("status") != "completed":
         fail("v4_6_conditional_repair_closeout status block missing")

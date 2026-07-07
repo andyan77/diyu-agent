@@ -1,0 +1,103 @@
+metadata_cleanup_patch:
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  applies_as_patch_file_only: true
+  V4_7_original_artifacts_modified: false
+  canonical_label_cleanup:
+    rule: remove_revision_or_process_terms_from_domain_labels
+    forbidden_terms_in_canonical_label_zh:
+    - 胶囊语义清理版
+    - 语义清理
+    - V4
+    - V4.7
+    - 修订
+    - pilot
+    - judge
+    patches:
+    - draft_id: SEM-V4_7-CONTENT-METHOD-001
+      before: 故事弧线的情绪证据采集胶囊语义清理版
+      after: 故事弧线的情绪证据采集
+    - draft_id: SEM-V4_7-CONTENT-METHOD-002
+      before: 反模板对象锚点的内容节奏胶囊语义清理版
+      after: 反模板对象锚点的内容节奏
+    - draft_id: SEM-V4_7-APPAREL-CLAIM-BOUNDARY-001
+      before: 身材效果表达的安全创意替代胶囊语义清理版
+      after: 身材效果表达的安全创意替代
+    - draft_id: SEM-V4_7-APPAREL-CLAIM-BOUNDARY-002
+      before: 舒适性能主张的安全创意替代胶囊语义清理版
+      after: 舒适性能主张的安全创意替代
+    - draft_id: SEM-V4_7-DISPLAY-TO-CONTENT-001
+      before: 陈列区位到内容角度的视觉转译胶囊语义清理版
+      after: 陈列区位到内容角度的视觉转译
+    - draft_id: SEM-V4_7-DISPLAY-TO-CONTENT-002
+      before: 门店动作到内容片段的情绪转译胶囊语义清理版
+      after: 门店动作到内容片段的情绪转译
+    - draft_id: SEM-V4_7-CONTROL-PLANE-GOVERNANCE-001
+      before: 风险敏感路由的防假生成治理胶囊语义清理版
+      after: 风险敏感路由的防假生成治理
+    - draft_id: SEM-V4_7-CONTROL-PLANE-GOVERNANCE-002
+      before: 研究资产绑定非生产封印治理胶囊语义清理版
+      after: 研究资产绑定非生产封印治理
+  creative_hypothesis_field_typing:
+    rule: every_human_motive_or_audience_cognition_phrase_must_have_field_level_epistemic_class
+    required_epistemic_class: creative_hypothesis_not_audience_fact
+    applies_to:
+    - human_motive
+    - audience_cognition_shift
+    - aesthetic_tension
+    - generative_option_space
+  type_specific_epistemic_check_fields:
+    content_method:
+      allowed_check_fields:
+      - object
+      - action
+      - relation
+      - time
+      - space
+      - evidence_strength
+      - story_problem_type
+    claim_boundary:
+      allowed_check_fields:
+      - direct_observation
+      - conditional_experience_expression
+      - source_required_performance_claim
+      - prohibited_guarantee
+    display_spatial:
+      allowed_check_fields:
+      - visual_focus
+      - supporting_object
+      - distance
+      - spatial_path
+    display_temporal:
+      allowed_check_fields:
+      - action_trigger
+      - before_after_change
+      - explanation_slot
+      - completion_marker
+    control_plane:
+      allowed_check_fields:
+      - trigger
+      - route
+      - ledger
+      - block_or_split
+      - reentry
+    asset_binding_policy:
+      allowed_check_fields:
+      - source_path
+      - owner
+      - usage_boundary
+      - review_only_label
+      - reentry
+    product_material_observation_method:
+      allowed_check_fields:
+      - term
+      - visible_structure
+      - attribute_boundary
+      - source_need
+      - safe_expression
+    styling_or_outfit_composition_method:
+      allowed_check_fields:
+      - silhouette
+      - proportion_relation
+      - layering
+      - scene_condition
+      - boundary

@@ -1,0 +1,43 @@
+holdout_selection_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  source: W7_canonical_cluster_authority
+  selection_count:
+    min: 12
+    max: 16
+    selected: 14
+  exclude:
+    all_v4_to_v4_7_sampled_mkc_ids:
+    - mkc_004
+    - mkc_006
+    - mkc_009
+    - mkc_010
+    - mkc_026
+    - mkc_027
+    - mkc_032
+    - mkc_034
+  required_mix:
+    content_method_or_narrative: 3_to_4
+    claim_or_evidence_boundary: 2_to_3
+    display_or_execution_asset: 3_to_4
+    control_or_governance: 1_to_2
+    product_or_material_or_styling_method: 3_to_4
+  selected_cluster_ids:
+  - mkc_002
+  - mkc_005
+  - mkc_007
+  - mkc_012
+  - mkc_013
+  - mkc_003
+  - mkc_021
+  - mkc_028
+  - mkc_030
+  - mkc_033
+  - mkc_036
+  - mkc_020
+  - mkc_022
+  - mkc_024
+  stop_if:
+  - cannot_select_clusters_from_W7_without_modifying_authority
+  - selected_clusters_do_not_cover_at_least_4_body_compiler_families
+  - selected_clusters_would_require_external_source_access

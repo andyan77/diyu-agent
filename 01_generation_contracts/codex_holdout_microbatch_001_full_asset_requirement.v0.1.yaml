@@ -1,0 +1,35 @@
+holdout_full_asset_requirement:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  every_holdout_item_must_generate:
+  - candidate_card
+  - knowledge_capsule
+  - complete_rich_body
+  - creative_value_block_or_control_body
+  - epistemic_labels
+  - governance_sidecar
+  - relation_design_hints
+  hard_reject:
+  - index_only_capsule
+  - label_only_knowledge
+  - capsule_without_complete_rich_body
+  - rich_body_without_capsule
+  - fat_pseudo_rich_body
+  - rich_body_with_governance_dump
+  - sidecar_information_inside_rich_body
+  - relation_hints_claim_formal_ontology_edge
+  - real_instance_fact_leak
+  - direct_publish_script
+  base_body_rule:
+    base_domain_body_must_exist_now: true
+    later_extensions_may_add:
+    - source_evidence
+    - brand_instance_binding
+    - L3_execution_asset_details
+    - platform_or_policy_source_strengthening
+    later_extensions_must_not_be_required_to_create:
+    - core_mechanism
+    - observable_material
+    - transfer_logic
+    - boundary_logic
+    - downstream_use

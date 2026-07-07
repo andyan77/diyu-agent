@@ -1,0 +1,26 @@
+codex_holdout_microbatch_001_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  holdout_scope: pilot_validation_only
+  not_formal_microbatch_generation: true
+  allowed_output_root: 03_pilot/holdout_microbatch_001
+  forbidden_output_roots:
+  - 04_microbatch_generation
+  - 06_candidatepack_eligibility
+  - KE
+  - serving_projection
+  - rag
+  - dify
+  review_pending_draft_scope: holdout_microbatch_001_14_review_pending_drafts_only
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  real_instance_fact_leak_policy:
+    brand: 0
+    SKU: 0
+    store: 0
+    person: 0
+    price: 0
+    inventory: 0
+  direct_publish_script_leak_count: 0
+  safe_creative_alternative_performance_claim_count: 0

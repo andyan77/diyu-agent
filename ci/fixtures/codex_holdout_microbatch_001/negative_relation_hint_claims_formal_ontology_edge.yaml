@@ -1,0 +1,66 @@
+holdout_microbatch_001_fixture:
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  current_next_step: CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001
+  holdout_count: 14
+  selected_w7_cluster_ids:
+  - mkc_002
+  - mkc_005
+  - mkc_007
+  - mkc_012
+  - mkc_013
+  - mkc_003
+  - mkc_021
+  - mkc_028
+  - mkc_030
+  - mkc_033
+  - mkc_036
+  - mkc_020
+  - mkc_022
+  - mkc_024
+  body_compiler_family_count: 7
+  canonical_label_zh: 路由阶梯与降级触发
+  creative_fields_present:
+  - human_motive
+  - audience_cognition_shift
+  - aesthetic_tension
+  - generative_option_space
+  field_level_epistemic_typing:
+    human_motive: creative_hypothesis_not_audience_fact
+    audience_cognition_shift: creative_hypothesis_not_audience_fact
+    aesthetic_tension: creative_hypothesis_not_audience_fact
+    generative_option_space: creative_hypothesis_not_audience_fact
+  control_plane_check_fields:
+  - trigger
+  - route
+  - ledger
+  - block_or_split
+  - reentry
+  every_holdout_has_candidate_card: true
+  every_holdout_has_knowledge_capsule: true
+  every_holdout_has_complete_rich_body: true
+  every_holdout_has_creative_value_block_or_control_body: true
+  every_holdout_has_epistemic_labels: true
+  every_holdout_has_sidecar: true
+  index_only_capsule_count: 0
+  capsule_without_rich_body_count: 0
+  governance_dump_in_rich_body_count: 0
+  relation_status: formal_ontology_edge
+  sample_text: 待审草案只包含通用方法和边界说明。
+  safe_creative_alternatives:
+  - 观察维度转写
+  - 边界提示
+  - 补源问题
+  - 场景条件
+  - 待审复核点
+  real_instance_fact_leak_count: 0
+  direct_publish_script_leak_count: 0
+  safe_alternative_performance_claim_count: 0
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  readiness_all_false: true
+  candidatepack_created: false
+  KE_touched: false
+  Serving_touched: false
+  RAG_touched: false
+  DIFY_touched: false

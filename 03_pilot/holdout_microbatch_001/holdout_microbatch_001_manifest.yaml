@@ -1,0 +1,59 @@
+holdout_microbatch_001_manifest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  previous_commit: 51d25bbe21778f3d2a856ebf04044e24234db04a
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.7 is PASS_FOR_REPAIR_DIRECTION; same 8 rewrite loop is closed; metadata cleanup plus holdout transferability
+      validation is authorized.
+    authorized_scope:
+    - V4.7 pass closeout
+    - V4.7 metadata cleanup patch
+    - holdout microbatch validation only
+    not_authorized:
+    - 3600_generation
+    - batch_001
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+  holdout_scope: pilot_validation_only
+  not_formal_microbatch_generation: true
+  holdout_count: 14
+  one_to_one_revision_of_v4_7: false
+  all_new_w7_clusters: true
+  selected_from_W7_authority: true
+  selected_w7_cluster_ids:
+  - mkc_002
+  - mkc_005
+  - mkc_007
+  - mkc_012
+  - mkc_013
+  - mkc_003
+  - mkc_021
+  - mkc_028
+  - mkc_030
+  - mkc_033
+  - mkc_036
+  - mkc_020
+  - mkc_022
+  - mkc_024
+  excluded_previous_sampled_cluster_ids:
+  - mkc_004
+  - mkc_006
+  - mkc_009
+  - mkc_010
+  - mkc_026
+  - mkc_027
+  - mkc_032
+  - mkc_034
+  body_compiler_family_count: 9
+  source_repo_live_accessed: false
+  external_drive_accessed: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  ready_for_holdout_microbatch_001_judge_review: true
+  recommended_next_step: CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001

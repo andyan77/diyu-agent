@@ -1,0 +1,184 @@
+holdout_microbatch_001_knowledge_capsules:
+  items:
+  - draft_id: HOLDOUT-MB001-001
+    selected_w7_cluster_id: mkc_002
+    domain_question: 路由阶梯与降级触发 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-00 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: route 梯级定义；degradation 类型；soft fallback 与 hard block 区分
+    transfer_logic: 使用 control_plane_route 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-002
+    selected_w7_cluster_id: mkc_005
+    domain_question: 能力组合与 strictest-wins 裁定 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-00 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: strictest-wins 原则；control-plane 保留条件；shared cluster 拆分条件
+    transfer_logic: 使用 asset_binding_policy 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-003
+    selected_w7_cluster_id: mkc_007
+    domain_question: 企业叙事骨架 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-01 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 企业所回应的问题场景；组织性方法与长期选择；供应链 / 组织 / 过程证明的预留槽位
+    transfer_logic: 使用 content_story_method 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-004
+    selected_w7_cluster_id: mkc_012
+    domain_question: 系列轴与跨形态资产单元 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-01 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 系列轴的类型与选用条件；序列编排逻辑与去重复机制；proof cadence 与 topic cascade 的绑定
+    transfer_logic: 使用 content_story_method 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-005
+    selected_w7_cluster_id: mkc_013
+    domain_question: 角色发声寄存器 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-02 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 主语选择与叙述站位；信息密度与限制语；动作词、观察词、解释词边界
+    transfer_logic: 使用 anchor_composition_method 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-006
+    selected_w7_cluster_id: mkc_003
+    domain_question: 全局 claim 与证据边界检查 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-00 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: claim 强度分层；方法陈述与事实断言切分；source support 与 evidence support 区分
+    transfer_logic: 使用 claim_boundary 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-007
+    selected_w7_cluster_id: mkc_021
+    domain_question: 同类比较维度与禁比边界 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-03 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 同类之间可比的维度；不可直接比较的维度；比较时如何显示未知项
+    transfer_logic: 使用 claim_boundary 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-008
+    selected_w7_cluster_id: mkc_028
+    domain_question: 品质观察项与证明类型路由 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-03 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 可观察品质线索；proof-type taxonomy；certification / standard claim 的 route-away 规则
+    transfer_logic: 使用 claim_boundary 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-009
+    selected_w7_cluster_id: mkc_030
+    domain_question: Look 拆解观察骨架 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-04 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: Look层级拆解维度；单套搭配与成组陈列的观察节点；轮廓/层次/搭配位的命名边界
+    transfer_logic: 使用 display_spatial_execution 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-010
+    selected_w7_cluster_id: mkc_033
+    domain_question: 门店日常动作观察切片 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-04 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 开场准备类动作；整理/比对/讲解/递示等一般化动作；动作前提与结束标志
+    transfer_logic: 使用 display_temporal_execution 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-011
+    selected_w7_cluster_id: mkc_036
+    domain_question: 陈列动作 SOP 节点框架 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-04 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 陈列前检查/实施/复核的一般节点；节点输入与节点输出；节点之间的依赖顺序
+    transfer_logic: 使用 display_temporal_execution 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-012
+    selected_w7_cluster_id: mkc_020
+    domain_question: 品类解释与属性槽位骨架 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-03 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 上装/下装/连衣类/外搭类等抽象品类分层；单品解释时可使用的通用属性槽位；品类说明与真实 SKU 事实的切断规则
+    transfer_logic: 使用 product_material_observation_method 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-013
+    selected_w7_cluster_id: mkc_022
+    domain_question: 面料家族与属性边界 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-03 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 纤维/纱线/面料层级区分；梭织/针织等结构差异的解释入口；常见观察项与不可直接外推的性能项
+    transfer_logic: 使用 product_material_observation_method 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。
+  - draft_id: HOLDOUT-MB001-014
+    selected_w7_cluster_id: mkc_024
+    domain_question: 版型廓形剪裁术语 应该如何从 权威簇 转成可复核的待审知识草案？
+    core_mechanism: 先读取 P0-03 的能力边界，再把 expected body topics 分成机制、材料、边界和下游用途。
+    observable_material: 版型与廓形区别；轮廓线、长度、宽窄、松量、重心等表达；结构节点与视觉结果的关系提示
+    transfer_logic: 使用 styling_or_outfit_composition_method 编译正文，确保每段都服务 cluster 自身，而不是复用上一组样本。
+    boundary_guardrail: 不写真实品牌、SKU、门店、人物、价格、库存，不写完整成稿，不声明正式知识。
+    generative_options:
+    - 机制拆解
+    - 边界复核
+    - 补源提示
+    failure_signal: 如果只能生成标题索引、空标签或治理报告堆叠，则 holdout 失败。
+    downstream_effect: 用于 待审迁移验证 的待审验证，不进入正式产线。

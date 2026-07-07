@@ -1,0 +1,42 @@
+v4_7_semantic_review_digest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+  previous_commit: 51d25bbe21778f3d2a856ebf04044e24234db04a
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.7 is PASS_FOR_REPAIR_DIRECTION; same 8 rewrite loop is closed; metadata cleanup plus holdout transferability
+      validation is authorized.
+    authorized_scope:
+    - V4.7 pass closeout
+    - V4.7 metadata cleanup patch
+    - holdout microbatch validation only
+    not_authorized:
+    - 3600_generation
+    - batch_001
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+  semantic_verdict: PASS_FOR_REPAIR_DIRECTION
+  same_8_rewrite_loop_closed: true
+  metadata_cleanup_done: true
+  V4_7_original_artifacts_modified: false
+  original_v4_7_artifacts:
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_candidate_cards.yaml: 561559f524f1a370a0be5563c305e13de6c90b80532e4e1bb7272b91d4e9c5f2
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_cleanup_report.json: 49c7bdaa7dd47a90efe43487faae083b592260acf01fde54d6d5d67fe5d85fc9
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_complete_rich_bodies.yaml: 0abac71278e332038fded27527ab47e85f5c58325bf5388b987004bd2c14708b
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_creative_value_blocks.yaml: 33b46890311a9487c7133fca3f5d6aa202da0a80630385547ce38f4094042a3d
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_epistemic_labels.yaml: 409dfd5e257cc4bd2cd1a9c35fdc4fbfc50c4cf327439d342186ad62b56375a3
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_judge_protocol.md: 1d9f4a25efc046c58fd453a630aacc0aefb72207faf45d057fe944fcc2a7ee8b
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_judge_review_queue.yaml: 5f946b83ee5716547362330483057ad20023c86189e222f500379101746e2897
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_knowledge_capsules.yaml: 2ec8de84ab4304bf455945fd829339c573f383df3af49c8b652d8b0845b1f345
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_manifest.yaml: 205310c3a8de26d9c908fe8cf4e543620bb949ccdf6071c0f4e08d6741f20fc7
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_quality_report.json: 0afed61d8f1fade6434c75cda74aa8f4d5fcda0df3cdbdc9b7b78ccadc122704
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_relation_design_hints.csv: d25796fba3c3eba471486feda0c12381d016b41d98a6724a8bfee5c3ba3bf7ac
+    03_pilot/semantic_v4_7/semantic_pilot_v4_7_sidecars.yaml: 57e5f9f70be044babb6f408a1dc824bd925749e4b81dcd134bed19868be27ce0
+  holdout_scope: pilot_validation_only
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  recommended_next_step: holdout_microbatch_001

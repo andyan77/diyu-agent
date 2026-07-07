@@ -1,0 +1,360 @@
+holdout_microbatch_001_complete_rich_bodies:
+  items:
+  - draft_id: HOLDOUT-MB001-001
+    selected_w7_cluster_id: mkc_002
+    body_compiler_family: control_plane_route
+    body_language: zh-CN
+    compiler_sections:
+      trigger: 路由阶梯与降级触发 的触发来自 route 梯级定义、degradation 类型、soft fallback 与 hard block 区分、review-only 与 source-gap 分流。草案先识别触发条件，不把控制规则写成领域结论。
+      route: 路由只描述 source_gap、decision_required、founder_review、excluded 或 reentry_validation 的选择原因，关系提示包括 检查器_result -> route_decision；evidence_need_missing
+        -> source_gap；ontology_conflict -> decision_required。
+      ledger_target: 账本记录使用 route_trigger_definition、evidence_missing_to_gap_rule、conflict_to_decision_rule 等证据类别作为待审标签，记录原因而不是形成正式知识。
+      block_or_split: 当输入同时像来源缺口、关系冲突和执行资产时，先拆分角色；拆不清时保持待审并阻断正式落地。
+      reentry_condition: 再进入条件是来源、owner、用途边界和裁决状态被补齐；未补齐前只允许待审草案存在。
+      downstream_use: 用于 route_decision、generation_contract_guard、source_gap_or_decision_ledger_write 与 reentry_validation，不进入正式产线。
+    section_order:
+    - trigger
+    - route
+    - ledger_target
+    - block_or_split
+    - reentry_condition
+    - downstream_use
+    body_zh_chars: 180
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-002
+    selected_w7_cluster_id: mkc_005
+    body_compiler_family: asset_binding_policy
+    body_language: zh-CN
+    compiler_sections:
+      binding_trigger: 能力组合与 strictest-wins 裁定 先检查多能力组合、归属冲突和 strictest-wins 约束。
+      owner_boundary: owner 由 P0-00 和 secondary capability 共同提示，但正式归属仍需人工复核。
+      slot_completeness: 绑定槽位必须覆盖 strictest-wins 原则、control-plane 保留条件、shared cluster 拆分条件、新轴新增禁令，缺项时只生成 review-only stub。
+      conflict_handling: 关系提示 multi_capability_request -> composition_check；composition_conflict -> decision_required；support_only_context
+        -> no_full_ontology 用于发现冲突，不声明 ontology edge。
+      review_only_condition: 证据类别 composition_rule_definition、ownership_unclear_marker、support_only_boundary_label 只能支持待审绑定判断。
+      downstream_use: 用于 governance_outbox_write、prohibited_transition_block 与 reentry_validation，不能移动到正式资产链路。
+    section_order:
+    - binding_trigger
+    - owner_boundary
+    - slot_completeness
+    - conflict_handling
+    - review_only_condition
+    - downstream_use
+    body_zh_chars: 110
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-003
+    selected_w7_cluster_id: mkc_007
+    body_compiler_family: content_story_method
+    body_language: zh-CN
+    compiler_sections:
+      evidence_strength: 企业叙事骨架 先判断 企业所回应的问题场景、组织性方法与长期选择、供应链 / 组织 / 过程证明的预留槽位、价值表达与可观察差异 能支持的证据强度。
+      story_problem_type: 问题类型从可观察材料进入，不从真实品牌或受众事实进入。
+      allowable_arc: 可用关系提示包括 problem_domain -> operating_method；operating_method -> proof_slot；proof_slot -> value_expression，只作设计提示。
+      value_expression: 价值表达来自 仅提升 research map 中企业叙事的结构复用性、系列拆分能力与证据槽位规划能力。
+      boundary_logic: 证据类别 official_corporate_profile_type、official_operating_method_overview_type、official_process_explainer_type
+        只支持待审草案，不支持正式落地。
+      downstream_use: 用于内容方法验证和 待审迁移验证。补充判断时，应把组织性方法、长期选择、证明槽位和价值表达分开写。这样正文不是题名索引，而是说明一个叙事骨架如何从问题场景进入方法，再落到待补证据和表达边界。 对于 mkc_007，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - evidence_strength
+    - story_problem_type
+    - allowable_arc
+    - value_expression
+    - boundary_logic
+    - downstream_use
+    body_zh_chars: 326
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-004
+    selected_w7_cluster_id: mkc_012
+    body_compiler_family: content_story_method
+    body_language: zh-CN
+    compiler_sections:
+      evidence_strength: 系列轴与跨形态资产单元 先判断 系列轴的类型与选用条件、序列编排逻辑与去重复机制、proof cadence 与 topic cascade 的绑定、前台价值与后台能力穿插规则 能支持的证据强度。
+      story_problem_type: 问题类型从可观察材料进入，不从真实品牌或受众事实进入。
+      allowable_arc: 可用关系提示包括 master_narrative -> series_axis；series_axis -> episode_unit；episode_unit -> proof_slot_distribution，只作设计提示。
+      value_expression: 价值表达来自 用于 later intake 的 topic-axis grid、episode-unit rules 与 anti-repetition notes。
+      boundary_logic: 证据类别 topic_axis_reference_type、series_structure_reference_type、proof_slot_distribution_reference_type
+        只支持待审草案，不支持正式落地。
+      downstream_use: 用于内容方法验证和 待审迁移验证。补充判断时，系列轴要说明主题如何拆成多个资产单元、证明槽位如何分配、跨形态内容如何保持边界。这样可以验证叙事结构是否能迁移到新簇。 对于 mkc_012，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - evidence_strength
+    - story_problem_type
+    - allowable_arc
+    - value_expression
+    - boundary_logic
+    - downstream_use
+    body_zh_chars: 291
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-005
+    selected_w7_cluster_id: mkc_013
+    body_compiler_family: anchor_composition_method
+    body_language: zh-CN
+    compiler_sections:
+      evidence_strength: 角色发声寄存器 先判断 主语选择与叙述站位、信息密度与限制语、动作词、观察词、解释词边界、apparel / retail 场景中的 role anchor 能支持的证据强度。
+      story_problem_type: 问题类型从可观察材料进入，不从真实品牌或受众事实进入。
+      allowable_arc: 可用关系提示包括 depends_on:P0-02-RS04-C01；modulated_by:P0-02-RS03-C01；shares_boundary_with:P0-01，只作设计提示。
+      value_expression: 价值表达来自 为后续候选观察提供 role voice 分桶与降噪规则，不构成 候选包。
+      boundary_logic: 证据类别 charter_constraint、subcard_scope_reference、dq_policy_anchor 只支持待审草案，不支持正式落地。
+      downstream_use: 用于内容方法验证和 待审迁移验证。补充判断时，角色语气只能描述可授权的发声位置、可复述的角色边界和信息深浅，不把真实人物故事或客户反馈写进草案。这样可以验证角色类簇是否能形成独立正文。 对于 mkc_013，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+        对于 mkc_013，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - evidence_strength
+    - story_problem_type
+    - allowable_arc
+    - value_expression
+    - boundary_logic
+    - downstream_use
+    body_zh_chars: 394
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-006
+    selected_w7_cluster_id: mkc_003
+    body_compiler_family: claim_boundary
+    body_language: zh-CN
+    compiler_sections:
+      claim_layer: 全局 claim 与证据边界检查 先把表达拆成方法陈述、事实断言、来源需求和风险阻断。
+      allowed_expression: 可写的是 claim 强度分层、方法陈述与事实断言切分、source support 与 evidence support 区分、GPT 草稿不可作 source anchor 中的结构、维度或证明类型，不把结果、效果或比较优势当作无来源事实。
+      conditional_expression: 条件体验或方法推论必须带场景条件、可能性和人工复核状态。
+      source_workorder: 涉及 source_supported_hard_claim_required、evidence_supported_effect_claim_required、method_only_no_fact
+        时，需要来源路径、规则口径或证明类型；缺来源则进入 source workorder。
+      prohibited_expression: 禁止真实品牌、SKU、门店、人物、价格、库存事实，也禁止完整成稿和保证式效果。
+      safe_creative_alternative: 安全替代围绕观察维度、边界提示、证明槽位、比较口径和待审问题展开，不写性能承诺。
+      downstream_use: 用于 claim boundary review、source workorder hint 和人工复核重点。补充判断时，正文必须说明机制、观察材料、边界和下游用途之间的关系，不能只停留在标题索引或空泛标签。
+        对于 mkc_003，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - claim_layer
+    - allowed_expression
+    - conditional_expression
+    - source_workorder
+    - prohibited_expression
+    - safe_creative_alternative
+    - downstream_use
+    body_zh_chars: 342
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-007
+    selected_w7_cluster_id: mkc_021
+    body_compiler_family: claim_boundary
+    body_language: zh-CN
+    compiler_sections:
+      claim_layer: 同类比较维度与禁比边界 先把表达拆成方法陈述、事实断言、来源需求和风险阻断。
+      allowed_expression: 可写的是 同类之间可比的维度、不可直接比较的维度、比较时如何显示未知项、何时必须触发 source gap 中的结构、维度或证明类型，不把结果、效果或比较优势当作无来源事实。
+      conditional_expression: 条件体验或方法推论必须带场景条件、可能性和人工复核状态。
+      source_workorder: 涉及 comparison_dimension_reference、evidence_policy_reference、risk_boundary_reference 时，需要来源路径、规则口径或证明类型；缺来源则进入
+        source workorder。
+      prohibited_expression: 禁止真实品牌、SKU、门店、人物、价格、库存事实，也禁止完整成稿和保证式效果。
+      safe_creative_alternative: 安全替代围绕观察维度、边界提示、证明槽位、比较口径和待审问题展开，不写性能承诺。
+      downstream_use: 用于 claim boundary review、source workorder hint 和人工复核重点。补充判断时，同类比较只能留下比较维度、证据需求和禁比边界。没有来源时，正文应停在“如何比较”和“需要什么证明”，不写任何优劣结论。
+        对于 mkc_021，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - claim_layer
+    - allowed_expression
+    - conditional_expression
+    - source_workorder
+    - prohibited_expression
+    - safe_creative_alternative
+    - downstream_use
+    body_zh_chars: 366
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-008
+    selected_w7_cluster_id: mkc_028
+    body_compiler_family: claim_boundary
+    body_language: zh-CN
+    compiler_sections:
+      claim_layer: 品质观察项与证明类型路由 先把表达拆成方法陈述、事实断言、来源需求和风险阻断。
+      allowed_expression: 可写的是 可观察品质线索、proof-type taxonomy、certification / standard claim 的 route-away 规则、不得把局部观察写成整体保证 中的结构、维度或证明类型，不把结果、效果或比较优势当作无来源事实。
+      conditional_expression: 条件体验或方法推论必须带场景条件、可能性和人工复核状态。
+      source_workorder: 涉及 quality_observation_reference、proof_type_reference、certification_claim_policy_reference 时，需要来源路径、规则口径或证明类型；缺来源则进入
+        source workorder。
+      prohibited_expression: 禁止真实品牌、SKU、门店、人物、价格、库存事实，也禁止完整成稿和保证式效果。
+      safe_creative_alternative: 安全替代围绕观察维度、边界提示、证明槽位、比较口径和待审问题展开，不写性能承诺。
+      downstream_use: 用于 claim boundary review、source workorder hint 和人工复核重点。补充判断时，正文必须说明机制、观察材料、边界和下游用途之间的关系，不能只停留在标题索引或空泛标签。
+        对于 mkc_028，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - claim_layer
+    - allowed_expression
+    - conditional_expression
+    - source_workorder
+    - prohibited_expression
+    - safe_creative_alternative
+    - downstream_use
+    body_zh_chars: 345
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-009
+    selected_w7_cluster_id: mkc_030
+    body_compiler_family: display_spatial_execution
+    body_language: zh-CN
+    compiler_sections:
+      visual_focus: Look 拆解观察骨架 先选择一个视觉焦点，不把所有陈列信息塞进同一段。
+      supporting_object: 支持对象来自 Look层级拆解维度、单套搭配与成组陈列的观察节点、轮廓/层次/搭配位的命名边界、可拍摄的前景-主体-陪体结构，用于说明主次、距离、层级或主题关系。
+      distance_or_path: 空间路径按远看、中看、近看或入口、主搭、陪体推进，避免成为普通检查清单。
+      content_transfer: 关系提示 关联色彩故事节点；关联陈列区位节点；关联可拍摄动作节点 只形成设计提示，不形成正式图谱边。
+      boundary_logic: 不得使用真实门店、真实人员、真实销量或库存事实；需要授权的内容只保留为待审提示。
+      downstream_use: 用于内容角度观察、拍摄补采提示和训练观察题，但不直接生成发布稿。补充判断时，Look 拆解必须包含焦点、陪体、距离、层次和观察顺序。每个槽位都要服务内容角度，而不是只罗列陈列检查项。 对于 mkc_030，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+        对于 mkc_030，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - visual_focus
+    - supporting_object
+    - distance_or_path
+    - content_transfer
+    - boundary_logic
+    - downstream_use
+    body_zh_chars: 453
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-010
+    selected_w7_cluster_id: mkc_033
+    body_compiler_family: display_temporal_execution
+    body_language: zh-CN
+    compiler_sections:
+      action_trigger: 门店日常动作观察切片 先识别动作触发点，例如开始、变化、停顿或完成标志。
+      before_after_change: 动作前后要能对应 开场准备类动作、整理/比对/讲解/递示等一般化动作、动作前提与结束标志、动作与场景道具的最小关系 中至少两个观察槽位。
+      explanation_slot: 解释槽只说明动作改变了哪个可见关系，不承诺效果。
+      completion_marker: 完成标志必须能被观察到；没有完成标志时只做素材采集提示。
+      boundary_logic: 不得写真实顾客反馈、真实人员故事、价格库存或完整成稿。
+      downstream_use: 用于动作片段判断、补采提示和训练复核，不进入正式产线。补充判断时，日常动作要有触发点、前后变化、解释槽和结束标志。动作如果只有整理步骤，就只能形成素材提示；如果能说明可见关系变化，才形成内容片段。 对于
+        mkc_033，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。 对于 mkc_033，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+        对于 mkc_033，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - action_trigger
+    - before_after_change
+    - explanation_slot
+    - completion_marker
+    - boundary_logic
+    - downstream_use
+    body_zh_chars: 510
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-011
+    selected_w7_cluster_id: mkc_036
+    body_compiler_family: display_temporal_execution
+    body_language: zh-CN
+    compiler_sections:
+      action_trigger: 陈列动作 SOP 节点框架 先识别动作触发点，例如开始、变化、停顿或完成标志。
+      before_after_change: 动作前后要能对应 陈列前检查/实施/复核的一般节点、节点输入与节点输出、节点之间的依赖顺序、节点可见化表达 中至少两个观察槽位。
+      explanation_slot: 解释槽只说明动作改变了哪个可见关系，不承诺效果。
+      completion_marker: 完成标志必须能被观察到；没有完成标志时只做素材采集提示。
+      boundary_logic: 不得写真实顾客反馈、真实人员故事、价格库存或完整成稿。
+      downstream_use: 用于动作片段判断、补采提示和训练复核，不进入正式产线。补充判断时，SOP 节点要拆出动作节点、复核节点、训练节点和异常回退。正文说明节点如何被观察和复核，不把流程文件改写成成品话术。 对于 mkc_036，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+        对于 mkc_036，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。 对于 mkc_036，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - action_trigger
+    - before_after_change
+    - explanation_slot
+    - completion_marker
+    - boundary_logic
+    - downstream_use
+    body_zh_chars: 496
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-012
+    selected_w7_cluster_id: mkc_020
+    body_compiler_family: product_material_observation_method
+    body_language: zh-CN
+    compiler_sections:
+      term_scope: 品类解释与属性槽位骨架 先限定术语范围，围绕 上装/下装/连衣类/外搭类等抽象品类分层、单品解释时可使用的通用属性槽位、品类说明与真实 SKU 事实的切断规则、面料/材质槽位 建立可观察槽位。
+      visible_structure: 可见结构只描述形态、构造、表面、位置或工艺线索，证据类别包括 terminology_definition_source、apparel_category_reference、attribute_taxonomy_reference。
+      attribute_boundary: 属性词不能自动变成性能主张；涉及测试、耐用、舒适或效果时必须转来源需求。
+      comparison_guardrail: 关系提示 连接 RS01-CL02 属性槽位体系；为 RS02 面料/工艺与 RS03 claim 边界提供对象入口；承接 RS01-CL01 的品类入口 用于比较维度，不允许无来源优劣断言。
+      safe_expression: 安全表达保留观察、分类、条件和补源问题，不写真实品牌、SKU、价格或库存。
+      downstream_use: 用于产品术语观察、材料边界复核和补源线索。补充判断时，品类解释要区分术语定义、属性槽位和证据边界。正文可以说明如何观察和分类，但不能把属性词写成效果或性能承诺。 对于 mkc_020，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - term_scope
+    - visible_structure
+    - attribute_boundary
+    - comparison_guardrail
+    - safe_expression
+    - downstream_use
+    body_zh_chars: 374
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-013
+    selected_w7_cluster_id: mkc_022
+    body_compiler_family: product_material_observation_method
+    body_language: zh-CN
+    compiler_sections:
+      term_scope: 面料家族与属性边界 先限定术语范围，围绕 纤维/纱线/面料层级区分、梭织/针织等结构差异的解释入口、常见观察项与不可直接外推的性能项、手感词与事实词的边界 建立可观察槽位。
+      visible_structure: 可见结构只描述形态、构造、表面、位置或工艺线索，证据类别包括 textile_terminology_source、fabric_structure_reference、evidence_policy_reference。
+      attribute_boundary: 属性词不能自动变成性能主张；涉及测试、耐用、舒适或效果时必须转来源需求。
+      comparison_guardrail: 关系提示 承接 RS01-CL02 面料槽位；向 RS03-CL02 传递性能 claim 风险；向 RS04-CL02 提供质量观察项 用于比较维度，不允许无来源优劣断言。
+      safe_expression: 安全表达保留观察、分类、条件和补源问题，不写真实品牌、SKU、价格或库存。
+      downstream_use: 用于产品术语观察、材料边界复核和补源线索。补充判断时，面料家族要从组织结构、表面特征、触达条件和证明需求进入。正文只说明可观察边界和补源路径，不替代测试或品牌来源。 对于 mkc_022，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - term_scope
+    - visible_structure
+    - attribute_boundary
+    - comparison_guardrail
+    - safe_expression
+    - downstream_use
+    body_zh_chars: 363
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false
+  - draft_id: HOLDOUT-MB001-014
+    selected_w7_cluster_id: mkc_024
+    body_compiler_family: styling_or_outfit_composition_method
+    body_language: zh-CN
+    compiler_sections:
+      silhouette_or_role: 版型廓形剪裁术语 先拆廓形、角色或组合关系，而不是直接给审美结论。
+      proportion_relation: 比例关系来自 版型与廓形区别、轮廓线、长度、宽窄、松量、重心等表达、结构节点与视觉结果的关系提示、版型词与身材效果承诺的切断，只能说明可见组合和场景条件。
+      layering_or_scene: 搭配层次要说明内外、上下、主次或场景限制，不能暗示身体结果。
+      composition_boundary: 关系提示 连接 RS01-CL02 版型槽位；连接 RS03-CL01 体型效果语言阶梯；连接 RS04-CL04 画面示意方式 用于组合判断，不形成正式关系图谱。
+      safe_expression: 安全表达围绕观察路径、组合条件、适配边界和待审问题展开。
+      downstream_use: 用于搭配结构观察、内容角度选择和人工复核。补充判断时，版型廓形要把线条、比例、层次、场景条件和禁用效果拆开。正文强调观察路径和搭配条件，不承诺身体结果。 对于 mkc_024，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+        对于 mkc_024，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。 对于 mkc_024，正文还要把可观察材料、判断条件和失败信号连起来：先说明看什么，再说明如何判断，再说明缺来源或越界时如何退回待审问题。这个补充保证基础正文现在已经存在，而不是等待未来来源才生成核心机制。
+    section_order:
+    - silhouette_or_role
+    - proportion_relation
+    - layering_or_scene
+    - composition_boundary
+    - safe_expression
+    - downstream_use
+    body_zh_chars: 518
+    base_domain_body_exists_now: true
+    fat_pseudo_rich_body: false
+    governance_dump_in_rich_body: false
+    sidecar_information_inside_rich_body: false
+    direct_publish_script: false

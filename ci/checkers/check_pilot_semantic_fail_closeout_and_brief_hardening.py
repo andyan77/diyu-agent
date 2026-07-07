@@ -22,6 +22,7 @@ SEMANTIC_V4_4_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_5_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_6_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_7_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001"
+HOLDOUT_MICROBATCH_JUDGE_NEXT_STEP = "CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001"
 BATCH_TASK_ID = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_BATCH_IDS = [f"batch_{idx:03d}" for idx in range(1, 15)]
 GATE_KEYS = [
@@ -131,7 +132,7 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("batch generation must remain locked")
     if data.get("ready_for_first_batch_generation") is not False:
         errors.append("first batch generation must remain false")
-    if data.get("current_next_step") not in {NEXT_TASK_ID, SEMANTIC_JUDGE_NEXT_STEP, SEMANTIC_V3_JUDGE_NEXT_STEP, SEMANTIC_V4_JUDGE_NEXT_STEP, SEMANTIC_V4_1_JUDGE_NEXT_STEP, SEMANTIC_V4_2_JUDGE_NEXT_STEP, SEMANTIC_V4_3_JUDGE_NEXT_STEP, SEMANTIC_V4_4_JUDGE_NEXT_STEP, SEMANTIC_V4_5_JUDGE_NEXT_STEP, SEMANTIC_V4_6_JUDGE_NEXT_STEP, SEMANTIC_V4_7_JUDGE_NEXT_STEP}:
+    if data.get("current_next_step") not in {NEXT_TASK_ID, SEMANTIC_JUDGE_NEXT_STEP, SEMANTIC_V3_JUDGE_NEXT_STEP, SEMANTIC_V4_JUDGE_NEXT_STEP, SEMANTIC_V4_1_JUDGE_NEXT_STEP, SEMANTIC_V4_2_JUDGE_NEXT_STEP, SEMANTIC_V4_3_JUDGE_NEXT_STEP, SEMANTIC_V4_4_JUDGE_NEXT_STEP, SEMANTIC_V4_5_JUDGE_NEXT_STEP, SEMANTIC_V4_6_JUDGE_NEXT_STEP, SEMANTIC_V4_7_JUDGE_NEXT_STEP, HOLDOUT_MICROBATCH_JUDGE_NEXT_STEP}:
         errors.append("next step must be semantic pilot regen, semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, semantic pilot v4.1 judge go/no-go, semantic pilot v4.2 judge go/no-go, or semantic pilot v4.3 judge go/no-go or semantic pilot v4.4 judge go/no-go")
     if data.get("current_next_step") == BATCH_TASK_ID:
         errors.append("batch generation task cannot be next step")
@@ -356,6 +357,21 @@ def validate_live(
             fail("semantic v4.7 judge route requires accepted_domain_knowledge_count 0")
         assert_false(semantic_v47.get("batch_generation_unlocked"), "semantic v4.7 judge route batch_generation_unlocked")
         assert_false(semantic_v47.get("ready_for_first_batch_generation"), "semantic v4.7 judge route ready_for_first_batch_generation")
+
+    elif current_next_step == HOLDOUT_MICROBATCH_JUDGE_NEXT_STEP:
+        holdout = status.get("holdout_microbatch_001", {})
+        if holdout.get("task_id") != "CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001" or holdout.get("status") != "completed":
+            fail("holdout judge route requires completed holdout_microbatch_001 block")
+        if holdout.get("holdout_scope") != "pilot_validation_only":
+            fail("holdout judge route requires pilot_validation_only scope")
+        if holdout.get("holdout_count", 0) < 12 or holdout.get("holdout_count", 99) > 16:
+            fail("holdout judge route requires 12..16 holdout drafts")
+        if holdout.get("body_compiler_family_count", 0) < 4:
+            fail("holdout judge route requires at least four compiler families")
+        if holdout.get("accepted_domain_knowledge_count") != 0:
+            fail("holdout judge route requires accepted_domain_knowledge_count 0")
+        assert_false(holdout.get("batch_generation_unlocked"), "holdout judge route batch_generation_unlocked")
+        assert_false(holdout.get("ready_for_first_batch_generation"), "holdout judge route ready_for_first_batch_generation")
     elif current_next_step != NEXT_TASK_ID:
         fail("current_next_step must be a known semantic pilot handoff and must not be batch generation")
     readiness = status.get("readiness", {})

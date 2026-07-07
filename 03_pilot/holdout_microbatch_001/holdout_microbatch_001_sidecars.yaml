@@ -1,0 +1,534 @@
+holdout_microbatch_001_sidecars:
+  sidecars:
+  - draft_id: HOLDOUT-MB001-001
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_002
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: ControlPlaneContractSource
+      artifact_kind: control_plane_candidate
+      consumer_layer: GenerationContract
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_002
+      canonical_title_from_authority: 路由阶梯与降级触发
+      authority_record_digest: ed6a232ec8a2b8b22aa0c0f2d81a7946e409c4e36968c5ad825d39ade136897a
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-002
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_005
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: GovernanceOutbox
+      artifact_kind: governance_outbox_candidate
+      consumer_layer: GenerationContract
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_005
+      canonical_title_from_authority: 能力组合与 strictest-wins 裁定
+      authority_record_digest: 3331e63f51bc9b95cde7b14c01592a68f577bb173278ad77b92bed8a346fd256
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-003
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_007
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_007
+      canonical_title_from_authority: 企业叙事骨架
+      authority_record_digest: 7660cf025fb1678a83e04cc3db172d23f35c8393f224258b3e94c521ee6ef170
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-004
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_012
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_012
+      canonical_title_from_authority: 系列轴与跨形态资产单元
+      authority_record_digest: c684419820c50b5a17d5cc4763837aaa6637147ba26e7668e4cbaa044c695c70
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-005
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_013
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_013
+      canonical_title_from_authority: 角色发声寄存器
+      authority_record_digest: 2c7902dcaa7e0ed3b9512fe8147d1dd1a644b96a934e80f3261a6eb16755e7d2
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-006
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_003
+    owner_model:
+      semantic_owner: evidence_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_003
+      canonical_title_from_authority: 全局 claim 与证据边界检查
+      authority_record_digest: 4978367cbc96d98533844a197faf6e1afc9b0683bac65fc524c3a06057b8544b
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-007
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_021
+    owner_model:
+      semantic_owner: evidence_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_021
+      canonical_title_from_authority: 同类比较维度与禁比边界
+      authority_record_digest: ff8a89a8b1e78255beafe147d4e6cf4d637e6cd566071d8389930674543ad307
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-008
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_028
+    owner_model:
+      semantic_owner: evidence_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_028
+      canonical_title_from_authority: 品质观察项与证明类型路由
+      authority_record_digest: e8fc097d82ffa0c1f9502a0a8d083cf3c78776358d42f3eec721f84cd78aea5a
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-009
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_030
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_030
+      canonical_title_from_authority: Look 拆解观察骨架
+      authority_record_digest: d3814562e11e0d392f755b504361f5a450dd90f73134ae1add214afe1704f0be
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-010
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_033
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_033
+      canonical_title_from_authority: 门店日常动作观察切片
+      authority_record_digest: efb9172590db269edeab9925ce72360f60d269c5ff2fb618b9ff453f4827b40b
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-011
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_036
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_036
+      canonical_title_from_authority: 陈列动作 SOP 节点框架
+      authority_record_digest: aa2f2b26b135d35755b5886ea87d76e7bd0615323332d82d6b0bb17df18f8026
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-012
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_020
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_020
+      canonical_title_from_authority: 品类解释与属性槽位骨架
+      authority_record_digest: a897518d02dfc84d381c5d283d2aec3bda4709dd71c1d490439058c8ca0524b1
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-013
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_022
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_022
+      canonical_title_from_authority: 面料家族与属性边界
+      authority_record_digest: d5694d4af73decbf3b64afda8c49a1f300931b216a53c01abe11820ae535fdf8
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+  - draft_id: HOLDOUT-MB001-014
+    task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+    holdout_scope: pilot_validation_only
+    selected_w7_cluster_id: mkc_024
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    W7_trace:
+      referenced_mkc_id: mkc_024
+      canonical_title_from_authority: 版型廓形剪裁术语
+      authority_record_digest: dbf018978d0992940f3938727579f01343e980f37d604383c8dd233acede64f7
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    Serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false

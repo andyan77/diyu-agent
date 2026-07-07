@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001",
+  "holdout_count": 14,
+  "selected_w7_cluster_count": 14,
+  "selected_w7_cluster_ids": [
+    "mkc_002",
+    "mkc_003",
+    "mkc_005",
+    "mkc_007",
+    "mkc_012",
+    "mkc_013",
+    "mkc_020",
+    "mkc_021",
+    "mkc_022",
+    "mkc_024",
+    "mkc_028",
+    "mkc_030",
+    "mkc_033",
+    "mkc_036"
+  ],
+  "excluded_previous_sampled_cluster_ids": [
+    "mkc_004",
+    "mkc_006",
+    "mkc_009",
+    "mkc_010",
+    "mkc_026",
+    "mkc_027",
+    "mkc_032",
+    "mkc_034"
+  ],
+  "excluded_previous_sampled_cluster_count": 8,
+  "body_compiler_family_count": 9,
+  "candidate_card_count": 14,
+  "knowledge_capsule_count": 14,
+  "complete_rich_body_count": 14,
+  "creative_value_or_control_body_count": 14,
+  "epistemic_label_count": 14,
+  "sidecar_count": 14,
+  "relation_design_hints_count": 28,
+  "index_only_capsule_count": 0,
+  "capsule_without_rich_body_count": 0,
+  "governance_dump_in_rich_body_count": 0,
+  "real_instance_fact_leak_count": 0,
+  "direct_publish_script_leak_count": 0,
+  "safe_alternative_performance_claim_count": 0,
+  "formal_graph_claim_count": 0,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "readiness_flags_result": "all_false",
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "Serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "source_repo_live_accessed": false,
+  "recommended_next_step": "CODEX-HOLDOUT-MICROBATCH-001-JUDGE-GO-NOGO-001",
+  "workspace_status_block_present": true,
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 16,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_canonical_label_contains_semantic_cleanup_version.yaml": [
+      "canonical label contains revision/process terms"
+    ],
+    "negative_human_motive_without_creative_hypothesis_label.yaml": [
+      "human_motive must be typed as creative_hypothesis_not_audience_fact"
+    ],
+    "negative_control_plane_has_material_observation_check_terms.yaml": [
+      "control plane uses material observation check fields"
+    ],
+    "negative_holdout_count_less_than_12.yaml": [
+      "holdout_count must be 12..16"
+    ],
+    "negative_holdout_uses_v4_sampled_mkc_id.yaml": [
+      "holdout selected a previously sampled cluster"
+    ],
+    "negative_holdout_only_has_capsule_no_rich_body.yaml": [
+      "every holdout must have complete rich body",
+      "capsule without rich body count must be 0"
+    ],
+    "negative_holdout_capsule_is_tag_index_only.yaml": [
+      "index-only capsule count must be 0"
+    ],
+    "negative_rich_body_is_padding_or_governance_dump.yaml": [
+      "governance dump in rich body count must be 0"
+    ],
+    "negative_relation_hint_claims_formal_ontology_edge.yaml": [
+      "relation status must remain design_hint_not_ontology_edge"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "real instance fact leak count must be 0"
+    ],
+    "negative_direct_publish_script_leak.yaml": [
+      "direct publish script leak count must be 0"
+    ],
+    "negative_safe_alternative_performance_claim.yaml": [
+      "safe creative alternative cannot become a performance claim"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_ready_for_first_batch_generation_true.yaml": [
+      "ready_for_first_batch_generation must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  }
+}
