@@ -1,0 +1,1125 @@
+legacy_archive_manifest:
+  schema_version: v0.1
+  generated_by_task: GKB-WORKSPACE-LEGACY-ARCHIVE-001
+  generated_at: "2026-07-06T21:21:42.456545-07:00"
+  policy:
+    no_delete: true
+    move_not_copy: true
+    canonical_inputs_touched: false
+    project_infra_touched: false
+    readiness_flags_changed: false
+    legacy_archive_is_not_active_authority: true
+    future_checkers_should_ignore_archive: true
+  archive_root: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07"
+  candidate_roots:
+  - path: "knowledge_intake"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+  - path: "tools/gkb_intake"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+  - path: "fixtures/gkb_intake"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+  - path: "ci/checkers/README_gkb_intake.md"
+    reason: "legacy intake checker documentation; not active contract-lock checker"
+  - path: "ci/checkers/check_capability_routing_composability.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_declared_semantics_alignment.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_gold_hooks_as_release_input.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_hard_claim_and_brand_fact_leak.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_no_readiness_leak.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_rich_body_structure_consistency.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_semantic_fingerprint_dedupe.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_serving_spec_no_passage_text.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/check_source_anchor_coverage.py"
+    reason: "legacy intake checker; not active contract-lock checker"
+  - path: "ci/checkers/gkb_intake_common.py"
+    reason: "legacy intake checker helper; not active contract-lock checker"
+  - path: "tools.txt"
+    reason: "legacy local tool note from old workspace"
+  - path: "落盘总方案.txt"
+    reason: "legacy implementation note from old workspace"
+  - path: "SKILL/diyu-gkb-draft-intake.md"
+    reason: "legacy skill mirror retained as archived reference only"
+  - path: ".agents/skills/diyu-gkb-draft-intake"
+    reason: "legacy active skill package retired from workspace skill discovery"
+  archived_files:
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/AGENTS.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/AGENTS.md"
+    relative_original_path: "knowledge_intake/AGENTS.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/AGENTS.md"
+    sha256: "e3ee6bc4b2a1f8551b1fa3cd75547b5c7bfcd16a6451d08d7f3a212138c033fa"
+    size_bytes: 1528
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/cso_signal_candidate_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/cso_signal_candidate_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/cso_signal_candidate_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/cso_signal_candidate_contract.v1.yaml"
+    sha256: "d6782223c93eb76b440cf33e3cd1489dcf3ae7ad9adcd6804a40d7b0f45ffbfb"
+    size_bytes: 397
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/forbidden_scope_policy.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/forbidden_scope_policy.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/forbidden_scope_policy.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/forbidden_scope_policy.v1.yaml"
+    sha256: "1c226bb2a6d603e0882c2f3417766389978a6b7dc259d012904584f4eeecdf25"
+    size_bytes: 710
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gold_hook_candidate_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gold_hook_candidate_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gold_hook_candidate_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gold_hook_candidate_contract.v1.yaml"
+    sha256: "bec01fb4ff01eeef1a06b80b275d26f344c19b6b3abe205bfcd08d3218864e83"
+    size_bytes: 456
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_card_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_card_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_card_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_card_contract.v1.yaml"
+    sha256: "b9b2ee85a5b1194ef460e2223a9cb22c575f148d783ca73ef5bd3fdc9467f536"
+    size_bytes: 1534
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_intake_manifest.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_intake_manifest.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_intake_manifest.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_intake_manifest.yaml"
+    sha256: "8147e48f764c9d08d3900857a038343222f4130576875aea8de54281e4da06f0"
+    size_bytes: 984
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/knowledge_runtime_readiness_assertions.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/knowledge_runtime_readiness_assertions.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/knowledge_runtime_readiness_assertions.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/knowledge_runtime_readiness_assertions.v1.yaml"
+    sha256: "4ba512e9c021f95dcbafd83c29fe8c0451d333190b23b69ff41688bf3657c2fb"
+    size_bytes: 517
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/l2_l3_execution_asset_candidate_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/l2_l3_execution_asset_candidate_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/l2_l3_execution_asset_candidate_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/l2_l3_execution_asset_candidate_contract.v1.yaml"
+    sha256: "e5e58999eba4101180a9e9c7443f9dc271d53c59f6b86ed76000c901d782ebbf"
+    size_bytes: 480
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/relation_edge_candidate_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/relation_edge_candidate_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/relation_edge_candidate_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/relation_edge_candidate_contract.v1.yaml"
+    sha256: "dd36f7f7c06ba800a4a40d37976437d508d8c2baf4a2b6dae8e9600d58819e5b"
+    size_bytes: 495
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/rich_body_blocks_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/rich_body_blocks_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/rich_body_blocks_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/rich_body_blocks_contract.v1.yaml"
+    sha256: "fdb15e85bcbbf1725cf2ea631a7194a7056b0aaa841fb53c99894983324c3789"
+    size_bytes: 786
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/serving_passage_spec_candidate_contract.v1.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/serving_passage_spec_candidate_contract.v1.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/serving_passage_spec_candidate_contract.v1.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/serving_passage_spec_candidate_contract.v1.yaml"
+    sha256: "6796bdafea11dd41df511eb098eb1c63de8856718462b175231b10a7adc1b96a"
+    size_bytes: 535
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_digest_ledger.csv"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_digest_ledger.csv"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_digest_ledger.csv"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_digest_ledger.csv"
+    sha256: "ae2b2ef09cbb32e2078e6acfc08e6910a4e9dcc48faeb1cbde1edda64bfa5510"
+    size_bytes: 94
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_excerpt_ledger.csv"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_excerpt_ledger.csv"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_excerpt_ledger.csv"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_excerpt_ledger.csv"
+    sha256: "e4e59bd7ef573d005ff0e1617d4325ed71ee62ae2d3afcec8d1204e37374c6ea"
+    size_bytes: 229
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_manifest.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_manifest.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_manifest.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_manifest.yaml"
+    sha256: "bea566876b5a1289951adafb0a9492611a27735142e5bb918e010fe0bbd0069e"
+    size_bytes: 700
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_registry.csv"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_registry.csv"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_registry.csv"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_registry.csv"
+    sha256: "816cd5a82ef1b673cae5888c811f2a35945c535f8c73fbc3bfe2825cce5c3b8c"
+    size_bytes: 219
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/.gitkeep"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/.gitkeep"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/.gitkeep"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/.gitkeep"
+    sha256: "b98a1836a8a5a71fe8943cdbeac027098ab5d765b6ffe4b37f91f52bd592f5f4"
+    size_bytes: 14
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/after_bulk_delete_manifest.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/after_bulk_delete_manifest.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/after_bulk_delete_manifest.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/after_bulk_delete_manifest.json"
+    sha256: "002f5489390ecbfcf6049bd3969365afb30159ad26f46d48cff79ab61809f068"
+    size_bytes: 27487
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/before_bulk_delete_manifest.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/before_bulk_delete_manifest.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/before_bulk_delete_manifest.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/before_bulk_delete_manifest.json"
+    sha256: "e75fe260002d6df17df6c4773aea679a7133716a86543268304eab3a851ec489"
+    size_bytes: 37947
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_receipt.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_receipt.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_receipt.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_receipt.json"
+    sha256: "6ef7dc82447a6d6a009b54361c88b58e2fe2ad9fa967fb68558431c57eaec9d6"
+    size_bytes: 5130
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_report.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_report.md"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_report.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_report.md"
+    sha256: "0da29f4b880ccfb6aba14bff451034ec1de9bfaa03e49ad9c63de5d1e9cc56a0"
+    size_bytes: 7940
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json"
+    sha256: "85ded0e2aa2a1eed6ea86bf9806542ce182170db1742e51168b95b8701cd8191"
+    size_bytes: 116
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json"
+    sha256: "568c382519c894ff7c7e69e1b85f1460722ff480817c637ea913d217a0298a20"
+    size_bytes: 112
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json"
+    sha256: "38f5b929ae007292b81358c722322491ca6ddd08e5b4ee0bb4ca6db70bf51946"
+    size_bytes: 111
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json"
+    sha256: "b3b1de4ce4ae26f2187866f538ac2742953a77a648ba66da31234a9753eb1e9d"
+    size_bytes: 114
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json"
+    sha256: "516382d980da3a206f433f8e041b56ffccb692be11717eee5e4e4a4e17f3c7bb"
+    size_bytes: 102
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json"
+    sha256: "8c96bba254ec08ab0f62c06faf3a86dd212cfdd00db7d66916ff58179a5d2bc6"
+    size_bytes: 115
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json"
+    sha256: "c55c937499a3dc20a8c7c4b2c932b0342c4616703cef1af244a50ea1fcd20015"
+    size_bytes: 111
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json"
+    sha256: "b2188ed67aadc9a2736c2ab266aa9a2c9cb593a15518fde954b5c0fedb5b84bb"
+    size_bytes: 112
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json"
+    sha256: "6046be893fbd96f03c0a38e2f603badc4354f98f18a654190445fecbd9d69f44"
+    size_bytes: 106
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json"
+    sha256: "ddecc8543af509048d22e3b9567982d0ea93e323f58647d6db190266124c0c1f"
+    size_bytes: 7183
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_receipt.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_receipt.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_receipt.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_receipt.json"
+    sha256: "9d7e59a93f2e1ce8894bcffbb18f58415ea2d9c2953291ed87f482ac102bd1be"
+    size_bytes: 1632
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_report.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_report.md"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_report.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_closure_report.md"
+    sha256: "874d368cfa135aae05f7910631012610e4796c5b8ae2d56ca696a33e240df24a"
+    size_bytes: 3362
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.json"
+    sha256: "7842bd35281093c77161e56b751c9092a30b3621728bf148d8c4023bb486b237"
+    size_bytes: 1161
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.md"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_pilot_readiness_report.md"
+    sha256: "79b124e6466565d3b10b473e910d2e42a11f1e083d72767e1c04cd10ed9adf22"
+    size_bytes: 845
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_receipt.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_receipt.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_receipt.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_receipt.json"
+    sha256: "1309ab184a0677eab58804fa513851ab3d927253d78044a79fd43fc05e07445f"
+    size_bytes: 2532
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_report.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_report.md"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_report.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_local_tools_upgrade_report.md"
+    sha256: "da02c094f989fc09f5a8e01db7f71cf96c05e60242bae032108b590b4e20ec2d"
+    size_bytes: 4062
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_tools_manifest.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_tools_manifest.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_tools_manifest.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_tools_manifest.json"
+    sha256: "f8f1904e1351f77448b35404ccc5d5038652214162e5f81c9761a090658e3362"
+    size_bytes: 8301
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_000_report.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_000_report.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_000_report.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_000_report.json"
+    sha256: "e11f762013d22aee8c34f6de9e28ce22fbbe604d0ce41a04389a3f11d4412cd4"
+    size_bytes: 379
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_001_report.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_001_report.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_001_report.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_batch_001_report.json"
+    sha256: "d6701a94b1ada96008293b7a30c64df8353f28a36d732d76f246d983c101a721"
+    size_bytes: 379
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_report.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_report.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_report.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_report.json"
+    sha256: "e11f762013d22aee8c34f6de9e28ce22fbbe604d0ce41a04389a3f11d4412cd4"
+    size_bytes: 379
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json"
+    sha256: "7d425fcb78d8f40c57a08aa4a5441638f6701ac0c238abb9e83678c92e697f22"
+    size_bytes: 79
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_receipt.json"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_receipt.json"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_receipt.json"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_receipt.json"
+    sha256: "f8237373d80cb1b1386c5a225a3bdd10163bf6ff7e520fbf3c26ea86af2a50bd"
+    size_bytes: 9128
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_validation_report.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_validation_report.md"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_validation_report.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_validation_report.md"
+    sha256: "773f792826497f547c251bdf3db59cff45e78d8a3d0f3a80ef80259c763a215d"
+    size_bytes: 3278
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generator_delete_ledger.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generator_delete_ledger.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generator_delete_ledger.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generator_delete_ledger.yaml"
+    sha256: "ef330323b847851cd9c7d498f4383d1ac02d65599c46c6289812e45fdd8cc7f2"
+    size_bytes: 235
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/decision_packet_ledger.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/decision_packet_ledger.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/decision_packet_ledger.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/decision_packet_ledger.yaml"
+    sha256: "bafa10efc7f3c18d41bc6ec776fb58da776b561e2bac688f8ad7654535f5d835"
+    size_bytes: 333
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/failure_ledger.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/failure_ledger.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/failure_ledger.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/failure_ledger.yaml"
+    sha256: "87f35c4433b52b501299afd21b1fd44a3a3245a24f6d48a9180b83d2f0c5abbf"
+    size_bytes: 317
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/human_decision_required.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/human_decision_required.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/human_decision_required.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/human_decision_required.yaml"
+    sha256: "6ea75a1909b5b24551031c1def8c62ca337cff02026789b01d303180ac1db083"
+    size_bytes: 323
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/review_queue.csv"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/review_queue.csv"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/review_queue.csv"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/review_queue.csv"
+    sha256: "1374fc0174a94ac49922ca92138be50ec9385b30fd0d06832126974932428464"
+    size_bytes: 105
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml"
+    sha256: "39bdaac81763fe919c8df6c1fc12b08099495527914f30c20c4c2f589a8f562e"
+    size_bytes: 323
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/AGENTS.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/AGENTS.md"
+    relative_original_path: "knowledge_intake/gpt55_gkb_enrichment_v1/AGENTS.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/knowledge_intake/gpt55_gkb_enrichment_v1/AGENTS.md"
+    sha256: "2e977ad78999152e398ec4816a7f6a0d7d77f5a07128ccf705a79b70d0deccc0"
+    size_bytes: 3345
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake workspace; superseded by canonical stage directories and contract-lock route"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/README.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/README.md"
+    relative_original_path: "tools/gkb_intake/README.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/README.md"
+    sha256: "ee542deca6ae38b9afef225db2e7b3aa0e396128faf2cc76609335909601e68c"
+    size_bytes: 922
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/audit_gkb_3600_content_snapshot.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/audit_gkb_3600_content_snapshot.py"
+    relative_original_path: "tools/gkb_intake/audit_gkb_3600_content_snapshot.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/audit_gkb_3600_content_snapshot.py"
+    sha256: "1c088f654bd8ce856261b4e10c9194f41e025f9eb065e2753561bb9172beae0d"
+    size_bytes: 27746
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/audit_gkb_intake_effectiveness.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/audit_gkb_intake_effectiveness.py"
+    relative_original_path: "tools/gkb_intake/audit_gkb_intake_effectiveness.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/audit_gkb_intake_effectiveness.py"
+    sha256: "8503907bb6855ad2bb73c26b7a52b7822c462a930a5875d1c69f63a5367d33f7"
+    size_bytes: 32
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/audit_pilot_readiness.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/audit_pilot_readiness.py"
+    relative_original_path: "tools/gkb_intake/audit_pilot_readiness.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/audit_pilot_readiness.py"
+    sha256: "4534b695a5b48b5617e663033c5116d175b5a8d97d8a406c0641e55757516ab2"
+    size_bytes: 9331
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/build_reports.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/build_reports.py"
+    relative_original_path: "tools/gkb_intake/build_reports.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/build_reports.py"
+    sha256: "3d8d89d216552ec39c920e282d63b27a5cab260c2a1c3e53c12723542ebb4669"
+    size_bytes: 2652
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/run_batch.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/run_batch.py"
+    relative_original_path: "tools/gkb_intake/run_batch.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/run_batch.py"
+    sha256: "8cc1fecd2086c92720f35a0c308866afccc18b0890aead2c015fad904fbbf9ea"
+    size_bytes: 4550
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/run_gates.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/run_gates.py"
+    relative_original_path: "tools/gkb_intake/run_gates.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/run_gates.py"
+    sha256: "7a41480759700ca3b55128a512edcd92a9636ab69ba45ca0dcb0b5f8dc0c0828"
+    size_bytes: 3443
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools/gkb_intake/validate_batch.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/validate_batch.py"
+    relative_original_path: "tools/gkb_intake/validate_batch.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools/gkb_intake/validate_batch.py"
+    sha256: "92986b61bbb96da590a44bca0c4f7d50e65b599035a5ee9107aee2b44de53b30"
+    size_bytes: 11308
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake local tools; superseded by future contract-lock checkers"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/concrete_brand_fact.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/concrete_brand_fact.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/concrete_brand_fact.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/concrete_brand_fact.yaml"
+    sha256: "50b5b271a3c77e2c2ff98c5bb0793328a54e1b4a1855b97a5f2c7f8a2ea924c8"
+    size_bytes: 898
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/declared_semantics_mismatch.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/declared_semantics_mismatch.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/declared_semantics_mismatch.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/declared_semantics_mismatch.yaml"
+    sha256: "a2ebf14360d41b310ee7bf146d920b0b91805b3410ed414690e4d8fda3738b01"
+    size_bytes: 382
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/duplicate_fingerprint.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/duplicate_fingerprint.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/duplicate_fingerprint.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/duplicate_fingerprint.yaml"
+    sha256: "ff698e9a9424b1805e5c8c08bab981fdb79dcdc9d1c1ed0810466a399e7544a6"
+    size_bytes: 1518
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/hard_claim_leak.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/hard_claim_leak.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/hard_claim_leak.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/hard_claim_leak.yaml"
+    sha256: "aa22b44bb5c354c58e2787a3ffb641342000cc2a3e5d2758be37b2960c3286b5"
+    size_bytes: 893
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/independent_gold_system.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/independent_gold_system.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/independent_gold_system.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/independent_gold_system.yaml"
+    sha256: "7ef5192af176dfe9bc8552a6aba51aa2944b950157a5a9a4953136a09ab48be9"
+    size_bytes: 251
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/missing_capability_consumption_hint.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/missing_capability_consumption_hint.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/missing_capability_consumption_hint.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/missing_capability_consumption_hint.yaml"
+    sha256: "a1d4a2a83e29d1dcf862593501a73ec76154bf0502fe9a4e6f0099487ef7a2c3"
+    size_bytes: 709
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/missing_source_anchor.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/missing_source_anchor.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/missing_source_anchor.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/missing_source_anchor.yaml"
+    sha256: "9f798d89fed00053e82b07dd2b42bcc34b0966f5e89a5fd7c15e190830167281"
+    size_bytes: 721
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/readiness_true.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/readiness_true.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/readiness_true.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/readiness_true.yaml"
+    sha256: "99e9d31879976ba8591e628647f7d54f954599dc6c8b9b99d04cd4e6fe591607"
+    size_bytes: 707
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/rich_body_missing_nested_blocks.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/rich_body_missing_nested_blocks.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/rich_body_missing_nested_blocks.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/rich_body_missing_nested_blocks.yaml"
+    sha256: "a5bf7aa8f34b3a7dd3e5352de47b422f5300cbc7a1df201cad76ddc03ae0b081"
+    size_bytes: 847
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/serving_passage_text_generated.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/serving_passage_text_generated.yaml"
+    relative_original_path: "fixtures/gkb_intake/negative/serving_passage_text_generated.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/negative/serving_passage_text_generated.yaml"
+    sha256: "36789a9fbdde1254b0f0ae67f470e35daefa7d2e49fe232ee29a897030ab6406"
+    size_bytes: 333
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/rich_body_nested_shape.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/rich_body_nested_shape.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/rich_body_nested_shape.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/rich_body_nested_shape.yaml"
+    sha256: "2ca23d432273ca958d457ed51bc5634d5dfcee753bff748cc2b1886f5d54dc46"
+    size_bytes: 1125
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_batch_lockfile.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_batch_lockfile.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_batch_lockfile.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_batch_lockfile.yaml"
+    sha256: "65e7b32c093b800b4636ac26240b297ce8ba881b3e47533d69f3ee93c3dbde73"
+    size_bytes: 957
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_candidate_with_source_anchor.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_candidate_with_source_anchor.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_candidate_with_source_anchor.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_candidate_with_source_anchor.yaml"
+    sha256: "a0f51d01d10715769d7e7d2ccb8c25ce23db49075fe39dc5b2b33ba3d939d5fe"
+    size_bytes: 1993
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_declared_semantics_alignment.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_declared_semantics_alignment.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_declared_semantics_alignment.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_declared_semantics_alignment.yaml"
+    sha256: "5e966d5220931b3f3ff354ba8d14fef50bc0e4e29e87c1cddca7d10c2fb0323c"
+    size_bytes: 552
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_fingerprint_registry.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_fingerprint_registry.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_fingerprint_registry.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_fingerprint_registry.yaml"
+    sha256: "260c655c51ecd24486bed34b3c0f000be9289896a8c1c9a21bfab78fa7dbb49e"
+    size_bytes: 810
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_gold_hook_candidate.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_gold_hook_candidate.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_gold_hook_candidate.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_gold_hook_candidate.yaml"
+    sha256: "74f94348737ab78c157fcbcb7316f2863f3a0a8cd302ad98a55e9b0424770dea"
+    size_bytes: 422
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_rich_body_blocks.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_rich_body_blocks.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_rich_body_blocks.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_rich_body_blocks.yaml"
+    sha256: "c031d6fe8b16d4a417b0fc93578928cd6157f257dd3805bd46b50151cd030547"
+    size_bytes: 1099
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/valid_serving_spec_candidate.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_serving_spec_candidate.yaml"
+    relative_original_path: "fixtures/gkb_intake/positive/valid_serving_spec_candidate.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/fixtures/gkb_intake/positive/valid_serving_spec_candidate.yaml"
+    sha256: "bad084dc42ead6d005f5716db022e685f7fcf3c3e3e09901a05be894f7640f61"
+    size_bytes: 320
+    classification: "legacy_archive_candidate"
+    reason: "legacy GPT 5.5 intake fixtures; not active contract-lock fixtures"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/README_gkb_intake.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/README_gkb_intake.md"
+    relative_original_path: "ci/checkers/README_gkb_intake.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/README_gkb_intake.md"
+    sha256: "77c6c29452e21a0de4c5efcfbc859be4fdaa5f944606f828dc023a2f7876198d"
+    size_bytes: 1072
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker documentation; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_capability_routing_composability.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_capability_routing_composability.py"
+    relative_original_path: "ci/checkers/check_capability_routing_composability.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_capability_routing_composability.py"
+    sha256: "9c4b4d1cd5279c3bfceef436c7625547d779d05fca1ab4e39e6a6fb23ce21d80"
+    size_bytes: 3651
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_declared_semantics_alignment.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_declared_semantics_alignment.py"
+    relative_original_path: "ci/checkers/check_declared_semantics_alignment.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_declared_semantics_alignment.py"
+    sha256: "23f1309faf090a6ca14d118d6869388d388550b7a0283f43f0fe2f31e4378cd8"
+    size_bytes: 6264
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_gold_hooks_as_release_input.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_gold_hooks_as_release_input.py"
+    relative_original_path: "ci/checkers/check_gold_hooks_as_release_input.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_gold_hooks_as_release_input.py"
+    sha256: "bfc47e035dc47330ba96455dbc4f92a8ac8ecf498b126f1375719272b0c78a58"
+    size_bytes: 3707
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_hard_claim_and_brand_fact_leak.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_hard_claim_and_brand_fact_leak.py"
+    relative_original_path: "ci/checkers/check_hard_claim_and_brand_fact_leak.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_hard_claim_and_brand_fact_leak.py"
+    sha256: "00af512ae5431f59e852ab2b11c2880c1707eb43ffc1f8d317fcc2274357f77b"
+    size_bytes: 3523
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_no_readiness_leak.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_no_readiness_leak.py"
+    relative_original_path: "ci/checkers/check_no_readiness_leak.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_no_readiness_leak.py"
+    sha256: "92846395842a9e6c2293060befc2c84c988466f9fc54d216f32aeefe4e4f044a"
+    size_bytes: 2198
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_rich_body_structure_consistency.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_rich_body_structure_consistency.py"
+    relative_original_path: "ci/checkers/check_rich_body_structure_consistency.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_rich_body_structure_consistency.py"
+    sha256: "001787e5d2838d40792de247b63a188b9c8078dfdc1a05980f10ff0a07ae6f65"
+    size_bytes: 4806
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_semantic_fingerprint_dedupe.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_semantic_fingerprint_dedupe.py"
+    relative_original_path: "ci/checkers/check_semantic_fingerprint_dedupe.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_semantic_fingerprint_dedupe.py"
+    sha256: "b94da9d0761ad9ae4d94bb5d356aad9f10928d93e5bee57a3377bbf88ae310a8"
+    size_bytes: 5605
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_serving_spec_no_passage_text.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_serving_spec_no_passage_text.py"
+    relative_original_path: "ci/checkers/check_serving_spec_no_passage_text.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_serving_spec_no_passage_text.py"
+    sha256: "134192c9b4d9d8e68788852678618e3877293e83571b29d6fa337d00d8c17152"
+    size_bytes: 2407
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/check_source_anchor_coverage.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_source_anchor_coverage.py"
+    relative_original_path: "ci/checkers/check_source_anchor_coverage.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/check_source_anchor_coverage.py"
+    sha256: "d61e92b1489e0670372b3b22278f987e9989b54f4c50f813fa19c66102f6b139"
+    size_bytes: 3295
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/ci/checkers/gkb_intake_common.py"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/gkb_intake_common.py"
+    relative_original_path: "ci/checkers/gkb_intake_common.py"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/ci/checkers/gkb_intake_common.py"
+    sha256: "c8ef258196c7609066f16a8705be9817a03004aa356af2cc6b545c95d58b26f5"
+    size_bytes: 5643
+    classification: "legacy_archive_candidate"
+    reason: "legacy intake checker helper; not active contract-lock checker"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/tools.txt"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/tools.txt"
+    relative_original_path: "tools.txt"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/tools.txt"
+    sha256: "03f137c74b25dedd1e117551f4a9b89cbc53e31f02de562ddb7d534c3fc392e6"
+    size_bytes: 1117
+    classification: "legacy_archive_candidate"
+    reason: "legacy local tool note from old workspace"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/落盘总方案.txt"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/落盘总方案.txt"
+    relative_original_path: "落盘总方案.txt"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/落盘总方案.txt"
+    sha256: "3645c889c7452b6a91bbe7d8a71a70f1464164f89a622c38810ca786827336d1"
+    size_bytes: 59044
+    classification: "legacy_archive_candidate"
+    reason: "legacy implementation note from old workspace"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/SKILL/diyu-gkb-draft-intake.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/SKILL/diyu-gkb-draft-intake.md"
+    relative_original_path: "SKILL/diyu-gkb-draft-intake.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/SKILL/diyu-gkb-draft-intake.md"
+    sha256: "fbe5c7042d879c0da4fff13faa883c96d9e5106ab9ac4cb2f361f2dc5fe255bb"
+    size_bytes: 2117
+    classification: "legacy_archive_candidate"
+    reason: "legacy skill mirror retained as archived reference only"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/SKILL.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/SKILL.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/SKILL.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/SKILL.md"
+    sha256: "db886e600d0d9813729721d5dad784275396f68f3ce950a3dddd536d9078fdae"
+    size_bytes: 2721
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/assets/batch_brief.template.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/batch_brief.template.yaml"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/assets/batch_brief.template.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/batch_brief.template.yaml"
+    sha256: "debd24c568db15e333f6a99c077cf1f21a1f713c205b02662241c85db31c0153"
+    size_bytes: 370
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/assets/gold_hook_candidate.template.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/gold_hook_candidate.template.yaml"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/assets/gold_hook_candidate.template.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/gold_hook_candidate.template.yaml"
+    sha256: "9c1ffc6bd13784eea3df1ca479627758f4d8a622c9816b23a320bf6cecef7054"
+    size_bytes: 301
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/assets/knowledge_candidate_card.template.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/knowledge_candidate_card.template.yaml"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/assets/knowledge_candidate_card.template.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/knowledge_candidate_card.template.yaml"
+    sha256: "8e933216d7d2120a3114ac756425998754a8ec947de575b27cc717709fa573e9"
+    size_bytes: 1140
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/assets/rich_body_blocks.template.yaml"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/rich_body_blocks.template.yaml"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/assets/rich_body_blocks.template.yaml"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/assets/rich_body_blocks.template.yaml"
+    sha256: "35e1bb3266f638f40725cf9e5c65de6f46d22536f0350a3847a7324be5937b2a"
+    size_bytes: 387
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/references/failure_codes.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/failure_codes.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/references/failure_codes.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/failure_codes.md"
+    sha256: "0f8d8f571a6d47bba6ea769f395be27defaed91766bfe38739ea529077f0a1fa"
+    size_bytes: 934
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/references/intake_contract.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/intake_contract.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/references/intake_contract.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/intake_contract.md"
+    sha256: "b0de615070fe71225e2a5b33cfae169f4094f7ef6bcb7b482d9bf969903973e4"
+    size_bytes: 1619
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/references/nine_pass_method.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/nine_pass_method.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/references/nine_pass_method.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/nine_pass_method.md"
+    sha256: "8e08a36736e5b1f321ce5ca0e9cede1d1a37a76e1c791f2db5d3d3a850e8ccf0"
+    size_bytes: 911
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/references/release_integration.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/release_integration.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/references/release_integration.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/release_integration.md"
+    sha256: "f9b49d3716b2b604b55f3c3e496bf30b68471a3e05d210e94e26c6138e22e3d4"
+    size_bytes: 613
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/references/scoring_rubric.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/scoring_rubric.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/references/scoring_rubric.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/references/scoring_rubric.md"
+    sha256: "29427730c31ab3ca64e64b6b162836ce6b0a7828e79eef9436de7fb61f1bcbd9"
+    size_bytes: 880
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  - original_path: "/home/diyu/笛语领域通用数据库/.agents/skills/diyu-gkb-draft-intake/scripts/README.md"
+    archive_path: "/home/diyu/笛语领域通用数据库/archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/scripts/README.md"
+    relative_original_path: ".agents/skills/diyu-gkb-draft-intake/scripts/README.md"
+    relative_archive_path: "archive/legacy_pre_contract_lock/2026-07-07/.agents/skills/diyu-gkb-draft-intake/scripts/README.md"
+    sha256: "ef8a9ff2c2b60b00fbc0aa70ec4b246ab7352fccd70dd98ff9f5bbb2d3c87a32"
+    size_bytes: 222
+    classification: "legacy_archive_candidate"
+    reason: "legacy active skill package retired from workspace skill discovery"
+    action: "moved_to_archive_legacy_pre_contract_lock"
+    digest_match_after_move: true
+  counts:
+    candidate_root_count: 18
+    archived_file_count: 107
+    deleted_file_count: 0
