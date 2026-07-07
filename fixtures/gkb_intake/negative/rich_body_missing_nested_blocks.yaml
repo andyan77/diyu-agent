@@ -1,0 +1,17 @@
+# Negative fixture: nested rich_body_blocks present but missing/empty >=3 required blocks.
+# Proves the auditor still flags genuinely absent nested body blocks as empty
+# (the fix must NOT paper over real gaps). Test-only fixture; not knowledge.
+rich_body_items:
+  - candidate_id: TEST-RICH-MISSING-001
+    rich_body_blocks:
+      concept_mechanism: "只有部分块存在。"
+      domain_logic:
+        - "领域逻辑存在。"
+      content_generation_usage: ""            # present but empty -> counts as missing
+      # merchandising_or_retail_usage  MISSING
+      # transformation_rules           MISSING
+      # generic_micro_scenarios        MISSING
+      # anti_patterns                  MISSING
+      # boundary_language              MISSING
+      # retrieval_phrases              MISSING
+      # capability_consumption_hint    MISSING

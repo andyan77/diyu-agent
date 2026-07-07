@@ -1,0 +1,29 @@
+batch_id: batch_000
+micro_batch_id: batch_000_00
+source_pack_refs: []
+target_raw_count: 0
+target_aligned_count: 0
+allowed_output_files:
+  - knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json
+  - knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json
+expected_checker_set:
+  - check_no_readiness_leak.py
+  - check_source_anchor_coverage.py
+  - check_declared_semantics_alignment.py
+  - check_hard_claim_and_brand_fact_leak.py
+  - check_rich_body_structure_consistency.py
+  - check_semantic_fingerprint_dedupe.py
+  - check_capability_routing_composability.py
+  - check_serving_spec_no_passage_text.py
+  - check_gold_hooks_as_release_input.py
+run_status: not_started
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false

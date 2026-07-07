@@ -1,0 +1,44 @@
+{
+  "batch_lockfile_status": {
+    "batch_000": "ready_for_gate_only",
+    "batch_001": "ready_for_gate_only"
+  },
+  "blockers": [
+    "real_source_pack_content_unverified"
+  ],
+  "checker_real_content_status": "fixture_verified_only",
+  "next_allowed_mode": "gate_dry_run_only",
+  "non_git_policy": {
+    "not_recommended_for": [
+      "120_micro_batches",
+      "3600_candidates",
+      "long_running_dedupe_registry"
+    ],
+    "ok_for": [
+      "scaffold",
+      "batch_000_001_pilot",
+      "local_gate_proof"
+    ]
+  },
+  "readiness_flags": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false
+  },
+  "real_source_pack_content": "unverified",
+  "source_digest_rows": 0,
+  "source_excerpt_rows": 0,
+  "source_pack_content_errors": [
+    "source_pack_registry has no real rows",
+    "source_excerpt_ledger has no real rows",
+    "source_digest_ledger has no real rows"
+  ],
+  "source_pack_registry_rows": 0,
+  "source_pack_surface": "ready"
+}

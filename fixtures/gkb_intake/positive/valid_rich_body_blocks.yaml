@@ -1,0 +1,27 @@
+candidate_id: GKB-POS-001
+rich_body_blocks:
+  concept_mechanism: A generic mechanism explains how context, route, and output asset interact.
+  domain_logic: The block stays at the method level and avoids concrete external facts.
+  content_generation_usage:
+    - Select content intent from source-grounded candidate fields.
+  merchandising_or_retail_usage:
+    - Map generic display or assortment context into candidate routing language.
+  transformation_rules:
+    - Keep facts source-bound and route missing evidence to source_gap.
+  generic_micro_scenarios:
+    - A team maps an abstract launch context to a review queue item.
+  anti_patterns:
+    - Do not turn retrieval phrases into a final passage.
+  boundary_language:
+    - Generic only; no concrete brands, stores, people, cities, or campaigns.
+  retrieval_phrases:
+    - source grounded route
+    - capability consumption hint
+    - generic merchandising context
+  capability_consumption_hint:
+    affects:
+      - route_selection
+    likely_output_assets:
+      - candidate_brief
+    checker_need:
+      - rich_body_structure_consistency

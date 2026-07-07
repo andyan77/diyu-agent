@@ -1,0 +1,431 @@
+{
+  "task_id": "GKB-WORKSPACE-INVENTORY-MIGRATION-PREFLIGHT-001",
+  "generated_at": "2026-07-06T20:22:41.112297-07:00",
+  "execution_mode": "read_only_inventory_with_tmp_report_writes_only",
+  "target_workspace": {
+    "path": "/home/diyu/笛语领域通用数据库",
+    "exists": true,
+    "is_directory": true,
+    "git": {
+      "is_git_repo": false,
+      "status_short": null,
+      "branch": null,
+      "head": null,
+      "log_oneline_n5": [],
+      "error": "fatal: not a git repository (or any of the parent directories): .git"
+    },
+    "total_size_human": "976K",
+    "file_count": 146,
+    "dir_count": 35,
+    "top_level_file_count": 4,
+    "extension_counts": {
+      "[no_ext]": 7,
+      "csv": 5,
+      "html": 1,
+      "json": 22,
+      "md": 18,
+      "py": 17,
+      "pyc": 2,
+      "txt": 2,
+      "yaml": 72
+    },
+    "recent_modified_files": [
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_receipt.json",
+        "size_bytes": 5130,
+        "modified_iso": "2026-07-06T02:57:50.642349-07:00",
+        "sha256": "6ef7dc82447a6d6a009b54361c88b58e2fe2ad9fa967fb68558431c57eaec9d6"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/bulk_3600_delete_auditor_fix_deprecate_report.md",
+        "size_bytes": 7940,
+        "modified_iso": "2026-07-06T02:57:21.565210-07:00",
+        "sha256": "0da29f4b880ccfb6aba14bff451034ec1de9bfaa03e49ad9c63de5d1e9cc56a0"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/after_bulk_delete_manifest.json",
+        "size_bytes": 27487,
+        "modified_iso": "2026-07-06T02:55:26.526234-07:00",
+        "sha256": "002f5489390ecbfcf6049bd3969365afb30159ad26f46d48cff79ab61809f068"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json",
+        "size_bytes": 7183,
+        "modified_iso": "2026-07-06T02:54:37.971486-07:00",
+        "sha256": "ddecc8543af509048d22e3b9567982d0ea93e323f58647d6db190266124c0c1f"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json",
+        "size_bytes": 111,
+        "modified_iso": "2026-07-06T02:54:37.966188-07:00",
+        "sha256": "38f5b929ae007292b81358c722322491ca6ddd08e5b4ee0bb4ca6db70bf51946"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json",
+        "size_bytes": 112,
+        "modified_iso": "2026-07-06T02:54:37.925029-07:00",
+        "sha256": "b2188ed67aadc9a2736c2ab266aa9a2c9cb593a15518fde954b5c0fedb5b84bb"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json",
+        "size_bytes": 116,
+        "modified_iso": "2026-07-06T02:54:37.885811-07:00",
+        "sha256": "85ded0e2aa2a1eed6ea86bf9806542ce182170db1742e51168b95b8701cd8191"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json",
+        "size_bytes": 111,
+        "modified_iso": "2026-07-06T02:54:37.841182-07:00",
+        "sha256": "c55c937499a3dc20a8c7c4b2c932b0342c4616703cef1af244a50ea1fcd20015"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json",
+        "size_bytes": 115,
+        "modified_iso": "2026-07-06T02:54:37.798016-07:00",
+        "sha256": "8c96bba254ec08ab0f62c06faf3a86dd212cfdd00db7d66916ff58179a5d2bc6"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json",
+        "size_bytes": 114,
+        "modified_iso": "2026-07-06T02:54:37.756873-07:00",
+        "sha256": "b3b1de4ce4ae26f2187866f538ac2742953a77a648ba66da31234a9753eb1e9d"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json",
+        "size_bytes": 112,
+        "modified_iso": "2026-07-06T02:54:37.710085-07:00",
+        "sha256": "568c382519c894ff7c7e69e1b85f1460722ff480817c637ea913d217a0298a20"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json",
+        "size_bytes": 106,
+        "modified_iso": "2026-07-06T02:54:37.669711-07:00",
+        "sha256": "6046be893fbd96f03c0a38e2f603badc4354f98f18a654190445fecbd9d69f44"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json",
+        "size_bytes": 102,
+        "modified_iso": "2026-07-06T02:54:37.626882-07:00",
+        "sha256": "516382d980da3a206f433f8e041b56ffccb692be11717eee5e4e4a4e17f3c7bb"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generation_deleted_manifest_supplement.yaml",
+        "size_bytes": 5114,
+        "modified_iso": "2026-07-06T02:54:19.085322-07:00",
+        "sha256": "b7180038fd55018243b340212bca7078d99761ad18373da2f58d19334cab23c8"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/ci/checkers/__pycache__/gkb_intake_common.cpython-310.pyc",
+        "size_bytes": 6486,
+        "modified_iso": "2026-07-06T02:43:48.904355-07:00",
+        "sha256": "1218cd29760e6afcf26a4588897af8f8c7617925779e41c6cdb8e14fc360a66c"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generation_deprecation_ledger.yaml",
+        "size_bytes": 1225,
+        "modified_iso": "2026-07-06T02:43:28.196758-07:00",
+        "sha256": "0d886137b0a101806ad7f62efef9d40b2f7c7ac4f2319ce9e607a3bf14543dbb"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/tools/gkb_intake/__pycache__/audit_gkb_3600_content_snapshot.cpython-310.pyc",
+        "size_bytes": 20749,
+        "modified_iso": "2026-07-06T02:43:17.536418-07:00",
+        "sha256": "82fd5db8c6d1978d65506a0883b8aee8f0716ee5f9522dea445de90eecc2c517"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/rich_body_missing_nested_blocks.yaml",
+        "size_bytes": 847,
+        "modified_iso": "2026-07-06T02:43:03.451766-07:00",
+        "sha256": "a5bf7aa8f34b3a7dd3e5352de47b422f5300cbc7a1df201cad76ddc03ae0b081"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/positive/rich_body_nested_shape.yaml",
+        "size_bytes": 1125,
+        "modified_iso": "2026-07-06T02:42:55.598100-07:00",
+        "sha256": "2ca23d432273ca958d457ed51bc5634d5dfcee753bff748cc2b1886f5d54dc46"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/tools/gkb_intake/audit_gkb_3600_content_snapshot.py",
+        "size_bytes": 27746,
+        "modified_iso": "2026-07-06T02:42:17.693779-07:00",
+        "sha256": "1c088f654bd8ce856261b4e10c9194f41e025f9eb065e2753561bb9172beae0d"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generator_delete_ledger.yaml",
+        "size_bytes": 235,
+        "modified_iso": "2026-07-06T02:41:13.006884-07:00",
+        "sha256": "ef330323b847851cd9c7d498f4383d1ac02d65599c46c6289812e45fdd8cc7f2"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generation_deleted_manifest.yaml",
+        "size_bytes": 7420,
+        "modified_iso": "2026-07-06T02:40:59.855258-07:00",
+        "sha256": "c474cba488e045b5158f45949c5b8e1496986a85ce06879e4d998d6f591a3633"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/before_bulk_delete_manifest.json",
+        "size_bytes": 37947,
+        "modified_iso": "2026-07-06T02:39:51.604055-07:00",
+        "sha256": "e75fe260002d6df17df6c4773aea679a7133716a86543268304eab3a851ec489"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json",
+        "size_bytes": 79,
+        "modified_iso": "2026-07-06T01:45:37.056463-07:00",
+        "sha256": "7d425fcb78d8f40c57a08aa4a5441638f6701ac0c238abb9e83678c92e697f22"
+      },
+      {
+        "path": "/home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_tools_manifest.json",
+        "size_bytes": 8301,
+        "modified_iso": "2026-07-06T01:42:13.528083-07:00",
+        "sha256": "f8f1904e1351f77448b35404ccc5d5038652214162e5f81c9761a090658e3362"
+      }
+    ],
+    "suspicious_large_files_over_10m": [],
+    "duplicate_or_archive_like_dirs": [],
+    "secret_or_sensitive_candidate_files": [],
+    "readiness_true_hits": [
+      "/home/diyu/笛语领域通用数据库/fixtures/gkb_intake/negative/readiness_true.yaml:18:candidatepack_ready: true"
+    ],
+    "readiness_true_hit_note": "Only observed hit is a negative fixture for checker validation, not a workspace readiness transition."
+  },
+  "source_repo_reference": {
+    "path": "/home/faye/笛语agent",
+    "exists": true,
+    "git": {
+      "is_git_repo": true,
+      "top_level": "/home/faye/笛语agent",
+      "status_short": "",
+      "worktree_clean": true,
+      "branch": "master",
+      "head": "d56e62abb7cbe831c8e67656746ee76397dd1042",
+      "log_oneline_n5": [
+        "d56e62a docs(gate): stamp commit_after (162dce8) into G2.5 closeout receipt (immediate follow-up)",
+        "162dce8 chore(gate): close G2.5 prerequisites and advance to release input rebaseline",
+        "d3b80b1 docs(release): stamp commit_after (6c39abb) into step19 authorization receipt (immediate follow-up)",
+        "6c39abb chore(release): land first-real-generation authorization package (gate blocked, route not advanced)",
+        "897c0c3 docs(dify): stamp closeout commit_after (8d85198) into step18 receipt (immediate follow-up)"
+      ]
+    },
+    "candidate_W7_artifacts_found_in_source_repo": [
+      "/home/faye/笛语agent/candidatepack_etl/candidatepack_instances/stage2_2_gap_backed_deep_research_001/non_gateable_followup_resolution_overlay.yaml",
+      "/home/faye/笛语agent/docs/闭环能力卡/07_Batch05_领域知识层深研/03_场景穿着任务/【Batch05-KR02】场景人群与穿着任务领域知识深研.md",
+      "/home/faye/笛语agent/docs/闭环能力卡/Batch 05 B05-DOMAIN-KNOWLEDGE/服装行业场景与穿着任务知识档案.md"
+    ],
+    "canonical_W7_artifacts_found_in_source_repo": false,
+    "candidate_generation_artifacts_found": [
+      "/home/faye/笛语agent/dify/prompts/first_stage_generation_prompt_contract.md",
+      "/home/faye/笛语agent/dify/prompts/dify_staging_generation_prompt_contract.md",
+      "/home/faye/笛语agent/candidatepack_etl/candidatepack_instances/*/candidatepack_instance.yaml"
+    ],
+    "secret_or_sensitive_candidate_files": [
+      "/home/faye/笛语agent/.env",
+      "/home/faye/笛语agent/candidatepack_etl/sourceunit_normalization/b01_b09_invalid_token_report.yaml",
+      "/home/faye/笛语agent/candidatepack_etl/sourceunit_normalization/b10_q3_invalid_token_report.yaml"
+    ]
+  },
+  "temp_workspace_discovery": {
+    "known_temp_paths_checked": [
+      "/tmp/codex-ipc/deep_research_w7_master_map_001",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001",
+      "/tmp/codex-ipc/新建文件夹",
+      "/tmp bounded maxdepth scan",
+      "/tmp/codex-ipc"
+    ],
+    "W7_artifacts_found": true,
+    "founder_overlay_found": true,
+    "generation_assignment_found": true,
+    "manifest_digest_found": true,
+    "source_gap_seed_found": true,
+    "unresolved_decision_found": true,
+    "W1_W6_deep_research_outputs_found": [
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report (25).md",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report (26).md",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report (27).md",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report (28).md",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report (29).md",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report (30).md",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report 整合).md"
+    ],
+    "old_temp_workspace_candidates": [
+      "/tmp/codex-ipc/deep_research_w7_master_map_001",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001",
+      "/tmp/codex-ipc/新建文件夹",
+      "/tmp/codex-ipc/新建文件夹/current_repo_ci_run_20260706_085818",
+      "/tmp/codex-ipc/新建文件夹/source_repo_ci_run_20260706_085856"
+    ],
+    "old_temp_workspace_sizes": {
+      "/tmp/codex-ipc/deep_research_w7_master_map_001": "400K",
+      "/tmp/codex-ipc/deep_research_input_pack_inventory_001": "1.8M",
+      "/tmp/codex-ipc/新建文件夹": "88M"
+    }
+  },
+  "W7_facts": {
+    "machine_check_self_verdict": "PASS",
+    "count_checks": {
+      "canonical_cluster_count": {
+        "actual": 46,
+        "expected": 46,
+        "pass": true
+      },
+      "source_cluster_total": {
+        "actual": 58,
+        "expected": 58,
+        "pass": true
+      },
+      "generation_assignment_count": {
+        "actual": 14,
+        "expected": 14,
+        "pass": true
+      },
+      "unresolved_decision_count": {
+        "actual": 12,
+        "expected": 12,
+        "pass": true
+      },
+      "source_gap_seed_count": {
+        "actual": 16,
+        "expected": 16,
+        "pass": true
+      },
+      "batch_crosswalk_row_count": {
+        "actual": 14,
+        "expected": 14,
+        "pass": true
+      },
+      "ownership_matrix_row_count": {
+        "actual": 46,
+        "expected": 46,
+        "pass": true
+      },
+      "capability_crosswalk_row_count": {
+        "actual": 46,
+        "expected": 46,
+        "pass": true
+      }
+    },
+    "readiness_true_count": 0,
+    "split_files": [
+      {
+        "file": "shared_knowledge_cluster_registry.yaml",
+        "bytes": 63370,
+        "sha256": "a3efeaded4e5b06a54fa12c5b802f5a295df8bd94b9a1f2e02e8f32976c3daf0"
+      },
+      {
+        "file": "cluster_ownership_arbitration_matrix.csv",
+        "bytes": 14761,
+        "sha256": "615f0ae2314a25f875369c82d9feba96fc25626d4c2e7c1c54ed796f4ee4434e"
+      },
+      {
+        "file": "capability_to_cluster_crosswalk.csv",
+        "bytes": 3880,
+        "sha256": "49653c980a48745e698f5f4283837d1aed756ffc91ac8e2945b543d20db40f48"
+      },
+      {
+        "file": "batch_to_cluster_crosswalk.csv",
+        "bytes": 5379,
+        "sha256": "f0af122acf929f8ed0b856d8a60b60b3054545aeca63a3798b8bafae7b184f1a"
+      },
+      {
+        "file": "master_knowledge_map.yaml",
+        "bytes": 10006,
+        "sha256": "ede56a353eba1428755d071f8da512a1bb3e7fe71918f7ad37b57ac16e9eb789"
+      },
+      {
+        "file": "generation_assignment_plan.yaml",
+        "bytes": 7339,
+        "sha256": "afa70abbf4664ed8973c62c233c217c2f9b353a29324700636400952ce641d70"
+      },
+      {
+        "file": "unresolved_decision_ledger.yaml",
+        "bytes": 7544,
+        "sha256": "ef37e4fc3475a3da437b17c4015e10cfec5c58e941990f47284d75f2f56fbfe1"
+      },
+      {
+        "file": "source_gap_seed_ledger.yaml",
+        "bytes": 6552,
+        "sha256": "f8bbece2e0a2070fbb323de5cbbfba4cca6e6b0afc40c6961ffb21a412fbeb53"
+      },
+      {
+        "file": "merge_report.md",
+        "bytes": 5198,
+        "sha256": "cbcd3c6c33698356f077916fcd89af5bee4a7259f828161a10ee3525d99c2f5a"
+      }
+    ],
+    "founder_overlay_self_verdict": "PASS",
+    "founder_decisions_resolved": [
+      "UD-004",
+      "UD-009",
+      "UD-010",
+      "UD-011"
+    ],
+    "founder_non_blocking_decisions_count": 8
+  },
+  "parse_checks": {
+    "target_yaml_json": {
+      "parsed_files": 94,
+      "parse_failures": [],
+      "pass": true
+    },
+    "w7_yaml_json": {
+      "parsed_files": 15,
+      "parse_failures": [],
+      "pass": true
+    },
+    "input_pack_yaml_json": {
+      "parsed_files": 23,
+      "parse_failures": [],
+      "pass": true
+    }
+  },
+  "migration_readiness": {
+    "canonical_inputs_found": true,
+    "required_inputs_status": {
+      "W7_map_files": true,
+      "Founder_Overlay": true,
+      "generation_assignments": true,
+      "source_gap_seeds": true,
+      "unresolved_decisions": true,
+      "manifest_digest": true,
+      "workspace_README": false,
+      "workspace_status_manifest": false,
+      "git_baseline": false
+    },
+    "missing_required_inputs": [
+      "workspace_README",
+      "workspace_status_manifest",
+      "git_baseline"
+    ],
+    "duplicate_candidates_count": 1,
+    "stale_candidates_count": 13,
+    "cleanup_candidates_count": 5,
+    "target_workspace_safe_to_adopt": true,
+    "recommended_workspace_verdict": "adoptable_after_cleanup",
+    "can_enter_GKB_WORKSPACE_ADOPTION_AND_MIGRATION_001": true,
+    "can_skip_to_CODEX_KNOWLEDGE_GENERATION_CONTRACT_LOCK_001": false,
+    "skip_contract_lock_reason": "Target is not a git repo and required W7/source inputs are still outside the target workspace; workspace README/status manifest also missing."
+  },
+  "classification_counts": {
+    "canonical_optional": 75,
+    "cleanup_candidate": 5,
+    "duplicate": 1,
+    "provenance_only": 46,
+    "scratch": 38,
+    "canonical_required": 30,
+    "stale_or_superseded": 13,
+    "secret_or_sensitive_candidate": 3
+  },
+  "readiness_flags_asserted_by_this_task": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "stop_conditions_triggered": [],
+  "external_resources_touched": false
+}

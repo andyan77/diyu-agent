@@ -1,0 +1,105 @@
+policy_id: w7_12_16_triage_policy.v0_1
+task_id: W7-FOUNDER-DECISION-OVERLAY-AND-TRIAGE-POLICY-001
+status: non_blocking_for_draft_generation
+class5_decisions_resolved:
+- decision_id: UD-004
+  title: P0-04 的 precheck/review hints 与 P0-00 控制路由的边界
+  resolved_by: founder_decision_overlay
+  blocks_draft_generation: false
+  blocks_candidatepack_until_later_gate: false
+- decision_id: UD-009
+  title: 组货/渠道边界与 A2 support-only 的切分
+  resolved_by: founder_decision_overlay
+  blocks_draft_generation: false
+  blocks_candidatepack_until_later_gate: false
+- decision_id: UD-010
+  title: content_x_display 是否会被误写成新 axis
+  resolved_by: founder_decision_overlay
+  blocks_draft_generation: false
+  blocks_candidatepack_until_later_gate: false
+- decision_id: UD-011
+  title: 跨域关系簇是否引入 workflow / serving / DIFY 结构字段
+  resolved_by: founder_decision_overlay
+  blocks_draft_generation: false
+  blocks_candidatepack_until_later_gate: false
+non_blocking_unresolved_decisions:
+- decision_id: UD-001
+  title: 企业 proof slot 与质量/认证 proof-type 的 owner 分界
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-002
+  title: 颜色表达与主题色彩故事的 owner 分界
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-003
+  title: generic role authorization 与 retail permission boundary 的切分
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-005
+  title: W1 子卡批次压缩为 batch_014 与上传 capability / matrix 参考的冲突
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-006
+  title: P0-03-RS04 secondary batch_012 与上传 allocation reference 的零计数冲突
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-007
+  title: CTA 术语是否统一降级为动作提示
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-008
+  title: 产品生命周期抽象阶段命名粒度
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+- decision_id: UD-012
+  title: filmability / anchor vocabulary 是否需要共享上位字典
+  default_route: non_blocking_for_draft_generation
+  candidatepack_requires_later_resolution_or_gate: true
+source_gap_seed_default_route:
+  all_source_gap_seed_ids:
+  - SG-001
+  - SG-002
+  - SG-003
+  - SG-004
+  - SG-005
+  - SG-006
+  - SG-007
+  - SG-008
+  - SG-009
+  - SG-010
+  - SG-011
+  - SG-012
+  - SG-013
+  - SG-014
+  - SG-015
+  - SG-016
+  default_route: collection_or_expert_synthesis_hint
+  blocks_draft_generation: false
+  blocks_candidatepack_eligibility_until_source_or_policy_gate: true
+blocking_only_if:
+- hard_claim_without_source_is_requested
+- real_brand_sku_store_person_customer_fact_is_requested
+- performance_body_effect_test_claim_is_requested
+- runtime_or_serving_or_RAG_or_DIFY_field_is_requested
+- generation_brief_attempts_CandidatePack_or_KE_or_Serving_or_RAG_or_DIFY_output
+allow_next:
+- Master Map to Codex Generation Brief Pack
+- research_draft_generation_with_required_tags
+- creative_method_and_industry_common_sense_draft_after_human_review
+hold:
+- CandidatePack eligibility
+- KE write
+- Serving projection write
+- RAG context_bundle write
+- DIFY workflow write
+- route advance
+- readiness transition
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_ready: false
+  release_ready: false

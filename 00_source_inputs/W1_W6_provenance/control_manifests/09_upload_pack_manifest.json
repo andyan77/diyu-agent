@@ -1,0 +1,117 @@
+{
+  "pack_id": "web_gpt_upload_pack_v0_1",
+  "generated_at": "2026-07-06T14:24:02Z",
+  "source_tmp_dir": "/tmp/codex-ipc/deep_research_input_pack_inventory_001",
+  "source_repo_path": "/home/faye/笛语agent",
+  "source_repo_git_status_before": "",
+  "source_repo_git_status_after": "",
+  "upload_file_count": 9,
+  "files": [
+    {
+      "file_name": "01_research_charter_and_redlines.md",
+      "byte_size": 3026,
+      "sha256": "0322934fb996aa600d73a6b6c6770aa5eecca2571061e0ba8b11688e71219255",
+      "source_materials": [
+        "common_pack/research_charter.v0.1.md",
+        "common_pack/forbidden_outputs_and_exclude_policy.v0.1.md"
+      ],
+      "usage_role": "global charter and redlines",
+      "upload_priority": 1
+    },
+    {
+      "file_name": "02_p0_capability_and_subcards.yaml",
+      "byte_size": 14454,
+      "sha256": "d983a16642060ee4c0a5ecae99b75466cc9202e7ee5b11d3c97f09edc752fbd4",
+      "source_materials": [
+        "common_pack/docs/capability_modeling/p0_capability_cards.yaml",
+        "common_pack/p0_research_subcard_matrix.v0.1.yaml"
+      ],
+      "usage_role": "capability and subcard allocation reference",
+      "upload_priority": 2
+    },
+    {
+      "file_name": "03_batch_allocation_matrix.csv",
+      "byte_size": 1522,
+      "sha256": "3729afb304a2cd77abe20c1a8702e9df7a3e8a7e8826ef135f70cb8c414686e7",
+      "source_materials": [
+        "common_pack/p0_x_batch_allocation_matrix.v0.1.csv"
+      ],
+      "usage_role": "parallel batch count budget",
+      "upload_priority": 3
+    },
+    {
+      "file_name": "04_research_map_output_schema.yaml",
+      "byte_size": 3475,
+      "sha256": "d57e1fbbe1874cb7b03f60c894f3f95bc1b6606a5afb9ae3552558f792c04ca3",
+      "source_materials": [
+        "common_pack/card_knowledge_research_map.schema.v0.1.yaml"
+      ],
+      "usage_role": "machine-readable research output schema",
+      "upload_priority": 4
+    },
+    {
+      "file_name": "05_source_claim_evidence_policy.md",
+      "byte_size": 2022,
+      "sha256": "518a1e91ed546a01bbf6199b8543c2de99d5d4381fe6bf17c89646d1c15361d3",
+      "source_materials": [
+        "common_pack/contracts/source_intake_contracts/source_intake_contract_manifest.yaml",
+        "common_pack/contracts/source_intake_contracts/source_type_contracts.yaml",
+        "common_pack/contracts/evidence_policy_contracts/evidence_policy_contracts.yaml",
+        "common_pack/source_gap_and_decision_routing_policy.v0.1.yaml"
+      ],
+      "usage_role": "source, claim, evidence, and routing policy",
+      "upload_priority": 5
+    },
+    {
+      "file_name": "06_candidatepack_and_readiness_policy.md",
+      "byte_size": 1768,
+      "sha256": "5ebb04fea39914359c7b91bfd195037a0803144b5a1a22cfc773b05d19b49cb5",
+      "source_materials": [
+        "common_pack/candidatepack_etl/README.md",
+        "common_pack/candidatepack_etl/candidatepack_contract.yaml",
+        "task_specific_pack/release/rag_release_gate/ke_thickened_baseline_001/readiness_transition_policy.v0.1.yaml"
+      ],
+      "usage_role": "CandidatePack path and readiness boundary",
+      "upload_priority": 6
+    },
+    {
+      "file_name": "07_dq_anti_homogeneity_policy.md",
+      "byte_size": 2173,
+      "sha256": "48a02b6a196151c927565f92882054489e291929ea6de5662ac0c2dd5a81ecb7",
+      "source_materials": [
+        "task_specific_pack/contracts/dq_main_contract/dq_main_contract.yaml",
+        "task_specific_pack/docs/capability_modeling/capability_dq_integration_matrix.yaml",
+        "task_specific_pack/docs/capability_modeling/part_a_dq_asset_stage_map.yaml",
+        "task_specific_pack/candidatepack_etl/dq_gap_audit/README.md"
+      ],
+      "usage_role": "DQ and anti-generic quality policy",
+      "upload_priority": 7
+    },
+    {
+      "file_name": "08_optional_reference_digest.md",
+      "byte_size": 2053,
+      "sha256": "5602403317009c432296e5cf41cefc163a3242c730791b356db2f43e54fb1bb2",
+      "source_materials": [
+        "optional_reference/candidatepack_etl/source_supplements/stage2_2_deep_research/research_packs/**",
+        "docs/governance/ADR-0001..0010 read-only source repo",
+        "optional_reference/external_general_kb_plan/落盘总方案.txt"
+      ],
+      "usage_role": "optional reference digest only",
+      "upload_priority": 8
+    }
+  ],
+  "excluded_materials": [
+    "source repository runtime files",
+    "KE tree",
+    "Serving tree",
+    "RAG tree",
+    "DIFY tree",
+    "route mutation files",
+    "private credential material",
+    "old route history as current truth"
+  ],
+  "forbidden_scope_touched": false,
+  "readiness_true_count": 0,
+  "sensitive_word_hits": [],
+  "self_verdict": "PASS"
+}

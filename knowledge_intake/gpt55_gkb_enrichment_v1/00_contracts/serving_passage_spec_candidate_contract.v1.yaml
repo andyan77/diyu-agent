@@ -1,0 +1,22 @@
+contract_id: serving_passage_spec_candidate_contract.v1
+object_name: ServingPassageSpecCandidate
+status: scaffold_only
+ServingPassageSpecCandidate:
+  may_define:
+    - projection_scope
+    - allowed_uses
+    - do_not_include
+    - source_trace_required
+    - digest_required
+  must_not_define:
+    - approved_passage_text
+    - rendered_body
+    - passage_text
+    - context_bundle_item
+spec_policy:
+  spec_only: true
+  passage_text_allowed: false
+readiness:
+  production_servable: false
+  RAG_ready: false
+  generation_allowed: false

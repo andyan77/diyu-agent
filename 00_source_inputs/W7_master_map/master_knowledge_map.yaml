@@ -1,0 +1,270 @@
+map_id: W7_shared_cluster_master_map
+map_version: v0_1
+status: integration_only
+integration_role: W1-W6 normalization_dedupe_cluster_ownership_arbitration_batch_alignment_schema_rewrite_only
+scope_guardrails:
+  adds_new_industry_knowledge: false
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  production_ready: false
+  release_ready: false
+input_validation_summary:
+  w1_w6_identified_as_p0_00_to_p0_05: true
+  each_p0_has_4_research_subcards: true
+  all_source_batch_refs_in_allowed_range: true
+  all_source_readiness_false: true
+  total_source_clusters: 58
+  total_canonical_clusters: 46
+normalization_issue_ledger:
+- issue_id: NI-001
+  issue_type: cluster_id_convention_mismatch
+  severity: medium
+  observed_in:
+  - W1
+  - W2
+  - W3
+  - W4
+  - W5
+  - W6
+  description: Raw cluster_id styles mix plain P0 ids, W2-prefixed ids, and W5 underscore-prefixed ids; canonical ids rewritten to mkc_###.
+  action: fixed_in_w7
+  notes: source ids retained only in source_cluster_ids.
+- issue_id: NI-002
+  issue_type: batch_ref_shape_mismatch
+  severity: medium
+  observed_in:
+  - W1
+  - W2
+  - W3
+  - W4
+  - W5
+  - W6
+  description: batch_refs appear as flat lists in some maps and primary/secondary dicts in others; W7 normalizes to flat allowed batch set only.
+  action: fixed_in_w7
+  notes: No batch outside batch_001~batch_014 retained.
+- issue_id: NI-003
+  issue_type: yaml_anchor_alias_forward_reference
+  severity: high
+  observed_in:
+  - W4
+  description: W4 uses forward alias references for subcard maps; anchors/aliases are removed in W7 output.
+  action: fixed_in_w7
+  notes: Final output contains no YAML anchor or alias structure.
+- issue_id: NI-004
+  issue_type: subcard_batch_collapse
+  severity: high
+  observed_in:
+  - W1
+  description: W1 subcard-level batch refs collapse to batch_014, while uploaded capability/batch references indicate broader allocation patterns.
+  action: carried_to_unresolved_decision_ledger
+  notes: Cluster-level source batch_refs are preserved; authority reconciliation is not invented.
+- issue_id: NI-005
+  issue_type: top_level_knowledge_mode_inconsistency
+  severity: low
+  observed_in:
+  - W1
+  - W6
+  description: knowledge_mode is not consistently surfaced at top level; W7 normalizes all master structures to general_only.
+  action: fixed_in_w7
+  notes: No readiness state was enabled during rewrite.
+- issue_id: NI-006
+  issue_type: ledger_shape_mismatch
+  severity: medium
+  observed_in:
+  - W1
+  - W5
+  - W6
+  description: unresolved_decisions and source_gap_seed mix dict-list and string-list patterns.
+  action: fixed_in_w7
+  notes: All downstream ledgers rewritten to stable id-based records.
+- issue_id: NI-007
+  issue_type: shared_cluster_overlap_not_fully_mergeable
+  severity: medium
+  observed_in:
+  - W2
+  - W3
+  - W4
+  - W5
+  - W6
+  description: Several source clusters share vocabulary but not identical ownership scope, especially proof-slot, color-story, authorization, and precheck-routing families.
+  action: split_preserved_with_ownership_notes
+  notes: Unclear cases routed to unresolved_decision_ledger, not silently collapsed.
+clusters_by_owner:
+  P0-00:
+  - canonical_cluster_id: mkc_001
+    canonical_cluster_name: 入口槽位契约
+  - canonical_cluster_id: mkc_002
+    canonical_cluster_name: 路由阶梯与降级触发
+  - canonical_cluster_id: mkc_003
+    canonical_cluster_name: 全局 claim 与证据边界检查
+  - canonical_cluster_id: mkc_004
+    canonical_cluster_name: 异常分发与再进入规则
+  - canonical_cluster_id: mkc_005
+    canonical_cluster_name: 能力组合与 strictest-wins 裁定
+  - canonical_cluster_id: mkc_006
+    canonical_cluster_name: 研究资产绑定与非生产封印
+  P0-01:
+  - canonical_cluster_id: mkc_007
+    canonical_cluster_name: 企业叙事骨架
+  - canonical_cluster_id: mkc_008
+    canonical_cluster_name: 证明槽位与价值转译
+  - canonical_cluster_id: mkc_009
+    canonical_cluster_name: 故事弧线适用边界
+  - canonical_cluster_id: mkc_010
+    canonical_cluster_name: 反模板叙事锚点
+  - canonical_cluster_id: mkc_011
+    canonical_cluster_name: 叙事放大禁区与风险路由
+  - canonical_cluster_id: mkc_012
+    canonical_cluster_name: 系列轴与跨形态资产单元
+  P0-02:
+  - canonical_cluster_id: mkc_013
+    canonical_cluster_name: 角色发声寄存器
+  - canonical_cluster_id: mkc_014
+    canonical_cluster_name: 语气校准与去人物化
+  - canonical_cluster_id: mkc_015
+    canonical_cluster_name: 组织生态角色网格
+  - canonical_cluster_id: mkc_016
+    canonical_cluster_name: 视角切换与公开安全边界
+  - canonical_cluster_id: mkc_017
+    canonical_cluster_name: 受众距离与信息深浅轴
+  - canonical_cluster_id: mkc_018
+    canonical_cluster_name: 情绪温度层与信任门控
+  - canonical_cluster_id: mkc_019
+    canonical_cluster_name: 角色授权表面与人物故事红线
+  P0-03:
+  - canonical_cluster_id: mkc_020
+    canonical_cluster_name: 品类解释与属性槽位骨架
+  - canonical_cluster_id: mkc_021
+    canonical_cluster_name: 同类比较维度与禁比边界
+  - canonical_cluster_id: mkc_022
+    canonical_cluster_name: 面料家族与属性边界
+  - canonical_cluster_id: mkc_023
+    canonical_cluster_name: 颜色表达与视觉解释边界
+  - canonical_cluster_id: mkc_024
+    canonical_cluster_name: 版型廓形剪裁术语
+  - canonical_cluster_id: mkc_025
+    canonical_cluster_name: 工艺观察线索与讲解节点
+  - canonical_cluster_id: mkc_026
+    canonical_cluster_name: 身材效果语言阶梯与场景化观察
+  - canonical_cluster_id: mkc_027
+    canonical_cluster_name: 舒适性能耐用品质证据阶梯
+  - canonical_cluster_id: mkc_028
+    canonical_cluster_name: 品质观察项与证明类型路由
+  - canonical_cluster_id: mkc_029
+    canonical_cluster_name: 工艺品质内容的可拍摄表达
+  P0-04:
+  - canonical_cluster_id: mkc_030
+    canonical_cluster_name: Look 拆解观察骨架
+  - canonical_cluster_id: mkc_031
+    canonical_cluster_name: 主题与色彩故事关系网
+  - canonical_cluster_id: mkc_032
+    canonical_cluster_name: 陈列区位与可拍摄视觉锚点
+  - canonical_cluster_id: mkc_033
+    canonical_cluster_name: 门店日常动作观察切片
+  - canonical_cluster_id: mkc_034
+    canonical_cluster_name: 动作转内容槽位与演示三段式
+  - canonical_cluster_id: mkc_035
+    canonical_cluster_name: 门店日常内容化风险红线
+  - canonical_cluster_id: mkc_036
+    canonical_cluster_name: 陈列动作 SOP 节点框架
+  - canonical_cluster_id: mkc_037
+    canonical_cluster_name: 零售角色动作权限与加盟改写边界
+  - canonical_cluster_id: mkc_038
+    canonical_cluster_name: 异常回退与前复核路由提示
+  P0-05:
+  - canonical_cluster_id: mkc_039
+    canonical_cluster_name: 产品叙事角色入场框架
+  - canonical_cluster_id: mkc_040
+    canonical_cluster_name: 叙事到 CTA 的非硬卖边界
+  - canonical_cluster_id: mkc_041
+    canonical_cluster_name: 产品生命周期角色窗口
+  - canonical_cluster_id: mkc_042
+    canonical_cluster_name: 组货角色与渠道边界矩阵
+  - canonical_cluster_id: mkc_043
+    canonical_cluster_name: 场景适配条件与不适配条件
+  - canonical_cluster_id: mkc_044
+    canonical_cluster_name: 使用教育与结果 claim 分界
+  - canonical_cluster_id: mkc_045
+    canonical_cluster_name: 产品到陈列叙事关系语法
+  - canonical_cluster_id: mkc_046
+    canonical_cluster_name: 产品到角色到叙事跨域关系
+relation_index:
+- relation_id: REL-001
+  from: mkc_001
+  to: mkc_002
+  relation_type: precedes_route_evaluation
+- relation_id: REL-002
+  from: mkc_003
+  to: mkc_004
+  relation_type: feeds_exception_dispatch
+- relation_id: REL-003
+  from: mkc_005
+  to: mkc_046
+  relation_type: strictest_wins_applies_to_cross_domain_product_relations
+- relation_id: REL-004
+  from: mkc_008
+  to: mkc_028
+  relation_type: proof_slot_references_quality_proof_types_without_owning_them
+- relation_id: REL-005
+  from: mkc_010
+  to: mkc_029
+  relation_type: shared_anchor_and_filmability_boundary
+- relation_id: REL-006
+  from: mkc_019
+  to: mkc_037
+  relation_type: generic_authorization_boundary_intersects_retail_permission_boundary
+- relation_id: REL-007
+  from: mkc_020
+  to: mkc_039
+  relation_type: product_role_entry_consumes_object_schema
+- relation_id: REL-008
+  from: mkc_027
+  to: mkc_044
+  relation_type: global_claim_ladder_constrains_product_education_boundary
+- relation_id: REL-009
+  from: mkc_031
+  to: mkc_045
+  relation_type: display_theme_color_supports_product_display_grammar
+- relation_id: REL-010
+  from: mkc_032
+  to: mkc_034
+  relation_type: visual_anchor_feeds_action_to_content_translation
+- relation_id: REL-011
+  from: mkc_036
+  to: mkc_038
+  relation_type: sop_nodes_feed_exception_and_precheck_handling
+- relation_id: REL-012
+  from: mkc_043
+  to: mkc_044
+  relation_type: scene_fit_expression_is_constrained_by_claim_boundary
+registry_ref: shared_knowledge_cluster_registry.yaml
+ownership_ref: cluster_ownership_arbitration_matrix.csv
+capability_crosswalk_ref: capability_to_cluster_crosswalk.csv
+batch_crosswalk_ref: batch_to_cluster_crosswalk.csv
+generation_assignment_plan_ref: generation_assignment_plan.yaml
+unresolved_decision_ledger_ref: unresolved_decision_ledger.yaml
+source_gap_seed_ledger_ref: source_gap_seed_ledger.yaml
+forbidden_output_attestation:
+  no_candidatepack: true
+  no_source_pack: true
+  no_KE: true
+  no_serving_projection: true
+  no_RAG_context_bundle: true
+  no_DIFY_workflow: true
+  no_approved_passage_text: true
+  no_production_ready_knowledge: true
+  no_real_brand_or_sku_or_store_or_person_or_customer_fact: true
+  no_yaml_anchor_or_alias: true
+  no_raw_filecite_in_master_map: true
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_ready: false
+  release_ready: false

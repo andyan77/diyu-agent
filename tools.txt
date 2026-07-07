@@ -1,0 +1,19 @@
+6.1 必须工具
+工具	是否必须	作用
+JSON Schema / Pydantic schema	必须	防字段漂移、防漏字段、防 enum 乱写
+deterministic batch runner	必须	按 batch lockfile 跑，不靠人工复制
+source pack ledger	必须	防 GPT 生成物冒充 source truth
+semantic fingerprint registry	必须	防 3600 条同义重复和运行效果重复
+checker suite	必须	机器 fail-closed
+fixture set	必须	证明 checker 真能挡负例
+review_queue	必须	汇总人工裁决，不让执行 AI 猜
+capability coverage matrix	必须	确保 P0-00 到 P0-05 可消费
+gold_hook outbox	必须	并入 Step 20 / 21，不另造评测体系
+6.2 增强工具
+工具	是否建议	作用
+SQLite registry	建议	3600 条 + 10000 关系边时，CSV 查询会吃力
+batch dashboard	建议	看进度、拒绝率、重复率、source_gap 分布
+token / cost ledger	建议	控制 120 个微批次的成本
+prompt snapshot ledger	建议	追踪 prompt 漂移
+automatic diff guard	建议	防止微批次改错文件
+subagent review workflow	建议	Generator / Normalizer / Dedup / Boundary / Test Designer 分工

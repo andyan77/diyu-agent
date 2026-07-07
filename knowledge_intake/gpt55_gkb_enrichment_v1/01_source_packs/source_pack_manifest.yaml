@@ -1,0 +1,23 @@
+manifest_id: source_pack_manifest.gpt55_gkb_enrichment_v1
+status: scaffold_only
+purpose: Track source packs before any candidate can claim candidatepack eligibility.
+minimum_required_source_pack_types:
+  - apparel_industry_material
+  - merchandising_manual
+  - retail_store_sop
+  - content_operation_notes
+  - internal_methodology
+  - compliance_reference
+source_pack_policy:
+  gpt_generated_text_is_not_source_anchor: true
+  missing_source_pack_routes_to: source_gap
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false

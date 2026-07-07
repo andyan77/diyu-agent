@@ -1,0 +1,270 @@
+plan_id: W7_generation_assignment_plan
+plan_version: v0_1
+status: planning_stub_only
+assignments:
+- assignment_id: GA-001
+  source_cluster_ids:
+  - P0-00-RS01-C01
+  - P0-00-RS01-C02
+  - P0-00-RS02-C01
+  target_capability_group: P0-00
+  suggested_generation_scope: 仅规划 control-plane intake / route / evidence gate 的后续 codex scaffold，不生成 runtime rule 或 domain knowledge。
+  prerequisite_source_gaps:
+  - SG-001
+  - SG-002
+  prerequisite_decisions:
+  - UD-005
+  forbidden_outputs:
+  - CandidatePack
+  - KE
+  - RAG context_bundle
+  - DIFY workflow
+  - route mutation
+  readiness_required_false: true
+- assignment_id: GA-002
+  source_cluster_ids:
+  - P0-00-RS02-C02
+  - P0-00-RS04-C02
+  - P0-00-RS03-C01
+  - P0-00-RS03-C02
+  - P0-00-RS04-C01
+  target_capability_group: P0-00
+  suggested_generation_scope: 仅规划 exception / reentry / strictest-wins / non-production sealing 的结构化编排提示。
+  prerequisite_source_gaps:
+  - SG-003
+  - SG-004
+  - SG-005
+  prerequisite_decisions:
+  - UD-004
+  - UD-011
+  forbidden_outputs:
+  - production rule set
+  - serving projection
+  - approved passage text
+  readiness_required_false: true
+- assignment_id: GA-003
+  source_cluster_ids:
+  - W2-P0-01-RS01-CL01
+  - W2-P0-01-RS01-CL02
+  - W2-P0-01-RS02-CL02
+  - W2-P0-01-RS02-CL01
+  target_capability_group: P0-01
+  suggested_generation_scope: 仅规划 enterprise narrative skeleton、proof-slot use、arc boundary 的后续研究拆解。
+  prerequisite_source_gaps:
+  - SG-006
+  prerequisite_decisions:
+  - UD-001
+  forbidden_outputs:
+  - brand story copy
+  - real brand facts
+  - founder story
+  readiness_required_false: true
+- assignment_id: GA-004
+  source_cluster_ids:
+  - W2-P0-01-RS03-CL01
+  - W2-P0-01-RS03-CL02
+  - W2-P0-01-RS04-CL01
+  - W2-P0-01-RS04-CL02
+  target_capability_group: P0-01
+  suggested_generation_scope: 仅规划 anti-template anchor、risk routing、series/cross-format unit 的研究结构。
+  prerequisite_source_gaps:
+  - SG-007
+  prerequisite_decisions:
+  - UD-012
+  forbidden_outputs:
+  - topic calendar
+  - publishable script
+  - platform workflow
+  readiness_required_false: true
+- assignment_id: GA-005
+  source_cluster_ids:
+  - P0-02-RS01-C01
+  - P0-02-RS01-C02
+  - P0-02-RS03-C01
+  - P0-02-RS03-C02
+  target_capability_group: P0-02
+  suggested_generation_scope: 仅规划 role voice、tone、audience distance、trust gate 的 method bundles。
+  prerequisite_source_gaps:
+  - SG-008
+  prerequisite_decisions: []
+  forbidden_outputs:
+  - real person quote
+  - customer story
+  - authorization claim
+  readiness_required_false: true
+- assignment_id: GA-006
+  source_cluster_ids:
+  - P0-02-RS02-C01
+  - P0-02-RS02-C02
+  - P0-02-RS04-C01
+  - P0-02-RS04-C02
+  target_capability_group: P0-02
+  suggested_generation_scope: 仅规划 org ecology、public-safe handoff、generic authorization boundary 的结构化稿架。
+  prerequisite_source_gaps:
+  - SG-008
+  - SG-014
+  prerequisite_decisions:
+  - UD-003
+  forbidden_outputs:
+  - org chart
+  - private ops record
+  - retail contract fact
+  readiness_required_false: true
+- assignment_id: GA-007
+  source_cluster_ids:
+  - P0-03-RS01-CL01
+  - P0-03-RS01-CL02
+  - P0-03-RS01-CL03
+  - P0-03-RS02-CL01
+  - P0-03-RS02-CL02
+  - P0-03-RS02-CL03
+  target_capability_group: P0-03
+  suggested_generation_scope: 仅规划 apparel object schema、material/color/fit terminology、comparison boundary 的后续研究包。
+  prerequisite_source_gaps:
+  - SG-009
+  - SG-010
+  prerequisite_decisions:
+  - UD-002
+  forbidden_outputs:
+  - real SKU attribute sheet
+  - effect claim
+  - fit guarantee
+  readiness_required_false: true
+- assignment_id: GA-008
+  source_cluster_ids:
+  - P0-03-RS02-CL04
+  - P0-03-RS04-CL01
+  - P0-03-RS03-CL01
+  - P0-03-RS03-CL03
+  - P0-03-RS03-CL02
+  - P0-03-RS04-CL02
+  - P0-03-RS04-CL03
+  - P0-03-RS04-CL04
+  target_capability_group: P0-03
+  suggested_generation_scope: 仅规划 craft/quality observability、body-effect language ladder、quality proof routing 的后续研究 scaffold。
+  prerequisite_source_gaps:
+  - SG-010
+  - SG-011
+  prerequisite_decisions:
+  - UD-001
+  - UD-006
+  - UD-012
+  forbidden_outputs:
+  - quality guarantee
+  - certification fact
+  - publishable education copy
+  readiness_required_false: true
+- assignment_id: GA-009
+  source_cluster_ids:
+  - W5_P0_04_RS01_CL01
+  - W5_P0_04_RS01_CL02
+  - W5_P0_04_RS01_CL03
+  target_capability_group: P0-04
+  suggested_generation_scope: 仅规划 Look / theme-color / display-zone 的观察结构与 filmable interface。
+  prerequisite_source_gaps:
+  - SG-012
+  prerequisite_decisions:
+  - UD-002
+  - UD-010
+  forbidden_outputs:
+  - real store lookbook
+  - display ontology
+  - store map
+  readiness_required_false: true
+- assignment_id: GA-010
+  source_cluster_ids:
+  - W5_P0_04_RS02_CL01
+  - W5_P0_04_RS02_CL02
+  - W5_P0_04_RS03_CL02
+  - W5_P0_04_RS02_CL03
+  target_capability_group: P0-04
+  suggested_generation_scope: 仅规划 store-daily action slicing、action-to-content slots、risk redlines 的结构化研究输入。
+  prerequisite_source_gaps:
+  - SG-013
+  prerequisite_decisions:
+  - UD-004
+  forbidden_outputs:
+  - publishable script
+  - employee story
+  - customer interaction fact
+  readiness_required_false: true
+- assignment_id: GA-011
+  source_cluster_ids:
+  - W5_P0_04_RS03_CL01
+  - W5_P0_04_RS04_CL01
+  - W5_P0_04_RS04_CL02
+  - W5_P0_04_RS03_CL03
+  - W5_P0_04_RS04_CL03
+  target_capability_group: P0-04
+  suggested_generation_scope: 仅规划 merchandising SOP nodes、retail permission boundary、exception/review hints 的研究框架。
+  prerequisite_source_gaps:
+  - SG-014
+  prerequisite_decisions:
+  - UD-003
+  - UD-004
+  forbidden_outputs:
+  - training script
+  - sales SOP
+  - franchise fact
+  readiness_required_false: true
+- assignment_id: GA-012
+  source_cluster_ids:
+  - P0-05-RS01-C01
+  - P0-05-RS01-C02
+  target_capability_group: P0-05
+  suggested_generation_scope: 仅规划 product role entry 与 CTA boundary 的 narrative skeleton。
+  prerequisite_source_gaps:
+  - SG-002
+  prerequisite_decisions:
+  - UD-007
+  forbidden_outputs:
+  - direct sales copy
+  - real SKU narrative
+  - CTA playbook
+  readiness_required_false: true
+- assignment_id: GA-013
+  source_cluster_ids:
+  - P0-05-RS02-C01
+  - P0-05-RS02-C02
+  - P0-05-RS03-C01
+  - P0-05-RS03-C02
+  target_capability_group: P0-05
+  suggested_generation_scope: 仅规划 lifecycle / assortment / scene-fit / education-vs-claim 的边界化研究结构。
+  prerequisite_source_gaps:
+  - SG-015
+  - SG-016
+  - SG-010
+  prerequisite_decisions:
+  - UD-008
+  - UD-009
+  forbidden_outputs:
+  - inventory fact
+  - channel strategy fact
+  - body result claim
+  readiness_required_false: true
+- assignment_id: GA-014
+  source_cluster_ids:
+  - P0-05-RS04-C01
+  - P0-05-RS04-C02
+  target_capability_group: P0-05
+  suggested_generation_scope: 仅规划 product-display / product-role cross-domain relation hints，不生成 runtime structure。
+  prerequisite_source_gaps:
+  - SG-016
+  prerequisite_decisions:
+  - UD-009
+  - UD-010
+  - UD-011
+  forbidden_outputs:
+  - display system ontology
+  - serving projection
+  - workflow graph
+  readiness_required_false: true
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_ready: false
+  release_ready: false

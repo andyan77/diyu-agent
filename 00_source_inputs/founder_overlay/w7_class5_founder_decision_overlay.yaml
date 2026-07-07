@@ -1,0 +1,80 @@
+overlay_id: w7_class5_founder_decision_overlay.v0_1
+task_id: W7-FOUNDER-DECISION-OVERLAY-AND-TRIAGE-POLICY-001
+status: founder_decisions_applied_to_w7_residuals
+input_w7_machine_check:
+  self_verdict: PASS
+  readiness_true_count: 0
+class5_decisions:
+- decision_id: UD-004
+  title: P0-04 的 precheck/review hints 与 P0-00 控制路由的边界
+  founder_decision: P0-00 owns global route, downgrade, founder_review, excluded,
+    source_gap, and decision_required routing. P0-04 may keep local review notes only
+    and does not own global control routing.
+  blocker_resolved: true
+  effect_on_W7: Resolves the control-plane boundary. P0-04 clusters may emit local
+    review notes but must not become routing authorities.
+  effect_on_generation_brief: Generation briefs may include P0-04 local review_note
+    fields, but final route / downgrade / block / source_gap routing remains a P0-00
+    control-plane concern.
+  forbidden_followup:
+  - P0-04 global route decision
+  - P0-04 downgrade authority
+  - P0-04 founder_review router
+  - P0-04 excluded/source_gap/decision_required router
+- decision_id: UD-009
+  title: 组货/渠道边界与 A2 support-only 的切分
+  founder_decision: A2 remains support-only. Assortment, channel, and product-display
+    relations may provide relation grammar, adjacency hints, and support material
+    only; they must not become a full display system.
+  blocker_resolved: true
+  effect_on_W7: Resolves the A2 boundary. Product/display relation clusters remain
+    support hints rather than an independent display-system ontology.
+  effect_on_generation_brief: Generation briefs may use relation grammar and adjacency
+    hints for draft structure, but must not create a complete display planning system.
+  forbidden_followup:
+  - full display system
+  - A2 promoted to primary scenario
+  - channel decision engine
+  - assortment execution engine
+- decision_id: UD-010
+  title: content_x_display 是否会被误写成新 axis
+  founder_decision: content_x_display is a collaborative view only. It does not create
+    a third scenario axis and does not create a third business scenario.
+  blocker_resolved: true
+  effect_on_W7: Resolves the scenario-axis boundary. Cross-view clusters can remain
+    coordination hints without changing the scenario family.
+  effect_on_generation_brief: Generation briefs may reference content-display collaboration,
+    but must keep content_generation and display_styling as the only scenario family
+    values.
+  forbidden_followup:
+  - third scenario axis
+  - third business scenario
+  - content_x_display as standalone scenario
+  - new route_profile axis
+- decision_id: UD-011
+  title: 跨域关系簇是否引入 workflow / serving / DIFY 结构字段
+  founder_decision: Cross-domain relation clusters output relation hints, routing
+    hints, risk boundary, and ownership hints only. They must not output execution
+    graph, workflow schema, serving field, RAG field, DIFY field, or runtime field.
+  blocker_resolved: true
+  effect_on_W7: Resolves the runtime-field boundary. W7 remains a knowledge generation
+    map and does not design execution/runtime data structures.
+  effect_on_generation_brief: Generation briefs may request relation/risk/ownership
+    hints but must not ask GPT to emit workflow, serving, RAG, DIFY, runtime, or execution
+    graph fields.
+  forbidden_followup:
+  - execution graph
+  - workflow schema
+  - serving field
+  - RAG field
+  - DIFY field
+  - runtime field
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_ready: false
+  release_ready: false

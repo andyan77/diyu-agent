@@ -1,0 +1,55 @@
+{
+  "task_id": "GKB-INTAKE-PILOT-READINESS-CLOSURE-001",
+  "source_pack_surface": "ready",
+  "real_source_pack_content": "unverified",
+  "source_pack_registry_rows": 0,
+  "source_excerpt_rows": 0,
+  "source_digest_rows": 0,
+  "source_excerpt_ledger_header_updated": true,
+  "batch_lockfile_status": {
+    "batch_000": "ready_for_gate_only",
+    "batch_001": "ready_for_gate_only"
+  },
+  "checker_real_content_status": "fixture_verified_only",
+  "next_allowed_mode": "gate_dry_run_only",
+  "non_git_policy": {
+    "ok_for": [
+      "scaffold",
+      "batch_000_001_pilot",
+      "local_gate_proof"
+    ],
+    "not_recommended_for": [
+      "120_micro_batches",
+      "3600_candidates",
+      "long_running_dedupe_registry"
+    ]
+  },
+  "checks": {
+    "audit_pilot_readiness": "PASS_WITH_BLOCKER_REAL_SOURCE_UNVERIFIED",
+    "run_batch_batch_000_gate_only": "PASS",
+    "run_batch_batch_001_gate_only": "PASS",
+    "validate_batch_with_gates": "PASS",
+    "run_gates_selftest": "PASS",
+    "yaml_json_csv_parse": "PASS",
+    "py_compile": "PASS",
+    "forbidden_paths_absent": "PASS",
+    "protected_hashes_unchanged": "PASS"
+  },
+  "readiness_flags": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "all_ready_for_3600_candidates": false,
+  "ready_for_batch_000_001_gate_dry_run": true,
+  "ready_for_real_candidate_generation": false,
+  "blocking_reason": [
+    "real_source_pack_content_unverified"
+  ]
+}

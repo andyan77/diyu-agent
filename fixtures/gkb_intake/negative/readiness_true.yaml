@@ -1,0 +1,26 @@
+candidates:
+  - candidate_id: GKB-NEG-READINESS-001
+    batch_id: batch_000
+    source_origin: gpt_generated_candidate
+    source_pack_refs: []
+    source_trace:
+      source_excerpt_refs: []
+      excerpt_digests: []
+    capability_group_refs:
+      - P0-00
+    capability_consumption_hint:
+      affects:
+        - route_selection
+    semantic_fingerprint: gkb-neg-readiness
+    candidatepack_eligibility: false
+    route: source_gap
+    readiness:
+      candidatepack_ready: true
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false

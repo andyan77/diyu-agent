@@ -1,0 +1,11 @@
+gold_hook_id: GOLD-HOOK-TEMPLATE
+source_candidate_id: GKB-CANDIDATE-TEMPLATE
+is_release_input_candidate: true
+independent_gold_system: false
+consumed_by:
+  - Step_20_Gold_Hooks_Rebaseline
+  - Step_21_Release_Gate
+readiness:
+  release_ready: false
+  production_ready: false
+  generation_allowed: false

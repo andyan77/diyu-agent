@@ -1,0 +1,237 @@
+ledger_id: W7_source_gap_seed_ledger
+ledger_version: v0_1
+status: integration_only
+items:
+- source_gap_id: SG-001
+  gap_type: missing_source
+  title: 控制面最小入口槽位 canonical 字典缺失
+  affected_canonical_clusters:
+  - mkc_001
+  seed_origin:
+  - W1
+  missing_artifact: minimal intake slot dictionary
+  next_source_needed: repository-side slot contract
+  risk_tags:
+  - missing_evidence
+  - P0-00_domain_leak
+  readiness_required_false: true
+- source_gap_id: SG-002
+  gap_type: missing_source
+  title: claim 强度分级统一命名表缺失
+  affected_canonical_clusters:
+  - mkc_003
+  - mkc_027
+  - mkc_044
+  seed_origin:
+  - W1
+  - W4
+  - W6
+  missing_artifact: claim taxonomy contract
+  next_source_needed: cross-card claim ladder vocabulary
+  risk_tags:
+  - unsupported_hard_claim
+  - missing_evidence
+  readiness_required_false: true
+- source_gap_id: SG-003
+  gap_type: missing_source
+  title: founder review 触发清单未穷举
+  affected_canonical_clusters:
+  - mkc_004
+  - mkc_011
+  - mkc_018
+  seed_origin:
+  - W1
+  - W2
+  - W3
+  missing_artifact: founder review trigger ledger
+  next_source_needed: review trigger policy
+  risk_tags:
+  - missing_evidence
+  - owner_unclear
+  readiness_required_false: true
+- source_gap_id: SG-004
+  gap_type: missing_source
+  title: research-only 执行资产绑定白名单缺失
+  affected_canonical_clusters:
+  - mkc_006
+  seed_origin:
+  - W1
+  missing_artifact: authorized asset binding contract
+  next_source_needed: repository-side non-production asset whitelist
+  risk_tags:
+  - DIFY_axis_conflict
+  readiness_required_false: true
+- source_gap_id: SG-005
+  gap_type: missing_source
+  title: blocked-to-gap 再进入最小字段模板缺失
+  affected_canonical_clusters:
+  - mkc_004
+  seed_origin:
+  - W1
+  missing_artifact: reentry prerequisite template
+  next_source_needed: reentry contract
+  risk_tags:
+  - decision_required_likelihood_high
+  readiness_required_false: true
+- source_gap_id: SG-006
+  gap_type: missing_source
+  title: 企业叙事公开来源类别与 proof-slot 托底样本不足
+  affected_canonical_clusters:
+  - mkc_007
+  - mkc_008
+  - mkc_009
+  seed_origin:
+  - W2
+  missing_artifact: public-safe narrative source class examples
+  next_source_needed: enterprise narrative intake source taxonomy
+  risk_tags:
+  - missing_evidence
+  - unsupported_hard_claim
+  readiness_required_false: true
+- source_gap_id: SG-007
+  gap_type: missing_source
+  title: 跨形态最小 narrative asset unit 字段不足
+  affected_canonical_clusters:
+  - mkc_012
+  seed_origin:
+  - W2
+  missing_artifact: cross-format asset unit schema
+  next_source_needed: later intake asset unit contract
+  risk_tags:
+  - DIFY_axis_conflict
+  readiness_required_false: true
+- source_gap_id: SG-008
+  gap_type: missing_source
+  title: role naming / authorization trigger 词表缺失
+  affected_canonical_clusters:
+  - mkc_013
+  - mkc_019
+  - mkc_037
+  seed_origin:
+  - W3
+  - W5
+  missing_artifact: shared role and authorization vocabulary
+  next_source_needed: generic role lexicon and escalation trigger list
+  risk_tags:
+  - owner_unclear
+  - real_person_risk
+  readiness_required_false: true
+- source_gap_id: SG-009
+  gap_type: missing_source
+  title: 通用服装品类/属性/材料/版型术语来源样本不足
+  affected_canonical_clusters:
+  - mkc_020
+  - mkc_022
+  - mkc_023
+  - mkc_024
+  seed_origin:
+  - W4
+  missing_artifact: apparel terminology anchor set
+  next_source_needed: general apparel reference set
+  risk_tags:
+  - missing_evidence
+  readiness_required_false: true
+- source_gap_id: SG-010
+  gap_type: missing_source
+  title: 观察词—关系词—结果词转换准则与高风险词表不足
+  affected_canonical_clusters:
+  - mkc_021
+  - mkc_026
+  - mkc_027
+  - mkc_044
+  seed_origin:
+  - W4
+  - W6
+  missing_artifact: claim risk lexicon
+  next_source_needed: claim phrase ladder and rewrite rules
+  risk_tags:
+  - unsupported_hard_claim
+  - missing_evidence
+  readiness_required_false: true
+- source_gap_id: SG-011
+  gap_type: missing_source
+  title: 品质观察项到 proof-type 的映射样本不足
+  affected_canonical_clusters:
+  - mkc_025
+  - mkc_028
+  - mkc_029
+  seed_origin:
+  - W4
+  missing_artifact: quality observation to proof-type map
+  next_source_needed: quality evidence mapping examples
+  risk_tags:
+  - quality_claim_risk
+  - missing_evidence
+  readiness_required_false: true
+- source_gap_id: SG-012
+  gap_type: missing_source
+  title: 通用陈列区位、Look 拆解、镜头锚点共识来源不足
+  affected_canonical_clusters:
+  - mkc_030
+  - mkc_031
+  - mkc_032
+  seed_origin:
+  - W5
+  missing_artifact: display observation lexicon
+  next_source_needed: general display/look observation references
+  risk_tags:
+  - A2_full_display_system_overreach
+  readiness_required_false: true
+- source_gap_id: SG-013
+  gap_type: missing_source
+  title: 门店日常动作切片与动作转内容单元来源不足
+  affected_canonical_clusters:
+  - mkc_033
+  - mkc_034
+  - mkc_036
+  seed_origin:
+  - W5
+  missing_artifact: store action slice and translation source set
+  next_source_needed: general retail action/content method sources
+  risk_tags:
+  - store_risk
+  - missing_evidence
+  readiness_required_false: true
+- source_gap_id: SG-014
+  gap_type: missing_source
+  title: 通用零售授权复核链条来源不一致
+  affected_canonical_clusters:
+  - mkc_037
+  - mkc_038
+  seed_origin:
+  - W5
+  missing_artifact: retail authorization/review generic references
+  next_source_needed: public-safe retail authorization method sources
+  risk_tags:
+  - owner_unclear
+  - real_store_risk
+  readiness_required_false: true
+- source_gap_id: SG-015
+  gap_type: missing_source
+  title: 产品生命周期抽象阶段与非实例经营状态的安全桥接来源不足
+  affected_canonical_clusters:
+  - mkc_041
+  seed_origin:
+  - W6
+  missing_artifact: abstract lifecycle stage bridge
+  next_source_needed: lifecycle method references without instance operations
+  risk_tags:
+  - missing_evidence
+  - operational_fact_risk
+  readiness_required_false: true
+- source_gap_id: SG-016
+  gap_type: missing_source
+  title: 组货角色/渠道边界与产品-display 关系的通用化来源不足
+  affected_canonical_clusters:
+  - mkc_042
+  - mkc_045
+  - mkc_046
+  seed_origin:
+  - W6
+  missing_artifact: generalized assortment-display relation references
+  next_source_needed: non-instance product role relation sources
+  risk_tags:
+  - A2_full_display_system_overreach
+  - missing_evidence
+  readiness_required_false: true
+readiness_required_false: true

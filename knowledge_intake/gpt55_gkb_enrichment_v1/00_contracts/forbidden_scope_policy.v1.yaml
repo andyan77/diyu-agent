@@ -1,0 +1,34 @@
+policy_id: forbidden_scope_policy.v1
+status: scaffold_only
+forbidden_paths:
+  - KE/**
+  - serving_projection/**
+  - rag/**
+  - dify/**
+  - candidatepack_etl/candidatepack_instances/**
+  - candidatepack_instances/**
+  - runtime/**
+forbidden_files:
+  - .env
+  - .env.*
+  - "*.pem"
+  - "*.key"
+  - "*secret*"
+  - "*credential*"
+forbidden_actions:
+  - package_install
+  - external_network_call
+  - LLM_generation_call
+  - embedding_call
+  - database_migration
+  - production_deploy
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false

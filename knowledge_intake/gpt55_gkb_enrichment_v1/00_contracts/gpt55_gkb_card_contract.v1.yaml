@@ -1,0 +1,63 @@
+contract_id: gpt55_gkb_card_contract.v1
+object_name: KnowledgeCandidateCard
+status: scaffold_only
+required_fields:
+  - candidate_id
+  - batch_id
+  - source_origin
+  - source_pack_refs
+  - source_trace
+  - target_owner
+  - target_domain_module
+  - target_module
+  - object_type
+  - one_sentence_definition
+  - operational_definition
+  - not_this
+  - applicable_when
+  - not_applicable_when
+  - input_context_required
+  - output_effect
+  - relations
+  - risk_boundary
+  - evidence_requirement
+  - claim_policy
+  - capability_group_refs
+  - capability_consumption_hint
+  - serving_projection_hint
+  - semantic_fingerprint
+  - duplicate_control
+  - readiness
+allowed_source_origin:
+  - source_grounded_candidate
+  - gpt_generated_candidate
+  - human_declared_candidate
+allowed_object_type:
+  - concept_candidate
+  - rule_candidate
+  - boundary_candidate
+  - relation_candidate
+  - capability_routing_candidate
+source_pack_policy:
+  source_pack_refs_empty_allowed: true
+  when_empty:
+    candidatepack_eligibility: false
+    route: source_gap
+candidatepack_policy:
+  eligibility_requires_source_pack_refs: true
+  eligibility_requires_excerpt_digest: true
+  gpt_generated_candidate_is_not_source_anchor: true
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false
+json_schema_scaffold:
+  type: object
+  additionalProperties: false
+  required_ref: required_fields

@@ -1,0 +1,66 @@
+candidates:
+  - candidate_id: GKB-POS-001
+    batch_id: batch_000
+    source_origin: source_grounded_candidate
+    source_pack_refs:
+      - SP-POS-001
+    source_trace:
+      source_excerpt_refs:
+        - SE-POS-001
+      excerpt_digests:
+        - sha256:positivefixture001
+    target_owner: gkb_intake
+    target_domain_module: generic_merchandising
+    target_module: content_planning
+    object_type: concept_candidate
+    one_sentence_definition: A generic planning concept links content intent to operational inputs.
+    operational_definition: Use the concept to decide what information a downstream capability needs.
+    not_this:
+      - product-specific claim
+      - production passage
+    applicable_when:
+      - planning a generic content route
+    not_applicable_when:
+      - asserting concrete brand facts
+    input_context_required:
+      - source excerpt
+      - capability group
+    output_effect:
+      affects:
+        - route_selection
+      likely_output_assets:
+        - candidate_brief
+      checker_need:
+        - source_anchor_coverage
+    relations: []
+    risk_boundary:
+      - generic only
+    evidence_requirement: source_pack_excerpt_digest_required
+    claim_policy: no_hard_claim_without_evidence_route
+    capability_group_refs:
+      - P0-00
+    capability_consumption_hint:
+      affects:
+        - route_selection
+      likely_output_assets:
+        - candidate_brief
+      checker_need:
+        - source_anchor_coverage
+    serving_projection_hint:
+      spec_only: true
+      passage_text_allowed: false
+    semantic_fingerprint: gkb-pos-001-route-selection
+    duplicate_control:
+      status: unique
+    candidatepack_eligibility: false
+    route: source_grounding_pending
+    readiness:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false

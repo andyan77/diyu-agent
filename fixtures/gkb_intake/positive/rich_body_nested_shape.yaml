@@ -1,0 +1,28 @@
+# Positive fixture: nested rich_body_blocks shape, all required blocks non-empty.
+# Proves the auditor reads item["rich_body_blocks"][block] and does NOT mis-judge
+# nested body text as empty. Test-only fixture; not knowledge, not source-grounded.
+rich_body_items:
+  - candidate_id: TEST-RICH-NESTED-001
+    rich_body_blocks:
+      concept_mechanism: "嵌套正文机制非空。"
+      domain_logic:
+        - "嵌套领域逻辑非空。"
+      content_generation_usage:
+        - "嵌套内容生成用途非空。"
+      merchandising_or_retail_usage:
+        - "嵌套陈列零售用途非空。"
+      transformation_rules:
+        - "当输入条件明确时，可转译为输出约束，但不得越过边界。"
+      generic_micro_scenarios:
+        - "通用场景非空，不含品牌。"
+      anti_patterns:
+        - "禁止把通用概念写成品牌事实。"
+      boundary_language:
+        - "允许表达通用边界。"
+      retrieval_phrases:
+        - "嵌套检索短语"
+      capability_consumption_hint:
+        likely_capability_groups:
+          - P0-01
+        affects:
+          - route_plan

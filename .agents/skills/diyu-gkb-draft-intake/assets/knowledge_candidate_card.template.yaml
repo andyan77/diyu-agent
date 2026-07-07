@@ -1,0 +1,46 @@
+candidate_id: GKB-CANDIDATE-TEMPLATE
+batch_id: batch_000
+source_origin: gpt_generated_candidate
+source_pack_refs: []
+source_trace:
+  source_excerpt_refs: []
+  excerpt_digests: []
+target_owner: gkb_intake
+target_domain_module: scaffold
+target_module: scaffold
+object_type: concept_candidate
+one_sentence_definition: ""
+operational_definition: ""
+not_this: []
+applicable_when: []
+not_applicable_when: []
+input_context_required: []
+output_effect:
+  affects: []
+relations: []
+risk_boundary: []
+evidence_requirement: source_pack_required_before_candidatepack
+claim_policy: no_hard_claim_without_evidence_route
+capability_group_refs: []
+capability_consumption_hint:
+  affects: []
+  likely_output_assets: []
+  checker_need: []
+serving_projection_hint:
+  spec_only: true
+  passage_text_allowed: false
+semantic_fingerprint: ""
+duplicate_control:
+  status: unchecked
+candidatepack_eligibility: false
+route: source_gap
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false

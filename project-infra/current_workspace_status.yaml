@@ -1,0 +1,35 @@
+workspace:
+  name: 笛语领域通用数据库
+  path: /home/diyu/笛语领域通用数据库
+  status: adopted_canonical_workspace
+  git_baseline_created: true
+phase:
+  current_phase: codex_knowledge_generation_preparation
+  current_next_step: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  previous_step: GKB-WORKSPACE-ADOPTION-AND-MIGRATION-001
+source_authority:
+  source_repo_reference:
+    path: /home/faye/笛语agent
+    HEAD: d56e62abb7cbe831c8e67656746ee76397dd1042
+    role: read_only_reference
+  temp_workspace_role: migration_source_only
+workspace_adoption:
+  gkb_workspace_adopted: true
+  gkb_workspace_git_baseline_created: true
+  gkb_canonical_inputs_migrated: true
+  ready_for_codex_generation_contract_lock: true
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_ready: false
+  release_ready: false
+route_policy:
+  direct_3600_generation_allowed: false
+  pilot_required: true
+  microbatch_required: true
+  candidatepack_direct_creation_allowed: false
+  KE_RAG_DIFY_direct_creation_allowed: false

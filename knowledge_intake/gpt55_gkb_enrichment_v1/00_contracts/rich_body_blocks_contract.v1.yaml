@@ -1,0 +1,31 @@
+contract_id: rich_body_blocks_contract.v1
+object_name: KnowledgeCandidateRichBodyBlocks
+status: scaffold_only
+required_blocks:
+  - concept_mechanism
+  - domain_logic
+  - content_generation_usage
+  - merchandising_or_retail_usage
+  - transformation_rules
+  - generic_micro_scenarios
+  - anti_patterns
+  - boundary_language
+  - retrieval_phrases
+  - capability_consumption_hint
+forbidden:
+  - concrete_brand
+  - concrete_product
+  - concrete_store
+  - concrete_person
+  - concrete_city
+  - concrete_campaign
+  - customer_feedback
+  - approved_passage_text
+  - rendered_body
+  - passage_text
+  - RAG_context_bundle
+  - DIFY_output
+consistency_policy:
+  body_must_not_overreach_card: true
+  retrieval_phrases_are_phrases_not_passages: true
+  generic_micro_scenarios_must_stay_generic: true

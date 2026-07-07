@@ -1,0 +1,18 @@
+contract_id: cso_signal_candidate_contract.v1
+object_name: CsoSignalCandidate
+status: scaffold_only
+required_fields:
+  - signal_id
+  - source_candidate_id
+  - signal_type
+  - capability_group_refs
+  - source_trace
+  - readiness
+must_not_include:
+  - passage_text
+  - approved_passage_text
+  - production_copy
+readiness:
+  production_ready: false
+  release_ready: false
+  generation_allowed: false

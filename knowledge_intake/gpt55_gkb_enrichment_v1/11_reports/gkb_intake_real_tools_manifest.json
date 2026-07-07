@@ -1,0 +1,176 @@
+{
+  "file_count": 175,
+  "gate_summary": {
+    "gate_suite": "gkb_intake_local_gates",
+    "passed": true,
+    "runs": [
+      {
+        "checker": "check_no_readiness_leak.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_no_readiness_leak.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_no_readiness_leak.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 99,\n  \"findings\": [],\n  \"gate_id\": \"check_no_readiness_leak\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_source_anchor_coverage.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_source_anchor_coverage.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_source_anchor_coverage.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 32,\n  \"findings\": [],\n  \"gate_id\": \"check_source_anchor_coverage\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_declared_semantics_alignment.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_declared_semantics_alignment.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_declared_semantics_alignment.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 29,\n  \"findings\": [],\n  \"gate_id\": \"check_declared_semantics_alignment\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_hard_claim_and_brand_fact_leak.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_hard_claim_and_brand_fact_leak.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_hard_claim_and_brand_fact_leak.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 33,\n  \"findings\": [],\n  \"gate_id\": \"check_hard_claim_and_brand_fact_leak\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_rich_body_structure_consistency.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_rich_body_structure_consistency.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_rich_body_structure_consistency.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 1,\n  \"findings\": [],\n  \"gate_id\": \"check_rich_body_structure_consistency\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_semantic_fingerprint_dedupe.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_semantic_fingerprint_dedupe.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_semantic_fingerprint_dedupe.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 17,\n  \"findings\": [],\n  \"gate_id\": \"check_semantic_fingerprint_dedupe\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_capability_routing_composability.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_capability_routing_composability.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_capability_routing_composability.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 18,\n  \"findings\": [],\n  \"gate_id\": \"check_capability_routing_composability\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_serving_spec_no_passage_text.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_serving_spec_no_passage_text.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_serving_spec_no_passage_text.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 0,\n  \"findings\": [],\n  \"gate_id\": \"check_serving_spec_no_passage_text\",\n  \"passed\": true\n}\n"
+      },
+      {
+        "checker": "check_gold_hooks_as_release_input.py",
+        "command": [
+          "/usr/bin/python3",
+          "/home/diyu/笛语领域通用数据库/ci/checkers/check_gold_hooks_as_release_input.py",
+          "--root",
+          "knowledge_intake/gpt55_gkb_enrichment_v1",
+          "--report-json",
+          "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json",
+          "--selftest"
+        ],
+        "passed": true,
+        "report_path": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gates/check_gold_hooks_as_release_input.json",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "{\n  \"checked_files\": 0,\n  \"findings\": [],\n  \"gate_id\": \"check_gold_hooks_as_release_input\",\n  \"passed\": true\n}\n"
+      }
+    ],
+    "selftest": true,
+    "workspace": "knowledge_intake/gpt55_gkb_enrichment_v1"
+  },
+  "passed": true,
+  "protected_hashes": {
+    "AGENTS.md": "f72a842a34060df0400bc1e9b9f180fc15918b448fd0dea7e602ae8223907349",
+    "SKILL/diyu-gkb-draft-intake.md": "fbe5c7042d879c0da4fff13faa883c96d9e5106ab9ac4cb2f361f2dc5fe255bb",
+    "knowledge_intake/AGENTS.md": "e3ee6bc4b2a1f8551b1fa3cd75547b5c7bfcd16a6451d08d7f3a212138c033fa",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/AGENTS.md": "2e977ad78999152e398ec4816a7f6a0d7d77f5a07128ccf705a79b70d0deccc0",
+    "tools.txt": "03f137c74b25dedd1e117551f4a9b89cbc53e31f02de562ddb7d534c3fc392e6",
+    "落盘总方案.txt": "3645c889c7452b6a91bbe7d8a71a70f1464164f89a622c38810ca786827336d1"
+  },
+  "root": ".",
+  "workspace": "knowledge_intake/gpt55_gkb_enrichment_v1",
+  "workspace_file_count": 123
+}

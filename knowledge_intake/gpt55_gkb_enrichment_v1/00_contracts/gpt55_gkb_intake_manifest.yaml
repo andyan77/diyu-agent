@@ -1,0 +1,41 @@
+manifest_id: gpt55_gkb_enrichment_v1
+status: gpt_generated_draft_generation_complete
+workspace_role: source_grounded_rich_draft_intake
+task_package: GKB-INTAKE-SCAFFOLD-AND-BLOCKING-CHECKER-FOUNDATION-001
+not_a:
+- KE_truth_source
+- ABox_record
+- TBox_record
+- Evidence_record
+- ServingProjection
+- RAG_context_bundle
+- DIFY_workflow
+- CandidatePack_instance
+allowed_outputs:
+- contracts
+- source_pack_ledgers
+- batch_briefs
+- checker_reports
+- scaffold_receipts
+forbidden_outputs:
+- KE_truth_source
+- approved_passage_text
+- rendered_body
+- passage_text
+- RAG_context_bundle
+- DIFY_workflow
+- production_content
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false
+generated_draft_count: 3600
+source_origin: gpt_generated_candidate
+candidatepack_eligible_count: 0
+route_without_source: source_gap_pending

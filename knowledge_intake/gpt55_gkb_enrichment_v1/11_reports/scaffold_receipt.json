@@ -1,0 +1,181 @@
+{
+  "task_id": "GKB-INTAKE-SCAFFOLD-AND-BLOCKING-CHECKER-FOUNDATION-001",
+  "workspace": "/home/diyu/笛语领域通用数据库",
+  "git_repo": false,
+  "baseline_head": null,
+  "manifest_mode": true,
+  "python_alias_available": false,
+  "python3_available": true,
+  "package_install_attempted": false,
+  "external_access_attempted": false,
+  "forbidden_scope_touched": false,
+  "files_confirmed_unchanged": {
+    "AGENTS.md": "f72a842a34060df0400bc1e9b9f180fc15918b448fd0dea7e602ae8223907349",
+    "knowledge_intake/AGENTS.md": "e3ee6bc4b2a1f8551b1fa3cd75547b5c7bfcd16a6451d08d7f3a212138c033fa",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/AGENTS.md": "2e977ad78999152e398ec4816a7f6a0d7d77f5a07128ccf705a79b70d0deccc0",
+    "SKILL/diyu-gkb-draft-intake.md": "fbe5c7042d879c0da4fff13faa883c96d9e5106ab9ac4cb2f361f2dc5fe255bb",
+    "tools.txt": "03f137c74b25dedd1e117551f4a9b89cbc53e31f02de562ddb7d534c3fc392e6",
+    "落盘总方案.txt": "3645c889c7452b6a91bbe7d8a71a70f1464164f89a622c38810ca786827336d1"
+  },
+  "files_created": [
+    ".agents/skills/diyu-gkb-draft-intake/SKILL.md",
+    ".agents/skills/diyu-gkb-draft-intake/references/intake_contract.md",
+    ".agents/skills/diyu-gkb-draft-intake/references/nine_pass_method.md",
+    ".agents/skills/diyu-gkb-draft-intake/references/failure_codes.md",
+    ".agents/skills/diyu-gkb-draft-intake/references/scoring_rubric.md",
+    ".agents/skills/diyu-gkb-draft-intake/references/release_integration.md",
+    ".agents/skills/diyu-gkb-draft-intake/assets/batch_brief.template.yaml",
+    ".agents/skills/diyu-gkb-draft-intake/assets/knowledge_candidate_card.template.yaml",
+    ".agents/skills/diyu-gkb-draft-intake/assets/rich_body_blocks.template.yaml",
+    ".agents/skills/diyu-gkb-draft-intake/assets/gold_hook_candidate.template.yaml",
+    ".agents/skills/diyu-gkb-draft-intake/scripts/README.md",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_intake_manifest.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_card_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/rich_body_blocks_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/relation_edge_candidate_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/cso_signal_candidate_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/l2_l3_execution_asset_candidate_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/serving_passage_spec_candidate_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gold_hook_candidate_contract.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/knowledge_runtime_readiness_assertions.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/forbidden_scope_policy.v1.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_manifest.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_registry.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_excerpt_ledger.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_digest_ledger.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_plan.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_manifest_registry.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_000.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_001.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/07_fingerprints/semantic_fingerprint_registry.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/07_fingerprints/semantic_fingerprint_delta.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/.gitkeep",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_validation_report.md",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/scaffold_receipt.json",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/review_queue.csv",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/failure_ledger.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/decision_packet_ledger.yaml",
+    "knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/human_decision_required.yaml",
+    "ci/checkers/check_no_readiness_leak.py",
+    "ci/checkers/check_source_anchor_coverage.py",
+    "ci/checkers/check_hard_claim_and_brand_fact_leak.py",
+    "ci/checkers/check_rich_body_structure_consistency.py",
+    "ci/checkers/check_capability_routing_composability.py",
+    "ci/checkers/README_gkb_intake.md",
+    "fixtures/gkb_intake/positive/valid_candidate_with_source_anchor.yaml",
+    "fixtures/gkb_intake/positive/valid_rich_body_blocks.yaml",
+    "fixtures/gkb_intake/positive/valid_gold_hook_candidate.yaml",
+    "fixtures/gkb_intake/negative/readiness_true.yaml",
+    "fixtures/gkb_intake/negative/missing_source_anchor.yaml",
+    "fixtures/gkb_intake/negative/hard_claim_leak.yaml",
+    "fixtures/gkb_intake/negative/concrete_brand_fact.yaml",
+    "fixtures/gkb_intake/negative/serving_passage_text_generated.yaml",
+    "fixtures/gkb_intake/negative/missing_capability_consumption_hint.yaml",
+    "fixtures/gkb_intake/negative/duplicate_fingerprint.yaml",
+    "tools/gkb_intake/README.md",
+    "tools/gkb_intake/run_batch.py",
+    "tools/gkb_intake/validate_batch.py",
+    "tools/gkb_intake/build_reports.py"
+  ],
+  "files_modified": [],
+  "checks_run": [
+    {
+      "command": "python3 ci/checkers/check_no_readiness_leak.py --root knowledge_intake/gpt55_gkb_enrichment_v1 --selftest",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 ci/checkers/check_source_anchor_coverage.py --root knowledge_intake/gpt55_gkb_enrichment_v1 --selftest",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 ci/checkers/check_hard_claim_and_brand_fact_leak.py --root knowledge_intake/gpt55_gkb_enrichment_v1 --selftest",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 ci/checkers/check_rich_body_structure_consistency.py --root knowledge_intake/gpt55_gkb_enrichment_v1 --selftest",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 ci/checkers/check_capability_routing_composability.py --root knowledge_intake/gpt55_gkb_enrichment_v1 --selftest",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 tools/gkb_intake/validate_batch.py --workspace knowledge_intake/gpt55_gkb_enrichment_v1 --scaffold-only",
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m py_compile ci/checkers/*.py tools/gkb_intake/*.py",
+      "result": "PASS; pycache removed"
+    },
+    {
+      "command": "full YAML / JSON parse scan",
+      "result": "PASS"
+    },
+    {
+      "command": "forbidden protected path existence scan",
+      "result": "PASS; protected runtime and production paths absent"
+    }
+  ],
+  "selftest_results": [
+    {
+      "checker": "check_no_readiness_leak.py",
+      "positive_fixture": "PASS",
+      "negative_fixture": "FAIL_AS_EXPECTED",
+      "verdict": "PASS"
+    },
+    {
+      "checker": "check_source_anchor_coverage.py",
+      "positive_fixture": "PASS",
+      "negative_fixture": "FAIL_AS_EXPECTED",
+      "verdict": "PASS"
+    },
+    {
+      "checker": "check_hard_claim_and_brand_fact_leak.py",
+      "positive_fixture": "PASS",
+      "negative_fixture": "FAIL_AS_EXPECTED",
+      "verdict": "PASS",
+      "checker_maturity": "scaffold_keyword_based"
+    },
+    {
+      "checker": "check_rich_body_structure_consistency.py",
+      "positive_fixture": "PASS",
+      "negative_fixture": "FAIL_AS_EXPECTED",
+      "verdict": "PASS"
+    },
+    {
+      "checker": "check_capability_routing_composability.py",
+      "positive_fixture": "PASS",
+      "negative_fixture": "FAIL_AS_EXPECTED",
+      "verdict": "PASS"
+    }
+  ],
+  "readiness_flags": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "facts_required_for_next_planning": {
+    "canonical_skill_path_created": true,
+    "canonical_skill_path": ".agents/skills/diyu-gkb-draft-intake",
+    "current_codex_recognizes_agents_skills_path": "unverified",
+    "checker_selftests_pass": true,
+    "fixture_structure_created": true,
+    "batch_000_and_batch_001_briefs_exist": true,
+    "source_pack_ledger_exists": true,
+    "no_git_mode_remains_acceptable": true,
+    "recommended_next_package": "GKB-INTAKE-BATCH-000-001-PILOT-BRIEF-001"
+  }
+}

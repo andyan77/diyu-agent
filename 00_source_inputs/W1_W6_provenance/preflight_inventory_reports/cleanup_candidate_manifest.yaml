@@ -1,0 +1,668 @@
+task_id: GKB-WORKSPACE-INVENTORY-MIGRATION-PREFLIGHT-001
+cleanup_policy: no_delete_in_this_task; quarantine/archive only in a future explicitly
+  authorized migration or cleanup task after digest verification
+cleanup_candidate_files:
+- path: /home/diyu/笛语领域通用数据库/ci/checkers/__pycache__/gkb_intake_common.cpython-310.pyc
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: cleanup_candidate
+  reason: generated Python cache; exclude from canonical migration
+  size_bytes: 6486
+  modified_iso: '2026-07-06T02:43:48.904355-07:00'
+  sha256: 1218cd29760e6afcf26a4588897af8f8c7617925779e41c6cdb8e14fc360a66c
+  migration_recommendation: do_not_migrate; may delete only after human approval
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generation_deleted_manifest.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: cleanup_candidate
+  reason: bulk deletion/deprecation ledger from prior run; not part of W7 canonical
+    inputs
+  size_bytes: 7420
+  modified_iso: '2026-07-06T02:40:59.855258-07:00'
+  sha256: c474cba488e045b5158f45949c5b8e1496986a85ce06879e4d998d6f591a3633
+  migration_recommendation: archive_or_quarantine_before_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generation_deleted_manifest_supplement.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: cleanup_candidate
+  reason: bulk deletion/deprecation ledger from prior run; not part of W7 canonical
+    inputs
+  size_bytes: 5114
+  modified_iso: '2026-07-06T02:54:19.085322-07:00'
+  sha256: b7180038fd55018243b340212bca7078d99761ad18373da2f58d19334cab23c8
+  migration_recommendation: archive_or_quarantine_before_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/bulk_generation_deprecation_ledger.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: cleanup_candidate
+  reason: bulk deletion/deprecation ledger from prior run; not part of W7 canonical
+    inputs
+  size_bytes: 1225
+  modified_iso: '2026-07-06T02:43:28.196758-07:00'
+  sha256: 0d886137b0a101806ad7f62efef9d40b2f7c7ac4f2319ce9e607a3bf14543dbb
+  migration_recommendation: archive_or_quarantine_before_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/tools/gkb_intake/__pycache__/audit_gkb_3600_content_snapshot.cpython-310.pyc
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: cleanup_candidate
+  reason: generated Python cache; exclude from canonical migration
+  size_bytes: 20749
+  modified_iso: '2026-07-06T02:43:17.536418-07:00'
+  sha256: 82fd5db8c6d1978d65506a0883b8aee8f0716ee5f9522dea445de90eecc2c517
+  migration_recommendation: do_not_migrate; may delete only after human approval
+  sensitivity: normal
+stale_or_superseded_files:
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B1_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 521623
+  modified_iso: '2026-07-02T18:58:49.716062-07:00'
+  sha256: ccc8694727f8d3dd0162a51807539a823e8e95f6cc418768f8bdc392e1cb375a
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B2_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 595061
+  modified_iso: '2026-07-02T19:23:15.737417-07:00'
+  sha256: b22f8091695389fd953fbf20183ed88a7f74da8973f0784edc7c56e54734e4e1
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B3_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 489705
+  modified_iso: '2026-07-02T19:45:59.375886-07:00'
+  sha256: 5c16d657a1d456a8a02d77f4d8bbb8a344d234c3969b45db68436895af9b628d
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B4_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 622336
+  modified_iso: '2026-07-02T20:09:46.400490-07:00'
+  sha256: 0bc2d2a5cfbe99306ccf29645bbd2dd6c28ad6eb8d2aa98de7f90da04ba77ab8
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B5_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 772583
+  modified_iso: '2026-07-02T20:36:12.266479-07:00'
+  sha256: 94ccf346e0013d44cff4ecfa3c79efa7cda3e43d6d68c58281428fb7fb8fbb3d
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B6_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 828295
+  modified_iso: '2026-07-02T20:57:38.435959-07:00'
+  sha256: 3ab6e31b9ad5da2397e20a533304eac84d571764143fdc80c51a2041847a425e
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/GPT交付物7份/batch_spec_B7_candidate_research_draft_delivery.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 505838
+  modified_iso: '2026-07-02T21:09:55.867615-07:00'
+  sha256: 9e258cbc29bfe834c19fce9ba373c9d5a14a4359912ef5f40ab7d2213bfd58a8
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/第一阶段知识补全/B1 P0-00 低数据品牌资产总控编排候选研究包.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 69801
+  modified_iso: '2026-07-02T23:47:48.372719-07:00'
+  sha256: bfdea90d1f7b7cbe75bfcc0de1149dc9b94797886eab20f70ff01df1ebb99c64
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/第一阶段知识补全/B2_P0_01_enterprise_narrative_brand_story_candidate_research_package.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 74652
+  modified_iso: '2026-07-02T22:07:29.613584-07:00'
+  sha256: e18c47ae1449a5e50e8de10f33aa2bcf24f688864a76bcf8a9cf4dd49841b6d2
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/第一阶段知识补全/B3_P0_02_role_perspective_org_ecology_candidate_research_package.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 75741
+  modified_iso: '2026-07-02T22:43:47.418079-07:00'
+  sha256: 88053f333138c563d5709172c7664c780b5c165c58bd5275864d342d8fb27de0
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/第一阶段知识补全/B4_P0_03_process_material_fit_explainer_candidate_research_package.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 88067
+  modified_iso: '2026-07-02T23:02:45.751096-07:00'
+  sha256: fbad1455efc569de24929503f54fb382cd98c1e735452ba3d66a576121ed2ba6
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/第一阶段知识补全/B5_P0_04_store_daily_display_contentization_candidate_research_package.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 93383
+  modified_iso: '2026-07-02T23:30:27.534972-07:00'
+  sha256: 05739cc775402eb380ebed676f91174744fe08c452ed474b1af5fdb28e8dca24
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/第一阶段知识补全/B6_P0_05_product_role_narrative_candidate_research_package.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: stale_or_superseded
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 84779
+  modified_iso: '2026-07-02T23:45:28.089926-07:00'
+  sha256: 6c898265529edcbcf67714c805857e38fdd527f126be353ba4af1d55e59c436f
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+scratch_files:
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_000.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1183
+  modified_iso: '2026-07-06T01:41:12.032714-07:00'
+  sha256: 65aa9da256bebebe98f08a15f457fdd018ff8b97bd1cce3be4b24e1e041a319b
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_000.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 604
+  modified_iso: '2026-07-06T00:08:58.632783-07:00'
+  sha256: d6fee8650077e9adbe2b490e1876611eb86241a8280cc1b1bf26daf14eec9e9e
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_001.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.032807-07:00'
+  sha256: 5c75e1bb2c0d10665d840c298e7b45e2c32ceb4174708b552abfd40b5911e187
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_001.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 818
+  modified_iso: '2026-07-06T01:28:15.123978-07:00'
+  sha256: 290019a25e3c99f5a2b72fe84ff9536a406aacfaaa64443102d8eaea085b3319
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_002.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.032850-07:00'
+  sha256: b8a8a09a39a396190774c7a8b88c9a4d7d1b3e59d0bf2aaeb9e01132f53efb01
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_002.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 811
+  modified_iso: '2026-07-06T01:28:15.125067-07:00'
+  sha256: 7f8e3a7a76f445996c2fa85f78c95c2e40d105601e3d60ff3328bcddeb5d0d7b
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_003.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033145-07:00'
+  sha256: 68c23e894ac8009127fe03dfd771816d863e7f98aeb765545f00605d1d466b97
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_003.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 805
+  modified_iso: '2026-07-06T01:28:15.127331-07:00'
+  sha256: d814f4bb635477bf4ebfa554b5f17cc6ad8a5c1d742bf30781765929efcb0faf
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_004.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033234-07:00'
+  sha256: 7b0ed08996701cceeae802532e40add90b7ed498c851ceac5bf9593a22a7c703
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_004.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 796
+  modified_iso: '2026-07-06T01:28:15.129037-07:00'
+  sha256: 95e803fa86af617fabf766564ee048006e9700c0ceff3e46abcaa64336af193c
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_005.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033273-07:00'
+  sha256: 49b3b8629e9e1447487d28a3802637dfd61907de326bf23cac545cbbad738af8
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_005.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 804
+  modified_iso: '2026-07-06T01:28:15.130734-07:00'
+  sha256: 8b85b2f3bc6790dcc47bbf2d921eba599a63344e9cb68a5e565b20249e2567af
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_006.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033303-07:00'
+  sha256: ff6303aa8968f21785e9c6867da27603e33337b810949d3d4d757227f9bc32a1
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_006.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 814
+  modified_iso: '2026-07-06T01:28:15.132460-07:00'
+  sha256: 0ec19989c32f5216f149ebcb6ca3b850120a88a2044809832c378c0f7252bfdc
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_007.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033344-07:00'
+  sha256: 38ce007b7f15309e78518f07af49f49e6180927e09333541d32ac8f2c8816b1d
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_007.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 816
+  modified_iso: '2026-07-06T01:28:15.135680-07:00'
+  sha256: 0bbdea909d3781c6fc9c59fbc6e6fa07e33e54577440400bee7624b1c9175047
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_008.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033376-07:00'
+  sha256: dc3fd645531902df53defb92a792c5422d025886d54bba907d6f2d5d7365def8
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_008.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 806
+  modified_iso: '2026-07-06T01:28:15.137273-07:00'
+  sha256: 55663d0eef15a47cf6d543d52d331999b864116ecea8f2c1637f5a6445a394ec
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_009.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033405-07:00'
+  sha256: c739029ab347f636e9252d0d9adddeb3ac50975dda207cf62d7d44dcf8cd77fc
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_009.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 842
+  modified_iso: '2026-07-06T01:28:15.139081-07:00'
+  sha256: fc39cae6d6bf107eb091ec1bc0f6748f4df8097d00e6ffa46313c97d61708b20
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_010.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033432-07:00'
+  sha256: 37562b1a19f08cd3f1d335f511439c51fe7978010b6849f504300a39f11417ca
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_010.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 806
+  modified_iso: '2026-07-06T01:28:15.141463-07:00'
+  sha256: d712fe42414bc3c8c5748067ec966f38569d0f0be5290ae9821127306f656232
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_011.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033457-07:00'
+  sha256: 73ba2d1e1dfb56a068e248b2e807da89b332dce81a412d6a9e3b0abc784ebdb4
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_011.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 806
+  modified_iso: '2026-07-06T01:28:15.143149-07:00'
+  sha256: fc00a41ccc73bfd37117ff23b9dc0336df028e6a1abdd87b47d4acabe5b86a17
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_012.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033484-07:00'
+  sha256: ea199d7c0a75e9e8f75fb0e494fd5c7382f901cba5c8623fabca6a59c2a38a21
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_012.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 825
+  modified_iso: '2026-07-06T01:28:15.144633-07:00'
+  sha256: b4ae6f02e6f16af1dc39b5141ddd85e1437167cb1bba860f347392f89d04b6cf
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_013.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033510-07:00'
+  sha256: ef0e1cbab77fae443855c94b485f4ff386564a447b3389157ac17a9fe4f9a9fc
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_013.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 811
+  modified_iso: '2026-07-06T01:28:15.146658-07:00'
+  sha256: 8feb266fcda08d6ed5917b3c3cecbb7e21bc7af5dc7d0f3e726a52da59076d78
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_014.lock.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 1139
+  modified_iso: '2026-07-06T01:41:12.033535-07:00'
+  sha256: 056679368d9673ee21209b6737e3c6830d2c01400e712ab66ed7c7d796dcc240
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_014.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 789
+  modified_iso: '2026-07-06T01:28:15.148148-07:00'
+  sha256: f7129ef9d87bf6acd47d61d47a4911a5a8c37fdfebae25faaf65c066d0147dfe
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_manifest_registry.csv
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 2191
+  modified_iso: '2026-07-06T01:28:15.149064-07:00'
+  sha256: 32acc923fe5262626220b121d74c9f12041132159ae73589c46da5052ac3309b
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /home/diyu/笛语领域通用数据库/knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_plan.yaml
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: scratch
+  reason: pre-existing batch brief or lock scaffold; not backed by current W7 contract
+    lock
+  size_bytes: 586
+  modified_iso: '2026-07-06T00:08:58.632783-07:00'
+  sha256: c31dc6dc9e2bc15f526a165f5af6724e00fe4d58c358cb25ef096a87abf25edf
+  migration_recommendation: quarantine_or_regenerate_after_contract_lock
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/diyu_repo_fitted_knowledge_generation/VALIDATION_RESULT.json
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: scratch
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 954
+  modified_iso: '2026-07-05T17:50:53.123587-07:00'
+  sha256: c9ae115c257eb04b0231c86c3d7d1b4637a5a0ea927315bcb7ae87f753a52c4c
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/diyu_repo_fitted_knowledge_generation/VALIDATION_RESULT_FULL_V2.json
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: scratch
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 1529
+  modified_iso: '2026-07-05T18:00:58.951716-07:00'
+  sha256: eabe63d3ab4c52eef05236dbf322984eff73f8faab769f9e268bd8890f26ceac
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/diyu_repo_fitted_knowledge_generation/domain_general_kb_gpt_candidate_generation_repo_fitted.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: scratch
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 18116
+  modified_iso: '2026-07-05T17:50:30.747587-07:00'
+  sha256: a7782efac29f6bb6e980a107f41be1627ec9eb24adf031aeb635e3b53988b4f4
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/diyu_repo_fitted_knowledge_generation/domain_general_kb_gpt_candidate_generation_repo_fitted_full_v2.md
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: scratch
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 34435
+  modified_iso: '2026-07-05T18:00:37.351716-07:00'
+  sha256: a99e0235ffc4bc977c2b02df982dbeb9582b5cc088d5336132c48a576ba18f75
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/diyu_repo_fitted_knowledge_generation/validate_full_v2_repo_fit.py
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: scratch
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 4716
+  modified_iso: '2026-07-05T18:00:37.351716-07:00'
+  sha256: 605de648720279d42b23c75888c8e7df8277f0f8268d6a1f183abf86b72acc7a
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+- path: /tmp/codex-ipc/新建文件夹/diyu_repo_fitted_knowledge_generation/validate_repo_fit.py
+  location: old_temp_workspace
+  artifact_type: prior_generation_or_research_draft
+  classification: scratch
+  reason: older GPT/generated or repo-fit draft; not authorized as truth source and
+    superseded by W7 route
+  size_bytes: 6357
+  modified_iso: '2026-07-05T17:50:03.399587-07:00'
+  sha256: e0248ae64a7127891a487581e821a7abd2ebee3917f36db2b575f11d046874cf
+  migration_recommendation: exclude_from_generation; archive_or_cleanup_candidate_after_human_review
+  sensitivity: normal
+duplicate_files:
+- path: /home/diyu/笛语领域通用数据库/diyu_knowledge_intake_alignment_gate.html
+  location: target_workspace
+  artifact_type: existing_target_file
+  classification: duplicate
+  reason: HTML alignment artifact also appears in W7 package
+  size_bytes: 18774
+  modified_iso: '2026-07-04T01:48:38.497645-07:00'
+  sha256: 44c55f04b80f4e9446aec7acb7b2c9c82a47bbc1bb63203d192d751df9ac6833
+  migration_recommendation: keep one canonical copy or archive duplicate
+  sensitivity: normal
+secret_or_sensitive_candidate_files:
+- path: /home/faye/笛语agent/.env
+  location: source_repo_reference
+  artifact_type: sensitive_or_token_named_file
+  classification: secret_or_sensitive_candidate
+  reason: path/name suggests secret or token-sensitive material; content not read
+  size_bytes: 2529
+  modified_iso: '2026-07-04T05:55:28.357256-07:00'
+  sha256: ''
+  migration_recommendation: exclude_from_migration_and_reports
+  sensitivity: secret_or_sensitive_candidate
+- path: /home/faye/笛语agent/candidatepack_etl/sourceunit_normalization/b01_b09_invalid_token_report.yaml
+  location: source_repo_reference
+  artifact_type: sensitive_or_token_named_file
+  classification: secret_or_sensitive_candidate
+  reason: path/name suggests secret or token-sensitive material; content not read
+  size_bytes: 1405
+  modified_iso: '2026-06-23T01:17:27.652406-07:00'
+  sha256: ''
+  migration_recommendation: exclude_from_migration_and_reports
+  sensitivity: secret_or_sensitive_candidate
+- path: /home/faye/笛语agent/candidatepack_etl/sourceunit_normalization/b10_q3_invalid_token_report.yaml
+  location: source_repo_reference
+  artifact_type: sensitive_or_token_named_file
+  classification: secret_or_sensitive_candidate
+  reason: path/name suggests secret or token-sensitive material; content not read
+  size_bytes: 1736
+  modified_iso: '2026-06-23T13:12:30.658930-07:00'
+  sha256: ''
+  migration_recommendation: exclude_from_migration_and_reports
+  sensitivity: secret_or_sensitive_candidate
+cleanup_candidate_directories:
+- /tmp/codex-ipc/新建文件夹
+- /tmp/codex-ipc/新建文件夹/current_repo_ci_run_20260706_085818
+- /tmp/codex-ipc/新建文件夹/source_repo_ci_run_20260706_085856
+- /home/diyu/笛语领域通用数据库/tools/gkb_intake/__pycache__
+- /home/diyu/笛语领域通用数据库/ci/checkers/__pycache__

@@ -1,0 +1,61 @@
+{
+  "task_id": "GKB-INTAKE-REAL-LOCAL-TOOLS-UPGRADE-001",
+  "workspace": "/home/diyu/笛语领域通用数据库",
+  "git_repo": false,
+  "manifest_mode": true,
+  "generation_executed": false,
+  "package_install_attempted": false,
+  "external_access_attempted": false,
+  "forbidden_scope_touched": false,
+  "tools_upgraded": [
+    "tools/gkb_intake/run_gates.py",
+    "tools/gkb_intake/run_batch.py",
+    "tools/gkb_intake/validate_batch.py",
+    "tools/gkb_intake/build_reports.py"
+  ],
+  "checker_suite": [
+    "ci/checkers/check_no_readiness_leak.py",
+    "ci/checkers/check_source_anchor_coverage.py",
+    "ci/checkers/check_declared_semantics_alignment.py",
+    "ci/checkers/check_hard_claim_and_brand_fact_leak.py",
+    "ci/checkers/check_rich_body_structure_consistency.py",
+    "ci/checkers/check_semantic_fingerprint_dedupe.py",
+    "ci/checkers/check_capability_routing_composability.py",
+    "ci/checkers/check_serving_spec_no_passage_text.py",
+    "ci/checkers/check_gold_hooks_as_release_input.py"
+  ],
+  "shared_checker_library_created": "ci/checkers/gkb_intake_common.py",
+  "checks": {
+    "run_gates_selftest": "PASS",
+    "validate_batch_with_gates": "PASS",
+    "run_batch_gate_only": "PASS",
+    "build_reports": "PASS",
+    "negative_fixture_matrix": "PASS",
+    "py_compile": "PASS",
+    "yaml_json_csv_parse": "PASS",
+    "forbidden_paths_absent": "PASS",
+    "protected_hashes_unchanged": "PASS"
+  },
+  "readiness_flags": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "outputs": {
+    "gate_summary": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_gate_summary.json",
+    "validation_report": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_validation_report.json",
+    "runner_report": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_runner_report.json",
+    "manifest": "knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/gkb_intake_real_tools_manifest.json"
+  },
+  "remaining_limits": [
+    "hard claim and concrete fact checker is local rule-based, not a statistical or LLM classifier",
+    "real candidate content is still absent, so candidate-directory gates currently validate empty candidate dirs plus fixture selftests",
+    "no external services, embeddings, package installs, or production writes were attempted"
+  ]
+}

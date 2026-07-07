@@ -1,0 +1,195 @@
+ledger_id: W7_unresolved_decision_ledger
+ledger_version: v0_1
+status: integration_only
+items:
+- decision_id: UD-001
+  decision_type: owner_unclear
+  priority: high
+  title: 企业 proof slot 与质量/认证 proof-type 的 owner 分界
+  affected_canonical_clusters:
+  - mkc_008
+  - mkc_028
+  source_cluster_ids:
+  - W2-P0-01-RS01-CL02
+  - W2-P0-01-RS02-CL02
+  - P0-03-RS04-CL02
+  - P0-03-RS04-CL03
+  why_unresolved: P0-01 负责 narrative proof-slot framing，P0-03 负责 quality / certification routing；共享 vocabulary 明显，但不宜强行单簇化。
+  required_decision: 确认 proof-slot taxonomy 是共享上位字典还是由 P0-03 维护、P0-01 只引用。
+  proposed_current_handling: keep_split_with_P0-01_secondary_to_P0-03
+  readiness_required_false: true
+- decision_id: UD-002
+  decision_type: owner_unclear
+  priority: medium
+  title: 颜色表达与主题色彩故事的 owner 分界
+  affected_canonical_clusters:
+  - mkc_023
+  - mkc_031
+  source_cluster_ids:
+  - P0-03-RS02-CL02
+  - W5_P0_04_RS01_CL02
+  why_unresolved: P0-03 处理 color expression boundary，P0-04 处理 display theme-color graph；词汇共享但视角不同。
+  required_decision: 确认是否需要共享词表层，而保留 display-story ownership 在 P0-04。
+  proposed_current_handling: keep_split_with_shared_vocabulary_note
+  readiness_required_false: true
+- decision_id: UD-003
+  decision_type: owner_unclear
+  priority: high
+  title: generic role authorization 与 retail permission boundary 的切分
+  affected_canonical_clusters:
+  - mkc_019
+  - mkc_037
+  source_cluster_ids:
+  - P0-02-RS04-C01
+  - P0-02-RS04-C02
+  - W5_P0_04_RS04_CL01
+  - W5_P0_04_RS04_CL02
+  why_unresolved: P0-02 是 generic role surface，P0-04 是 retail role-action / franchise rewrite；存在同类红线但不等价。
+  required_decision: 确认是否建立 shared authorization vocabulary，或保持双维护。
+  proposed_current_handling: keep_split_with_P0-02_owner_on_generic_role
+  readiness_required_false: true
+- decision_id: UD-004
+  decision_type: P0-00_domain_leak
+  priority: high
+  title: P0-04 的 precheck/review hints 与 P0-00 控制路由的边界
+  affected_canonical_clusters:
+  - mkc_004
+  - mkc_038
+  source_cluster_ids:
+  - P0-00-RS02-C02
+  - P0-00-RS04-C02
+  - W5_P0_04_RS03_CL03
+  - W5_P0_04_RS04_CL03
+  why_unresolved: 两侧都处理 exception/review vocabulary，但 P0-04 不能落成控制面总路由。
+  required_decision: 确认 P0-04 是否只允许局部 review note，不允许 route taxonomy 扩展。
+  proposed_current_handling: P0-00_owner_strictest
+  readiness_required_false: true
+- decision_id: UD-005
+  decision_type: batch_alignment_conflict
+  priority: high
+  title: W1 子卡批次压缩为 batch_014 与上传 capability / matrix 参考的冲突
+  affected_canonical_clusters:
+  - mkc_001
+  - mkc_002
+  - mkc_003
+  - mkc_004
+  - mkc_005
+  - mkc_006
+  source_cluster_ids:
+  - P0-00-RS01-C01
+  - P0-00-RS01-C02
+  - P0-00-RS02-C01
+  - P0-00-RS02-C02
+  - P0-00-RS03-C01
+  - P0-00-RS03-C02
+  - P0-00-RS04-C01
+  - P0-00-RS04-C02
+  why_unresolved: W1 source clusters only expose batch_014, while uploaded allocation references indicate broader P0-00 batch presence.
+  required_decision: 确认 W7 是否应以后续 repository authority 回填 P0-00 non-014 batch coverage。
+  proposed_current_handling: preserve_source_cluster_batch_refs_only
+  readiness_required_false: true
+- decision_id: UD-006
+  decision_type: batch_alignment_conflict
+  priority: medium
+  title: P0-03-RS04 secondary batch_012 与上传 allocation reference 的零计数冲突
+  affected_canonical_clusters:
+  - mkc_025
+  - mkc_028
+  - mkc_029
+  source_cluster_ids:
+  - P0-03-RS04-CL01
+  - P0-03-RS04-CL02
+  - P0-03-RS04-CL03
+  - P0-03-RS04-CL04
+  why_unresolved: W4 自述已标记该冲突；W7 不能自行发明 authoritative correction。
+  required_decision: 确认 batch_012 是 support-only 引用还是录入差异。
+  proposed_current_handling: carry_forward_as_decision_required
+  readiness_required_false: true
+- decision_id: UD-007
+  decision_type: term_normalization
+  priority: medium
+  title: CTA 术语是否统一降级为动作提示
+  affected_canonical_clusters:
+  - mkc_040
+  source_cluster_ids:
+  - P0-05-RS01-C02
+  why_unresolved: W6 明确提出 CTA vocabulary 可能需要进一步降级，以降低执行层误读。
+  required_decision: 确认后续 intake 是否统一使用 action-prompt vocabulary。
+  proposed_current_handling: retain_cta_boundary_term_with_risk_note
+  readiness_required_false: true
+- decision_id: UD-008
+  decision_type: taxonomy_granularity
+  priority: medium
+  title: 产品生命周期抽象阶段命名粒度
+  affected_canonical_clusters:
+  - mkc_041
+  source_cluster_ids:
+  - P0-05-RS02-C01
+  why_unresolved: 阶段命名若过细，会滑向真实经营状态；过粗则失去 role-window 价值。
+  required_decision: 确认只保留抽象阶段族还是允许更细的 method labels。
+  proposed_current_handling: keep_abstract_stage_family_only
+  readiness_required_false: true
+- decision_id: UD-009
+  decision_type: A2_full_display_system_overreach
+  priority: high
+  title: 组货/渠道边界与 A2 support-only 的切分
+  affected_canonical_clusters:
+  - mkc_042
+  - mkc_045
+  source_cluster_ids:
+  - P0-05-RS02-C02
+  - P0-05-RS04-C01
+  why_unresolved: W6 明确警惕 A2 full system overreach；W7 不能把 display relation 扩成完整 display ontology。
+  required_decision: 确认 display support context 仅保留 relation grammar 与 adjacency hints。
+  proposed_current_handling: support_only_locked
+  readiness_required_false: true
+- decision_id: UD-010
+  decision_type: CSO_axis_conflict
+  priority: high
+  title: content_x_display 是否会被误写成新 axis
+  affected_canonical_clusters:
+  - mkc_031
+  - mkc_032
+  - mkc_045
+  - mkc_046
+  source_cluster_ids:
+  - W5_P0_04_RS01_CL02
+  - W5_P0_04_RS01_CL03
+  - P0-05-RS04-C01
+  - P0-05-RS04-C02
+  why_unresolved: charter 只允许 content_generation 与 display_styling 两个 scenario family，content_x_display 只能是 coordination view。
+  required_decision: 确认任何 master structure 不新增第三场景轴。
+  proposed_current_handling: coordination_view_only
+  readiness_required_false: true
+- decision_id: UD-011
+  decision_type: DIFY_axis_conflict
+  priority: high
+  title: 跨域关系簇是否引入 workflow / serving / DIFY 结构字段
+  affected_canonical_clusters:
+  - mkc_046
+  - mkc_006
+  source_cluster_ids:
+  - P0-05-RS04-C02
+  - P0-00-RS03-C02
+  - P0-00-RS04-C01
+  why_unresolved: W6 与 charter 同时禁止 workflow/serving 化；W7 只能保留 research relation, 不保留 runtime structure。
+  required_decision: 确认跨域关系图只输出 relation hints，不输出任何 execution graph fields。
+  proposed_current_handling: runtime_fields_excluded
+  readiness_required_false: true
+- decision_id: UD-012
+  decision_type: duplicate_requiring_merge
+  priority: medium
+  title: filmability / anchor vocabulary 是否需要共享上位字典
+  affected_canonical_clusters:
+  - mkc_010
+  - mkc_029
+  - mkc_032
+  source_cluster_ids:
+  - W2-P0-01-RS03-CL01
+  - P0-03-RS04-CL04
+  - W5_P0_04_RS01_CL03
+  why_unresolved: 三者均强调 anchor / filmability，但 narrative、process-quality、display 三种 owner 视角不同。
+  required_decision: 确认是否仅共享 DQ-level anchor vocabulary，不再进行更深合并。
+  proposed_current_handling: keep_split_with_shared_anchor_lexicon_note
+  readiness_required_false: true
+readiness_required_false: true

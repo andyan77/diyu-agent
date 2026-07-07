@@ -1,0 +1,46 @@
+policy_id: creative_domain_expert_synthesis_source_policy.v0_1
+task_id: W7-FOUNDER-DECISION-OVERLAY-AND-TRIAGE-POLICY-001
+human_reviewed_expert_synthesis_allowed: true
+allowed_for:
+- creative_method
+- industry_common_sense
+- display_method
+- content_strategy
+- narrative_structure
+- role_expression_pattern
+not_allowed_for:
+- hard_claim
+- real_brand_fact
+- real_SKU_fact
+- real_store_fact
+- real_person_fact
+- real_customer_feedback
+- testing_claim
+- performance_claim
+- body_effect_claim
+- medical_or_legal_or_financial_claim
+required_human_review:
+  required_before_use_as_generation_source: true
+  review_must_confirm:
+  - generic_method_only
+  - no_real_brand_or_person_or_customer_fact
+  - no_hard_claim
+  - no_runtime_field
+  - no_readiness_transition
+relation_to_candidatepack:
+  can_seed_draft_research: true
+  can_enter_candidatepack_directly: false
+  candidatepack_requires_separate_gate: true
+relation_to_KE:
+  can_seed_future_KE_candidate: true
+  can_write_KE_directly: false
+  KE_requires_candidatepack_and_gate: true
+readiness_all_false:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_ready: false
+  release_ready: false

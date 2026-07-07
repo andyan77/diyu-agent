@@ -1,0 +1,20 @@
+contract_id: l2_l3_execution_asset_candidate_contract.v1
+object_name: L2L3ExecutionAssetPayloadCandidate
+status: scaffold_only
+required_fields:
+  - asset_candidate_id
+  - source_candidate_id
+  - asset_kind
+  - capability_group_refs
+  - input_contract
+  - output_contract
+  - checker_need
+  - readiness
+must_not_include:
+  - complete_script
+  - production_workflow
+  - external_runtime_config
+readiness:
+  production_ready: false
+  release_ready: false
+  generation_allowed: false

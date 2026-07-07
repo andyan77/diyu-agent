@@ -1,0 +1,2185 @@
+---
+
+# GPT 5.5 Rich GKB Draft Intake · 适配版执行方案 v1.0
+
+## 0. 执行总判定
+
+```yaml
+plan_id: GPT55_RICH_GKB_DRAFT_INTAKE_ALIGNMENT_V1
+status: execution_ready_plan_after_codex_pre_review
+scope:
+  knowledge_mode: general_only
+  scenario_family:
+    - content_generation
+    - display_styling
+  p0_capability_scope:
+    - P0-00
+    - P0-01
+    - P0-02
+    - P0-03
+    - P0-04
+    - P0-05
+
+core_verdict:
+  original_plan_alignment: conditional_aligned
+  must_adapt_before_execution: true
+  independent_new_gate_allowed: false
+  candidatepack_direct_creation_allowed: false
+  KE_direct_landing_allowed: false
+  serving_passage_generation_allowed: false
+  RAG_context_bundle_generation_allowed: false
+  DIFY_generation_allowed: false
+  readiness_transition_allowed: false
+```
+
+---
+
+# 1. 当前 accepted facts
+
+```yaml
+accepted_facts_reused:
+  project_architecture:
+    - 所有知识先进入 CandidatePack。
+    - CandidatePack 通过四闸后，才允许讨论 KE / serving / RAG / DIFY。
+    - MD / GPT draft 不直接入 ABox / TBox。
+    - RAG 只读 serving projection。
+    - DIFY 只消费 context_bundle。
+    - 用户反馈不能直写本体。
+    - 无 evidence 不得 production_servable。
+    - not_production_ready 不得进入 generation。
+
+  current_discussion_decisions:
+    - 知识运行准入门不新增第 27 步。
+    - 知识运行准入门应改为 knowledge_runtime_readiness_assertions。
+    - 该断言并入 Step 14 / Step 20 / Step 21。
+    - Gold Case 是标准考题与回归样本。
+    - Release Gate 是发布前总门禁。
+    - Knowledge Runtime Readiness 是知识资产与 context_bundle 的前置断言域。
+
+  attachment_two_requirements:
+    - 默认尊重草案声明语义。
+    - 不把已标注草案当未结构化文本重识别。
+    - 字段 / 词表 / 层级 / 风险 / 写入面必须契约对齐。
+    - hard claim、真人、品牌事实、授权、外部引用必须风险剥离。
+    - 必须检查 source trace / provenance。
+    - 必须检查 canonical write surface。
+    - readiness flags 默认 false。
+    - testable acceptance 必须覆盖 schema parse、count assertion、no forbidden path、no hard claim leak、no readiness leak、deterministic rebuild、zero-diff。
+```
+
+---
+
+# 2. 已 superseded 的旧口径
+
+```yaml
+superseded_facts:
+  - GPT 5.5 生成后即可成为 accepted knowledge。
+  - GPT 5.5 生成后即可进入 CandidatePack。
+  - GPT 生成正文可以作为 source_anchor。
+  - rich GKB candidate 可以直接进入 Serving / RAG。
+  - Golden Tests 可以作为独立于 1-26 步的新评测体系。
+  - 知识生产准入门需要新增独立 gate。
+  - 3,600 条 rich candidates 完成后即可宣称生产可用。
+  - 只有数量达标即可证明模块完成。
+```
+
+---
+
+# 3. 当前真实 blocker
+
+```yaml
+current_real_blocker:
+  blocker_id: GPT55_DRAFT_TO_CANDIDATEPACK_BRIDGE_NOT_LOCKED
+  description: >
+    GPT 5.5 可生成结构化厚知识草案，但这些草案必须先被 Source Pack、语义对齐门、
+    风险剥离、source trace、dedupe、capability routing composability 和 CandidatePack eligibility
+    证明，才能进入后续 CandidatePack Brief。
+  why_it_matters:
+    - 防止 GPT 生成物冒充 evidence。
+    - 防止草案字段与仓库契约漂移。
+    - 防止无 source_anchor 的知识进入 RAG / DIFY。
+    - 防止重复造 Gold / Release 评测体系。
+```
+
+---
+
+# 4. 总体架构关系
+
+```text
+Source Pack
+  ↓
+GPT 5.5 Rich Draft Generation
+  ↓
+Declared Semantics Parse
+  ↓
+Semantic Alignment Gate
+  ↓
+Risk Strip / SourceGap / DecisionPacket
+  ↓
+Dedupe / Semantic Fingerprint / Supersession
+  ↓
+Capability Routing Composability Assertions
+  ↓
+CandidatePack Eligibility Report
+  ↓
+CandidatePack Brief
+  ↓
+Four-Gate
+  ↓
+KE / Serving / RAG / DIFY 后续阶段
+
+Gold / Release 侧：
+  knowledge_runtime_readiness_assertions
+    → Step 14 KE/RAG Delivery Certificate
+    → Step 20 Gold Hooks Rebaseline
+    → Step 21 Release Gate + Manual Review
+```
+
+---
+
+# 5. 总执行原则
+
+```yaml
+execution_principles:
+  P1_source_grounded:
+    rule: GPT 5.5 生成内容不是 source anchor。
+    consequence: 无 Source Pack 的产物只能是 gpt_generated_draft。
+
+  P2_declared_semantics_first:
+    rule: 读取草案声明语义，不重新乱分类。
+    consequence: 只有契约冲突、风险证据或字段不可承接时才进入 review / decision。
+
+  P3_no_direct_landing:
+    rule: 本计划不直接写 KE / Serving / RAG / DIFY。
+    consequence: 所有产物停在 draft / candidate_input / assertion / outbox 层。
+
+  P4_no_parallel_gold:
+    rule: 不新建独立 Golden Test 体系。
+    consequence: 只生成 gold_hook_candidates，供现有 Step 20 消费。
+
+  P5_readiness_all_false:
+    rule: 所有 readiness / generation / production flags 必须 false。
+    consequence: 任一 true 直接 blocking。
+
+  P6_capability_composable_or_reject:
+    rule: 每条知识必须说明如何被 P0 能力路由消费。
+    consequence: 无 capability routing consumability 的知识判为 index_shell 或 source_gap。
+
+  P7_body_structure_consistency:
+    rule: rich_body_blocks 不得超出结构卡声明的事实、规则和边界。
+    consequence: 正文越界必须回 CandidatePack / SourceGap / DecisionPacket。
+```
+
+---
+
+# 6. 目录结构
+
+落盘根目录：
+
+```text
+knowledge_intake/gpt55_gkb_enrichment_v1/
+```
+
+完整目录：
+
+```text
+knowledge_intake/gpt55_gkb_enrichment_v1/
+  00_contracts/
+    gpt55_gkb_intake_manifest.yaml
+    gpt55_gkb_card_contract.v1.yaml
+    rich_body_blocks_contract.v1.yaml
+    relation_edge_candidate_contract.v1.yaml
+    cso_signal_candidate_contract.v1.yaml
+    l2_l3_execution_asset_candidate_contract.v1.yaml
+    serving_passage_spec_candidate_contract.v1.yaml
+    gold_hook_candidate_contract.v1.yaml
+    knowledge_runtime_readiness_assertions.v1.yaml
+    forbidden_scope_policy.v1.yaml
+
+  01_source_packs/
+    source_pack_manifest.yaml
+    source_pack_registry.csv
+    source_excerpt_ledger.csv
+    source_digest_ledger.csv
+    source_gap_ledger.yaml
+
+  02_batch_briefs/
+    batch_plan.yaml
+    batch_manifest_registry.csv
+    batch_000_field_contract_alignment.yaml
+    batch_001_claim_evidence_readiness.yaml
+    batch_002_apparel_product_category_schema.yaml
+    batch_003_material_color_fit_silhouette_craft.yaml
+    batch_004_body_effect_claim_boundary.yaml
+    batch_005_product_lifecycle_assortment_role.yaml
+    batch_006_inventory_launch_wave_channel_strategy.yaml
+    batch_007_topic_form_length_series_narrative_axis.yaml
+    batch_008_tone_emotion_persona_audience_axis.yaml
+    batch_009_seeding_education_lifestyle_brand_narrative.yaml
+    batch_010_ip_store_daily_local_life_training.yaml
+    batch_011_outfit_look_display_theme_color_story.yaml
+    batch_012_display_to_content_training_sales_sop.yaml
+    batch_013_retail_franchise_store_role_authorization.yaml
+    batch_014_cross_domain_relation_rules.yaml
+
+  03_raw_drafts/
+    batch_000_raw.yaml
+    batch_001_raw.yaml
+    batch_002_raw.yaml
+    batch_003_raw.yaml
+    batch_004_raw.yaml
+    batch_005_raw.yaml
+    batch_006_raw.yaml
+    batch_007_raw.yaml
+    batch_008_raw.yaml
+    batch_009_raw.yaml
+    batch_010_raw.yaml
+    batch_011_raw.yaml
+    batch_012_raw.yaml
+    batch_013_raw.yaml
+    batch_014_raw.yaml
+
+  04_aligned_candidates/
+    knowledge_candidate_cards.yaml
+    knowledge_candidate_cards_by_batch/
+    candidate_alignment_status.csv
+    candidatepack_eligibility_matrix.csv
+
+  05_rich_body_blocks/
+    knowledge_candidate_rich_body_blocks.yaml
+    body_structure_consistency_report.json
+    body_structure_violation_ledger.yaml
+
+  06_relations/
+    relation_edge_candidates.csv
+    relation_conflict_ledger.yaml
+    relation_dedupe_report.json
+
+  07_fingerprints/
+    semantic_fingerprint_registry.csv
+    semantic_fingerprint_delta.csv
+    dedupe_report.json
+    supersession_map.yaml
+
+  08_outbox/
+    cso_signal_candidates.yaml
+    l2_l3_execution_asset_payload_candidates.yaml
+    governance_decision_payload_candidates.yaml
+    source_gap_candidates.yaml
+    decision_packet_candidates.yaml
+    excluded_candidates.yaml
+
+  09_serving_specs/
+    serving_passage_spec_candidates.yaml
+    serving_spec_eligibility_report.json
+    passage_text_forbidden_scan.json
+
+  10_gold_hooks/
+    gold_hook_candidates.yaml
+    route_coverage_hook_candidates.yaml
+    release_gate_assertion_candidates.yaml
+    knowledge_runtime_readiness_assertion_report.json
+
+  11_reports/
+    batch_validation_report.json
+    module_coverage_report.md
+    capability_coverage_report.md
+    rejection_report.md
+    source_anchor_coverage_report.md
+    hard_claim_evidence_report.md
+    capability_routing_composability_report.md
+    final_candidatepack_brief_readiness_report.md
+
+  12_ledger/
+    review_queue.csv
+    failure_ledger.yaml
+    source_gap_ledger.yaml
+    decision_packet_ledger.yaml
+    human_decision_required.yaml
+```
+
+---
+
+# 7. 总产物边界
+
+## 7.1 本计划允许产出
+
+```yaml
+allowed_outputs:
+  - gpt_generated_structured_draft
+  - source_grounded_candidate_input
+  - rich_body_blocks
+  - semantic_fingerprint
+  - relation_edge_candidate
+  - cso_signal_candidate
+  - l2_l3_execution_asset_payload_candidate
+  - serving_passage_spec_candidate
+  - gold_hook_candidate
+  - source_gap_candidate
+  - decision_packet_candidate
+  - knowledge_runtime_readiness_assertion
+  - candidatepack_eligibility_report
+  - candidatepack_brief_readiness_report
+```
+
+## 7.2 本计划禁止产出
+
+```yaml
+forbidden_outputs:
+  - KE_truth_source
+  - ABox_record
+  - TBox_record
+  - Evidence_record
+  - L2_landed_asset
+  - L3_landed_asset
+  - Serving_projection_record
+  - approved_passage_text
+  - RAG_context_bundle
+  - DIFY_workflow
+  - production_servable_true
+  - generation_eligible_true
+  - production_ready_true
+  - release_ready_true
+```
+
+---
+
+# 8. 状态机
+
+```yaml
+draft_status_lifecycle:
+  - gpt_generated_draft
+  - source_grounding_pending
+  - semantic_alignment_pending
+  - risk_strip_pending
+  - aligned_candidate_input
+  - candidatepack_eligible
+  - candidatepack_ineligible_source_gap
+  - candidatepack_ineligible_decision_required
+  - candidatepack_ineligible_excluded
+  - candidatepack_brief_ready
+
+forbidden_state_transition:
+  - gpt_generated_draft -> KE_landed
+  - gpt_generated_draft -> serving_projection
+  - gpt_generated_draft -> RAG_context_bundle
+  - gpt_generated_draft -> DIFY_generation
+  - aligned_candidate_input -> production_servable
+  - candidatepack_eligible -> generation_eligible
+```
+
+---
+
+# 9. 数据对象清单
+
+## 9.1 SourcePack
+
+```yaml
+SourcePack:
+  required_fields:
+    - source_pack_id
+    - source_pack_type
+    - source_title
+    - source_owner
+    - source_license_or_usage_status
+    - source_scope
+    - source_file_ref
+    - source_digest
+    - excerpt_count
+    - allowed_usage
+    - forbidden_usage
+    - privacy_or_consent_status
+    - ingestion_status
+
+  allowed_source_pack_type:
+    - apparel_industry_material
+    - internal_methodology
+    - merchandising_manual
+    - training_material
+    - retail_store_sop
+    - content_operation_notes
+    - compliance_reference
+    - founder_declared_methodology
+
+  readiness:
+    source_verified: false
+    candidatepack_ready: false
+```
+
+## 9.2 SourceExcerpt
+
+```yaml
+SourceExcerpt:
+  required_fields:
+    - source_excerpt_id
+    - source_pack_id
+    - section_ref
+    - excerpt_text
+    - excerpt_digest
+    - declared_topic
+    - declared_layer_hint
+    - claim_type_hint
+    - usable_for_general_kb
+    - usable_for_brand_kb
+    - hard_claim_present
+    - personal_data_present
+    - requires_human_review
+```
+
+## 9.3 KnowledgeCandidateCard
+
+```yaml
+KnowledgeCandidateCard:
+  required_fields:
+    - candidate_id
+    - batch_id
+    - source_origin
+    - source_pack_refs
+    - source_excerpt_refs
+    - source_trace
+    - target_owner
+    - target_domain_module
+    - target_module
+    - object_type
+    - declared_layer
+    - one_sentence_definition
+    - operational_definition
+    - not_this
+    - applicable_when
+    - not_applicable_when
+    - input_context_required
+    - output_effect
+    - relations
+    - risk_boundary
+    - evidence_requirement
+    - claim_policy
+    - capability_group_refs
+    - capability_consumption_hint
+    - serving_projection_hint
+    - semantic_fingerprint
+    - duplicate_control
+    - body_structure_contract_ref
+    - readiness
+    - routing_outcome_preview
+
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    production_servable: false
+    generation_eligible: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+```
+
+## 9.4 RichBodyBlocks
+
+```yaml
+RichBodyBlocks:
+  required_fields:
+    - candidate_id
+    - concept_mechanism
+    - domain_logic
+    - content_generation_usage
+    - merchandising_or_retail_usage
+    - transformation_rules
+    - generic_micro_scenarios
+    - anti_patterns
+    - boundary_language
+    - retrieval_phrases
+    - capability_consumption_hint
+    - body_structure_consistency
+    - body_claim_scope
+    - body_forbidden_overreach_scan
+
+  hard_constraints:
+    - must_not_add_new_claim_not_in_card
+    - must_not_add_brand_fact
+    - must_not_add_personal_fact
+    - must_not_add_serving_passage_body
+    - must_not_add_generation_script
+```
+
+## 9.5 RelationEdgeCandidate
+
+```yaml
+RelationEdgeCandidate:
+  required_fields:
+    - relation_id
+    - batch_id
+    - source_candidate_id
+    - target_candidate_id
+    - relation_type
+    - relation_condition
+    - relation_scope
+    - confidence_level
+    - evidence_basis
+    - conflict_policy
+    - semantic_fingerprint
+```
+
+## 9.6 CSOSignalCandidate
+
+```yaml
+CSOSignalCandidate:
+  required_fields:
+    - cso_signal_id
+    - source_gkb_candidate_refs
+    - strategy_axis_refs
+    - strategy_role_refs
+    - mapping_condition
+    - CTA_boundary
+    - claim_boundary
+    - brand_coupling_axis
+    - product_coupling_level
+    - merchandising_coupling_axis
+    - preferred_asset_kind_refs
+    - degradation_hint
+    - risk_boundary
+    - decision_status
+
+  forbidden:
+    - approved_passage_text
+    - cso_strategy_passage_body
+    - production_difficulty_as_cso_axis
+    - DIFY_fifth_axis
+```
+
+## 9.7 L2L3ExecutionAssetPayloadCandidate
+
+```yaml
+L2L3ExecutionAssetPayloadCandidate:
+  required_fields:
+    - asset_payload_candidate_id
+    - asset_kind
+    - source_gkb_candidate_refs
+    - source_cso_signal_refs
+    - required_slots
+    - applicable_when
+    - not_applicable_when
+    - forbidden_claims
+    - evidence_requirement
+    - execution_constraints
+    - output_shape
+    - routing_hint
+
+  forbidden:
+    - complete_script_body
+    - real_brand_fact
+    - real_person_fact
+    - production_ready
+```
+
+## 9.8 ServingPassageSpecCandidate
+
+```yaml
+ServingPassageSpecCandidate:
+  required_fields:
+    - serving_spec_id
+    - source_candidate_ids
+    - projection_scope
+    - allowed_uses
+    - do_not_include
+    - projection_rule
+    - source_trace_required
+    - digest_required
+    - passage_text_generated
+    - readiness
+
+  required_values:
+    passage_text_generated: false
+
+  forbidden:
+    - approved_passage_text
+    - rendered_body
+    - context_bundle_item
+```
+
+## 9.9 GoldHookCandidate
+
+```yaml
+GoldHookCandidate:
+  required_fields:
+    - gold_hook_id
+    - hook_type
+    - target_capability_groups
+    - entry_mode_candidates
+    - domain_modules
+    - required_gkb_candidate_refs
+    - required_cso_signal_refs
+    - required_asset_kind_refs
+    - risk_boundary
+    - source_gap_trigger
+    - general_kb_direct_pass
+    - brand_specific_required
+    - expected_routing_outcome
+    - knowledge_runtime_readiness_assertions
+
+  belongs_to:
+    - Step_20_Gold_Hooks_Rebaseline
+    - Step_21_Release_Gate
+```
+
+---
+
+# 10. 字段语义契约
+
+## 10.1 `source_origin`
+
+```yaml
+source_origin:
+  allowed_values:
+    - source_grounded_gpt_draft
+    - gpt_generated_draft_without_source_anchor
+    - human_declared_methodology_draft
+    - source_extracted_candidate
+
+  rules:
+    source_grounded_gpt_draft:
+      candidatepack_eligible_possible: true
+      requires_source_pack_refs: true
+      requires_excerpt_digest: true
+
+    gpt_generated_draft_without_source_anchor:
+      candidatepack_eligible_possible: false
+      route: source_gap
+```
+
+## 10.2 `target_owner`
+
+```yaml
+target_owner:
+  allowed_values:
+    - GeneralKnowledgeBase
+    - CSOOutbox
+    - L2L3ExecutionAssetOutbox
+    - ServingSpecOutbox
+    - GoldHookOutbox
+    - SourceGap
+    - DecisionPacket
+```
+
+## 10.3 `object_type`
+
+```yaml
+object_type:
+  allowed_values:
+    - CONCEPT
+    - AXIS_VALUE
+    - RULE
+    - BOUNDARY
+    - RELATION
+    - CROSS_DOMAIN_RULE
+
+  forbidden_as_object_type:
+    - TEMPLATE
+    - SCRIPT
+    - BRAND_FACT
+    - SKU_FACT
+    - STORE_FACT
+    - PERSON_FACT
+    - CSO_DECISION_BODY
+    - SERVING_PASSAGE
+```
+
+## 10.4 `capability_group_refs`
+
+```yaml
+capability_group_refs:
+  allowed_values:
+    - P0-00
+    - P0-01
+    - P0-02
+    - P0-03
+    - P0-04
+    - P0-05
+
+  rules:
+    - 每条 candidate 至少绑定 1 个 P0 能力组。
+    - P0-00 只作为 route/control-plane consumer，不作为普通业务知识归属地。
+    - capability_group_refs 只表示消费面，不表示 KE 落层。
+```
+
+## 10.5 `semantic_fingerprint`
+
+```yaml
+semantic_fingerprint:
+  required_components:
+    - label_fingerprint
+    - proposition_fingerprint
+    - runtime_effect_fingerprint
+
+  duplicate_policy:
+    same_label_same_proposition: duplicate_review
+    different_label_same_runtime_effect: semantic_nearby_review
+    same_rule_different_module: conflict_review
+    parent_child_overlap: hierarchy_review
+```
+
+## 10.6 `readiness`
+
+```yaml
+readiness:
+  required_fields:
+    - candidatepack_ready
+    - KE_ready
+    - production_servable
+    - generation_eligible
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+    - release_ready
+
+  required_values_in_this_plan:
+    candidatepack_ready: false
+    KE_ready: false
+    production_servable: false
+    generation_eligible: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+```
+
+---
+
+# 11. 知识正文块契约
+
+每张 `KnowledgeCandidateCard` 必须有一条对应 `RichBodyBlocks`。
+
+```yaml
+rich_body_blocks_contract:
+  concept_mechanism:
+    min_cn_chars: 120
+    max_cn_chars: 220
+    must_explain:
+      - why_concept_holds
+      - composed_by_what
+      - related_to_which_domain_objects
+    forbidden:
+      - value_slogan
+      - marketing_praise
+
+  domain_logic:
+    min_items: 4
+    max_items: 7
+    item_type_allowed:
+      - judgment
+      - classification
+      - translation
+      - constraint
+      - relation
+
+  content_generation_usage:
+    min_items: 4
+    max_items: 8
+    must_affect_at_least_one:
+      - topic_axis
+      - persona_axis
+      - form_axis
+      - series_axis
+      - tone_axis
+      - brand_coupling_axis
+      - product_coupling_level
+      - CTA_pressure
+
+  merchandising_or_retail_usage:
+    allowed_modes:
+      - usage_rules
+      - none_with_reason
+    if_usage_rules:
+      min_items: 3
+      max_items: 6
+
+  transformation_rules:
+    min_items: 3
+    max_items: 7
+    required_pattern: "当 <condition> 时，可转译为 <target_object>，但不得 <boundary>"
+
+  generic_micro_scenarios:
+    min_items: 2
+    max_items: 4
+    forbidden:
+      - concrete_brand
+      - concrete_product
+      - concrete_store
+      - concrete_person
+      - concrete_city
+      - concrete_campaign
+
+  anti_patterns:
+    min_items: 3
+    max_items: 6
+    must_explain_wrong_usage: true
+
+  boundary_language:
+    min_items: 3
+    required_types:
+      - allowed_expression
+      - degraded_expression
+      - forbidden_expression
+
+  retrieval_phrases:
+    min_items: 8
+    max_items: 15
+    phrase_only: true
+    passage_body_forbidden: true
+
+  capability_consumption_hint:
+    required_fields:
+      - likely_capability_groups
+      - possible_entry_modes
+      - affects
+      - likely_output_assets
+      - checker_need
+```
+
+---
+
+# 12. 生产准入断言：并入 Gold / Release
+
+这部分不是新 gate。
+
+```yaml
+knowledge_runtime_readiness_assertions:
+  independent_gate: false
+
+  consumed_by:
+    - Step_14_KE_RAG_Delivery_Certificate
+    - Step_20_RAG_DIFY_Gold_Hooks_Rebaseline
+    - Step_21_Release_Gate_And_Manual_Review
+
+  assertion_groups:
+    semantic_readiness:
+      - semantic_completeness
+      - robustness
+      - body_structure_consistency
+
+    routing_readiness:
+      - capability_routing_composability
+      - route_plan_consumability
+      - slot_contract_compatibility
+
+    evidence_anchor_readiness:
+      - hard_claim_evidence_coverage
+      - irreplaceable_anchor_requirement
+      - source_trace_completeness
+
+    conflict_readiness:
+      - dedupe_status
+      - semantic_nearby_review_status
+      - supersession_status
+      - conflict_policy_present
+
+    serving_rag_readiness:
+      - serving_spec_valid
+      - passage_text_not_generated
+      - RAG_context_bundle_not_generated
+      - blocked_or_source_gap_routed
+
+    release_readiness:
+      - readiness_flags_all_false
+      - generation_allowed_false
+      - direct_publishable_false
+```
+
+---
+
+# 13. 分阶段执行路线
+
+## Phase 0：契约与工作面锁定
+
+```yaml
+phase_id: PHASE_0_CONTRACT_AND_WORKSPACE_LOCK
+objective: >
+  建立 GPT 5.5 rich GKB draft intake 的最小契约、目录、字段、禁区和检查入口。
+  本阶段不生成知识正文。
+
+allowed_writes:
+  - knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/**
+  - knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_plan.yaml
+  - knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/phase_0_contract_lock_report.md
+
+forbidden_scope:
+  - KE/**
+  - serving_projection/**
+  - rag/**
+  - dify/**
+  - candidatepack_etl/candidatepack_instances/**
+  - production readiness flags
+  - source truth writes
+
+deliverables:
+  - gpt55_gkb_intake_manifest.yaml
+  - gpt55_gkb_card_contract.v1.yaml
+  - rich_body_blocks_contract.v1.yaml
+  - knowledge_runtime_readiness_assertions.v1.yaml
+  - forbidden_scope_policy.v1.yaml
+  - batch_plan.yaml
+
+delta_checks:
+  - YAML parse
+  - no readiness true
+  - no KE/RAG/DIFY write
+  - all contracts reference existing P0 capability ids only
+  - no invented production flag
+```
+
+---
+
+## Phase 1：Source Pack 建账
+
+```yaml
+phase_id: PHASE_1_SOURCE_PACK_LEDGER
+objective: >
+  为 GPT 生成提供可追溯源头。无 source_pack 的 GPT draft 不允许进入 CandidatePack eligibility。
+
+allowed_writes:
+  - knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/**
+  - knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml
+  - knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/source_anchor_coverage_report.md
+
+deliverables:
+  - source_pack_manifest.yaml
+  - source_pack_registry.csv
+  - source_excerpt_ledger.csv
+  - source_digest_ledger.csv
+  - source_gap_ledger.yaml
+
+source_pack_minimum:
+  apparel_industry_material: required
+  merchandising_manual: required
+  retail_store_sop: required
+  content_operation_notes: required
+  internal_methodology: required
+  compliance_reference: required
+
+blocking_conditions:
+  - source_pack_id_missing
+  - excerpt_digest_missing
+  - usage_status_unknown
+  - hard_claim_source_without_evidence_policy
+  - personal_data_without_consent_status
+```
+
+---
+
+## Phase 2：Batch 000 字段 / 词表 / 写入面对齐
+
+```yaml
+phase_id: PHASE_2_BATCH_000_ALIGNMENT
+batch_id: batch_000_field_contract_alignment
+objective: >
+  对齐字段、词表、source_type、object_type、domain_module、capability_group_refs。
+  不生成业务知识正文。
+
+target_outputs:
+  - field_mapping_matrix.csv
+  - enum_alignment_report.json
+  - layer_write_surface_proof.yaml
+  - source_type_role_check.json
+  - batch_000_alignment_report.md
+
+checks:
+  - declared semantics parse
+  - field mapping
+  - vocabulary alignment
+  - source_type boundary
+  - canonical write surface proof
+  - readiness false scan
+
+exit_policy:
+  pass:
+    unlock: batch_001_claim_evidence_readiness
+  fail:
+    route:
+      - decision_packet
+      - source_gap
+      - contract_delta_required
+```
+
+---
+
+## Phase 3：Batch 001 claim / evidence / readiness 安全层
+
+```yaml
+phase_id: PHASE_3_BATCH_001_SAFETY_BASE
+batch_id: batch_001_claim_evidence_readiness
+objective: >
+  生成 claim_type、evidence_requirement、unsupported_claim_route、readiness false、source_gap 路由等安全基础知识草案。
+
+target_raw_candidates:
+  min: 80
+  max: 120
+
+target_relation_edges:
+  min: 300
+  max: 500
+
+must_cover:
+  - hard_claim
+  - soft_method_claim
+  - personal_or_consent_claim
+  - brand_specific_claim
+  - product_performance_claim
+  - fabric_test_claim
+  - body_effect_claim
+  - customer_feedback_claim
+  - external_reference_claim
+
+blocking_rules:
+  - hard_claim_without_evidence_requirement
+  - readiness_true
+  - source_anchor_missing_without_source_gap
+  - claim_policy_missing
+  - evidence_requirement_missing
+```
+
+---
+
+## Phase 4：Batch 002–004 服装专业知识主体
+
+```yaml
+phase_id: PHASE_4_APPAREL_INDUSTRY
+batches:
+  batch_002_apparel_product_category_schema:
+    target_raw_candidates: 260
+    target_aligned_candidates: 200
+    required_modules:
+      - product_category
+      - sku_abstraction
+      - category_relation
+      - product_attribute_logic
+
+  batch_003_material_color_fit_silhouette_craft:
+    target_raw_candidates: 360
+    target_aligned_candidates: 280
+    required_modules:
+      - material
+      - color
+      - fit
+      - silhouette
+      - craft_detail
+      - style_semantics
+
+  batch_004_body_effect_claim_boundary:
+    target_raw_candidates: 320
+    target_aligned_candidates: 240
+    required_modules:
+      - body_effect_boundary
+      - product_claim_type
+      - wearing_scene
+      - audience_fit_boundary
+
+phase_targets:
+  aligned_gkb_candidates: 720
+  relation_edges:
+    min: 2000
+    max: 2800
+  boundary_candidates:
+    min: 120
+    max: 180
+  serving_passage_spec_candidates:
+    min: 80
+    max: 120
+
+mandatory_assertions:
+  - hard_claim_evidence_requirement_present
+  - body_effect_claim_not_generation_ready
+  - apparel_term_boundary_language_present
+  - P0_03_or_P0_05_consumption_hint_present
+```
+
+---
+
+## Phase 5：Batch 005–006 商品 / 货盘管理知识
+
+```yaml
+phase_id: PHASE_5_PRODUCT_ASSORTMENT
+batches:
+  batch_005_product_lifecycle_assortment_role:
+    target_raw_candidates: 300
+    target_aligned_candidates: 240
+    required_modules:
+      - product_lifecycle
+      - assortment_structure
+      - product_role
+      - price_role_boundary
+
+  batch_006_inventory_launch_wave_channel_strategy:
+    target_raw_candidates: 300
+    target_aligned_candidates: 240
+    required_modules:
+      - inventory_pressure
+      - launch_wave
+      - channel_product_strategy
+      - product_goal_to_content_goal
+      - product_goal_to_display_goal
+
+phase_targets:
+  aligned_gkb_candidates: 480
+  relation_edges:
+    min: 1400
+    max: 2000
+  rule_candidates:
+    min: 120
+    max: 180
+  boundary_candidates:
+    min: 60
+    max: 100
+  serving_passage_spec_candidates:
+    min: 60
+    max: 90
+
+mandatory_assertions:
+  - product_role_to_content_route_present
+  - product_role_to_display_route_present
+  - CTA_pressure_boundary_present
+  - inventory_pressure_not_hard_sell_override
+  - price_or_benefit_claim_boundary_present
+```
+
+---
+
+## Phase 6：Batch 007–010 开放式内容经营知识
+
+```yaml
+phase_id: PHASE_6_CREATIVE_CONTENT_OPERATING
+batches:
+  batch_007_topic_form_length_series_narrative_axis:
+    target_raw_candidates: 320
+    target_aligned_candidates: 240
+    required_modules:
+      - topic_axis
+      - form_axis
+      - length_axis
+      - series_axis
+      - narrative_axis
+
+  batch_008_tone_emotion_persona_audience_axis:
+    target_raw_candidates: 320
+    target_aligned_candidates: 240
+    required_modules:
+      - tone_axis
+      - emotion_axis
+      - persona_archetype
+      - audience_axis
+      - persona_boundary
+
+  batch_009_seeding_education_lifestyle_brand_narrative:
+    target_raw_candidates: 320
+    target_aligned_candidates: 240
+    required_modules:
+      - seeding_content
+      - education_content
+      - lifestyle_topic
+      - brand_narrative
+      - soft_product_coupling
+
+  batch_010_ip_store_daily_local_life_training:
+    target_raw_candidates: 320
+    target_aligned_candidates: 240
+    required_modules:
+      - ip_content
+      - store_daily_content
+      - local_life_content
+      - franchise_content
+      - training_content
+
+phase_targets:
+  aligned_gkb_candidates: 960
+  relation_edges:
+    min: 3000
+    max: 4000
+  rule_candidates:
+    min: 180
+    max: 260
+  boundary_candidates:
+    min: 120
+    max: 180
+  serving_passage_spec_candidates:
+    min: 150
+    max: 220
+
+mandatory_assertions:
+  - non_product_content_supported
+  - topic_first_supported
+  - persona_first_supported
+  - series_first_supported
+  - product_coupling_level_present
+  - brand_specific_fact_not_in_general_kb
+  - persona_consent_boundary_present
+```
+
+---
+
+## Phase 7：Batch 011–012 陈列搭配知识
+
+```yaml
+phase_id: PHASE_7_MERCHANDISING_STYLING
+batches:
+  batch_011_outfit_look_display_theme_color_story:
+    target_raw_candidates: 460
+    target_aligned_candidates: 360
+    required_modules:
+      - outfit
+      - look
+      - capsule
+      - display_theme
+      - color_story
+      - rack_story
+      - mannequin_look
+
+  batch_012_display_to_content_training_sales_sop:
+    target_raw_candidates: 460
+    target_aligned_candidates: 360
+    required_modules:
+      - display_to_content
+      - display_to_training
+      - display_to_sales_talk
+      - display_to_franchise_sop
+      - visual_story_boundary
+
+phase_targets:
+  aligned_gkb_candidates: 720
+  relation_edges:
+    min: 2000
+    max: 3000
+  rule_candidates:
+    min: 160
+    max: 240
+  boundary_candidates:
+    min: 80
+    max: 140
+  serving_passage_spec_candidates:
+    min: 100
+    max: 160
+
+mandatory_assertions:
+  - display_object_to_content_route_present
+  - display_object_to_training_route_present
+  - display_object_to_sales_talk_route_present
+  - visual_cliche_boundary_present
+  - P0_04_consumption_hint_present
+```
+
+---
+
+## Phase 8：Batch 013 零售 / 加盟经营知识
+
+```yaml
+phase_id: PHASE_8_RETAIL_FRANCHISE_OPERATING
+batch_id: batch_013_retail_franchise_store_role_authorization
+target_raw_candidates: 620
+target_aligned_candidates: 480
+
+required_modules:
+  - store_role
+  - franchise_role
+  - store_scene
+  - local_life
+  - customer_reception
+  - fitting_room
+  - sales_associate_action
+  - training_scene
+  - authorization_boundary
+
+phase_targets:
+  aligned_gkb_candidates: 480
+  relation_edges:
+    min: 1200
+    max: 1800
+  rule_candidates:
+    min: 100
+    max: 160
+  boundary_candidates:
+    min: 100
+    max: 160
+  serving_passage_spec_candidates:
+    min: 80
+    max: 120
+
+mandatory_assertions:
+  - person_or_role_boundary_present
+  - store_scene_not_brand_fact
+  - customer_feedback_not_fabricated
+  - franchise_identity_boundary_present
+  - local_life_claim_boundary_present
+```
+
+---
+
+## Phase 9：Batch 014 跨域关系知识
+
+```yaml
+phase_id: PHASE_9_CROSS_DOMAIN_RELATIONS
+batch_id: batch_014_cross_domain_relation_rules
+target_raw_candidates: 320
+target_aligned_candidates: 240
+
+required_relation_routes:
+  - product_role_to_content_engine
+  - product_role_to_display_role
+  - display_theme_to_content_topic
+  - store_scene_to_content_form
+  - persona_role_to_topic_boundary
+  - inventory_pressure_to_content_display_cta_boundary
+  - series_content_to_product_display_soft_coupling
+  - authorization_boundary_to_checker_degradation
+
+phase_targets:
+  aligned_gkb_candidates: 240
+  relation_edges:
+    min: 1200
+    max: 2000
+  rule_candidates:
+    min: 100
+    max: 160
+  boundary_candidates:
+    min: 60
+    max: 100
+
+mandatory_assertions:
+  - P0_00_route_control_consumability_present
+  - cross_domain_translation_rule_present
+  - conflict_policy_present
+  - downgrade_policy_present
+```
+
+---
+
+## Phase 10：Outbox 抽取
+
+```yaml
+phase_id: PHASE_10_OUTBOX_EXTRACTION
+objective: >
+  从 aligned GKB candidates 中抽取 CSO signal、L2/L3 execution asset payload、serving passage spec、source_gap、decision_packet。
+  不落 KE，不生成 passage，不生成 context_bundle。
+
+allowed_writes:
+  - knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/**
+  - knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/**
+  - knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/*outbox*.md
+
+targets:
+  cso_signal_candidates:
+    min: 450
+    max: 650
+  l2_l3_execution_asset_payload_candidates:
+    min: 500
+    max: 800
+  serving_passage_spec_candidates:
+    min: 500
+    max: 800
+
+blocking_rules:
+  - cso_signal_contains_passage_body
+  - l2_l3_asset_contains_complete_script
+  - serving_spec_contains_passage_text
+  - cso_13th_axis_created
+  - DIFY_fifth_axis_created
+```
+
+---
+
+## Phase 11：Gold Hook 生成
+
+```yaml
+phase_id: PHASE_11_GOLD_HOOK_GENERATION
+objective: >
+  生成 gold_hook_candidates，不新建独立评测体系。
+  所有 hook 只作为 Step 20 Gold Hooks Rebaseline 的输入候选。
+
+allowed_writes:
+  - knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/**
+  - knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/*gold*.md
+
+targets:
+  gold_hook_candidates:
+    min: 300
+    max: 450
+
+hook_types:
+  - content_openness
+  - non_product_content
+  - series_vlog_minidrama
+  - display_to_content
+  - display_to_training
+  - store_franchise_local_life
+  - product_role_narrative
+  - hard_claim_consent_degradation
+  - capability_routing_composability
+  - body_structure_consistency
+
+mandatory_fields:
+  - entry_mode_candidates
+  - domain_modules
+  - required_gkb_candidate_refs
+  - required_cso_signal_refs
+  - required_asset_kind_refs
+  - risk_boundary
+  - source_gap_trigger
+  - general_kb_direct_pass
+  - brand_specific_required
+  - expected_routing_outcome
+  - knowledge_runtime_readiness_assertions
+
+release_integration:
+  Step_20: consume_as_gold_hook_candidates
+  Step_21: consume_as_release_gate_assertions
+```
+
+---
+
+## Phase 12：系统级离线验收
+
+```yaml
+phase_id: PHASE_12_OFFLINE_SYSTEM_ACCEPTANCE
+objective: >
+  验证 3,600 条 rich draft candidates 不是空壳、不是品牌事实污染、不是无证据 claim、不是 route 不可组合知识。
+
+required_reports:
+  - batch_validation_report.json
+  - module_coverage_report.md
+  - capability_coverage_report.md
+  - source_anchor_coverage_report.md
+  - hard_claim_evidence_report.md
+  - capability_routing_composability_report.md
+  - body_structure_consistency_report.json
+  - final_candidatepack_brief_readiness_report.md
+
+acceptance_thresholds:
+  source_anchor_coverage:
+    candidatepack_eligible_items: "100%"
+    gpt_generated_without_source_anchor: "0% in candidatepack_eligible"
+
+  semantic_completeness:
+    aligned_candidates: ">= 95%"
+    index_shell: "0% accepted"
+
+  rich_body_completeness:
+    required_blocks_present: ">= 95%"
+    body_structure_violation: "0 blocking unresolved"
+
+  capability_routing_composability:
+    P0_bound_candidates: ">= 100%"
+    route_plan_affect_present: ">= 70%"
+    checker_or_asset_binding_effect_present: ">= 60%"
+
+  hard_claim_safety:
+    hard_claim_leak_to_generation: "0"
+    unsupported_claim_without_source_gap: "0"
+
+  brand_fact_isolation:
+    concrete_brand_fact_in_general_kb: "0"
+    concrete_product_or_store_or_person_in_general_kb: "0"
+
+  readiness:
+    readiness_true_count: "0"
+
+  dedupe_conflict:
+    unresolved_duplicate: "0 blocking"
+    unresolved_conflict: "0 blocking"
+```
+
+---
+
+# 14. 单批 9-pass 执行法
+
+每个 batch 必须按 9 pass 执行。
+
+## Pass 1：Batch Brief 固定
+
+```yaml
+pass_id: P1_BATCH_BRIEF_LOCK
+input:
+  - target_domain_module
+  - target_modules
+  - allowed_object_types
+  - required_output_count
+  - source_pack_refs
+  - existing_index_refs
+  - existing_fingerprint_refs
+  - forbidden_scope
+  - P0_capability_coverage_target
+
+output:
+  - batch_manifest.yaml
+
+blocking:
+  - source_pack_refs_missing
+  - forbidden_scope_missing
+  - P0_coverage_target_missing
+  - readiness_policy_missing
+```
+
+## Pass 2：Source Pack 绑定
+
+```yaml
+pass_id: P2_SOURCE_BINDING
+input:
+  - batch_manifest.yaml
+  - source_pack_manifest.yaml
+  - source_excerpt_ledger.csv
+
+output:
+  - batch_source_binding.yaml
+
+blocking:
+  - source_excerpt_digest_missing
+  - source_usage_status_unknown
+  - source_scope_not_general_kb_eligible
+```
+
+## Pass 3：GPT 5.5 初稿生成
+
+```yaml
+pass_id: P3_GPT55_DRAFT_GENERATION
+output:
+  - batch_raw.yaml
+
+required:
+  - one_claim_per_candidate
+  - no_brand_fact
+  - no_template_body
+  - no_serving_passage
+  - readiness_all_false
+  - semantic_fingerprint_present
+  - source_pack_refs_present_if_candidatepack_eligible_claimed
+
+blocking:
+  - candidatepack_ready_true
+  - KE_ready_true
+  - generation_eligible_true
+  - source_type_invented
+  - capability_id_invented
+  - route_profile_invented
+```
+
+## Pass 4：Rich Body Expansion
+
+```yaml
+pass_id: P4_RICH_BODY_EXPANSION
+output:
+  - knowledge_candidate_rich_body_blocks.yaml
+
+rules:
+  - no_new_candidate_id
+  - no_object_type_change
+  - no_domain_module_change
+  - no_serving_passage
+  - no_script_body
+  - no_new_claim_beyond_card
+
+blocking:
+  - rich_body_blocks_missing
+  - body_adds_unstructured_claim
+  - body_mentions_concrete_brand_or_person
+```
+
+## Pass 5：Declared Semantics Parse
+
+```yaml
+pass_id: P5_DECLARED_SEMANTICS_PARSE
+output:
+  - draft_parse_manifest.json
+  - declared_layer_map.csv
+
+checks:
+  - declared_layer_read
+  - declared_field_read
+  - declared_vocabulary_read
+  - declared_boundary_read
+
+blocking:
+  - parser_cannot_read_batch
+  - declared_layer_missing
+  - required_field_missing
+```
+
+## Pass 6：Semantic Alignment Gate
+
+```yaml
+pass_id: P6_SEMANTIC_ALIGNMENT_GATE
+output:
+  - semantic_alignment_report.json
+  - field_mapping_matrix.csv
+  - enum_alignment_report.json
+  - write_surface_proof.yaml
+
+checks:
+  - layer承接
+  - 字段映射
+  - 词表枚举
+  - source_type边界
+  - canonical_write_surface
+  - downstream_consumability
+
+blocking:
+  - write_surface_missing
+  - enum_missing_without_decision
+  - field_unmapped_required
+  - source_type_used_as_landing_layer
+```
+
+## Pass 7：Risk Strip / Dedupe / Routing
+
+```yaml
+pass_id: P7_RISK_DEDUPE_ROUTING
+output:
+  - hard_claim_strip_map.yaml
+  - brand_specific_route_ledger.yaml
+  - dedupe_report.json
+  - supersession_map.yaml
+  - review_queue.csv
+  - source_gap_candidates.yaml
+  - decision_packet_candidates.yaml
+
+checks:
+  - hard_claim剥离
+  - BrandSpecific/source_gap
+  - 唯一ID/去重/supersession
+  - 证据等级匹配
+  - unsafe route
+
+blocking:
+  - hard_claim_leak
+  - brand_fact_in_general_kb
+  - duplicate_without_resolution
+  - conflict_without_decision
+```
+
+## Pass 8：Capability Routing Composability
+
+```yaml
+pass_id: P8_CAPABILITY_ROUTING_COMPOSABILITY
+output:
+  - capability_routing_composability_report.json
+  - route_consumability_matrix.csv
+
+required_assertions:
+  - capability_group_refs_present
+  - capability_consumption_hint_present
+  - possible_entry_modes_present
+  - output_effect_affects_route_or_strategy_or_asset_or_checker
+  - conflict_policy_present_if_cross_domain
+  - downgrade_policy_present_if_risky
+  - context_bundle_future_consumability_present
+
+blocking:
+  - no_capability_group_ref
+  - no_route_effect
+  - no_asset_or_checker_effect_for_operational_knowledge
+  - cross_domain_without_conflict_policy
+```
+
+## Pass 9：CandidatePack Eligibility + Gold Hook Output
+
+```yaml
+pass_id: P9_CANDIDATEPACK_ELIGIBILITY_AND_GOLD_HOOKS
+output:
+  - candidatepack_eligibility_matrix.csv
+  - knowledge_runtime_readiness_assertion_report.json
+  - gold_hook_candidates.yaml
+  - batch_validation_report.json
+
+eligibility_values:
+  - candidatepack_eligible
+  - source_gap
+  - decision_required
+  - governance_only
+  - excluded
+
+blocking:
+  - candidatepack_eligible_without_source_anchor
+  - candidatepack_eligible_without_semantic_alignment_pass
+  - candidatepack_eligible_with_readiness_true
+  - gold_hook_without_assertions
+```
+
+---
+
+# 15. 质量评分
+
+## 15.1 单卡 100 分
+
+```yaml
+scorecard:
+  semantic_completeness: 20
+  source_grounding: 15
+  rich_body_quality: 20
+  capability_routing_composability: 15
+  risk_and_evidence_boundary: 15
+  dedupe_and_conflict_control: 10
+  format_and_readiness_safety: 5
+
+acceptance_policy:
+  score_gte_85: aligned_candidate_input
+  score_70_to_84: needs_rewrite
+  score_lt_70: reject
+```
+
+## 15.2 硬拒绝
+
+```yaml
+hard_reject:
+  - rich_body_blocks_missing
+  - source_anchor_missing_but_candidatepack_eligible
+  - concrete_brand_fact_in_general_kb
+  - concrete_product_or_sku_or_store_or_person
+  - serving_passage_text_generated
+  - RAG_context_bundle_generated
+  - DIFY_output_generated
+  - hard_claim_without_evidence_requirement
+  - readiness_true
+  - semantic_fingerprint_missing
+  - duplicate_unresolved
+  - body_structure_overreach
+```
+
+---
+
+# 16. failure_code
+
+```yaml
+failure_codes:
+  KIG_LAYER_UNSUPPORTED:
+    meaning: 草案声明层级当前系统无法承接。
+    route: decision_packet
+
+  KIG_FIELD_UNMAPPED:
+    meaning: required 字段无法映射到当前 contract。
+    route: contract_delta_or_rewrite
+
+  KIG_ENUM_MISS:
+    meaning: 词表值未命中系统 enum。
+    route: enum_alignment_or_decision_packet
+
+  KIG_PAYLOAD_INCOMPLETE:
+    meaning: payload 缺 required 字段。
+    route: rewrite
+
+  KIG_SOURCE_TYPE_MISUSED:
+    meaning: source_type 被误用为本体落层。
+    route: boundary_correction
+
+  KIG_HARD_CLAIM_LEAK:
+    meaning: hard claim 未剥离或未证据绑定。
+    route: blocking_source_gap
+
+  KIG_BRAND_FACT_LEAK:
+    meaning: GeneralKB 出现品牌/商品/门店/人物事实。
+    route: blocking_brand_specific
+
+  KIG_SOURCE_ANCHOR_MISSING:
+    meaning: 缺 source_pack / excerpt / digest。
+    route: source_gap
+
+  KIG_DUPLICATE_UNRESOLVED:
+    meaning: 语义重复未处理。
+    route: review_queue
+
+  KIG_CONFLICT_UNRESOLVED:
+    meaning: 规则或父子关系冲突未裁决。
+    route: decision_packet
+
+  KIG_BODY_OVERREACH:
+    meaning: rich body 超出结构卡声明。
+    route: rewrite_or_decision_packet
+
+  KIG_ROUTE_NOT_COMPOSABLE:
+    meaning: 知识无法被能力路由组合使用。
+    route: rewrite_or_excluded
+
+  KIG_READINESS_LEAK:
+    meaning: readiness / generation / production flag 被误置 true。
+    route: blocking_reject
+
+  KIG_GOLD_PARALLEL_SYSTEM:
+    meaning: 试图建立独立 Gold/Release 体系。
+    route: replan
+
+  KIG_SERVING_TEXT_GENERATED:
+    meaning: 生成了 passage 正文。
+    route: blocking_reject
+```
+
+---
+
+# 17. checker 链
+
+```yaml
+checkers:
+  check_gpt55_gkb_contract.py:
+    input:
+      - 00_contracts/**
+      - 04_aligned_candidates/**
+      - 05_rich_body_blocks/**
+    blocks:
+      - missing_required_fields
+      - invalid_object_type
+      - readiness_true
+
+  check_source_anchor_coverage.py:
+    input:
+      - 01_source_packs/**
+      - 04_aligned_candidates/**
+    blocks:
+      - candidatepack_eligible_without_source_anchor
+      - missing_excerpt_digest
+
+  check_declared_semantics_alignment.py:
+    input:
+      - 03_raw_drafts/**
+      - 04_aligned_candidates/**
+    blocks:
+      - declared_layer_missing
+      - field_unmapped
+      - enum_miss_without_ledger
+
+  check_hard_claim_and_brand_fact_leak.py:
+    input:
+      - 04_aligned_candidates/**
+      - 05_rich_body_blocks/**
+    blocks:
+      - hard_claim_leak
+      - concrete_brand_fact
+      - personal_data_without_consent_route
+
+  check_rich_body_structure_consistency.py:
+    input:
+      - 04_aligned_candidates/**
+      - 05_rich_body_blocks/**
+    blocks:
+      - body_overreach
+      - missing_body_block
+      - retrieval_phrase_as_passage
+
+  check_semantic_fingerprint_dedupe.py:
+    input:
+      - 07_fingerprints/**
+      - 04_aligned_candidates/**
+    blocks:
+      - duplicate_unresolved
+      - conflict_unresolved
+      - supersession_missing
+
+  check_capability_routing_composability.py:
+    input:
+      - 04_aligned_candidates/**
+      - 08_outbox/**
+    blocks:
+      - missing_capability_group_refs
+      - missing_route_effect
+      - missing_downgrade_policy
+      - missing_conflict_policy_for_cross_domain
+
+  check_serving_spec_no_passage_text.py:
+    input:
+      - 09_serving_specs/**
+    blocks:
+      - approved_passage_text_present
+      - rendered_body_present
+      - passage_text_generated_true
+
+  check_gold_hooks_as_release_input.py:
+    input:
+      - 10_gold_hooks/**
+    blocks:
+      - independent_gold_system_claim
+      - missing_knowledge_runtime_readiness_assertions
+      - missing_step20_or_step21_binding
+
+  check_no_readiness_leak.py:
+    input:
+      - knowledge_intake/gpt55_gkb_enrichment_v1/**
+    blocks:
+      - KE_ready_true
+      - RAG_ready_true
+      - DIFY_ready_true
+      - generation_eligible_true
+      - production_ready_true
+      - release_ready_true
+```
+
+---
+
+# 18. CI lane
+
+```yaml
+ci_lane:
+  lane_id: lane_gpt55_gkb_intake_alignment_v1
+  mode: report_only_until_checker_selftest_passes
+  upgrade_policy:
+    after_selftest_pass:
+      - contract_parse: blocking
+      - readiness_leak: blocking
+      - hard_claim_leak: blocking
+      - brand_fact_leak: blocking
+      - source_anchor_for_candidatepack_eligible: blocking
+      - serving_text_generated: blocking
+      - independent_gold_system_claim: blocking
+
+  commands:
+    - python ci/checkers/check_gpt55_gkb_contract.py
+    - python ci/checkers/check_source_anchor_coverage.py
+    - python ci/checkers/check_declared_semantics_alignment.py
+    - python ci/checkers/check_hard_claim_and_brand_fact_leak.py
+    - python ci/checkers/check_rich_body_structure_consistency.py
+    - python ci/checkers/check_semantic_fingerprint_dedupe.py
+    - python ci/checkers/check_capability_routing_composability.py
+    - python ci/checkers/check_serving_spec_no_passage_text.py
+    - python ci/checkers/check_gold_hooks_as_release_input.py
+    - python ci/checkers/check_no_readiness_leak.py
+```
+
+---
+
+# 19. 最终批次数量表
+
+```yaml
+final_batch_plan:
+  batch_000:
+    name: field_contract_alignment
+    generates_knowledge_body: false
+
+  batch_001:
+    name: claim_evidence_readiness_safety_base
+    target_aligned_candidates: 100
+
+  batch_002:
+    name: apparel_product_category_schema
+    target_aligned_candidates: 200
+
+  batch_003:
+    name: material_color_fit_silhouette_craft
+    target_aligned_candidates: 280
+
+  batch_004:
+    name: body_effect_claim_boundary
+    target_aligned_candidates: 240
+
+  batch_005:
+    name: product_lifecycle_assortment_role
+    target_aligned_candidates: 240
+
+  batch_006:
+    name: inventory_launch_wave_channel_strategy
+    target_aligned_candidates: 240
+
+  batch_007:
+    name: topic_form_length_series_narrative_axis
+    target_aligned_candidates: 240
+
+  batch_008:
+    name: tone_emotion_persona_audience_axis
+    target_aligned_candidates: 240
+
+  batch_009:
+    name: seeding_education_lifestyle_brand_narrative
+    target_aligned_candidates: 240
+
+  batch_010:
+    name: ip_store_daily_local_life_training
+    target_aligned_candidates: 240
+
+  batch_011:
+    name: outfit_look_display_theme_color_story
+    target_aligned_candidates: 360
+
+  batch_012:
+    name: display_to_content_training_sales_sop
+    target_aligned_candidates: 360
+
+  batch_013:
+    name: retail_franchise_store_role_authorization
+    target_aligned_candidates: 480
+
+  batch_014:
+    name: cross_domain_relation_rules
+    target_aligned_candidates: 240
+
+total_targets:
+  aligned_gkb_candidates: 3600
+  relation_edges:
+    min: 10000
+    max: 14000
+  cso_signal_candidates:
+    min: 450
+    max: 650
+  l2_l3_execution_asset_payload_candidates:
+    min: 500
+    max: 800
+  serving_passage_spec_candidates:
+    min: 500
+    max: 800
+  gold_hook_candidates:
+    min: 300
+    max: 450
+```
+
+---
+
+# 20. 和 1-26 步的挂接
+
+```yaml
+route_integration:
+  not_new_step_27: true
+
+  attaches_to:
+    step_14:
+      name: KE_RAG_PRODUCTION_DELIVERY_CERTIFICATE
+      contribution:
+        - source_anchor_coverage_report
+        - serving_spec_eligibility_report
+        - knowledge_runtime_readiness_assertion_report
+
+    step_20:
+      name: RAG_DIFY_GOLD_HOOKS_REBASELINE_AS_RELEASE_INPUT
+      contribution:
+        - gold_hook_candidates
+        - route_coverage_hook_candidates
+        - release_gate_assertion_candidates
+
+    step_21:
+      name: RELEASE_GATE_AND_MANUAL_REVIEW
+      contribution:
+        - knowledge_runtime_readiness_assertions
+        - hard_claim_evidence_report
+        - capability_routing_composability_report
+        - body_structure_consistency_report
+
+  forbidden:
+    - new_parallel_release_gate
+    - new_parallel_gold_case_system
+    - bypass_step20
+    - bypass_step21
+```
+
+---
+
+# 21. 最终交付清单
+
+```text
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_intake_manifest.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gpt55_gkb_card_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/rich_body_blocks_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/relation_edge_candidate_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/cso_signal_candidate_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/l2_l3_execution_asset_candidate_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/serving_passage_spec_candidate_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/gold_hook_candidate_contract.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/knowledge_runtime_readiness_assertions.v1.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/00_contracts/forbidden_scope_policy.v1.yaml
+
+knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_manifest.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_pack_registry.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_excerpt_ledger.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/01_source_packs/source_digest_ledger.csv
+
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_plan.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_manifest_registry.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_000_field_contract_alignment.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_001_claim_evidence_readiness.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_002_apparel_product_category_schema.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_003_material_color_fit_silhouette_craft.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_004_body_effect_claim_boundary.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_005_product_lifecycle_assortment_role.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_006_inventory_launch_wave_channel_strategy.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_007_topic_form_length_series_narrative_axis.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_008_tone_emotion_persona_audience_axis.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_009_seeding_education_lifestyle_brand_narrative.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_010_ip_store_daily_local_life_training.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_011_outfit_look_display_theme_color_story.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_012_display_to_content_training_sales_sop.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_013_retail_franchise_store_role_authorization.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/02_batch_briefs/batch_014_cross_domain_relation_rules.yaml
+
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_000_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_001_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_002_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_003_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_004_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_005_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_006_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_007_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_008_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_009_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_010_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_011_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_012_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_013_raw.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/03_raw_drafts/batch_014_raw.yaml
+
+knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/knowledge_candidate_cards.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/candidate_alignment_status.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/04_aligned_candidates/candidatepack_eligibility_matrix.csv
+
+knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/knowledge_candidate_rich_body_blocks.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/body_structure_consistency_report.json
+knowledge_intake/gpt55_gkb_enrichment_v1/05_rich_body_blocks/body_structure_violation_ledger.yaml
+
+knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/relation_edge_candidates.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/relation_conflict_ledger.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/06_relations/relation_dedupe_report.json
+
+knowledge_intake/gpt55_gkb_enrichment_v1/07_fingerprints/semantic_fingerprint_registry.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/07_fingerprints/semantic_fingerprint_delta.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/07_fingerprints/dedupe_report.json
+knowledge_intake/gpt55_gkb_enrichment_v1/07_fingerprints/supersession_map.yaml
+
+knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/cso_signal_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/l2_l3_execution_asset_payload_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/governance_decision_payload_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/source_gap_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/decision_packet_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/08_outbox/excluded_candidates.yaml
+
+knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/serving_passage_spec_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/serving_spec_eligibility_report.json
+knowledge_intake/gpt55_gkb_enrichment_v1/09_serving_specs/passage_text_forbidden_scan.json
+
+knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/gold_hook_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/route_coverage_hook_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/release_gate_assertion_candidates.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/10_gold_hooks/knowledge_runtime_readiness_assertion_report.json
+
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/batch_validation_report.json
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/module_coverage_report.md
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/capability_coverage_report.md
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/rejection_report.md
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/source_anchor_coverage_report.md
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/hard_claim_evidence_report.md
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/capability_routing_composability_report.md
+knowledge_intake/gpt55_gkb_enrichment_v1/11_reports/final_candidatepack_brief_readiness_report.md
+
+knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/review_queue.csv
+knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/failure_ledger.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/source_gap_ledger.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/decision_packet_ledger.yaml
+knowledge_intake/gpt55_gkb_enrichment_v1/12_ledger/human_decision_required.yaml
+```
+
+---
+
+# 22. 最终 verdict
+
+```yaml
+planning_verdict:
+  aligned_with_discussion: true_after_adaptation
+  aligned_with_attachment_two: true_after_adaptation
+  duplicate_wheel_risk: removed
+  production_gate_position: embedded_in_existing_gold_release
+  candidatepack_direct_risk: blocked
+  source_anchor_risk: blocked
+  readiness_leak_risk: blocked
+  next_required_action: Codex Prompt Pre-Review before any repository write
+```
+
+一句话定案：
+
+```text
+这套方案可以执行，但必须从“GPT 生成知识库”改成“Source-grounded rich draft intake 生产线”。
+它生产的是可被 CandidatePack 消费的结构化厚草案输入，不是 KE、不是真源、不是真正 production knowledge。
+知识运行准入断言只进入现有 Step 14 / 20 / 21，不另造评测轮子。
+```

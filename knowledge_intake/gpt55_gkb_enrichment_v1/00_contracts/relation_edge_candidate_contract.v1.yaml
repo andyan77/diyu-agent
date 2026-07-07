@@ -1,0 +1,23 @@
+contract_id: relation_edge_candidate_contract.v1
+object_name: RelationEdgeCandidate
+status: scaffold_only
+required_fields:
+  - relation_id
+  - batch_id
+  - source_candidate_id
+  - target_candidate_id
+  - relation_type
+  - relation_evidence_policy
+  - semantic_fingerprint
+  - readiness
+allowed_relation_type:
+  - refines
+  - contrasts_with
+  - depends_on
+  - routes_to
+  - blocks
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  production_servable: false
+  generation_allowed: false

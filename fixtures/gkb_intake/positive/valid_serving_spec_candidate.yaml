@@ -1,0 +1,13 @@
+serving_spec_candidate_id: SERVING-POS-001
+projection_scope: generic_candidate_summary
+allowed_uses:
+  - retrieval_planning
+do_not_include:
+  - generated passage body
+source_trace_required: true
+digest_required: true
+spec_only: true
+readiness:
+  production_servable: false
+  RAG_ready: false
+  generation_allowed: false

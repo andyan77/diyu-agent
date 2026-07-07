@@ -1,0 +1,25 @@
+candidate_id: GKB-NEG-BRAND-001
+rich_body_blocks:
+  concept_mechanism: A draft names Nike as an example brand fact.
+  domain_logic: The scenario talks about a Beijing store and a concrete SKU.
+  content_generation_usage:
+    - Generate copy from a specific customer feedback claim.
+  merchandising_or_retail_usage:
+    - Tie a named store campaign to a generic rule.
+  transformation_rules:
+    - Keep the leaked concrete example.
+  generic_micro_scenarios:
+    - Nike SKU A123 is promoted in Beijing by a named store team.
+  anti_patterns:
+    - Concrete brand facts should not pass.
+  boundary_language:
+    - This negative fixture intentionally violates the generic boundary.
+  retrieval_phrases:
+    - concrete brand leak
+  capability_consumption_hint:
+    affects:
+      - route_selection
+    likely_output_assets:
+      - review_queue
+    checker_need:
+      - hard_claim_and_brand_fact_leak

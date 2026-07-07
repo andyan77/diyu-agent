@@ -1,0 +1,22 @@
+assertion_contract_id: knowledge_runtime_readiness_assertions.v1
+status: scaffold_only
+required_false_flags:
+  - candidatepack_ready
+  - KE_ready
+  - RAG_ready
+  - DIFY_ready
+  - production_servable
+  - generation_eligible
+  - generation_allowed
+  - release_ready
+  - production_ready
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false

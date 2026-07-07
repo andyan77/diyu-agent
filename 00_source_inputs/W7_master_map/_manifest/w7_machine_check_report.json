@@ -1,0 +1,126 @@
+{
+  "task_id": "W7-DEEP-RESEARCH-MASTER-MAP-SPLIT-AND-CHECK-001",
+  "input_file": "/tmp/codex-ipc/deep_research_input_pack_inventory_001/第一轮交付/deep-research-report 整合).md",
+  "output_dir": "/tmp/codex-ipc/deep_research_w7_master_map_001",
+  "files_created": [
+    "shared_knowledge_cluster_registry.yaml",
+    "cluster_ownership_arbitration_matrix.csv",
+    "capability_to_cluster_crosswalk.csv",
+    "batch_to_cluster_crosswalk.csv",
+    "master_knowledge_map.yaml",
+    "generation_assignment_plan.yaml",
+    "unresolved_decision_ledger.yaml",
+    "source_gap_seed_ledger.yaml",
+    "merge_report.md"
+  ],
+  "yaml_parse_result": {
+    "shared_knowledge_cluster_registry.yaml": "PASS",
+    "master_knowledge_map.yaml": "PASS",
+    "generation_assignment_plan.yaml": "PASS",
+    "unresolved_decision_ledger.yaml": "PASS",
+    "source_gap_seed_ledger.yaml": "PASS"
+  },
+  "csv_parse_result": {
+    "cluster_ownership_arbitration_matrix.csv": "PASS",
+    "capability_to_cluster_crosswalk.csv": "PASS",
+    "batch_to_cluster_crosswalk.csv": "PASS"
+  },
+  "count_checks": {
+    "canonical_cluster_count": {
+      "actual": 46,
+      "expected": 46,
+      "pass": true
+    },
+    "source_cluster_total": {
+      "actual": 58,
+      "expected": 58,
+      "pass": true
+    },
+    "generation_assignment_count": {
+      "actual": 14,
+      "expected": 14,
+      "pass": true
+    },
+    "unresolved_decision_count": {
+      "actual": 12,
+      "expected": 12,
+      "pass": true
+    },
+    "source_gap_seed_count": {
+      "actual": 16,
+      "expected": 16,
+      "pass": true
+    },
+    "batch_crosswalk_row_count": {
+      "actual": 14,
+      "expected": 14,
+      "pass": true
+    },
+    "ownership_matrix_row_count": {
+      "actual": 46,
+      "expected": 46,
+      "pass": true
+    },
+    "capability_crosswalk_row_count": {
+      "actual": 46,
+      "expected": 46,
+      "pass": true
+    }
+  },
+  "canonical_cluster_count": 46,
+  "source_cluster_total": 58,
+  "generation_assignment_count": 14,
+  "unresolved_decision_count": 12,
+  "source_gap_seed_count": 16,
+  "batch_crosswalk_row_count": 14,
+  "ownership_matrix_row_count": 46,
+  "capability_crosswalk_row_count": 46,
+  "scope_check": {
+    "allowed_p0": [
+      "P0-00",
+      "P0-01",
+      "P0-02",
+      "P0-03",
+      "P0-04",
+      "P0-05"
+    ],
+    "allowed_batches": [
+      "batch_001",
+      "batch_002",
+      "batch_003",
+      "batch_004",
+      "batch_005",
+      "batch_006",
+      "batch_007",
+      "batch_008",
+      "batch_009",
+      "batch_010",
+      "batch_011",
+      "batch_012",
+      "batch_013",
+      "batch_014"
+    ],
+    "violations": [],
+    "pass": true
+  },
+  "readiness_true_count": 0,
+  "readiness_true_hits": [],
+  "forbidden_scan_result": {
+    "pass": true,
+    "exact_forbidden_hits": []
+  },
+  "source_repo": {
+    "path": "/home/faye/笛语agent",
+    "branch": "master",
+    "head_before": "897c0c3959e6e0f70472d13b6696e9b840e042b4",
+    "head_after": "897c0c3959e6e0f70472d13b6696e9b840e042b4"
+  },
+  "source_repo_status_before_after": {
+    "before": "",
+    "after": ""
+  },
+  "forbidden_scope_touched": false,
+  "errors": [],
+  "warnings": [],
+  "self_verdict": "PASS"
+}
