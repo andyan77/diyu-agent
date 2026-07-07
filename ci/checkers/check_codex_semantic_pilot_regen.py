@@ -13,6 +13,7 @@ from typing import Any
 
 import yaml
 
+V4_5_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001"
 TASK_ID = "CODEX-SEMANTIC-PILOT-REGEN-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001"
 V3_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
@@ -21,6 +22,7 @@ V4_1_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_1-JUDGE-GO-NOGO-001"
 V4_2_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_2-JUDGE-GO-NOGO-001"
 V4_3_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_3-JUDGE-GO-NOGO-001"
 V4_4_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001"
+V4_5_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 20
 EXPECTED_CATEGORY_COUNTS = {
@@ -110,6 +112,11 @@ class SemanticRegenError(Exception):
 
 def fail(message: str) -> None:
     raise SemanticRegenError(message)
+
+def assert_false(value: Any, label: str) -> None:
+    if value is True or str(value).lower() == "true":
+        fail(f"{label} must be false")
+
 
 
 def load_yaml(path: Path) -> Any:
@@ -306,7 +313,7 @@ def validate_status(status: dict[str, Any]) -> None:
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation must not be next step")
     current_next_step = phase.get("current_next_step")
-    if current_next_step not in {NEXT_STEP, V3_NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP}:
+    if current_next_step not in {NEXT_STEP, V3_NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP, V4_5_NEXT_STEP}:
         fail("workspace next step must be semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, semantic pilot v4.1 judge go/no-go, semantic pilot v4.2 judge go/no-go, or semantic pilot v4.3 judge go/no-go or semantic pilot v4.4 judge go/no-go")
     regen = status.get("semantic_pilot_regen", {})
     if regen.get("task_id") != TASK_ID or regen.get("status") != "completed":
@@ -401,10 +408,33 @@ def validate_status(status: dict[str, Any]) -> None:
             fail("semantic v4.4 judge route must keep batch_generation_unlocked false")
         if v44.get("ready_for_first_batch_generation") is True:
             fail("semantic v4.4 judge route must keep ready_for_first_batch_generation false")
+    if current_next_step == V4_5_NEXT_STEP:
+        validate_v45_status_block(status)
     readiness = status.get("readiness", {})
     bad = {key: value for key, value in readiness.items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"readiness true flags: {bad}")
+
+
+def validate_v45_status_block(status: dict[str, Any]) -> None:
+    phase = status.get("phase", {})
+    if phase.get("previous_step") != V4_5_TASK_ID:
+        fail("semantic v4.5 judge route requires V4.5 integration task as previous_step")
+    v45 = status.get("semantic_pilot_v4_5", {})
+    if v45.get("task_id") != V4_5_TASK_ID or v45.get("status") != "completed":
+        fail("semantic v4.5 judge route requires completed semantic_pilot_v4_5 block")
+    if v45.get("semantic_pilot_v4_5_count") != 8:
+        fail("semantic v4.5 judge route requires 8 v4.5 semantic revision drafts")
+    if v45.get("one_to_one_revision_of_v4_4") is not True:
+        fail("semantic v4.5 judge route requires one-to-one revision of V4.4")
+    if v45.get("capsule_rich_body_alignment_valid_count") != 8:
+        fail("semantic v4.5 judge route requires 8 capsule/rich-body alignments")
+    if v45.get("accepted_domain_knowledge_count") != 0:
+        fail("semantic v4.5 judge route requires accepted_domain_knowledge_count 0")
+    assert_false(v45.get("batch_generation_unlocked"), "semantic v4.5 judge route batch_generation_unlocked")
+    assert_false(v45.get("ready_for_first_batch_generation"), "semantic v4.5 judge route ready_for_first_batch_generation")
+    if v45.get("ready_for_semantic_pilot_v4_5_judge_review") is not True:
+        fail("semantic v4.5 judge route requires ready_for_semantic_pilot_v4_5_judge_review true")
 
 
 def validate_fixture_model(model: dict[str, Any]) -> list[str]:
@@ -432,7 +462,7 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("first batch generation must remain false")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") not in {NEXT_STEP, V3_NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP}:
+    if data.get("current_next_step") not in {NEXT_STEP, V3_NEXT_STEP, V4_NEXT_STEP, V4_1_NEXT_STEP, V4_2_NEXT_STEP, V4_3_NEXT_STEP, V4_4_NEXT_STEP, V4_5_NEXT_STEP}:
         errors.append("next step must be semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, semantic pilot v4.1 judge go/no-go, semantic pilot v4.2 judge go/no-go, or semantic pilot v4.3 judge go/no-go or semantic pilot v4.4 judge go/no-go")
     for key in [
         "normalized_proposition_duplicate_count",

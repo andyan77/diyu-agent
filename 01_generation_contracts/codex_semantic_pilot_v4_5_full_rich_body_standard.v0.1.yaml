@@ -1,0 +1,56 @@
+codex_semantic_pilot_v4_5_full_rich_body_standard:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001
+  standard_status: base_domain_body_required_now
+  min_body_zh_chars: 420
+  required_sections:
+  - mechanism_chain
+  - observable_material
+  - transfer_logic
+  - boundary_logic
+  - contrast_or_micro_scenario
+  - anti_pattern
+  - downstream_use
+  section_rules:
+    mechanism_chain:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+    observable_material:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+    transfer_logic:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+    boundary_logic:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+    contrast_or_micro_scenario:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+    anti_pattern:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+    downstream_use:
+      required: true
+      nonempty: true
+      may_not_be_capsule_paraphrase_only: true
+  forbidden_body_shapes:
+  - pure_index_card
+  - prose_padding
+  - repeated_capsule_paraphrase
+  - compliance_or_governance_dump
+  - real_brand_or_sku_or_store_or_person_fact
+  - customer_feedback_fact_without_source
+  - direct_publish_ready_script
+  machine_checks:
+    all_required_sections_nonempty: true
+    body_zh_chars_at_least_minimum: true
+    capsule_core_expanded_in_named_sections: true
+    observable_material_expanded_not_only_repeated: true
+    downstream_use_is_operational_not_batch_unlock: true

@@ -1,0 +1,226 @@
+semantic_pilot_v4_5_complete_rich_bodies:
+  items:
+  - draft_id: SEM-V4_5-CONTENT-METHOD-001
+    revision_of: SEM-V4_4-CONTENT-METHOD-001
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 515
+    required_sections:
+      mechanism_chain: 内容方法卡把素材先转成可观察的对象、动作和约束，再决定它能承载哪一种叙事弧线。核心机制是先判断素材能支撑哪一种问题类型，再把故事弧线、证据强度和价值表达绑定。故事弧线适用边界 的 W7 主题包括 不同叙事弧线对应的问题类型、弧线与证据要求的绑定、弧线与价值表达、proof slot 的兼容性，所以正文必须说明为什么同一组材料可产生多个角度，也说明何时必须降级。
+      observable_material: 可观察材料包括衣物边线、袖口折痕、面料垂坠、拿取和放回的手部动作、光线在表面的停顿、搭配前后的相邻关系。这些材料只提供故事入口，不提供品牌事实、顾客反馈或产品效果。
+      transfer_logic: 创意转译从材料开始，而不是从形容词开始：一个细节可以被转成过程弧线、选择弧线或留白观察；每个角度都要说明它依赖的证据强度，并保留未被证明的空白。
+      boundary_logic: 边界逻辑要求情绪和审美只作为表达方向；如果正文出现受众事实、真实反馈或结果保证，就必须退回 source gap 或人工判断。故事弧线不能补足不存在的因果。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-CONTENT-METHOD-002
+    revision_of: SEM-V4_4-CONTENT-METHOD-002
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 504
+    required_sections:
+      mechanism_chain: 内容方法卡把素材先转成可观察的对象、动作和约束，再决定它能承载哪一种叙事弧线。核心机制是先判断素材能支撑哪一种问题类型，再把故事弧线、证据强度和价值表达绑定。反模板叙事锚点 的 W7 主题包括 对象锚点类型、动作锚点与处理逻辑、约束锚点与取舍表达，所以正文必须说明为什么同一组材料可产生多个角度，也说明何时必须降级。
+      observable_material: 可观察材料包括衣物边线、袖口折痕、面料垂坠、拿取和放回的手部动作、光线在表面的停顿、搭配前后的相邻关系。这些材料只提供故事入口，不提供品牌事实、顾客反馈或产品效果。
+      transfer_logic: 创意转译从材料开始，而不是从形容词开始：一个细节可以被转成过程弧线、选择弧线或留白观察；每个角度都要说明它依赖的证据强度，并保留未被证明的空白。
+      boundary_logic: 边界逻辑要求情绪和审美只作为表达方向；如果正文出现受众事实、真实反馈或结果保证，就必须退回 source gap 或人工判断。故事弧线不能补足不存在的因果。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-APPAREL-CLAIM-BOUNDARY-001
+    revision_of: SEM-V4_4-APPAREL-CLAIM-BOUNDARY-001
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 548
+    required_sections:
+      mechanism_chain: 服饰 claim 边界卡把画面观察、条件体验、需补源性能主张和禁用保证拆开，避免把审美表达误写成身体效果。核心机制是把一句穿搭表达先拆成四层：可见的画面关系、带条件的穿着体验、需要外部来源支持的性能主张、必须阻断的保证句。身材效果语言阶梯与场景化观察 对应的正文主题包括 观察词/关系词/结果词分层、能说视觉线条变化与不能保证身体结果的边界、替代表达与回避表达，所以正文不能只说禁用词，而要说明每一层如何被改写和转路由。
+      observable_material: 可观察材料只包括画面里的线条、分界、遮挡、垂坠、开合、层次和动作停顿。它可以支持“腰线位置更清楚”“面料边界更容易被看见”这类观察句；触感、舒适、显瘦、耐穿等不能被写成直接观察。
+      transfer_logic: 创意转译不是把效果说得更夸张，而是把风险句改写成安全表达路径：先写画面条件，再写感受的条件性，最后把性能或身体结果交给补源工单。这样内容仍有审美方向，但不会把经验词冒充事实。
+      boundary_logic: 边界逻辑要求 direct_observation、conditional_experience_expression、source_required_performance_claim、prohibited_guarantee 四类同时出现。safe alternative 只能提供观察、条件体验、场景表达和美学方向，不能承诺结果，也不能绕开来源要求。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-APPAREL-CLAIM-BOUNDARY-002
+    revision_of: SEM-V4_4-APPAREL-CLAIM-BOUNDARY-002
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 532
+    required_sections:
+      mechanism_chain: 服饰 claim 边界卡把画面观察、条件体验、需补源性能主张和禁用保证拆开，避免把审美表达误写成身体效果。核心机制是把一句穿搭表达先拆成四层：可见的画面关系、带条件的穿着体验、需要外部来源支持的性能主张、必须阻断的保证句。舒适性能耐用品质证据阶梯 对应的正文主题包括 claim 分级、不同 claim 对应的证据类别、无证据时允许保留的最低表达层级，所以正文不能只说禁用词，而要说明每一层如何被改写和转路由。
+      observable_material: 可观察材料只包括画面里的线条、分界、遮挡、垂坠、开合、层次和动作停顿。它可以支持“腰线位置更清楚”“面料边界更容易被看见”这类观察句；触感、舒适、显瘦、耐穿等不能被写成直接观察。
+      transfer_logic: 创意转译不是把效果说得更夸张，而是把风险句改写成安全表达路径：先写画面条件，再写感受的条件性，最后把性能或身体结果交给补源工单。这样内容仍有审美方向，但不会把经验词冒充事实。
+      boundary_logic: 边界逻辑要求 direct_observation、conditional_experience_expression、source_required_performance_claim、prohibited_guarantee 四类同时出现。safe alternative 只能提供观察、条件体验、场景表达和美学方向，不能承诺结果，也不能绕开来源要求。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-DISPLAY-TO-CONTENT-001
+    revision_of: SEM-V4_4-DISPLAY-TO-CONTENT-001
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 547
+    required_sections:
+      mechanism_chain: 陈列转内容卡把空间秩序、视线路径和动作段落翻译成内容角度，但不替代门店事实或发布成稿。核心机制是把陈列中的区位、光线、视线顺序和动作节点拆成可拍摄材料，再决定它们适合转成什么内容角度。陈列区位与可拍摄视觉锚点 的 W7 主题指向 入口区/中岛/端架/挂通等一般化区位表达、远景-中景-近景的观察切换、静态陈列中的可拍摄重点，因此正文必须说明从空间观察到内容槽位的转换，而不是只列拍摄清单。
+      observable_material: 可观察材料包括入口焦点、挂架间距、模特朝向、同色组合、拿取动作、镜前停顿、转身展示和导购解释节点。这些材料只证明画面结构和动作顺序，不证明销售效果、受众偏好或门店表现。
+      transfer_logic: 创意转译要把一个陈列点拆成多个输出：短视频可用动作段落，小红书笔记可用观察问题，导购话术卡可用解释顺序，培训观察提示可用检查对象和动作。每个输出都回到同一组可观察材料，而不是直接生成成稿。
+      boundary_logic: 边界逻辑要求 relation hints 只描述设计提示，不成为 formal graph edge；美学张力只能来自空间秩序与人类动机的对照，不能被写成真实顾客反馈或门店数据。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-DISPLAY-TO-CONTENT-002
+    revision_of: SEM-V4_4-DISPLAY-TO-CONTENT-002
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 537
+    required_sections:
+      mechanism_chain: 陈列转内容卡把空间秩序、视线路径和动作段落翻译成内容角度，但不替代门店事实或发布成稿。核心机制是把陈列中的区位、光线、视线顺序和动作节点拆成可拍摄材料，再决定它们适合转成什么内容角度。动作转内容槽位与演示三段式 的 W7 主题指向 动作镜头起承转合、动作对应的解释槽位、强观察/弱解释的组合方式，因此正文必须说明从空间观察到内容槽位的转换，而不是只列拍摄清单。
+      observable_material: 可观察材料包括入口焦点、挂架间距、模特朝向、同色组合、拿取动作、镜前停顿、转身展示和导购解释节点。这些材料只证明画面结构和动作顺序，不证明销售效果、受众偏好或门店表现。
+      transfer_logic: 创意转译要把一个陈列点拆成多个输出：短视频可用动作段落，小红书笔记可用观察问题，导购话术卡可用解释顺序，培训观察提示可用检查对象和动作。每个输出都回到同一组可观察材料，而不是直接生成成稿。
+      boundary_logic: 边界逻辑要求 relation hints 只描述设计提示，不成为 formal graph edge；美学张力只能来自空间秩序与人类动机的对照，不能被写成真实顾客反馈或门店数据。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-CONTROL-PLANE-GOVERNANCE-001
+    revision_of: SEM-V4_4-CONTROL-PLANE-GOVERNANCE-001
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 439
+    required_sections:
+      mechanism_chain: 控制面卡只说明路由、账本、阻断和再进入条件，不把治理判断伪装成领域正文质量。核心机制是先识别异常类型，再分配到 source_gap、decision_required、founder_review、excluded 四条路线。异常分发与再进入规则 的 required relations 包括 missing_source -> source_gap；modeling_conflict -> decision_required，所以正文必须把触发条件、账本写入和再进入条件写清楚。
+      observable_material: 可观察材料是候选片段里的缺源标记、建模冲突、风险敏感项、禁止输出请求、资产绑定冲突和非生产封印。它们不是创意素材，而是决定该片段能否继续被处理的控制信号。
+      transfer_logic: 转译逻辑是把控制信号转成可执行的处理结果：缺源进入 source_gap，结构冲突进入 decision_required，创始人裁决项进入 founder_review，禁止输出进入 excluded。多资产冲突必须先阻断或拆分，不能强行绑定。
+      boundary_logic: 边界逻辑要求控制面正文不计入创意质量通过；sidecar 记录路由证据和 ledger 目标，但 Rich Body 只解释规则本身，不声明任何知识已可生产或可批量。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false
+  - draft_id: SEM-V4_5-CONTROL-PLANE-GOVERNANCE-002
+    revision_of: SEM-V4_4-CONTROL-PLANE-GOVERNANCE-002
+    body_language: zh-CN
+    min_body_zh_chars: 420
+    body_zh_chars: 441
+    required_sections:
+      mechanism_chain: 控制面卡只说明路由、账本、阻断和再进入条件，不把治理判断伪装成领域正文质量。核心机制是先识别异常类型，再分配到 source_gap、decision_required、founder_review、excluded 四条路线。研究资产绑定与非生产封印 的 required relations 包括 route_decision -> allowed_asset_stub；slot_completeness -> bindability，所以正文必须把触发条件、账本写入和再进入条件写清楚。
+      observable_material: 可观察材料是候选片段里的缺源标记、建模冲突、风险敏感项、禁止输出请求、资产绑定冲突和非生产封印。它们不是创意素材，而是决定该片段能否继续被处理的控制信号。
+      transfer_logic: 转译逻辑是把控制信号转成可执行的处理结果：缺源进入 source_gap，结构冲突进入 decision_required，创始人裁决项进入 founder_review，禁止输出进入 excluded。多资产冲突必须先阻断或拆分，不能强行绑定。
+      boundary_logic: 边界逻辑要求控制面正文不计入创意质量通过；sidecar 记录路由证据和 ledger 目标，但 Rich Body 只解释规则本身，不声明任何知识已可生产或可批量。
+      contrast_or_micro_scenario: 对照场景：合格写法会先指出一个具体材料，再解释它如何转成选择、观察或路由；失败写法只堆叠好看、松弛、有氛围等形容词，或者把条件经验写成确定结论。
+      anti_pattern: 反模式包括：只复制胶囊标题、把 sidecar 的状态字段塞进正文、写成面向发布的完整成稿、虚构真实品牌或顾客反馈、把 relation hint 称为本体边。
+      downstream_use: 下游可把这段正文拆给 brief、judge、训练观察提示或人工复核使用；它只说明如何审阅和生成下一轮样本，不改变任何后续资产状态。
+    capsule_alignment:
+      capsule_core_expanded_in_sections:
+        capsule_question: mechanism_chain
+        core_mechanism: mechanism_chain
+        observable_material: observable_material
+        creative_transfer: transfer_logic
+        boundary_guardrail: boundary_logic
+        failure_signal: anti_pattern
+        downstream_effect: downstream_use
+      rich_body_contradicts_capsule: false
+      capsule_paraphrase_only: false
+      observable_material_expanded_beyond_capsule: true
+    sidecar_leak_into_rich_body: false
+    direct_publish_script_leak: false
+    real_instance_fact_leak: false

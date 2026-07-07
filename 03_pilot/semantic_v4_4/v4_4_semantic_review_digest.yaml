@@ -1,0 +1,29 @@
+v4_4_semantic_review_digest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001
+  review_scope: V4.4 conditional pass closeout before V4.5 repair
+  human_decision_present: true
+  semantic_verdict: CONDITIONAL_PASS_FOR_CAPSULE_DIRECTION
+  engineering_delivery: PASS
+  carry_forward_findings:
+  - capsule direction is useful but insufficient without complete rich body
+  - claim boundary examples need explicit observation / experience / performance / guarantee split
+  - control-plane cards need four route coverage and multi_asset_conflict handling
+  - creative hypothesis and audience fact typing must be machine-checkable
+  - relation hints must stay design hints, not formal graph edges
+  V4_4_original_artifacts_modified: false
+  V4_4_original_artifact_digests:
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_candidate_cards.yaml: 85857678f6104b7accda7e6b723054bb20fb32536d5f5cd95b73eb8c7593b7a0
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_creative_value_blocks.yaml: 61d37dd991c35db2feb01ad8ccd496b6a44bb8acf5897d2d99959d6ee3c98aea
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_creative_value_report.json: 9bf354ea8c6475554d1875062d7d1ce58db9531ec09d11263d8bfa85a12c7d49
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_judge_protocol.md: 04e18b0614cec542f9304ccd1f076df61fef49bf5ee2335a38398f074a6211f3
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_judge_review_queue.yaml: c9ee32e7c1469491aa6983958f0e6064a2cae34a87b042338b8fe3c6bb016e0f
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_knowledge_capsules.yaml: 1979dd3c1ec54516e7b1dc29493f5487aac2b1c5c7acde11826dbe886b3d8741
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_manifest.yaml: c4c58a28c32736f3bf21d97cd18dd108403959854a43a0b26db69ec4c7a4494e
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_quality_report.json: 4cb726a6a71ffc299efa25de8c31583e48986a55c00b99a5e4b3063aaf55e617
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_relation_design_hints.csv: 3711bbdaee5638c9cfb6b67fdeaf4ab14ebada7063aead2ff75da141cf5560c6
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_safe_creative_alternatives.yaml: ace2e81f401608087d85ce002246dece8ddf151f20d411798cc6f748ca93cb88
+    03_pilot/semantic_v4_4/semantic_pilot_v4_4_sidecars.yaml: 8b8728a4d1de9622bda63d4eee750792153a602e1d5c050aeb809047ca559028
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001

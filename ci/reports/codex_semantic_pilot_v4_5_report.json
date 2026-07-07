@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001",
+  "v4_5_draft_count": 8,
+  "v4_5_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "capsule_valid_count": 8,
+  "complete_rich_body_valid_count": 8,
+  "capsule_rich_body_alignment_valid_count": 8,
+  "creative_value_block_valid_count": 8,
+  "safe_creative_alternatives_count": 10,
+  "epistemic_label_valid_count": 8,
+  "control_plane_four_route_coverage": 2,
+  "multi_asset_conflict_rule_present": true,
+  "multi_asset_conflict_rule_present_count": 2,
+  "sidecar_leak_into_rich_body_count": 0,
+  "index_shell_capsule_count": 0,
+  "rich_body_repeated_capsule_padding_count": 0,
+  "relation_design_hints_count": 23,
+  "relation_registry_valid_count": 23,
+  "relation_design_hints_valid_against_v4_3_predicate_registry": true,
+  "relation_formal_graph_claim_count": 0,
+  "real_instance_fact_leak_count": 0,
+  "direct_publish_script_leak_count": 0,
+  "safe_alternative_performance_claim_count": 0,
+  "creative_hypothesis_as_audience_fact_count": 0,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "readiness_flags_result": "all_false",
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "Serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "source_repo_live_accessed": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 23,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_capsule_without_rich_body.yaml": [
+      "complete_rich_body_valid_count must be 8"
+    ],
+    "negative_rich_body_without_capsule.yaml": [
+      "capsule_valid_count must be 8"
+    ],
+    "negative_capsule_index_shell_only.yaml": [
+      "index_shell_capsule_count must be 0"
+    ],
+    "negative_rich_body_missing_required_section.yaml": [
+      "all rich body required sections must be present"
+    ],
+    "negative_rich_body_below_min_chars.yaml": [
+      "all rich bodies must meet min zh char count"
+    ],
+    "negative_repeated_capsule_paraphrase_only.yaml": [
+      "rich_body_repeated_capsule_padding_count must be 0"
+    ],
+    "negative_sidecar_information_inside_rich_body.yaml": [
+      "sidecar_leak_into_rich_body_count must be 0"
+    ],
+    "negative_rich_body_contradicts_capsule.yaml": [
+      "capsule_rich_body_alignment_valid_count must be 8"
+    ],
+    "negative_claim_boundary_missing_safe_alternatives.yaml": [
+      "claim boundary safe alternatives must include at least 10 entries"
+    ],
+    "negative_claim_boundary_treats_touch_as_direct_observation.yaml": [
+      "two claim-boundary split records required"
+    ],
+    "negative_safe_alternative_performance_claim.yaml": [
+      "safe_alternative_performance_claim_count must be 0"
+    ],
+    "negative_creative_hypothesis_marked_as_audience_fact.yaml": [
+      "creative_hypothesis_as_audience_fact_count must be 0"
+    ],
+    "negative_display_card_only_observation_checklist.yaml": [
+      "creative_value_block_valid_count must be 8"
+    ],
+    "negative_control_plane_missing_excluded_route.yaml": [
+      "two control-plane four-route records required"
+    ],
+    "negative_control_plane_missing_multi_asset_conflict.yaml": [
+      "two multi-asset conflict rules required"
+    ],
+    "negative_invalid_relation_predicate.yaml": [
+      "all relation hints must validate against V4.3 predicate registry"
+    ],
+    "negative_invalid_relation_status.yaml": [
+      "all relation hints must validate against V4.3 predicate registry"
+    ],
+    "negative_formal_graph_claim.yaml": [
+      "relation_formal_graph_claim_count must be 0"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "real_instance_fact_leak_count must be 0"
+    ],
+    "negative_direct_publish_script_leak.yaml": [
+      "direct_publish_script_leak_count must be 0"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  }
+}

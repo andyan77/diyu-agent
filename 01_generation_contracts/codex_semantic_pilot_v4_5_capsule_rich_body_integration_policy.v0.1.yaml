@@ -1,0 +1,48 @@
+codex_semantic_pilot_v4_5_capsule_rich_body_integration_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001
+  policy_status: active_for_v4_5_pilot_only
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.4 is CONDITIONAL_PASS_FOR_CAPSULE_DIRECTION and requires V4.5 capsule plus rich body integration repair
+    authorized_scope:
+    - V4.4 conditional pass closeout
+    - V4.5 capsule plus Rich Body integration repair
+    - route sync for V4.5 judge handoff
+    - checker hardening for V4.5
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE_landing
+    - Serving_projection
+    - RAG_context_bundle
+    - DIFY_workflow
+  required_four_artifact_bundle:
+  - knowledge_capsule
+  - complete_rich_body
+  - creative_value_block_or_control_block
+  - governance_sidecar
+  bundle_rules:
+    one_to_one_with_v4_4: true
+    all_8_items_must_have_capsule: true
+    all_8_items_must_have_complete_rich_body: true
+    capsule_core_proposition_must_expand_in_rich_body: true
+    rich_body_must_not_contradict_capsule: true
+    governance_sidecar_must_not_be_embedded_in_rich_body: true
+    control_plane_creative_value_block_not_applicable: true
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+  hard_rejects:
+  - capsule_without_rich_body
+  - rich_body_without_capsule
+  - rich_body_contradicts_capsule
+  - sidecar_information_inside_rich_body
+  - capsule_rephrased_as_padding_only
+  - formal_relation_graph_claim
+  - batch_generation_unlocked_true
+  alignment_metrics_required:
+    capsule_rich_body_alignment_valid_count: 8
+    complete_rich_body_valid_count: 8
+    sidecar_leak_into_rich_body_count: 0
+    relation_formal_graph_claim_count: 0

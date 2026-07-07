@@ -12,9 +12,11 @@ from typing import Any
 
 import yaml
 
+V4_5_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001"
 TASK_ID = "CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001"
 PREVIOUS_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001"
+V4_5_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 8
 EXPECTED_DISTRIBUTION = {
@@ -145,6 +147,27 @@ def assert_false(value: Any, label: str) -> None:
         fail(f"{label} must be false")
 
 
+def validate_v45_status_block(status: dict[str, Any]) -> None:
+    phase = status.get("phase", {})
+    if phase.get("previous_step") != V4_5_TASK_ID:
+        fail("semantic v4.5 judge route requires V4.5 integration task as previous_step")
+    v45 = status.get("semantic_pilot_v4_5", {})
+    if v45.get("task_id") != V4_5_TASK_ID or v45.get("status") != "completed":
+        fail("semantic v4.5 judge route requires completed semantic_pilot_v4_5 block")
+    if v45.get("semantic_pilot_v4_5_count") != 8:
+        fail("semantic v4.5 judge route requires 8 v4.5 semantic revision drafts")
+    if v45.get("one_to_one_revision_of_v4_4") is not True:
+        fail("semantic v4.5 judge route requires one-to-one revision of V4.4")
+    if v45.get("capsule_rich_body_alignment_valid_count") != 8:
+        fail("semantic v4.5 judge route requires 8 capsule/rich-body alignments")
+    if v45.get("accepted_domain_knowledge_count") != 0:
+        fail("semantic v4.5 judge route requires accepted_domain_knowledge_count 0")
+    assert_false(v45.get("batch_generation_unlocked"), "semantic v4.5 judge route batch_generation_unlocked")
+    assert_false(v45.get("ready_for_first_batch_generation"), "semantic v4.5 judge route ready_for_first_batch_generation")
+    if v45.get("ready_for_semantic_pilot_v4_5_judge_review") is not True:
+        fail("semantic v4.5 judge route requires ready_for_semantic_pilot_v4_5_judge_review true")
+
+
 def contains_pattern(text: str, patterns: list[re.Pattern[str]]) -> bool:
     return any(pattern.search(text) for pattern in patterns)
 
@@ -156,8 +179,8 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("task_id mismatch")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") != NEXT_STEP:
-        errors.append("current_next_step must be semantic pilot V4.4 judge go/no-go")
+    if data.get("current_next_step") not in {NEXT_STEP, V4_5_NEXT_STEP}:
+        errors.append("current_next_step must be semantic pilot V4.4/V4.5 judge go/no-go")
     if data.get("v4_4_draft_count") != EXPECTED_TOTAL:
         errors.append("v4_4_draft_count must be 8")
     if data.get("v4_4_distribution") != EXPECTED_DISTRIBUTION:
@@ -211,10 +234,13 @@ def validate_status(workspace: Path) -> None:
     phase = status.get("phase", {})
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
-    if phase.get("current_next_step") != NEXT_STEP:
-        fail("workspace next step must be semantic pilot V4.4 judge go/no-go")
-    if phase.get("previous_step") != TASK_ID:
+    current_next_step = phase.get("current_next_step")
+    if current_next_step not in {NEXT_STEP, V4_5_NEXT_STEP}:
+        fail("workspace next step must be semantic pilot V4.4 or V4.5 judge go/no-go")
+    if current_next_step == NEXT_STEP and phase.get("previous_step") != TASK_ID:
         fail("workspace previous step must be V4.4 creative capsule task")
+    if current_next_step == V4_5_NEXT_STEP:
+        validate_v45_status_block(status)
     v44 = status.get("semantic_pilot_v4_4", {})
     if v44.get("task_id") != TASK_ID or v44.get("status") != "completed":
         fail("semantic_pilot_v4_4 status block missing")

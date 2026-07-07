@@ -1,0 +1,41 @@
+codex_semantic_pilot_v4_5_epistemic_class_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001
+  policy_status: active_for_v4_5_pilot_only
+  epistemic_classes:
+    direct_observation:
+      source_required: false
+      may_describe:
+      - visible_shape
+      - visible_relation
+      - display_order
+      - material_action
+    conditional_experience_expression:
+      source_required: false
+      must_be_conditioned: true
+      may_describe:
+      - wearing_condition
+      - scene_condition
+      - styling_condition
+    creative_hypothesis:
+      source_required: false
+      not_audience_fact: true
+      not_brand_fact: true
+      not_customer_feedback: true
+    audience_fact:
+      source_required: true
+      forbidden_without_source: true
+    performance_claim:
+      source_required: true
+      cannot_be_safe_alternative: true
+    prohibited_guarantee:
+      allowed: false
+    governance_route_rule:
+      source_required: false
+      not_domain_creative_quality_pass: true
+  hard_rejects:
+  - creative_hypothesis_marked_as_audience_fact
+  - comfort_or_touch_treated_as_direct_observation
+  - safe_alternative_written_as_performance_claim
+  - prohibited_guarantee_present
+  - real_brand_sku_store_person_customer_feedback_leak

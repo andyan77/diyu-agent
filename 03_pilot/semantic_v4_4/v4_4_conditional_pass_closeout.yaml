@@ -1,0 +1,37 @@
+v4_4_conditional_pass_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001
+  previous_commit: e53de3ea94b69d942ca5cc76e12a728def836575
+  engineering_delivery: PASS
+  semantic_capsule_design: PASS
+  v4_root_cause_fixed: true
+  semantic_verdict: CONDITIONAL_PASS_FOR_CAPSULE_DIRECTION
+  not_yet:
+  - accepted_domain_knowledge
+  - candidatepack_eligible
+  - batch_generation_template
+  - formal_relation_graph
+  required_targeted_fixes:
+  - claim_observation_experience_performance_guarantee_split
+  - control_plane_four_routes_and_multi_asset_conflict
+  - creative_hypothesis_vs_audience_fact_typing
+  - capsule_plus_complete_rich_body_plus_creative_value_plus_sidecar_integration
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.4 is CONDITIONAL_PASS_FOR_CAPSULE_DIRECTION and requires V4.5 capsule plus rich body integration repair
+    authorized_scope:
+    - V4.4 conditional pass closeout
+    - V4.5 capsule plus Rich Body integration repair
+    - route sync for V4.5 judge handoff
+    - checker hardening for V4.5
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE_landing
+    - Serving_projection
+    - RAG_context_bundle
+    - DIFY_workflow
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
