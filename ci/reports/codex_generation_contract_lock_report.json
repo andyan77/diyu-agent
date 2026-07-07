@@ -1,0 +1,64 @@
+{
+  "checker": "check_codex_generation_contract_lock.py",
+  "status": "PASS",
+  "w7_counts": {
+    "canonical_cluster_count": 46,
+    "source_cluster_count": 58,
+    "generation_assignment_count": 14,
+    "unresolved_decision_count": 12,
+    "source_gap_seed_count": 16,
+    "readiness_true_count": 0
+  },
+  "schema_strict": true,
+  "positive_fixture_passed": true,
+  "negative_fixture_count": 14,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_readiness_true.yaml": [
+      "$.readiness_flags.candidatepack_ready: expected const False"
+    ],
+    "negative_missing_candidate_kind.yaml": [
+      "$.ownership.candidate_kind: missing required"
+    ],
+    "negative_invalid_enum.yaml": [
+      "$.ownership.candidate_kind: invalid enum 'made_up_kind'"
+    ],
+    "negative_source_type_decides_layer.yaml": [
+      "$.source_policy.source_type_boundary_status: expected const 'source_type_is_intake_classification_only'"
+    ],
+    "negative_empty_rich_body.yaml": [
+      "$.rich_body.body_text: string too short"
+    ],
+    "negative_selfcheck_leaked_into_body.yaml": [
+      "semantic self-check term leaked into body text"
+    ],
+    "negative_body_not_entailed.yaml": [
+      "$.rich_body.body_sections: too few items",
+      "$.rich_body.body_sections[0].proposition_refs: too few items"
+    ],
+    "negative_hard_claim_expert_synthesis.yaml": [
+      "hard claim cannot be filled by expert synthesis"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "real instance fact leak"
+    ],
+    "negative_p0_00_general_kb_leak.yaml": [
+      "P0-00/control-plane marker cannot target GeneralKnowledgeBase"
+    ],
+    "negative_candidatepack_claim.yaml": [
+      "$.state_machine.current_state: invalid enum 'CandidatePack'"
+    ],
+    "negative_KE_RAG_DIFY_claim.yaml": [
+      "KE/RAG/DIFY readiness claim forbidden"
+    ],
+    "negative_provenance_true_flag_treated_as_active.yaml": [
+      "provenance true flag examples must not be treated as active readiness"
+    ],
+    "negative_provenance_true_flag_misread.yaml": [
+      "provenance true flag examples must not be treated as active readiness"
+    ]
+  },
+  "provenance_safety_verified": true,
+  "source_repo_live_dependency": false,
+  "readiness_false_preserved": true
+}

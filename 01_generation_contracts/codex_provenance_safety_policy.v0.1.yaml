@@ -1,0 +1,11 @@
+provenance_safety_rule:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  historical_provenance_text_may_contain_example_true_flags: true
+  active_readiness_authority:
+  - project-infra/current_workspace_status.yaml
+  - generated contract fixtures
+  - checker reports
+  checker_must_not_treat_provenance_examples_as_active_flags: true
+  provenance_only_must_not_participate_in_readiness_transition: true

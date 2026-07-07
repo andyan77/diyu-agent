@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
-  previous_step: GKB-WORKSPACE-ADOPTION-AND-MIGRATION-001
+  current_next_step: MASTER-MAP-TO-CODEX-GENERATION-BRIEF-PACK-001
+  previous_step: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -21,6 +21,9 @@ workspace_adoption:
 pre_contract_lock_archive_baseline:
   status: completed
   task_id: GKB-PRE-CONTRACT-LOCK-ARCHIVE-BASELINE-001
+contract_lock:
+  task_id: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  status: completed
 readiness:
   candidatepack_ready: false
   KE_ready: false

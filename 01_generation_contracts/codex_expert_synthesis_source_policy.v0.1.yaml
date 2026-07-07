@@ -1,0 +1,22 @@
+expert_synthesis_source_policy:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  allowed_after_human_review_for:
+  - creative_method
+  - industry_common_sense
+  - display_method
+  - content_strategy
+  - narrative_structure
+  - role_expression_pattern
+  forbidden_for:
+  - hard_claim
+  - real_brand_fact
+  - real_SKU_fact
+  - real_store_fact
+  - real_person_fact
+  - real_customer_feedback
+  - fabric_test_claim
+  - body_effect_claim
+  - product_performance_claim
+  hard_claim_or_real_instance_must_have_source_ref: true

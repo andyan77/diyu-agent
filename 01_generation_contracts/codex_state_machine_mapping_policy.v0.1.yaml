@@ -1,0 +1,28 @@
+state_machine_mapping:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  initial_state:
+  - gpt_generated_structured_draft
+  after_semantic_alignment:
+  - aligned_candidate_input
+  split_routes:
+    candidatepack_ready_after_review:
+      meaning: structured and source-grounded enough to prepare a CandidatePack Brief
+      must_not_mean: already_CandidatePack
+    source_workorder_needed:
+      meaning: valuable but needs source collection or expert confirmation
+    decision_required:
+      meaning: layer, vocabulary, field, target_owner, or capability ownership is
+        unclear
+    excluded:
+      meaning: out of scope, duplicate, real-instance contaminated, or hard-claim
+        noncompliant
+    draft_backlog:
+      meaning: valuable but out of the current round
+  candidatepack_ready_after_review_is_not:
+  - CandidatePack instance
+  - Four-Gate pass
+  - KE landing
+  - RAG context_bundle
+  - DIFY workflow

@@ -1,0 +1,466 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "codex_generation_output_contract.v0.1.schema.json",
+  "title": "Codex GKB Draft Generation Output Contract v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "identity",
+    "w7_trace",
+    "ownership",
+    "source_policy",
+    "layer_annotation",
+    "semantic_structure",
+    "rich_body",
+    "dedupe",
+    "readiness_flags",
+    "state_machine",
+    "review"
+  ],
+  "properties": {
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "candidate_name",
+        "schema_version",
+        "generation_status"
+      ],
+      "properties": {
+        "candidate_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "candidate_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "v0.1"
+        },
+        "generation_status": {
+          "type": "string",
+          "const": "gpt_generated_structured_draft"
+        }
+      }
+    },
+    "w7_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "w7_map_digest",
+        "founder_overlay_digest",
+        "canonical_cluster_id",
+        "generation_assignment_id",
+        "input_digest"
+      ],
+      "properties": {
+        "w7_map_digest": {
+          "type": "string",
+          "const": "dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c"
+        },
+        "founder_overlay_digest": {
+          "type": "string",
+          "const": "823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48"
+        },
+        "canonical_cluster_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generation_assignment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "input_digest": {
+          "type": "string",
+          "minLength": 32
+        }
+      }
+    },
+    "ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_kind",
+        "proposed_target_owner",
+        "target_owner_reason"
+      ],
+      "properties": {
+        "candidate_kind": {
+          "type": "string",
+          "enum": [
+            "general_knowledge_candidate",
+            "control_plane_candidate",
+            "cso_outbox_candidate",
+            "execution_asset_outbox_candidate",
+            "governance_outbox_candidate",
+            "source_gap",
+            "decision_packet"
+          ]
+        },
+        "proposed_target_owner": {
+          "type": "string",
+          "enum": [
+            "GeneralKnowledgeBase",
+            "ControlPlaneContractSource",
+            "CSOOutbox",
+            "ExecutionAssetOutbox",
+            "GovernanceOutbox",
+            "SourceGapLedger",
+            "DecisionPacketLedger"
+          ]
+        },
+        "target_owner_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_type",
+        "source_type_boundary_status",
+        "source_refs",
+        "expert_synthesis_allowed",
+        "expert_synthesis_policy_ref"
+      ],
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "source_cited",
+            "human_reviewed_expert_synthesis",
+            "provenance_only",
+            "source_gap_seed",
+            "founder_overlay"
+          ]
+        },
+        "source_type_boundary_status": {
+          "type": "string",
+          "const": "source_type_is_intake_classification_only"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "expert_synthesis_allowed": {
+          "type": "boolean"
+        },
+        "expert_synthesis_policy_ref": {
+          "type": "string",
+          "const": "01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml"
+        }
+      }
+    },
+    "layer_annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "declared_layer",
+        "target_layer_candidate",
+        "allowed_landing_layers",
+        "forbidden_landing_layers",
+        "layer_confidence",
+        "layer_boundary_note",
+        "if_layer_uncertain_route"
+      ],
+      "properties": {
+        "declared_layer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_layer_candidate": {
+          "type": "string",
+          "enum": [
+            "TBox_candidate",
+            "Rule_candidate",
+            "EvidencePolicy_candidate",
+            "L2_PlayCard_candidate",
+            "L3_ExecutionAsset_candidate",
+            "SlotContract_candidate",
+            "SourceIntakeContract_candidate",
+            "GovernanceContract_candidate",
+            "CSOOutbox_candidate",
+            "ExecutionAssetOutbox_candidate",
+            "SourceGapLedger",
+            "DecisionPacketLedger",
+            "Excluded",
+            "DraftBacklog"
+          ]
+        },
+        "allowed_landing_layers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "TBox_candidate",
+              "Rule_candidate",
+              "EvidencePolicy_candidate",
+              "L2_PlayCard_candidate",
+              "L3_ExecutionAsset_candidate",
+              "SlotContract_candidate",
+              "SourceIntakeContract_candidate",
+              "GovernanceContract_candidate",
+              "CSOOutbox_candidate",
+              "ExecutionAssetOutbox_candidate",
+              "SourceGapLedger",
+              "DecisionPacketLedger",
+              "Excluded",
+              "DraftBacklog"
+            ]
+          },
+          "minItems": 1
+        },
+        "forbidden_landing_layers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "layer_confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "layer_boundary_note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "if_layer_uncertain_route": {
+          "type": "string",
+          "enum": [
+            "decision_required",
+            "source_workorder_needed",
+            "excluded"
+          ]
+        }
+      }
+    },
+    "semantic_structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "definition",
+        "applicable_when",
+        "not_applicable_when",
+        "output_effect",
+        "risk_boundary",
+        "evidence_requirement"
+      ],
+      "properties": {
+        "definition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "applicable_when": {
+          "type": "string",
+          "minLength": 1
+        },
+        "not_applicable_when": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_effect": {
+          "type": "string",
+          "minLength": 1
+        },
+        "risk_boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_requirement": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "rich_body": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "body_text",
+        "body_sections",
+        "body_proposition_refs"
+      ],
+      "properties": {
+        "body_text": {
+          "type": "string",
+          "minLength": 350
+        },
+        "body_sections": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "heading",
+              "text",
+              "proposition_refs"
+            ],
+            "properties": {
+              "heading": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 20
+              },
+              "proposition_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1
+              }
+            }
+          }
+        },
+        "body_proposition_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "dedupe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "duplicate_check_key",
+        "semantic_fingerprint",
+        "proposition_fingerprint",
+        "runtime_effect_fingerprint"
+      ],
+      "properties": {
+        "duplicate_check_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semantic_fingerprint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposition_fingerprint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "runtime_effect_fingerprint": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "readiness_flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidatepack_ready",
+        "KE_ready",
+        "serving_ready",
+        "RAG_ready",
+        "DIFY_ready",
+        "generation_eligible",
+        "production_servable",
+        "production_ready"
+      ],
+      "properties": {
+        "candidatepack_ready": {
+          "type": "boolean",
+          "const": false
+        },
+        "KE_ready": {
+          "type": "boolean",
+          "const": false
+        },
+        "serving_ready": {
+          "type": "boolean",
+          "const": false
+        },
+        "RAG_ready": {
+          "type": "boolean",
+          "const": false
+        },
+        "DIFY_ready": {
+          "type": "boolean",
+          "const": false
+        },
+        "generation_eligible": {
+          "type": "boolean",
+          "const": false
+        },
+        "production_servable": {
+          "type": "boolean",
+          "const": false
+        },
+        "production_ready": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "state_machine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_state",
+        "route_after_review",
+        "route_reason"
+      ],
+      "properties": {
+        "current_state": {
+          "type": "string",
+          "enum": [
+            "gpt_generated_structured_draft"
+          ]
+        },
+        "route_after_review": {
+          "type": "string",
+          "enum": [
+            "candidatepack_ready_after_review",
+            "source_workorder_needed",
+            "decision_required",
+            "excluded",
+            "draft_backlog"
+          ]
+        },
+        "route_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "human_review_required",
+        "reviewer_status"
+      ],
+      "properties": {
+        "human_review_required": {
+          "type": "boolean",
+          "const": true
+        },
+        "reviewer_status": {
+          "type": "string",
+          "enum": [
+            "pending_human_review",
+            "human_reviewed"
+          ]
+        }
+      }
+    }
+  }
+}

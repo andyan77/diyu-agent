@@ -1,0 +1,46 @@
+candidate_kind_target_owner_policy:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  source_type_decides_final_layer: false
+  candidate_kind_allowed:
+  - general_knowledge_candidate
+  - control_plane_candidate
+  - cso_outbox_candidate
+  - execution_asset_outbox_candidate
+  - governance_outbox_candidate
+  - source_gap
+  - decision_packet
+  proposed_target_owner_allowed:
+  - GeneralKnowledgeBase
+  - ControlPlaneContractSource
+  - CSOOutbox
+  - ExecutionAssetOutbox
+  - GovernanceOutbox
+  - SourceGapLedger
+  - DecisionPacketLedger
+  rules:
+  - if: candidate_kind == general_knowledge_candidate
+    allowed_target_owner:
+    - GeneralKnowledgeBase
+    forbidden_content:
+    - P0_00_control_plane_operation
+    - route_authority
+    - readiness_transition_rule
+    - real_brand_fact
+    - real_SKU_fact
+    - real_store_fact
+    - real_person_fact
+  - if: candidate_kind == control_plane_candidate
+    allowed_target_owner:
+    - ControlPlaneContractSource
+    forbidden_target_owner:
+    - GeneralKnowledgeBase
+  - if: candidate_kind in [source_gap, decision_packet]
+    allowed_target_owner:
+    - SourceGapLedger
+    - DecisionPacketLedger
+    forbidden:
+    - candidatepack_ready_true
+    - KE_ready_true
+    - generation_eligible_true

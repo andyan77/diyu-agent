@@ -1,0 +1,20 @@
+source_type_boundary:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  source_type_semantics: intake_source_classification_only
+  source_type_decides_final_layer: false
+  source_type_must_not_decide:
+  - target_owner
+  - KE_layer
+  - production_servable
+  - generation_eligible
+  - CandidatePack readiness
+  final_landing_decided_by:
+  - candidate_kind
+  - proposed_target_owner
+  - layer_annotation
+  - gate_result
+  - human_review
+  fail_closed_examples:
+  - source_type=expert_synthesis_must_not_auto_land_GeneralKnowledgeBase

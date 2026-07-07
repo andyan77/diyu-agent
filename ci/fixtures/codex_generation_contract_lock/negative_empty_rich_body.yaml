@@ -1,0 +1,96 @@
+identity:
+  candidate_id: draft-demo-001
+  candidate_name: Reusable Display Principle
+  schema_version: v0.1
+  generation_status: gpt_generated_structured_draft
+w7_trace:
+  w7_map_digest: dd1503011a3a3f4cba9a663e50417037e85e8f09001edfc98c214919284d6c7c
+  founder_overlay_digest: 823ff7ab0a88aa41e235d03b09515b4303c7e4fd420af6619bcddb1cad96ea48
+  canonical_cluster_id: CC-001
+  generation_assignment_id: GA-001
+  input_digest: ede56a353eba1428755d071f8da512a1bb3e7fe71918f7ad37b57ac16e9eb789
+ownership:
+  candidate_kind: general_knowledge_candidate
+  proposed_target_owner: GeneralKnowledgeBase
+  target_owner_reason: general reusable knowledge without control-plane authority
+    or real-instance fact
+source_policy:
+  source_type: human_reviewed_expert_synthesis
+  source_type_boundary_status: source_type_is_intake_classification_only
+  source_refs:
+  - 00_source_inputs/W7_master_map/master_knowledge_map.yaml
+  expert_synthesis_allowed: true
+  expert_synthesis_policy_ref: 01_generation_contracts/codex_expert_synthesis_source_policy.v0.1.yaml
+layer_annotation:
+  declared_layer: TBox candidate draft
+  target_layer_candidate: TBox_candidate
+  allowed_landing_layers:
+  - TBox_candidate
+  forbidden_landing_layers:
+  - ControlPlaneContractSource
+  layer_confidence: 0.82
+  layer_boundary_note: landing is decided by candidate_kind, target_owner, layer annotation,
+    gate result, and human review
+  if_layer_uncertain_route: decision_required
+semantic_structure:
+  definition: A reusable display principle describes how presentation choices affect
+    interpretation without claiming a specific real-world result.
+  applicable_when: Use when drafting general guidance for display, content strategy,
+    or narrative structure.
+  not_applicable_when: Do not use for real brand facts, SKU facts, body effect claims,
+    or production readiness.
+  output_effect: Improves downstream draft consistency while keeping review gates
+    explicit.
+  risk_boundary: Hard claims and real instance facts must route to source work orders
+    or exclusion.
+  evidence_requirement: Source references or human expert review are required before
+    stronger factual claims.
+rich_body:
+  body_text: empty
+  body_sections:
+  - heading: Principle
+    text: The candidate explains a reusable principle while preserving the boundary
+      between draft guidance and factual claims.
+    proposition_refs:
+    - definition
+    - risk_boundary
+  - heading: Use boundary
+    text: It applies to general display or content strategy guidance and excludes
+      real instance facts or readiness claims.
+    proposition_refs:
+    - applicable_when
+    - not_applicable_when
+    - evidence_requirement
+  body_proposition_refs:
+  - definition
+  - applicable_when
+  - not_applicable_when
+  - output_effect
+  - risk_boundary
+  - evidence_requirement
+dedupe:
+  duplicate_check_key: cc001-display-principle
+  semantic_fingerprint: display-principle-general-boundary
+  proposition_fingerprint: definition-applicability-risk-evidence
+  runtime_effect_fingerprint: draft-consistency-review-routing
+readiness_flags:
+  candidatepack_ready: false
+  KE_ready: false
+  serving_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  generation_eligible: false
+  production_servable: false
+  production_ready: false
+state_machine:
+  current_state: gpt_generated_structured_draft
+  route_after_review: candidatepack_ready_after_review
+  route_reason: may prepare a brief after human review but is not a CandidatePack
+    instance
+review:
+  human_review_required: true
+  reviewer_status: pending_human_review
+provenance_only_text: 'Historical example: generation_allowed: true, production_ready:
+  true. This text is provenance_only and not active authority.'
+checker_behavior:
+  treat_provenance_as_active_readiness: false

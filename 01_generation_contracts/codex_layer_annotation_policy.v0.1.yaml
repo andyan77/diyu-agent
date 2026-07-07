@@ -1,0 +1,25 @@
+layer_annotation_policy:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  target_layer_candidate_allowed:
+  - TBox_candidate
+  - Rule_candidate
+  - EvidencePolicy_candidate
+  - L2_PlayCard_candidate
+  - L3_ExecutionAsset_candidate
+  - SlotContract_candidate
+  - SourceIntakeContract_candidate
+  - GovernanceContract_candidate
+  - CSOOutbox_candidate
+  - ExecutionAssetOutbox_candidate
+  - SourceGapLedger
+  - DecisionPacketLedger
+  - Excluded
+  - DraftBacklog
+  layer_rules:
+  - P0_00_control_plane_content_must_not_target_GeneralKnowledgeBase
+  - hard_claim_without_source_must_route_to_source_gap_or_excluded
+  - real_instance_fact_must_route_to_source_gap_or_excluded
+  - layer_confidence_below_threshold_must_route_to_decision_required
+  uncertain_layer_threshold: 0.7

@@ -1,0 +1,30 @@
+dedupe_fingerprint_policy:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  dedupe_layers:
+    label_dedupe:
+      fields:
+      - candidate_name
+      - canonical_cluster_id
+      - duplicate_check_key
+    proposition_dedupe:
+      fields:
+      - definition
+      - applicable_when
+      - not_applicable_when
+      - risk_boundary
+      - evidence_requirement
+    runtime_effect_dedupe:
+      fields:
+      - content_generation_usage
+      - display_styling_usage
+      - output_effect
+      - downstream_consumability
+  dedupe_outcomes:
+  - keep_primary
+  - merge_into_primary
+  - split_candidate
+  - mark_near_duplicate_review
+  - supersede_draft
+  - exclude_duplicate

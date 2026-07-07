@@ -1,0 +1,17 @@
+body_entailment:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  principle: body_claims_must_be_entailed_by_structured_propositions
+  structured_proposition_sources:
+  - definition
+  - applicable_when
+  - not_applicable_when
+  - output_effect
+  - risk_boundary
+  - evidence_requirement
+  checker_behavior:
+  - every_body_section_must_reference_at_least_one_structured_proposition
+  - hard_claim_must_have_source_ref_or_route_to_source_gap
+  - real_instance_fact_must_not_be_created_by_expert_synthesis
+  - unsupported_body_claim_must_fail

@@ -1,0 +1,29 @@
+microbatch_policy:
+  schema_version: v0.1
+  generated_by_task: CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001
+  source_repo_live_dependency: false
+  macro_batches: 14
+  target_total_budget: 3600
+  budget_not_kpi: true
+  quality_over_count: true
+  microbatch_size: 20_to_40
+  each_microbatch_must_run:
+  - schema_parse
+  - readiness_false_scan
+  - candidate_kind_target_owner_check
+  - layer_annotation_check
+  - rich_body_quality_check
+  - body_entailment_check
+  - dedupe_check
+  - hard_claim_leak_check
+  - real_instance_fact_leak_check
+  - P0_00_domain_leak_check
+  - microbatch_receipt
+  stop_microbatch_if:
+  - readiness_true_count > 0
+  - index_shell_rate > 0
+  - hard_claim_without_evidence_as_fact > 0
+  - real_instance_fact_leak > 0
+  - P0_00_domain_leak > 0
+  - body_entailment_fail_rate > 10%
+  - rich_body_empty_or_generic_rate > 10%
