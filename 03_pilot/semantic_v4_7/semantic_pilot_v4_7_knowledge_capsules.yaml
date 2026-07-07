@@ -1,0 +1,106 @@
+semantic_pilot_v4_7_knowledge_capsules:
+  items:
+  - draft_id: SEM-V4_7-CONTENT-METHOD-001
+    revision_of: SEM-V4_6-CONTENT-METHOD-001
+    domain_question: 同一组素材如何在证据强弱不同的情况下形成多个叙事角度？
+    core_mechanism: 先判断素材能证明什么，再选择叙事强度；只看见单个细节时保留观察问题，看见连续取舍时再展开过程。
+    observable_material: 衣物边线、袖口折痕、光线停顿、手把衣架推回或把衣物举起时露出的层次。
+    transfer_logic: 把可见细节转成问题、取舍或价值表达，每一种转写都要和材料强度绑定。
+    boundary_guardrail: 不能把情绪方向写成真实反馈，也不能用薄弱材料补出不存在的因果。
+    generative_options:
+    - 瞬间观察：围绕一个细节提出开放问题
+    - 选择过程：围绕取舍动作展开顺序
+    - 价值表达：说明细节如何服务审美判断
+    failure_signal: 只有情绪词而没有对象、动作或材料强度时，退回补采和观察问题。
+    downstream_effect: 帮助选择内容角度、检查证据强度和提示补采素材，不改变资产状态。
+  - draft_id: SEM-V4_7-CONTENT-METHOD-002
+    revision_of: SEM-V4_6-CONTENT-METHOD-002
+    domain_question: 抽象风格词怎样拆成可观察的对象、动作、关系、时间和空间？
+    core_mechanism: 把一个风格判断拆成五个采集槽，每个槽都要能被画面复述，最后再确定主锚点和观察顺序。
+    observable_material: 下摆塞入、袖口翻折、鞋面距离、挂通间距、手势方向和视线移动。
+    transfer_logic: 从最稳定的对象动作组合进入，再用关系和时间变化组织内容节奏。
+    boundary_guardrail: 不得用高级、松弛、氛围等形容词替代对象动作关系，也不虚构真实人员或门店情节。
+    generative_options:
+    - 对象路径：先解释衣物结构
+    - 动作路径：先解释整理或试穿动作
+    - 关系路径：先解释主次搭配和空间距离
+    failure_signal: 无法指出对象、动作、关系、时间和空间时，停止扩写并返回采集槽。
+    downstream_effect: 帮助选择观察顺序、讲解节奏和补采对象动作关系。
+  - draft_id: SEM-V4_7-APPAREL-CLAIM-BOUNDARY-001
+    revision_of: SEM-V4_6-APPAREL-CLAIM-BOUNDARY-001
+    domain_question: 不能承诺身体结果时，如何保留搭配美感和使用价值？
+    core_mechanism: 把表达分成画面观察、条件体验、需来源支持的结果主张和禁用保证；创意只在安全层内提供替代路径。
+    observable_material: 腰线位置、外套开合、裤管垂坠、内搭露出、上下装颜色分界和遮挡关系。
+    transfer_logic: 把结果冲动转成线条停顿、重心分界、外套开合、内搭比例和场景条件。
+    boundary_guardrail: 直接观察只能说可见关系；主观感受必须带条件；结果主张需要来源；保证句直接阻断。
+    generative_options:
+    - 画面观察：腰线位置更清楚
+    - 条件体验：在上短下长搭配中更容易注意到分界
+    - 审美方向：让视觉重心停在上半身
+    failure_signal: 出现无条件结果、保证句或需来源支持的性能语言时，转为补源任务。
+    downstream_effect: 帮助选择安全表达、补源提示和人工复核重点。
+  - draft_id: SEM-V4_7-APPAREL-CLAIM-BOUNDARY-002
+    revision_of: SEM-V4_6-APPAREL-CLAIM-BOUNDARY-002
+    domain_question: 缺少测试或标准时，舒适性能类表达怎样保留创意空间？
+    core_mechanism: 先把可见结构、条件体验、性能主张和保证句分层；可写结构与场景，不能把体验或性能伪装成观察。
+    observable_material: 面料表面纹理、接触面的可见结构、缝线位置、松紧部位形态和动作后衣摆的形态变化。
+    transfer_logic: 把表达转向平整度、留量、接触面结构、动作后的线条和特定场景中的主观感受。
+    boundary_guardrail: 触感、贴肤感、活动感和舒适不能标为直接观察；透气、抗皱、耐穿、持久舒适和回弹性能需要来源。
+    generative_options:
+    - 画面观察：接触面结构更容易辨认
+    - 条件体验：短时走动时更关注留量
+    - 审美方向：用轻缓的画面节奏表达少束缚
+    failure_signal: 出现检测证明、长期承诺、医学级或保证体验时，停止并转补源。
+    downstream_effect: 帮助选择结构观察、条件体验表达和来源任务。
+  - draft_id: SEM-V4_7-DISPLAY-TO-CONTENT-001
+    revision_of: SEM-V4_6-DISPLAY-TO-CONTENT-001
+    domain_question: 陈列区位为什么能成为内容角度，而不是只是一张拍摄清单？
+    core_mechanism: 先判断观者站在哪里、第一眼看到什么，再把焦点、陪体、距离和停顿转成内容顺序。
+    observable_material: 入口焦点、前后层级、挂通间距、材质反差、灯光边缘和主搭陪体距离。
+    transfer_logic: 空间关系决定取景层级和解释顺序，让内容从第一眼焦点进入，而不是从普通清单进入。
+    boundary_guardrail: 不使用真实门店数据、真实人员身份或销售结果；需要授权的素材转人工确认。
+    generative_options:
+    - 远景停留：先建立区位
+    - 近景解释：说明焦点与陪体关系
+    - 训练观察：让新人找出停留点
+    failure_signal: 只有检查清单而没有内容角度转译时，退回空间信号采集。
+    downstream_effect: 帮助选择空间开场、讲解顺序和远中近景补采。
+  - draft_id: SEM-V4_7-DISPLAY-TO-CONTENT-002
+    revision_of: SEM-V4_6-DISPLAY-TO-CONTENT-002
+    domain_question: 哪个门店动作可以变成内容片段，而不是普通整理动作？
+    core_mechanism: 动作需要对象、前提、变化和结束标志同时成立，才可成为可解释的内容片段。
+    observable_material: 整理衣摆、并排比较、递示衣架、手势停顿、视线从整体移向细节。
+    transfer_logic: 把触发、变化、解释和停顿组成时间顺序，让动作说明选择条件。
+    boundary_guardrail: 不虚构真实顾客反馈，不写真实人员故事，也不输出可直接发布成稿。
+    generative_options:
+    - 动作解释：说明前后变化
+    - 对比片段：展示对象差异
+    - 训练追问：判断完成标志是否出现
+    failure_signal: 动作没有完成标志或只剩执行步骤时，退回素材采集。
+    downstream_effect: 帮助选择动作段落、前后对照和补采停顿点。
+  - draft_id: SEM-V4_7-CONTROL-PLANE-GOVERNANCE-001
+    revision_of: SEM-V4_6-CONTROL-PLANE-GOVERNANCE-001
+    domain_question: 什么状态必须先进入路由或账本，而不能继续写成领域正文？
+    core_mechanism: 缺来源、建模冲突、风险敏感和禁止输出先触发路径判断，再决定记录、阻断、拆分或再进入。
+    observable_material: 状态字段、路径目标、账本写入、阻断原因和再进入条件。
+    transfer_logic: 把异常信号转成 route_decision、generation_contract_guard、source_gap_or_decision_ledger_write 或 reentry_validation。
+    boundary_guardrail: 来源缺口或敏感项阻断正式落地，但不阻断标明出处、待审且不具备正式资格的草案。
+    generative_options:
+    - source_gap 路由说明
+    - decision_required 账本记录
+    - reentry_validation 条件说明
+    failure_signal: 路径目标缺失、账本目标缺失或再进入条件不清时，阻断并等待人工决定。
+    downstream_effect: route_decision; generation_contract_guard; source_gap_or_decision_ledger_write; reentry_validation
+  - draft_id: SEM-V4_7-CONTROL-PLANE-GOVERNANCE-002
+    revision_of: SEM-V4_6-CONTROL-PLANE-GOVERNANCE-002
+    domain_question: 研究资产什么时候只能保留为待审绑定候选，而不能进入正式资产链路？
+    core_mechanism: 绑定需要来源路径、owner、用途边界和非生产封印同时存在；缺任一项都只能形成待审记录。
+    observable_material: source path digest、owner 字段、review_only 标签、用途边界和非生产状态。
+    transfer_logic: 把绑定请求转成 governance_outbox_write、prohibited_transition_block 和 reentry_validation。
+    boundary_guardrail: 研究资产不得越过待审状态进入正式链路；补齐来源和 owner 后才可重新评估。
+    generative_options:
+    - review-only stub 说明
+    - binding block reason
+    - reentry review condition
+    failure_signal: 缺 source、owner、用途边界或非生产封印时，绑定候选无效。
+    downstream_effect: governance_outbox_write; prohibited_transition_block; reentry_validation

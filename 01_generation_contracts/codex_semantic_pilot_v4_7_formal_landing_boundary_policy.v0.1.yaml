@@ -1,0 +1,38 @@
+formal_landing_boundary_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  review_pending_draft_generation:
+    allowed: true
+    scope: this_v4_7_pilot_8_review_pending_drafts_only
+    conditions:
+    - provenance_class_present
+    - human_review_status_pending
+    - accepted_domain_knowledge_count_zero
+    - readiness_all_false
+    - no_CandidatePack
+    - no_KE
+    - no_Serving
+    - no_RAG
+    - no_DIFY
+    forbidden_scope_expansion:
+    - 3600_generation
+    - batch_001
+    - microbatch_generation
+    - CandidatePack_eligibility
+    - formal_landing
+  source_gap_or_sensitive_item:
+    blocks:
+    - formal_CandidatePack_eligibility
+    - KE_landing
+    - Serving_materialization
+    - RAG_consumption
+    - DIFY_generation
+    - production_servable
+    does_not_block:
+    - clearly_labeled_draft_generation
+    - source_workorder_hint
+    - decision_packet_preview_if_required
+  forbidden_statement:
+  - 缺来源或敏感项不得生成任何草案
+  review_pending_draft_scope_note: Review-pending draft permission is limited to the eight V4.7 pilot drafts; it does not
+    authorize 3600, batch_001, microbatch generation, CandidatePack eligibility, or formal landing.

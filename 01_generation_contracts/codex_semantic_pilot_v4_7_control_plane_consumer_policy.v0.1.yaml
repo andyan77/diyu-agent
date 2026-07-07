@@ -1,0 +1,19 @@
+control_plane_consumer_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  allowed_downstream_effect:
+  - route_decision
+  - generation_contract_guard
+  - source_gap_or_decision_ledger_write
+  - governance_outbox_write
+  - reentry_validation
+  - prohibited_transition_block
+  forbidden_downstream_effect:
+  - content_angle_selection
+  - review_focus_for_content_quality
+  - execution_asset_hint
+  - creative_value_block
+  - aesthetic_tension
+  - human_motive
+  control_plane_rule: Control-plane drafts describe route, guard, ledger, and reentry consumers only; content, display, and
+    creative consumers remain outside control-plane downstream_effect.

@@ -1,0 +1,60 @@
+semantic_cleanup_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  capsule_scan_scope: knowledge_capsule_body_fields_only
+  capsule_body_fields:
+  - domain_question
+  - core_mechanism
+  - observable_material
+  - transfer_logic
+  - boundary_guardrail
+  - generative_options
+  - failure_signal
+  - downstream_effect
+  capsule_forbidden_terms:
+  - V4
+  - V4.5
+  - V4.6
+  - V4.7
+  - compiler
+  - checker
+  - route-sync
+  - brief
+  - selftest
+  - fail-closed
+  - closeout
+  - judge
+  - no-go
+  - batch_generation
+  - CandidatePack
+  - KE
+  - Serving
+  - RAG
+  - DIFY
+  - readiness
+  allowed_locations_for_terms:
+    revision_lineage:
+    - V4
+    - V4.5
+    - V4.6
+    - V4.7
+    governance_sidecar:
+    - checker
+    - readiness
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+    report_or_receipt: all_terms
+  capsule_must_contain_only:
+  - domain_question
+  - core_mechanism
+  - observable_material
+  - transfer_logic
+  - boundary_guardrail
+  - generative_options
+  - failure_signal
+  - downstream_effect
+  false_positive_guard: lineage, sidecar, report, receipt, and file names may contain governance terms; the blocking scan
+    applies only to the capsule body fields.

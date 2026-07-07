@@ -1,0 +1,37 @@
+v4_6_conditional_repair_closeout:
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  previous_commit: dcca1d99b9906970a376c86f59618ae30f9a4b2f
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.6 structural design, boundary governance, and W7 traceability may be retained as repair baseline; V4.6 still
+      must not scale to 3600.
+    authorized_scope: V4.6 conditional repair closeout + V4.7 targeted semantic cleanup only
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+    - 3600_scale
+  engineering_delivery: PASS
+  type_specific_rich_body_compiler: PASS
+  section_independence: PASS
+  sidecar_leak_prevention: PASS
+  semantic_verdict: CONDITIONAL_REPAIR_REQUIRED
+  retained_as: repair_baseline
+  not_yet:
+  - accepted_domain_knowledge
+  - candidatepack_eligible
+  - batch_generation_template
+  - formal_relation_graph
+  required_targeted_fixes:
+  - remove_version_and_checker_language_from_capsule
+  - clean_claim_boundary_epistemic_residuals
+  - fix_control_plane_downstream_effect
+  - clarify_draft_generation_vs_formal_landing_boundary
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  V4_6_original_artifacts_modified: false

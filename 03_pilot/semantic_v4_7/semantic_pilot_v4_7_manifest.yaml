@@ -1,0 +1,33 @@
+semantic_pilot_v4_7_manifest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  previous_commit: dcca1d99b9906970a376c86f59618ae30f9a4b2f
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.6 structural design, boundary governance, and W7 traceability may be retained as repair baseline; V4.6 still
+      must not scale to 3600.
+    authorized_scope: V4.6 conditional repair closeout + V4.7 targeted semantic cleanup only
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+    - 3600_scale
+  semantic_pilot_v4_7_count: 8
+  distribution:
+    content_method: 2
+    apparel_claim_boundary: 2
+    display_to_content: 2
+    control_plane_governance: 2
+  one_to_one_revision_of_v4_6: true
+  review_pending_draft_scope: this_v4_7_pilot_8_review_pending_drafts_only
+  source_repo_live_accessed: false
+  external_drive_accessed: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  ready_for_semantic_pilot_v4_7_judge_review: true
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001

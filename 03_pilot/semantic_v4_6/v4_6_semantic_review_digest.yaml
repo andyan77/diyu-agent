@@ -1,0 +1,47 @@
+v4_6_semantic_review_digest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  previous_commit: dcca1d99b9906970a376c86f59618ae30f9a4b2f
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.6 structural design, boundary governance, and W7 traceability may be retained as repair baseline; V4.6 still
+      must not scale to 3600.
+    authorized_scope: V4.6 conditional repair closeout + V4.7 targeted semantic cleanup only
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+    - 3600_scale
+  semantic_review_summary:
+    structural_design: repair_baseline
+    boundary_governance: repair_baseline
+    W7_traceability: pass
+    safe_to_scale_to_3600: false
+    semantic_verdict: CONDITIONAL_REPAIR_REQUIRED
+  targeted_repair_scope:
+  - knowledge_capsule_governance_language_cleanup
+  - claim_boundary_epistemic_split_cleanup
+  - control_plane_consumer_cleanup
+  - review_pending_draft_vs_formal_landing_boundary_cleanup
+  original_v4_6_artifacts:
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_body_compiler_shapes.yaml: bfca78c95b23fd709d47b52102f56017fadd5d5d97fce5ab1bc238debaedbe32
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_candidate_cards.yaml: acd8ae66b6efd55af2a136e9b2ecd6cbe197cd8effea312c496a0def50b7cc14
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_complete_rich_bodies.yaml: daeb437f764a6193e58b17ecd34780710598cc5de445097c0c46de1318cd40ce
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_creative_value_blocks.yaml: 42f5becbe51689cb129f96180123e96ba0e541f128ec45d857ca80e8cd5c7cc5
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_epistemic_labels.yaml: ad5f9dcf02e8a4304f48d6b421a5fa3c1d1b342e17f7a9f66ef39fcb137032c5
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_independence_report.json: 4d328c966a0dba6b02e9009e025882a9b433fe4daf93eaee9877b41d38a9dae2
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_judge_protocol.md: 5ea309244d25e0a1d3f7967fa2e90b853c139c7ab00636214ab6707f071b5ce4
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_judge_review_queue.yaml: ecd763305313206860188599c6731dd544df6a493f5feaa7db762d641aba2e7e
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_knowledge_capsules.yaml: d67b8b818bbc32b44a2f2c520daea66a42c2eb77504e2f3cbe380175ce07134f
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_manifest.yaml: 9f3245084a2f670ad7627ad7c857c7aecaf1db948ef213f4b5b5697ff24eb73d
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_quality_report.json: 28a42d245d96338414094384aa9d840c2ddbebcd3a2720507e12fe6ebada847b
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_relation_design_hints.csv: fa4bcb400524cb64e294db2d2c079fe19030add12d427da74190eab483c901a5
+    03_pilot/semantic_v4_6/semantic_pilot_v4_6_sidecars.yaml: f0ce3977245eb9559b5bcce75769a1c65745ceb1756d0b2bdd8f63d9679dcd84
+  V4_6_original_artifacts_modified: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001

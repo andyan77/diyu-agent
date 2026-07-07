@@ -21,6 +21,7 @@ SEMANTIC_V4_3_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_3-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_4_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_5_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
 SEMANTIC_V4_6_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001"
+SEMANTIC_V4_7_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001"
 BATCH_TASK_ID = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_BATCH_IDS = [f"batch_{idx:03d}" for idx in range(1, 15)]
 GATE_KEYS = [
@@ -130,7 +131,7 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("batch generation must remain locked")
     if data.get("ready_for_first_batch_generation") is not False:
         errors.append("first batch generation must remain false")
-    if data.get("current_next_step") not in {NEXT_TASK_ID, SEMANTIC_JUDGE_NEXT_STEP, SEMANTIC_V3_JUDGE_NEXT_STEP, SEMANTIC_V4_JUDGE_NEXT_STEP, SEMANTIC_V4_1_JUDGE_NEXT_STEP, SEMANTIC_V4_2_JUDGE_NEXT_STEP, SEMANTIC_V4_3_JUDGE_NEXT_STEP, SEMANTIC_V4_4_JUDGE_NEXT_STEP, SEMANTIC_V4_5_JUDGE_NEXT_STEP, SEMANTIC_V4_6_JUDGE_NEXT_STEP}:
+    if data.get("current_next_step") not in {NEXT_TASK_ID, SEMANTIC_JUDGE_NEXT_STEP, SEMANTIC_V3_JUDGE_NEXT_STEP, SEMANTIC_V4_JUDGE_NEXT_STEP, SEMANTIC_V4_1_JUDGE_NEXT_STEP, SEMANTIC_V4_2_JUDGE_NEXT_STEP, SEMANTIC_V4_3_JUDGE_NEXT_STEP, SEMANTIC_V4_4_JUDGE_NEXT_STEP, SEMANTIC_V4_5_JUDGE_NEXT_STEP, SEMANTIC_V4_6_JUDGE_NEXT_STEP, SEMANTIC_V4_7_JUDGE_NEXT_STEP}:
         errors.append("next step must be semantic pilot regen, semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, semantic pilot v4 judge go/no-go, semantic pilot v4.1 judge go/no-go, semantic pilot v4.2 judge go/no-go, or semantic pilot v4.3 judge go/no-go or semantic pilot v4.4 judge go/no-go")
     if data.get("current_next_step") == BATCH_TASK_ID:
         errors.append("batch generation task cannot be next step")
@@ -340,6 +341,21 @@ def validate_live(
             fail("semantic v4.6 judge route requires accepted_domain_knowledge_count 0")
         assert_false(semantic_v46.get("batch_generation_unlocked"), "semantic v4.6 judge route batch_generation_unlocked")
         assert_false(semantic_v46.get("ready_for_first_batch_generation"), "semantic v4.6 judge route ready_for_first_batch_generation")
+
+    elif current_next_step == SEMANTIC_V4_7_JUDGE_NEXT_STEP:
+        semantic_v47 = status.get("semantic_pilot_v4_7", {})
+        if semantic_v47.get("task_id") != "CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001" or semantic_v47.get("status") != "completed":
+            fail("semantic v4.7 judge route requires completed semantic_pilot_v4_7 block")
+        if semantic_v47.get("semantic_pilot_v4_7_count") != 8:
+            fail("semantic v4.7 judge route requires 8 v4.7 semantic cleanup drafts")
+        if semantic_v47.get("one_to_one_revision_of_v4_6") is not True:
+            fail("semantic v4.7 judge route requires one-to-one revision of V4.6")
+        if semantic_v47.get("capsule_forbidden_term_count") != 0:
+            fail("semantic v4.7 judge route requires zero capsule forbidden terms")
+        if semantic_v47.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v4.7 judge route requires accepted_domain_knowledge_count 0")
+        assert_false(semantic_v47.get("batch_generation_unlocked"), "semantic v4.7 judge route batch_generation_unlocked")
+        assert_false(semantic_v47.get("ready_for_first_batch_generation"), "semantic v4.7 judge route ready_for_first_batch_generation")
     elif current_next_step != NEXT_TASK_ID:
         fail("current_next_step must be a known semantic pilot handoff and must not be batch generation")
     readiness = status.get("readiness", {})

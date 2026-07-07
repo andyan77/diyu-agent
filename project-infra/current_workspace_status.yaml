@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001
-  previous_step: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  current_next_step: CODEX-SEMANTIC-PILOT-V4_7-JUDGE-GO-NOGO-001
+  previous_step: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -224,3 +224,32 @@ semantic_pilot_v4_6:
   ready_for_semantic_pilot_v4_6_judge_review: true
   batch_generation_unlocked: false
   ready_for_first_batch_generation: false
+v4_6_conditional_repair_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  status: completed
+  semantic_verdict: CONDITIONAL_REPAIR_REQUIRED
+  retained_as: repair_baseline
+  V4_6_original_artifacts_modified: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+semantic_pilot_v4_7:
+  task_id: CODEX-SEMANTIC-PILOT-V4_6-CONDITIONAL-REPAIR-CLOSEOUT-AND-V4_7-SEMANTIC-CLEANUP-001
+  status: completed
+  semantic_pilot_v4_7_count: 8
+  distribution:
+    content_method: 2
+    apparel_claim_boundary: 2
+    display_to_content: 2
+    control_plane_governance: 2
+  one_to_one_revision_of_v4_6: true
+  capsule_forbidden_term_count: 0
+  complete_rich_body_valid_count: 8
+  capsule_rich_body_alignment_valid_count: 8
+  claim_boundary_epistemic_split_valid_count: 2
+  control_plane_downstream_effect_valid_count: 2
+  review_pending_draft_scope: this_v4_7_pilot_8_review_pending_drafts_only
+  accepted_domain_knowledge_count: 0
+  ready_for_semantic_pilot_v4_7_judge_review: true
+  ready_for_first_batch_generation: false
+  batch_generation_unlocked: false
