@@ -1,0 +1,180 @@
+codex_semantic_pilot_v4_6_type_specific_rich_body_compiler:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  policy_status: active_for_v4_6_pilot_only
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.5 architecture conditional pass, V4.5 rich body quality fail, no batch generation, authorize V4.6 rewrite and checker hardening only
+    authorized_scope:
+    - V4.5 closeout
+    - V4.6 type-specific Rich Body rewrite
+    - type-specific compiler contract
+    - route sync for V4.6 judge handoff
+    - checker hardening for section independence and sidecar leak prevention
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE_landing
+    - Serving_projection
+    - RAG_context_bundle
+    - DIFY_workflow
+  compiler_assignment_matrix:
+  - draft_id: SEM-V4_6-CONTENT-METHOD-001
+    revision_of: SEM-V4_5-CONTENT-METHOD-001
+    referenced_mkc_id: mkc_009
+    canonical_title_from_authority: 故事弧线适用边界
+    artifact_kind: general_knowledge_candidate
+    type_specific_body_shape: general_knowledge
+    compiler_id: content_story_method
+    expected_body_shape: story_arc_body
+    compiler_shape: &id003
+    - evidence_strength
+    - story_problem_type
+    - allowable_arc
+    - value_expression
+    - downgrade_path
+    - micro_scene_contrast
+    - downstream_use
+  - draft_id: SEM-V4_6-CONTENT-METHOD-002
+    revision_of: SEM-V4_5-CONTENT-METHOD-002
+    referenced_mkc_id: mkc_010
+    canonical_title_from_authority: 反模板叙事锚点
+    artifact_kind: general_knowledge_candidate
+    type_specific_body_shape: general_knowledge
+    compiler_id: anchor_composition_method
+    expected_body_shape: anchor_composition_body
+    compiler_shape: &id004
+    - object_action_relation_time_space
+    - primary_anchor
+    - constraint
+    - sequencing
+    - content_rhythm
+    - anti_template_failure
+    - downstream_use
+  - draft_id: SEM-V4_6-APPAREL-CLAIM-BOUNDARY-001
+    revision_of: SEM-V4_5-APPAREL-CLAIM-BOUNDARY-001
+    referenced_mkc_id: mkc_026
+    canonical_title_from_authority: 身材效果语言阶梯与场景化观察
+    artifact_kind: general_knowledge_candidate
+    type_specific_body_shape: claim_boundary
+    compiler_id: claim_boundary
+    expected_body_shape: claim_boundary_body
+    compiler_shape: &id001
+    - expression_layer
+    - allowed_expression
+    - conditional_expression
+    - source_workorder
+    - prohibited_expression
+    - safe_creative_alternative
+    - epistemic_warning
+  - draft_id: SEM-V4_6-APPAREL-CLAIM-BOUNDARY-002
+    revision_of: SEM-V4_5-APPAREL-CLAIM-BOUNDARY-002
+    referenced_mkc_id: mkc_027
+    canonical_title_from_authority: 舒适性能耐用品质证据阶梯
+    artifact_kind: general_knowledge_candidate
+    type_specific_body_shape: claim_boundary
+    compiler_id: claim_boundary
+    expected_body_shape: claim_boundary_body
+    compiler_shape: *id001
+  - draft_id: SEM-V4_6-DISPLAY-TO-CONTENT-001
+    revision_of: SEM-V4_5-DISPLAY-TO-CONTENT-001
+    referenced_mkc_id: mkc_032
+    canonical_title_from_authority: 陈列区位与可拍摄视觉锚点
+    artifact_kind: execution_asset_outbox_candidate
+    type_specific_body_shape: execution_asset
+    compiler_id: display_execution.spatial_variant
+    expected_body_shape: display_spatial_execution_body
+    compiler_shape: &id005
+    - spatial_signal
+    - visual_focus
+    - supporting_object_or_distance
+    - capture_order
+    - content_angle
+    - authorization_boundary
+    - multi_output_consumption
+  - draft_id: SEM-V4_6-DISPLAY-TO-CONTENT-002
+    revision_of: SEM-V4_5-DISPLAY-TO-CONTENT-002
+    referenced_mkc_id: mkc_034
+    canonical_title_from_authority: 动作转内容槽位与演示三段式
+    artifact_kind: execution_asset_outbox_candidate
+    type_specific_body_shape: execution_asset
+    compiler_id: display_execution.temporal_variant
+    expected_body_shape: display_temporal_execution_body
+    compiler_shape: &id006
+    - action_trigger
+    - before_after_change
+    - explanation_slot
+    - completion_marker
+    - content_rhythm
+    - authorization_boundary
+    - multi_output_consumption
+  - draft_id: SEM-V4_6-CONTROL-PLANE-GOVERNANCE-001
+    revision_of: SEM-V4_5-CONTROL-PLANE-GOVERNANCE-001
+    referenced_mkc_id: mkc_004
+    canonical_title_from_authority: 异常分发与再进入规则
+    artifact_kind: control_plane_candidate
+    type_specific_body_shape: control_plane
+    compiler_id: control_plane
+    expected_body_shape: control_plane_route_body
+    compiler_shape: &id002
+    - trigger
+    - route
+    - ledger_target
+    - block_or_split
+    - reentry_condition
+    - forbidden_transition
+    - false_generation_prevention
+  - draft_id: SEM-V4_6-CONTROL-PLANE-GOVERNANCE-002
+    revision_of: SEM-V4_5-CONTROL-PLANE-GOVERNANCE-002
+    referenced_mkc_id: mkc_006
+    canonical_title_from_authority: 研究资产绑定与非生产封印
+    artifact_kind: governance_outbox_candidate
+    type_specific_body_shape: asset_binding_policy
+    compiler_id: control_plane
+    expected_body_shape: control_plane_route_body
+    compiler_shape: *id002
+  type_specific_rich_body_compilers:
+    content_story_method:
+      applies_to:
+      - mkc_009
+      compiler_shape: *id003
+      must_not_share_core_sections_with:
+      - anchor_composition_method
+    anchor_composition_method:
+      applies_to:
+      - mkc_010
+      compiler_shape: *id004
+      must_not_share_core_sections_with:
+      - content_story_method
+    claim_boundary:
+      applies_to:
+      - mkc_026
+      - mkc_027
+      compiler_shape: *id001
+      strict_split_required:
+      - direct_observation
+      - conditional_experience_expression
+      - source_required_performance_claim
+      - prohibited_guarantee
+    display_execution:
+      spatial_variant:
+        applies_to:
+        - display_zone_to_visual_focus
+        - mkc_032
+        compiler_shape: *id005
+      temporal_variant:
+        applies_to:
+        - action_slice_to_explanation_slot
+        - mkc_034
+        compiler_shape: *id006
+      spatial_and_temporal_must_not_reuse_core_sections: true
+    control_plane:
+      applies_to:
+      - mkc_004
+      - mkc_006
+      compiler_shape: *id002
+      forbidden:
+      - creative_transfer_slot
+      - aesthetic_tension_slot
+      - not_applicable_for_control_plane_in_body_text

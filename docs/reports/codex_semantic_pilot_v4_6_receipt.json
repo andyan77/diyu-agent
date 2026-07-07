@@ -1,0 +1,109 @@
+{
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001",
+  "status": "completed",
+  "repository": "/home/diyu/笛语领域通用数据库",
+  "branch": "master",
+  "commit_before": "6685a09ec11dbcff1f7921ae211c2b89da583071",
+  "semantic_pilot_v4_6_path": "03_pilot/semantic_v4_6",
+  "v4_6_draft_count": 8,
+  "v4_6_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "compiler_shape_valid_count": 8,
+  "complete_rich_body_valid_count": 8,
+  "capsule_rich_body_alignment_valid_count": 8,
+  "exact_section_reuse_count": 0,
+  "same_group_core_section_similarity_max": 0.183,
+  "cross_group_core_section_similarity_max": 0.197,
+  "similarity_method": {
+    "normalization": "lowercase ASCII tokens plus CJK character bigrams; punctuation and whitespace removed for CJK comparison",
+    "metric": "Jaccard similarity over normalized unit sets"
+  },
+  "repeated_downstream_use_paragraph_count": 0,
+  "sidecar_leak_into_rich_body_count": 0,
+  "epistemic_label_text_conflict_count": 0,
+  "relation_design_hints_count": 23,
+  "formal_graph_claim_count": 0,
+  "predicate_version_suffix_count": 0,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "ready_for_semantic_pilot_v4_6_judge_review": true,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001",
+  "V4_5_original_artifacts_modified": false,
+  "source_repo_live_accessed": false,
+  "external_resources_touched": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "Serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "route_sync_files_changed": [
+    "ci/checkers/check_codex_generation_cross_type_pilot.py",
+    "ci/checkers/check_codex_semantic_pilot_regen.py",
+    "ci/checkers/check_codex_semantic_pilot_v3.py",
+    "ci/checkers/check_codex_semantic_pilot_v4.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_1.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_2.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_3.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_4.py",
+    "ci/checkers/check_codex_semantic_pilot_v4_5.py",
+    "ci/checkers/check_pilot_semantic_fail_closeout_and_brief_hardening.py"
+  ],
+  "old_checker_selftest_results": {
+    "check_codex_generation_cross_type_pilot.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_regen.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v3.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v4.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v4_1.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v4_2.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v4_3.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v4_4.py": {
+      "status": "PASS"
+    },
+    "check_codex_semantic_pilot_v4_5.py": {
+      "status": "PASS"
+    },
+    "check_pilot_semantic_fail_closeout_and_brief_hardening.py": {
+      "status": "PASS"
+    }
+  },
+  "exact_commands_run": [
+    "git status --short",
+    "git rev-parse --abbrev-ref HEAD",
+    "git rev-parse HEAD",
+    "sha256sum 03_pilot/semantic_v4_5/semantic_pilot_v4_5_* > /tmp/v4_5_before.sha256",
+    "python3 -m py_compile ci/checkers/check_codex_semantic_pilot_v4_6.py",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_5.py --live",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_5.py --selftest",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_6.py --live --report-out ci/reports/codex_semantic_pilot_v4_6_report.json",
+    "python3 ci/checkers/check_codex_semantic_pilot_v4_6.py --selftest",
+    "python3 -O ci/checkers/check_codex_semantic_pilot_v4_6.py --live (expected exit 2 and FAIL-CLOSED)",
+    "python3 -m py_compile route-sync old checkers",
+    "python3 old route-sync checkers (live)",
+    "python3 old route-sync checkers --selftest",
+    "python3 ci/checkers/check_codex_generation_contract_lock.py",
+    "python3 parse YAML/JSON/CSV check",
+    "python3 readiness false scan with full readiness tokens",
+    "sha256sum -c /tmp/v4_5_before.sha256"
+  ],
+  "human_decision_needed_next": "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001 review decision"
+}

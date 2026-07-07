@@ -1,0 +1,26 @@
+codex_semantic_pilot_v4_6_rich_body_independence_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  rich_body_independence:
+    hard_reject:
+    - exact_section_reuse_across_different_cards
+    - same_group_core_section_duplicate
+    - seven_section_template_with_topic_replacement
+    - repeated_downstream_use_paragraph_across_all_cards
+    - repeated_contrast_or_antipattern_paragraph_across_all_cards
+    thresholds:
+      exact_reused_section_count_max: 0
+      same_group_core_section_similarity_max: 0.35
+      cross_group_core_section_similarity_max: 0.25
+      repeated_downstream_use_paragraph_max: 0
+    similarity_method:
+      normalization: lowercase ASCII tokens plus CJK character bigrams; punctuation and whitespace removed for CJK comparison
+      metric: Jaccard similarity over normalized unit sets
+      scope: max pairwise similarity across core rich-body section texts, excluding ids and metadata
+    required_difference_claim:
+      every_card_must_state:
+      - what_decision_changes
+      - what_observable_material_changes
+      - what_transfer_logic_changes
+      - what_failure_mode_changes
+      - what_downstream_use_changes

@@ -13,10 +13,12 @@ from typing import Any
 import yaml
 
 V4_5_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001"
+V4_6_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001"
 TASK_ID = "CODEX-SEMANTIC-PILOT-V4_3-NOGO-CLOSEOUT-CREATIVE-KNOWLEDGE-CAPSULE-AND-V4_4-REWRITE-001"
 PREVIOUS_TASK_ID = "CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_4-JUDGE-GO-NOGO-001"
 V4_5_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_5-JUDGE-GO-NOGO-001"
+V4_6_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 8
 EXPECTED_DISTRIBUTION = {
@@ -168,6 +170,27 @@ def validate_v45_status_block(status: dict[str, Any]) -> None:
         fail("semantic v4.5 judge route requires ready_for_semantic_pilot_v4_5_judge_review true")
 
 
+def validate_v46_status_block(status: dict[str, Any]) -> None:
+    phase = status.get("phase", {})
+    if phase.get("previous_step") != V4_6_TASK_ID:
+        fail("semantic v4.6 judge route requires V4.6 compiler rewrite task as previous_step")
+    v46 = status.get("semantic_pilot_v4_6", {})
+    if v46.get("task_id") != V4_6_TASK_ID or v46.get("status") != "completed":
+        fail("semantic v4.6 judge route requires completed semantic_pilot_v4_6 block")
+    if v46.get("semantic_pilot_v4_6_count") != 8:
+        fail("semantic v4.6 judge route requires 8 v4.6 semantic revision drafts")
+    if v46.get("one_to_one_revision_of_v4_5") is not True:
+        fail("semantic v4.6 judge route requires one-to-one revision of V4.5")
+    if v46.get("compiler_shape_valid_count") != 8:
+        fail("semantic v4.6 judge route requires 8 valid compiler shapes")
+    if v46.get("accepted_domain_knowledge_count") != 0:
+        fail("semantic v4.6 judge route requires accepted_domain_knowledge_count 0")
+    assert_false(v46.get("batch_generation_unlocked"), "semantic v4.6 judge route batch_generation_unlocked")
+    assert_false(v46.get("ready_for_first_batch_generation"), "semantic v4.6 judge route ready_for_first_batch_generation")
+    if v46.get("ready_for_semantic_pilot_v4_6_judge_review") is not True:
+        fail("semantic v4.6 judge route requires ready_for_semantic_pilot_v4_6_judge_review true")
+
+
 def contains_pattern(text: str, patterns: list[re.Pattern[str]]) -> bool:
     return any(pattern.search(text) for pattern in patterns)
 
@@ -179,7 +202,7 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("task_id mismatch")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") not in {NEXT_STEP, V4_5_NEXT_STEP}:
+    if data.get("current_next_step") not in {NEXT_STEP, V4_5_NEXT_STEP, V4_6_NEXT_STEP}:
         errors.append("current_next_step must be semantic pilot V4.4/V4.5 judge go/no-go")
     if data.get("v4_4_draft_count") != EXPECTED_TOTAL:
         errors.append("v4_4_draft_count must be 8")
@@ -235,7 +258,7 @@ def validate_status(workspace: Path) -> None:
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
     current_next_step = phase.get("current_next_step")
-    if current_next_step not in {NEXT_STEP, V4_5_NEXT_STEP}:
+    if current_next_step not in {NEXT_STEP, V4_5_NEXT_STEP, V4_6_NEXT_STEP}:
         fail("workspace next step must be semantic pilot V4.4 or V4.5 judge go/no-go")
     if current_next_step == NEXT_STEP and phase.get("previous_step") != TASK_ID:
         fail("workspace previous step must be V4.4 creative capsule task")
@@ -252,6 +275,8 @@ def validate_status(workspace: Path) -> None:
         fail("accepted_domain_knowledge_count must remain 0")
     assert_false(v44.get("batch_generation_unlocked"), "semantic_pilot_v4_4 batch_generation_unlocked")
     assert_false(v44.get("ready_for_first_batch_generation"), "semantic_pilot_v4_4 ready_for_first_batch_generation")
+    if current_next_step == V4_6_NEXT_STEP:
+        validate_v46_status_block(status)
     bad = {key: value for key, value in status.get("readiness", {}).items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"readiness true flags: {bad}")

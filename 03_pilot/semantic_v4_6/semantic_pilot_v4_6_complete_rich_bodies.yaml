@@ -1,0 +1,244 @@
+semantic_pilot_v4_6_complete_rich_bodies:
+  items:
+  - draft_id: SEM-V4_6-CONTENT-METHOD-001
+    revision_of: SEM-V4_5-CONTENT-METHOD-001
+    compiler_id: content_story_method
+    expected_body_shape: story_arc_body
+    body_language: zh-CN
+    compiler_sections:
+      evidence_strength: 先估计素材能承载的证据强度：一张静态图只能支持可见细节和当下动作，一组连续片段才可能支持选择过程，只有外部来源才能支持结果型结论。强度判断改变的是叙事入口，而不是把薄弱材料包装得更完整。
+      story_problem_type: 故事问题从“为什么这个细节值得被看见”开始，而不是从人物动机或受众反应开始。它要求先确认材料属于瞬间观察、选择过程还是价值取舍，再决定是提出问题、展开过程，还是只保留开放观察。
+      allowable_arc: 可用弧线有三类：瞬间观察弧只呈现一个可见细节；选择过程弧展示取舍顺序；价值表达弧说明细节如何服务审美或角色。每个弧线都必须和证据强度绑定，证据不足时不能补因果。
+      value_expression: 价值表达只落在方法层，例如“让细节先说话”“把取舍暴露出来”“让留白保留判断空间”。它不把情绪词写成真实反馈，也不声称观众已经产生某种反应。
+      downgrade_path: 当素材只有衣物边线、袖口折痕或光线停顿时，正文应降级为观察问题；当素材出现拿取、比较、放回等连续动作时，才进入选择过程。缺少来源的结果句必须回到素材采集提示。
+      micro_scene_contrast: 微场景对比是“同一件衣物被举起时看见边线”与“直接说它有故事感”的差别。前者让可见细节形成故事问题，后者只给空泛评价，无法指导下一步内容角度。
+      downstream_use: 'downstream_use: content_angle_selection 可选择瞬间观察、选择过程或价值表达；review_focus 检查弧线是否越过证据强度；execution_asset_hint 只提示需要补采连续动作或细节特写。'
+    section_order:
+    - evidence_strength
+    - story_problem_type
+    - allowable_arc
+    - value_expression
+    - downgrade_path
+    - micro_scene_contrast
+    - downstream_use
+    body_zh_chars: 478
+    difference_claim:
+      what_decision_changes: 先判证据强度，再选故事问题类型。
+      what_observable_material_changes: 关注衣物细节和动作连续性，而不是空间位置。
+      what_transfer_logic_changes: 由强度绑定弧线，不由锚点编排决定节奏。
+      what_failure_mode_changes: 证据弱时降级为观察问题。
+      what_downstream_use_changes: 用于内容角度选择和补采提示。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-CONTENT-METHOD-002
+    revision_of: SEM-V4_5-CONTENT-METHOD-002
+    compiler_id: anchor_composition_method
+    expected_body_shape: anchor_composition_body
+    body_language: zh-CN
+    compiler_sections:
+      object_action_relation_time_space: 正文先列出对象、动作、关系、时间和空间：对象是衣物、衣架、手部或镜面；动作是靠近、抬起、摊开、转向；关系是遮挡、并列、前后；时间是动作前后；空间是桌面、挂杆或镜前位置。
+      primary_anchor: 主锚点只能从最稳定的对象动作组合中选出，例如“手把衣摆抬起露出内层边线”。锚点决定观察顺序，不决定故事弧线；它回答“先看哪里”，不是回答“为什么感动”。
+      constraint: 约束来自画面限制和材料限制：光线不足、动作太快、对象被遮挡、关系只出现一瞬。约束被记录后，正文才知道哪些内容角度不能展开，哪些只适合做短提示。
+      sequencing: 编排顺序按锚点稳定度排列：先给对象位置，再给动作变化，再给关系变化，最后给可被提问的细节。这个顺序帮助创作避免模板化开头，也避免把缺失动作当作连续过程。
+      content_rhythm: 节奏来自观察切换：慢看对象，短停动作，快速说明关系，再留一个问题。它和故事弧线不同，不讨论价值取舍，只让素材从杂乱画面变成可采集、可解释的观察段。
+      anti_template_failure: 失败信号是只有“高级、松弛、氛围”这类形容词，没有对象动作关系，或把单个锚点硬套成完整故事。此时应返回锚点采集，而不是继续扩写。
+      downstream_use: 'downstream_use: content_angle_selection 选择锚点观察或动作顺序；review_focus 检查对象动作关系是否齐全；execution_asset_hint 提示补拍对象位置、动作前后和关系变化。'
+    section_order:
+    - object_action_relation_time_space
+    - primary_anchor
+    - constraint
+    - sequencing
+    - content_rhythm
+    - anti_template_failure
+    - downstream_use
+    body_zh_chars: 422
+    difference_claim:
+      what_decision_changes: 先选主锚点和观察顺序。
+      what_observable_material_changes: 关注对象、动作、关系、时间、空间五元。
+      what_transfer_logic_changes: 由锚点稳定度生成内容节奏。
+      what_failure_mode_changes: 缺锚点时回到采集，不进入故事弧线。
+      what_downstream_use_changes: 用于执行资产提示和观察顺序。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-APPAREL-CLAIM-BOUNDARY-001
+    revision_of: SEM-V4_5-APPAREL-CLAIM-BOUNDARY-001
+    compiler_id: claim_boundary
+    expected_body_shape: claim_boundary_body
+    body_language: zh-CN
+    compiler_sections:
+      expression_layer: 身材效果表达先拆成画面观察、条件体验、需来源支持的结果主张和禁用保证。画面观察只处理比例线、分界、遮挡和轮廓关系；它不能推出真实身体变化，也不能替代试穿数据。
+      allowed_expression: 允许写“画面中的上下比例关系更清楚”“内外层分界更容易被看见”“衣摆位置让重心显得更明确”。这些句子都指向可见关系，不把显瘦、变高或身体结果当作事实。
+      conditional_expression: 条件体验必须带场景条件，例如“在上短下长搭配中，穿着者可能更容易注意到腰线分界”。这里表达的是穿搭语境下的主观感受，不能省略条件，也不能写成普遍结论。
+      source_workorder: 若出现显瘦、修饰比例、体感改善等结果语言，应转成补源任务：需要规则来源、样本条件或测量口径。没有来源时，只能保留可见线条和搭配条件。
+      prohibited_expression: 禁止写“谁穿都显瘦”“保证拉长比例”“一定显高”。这类保证越过了观察层和条件体验层，既没有来源，也会把审美表达伪装成身体效果。
+      safe_creative_alternative: 安全替代表达可围绕线条停顿、重心分界、外套开合和内搭露出比例展开。它保留审美方向，但把结果承诺改成画面关系和搭配条件。
+      epistemic_warning: 触感、贴肤感和活动感不能标为 direct_observation；它们最多是 conditional_experience_expression。显瘦、耐穿、持久舒适等属于 source_required_performance_claim；保证性词组直接阻断。
+    section_order: &id001
+    - expression_layer
+    - allowed_expression
+    - conditional_expression
+    - source_workorder
+    - prohibited_expression
+    - safe_creative_alternative
+    - epistemic_warning
+    body_zh_chars: 406
+    difference_claim:
+      what_decision_changes: 先拆表达层级，再决定保留或补源。
+      what_observable_material_changes: 关注比例线、遮挡、分界和轮廓。
+      what_transfer_logic_changes: 把效果句转成画面关系或来源任务。
+      what_failure_mode_changes: 身体结果承诺直接阻断。
+      what_downstream_use_changes: 用于安全表达和补源提示。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-APPAREL-CLAIM-BOUNDARY-002
+    revision_of: SEM-V4_5-APPAREL-CLAIM-BOUNDARY-002
+    compiler_id: claim_boundary
+    expected_body_shape: claim_boundary_body
+    body_language: zh-CN
+    compiler_sections:
+      expression_layer: 舒适和耐用品质表达按可见结构、条件体验、性能主张、保证句分层。可见结构包括缝线走向、接触面结构、松紧部位形态和动作后衣摆变化；舒适、透气、抗皱不能直接放进观察层。
+      allowed_expression: 允许写“接触面的结构更平整”“动作后衣摆形态保持得更清楚”“缝线位置减少了画面杂乱”。这些表达说明画面中可看见的结构变化，不声称真实体感或耐久结果。
+      conditional_expression: 条件体验可以写“在短时走动场景中，穿着者可能更注意到接触面是否顺滑”。它必须保留“短时、场景、可能、主观感受”等限制，不能被改写为长期性能。
+      source_workorder: 透气、抗皱、耐穿、回弹和持久舒适都需要来源任务。正文应记录需要哪类测试口径或外部说明，而不是用创意替代路径把性能句变得更柔和。
+      prohibited_expression: 禁止写“保证舒适”“长期不变形”“活动多久都不勒”。这些话承诺了真实效果和持续时间，缺少来源时不能进入正文表达。
+      safe_creative_alternative: 安全替代可写成“动作后衣摆线条仍清楚”“接触面结构在画面里更容易辨认”“搭配中减少皱褶干扰”。它把体感风险转成可见结构和条件场景。
+      epistemic_warning: 触感、活动感、贴肤感不属于 direct_observation；如果正文把它们标成直接观察，就是认识论冲突。性能词只能进入 source_required_performance_claim，保证词进入 prohibited_guarantee。
+    section_order: *id001
+    body_zh_chars: 399
+    difference_claim:
+      what_decision_changes: 先区分结构观察和体验/性能。
+      what_observable_material_changes: 关注缝线、接触面、松紧、衣摆形态。
+      what_transfer_logic_changes: 把体感风险改写为结构观察或来源任务。
+      what_failure_mode_changes: 长期性能和保证句阻断。
+      what_downstream_use_changes: 用于表达分层和来源任务。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-DISPLAY-TO-CONTENT-001
+    revision_of: SEM-V4_5-DISPLAY-TO-CONTENT-001
+    compiler_id: display_execution.spatial_variant
+    expected_body_shape: display_spatial_execution_body
+    body_language: zh-CN
+    compiler_sections:
+      spatial_signal: 空间信号来自入口焦点、货架层级、模特朝向、同色陈列和人行距离。正文先判断观者站在哪里会看见什么，而不是从动作开始。空间信号改变的是镜头取位和内容角度。
+      visual_focus: 视觉焦点只能选择一个主区域，例如入口正面的同色组合或中岛台的高低层次。焦点要说明为什么能被看到：对比、留白、距离或高度，而不是泛泛说画面好看。
+      supporting_object_or_distance: 辅助对象包括旁边的挂架、模特手位、标识留白或相邻色块；距离说明观者从远看、中看、近看时信息如何变化。它们服务空间判断，不承担动作演示。
+      capture_order: 拍摄顺序按空间层级推进：先远景建立区位，再中景锁定焦点，最后近景捕捉支持对象。每一步都说明要拍什么和为什么，避免把陈列观察写成普通清单。
+      content_angle: 内容角度可落在“为什么这个位置先被看见”“同色组合如何形成入口”“距离变化如何改变注意点”。它不声称门店效果，也不写成完整发布稿。
+      authorization_boundary: 授权边界只允许基于可见空间和拍摄条件进行内容构思。涉及人脸、真实门店数据、销售结果或内部陈列策略时，应停止并转入人工确认。
+      multi_output_consumption: 'downstream_use: content_angle_selection 可选空间焦点、视觉路径或距离变化；review_focus 检查是否把空间信号误写成效果事实；execution_asset_hint 提示远中近景补拍。'
+    section_order:
+    - spatial_signal
+    - visual_focus
+    - supporting_object_or_distance
+    - capture_order
+    - content_angle
+    - authorization_boundary
+    - multi_output_consumption
+    body_zh_chars: 404
+    difference_claim:
+      what_decision_changes: 先选空间焦点和取景层级。
+      what_observable_material_changes: 关注入口、距离、货架、相邻对象。
+      what_transfer_logic_changes: 把空间信号转成内容角度。
+      what_failure_mode_changes: 缺空间层级时退回拍摄提示。
+      what_downstream_use_changes: 用于空间取景和内容角度选择。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-DISPLAY-TO-CONTENT-002
+    revision_of: SEM-V4_5-DISPLAY-TO-CONTENT-002
+    compiler_id: display_execution.temporal_variant
+    expected_body_shape: display_temporal_execution_body
+    body_language: zh-CN
+    compiler_sections:
+      action_trigger: 动作触发来自拿起、展开、旋转、靠近镜面、停顿解释等事件。正文先判断哪个动作启动内容段落，而不是先看空间位置。触发点必须能在片段里被观察到。
+      before_after_change: 前后变化记录动作前的状态和动作后的可见差异，例如衣摆从垂放到展开、内层从遮挡到露出、搭配从平面到上身对照。变化越清楚，解释槽位越稳定。
+      explanation_slot: 解释槽位只说明动作改变了哪个可见关系：露出层次、改变垂坠、显示开合、说明搭配顺序。它不承诺效果，也不把导购话术写成最终成稿。
+      completion_marker: 完成标记是动作停住、对象回到画面中心、对照关系被看清或解释语句结束。没有完成标记时，片段只能作为素材采集，不宜转成完整演示。
+      content_rhythm: 节奏按触发、变化、解释、停顿四步排列。它和空间卡不同，重点在时间顺序和动作节点；如果只有静态陈列，就不使用这个编译器。
+      authorization_boundary: 授权边界要求动作不涉及隐私、真实人物身份或内部销售结论。若动作需要额外许可或来源说明，应转为人工确认，不在正文里补事实。
+      multi_output_consumption: 'downstream_use: content_angle_selection 可选择动作演示、前后变化或解释槽位；review_focus 检查完成标记是否存在；execution_asset_hint 提示补采触发前后和停顿点。'
+    section_order:
+    - action_trigger
+    - before_after_change
+    - explanation_slot
+    - completion_marker
+    - content_rhythm
+    - authorization_boundary
+    - multi_output_consumption
+    body_zh_chars: 377
+    difference_claim:
+      what_decision_changes: 先确认动作触发和完成标记。
+      what_observable_material_changes: 关注前后变化、停顿和解释节点。
+      what_transfer_logic_changes: 把动作序列转成内容节奏。
+      what_failure_mode_changes: 没有完成标记时退回素材采集。
+      what_downstream_use_changes: 用于动作段落和演示提示。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-CONTROL-PLANE-GOVERNANCE-001
+    revision_of: SEM-V4_5-CONTROL-PLANE-GOVERNANCE-001
+    compiler_id: control_plane
+    expected_body_shape: control_plane_route_body
+    body_language: zh-CN
+    compiler_sections:
+      trigger: 触发条件是候选片段出现缺少来源、建模冲突、风险敏感或禁止输出请求。正文先识别触发类型，再决定是否进入 source_gap、decision_required、founder_review 或 excluded。
+      route: route 只描述四条处理路径：source_gap 用于缺来源；decision_required 用于结构冲突；founder_review 用于需要创始人裁决的敏感项；excluded 用于禁止输出或越权请求。
+      ledger_target: 账本目标按路径确定：缺来源记录补源线索，结构冲突记录待决事项，敏感项记录裁决请求，禁止项记录排除原因。正文不把这些记录说成领域知识。
+      block_or_split: 当一个输入同时像来源缺口、待决事项和执行资产时，先触发 block_or_split。能拆清楚归属就分流；拆不清楚就阻断，并保留需要人工决定的原因。
+      reentry_condition: 再进入条件必须明确：source_gap 需要来源补足，decision_required 需要结构裁决，founder_review 需要创始人授权，excluded 通常不得再进入。
+      forbidden_transition: 禁止从缺来源或敏感项直接进入领域正文，也禁止把排除项改写成安全表达后继续流转。控制路径必须先完成必要条件，不能用文字修饰绕过。
+      false_generation_prevention: 'downstream_use: review_focus 检查触发、路径、账本目标和再进入条件是否齐全；execution_asset_hint 只提示需要补什么路由信息；content_angle_selection 不适用于控制路径。'
+    section_order: &id002
+    - trigger
+    - route
+    - ledger_target
+    - block_or_split
+    - reentry_condition
+    - forbidden_transition
+    - false_generation_prevention
+    body_zh_chars: 338
+    difference_claim:
+      what_decision_changes: 先识别异常触发，再分配路径。
+      what_observable_material_changes: 关注缺源、冲突、敏感和禁止信号。
+      what_transfer_logic_changes: 从信号转为账本路径和再进入条件。
+      what_failure_mode_changes: 路径不清时阻断或拆分。
+      what_downstream_use_changes: 用于人工复核焦点和执行提示。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true
+  - draft_id: SEM-V4_6-CONTROL-PLANE-GOVERNANCE-002
+    revision_of: SEM-V4_5-CONTROL-PLANE-GOVERNANCE-002
+    compiler_id: control_plane
+    expected_body_shape: control_plane_route_body
+    body_language: zh-CN
+    compiler_sections:
+      trigger: 触发条件是研究资产同时指向多种目标、缺少所有者、缺少非生产封印或含有运行态误导。输入一旦无法确定归属，就不能继续按普通内容样本处理。
+      route: route 按资产绑定状态处理：缺绑定进入 source_gap，归属冲突进入 decision_required，敏感授权进入 founder_review，生产化误导或禁止请求进入 excluded。
+      ledger_target: 账本目标记录资产名称、候选用途、冲突目标、缺少的授权和可再进入条件。它只服务治理路径，不把资产本身当作已完成知识或已发布素材。
+      block_or_split: multi_asset_conflict 必须先 block_or_split：如果一个片段同时像内容方法、执行资产和控制规则，就拆成独立候选；不能拆时保持阻断，直到所有者明确。
+      reentry_condition: 再进入条件包括目标所有者确认、资产边界写清、非生产封印存在、来源状态明确。任一条件缺失，片段只能停留在对应路径。
+      forbidden_transition: 禁止把未绑定资产直接转成生产材料，禁止把多目标冲突压成一个泛化结论，禁止省略非生产封印后继续流转。
+      false_generation_prevention: 'downstream_use: review_focus 检查所有者、封印和冲突路径；execution_asset_hint 只列出需要补齐的绑定信息；content_angle_selection 不处理资产归属。'
+    section_order: *id002
+    body_zh_chars: 330
+    difference_claim:
+      what_decision_changes: 先判资产归属和冲突。
+      what_observable_material_changes: 关注目标、所有者、封印和用途信号。
+      what_transfer_logic_changes: 从资产信号转为阻断、拆分或再进入条件。
+      what_failure_mode_changes: 多目标冲突不能被压成单一候选。
+      what_downstream_use_changes: 用于资产绑定复核和执行提示。
+    sidecar_leak_into_rich_body: false
+    exact_section_reuse_with_other_cards: false
+    capsule_paraphrase_only: false
+    epistemic_text_consistency: true

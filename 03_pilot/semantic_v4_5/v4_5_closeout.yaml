@@ -1,0 +1,41 @@
+v4_5_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_4-CONDITIONAL-PASS-CLOSEOUT-AND-V4_5-CAPSULE-RICH-BODY-INTEGRATION-001
+  previous_commit: 6685a09ec11dbcff1f7921ae211c2b89da583071
+  engineering_delivery: PASS
+  asset_architecture: CONDITIONAL_PASS
+  capsule_rich_body_integration_shape: PASS
+  semantic_verdict: NO_GO_FOR_BATCH
+  retained_as: repair_baseline
+  human_decision_authorization:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V4.5 architecture conditional pass, V4.5 rich body quality fail, no batch generation, authorize V4.6 rewrite and checker hardening only
+    authorized_scope:
+    - V4.5 closeout
+    - V4.6 type-specific Rich Body rewrite
+    - type-specific compiler contract
+    - route sync for V4.6 judge handoff
+    - checker hardening for section independence and sidecar leak prevention
+    not_authorized:
+    - batch_generation
+    - CandidatePack
+    - KE_landing
+    - Serving_projection
+    - RAG_context_bundle
+    - DIFY_workflow
+  not_yet:
+  - accepted_domain_knowledge
+  - candidatepack_eligible
+  - batch_generation_template
+  - formal_relation_graph
+  required_targeted_fixes:
+  - type_specific_rich_body_compiler
+  - section_independence_across_w7_clusters
+  - no_W7_or_sidecar_instruction_leak_in_rich_body
+  - epistemic_label_text_consistency
+  - body_shape_per_artifact_kind
+  V4_5_original_artifacts_modified: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false

@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001",
+  "v4_6_draft_count": 8,
+  "v4_6_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "compiler_shape_valid_count": 8,
+  "complete_rich_body_valid_count": 8,
+  "capsule_rich_body_alignment_valid_count": 8,
+  "exact_section_reuse_count": 0,
+  "same_group_core_section_similarity_max": 0.183,
+  "cross_group_core_section_similarity_max": 0.197,
+  "similarity_method": {
+    "normalization": "lowercase ASCII tokens plus CJK character bigrams; punctuation and whitespace removed for CJK comparison",
+    "metric": "Jaccard similarity over normalized unit sets"
+  },
+  "repeated_downstream_use_paragraph_count": 0,
+  "sidecar_leak_into_rich_body_count": 0,
+  "epistemic_label_text_conflict_count": 0,
+  "story_arc_anchor_compiler_confusion_count": 0,
+  "spatial_temporal_display_confusion_count": 0,
+  "touch_labeled_direct_observation_count": 0,
+  "control_plane_forbidden_body_slot_count": 0,
+  "relation_design_hints_count": 23,
+  "relation_design_hints_valid_count": 23,
+  "formal_graph_claim_count": 0,
+  "predicate_version_suffix_count": 0,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "readiness_flags_result": "all_false",
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "Serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "source_repo_live_accessed": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 16,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_exact_section_reuse_across_cards.yaml": [
+      "exact_section_reuse_count must be 0"
+    ],
+    "negative_same_group_core_section_duplicate.yaml": [
+      "same group core section similarity must be <= 0.35"
+    ],
+    "negative_repeated_downstream_use_paragraph.yaml": [
+      "repeated_downstream_use_paragraph_count must be 0"
+    ],
+    "negative_W7_text_in_rich_body.yaml": [
+      "sidecar_leak_into_rich_body_count must be 0"
+    ],
+    "negative_sidecar_word_in_rich_body.yaml": [
+      "sidecar_leak_into_rich_body_count must be 0"
+    ],
+    "negative_judge_or_batch_word_in_rich_body.yaml": [
+      "sidecar_leak_into_rich_body_count must be 0"
+    ],
+    "negative_story_arc_uses_anchor_compiler_shape.yaml": [
+      "story_arc_anchor_compiler_confusion_count must be 0"
+    ],
+    "negative_anchor_card_uses_story_arc_compiler_shape.yaml": [
+      "story_arc_anchor_compiler_confusion_count must be 0"
+    ],
+    "negative_spatial_display_reuses_temporal_core_section.yaml": [
+      "spatial_temporal_display_confusion_count must be 0"
+    ],
+    "negative_touch_labeled_direct_observation.yaml": [
+      "touch_labeled_direct_observation_count must be 0"
+    ],
+    "negative_control_plane_contains_not_applicable_for_control_plane.yaml": [
+      "control_plane_forbidden_body_slot_count must be 0"
+    ],
+    "negative_relation_hint_claims_formal_ontology_edge.yaml": [
+      "formal_graph_claim_count must be 0"
+    ],
+    "negative_predicate_id_has_v43_suffix.yaml": [
+      "predicate_version_suffix_count must be 0"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ]
+  }
+}

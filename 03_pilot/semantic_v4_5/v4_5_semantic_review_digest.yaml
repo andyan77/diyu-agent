@@ -1,0 +1,33 @@
+v4_5_semantic_review_digest:
+  task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  human_decision_present: true
+  semantic_review_result:
+    architecture_and_boundary: CONDITIONAL_PASS
+    rich_body_quality: FAIL
+    as_generation_template: NO_GO
+    as_next_repair_baseline: true
+  carry_forward_findings:
+  - seven nonempty sections do not prove type-specific domain body quality
+  - same shape downstream and contrast sections are too reusable across cards
+  - runtime/governance vocabulary must stay outside complete Rich Body text
+  - epistemic class labels must match actual body wording
+  - relation design hints must use versionless predicate ids and remain design hints
+  V4_5_original_artifacts_modified: false
+  V4_5_original_artifact_digests:
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_candidate_cards.yaml: cad5e0c42ea9758f5570d792fad945afc47180e4378b1da0bef84a4dd4a00330
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_complete_rich_bodies.yaml: 7ae34b15face5292320f21ce3e8c34bceb79668b8f937c3876c40481682ceb20
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_creative_value_blocks.yaml: a8cd977f83b769b1397f2988c3d26d98df15b2adc2fbd88abad71579c22a1524
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_epistemic_labels.yaml: d6864d8b20e2c7a1e5fe5b58c1e9e564b97ac964b97998f9b8d94683541fc915
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_integration_report.json: 265f490fd785562b0d7a18573101845b80263df50d42c68b75b7be1e321967fe
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_judge_protocol.md: e3d13d51d78ae9fb0976ec5a6248618b966527b256b5fa725697ee550d452946
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_judge_review_queue.yaml: dd93cb342f64cf59a86764028bf933c29aa52531b1d840f4ad9a329da1baa883
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_knowledge_capsules.yaml: 6c4f6db5bf78f31fb941c0c450c15ad8cb9d826a12276d2886af96533b4be42f
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_manifest.yaml: db92eeef51f0a08a96fc7f21924aa2a273264eb90497d2b42baea0eacc3b00fc
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_quality_report.json: e37a62be8daa8d8636bd97ddb994a7d5f51ab1d766e24aedfbe17639bc02a2ab
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_relation_design_hints.csv: b6b009f36b27baed8054d7a2c34e5c155e22d88de668c14a67c275eedc86dda9
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_safe_creative_alternatives.yaml: 71f0a64d7576682d0fdf45403c133b1ab73483fc71bf14e5e5d2298f6767c2d4
+    03_pilot/semantic_v4_5/semantic_pilot_v4_5_sidecars.yaml: 19cecb3d7d3e74badada47220200d7002df30192435fe1b31a66797f786faa14
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V4_6-JUDGE-GO-NOGO-001

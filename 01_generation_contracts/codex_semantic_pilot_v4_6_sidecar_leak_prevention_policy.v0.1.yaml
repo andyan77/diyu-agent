@@ -1,0 +1,42 @@
+codex_semantic_pilot_v4_6_sidecar_leak_prevention_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_5-CLOSEOUT-TYPE-SPECIFIC-RICH-BODY-COMPILER-AND-V4_6-REWRITE-001
+  sidecar_leak_prevention:
+    forbidden_in_complete_rich_body:
+    - W7
+    - authority
+    - sidecar
+    - judge
+    - next_step
+    - batch_generation
+    - CandidatePack
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+    - readiness
+    - accepted_domain_knowledge_count
+    - relation_design_hints
+    - reviewer
+    - checker
+    - no_go
+    - go_nogo
+    allowed_in_sidecar_only:
+    - W7_trace
+    - owner_model
+    - source_status
+    - readiness_flags
+    - relation_design_hints
+    - review_queue_status
+    - source_workorder_hints
+    control_plane_route_terms_allowed_in_body:
+    - source_gap
+    - decision_required
+    - founder_review
+    - excluded
+    rich_body_downstream_use_boundary:
+      allowed_abstract_consumption_impacts:
+      - content_angle_selection
+      - review_focus
+      - execution_asset_hint
+      runtime_system_names_must_stay_in_sidecar: true
