@@ -1,0 +1,367 @@
+semantic_pilot_judge_review_queue:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-REGEN-001
+  queue_count: 20
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  items:
+  - candidate_id: SEM-PILOT-CONTENT-METHOD-001
+    pilot_category: content_method
+    canonical_cluster_id: mkc_019
+    generation_assignment_id: GA-001
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTENT-METHOD-002
+    pilot_category: content_method
+    canonical_cluster_id: mkc_009
+    generation_assignment_id: GA-002
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTENT-METHOD-003
+    pilot_category: content_method
+    canonical_cluster_id: mkc_022
+    generation_assignment_id: GA-003
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTENT-METHOD-004
+    pilot_category: content_method
+    canonical_cluster_id: mkc_043
+    generation_assignment_id: GA-004
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTENT-METHOD-005
+    pilot_category: content_method
+    canonical_cluster_id: mkc_039
+    generation_assignment_id: GA-005
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-APPAREL-CLAIM-BOUNDARY-001
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_015
+    generation_assignment_id: GA-006
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-APPAREL-CLAIM-BOUNDARY-002
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_008
+    generation_assignment_id: GA-007
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-APPAREL-CLAIM-BOUNDARY-003
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_017
+    generation_assignment_id: GA-008
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-APPAREL-CLAIM-BOUNDARY-004
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_025
+    generation_assignment_id: GA-009
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-APPAREL-CLAIM-BOUNDARY-005
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_015
+    generation_assignment_id: GA-010
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-DISPLAY-TO-CONTENT-001
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_010
+    generation_assignment_id: GA-011
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-DISPLAY-TO-CONTENT-002
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_025
+    generation_assignment_id: GA-012
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-DISPLAY-TO-CONTENT-003
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_015
+    generation_assignment_id: GA-013
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-DISPLAY-TO-CONTENT-004
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_004
+    generation_assignment_id: GA-014
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-DISPLAY-TO-CONTENT-005
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_026
+    generation_assignment_id: GA-001
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTROL-PLANE-GOVERNANCE-001
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_008
+    generation_assignment_id: GA-002
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTROL-PLANE-GOVERNANCE-002
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_021
+    generation_assignment_id: GA-003
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTROL-PLANE-GOVERNANCE-003
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_027
+    generation_assignment_id: GA-004
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTROL-PLANE-GOVERNANCE-004
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_025
+    generation_assignment_id: GA-005
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation
+  - candidate_id: SEM-PILOT-CONTROL-PLANE-GOVERNANCE-005
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_016
+    generation_assignment_id: GA-006
+    review_status: pending
+    required_judgment_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+    - future_batch_exemplar_value
+    go_nogo_options:
+    - approve_as_semantic_pilot_pass
+    - revise_required
+    - reject_as_template
+    - reject_as_boundary_violation

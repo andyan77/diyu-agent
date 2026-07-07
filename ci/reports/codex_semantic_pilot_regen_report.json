@@ -1,0 +1,104 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-REGEN-001",
+  "source_repo_live_accessed": false,
+  "external_drive_accessed": false,
+  "semantic_pilot_structured_draft_count": 20,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "category_counts": {
+    "content_method": 5,
+    "apparel_claim_boundary": 5,
+    "display_to_content": 5,
+    "control_plane_governance": 5
+  },
+  "normalized_proposition_duplicate_count": 0,
+  "normalized_body_duplicate_count": 0,
+  "semantic_fingerprint_duplicate_count": 0,
+  "cluster_entailment_pass_count": 20,
+  "cluster_entailment_fail_count": 0,
+  "industry_density_pass_count": 20,
+  "relation_quality_result": "PASS",
+  "source_status_disambiguation_pass_count": 20,
+  "hard_claim_leak_count": 0,
+  "real_instance_fact_leak_count": 0,
+  "P0_00_general_kb_leak_count": 0,
+  "judge_review_queue_created": true,
+  "judge_protocol_created": true,
+  "relation_count": 40,
+  "negative_fixture_count": 20,
+  "positive_fixture_count": 1,
+  "negative_fixtures_fail_closed": true,
+  "positive_fixture_passed": true,
+  "readiness_flags_result": "all_false",
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001",
+  "negative_results": {
+    "negative_wrong_count.yaml": [
+      "semantic pilot count must be 20"
+    ],
+    "negative_wrong_category_distribution.yaml": [
+      "category counts must be 5 each"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness must remain all false"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted domain knowledge count must be 0"
+    ],
+    "negative_batch_generation_unlocked.yaml": [
+      "batch generation must remain locked"
+    ],
+    "negative_duplicate_proposition_signature.yaml": [
+      "normalized_proposition_duplicate_count must be 0"
+    ],
+    "negative_duplicate_normalized_body.yaml": [
+      "normalized_body_duplicate_count must be 0"
+    ],
+    "negative_hash_only_fingerprint.yaml": [
+      "semantic_fingerprint_duplicate_count must be 0"
+    ],
+    "negative_missing_cluster_entailment.yaml": [
+      "all candidates must pass cluster entailment"
+    ],
+    "negative_low_industry_density.yaml": [
+      "all candidates must pass industry density"
+    ],
+    "negative_generic_relation_predicate.yaml": [
+      "forbidden_relation_predicate_count must be 0"
+    ],
+    "negative_missing_min_two_relations.yaml": [
+      "all candidates must have min two relations"
+    ],
+    "negative_source_status_conflation.yaml": [
+      "all candidates must pass source status disambiguation"
+    ],
+    "negative_hard_claim_expert_synthesis.yaml": [
+      "hard_claim_leak_count must be 0"
+    ],
+    "negative_real_instance_fact_leak.yaml": [
+      "real_instance_fact_leak_count must be 0"
+    ],
+    "negative_p0_00_general_kb_leak.yaml": [
+      "P0_00_general_kb_leak_count must be 0"
+    ],
+    "negative_missing_judge_queue.yaml": [
+      "judge review queue required"
+    ],
+    "negative_source_repo_dependency_true.yaml": [
+      "source repo dependency must be false"
+    ],
+    "negative_external_drive_dependency_true.yaml": [
+      "external drive dependency must be false"
+    ],
+    "negative_batch_generation_next_step.yaml": [
+      "batch generation task cannot be next step",
+      "next step must be semantic pilot judge go/no-go"
+    ]
+  }
+}

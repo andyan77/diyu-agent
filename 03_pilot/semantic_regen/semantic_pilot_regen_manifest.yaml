@@ -1,0 +1,63 @@
+semantic_pilot_regen_manifest:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-REGEN-001
+  workspace_HEAD_before: f65d5f964b995e590e1b32039a1353610be14725
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: execute_semantic_pilot_regen_20_drafts
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  external_drive_dependency: false
+  external_drive_accessed: false
+  semantic_pilot_structured_draft_count: 20
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  ready_for_semantic_pilot_judge_review: true
+  category_counts:
+    content_method: 5
+    apparel_claim_boundary: 5
+    display_to_content: 5
+    control_plane_governance: 5
+  generation_assignment_coverage:
+  - GA-001
+  - GA-002
+  - GA-003
+  - GA-004
+  - GA-005
+  - GA-006
+  - GA-007
+  - GA-008
+  - GA-009
+  - GA-010
+  - GA-011
+  - GA-012
+  - GA-013
+  - GA-014
+  W7_cluster_coverage:
+  - mkc_004
+  - mkc_008
+  - mkc_009
+  - mkc_010
+  - mkc_015
+  - mkc_016
+  - mkc_017
+  - mkc_019
+  - mkc_021
+  - mkc_022
+  - mkc_025
+  - mkc_026
+  - mkc_027
+  - mkc_039
+  - mkc_043
+  recommended_next_step: CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001
+  assertions:
+    generated_3600: false
+    candidatepack_created: false
+    KE_touched: false
+    serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+    readiness_all_false: true
+    requires_judge_go_nogo_before_batch_generation: true

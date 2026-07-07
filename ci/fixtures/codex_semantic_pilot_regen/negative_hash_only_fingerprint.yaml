@@ -1,0 +1,29 @@
+semantic_regen_fixture:
+  task_id: CODEX-SEMANTIC-PILOT-REGEN-001
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  external_drive_dependency: false
+  external_drive_accessed: false
+  semantic_pilot_structured_draft_count: 20
+  category_counts:
+    content_method: 5
+    apparel_claim_boundary: 5
+    display_to_content: 5
+    control_plane_governance: 5
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  current_next_step: CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001
+  normalized_proposition_duplicate_count: 0
+  normalized_body_duplicate_count: 0
+  semantic_fingerprint_duplicate_count: 1
+  hard_claim_leak_count: 0
+  real_instance_fact_leak_count: 0
+  P0_00_general_kb_leak_count: 0
+  forbidden_relation_predicate_count: 0
+  candidates_with_min_two_relations: 20
+  cluster_entailment_pass_count: 20
+  industry_density_pass_count: 20
+  source_status_disambiguation_pass_count: 20
+  judge_review_queue_present: true
+  readiness_all_false: true
