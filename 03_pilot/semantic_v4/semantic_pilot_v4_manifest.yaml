@@ -1,0 +1,32 @@
+semantic_pilot_v4_manifest:
+  schema_version: v0.1
+  task_id: CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001
+  workspace_HEAD_before: 00b47dea68381422c6260e14535d4c01a820ef3a
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V3 no-go recorded; W7 authority locked; V4 pilot generation authorized
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  external_drive_dependency: false
+  external_drive_accessed: false
+  W7_authority_records_count: 46
+  semantic_pilot_v4_count: 8
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  ready_for_v4_judge_review: true
+  category_counts:
+    content_method: 2
+    apparel_claim_boundary: 2
+    display_to_content: 2
+    control_plane_governance: 2
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001
+  assertions:
+    generated_3600: false
+    candidatepack_created: false
+    KE_touched: false
+    serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false
+    readiness_all_false: true

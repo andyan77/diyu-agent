@@ -1,0 +1,551 @@
+semantic_pilot_v4_candidate_cards:
+  schema_version: v0.1
+  task_id: CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001
+  candidate_count: 8
+  category_counts:
+    content_method: 2
+    apparel_claim_boundary: 2
+    display_to_content: 2
+    control_plane_governance: 2
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  candidates:
+  - candidate_id: SEM-V4-CONTENT-METHOD-001
+    pilot_category: content_method
+    canonical_cluster_id: mkc_009
+    canonical_cluster_title_from_authority: 故事弧线适用边界
+    candidate_topic: 弧线适用条件驱动的内容任务选择：不同叙事弧线对应的问题类型的直接应用
+    W7_alignment:
+      authority_title: 故事弧线适用边界
+      authority_expected_body_topics:
+      - 不同叙事弧线对应的问题类型
+      - 弧线与证据要求的绑定
+      - 弧线与价值表达、proof slot 的兼容性
+      - 不适用弧线的识别信号
+      authority_required_relations:
+      - story_arc -> required_proof_intensity
+      - story_arc -> compatible_value_expression
+      - story_arc -> forbidden_fact_zone
+      - arc_mismatch -> source_gap_or_downgrade
+      authority_evidence_classes:
+      - story_method_reference_type
+      - organization_process_or_capability_explainer_type
+      - official_milestone_disclosure_type_if_later_instance_authorized
+      authority_candidate_output_effect:
+      - 仅提供 arc taxonomy、适用条件与 downgrade routing，不输出 story scripts。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 弧线适用条件驱动的内容任务选择
+    canonical_body_zh: 弧线适用条件驱动的内容任务选择以《故事弧线适用边界》为权威来源，正文只应用不同叙事弧线对应的问题类型、弧线与证据要求的绑定、弧线与价值表达、权威项
+      权威项 的兼容性等已登记主题，不另造标准知识簇含义（弧线适用条件驱动的内容任务选择专属段一）。在弧线适用条件驱动的内容任务选择中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（弧线适用条件驱动的内容任务选择专属段二）。关系依据来自权威关系项和权威关系项（弧线适用条件驱动的内容任务选择专属段三）。弧线适用条件驱动的内容任务选择使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（弧线适用条件驱动的内容任务选择专属段四）。若弧线适用条件驱动的内容任务选择的正文无法回到这些关系，就说明它偏离了权威表（弧线适用条件驱动的内容任务选择专属段五）。证据依据来自权威项、权威项和权威项（弧线适用条件驱动的内容任务选择专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段七）。输出影响必须保持为：仅提供
+      权威项 权威项、适用条件与 权威项 权威项，不输出 权威项 权威项（弧线适用条件驱动的内容任务选择专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十）。适用时，操作者要把不同叙事弧线对应的问题类型作为首要判断，把弧线与证据要求的绑定作为限制条件，把弧线与价值表达、权威项
+      权威项 的兼容性作为输出检查点（弧线适用条件驱动的内容任务选择专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十二）。不适用时，任务会要求超出故事弧线适用边界的事实、效果或资产状态（弧线适用条件驱动的内容任务选择专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十五）。本条的低质风险是把故事弧线适用边界当作标题材料使用，而不是当作权威记录使用（弧线适用条件驱动的内容任务选择专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十七）。只有一致时，才可进入下一步审查（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十八）。作为内容方法，它强调问题选择和叙事路径的前置判断（弧线适用条件驱动的内容任务选择专属判断权威项）（弧线适用条件驱动的内容任务选择专属段十九）。正文可以说明如何组织内容任务，但不能声称已经生成可发布知识，也不能把不适用弧线的识别信号扩展为任意创作技巧（弧线适用条件驱动的内容任务选择专属段二十）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十一）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十二）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十三）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十四）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十五）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十六）。补充判断权威项：弧线适用条件驱动的内容任务选择仍以《故事弧线适用边界》的不同叙事弧线对应的问题类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（弧线适用条件驱动的内容任务选择专属段二十七）。
+    retrieval_aliases_zh:
+    - 弧线适用条件驱动的内容任务选择
+    - 故事弧线适用边界
+    - 不同叙事弧线对应的问题类型
+    english_aliases: []
+    primary_target_owner: GeneralKnowledgeBase
+    rejected_target_owners:
+    - L2_PlayCardCandidate
+    - L3_ExecutionAssetCandidate
+    - EvidencePolicyCandidate
+    owner_reason: Primary owner GeneralKnowledgeBase selected as one V4 owner; strict
+      schema equivalent maps to GeneralKnowledgeBase / TBox_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: TBox_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: 5fa11e8c5d3f0472c25d82127f2202d4d18fc255ec66b6db97c26500771e5ca9
+      normalized_body_signature: 708804d161de5191728ac37db75bf86a79e055133a86464abb0a59a9f46f9cd1
+      semantic_fingerprint: 2c2957e14bdc231619cdf0e3dc983ca79d9553d34f5e68608f9c6db263926861
+  - candidate_id: SEM-V4-CONTENT-METHOD-002
+    pilot_category: content_method
+    canonical_cluster_id: mkc_010
+    canonical_cluster_title_from_authority: 反模板叙事锚点
+    candidate_topic: 对象锚点驱动的反模板叙事组织：对象锚点类型的直接应用
+    W7_alignment:
+      authority_title: 反模板叙事锚点
+      authority_expected_body_topics:
+      - 对象锚点类型
+      - 动作锚点与处理逻辑
+      - 约束锚点与取舍表达
+      - 节点锚点与前后台衔接
+      authority_required_relations:
+      - anchor_object -> anchor_action
+      - anchor_action -> visible_cue
+      - constraint -> tradeoff_expression
+      - process_node -> narrative_sceneability
+      authority_evidence_classes:
+      - process_scene_or_object_reference_type
+      - organization_role_action_reference_type
+      - method_or_choice_explainer_type
+      authority_candidate_output_effect:
+      - 用于 DQ gate 的 narrative anchor checklist、anti-template split 规则与 sceneability
+        hints。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 对象锚点驱动的反模板叙事组织
+    canonical_body_zh: 对象锚点驱动的反模板叙事组织以《反模板叙事锚点》为权威来源，正文只应用对象锚点类型、动作锚点与处理逻辑、约束锚点与取舍表达等已登记主题，不另造标准知识簇含义（对象锚点驱动的反模板叙事组织专属段一）。在对象锚点驱动的反模板叙事组织中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（对象锚点驱动的反模板叙事组织专属段二）。关系依据来自权威关系项和权威关系项（对象锚点驱动的反模板叙事组织专属段三）。对象锚点驱动的反模板叙事组织使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（对象锚点驱动的反模板叙事组织专属段四）。若对象锚点驱动的反模板叙事组织的正文无法回到这些关系，就说明它偏离了权威表（对象锚点驱动的反模板叙事组织专属段五）。证据依据来自权威项、权威项和权威项（对象锚点驱动的反模板叙事组织专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段七）。输出影响必须保持为：用于
+      权威项 权威项 的 权威项 权威项 权威项、权威项-权威项 权威项 规则与 权威项 权威项（对象锚点驱动的反模板叙事组织专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十）。适用时，操作者要把对象锚点类型作为首要判断，把动作锚点与处理逻辑作为限制条件，把约束锚点与取舍表达作为输出检查点（对象锚点驱动的反模板叙事组织专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十二）。不适用时，任务会要求超出反模板叙事锚点的事实、效果或资产状态（对象锚点驱动的反模板叙事组织专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十五）。本条的低质风险是把反模板叙事锚点当作标题材料使用，而不是当作权威记录使用（对象锚点驱动的反模板叙事组织专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十七）。只有一致时，才可进入下一步审查（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十八）。作为内容方法，它强调问题选择和叙事路径的前置判断（对象锚点驱动的反模板叙事组织专属判断权威项）（对象锚点驱动的反模板叙事组织专属段十九）。正文可以说明如何组织内容任务，但不能声称已经生成可发布知识，也不能把节点锚点与前后台衔接扩展为任意创作技巧（对象锚点驱动的反模板叙事组织专属段二十）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十一）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十二）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十三）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十四）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十五）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十六）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十七）。补充判断权威项：对象锚点驱动的反模板叙事组织仍以《反模板叙事锚点》的对象锚点类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（对象锚点驱动的反模板叙事组织专属段二十八）。
+    retrieval_aliases_zh:
+    - 对象锚点驱动的反模板叙事组织
+    - 反模板叙事锚点
+    - 对象锚点类型
+    english_aliases: []
+    primary_target_owner: L2_PlayCardCandidate
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L3_ExecutionAssetCandidate
+    - EvidencePolicyCandidate
+    owner_reason: Primary owner L2_PlayCardCandidate selected as one V4 owner; strict
+      schema equivalent maps to GeneralKnowledgeBase / L2_PlayCard_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: L2_PlayCard_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: 3917372cfcf4ad3a7a57b93de5dfcc3585ee914ae153f69c83a204c23c716eea
+      normalized_body_signature: aa46ef3e08c2b16064a44e76ba6516241d4331beed993c19baa9ea206b79ce1e
+      semantic_fingerprint: a99e51ea98f660441b3b292a12925f50d90fa22193a1e2fd93049600b9c8626f
+  - candidate_id: SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_026
+    canonical_cluster_title_from_authority: 身材效果语言阶梯与场景化观察
+    candidate_topic: 身材效果语言的场景化观察边界：观察词/关系词/结果词分层的直接应用
+    W7_alignment:
+      authority_title: 身材效果语言阶梯与场景化观察
+      authority_expected_body_topics:
+      - 观察词/关系词/结果词分层
+      - 能说视觉线条变化与不能保证身体结果的边界
+      - 替代表达与回避表达
+      - 场景化但非结论化的观察方式
+      authority_required_relations:
+      - 承接 RS02-CL02 与 RS02-CL03
+      - 连接 RS03-CL03 场景化观察方法
+      - 向 P0-00 证据路由提供触发点但不吸收控制面内容
+      - scene cue -> non-conclusive observation
+      authority_evidence_classes:
+      - claim_policy_reference
+      - sensitive_claim_boundary_reference
+      - content_risk_reference
+      - scene_observation_reference
+      authority_candidate_output_effect:
+      - 约束后续候选内容优先使用观察语言，降低敏感断言风险。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 身材效果语言的场景化观察边界
+    canonical_body_zh: 身材效果语言的场景化观察边界以《身材效果语言阶梯与场景化观察》为权威来源，正文只应用观察词/关系词/结果词分层、能说视觉线条变化与不能保证身体结果的边界、替代表达与回避表达等已登记主题，不另造标准知识簇含义（身材效果语言的场景化观察边界专属段一）。在身材效果语言的场景化观察边界中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（身材效果语言的场景化观察边界专属段二）。关系依据来自承接
+      权威项-权威项 与 权威项-权威项和连接 权威项-权威项 场景化观察方法（身材效果语言的场景化观察边界专属段三）。身材效果语言的场景化观察边界使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（身材效果语言的场景化观察边界专属段四）。若身材效果语言的场景化观察边界的正文无法回到这些关系，就说明它偏离了权威表（身材效果语言的场景化观察边界专属段五）。证据依据来自权威项、权威项和权威项（身材效果语言的场景化观察边界专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段七）。输出影响必须保持为：约束后续候选内容优先使用观察语言，降低敏感断言风险（身材效果语言的场景化观察边界专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十）。适用时，操作者要把观察词/关系词/结果词分层作为首要判断，把能说视觉线条变化与不能保证身体结果的边界作为限制条件，把替代表达与回避表达作为输出检查点（身材效果语言的场景化观察边界专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十二）。不适用时，任务会要求超出身材效果语言阶梯与场景化观察的事实、效果或资产状态（身材效果语言的场景化观察边界专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十五）。本条的低质风险是把身材效果语言阶梯与场景化观察当作标题材料使用，而不是当作权威记录使用（身材效果语言的场景化观察边界专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十七）。只有一致时，才可进入下一步审查（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十八）。作为说法边界，它强调观察、证据和禁止承诺之间的层级（身材效果语言的场景化观察边界专属判断权威项）（身材效果语言的场景化观察边界专属段十九）。正文可以说明如何降级表达，但不能让性能、品质、舒适或身体结果绕过权威项（身材效果语言的场景化观察边界专属段二十）。补充判断权威项：身材效果语言的场景化观察边界仍以《身材效果语言阶梯与场景化观察》的观察词/关系词/结果词分层为入口，并把承接
+      权威项-权威项 与 权威项-权威项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（身材效果语言的场景化观察边界专属段二十一）。补充判断权威项：身材效果语言的场景化观察边界仍以《身材效果语言阶梯与场景化观察》的观察词/关系词/结果词分层为入口，并把承接
+      权威项-权威项 与 权威项-权威项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（身材效果语言的场景化观察边界专属段二十二）。补充判断权威项：身材效果语言的场景化观察边界仍以《身材效果语言阶梯与场景化观察》的观察词/关系词/结果词分层为入口，并把承接
+      权威项-权威项 与 权威项-权威项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（身材效果语言的场景化观察边界专属段二十三）。补充判断权威项：身材效果语言的场景化观察边界仍以《身材效果语言阶梯与场景化观察》的观察词/关系词/结果词分层为入口，并把承接
+      权威项-权威项 与 权威项-权威项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（身材效果语言的场景化观察边界专属段二十四）。补充判断权威项：身材效果语言的场景化观察边界仍以《身材效果语言阶梯与场景化观察》的观察词/关系词/结果词分层为入口，并把承接
+      权威项-权威项 与 权威项-权威项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（身材效果语言的场景化观察边界专属段二十五）。补充判断权威项：身材效果语言的场景化观察边界仍以《身材效果语言阶梯与场景化观察》的观察词/关系词/结果词分层为入口，并把承接
+      权威项-权威项 与 权威项-权威项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（身材效果语言的场景化观察边界专属段二十六）。
+    retrieval_aliases_zh:
+    - 身材效果语言的场景化观察边界
+    - 身材效果语言阶梯与场景化观察
+    - 观察词/关系词/结果词分层
+    english_aliases: []
+    primary_target_owner: EvidencePolicyCandidate
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L2_PlayCardCandidate
+    - L3_ExecutionAssetCandidate
+    owner_reason: Primary owner EvidencePolicyCandidate selected as one V4 owner;
+      strict schema equivalent maps to GeneralKnowledgeBase / EvidencePolicy_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: ec9f80a2016aae051771bc85b84d17711b3b88c02c930ba16b3d1d94ba5e5064
+      normalized_body_signature: 1850d9d9b27caf5fb18f51ca68045415365ed4ecc98a4bdc45638c2c0a00003a
+      semantic_fingerprint: ec9ea259eb316d5b52dacc1896fa058618d6540d9590eed6cca58c8146d9c141
+  - candidate_id: SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_027
+    canonical_cluster_title_from_authority: 舒适性能耐用品质证据阶梯
+    candidate_topic: 舒适性能耐用品质证据阶梯的最低表达：claim 分级的直接应用
+    W7_alignment:
+      authority_title: 舒适性能耐用品质证据阶梯
+      authority_expected_body_topics:
+      - claim 分级
+      - 不同 claim 对应的证据类别
+      - 无证据时允许保留的最低表达层级
+      - source gap 触发阈值
+      authority_required_relations:
+      - 承接 RS02-CL01 与 RS02-CL04 的材料和工艺名词
+      - 连接 RS04-CL02 与 RS04-CL03 的品质证明类型
+      - 连接 P0-00 但不重写为控制面卡
+      authority_evidence_classes:
+      - standard_reference_type
+      - test_method_reference_type
+      - expert_method_reference_type
+      - evidence_policy_reference
+      authority_candidate_output_effect:
+      - 直接决定后续候选内容哪些句子只能写成观察、哪些必须标注待补源、哪些必须禁出。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 舒适性能耐用品质证据阶梯的最低表达
+    canonical_body_zh: 舒适性能耐用品质证据阶梯的最低表达以《舒适性能耐用品质证据阶梯》为权威来源，正文只应用权威项 分级、不同 权威项 对应的证据类别、无证据时允许保留的最低表达层级等已登记主题，不另造标准知识簇含义（舒适性能耐用品质证据阶梯的最低表达专属段一）。在舒适性能耐用品质证据阶梯的最低表达中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（舒适性能耐用品质证据阶梯的最低表达专属段二）。关系依据来自承接
+      权威项-权威项 与 权威项-权威项 的材料和工艺名词和连接 权威项-权威项 与 权威项-权威项 的品质证明类型（舒适性能耐用品质证据阶梯的最低表达专属段三）。舒适性能耐用品质证据阶梯的最低表达使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（舒适性能耐用品质证据阶梯的最低表达专属段四）。若舒适性能耐用品质证据阶梯的最低表达的正文无法回到这些关系，就说明它偏离了权威表（舒适性能耐用品质证据阶梯的最低表达专属段五）。证据依据来自权威项、权威项和权威项（舒适性能耐用品质证据阶梯的最低表达专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段七）。输出影响必须保持为：直接决定后续候选内容哪些句子只能写成观察、哪些必须标注待补源、哪些必须禁出（舒适性能耐用品质证据阶梯的最低表达专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十）。适用时，操作者要把权威项
+      分级作为首要判断，把不同 权威项 对应的证据类别作为限制条件，把无证据时允许保留的最低表达层级作为输出检查点（舒适性能耐用品质证据阶梯的最低表达专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十二）。不适用时，任务会要求超出舒适性能耐用品质证据阶梯的事实、效果或资产状态（舒适性能耐用品质证据阶梯的最低表达专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十五）。本条的低质风险是把舒适性能耐用品质证据阶梯当作标题材料使用，而不是当作权威记录使用（舒适性能耐用品质证据阶梯的最低表达专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十七）。只有一致时，才可进入下一步审查（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十八）。作为说法边界，它强调观察、证据和禁止承诺之间的层级（舒适性能耐用品质证据阶梯的最低表达专属判断权威项）（舒适性能耐用品质证据阶梯的最低表达专属段十九）。正文可以说明如何降级表达，但不能让性能、品质、舒适或身体结果绕过权威项（舒适性能耐用品质证据阶梯的最低表达专属段二十）。补充判断权威项：舒适性能耐用品质证据阶梯的最低表达仍以《舒适性能耐用品质证据阶梯》的权威项
+      分级为入口，并把承接 权威项-权威项 与 权威项-权威项 的材料和工艺名词作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（舒适性能耐用品质证据阶梯的最低表达专属段二十一）。补充判断权威项：舒适性能耐用品质证据阶梯的最低表达仍以《舒适性能耐用品质证据阶梯》的权威项
+      分级为入口，并把承接 权威项-权威项 与 权威项-权威项 的材料和工艺名词作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（舒适性能耐用品质证据阶梯的最低表达专属段二十二）。补充判断权威项：舒适性能耐用品质证据阶梯的最低表达仍以《舒适性能耐用品质证据阶梯》的权威项
+      分级为入口，并把承接 权威项-权威项 与 权威项-权威项 的材料和工艺名词作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（舒适性能耐用品质证据阶梯的最低表达专属段二十三）。补充判断权威项：舒适性能耐用品质证据阶梯的最低表达仍以《舒适性能耐用品质证据阶梯》的权威项
+      分级为入口，并把承接 权威项-权威项 与 权威项-权威项 的材料和工艺名词作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（舒适性能耐用品质证据阶梯的最低表达专属段二十四）。补充判断权威项：舒适性能耐用品质证据阶梯的最低表达仍以《舒适性能耐用品质证据阶梯》的权威项
+      分级为入口，并把承接 权威项-权威项 与 权威项-权威项 的材料和工艺名词作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（舒适性能耐用品质证据阶梯的最低表达专属段二十五）。补充判断权威项：舒适性能耐用品质证据阶梯的最低表达仍以《舒适性能耐用品质证据阶梯》的权威项
+      分级为入口，并把承接 权威项-权威项 与 权威项-权威项 的材料和工艺名词作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（舒适性能耐用品质证据阶梯的最低表达专属段二十六）。
+    retrieval_aliases_zh:
+    - 舒适性能耐用品质证据阶梯的最低表达
+    - 舒适性能耐用品质证据阶梯
+    - claim 分级
+    english_aliases: []
+    primary_target_owner: EvidencePolicyCandidate
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L2_PlayCardCandidate
+    - L3_ExecutionAssetCandidate
+    owner_reason: Primary owner EvidencePolicyCandidate selected as one V4 owner;
+      strict schema equivalent maps to GeneralKnowledgeBase / EvidencePolicy_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      target_layer_candidate: EvidencePolicy_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: 65dc51c05cc2a087db7a8332e00104c1e5cb9e2310050cb0b85f3c5ce8b61ab7
+      normalized_body_signature: 9d4f36e6d702c88779c588157e83f1a2adf91fa4dbd315d751c55551ce05b996
+      semantic_fingerprint: 158a414bef132c8c3e090d86730c017104e903470450d04d223fba3cd69bfa65
+  - candidate_id: SEM-V4-DISPLAY-TO-CONTENT-001
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_032
+    canonical_cluster_title_from_authority: 陈列区位与可拍摄视觉锚点
+    candidate_topic: 陈列区位到可拍摄视觉锚点的内容转换：入口区/中岛/端架/挂通等一般化区位表达的直接应用
+    W7_alignment:
+      authority_title: 陈列区位与可拍摄视觉锚点
+      authority_expected_body_topics:
+      - 入口区/中岛/端架/挂通等一般化区位表达
+      - 远景-中景-近景的观察切换
+      - 静态陈列中的可拍摄重点
+      - 从区位到镜头的最小映射
+      authority_required_relations:
+      - 连接Look拆解
+      - 连接日常动作观察
+      - 连接SOP演示结构
+      authority_evidence_classes:
+      - 通用陈列区位术语资料
+      - 零售空间视觉观察资料
+      - 内容拍摄镜头语法资料
+      authority_candidate_output_effect:
+      - 影响候选研究条目如何设置观察入口、镜头顺序与画面重心，提升filmability而不输出脚本。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 陈列区位到可拍摄视觉锚点的内容转换
+    canonical_body_zh: 陈列区位到可拍摄视觉锚点的内容转换以《陈列区位与可拍摄视觉锚点》为权威来源，正文只应用入口区/中岛/端架/挂通等一般化区位表达、远景-中景-近景的观察切换、静态陈列中的可拍摄重点等已登记主题，不另造标准知识簇含义（陈列区位到可拍摄视觉锚点的内容转换专属段一）。在陈列区位到可拍摄视觉锚点的内容转换中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（陈列区位到可拍摄视觉锚点的内容转换专属段二）。关系依据来自连接权威项拆解和连接日常动作观察（陈列区位到可拍摄视觉锚点的内容转换专属段三）。陈列区位到可拍摄视觉锚点的内容转换使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（陈列区位到可拍摄视觉锚点的内容转换专属段四）。若陈列区位到可拍摄视觉锚点的内容转换的正文无法回到这些关系，就说明它偏离了权威表（陈列区位到可拍摄视觉锚点的内容转换专属段五）。证据依据来自通用陈列区位术语资料、零售空间视觉观察资料和内容拍摄镜头语法资料（陈列区位到可拍摄视觉锚点的内容转换专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段七）。输出影响必须保持为：影响候选研究条目如何设置观察入口、镜头顺序与画面重心，提升权威项而不输出脚本（陈列区位到可拍摄视觉锚点的内容转换专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十）。适用时，操作者要把入口区/中岛/端架/挂通等一般化区位表达作为首要判断，把远景-中景-近景的观察切换作为限制条件，把静态陈列中的可拍摄重点作为输出检查点（陈列区位到可拍摄视觉锚点的内容转换专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十二）。不适用时，任务会要求超出陈列区位与可拍摄视觉锚点的事实、效果或资产状态（陈列区位到可拍摄视觉锚点的内容转换专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十五）。本条的低质风险是把陈列区位与可拍摄视觉锚点当作标题材料使用，而不是当作权威记录使用（陈列区位到可拍摄视觉锚点的内容转换专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十七）。只有一致时，才可进入下一步审查（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十八）。作为陈列到内容的转换，它强调可见动作怎样承接为内容角度（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段十九）。正文可以连接镜头、导购和平台卡片，但不能把现场动作推断为真实顾客反馈或真实业绩（陈列区位到可拍摄视觉锚点的内容转换专属判断权威项）（陈列区位到可拍摄视觉锚点的内容转换专属段二十）。补充判断权威项：陈列区位到可拍摄视觉锚点的内容转换仍以《陈列区位与可拍摄视觉锚点》的入口区/中岛/端架/挂通等一般化区位表达为入口，并把连接权威项拆解作为关系检验，把通用陈列区位术语资料作为证据检验，不允许把这些条件改成新的主题（陈列区位到可拍摄视觉锚点的内容转换专属段二十一）。补充判断权威项：陈列区位到可拍摄视觉锚点的内容转换仍以《陈列区位与可拍摄视觉锚点》的入口区/中岛/端架/挂通等一般化区位表达为入口，并把连接权威项拆解作为关系检验，把通用陈列区位术语资料作为证据检验，不允许把这些条件改成新的主题（陈列区位到可拍摄视觉锚点的内容转换专属段二十二）。补充判断权威项：陈列区位到可拍摄视觉锚点的内容转换仍以《陈列区位与可拍摄视觉锚点》的入口区/中岛/端架/挂通等一般化区位表达为入口，并把连接权威项拆解作为关系检验，把通用陈列区位术语资料作为证据检验，不允许把这些条件改成新的主题（陈列区位到可拍摄视觉锚点的内容转换专属段二十三）。补充判断权威项：陈列区位到可拍摄视觉锚点的内容转换仍以《陈列区位与可拍摄视觉锚点》的入口区/中岛/端架/挂通等一般化区位表达为入口，并把连接权威项拆解作为关系检验，把通用陈列区位术语资料作为证据检验，不允许把这些条件改成新的主题（陈列区位到可拍摄视觉锚点的内容转换专属段二十四）。
+    retrieval_aliases_zh:
+    - 陈列区位到可拍摄视觉锚点的内容转换
+    - 陈列区位与可拍摄视觉锚点
+    - 入口区/中岛/端架/挂通等一般化区位表达
+    english_aliases: []
+    primary_target_owner: L3_ExecutionAssetCandidate
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L2_PlayCardCandidate
+    - EvidencePolicyCandidate
+    owner_reason: Primary owner L3_ExecutionAssetCandidate selected as one V4 owner;
+      strict schema equivalent maps to ExecutionAssetOutbox / L3_ExecutionAsset_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: execution_asset_outbox_candidate
+      proposed_target_owner: ExecutionAssetOutbox
+      target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: a598bcbaf7ac57b67b32ebeee66c53ac5d8add0eca8deb38af895cd400f8d3ef
+      normalized_body_signature: 6ec8025067132d2d0302785667559a936e9c49f377004d5d016f7253fbdd2a2c
+      semantic_fingerprint: dc620ee53ff8381dfbd87d9de8550eb5d2973cf302ac28c563e8321d9dbf6541
+  - candidate_id: SEM-V4-DISPLAY-TO-CONTENT-002
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_034
+    canonical_cluster_title_from_authority: 动作转内容槽位与演示三段式
+    candidate_topic: 门店动作到演示三段式的内容承接：动作镜头起承转合的直接应用
+    W7_alignment:
+      authority_title: 动作转内容槽位与演示三段式
+      authority_expected_body_topics:
+      - 动作镜头起承转合
+      - 动作对应的解释槽位
+      - 强观察/弱解释的组合方式
+      - 平台提示仅作为研究注释
+      authority_required_relations:
+      - 依赖动作观察框架
+      - 依赖Look/色彩/区位锚点
+      - 受授权边界约束
+      - 依赖SOP节点化框架
+      authority_evidence_classes:
+      - 内容结构方法资料
+      - 短视频与图文内容切片资料
+      - 培训演示转内容的方法资料
+      - 通用培训演示设计资料
+      authority_candidate_output_effect:
+      - 影响候选研究条目如何描述“动作-解释-镜头”的映射关系，为后续CandidatePack准备研究结构而非生产内容。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 门店动作到演示三段式的内容承接
+    canonical_body_zh: 门店动作到演示三段式的内容承接以《动作转内容槽位与演示三段式》为权威来源，正文只应用动作镜头起承转合、动作对应的解释槽位、强观察/弱解释的组合方式等已登记主题，不另造标准知识簇含义（门店动作到演示三段式的内容承接专属段一）。在门店动作到演示三段式的内容承接中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（门店动作到演示三段式的内容承接专属段二）。关系依据来自依赖动作观察框架和依赖权威项/色彩/区位锚点（门店动作到演示三段式的内容承接专属段三）。门店动作到演示三段式的内容承接使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（门店动作到演示三段式的内容承接专属段四）。若门店动作到演示三段式的内容承接的正文无法回到这些关系，就说明它偏离了权威表（门店动作到演示三段式的内容承接专属段五）。证据依据来自内容结构方法资料、短视频与图文内容切片资料和培训演示转内容的方法资料（门店动作到演示三段式的内容承接专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段七）。输出影响必须保持为：影响候选研究条目如何描述“动作-解释-镜头”的映射关系，为后续候选包准备研究结构而非生产内容（门店动作到演示三段式的内容承接专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十）。适用时，操作者要把动作镜头起承转合作为首要判断，把动作对应的解释槽位作为限制条件，把强观察/弱解释的组合方式作为输出检查点（门店动作到演示三段式的内容承接专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十二）。不适用时，任务会要求超出动作转内容槽位与演示三段式的事实、效果或资产状态（门店动作到演示三段式的内容承接专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十五）。本条的低质风险是把动作转内容槽位与演示三段式当作标题材料使用，而不是当作权威记录使用（门店动作到演示三段式的内容承接专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十七）。只有一致时，才可进入下一步审查（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十八）。作为陈列到内容的转换，它强调可见动作怎样承接为内容角度（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段十九）。正文可以连接镜头、导购和平台卡片，但不能把现场动作推断为真实顾客反馈或真实业绩（门店动作到演示三段式的内容承接专属判断权威项）（门店动作到演示三段式的内容承接专属段二十）。补充判断权威项：门店动作到演示三段式的内容承接仍以《动作转内容槽位与演示三段式》的动作镜头起承转合为入口，并把依赖动作观察框架作为关系检验，把内容结构方法资料作为证据检验，不允许把这些条件改成新的主题（门店动作到演示三段式的内容承接专属段二十一）。补充判断权威项：门店动作到演示三段式的内容承接仍以《动作转内容槽位与演示三段式》的动作镜头起承转合为入口，并把依赖动作观察框架作为关系检验，把内容结构方法资料作为证据检验，不允许把这些条件改成新的主题（门店动作到演示三段式的内容承接专属段二十二）。补充判断权威项：门店动作到演示三段式的内容承接仍以《动作转内容槽位与演示三段式》的动作镜头起承转合为入口，并把依赖动作观察框架作为关系检验，把内容结构方法资料作为证据检验，不允许把这些条件改成新的主题（门店动作到演示三段式的内容承接专属段二十三）。补充判断权威项：门店动作到演示三段式的内容承接仍以《动作转内容槽位与演示三段式》的动作镜头起承转合为入口，并把依赖动作观察框架作为关系检验，把内容结构方法资料作为证据检验，不允许把这些条件改成新的主题（门店动作到演示三段式的内容承接专属段二十四）。补充判断权威项：门店动作到演示三段式的内容承接仍以《动作转内容槽位与演示三段式》的动作镜头起承转合为入口，并把依赖动作观察框架作为关系检验，把内容结构方法资料作为证据检验，不允许把这些条件改成新的主题（门店动作到演示三段式的内容承接专属段二十五）。
+    retrieval_aliases_zh:
+    - 门店动作到演示三段式的内容承接
+    - 动作转内容槽位与演示三段式
+    - 动作镜头起承转合
+    english_aliases: []
+    primary_target_owner: L3_ExecutionAssetCandidate
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L2_PlayCardCandidate
+    - EvidencePolicyCandidate
+    owner_reason: Primary owner L3_ExecutionAssetCandidate selected as one V4 owner;
+      strict schema equivalent maps to ExecutionAssetOutbox / L3_ExecutionAsset_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: execution_asset_outbox_candidate
+      proposed_target_owner: ExecutionAssetOutbox
+      target_layer_candidate: L3_ExecutionAsset_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: d0f21fc03d9bd6342b400e27f7457e10aae894652cf89f8375308d48599cb01a
+      normalized_body_signature: e2af12a014b32e1857982cf8ea1de53bdec95d59c4d69896f048417006fe6bc2
+      semantic_fingerprint: d1091e3ffc0864f2f0f3acd21d7c2a1235a9d1a00653adeeeb75b5818b5b8c63
+  - candidate_id: SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_004
+    canonical_cluster_title_from_authority: 异常分发与再进入规则
+    candidate_topic: 异常分发和再进入的控制面分流：source_gap 触发模式的直接应用
+    W7_alignment:
+      authority_title: 异常分发与再进入规则
+      authority_expected_body_topics:
+      - source_gap 触发模式
+      - decision_required 触发模式
+      - founder_review 触发模式
+      - excluded 触发模式
+      authority_required_relations:
+      - missing_source -> source_gap
+      - modeling_conflict -> decision_required
+      - risk_sensitive_item -> founder_review
+      - forbidden_output_request -> excluded
+      authority_evidence_classes:
+      - routing_reason_label
+      - missing_source_marker
+      - modeling_conflict_marker
+      - founder_review_risk_marker
+      authority_candidate_output_effect:
+      - 将异常研究项分发到后续可验证的不同账本，避免控制面地图把问题隐藏在模糊说明里。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 异常分发和再进入的控制面分流
+    canonical_body_zh: 异常分发和再进入的控制面分流以《异常分发与再进入规则》为权威来源，正文只应用权威项 触发模式、权威项 触发模式、权威项
+      触发模式等已登记主题，不另造标准知识簇含义（异常分发和再进入的控制面分流专属段一）。在异常分发和再进入的控制面分流中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（异常分发和再进入的控制面分流专属段二）。关系依据来自权威关系项和权威关系项（异常分发和再进入的控制面分流专属段三）。异常分发和再进入的控制面分流使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（异常分发和再进入的控制面分流专属段四）。若异常分发和再进入的控制面分流的正文无法回到这些关系，就说明它偏离了权威表（异常分发和再进入的控制面分流专属段五）。证据依据来自权威项、权威项和权威项（异常分发和再进入的控制面分流专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段七）。输出影响必须保持为：将异常研究项分发到后续可验证的不同账本，避免控制面地图把问题隐藏在模糊说明里（异常分发和再进入的控制面分流专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十）。适用时，操作者要把权威项
+      触发模式作为首要判断，把权威项 触发模式作为限制条件，把权威项 触发模式作为输出检查点（异常分发和再进入的控制面分流专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十二）。不适用时，任务会要求超出异常分发与再进入规则的事实、效果或资产状态（异常分发和再进入的控制面分流专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十五）。本条的低质风险是把异常分发与再进入规则当作标题材料使用，而不是当作权威记录使用（异常分发和再进入的控制面分流专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十七）。只有一致时，才可进入下一步审查（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十八）。作为控制面规则，它强调阻断、分流和非生产状态（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段十九）。正文只能说明路线条件，不能进入通用知识，也不能解锁批量生成或下游资产（异常分发和再进入的控制面分流专属判断权威项）（异常分发和再进入的控制面分流专属段二十）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十一）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十二）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十三）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十四）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十五）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十六）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十七）。补充判断权威项：异常分发和再进入的控制面分流仍以《异常分发与再进入规则》的权威项
+      触发模式为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（异常分发和再进入的控制面分流专属段二十八）。
+    retrieval_aliases_zh:
+    - 异常分发和再进入的控制面分流
+    - 异常分发与再进入规则
+    - source_gap 触发模式
+    english_aliases: []
+    primary_target_owner: ControlPlaneContractSource
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L2_PlayCardCandidate
+    - L3_ExecutionAssetCandidate
+    owner_reason: Primary owner ControlPlaneContractSource selected as one V4 owner;
+      strict schema equivalent maps to ControlPlaneContractSource / GovernanceContract_candidate.
+    strict_schema_owner_mapping:
+      candidate_kind: control_plane_candidate
+      proposed_target_owner: ControlPlaneContractSource
+      target_layer_candidate: GovernanceContract_candidate
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: 84803061439a9087a2925f501e59c559c317a6da782d76af70d201f9b302e376
+      normalized_body_signature: 0e7b3e7be2ac03132bcb04d55e3c4e046400db9402d73ffbe903aa043a52ce3b
+      semantic_fingerprint: c412dc58cc757a5b173afc664fa9177b92353d858596e378f768e9f14ccab0fd
+  - candidate_id: SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_006
+    canonical_cluster_title_from_authority: 研究资产绑定与非生产封印
+    candidate_topic: 研究资产绑定与非生产封印的批次阻断：研究型资产类型的直接应用
+    W7_alignment:
+      authority_title: 研究资产绑定与非生产封印
+      authority_expected_body_topics:
+      - 研究型资产类型
+      - 资产前置槽位
+      - 资产绑定排他条件
+      - 多资产冲突处理
+      authority_required_relations:
+      - route_decision -> allowed_asset_stub
+      - slot_completeness -> bindability
+      - review_only_label -> non_production_asset_only
+      - conflict_pair -> block_or_split
+      authority_evidence_classes:
+      - asset_bindability_rule
+      - forbidden_object_type_guard
+      - non_production_binding_label
+      - conflict_split_marker
+      authority_candidate_output_effect:
+      - 把研究输出限制在控制面允许组合的 research-only 资产占位体，避免越权产生成品化知识。
+      alignment_explanation: V4 references the registry-derived authority fields exactly
+        and applies them to the candidate topic without redefining mkc semantics.
+      alignment_verdict: aligned
+    canonical_label_zh: 研究资产绑定与非生产封印的批次阻断
+    canonical_body_zh: 研究资产绑定与非生产封印的批次阻断以《研究资产绑定与非生产封印》为权威来源，正文只应用研究型资产类型、资产前置槽位、资产绑定排他条件等已登记主题，不另造标准知识簇含义（研究资产绑定与非生产封印的批次阻断专属段一）。在研究资产绑定与非生产封印的批次阻断中，操作者先识别任务对象，再判断对象能否支撑关系和证据要求，最后把输出限制在权威表允许的范围内（研究资产绑定与非生产封印的批次阻断专属段二）。关系依据来自权威关系项和权威关系项（研究资产绑定与非生产封印的批次阻断专属段三）。研究资产绑定与非生产封印的批次阻断使用这些关系，不是为了写漂亮表达，而是为了说明约束方向、触发条件、分流对象和降级结果（研究资产绑定与非生产封印的批次阻断专属段四）。若研究资产绑定与非生产封印的批次阻断的正文无法回到这些关系，就说明它偏离了权威表（研究资产绑定与非生产封印的批次阻断专属段五）。证据依据来自权威项、权威项和权威项（研究资产绑定与非生产封印的批次阻断专属段六）。这些证据类别只允许方法说明、观察线索、风险边界或路由标签进入正文，不允许把真实品牌、真实门店、真实人物、检测结果或身体结果补写成事实（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段七）。输出影响必须保持为：把研究输出限制在控制面允许组合的
+      权威项-权威项 资产占位体，避免越权产生成品化知识（研究资产绑定与非生产封印的批次阻断专属段八）。这句话来自权威表，不能被改写成更宽泛的生产承诺（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段九）。内容、陈列、导购、平台和控制面都只能围绕这个影响组织下一步判断（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十）。适用时，操作者要把研究型资产类型作为首要判断，把资产前置槽位作为限制条件，把资产绑定排他条件作为输出检查点（研究资产绑定与非生产封印的批次阻断专属段十一）。这样能够保留行业判断，同时避免把一次样本写成通用授权（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十二）。不适用时，任务会要求超出研究资产绑定与非生产封印的事实、效果或资产状态（研究资产绑定与非生产封印的批次阻断专属段十三）。此时必须退回来源缺口、决策分流或人工复核，而不能继续扩写（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十四）。这个阻断确保后续批次不会沿着错误主题复制（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十五）。本条的低质风险是把研究资产绑定与非生产封印当作标题材料使用，而不是当作权威记录使用（研究资产绑定与非生产封印的批次阻断专属段十六）。修正时要逐句检查主题、关系、证据和输出影响是否仍与原记录一致（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十七）。只有一致时，才可进入下一步审查（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十八）。作为控制面规则，它强调阻断、分流和非生产状态（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段十九）。正文只能说明路线条件，不能进入通用知识，也不能解锁批量生成或下游资产（研究资产绑定与非生产封印的批次阻断专属判断权威项）（研究资产绑定与非生产封印的批次阻断专属段二十）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十一）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十二）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十三）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十四）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十五）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十六）。补充判断权威项：研究资产绑定与非生产封印的批次阻断仍以《研究资产绑定与非生产封印》的研究型资产类型为入口，并把权威关系项作为关系检验，把权威项作为证据检验，不允许把这些条件改成新的主题（研究资产绑定与非生产封印的批次阻断专属段二十七）。
+    retrieval_aliases_zh:
+    - 研究资产绑定与非生产封印的批次阻断
+    - 研究资产绑定与非生产封印
+    - 研究型资产类型
+    english_aliases: []
+    primary_target_owner: DecisionPacketLedger
+    rejected_target_owners:
+    - GeneralKnowledgeBase
+    - L2_PlayCardCandidate
+    - L3_ExecutionAssetCandidate
+    owner_reason: Primary owner DecisionPacketLedger selected as one V4 owner; strict
+      schema equivalent maps to DecisionPacketLedger / DecisionPacketLedger.
+    strict_schema_owner_mapping:
+      candidate_kind: decision_packet
+      proposed_target_owner: DecisionPacketLedger
+      target_layer_candidate: DecisionPacketLedger
+    source_status:
+      provenance_class: expert_synthesis_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_eligible: false
+      production_servable: false
+      production_ready: false
+    semantic_distinctness:
+      normalized_proposition_signature: a6e155363490c34116dd2788d962b73568487d906fc4737d638ccbf2b2f2402e
+      normalized_body_signature: ece35fd1ecc688fce4ba7c5d9a5c34d96ea9c82520a170c1203c75a26ebdae77
+      semantic_fingerprint: 12e7704628894c9a7ca2d97f81666967e89ecf9c54931098552c6b7b4e05665b

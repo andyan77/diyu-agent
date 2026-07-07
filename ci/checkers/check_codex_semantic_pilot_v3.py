@@ -13,7 +13,9 @@ from typing import Any
 import yaml
 
 TASK_ID = "CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001"
+V4_TASK_ID = "CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001"
 NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
+V4_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001"
 BATCH_NEXT_STEP = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_TOTAL = 20
 EXPECTED_CATEGORY_COUNTS = {
@@ -234,10 +236,14 @@ def validate_status(status: dict[str, Any]) -> None:
     phase = status.get("phase", {})
     if phase.get("current_next_step") == BATCH_NEXT_STEP:
         fail("batch generation task cannot be next step")
-    if phase.get("current_next_step") != NEXT_STEP:
-        fail("workspace next step must be semantic pilot v3 judge go/no-go")
-    if phase.get("previous_step") != TASK_ID:
+    current_next_step = phase.get("current_next_step")
+    if current_next_step not in {NEXT_STEP, V4_NEXT_STEP}:
+        fail("workspace next step must be semantic pilot v3 judge go/no-go or semantic pilot v4 judge go/no-go")
+    previous_step = phase.get("previous_step")
+    if current_next_step == NEXT_STEP and previous_step != TASK_ID:
         fail("workspace previous step must be semantic pilot v3 task")
+    if current_next_step == V4_NEXT_STEP and previous_step != V4_TASK_ID:
+        fail("workspace previous step must be semantic pilot v4 task")
     v3 = status.get("semantic_pilot_v3", {})
     if v3.get("task_id") != TASK_ID or v3.get("status") != "completed":
         fail("semantic_pilot_v3 status block missing")
@@ -249,6 +255,20 @@ def validate_status(status: dict[str, Any]) -> None:
         fail("batch_generation_unlocked must remain false")
     if v3.get("ready_for_first_batch_generation") is True:
         fail("ready_for_first_batch_generation must remain false")
+    if current_next_step == V4_NEXT_STEP:
+        v4 = status.get("semantic_pilot_v4", {})
+        if v4.get("status") != "completed":
+            fail("semantic v4 judge route requires completed semantic_pilot_v4 block")
+        if v4.get("W7_authority_records_count") != 46:
+            fail("semantic v4 judge route requires 46 W7 authority records")
+        if v4.get("semantic_pilot_v4_count") != 8:
+            fail("semantic v4 judge route requires 8 v4 semantic pilot drafts")
+        if v4.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v4 judge route requires accepted_domain_knowledge_count 0")
+        if v4.get("batch_generation_unlocked") is True:
+            fail("semantic v4 judge route must keep batch_generation_unlocked false")
+        if v4.get("ready_for_first_batch_generation") is True:
+            fail("semantic v4 judge route must keep ready_for_first_batch_generation false")
     bad = {key: value for key, value in status.get("readiness", {}).items() if value is True or str(value).lower() == "true"}
     if bad:
         fail(f"readiness true flags: {bad}")
@@ -382,8 +402,8 @@ def validate_fixture_model(model: dict[str, Any]) -> list[str]:
         errors.append("first batch generation must remain false")
     if data.get("current_next_step") == BATCH_NEXT_STEP:
         errors.append("batch generation task cannot be next step")
-    if data.get("current_next_step") != NEXT_STEP:
-        errors.append("next step must be semantic pilot v3 judge go/no-go")
+    if data.get("current_next_step") not in {NEXT_STEP, V4_NEXT_STEP}:
+        errors.append("next step must be semantic pilot v3 judge go/no-go or semantic pilot v4 judge go/no-go")
     expected_zero = [
         "english_primary_body_count",
         "forbidden_audit_phrase_count",

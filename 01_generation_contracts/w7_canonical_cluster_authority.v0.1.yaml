@@ -1,0 +1,1329 @@
+w7_canonical_cluster_authority:
+  schema_version: v0.1
+  source: 00_source_inputs/W7_master_map/shared_knowledge_cluster_registry.yaml
+  source_repo_live_dependency: false
+  record_count: 46
+  authority_rule: mkc_id semantics are read-only canonical records. Downstream pilot / batch / checker / sidecar files must not redefine mkc title,
+    owner, expected body topics, required relations, evidence classes, or output effect.
+  records:
+  - mkc_id: mkc_001
+    canonical_title: 入口槽位契约
+    owner_capability_group: P0-00
+    secondary_capability_groups:
+    - P0-01
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - 最小入口槽位族
+    - 槽位完备度定义
+    - 槽位缺失分层
+    - 入口 checker 触发顺序
+    required_relations:
+    - slot_completeness -> route_ladder
+    - instance_fact_presence -> blocking_or_gap
+    - claim_risk_level -> evidence_checker
+    - requested_asset_type -> asset_binding_gate
+    evidence_classes:
+    - structure_only_slot_definition
+    - source_anchor_presence_check
+    - evidence_need_label_only
+    - instance_fact_prohibited
+    candidate_output_effect:
+    - 使后续研究产物只能以控制面可消费槽位进入，不得越权直接形成领域正文或实例知识。
+    source_gap_likelihood: medium
+    source_record_sha256: 327f3e854c43208838f0a2f8cc7f8878e7db78742174d78069ad8124bc861e46
+  - mkc_id: mkc_002
+    canonical_title: 路由阶梯与降级触发
+    owner_capability_group: P0-00
+    secondary_capability_groups:
+    - P0-01
+    - P0-03
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - boundary_rule
+    - routing_hint
+    - relation_hint
+    expected_body_topics:
+    - route 梯级定义
+    - degradation 类型
+    - soft fallback 与 hard block 区分
+    - review-only 与 source-gap 分流
+    required_relations:
+    - checker_result -> route_decision
+    - evidence_need_missing -> source_gap
+    - ontology_conflict -> decision_required
+    - risk_sensitive_override -> founder_review
+    evidence_classes:
+    - route_trigger_definition
+    - evidence_missing_to_gap_rule
+    - conflict_to_decision_rule
+    - risk_sensitive_to_founder_review_rule
+    candidate_output_effect:
+    - 让任何候选研究片段都必须先通过控制面路由阶梯判断，不能直接被误读为可用知识。
+    source_gap_likelihood: medium
+    source_record_sha256: ed6a232ec8a2b8b22aa0c0f2d81a7946e409c4e36968c5ad825d39ade136897a
+  - mkc_id: mkc_003
+    canonical_title: 全局 claim 与证据边界检查
+    owner_capability_group: P0-00
+    secondary_capability_groups:
+    - P0-03
+    - P0-05
+    knowledge_types:
+    - evidence_requirement
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - claim 强度分层
+    - 方法陈述与事实断言切分
+    - source support 与 evidence support 区分
+    - GPT 草稿不可作 source anchor
+    required_relations:
+    - claim_strength -> evidence_need_class
+    - evidence_absence -> source_gap
+    - instance_fact -> excluded_or_decision_required
+    - claim_risk_override -> founder_review
+    evidence_classes:
+    - source_supported_hard_claim_required
+    - evidence_supported_effect_claim_required
+    - method_only_no_fact
+    - unsupported_claim_to_gap
+    candidate_output_effect:
+    - 防止控制面把 claim 类片段误消化为一般知识，确保高风险断言都被分流到正确账本。
+    source_gap_likelihood: high
+    source_record_sha256: 4978367cbc96d98533844a197faf6e1afc9b0683bac65fc524c3a06057b8544b
+  - mkc_id: mkc_004
+    canonical_title: 异常分发与再进入规则
+    owner_capability_group: P0-00
+    secondary_capability_groups:
+    - P0-01
+    - P0-02
+    - P0-03
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - routing_hint
+    - boundary_rule
+    - decision_required_candidate
+    - source_gap_candidate
+    expected_body_topics:
+    - source_gap 触发模式
+    - decision_required 触发模式
+    - founder_review 触发模式
+    - excluded 触发模式
+    required_relations:
+    - missing_source -> source_gap
+    - modeling_conflict -> decision_required
+    - risk_sensitive_item -> founder_review
+    - forbidden_output_request -> excluded
+    evidence_classes:
+    - routing_reason_label
+    - missing_source_marker
+    - modeling_conflict_marker
+    - founder_review_risk_marker
+    candidate_output_effect:
+    - 将异常研究项分发到后续可验证的不同账本，避免控制面地图把问题隐藏在模糊说明里。
+    source_gap_likelihood: high
+    source_record_sha256: 4a34d69d030c598cc5aabba03bcc8e42ce554f09bfd4a1a2b12eea577794accd
+  - mkc_id: mkc_005
+    canonical_title: 能力组合与 strictest-wins 裁定
+    owner_capability_group: P0-00
+    secondary_capability_groups:
+    - P0-01
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - relation_hint
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - strictest-wins 原则
+    - control-plane 保留条件
+    - shared cluster 拆分条件
+    - 新轴新增禁令
+    required_relations:
+    - multi_capability_request -> composition_check
+    - composition_conflict -> decision_required
+    - support_only_context -> no_full_ontology
+    - strictest_rule -> final_route
+    evidence_classes:
+    - composition_rule_definition
+    - ownership_unclear_marker
+    - support_only_boundary_label
+    - strictest_wins_relation
+    candidate_output_effect:
+    - 为多能力交叉请求建立统一冲突裁决面，防止研究产物在能力归属上漂移。
+    source_gap_likelihood: medium
+    source_record_sha256: 3331e63f51bc9b95cde7b14c01592a68f577bb173278ad77b92bed8a346fd256
+  - mkc_id: mkc_006
+    canonical_title: 研究资产绑定与非生产封印
+    owner_capability_group: P0-00
+    secondary_capability_groups:
+    - P0-01
+    - P0-02
+    - P0-03
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - boundary_rule
+    - relation_hint
+    - routing_hint
+    - exclusion_note
+    expected_body_topics:
+    - 研究型资产类型
+    - 资产前置槽位
+    - 资产绑定排他条件
+    - 多资产冲突处理
+    required_relations:
+    - route_decision -> allowed_asset_stub
+    - slot_completeness -> bindability
+    - review_only_label -> non_production_asset_only
+    - conflict_pair -> block_or_split
+    evidence_classes:
+    - asset_bindability_rule
+    - forbidden_object_type_guard
+    - non_production_binding_label
+    - conflict_split_marker
+    candidate_output_effect:
+    - 把研究输出限制在控制面允许组合的 research-only 资产占位体，避免越权产生成品化知识。
+    source_gap_likelihood: medium
+    source_record_sha256: 70914d5bb538b1df9ec16a6212a0eedd8b3599041a257c5cd12b7d0c0f0db11f
+  - mkc_id: mkc_007
+    canonical_title: 企业叙事骨架
+    owner_capability_group: P0-01
+    secondary_capability_groups:
+    - P0-02
+    - P0-03
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - boundary_rule
+    expected_body_topics:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - 供应链 / 组织 / 过程证明的预留槽位
+    - 价值表达与可观察差异
+    required_relations:
+    - problem_domain -> operating_method
+    - operating_method -> proof_slot
+    - proof_slot -> value_expression
+    - value_expression -> series_axis
+    evidence_classes:
+    - official_corporate_profile_type
+    - official_operating_method_overview_type
+    - official_process_explainer_type
+    - organization_role_description_type
+    candidate_output_effect:
+    - 仅提升 research map 中企业叙事的结构复用性、系列拆分能力与证据槽位规划能力。
+    source_gap_likelihood: medium
+    source_record_sha256: 7660cf025fb1678a83e04cc3db172d23f35c8393f224258b3e94c521ee6ef170
+  - mkc_id: mkc_008
+    canonical_title: 证明槽位与价值转译
+    owner_capability_group: P0-01
+    secondary_capability_groups:
+    - P0-03
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - evidence_requirement
+    - relation_hint
+    - boundary_rule
+    - general_method
+    expected_body_topics:
+    - 角色分工与协作边界
+    - 关键工序或流程节点的叙事位置
+    - 质量门、复核门、交接门
+    - 供应链选择与约束处理的通用叙事位
+    required_relations:
+    - organization_role -> process_node
+    - process_node -> quality_gate
+    - supply_chain_choice -> constraint
+    - constraint -> method_credibility
+    evidence_classes:
+    - official_process_overview_type
+    - official_quality_method_note_type
+    - official_supply_chain_principle_disclosure_type
+    - organization_or_role_document_type
+    candidate_output_effect:
+    - 仅形成 proof-slot taxonomy、evidence need labels 与 cross-card relation hints。
+    source_gap_likelihood: high
+    source_record_sha256: ae60113e10a1f7cc9f2f57186dfe0fafec4e09a6d6aeb2f753825f4b8f436dbe
+  - mkc_id: mkc_009
+    canonical_title: 故事弧线适用边界
+    owner_capability_group: P0-01
+    secondary_capability_groups:
+    - P0-05
+    knowledge_types:
+    - boundary_rule
+    - general_method
+    - source_gap_candidate
+    expected_body_topics:
+    - 不同叙事弧线对应的问题类型
+    - 弧线与证据要求的绑定
+    - 弧线与价值表达、proof slot 的兼容性
+    - 不适用弧线的识别信号
+    required_relations:
+    - story_arc -> required_proof_intensity
+    - story_arc -> compatible_value_expression
+    - story_arc -> forbidden_fact_zone
+    - arc_mismatch -> source_gap_or_downgrade
+    evidence_classes:
+    - story_method_reference_type
+    - organization_process_or_capability_explainer_type
+    - official_milestone_disclosure_type_if_later_instance_authorized
+    candidate_output_effect:
+    - 仅提供 arc taxonomy、适用条件与 downgrade routing，不输出 story scripts。
+    source_gap_likelihood: medium_high
+    source_record_sha256: e01905e21aa0b7fdbcee7714b0ba523cd8e0ae20ceceaff0693d9d87e9d5a0f2
+  - mkc_id: mkc_010
+    canonical_title: 反模板叙事锚点
+    owner_capability_group: P0-01
+    secondary_capability_groups:
+    - P0-02
+    - P0-03
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - relation_hint
+    expected_body_topics:
+    - 对象锚点类型
+    - 动作锚点与处理逻辑
+    - 约束锚点与取舍表达
+    - 节点锚点与前后台衔接
+    required_relations:
+    - anchor_object -> anchor_action
+    - anchor_action -> visible_cue
+    - constraint -> tradeoff_expression
+    - process_node -> narrative_sceneability
+    evidence_classes:
+    - process_scene_or_object_reference_type
+    - organization_role_action_reference_type
+    - method_or_choice_explainer_type
+    candidate_output_effect:
+    - 用于 DQ gate 的 narrative anchor checklist、anti-template split 规则与 sceneability hints。
+    source_gap_likelihood: medium
+    source_record_sha256: 02526a1a29adedfcf75e06b9f03b458ce5b2c4c041be38c90f7abc9b40ba6364
+  - mkc_id: mkc_011
+    canonical_title: 叙事放大禁区与风险路由
+    owner_capability_group: P0-01
+    secondary_capability_groups:
+    - P0-00
+    - P0-03
+    - P0-05
+    knowledge_types:
+    - routing_hint
+    - boundary_rule
+    - decision_required_candidate
+    expected_body_topics:
+    - 高风险 narrative zone 分类
+    - 不同风险 zone 对应的路由动作
+    - 风险放大词与禁用表达类别
+    - 需要 founder review 的典型边界
+    required_relations:
+    - risk_zone -> routing_target
+    - authority_signal -> evidence_requirement
+    - instance_fact_dependency -> source_gap
+    - sensitive_promise -> founder_review
+    evidence_classes:
+    - risk_policy_reference_type
+    - source_gap_route_reference_type
+    - founder_review_trigger_reference_type
+    candidate_output_effect:
+    - 只产生 risk routing ledger、forbidden amplification cues 与 downgrade conditions。
+    source_gap_likelihood: high
+    source_record_sha256: e2b6a740c75c2ae680d620157c96c78e5b0f005cc3bea0e09b2b398fa398b16d
+  - mkc_id: mkc_012
+    canonical_title: 系列轴与跨形态资产单元
+    owner_capability_group: P0-01
+    secondary_capability_groups:
+    - P0-02
+    - P0-03
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - boundary_rule
+    - evidence_requirement
+    expected_body_topics:
+    - 系列轴的类型与选用条件
+    - 序列编排逻辑与去重复机制
+    - proof cadence 与 topic cascade 的绑定
+    - 前台价值与后台能力穿插规则
+    required_relations:
+    - master_narrative -> series_axis
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - sequence_order -> repetition_control
+    evidence_classes:
+    - topic_axis_reference_type
+    - series_structure_reference_type
+    - proof_slot_distribution_reference_type
+    - asset_unit_reference_type
+    candidate_output_effect:
+    - 用于 later intake 的 topic-axis grid、episode-unit rules 与 anti-repetition notes。
+    source_gap_likelihood: medium
+    source_record_sha256: c684419820c50b5a17d5cc4763837aaa6637147ba26e7668e4cbaa044c695c70
+  - mkc_id: mkc_013
+    canonical_title: 角色发声寄存器
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-01
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    expected_body_topics:
+    - 主语选择与叙述站位
+    - 信息密度与限制语
+    - 动作词、观察词、解释词边界
+    - apparel / retail 场景中的 role anchor
+    required_relations:
+    - depends_on:P0-02-RS04-C01
+    - modulated_by:P0-02-RS03-C01
+    - shares_boundary_with:P0-01
+    evidence_classes:
+    - charter_constraint
+    - subcard_scope_reference
+    - dq_policy_anchor
+    candidate_output_effect:
+    - 为后续候选观察提供 role voice 分桶与降噪规则，不构成 CandidatePack。
+    source_gap_likelihood: medium
+    source_record_sha256: 2c7902dcaa7e0ed3b9512fe8147d1dd1a644b96a934e80f3261a6eb16755e7d2
+  - mkc_id: mkc_014
+    canonical_title: 语气校准与去人物化
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-01
+    - P0-03
+    - P0-04
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - evidence_requirement
+    expected_body_topics:
+    - 语气强度与场景强度匹配
+    - 允许的人设表面层
+    - 不可写的真人痕迹
+    - 高风险 claim 前的降调与限制语
+    required_relations:
+    - constrained_by:P0-02-RS04-C02
+    - modulated_by:P0-02-RS03-C02
+    - intersects_with:P0-03
+    evidence_classes:
+    - charter_constraint
+    - source_boundary_policy
+    - dq_policy_anchor
+    candidate_output_effect:
+    - 为后续候选观察建立 tone 梯度与 persona downgrade，不形成任何人物素材或发布文案。
+    source_gap_likelihood: medium
+    source_record_sha256: 0ee34eb4bfb1cc57e7a0614bc6eb172d9588aa768d1bcc9c8f6962ae767bc2b3
+  - mkc_id: mkc_015
+    canonical_title: 组织生态角色网格
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    expected_body_topics:
+    - 角色功能层级
+    - 内容职责与观察接口
+    - 不同角色的信息颗粒度
+    - 公开可复用的生态视角
+    required_relations:
+    - feeds:P0-02-RS02-C02
+    - constrained_by:P0-02-RS04-C01
+    - shared_with:P0-04
+    evidence_classes:
+    - subcard_scope_reference
+    - batch_budget_reference
+    - dq_policy_anchor
+    candidate_output_effect:
+    - 为后续生态内容提供 role grid，不产出真实组织资料。
+    source_gap_likelihood: medium
+    source_record_sha256: 7ae815337946d83d4baad324c805a0e62a252c186543b6a63a0e7be3039d3c04
+  - mkc_id: mkc_016
+    canonical_title: 视角切换与公开安全边界
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-00
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - relation_hint
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - 对象在不同角色中的命名变化
+    - 交接节点与上下文切换
+    - public-safe 与 private-ops 切断规则
+    - accepted / gap / excluded 路由
+    required_relations:
+    - depends_on:P0-02-RS02-C01
+    - downgraded_by:P0-02-RS04-C02
+    - shared_boundary_with:P0-00
+    - shared_boundary_with:P0-04
+    evidence_classes:
+    - source_boundary_policy
+    - batch_budget_reference
+    - readiness_boundary_policy
+    candidate_output_effect:
+    - 为后续跨角色编排保留 relation hint 与 downgrade 规则，不形成运行时流程。
+    source_gap_likelihood: high
+    source_record_sha256: 5bc61670cc264e53c210026c9a9b9ccb20fca50bf72ea0fffe944005acba0935
+  - mkc_id: mkc_017
+    canonical_title: 受众距离与信息深浅轴
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-01
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    expected_body_topics:
+    - knowledge distance
+    - decision stage
+    - interaction intensity
+    - 不同阶段对应的信息深浅
+    required_relations:
+    - modulates:P0-02-RS01-C01
+    - modulates:P0-02-RS01-C02
+    - feeds:P0-02-RS03-C02
+    evidence_classes:
+    - subcard_scope_reference
+    - dq_policy_anchor
+    candidate_output_effect:
+    - 为后续 role-to-audience 研究提供安全维度，不生成真实用户画像。
+    source_gap_likelihood: medium
+    source_record_sha256: 5a1769cce192fe880dba441e69dafd9a4630063162abc458350808a36ee022f4
+  - mkc_id: mkc_018
+    canonical_title: 情绪温度层与信任门控
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-00
+    - P0-03
+    - P0-05
+    knowledge_types:
+    - general_method
+    - evidence_requirement
+    - boundary_rule
+    expected_body_topics:
+    - 情绪温度分层
+    - 低风险信任信号
+    - 强证据信号
+    - 从 accepted cluster 到 source gap 的触发条件
+    required_relations:
+    - depends_on:P0-02-RS03-C01
+    - modulates:P0-02-RS01-C02
+    - gated_by:P0-02-RS04-C01
+    - intersects_with:P0-03
+    evidence_classes:
+    - source_boundary_policy
+    - dq_policy_anchor
+    - charter_constraint
+    candidate_output_effect:
+    - 为后续候选观察补上 evidence gate 与 downgrade 触发条件，不生成 claim 成稿。
+    source_gap_likelihood: high
+    source_record_sha256: b9a8ea55cc4aa30a2957d0151c436d2b6c7281a60769efe033d8c21c2db511f4
+  - mkc_id: mkc_019
+    canonical_title: 角色授权表面与人物故事红线
+    owner_capability_group: P0-02
+    secondary_capability_groups:
+    - P0-00
+    - P0-04
+    knowledge_types:
+    - boundary_rule
+    - general_method
+    - routing_hint
+    - source_gap_candidate
+    - decision_required_candidate
+    expected_body_topics:
+    - 可说的方法层
+    - 不可说的事实层
+    - 默认背书的危险信号
+    - 越权表述拆解
+    required_relations:
+    - constrains:P0-02-RS01-C01
+    - constrains:P0-02-RS02-C01
+    - feeds:P0-02-RS04-C02
+    - shares_boundary_with:P0-00
+    evidence_classes:
+    - source_boundary_policy
+    - readiness_boundary_policy
+    - subcard_scope_reference
+    candidate_output_effect:
+    - 为后续 role-based 研究建立 speakable / not_speakable 分层，不生成任何真实授权材料。
+    source_gap_likelihood: high
+    source_record_sha256: a4ef653f8e92e87305889d97ac57f91f33b9367ae0724350ec85c773781ab361
+  - mkc_id: mkc_020
+    canonical_title: 品类解释与属性槽位骨架
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - relation_hint
+    expected_body_topics:
+    - 上装/下装/连衣类/外搭类等抽象品类分层
+    - 单品解释时可使用的通用属性槽位
+    - 品类说明与真实 SKU 事实的切断规则
+    - 面料/材质槽位
+    required_relations:
+    - 连接 RS01-CL02 属性槽位体系
+    - 为 RS02 面料/工艺与 RS03 claim 边界提供对象入口
+    - 承接 RS01-CL01 的品类入口
+    - 向 RS02/RS03/RS04 分发属性研究任务
+    evidence_classes:
+    - terminology_definition_source
+    - apparel_category_reference
+    - attribute_taxonomy_reference
+    - attribute_schema_reference
+    candidate_output_effect:
+    - 约束后续候选内容以类别—属性—边界结构组织，减少泛化空话与实例混入。
+    source_gap_likelihood: 中
+    source_record_sha256: a897518d02dfc84d381c5d283d2aec3bda4709dd71c1d490439058c8ca0524b1
+  - mkc_id: mkc_021
+    canonical_title: 同类比较维度与禁比边界
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-05
+    knowledge_types:
+    - boundary_rule
+    - general_method
+    - evidence_requirement
+    expected_body_topics:
+    - 同类之间可比的维度
+    - 不可直接比较的维度
+    - 比较时如何显示未知项
+    - 何时必须触发 source gap
+    required_relations:
+    - 依赖 RS01-CL02 属性槽位
+    - 与 RS03-CL02 claim 证据阶梯联动
+    evidence_classes:
+    - comparison_dimension_reference
+    - evidence_policy_reference
+    - risk_boundary_reference
+    candidate_output_effect:
+    - 让候选内容形成比较维度—能看见什么—不能推出什么的结构。
+    source_gap_likelihood: 中
+    source_record_sha256: ff8a89a8b1e78255beafe147d4e6cf4d637e6cd566071d8389930674543ad307
+  - mkc_id: mkc_022
+    canonical_title: 面料家族与属性边界
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - evidence_requirement
+    expected_body_topics:
+    - 纤维/纱线/面料层级区分
+    - 梭织/针织等结构差异的解释入口
+    - 常见观察项与不可直接外推的性能项
+    - 手感词与事实词的边界
+    required_relations:
+    - 承接 RS01-CL02 面料槽位
+    - 向 RS03-CL02 传递性能 claim 风险
+    - 向 RS04-CL02 提供质量观察项
+    evidence_classes:
+    - textile_terminology_source
+    - fabric_structure_reference
+    - evidence_policy_reference
+    candidate_output_effect:
+    - 帮助后续候选内容把材料家族→结构特点→可观察线索→不可直接承诺的效果→需补源项串起来。
+    source_gap_likelihood: 高
+    source_record_sha256: d5694d4af73decbf3b64afda8c49a1f300931b216a53c01abe11820ae535fdf8
+  - mkc_id: mkc_023
+    canonical_title: 颜色表达与视觉解释边界
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - relation_hint
+    expected_body_topics:
+    - 颜色基础维度
+    - 色彩家族与中性/冷暖等通用表达
+    - 颜色在镜头与光线下的观察提醒
+    - 颜色故事与品质/显白/显瘦等结论切断
+    required_relations:
+    - 连接 RS01-CL02 颜色槽位
+    - 连接 RS04-CL04 可拍摄表达
+    - 与 RS03-CL01 体型效果边界联动
+    evidence_classes:
+    - color_theory_reference
+    - visual_observation_reference
+    - evidence_policy_reference
+    candidate_output_effect:
+    - 让后续候选内容在色彩解释里有锚点、有镜头线索、无越界结果承诺。
+    source_gap_likelihood: 中
+    source_record_sha256: ca450fe9c82cabed5852e215f447190874e947e6b9536478470cccf5437dacfc
+  - mkc_id: mkc_024
+    canonical_title: 版型廓形剪裁术语
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - boundary_rule
+    expected_body_topics:
+    - 版型与廓形区别
+    - 轮廓线、长度、宽窄、松量、重心等表达
+    - 结构节点与视觉结果的关系提示
+    - 版型词与身材效果承诺的切断
+    required_relations:
+    - 连接 RS01-CL02 版型槽位
+    - 连接 RS03-CL01 体型效果语言阶梯
+    - 连接 RS04-CL04 画面示意方式
+    evidence_classes:
+    - pattern_cut_reference
+    - fashion_terminology_source
+    - evidence_policy_reference
+    candidate_output_effect:
+    - 让后续候选内容形成术语定义—结构节点—视觉变化—风险边界的段落。
+    source_gap_likelihood: 高
+    source_record_sha256: dbf018978d0992940f3938727579f01343e980f37d604383c8dd233acede64f7
+  - mkc_id: mkc_025
+    canonical_title: 工艺观察线索与讲解节点
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-04
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - evidence_requirement
+    - boundary_rule
+    expected_body_topics:
+    - 可见工艺节点清单
+    - 观察顺序：外观→结构→细节→不可直接外推的质量结论
+    - 工艺名词与功能/耐用结论的风险切断
+    - 工艺节点的叙事先后顺序
+    required_relations:
+    - 连接 RS04-CL01 工艺叙事节点
+    - 连接 RS04-CL02 质量观察项
+    - 连接 RS03-CL02 质量/耐用 claim 证据阶梯
+    - process_node -> explanation_order
+    evidence_classes:
+    - garment_construction_reference
+    - visual_inspection_reference
+    - evidence_policy_reference
+    - process_story_method_reference
+    candidate_output_effect:
+    - 提升后续候选内容的细节锚点与镜头对象选择，但不越过质量承诺边界。
+    source_gap_likelihood: 高
+    source_record_sha256: 4300bcf18989c0f450054db85bbb2bc955cbd353fbeca66656b5325f1e7f2102
+  - mkc_id: mkc_026
+    canonical_title: 身材效果语言阶梯与场景化观察
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-05
+    knowledge_types:
+    - boundary_rule
+    - general_method
+    - routing_hint
+    expected_body_topics:
+    - 观察词/关系词/结果词分层
+    - 能说视觉线条变化与不能保证身体结果的边界
+    - 替代表达与回避表达
+    - 场景化但非结论化的观察方式
+    required_relations:
+    - 承接 RS02-CL02 与 RS02-CL03
+    - 连接 RS03-CL03 场景化观察方法
+    - 向 P0-00 证据路由提供触发点但不吸收控制面内容
+    - scene cue -> non-conclusive observation
+    evidence_classes:
+    - claim_policy_reference
+    - sensitive_claim_boundary_reference
+    - content_risk_reference
+    - scene_observation_reference
+    candidate_output_effect:
+    - 约束后续候选内容优先使用观察语言，降低敏感断言风险。
+    source_gap_likelihood: 高
+    source_record_sha256: c3623ffdf4a1e31a2ab4953c6817a36279b81b59aaa4e4c8abea49c77d10928f
+  - mkc_id: mkc_027
+    canonical_title: 舒适性能耐用品质证据阶梯
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-00
+    - P0-05
+    knowledge_types:
+    - evidence_requirement
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - claim 分级
+    - 不同 claim 对应的证据类别
+    - 无证据时允许保留的最低表达层级
+    - source gap 触发阈值
+    required_relations:
+    - 承接 RS02-CL01 与 RS02-CL04 的材料和工艺名词
+    - 连接 RS04-CL02 与 RS04-CL03 的品质证明类型
+    - 连接 P0-00 但不重写为控制面卡
+    evidence_classes:
+    - standard_reference_type
+    - test_method_reference_type
+    - expert_method_reference_type
+    - evidence_policy_reference
+    candidate_output_effect:
+    - 直接决定后续候选内容哪些句子只能写成观察、哪些必须标注待补源、哪些必须禁出。
+    source_gap_likelihood: high
+    source_record_sha256: 0055faf0ea352810af2ab47aaa1bb6329e24219985198b9f6f11035532bed0a6
+  - mkc_id: mkc_028
+    canonical_title: 品质观察项与证明类型路由
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-01
+    knowledge_types:
+    - general_method
+    - evidence_requirement
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - 可观察品质线索
+    - proof-type taxonomy
+    - certification / standard claim 的 route-away 规则
+    - 不得把局部观察写成整体保证
+    required_relations:
+    - quality_observation -> proof_type
+    - proof_type -> claim_routing
+    - certification_signal -> higher_evidence_need
+    - unsupported_proof -> source_gap
+    evidence_classes:
+    - quality_observation_reference
+    - proof_type_reference
+    - certification_claim_policy_reference
+    - evidence_policy_reference
+    candidate_output_effect:
+    - 使后续候选内容把 quality cue、proof-type 与 route-away 条件明确拆开。
+    source_gap_likelihood: 高
+    source_record_sha256: e8fc097d82ffa0c1f9502a0a8d083cf3c78776358d42f3eec721f84cd78aea5a
+  - mkc_id: mkc_029
+    canonical_title: 工艺品质内容的可拍摄表达
+    owner_capability_group: P0-03
+    secondary_capability_groups:
+    - P0-01
+    - P0-04
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - boundary_rule
+    expected_body_topics:
+    - 可拍摄对象
+    - 可拍摄动作
+    - 画面层级
+    - 说明与非结论化提示
+    required_relations:
+    - object cue -> camera cue
+    - camera cue -> explanation slot
+    - explanation slot -> claim boundary
+    - process detail -> filmability
+    evidence_classes:
+    - filmability_reference
+    - process_visualization_reference
+    - risk_boundary_reference
+    candidate_output_effect:
+    - 使后续研究保留可拍摄表达方式，而不落成生产级内容。
+    source_gap_likelihood: medium
+    source_record_sha256: 6f04cad3ac8e4d99a5ae7bb49c77dc51a05119b8f0628baceed8878c4fffe9ca
+  - mkc_id: mkc_030
+    canonical_title: Look 拆解观察骨架
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-03
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - evidence_requirement
+    expected_body_topics:
+    - Look层级拆解维度
+    - 单套搭配与成组陈列的观察节点
+    - 轮廓/层次/搭配位的命名边界
+    - 可拍摄的前景-主体-陪体结构
+    required_relations:
+    - 关联色彩故事节点
+    - 关联陈列区位节点
+    - 关联可拍摄动作节点
+    evidence_classes:
+    - 通用视觉陈列方法资料
+    - 服装造型观察框架资料
+    - 内容拍摄可视锚点资料
+    candidate_output_effect:
+    - 影响后续候选研究条目如何描述Look拆解、画面重点与动作入口，减少空泛形容词。
+    source_gap_likelihood: medium
+    source_record_sha256: d3814562e11e0d392f755b504361f5a450dd90f73134ae1add214afe1704f0be
+  - mkc_id: mkc_031
+    canonical_title: 主题与色彩故事关系网
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-01
+    - P0-03
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - boundary_rule
+    - evidence_requirement
+    expected_body_topics:
+    - 主题词与色彩组的关系
+    - 主色/辅色/点缀色的观察顺序
+    - 系列感与节奏感的表达边界
+    - 色彩故事如何回扣Look结构
+    required_relations:
+    - 依赖Look拆解骨架
+    - 连到主题命名边界
+    - 连到培训解释节点
+    evidence_classes:
+    - 色彩叙事方法资料
+    - 视觉陈列主题组织资料
+    - 服装搭配色彩层次资料
+    candidate_output_effect:
+    - 影响候选研究条目如何把配色关系写成可解释的观察结构，而不是产出可直接发布文案。
+    source_gap_likelihood: medium
+    source_record_sha256: 43053a3598ac5918f5a01fbe38d8cd5ba7290678d7ce42a21ad9f1d751fcecbf
+  - mkc_id: mkc_032
+    canonical_title: 陈列区位与可拍摄视觉锚点
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-02
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - routing_hint
+    expected_body_topics:
+    - 入口区/中岛/端架/挂通等一般化区位表达
+    - 远景-中景-近景的观察切换
+    - 静态陈列中的可拍摄重点
+    - 从区位到镜头的最小映射
+    required_relations:
+    - 连接Look拆解
+    - 连接日常动作观察
+    - 连接SOP演示结构
+    evidence_classes:
+    - 通用陈列区位术语资料
+    - 零售空间视觉观察资料
+    - 内容拍摄镜头语法资料
+    candidate_output_effect:
+    - 影响候选研究条目如何设置观察入口、镜头顺序与画面重心，提升filmability而不输出脚本。
+    source_gap_likelihood: high
+    source_record_sha256: 78f32b7450fc13cc45e26c65cf0dcdc223135e10a1abd5ac63bba4710862fefe
+  - mkc_id: mkc_033
+    canonical_title: 门店日常动作观察切片
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-02
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - relation_hint
+    expected_body_topics:
+    - 开场准备类动作
+    - 整理/比对/讲解/递示等一般化动作
+    - 动作前提与结束标志
+    - 动作与场景道具的最小关系
+    required_relations:
+    - 连接陈列区位锚点
+    - 连接SOP节点
+    - 连接风险边界cluster
+    evidence_classes:
+    - 零售服务与陈列动作的一般方法资料
+    - 培训示范动作资料
+    - 内容切片方法资料
+    candidate_output_effect:
+    - 影响候选研究条目如何识别“可内容化动作”，避免只剩空泛“门店日常氛围”。
+    source_gap_likelihood: medium
+    source_record_sha256: efb9172590db269edeab9925ce72360f60d269c5ff2fb618b9ff453f4827b40b
+  - mkc_id: mkc_034
+    canonical_title: 动作转内容槽位与演示三段式
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-01
+    - P0-02
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - routing_hint
+    - evidence_requirement
+    expected_body_topics:
+    - 动作镜头起承转合
+    - 动作对应的解释槽位
+    - 强观察/弱解释的组合方式
+    - 平台提示仅作为研究注释
+    required_relations:
+    - 依赖动作观察框架
+    - 依赖Look/色彩/区位锚点
+    - 受授权边界约束
+    - 依赖SOP节点化框架
+    evidence_classes:
+    - 内容结构方法资料
+    - 短视频与图文内容切片资料
+    - 培训演示转内容的方法资料
+    - 通用培训演示设计资料
+    candidate_output_effect:
+    - 影响候选研究条目如何描述“动作-解释-镜头”的映射关系，为后续CandidatePack准备研究结构而非生产内容。
+    source_gap_likelihood: high
+    source_record_sha256: cc1ebb6311b118a42d1a78570edc9ff35cdbb6d8593b608ec0061fb24e88e7da
+  - mkc_id: mkc_035
+    canonical_title: 门店日常内容化风险红线
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-00
+    - P0-02
+    knowledge_types:
+    - boundary_rule
+    - routing_hint
+    - decision_required_candidate
+    expected_body_topics:
+    - 隐私与实例事实边界
+    - 不可写的经营表现与顾客反馈
+    - 可保留的一般化角色表达
+    - 何时转source_gap或decision_required
+    required_relations:
+    - 约束所有RS02 cluster
+    - 连接授权复核cluster
+    - 连接source_gap与excluded items
+    evidence_classes:
+    - 上传包章程与证据政策
+    - 角色/客户风险边界资料
+    - 内容风险管理的一般方法资料
+    candidate_output_effect:
+    - 影响候选研究条目如何在内容化前进行剔除、重写或升级决策，避免实例事实渗漏。
+    source_gap_likelihood: low
+    source_record_sha256: 446645dec34293f9396086ca8e5c2a2d1a7076ca89ce545f72bdb7a47588c1ea
+  - mkc_id: mkc_036
+    canonical_title: 陈列动作 SOP 节点框架
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-02
+    - P0-05
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - evidence_requirement
+    expected_body_topics:
+    - 陈列前检查/实施/复核的一般节点
+    - 节点输入与节点输出
+    - 节点之间的依赖顺序
+    - 节点可见化表达
+    required_relations:
+    - 连接日常动作观察
+    - 连接培训演示结构
+    - 连接异常处理cluster
+    evidence_classes:
+    - 通用陈列SOP方法资料
+    - 培训流程设计资料
+    - 零售操作分解资料
+    candidate_output_effect:
+    - 影响候选研究条目如何从“陈列动作”升级为“节点化流程知识”，提升可复核性。
+    source_gap_likelihood: medium
+    source_record_sha256: aa2f2b26b135d35755b5886ea87d76e7bd0615323332d82d6b0bb17df18f8026
+  - mkc_id: mkc_037
+    canonical_title: 零售角色动作权限与加盟改写边界
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-02
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - relation_hint
+    - routing_hint
+    - decision_required_candidate
+    - exclusion_note
+    expected_body_topics:
+    - 零售角色、动作、权限关系
+    - speakable 的一般化授权表面
+    - 加盟/授权信息的泛化改写条件
+    - 真实制度与方法层的切断
+    required_relations:
+    - role -> action -> permission
+    - instance authorization -> route_away
+    - franchise info -> generic rewrite gate
+    - retail permission -> review boundary
+    evidence_classes:
+    - 零售角色关系通用资料
+    - 权限边界方法资料
+    - 授权改写风险资料
+    - 章程/证据政策资料
+    candidate_output_effect:
+    - 使后续研究可保留零售角色与改写边界，但不沉淀任何实例授权信息。
+    source_gap_likelihood: high
+    source_record_sha256: 258bbdec1012ff7e480389a5427765e3532a8990c434a83c36092ef04cad6794
+  - mkc_id: mkc_038
+    canonical_title: 异常回退与前复核路由提示
+    owner_capability_group: P0-04
+    secondary_capability_groups:
+    - P0-00
+    knowledge_types:
+    - boundary_rule
+    - routing_hint
+    - decision_required_candidate
+    expected_body_topics:
+    - 节点缺失时的回退
+    - 证据不足时的source_gap路由
+    - 授权不明时的decision_required路由
+    - 异常项的最小记录格式
+    required_relations:
+    - 约束所有RS03 cluster
+    - 连接RS04授权边界
+    - 连接全图decision_required items
+    - precheck -> review routing
+    evidence_classes:
+    - 上传包章程与证据政策
+    - 流程异常管理的一般方法资料
+    - 复核节点方法资料
+    candidate_output_effect:
+    - 影响候选研究条目在遇到证据缺口、边界冲突、控制面泄漏时的停机与转向方式。
+    source_gap_likelihood: low
+    source_record_sha256: 9ee41f3b04f190bd4489a6daae82256080520678498f2ee6596204512b9bc95b
+  - mkc_id: mkc_039
+    canonical_title: 产品叙事角色入场框架
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-01
+    - P0-04
+    knowledge_types:
+    - general_method
+    - relation_hint
+    - evidence_requirement
+    expected_body_topics:
+    - 角色功能命名方式
+    - 产品在镜头中的首出现位置
+    - 产品与场景任务的绑定方式
+    - 产品作为对比项、解决项、过渡项的结构位置
+    required_relations:
+    - 产品角色 -> 场景任务
+    - 产品角色 -> 叙事段落
+    - 产品角色 -> 视觉锚点
+    - 产品角色 -> 教育节点
+    evidence_classes:
+    - 通用叙事方法来源
+    - 零售展示/视觉营销方法来源
+    - 内容结构方法来源
+    - 边界政策来源
+    candidate_output_effect:
+    - 为后续候选研究提供“产品以什么角色进入故事”的拆解槽位，帮助形成可检查的 narrative skeleton，而不是产出成稿。
+    source_gap_likelihood: medium
+    source_record_sha256: 0bd0f7ea666863430071718d77163ff065118050670e117a6b91377bad7e9809
+  - mkc_id: mkc_040
+    canonical_title: 叙事到 CTA 的非硬卖边界
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-00
+    - P0-01
+    - P0-04
+    knowledge_types:
+    - boundary_rule
+    - routing_hint
+    - evidence_requirement
+    expected_body_topics:
+    - CTA 的前置教育条件
+    - CTA 的信息密度控制
+    - CTA 与商品事实的隔离
+    - CTA 与陈列/场景的连接点
+    required_relations:
+    - 叙事完成度 -> CTA 可出现条件
+    - 教育节点 -> CTA 信息层级
+    - 产品角色 -> CTA 触发方式
+    - display cue -> CTA 位置
+    evidence_classes:
+    - CTA 方法来源
+    - 内容路径设计来源
+    - 边界政策来源
+    candidate_output_effect:
+    - 帮助后续候选研究把 CTA 作为方法节点而非销售句输出，形成非 production-ready 的收束控制。
+    source_gap_likelihood: high
+    source_record_sha256: 0bbaf045b408fbb5798140dd45d9abc28f8998d7a7d75078bce73562a665544e
+  - mkc_id: mkc_041
+    canonical_title: 产品生命周期角色窗口
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-00
+    - P0-04
+    knowledge_types:
+    - general_method
+    - boundary_rule
+    - source_gap_candidate
+    expected_body_topics:
+    - 阶段抽象命名
+    - 阶段与叙事密度关系
+    - 阶段与教育重心关系
+    - 阶段与陈列更新关系
+    required_relations:
+    - 生命周期阶段 -> 产品角色强度
+    - 生命周期阶段 -> 教育内容比重
+    - 生命周期阶段 -> 陈列更新提示
+    - 生命周期阶段 -> CTA 强度上限
+    evidence_classes:
+    - 零售生命周期方法来源
+    - 陈列更新方法来源
+    - 内容节奏方法来源
+    - 边界政策来源
+    candidate_output_effect:
+    - 使后续研究能在不同生命周期阶段下改变产品叙事任务，构造可比较的 role window，而非生成经营结论。
+    source_gap_likelihood: high
+    source_record_sha256: 970290637e3b470e67a6257c9271ebccdbe333d61cdd942f053819a422084e96
+  - mkc_id: mkc_042
+    canonical_title: 组货角色与渠道边界矩阵
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-00
+    - P0-02
+    - P0-04
+    knowledge_types:
+    - relation_hint
+    - boundary_rule
+    - decision_required_candidate
+    expected_body_topics:
+    - 组货角色类型
+    - 主次关系与陪衬关系
+    - 渠道差异下的信息删减规则
+    - 产品角色与主题化组合关系
+    required_relations:
+    - 组货角色 -> 产品叙事视角
+    - 组货角色 -> display 邻接关系
+    - 组货角色 -> CTA 信息稀疏度
+    - 渠道边界 -> 可使用的信息类型
+    evidence_classes:
+    - 组货方法来源
+    - 零售角色关系来源
+    - 视觉陈列方法来源
+    - 边界政策来源
+    candidate_output_effect:
+    - 支持后续研究用“产品之间的角色关系”组织候选内容结构，降低单品空讲的模板化风险。
+    source_gap_likelihood: medium
+    source_record_sha256: c48fdeea62810d1172943a269a6ac3b6ad6e936b38de08aba729ff8b0e776fed
+  - mkc_id: mkc_043
+    canonical_title: 场景适配条件与不适配条件
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-01
+    - P0-02
+    - P0-03
+    knowledge_types:
+    - boundary_rule
+    - general_method
+    - evidence_requirement
+    expected_body_topics:
+    - 场景任务锚点
+    - 场景切换条件
+    - 场景中的动作限制
+    - 不适配条件表达
+    required_relations:
+    - 场景任务 -> 产品角色
+    - 场景限制 -> 不适配条件
+    - 产品角色 -> 使用说明级教育
+    - 场景匹配度 -> CTA 上限
+    evidence_classes:
+    - 场景叙事方法来源
+    - 任务导向内容来源
+    - 边界政策来源
+    candidate_output_effect:
+    - 让后续候选研究围绕“场景条件 -> 动作任务 -> 产品角色”而不是“效果保证”展开。
+    source_gap_likelihood: high
+    source_record_sha256: 06a2523aece2e3d1c2de8c4e6d9f0eab914c85250234bf1050c90b17fed6e1da
+  - mkc_id: mkc_044
+    canonical_title: 使用教育与结果 claim 分界
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-00
+    - P0-03
+    knowledge_types:
+    - evidence_requirement
+    - boundary_rule
+    - routing_hint
+    expected_body_topics:
+    - 教育性说明的允许范围
+    - 演示与证明的区别
+    - 比较语言的边界
+    - 注意事项表达
+    required_relations:
+    - 教育说明 -> 可接受叙事节点
+    - 演示动作 -> 非证明边界
+    - 比较关系 -> 证据等级要求
+    - claim 类型 -> routing 结果
+    evidence_classes:
+    - 证据边界政策来源
+    - 教育内容方法来源
+    - 比较语言规范来源
+    candidate_output_effect:
+    - 为后续研究提供强约束路由，把高风险结论隔离出候选方法簇，保持研究图安全。
+    source_gap_likelihood: highest
+    source_record_sha256: a952e44f7aea1ba753fdf995c6c355a5cfbae3a87aae3f4652e6ea10c7d88364
+  - mkc_id: mkc_045
+    canonical_title: 产品到陈列叙事关系语法
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-03
+    - P0-04
+    knowledge_types:
+    - relation_hint
+    - general_method
+    - boundary_rule
+    expected_body_topics:
+    - 位置关系
+    - 邻接关系
+    - 主次层级
+    - 主题化组合
+    required_relations:
+    - 产品角色 -> display 位置
+    - 产品角色 -> 邻接对象
+    - grouping rule -> narrative emphasis
+    - display cue -> 拍摄镜头线索
+    evidence_classes:
+    - 视觉陈列方法来源
+    - 展示层级方法来源
+    - 主题化组合方法来源
+    - 边界政策来源
+    candidate_output_effect:
+    - 为后续研究输出产品与 display 的关系槽位，使内容具备可视结构但不落到门店实例。
+    source_gap_likelihood: medium
+    source_record_sha256: 908e0d4a58e10cb86347eb8ced481abfedc18d8048851d90b41d6e254365dd11
+  - mkc_id: mkc_046
+    canonical_title: 产品到角色到叙事跨域关系
+    owner_capability_group: P0-05
+    secondary_capability_groups:
+    - P0-00
+    - P0-01
+    - P0-02
+    - P0-04
+    knowledge_types:
+    - relation_hint
+    - routing_hint
+    - decision_required_candidate
+    expected_body_topics:
+    - 产品与角色语气的关系
+    - 产品与组织生态视角的连接
+    - 产品与 display 动作的接口
+    - 产品与 narrative 段落的跨域对齐
+    required_relations:
+    - product role -> role perspective
+    - product role -> display action
+    - product role -> narrative sequence
+    - cross-domain overlap -> strictest_wins_note
+    evidence_classes:
+    - relation-map method reference
+    - cross-domain boundary policy
+    - routing policy reference
+    candidate_output_effect:
+    - 为后续 research planning 提供跨域接口提示，但不形成执行图或产线对象。
+    source_gap_likelihood: high
+    source_record_sha256: ba02b55bb8a347999292b3b574d00e16ddc1c162226451ee8416ab00606dc774

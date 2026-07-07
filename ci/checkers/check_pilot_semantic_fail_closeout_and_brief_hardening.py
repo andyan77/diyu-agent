@@ -14,6 +14,7 @@ TASK_ID = "CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001"
 NEXT_TASK_ID = "CODEX-SEMANTIC-PILOT-REGEN-001"
 SEMANTIC_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-JUDGE-GO-NOGO-001"
 SEMANTIC_V3_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V3-JUDGE-GO-NOGO-001"
+SEMANTIC_V4_JUDGE_NEXT_STEP = "CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001"
 BATCH_TASK_ID = "CODEX-GKB-DRAFT-GENERATION-BATCH-001"
 EXPECTED_BATCH_IDS = [f"batch_{idx:03d}" for idx in range(1, 15)]
 GATE_KEYS = [
@@ -243,8 +244,20 @@ def validate_live(
             fail("semantic v3 judge route requires accepted_domain_knowledge_count 0")
         assert_false(semantic_v3.get("batch_generation_unlocked"), "semantic v3 judge route batch_generation_unlocked")
         assert_false(semantic_v3.get("ready_for_first_batch_generation"), "semantic v3 judge route ready_for_first_batch_generation")
+    elif current_next_step == SEMANTIC_V4_JUDGE_NEXT_STEP:
+        semantic_v4 = status.get("semantic_pilot_v4", {})
+        if semantic_v4.get("status") != "completed":
+            fail("semantic v4 judge route requires completed semantic_pilot_v4 block")
+        if semantic_v4.get("W7_authority_records_count") != 46:
+            fail("semantic v4 judge route requires 46 W7 authority records")
+        if semantic_v4.get("semantic_pilot_v4_count") != 8:
+            fail("semantic v4 judge route requires 8 v4 semantic pilot drafts")
+        if semantic_v4.get("accepted_domain_knowledge_count") != 0:
+            fail("semantic v4 judge route requires accepted_domain_knowledge_count 0")
+        assert_false(semantic_v4.get("batch_generation_unlocked"), "semantic v4 judge route batch_generation_unlocked")
+        assert_false(semantic_v4.get("ready_for_first_batch_generation"), "semantic v4 judge route ready_for_first_batch_generation")
     elif current_next_step != NEXT_TASK_ID:
-        fail("current_next_step must be semantic pilot regen, semantic pilot judge go/no-go, or semantic pilot v3 judge go/no-go")
+        fail("current_next_step must be semantic pilot regen, semantic pilot judge go/no-go, semantic pilot v3 judge go/no-go, or semantic pilot v4 judge go/no-go")
     readiness = status.get("readiness", {})
     bad = {key: value for key, value in readiness.items() if value is True or str(value).lower() == "true"}
     if bad:

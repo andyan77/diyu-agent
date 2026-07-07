@@ -1,0 +1,26 @@
+v3_no_go_closeout:
+  schema_version: v0.1
+  task_id: CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: V3 high quality domain knowledge fail; V3 cannot serve as 3600 exemplar;
+      proceed to V4 pilot with W7 authority lock
+  prior_task: CODEX-SEMANTIC-PILOT-V3-REWRITE-AND-W7-ALIGNMENT-001
+  prior_commit: 00b47dea68381422c6260e14535d4c01a820ef3a
+  verdict:
+    as_engineering_delivery: pass
+    as_high_quality_domain_knowledge: fail
+    as_3600_generation_exemplar: no_go
+    as_candidatepack_or_KE_input: not_ready
+  blocking_reasons:
+  - W7_canonical_trace_integrity_fail
+  - W7_alignment_report_trustworthiness_fail
+  - rich_body_template_residual
+  - relation_graph_usability_fail
+  - owner_layer_separation_incomplete
+  disposition:
+    retain_as: diagnostic_semantic_pilot
+    batch_generation_unlocked: false
+    candidatepack_eligible: false
+    accepted_domain_knowledge_count: 0

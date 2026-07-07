@@ -1,0 +1,21 @@
+W7_authority_alignment_policy:
+  schema_version: v0.1
+  authority_ref: 01_generation_contracts/w7_canonical_cluster_authority.v0.1.yaml
+  registry_source_ref: 00_source_inputs/W7_master_map/shared_knowledge_cluster_registry.yaml
+  hard_rules:
+  - candidate_must_reference_existing_mkc_id
+  - candidate_must_not_rewrite_mkc_canonical_title
+  - candidate_topic_must_be_subset_or_direct_application_of_expected_body_topics
+  - candidate_relation_predicates_must_be_compatible_with_required_relations
+  - candidate_evidence_requirement_must_be_compatible_with_evidence_classes
+  - candidate_output_effect_must_be_compatible_with_candidate_output_effect
+  - control_plane_mkc_must_not_generate_apparel_method_body
+  - apparel_claim_mkc_must_not_generate_control_plane_body
+  fail_closed_if:
+  - mkc_id_unknown
+  - candidate_topic_redefines_cluster_theme
+  - candidate_body_contradicts_cluster_theme
+  - candidate_relation_shape_unrelated_to_required_relations
+  - W7_alignment_report_uses_sidecar_theme_not_authority_theme
+  comparison_rule: Checkers must compare V4 sidecar authority fields against the W7
+    registry-derived authority table, not against V4 prose.

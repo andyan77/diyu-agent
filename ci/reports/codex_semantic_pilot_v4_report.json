@@ -1,0 +1,102 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-V3-NOGO-W7-AUTHORITY-AND-V4-PILOT-001",
+  "source_repo_live_accessed": false,
+  "external_drive_accessed": false,
+  "W7_authority_records_count": 46,
+  "V3_no_go_closeout_created": true,
+  "semantic_pilot_v4_count": 8,
+  "category_counts": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "W7_alignment_result": "PASS",
+  "chinese_body_result": "PASS",
+  "shared_sentence_ratio_max": 0.125,
+  "relation_total": 24,
+  "candidate_to_cluster_relation_count": 0,
+  "forbidden_relation_predicate_count": 0,
+  "target_owner_single_assignment_result": "PASS",
+  "source_status_disambiguation_result": "PASS",
+  "source_status_disambiguation_pass_count": 8,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "readiness_flags_result": "all_false",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 16,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4-JUDGE-GO-NOGO-001",
+  "negative_results": {
+    "negative_unknown_mkc_id.yaml": [
+      "unknown_mkc_id_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_redefined_mkc_title.yaml": [
+      "redefined_mkc_title_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_topic_mismatch.yaml": [
+      "topic_mismatch_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_missing_authority_record.yaml": [
+      "missing_authority_record_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_english_primary_body.yaml": [
+      "english_primary_body_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_forbidden_audit_phrase.yaml": [
+      "forbidden_audit_phrase_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_shared_sentence_ratio_high.yaml": [
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_candidate_to_cluster_relation.yaml": [
+      "candidate_to_cluster_relation_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_generic_relation_predicate.yaml": [
+      "forbidden_relation_predicate_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_control_plane_targets_GKB.yaml": [
+      "control_plane_GKB_target_count must be 0",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_multiple_primary_target_owners.yaml": [
+      "shared sentence ratio must be <= 0.18",
+      "single primary target owner count must be 8"
+    ],
+    "negative_source_status_conflation.yaml": [
+      "shared sentence ratio must be <= 0.18",
+      "source status disambiguation pass count must be 8"
+    ],
+    "negative_batch_generation_unlocked.yaml": [
+      "batch generation must remain locked",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_readiness_true.yaml": [
+      "shared sentence ratio must be <= 0.18",
+      "readiness must remain all false"
+    ],
+    "negative_source_repo_dependency_true.yaml": [
+      "source repo dependency/access must be false",
+      "shared sentence ratio must be <= 0.18"
+    ],
+    "negative_google_drive_dependency_true.yaml": [
+      "external drive dependency/access must be false",
+      "shared sentence ratio must be <= 0.18"
+    ]
+  }
+}
