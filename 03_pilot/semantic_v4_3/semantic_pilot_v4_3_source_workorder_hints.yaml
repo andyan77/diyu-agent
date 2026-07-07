@@ -1,0 +1,26 @@
+semantic_pilot_v4_3_source_workorder_hints:
+  items:
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-001
+    claim_type: body_effect_or_product_performance_claim_boundary
+    source_needed:
+    - platform_rule
+    - advertising_compliance_rule
+    - brand_policy_or_human_review_policy
+    why_needed: V4.3 may only describe boundaries; any real body-effect or performance assertion needs external source review before use.
+    blocks:
+    - CandidatePack
+    - batch_exemplar
+    candidatepack_eligibility: false
+    batch_exemplar_eligibility: false
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-002
+    claim_type: body_effect_or_product_performance_claim_boundary
+    source_needed:
+    - platform_rule
+    - advertising_compliance_rule
+    - brand_policy_or_human_review_policy
+    why_needed: V4.3 may only describe boundaries; any real body-effect or performance assertion needs external source review before use.
+    blocks:
+    - CandidatePack
+    - batch_exemplar
+    candidatepack_eligibility: false
+    batch_exemplar_eligibility: false

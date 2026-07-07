@@ -1,0 +1,11 @@
+semantic_pilot_v4_3_reslice_report:
+  items:
+  - source_draft_id: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002
+    target_draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+    from_type_specific_body_shape: decision_packet
+    resliced_to_profile: asset_binding_policy_candidate
+    strict_owner_model:
+      artifact_kind: governance_outbox_candidate
+      storage_target: GovernanceOutbox
+    decision_packet_without_decision_instance: false
+    reason: V4.2 described asset binding policy, not a decision packet with a concrete decision instance.

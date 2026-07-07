@@ -1,0 +1,305 @@
+semantic_pilot_v4_3_sidecars:
+  sidecars:
+  - draft_id: SEM-V4_3-CONTENT-METHOD-001
+    revision_of: SEM-V4_2-CONTENT-METHOD-001
+    predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: general_knowledge_candidate
+        storage_target: GeneralKnowledgeBase
+      type_specific_body_shape: general_knowledge
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_009
+      canonical_title_from_authority: 故事弧线适用边界
+      expected_body_topics:
+      - 不同叙事弧线对应的问题类型
+      - 弧线与证据要求的绑定
+      - 弧线与价值表达、proof slot 的兼容性
+      - 不适用弧线的识别信号
+      required_relations:
+      - story_arc -> required_proof_intensity
+      - story_arc -> compatible_value_expression
+      - story_arc -> forbidden_fact_zone
+      - arc_mismatch -> source_gap_or_downgrade
+      authority_record_digest: 8eba1b63c9eac0fe354222175c298711f9a0159bf3f791a58c5cfc9dbc66de06
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: minor_fix
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_3-CONTENT-METHOD-002
+    revision_of: SEM-V4_2-CONTENT-METHOD-002
+    predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: general_knowledge_candidate
+        storage_target: GeneralKnowledgeBase
+      type_specific_body_shape: general_knowledge
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_010
+      canonical_title_from_authority: 反模板叙事锚点
+      expected_body_topics:
+      - 对象锚点类型
+      - 动作锚点与处理逻辑
+      - 约束锚点与取舍表达
+      - 节点锚点与前后台衔接
+      required_relations:
+      - anchor_object -> anchor_action
+      - anchor_action -> visible_cue
+      - constraint -> tradeoff_expression
+      - process_node -> narrative_sceneability
+      authority_record_digest: 5e62f930e7caa258f628e5f40ecfe9470618bbd62160a697b5ea54edaf314622
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: minor_fix
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-001
+    revision_of: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-001
+    predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: general_knowledge_candidate
+        storage_target: GeneralKnowledgeBase
+      type_specific_body_shape: claim_boundary
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_026
+      canonical_title_from_authority: 身材效果语言阶梯与场景化观察
+      expected_body_topics:
+      - 观察词/关系词/结果词分层
+      - 能说视觉线条变化与不能保证身体结果的边界
+      - 替代表达与回避表达
+      - 场景化但非结论化的观察方式
+      required_relations:
+      - 承接 RS02-CL02 与 RS02-CL03
+      - 连接 RS03-CL03 场景化观察方法
+      - 向 P0-00 证据路由提供触发点但不吸收控制面内容
+      - scene cue -> non-conclusive observation
+      authority_record_digest: 852b02654bae2233959726f4ba01a26660aa3f2bc7b648dc266cee1fc71a68e6
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: minor_fix_source_workorder_needed
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-002
+    revision_of: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-002
+    predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: general_knowledge_candidate
+        storage_target: GeneralKnowledgeBase
+      type_specific_body_shape: claim_boundary
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_027
+      canonical_title_from_authority: 舒适性能耐用品质证据阶梯
+      expected_body_topics:
+      - claim 分级
+      - 不同 claim 对应的证据类别
+      - 无证据时允许保留的最低表达层级
+      - source gap 触发阈值
+      required_relations:
+      - 承接 RS02-CL01 与 RS02-CL04 的材料和工艺名词
+      - 连接 RS04-CL02 与 RS04-CL03 的品质证明类型
+      - 连接 P0-00 但不重写为控制面卡
+      authority_record_digest: 52db1e47463300f9ad661c36383e182e450454d7a9ee1e33982a1ec2dcaac07a
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: minor_fix_source_workorder_needed
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-001
+    revision_of: SEM-V4_2-DISPLAY-TO-CONTENT-001
+    predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: execution_asset_outbox_candidate
+        storage_target: ExecutionAssetOutbox
+      type_specific_body_shape: execution_asset
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_032
+      canonical_title_from_authority: 陈列区位与可拍摄视觉锚点
+      expected_body_topics:
+      - 入口区/中岛/端架/挂通等一般化区位表达
+      - 远景-中景-近景的观察切换
+      - 静态陈列中的可拍摄重点
+      - 从区位到镜头的最小映射
+      required_relations:
+      - 连接Look拆解
+      - 连接日常动作观察
+      - 连接SOP演示结构
+      authority_record_digest: b3d04225085d20f8a3e5fb4cc055be0a409b0752b77ceedee378140aa5e3d8cd
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: major_fix
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-002
+    revision_of: SEM-V4_2-DISPLAY-TO-CONTENT-002
+    predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: execution_asset_outbox_candidate
+        storage_target: ExecutionAssetOutbox
+      type_specific_body_shape: execution_asset
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_034
+      canonical_title_from_authority: 动作转内容槽位与演示三段式
+      expected_body_topics:
+      - 动作镜头起承转合
+      - 动作对应的解释槽位
+      - 强观察/弱解释的组合方式
+      - 平台提示仅作为研究注释
+      required_relations:
+      - 依赖动作观察框架
+      - 依赖Look/色彩/区位锚点
+      - 受授权边界约束
+      - 依赖SOP节点化框架
+      authority_record_digest: 76a113c4eb8a5244d7bf27b4f0401ebfcc730ca3fc13043001b61ec01735c89d
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: major_fix
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+  - draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-001
+    revision_of: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-001
+    predicate_profile_id: control_plane_candidate
+    relation_profile_id: relation_profile_control_plane
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: control_plane_candidate
+        storage_target: ControlPlaneContractSource
+      type_specific_body_shape: control_plane
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_004
+      canonical_title_from_authority: 异常分发与再进入规则
+      expected_body_topics:
+      - source_gap 触发模式
+      - decision_required 触发模式
+      - founder_review 触发模式
+      - excluded 触发模式
+      required_relations:
+      - missing_source -> source_gap
+      - modeling_conflict -> decision_required
+      - risk_sensitive_item -> founder_review
+      - forbidden_output_request -> excluded
+      authority_record_digest: ff43b069259148ef4adb23d22d2dec558f0a5cd18ba588746246851457316774
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: minor_fix
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+    route_target_policy:
+      required_route_target: founder_review
+      human_review_as_superclass_only: true
+  - draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+    revision_of: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002
+    predicate_profile_id: asset_binding_policy_candidate
+    relation_profile_id: relation_profile_asset_binding_policy
+    schema_compatibility:
+      strict_owner_model:
+        artifact_kind: governance_outbox_candidate
+        storage_target: GovernanceOutbox
+      type_specific_body_shape: asset_binding_policy
+      claim_boundary_not_written_to_strict_artifact_kind: true
+      asset_binding_policy_not_written_to_strict_artifact_kind: true
+    w7_alignment:
+      referenced_mkc_id: mkc_006
+      canonical_title_from_authority: 研究资产绑定与非生产封印
+      expected_body_topics:
+      - 研究型资产类型
+      - 资产前置槽位
+      - 资产绑定排他条件
+      - 多资产冲突处理
+      required_relations:
+      - route_decision -> allowed_asset_stub
+      - slot_completeness -> bindability
+      - review_only_label -> non_production_asset_only
+      - conflict_pair -> block_or_split
+      authority_record_digest: a9ea7dc9d2c5a4d56d73e7e8742fa600364ea5454e94e00684c6f9029a61fb66
+      title_redefined: false
+      expected_topics_redefined: false
+      required_relations_redefined: false
+    repair_level: reslice_required
+    source_boundary:
+      accepted_domain_knowledge_count: 0
+      batch_generation_unlocked: false
+      candidatepack_created: false
+      KE_touched: false
+      serving_touched: false
+      RAG_touched: false
+      DIFY_touched: false
+    reslice:
+      from_type_specific_body_shape: decision_packet
+      resliced_to_profile: asset_binding_policy_candidate
+      strict_owner_model:
+        artifact_kind: governance_outbox_candidate
+        storage_target: GovernanceOutbox

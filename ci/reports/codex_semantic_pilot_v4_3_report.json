@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "task_id": "CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001",
+  "v4_3_draft_count": 8,
+  "v4_3_distribution": {
+    "content_method": 2,
+    "apparel_claim_boundary": 2,
+    "display_to_content": 2,
+    "control_plane_governance": 2
+  },
+  "one_to_one_revision_count": 8,
+  "predicate_registry_artifact_kind_count": 5,
+  "relation_design_hints_count": 26,
+  "predicate_registry_valid_relation_count": 26,
+  "prohibited_cross_type_predicate_count": 0,
+  "strict_artifact_kind_illegal_value_count": 0,
+  "claim_boundary_source_workorder_hint_count": 2,
+  "display_execution_major_fix_valid_count": 2,
+  "control_plane_001_founder_review_policy_valid": true,
+  "control_plane_002_resliced_to": "asset_binding_policy_candidate",
+  "control_plane_002_strict_artifact_kind": "governance_outbox_candidate",
+  "decision_packet_without_decision_instance_count": 0,
+  "accepted_domain_knowledge_count": 0,
+  "batch_generation_unlocked": false,
+  "ready_for_first_batch_generation": false,
+  "candidatepack_created": false,
+  "KE_touched": false,
+  "serving_touched": false,
+  "RAG_touched": false,
+  "DIFY_touched": false,
+  "readiness_flags_result": "all_false",
+  "ready_for_semantic_pilot_v4_3_judge_review": true,
+  "recommended_next_step": "CODEX-SEMANTIC-PILOT-V4_3-JUDGE-GO-NOGO-001",
+  "positive_fixture_count": 1,
+  "negative_fixture_count": 14,
+  "positive_fixture_passed": true,
+  "negative_fixtures_fail_closed": true,
+  "negative_results": {
+    "negative_claim_boundary_uses_maps_zone_to_shot_task.yaml": [
+      "prohibited cross-type predicate count must be 0"
+    ],
+    "negative_display_execution_uses_blocks_production_binding.yaml": [
+      "prohibited cross-type predicate count must be 0"
+    ],
+    "negative_control_plane_uses_camera_predicate.yaml": [
+      "prohibited cross-type predicate count must be 0"
+    ],
+    "negative_human_review_used_as_route_target_without_founder_review_mapping.yaml": [
+      "control_plane_001 must route risk-sensitive review to founder_review"
+    ],
+    "negative_decision_packet_without_decision_id.yaml": [
+      "decision packet without decision instance count must be 0"
+    ],
+    "negative_asset_binding_policy_mislabeled_as_decision_packet.yaml": [
+      "control_plane_002 strict artifact kind must be governance_outbox_candidate"
+    ],
+    "negative_claim_boundary_missing_source_workorder_hint.yaml": [
+      "two claim-boundary source workorder hints required"
+    ],
+    "negative_display_execution_missing_completion_condition.yaml": [
+      "two display execution major fixes required"
+    ],
+    "negative_predicate_registry_missing_artifact_kind.yaml": [
+      "five predicate/relation profiles required"
+    ],
+    "negative_accepted_domain_knowledge_count_positive.yaml": [
+      "accepted_domain_knowledge_count must be 0"
+    ],
+    "negative_batch_generation_unlocked_true.yaml": [
+      "batch_generation_unlocked must be false"
+    ],
+    "negative_readiness_true.yaml": [
+      "readiness_all_false must be true"
+    ],
+    "negative_claim_boundary_written_to_strict_artifact_kind.yaml": [
+      "strict artifact kind illegal value count must be 0"
+    ],
+    "negative_asset_binding_policy_written_to_strict_artifact_kind.yaml": [
+      "control_plane_002 strict artifact kind must be governance_outbox_candidate"
+    ]
+  }
+}

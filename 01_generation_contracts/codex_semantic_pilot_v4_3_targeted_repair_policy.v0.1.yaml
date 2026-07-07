@@ -1,0 +1,39 @@
+codex_semantic_pilot_v4_3_targeted_repair_policy:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    authorized_scope:
+    - V4.2 no-go closeout
+    - V4.3 one-to-one targeted repair
+    - predicate registry draft only, not formal ontology
+    - control_plane_002 reslice according to explicit founder decision
+    engineering_delivery: PASS
+    semantic_verdict: NO_GO_FOR_BATCH
+    future_exemplar_status: pending_after_targeted_repair
+  strict_schema_boundary:
+    forbidden_strict_artifact_kind_values:
+    - claim_boundary
+    - asset_binding_policy_candidate
+    v4_3_only_fields_location: wrapper_or_sidecar_not_strict_candidate_schema
+    strict_enum_change_authorized: false
+  control_plane_002_reslice_decision:
+    source_draft_id: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002
+    v4_3_draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+    resliced_to_profile: asset_binding_policy_candidate
+    strict_owner_model:
+      artifact_kind: governance_outbox_candidate
+      storage_target: GovernanceOutbox
+      consumer_layer: GenerationContract
+    decision_packet_status: not_a_decision_packet_without_decision_instance
+  quality_guards:
+    accepted_domain_knowledge_count: 0
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    candidatepack_created: false
+    KE_touched: false
+    serving_touched: false
+    RAG_touched: false
+    DIFY_touched: false

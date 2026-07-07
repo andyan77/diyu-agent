@@ -1,0 +1,182 @@
+codex_semantic_pilot_v4_3_predicate_registry:
+  schema_version: v0.1
+  task_id: CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001
+  registry_status: draft_predicate_profile_registry_not_formal_ontology
+  human_decision_present: true
+  authorized_scope:
+  - V4.2 no-go closeout
+  - V4.3 one-to-one targeted repair
+  - predicate registry draft only, not formal ontology
+  - control_plane_002 reslice according to explicit founder decision
+  strict_enum_change_authorized: false
+  profile_id_semantics: predicate_profile_id and relation_profile_id are not strict artifact_kind/candidate_kind enums
+  forbidden_strict_artifact_kind_values:
+  - claim_boundary
+  - asset_binding_policy_candidate
+  global_relation_rules:
+    relation_status: design_hint_not_ontology_edge
+    not_formal_ontology: true
+    batch_unlock_effect: false
+    fixed_three_per_card_forbidden: true
+  review_route_policy:
+    risk_sensitive_route_target: founder_review
+    human_review_allowed_only_as_declared_superclass: true
+    human_review_must_not_replace_founder_review: true
+    batch_generation_next_step_forbidden: CODEX-GKB-DRAFT-GENERATION-BATCH-001
+  profiles:
+  - predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    maps_to:
+      strict_owner_model:
+        artifact_kind: general_knowledge_candidate
+        storage_target: GeneralKnowledgeBase
+      type_specific_body_shape: general_knowledge
+    allowed_predicate_families:
+    - story_method
+    - anchor_method
+    forbidden_predicate_families:
+    - claim_boundary
+    - display_execution
+    - temporal_execution
+    - control_plane_route
+    - asset_binding_policy
+    allowed_predicates:
+    - predicate_id: selects_story_problem_type_v43
+      predicate_family: story_method
+      relation_status: design_hint_not_ontology_edge
+      description: 故事弧线先判断问题类型，再决定叙事强度。
+    - predicate_id: binds_arc_to_proof_intensity_v43
+      predicate_family: story_method
+      relation_status: design_hint_not_ontology_edge
+      description: 叙事弧线必须绑定证据强度。
+    - predicate_id: anchors_object_action_constraint_v43
+      predicate_family: anchor_method
+      relation_status: design_hint_not_ontology_edge
+      description: 反模板叙事必须由对象、动作和约束共同支撑。
+    - predicate_id: downgrades_weak_anchor_to_checklist_v43
+      predicate_family: anchor_method
+      relation_status: design_hint_not_ontology_edge
+      description: 锚点不足时降级为说明清单。
+  - predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    maps_to:
+      strict_owner_model:
+        artifact_kind: general_knowledge_candidate
+        storage_target: GeneralKnowledgeBase
+      type_specific_body_shape: claim_boundary
+    allowed_predicate_families:
+    - claim_boundary
+    - evidence_boundary
+    forbidden_predicate_families:
+    - display_execution
+    - temporal_execution
+    - control_plane_route
+    - asset_binding_policy
+    allowed_predicates:
+    - predicate_id: classifies_expression_strength_v43
+      predicate_family: claim_boundary
+      relation_status: design_hint_not_ontology_edge
+      description: 把表达分为观察词、关系词、结果词和禁用承诺词。
+    - predicate_id: requires_source_workorder_for_result_claim_v43
+      predicate_family: evidence_boundary
+      relation_status: design_hint_not_ontology_edge
+      description: 结果或性能主张必须转入补源工单。
+    - predicate_id: downgrades_claim_to_observation_v43
+      predicate_family: claim_boundary
+      relation_status: design_hint_not_ontology_edge
+      description: 证据不足时从结果句降级为观察句。
+    - predicate_id: blocks_body_effect_claim_v43
+      predicate_family: evidence_boundary
+      relation_status: design_hint_not_ontology_edge
+      description: 身体效果承诺必须阻断。
+  - predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    maps_to:
+      strict_owner_model:
+        artifact_kind: execution_asset_outbox_candidate
+        storage_target: ExecutionAssetOutbox
+      type_specific_body_shape: execution_asset
+    allowed_predicate_families:
+    - display_execution
+    - temporal_execution
+    forbidden_predicate_families:
+    - claim_boundary
+    - evidence_boundary
+    - control_plane_route
+    - asset_binding_policy
+    allowed_predicates:
+    - predicate_id: maps_zone_to_visual_focus_v43
+      predicate_family: display_execution
+      relation_status: design_hint_not_ontology_edge
+      description: 区位信号只映射观察焦点。
+    - predicate_id: orders_capture_steps_v43
+      predicate_family: display_execution
+      relation_status: design_hint_not_ontology_edge
+      description: 动作顺序必须可执行且有完成条件。
+    - predicate_id: binds_action_to_explanation_slot_v43
+      predicate_family: temporal_execution
+      relation_status: design_hint_not_ontology_edge
+      description: 动作槽位对应解释槽位。
+    - predicate_id: stops_when_privacy_or_authorization_missing_v43
+      predicate_family: temporal_execution
+      relation_status: design_hint_not_ontology_edge
+      description: 缺授权或隐私边界不清时停止。
+  - predicate_profile_id: control_plane_candidate
+    relation_profile_id: relation_profile_control_plane
+    maps_to:
+      strict_owner_model:
+        artifact_kind: control_plane_candidate
+        storage_target: ControlPlaneContractSource
+      type_specific_body_shape: control_plane
+    allowed_predicate_families:
+    - control_plane_route
+    - state_guard
+    forbidden_predicate_families:
+    - display_execution
+    - temporal_execution
+    - claim_boundary
+    allowed_predicates:
+    - predicate_id: routes_risk_sensitive_item_to_founder_review_v43
+      predicate_family: control_plane_route
+      relation_status: design_hint_not_ontology_edge
+      description: 风险敏感项必须进入 founder_review。
+    - predicate_id: writes_source_gap_or_decision_ledger_v43
+      predicate_family: state_guard
+      relation_status: design_hint_not_ontology_edge
+      description: 异常分发必须写入对应 ledger。
+    - predicate_id: blocks_batch_generation_on_unresolved_route_v43
+      predicate_family: state_guard
+      relation_status: design_hint_not_ontology_edge
+      description: 路由未决时阻断批量生成。
+  - predicate_profile_id: asset_binding_policy_candidate
+    relation_profile_id: relation_profile_asset_binding_policy
+    maps_to:
+      strict_owner_model:
+        artifact_kind: governance_outbox_candidate
+        storage_target: GovernanceOutbox
+      type_specific_body_shape: asset_binding_policy
+    allowed_predicate_families:
+    - asset_binding_policy
+    - state_guard
+    forbidden_predicate_families:
+    - display_execution
+    - temporal_execution
+    - claim_boundary
+    - decision_packet
+    allowed_predicates:
+    - predicate_id: defines_review_only_asset_stub_v43
+      predicate_family: asset_binding_policy
+      relation_status: design_hint_not_ontology_edge
+      description: 资产绑定只能生成 review-only stub。
+    - predicate_id: seals_non_production_binding_v43
+      predicate_family: asset_binding_policy
+      relation_status: design_hint_not_ontology_edge
+      description: 非生产封印必须随绑定规则保留。
+    - predicate_id: blocks_binding_without_source_or_owner_v43
+      predicate_family: state_guard
+      relation_status: design_hint_not_ontology_edge
+      description: 缺来源或 owner 时禁止绑定。
+    - predicate_id: routes_asset_binding_policy_to_governance_outbox_v43
+      predicate_family: asset_binding_policy
+      relation_status: design_hint_not_ontology_edge
+      description: 绑定规则落入 GovernanceOutbox。

@@ -1,0 +1,536 @@
+semantic_pilot_v4_3_candidate_cards:
+  candidates:
+  - draft_id: SEM-V4_3-CONTENT-METHOD-001
+    revision_lineage:
+      draft_id: SEM-V4_3-CONTENT-METHOD-001
+      revision_of: SEM-V4_2-CONTENT-METHOD-001
+      v4_1_ref: SEM-V4_1-CONTENT-METHOD-001
+      original_v4_ref: SEM-V4-CONTENT-METHOD-001
+      referenced_mkc_id: mkc_009
+      w7_authority_record_digest: 8eba1b63c9eac0fe354222175c298711f9a0159bf3f791a58c5cfc9dbc66de06
+      v4_2_no_go_reason_refs: &id001
+      - claim_boundary_relation_predicates_still_used_display_or_camera_families
+      - display_execution_needed_type_specific_completion_and_stop_conditions
+      - control_plane_001_needed_founder_review_route_target_not_generic_human_review
+      - control_plane_002_was_decision_packet_without_decision_instance_and_requires_reslice
+    pilot_category: content_method
+    canonical_cluster_id: mkc_009
+    canonical_cluster_title_from_authority: 故事弧线适用边界
+    canonical_label_zh: 故事弧线选择边界的任务判定知识 V4.3
+    candidate_topic: 用问题类型和证据强度选择故事弧线或降级路径
+    type_specific_body_shape: general_knowledge
+    predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'definition：故事弧线选择边界用于判断一段内容应该解释过程、呈现阶段变化、说明取舍，还是退回事实清单。V4.3 把选择动作放在任务入口：先问素材里是否有过程证据，再问表达目标是否需要价值说明，最后决定弧线强度。
+
+
+      decision_matrix_for_story_arc_or_anchor_choice：若输入是时间顺序和阶段变化，优先使用过程弧线；若输入是单个对象和动作，优先使用锚点说明；若输入只有价值词，必须降级为补充素材请求或事实清单。
+
+
+      input_signal_to_method_selection：输入信号包括事件顺序、选择理由、可观察材料、角色动作和不可验证主张。每个信号只选择能够被证据支撑的方法，不把弱信号扩写成完整故事。
+
+
+      failure_downgrade_path：当证据不足以支持故事弧线时，输出应降级为说明清单、观察锚点或 source gap；不得用情绪词补足因果。
+
+
+      difference_from_neighbor_cluster：它区别于 mkc_010：本条决定弧线强度，mkc_010 决定对象锚点如何打破套话。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_009
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 故事弧线选择边界的任务判定知识 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 general_knowledge 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条改变的是弧线与证据强度的选择，邻近叙事锚点改变的是对象和动作如何组织。
+      closest_neighbor_cluster: mkc_010
+      difference_from_neighbor: 本条改变的是弧线与证据强度的选择，邻近叙事锚点改变的是对象和动作如何组织。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-CONTENT-METHOD-002
+    revision_lineage:
+      draft_id: SEM-V4_3-CONTENT-METHOD-002
+      revision_of: SEM-V4_2-CONTENT-METHOD-002
+      v4_1_ref: SEM-V4_1-CONTENT-METHOD-002
+      original_v4_ref: SEM-V4-CONTENT-METHOD-002
+      referenced_mkc_id: mkc_010
+      w7_authority_record_digest: 5e62f930e7caa258f628e5f40ecfe9470618bbd62160a697b5ea54edaf314622
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: content_method
+    canonical_cluster_id: mkc_010
+    canonical_cluster_title_from_authority: 反模板叙事锚点
+    canonical_label_zh: 反模板叙事对象锚点知识 V4.3
+    candidate_topic: 用对象、动作、约束和节点替代泛化风格词
+    type_specific_body_shape: general_knowledge
+    predicate_profile_id: general_knowledge_candidate
+    relation_profile_id: relation_profile_general_knowledge
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'definition：反模板叙事锚点用于把高级、松弛、日常感等抽象词拆回可见对象。V4.3 要求先列对象，再列动作，再说明约束，最后才允许形成内容句。
+
+
+      decision_matrix_for_story_arc_or_anchor_choice：若素材里有明确服装对象和动作，使用对象锚点；若素材有组织流程，使用节点锚点；若只剩情绪标签，不进入正文扩写。
+
+
+      input_signal_to_method_selection：输入信号包括袖口翻折、裤管长度、陈列焦点、试衣动作、导购说明顺序和搭配取舍。信号越具体，越适合转成锚点句。
+
+
+      failure_downgrade_path：缺对象时先补对象；缺动作时改为静态描述；缺约束时不得生成取舍结论。
+
+
+      difference_from_neighbor_cluster：它区别于 mkc_009：本条解决内容对象怎么落地，mkc_009 解决弧线强度是否成立。'
+    owner_model:
+      semantic_owner: creative_content_operating
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: L2_PlayCardCandidate
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_010
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 反模板叙事的对象锚点知识 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 general_knowledge 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条关注对象、动作、约束和流程节点如何打破套话，邻近弧线边界关注叙事强度能否成立。
+      closest_neighbor_cluster: mkc_009
+      difference_from_neighbor: 本条关注对象、动作、约束和流程节点如何打破套话，邻近弧线边界关注叙事强度能否成立。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-001
+    revision_lineage:
+      draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-001
+      revision_of: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-001
+      v4_1_ref: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-001
+      original_v4_ref: SEM-V4-APPAREL-CLAIM-BOUNDARY-001
+      referenced_mkc_id: mkc_026
+      w7_authority_record_digest: 852b02654bae2233959726f4ba01a26660aa3f2bc7b648dc266cee1fc71a68e6
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_026
+    canonical_cluster_title_from_authority: 身材效果语言阶梯与场景化观察
+    canonical_label_zh: 身材效果观察词阶梯 V4.3
+    candidate_topic: 把视觉线条观察和身体结果承诺拆开处理
+    type_specific_body_shape: claim_boundary
+    predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'claim_type_ladder：表达从低到高分为观察词、关系词、结果词、身体承诺词。观察词描述可见线条，关系词描述搭配条件，结果词需要风险标记，身体承诺词禁止进入正文。
+
+
+      allowed_expression_examples：允许表达：腰线位置更清楚、外套开穿时内搭比例更明确、裤管垂坠让线条更顺。
+
+
+      restricted_expression_examples：受限表达：显高、显瘦、修饰身形。只有在搭配条件明确且改写为观察句时才可保留。
+
+
+      prohibited_expression_examples：禁止表达：保证瘦十斤、改变身材比例、穿上就瘦腿。
+
+
+      evidence_threshold_by_claim_strength：观察词需要图片或试穿场景；关系词需要搭配条件；结果词需要平台规则或品牌政策确认；身体承诺词即使有反馈也不能作为证据。
+
+
+      source_workorder_hint：任何需要证明身体结果或普遍效果的句子都必须进入 source_workorder_needed，不得由专家经验补足。'
+    owner_model:
+      semantic_owner: apparel_claim_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_026
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 身材效果表达的观察词阶梯 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 claim_boundary 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条处理视觉线条和身体结果的边界，邻近证据阶梯处理舒适、性能和耐用主张的证据强度。
+      closest_neighbor_cluster: mkc_027
+      difference_from_neighbor: 本条处理视觉线条和身体结果的边界，邻近证据阶梯处理舒适、性能和耐用主张的证据强度。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: source_workorder_needed
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-002
+    revision_lineage:
+      draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-002
+      revision_of: SEM-V4_2-APPAREL-CLAIM-BOUNDARY-002
+      v4_1_ref: SEM-V4_1-APPAREL-CLAIM-BOUNDARY-002
+      original_v4_ref: SEM-V4-APPAREL-CLAIM-BOUNDARY-002
+      referenced_mkc_id: mkc_027
+      w7_authority_record_digest: 52db1e47463300f9ad661c36383e182e450454d7a9ee1e33982a1ec2dcaac07a
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: apparel_claim_boundary
+    canonical_cluster_id: mkc_027
+    canonical_cluster_title_from_authority: 舒适性能耐用品质证据阶梯
+    canonical_label_zh: 舒适性能品质证据阶梯 V4.3
+    candidate_topic: 为舒适、性能、耐用主张设置证据阈值和降级句法
+    type_specific_body_shape: claim_boundary
+    predicate_profile_id: claim_boundary
+    relation_profile_id: relation_profile_claim_boundary
+    artifact_kind: general_knowledge_candidate
+    canonical_body_zh: 'claim_type_ladder：表达分为体感观察、结构描述、性能判断、耐用承诺。体感观察可以暂存，性能判断要补证据，耐用承诺必须有测试或标准来源。
+
+
+      allowed_expression_examples：允许表达：面料触感更柔、内里减少摩擦感、版型留量让活动更从容。
+
+
+      restricted_expression_examples：受限表达：抗皱、耐穿、透气、亲肤。必须说明来源类型或改成观察描述。
+
+
+      prohibited_expression_examples：禁止表达：经检测永久不变形、医学级亲肤、保证全天无闷感。
+
+
+      evidence_threshold_by_claim_strength：结构观察需要图片或工艺说明；性能主张需要标准、测试方法或品牌政策；耐用承诺需要可追溯测试。
+
+
+      source_workorder_hint：缺少标准、测试或品牌政策时，生成 source workorder；V4.3 不把这些句子作为可用知识。'
+    owner_model:
+      semantic_owner: apparel_claim_boundary
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      consumer_layer: HumanReview
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_027
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 舒适耐用品质表达的证据阶梯 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 claim_boundary 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条处理材料、舒适、耐用等品质主张的证据层级，邻近身材边界处理视觉观察和敏感结果词。
+      closest_neighbor_cluster: mkc_026
+      difference_from_neighbor: 本条处理材料、舒适、耐用等品质主张的证据层级，邻近身材边界处理视觉观察和敏感结果词。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: source_workorder_needed
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-001
+    revision_lineage:
+      draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-001
+      revision_of: SEM-V4_2-DISPLAY-TO-CONTENT-001
+      v4_1_ref: SEM-V4_1-DISPLAY-TO-CONTENT-001
+      original_v4_ref: SEM-V4-DISPLAY-TO-CONTENT-001
+      referenced_mkc_id: mkc_032
+      w7_authority_record_digest: b3d04225085d20f8a3e5fb4cc055be0a409b0752b77ceedee378140aa5e3d8cd
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_032
+    canonical_cluster_title_from_authority: 陈列区位与可拍摄视觉锚点
+    canonical_label_zh: 陈列区位到视觉焦点执行知识 V4.3
+    candidate_topic: 把区位信号转成观察焦点、镜头槽位和停止条件
+    type_specific_body_shape: execution_asset
+    predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    artifact_kind: execution_asset_outbox_candidate
+    canonical_body_zh: 'input_condition：输入必须是一般化区位信号，例如入口区、中岛、端架或挂通，不得是具体门店事实。
+
+
+      observation_target：观察目标是远景到中景再到近景的焦点切换，而不是品牌展示或销售承诺。
+
+
+      ordered_steps：先识别区位，再确认主次层级，随后选择远中近观察槽位，最后记录不可拍或需补授权的边界。
+
+
+      camera_or_explanation_slot：镜头槽位只作为解释顺序提示：环境、焦点、细节；不生成拍摄脚本。
+
+
+      completion_condition：当区位、焦点、细节和不可用条件都被记录时完成。
+
+
+      stop_condition：若涉及具体门店、顾客、未授权影像或品牌事实，立即停止并转人工。
+
+
+      authorization_or_privacy_boundary：任何真实门店或人员资料都需要授权，本条只保留一般化执行资产结构。'
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_032
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 陈列区位到镜头观察的空间执行卡 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 execution_asset 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条把区位转换为镜头观察入口，邻近动作三段式把门店动作转换为时间顺序。
+      closest_neighbor_cluster: mkc_034
+      difference_from_neighbor: 本条把区位转换为镜头观察入口，邻近动作三段式把门店动作转换为时间顺序。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-002
+    revision_lineage:
+      draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-002
+      revision_of: SEM-V4_2-DISPLAY-TO-CONTENT-002
+      v4_1_ref: SEM-V4_1-DISPLAY-TO-CONTENT-002
+      original_v4_ref: SEM-V4-DISPLAY-TO-CONTENT-002
+      referenced_mkc_id: mkc_034
+      w7_authority_record_digest: 76a113c4eb8a5244d7bf27b4f0401ebfcc730ca3fc13043001b61ec01735c89d
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: display_to_content
+    canonical_cluster_id: mkc_034
+    canonical_cluster_title_from_authority: 动作转内容槽位与演示三段式
+    canonical_label_zh: 动作切片到解释槽位执行知识 V4.3
+    candidate_topic: 把门店日常动作转成可解释内容槽位而非治理规则
+    type_specific_body_shape: execution_asset
+    predicate_profile_id: execution_asset_outbox_candidate
+    relation_profile_id: relation_profile_execution_asset
+    artifact_kind: execution_asset_outbox_candidate
+    canonical_body_zh: 'input_condition：输入必须是一般化服务或陈列动作，例如整理、比对、讲解、递示。
+
+
+      observation_target：观察目标是动作前提、动作对象和结束标志，不能转成组织治理结论。
+
+
+      ordered_steps：先确认动作对象，再记录动作前提，然后写出解释槽位，最后检查是否需要停止或补授权。
+
+
+      camera_or_explanation_slot：解释槽位包括动作原因、对象变化和顾客可见信息，不绑定真实拍摄执行。
+
+
+      completion_condition：动作对象、前提、解释槽位、结束标志全部具备时完成。
+
+
+      stop_condition：动作涉及个人信息、真实顾客反馈或未授权门店素材时停止。
+
+
+      authorization_or_privacy_boundary：本条只保留通用动作结构，任何真实实例必须另行授权。'
+    owner_model:
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      consumer_layer: L3_ExecutionAssetCandidate
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_034
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 门店动作到演示三段式的时间执行卡 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 execution_asset 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条把动作开始、解释节点和完成判断串成时间序列，邻近区位卡处理空间入口和镜头位置。
+      closest_neighbor_cluster: mkc_032
+      difference_from_neighbor: 本条把动作开始、解释节点和完成判断串成时间序列，邻近区位卡处理空间入口和镜头位置。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-001
+    revision_lineage:
+      draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-001
+      revision_of: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-001
+      v4_1_ref: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-001
+      original_v4_ref: SEM-V4-CONTROL-PLANE-GOVERNANCE-001
+      referenced_mkc_id: mkc_004
+      w7_authority_record_digest: ff43b069259148ef4adb23d22d2dec558f0a5cd18ba588746246851457316774
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_004
+    canonical_cluster_title_from_authority: 异常分发与再进入规则
+    canonical_label_zh: 异常分发与 founder_review 再进入规则 V4.3
+    candidate_topic: 把风险敏感项路由到 founder_review 并阻断未决批量生成
+    type_specific_body_shape: control_plane
+    predicate_profile_id: control_plane_candidate
+    relation_profile_id: relation_profile_control_plane
+    artifact_kind: control_plane_candidate
+    canonical_body_zh: 'trigger：触发条件是 source gap、建模冲突、风险敏感 claim 或 owner 不明。
+
+
+      route_target：风险敏感项必须进入 founder_review；human_review 只能作为已声明的上位审查类别，不能替代 founder_review。
+
+
+      ledger_write：source gap 写 SourceGapLedger，建模冲突写 DecisionPacketLedger，路由政策写 ControlPlaneContractSource。
+
+
+      reentry：只有 founder_review 或对应 ledger 明确解除阻断后，任务才能回到修订队列。
+
+
+      prohibited_transition：禁止从 unresolved route 直接进入 batch generation、CandidatePack 或 KE。'
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: ControlPlaneContractSource
+      artifact_kind: control_plane_candidate
+      consumer_layer: GenerationContract
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_004
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 异常研究项分流的状态机规则 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 control_plane 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条处理异常项如何分流和再进入，邻近资产绑定规则处理研究材料是否能被绑定到非生产用途。
+      closest_neighbor_cluster: mkc_006
+      difference_from_neighbor: 本条处理异常项如何分流和再进入，邻近资产绑定规则处理研究材料是否能被绑定到非生产用途。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+  - draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+    revision_lineage:
+      draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+      revision_of: SEM-V4_2-CONTROL-PLANE-GOVERNANCE-002
+      v4_1_ref: SEM-V4_1-CONTROL-PLANE-GOVERNANCE-002
+      original_v4_ref: SEM-V4-CONTROL-PLANE-GOVERNANCE-002
+      referenced_mkc_id: mkc_006
+      w7_authority_record_digest: a9ea7dc9d2c5a4d56d73e7e8742fa600364ea5454e94e00684c6f9029a61fb66
+      v4_2_no_go_reason_refs: *id001
+    pilot_category: control_plane_governance
+    canonical_cluster_id: mkc_006
+    canonical_cluster_title_from_authority: 研究资产绑定与非生产封印
+    canonical_label_zh: 研究资产绑定与非生产封印规则 V4.3
+    candidate_topic: 把研究资产绑定规则从 decision_packet 重切为治理 outbox 候选
+    type_specific_body_shape: asset_binding_policy
+    predicate_profile_id: asset_binding_policy_candidate
+    relation_profile_id: relation_profile_asset_binding_policy
+    artifact_kind: governance_outbox_candidate
+    canonical_body_zh: 'asset_stub_shape：资产绑定只生成 review-only stub，记录来源、owner、禁止生产使用标签和复核入口。
+
+
+      bindability_condition：只有来源路径、用途边界、owner 和非生产封印同时存在时，才允许形成绑定候选。
+
+
+      forbidden_binding：禁止把未审研究资产绑定到 CandidatePack、KE、RAG、DIFY 或生产运行文件。
+
+
+      review_only_label：所有绑定候选必须带 review_only 和 not_production_ready 标签。
+
+
+      non_production_seal：非生产封印要求 batch_generation_unlocked、generation_allowed、production_ready 全 false。
+
+
+      reslice_target：本条从 V4.2 decision_packet 重切为 asset_binding_policy_candidate profile；strict artifact_kind 使用 governance_outbox_candidate。
+
+
+      governance_outbox_route：落点是 GovernanceOutbox，作为治理 outbox 候选，不是正式 ontology，不是 decision packet。'
+    owner_model:
+      semantic_owner: governance_control_plane
+      storage_target: GovernanceOutbox
+      artifact_kind: governance_outbox_candidate
+      consumer_layer: GenerationContract
+    cluster_differentiation_claim:
+      referenced_mkc_id: mkc_006
+      what_changes_in_decision_logic: 决策从泛化表达改为使用 研究资产绑定的决策包规则 的类型专属判断。
+      what_input_requirement_changes: 输入必须包含能够支撑 decision_packet 结构的具体信号，而不是只有主题词。
+      what_output_effect_changes: 输出从统一说明段落改为类型专属结构，供后续判断是否可继续修订。
+      what_failure_mode_is_unique: 本条形成决策包，判断研究材料能否绑定到用途和槽位；邻近分流规则判断异常项进入哪个状态。
+      closest_neighbor_cluster: mkc_004
+      difference_from_neighbor: 本条形成决策包，判断研究材料能否绑定到用途和槽位；邻近分流规则判断异常项进入哪个状态。
+    source_status:
+      provenance_class: expert_synthesis_revision_draft
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      human_reviewed_method: false
+      is_source_anchor: false
+      source_readiness: review_pending
+      candidatepack_eligibility: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+    accepted_domain_knowledge: false
+    batch_generation_unlocked: false
+    resliced_to_profile: asset_binding_policy_candidate
+    decision_packet_status: not_a_decision_packet_without_decision_instance

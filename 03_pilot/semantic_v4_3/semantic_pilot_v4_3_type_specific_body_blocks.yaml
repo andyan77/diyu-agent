@@ -1,0 +1,186 @@
+semantic_pilot_v4_3_type_specific_body_blocks:
+  items:
+  - draft_id: SEM-V4_3-CONTENT-METHOD-001
+    type_specific_body_shape: general_knowledge
+    predicate_profile_id: general_knowledge_candidate
+    required_blocks:
+    - definition
+    - decision_matrix_for_story_arc_or_anchor_choice
+    - input_signal_to_method_selection
+    - failure_downgrade_path
+    - difference_from_neighbor_cluster
+    blocks:
+    - block_id: definition
+      text: 故事弧线选择边界用于判断一段内容应该解释过程、呈现阶段变化、说明取舍，还是退回事实清单。V4.3 把选择动作放在任务入口：先问素材里是否有过程证据，再问表达目标是否需要价值说明，最后决定弧线强度。
+    - block_id: decision_matrix_for_story_arc_or_anchor_choice
+      text: 若输入是时间顺序和阶段变化，优先使用过程弧线；若输入是单个对象和动作，优先使用锚点说明；若输入只有价值词，必须降级为补充素材请求或事实清单。
+    - block_id: input_signal_to_method_selection
+      text: 输入信号包括事件顺序、选择理由、可观察材料、角色动作和不可验证主张。每个信号只选择能够被证据支撑的方法，不把弱信号扩写成完整故事。
+    - block_id: failure_downgrade_path
+      text: 当证据不足以支持故事弧线时，输出应降级为说明清单、观察锚点或 source gap；不得用情绪词补足因果。
+    - block_id: difference_from_neighbor_cluster
+      text: 它区别于 mkc_010：本条决定弧线强度，mkc_010 决定对象锚点如何打破套话。
+  - draft_id: SEM-V4_3-CONTENT-METHOD-002
+    type_specific_body_shape: general_knowledge
+    predicate_profile_id: general_knowledge_candidate
+    required_blocks:
+    - definition
+    - decision_matrix_for_story_arc_or_anchor_choice
+    - input_signal_to_method_selection
+    - failure_downgrade_path
+    - difference_from_neighbor_cluster
+    blocks:
+    - block_id: definition
+      text: 反模板叙事锚点用于把高级、松弛、日常感等抽象词拆回可见对象。V4.3 要求先列对象，再列动作，再说明约束，最后才允许形成内容句。
+    - block_id: decision_matrix_for_story_arc_or_anchor_choice
+      text: 若素材里有明确服装对象和动作，使用对象锚点；若素材有组织流程，使用节点锚点；若只剩情绪标签，不进入正文扩写。
+    - block_id: input_signal_to_method_selection
+      text: 输入信号包括袖口翻折、裤管长度、陈列焦点、试衣动作、导购说明顺序和搭配取舍。信号越具体，越适合转成锚点句。
+    - block_id: failure_downgrade_path
+      text: 缺对象时先补对象；缺动作时改为静态描述；缺约束时不得生成取舍结论。
+    - block_id: difference_from_neighbor_cluster
+      text: 它区别于 mkc_009：本条解决内容对象怎么落地，mkc_009 解决弧线强度是否成立。
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-001
+    type_specific_body_shape: claim_boundary
+    predicate_profile_id: claim_boundary
+    required_blocks:
+    - claim_type_ladder
+    - allowed_expression_examples
+    - restricted_expression_examples
+    - prohibited_expression_examples
+    - evidence_threshold_by_claim_strength
+    - source_workorder_hint
+    blocks:
+    - block_id: claim_type_ladder
+      text: 表达从低到高分为观察词、关系词、结果词、身体承诺词。观察词描述可见线条，关系词描述搭配条件，结果词需要风险标记，身体承诺词禁止进入正文。
+    - block_id: allowed_expression_examples
+      text: 允许表达：腰线位置更清楚、外套开穿时内搭比例更明确、裤管垂坠让线条更顺。
+    - block_id: restricted_expression_examples
+      text: 受限表达：显高、显瘦、修饰身形。只有在搭配条件明确且改写为观察句时才可保留。
+    - block_id: prohibited_expression_examples
+      text: 禁止表达：保证瘦十斤、改变身材比例、穿上就瘦腿。
+    - block_id: evidence_threshold_by_claim_strength
+      text: 观察词需要图片或试穿场景；关系词需要搭配条件；结果词需要平台规则或品牌政策确认；身体承诺词即使有反馈也不能作为证据。
+    - block_id: source_workorder_hint
+      text: 任何需要证明身体结果或普遍效果的句子都必须进入 source_workorder_needed，不得由专家经验补足。
+  - draft_id: SEM-V4_3-APPAREL-CLAIM-BOUNDARY-002
+    type_specific_body_shape: claim_boundary
+    predicate_profile_id: claim_boundary
+    required_blocks:
+    - claim_type_ladder
+    - allowed_expression_examples
+    - restricted_expression_examples
+    - prohibited_expression_examples
+    - evidence_threshold_by_claim_strength
+    - source_workorder_hint
+    blocks:
+    - block_id: claim_type_ladder
+      text: 表达分为体感观察、结构描述、性能判断、耐用承诺。体感观察可以暂存，性能判断要补证据，耐用承诺必须有测试或标准来源。
+    - block_id: allowed_expression_examples
+      text: 允许表达：面料触感更柔、内里减少摩擦感、版型留量让活动更从容。
+    - block_id: restricted_expression_examples
+      text: 受限表达：抗皱、耐穿、透气、亲肤。必须说明来源类型或改成观察描述。
+    - block_id: prohibited_expression_examples
+      text: 禁止表达：经检测永久不变形、医学级亲肤、保证全天无闷感。
+    - block_id: evidence_threshold_by_claim_strength
+      text: 结构观察需要图片或工艺说明；性能主张需要标准、测试方法或品牌政策；耐用承诺需要可追溯测试。
+    - block_id: source_workorder_hint
+      text: 缺少标准、测试或品牌政策时，生成 source workorder；V4.3 不把这些句子作为可用知识。
+  - draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-001
+    type_specific_body_shape: execution_asset
+    predicate_profile_id: execution_asset_outbox_candidate
+    required_blocks:
+    - input_condition
+    - observation_target
+    - ordered_steps
+    - camera_or_explanation_slot
+    - completion_condition
+    - stop_condition
+    - authorization_or_privacy_boundary
+    blocks:
+    - block_id: input_condition
+      text: 输入必须是一般化区位信号，例如入口区、中岛、端架或挂通，不得是具体门店事实。
+    - block_id: observation_target
+      text: 观察目标是远景到中景再到近景的焦点切换，而不是品牌展示或销售承诺。
+    - block_id: ordered_steps
+      text: 先识别区位，再确认主次层级，随后选择远中近观察槽位，最后记录不可拍或需补授权的边界。
+    - block_id: camera_or_explanation_slot
+      text: 镜头槽位只作为解释顺序提示：环境、焦点、细节；不生成拍摄脚本。
+    - block_id: completion_condition
+      text: 当区位、焦点、细节和不可用条件都被记录时完成。
+    - block_id: stop_condition
+      text: 若涉及具体门店、顾客、未授权影像或品牌事实，立即停止并转人工。
+    - block_id: authorization_or_privacy_boundary
+      text: 任何真实门店或人员资料都需要授权，本条只保留一般化执行资产结构。
+  - draft_id: SEM-V4_3-DISPLAY-TO-CONTENT-002
+    type_specific_body_shape: execution_asset
+    predicate_profile_id: execution_asset_outbox_candidate
+    required_blocks:
+    - input_condition
+    - observation_target
+    - ordered_steps
+    - camera_or_explanation_slot
+    - completion_condition
+    - stop_condition
+    - authorization_or_privacy_boundary
+    blocks:
+    - block_id: input_condition
+      text: 输入必须是一般化服务或陈列动作，例如整理、比对、讲解、递示。
+    - block_id: observation_target
+      text: 观察目标是动作前提、动作对象和结束标志，不能转成组织治理结论。
+    - block_id: ordered_steps
+      text: 先确认动作对象，再记录动作前提，然后写出解释槽位，最后检查是否需要停止或补授权。
+    - block_id: camera_or_explanation_slot
+      text: 解释槽位包括动作原因、对象变化和顾客可见信息，不绑定真实拍摄执行。
+    - block_id: completion_condition
+      text: 动作对象、前提、解释槽位、结束标志全部具备时完成。
+    - block_id: stop_condition
+      text: 动作涉及个人信息、真实顾客反馈或未授权门店素材时停止。
+    - block_id: authorization_or_privacy_boundary
+      text: 本条只保留通用动作结构，任何真实实例必须另行授权。
+  - draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-001
+    type_specific_body_shape: control_plane
+    predicate_profile_id: control_plane_candidate
+    required_blocks:
+    - trigger
+    - route_target
+    - ledger_write
+    - reentry
+    - prohibited_transition
+    blocks:
+    - block_id: trigger
+      text: 触发条件是 source gap、建模冲突、风险敏感 claim 或 owner 不明。
+    - block_id: route_target
+      text: 风险敏感项必须进入 founder_review；human_review 只能作为已声明的上位审查类别，不能替代 founder_review。
+    - block_id: ledger_write
+      text: source gap 写 SourceGapLedger，建模冲突写 DecisionPacketLedger，路由政策写 ControlPlaneContractSource。
+    - block_id: reentry
+      text: 只有 founder_review 或对应 ledger 明确解除阻断后，任务才能回到修订队列。
+    - block_id: prohibited_transition
+      text: 禁止从 unresolved route 直接进入 batch generation、CandidatePack 或 KE。
+  - draft_id: SEM-V4_3-CONTROL-PLANE-GOVERNANCE-002
+    type_specific_body_shape: asset_binding_policy
+    predicate_profile_id: asset_binding_policy_candidate
+    required_blocks:
+    - asset_stub_shape
+    - bindability_condition
+    - forbidden_binding
+    - review_only_label
+    - non_production_seal
+    - reslice_target
+    - governance_outbox_route
+    blocks:
+    - block_id: asset_stub_shape
+      text: 资产绑定只生成 review-only stub，记录来源、owner、禁止生产使用标签和复核入口。
+    - block_id: bindability_condition
+      text: 只有来源路径、用途边界、owner 和非生产封印同时存在时，才允许形成绑定候选。
+    - block_id: forbidden_binding
+      text: 禁止把未审研究资产绑定到 CandidatePack、KE、RAG、DIFY 或生产运行文件。
+    - block_id: review_only_label
+      text: 所有绑定候选必须带 review_only 和 not_production_ready 标签。
+    - block_id: non_production_seal
+      text: 非生产封印要求 batch_generation_unlocked、generation_allowed、production_ready 全 false。
+    - block_id: reslice_target
+      text: 本条从 V4.2 decision_packet 重切为 asset_binding_policy_candidate profile；strict artifact_kind 使用 governance_outbox_candidate。
+    - block_id: governance_outbox_route
+      text: 落点是 GovernanceOutbox，作为治理 outbox 候选，不是正式 ontology，不是 decision packet。

@@ -1,0 +1,27 @@
+v4_2_no_go_closeout:
+  task_id: CODEX-SEMANTIC-PILOT-V4_2-NOGO-CLOSEOUT-PREDICATE-REGISTRY-AND-V4_3-TARGETED-REPAIR-001
+  previous_task_id: CODEX-SEMANTIC-PILOT-V4_1-NOGO-CLOSEOUT-AND-V4_2-TYPE-SPECIFIC-REWRITE-001
+  human_decision_present: true
+  authorized_by: founder_current_request
+  authorized_scope:
+  - V4.2 no-go closeout
+  - V4.3 one-to-one targeted repair
+  - predicate registry draft only, not formal ontology
+  - control_plane_002 reslice according to explicit founder decision
+  engineering_delivery: PASS
+  semantic_verdict: NO_GO_FOR_BATCH
+  future_exemplar_status: pending_after_targeted_repair
+  reasons:
+  - claim_boundary_relation_predicates_still_used_display_or_camera_families
+  - display_execution_needed_type_specific_completion_and_stop_conditions
+  - control_plane_001_needed_founder_review_route_target_not_generic_human_review
+  - control_plane_002_was_decision_packet_without_decision_instance_and_requires_reslice
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  candidatepack_created: false
+  KE_touched: false
+  serving_touched: false
+  RAG_touched: false
+  DIFY_touched: false
+  recommended_next_step: CODEX-SEMANTIC-PILOT-V4_3-JUDGE-GO-NOGO-001
