@@ -1,0 +1,52 @@
+semantic_pilot_regen_brief:
+  schema_version: v0.1
+  next_task_id: CODEX-SEMANTIC-PILOT-REGEN-001
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false
+  purpose: Generate a smaller but real semantic pilot that proves Codex can produce distinct, W7-cluster-entailing, apparel-retail dense knowledge drafts.
+  target_count:
+    min: 16
+    max: 24
+    recommended: 20
+  distribution:
+    content_method:
+      count: 5
+    apparel_claim_boundary:
+      count: 5
+    display_to_content:
+      count: 5
+    control_plane_governance:
+      count: 5
+  hard_requirements:
+  - each_card_has_distinct_proposition
+  - each_card_has_distinct_normalized_body
+  - each_card_entails_specific_W7_cluster
+  - each_card_has_specific_relation_predicates
+  - each_card_has_semantic_fingerprint_derived_from_normalized_proposition
+  - each_card_has_source_status_disambiguated
+  - no_hard_claim_expert_synthesis
+  - no_real_instance_fact
+  - readiness_all_false
+  body_requirements:
+    min_body_chars: 900
+    must_include:
+    - apparel_retail_object_or_scene
+    - observable_action
+    - mechanism_explanation
+    - applicability_boundary
+    - failure_mode
+    - evidence_or_claim_boundary
+    - downstream_generation_or_display_effect
+  review_requirements:
+    structural_checker_required: true
+    human_or_independent_judge_required: true
+    judge_dimensions:
+    - proposition_independence
+    - W7_cluster_entailment
+    - industry_density
+    - relation_specificity
+    - source_boundary_correctness
+    - non_template_body
+  batch_generation_unlock:
+    allowed_by_this_brief: false
+    requires_future_semantic_pilot_pass: true

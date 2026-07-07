@@ -13,7 +13,7 @@ microbatch_manifest:
     sequence: 1
     target_count: 40
     budget_not_kpi: true
-    must_run_checks: &id001
+    must_run_checks:
     - schema_parse
     - readiness_false_scan
     - candidate_kind_target_owner_check
@@ -25,7 +25,14 @@ microbatch_manifest:
     - real_instance_fact_leak_check
     - P0_00_domain_leak_check
     - microbatch_receipt
-    stop_if: &id002
+    - semantic_uniqueness_check
+    - normalized_body_duplicate_check
+    - cluster_entailment_check
+    - rich_body_industry_density_check
+    - relation_predicate_specificity_check
+    - semantic_fingerprint_validity_check
+    - source_status_disambiguation_check
+    stop_if:
     - readiness_true_count > 0
     - index_shell_rate > 0
     - hard_claim_without_evidence_as_fact > 0
@@ -33,33 +40,204 @@ microbatch_manifest:
     - P0_00_domain_leak > 0
     - body_entailment_fail_rate > 10%
     - rich_body_empty_or_generic_rate > 10%
+    - semantic_uniqueness_fail_count > 0
+    - normalized_body_duplicate_count > 0
+    - cluster_entailment_fail_count > 0
+    - rich_body_industry_density_fail_count > 0
+    - generic_relation_predicate_count > 0
+    - title_only_fingerprint_difference_count > 0
+    - source_status_conflation_count > 0
   - microbatch_id: batch_005_mb_002
     sequence: 2
     target_count: 40
     budget_not_kpi: true
-    must_run_checks: *id001
-    stop_if: *id002
+    must_run_checks:
+    - schema_parse
+    - readiness_false_scan
+    - candidate_kind_target_owner_check
+    - layer_annotation_check
+    - rich_body_quality_check
+    - body_entailment_check
+    - dedupe_check
+    - hard_claim_leak_check
+    - real_instance_fact_leak_check
+    - P0_00_domain_leak_check
+    - microbatch_receipt
+    - semantic_uniqueness_check
+    - normalized_body_duplicate_check
+    - cluster_entailment_check
+    - rich_body_industry_density_check
+    - relation_predicate_specificity_check
+    - semantic_fingerprint_validity_check
+    - source_status_disambiguation_check
+    stop_if:
+    - readiness_true_count > 0
+    - index_shell_rate > 0
+    - hard_claim_without_evidence_as_fact > 0
+    - real_instance_fact_leak > 0
+    - P0_00_domain_leak > 0
+    - body_entailment_fail_rate > 10%
+    - rich_body_empty_or_generic_rate > 10%
+    - semantic_uniqueness_fail_count > 0
+    - normalized_body_duplicate_count > 0
+    - cluster_entailment_fail_count > 0
+    - rich_body_industry_density_fail_count > 0
+    - generic_relation_predicate_count > 0
+    - title_only_fingerprint_difference_count > 0
+    - source_status_conflation_count > 0
   - microbatch_id: batch_005_mb_003
     sequence: 3
     target_count: 40
     budget_not_kpi: true
-    must_run_checks: *id001
-    stop_if: *id002
+    must_run_checks:
+    - schema_parse
+    - readiness_false_scan
+    - candidate_kind_target_owner_check
+    - layer_annotation_check
+    - rich_body_quality_check
+    - body_entailment_check
+    - dedupe_check
+    - hard_claim_leak_check
+    - real_instance_fact_leak_check
+    - P0_00_domain_leak_check
+    - microbatch_receipt
+    - semantic_uniqueness_check
+    - normalized_body_duplicate_check
+    - cluster_entailment_check
+    - rich_body_industry_density_check
+    - relation_predicate_specificity_check
+    - semantic_fingerprint_validity_check
+    - source_status_disambiguation_check
+    stop_if:
+    - readiness_true_count > 0
+    - index_shell_rate > 0
+    - hard_claim_without_evidence_as_fact > 0
+    - real_instance_fact_leak > 0
+    - P0_00_domain_leak > 0
+    - body_entailment_fail_rate > 10%
+    - rich_body_empty_or_generic_rate > 10%
+    - semantic_uniqueness_fail_count > 0
+    - normalized_body_duplicate_count > 0
+    - cluster_entailment_fail_count > 0
+    - rich_body_industry_density_fail_count > 0
+    - generic_relation_predicate_count > 0
+    - title_only_fingerprint_difference_count > 0
+    - source_status_conflation_count > 0
   - microbatch_id: batch_005_mb_004
     sequence: 4
     target_count: 40
     budget_not_kpi: true
-    must_run_checks: *id001
-    stop_if: *id002
+    must_run_checks:
+    - schema_parse
+    - readiness_false_scan
+    - candidate_kind_target_owner_check
+    - layer_annotation_check
+    - rich_body_quality_check
+    - body_entailment_check
+    - dedupe_check
+    - hard_claim_leak_check
+    - real_instance_fact_leak_check
+    - P0_00_domain_leak_check
+    - microbatch_receipt
+    - semantic_uniqueness_check
+    - normalized_body_duplicate_check
+    - cluster_entailment_check
+    - rich_body_industry_density_check
+    - relation_predicate_specificity_check
+    - semantic_fingerprint_validity_check
+    - source_status_disambiguation_check
+    stop_if:
+    - readiness_true_count > 0
+    - index_shell_rate > 0
+    - hard_claim_without_evidence_as_fact > 0
+    - real_instance_fact_leak > 0
+    - P0_00_domain_leak > 0
+    - body_entailment_fail_rate > 10%
+    - rich_body_empty_or_generic_rate > 10%
+    - semantic_uniqueness_fail_count > 0
+    - normalized_body_duplicate_count > 0
+    - cluster_entailment_fail_count > 0
+    - rich_body_industry_density_fail_count > 0
+    - generic_relation_predicate_count > 0
+    - title_only_fingerprint_difference_count > 0
+    - source_status_conflation_count > 0
   - microbatch_id: batch_005_mb_005
     sequence: 5
     target_count: 40
     budget_not_kpi: true
-    must_run_checks: *id001
-    stop_if: *id002
+    must_run_checks:
+    - schema_parse
+    - readiness_false_scan
+    - candidate_kind_target_owner_check
+    - layer_annotation_check
+    - rich_body_quality_check
+    - body_entailment_check
+    - dedupe_check
+    - hard_claim_leak_check
+    - real_instance_fact_leak_check
+    - P0_00_domain_leak_check
+    - microbatch_receipt
+    - semantic_uniqueness_check
+    - normalized_body_duplicate_check
+    - cluster_entailment_check
+    - rich_body_industry_density_check
+    - relation_predicate_specificity_check
+    - semantic_fingerprint_validity_check
+    - source_status_disambiguation_check
+    stop_if:
+    - readiness_true_count > 0
+    - index_shell_rate > 0
+    - hard_claim_without_evidence_as_fact > 0
+    - real_instance_fact_leak > 0
+    - P0_00_domain_leak > 0
+    - body_entailment_fail_rate > 10%
+    - rich_body_empty_or_generic_rate > 10%
+    - semantic_uniqueness_fail_count > 0
+    - normalized_body_duplicate_count > 0
+    - cluster_entailment_fail_count > 0
+    - rich_body_industry_density_fail_count > 0
+    - generic_relation_predicate_count > 0
+    - title_only_fingerprint_difference_count > 0
+    - source_status_conflation_count > 0
   - microbatch_id: batch_005_mb_006
     sequence: 6
     target_count: 40
     budget_not_kpi: true
-    must_run_checks: *id001
-    stop_if: *id002
+    must_run_checks:
+    - schema_parse
+    - readiness_false_scan
+    - candidate_kind_target_owner_check
+    - layer_annotation_check
+    - rich_body_quality_check
+    - body_entailment_check
+    - dedupe_check
+    - hard_claim_leak_check
+    - real_instance_fact_leak_check
+    - P0_00_domain_leak_check
+    - microbatch_receipt
+    - semantic_uniqueness_check
+    - normalized_body_duplicate_check
+    - cluster_entailment_check
+    - rich_body_industry_density_check
+    - relation_predicate_specificity_check
+    - semantic_fingerprint_validity_check
+    - source_status_disambiguation_check
+    stop_if:
+    - readiness_true_count > 0
+    - index_shell_rate > 0
+    - hard_claim_without_evidence_as_fact > 0
+    - real_instance_fact_leak > 0
+    - P0_00_domain_leak > 0
+    - body_entailment_fail_rate > 10%
+    - rich_body_empty_or_generic_rate > 10%
+    - semantic_uniqueness_fail_count > 0
+    - normalized_body_duplicate_count > 0
+    - cluster_entailment_fail_count > 0
+    - rich_body_industry_density_fail_count > 0
+    - generic_relation_predicate_count > 0
+    - title_only_fingerprint_difference_count > 0
+    - source_status_conflation_count > 0
+  semantic_gate_profile: semantic_hardened_v0.1
+  semantic_generation_gates_ref: 02_generation_brief_pack/batch_005/batch_005_generation_brief.yaml#semantic_generation_gates
+  batch_generation_blocked_until_semantic_pilot_pass: true
+  current_44_counts_as_unlock_evidence: false

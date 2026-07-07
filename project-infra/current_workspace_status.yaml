@@ -5,8 +5,8 @@ workspace:
   git_baseline_created: true
 phase:
   current_phase: codex_knowledge_generation_preparation
-  current_next_step: CODEX-PILOT-JUDGE-REVIEW-AND-GO-NOGO-001
-  previous_step: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+  current_next_step: CODEX-SEMANTIC-PILOT-REGEN-001
+  previous_step: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
 source_authority:
   source_repo_reference:
     path: /home/faye/笛语agent
@@ -32,6 +32,14 @@ pilot:
   status: completed
   pilot_structured_draft_count: 44
   ready_for_pilot_review: true
+  ready_for_first_batch_generation: false
+pilot_semantic_closeout:
+  task_id: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
+  status: completed
+  current_44_reclassified_as: schema_route_provenance_smoke_fixture
+  semantic_pilot_status: failed
+  batch_generation_unlocked: false
+  accepted_domain_knowledge_count: 0
   ready_for_first_batch_generation: false
 readiness:
   candidatepack_ready: false

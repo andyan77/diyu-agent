@@ -1,0 +1,35 @@
+pilot_semantic_fail_closeout:
+  schema_version: v0.1
+  task_id: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: current_44_semantic_fail_and_reclassify_as_smoke_fixture
+  prior_pilot:
+    task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+    commit: 7cea94858361c7ee8224d62306f36a0321fcf075
+    draft_count: 44
+    technical_smoke_passed: true
+  founder_semantic_override:
+    verdict: semantic_fail
+    reason: same_category_template_cards_not_independent_knowledge
+  disposition:
+    retain_as: schema_route_provenance_smoke_fixture
+    count_as_domain_knowledge: false
+    count_as_rich_body_exemplar: false
+    count_as_relation_graph_exemplar: false
+    eligible_for_candidatepack: false
+    eligible_for_batch_generation_gate: false
+    eligible_for_human_knowledge_review: false
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlock:
+    allowed: false
+    batch_generation_unlocked: false
+    ready_for_first_batch_generation: false
+    blocked_by:
+    - semantic_uniqueness_missing
+    - rich_body_industry_density_missing
+    - relation_predicate_specificity_missing
+    - cluster_entailment_missing
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false

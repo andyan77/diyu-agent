@@ -29,8 +29,23 @@ shared_generation_rules:
   - source_type_decides_layer
   shared_assignment_rule:
     canonical_cluster_refs_may_repeat_across_batches: true
-    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters
-      across planning contexts.
+    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters across planning contexts.
     generation_assignment_refs_must_be_exactly_once: true
-    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014
-      by numeric suffix for brief planning.
+    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014 by numeric suffix for brief planning.
+  semantic_quality_blocking_policy:
+    old_44_pilot_status: schema_route_provenance_smoke_fixture_only
+    batch_generation_blocked_until_semantic_pilot_pass: true
+    semantic_pilot_regen_required: true
+    must_block:
+    - same_category_template_cards
+    - duplicated_normalized_body
+    - generic_relation_predicates
+    - W7_trace_without_body_entailment
+    - title_only_fingerprint_difference
+    - source_status_conflation
+    must_not_accept_as_quality_evidence:
+    - schema_pass_only
+    - readiness_false_only
+    - trace_present_only
+    - count_coverage_only
+    - hash_difference_only

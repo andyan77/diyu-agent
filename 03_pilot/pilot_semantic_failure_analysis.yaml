@@ -1,0 +1,28 @@
+semantic_failure_analysis:
+  schema_version: v0.1
+  task_id: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
+  human_decision:
+    human_decision_present: true
+    authorized_by: founder_current_request
+    decision: current_44_semantic_fail_and_reclassify_as_smoke_fixture
+  failure_codes:
+    PILOT_TEMPLATE_PROPOSITION_DUPLICATE:
+      blocking: true
+      description: same category cards share definition / applicable_when / not_applicable_when / output_effect / risk_boundary / evidence_requirement
+    PILOT_NORMALIZED_BODY_DUPLICATE:
+      blocking: true
+      description: normalized rich body collapses into few template bodies
+    PILOT_CLUSTER_TRACE_NOT_ENTAILED:
+      blocking: true
+      description: W7 cluster id is present but does not drive body / mechanism / risk / relation difference
+    PILOT_GENERIC_RELATION_PREDICATE:
+      blocking: true
+      description: relation uses placeholder predicate such as review_adjacent_method_boundary
+    PILOT_HASH_NOT_SEMANTIC_FINGERPRINT:
+      blocking: true
+      description: fingerprint changes because id/title changes, not because proposition differs
+    PILOT_SOURCE_STATUS_CONFLATION:
+      blocking: true
+      description: expert_synthesis_draft pending review is mislabeled as human_reviewed_expert_synthesis
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false

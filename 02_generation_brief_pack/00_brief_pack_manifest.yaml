@@ -6,11 +6,9 @@ brief_pack_manifest:
   source_repo_live_accessed: false
   shared_assignment_rule:
     canonical_cluster_refs_may_repeat_across_batches: true
-    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters
-      across planning contexts.
+    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters across planning contexts.
     generation_assignment_refs_must_be_exactly_once: true
-    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014
-      by numeric suffix for brief planning.
+    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014 by numeric suffix for brief planning.
   inputs:
   - path: 00_source_inputs/W7_master_map/shared_knowledge_cluster_registry.yaml
     sha256: a3efeaded4e5b06a54fa12c5b802f5a295df8bd94b9a1f2e02e8f32976c3daf0
@@ -84,6 +82,8 @@ brief_pack_manifest:
       path: 02_generation_brief_pack/00_batch_allocation_matrix.yaml
     microbatch_plan:
       path: 02_generation_brief_pack/00_microbatch_plan.csv
+    semantic_pilot_regen_brief:
+      path: 03_pilot/semantic_pilot_regen_brief.v0.1.yaml
   assertions:
     no_generated_knowledge: true
     no_candidatepack_created: true
@@ -91,3 +91,10 @@ brief_pack_manifest:
     readiness_all_false: true
     total_budget: 3600
     budget_not_kpi: true
+  semantic_hardening:
+    task_id: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
+    status: completed
+    current_44_reclassified_as: schema_route_provenance_smoke_fixture
+    batch_generation_unlocked: false
+    semantic_pilot_regen_required: true
+    semantic_gate_profile: semantic_hardened_v0.1

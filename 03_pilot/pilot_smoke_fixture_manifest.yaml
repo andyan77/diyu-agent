@@ -1,0 +1,37 @@
+pilot_smoke_fixture_manifest:
+  schema_version: v0.1
+  task_id: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
+  classification: schema_route_provenance_smoke_fixture
+  source_pilot_files:
+  - 03_pilot/pilot_knowledge_candidate_cards.yaml
+  - 03_pilot/pilot_rich_body_blocks.yaml
+  - 03_pilot/pilot_relation_candidates.csv
+  source_file_digests:
+  - path: 03_pilot/pilot_knowledge_candidate_cards.yaml
+    sha256: ce12f51ea883c5a8125780c32c0829488e374084bbc908b37c09758ac40f3b3b
+  - path: 03_pilot/pilot_rich_body_blocks.yaml
+    sha256: ed0769143d632bfbcd62422ae2af97920c34bfad9366fdcf00fd3c0bdac8f7ef
+  - path: 03_pilot/pilot_relation_candidates.csv
+    sha256: 415d92f12fcf5e8bb83dbebd47855aeca6106498eccac13c9769ecf798814148
+  - path: 03_pilot/pilot_review_queue.yaml
+    sha256: cfdc636a7af364f32466cc5e7ae0520e2a6f88e3b67f19bb4037ace5e35d7256
+  - path: 03_pilot/pilot_semantic_alignment_report.json
+    sha256: 081279af455fb59ce961d74b3def51d9a575f6b4880d498add020a6a30ec412e
+  - path: 03_pilot/pilot_body_entailment_report.json
+    sha256: 1cf8a07a98fc6332f74c40a01a332aaaa0ea2e726fedb84497eb0c53d2b9c0be
+  - path: 03_pilot/pilot_dedupe_report.json
+    sha256: 46c19d0147347468a7d99406a1b166dcb5c306b1ca3eecac49ad315d64dc7cdc
+  retained_value:
+  - schema_validation_fixture
+  - route_and_owner_fixture
+  - readiness_false_fixture
+  - P0_00_boundary_fixture
+  - review_queue_presence_fixture
+  explicitly_not_valid_for:
+  - domain_knowledge_quality
+  - rich_body_quality_exemplar
+  - relation_graph_quality
+  - batch_generation_unlock
+  - candidatepack_eligibility
+  source_repo_live_dependency: false
+  source_repo_live_accessed: false

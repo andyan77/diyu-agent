@@ -74,8 +74,7 @@ batch_generation_brief:
   generation_requirements:
     output_schema_ref: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
     rich_body_requirements: 01_generation_contracts/codex_rich_body_quality_standard.v0.1.md
-    semantic_alignment_requirements: must trace W7 cluster, assignment, source refs,
-      and contract lock digest
+    semantic_alignment_requirements: must trace W7 cluster, assignment, source refs, and contract lock digest
     layer_annotation_requirements: 01_generation_contracts/codex_layer_annotation_policy.v0.1.yaml
     body_entailment_requirements: 01_generation_contracts/codex_body_entailment_policy.v0.1.yaml
     dedupe_requirements: 01_generation_contracts/codex_dedupe_fingerprint_policy.v0.1.yaml
@@ -84,11 +83,9 @@ batch_generation_brief:
     state_machine_mapping: 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
   risk_controls:
     hard_claim_policy: hard claims require source refs or route to SourceGapLedger/Excluded
-    real_instance_fact_policy: real brand/SKU/store/person/customer/fabric/body-effect
-      facts cannot be invented by expert synthesis
+    real_instance_fact_policy: real brand/SKU/store/person/customer/fabric/body-effect facts cannot be invented by expert synthesis
     P0_00_boundary_policy: P0-00 control-plane content cannot land in GeneralKnowledgeBase
-    provenance_safety_policy: historical provenance true flags are not active readiness
-      authority
+    provenance_safety_policy: historical provenance true flags are not active readiness authority
     readiness_all_false: true
   microbatch_plan_ref: 02_generation_brief_pack/microbatch_manifest/batch_005_microbatch_manifest.yaml
   pilot_relevance: eligible for cross-type pilot sampling if selected by 00_pilot_sampling_plan.yaml
@@ -105,3 +102,95 @@ batch_generation_brief:
   - real_instance_fact_leak
   - P0_00_general_kb_leak
   - source_type_decides_layer
+  - same_category_template_cards
+  - duplicated_normalized_body
+  - generic_relation_predicates
+  - W7_trace_without_body_entailment
+  - title_only_fingerprint_difference
+  - source_status_conflation
+  semantic_generation_hardening_status: hardened_after_pilot_semantic_fail
+  semantic_generation_gates:
+    semantic_uniqueness_gate:
+      blocking: true
+      rule: Within the same batch and same pilot category / knowledge family, no two candidates may share the same normalized proposition signature.
+      normalized_proposition_signature_fields:
+      - definition
+      - applicable_when
+      - not_applicable_when
+      - output_effect
+      - risk_boundary
+      - evidence_requirement
+      ignore_fields:
+      - candidate_id
+      - candidate_name
+      - sample_number
+      - cluster_id
+      - batch_id
+    normalized_body_duplicate_gate:
+      blocking: true
+      rule: After removing title, ids, sample numbers, boilerplate review text, and metadata references, rich_body.normalized_body_signature must be distinct.
+      max_same_category_similarity: 0.82
+      exact_duplicate_allowed: false
+    cluster_entailment_gate:
+      blocking: true
+      rule: Each generated candidate must prove how its specific W7 canonical_cluster_id changes definition, conditions, risk boundary, evidence requirement, output effect, relation candidates, or downstream generation behavior.
+      required_cluster_specific_elements_min: 3
+      required_fields:
+      - cluster_specific_mechanism
+      - cluster_specific_object_or_action
+      - cluster_specific_risk_boundary
+      - cluster_specific_output_effect
+    rich_body_industry_density_gate:
+      blocking: true
+      rule: Rich body must be knowledge text, not review explanation. It must contain apparel / retail / content / display observable objects, actions, scenes, constraints, decisions, and failure modes.
+      min_body_chars: 900
+      required_industry_elements_min: 6
+      required_element_types:
+      - apparel_object
+      - retail_scene
+      - content_action
+      - display_or_styling_action
+      - evidence_or_claim_boundary
+      - downstream_output_implication
+    relation_predicate_specificity_gate:
+      blocking: true
+      forbidden_predicates:
+      - generic
+      - review_adjacent
+      - review_adjacent_method_boundary
+      - placeholder
+      - related_to
+      - similar_to
+      required_relation_predicate_examples:
+      - constrains_claim_type
+      - requires_evidence_mode
+      - translates_display_action_to_content_angle
+      - binds_role_perspective_to_authority_boundary
+      - maps_scene_task_to_narrative_device
+      - downgrades_output_when_evidence_missing
+      - connects_anchor_type_to_content_strategy
+    semantic_fingerprint_validity_gate:
+      blocking: true
+      rule: fingerprint must be derived from normalized proposition + normalized rich body mechanism + relation predicate set. It must not change only because title, id, or sample number changed.
+      must_ignore:
+      - candidate_id
+      - candidate_name
+      - sample_number
+      - batch_id
+      - generated_at
+    source_status_disambiguation_gate:
+      blocking: true
+      required_fields:
+      - provenance_class
+      - human_review_status
+      - human_reviewed_method
+      allowed_provenance_class:
+      - expert_synthesis_draft
+      - founder_overlay_governance_basis
+      - source_gap_seed
+      - decision_packet_seed
+      rule: pending expert synthesis draft must not be labeled human_reviewed_expert_synthesis.
+  batch_generation_unlock_policy:
+    current_44_counts_as_unlock_evidence: false
+    batch_generation_unlocked: false
+    required_before_batch_generation: CODEX-SEMANTIC-PILOT-REGEN-001

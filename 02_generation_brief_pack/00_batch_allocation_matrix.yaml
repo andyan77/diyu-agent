@@ -9,11 +9,9 @@ batch_allocation_matrix:
     lower_actual_count_allowed_if_quality_gate_blocks: true
   shared_assignment_rule:
     canonical_cluster_refs_may_repeat_across_batches: true
-    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters
-      across planning contexts.
+    reason: W7 batch_to_cluster_crosswalk intentionally shares canonical clusters across planning contexts.
     generation_assignment_refs_must_be_exactly_once: true
-    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014
-      by numeric suffix for brief planning.
+    assignment_mapping_rule: GA-001..GA-014 map exactly once to batch_001..batch_014 by numeric suffix for brief planning.
   batches:
   - batch_id: batch_001
     generation_assignment_id: GA-001
@@ -206,3 +204,8 @@ batch_allocation_matrix:
     - mkc_045
     - mkc_046
     canonical_cluster_count: 16
+  semantic_quality_blocking_policy:
+    semantic_pilot_regen_required: true
+    batch_generation_blocked_until_semantic_pilot_pass: true
+    current_44_not_unlock_evidence: true
+    semantic_gate_profile: semantic_hardened_v0.1

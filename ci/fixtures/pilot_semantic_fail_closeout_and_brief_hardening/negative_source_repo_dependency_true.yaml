@@ -1,0 +1,99 @@
+semantic_hardening_fixture:
+  task_id: CODEX-PILOT-SEMANTIC-FAIL-CLOSEOUT-AND-BRIEF-HARDENING-001
+  human_decision_present: true
+  current_44_reclassified_as: schema_route_provenance_smoke_fixture
+  accepted_domain_knowledge_count: 0
+  batch_generation_unlocked: false
+  ready_for_first_batch_generation: false
+  current_next_step: CODEX-SEMANTIC-PILOT-REGEN-001
+  batch_briefs_hardened_count: 14
+  semantic_pilot_regen_brief_exists: true
+  regen_target_count:
+    min: 16
+    max: 24
+    recommended: 20
+  regen_min_body_chars: 900
+  readiness_all_false: true
+  source_repo_live_dependency: true
+  source_repo_live_accessed: false
+  semantic_generation_gates:
+    semantic_uniqueness_gate:
+      blocking: true
+      rule: Within the same batch and same pilot category / knowledge family, no two candidates may share the same normalized proposition signature.
+      normalized_proposition_signature_fields:
+      - definition
+      - applicable_when
+      - not_applicable_when
+      - output_effect
+      - risk_boundary
+      - evidence_requirement
+      ignore_fields:
+      - candidate_id
+      - candidate_name
+      - sample_number
+      - cluster_id
+      - batch_id
+    normalized_body_duplicate_gate:
+      blocking: true
+      rule: After removing title, ids, sample numbers, boilerplate review text, and metadata references, rich_body.normalized_body_signature must be distinct.
+      max_same_category_similarity: 0.82
+      exact_duplicate_allowed: false
+    cluster_entailment_gate:
+      blocking: true
+      rule: Each generated candidate must prove how its specific W7 canonical_cluster_id changes definition, conditions, risk boundary, evidence requirement, output effect, relation candidates, or downstream generation behavior.
+      required_cluster_specific_elements_min: 3
+      required_fields:
+      - cluster_specific_mechanism
+      - cluster_specific_object_or_action
+      - cluster_specific_risk_boundary
+      - cluster_specific_output_effect
+    rich_body_industry_density_gate:
+      blocking: true
+      rule: Rich body must be knowledge text, not review explanation. It must contain apparel / retail / content / display observable objects, actions, scenes, constraints, decisions, and failure modes.
+      min_body_chars: 900
+      required_industry_elements_min: 6
+      required_element_types:
+      - apparel_object
+      - retail_scene
+      - content_action
+      - display_or_styling_action
+      - evidence_or_claim_boundary
+      - downstream_output_implication
+    relation_predicate_specificity_gate:
+      blocking: true
+      forbidden_predicates:
+      - generic
+      - review_adjacent
+      - review_adjacent_method_boundary
+      - placeholder
+      - related_to
+      - similar_to
+      required_relation_predicate_examples:
+      - constrains_claim_type
+      - requires_evidence_mode
+      - translates_display_action_to_content_angle
+      - binds_role_perspective_to_authority_boundary
+      - maps_scene_task_to_narrative_device
+      - downgrades_output_when_evidence_missing
+      - connects_anchor_type_to_content_strategy
+    semantic_fingerprint_validity_gate:
+      blocking: true
+      rule: fingerprint must be derived from normalized proposition + normalized rich body mechanism + relation predicate set. It must not change only because title, id, or sample number changed.
+      must_ignore:
+      - candidate_id
+      - candidate_name
+      - sample_number
+      - batch_id
+      - generated_at
+    source_status_disambiguation_gate:
+      blocking: true
+      required_fields:
+      - provenance_class
+      - human_review_status
+      - human_reviewed_method
+      allowed_provenance_class:
+      - expert_synthesis_draft
+      - founder_overlay_governance_basis
+      - source_gap_seed
+      - decision_packet_seed
+      rule: pending expert synthesis draft must not be labeled human_reviewed_expert_synthesis.
