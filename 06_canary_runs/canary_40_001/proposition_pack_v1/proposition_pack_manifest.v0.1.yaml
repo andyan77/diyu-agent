@@ -1,0 +1,69 @@
+proposition_pack_manifest:
+  task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  run_id: canary_40_001
+  schema_version: v0.1
+  proposition_pack_version: v1
+  proposition_pack_role: derived_review_asset
+  source_canary_run: 06_canary_runs/canary_40_001
+  cluster_count: 40
+  cluster_coverage: mkc_007..mkc_046
+  total_proposition_count: 160
+  min_propositions_per_cluster: 4
+  max_propositions_per_cluster: 4
+  owner_candidate_distribution:
+    GeneralKnowledgeBase: 60
+    EvidencePolicyOutbox: 42
+    GovernanceOutbox: 34
+    SourceGapLedger: 9
+    ExecutionAssetOutbox: 15
+  epistemic_class_distribution:
+    domain_method: 60
+    claim_boundary_policy: 42
+    governance_control_policy: 34
+    source_gap_candidate: 9
+    execution_asset_method: 15
+  proposition_type_distribution:
+    definition: 31
+    mechanism: 34
+    boundary_condition: 31
+    evidence_requirement: 20
+    downstream_effect: 4
+    execution_instruction: 11
+    failure_signal: 11
+    applicable_condition: 16
+    owner_split_hint: 2
+  evidence_policy_to_gkb_violations: 0
+  owner_epistemic_consistency_violations: 0
+  all_source_spans_exact_substring: true
+  accepted_domain_knowledge_true_count: 0
+  candidatepack_ready_true_count: 0
+  ontology_edge_created: false
+  accepted_domain_knowledge: false
+  candidatepack_ready: false
+  generation_3600_unlocked: false
+  global_generation_allowed: false
+  external_resources_allowed: false
+  embedding_allowed: false
+  web_access_allowed: false
+  source_repo_live_dependency: false
+  google_drive_live_read: false
+  object_count: 0
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+  readiness_all_false: true
+  files:
+  - cluster_propositions.v0.1.yaml
+  - proposition_owner_candidate_matrix.v0.1.yaml
+  - proposition_epistemic_class_matrix.v0.1.yaml
+  - proposition_source_trace_index.v0.1.yaml
+  - proposition_failure_signal_index.v0.1.yaml
+  - proposition_downstream_effect_index.v0.1.yaml
+  - proposition_pack_closeout.v0.1.md

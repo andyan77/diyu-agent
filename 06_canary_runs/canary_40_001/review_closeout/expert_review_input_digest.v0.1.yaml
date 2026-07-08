@@ -1,0 +1,34 @@
+expert_review_input_digest:
+  schema_version: v0.1
+  task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  run_id: canary_40_001
+  # ---- Codex Prompt Pre-Review required note 4: honest provenance ----
+  review_input_form: founder_provided_expert_consensus_summary
+  raw_expert_review_files_available: false
+  raw_expert_review_file_paths: []
+  repeated_review_performed: false
+  re_scored: false
+  rewrote_expert_conclusions: false
+  provenance_note: >-
+    Input is the founder-provided summarized consensus of two domain expert reviews,
+    NOT the two raw expert review reports. No raw expert-review files were located in the
+    repository; none were read. This closeout absorbs the consensus verbatim and does not
+    re-review, re-score, or rewrite the experts' conclusions.
+  expert_review_count: 2
+  shared_verdict:
+    canary_40_as_generation_probe: pass
+    canary_40_as_formal_knowledge: false
+    candidatepack_ready: false
+    KE_RAG_DIFY_ready: false
+    generation_3600_unlocked: false
+    next_should_not_repeat_review: true
+    next_should_extract_proposition_pack: true
+  quality_observations:
+  - body_quality_good_to_strong
+  - cluster_specific_mechanism_mostly_pass
+  - P0_03_and_P0_04_strongest
+  - boundary_language_still_heavy
+  - some_owner_splitting_needed_at_proposition_level
+  - P0_02_and_P0_05_need_proposition_level_owner_split
+  - relation_candidates_are_design_hints_not_ontology_edges
+  - boundary_body_should_later_separate_domain_mechanism_body_from_risk_boundary_sidecar

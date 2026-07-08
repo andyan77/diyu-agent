@@ -400,12 +400,19 @@ def validate_canary(run, ledger_steps, fs_state, refs,
         e.append(f"ledger P3 status {p3!r} != DONE")
     if p4 != "DONE":
         e.append(f"ledger P4 status {p4!r} != DONE (P4 must be DONE when checker passes)")
-    # note1: review closeout must exist and be NEXT
-    rc_status = status_of(REVIEW_CLOSEOUT_TASK)
-    if rc_status is None:
-        e.append(f"ledger: {REVIEW_CLOSEOUT_TASK} step missing")
-    elif rc_status != "NEXT":
-        e.append(f"ledger: {REVIEW_CLOSEOUT_TASK} status {rc_status!r} != NEXT")
+    # note1 (E7.1 robust roadmap-advancement rule; founder-authorized fix at P5):
+    # once P4 is DONE, P5 must be the review-closeout task OR its superseding task, and must be
+    # unblocked (NEXT or advanced/DONE), never blocked-by-P4. Do NOT hard-require the specific
+    # task name to be exactly NEXT (that snapshot breaks the moment P5 supersedes/advances).
+    p5_step = by_id.get("P5", {})
+    p5_task = p5_step.get("task_id")
+    p5_supersedes = p5_step.get("supersedes_task_id")
+    p5_status = p5_step.get("status")
+    if p4 == "DONE":
+        if p5_task != REVIEW_CLOSEOUT_TASK and p5_supersedes != REVIEW_CLOSEOUT_TASK:
+            e.append(f"ledger P5 is neither {REVIEW_CLOSEOUT_TASK} nor its supersessor (got {p5_task!r})")
+        if p5_status in (None, "BLOCKED_BY_P4"):
+            e.append(f"ledger P4 DONE requires P5 unblocked (NEXT or advanced), got {p5_status!r}")
     # note1/note4: 3600 microbatch must exist and must NOT be NEXT (fail-closed)
     t3_status = status_of(THREE600_TASK)
     if t3_status is None:

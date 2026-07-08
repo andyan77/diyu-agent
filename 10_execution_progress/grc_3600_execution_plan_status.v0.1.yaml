@@ -1,6 +1,6 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-CANARY-40-GENERATION-AND-GATE-001
+  updated_by_task: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
   roadmap_authority: founder_approved_2026-07-08
   route_authority_for_grc_sequence:
     primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
@@ -14,6 +14,16 @@ grc_3600_execution_plan_status:
     three600_stays_blocked_until: P5_founder_quality_review_closeout
     rationale: canary machine-gate green is not a 3600 unlock; founder quality review (P5) gates 3600.
     applied_from: codex_prompt_pre_review_required_note_1
+  canary_p5_route_note:
+    p5_task_supersedes: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+    p5_task_now: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+    supersede_reason: expanded_scope_absorb_expert_reviews_plus_extract_proposition_pack_v1
+    p5_pass_unlocks_only: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    three600_generation_task: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    three600_generation_must_not_be_next_after_p5: true
+    three600_generation_stays_blocked_until: P6_briefing_and_go_nogo_pass
+    rationale: proposition_pack_v1 done is not a 3600 unlock; a 3600 briefing/go-no-go (P6) gates 3600 generation.
+    applied_from: codex_prompt_pre_review_required_notes_1_and_2
   generation_unlocked: false
   readiness:
     candidatepack_ready: false
@@ -133,46 +143,57 @@ grc_3600_execution_plan_status:
     - DIFY_ready
     - production_ready
   - step_id: P5
-    task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
-    status: NEXT
-    head_before: null
-    head_after: null
-    worktree_after: null
-    objective: founder quality review of the 40 canary drafts + closeout decision (accept as training positives or route back); the ONLY step unlocked by P4 PASS. 3600 stays blocked.
-    standard_validation: to_be_defined_at_P5_brief
+    task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+    supersedes_task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+    status: DONE
+    head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not formal knowledge.
+    standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact substring of its canary rich body; EPO props not mapped to GKB; readiness all false
     deliverables:
-    - to_be_defined_at_P5_brief
+    - 06_canary_runs/canary_40_001/review_closeout/**
+    - 06_canary_runs/canary_40_001/proposition_pack_v1/**
+    - ci/checkers/check_canary_40_quality_closeout_and_proposition_pack.py
+    - ci/fixtures/canary_40_quality_closeout_and_proposition_pack/**
     blocked_by: []
     next_unlocked: P6
-    readiness_claims_allowed: []
+    readiness_claims_allowed:
+    - canary_40_quality_closeout_landed
+    - expert_review_input_absorbed
+    - proposition_pack_v1_landed
+    - ready_for_p6_microbatch_briefing
     readiness_claims_forbidden:
     - generation_3600_unlocked
     - global_generation_allowed
     - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
   - step_id: P6
-    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
-    status: PLANNED_BLOCKED_BY_P5
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 structured draft microbatch generation (planned; executable only after P5 founder quality review closeout; NOT unlocked by P4)
+    objective: 3600 microbatch briefing + go/no-go decision (the ONLY step unlocked by P5; consumes proposition_pack_v1; a go decision here is required before any 3600 generation). 3600 generation itself stays blocked.
     standard_validation: to_be_defined_at_P6_brief
     deliverables:
     - to_be_defined_at_P6_brief
-    blocked_by:
-    - P5
+    blocked_by: []
     next_unlocked: P7
     readiness_claims_allowed: []
     readiness_claims_forbidden:
     - generation_3600_unlocked
     - candidatepack_ready
   - step_id: P7
-    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
     status: PLANNED_BLOCKED_BY_P6
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P6)
+    objective: 3600 structured draft microbatch generation (planned; executable only after P6 briefing/go-no-go passes; NOT unlocked by P5)
     standard_validation: to_be_defined_at_P7_brief
     deliverables:
     - to_be_defined_at_P7_brief
@@ -184,15 +205,15 @@ grc_3600_execution_plan_status:
     - generation_3600_unlocked
     - candidatepack_ready
   - step_id: P8
-    task_id: reserved_not_executable
-    status: RESERVED_NOT_EXECUTABLE
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: PLANNED_BLOCKED_BY_P7
     head_before: null
     head_after: null
     worktree_after: null
-    objective: reserved (objective TBD by founder)
-    standard_validation: reserved
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7)
+    standard_validation: to_be_defined_at_P8_brief
     deliverables:
-    - reserved
+    - to_be_defined_at_P8_brief
     blocked_by:
     - P7
     next_unlocked: null

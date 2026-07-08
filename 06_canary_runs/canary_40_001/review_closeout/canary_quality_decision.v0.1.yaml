@@ -1,0 +1,28 @@
+canary_quality_decision:
+  schema_version: v0.1
+  task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  run_id: canary_40_001
+  decision: canary_40_accepted_as_generation_probe_only
+  decision_basis: founder_provided_two_expert_consensus
+  decisions:
+    accept_as_generation_probe: true
+    accept_as_formal_domain_knowledge: false
+    accept_as_candidatepack_input: false
+    promote_any_canary_to_object: false
+    unlock_3600_generation: false
+    next_asset: proposition_pack_v1
+    next_route_after_p5: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  rationale: >-
+    The two expert reviews agree the 40 canary drafts prove the generator learned
+    cluster-specific mechanism without copying gold bodies, but they are not formal
+    knowledge and must not enter CandidatePack / KE / Serving / RAG / DIFY. The next
+    machine-consumable asset is proposition_pack_v1; 3600 generation is gated by a
+    later briefing/go-no-go (P6), not by this closeout.
+  must_not_claim:
+  - generation_3600_unlocked
+  - candidatepack_ready
+  - KE_ready
+  - RAG_ready
+  - DIFY_ready
+  - production_ready
+  readiness_all_false: true

@@ -1,0 +1,48 @@
+canary_40_quality_closeout:
+  schema_version: v0.1
+  task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  run_id: canary_40_001
+  source_canary_run: 06_canary_runs/canary_40_001
+  expert_review_input: 06_canary_runs/canary_40_001/review_closeout/expert_review_input_digest.v0.1.yaml
+  # ---- Brief section 8 required records ----
+  expert_review_count: 2
+  review_mode: absorbed_existing_expert_reviews
+  repeated_review_performed: false
+  re_scored: false
+  canary_as_generation_probe: pass
+  canary_as_formal_knowledge: false
+  candidatepack_ready: false
+  generation_3600_unlocked: false
+  next_required_asset: proposition_pack_v1
+  # ---- preserved expert consensus (Brief section 8) ----
+  preserved_expert_consensus:
+  - canary_40_as_generation_probe_pass
+  - canary_40_not_formal_knowledge
+  - canary_40_not_into_candidatepack_ke_serving_rag_dify
+  - P0_03_and_P0_04_currently_strongest
+  - P0_02_and_P0_05_need_proposition_level_owner_split
+  - boundary_language_heavy_should_later_separate_domain_mechanism_body_from_risk_boundary_sidecar
+  - relation_candidates_remain_design_hints_not_ontology_edges
+  - next_step_is_proposition_extraction_not_re_review
+  # ---- identity boundary (Codex note 5) ----
+  closeout_role: derived_review_asset
+  accepted_domain_knowledge: false
+  ontology_edge_created: false
+  # ---- external resource prohibitions (Codex note 6) ----
+  external_resources_allowed: false
+  web_access_allowed: false
+  embedding_allowed: false
+  source_repo_live_dependency: false
+  google_drive_live_read: false
+  # ---- readiness (all false) ----
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+  readiness_all_false: true

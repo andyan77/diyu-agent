@@ -1,0 +1,644 @@
+proposition_downstream_effect_index:
+  task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  total: 160
+  entries:
+  - proposition_id: PROP-V1-001
+    canonical_cluster_id: mkc_007
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 起点选对后，后续做法层与证明层能顺畅衔接，不至于悬空。
+  - proposition_id: PROP-V1-002
+    canonical_cluster_id: mkc_007
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 形成可复述的经营方法，为后续预留证明位与价值表达提供内容。
+  - proposition_id: PROP-V1-003
+    canonical_cluster_id: mkc_007
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 无稳定做法的素材被降级为普通信息条目，避免虚构叙事。
+  - proposition_id: PROP-V1-004
+    canonical_cluster_id: mkc_007
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 缺料的硬结论被挂起待补，正文只保留方法层，杜绝无源硬结论进入叙事。
+  - proposition_id: PROP-V1-005
+    canonical_cluster_id: mkc_008
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 门与门之间形成可追溯链条，工序讲解显得可信
+  - proposition_id: PROP-V1-006
+    canonical_cluster_id: mkc_008
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 选择与约束成对呈现，提升方法可信度
+  - proposition_id: PROP-V1-007
+    canonical_cluster_id: mkc_008
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 守住证明槽位边界，避免越界宣称经营数据
+  - proposition_id: PROP-V1-008
+    canonical_cluster_id: mkc_008
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 剔除未授权实例事实，正文只承认存在此类工序节点
+  - proposition_id: PROP-V1-009
+    canonical_cluster_id: mkc_009
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 弧线与内容问题类型对齐后进入证据强度绑定环节
+  - proposition_id: PROP-V1-010
+    canonical_cluster_id: mkc_009
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 证据不足时须降级弧线或改写为中性观察
+  - proposition_id: PROP-V1-011
+    canonical_cluster_id: mkc_009
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 命中信号即判定弧线不适用，改写或压回方法说明
+  - proposition_id: PROP-V1-012
+    canonical_cluster_id: mkc_009
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 失效时把弧线压回一句中性方法说明
+  - proposition_id: PROP-V1-013
+    canonical_cluster_id: mkc_010
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 叙述获得抓手，天然区别于空泛写法。
+  - proposition_id: PROP-V1-014
+    canonical_cluster_id: mkc_010
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 叙述形成可拍可读的落点闭环，并相互区分。
+  - proposition_id: PROP-V1-015
+    canonical_cluster_id: mkc_010
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 把方法限定在有细节可抓的内容上，避免误用。
+  - proposition_id: PROP-V1-016
+    canonical_cluster_id: mkc_010
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 剔除或标缺来源，保证锚点是通用可复现的结构特征。
+  - proposition_id: PROP-V1-017
+    canonical_cluster_id: mkc_011
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 先定位禁区后，才能决定改写、挂起还是送审的分流动作
+  - proposition_id: PROP-V1-018
+    canonical_cluster_id: mkc_011
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 内容按风险强度被降级、挂起或送审，避免硬结论直出
+  - proposition_id: PROP-V1-019
+    canonical_cluster_id: mkc_011
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 无授权的实例依赖叙述被剔除或挂起，守住隐私与授权红线
+  - proposition_id: PROP-V1-020
+    canonical_cluster_id: mkc_011
+    owner_candidate: SourceGapLedger
+    downstream_effect: 无据功效断言进入缺来源清单，等待补证或回收表达强度
+  - proposition_id: PROP-V1-021
+    canonical_cluster_id: mkc_012
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续给每个单元分配切入点与去重复机制提供依据
+  - proposition_id: PROP-V1-022
+    canonical_cluster_id: mkc_012
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 产出彼此不重复、各有侧重的内容序列
+  - proposition_id: PROP-V1-023
+    canonical_cluster_id: mkc_012
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 决定是否启用系列轴编排流程
+  - proposition_id: PROP-V1-024
+    canonical_cluster_id: mkc_012
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 涉及具体排期与货号的部分挂为待补，正文只留编排结构
+  - proposition_id: PROP-V1-025
+    canonical_cluster_id: mkc_013
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续主语选择、信息密度控制与词性边界提供统一口吻基座。
+  - proposition_id: PROP-V1-026
+    canonical_cluster_id: mkc_013
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 三类词分离可防止把观察或猜测说成定论，使 claim 可控。
+  - proposition_id: PROP-V1-027
+    canonical_cluster_id: mkc_013
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 明确适用边界，避免口吻分桶被误用于伪造真人说法。
+  - proposition_id: PROP-V1-028
+    canonical_cluster_id: mkc_013
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 触发去个人化处理或缺来源标记，阻断真人事实污染与越权代言。
+  - proposition_id: PROP-V1-029
+    canonical_cluster_id: mkc_014
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 语气与场景匹配，叙述口吻稳定不虚张，避免情绪撑场。
+  - proposition_id: PROP-V1-030
+    canonical_cluster_id: mkc_014
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 触发真实人物泄漏风险，需剔除实例事实并退回改写。
+  - proposition_id: PROP-V1-031
+    canonical_cluster_id: mkc_014
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 语气调整只改表达强度改不了事实门槛，无证据断言应标缺来源并阻断。
+  - proposition_id: PROP-V1-032
+    canonical_cluster_id: mkc_014
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 绝对表达被收回为带限定的观察，降低权威越权风险。
+  - proposition_id: PROP-V1-033
+    canonical_cluster_id: mkc_015
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续按角色配置内容职责与观察接口提供顶层框架。
+  - proposition_id: PROP-V1-034
+    canonical_cluster_id: mkc_015
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 决定每种内容该由哪种角色视角产出，并约束其可讲范围。
+  - proposition_id: PROP-V1-035
+    canonical_cluster_id: mkc_015
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 指导内容按功能角色分工归位到合适的视角。
+  - proposition_id: PROP-V1-036
+    canonical_cluster_id: mkc_015
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 这类组织事实先删或先挂待补，仅抽象功能角色可被正文接纳。
+  - proposition_id: PROP-V1-037
+    canonical_cluster_id: mkc_016
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 跨视角命名对齐，读者能把不同称呼对应回同一对象。
+  - proposition_id: PROP-V1-038
+    canonical_cluster_id: mkc_016
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 机制适用与禁用边界清晰，避免被误用于外发内部信息。
+  - proposition_id: PROP-V1-039
+    canonical_cluster_id: mkc_016
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 事实门槛不随视角切换降低，未证说法仍须待补来源。
+  - proposition_id: PROP-V1-040
+    canonical_cluster_id: mkc_016
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 内部敏感信息被切断、改写、挂起或删除，公开面只留公开安全信息。
+  - proposition_id: PROP-V1-041
+    canonical_cluster_id: mkc_017
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 以知识距离定起点，使解释深度与受众熟悉度匹配，减少讲太浅或太深的内容浪费。
+  - proposition_id: PROP-V1-042
+    canonical_cluster_id: mkc_017
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 依互动强度调节信息密度，使同一段内容在不同观看方式下都能被吸收。
+  - proposition_id: PROP-V1-043
+    canonical_cluster_id: mkc_017
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 以阶段可判断为前置条件，把方法限定在能定粒度的合法场景内。
+  - proposition_id: PROP-V1-044
+    canonical_cluster_id: mkc_017
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 剔除或挂待补真实用户信息，防止 audience_stage_model 被误当作真实反馈或造成品牌事实污染。
+  - proposition_id: PROP-V1-045
+    canonical_cluster_id: mkc_018
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 分层清晰后可据温度档位对内容施加相应的谨慎度与门控强度。
+  - proposition_id: PROP-V1-046
+    canonical_cluster_id: mkc_018
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 有据者放行为 claim，无据者降级为观察，阻断情绪替代证据。
+  - proposition_id: PROP-V1-047
+    canonical_cluster_id: mkc_018
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 命中任一触发条件即触发门控，要求补来源或降级为观察。
+  - proposition_id: PROP-V1-048
+    canonical_cluster_id: mkc_018
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 适用即引导用低风险信号建信任，拦截即回收未证明的结论。
+  - proposition_id: PROP-V1-049
+    canonical_cluster_id: mkc_019
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 借角色输出的内容可作为可复用方法沉淀，不绑定任何实例人物。
+  - proposition_id: PROP-V1-050
+    canonical_cluster_id: mkc_019
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 未授权的真实人物事实必须删除或去授权化，防止实例人物泄漏。
+  - proposition_id: PROP-V1-051
+    canonical_cluster_id: mkc_019
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 需拆回方法层并去掉效果保证，改为需证据支撑的观察语言。
+  - proposition_id: PROP-V1-052
+    canonical_cluster_id: mkc_019
+    owner_candidate: SourceGapLedger
+    downstream_effect: 该表达被改写成中性观察，或标记为缺来源进入待补队列。
+  - proposition_id: PROP-V1-053
+    canonical_cluster_id: mkc_020
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续逐层打开领口、腰头等属性格子提供稳定的结构起点。
+  - proposition_id: PROP-V1-054
+    canonical_cluster_id: mkc_020
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 保证属性格子在正确的结构层级下依次打开，避免话题跑偏到销售话术。
+  - proposition_id: PROP-V1-055
+    canonical_cluster_id: mkc_020
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 把可输出内容封顶在品类/属性/边界三层，防止无源的商品事实泄漏。
+  - proposition_id: PROP-V1-056
+    canonical_cluster_id: mkc_020
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 触发剔除或挂缺来源的处置，隔断品牌事实污染进入正文。
+  - proposition_id: PROP-V1-057
+    canonical_cluster_id: mkc_021
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 这些可观察维度可直接呈现为差异描述，进入普通领域说明而无需证据阶梯
+  - proposition_id: PROP-V1-058
+    canonical_cluster_id: mkc_021
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 此类维度的优劣被挂为待补证据，不并入普通领域说明
+  - proposition_id: PROP-V1-059
+    canonical_cluster_id: mkc_021
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 证据不足时降级为只呈现可见差异并注明未知项
+  - proposition_id: PROP-V1-060
+    canonical_cluster_id: mkc_021
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 无证据优劣改写为观察加未知标注，性能与效果比较挂为待补证据
+  - proposition_id: PROP-V1-061
+    canonical_cluster_id: mkc_022
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 层级分清后，后续手感与结构描述才有正确落点
+  - proposition_id: PROP-V1-062
+    canonical_cluster_id: mkc_022
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 结构差异用于解释可观察的手感与外观，不支撑性能断言
+  - proposition_id: PROP-V1-063
+    canonical_cluster_id: mkc_022
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 触发即收回性能断言，并将其挂为待补证据
+  - proposition_id: PROP-V1-064
+    canonical_cluster_id: mkc_022
+    owner_candidate: SourceGapLedger
+    downstream_effect: 性能话术整体转入待补证据队列，只输出结构与可见线索
+  - proposition_id: PROP-V1-065
+    canonical_cluster_id: mkc_023
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续色彩家族归类与冷暖中性表达提供可核对的基础坐标
+  - proposition_id: PROP-V1-066
+    canonical_cluster_id: mkc_023
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 颜色描述带上条件限定，减少跨环境的色彩误读
+  - proposition_id: PROP-V1-067
+    canonical_cluster_id: mkc_023
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 把效果承诺挡在颜色描述之外，退回到可观察的表达
+  - proposition_id: PROP-V1-068
+    canonical_cluster_id: mkc_023
+    owner_candidate: SourceGapLedger
+    downstream_effect: 效果句进入缺来源清单，待材料到位再评审，避免无据外发
+  - proposition_id: PROP-V1-069
+    canonical_cluster_id: mkc_024
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 术语拆分清晰，后续结构到视觉的解释才有稳定基座
+  - proposition_id: PROP-V1-070
+    canonical_cluster_id: mkc_024
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 结构与视觉形成可解释链条，避免解释停在纸样术语层面
+  - proposition_id: PROP-V1-071
+    canonical_cluster_id: mkc_024
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 守住结构能担保的范围，防止版型术语外溢成效果承诺
+  - proposition_id: PROP-V1-072
+    canonical_cluster_id: mkc_024
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 效果承诺被降级为缺来源待补，改写为观察语言后可安全输出
+  - proposition_id: PROP-V1-073
+    canonical_cluster_id: mkc_025
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为讲解提供一组可直接观察的工艺节点作为叙事支点。
+  - proposition_id: PROP-V1-074
+    canonical_cluster_id: mkc_025
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 使讲解内容有推进感而非平铺罗列。
+  - proposition_id: PROP-V1-075
+    canonical_cluster_id: mkc_025
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 该结论须退回，改挂为待补证据或改成观察语言。
+  - proposition_id: PROP-V1-076
+    canonical_cluster_id: mkc_025
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 质量承诺一律挂为待补证据，不用“工艺好”笼统替代举证。
+  - proposition_id: PROP-V1-077
+    canonical_cluster_id: mkc_026
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 效果表达被降到观察层，降低越界承诺风险。
+  - proposition_id: PROP-V1-078
+    canonical_cluster_id: mkc_026
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 结果词被拦截或要求降级为线条描述。
+  - proposition_id: PROP-V1-079
+    canonical_cluster_id: mkc_026
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 触发拦截或改写为不下身体结论的表达。
+  - proposition_id: PROP-V1-080
+    canonical_cluster_id: mkc_026
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 承诺被挂为待补证据并沿阶梯降级。
+  - proposition_id: PROP-V1-081
+    canonical_cluster_id: mkc_027
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 为后续的断言分级与证据匹配提供统一的治理框架
+  - proposition_id: PROP-V1-082
+    canonical_cluster_id: mkc_027
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 分级结果决定该断言需匹配的证据硬度，强断言匹配更硬证据
+  - proposition_id: PROP-V1-083
+    canonical_cluster_id: mkc_027
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 强断言必须匹配更硬证据，不满足则被降级或整体挂起
+  - proposition_id: PROP-V1-084
+    canonical_cluster_id: mkc_027
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 整体挂起等材料，回收为观察语言并注明还缺哪一类证据
+  - proposition_id: PROP-V1-085
+    canonical_cluster_id: mkc_028
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 每条品质结论被路由到与其证据要求相称的证明类型。
+  - proposition_id: PROP-V1-086
+    canonical_cluster_id: mkc_028
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 认证/标准/等级声称被转入更高证据阶梯审核。
+  - proposition_id: PROP-V1-087
+    canonical_cluster_id: mkc_028
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 局部观察只支撑局部描述，整体性保证被拦回拆解。
+  - proposition_id: PROP-V1-088
+    canonical_cluster_id: mkc_028
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 缺源的认证/标准声称被路由为待补证据（source gap）。
+  - proposition_id: PROP-V1-089
+    canonical_cluster_id: mkc_029
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续镜头动作与画面层次提供确定的实物落点。
+  - proposition_id: PROP-V1-090
+    canonical_cluster_id: mkc_029
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 层层清楚地把整体、结构、细节交代给观众。
+  - proposition_id: PROP-V1-091
+    canonical_cluster_id: mkc_029
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 阻止观察到证明的混淆，守住性能不可承诺的边界。
+  - proposition_id: PROP-V1-092
+    canonical_cluster_id: mkc_029
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 把性能话术降级为观察语言或缺来源待补，防止假证。
+  - proposition_id: PROP-V1-093
+    canonical_cluster_id: mkc_030
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 为后续观察节点与拍摄编排提供统一的维度骨架供内容取用
+  - proposition_id: PROP-V1-094
+    canonical_cluster_id: mkc_030
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 驱动 shot_structure 输出，指导取景与主陪体的层次安排
+  - proposition_id: PROP-V1-095
+    canonical_cluster_id: mkc_030
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 限定 claim 边界，防止把几何观察包装成身材或效果断言
+  - proposition_id: PROP-V1-096
+    canonical_cluster_id: mkc_030
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 保证正文只沉淀可复用编排结构，实例事实转缺来源待人审
+  - proposition_id: PROP-V1-097
+    canonical_cluster_id: mkc_031
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 为后续观察顺序与Look回扣提供可复用的主题-色板对应素材
+  - proposition_id: PROP-V1-098
+    canonical_cluster_id: mkc_031
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 产出可复用的观察顺序编排，指导内容按主辅点缀落位到搭配与陈列
+  - proposition_id: PROP-V1-099
+    canonical_cluster_id: mkc_031
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 把色彩故事可说范围收敛在呼应与轻重，堵住情绪保证式越界
+  - proposition_id: PROP-V1-100
+    canonical_cluster_id: mkc_031
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 实例事实被剔除并路由为缺来源，正文保持行业通用、防品牌事实污染
+  - proposition_id: PROP-V1-101
+    canonical_cluster_id: mkc_032
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 供拍摄团队按远/中/近景别顺序采集静态陈列画面
+  - proposition_id: PROP-V1-102
+    canonical_cluster_id: mkc_032
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 为每类区位挑出可拍重点并设为静态陈列的视觉锚点
+  - proposition_id: PROP-V1-103
+    canonical_cluster_id: mkc_032
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 映射结果只进入拍摄参考环节，须再经脚本化与审查才可发布
+  - proposition_id: PROP-V1-104
+    canonical_cluster_id: mkc_032
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 命中即撤下越界内容，缺来源者挂起，仅保留通用类型映射
+  - proposition_id: PROP-V1-105
+    canonical_cluster_id: mkc_033
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 为后续动作分型、前提与收尾标注、内容编排提供起点。
+  - proposition_id: PROP-V1-106
+    canonical_cluster_id: mkc_033
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 标好前提与结束标志的片段可干净交给内容编排。
+  - proposition_id: PROP-V1-107
+    canonical_cluster_id: mkc_033
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 触发该信号说明需回到动作分型与前提/收尾标注重切。
+  - proposition_id: PROP-V1-108
+    canonical_cluster_id: mkc_033
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 相关片段先删或挂为缺来源，仅保留通用动作素材进入编排。
+  - proposition_id: PROP-V1-109
+    canonical_cluster_id: mkc_034
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 产出可复用的分段演示骨架，供后续内容组织。
+  - proposition_id: PROP-V1-110
+    canonical_cluster_id: mkc_034
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 形成强观察弱解释的组合，画面多给观察、旁白少而准。
+  - proposition_id: PROP-V1-111
+    canonical_cluster_id: mkc_034
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 明确产物是"动作—解释—镜头"结构而非成品，避免越界发布。
+  - proposition_id: PROP-V1-112
+    canonical_cluster_id: mkc_034
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 剔除具体经营场景与在售商品细节，只留可复用演示编排。
+  - proposition_id: PROP-V1-113
+    canonical_cluster_id: mkc_035
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 下游把它作为内容化前的门禁规则执行，而不当作领域知识召回
+  - proposition_id: PROP-V1-114
+    canonical_cluster_id: mkc_035
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 触发剔除或改写，禁止该类实例事实进入内容
+  - proposition_id: PROP-V1-115
+    canonical_cluster_id: mkc_035
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 生成一般化角色表面，把 privacy_signal 转成可安全消费的通用情形
+  - proposition_id: PROP-V1-116
+    canonical_cluster_id: mkc_035
+    owner_candidate: SourceGapLedger
+    downstream_effect: 该项进入待补队列挂起，待授权或来源补齐后再处置
+  - proposition_id: PROP-V1-117
+    canonical_cluster_id: mkc_036
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 下游可安全复用该框架而不会带出品牌或门店的实例事实
+  - proposition_id: PROP-V1-118
+    canonical_cluster_id: mkc_036
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 保证节点序列按依赖顺序推进并逐步产出可见状态
+  - proposition_id: PROP-V1-119
+    canonical_cluster_id: mkc_036
+    owner_candidate: ExecutionAssetOutbox
+    downstream_effect: 阻断跳步，保证每步前置状态齐备后才继续推进
+  - proposition_id: PROP-V1-120
+    canonical_cluster_id: mkc_036
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 剔除实例污染，只保留节点、输入输出与依赖关系可落进正文
+  - proposition_id: PROP-V1-121
+    canonical_cluster_id: mkc_037
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 下游据此校验权限关系，拦截越权动作，保证授权表面只在合法范围内被引用。
+  - proposition_id: PROP-V1-122
+    canonical_cluster_id: mkc_037
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 下游只保留“存在这样一类授权安排”式的抽象表述，切断真实制度与内部方法层外露。
+  - proposition_id: PROP-V1-123
+    canonical_cluster_id: mkc_037
+    owner_candidate: SourceGapLedger
+    downstream_effect: 该事实进入缺口清单待补来源，材料到位并核验后才决定是否泛化落地。
+  - proposition_id: PROP-V1-124
+    canonical_cluster_id: mkc_037
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 下游拦截并剔除此类实例事实，边界不清的条目转人工裁决而非自动放行。
+  - proposition_id: PROP-V1-125
+    canonical_cluster_id: mkc_038
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 为后续各类异常提供统一的停机与转向框架
+  - proposition_id: PROP-V1-126
+    canonical_cluster_id: mkc_038
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 保证复核等节点在前置补齐后才继续，避免带缺陷完成
+  - proposition_id: PROP-V1-127
+    canonical_cluster_id: mkc_038
+    owner_candidate: SourceGapLedger
+    downstream_effect: 缺口被登记并等待补齐来源，避免未证结论流入下游
+  - proposition_id: PROP-V1-128
+    canonical_cluster_id: mkc_038
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 实例事实被剔除，正文保持行业通用治理规则、不泄控制面信息
+  - proposition_id: PROP-V1-129
+    canonical_cluster_id: mkc_039
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续的功能命名与首次出现位置设计提供统一的提问框架
+  - proposition_id: PROP-V1-130
+    canonical_cluster_id: mkc_039
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 功能命名结果驱动叙事段落与首次出现位置的选择，形成可检查的叙事骨架
+  - proposition_id: PROP-V1-131
+    canonical_cluster_id: mkc_039
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 界定框架的适用范围，避免被误用为在售商品推广稿模板
+  - proposition_id: PROP-V1-132
+    canonical_cluster_id: mkc_039
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 涉及真实商品信息的部分先挂为缺来源，正文只保留角色与位置两层方法
+  - proposition_id: PROP-V1-133
+    canonical_cluster_id: mkc_040
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 引导被读者接受为内容的自然延伸而非硬卖，收尾不突兀
+  - proposition_id: PROP-V1-134
+    canonical_cluster_id: mkc_040
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 引导的适用范围被约束在有内容支撑的收尾场景
+  - proposition_id: PROP-V1-135
+    canonical_cluster_id: mkc_040
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 怎么收尾与承诺什么结果被彻底分开，效果表达回到证据阶梯
+  - proposition_id: PROP-V1-136
+    canonical_cluster_id: mkc_040
+    owner_candidate: SourceGapLedger
+    downstream_effect: 实例信息被拦截挂为缺来源，方法节点不产出可直接投放的销售句
+  - proposition_id: PROP-V1-137
+    canonical_cluster_id: mkc_041
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为后续阶段与叙事密度、教育重心的映射提供可比较的抽象坐标
+  - proposition_id: PROP-V1-138
+    canonical_cluster_id: mkc_041
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 指导各阶段内容生成的知识侧重与陈列强调点
+  - proposition_id: PROP-V1-139
+    canonical_cluster_id: mkc_041
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 限定角色窗口只产出可比较的叙事任务结构而非经营判断
+  - proposition_id: PROP-V1-140
+    canonical_cluster_id: mkc_041
+    owner_candidate: SourceGapLedger
+    downstream_effect: 真实经营数据被路由为缺来源待补，正文只保留阶段与叙事任务的方法
+  - proposition_id: PROP-V1-141
+    canonical_cluster_id: mkc_042
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 为主次陪衬关系与主题化组合提供角色分型基础。
+  - proposition_id: PROP-V1-142
+    canonical_cluster_id: mkc_042
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 按渠道场景裁剪信息密度，避免过载或空讲。
+  - proposition_id: PROP-V1-143
+    canonical_cluster_id: mkc_042
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 界定方法适用边界，防止品牌货盘事实污染。
+  - proposition_id: PROP-V1-144
+    canonical_cluster_id: mkc_042
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 触发缺来源挂账或删除，保正文只含角色关系层。
+  - proposition_id: PROP-V1-145
+    canonical_cluster_id: mkc_043
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 产品卖点能对齐场景任务，叙述更有针对性。
+  - proposition_id: PROP-V1-146
+    canonical_cluster_id: mkc_043
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 适配判断带边界，可信度提升，规避场景过度泛化。
+  - proposition_id: PROP-V1-147
+    canonical_cluster_id: mkc_043
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 点出边界使读者更信任判断，触发场景过度泛化红线的风险下降。
+  - proposition_id: PROP-V1-148
+    canonical_cluster_id: mkc_043
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 无源硬结论被拦为缺来源，正文最终只保留场景—任务匹配方法。
+  - proposition_id: PROP-V1-149
+    canonical_cluster_id: mkc_044
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 为后续演示/比较/结果表达提供统一的证据分界判据
+  - proposition_id: PROP-V1-150
+    canonical_cluster_id: mkc_044
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 演示归为观察性展示，效果结论另走证据阶梯
+  - proposition_id: PROP-V1-151
+    canonical_cluster_id: mkc_044
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 无证据分级的比较断言被降级或挂为待补证据
+  - proposition_id: PROP-V1-152
+    canonical_cluster_id: mkc_044
+    owner_candidate: EvidencePolicyOutbox
+    downstream_effect: 证据不足的结果表达整体挂为待补证据，高风险 claim 被隔离拦下
+  - proposition_id: PROP-V1-153
+    canonical_cluster_id: mkc_045
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 位置层为后续把产品角色对到陈列位置与镜头线索提供视觉权重依据。
+  - proposition_id: PROP-V1-154
+    canonical_cluster_id: mkc_045
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 邻接对象进入关系槽位，供后续内容确定呼应或对比的叙事侧重。
+  - proposition_id: PROP-V1-155
+    canonical_cluster_id: mkc_045
+    owner_candidate: GeneralKnowledgeBase
+    downstream_effect: 适用判定决定关系语法是否被启用来产出产品与陈列的关系槽位。
+  - proposition_id: PROP-V1-156
+    canonical_cluster_id: mkc_045
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 触发脱敏或待补分流，保证正文层只承认抽象关系结构、隔离品牌实例事实。
+  - proposition_id: PROP-V1-157
+    canonical_cluster_id: mkc_046
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 让三域接口在同一处对齐，避免各能力面各说各话、口径打架。
+  - proposition_id: PROP-V1-158
+    canonical_cluster_id: mkc_046
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 形成可追溯的冲突记录，供后续人工或规则判断复用。
+  - proposition_id: PROP-V1-159
+    canonical_cluster_id: mkc_046
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 把说明限制在真正跨域场景，避免适用面被过度扩张。
+  - proposition_id: PROP-V1-160
+    canonical_cluster_id: mkc_046
+    owner_candidate: GovernanceOutbox
+    downstream_effect: 守住只提供跨域接口提示、不形成执行图的治理边界。
