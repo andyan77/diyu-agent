@@ -1,0 +1,867 @@
+hard_gate_selfcheck:
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  selfcheck_scope: schema / body-sidecar separation / hard gate expected outcome / readiness false lock
+  canonical_hard_gate_namespace:
+    allowed_gate_ids:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    legacy_alias_allowed_in_new_output: false
+  forbidden_gold_body_terms:
+  - W7
+  - 第几批
+  - judge
+  - brief
+  - batch
+  - CandidatePack
+  - KE_ready
+  - RAG_ready
+  - DIFY_ready
+  - 人审
+  - 评测
+  - gold candidate
+  - readiness
+  items:
+  - case_id: GRC-P001-MKC007-POS-001
+    cluster_id: mkc_007
+    case_type: positive_gold
+    schema_valid: true
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: false
+  - case_id: GRC-P001-MKC007-ANTI-001
+    cluster_id: mkc_007
+    case_type: anti_gold
+    schema_valid: true
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRCF-101_GENERIC_ORIGIN_MYTH
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - GRCF-101_GENERIC_ORIGIN_MYTH
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: true
+    repair_path_present: false
+  - case_id: GRC-P001-MKC007-BDR-001
+    cluster_id: mkc_007
+    case_type: borderline_repair
+    schema_valid: true
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: true
+  - case_id: GRC-P001-MKC008-POS-001
+    cluster_id: mkc_008
+    case_type: positive_gold
+    schema_valid: true
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: false
+  - case_id: GRC-P001-MKC008-ANTI-001
+    cluster_id: mkc_008
+    case_type: anti_gold
+    schema_valid: true
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRCF-102_PROOF_SLOT_OVERCLAIM
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - GRCF-102_PROOF_SLOT_OVERCLAIM
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: true
+    repair_path_present: false
+  - case_id: GRC-P001-MKC008-BDR-001
+    cluster_id: mkc_008
+    case_type: borderline_repair
+    schema_valid: true
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: true
+  - case_id: GRC-P001-MKC009-POS-001
+    cluster_id: mkc_009
+    case_type: positive_gold
+    schema_valid: true
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: false
+  - case_id: GRC-P001-MKC009-ANTI-001
+    cluster_id: mkc_009
+    case_type: anti_gold
+    schema_valid: true
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRCF-103_UNSUPPORTED_STORY_ARC
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - GRCF-103_UNSUPPORTED_STORY_ARC
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: true
+    repair_path_present: false
+  - case_id: GRC-P001-MKC009-BDR-001
+    cluster_id: mkc_009
+    case_type: borderline_repair
+    schema_valid: true
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: true
+  - case_id: GRC-P001-MKC010-POS-001
+    cluster_id: mkc_010
+    case_type: positive_gold
+    schema_valid: true
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: false
+  - case_id: GRC-P001-MKC010-ANTI-001
+    cluster_id: mkc_010
+    case_type: anti_gold
+    schema_valid: true
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: true
+    repair_path_present: false
+  - case_id: GRC-P001-MKC010-BDR-001
+    cluster_id: mkc_010
+    case_type: borderline_repair
+    schema_valid: true
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: true
+  - case_id: GRC-P001-MKC011-POS-001
+    cluster_id: mkc_011
+    case_type: positive_gold
+    schema_valid: true
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: false
+  - case_id: GRC-P001-MKC011-ANTI-001
+    cluster_id: mkc_011
+    case_type: anti_gold
+    schema_valid: true
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: true
+    repair_path_present: false
+  - case_id: GRC-P001-MKC011-BDR-001
+    cluster_id: mkc_011
+    case_type: borderline_repair
+    schema_valid: true
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: true
+  - case_id: GRC-P001-MKC012-POS-001
+    cluster_id: mkc_012
+    case_type: positive_gold
+    schema_valid: true
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: false
+  - case_id: GRC-P001-MKC012-ANTI-001
+    cluster_id: mkc_012
+    case_type: anti_gold
+    schema_valid: true
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: fail_expected
+      expected_failure_code_refs:
+      - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: true
+    repair_path_present: false
+  - case_id: GRC-P001-MKC012-BDR-001
+    cluster_id: mkc_012
+    case_type: borderline_repair
+    schema_valid: true
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    gold_body_forbidden_scan_passed: true
+    relation_status_valid: true
+    readiness_false_lock_passed: true
+    registered_failure_codes_only: true
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      expected_result: pass
+      expected_failure_code_refs: []
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      expected_result: pass
+      expected_failure_code_refs: []
+    blocking_failure_expected: false
+    repair_path_present: true
+  summary:
+    checked_count: 18
+    schema_valid_count: 18
+    gold_body_forbidden_scan_fail_count: 0
+    relation_status_invalid_count: 0
+    readiness_false_lock_fail_count: 0
+    unregistered_failure_code_count: 0
+    legacy_hard_gate_id_count: 0
+    expected_score_floor_aligned: true
+    verdict: pass

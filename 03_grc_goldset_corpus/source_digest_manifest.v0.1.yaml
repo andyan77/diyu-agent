@@ -1,0 +1,236 @@
+source_digest_manifest:
+  manifest_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  source_root: tmp
+  expected_source_files_count: 32
+  source_files_count: 32
+  canonical_machine_path_must_be_ascii: true
+  chinese_source_path_allowed_only_as:
+  - source_path
+  - provenance_path
+  - digest_input
+  source_files:
+  - source_path: tmp/GRC-P0-00/acceptance_criteria.yaml
+    source_sha256: 580c3710a733647278ac6ec88811b03f9850d384eae2d8c03199f9e56325a2bc
+    byte_size: 1305
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/acceptance_criteria.yaml
+    normalized_sha256: 580c3710a733647278ac6ec88811b03f9850d384eae2d8c03199f9e56325a2bc
+    group: p0_00_control_plane
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/final_verdict.yaml
+    source_sha256: cafdfb56f1ac7a0ca8e65bbb2bc4388cf911dc1136ca2300a812ba4528d7dde4
+    byte_size: 642
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/final_verdict.yaml
+    normalized_sha256: cafdfb56f1ac7a0ca8e65bbb2bc4388cf911dc1136ca2300a812ba4528d7dde4
+    group: p0_00_control_plane
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/p0_00_18_control_gold_cases.yaml
+    source_sha256: 4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+    byte_size: 23518
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    normalized_sha256: 4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+    group: p0_00_control_plane
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/p0_00_to_40_cluster_dispatch_matrix.yaml
+    source_sha256: dc1bb9b2993cf952521bb8a65c05cf9331d2d6320e199c7b3625be372bd54c79
+    byte_size: 35537
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_to_40_cluster_dispatch_matrix.yaml
+    normalized_sha256: dc1bb9b2993cf952521bb8a65c05cf9331d2d6320e199c7b3625be372bd54c79
+    group: p0_00_control_plane
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/scope_decision.yaml
+    source_sha256: 3a76bf9e64673a217ab891af2b37d871f451fb56cdce7ad56b93364e6adf92cf
+    byte_size: 1147
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/scope_decision.yaml
+    normalized_sha256: 3a76bf9e64673a217ab891af2b37d871f451fb56cdce7ad56b93364e6adf92cf
+    group: p0_00_control_plane
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/batch_manifest.yaml
+    source_sha256: ed809d11daa3260fb1673ce92330b44a0def632ed7aeeb44372597eee7d25f1f
+    byte_size: 12958
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/batch_manifest.yaml
+    normalized_sha256: ed809d11daa3260fb1673ce92330b44a0def632ed7aeeb44372597eee7d25f1f
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/gold_reference_cases.yaml
+    source_sha256: bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    byte_size: 74872
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    normalized_sha256: bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/hard_gate_selfcheck.yaml
+    source_sha256: 05da803324064c5bba79ffd2910d6620a64975f9431ccabe039fe160c4f5e4c3
+    byte_size: 28023
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/hard_gate_selfcheck.yaml
+    normalized_sha256: 05da803324064c5bba79ffd2910d6620a64975f9431ccabe039fe160c4f5e4c3
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/judge_calibration_index.yaml
+    source_sha256: b8b5d68f56c6fbbb532813f511ad5d1d4e7725a3766ae312013d39673d8d1653
+    byte_size: 9033
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/judge_calibration_index.yaml
+    normalized_sha256: b8b5d68f56c6fbbb532813f511ad5d1d4e7725a3766ae312013d39673d8d1653
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/owner_storage_audit.yaml
+    source_sha256: e17d17a0509cc1de033ee835d07a0eb514fdb7fd3cae62d37b788d769d110cd1
+    byte_size: 6629
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/owner_storage_audit.yaml
+    normalized_sha256: e17d17a0509cc1de033ee835d07a0eb514fdb7fd3cae62d37b788d769d110cd1
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/validation_summary.yaml
+    source_sha256: a5eb72f176c20780ad19770c164b88287a6f996d55a8e528d3912a8db55e6301
+    byte_size: 373
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/validation_summary.yaml
+    normalized_sha256: a5eb72f176c20780ad19770c164b88287a6f996d55a8e528d3912a8db55e6301
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/batch_manifest.yaml
+    source_sha256: 1c87be96ce00f8d41dfd5d9a6bfb6769decf62580fd64678bb289ed0ba5b635b
+    byte_size: 7054
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/batch_manifest.yaml
+    normalized_sha256: 1c87be96ce00f8d41dfd5d9a6bfb6769decf62580fd64678bb289ed0ba5b635b
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/gold_reference_cases.yaml
+    source_sha256: 6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    byte_size: 96623
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    normalized_sha256: 6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/hard_gate_selfcheck.yaml
+    source_sha256: 12e3ea93546f2d4c4a1d35c2e327060d2fdd0320d4e5cfbff06c6f1c2352aff2
+    byte_size: 28990
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/hard_gate_selfcheck.yaml
+    normalized_sha256: 12e3ea93546f2d4c4a1d35c2e327060d2fdd0320d4e5cfbff06c6f1c2352aff2
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/judge_calibration_index.yaml
+    source_sha256: 506eb6dcbe8b1f24c25d14c2b2e0854321adaa9399e53cd4c304f77c55b504d0
+    byte_size: 9329
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/judge_calibration_index.yaml
+    normalized_sha256: 506eb6dcbe8b1f24c25d14c2b2e0854321adaa9399e53cd4c304f77c55b504d0
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/owner_storage_audit.yaml
+    source_sha256: c35a9378e2b5e890654fd8ba5c72d6eb1c5932788c7b912dd7b1b4b3c346d625
+    byte_size: 9723
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/owner_storage_audit.yaml
+    normalized_sha256: c35a9378e2b5e890654fd8ba5c72d6eb1c5932788c7b912dd7b1b4b3c346d625
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/batch_manifest.yaml
+    source_sha256: d661ae1c707e66d6efe0ae11b0cda7501f61b0ba20c3fbc1f7998bf242683d9f
+    byte_size: 10181
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/batch_manifest.yaml
+    normalized_sha256: d661ae1c707e66d6efe0ae11b0cda7501f61b0ba20c3fbc1f7998bf242683d9f
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/gold_reference_cases.yaml
+    source_sha256: bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    byte_size: 121178
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    normalized_sha256: bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/hard_gate_selfcheck.yaml
+    source_sha256: d0764f1b630d3a3d50689f03e3b95e31b4da7299ce9a928894adc5108c400cb6
+    byte_size: 37137
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/hard_gate_selfcheck.yaml
+    normalized_sha256: d0764f1b630d3a3d50689f03e3b95e31b4da7299ce9a928894adc5108c400cb6
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/judge_calibration_index.yaml
+    source_sha256: 88ead726224accba1b58859fc42c3767b89cfa5a85e53c574abc3a3017ded6cd
+    byte_size: 13788
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/judge_calibration_index.yaml
+    normalized_sha256: 88ead726224accba1b58859fc42c3767b89cfa5a85e53c574abc3a3017ded6cd
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/owner_storage_audit.yaml
+    source_sha256: 30531f6b1f257b24513df43d12944234f621cdfd32ed436e7346d5c9ccfa27ff
+    byte_size: 13545
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/owner_storage_audit.yaml
+    normalized_sha256: 30531f6b1f257b24513df43d12944234f621cdfd32ed436e7346d5c9ccfa27ff
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/batch_manifest.yaml
+    source_sha256: d777c78311797ef2a55f975f53ef0e509529f1f6a76cbd80ef92bca801d13f7d
+    byte_size: 7308
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/batch_manifest.yaml
+    normalized_sha256: d777c78311797ef2a55f975f53ef0e509529f1f6a76cbd80ef92bca801d13f7d
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/gold_reference_cases.yaml
+    source_sha256: 9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    byte_size: 150270
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    normalized_sha256: 9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/hard_gate_selfcheck.yaml
+    source_sha256: 76766b9715699ae8f93d2786a1a3af2e863e19556f22a12722dc59c4aa4f9a99
+    byte_size: 35845
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/hard_gate_selfcheck.yaml
+    normalized_sha256: 76766b9715699ae8f93d2786a1a3af2e863e19556f22a12722dc59c4aa4f9a99
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/judge_calibration_index.yaml
+    source_sha256: 263a5656ca644beddea7eb1771535905462cb5a806bf5086e39403b9e9d4e2c7
+    byte_size: 13411
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/judge_calibration_index.yaml
+    normalized_sha256: 263a5656ca644beddea7eb1771535905462cb5a806bf5086e39403b9e9d4e2c7
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/owner_storage_audit.yaml
+    source_sha256: 5d62b7ccaefed58d6a279feb6d580ac878826960e8ed2ef8e974a271969db97e
+    byte_size: 15692
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/owner_storage_audit.yaml
+    normalized_sha256: 5d62b7ccaefed58d6a279feb6d580ac878826960e8ed2ef8e974a271969db97e
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/batch_manifest.yaml
+    source_sha256: e4f8705f317d4850d9accd50dbcd8ff9f8fdc5089efaf6d65693760590db374c
+    byte_size: 7458
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/batch_manifest.yaml
+    normalized_sha256: e4f8705f317d4850d9accd50dbcd8ff9f8fdc5089efaf6d65693760590db374c
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/gold_reference_cases.yaml
+    source_sha256: a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    byte_size: 87778
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    normalized_sha256: a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/hard_gate_selfcheck.yaml
+    source_sha256: c2acc8394778697ce17c1f8bfaa910b94830efa8a2b3d6a01fc8bfc6bcbb164b
+    byte_size: 24907
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/hard_gate_selfcheck.yaml
+    normalized_sha256: c2acc8394778697ce17c1f8bfaa910b94830efa8a2b3d6a01fc8bfc6bcbb164b
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/judge_calibration_index.yaml
+    source_sha256: 06f45c286a2d2d36b2ec7e7404a479ede9dfe6e2ba6ba30fea8b008a1d796b96
+    byte_size: 11753
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/judge_calibration_index.yaml
+    normalized_sha256: 06f45c286a2d2d36b2ec7e7404a479ede9dfe6e2ba6ba30fea8b008a1d796b96
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/owner_storage_audit.yaml
+    source_sha256: 0e04cb848f924f5f3cf516ce4b3b44bbbd1192e018edc76bf0bc1f3e6a6270e4
+    byte_size: 12970
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/owner_storage_audit.yaml
+    normalized_sha256: 0e04cb848f924f5f3cf516ce4b3b44bbbd1192e018edc76bf0bc1f3e6a6270e4
+    group: formal_120
+    source_path_is_ascii: true
+  - source_path: tmp/13个批次专家评审.txt
+    source_sha256: 3691babc9ff5d3bc368e5de013edafeb0ddbfbda541d301b4222f7eb040822a5
+    byte_size: 326803
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+    normalized_sha256: 3691babc9ff5d3bc368e5de013edafeb0ddbfbda541d301b4222f7eb040822a5
+    group: expert_review
+    source_path_is_ascii: false

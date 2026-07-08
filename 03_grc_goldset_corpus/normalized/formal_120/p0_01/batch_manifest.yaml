@@ -1,0 +1,332 @@
+batch_manifest:
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  batch_type: formal_gold_reference_batch
+  capability_group: P0-01
+  formal_120_counting_policy: count_this_batch
+  formal_120_counting_included_count: 18
+  pilot_reuse_decision:
+    pilot_batch_id: GRC-PILOT-006-CONTRACT-CALIBRATION
+    formal_120_counting_policy: do_not_count_by_default
+    allowed_reuse:
+    - generation exemplar for mkc_009 / mkc_010
+    - metadata policy
+    - hard gate namespace
+    - failure code registry
+    not_allowed:
+    - pilot cases are not directly counted as formal 120 cases
+    - later clusters must not copy mkc_009 / mkc_010 body structure
+  purpose: P0-01 enterprise narrative / brand story gold reference cases for Codex generation reference and judge calibration.
+  selected_clusters:
+  - cluster_id: mkc_007
+    cluster_title: 企业叙事骨架
+    cluster_owner: P0-01
+    source_cluster_refs:
+    - W2-P0-01-RS01-CL01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_008
+    cluster_title: 证明槽位与价值转译
+    cluster_owner: P0-01
+    source_cluster_refs:
+    - W2-P0-01-RS01-CL02
+    - W2-P0-01-RS02-CL02
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_009
+    cluster_title: 故事弧线适用边界
+    cluster_owner: P0-01
+    source_cluster_refs:
+    - W2-P0-01-RS02-CL01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_010
+    cluster_title: 反模板叙事锚点
+    cluster_owner: P0-01
+    source_cluster_refs:
+    - W2-P0-01-RS03-CL01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_011
+    cluster_title: 叙事放大禁区与风险路由
+    cluster_owner: P0-01
+    source_cluster_refs:
+    - W2-P0-01-RS03-CL02
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_012
+    cluster_title: 系列轴与跨形态资产单元
+    cluster_owner: P0-01
+    source_cluster_refs:
+    - W2-P0-01-RS04-CL01
+    - W2-P0-01-RS04-CL02
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  expected_case_count: 18
+  actual_case_count: 18
+  global_case_type_distribution:
+    positive_gold: 6
+    anti_gold: 6
+    borderline_repair: 6
+  metadata_contract:
+    expected_score_policy:
+      scoring_max: 120
+      hard_gate_precedence: true
+      verdict_score_floor:
+        accept_gold_candidate:
+          expected_score_floor: 108
+          hard_gate_fail_count: 0
+        accept_with_minor_fix:
+          expected_score_floor: 96
+          hard_gate_fail_count: 0
+        reject_or_blocking_revise:
+          expected_score_floor: 0
+          hard_gate_fail_required: true
+      normalization_rule:
+        positive_gold:
+          expected_verdict: accept_gold_candidate
+          expected_score_floor: 108
+        borderline_repair:
+          expected_verdict: accept_with_minor_fix
+          expected_score_floor: 96
+          expected_failure_codes: []
+          repair_codes_allowed_in_codex_usage: true
+        anti_gold:
+          expected_verdict: reject_or_blocking_revise
+          expected_score_floor: 0
+          hard_gate_fail_expected: true
+    failure_code_registry:
+      registry_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001-FAILURE-CODE-REGISTRY
+      registry_scope: batch_local
+      namespace_policy:
+        canonical_global_failure_code_namespace: F##_*
+        batch_local_diagnostic_namespace: GRCF-###_*
+        forbidden_unregistered_global_codes:
+        - F15_UNSUPPORTED_STORY_ARC
+        - F17_BORDERLINE_SOURCE_REQUIRED_CLAIM
+        - F18_ABSTRACT_STYLE_WORD_STACK
+        - F19_BORDERLINE_AUDIENCE_PSYCHOLOGY_REPAIR
+      canonical_failure_codes_allowed:
+      - code: F01_NO_CLUSTER_SPECIFIC_MECHANISM
+        use_when: 缺少 cluster-specific mechanism，或不能说明 subject 如何影响 object。
+      - code: F02_TEMPLATE_REUSE
+        use_when: 同批多条正文共用段落骨架、只替换 cluster 名称、开头结尾高度重复。
+      - code: F03_GOVERNANCE_TEXT_IN_BODY
+        use_when: gold_body 出现 judge / brief / batch / CandidatePack / 人审 / 评测 / readiness 等治理话术。
+      - code: F05_WRONG_OWNER_ROUTING
+        use_when: semantic_owner / storage_target / artifact_kind 错层，尤其 evidence policy 误入 GeneralKnowledgeBase。
+      - code: F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+        use_when: 控制面条目没有字段化，混写成服装领域正文。
+      - code: F14_BRAND_FACT_POLLUTION
+        use_when: GeneralKnowledgeBase 出现具体品牌、商品、库存、门店、顾客、员工等实例事实。
+      - code: F16_NO_GOLD_VALUE
+        use_when: 无法作为正样本、负样本或边界修复样本提供校准价值。
+      batch_local_diagnostic_codes:
+      - code: GRCF-101_GENERIC_ORIGIN_MYTH
+        applies_to:
+        - mkc_007
+        severity: blocking_for_anti_gold
+        description: 用初心、使命、长期主义、行业领先等抽象词伪造企业起源、扩张史或经营结果。
+      - code: GRCF-102_PROOF_SLOT_OVERCLAIM
+        applies_to:
+        - mkc_008
+        severity: blocking_for_anti_gold
+        description: 把角色、流程、质量门或供应链槽位直接升级为耐穿、舒适、认证、品质保证等强结论。
+      - code: GRCF-103_UNSUPPORTED_STORY_ARC
+        applies_to:
+        - mkc_009
+        severity: blocking_for_anti_gold
+        description: 用无来源的低谷、坚持、传承、逆袭、品牌成长史等桥段填补故事弧线。
+      - code: GRCF-104_ABSTRACT_STYLE_WORD_STACK
+        applies_to:
+        - mkc_010
+        severity: blocking_for_anti_gold
+        description: 用高级、松弛、自然、温柔、有质感等抽象风格词替代对象、动作、约束、节点锚点。
+      - code: GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+        applies_to:
+        - mkc_011
+        severity: blocking_for_anti_gold
+        description: 把权威、反馈、授权、效果承诺等高风险信号改写成看似安全的品牌叙事。
+      - code: GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+        applies_to:
+        - mkc_012
+        severity: blocking_for_anti_gold
+        description: 把系列轴写成标题排期、价值词连载或同文多平台改写，缺少证明节奏。
+      - code: GRCF-107_ORGANIZATIONAL_METHOD_REPAIR
+        applies_to:
+        - mkc_007
+        severity: minor_fix_for_borderline
+        description: 企业叙事骨架基本成立，但历史、认可或长期积累表达需要补依据或降级。
+      - code: GRCF-108_SOURCE_REQUIRED_VALUE_REPAIR
+        applies_to:
+        - mkc_008
+        severity: minor_fix_for_borderline
+        description: 证明槽位链成立，但强价值词或产品效果结论需要补依据或降级。
+      - code: GRCF-109_SOURCE_REQUIRED_STORY_CLAIM_REPAIR
+        applies_to:
+        - mkc_009
+        severity: minor_fix_for_borderline
+        description: 故事弧线匹配基本成立，但长期坚持、行业见证、成长史等表达需要补依据或降级。
+      - code: GRCF-110_AUDIENCE_PSYCHOLOGY_REPAIR
+        applies_to:
+        - mkc_010
+        severity: minor_fix_for_borderline
+        description: 反模板锚点基本成立，但出现无来源受众心理效果推断，需要改成观看路径或可见变化。
+      - code: GRCF-111_RISK_ZONE_DOWNGRADE_REPAIR
+        applies_to:
+        - mkc_011
+        severity: minor_fix_for_borderline
+        description: 风险区识别成立，但处理动作不够明确，需要绑定删除、降级、补依据或裁决项。
+      - code: GRCF-112_SERIES_PROOF_CADENCE_REPAIR
+        applies_to:
+        - mkc_012
+        severity: minor_fix_for_borderline
+        description: 系列顺序成立，但各单元 proof cadence 不足，需补独立证明任务或合并。
+      usage_rule:
+        expected_failure_codes: 只放 canonical_failure_codes_allowed 或明确注册的 GRCF 本地诊断码。
+        borderline_repair_rule: borderline_repair 不把 repair code 写入 expected_failure_codes；修复码进入 codex_usage.use_as_reference_for
+          或 judge_calibration_index.repair_code_refs。
+    hard_gate_id_namespace:
+      registry_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001-HARD-GATE-NAMESPACE
+      canonical_namespace: HG-###
+      canonical_gate_ids:
+      - gate_id: HG-001
+        name: cluster_specific_mechanism
+      - gate_id: HG-002
+        name: no_template_reuse
+      - gate_id: HG-003
+        name: no_governance_text_in_body
+      - gate_id: HG-004
+        name: owner_storage_artifact_alignment
+      - gate_id: HG-005
+        name: epistemic_label_alignment
+      - gate_id: HG-006
+        name: relation_hint_boundary
+      - gate_id: HG-007
+        name: readiness_false_lock
+      - gate_id: HG-008
+        name: brand_instance_pollution
+      forbidden_new_output_aliases:
+      - HG01_NO_MECHANISM
+      - HG02_TEMPLATE_OR_BOILERPLATE
+      - HG03_GOVERNANCE_TEXT_IN_BODY
+      - HG05_WRONG_OWNER_ROUTING
+      - HG08_INDEX_SHELL
+      - HG10_READINESS_DRIFT
+      - HG13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      legacy_alias_mapping:
+        mapping_policy: name_based_not_number_based
+        reason: legacy aliases may conflict with canonical HG-### numbering; new outputs must use canonical gate ids only.
+        aliases:
+        - legacy_alias: HG01_NO_MECHANISM
+          canonical_gate_id: HG-001
+          canonical_gate_name: cluster_specific_mechanism
+        - legacy_alias: HG02_TEMPLATE_OR_BOILERPLATE
+          canonical_gate_id: HG-002
+          canonical_gate_name: no_template_reuse
+        - legacy_alias: HG03_GOVERNANCE_TEXT_IN_BODY
+          canonical_gate_id: HG-003
+          canonical_gate_name: no_governance_text_in_body
+        - legacy_alias: HG05_WRONG_OWNER_ROUTING
+          canonical_gate_id: HG-004
+          canonical_gate_name: owner_storage_artifact_alignment
+        - legacy_alias: HG13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+          canonical_gate_id: HG-004
+          canonical_gate_name: owner_storage_artifact_alignment
+        - legacy_alias: HG10_READINESS_DRIFT
+          canonical_gate_id: HG-007
+          canonical_gate_name: readiness_false_lock
+        - legacy_alias: HG08_INDEX_SHELL
+          canonical_gate_id: HG-001
+          canonical_gate_name: cluster_specific_mechanism
+      output_rule:
+        expected_hard_gates: 只能列 canonical_gate_ids，例如 HG-001，不得拼接 gate name。
+        hard_gate_selfcheck: 必须使用数组对象，不得使用 HG-001_cluster_specific_mechanism 这类动态 key。
+  pass_condition_mapping:
+    schema_valid:
+      expected: 18/18
+      actual: 18/18
+      status: pass
+    positive_cases_can_be_accepted:
+      expected: 6/6
+      actual: 6/6
+      status: pass
+    anti_cases_clearly_rejectable:
+      expected: 6/6
+      actual: 6/6
+      status: pass
+    borderline_cases_identify_repair_path:
+      expected: 6/6
+      actual: 6/6
+      status: pass
+    owner_routing_error:
+      expected: 0
+      actual: 0
+      status: pass
+    governance_text_in_gold_body:
+      expected: 0
+      actual: 0
+      status: pass
+    unregistered_f_code:
+      expected: 0
+      actual: 0
+      status: pass
+    legacy_hard_gate_id_in_new_output:
+      expected: 0
+      actual: 0
+      status: pass
+    expected_score_floor_aligned:
+      expected: true
+      actual: true
+      status: pass
+  readiness_assertions:
+    all_readiness_flags_false: true
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  delivery_outputs:
+  - gold_reference_cases.yaml
+  - batch_manifest.yaml
+  - owner_storage_audit.yaml
+  - hard_gate_selfcheck.yaml
+  - judge_calibration_index.yaml
+  batch_manifest_verdict: pass

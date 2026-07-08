@@ -1,0 +1,208 @@
+batch_manifest:
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  batch_type: formal_gold_reference_case_batch
+  capability_group: P0-02
+  purpose: 生成 P0-02 角色视角 / 组织生态能力组 21 条 GoldReferenceCase，用于 Codex 生成参考与 judge calibration，不作为正式知识入库。
+  pilot_reuse_decision:
+    pilot_batch_id: GRC-PILOT-006-CONTRACT-CALIBRATION
+    formal_120_counting_policy: do_not_count_by_default
+    allowed_reuse:
+    - 复用 metadata policy
+    - 复用 hard gate namespace
+    - 复用 failure code registry
+    - 复用 positive / anti / borderline 判型逻辑
+    not_allowed:
+    - 不得直接把 pilot 标为正式 120 条之一
+    - 不得复制 mkc_009 / mkc_010 正文结构
+  selected_clusters:
+  - cluster_id: mkc_013
+    cluster_title: 角色发声寄存器
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS01-C01
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_014
+    cluster_title: 语气校准与去人物化
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS01-C02
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_015
+    cluster_title: 组织生态角色网格
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS02-C01
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_016
+    cluster_title: 视角切换与公开安全边界
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS02-C02
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_017
+    cluster_title: 受众距离与信息深浅轴
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS03-C01
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_018
+    cluster_title: 情绪温度层与信任门控
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS03-C02
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_019
+    cluster_title: 角色授权表面与人物故事红线
+    cluster_owner: P0-02
+    source_cluster_refs:
+    - P0-02-RS04-C01
+    - P0-02-RS04-C02
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  expected_case_count: 21
+  actual_case_count: 21
+  global_case_type_distribution:
+    positive_gold: 7
+    anti_gold: 7
+    borderline_repair: 7
+  metadata_contract:
+    expected_score_policy:
+      scoring_max: 120
+      hard_gate_precedence: true
+      verdict_score_floor:
+        accept_gold_candidate:
+          expected_score_floor: 108
+          hard_gate_fail_count: 0
+        accept_with_minor_fix:
+          expected_score_floor: 96
+          hard_gate_fail_count: 0
+        reject_or_blocking_revise:
+          expected_score_floor: 0
+          hard_gate_fail_required: true
+    failure_code_registry:
+      registry_id: GRC-P0-02-FAILURE-CODE-REGISTRY
+      registry_scope: batch_local
+      canonical_failure_codes_allowed:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F02_TEMPLATE_REUSE
+      - F03_GOVERNANCE_TEXT_IN_BODY
+      - F05_WRONG_OWNER_ROUTING
+      - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      - F14_BRAND_FACT_POLLUTION
+      - F16_NO_GOLD_VALUE
+      batch_local_diagnostic_namespace: GRC-P0-02-F###_*
+      batch_local_diagnostic_codes:
+      - code: GRC-P0-02-F001_REAL_PERSONA_LEAK
+        use_when: 角色视角被写成真实员工、顾客、创始人或真实人物画像。
+      - code: GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+        use_when: 角色口吻被写成官方声明、授权背书、检测证明或组织立场。
+      - code: GRC-P0-02-F003_PRIVATE_OPS_LEAK
+        use_when: 组织生态或视角切换泄漏真实 SOP、审批链、门店配置、私域运营、加盟或渠道事实。
+      - code: GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+        use_when: 用情绪温度、信任感、温柔感替代证据或暗示确定性结果。
+      - code: GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+        use_when: 把受众距离模型误写成真实顾客反馈、敏感个人数据或真实用户画像。
+      forbidden_unregistered_global_codes:
+      - F15_*
+      - F17_*
+      - F18_*
+      - F19_*
+    hard_gate_id_namespace:
+      registry_id: GRC-P0-02-HARD-GATE-NAMESPACE
+      canonical_namespace: HG-###
+      canonical_gate_ids:
+      - gate_id: HG-001
+        name: cluster_specific_mechanism
+      - gate_id: HG-002
+        name: no_template_reuse
+      - gate_id: HG-003
+        name: no_governance_text_in_body
+      - gate_id: HG-004
+        name: owner_storage_artifact_alignment
+      - gate_id: HG-005
+        name: epistemic_label_alignment
+      - gate_id: HG-006
+        name: relation_hint_boundary
+      - gate_id: HG-007
+        name: readiness_false_lock
+      - gate_id: HG-008
+        name: brand_instance_pollution
+      forbidden_new_output_aliases:
+      - HG01_NO_MECHANISM
+      - HG02_TEMPLATE_OR_BOILERPLATE
+      - HG03_GOVERNANCE_TEXT_IN_BODY
+      - HG05_WRONG_OWNER_ROUTING
+      - HG08_INDEX_SHELL
+      - HG10_READINESS_DRIFT
+      - HG13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+  readiness_assertions:
+    all_readiness_flags_false: true
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  delivery_outputs:
+  - gold_reference_cases.yaml
+  - batch_manifest.yaml
+  - owner_storage_audit.yaml
+  - hard_gate_selfcheck.yaml
+  - judge_calibration_index.yaml
+  batch_manifest_verdict: pass

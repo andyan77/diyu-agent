@@ -1,0 +1,193 @@
+owner_storage_audit:
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  audit_scope: semantic_owner / storage_target / artifact_kind alignment
+  expected_matrix_row: general_content_method
+  expected_alignment:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_body_form:
+    - full_rich_body
+    - knowledge_capsule
+  hard_rules_checked:
+  - rule_id: OAR-004
+    rule: GeneralKnowledgeBase 条目不得包含品牌实例、真实顾客、真实员工、真实门店、真实库存。
+    fail_code: F14_BRAND_FACT_POLLUTION
+    applicable: true
+    result: pass
+  - rule_id: OAR-001
+    rule: semantic_owner=apparel_claim_boundary 时，storage_target 不得为 GeneralKnowledgeBase。
+    fail_code: F05_WRONG_OWNER_ROUTING
+    applicable: false
+    result: not_applicable
+  audit_items:
+  - case_id: GRC-P001-MKC007-POS-001
+    cluster_id: mkc_007
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC007-ANTI-001
+    cluster_id: mkc_007
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC007-BDR-001
+    cluster_id: mkc_007
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC008-POS-001
+    cluster_id: mkc_008
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC008-ANTI-001
+    cluster_id: mkc_008
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC008-BDR-001
+    cluster_id: mkc_008
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC009-POS-001
+    cluster_id: mkc_009
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC009-ANTI-001
+    cluster_id: mkc_009
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC009-BDR-001
+    cluster_id: mkc_009
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC010-POS-001
+    cluster_id: mkc_010
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC010-ANTI-001
+    cluster_id: mkc_010
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC010-BDR-001
+    cluster_id: mkc_010
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC011-POS-001
+    cluster_id: mkc_011
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC011-ANTI-001
+    cluster_id: mkc_011
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC011-BDR-001
+    cluster_id: mkc_011
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC012-POS-001
+    cluster_id: mkc_012
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC012-ANTI-001
+    cluster_id: mkc_012
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  - case_id: GRC-P001-MKC012-BDR-001
+    cluster_id: mkc_012
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+  summary:
+    audited_count: 18
+    owner_alignment_pass_count: 18
+    owner_alignment_fail_count: 0
+    owner_routing_error_count: 0
+    evidence_policy_wrong_gkb_count: 0
+    brand_instance_pollution_count: 0
+    verdict: pass

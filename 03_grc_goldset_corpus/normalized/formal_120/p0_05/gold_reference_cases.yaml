@@ -1,0 +1,2189 @@
+gold_reference_cases:
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_039
+  cluster_title: 产品叙事角色入场框架
+  cluster_owner: P0-05
+  source_cluster_refs: &id001
+  - P0-05-RS01-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: &id002
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: &id003
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 产品进入叙事时先被命名为角色，而不是被当成待售物。若它在开头承担“提出任务”的功能，它是主角；若它用于暴露两个穿着任务的差异，它是对比项；若它在问题之后提供可观察处理路径，它是解决项；若它连接两个场景、两种层次或两个搭配重心，它是过渡项；若镜头首先给到领口、门襟、腰线、面料纹理等局部，它更适合作为教育节点。首出现位置决定段落顺序：第一镜出现的产品负责建立任务，问题后出现的产品负责解释处理，旁边并列出现的产品负责形成对照，细节特写出现的产品负责说明结构。该框架只决定叙事槽位，不推出购买理由、身体结果或商品事实。
+    mechanism_chain:
+    - first_appearance_position -> product_role_name
+    - product_role_name -> narrative_section
+    - narrative_section -> scene_task_binding
+    - visible_detail -> education_node
+    apparel_domain_anchors:
+    - 领口
+    - 门襟
+    - 腰线
+    - 面料纹理
+    - 层次变化
+    - 搭配重心
+    output_effect: 让内容生成先判断产品在故事中承担的结构任务，再决定开头、对比、解释或教育段落。
+    failure_signal: 把产品一出现就写成值得购买、效果确定或带有具体商品事实的销售对象。
+    repair_instruction_if_failed: 把销售理由和结果承诺删掉，改为角色命名、首出现位置、场景任务和可见锚点。
+  epistemic_contract:
+    observation_statements: &id004
+    - 产品首出现位置可以作为叙事段落判断线索。
+    - 服装细节只能支持可见结构说明。
+    method_claims: &id005
+    - 先命名产品叙事角色，再决定段落位置。
+    - 产品角色不得直接推出购买理由。
+    creative_hypotheses: &id006
+    - 同一产品可因首出现位置不同承担主角、对比项、解决项、过渡项或教育节点。
+    source_required_claims: &id007
+    - 具体商品事实
+    - 真实销售表现
+    - 真实门店案例
+    - 具体顾客反馈
+    prohibited_claims: &id008
+    - 无来源商品事实
+    - 产品角色推出功效结论
+    - 产品角色推出身材结果
+    - 直接销售口播
+    downgrade_paths: &id009
+    - 购买理由 -> 叙事功能
+    - 效果承诺 -> 可见结构观察
+    - 具体商品事实 -> 删除或待补来源
+  boundary_contract:
+    do_not_include: &id010
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: &id011
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body: &id012
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id013
+    - product_role -> scene_task
+    - product_role -> narrative_section
+    - product_role -> visual_anchor
+    - product_role -> education_node
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: &id014
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - product_role_entry
+    - narrative_slot_selection
+    - visual_anchor_binding
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_039
+  cluster_title: 产品叙事角色入场框架
+  cluster_owner: P0-05
+  source_cluster_refs: *id001
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 错误样本会把产品角色直接写成带有具体商品信息的销售主角：先描述某个具体款号、价格和库存，再说它能解决身材问题，最后把故事收束为催促购买。这个写法看似有完整叙事，其实把角色槽位、商品事实、效果承诺和销售动作混在一起；产品没有被放进主角、对比项、解决项、过渡项或教育节点的结构位置，而是被直接包装成成交对象。
+    mechanism_chain:
+    - specific_product_fact -> sales_object
+    - product_role -> unsupported_effect_claim
+    - narrative_frame -> direct_sales_push
+    apparel_domain_anchors:
+    - 具体款号
+    - 价格
+    - 库存
+    - 身材结果
+    - 购买催促
+    output_effect: 训练识别产品角色框架被销售话术和实例事实污染时必须拒绝。
+    failure_signal: 出现具体商品事实、效果承诺或成交导向，而没有角色命名与叙事槽位。
+    repair_instruction_if_failed: 删除具体事实和销售动作，回退到抽象角色、镜头位置和场景任务。
+  epistemic_contract:
+    observation_statements: *id004
+    method_claims: *id005
+    creative_hypotheses: *id006
+    source_required_claims: *id007
+    prohibited_claims: *id008
+    downgrade_paths: *id009
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id013
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F001_REAL_SKU_FACT_LEAK
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - product_role_entry
+    - narrative_slot_selection
+    - visual_anchor_binding
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_039
+  cluster_title: 产品叙事角色入场框架
+  cluster_owner: P0-05
+  source_cluster_refs: *id001
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 产品角色结构已经成立：正文区分了主角、对比项和教育节点，也说明了第一镜出现与细节特写会改变段落功能。但局部表述把“解决项”继续推成了更值得入手、能够带来确定视觉结果的说法，这会让叙事槽位滑向购买理由和结果承诺。修复时保留角色命名与首出现位置，把“值得入手”改为“承担收束解释”，把确定结果改为“可观察结构变化”。
+    mechanism_chain:
+    - product_role_structure -> usable_narrative_skeleton
+    - solution_item -> overstrong_purchase_reason
+    - effect_language -> repair_to_observable_change
+    apparel_domain_anchors:
+    - 主角
+    - 对比项
+    - 教育节点
+    - 第一镜
+    - 细节特写
+    - 可观察结构变化
+    output_effect: 作为边界样本，提示产品角色方法可以保留，但销售性和结果性表达必须回退。
+    failure_signal: 角色结构完整，但局部出现购买理由或确定效果词。
+    repair_instruction_if_failed: 保留角色槽位；把购买理由改成叙事功能，把结果承诺改成观察语言。
+  epistemic_contract:
+    observation_statements: *id004
+    method_claims: *id005
+    creative_hypotheses: *id006
+    source_required_claims: *id007
+    prohibited_claims: *id008
+    downgrade_paths: *id009
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id013
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - product_role_entry
+    - narrative_slot_selection
+    - visual_anchor_binding
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_040
+  cluster_title: 叙事到 CTA 的非硬卖边界
+  cluster_owner: P0-05
+  source_cluster_refs: &id015
+  - P0-05-RS01-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: CTA 只能作为叙事收束的轻动作，不是成交推进。它出现前必须完成三个条件：观众已经知道产品在场景中承担什么任务，至少看到一个可观察锚点，并且已经获得一条使用说明或比较边界。CTA 的信息密度应控制在“一项动作 +
+      一个观察对象 + 一个条件提示”以内，例如引导保存搭配条件、对照陈列中的主次关系、观察领口与内搭的连接方式、询问适合的使用场景。CTA 不新增商品事实，不承诺结果，不把产品角色直接转成购买理由；若前文只有情绪词或单张图，CTA 应降级为观察提示。
+    mechanism_chain:
+    - education_condition -> cta_permission
+    - cta_density -> low_pressure_action
+    - product_fact_isolation -> no_sales_overreach
+    - display_or_scene_cue -> observation_prompt
+    apparel_domain_anchors:
+    - 观察对象
+    - 搭配条件
+    - 陈列主次
+    - 领口连接
+    - 场景提示
+    output_effect: 让叙事末端从硬卖口播改为保存、对照、观察、提问等低风险动作。
+    failure_signal: CTA 直接催促购买、承诺成交收益或补充未经来源支持的商品事实。
+    repair_instruction_if_failed: 把成交动作改为观察动作，把多项卖点堆叠改为一个条件化提示。
+  epistemic_contract:
+    observation_statements: &id016
+    - CTA 前应已有产品角色、可见锚点和教育条件。
+    method_claims: &id017
+    - CTA 信息密度控制为轻动作和条件提示。
+    - CTA 不新增商品事实。
+    creative_hypotheses: &id018
+    - 同一叙事可收束为保存、观察、对照或询问条件。
+    source_required_claims: &id019
+    - 真实渠道活动
+    - 真实营销节点
+    - 商品可得性
+    - 具体交易条件
+    prohibited_claims: &id020
+    - 成交承诺
+    - 直接下单口播
+    - 渠道玩法事实
+    - 结果承诺
+    downgrade_paths: &id021
+    - 购买动作 -> 观察动作
+    - 多动作 CTA -> 单一动作提示
+    - 渠道事实 -> 删除
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id022
+    - narrative_resolution -> low_pressure_cta
+    - education_condition -> cta_permission
+    - cta_density -> claim_boundary
+    - display_or_scene_cue -> observation_prompt
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - low_pressure_cta
+    - cta_density_control
+    - sales_copy_boundary
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_040
+  cluster_title: 叙事到 CTA 的非硬卖边界
+  cluster_owner: P0-05
+  source_cluster_refs: *id015
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 错误样本会在叙事末尾突然切换为强推：要求立刻购买、暗示错过损失、承诺下单后的穿着结果，并把渠道活动、营销节点和商品可得性作为促成动作。这样的 CTA 没有前置教育条件，也没有信息密度控制；它把产品叙事的收束节点改成销售口播，甚至把未提供依据的渠道玩法当成内容事实。
+    mechanism_chain:
+    - narrative_end -> hard_sales_push
+    - missing_education_condition -> invalid_cta
+    - channel_fact -> prohibited_instance_leak
+    apparel_domain_anchors:
+    - 强推语气
+    - 错过损失
+    - 渠道活动
+    - 营销节点
+    - 结果承诺
+    output_effect: 训练识别叙事到 CTA 的边界被硬卖和渠道事实破坏。
+    failure_signal: CTA 以购买、成交、渠道动作或营销节点为核心，而不是观察、保存、对照或提问。
+    repair_instruction_if_failed: 删除强推语气和渠道事实，改为低密度观察提示或场景条件提问。
+  epistemic_contract:
+    observation_statements: *id016
+    method_claims: *id017
+    creative_hypotheses: *id018
+    source_required_claims: *id019
+    prohibited_claims: *id020
+    downgrade_paths: *id021
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id022
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - low_pressure_cta
+    - cta_density_control
+    - sales_copy_boundary
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_040
+  cluster_title: 叙事到 CTA 的非硬卖边界
+  cluster_owner: P0-05
+  source_cluster_refs: *id015
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: CTA 收束方法基本成立：正文先说明产品角色，再给出可见锚点，最后引导继续了解搭配条件。但末尾同时放入多个动作，例如了解、询问、试穿、购买、收藏，信息密度过高，语气也偏向成交推进。修复时保留一个最低风险动作，将“去试、去买、马上问”改成“先对照场景条件”或“保存这一组观察点”，并删除任何与可得性或交易有关的暗示。
+    mechanism_chain:
+    - valid_precondition -> cta_allowed
+    - overloaded_cta -> repair_to_single_action
+    - hard_tone -> observation_prompt
+    apparel_domain_anchors:
+    - 产品角色
+    - 可见锚点
+    - 搭配条件
+    - 单一动作
+    - 观察点
+    output_effect: 提示 CTA 可以存在，但必须降语气、降信息密度、切断交易暗示。
+    failure_signal: CTA 前置条件成立，但末端动作过多或语气过硬。
+    repair_instruction_if_failed: 保留一项动作；改为观察、保存、对照、询问条件等非硬卖动作。
+  epistemic_contract:
+    observation_statements: *id016
+    method_claims: *id017
+    creative_hypotheses: *id018
+    source_required_claims: *id019
+    prohibited_claims: *id020
+    downgrade_paths: *id021
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id022
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - low_pressure_cta
+    - cta_density_control
+    - sales_copy_boundary
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_041
+  cluster_title: 产品生命周期角色窗口
+  cluster_owner: P0-05
+  source_cluster_refs: &id023
+  - P0-05-RS02-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 产品生命周期在通用知识中只能使用抽象阶段族，而不能使用具体经营状态。可用阶段包括认知进入期、结构教育期、组合扩展期、场景验证期、复盘维护期。阶段改变的是叙事任务：认知进入期解释产品承担什么角色，结构教育期提高面料、版型、搭配或使用说明密度，组合扩展期说明它与陪衬项、过渡项、主题项的关系，场景验证期强调适配条件和不适配条件，复盘维护期只整理观察与注意事项。阶段可以影响教育重心、陈列更新提示和
+      CTA 强度上限，但不能生成上新、库存、售罄、滞销、促销或订货结论。
+    mechanism_chain:
+    - abstract_lifecycle_stage -> narrative_task
+    - narrative_task -> education_focus
+    - abstract_stage -> cta_strength_ceiling
+    - business_status -> prohibited_instance_fact
+    apparel_domain_anchors:
+    - 认知进入期
+    - 结构教育期
+    - 组合扩展期
+    - 场景验证期
+    - 复盘维护期
+    output_effect: 使产品生命周期只服务内容任务分配，不泄漏经营状态或渠道判断。
+    failure_signal: 把生命周期阶段写成具体上新时间、库存状态、售罄滞销或促销处置。
+    repair_instruction_if_failed: 把实例化经营词改成抽象阶段族，并只保留叙事任务变化。
+  epistemic_contract:
+    observation_statements: &id024
+    - 抽象阶段可以改变叙事密度和教育重心。
+    method_claims: &id025
+    - 生命周期阶段只描述内容任务，不表达经营状态。
+    creative_hypotheses: &id026
+    - 同一产品在不同抽象阶段可承担不同教育密度。
+    source_required_claims: &id027
+    - 真实上新时间
+    - 真实库存状态
+    - 售罄滞销事实
+    - 促销处置
+    - 渠道订货结论
+    prohibited_claims: &id028
+    - 具体日期
+    - 库存数量
+    - 售罄滞销
+    - 促销清理
+    - 订货判断
+    downgrade_paths: &id029
+    - 经营状态 -> 抽象阶段
+    - 促销处置 -> 观察整理
+    - 订货结论 -> 删除
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id030
+    - abstract_lifecycle_stage -> narrative_density
+    - abstract_lifecycle_stage -> education_focus
+    - abstract_lifecycle_stage -> display_refresh_hint
+    - abstract_lifecycle_stage -> cta_strength_ceiling
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - abstract_lifecycle_stage
+    - narrative_density_by_stage
+    - business_fact_boundary
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_041
+  cluster_title: 产品生命周期角色窗口
+  cluster_owner: P0-05
+  source_cluster_refs: *id023
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 错误样本把生命周期直接写成经营台账：具体哪天上新、还剩多少库存、已经售罄还是滞销、接下来是否促销、某类渠道是否应加订。这样的内容不是产品叙事窗口，而是具体经营事实和渠道判断。它会让阶段标签承担库存、销售和订货含义，破坏通用知识边界，也会把叙事密度误导成经营处置建议。
+    mechanism_chain:
+    - real_launch_date -> lifecycle_instance_leak
+    - inventory_status -> business_conclusion
+    - promotion_action -> prohibited_channel_fact
+    apparel_domain_anchors:
+    - 具体上新日
+    - 库存数量
+    - 售罄
+    - 滞销
+    - 促销处置
+    - 订货判断
+    output_effect: 训练识别生命周期机制被经营事实污染时必须阻断。
+    failure_signal: 生命周期阶段被用来表达具体经营状态，而非抽象叙事任务。
+    repair_instruction_if_failed: 删除日期、库存和处置判断，改为认知、教育、组合、验证、维护等抽象阶段。
+  epistemic_contract:
+    observation_statements: *id024
+    method_claims: *id025
+    creative_hypotheses: *id026
+    source_required_claims: *id027
+    prohibited_claims: *id028
+    downgrade_paths: *id029
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id030
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F004_LIFECYCLE_INSTANCE_LEAK
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - abstract_lifecycle_stage
+    - narrative_density_by_stage
+    - business_fact_boundary
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_041
+  cluster_title: 产品生命周期角色窗口
+  cluster_owner: P0-05
+  source_cluster_refs: *id023
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 阶段窗口机制基本成立：正文知道早期应增加角色解释，中期应增加组合关系，后期应降低 CTA 强度。但阶段名称使用了“刚上新、快售完、需要清理”这类经营意味很强的词，会让读者误以为系统知道商品状态。修复时将这些名称改为“认知进入、组合扩展、复盘维护”，并把阶段影响限定为叙事密度、教育重心和观察提示，不触碰经营处置。
+    mechanism_chain:
+    - stage_window_mechanism -> valid_content_task
+    - business_like_stage_name -> repair_to_abstract_stage
+    - stage_effect -> narrative_density_only
+    apparel_domain_anchors:
+    - 早期解释
+    - 中期组合
+    - 后期降低强度
+    - 抽象阶段
+    - 观察提示
+    output_effect: 作为边界样本，提示生命周期语言应从经营状态回退到内容任务。
+    failure_signal: 阶段逻辑正确，但阶段名称像具体库存或销售状态。
+    repair_instruction_if_failed: 替换为抽象阶段族，并删除经营处置含义。
+  epistemic_contract:
+    observation_statements: *id024
+    method_claims: *id025
+    creative_hypotheses: *id026
+    source_required_claims: *id027
+    prohibited_claims: *id028
+    downgrade_paths: *id029
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id030
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - abstract_lifecycle_stage
+    - narrative_density_by_stage
+    - business_fact_boundary
+    - GRC-P0-05-F004_LIFECYCLE_INSTANCE_LEAK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_042
+  cluster_title: 组货角色与渠道边界矩阵
+  cluster_owner: P0-05
+  source_cluster_refs: &id031
+  - P0-05-RS02-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 组货角色矩阵先判断产品在一组货品中的功能，而不是判断渠道销量。常用角色包括主推叙事项、陪衬解释项、风格过渡项、颜色连接项、层次补足项和场景补位项。主推项负责建立主题，陪衬项负责降低理解成本，过渡项负责连接两个风格或季节信号，连接项负责让色组和材质关系可被看见。不同表达入口只改变信息删减：公开内容保留主次关系和主题组合，导购说明可增加穿着任务与替代条件，陈列说明可增加相邻对象和位置关系；一律删除库存、加盟、授权、渠道战术和连带成交结论。
+    mechanism_chain:
+    - assortment_role -> primary_secondary_relation
+    - supporting_item -> explanation_function
+    - channel_context -> information_reduction_rule
+    - theme_grouping -> product_role_combination
+    apparel_domain_anchors:
+    - 主推叙事项
+    - 陪衬解释项
+    - 风格过渡项
+    - 颜色连接项
+    - 层次补足项
+    - 场景补位项
+    output_effect: 让组货知识变成可复用的产品关系语言，而不是具体渠道策略。
+    failure_signal: 把组货关系写成门店系统、渠道战术、加盟授权或连带成交判断。
+    repair_instruction_if_failed: 保留组货角色和主次关系，删除经营渠道事实。
+  epistemic_contract:
+    observation_statements: &id032
+    - 组货角色可以描述主次、陪衬、过渡和连接关系。
+    method_claims: &id033
+    - 不同表达入口只改变信息删减规则。
+    creative_hypotheses: &id034
+    - 同一产品可在不同组合中由主推项变成陪衬项。
+    source_required_claims: &id035
+    - 真实渠道战术
+    - 加盟事实
+    - 授权事实
+    - 连带成交结果
+    prohibited_claims: &id036
+    - 加盟执行
+    - 授权区域
+    - 渠道主推事实
+    - 连带销售结论
+    downgrade_paths: &id037
+    - 渠道策略 -> 信息删减规则
+    - 经营结论 -> 角色关系
+    - 门店系统 -> 通用组货关系
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id038
+    - assortment_role -> primary_secondary_relation
+    - supporting_item -> narrative_support_function
+    - channel_context -> information_reduction_rule
+    - theme_grouping -> product_role_combination
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - assortment_role_matrix
+    - primary_secondary_relation
+    - channel_information_reduction
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_042
+  cluster_title: 组货角色与渠道边界矩阵
+  cluster_owner: P0-05
+  source_cluster_refs: *id031
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 错误样本把组货矩阵扩展成完整门店系统：规定某类渠道怎么主推、加盟门店如何执行、授权区域如何组合、哪些货品能带来连带成交。它虽然使用了主推、陪衬、组合等词，但真正输出的是经营战术和实例化渠道判断，而不是通用组货角色。此类内容会污染通用知识，也会让产品关系被误读为销售策略。
+    mechanism_chain:
+    - assortment_terms -> channel_strategy_leak
+    - franchise_or_authorization_fact -> brand_instance_pollution
+    - cross_selling_conclusion -> prohibited_business_claim
+    apparel_domain_anchors:
+    - 渠道主推
+    - 加盟执行
+    - 授权区域
+    - 连带成交
+    - 门店系统
+    output_effect: 训练识别组货关系被渠道事实和经营结论污染。
+    failure_signal: 出现加盟、授权、渠道战术或连带成交结论。
+    repair_instruction_if_failed: 删除渠道事实和经营判断，改为主次、陪衬、过渡、连接等通用关系。
+  epistemic_contract:
+    observation_statements: *id032
+    method_claims: *id033
+    creative_hypotheses: *id034
+    source_required_claims: *id035
+    prohibited_claims: *id036
+    downgrade_paths: *id037
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id038
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - assortment_role_matrix
+    - primary_secondary_relation
+    - channel_information_reduction
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_042
+  cluster_title: 组货角色与渠道边界矩阵
+  cluster_owner: P0-05
+  source_cluster_refs: *id031
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 组货关系本身成立：正文能区分主推项、陪衬项和过渡项，也说明了公开表达需要删减信息。但局部将“某入口适合加强主推”写得像真实渠道策略，并暗示不同渠道应采取不同销售动作。修复时保留信息删减规则，把渠道动作改为表达入口差异：公开内容少说经营条件，导购说明多说任务条件，陈列说明多说位置和邻接关系。
+    mechanism_chain:
+    - valid_assortment_role -> content_relation
+    - channel_strategy_tone -> repair_to_information_reduction
+    - entry_context -> allowed_detail_level
+    apparel_domain_anchors:
+    - 主推项
+    - 陪衬项
+    - 过渡项
+    - 信息删减
+    - 表达入口
+    output_effect: 提示组货矩阵可以跨入口使用，但不能变成渠道策略。
+    failure_signal: 关系矩阵成立，但表达像渠道经营动作。
+    repair_instruction_if_failed: 把渠道策略词改为信息删减规则和入口差异。
+  epistemic_contract:
+    observation_statements: *id032
+    method_claims: *id033
+    creative_hypotheses: *id034
+    source_required_claims: *id035
+    prohibited_claims: *id036
+    downgrade_paths: *id037
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id038
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - assortment_role_matrix
+    - primary_secondary_relation
+    - channel_information_reduction
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_043
+  cluster_title: 场景适配条件与不适配条件
+  cluster_owner: P0-05
+  source_cluster_refs: &id039
+  - P0-05-RS03-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 场景适配要从任务条件开始，而不是从人群或效果开始。可记录的任务锚点包括坐立切换、步行距离、外搭层次、室内外温差、手部动作、携带物限制和正式程度。适配条件说明“在什么任务下可以观察什么”，不适配条件说明“在哪些动作、温度、层次或礼仪限制下应降低推荐强度”。场景切换时，产品角色也要切换：通勤任务中可能是过渡项，短途出行中可能是主角，层搭场景中可能是连接项。场景匹配度只限制
+      CTA 上限，不能推出舒适、性能、身材效果或适合所有人的结论。
+    mechanism_chain:
+    - scene_task -> fit_condition
+    - action_limit -> unsuitable_condition
+    - scene_switch -> product_role_shift
+    - fit_confidence -> cta_strength_ceiling
+    apparel_domain_anchors:
+    - 坐立切换
+    - 步行距离
+    - 外搭层次
+    - 室内外温差
+    - 携带物限制
+    - 正式程度
+    output_effect: 让场景叙事变成条件化适配说明，而不是无条件效果承诺。
+    failure_signal: 用场景词推出舒适、性能、身材效果或真实顾客画像。
+    repair_instruction_if_failed: 把结果性表达改成任务条件、不适配条件和 CTA 上限。
+  epistemic_contract:
+    observation_statements: &id040
+    - 场景任务可以由动作、温度、层次、礼仪和携带限制构成。
+    method_claims: &id041
+    - 场景适配必须同时说明适配条件和不适配条件。
+    creative_hypotheses: &id042
+    - 同一产品在不同场景任务中可改变叙事角色。
+    source_required_claims: &id043
+    - 真实顾客画像
+    - 真实反馈
+    - 舒适体验证明
+    - 性能证明
+    prohibited_claims: &id044
+    - 适合所有人
+    - 舒适保证
+    - 身材效果保证
+    - 性能结论
+    downgrade_paths: &id045
+    - 场景结论 -> 条件化说明
+    - 体验保证 -> 动作限制
+    - 身材结果 -> 可见结构观察
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id046
+    - scene_task -> fit_condition
+    - scene_action_limit -> unsuitable_condition
+    - scene_switch_condition -> narrative_angle
+    - fit_confidence -> cta_strength_ceiling
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - scene_fit_condition
+    - unsuitable_condition
+    - cta_ceiling_by_scene
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_043
+  cluster_title: 场景适配条件与不适配条件
+  cluster_owner: P0-05
+  source_cluster_refs: *id039
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 错误样本会把场景适配写成无条件适合：通勤、旅行、聚会、久坐等场景一出现，就推出舒适、显身材、耐用、适合所有人等结论，还会用虚构反馈增强可信度。它没有动作限制、温度限制、层次限制和不适配条件，也没有说明场景匹配度只能约束
+      CTA 强度。这样的写法把场景任务误当成效果证明。
+    mechanism_chain:
+    - scene_label -> unsupported_effect_claim
+    - missing_action_limit -> overgeneralized_fit
+    - invented_feedback -> brand_instance_pollution
+    apparel_domain_anchors:
+    - 通勤
+    - 旅行
+    - 聚会
+    - 久坐
+    - 无条件适合
+    - 虚构反馈
+    output_effect: 训练识别场景适配过度泛化和无证据结果推断。
+    failure_signal: 只有场景标签，没有任务条件和不适配条件，却推出效果结论。
+    repair_instruction_if_failed: 改为条件化场景说明，并列出动作限制与不适配条件。
+  epistemic_contract:
+    observation_statements: *id040
+    method_claims: *id041
+    creative_hypotheses: *id042
+    source_required_claims: *id043
+    prohibited_claims: *id044
+    downgrade_paths: *id045
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id046
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    - GRC-P0-05-F008_SCENE_FIT_OVERGENERALIZATION
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - scene_fit_condition
+    - unsuitable_condition
+    - cta_ceiling_by_scene
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_043
+  cluster_title: 场景适配条件与不适配条件
+  cluster_owner: P0-05
+  source_cluster_refs: *id039
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 场景任务机制已经可用：正文列出通勤、室内外切换和层搭三类任务，也说明了动作限制。但个别句子把“适合通勤”继续推成长期坐着也不会不适、任何身形都能驾驭这类无证据结果。修复时将这些句子改成条件化表达：在坐立切换频繁时关注下摆和腰部活动余量，在层搭时关注肩线与外搭余量；不再评价身体结果或体验保证。
+    mechanism_chain:
+    - scene_task_mechanism -> valid_condition
+    - overgeneralized_fit -> repair_to_action_condition
+    - experience_guarantee -> prohibited_claim
+    apparel_domain_anchors:
+    - 通勤
+    - 室内外切换
+    - 层搭
+    - 动作限制
+    - 下摆
+    - 肩线
+    output_effect: 作为边界样本，提示场景适配可保留，但效果保证必须退回任务条件。
+    failure_signal: 场景条件成立，但局部出现无证据体验或身体结果保证。
+    repair_instruction_if_failed: 改写为动作条件、结构观察和不适配边界。
+  epistemic_contract:
+    observation_statements: *id040
+    method_claims: *id041
+    creative_hypotheses: *id042
+    source_required_claims: *id043
+    prohibited_claims: *id044
+    downgrade_paths: *id045
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id046
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - scene_fit_condition
+    - unsuitable_condition
+    - cta_ceiling_by_scene
+    - GRC-P0-05-F008_SCENE_FIT_OVERGENERALIZATION
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_044
+  cluster_title: 使用教育与结果 claim 分界
+  cluster_owner: P0-05
+  source_cluster_refs: &id047
+  - P0-05-RS03-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: 使用教育只能教会用户如何观察、如何穿用、如何比较条件，不能证明结果。允许表达包括：说明穿着顺序、解释系带或调节方式、指出翻折或层搭时应看哪里、提醒同一光线下比较颜色、说明洗护或收纳需按标签与材料条件处理。演示动作只说明“看见了什么步骤”，不等同于耐久、舒适、性能或质量证明；比较语言只能比较可见差异、操作差异和条件差异，不能写成更好、更强或更适合所有人。注意事项应使用条件句和限制语；一旦句子开始表达结果，就需要额外来源支持或降级为说明。
+    mechanism_chain:
+    - usage_education -> allowed_instruction
+    - demonstration -> observation_only
+    - comparison_wording -> evidence_requirement
+    - result_claim -> downgrade_or_source_needed
+    apparel_domain_anchors:
+    - 穿着顺序
+    - 调节方式
+    - 翻折
+    - 层搭
+    - 同一光线
+    - 标签条件
+    output_effect: 把使用教育、演示、比较和注意事项从结果断言中切开。
+    failure_signal: 把演示动作当成证明，或把说明句写成耐久、舒适、性能、质量结论。
+    repair_instruction_if_failed: 改为说明、观察、条件提示；结果类句子转为需额外来源支持或禁出。
+  epistemic_contract:
+    observation_statements: &id048
+    - 演示动作只能说明步骤和可见变化。
+    method_claims: &id049
+    - 教育说明、演示、比较和注意事项必须与结果断言切断。
+    creative_hypotheses: &id050
+    - 同一演示可被写成观察步骤，而不是证明结果。
+    source_required_claims: &id051
+    - 质量证明
+    - 耐久证明
+    - 舒适证明
+    - 性能证明
+    - 比较优劣证明
+    prohibited_claims: &id052
+    - 演示即证明
+    - 比较即优劣
+    - 使用说明推出结果
+    - 无证据效果 claim
+    downgrade_paths: &id053
+    - 结果断言 -> 说明或观察
+    - 比较优劣 -> 条件差异
+    - 证明语言 -> 待来源支持
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id054
+    - usage_education -> allowed_instruction
+    - demonstration -> observation_only
+    - comparison_wording -> evidence_requirement
+    - result_claim -> route_to_claim_boundary
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - usage_education_boundary
+    - demonstration_not_proof
+    - result_claim_downgrade
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_044
+  cluster_title: 使用教育与结果 claim 分界
+  cluster_owner: P0-05
+  source_cluster_refs: *id047
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: 错误样本会把教育动作直接写成结果证明：演示一次拉伸就说更耐用，展示翻折就说更显身材，对比两件衣服就说质量更好，说明穿着顺序后就承诺更舒适。它还把比较句写成可直接发布的优劣判断，没有给出条件、来源、限制语或降级路径。这不是使用教育，而是把观察动作越界成结果断言。
+    mechanism_chain:
+    - demonstration -> false_proof
+    - comparison -> unsupported_superiority
+    - usage_instruction -> result_claim_overreach
+    apparel_domain_anchors:
+    - 拉伸演示
+    - 翻折展示
+    - 两件对比
+    - 穿着顺序
+    - 优劣判断
+    output_effect: 训练识别使用教育与结果断言混淆时必须拒绝。
+    failure_signal: 演示、说明或比较直接推出耐久、舒适、质量、身材或性能结论。
+    repair_instruction_if_failed: 删除结果结论，改为可见步骤、比较条件、观察范围和需来源支持项。
+  epistemic_contract:
+    observation_statements: *id048
+    method_claims: *id049
+    creative_hypotheses: *id050
+    source_required_claims: *id051
+    prohibited_claims: *id052
+    downgrade_paths: *id053
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id054
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - usage_education_boundary
+    - demonstration_not_proof
+    - result_claim_downgrade
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_044
+  cluster_title: 使用教育与结果 claim 分界
+  cluster_owner: P0-05
+  source_cluster_refs: *id047
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: 使用教育机制已经成立：正文说明了穿着顺序、调节方式和同条件比较，也提醒不要夸大。但有两处句子把“这样演示后可以看出更耐穿”“这个对比说明更舒适”写成结果断言。修复时保留教育步骤，将“可以看出更耐穿”改成“可以观察到受力位置”，将“更舒适”改成“需要结合材料、版型和试穿依据另行判断”。
+    mechanism_chain:
+    - valid_usage_instruction -> keep
+    - demo_to_result_claim -> repair_to_observation
+    - comparison_to_comfort_claim -> source_needed_or_downgrade
+    apparel_domain_anchors:
+    - 穿着顺序
+    - 调节方式
+    - 同条件比较
+    - 受力位置
+    - 材料版型
+    output_effect: 作为边界样本，提示教育正文接近可用时，局部结果 claim 应改为观察或待来源支持。
+    failure_signal: 教育和演示结构完整，但个别句子滑向结果断言。
+    repair_instruction_if_failed: 保留教育步骤，结果类句子改为说明、观察或需额外来源支持。
+  epistemic_contract:
+    observation_statements: *id048
+    method_claims: *id049
+    creative_hypotheses: *id050
+    source_required_claims: *id051
+    prohibited_claims: *id052
+    downgrade_paths: *id053
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id054
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - usage_education_boundary
+    - demonstration_not_proof
+    - result_claim_downgrade
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_045
+  cluster_title: 产品到陈列叙事关系语法
+  cluster_owner: P0-05
+  source_cluster_refs: &id055
+  - P0-05-RS04-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 产品到陈列叙事只描述关系语法，不输出门店系统。产品角色可以对应四类 display 位置：中心位置承担主角或主题项，侧边位置承担陪衬或解释项，相邻位置形成对比或颜色连接，层次后方承担过渡或背景说明。邻接对象决定叙事重心：同色邻接强调系列感，异材质邻接强调触感对比，成套邻接强调场景任务，留白邻接强调焦点。主次层级决定镜头先后；主题化组合决定叙事强调点。display
+      cue 只提供拍摄线索，例如远景看层级，中景看邻接，近景看细节，不生成陈列执行步骤或门店案例。
+    mechanism_chain:
+    - product_role -> display_position
+    - adjacent_object -> narrative_emphasis
+    - primary_secondary_level -> shot_order
+    - display_cue -> shot_hint
+    apparel_domain_anchors:
+    - 中心位置
+    - 侧边位置
+    - 相邻位置
+    - 层次后方
+    - 同色邻接
+    - 异材质邻接
+    - 留白
+    output_effect: 为产品叙事提供可视关系槽位，使内容具备陈列结构但不落到门店实例。
+    failure_signal: 把位置、邻接、主次和主题化组合扩展成完整陈列系统或真实门店执行。
+    repair_instruction_if_failed: 保留 relation grammar，删除系统、步骤、门店实例和经营推断。
+  epistemic_contract:
+    observation_statements: &id056
+    - 位置、邻接、主次和主题化组合可以提供叙事线索。
+    method_claims: &id057
+    - 产品-display 关系只保留 relation grammar。
+    creative_hypotheses: &id058
+    - 同一产品在中心、侧边、相邻位置会改变叙事强调点。
+    source_required_claims: &id059
+    - 真实门店案例
+    - 真实陈列执行
+    - 客流数据
+    - 成交推断
+    prohibited_claims: &id060
+    - 完整陈列系统
+    - 陈列执行步骤
+    - 门店案例
+    - 经营结果推断
+    downgrade_paths: &id061
+    - 陈列系统 -> 关系语法
+    - 门店案例 -> 抽象位置关系
+    - 成交推断 -> 删除
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id062
+    - product_role -> display_position
+    - product_role -> adjacent_object
+    - grouping_rule -> narrative_emphasis
+    - display_cue -> shot_hint
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - product_display_relation_grammar
+    - display_position_hint
+    - shot_cue
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_045
+  cluster_title: 产品到陈列叙事关系语法
+  cluster_owner: P0-05
+  source_cluster_refs: *id055
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 错误样本会把产品与陈列的关系写成真实门店案例：某区域怎么摆、哪条动线带来客流、哪个位置促进成交、店员每天如何执行陈列步骤。它还把中心、侧边、邻接、留白等关系词扩展成完整陈列制度。这样的内容已经越过产品-display
+      关系语法，变成门店运营记录、执行步骤和经营推断。
+    mechanism_chain:
+    - display_position -> store_case_leak
+    - display_relation -> full_display_system
+    - store_flow -> business_result_claim
+    apparel_domain_anchors:
+    - 真实区域
+    - 动线
+    - 客流
+    - 成交
+    - 每日执行
+    - 陈列制度
+    output_effect: 训练识别产品-display 关系被扩展成陈列系统或门店实例时必须阻断。
+    failure_signal: 出现真实门店案例、完整陈列步骤、客流或成交推断。
+    repair_instruction_if_failed: 删除门店事实和执行系统，改回位置、邻接、主次、主题化组合的关系语法。
+  epistemic_contract:
+    observation_statements: *id056
+    method_claims: *id057
+    creative_hypotheses: *id058
+    source_required_claims: *id059
+    prohibited_claims: *id060
+    downgrade_paths: *id061
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id062
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - product_display_relation_grammar
+    - display_position_hint
+    - shot_cue
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_045
+  cluster_title: 产品到陈列叙事关系语法
+  cluster_owner: P0-05
+  source_cluster_refs: *id055
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: domain_method_body
+    gold_body: 产品-display 关系语法基本成立：正文能说明中心、侧边、相邻和层次后方分别影响叙事重心，也能把远景、中景、近景作为拍摄线索。但局部继续写到每日陈列如何调整和门店怎样执行，开始靠近完整陈列系统。修复时保留位置关系和镜头线索，把执行步骤改成“可观察
+      cue”，把门店动作改成抽象的邻接或主次关系。
+    mechanism_chain:
+    - relation_grammar -> valid_display_hint
+    - execution_step_language -> repair_to_observable_cue
+    - store_case_tone -> remove_instance_detail
+    apparel_domain_anchors:
+    - 中心
+    - 侧边
+    - 相邻
+    - 层次后方
+    - 远景
+    - 中景
+    - 近景
+    output_effect: 作为边界样本，提示 display 关系可以服务内容，但不能升级成陈列制度。
+    failure_signal: 位置关系成立，但局部出现执行步骤或门店系统扩张。
+    repair_instruction_if_failed: 改回 relation grammar 和拍摄线索，删除执行系统化表述。
+  epistemic_contract:
+    observation_statements: *id056
+    method_claims: *id057
+    creative_hypotheses: *id058
+    source_required_claims: *id059
+    prohibited_claims: *id060
+    downgrade_paths: *id061
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id062
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - product_display_relation_grammar
+    - display_position_hint
+    - shot_cue
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_046
+  cluster_title: 产品到角色到叙事跨域关系
+  cluster_owner: P0-05
+  source_cluster_refs: &id063
+  - P0-05-RS04-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 跨域关系只提供归属提示和最严格边界提示，不产生实现结构。产品角色连接角色语气时，只能说明同一产品由导购式、设计解释式、品牌旁白式表达会改变信息密度和限制语；连接组织生态视角时，只能提示是否需要过程、角色或来源支持；连接
+      display 动作时，只能提示产品是主角、陪衬、过渡还是教育节点；连接 narrative 段落时，只能提示它适合进入开头、解释、对比或收束。若产品角色与效果断言、人物立场、陈列动作或控制规则重叠，应采用最严格边界：claim 归
+      claim 边界，角色语气归角色视角，陈列动作归陈列内容化，产品簇不接管控制规则。
+    mechanism_chain:
+    - product_role -> role_perspective_hint
+    - product_role -> display_action_hint
+    - product_role -> narrative_sequence_hint
+    - cross_domain_overlap -> strictest_wins_note
+    apparel_domain_anchors:
+    - 导购式表达
+    - 设计解释式表达
+    - 品牌旁白式表达
+    - 主角
+    - 陪衬
+    - 过渡
+    - 教育节点
+    output_effect: 把产品叙事与角色、陈列、叙事段落之间的交叉关系限制为提示层，避免越权生成实现结构。
+    failure_signal: 把跨域关系写成状态字段、执行图、接口步骤，或让产品簇覆盖控制规则。
+    repair_instruction_if_failed: 改为 relation hint、ownership hint 和 strictest-wins note，不输出实现结构。
+  epistemic_contract:
+    observation_statements: &id064
+    - 产品角色可与角色语气、陈列动作和叙事段落形成交叉提示。
+    method_claims: &id065
+    - 跨域关系只输出提示和归属，不输出实现结构。
+    creative_hypotheses: &id066
+    - 同一产品角色在不同领域可触发不同表达约束。
+    source_required_claims: &id067
+    - 控制规则变更
+    - 正式关系边登记
+    - 具体系统实现
+    - 品牌授权事实
+    prohibited_claims: &id068
+    - 实现结构
+    - 状态字段
+    - 接口步骤
+    - 产品簇覆盖控制规则
+    downgrade_paths: &id069
+    - 执行结构 -> relation hint
+    - 自动分配 -> ownership hint
+    - 控制覆盖 -> strictest-wins note
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id070
+    - product_role -> role_perspective
+    - product_role -> display_action
+    - product_role -> narrative_sequence
+    - cross_domain_overlap -> strictest_wins_note
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - cross_domain_relation_hint
+    - strictest_wins_note
+    - ownership_hint
+    - positive_gold_mechanism_reference
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_046
+  cluster_title: 产品到角色到叙事跨域关系
+  cluster_owner: P0-05
+  source_cluster_refs: *id063
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 错误样本会把跨域关系写成系统执行图：先由产品角色生成角色语气，再自动调度陈列动作和叙事段落，最后由产品簇决定哪些控制规则生效。它还把角色、陈列、叙事和风险边界做成一套强制步骤，仿佛产品关系可以替代控制面裁定。这样的内容不是跨域提示，而是越权的实现设计，会让产品簇接管不属于自己的规则主权。
+    mechanism_chain:
+    - product_role -> execution_structure_overreach
+    - cross_domain_map -> control_authority_override
+    - relation_hint -> formalized_process_error
+    apparel_domain_anchors:
+    - 系统执行图
+    - 强制步骤
+    - 角色语气
+    - 陈列动作
+    - 叙事段落
+    - 规则主权
+    output_effect: 训练识别跨域关系被误写成实现结构或控制权覆盖时必须拒绝。
+    failure_signal: 产品关系被写成执行步骤、状态字段或控制规则替代物。
+    repair_instruction_if_failed: 删除执行结构，改为跨域关系提示、归属提示和最严格边界提示。
+  epistemic_contract:
+    observation_statements: *id064
+    method_claims: *id065
+    creative_hypotheses: *id066
+    source_required_claims: *id067
+    prohibited_claims: *id068
+    downgrade_paths: *id069
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id070
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id014
+    expected_failure_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - GRC-P0-05-F007_CROSS_DOMAIN_WORKFLOW_OVERREACH
+    expected_score_floor: 0
+    hard_gate_fail_expected: true
+  codex_usage:
+    use_as_reference_for:
+    - cross_domain_relation_hint
+    - strictest_wins_note
+    - ownership_hint
+    - anti_gold_reject_pattern
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  capability_group: P0-05
+  cluster_id: mkc_046
+  cluster_title: 产品到角色到叙事跨域关系
+  cluster_owner: P0-05
+  source_cluster_refs: *id063
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry: *id002
+    forbidden_storage_targets: *id003
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 跨域关系提示已经成立：正文知道产品角色可连接角色语气、display 动作和叙事段落，也知道冲突时应采用更严格边界。但局部使用了连续步骤和自动分配语气，读起来像一张执行图。修复时保留三类提示：role hint 说明语气只改变表达颗粒度，display
+      hint 说明动作只提供可视入口，narrative hint 说明段落只改变顺序；所有冲突仍回到 ownership hint 和 strictest-wins note。
+    mechanism_chain:
+    - cross_domain_hint -> valid_overlap_awareness
+    - step_like_language -> repair_to_relation_hint
+    - overlap_conflict -> strictest_wins_note
+    apparel_domain_anchors:
+    - 角色语气
+    - display 动作
+    - 叙事段落
+    - 表达颗粒度
+    - 可视入口
+    - 顺序
+    output_effect: 作为边界样本，提示跨域关系可以保留，但必须从执行图退回提示层。
+    failure_signal: 跨域提示成立，但语言像连续执行结构或自动分配机制。
+    repair_instruction_if_failed: 改写为 relation hint、routing hint、ownership hint 和 strictest-wins note。
+  epistemic_contract:
+    observation_statements: *id064
+    method_claims: *id065
+    creative_hypotheses: *id066
+    source_required_claims: *id067
+    prohibited_claims: *id068
+    downgrade_paths: *id069
+  boundary_contract:
+    do_not_include: *id010
+    anti_hallucination_guard: 只允许描述抽象产品角色、场景任务、视觉线索、说明动作和边界规则；不得补写品牌、商品、价格、库存、门店、顾客、渠道或经营事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id011
+    forbidden_in_gold_body: *id012
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id070
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id014
+    expected_failure_codes: []
+    expected_score_floor: 96
+    repair_path_required: true
+  codex_usage:
+    use_as_reference_for:
+    - cross_domain_relation_hint
+    - strictest_wins_note
+    - ownership_hint
+    - GRC-P0-05-F007_CROSS_DOMAIN_WORKFLOW_OVERREACH
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true

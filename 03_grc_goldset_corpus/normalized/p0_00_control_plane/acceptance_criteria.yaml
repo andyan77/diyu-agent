@@ -1,0 +1,44 @@
+acceptance_criteria:
+  p0_00_control_gold_cases:
+    expected_case_count: 18
+    cluster_coverage:
+      mkc_001: 3
+      mkc_002: 3
+      mkc_003: 3
+      mkc_004: 3
+      mkc_005: 3
+      mkc_006: 3
+    case_type_distribution_per_cluster:
+      positive_control_gold: 1
+      anti_control_gold: 1
+      borderline_control_repair: 1
+    required_pass:
+      - "0 missing cluster_id"
+      - "0 readiness true"
+      - "0 relation_status other than design_hint_not_ontology_edge"
+      - "0 control_policy written as apparel domain body"
+      - "0 EvidencePolicyOutbox item stored as GeneralKnowledgeBase"
+      - "0 review-only asset allowed into KE/RAG/DIFY"
+
+  p0_00_dispatch_matrix:
+    expected_cluster_count: 40
+    expected_capability_distribution:
+      P0-01: 6
+      P0-02: 7
+      P0-03: 10
+      P0-04: 9
+      P0-05: 8
+    required_fields_per_cluster:
+      - "cluster_id"
+      - "cluster_title"
+      - "primary_capability"
+      - "entry_slots_required"
+      - "p0_00_gates.entry_gate"
+      - "p0_00_gates.route_gate"
+      - "p0_00_gates.claim_gate"
+      - "p0_00_gates.exception_gate"
+      - "p0_00_gates.composition_gate"
+      - "p0_00_gates.asset_seal"
+      - "expected_asset_route"
+      - "forbidden_route"
+      - "dispatch_verdict"

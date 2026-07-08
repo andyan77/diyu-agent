@@ -1,0 +1,211 @@
+judge_calibration_index:
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  positive_examples:
+  - case_id: GRC-P0-02-MKC013-POS-001
+    cluster_id: mkc_013
+    cluster_title: 角色发声寄存器
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让同一服装对象能够按店主、导购、搭配师或品牌旁白切换表达密度与限制语，同时避免人物事实幻觉。
+    calibrates:
+    - role_voice_register
+    - narrative_stance
+    - de_personalized_role_voice
+  - case_id: GRC-P0-02-MKC014-POS-001
+    cluster_id: mkc_014
+    cluster_title: 语气校准与去人物化
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让角色口吻既有风格差异，又不会把温柔、专业或老练写成事实证明。
+    calibrates:
+    - tone_calibration
+    - persona_surface_limit
+    - claim_downgrade_language
+  - case_id: GRC-P0-02-MKC015-POS-001
+    cluster_id: mkc_015
+    cluster_title: 组织生态角色网格
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让组织生态被抽象为可复用角色功能层级，支持内容角度生成但不暴露真实组织。
+    calibrates:
+    - role_grid
+    - content_responsibility
+    - observation_interface
+  - case_id: GRC-P0-02-MKC016-POS-001
+    cluster_id: mkc_016
+    cluster_title: 视角切换与公开安全边界
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让跨角色内容能安全切换角度，同时切断内部运营事实和公开表达之间的错误通道。
+    calibrates:
+    - perspective_switch
+    - public_safe_boundary
+    - private_ops_cutoff
+  - case_id: GRC-P0-02-MKC017-POS-001
+    cluster_id: mkc_017
+    cluster_title: 受众距离与信息深浅轴
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让角色发声根据受众距离控制信息深浅，不把阶段模型写成真实用户画像。
+    calibrates:
+    - audience_distance_axis
+    - information_depth
+    - stage_model
+  - case_id: GRC-P0-02-MKC018-POS-001
+    cluster_id: mkc_018
+    cluster_title: 情绪温度层与信任门控
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让温度感服务解释和距离控制，同时阻断用温柔感、信任感替代证据。
+    calibrates:
+    - emotion_temperature
+    - trust_gate
+    - emotion_not_evidence
+  - case_id: GRC-P0-02-MKC019-POS-001
+    cluster_id: mkc_019
+    cluster_title: 角色授权表面与人物故事红线
+    expected_verdict: accept_gold_candidate
+    expected_score_floor: 108
+    key_reason: 让角色视角保留表达方法价值，同时阻断真实授权、真实身份和组织立场幻觉。
+    calibrates:
+    - authorization_surface
+    - speakable_not_speakable_split
+    - deauthorization
+  negative_examples:
+  - case_id: GRC-P0-02-MKC013-ANTI-001
+    cluster_id: mkc_013
+    cluster_title: 角色发声寄存器
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    key_reason: 依赖真实员工、真实顾客、真实门店或默认授权来制造口吻可信度。
+  - case_id: GRC-P0-02-MKC014-ANTI-001
+    cluster_id: mkc_014
+    cluster_title: 语气校准与去人物化
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    key_reason: 出现员工经历、创始人语录、舒适保证、显瘦保证或语气替代证据。
+  - case_id: GRC-P0-02-MKC015-ANTI-001
+    cluster_id: mkc_015
+    cluster_title: 组织生态角色网格
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    key_reason: 使用真实组织配置、审批职责、库存管理、加盟协作或私域跟进来证明品牌。
+  - case_id: GRC-P0-02-MKC016-ANTI-001
+    cluster_id: mkc_016
+    cluster_title: 视角切换与公开安全边界
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    key_reason: 出现培训安排、审批链、库存销售、渠道反馈或真实运营记录。
+  - case_id: GRC-P0-02-MKC017-ANTI-001
+    cluster_id: mkc_017
+    cluster_title: 受众距离与信息深浅轴
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    - F14_BRAND_FACT_POLLUTION
+    key_reason: 使用年龄、消费能力、购买记录、真实反馈或具体心理画像来决定表达。
+  - case_id: GRC-P0-02-MKC018-ANTI-001
+    cluster_id: mkc_018
+    cluster_title: 情绪温度层与信任门控
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    - F14_BRAND_FACT_POLLUTION
+    key_reason: 温柔感、安心感、顾客喜欢、穿上放松等句子承担事实证明或结果保证。
+  - case_id: GRC-P0-02-MKC019-ANTI-001
+    cluster_id: mkc_019
+    cluster_title: 角色授权表面与人物故事红线
+    expected_verdict: reject_or_blocking_revise
+    expected_score_floor: 0
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    key_reason: 默认同意、默认代表、真实经历转方法层、官方承诺式表达。
+  borderline_examples:
+  - case_id: GRC-P0-02-MKC013-BDR-001
+    cluster_id: mkc_013
+    cluster_title: 角色发声寄存器
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：角色分桶成立，但需要去掉真实身份和默认授权暗示。
+    repair_path: 把身份句改为通用表达功能句；保留角色类型、动作词、观察词和信息深度。
+    repair_code_refs:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+  - case_id: GRC-P0-02-MKC014-BDR-001
+    cluster_id: mkc_014
+    cluster_title: 语气校准与去人物化
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：语气分层成立，但需阻断口吻词承担证明功能。
+    repair_path: 保留语气层级；把证明句改成表达形式、限制语和观察条件。
+    repair_code_refs:
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+  - case_id: GRC-P0-02-MKC015-BDR-001
+    cluster_id: mkc_015
+    cluster_title: 组织生态角色网格
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：角色功能层级成立，但需从组织关系修复为内容接口关系。
+    repair_path: 删除组织链动词，替换为提供信息、限制表达、改变视角、调整颗粒度。
+    repair_code_refs:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+  - case_id: GRC-P0-02-MKC016-BDR-001
+    cluster_id: mkc_016
+    cluster_title: 视角切换与公开安全边界
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：视角切换机制成立，但需明确可见观察与内部运营的切断线。
+    repair_path: 把可见陈列变化留在正文，把运营安排移动到不能公开或待补依据类别。
+    repair_code_refs:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+  - case_id: GRC-P0-02-MKC017-BDR-001
+    cluster_id: mkc_017
+    cluster_title: 受众距离与信息深浅轴
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：阶段与信息深浅成立，但需去掉真实心理与熟客推断。
+    repair_path: 把心理推测改为信息需求、术语密度、解释顺序和替代方案。
+    repair_code_refs:
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+  - case_id: GRC-P0-02-MKC018-BDR-001
+    cluster_id: mkc_018
+    cluster_title: 情绪温度层与信任门控
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：温度分层成立，但信任句式过强，需要降级为阅读温度或待补依据。
+    repair_path: 保留温度层级；把信任结论改成表达功能、限制语或待补依据。
+    repair_code_refs:
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+  - case_id: GRC-P0-02-MKC019-BDR-001
+    cluster_id: mkc_019
+    cluster_title: 角色授权表面与人物故事红线
+    expected_verdict: accept_with_minor_fix
+    expected_score_floor: 96
+    key_reason: 接近可用：可说/不可说分层成立，但需要去掉半授权和默认代表暗示。
+    repair_path: 把半授权句改为表达口吻或观察位置；删除真实身份与代表关系。
+    repair_code_refs:
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+  summary:
+    positive_examples_count: 7
+    negative_examples_count: 7
+    borderline_examples_count: 7
+    all_examples_include_expected_verdict: true
+    all_borderline_examples_include_repair_path: true
+    verdict: pass

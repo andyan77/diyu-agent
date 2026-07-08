@@ -1,0 +1,198 @@
+judge_calibration_index:
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  index_scope: positive / anti-gold / borderline reference cases for P0-01 enterprise narrative
+  positive_examples:
+  - case_id: GRC-P001-MKC007-POS-001
+    cluster_id: mkc_007
+    expected_verdict: accept_gold_candidate
+    key_reason: 企业叙事骨架能按问题、方法、证明、价值形成机制链。
+    use_as_gold_for:
+    - enterprise_narrative_skeleton
+    - problem_to_method_to_proof
+    - value_expression_boundary
+    - series_axis_seed
+  - case_id: GRC-P001-MKC008-POS-001
+    cluster_id: mkc_008
+    expected_verdict: accept_gold_candidate
+    key_reason: 证明槽位能把角色、流程、质量门和约束转成有限价值表达。
+    use_as_gold_for:
+    - proof_slot_taxonomy
+    - value_translation
+    - process_node_to_quality_gate
+    - overclaim_downgrade
+  - case_id: GRC-P001-MKC009-POS-001
+    cluster_id: mkc_009
+    expected_verdict: accept_gold_candidate
+    key_reason: 故事弧线选择受材料问题类型和证明强度约束。
+    use_as_gold_for:
+    - story_arc_selection
+    - evidence_strength_boundary
+    - downgrade_path
+    - non_boilerplate_content_method
+  - case_id: GRC-P001-MKC010-POS-001
+    cluster_id: mkc_010
+    expected_verdict: accept_gold_candidate
+    key_reason: 反模板机制能把抽象风格词压回对象、动作、约束和节点。
+    use_as_gold_for:
+    - anti_template_content
+    - observable_anchor
+    - anchor_action_constraint
+    - non_boilerplate_rich_body
+  - case_id: GRC-P001-MKC011-POS-001
+    cluster_id: mkc_011
+    expected_verdict: accept_gold_candidate
+    key_reason: 叙事放大禁区能把权威、实例、结果、敏感背书分区处理。
+    use_as_gold_for:
+    - narrative_risk_zone
+    - amplification_boundary
+    - forbidden_claim_route
+    - downgrade_condition
+  - case_id: GRC-P001-MKC012-POS-001
+    cluster_id: mkc_012
+    expected_verdict: accept_gold_candidate
+    key_reason: 系列轴能按证明节奏拆成 episode unit 和跨形态资产单元。
+    use_as_gold_for:
+    - series_axis_design
+    - episode_unit_rule
+    - proof_slot_distribution
+    - anti_repetition_sequence
+  negative_examples:
+  - case_id: GRC-P001-MKC007-ANTI-001
+    cluster_id: mkc_007
+    expected_verdict: reject_or_blocking_revise
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-101_GENERIC_ORIGIN_MYTH
+    key_reason: 用初心、使命和行业领先伪造企业历史与经营结果。
+    what_to_watch: 不要因字段完整、行业词存在或语气克制而忽略机制缺失、证据越界或风险放大。
+  - case_id: GRC-P001-MKC008-ANTI-001
+    cluster_id: mkc_008
+    expected_verdict: reject_or_blocking_revise
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-102_PROOF_SLOT_OVERCLAIM
+    key_reason: 把证明槽位直接升级为耐穿、舒适、认证和品质保证。
+    what_to_watch: 不要因字段完整、行业词存在或语气克制而忽略机制缺失、证据越界或风险放大。
+  - case_id: GRC-P001-MKC009-ANTI-001
+    cluster_id: mkc_009
+    expected_verdict: reject_or_blocking_revise
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-103_UNSUPPORTED_STORY_ARC
+    key_reason: 固定套用低谷、坚持、传承等无依据故事公式。
+    what_to_watch: 不要因字段完整、行业词存在或语气克制而忽略机制缺失、证据越界或风险放大。
+  - case_id: GRC-P001-MKC010-ANTI-001
+    cluster_id: mkc_010
+    expected_verdict: reject_or_blocking_revise
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    key_reason: 用松弛、高级、治愈感等词堆叠替代锚点机制。
+    what_to_watch: 不要因字段完整、行业词存在或语气克制而忽略机制缺失、证据越界或风险放大。
+  - case_id: GRC-P001-MKC011-ANTI-001
+    cluster_id: mkc_011
+    expected_verdict: reject_or_blocking_revise
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    key_reason: 把行业领先、顾客认可、品质经得住考验等高风险词委婉包装。
+    what_to_watch: 不要因字段完整、行业词存在或语气克制而忽略机制缺失、证据越界或风险放大。
+  - case_id: GRC-P001-MKC012-ANTI-001
+    cluster_id: mkc_012
+    expected_verdict: reject_or_blocking_revise
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+    key_reason: 把系列轴写成标题排期和价值词连载。
+    what_to_watch: 不要因字段完整、行业词存在或语气克制而忽略机制缺失、证据越界或风险放大。
+  borderline_examples:
+  - case_id: GRC-P001-MKC007-BDR-001
+    cluster_id: mkc_007
+    expected_verdict: accept_with_minor_fix
+    repair_code_refs:
+    - GRCF-107_ORGANIZATIONAL_METHOD_REPAIR
+    key_reason: 骨架成立但多年积累、用户认可等表达需要补依据或降级。
+    what_to_watch: 应识别为可修复边界样本：机制主链可保留，但局部高强度表达必须降级或补依据。
+  - case_id: GRC-P001-MKC008-BDR-001
+    cluster_id: mkc_008
+    expected_verdict: accept_with_minor_fix
+    repair_code_refs:
+    - GRCF-108_SOURCE_REQUIRED_VALUE_REPAIR
+    key_reason: 槽位链成立但强价值词需要改为方法说明或待补依据问题。
+    what_to_watch: 应识别为可修复边界样本：机制主链可保留，但局部高强度表达必须降级或补依据。
+  - case_id: GRC-P001-MKC009-BDR-001
+    cluster_id: mkc_009
+    expected_verdict: accept_with_minor_fix
+    repair_code_refs:
+    - GRCF-109_SOURCE_REQUIRED_STORY_CLAIM_REPAIR
+    key_reason: 弧线选择成立但长期类叙事需要额外依据。
+    what_to_watch: 应识别为可修复边界样本：机制主链可保留，但局部高强度表达必须降级或补依据。
+  - case_id: GRC-P001-MKC010-BDR-001
+    cluster_id: mkc_010
+    expected_verdict: accept_with_minor_fix
+    repair_code_refs:
+    - GRCF-110_AUDIENCE_PSYCHOLOGY_REPAIR
+    key_reason: 锚点链成立但用户心理效果推断需要改成观看路径。
+    what_to_watch: 应识别为可修复边界样本：机制主链可保留，但局部高强度表达必须降级或补依据。
+  - case_id: GRC-P001-MKC011-BDR-001
+    cluster_id: mkc_011
+    expected_verdict: accept_with_minor_fix
+    repair_code_refs:
+    - GRCF-111_RISK_ZONE_DOWNGRADE_REPAIR
+    key_reason: 风险区识别成立但需要明确删除、降级、补依据或裁决动作。
+    what_to_watch: 应识别为可修复边界样本：机制主链可保留，但局部高强度表达必须降级或补依据。
+  - case_id: GRC-P001-MKC012-BDR-001
+    cluster_id: mkc_012
+    expected_verdict: accept_with_minor_fix
+    repair_code_refs:
+    - GRCF-112_SERIES_PROOF_CADENCE_REPAIR
+    key_reason: 系列顺序成立但各单元 proof cadence 不足。
+    what_to_watch: 应识别为可修复边界样本：机制主链可保留，但局部高强度表达必须降级或补依据。
+  cluster_case_index:
+  - cluster_id: mkc_007
+    cluster_title: 企业叙事骨架
+    positive_case_id: GRC-P001-MKC007-POS-001
+    anti_case_id: GRC-P001-MKC007-ANTI-001
+    borderline_case_id: GRC-P001-MKC007-BDR-001
+  - cluster_id: mkc_008
+    cluster_title: 证明槽位与价值转译
+    positive_case_id: GRC-P001-MKC008-POS-001
+    anti_case_id: GRC-P001-MKC008-ANTI-001
+    borderline_case_id: GRC-P001-MKC008-BDR-001
+  - cluster_id: mkc_009
+    cluster_title: 故事弧线适用边界
+    positive_case_id: GRC-P001-MKC009-POS-001
+    anti_case_id: GRC-P001-MKC009-ANTI-001
+    borderline_case_id: GRC-P001-MKC009-BDR-001
+  - cluster_id: mkc_010
+    cluster_title: 反模板叙事锚点
+    positive_case_id: GRC-P001-MKC010-POS-001
+    anti_case_id: GRC-P001-MKC010-ANTI-001
+    borderline_case_id: GRC-P001-MKC010-BDR-001
+  - cluster_id: mkc_011
+    cluster_title: 叙事放大禁区与风险路由
+    positive_case_id: GRC-P001-MKC011-POS-001
+    anti_case_id: GRC-P001-MKC011-ANTI-001
+    borderline_case_id: GRC-P001-MKC011-BDR-001
+  - cluster_id: mkc_012
+    cluster_title: 系列轴与跨形态资产单元
+    positive_case_id: GRC-P001-MKC012-POS-001
+    anti_case_id: GRC-P001-MKC012-ANTI-001
+    borderline_case_id: GRC-P001-MKC012-BDR-001
+  calibration_rules:
+    positive_gold: 应通过全部 HG-001..HG-008，expected_score_floor=108。
+    anti_gold: 应明确触发 blocking revise，expected_score_floor=0，并使用注册的 canonical / GRCF 失败码。
+    borderline_repair: 应给 accept_with_minor_fix，expected_score_floor=96；repair code 不进入 expected_failure_codes，只进入 repair_code_refs
+      / codex_usage。
+  summary:
+    positive_count: 6
+    anti_count: 6
+    borderline_count: 6
+    total_indexed_count: 18
+    verdict: pass

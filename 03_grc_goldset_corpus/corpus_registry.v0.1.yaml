@@ -1,0 +1,108 @@
+corpus_registry:
+  registry_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  corpus_root: 03_grc_goldset_corpus
+  do_not_consume_tmp_directly: true
+  canonical_machine_path_must_be_ascii: true
+  source_digest_manifest: 03_grc_goldset_corpus/source_digest_manifest.v0.1.yaml
+  normalization_map: 03_grc_goldset_corpus/normalization_map.v0.1.yaml
+  blocking_gap_ledger: 03_grc_goldset_corpus/blocking_gap_ledger.v0.1.yaml
+  groups:
+    p0_00_control_plane:
+      role: control_plane_calibration
+      formal_120_included: false
+      manifest: 03_grc_goldset_corpus/p0_00_control_plane_manifest.v0.1.yaml
+      normalized_files_count: 5
+      normalized_files:
+      - 03_grc_goldset_corpus/normalized/p0_00_control_plane/acceptance_criteria.yaml
+      - 03_grc_goldset_corpus/normalized/p0_00_control_plane/final_verdict.yaml
+      - 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+      - 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_to_40_cluster_dispatch_matrix.yaml
+      - 03_grc_goldset_corpus/normalized/p0_00_control_plane/scope_decision.yaml
+    formal_120:
+      role: domain_gold_reference
+      formal_120_included: true
+      manifest: 03_grc_goldset_corpus/formal_120_manifest.v0.1.yaml
+      normalized_files_count: 26
+      normalized_files:
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_01/batch_manifest.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_01/hard_gate_selfcheck.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_01/judge_calibration_index.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_01/owner_storage_audit.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_01/validation_summary.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_02/batch_manifest.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_02/hard_gate_selfcheck.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_02/judge_calibration_index.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_02/owner_storage_audit.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_03/batch_manifest.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_03/hard_gate_selfcheck.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_03/judge_calibration_index.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_03/owner_storage_audit.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_04/batch_manifest.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_04/hard_gate_selfcheck.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_04/judge_calibration_index.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_04/owner_storage_audit.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_05/batch_manifest.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_05/hard_gate_selfcheck.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_05/judge_calibration_index.yaml
+      - 03_grc_goldset_corpus/normalized/formal_120/p0_05/owner_storage_audit.yaml
+    expert_review:
+      role: expert_review_source
+      formal_120_included: false
+      manifest: 03_grc_goldset_corpus/expert_review_13_manifest.v0.1.yaml
+      normalized_files_count: 1
+      normalized_files:
+      - 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+  registered_normalized_files_count: 32
+  registered_normalized_files:
+  - 03_grc_goldset_corpus/normalized/p0_00_control_plane/acceptance_criteria.yaml
+  - 03_grc_goldset_corpus/normalized/p0_00_control_plane/final_verdict.yaml
+  - 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+  - 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_to_40_cluster_dispatch_matrix.yaml
+  - 03_grc_goldset_corpus/normalized/p0_00_control_plane/scope_decision.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_01/batch_manifest.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_01/hard_gate_selfcheck.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_01/judge_calibration_index.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_01/owner_storage_audit.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_01/validation_summary.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_02/batch_manifest.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_02/hard_gate_selfcheck.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_02/judge_calibration_index.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_02/owner_storage_audit.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_03/batch_manifest.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_03/hard_gate_selfcheck.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_03/judge_calibration_index.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_03/owner_storage_audit.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_04/batch_manifest.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_04/hard_gate_selfcheck.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_04/judge_calibration_index.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_04/owner_storage_audit.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_05/batch_manifest.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_05/hard_gate_selfcheck.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_05/judge_calibration_index.yaml
+  - 03_grc_goldset_corpus/normalized/formal_120/p0_05/owner_storage_audit.yaml
+  - 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+  declared_status:
+    grc_corpus_canonicalized: true
+    formal_120_corpus_locked: true
+    p0_00_control_plane_corpus_locked: true
+    expert_review_13_source_locked: true
+    generation_unlocked: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

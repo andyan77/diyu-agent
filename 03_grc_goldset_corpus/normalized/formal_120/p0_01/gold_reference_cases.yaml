@@ -1,0 +1,2136 @@
+gold_reference_cases:
+- case_id: GRC-P001-MKC007-POS-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_007
+  cluster_title: 企业叙事骨架
+  cluster_owner: P0-01
+  source_cluster_refs: &id001
+  - W2-P0-01-RS01-CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: &id002
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  boundary_contract:
+    do_not_include: &id003
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    anti_hallucination_guard: 不得把企业叙事骨架补写成真实品牌起源、创始人经历、扩张节点或行业地位。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: &id004
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id005
+    - problem_domain -> operating_method
+    - operating_method -> proof_slot
+    - proof_slot -> value_expression
+    - value_expression -> series_axis
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 企业叙事骨架的起点不是“品牌想显得更有理想”，而是先界定企业长期回应的服装经营问题。这个问题可以来自货品结构、面料取舍、版型稳定性、系列一致性、门店解释难度或顾客选择成本，但只能停留在通用问题层。骨架展开时应按四步组织：先说明问题场景，再说明企业采用的组织性方法，再列出需要被证明的槽位，最后把方法翻译成用户能够观察到的价值。若只有价值词而没有方法和证明槽位，只能形成主题提示；若有流程、角色分工、复核节点或系列结构线索，才可以进入企业叙事骨架。该机制把企业叙事从口号改成“问题—方法—证明—价值”的可复用结构。
+    mechanism_chain:
+    - problem_domain -> operating_method
+    - operating_method -> proof_slot
+    - proof_slot -> value_expression
+    - value_expression -> series_axis
+    apparel_domain_anchors:
+    - 货品结构
+    - 面料取舍
+    - 版型稳定性
+    - 系列一致性
+    - 门店解释难度
+    - 顾客选择成本
+    - 复核节点
+    output_effect: 让企业叙事先判断问题与方法是否成立，再决定能否展开为组织选择、系列主题或价值说明。
+    failure_signal: 正文只有愿景、使命、长期主义、行业领先等抽象话语，没有问题场景、组织性方法和证明槽位。
+    repair_instruction_if_failed: 删除无依据的起源史和行业地位，改为问题场景、方法选择、证明槽位和可观察价值。
+  epistemic_contract:
+    observation_statements:
+    - 服装企业叙事可从货品结构、版型稳定性、系列一致性等通用经营问题进入。
+    - 角色分工、复核节点和流程线索只能作为证明槽位，不等于真实企业事实。
+    method_claims:
+    - 企业叙事应按问题、方法、证明、价值组织。
+    - 没有证明槽位时应降级为主题提示或待补依据问题。
+    creative_hypotheses:
+    - 同一组门店素材可按“选择成本降低”或“系列一致性”形成不同叙事骨架。
+    source_required_claims:
+    - 真实品牌起源
+    - 真实企业节点
+    - 真实创始人经历
+    - 真实经营成果
+    - 真实行业地位
+    prohibited_claims:
+    - 无来源品牌使命
+    - 无来源行业领先
+    - 无来源多年沉淀
+    - 无来源创始人选择
+    downgrade_paths:
+    - 企业历史 -> 问题场景
+    - 行业地位 -> 方法说明
+    - 品牌使命 -> 价值表达边界
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - enterprise_narrative_skeleton
+    - problem_to_method_to_proof
+    - value_expression_boundary
+    - series_axis_seed
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC007-ANTI-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_007
+  cluster_title: 企业叙事骨架
+  cluster_owner: P0-01
+  source_cluster_refs: *id001
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把企业叙事骨架补写成真实品牌起源、创始人经历、扩张节点或行业地位。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id005
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 企业叙事就是把品牌写得有格局。只要强调初心、使命、热爱、长期主义和行业领先，就能让用户相信品牌有深度。即使没有企业资料，也可以写品牌从困难中走来、始终坚持好产品、最终被市场看见。服装品牌不需要拆太多组织方法，故事越完整越能打动人。
+    mechanism_chain:
+    - abstract_value_word -> invented_origin_history
+    - missing_proof_slot -> fabricated_enterprise_depth
+    - generic_mission -> unsupported_market_result
+    apparel_domain_anchors:
+    - 初心
+    - 使命
+    - 热爱
+    - 长期主义
+    - 行业领先
+    output_effect: 错误地把企业叙事写成抽象价值和虚构历史，制造品牌事实风险。
+    failure_signal: 没有问题场景、组织性方法、证明槽位和可观察价值，只用格局词填补企业叙事。
+    repair_instruction_if_failed: 删除困难、坚持、被市场看见等无依据桥段，改为通用问题场景与待补依据清单。
+  epistemic_contract:
+    observation_statements:
+    - 正文没有可观察服装对象或组织方法。
+    - 正文把价值词当成企业证明。
+    method_claims:
+    - 错误声称企业叙事可以脱离资料。
+    - 错误声称故事完整性高于证明槽位。
+    creative_hypotheses:
+    - 用格局词替代企业方法。
+    source_required_claims:
+    - 困难经历
+    - 市场看见
+    - 行业领先
+    - 始终坚持好产品
+    prohibited_claims:
+    - 无来源企业逆境
+    - 无来源行业地位
+    - 无来源经营结果
+    downgrade_paths:
+    - 完整企业故事 -> 禁止通过
+    - 抽象使命 -> 主题提示
+    - 无来源经营结果 -> 删除
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-101_GENERIC_ORIGIN_MYTH
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_generic_origin_myth
+    - anti_hallucination_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC007-BDR-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_007
+  cluster_title: 企业叙事骨架
+  cluster_owner: P0-01
+  source_cluster_refs: *id001
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把企业叙事骨架补写成真实品牌起源、创始人经历、扩张节点或行业地位。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id005
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 企业叙事可以先从“品牌长期解决什么选择难题”进入，再连接版型、面料、系列和门店解释方式。若材料中有复核节点、角色协作或系列结构，可以把它们作为组织性方法的证明槽位；若材料只有一句“长期做好衣服”，则只能保留为价值方向，不能继续写成企业历程。当前文本接近可用，但仍把“多年积累”和“被用户认可”写得过重；这两类表达只有在有明确依据时才可进入，否则应降级为方法说明和待补依据问题。
+    mechanism_chain:
+    - enterprise_problem -> operating_method
+    - operating_method -> proof_slot
+    - unsupported_history_claim -> repair_required
+    - value_direction -> evidence_question
+    apparel_domain_anchors:
+    - 版型复核
+    - 面料选择
+    - 系列结构
+    - 门店解释
+    - 角色协作
+    output_effect: 接近合格：已有企业叙事骨架，但部分历史与认可表达需要降级或补依据。
+    failure_signal: 出现多年积累、被用户认可等高强度表达，但没有说明需要额外依据。
+    repair_instruction_if_failed: 保留问题—方法—证明链，把多年积累和用户认可改为仅在有依据时使用。
+  epistemic_contract:
+    observation_statements:
+    - 复核节点、角色协作和系列结构可作为组织方法线索。
+    - 一句价值方向不足以证明企业历程。
+    method_claims:
+    - 企业叙事骨架可保留，但历史类表达必须补依据。
+    creative_hypotheses:
+    - 选择难题可以作为企业叙事入口。
+    source_required_claims:
+    - 多年积累
+    - 用户认可
+    - 真实企业历程
+    prohibited_claims:
+    - 无依据长期积累
+    - 无依据用户认可
+    downgrade_paths:
+    - 历史表达 -> 方法说明
+    - 用户认可 -> 待补依据问题
+    - 长期价值 -> 主题方向
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_007
+    - GRCF-107_ORGANIZATIONAL_METHOD_REPAIR
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC008-POS-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_008
+  cluster_title: 证明槽位与价值转译
+  cluster_owner: P0-01
+  source_cluster_refs: &id006
+  - W2-P0-01-RS01-CL02
+  - W2-P0-01-RS02-CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把角色、流程、质量门或供应链选择写成真实供应商、真实认证、真实检测结果或产品效果。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id007
+    - organization_role -> process_node
+    - process_node -> quality_gate
+    - supply_chain_choice -> constraint
+    - constraint -> method_credibility
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 证明槽位不是给价值词找装饰，而是把“为什么这样做”拆成可核对的叙事位置。角色槽位说明谁在做判断，例如设计、版型、陈列、导购等通用角色；流程槽位说明判断发生在哪个节点，例如选料、打样、试穿、复核、上架前调整；质量门槽位说明哪里需要停下来确认；约束槽位说明为什么不能只追求好看或好卖。价值转译只能从这些槽位向外推一层：把“复核”转成稳定性意识，把“取舍”转成适用场景意识，把“交接”转成服务一致性意识。没有证据的槽位不能转译成耐穿、权威认证、销量结果或行业评价。
+    mechanism_chain:
+    - organization_role -> process_node
+    - process_node -> quality_gate
+    - supply_chain_choice -> constraint
+    - constraint -> method_credibility
+    - proof_slot -> value_expression
+    apparel_domain_anchors:
+    - 设计角色
+    - 版型角色
+    - 陈列角色
+    - 导购角色
+    - 选料节点
+    - 打样节点
+    - 试穿节点
+    - 复核门
+    output_effect: 让企业价值表达从可证明槽位出发，避免把抽象价值直接写成产品效果或经营事实。
+    failure_signal: 正文直接说品质好、供应链强、专业可靠，却没有角色、流程、质量门和约束说明。
+    repair_instruction_if_failed: 为每个价值判断补证明槽位；无法补槽位的价值词降级为待补依据问题。
+  epistemic_contract:
+    observation_statements:
+    - 角色、流程、质量门和约束是通用证明槽位。
+    - 证明槽位只能支持方法可信度，不能自动支持产品效果。
+    method_claims:
+    - 价值转译应从证明槽位向外推一层。
+    - 无槽位价值词应降级为待补依据问题。
+    creative_hypotheses:
+    - 同一流程节点可转译为稳定性、适配性或服务一致性等不同价值。
+    source_required_claims:
+    - 真实供应商
+    - 真实认证
+    - 真实检测结果
+    - 真实质检结论
+    - 真实销售结果
+    prohibited_claims:
+    - 无来源认证
+    - 无来源耐用结论
+    - 无来源供应链事实
+    - 无来源品质保证
+    downgrade_paths:
+    - 产品效果 -> 方法可信度
+    - 供应链事实 -> 约束槽位
+    - 认证背书 -> 待补依据问题
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - proof_slot_taxonomy
+    - value_translation
+    - process_node_to_quality_gate
+    - overclaim_downgrade
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC008-ANTI-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_008
+  cluster_title: 证明槽位与价值转译
+  cluster_owner: P0-01
+  source_cluster_refs: *id006
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把角色、流程、质量门或供应链选择写成真实供应商、真实认证、真实检测结果或产品效果。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id007
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 只要写出品牌有严格工艺、优质供应链、资深团队和层层把关，就可以证明衣服更耐穿、更舒适、更高级。用户不需要知道具体流程，只要感受到专业就够了。即使没有公开资料，也可以把“复核”“精选”“严选”这些词转译成品质保证。
+    mechanism_chain:
+    - generic_quality_word -> unsupported_effect_claim
+    - missing_process_node -> fake_quality_gate
+    - abstract_professionalism -> product_result
+    apparel_domain_anchors:
+    - 严格工艺
+    - 优质供应链
+    - 资深团队
+    - 层层把关
+    - 严选
+    output_effect: 错误地把证明槽位写成空泛背书，并把方法词升级为产品效果承诺。
+    failure_signal: 没有角色、节点、质量门和约束，却直接推出耐穿、舒适、高级。
+    repair_instruction_if_failed: 删除产品效果承诺，补角色、节点、质量门、约束；无证据的供应链与团队信息不得保留。
+  epistemic_contract:
+    observation_statements:
+    - 正文没有可核对流程节点。
+    - 正文把专业感等同于产品结果。
+    method_claims:
+    - 错误声称价值转译可以跳过证明槽位。
+    creative_hypotheses:
+    - 用精选、严选等词替代证明。
+    source_required_claims:
+    - 优质供应链
+    - 资深团队
+    - 耐穿结果
+    - 舒适结果
+    - 品质保证
+    prohibited_claims:
+    - 无来源供应链背书
+    - 无来源品质保证
+    - 无来源性能承诺
+    downgrade_paths:
+    - 效果承诺 -> 禁止通过
+    - 专业感 -> 证明槽位需求
+    - 严选词 -> 删除或补依据
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-102_PROOF_SLOT_OVERCLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_proof_slot_overclaim
+    - anti_hallucination_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC008-BDR-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_008
+  cluster_title: 证明槽位与价值转译
+  cluster_owner: P0-01
+  source_cluster_refs: *id006
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把角色、流程、质量门或供应链选择写成真实供应商、真实认证、真实检测结果或产品效果。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id007
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 证明槽位可以把角色分工、流程节点和质量门连接到价值表达。比如版型复核可以支持“结构被反复确认”的方法说明，陈列调整可以支持“前台呈现经过取舍”的方法说明，导购解释可以支持“表达更接近选择场景”的方法说明。当前文本的问题是把这些方法说明继续写成“更耐穿、更专业、更值得信赖”；这一步需要额外依据。修复时应保留槽位链，把强结果词改为“可观察到的处理意识”或“需要补依据的问题”。
+    mechanism_chain:
+    - role_slot -> process_node
+    - process_node -> quality_gate
+    - quality_gate -> method_value
+    - unsupported_result_word -> repair_required
+    apparel_domain_anchors:
+    - 版型复核
+    - 陈列调整
+    - 导购解释
+    - 前台呈现
+    - 选择场景
+    output_effect: 接近合格：证明槽位链成立，但价值转译强度偏高，需要降级。
+    failure_signal: 方法槽位后接更耐穿、更专业、更值得信赖等未被证明的强结论。
+    repair_instruction_if_failed: 把强结论改为处理意识、取舍依据或待补依据问题。
+  epistemic_contract:
+    observation_statements:
+    - 版型复核和陈列调整可支持方法说明。
+    - 方法说明不等同于产品效果。
+    method_claims:
+    - 证明槽位可保留，强价值词需按证据降级。
+    creative_hypotheses:
+    - 可用“处理意识”替代“品质保证”。
+    source_required_claims:
+    - 更耐穿
+    - 更专业
+    - 更值得信赖
+    prohibited_claims:
+    - 无依据效果结论
+    - 无依据权威评价
+    downgrade_paths:
+    - 强价值结论 -> 方法说明
+    - 品质保证 -> 质量门描述
+    - 信任结果 -> 待补依据问题
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_008
+    - GRCF-108_SOURCE_REQUIRED_VALUE_REPAIR
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC009-POS-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_009
+  cluster_title: 故事弧线适用边界
+  cluster_owner: P0-01
+  source_cluster_refs: &id008
+  - W2-P0-01-RS02-CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用叙事弧线补写材料中不存在的人物、时间、地点、品牌历程、经营结果或顾客反馈。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id009
+    - story_arc -> required_proof_intensity
+    - story_arc -> compatible_value_expression
+    - story_arc -> forbidden_fact_zone
+    - arc_mismatch -> source_gap_or_downgrade
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 故事弧线应由材料的问题类型决定，而不是由写作者想要的情绪决定。若材料展示的是一个服装对象的结构差异，例如领型、腰线、门襟、面料肌理，适合使用“结构说明弧线”：从可见差异进入，解释取舍逻辑，再停在可观察价值。若材料展示的是连续处理过程，例如修改版型、比较面料、调整陈列、确认搭配比例，适合使用“选择过程弧线”：先提出需要解决的选择问题，再展示取舍顺序，最后说明选择被如何收束。若材料只包含价值词或单张无上下文图片，不应展开成困境、坚持、转折、结果，只能降级为观察问题或补依据清单。弧线越强，需要的证明越强。
+    mechanism_chain:
+    - material_problem_type -> story_arc_selection
+    - story_arc_selection -> required_proof_intensity
+    - required_proof_intensity -> compatible_value_expression
+    - arc_mismatch -> downgrade_to_observation_or_question
+    apparel_domain_anchors:
+    - 领型
+    - 腰线
+    - 门襟
+    - 面料肌理
+    - 版型修改
+    - 面料比较
+    - 陈列调整
+    - 搭配比例
+    output_effect: 让内容生成先判断材料适合结构说明、选择过程还是观察问题，避免弱材料承担强故事。
+    failure_signal: 把单张图片、价值词或局部细节扩写成完整品牌历程。
+    repair_instruction_if_failed: 删除无依据的经历、转折和结果，改为可见差异、取舍逻辑和待补依据问题。
+  epistemic_contract:
+    observation_statements:
+    - 结构差异支持结构说明弧线。
+    - 连续处理过程支持选择过程弧线。
+    - 价值词本身不支持完整故事。
+    method_claims:
+    - 故事弧线必须绑定材料问题类型和证明强度。
+    - 证据不足时应降级为观察问题。
+    creative_hypotheses:
+    - 同一组搭配比例材料可写成结构说明，也可在有过程证据时写成选择过程。
+    source_required_claims:
+    - 真实品牌起源
+    - 真实里程碑
+    - 真实创始人经历
+    - 真实组织选择
+    - 真实供应链证明
+    prohibited_claims:
+    - 无来源逆袭故事
+    - 无来源传承故事
+    - 无来源行业见证
+    - 无来源顾客反馈
+    downgrade_paths:
+    - 完整故事 -> 结构说明
+    - 人物经历 -> 方法观察
+    - 品牌历史 -> 待补依据问题
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - story_arc_selection
+    - evidence_strength_boundary
+    - downgrade_path
+    - non_boilerplate_content_method
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC009-ANTI-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_009
+  cluster_title: 故事弧线适用边界
+  cluster_owner: P0-01
+  source_cluster_refs: *id008
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用叙事弧线补写材料中不存在的人物、时间、地点、品牌历程、经营结果或顾客反馈。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id009
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 服装故事最好都按起点、困难、坚持、转折、被看见来写。即使只有一张细节图，也能写成多年坚持后的结果；即使没有过程材料，也可以通过传承、热爱、初心来补足情绪。故事弧线的作用就是让内容更动人，不必被材料限制。
+    mechanism_chain:
+    - fixed_story_formula -> fabricated_arc
+    - static_detail -> unsupported_long_term_story
+    - missing_process -> invented_persistence
+    apparel_domain_anchors:
+    - 起点
+    - 困难
+    - 坚持
+    - 转折
+    - 传承
+    - 初心
+    output_effect: 错误地用固定故事公式覆盖材料强度，诱发虚构品牌历史与人物经历。
+    failure_signal: 没有材料问题类型、证明强度、适用弧线和降级路径。
+    repair_instruction_if_failed: 删除固定故事桥段，把正文改成材料问题类型判断和可见对象说明。
+  epistemic_contract:
+    observation_statements:
+    - 正文没有区分结构细节、过程材料和外部依据。
+    method_claims:
+    - 错误声称故事弧线不受材料限制。
+    creative_hypotheses:
+    - 用情绪补缺失证据。
+    source_required_claims:
+    - 多年坚持
+    - 传承经历
+    - 困难转折
+    - 被看见结果
+    prohibited_claims:
+    - 无来源长期坚持
+    - 无来源传承
+    - 无来源成长史
+    downgrade_paths:
+    - 固定故事公式 -> 拒绝
+    - 无依据经历 -> 删除
+    - 情绪词 -> 观察问题
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-103_UNSUPPORTED_STORY_ARC
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_unsupported_story_arc
+    - anti_hallucination_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC009-BDR-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_009
+  cluster_title: 故事弧线适用边界
+  cluster_owner: P0-01
+  source_cluster_refs: *id008
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用叙事弧线补写材料中不存在的人物、时间、地点、品牌历程、经营结果或顾客反馈。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id009
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 故事弧线可以先判断材料属于结构差异、选择过程还是价值方向。若材料包含打样比较、面料取舍、版型调整或陈列改动，可以使用选择过程弧线；若只有静态细节，则更适合结构说明弧线。当前文本已经能区分两类材料，但仍把“长期坚持”“行业见证”放入选择过程之后，造成证明强度跳跃。修复时应保留过程弧线，把长期类表达改成“仅在有明确依据时使用”，否则收束为选择如何被确认。
+    mechanism_chain:
+    - material_type -> arc_selection
+    - process_evidence -> choice_process_arc
+    - static_detail -> structure_explanation_arc
+    - unsupported_long_term_claim -> repair_required
+    apparel_domain_anchors:
+    - 打样比较
+    - 面料取舍
+    - 版型调整
+    - 陈列改动
+    - 静态细节
+    output_effect: 接近合格：材料与弧线匹配基本成立，但长期类表达需要限制。
+    failure_signal: 选择过程之后出现长期坚持、行业见证等高强度叙事，却没有依据要求。
+    repair_instruction_if_failed: 保留选择过程弧线，把长期坚持和行业见证降级为待补依据问题。
+  epistemic_contract:
+    observation_statements:
+    - 过程材料支持选择过程弧线。
+    - 静态细节只支持结构说明。
+    method_claims:
+    - 弧线选择正确，但强叙事词需要证据约束。
+    creative_hypotheses:
+    - 选择如何被确认可成为内容入口。
+    source_required_claims:
+    - 长期坚持
+    - 行业见证
+    - 品牌成长史
+    prohibited_claims:
+    - 无依据长期叙事
+    - 无依据行业见证
+    downgrade_paths:
+    - 长期叙事 -> 选择过程
+    - 行业见证 -> 方法说明
+    - 成长史 -> 可见变化说明
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_009
+    - GRCF-109_SOURCE_REQUIRED_STORY_CLAIM_REPAIR
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC010-POS-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_010
+  cluster_title: 反模板叙事锚点
+  cluster_owner: P0-01
+  source_cluster_refs: &id010
+  - W2-P0-01-RS03-CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把锚点写成真实门店、真实顾客或真实员工事实；锚点只能描述通用可观察对象、动作、约束与节点。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id011
+    - anchor_object -> anchor_action
+    - anchor_action -> visible_cue
+    - constraint -> tradeoff_expression
+    - process_node -> narrative_sceneability
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 反模板叙事的锚点由四类信息共同组成。对象锚点说明画面里可被指出的服装部位或陈列对象，例如领口、袖口、腰线、门襟、叠装层次、挂通色组；动作锚点说明对象如何被处理，例如整理、翻折、对比、递示、试穿、转身；约束锚点说明表达为什么不能任意放大，例如光线会影响颜色观感，层搭会影响轮廓关系，场景会影响单品任务；节点锚点说明内容从哪个时刻切入，例如上身前、整理中、对比后、陈列完成时。只有锚点组合能回答“看见什么、怎样处理、受什么限制、从哪里切入”，抽象词才有落点。
+    mechanism_chain:
+    - abstract_style_word -> anchor_requirement
+    - anchor_object -> anchor_action
+    - anchor_action -> visible_cue
+    - constraint -> tradeoff_expression
+    - process_node -> narrative_sceneability
+    apparel_domain_anchors:
+    - 领口
+    - 袖口
+    - 腰线
+    - 门襟
+    - 叠装层次
+    - 挂通色组
+    - 翻折
+    - 递示
+    output_effect: 让内容从风格口号回到可观察对象、动作、约束和节点，提升非模板化表达密度。
+    failure_signal: 只有高级、松弛、日常、有质感等抽象词，没有对象、动作、约束和节点。
+    repair_instruction_if_failed: 为每个抽象风格词补一个可见对象和一个动作或约束；无法补充时降级为素材采集问题。
+  epistemic_contract:
+    observation_statements:
+    - 服装部位、陈列对象和门店动作可作为锚点。
+    - 光线、层搭、场景会限制表达强度。
+    method_claims:
+    - 抽象风格词必须回落到锚点组合。
+    - 锚点组合决定内容是否具备反模板基础。
+    creative_hypotheses:
+    - 同一件外套可因翻折、递示或转身动作不同形成不同叙事入口。
+    source_required_claims:
+    - 真实顾客感受
+    - 真实员工动作记录
+    - 真实门店事件
+    prohibited_claims:
+    - 用口号替代观察
+    - 用真实人物作为默认锚点
+    - 用真实顾客反应证明风格
+    downgrade_paths:
+    - 抽象风格词 -> 对象锚点
+    - 情绪判断 -> 动作观察
+    - 审美结论 -> 约束说明
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - anti_template_content
+    - observable_anchor
+    - anchor_action_constraint
+    - non_boilerplate_rich_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC010-ANTI-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_010
+  cluster_title: 反模板叙事锚点
+  cluster_owner: P0-01
+  source_cluster_refs: *id010
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把锚点写成真实门店、真实顾客或真实员工事实；锚点只能描述通用可观察对象、动作、约束与节点。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id011
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 反模板就是把文案写得更松弛、更高级、更自然。少讲服装细节，多讲氛围、温柔、被理解和治愈感，文字就不会像模板。用户看完觉得舒服才是关键，不需要把袖口、领口、动作和场景限制拆得太细。
+    mechanism_chain:
+    - abstract_style_word -> abstract_style_word
+    - missing_anchor_object -> empty_aesthetic_claim
+    - missing_action -> unsupported_audience_effect
+    apparel_domain_anchors:
+    - 松弛
+    - 高级
+    - 自然
+    - 温柔
+    - 治愈感
+    output_effect: 错误地把反模板理解为更换形容词，并引入无依据心理效果。
+    failure_signal: 没有对象、动作、约束、节点，只有审美词和用户心理推断。
+    repair_instruction_if_failed: 删除空泛风格词和心理推断，补可见对象、动作、约束或节点。
+  epistemic_contract:
+    observation_statements:
+    - 正文缺少服装对象和动作。
+    - 正文用心理效果替代可观察变化。
+    method_claims:
+    - 错误声称细节会削弱反模板表达。
+    creative_hypotheses:
+    - 用治愈感替代锚点机制。
+    source_required_claims:
+    - 用户觉得舒服
+    - 用户被理解
+    - 用户被治愈
+    prohibited_claims:
+    - 无来源心理反应
+    - 无对象锚点的审美结论
+    - 无动作锚点的内容节奏
+    downgrade_paths:
+    - 情绪词堆叠 -> 拒绝
+    - 心理推断 -> 删除
+    - 抽象审美 -> 补锚点
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_abstract_style_word_stack
+    - anti_hallucination_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC010-BDR-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_010
+  cluster_title: 反模板叙事锚点
+  cluster_owner: P0-01
+  source_cluster_refs: *id010
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把锚点写成真实门店、真实顾客或真实员工事实；锚点只能描述通用可观察对象、动作、约束与节点。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id011
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 反模板叙事已经可以从领口、袖口、面料纹理、挂通色组等对象进入，再接整理、翻折、对比、转身等动作，并说明光线、层搭、场景对表达的限制。当前文本的问题是仍保留“让人觉得被照顾”“让用户产生信任”这类心理结论。修复时应把这些句子改成观看路径或可见变化，例如先看到袖口翻折，再看到内搭露出的比例变化；先看到挂通色组，再看到主色与辅助色的区分。
+    mechanism_chain:
+    - anchor_object -> anchor_action
+    - anchor_action -> visible_cue
+    - constraint -> tradeoff_expression
+    - audience_psychology_claim -> repair_to_viewing_path
+    apparel_domain_anchors:
+    - 领口
+    - 袖口
+    - 面料纹理
+    - 挂通色组
+    - 翻折
+    - 层搭
+    - 比例变化
+    output_effect: 接近合格：对象、动作和约束成立，但心理效果推断需要改成观看路径。
+    failure_signal: 出现让用户产生信任、被照顾、被打动等心理结论。
+    repair_instruction_if_failed: 保留锚点链，把心理推断改为观看顺序、视觉路径或结构变化。
+  epistemic_contract:
+    observation_statements:
+    - 袖口、纹理、挂通色组是可见对象。
+    - 整理、翻折、对比是可见动作。
+    method_claims:
+    - 心理推断应改为观看路径。
+    creative_hypotheses:
+    - 观看路径可以替代未经证明的用户心理反应。
+    source_required_claims:
+    - 用户产生信任
+    - 用户被照顾
+    - 用户被打动
+    prohibited_claims:
+    - 无来源心理反应
+    - 无来源顾客感受
+    downgrade_paths:
+    - 心理推断 -> 观看路径
+    - 用户感受 -> 可见变化
+    - 情绪结论 -> 对象动作关系
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_010
+    - GRCF-110_AUDIENCE_PSYCHOLOGY_REPAIR
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC011-POS-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_011
+  cluster_title: 叙事放大禁区与风险路由
+  cluster_owner: P0-01
+  source_cluster_refs: &id012
+  - W2-P0-01-RS03-CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把荣誉、排名、认证、顾客反馈、授权、效果承诺等高风险信号包装成安全的品牌故事。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id013
+    - risk_zone -> routing_target
+    - authority_signal -> evidence_requirement
+    - instance_fact_dependency -> source_gap
+    - sensitive_promise -> founder_review
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 叙事放大禁区用于判断哪些表达不能被继续美化。第一类是权威信号，例如排名、认证、奖项、行业地位；它们只能在有明确依据时出现，否则应删除或改成方法层描述。第二类是实例事实，例如顾客反馈、员工经历、门店事件、供应链节点；它们不能被泛化为通用品牌故事。第三类是结果承诺，例如更显瘦、更耐穿、更舒适、更受欢迎；没有证据时只能降为观察词或选择建议。第四类是敏感背书，例如授权、隐私、内部流程；边界不清时不得进入对外表达。该机制的目标不是把风险句改得更安全，而是先决定删除、降级、补依据或升级为裁决项。
+    mechanism_chain:
+    - risk_zone -> routing_target
+    - authority_signal -> evidence_requirement
+    - instance_fact_dependency -> evidence_question
+    - sensitive_promise -> decision_required
+    apparel_domain_anchors:
+    - 排名
+    - 认证
+    - 奖项
+    - 顾客反馈
+    - 员工经历
+    - 门店事件
+    - 更显瘦
+    - 更耐穿
+    output_effect: 让企业叙事先识别放大禁区，再决定删除、降级、补依据或进入裁决项。
+    failure_signal: 把权威、实例事实、结果承诺和授权信息写成安全的品牌表达。
+    repair_instruction_if_failed: 将高风险表达拆成风险区、依据需求和处理动作；不能补依据的内容删除或降级。
+  epistemic_contract:
+    observation_statements:
+    - 权威信号、实例事实、结果承诺和敏感背书属于不同风险区。
+    - 实例事实不能泛化为通用故事。
+    method_claims:
+    - 风险句应先分区，再决定删除、降级、补依据或裁决。
+    creative_hypotheses:
+    - 同一句“被认可”可拆成权威背书、顾客反馈或经营结果三种不同风险。
+    source_required_claims:
+    - 真实排名
+    - 真实认证
+    - 真实顾客反馈
+    - 真实授权
+    - 真实检测结果
+    prohibited_claims:
+    - 无来源行业地位
+    - 无来源顾客评价
+    - 无来源授权背书
+    - 无来源结果承诺
+    downgrade_paths:
+    - 权威信号 -> 依据需求
+    - 实例事实 -> 删除或补依据
+    - 结果承诺 -> 观察词
+    - 敏感背书 -> 裁决项
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - narrative_risk_zone
+    - amplification_boundary
+    - forbidden_claim_route
+    - downgrade_condition
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC011-ANTI-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_011
+  cluster_title: 叙事放大禁区与风险路由
+  cluster_owner: P0-01
+  source_cluster_refs: *id012
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把荣誉、排名、认证、顾客反馈、授权、效果承诺等高风险信号包装成安全的品牌故事。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id013
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 品牌叙事要敢于放大优势。可以多写行业领先、很多顾客认可、专业团队背书、品质经得住考验、上身效果更好，这样才能让用户建立信任。即使没有具体依据，也可以把这些表达处理得委婉一些，让它们听起来不像硬承诺。
+    mechanism_chain:
+    - authority_word -> trust_claim
+    - customer_phrase -> unsupported_feedback
+    - effect_word -> disguised_promise
+    apparel_domain_anchors:
+    - 行业领先
+    - 顾客认可
+    - 专业团队
+    - 品质经得住考验
+    - 上身效果更好
+    output_effect: 错误地把高风险叙事放大词伪装成委婉表达，仍然制造无依据背书。
+    failure_signal: 没有识别权威信号、实例事实、结果承诺和敏感背书，只尝试改写语气。
+    repair_instruction_if_failed: 删除或降级所有无依据权威、反馈、授权和结果承诺，改为观察词或待补依据问题。
+  epistemic_contract:
+    observation_statements:
+    - 正文包含权威、反馈和效果类风险信号。
+    method_claims:
+    - 错误声称委婉语气能降低无依据 claim 风险。
+    creative_hypotheses:
+    - 用委婉表达包装强背书。
+    source_required_claims:
+    - 行业领先
+    - 顾客认可
+    - 专业团队背书
+    - 品质经得住考验
+    - 上身效果更好
+    prohibited_claims:
+    - 无来源权威背书
+    - 无来源反馈事实
+    - 无来源效果承诺
+    downgrade_paths:
+    - 委婉强 claim -> 拒绝
+    - 顾客认可 -> 删除
+    - 行业领先 -> 依据需求
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_narrative_risk_amplification
+    - anti_hallucination_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC011-BDR-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_011
+  cluster_title: 叙事放大禁区与风险路由
+  cluster_owner: P0-01
+  source_cluster_refs: *id012
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把荣誉、排名、认证、顾客反馈、授权、效果承诺等高风险信号包装成安全的品牌故事。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id013
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 叙事风险可以先分成权威信号、实例事实、结果承诺和敏感背书。当前文本已经能识别“行业认可”“顾客喜欢”“品质可靠”这些高风险词，但处理方式仍偏软，只写成“谨慎使用”。修复时应把每一类词改成明确动作：行业认可需要依据，否则删除；顾客喜欢属于实例反馈，不能泛化；品质可靠需要证明类型，否则降为可观察细节；授权和内部流程边界不清时不得进入对外表达。
+    mechanism_chain:
+    - risk_word -> risk_zone
+    - risk_zone -> required_action
+    - unsupported_authority -> delete_or_evidence_question
+    - unsupported_effect -> downgrade_to_observation
+    apparel_domain_anchors:
+    - 行业认可
+    - 顾客喜欢
+    - 品质可靠
+    - 可观察细节
+    - 内部流程
+    output_effect: 接近合格：风险区识别成立，但处理动作必须从谨慎使用改为删除、降级、补依据或裁决。
+    failure_signal: 只写谨慎使用，没有明确处理动作和依据要求。
+    repair_instruction_if_failed: 为每类风险词补 route_target：删除、降级、补依据、裁决项。
+  epistemic_contract:
+    observation_statements:
+    - 行业认可、顾客喜欢、品质可靠属于不同风险区。
+    method_claims:
+    - 风险区识别后必须绑定动作，而不是只提醒谨慎。
+    creative_hypotheses:
+    - 品质可靠可降为细节观察而非结果判断。
+    source_required_claims:
+    - 行业认可
+    - 顾客喜欢
+    - 品质可靠
+    - 授权边界
+    prohibited_claims:
+    - 无依据认可
+    - 无依据反馈
+    - 无依据品质结论
+    downgrade_paths:
+    - 谨慎使用 -> 明确动作
+    - 品质可靠 -> 可观察细节
+    - 顾客喜欢 -> 删除或补依据
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_011
+    - GRCF-111_RISK_ZONE_DOWNGRADE_REPAIR
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC012-POS-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_012
+  cluster_title: 系列轴与跨形态资产单元
+  cluster_owner: P0-01
+  source_cluster_refs: &id014
+  - W2-P0-01-RS04-CL01
+  - W2-P0-01-RS04-CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把系列轴写成发布排期、增长策略、直接成稿任务单或无证明节奏的价值宣讲。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id015
+    - master_narrative -> series_axis
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - sequence_order -> repetition_control
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 系列轴不是发布排期，而是把同一套企业叙事拆成可连续验证的内容单元。轴的选择应先看主叙事依赖什么证明：若依赖组织方法，可按流程节点拆；若依赖系列主题，可按场景任务拆；若依赖服装选择逻辑，可按品类角色、面料取舍、版型变化或陈列关系拆。每个单元只能承担一个证明任务，并与前后单元形成递进或对照，避免反复重复同一句价值。跨形态资产单元应保留同一轴心，但允许图文、短视频、门店讲解、培训提示使用不同表达密度。没有
+      proof cadence 的系列轴只会变成口号连载。
+    mechanism_chain:
+    - master_narrative -> series_axis
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - sequence_order -> repetition_control
+    apparel_domain_anchors:
+    - 流程节点
+    - 场景任务
+    - 品类角色
+    - 面料取舍
+    - 版型变化
+    - 陈列关系
+    - 图文
+    - 短视频
+    output_effect: 让企业叙事从单篇内容扩展为有证明节奏的系列资产，而不是重复价值词。
+    failure_signal: 系列只是一组标题或发布顺序，没有证明任务、单元边界和去重复机制。
+    repair_instruction_if_failed: 为每个单元补证明任务、资产形态、前后关系和停止重复条件。
+  epistemic_contract:
+    observation_statements:
+    - 系列轴可按流程、场景、品类角色或陈列关系拆分。
+    - 跨形态资产可共享轴心但表达密度不同。
+    method_claims:
+    - 每个 episode_unit 只承担一个证明任务。
+    - 序列顺序应控制重复。
+    creative_hypotheses:
+    - 同一主题可拆成门店讲解、图文清单和短视频动作三个资产单元。
+    source_required_claims:
+    - 真实内容排期
+    - 真实发布数据
+    - 真实增长结果
+    - 真实品牌系列主题
+    prohibited_claims:
+    - 无证明节奏的价值连载
+    - 直接生成发布任务单
+    - 无依据增长承诺
+    downgrade_paths:
+    - 内容排期 -> 系列轴结构
+    - 价值重复 -> proof slot distribution
+    - 发布任务 -> 资产单元定义
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - series_axis_design
+    - episode_unit_rule
+    - proof_slot_distribution
+    - anti_repetition_sequence
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC012-ANTI-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_012
+  cluster_title: 系列轴与跨形态资产单元
+  cluster_owner: P0-01
+  source_cluster_refs: *id014
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把系列轴写成发布排期、增长策略、直接成稿任务单或无证明节奏的价值宣讲。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id015
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 系列轴就是把一个主题拆成很多篇标题，比如第一篇讲品牌初心，第二篇讲匠心，第三篇讲品质，第四篇讲高级感，第五篇讲用户喜欢。只要排期足够多，品牌印象就会被反复强化。跨形态资产就是把同一段文字改成图文、短视频和朋友圈。
+    mechanism_chain:
+    - theme_word -> repeated_title_list
+    - posting_order -> assumed_brand_memory
+    - same_copy -> multi_format_asset
+    apparel_domain_anchors:
+    - 品牌初心
+    - 匠心
+    - 品质
+    - 高级感
+    - 用户喜欢
+    output_effect: 错误地把系列轴写成标题排期和价值词重复，缺少证明节奏。
+    failure_signal: 没有 series_axis、episode_unit、proof_slot_distribution 和 repetition_control。
+    repair_instruction_if_failed: 删除标题堆叠，为每个单元指定证明任务、对象、形态和前后关系。
+  epistemic_contract:
+    observation_statements:
+    - 正文只是价值词标题列表。
+    method_claims:
+    - 错误声称排期多就能强化品牌印象。
+    creative_hypotheses:
+    - 把同一段文字换平台不等于跨形态资产。
+    source_required_claims:
+    - 用户喜欢
+    - 品牌印象强化
+    - 真实发布排期
+    prohibited_claims:
+    - 无依据用户反馈
+    - 无证明节奏连载
+    - 复制式多形态资产
+    downgrade_paths:
+    - 标题排期 -> 拒绝
+    - 价值重复 -> proof slot distribution
+    - 同文改平台 -> 资产形态重构
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_series_axis_schedule_shell
+    - anti_hallucination_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P001-MKC012-BDR-001
+  batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+  capability_group: P0-01
+  cluster_id: mkc_012
+  cluster_title: 系列轴与跨形态资产单元
+  cluster_owner: P0-01
+  source_cluster_refs: *id014
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: *id002
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把系列轴写成发布排期、增长策略、直接成稿任务单或无证明节奏的价值宣讲。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields: *id004
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id015
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 系列轴可以按流程节点、场景任务或品类角色拆分，每个单元对应一个证明槽位。当前文本已经有“从面料到版型再到陈列”的顺序，但每个单元都在重复“品牌更用心”，导致证明节奏不足。修复时应让面料单元回答材料取舍，版型单元回答结构变化，陈列单元回答前台表达方式；如果没有新的
+      proof slot，就不要再新增一篇，只保留为同一单元的不同形态。
+    mechanism_chain:
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - repeated_value_expression -> repair_required
+    - missing_new_proof_slot -> merge_or_stop
+    apparel_domain_anchors:
+    - 面料单元
+    - 版型单元
+    - 陈列单元
+    - 材料取舍
+    - 结构变化
+    - 前台表达
+    output_effect: 接近合格：已有系列顺序，但需要把重复价值改成证明节奏。
+    failure_signal: 每个单元都重复品牌更用心，缺少独立证明任务。
+    repair_instruction_if_failed: 为每个单元指定唯一证明槽位；没有新证明槽位时合并或停止。
+  epistemic_contract:
+    observation_statements:
+    - 面料、版型、陈列可形成系列顺序。
+    - 重复价值词不能构成 proof cadence。
+    method_claims:
+    - 系列单元必须有独立证明任务。
+    creative_hypotheses:
+    - 同一证明槽位可转成不同形态，但不应强拆成多篇。
+    source_required_claims:
+    - 品牌更用心的证明
+    - 真实系列主题
+    - 发布节奏
+    prohibited_claims:
+    - 重复价值宣讲
+    - 无证明任务拆篇
+    downgrade_paths:
+    - 多篇重复 -> 合并
+    - 价值宣讲 -> proof slot
+    - 无新证据 -> 停止扩展
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_012
+    - GRCF-112_SERIES_PROOF_CADENCE_REPAIR
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true

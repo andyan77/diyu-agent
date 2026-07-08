@@ -1,0 +1,97 @@
+{
+  "task_id": "GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001",
+  "task_category": "corpus_lock_and_normalization",
+  "repo_after": {
+    "branch": "master",
+    "head_before": "09fdb37ce4e47f1d277420f606a44395e5b4132a",
+    "head_after": "recorded_in_git_log_for_this_commit",
+    "worktree_after": "clean"
+  },
+  "files_written": {
+    "added_count": 59,
+    "added_by_area": {
+      "03_grc_goldset_corpus_manifests_readme_schema": 13,
+      "03_grc_goldset_corpus_normalized_copies": 32,
+      "03_grc_goldset_corpus_gitattributes": 1,
+      "ci_checker": 1,
+      "ci_fixtures": 9,
+      "ci_report": 1,
+      "docs_reports": 2
+    },
+    "modified": [],
+    "deleted": []
+  },
+  "crlf_byte_exactness_resolution": {
+    "finding": "repo core.autocrlf=input LF-normalized 6 CRLF sources at git-blob level (5 P0-00 files + expert_review TXT), desyncing committed blob sha256 from source_digest_manifest",
+    "fix": "added 03_grc_goldset_corpus/.gitattributes with 'normalized/** -text'; re-stored blobs verbatim; amended commit",
+    "committed_blob_matches_manifest_sha": "32/32",
+    "founder_approved_allowed_write_expansion": true
+  },
+  "corpus_counts": {
+    "p0_00_case_count": 18,
+    "formal_120_case_count": 120,
+    "positive_gold_count": 40,
+    "anti_gold_count": 40,
+    "borderline_repair_count": 40,
+    "formal_cluster_count": 40,
+    "formal_cluster_range": "mkc_007..mkc_046",
+    "formal_cluster_exactness": "all_clusters_exactly_3",
+    "p0_00_cluster_range": "mkc_001..mkc_006",
+    "p0_00_included_in_formal_120": false
+  },
+  "normalization": {
+    "source_files_count": 32,
+    "normalized_files_count": 32,
+    "source_digest_count": 32,
+    "byte_identity_verified": true,
+    "chinese_filename_replaced_by_ascii": 1,
+    "cluster_count_derived_count": 5,
+    "case_id_rewrite_performed": false,
+    "judgment_rewrite_performed": false
+  },
+  "blocking_gap_ledger": {
+    "evidence_policy_outbox_case_count": 15,
+    "evidence_policy_candidate_case_count": 15,
+    "evidence_policy_same_case_set": true,
+    "evidence_policy_clusters": ["mkc_021", "mkc_026", "mkc_027", "mkc_028", "mkc_044"],
+    "evidence_policy_by_batch": {"P0-03": 12, "P0-05": 3},
+    "silently_mapped_to_general_knowledge_base": false,
+    "resolved_in_this_task": false,
+    "blocks": ["canary_generation", "3600_generation", "CandidatePack", "Four_Gate"],
+    "does_not_block": ["corpus_lock", "normalization", "digest_manifest"],
+    "requires_next_task": "GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001"
+  },
+  "checks": {
+    "checker_live": "PASS",
+    "checker_selftest": "PASS",
+    "checker_python_O_fail_closed": "exit_2_fail_closed",
+    "negative_fixtures_fail_closed": "8/8",
+    "schema_validation_normalized_outputs": "PASS",
+    "readiness_false": true,
+    "forbidden_scope_clean": true,
+    "no_generation_created": true,
+    "tmp_untouched": true,
+    "add_only_no_tracked_modified": true,
+    "committed_blob_matches_manifest_sha": "32/32",
+    "adversarial_verify_6_lens_refuted": "0/6 (all invariants held)"
+  },
+  "declared_status": {
+    "grc_corpus_canonicalized": true,
+    "formal_120_corpus_locked": true,
+    "p0_00_control_plane_corpus_locked": true,
+    "expert_review_13_source_locked": true,
+    "generation_unlocked": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_ready": false,
+    "generation_allowed": false,
+    "readiness_all_false": true
+  },
+  "next_real_action_unlocked": [
+    "GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001"
+  ]
+}

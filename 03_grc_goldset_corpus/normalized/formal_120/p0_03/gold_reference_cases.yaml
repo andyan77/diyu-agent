@@ -1,0 +1,3499 @@
+gold_reference_cases:
+- case_id: GRC-P0-03-MKC020-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_020
+  cluster_title: 品类解释与属性槽位骨架
+  cluster_owner: P0-03
+  source_cluster_refs: &id002
+  - P0-03-RS01-CL01
+  - P0-03-RS01-CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: &id003
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets: &id004
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      品类解释要先确定对象处在服装结构中的位置，再展开属性槽位。上装可以进入领型、袖型、门襟、肩线、衣长、面料表面和穿着层次；下装可以进入腰位、裤长或裙长、裤腿或裙摆轮廓、开衩、褶量和活动空间；连衣类要同时处理上半身连接点、腰线位置、裙摆结构和整体比例；外搭类还要增加开合方式、厚薄层次和内搭容纳关系。这个骨架只说明“可观察什么、可补充什么、哪些表达要停住”，不能替代具体商品资料。若没有款号、价格、库存、上新安排或品牌产品线材料，正文只能保留品类—属性—边界三层，不得把通用品类写成某个品牌正在销售的事实。
+    mechanism_chain: &id001
+    - category_family -> attribute_slot_group
+    - attribute_slot_group -> claim_boundary_entry
+    - category_description -> sku_fact_cutoff
+    - category_slot_gap -> neutral_question_prompt
+    apparel_domain_anchors:
+    - 上装
+    - 下装
+    - 连衣类
+    - 外搭类
+    - 属性槽位
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id005
+    - 上装、下装、连衣类、外搭类可以对应不同属性槽位。
+    - 属性槽位只描述可观察结构与待补字段。
+    method_claims: &id006
+    - 品类解释应按品类—属性—边界组织。
+    - 通用品类方法不得写成品牌商品事实。
+    creative_hypotheses: &id007
+    - 同一品类可以因属性槽位不同形成多种内容入口。
+    source_required_claims: &id008
+    - 真实 SKU
+    - 真实价格
+    - 真实库存
+    - 真实上新节奏
+    - 真实品牌产品线
+    prohibited_claims: &id009
+    - 把通用品类写成具体品牌商品事实
+    - 无依据主推款描述
+    - 无依据库存与价格表达
+    downgrade_paths: &id010
+    - 具体商品事实 -> 品类槽位
+    - 品牌产品线 -> 待补商品资料
+    - 库存价格 -> 删除
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id001
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: &id011
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - category_slot_skeleton
+    - sku_fact_cutoff
+    - attribute_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC020-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_020
+  cluster_title: 品类解释与属性槽位骨架
+  cluster_owner: P0-03
+  source_cluster_refs: *id002
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      品类说明可以直接写成商品清单：某品牌本季衬衫线有三个主推系列，第一组适合通勤，第二组库存充足，第三组价格更划算。连衣裙线今年会围绕法式、度假和轻礼服展开，每一条都能作为门店主推。这样写能让用户快速知道品牌有哪些产品、哪些款更值得买、哪些款后续还会上新。
+    mechanism_chain: *id001
+    apparel_domain_anchors:
+    - 上装
+    - 下装
+    - 连衣类
+    - 外搭类
+    - 属性槽位
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id005
+    method_claims: *id006
+    creative_hypotheses: *id007
+    source_required_claims: *id008
+    prohibited_claims: *id009
+    downgrade_paths: *id010
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id001
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-03-F006_SKU_OR_FACTORY_FACT_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - category_slot_skeleton
+    - sku_fact_cutoff
+    - attribute_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC020-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_020
+  cluster_title: 品类解释与属性槽位骨架
+  cluster_owner: P0-03
+  source_cluster_refs: *id002
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      上装可以拆成领口、肩线、袖型、衣长和面料表面，下装可以拆成腰位、裤腿、裙摆、开衩和长度，外搭可以补充开合方式和层次关系。这个槽位结构本身成立，但正文把“某品牌主推衬衫”和“本季系列”带入了通用品类解释，容易把方法层写成商品事实。修复时应删除品牌主推和系列字样，只保留抽象品类、可观察属性和需要另补商品资料的空位。
+    mechanism_chain: *id001
+    apparel_domain_anchors:
+    - 上装
+    - 下装
+    - 连衣类
+    - 外搭类
+    - 属性槽位
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id005
+    method_claims: *id006
+    creative_hypotheses: *id007
+    source_required_claims: *id008
+    prohibited_claims: *id009
+    downgrade_paths: *id010
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id001
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - category_slot_skeleton
+    - sku_fact_cutoff
+    - attribute_boundary
+    - GRC-P0-03-F006_SKU_OR_FACTORY_FACT_LEAK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC021-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_021
+  cluster_title: 同类比较维度与禁比边界
+  cluster_owner: P0-03
+  source_cluster_refs: &id013
+  - P0-03-RS01-CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: >-
+      同类比较只能比较同一层级中可观察或可记录的差异。两件衬衫可以比较领型、肩线、门襟、衣长、袖口、厚薄观感和面料表面纹理；两条裤子可以比较腰位、裤长、裤腿宽窄、褶量、垂落线和活动空间；两件外套可以比较开合方式、领口结构、内搭容量和层次厚度。比较句必须停在结构差异和使用情境，不得从“更短、更挺、更厚、更宽松”直接推出更舒服、更耐穿、更显瘦、更保暖或更高级。未知项要显示为待补依据，不能用主观判断填补。
+    mechanism_chain: &id012
+    - comparison_dimension -> allowed_observation
+    - comparison_dimension -> prohibited_effect_claim
+    - unknown_comparison_item -> downgrade_expression
+    - comparative_superiority -> source_required_claim
+    apparel_domain_anchors:
+    - 长度
+    - 厚薄
+    - 版型
+    - 可见工艺
+    - 使用场景
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id014
+    - 长度、厚薄、结构、版型和可见工艺可以作为同类比较维度。
+    - 未知项应显示为待补依据。
+    method_claims: &id015
+    - 比较只能停留在可观察维度或有依据维度。
+    - 优劣、效果和性能比较必须降级或补证。
+    creative_hypotheses: &id016
+    - 同类比较可以转化为选择条件说明。
+    source_required_claims: &id017
+    - 耐用比较
+    - 舒适比较
+    - 性能比较
+    - 竞品优劣
+    - 上一代效果比较
+    prohibited_claims: &id018
+    - 无证据更耐穿
+    - 无证据更显瘦
+    - 无证据更舒服
+    - 无证据竞品优劣
+    downgrade_paths: &id019
+    - 效果比较 -> 结构差异
+    - 优劣比较 -> 条件说明
+    - 未知比较 -> 待补依据
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id012
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - comparison_boundary
+    - claim_downgrade
+    - evidence_policy
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC021-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_021
+  cluster_title: 同类比较维度与禁比边界
+  cluster_owner: P0-03
+  source_cluster_refs: *id013
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: >-
+      同类比较应直接告诉用户哪一件更好。较厚的面料当然更保暖，较挺的版型更显瘦，工艺更多的一件更耐穿，价格更高的一件也更高级。对比上一代时可以直接说新款更舒服、更耐洗、更适合所有身材，因为用户需要快速判断哪件更值得买。
+    mechanism_chain: *id012
+    apparel_domain_anchors:
+    - 长度
+    - 厚薄
+    - 版型
+    - 可见工艺
+    - 使用场景
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id014
+    method_claims: *id015
+    creative_hypotheses: *id016
+    source_required_claims: *id017
+    prohibited_claims: *id018
+    downgrade_paths: *id019
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id012
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F005_COMPARISON_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - comparison_boundary
+    - claim_downgrade
+    - evidence_policy
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC021-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_021
+  cluster_title: 同类比较维度与禁比边界
+  cluster_owner: P0-03
+  source_cluster_refs: *id013
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: >-
+      两条同类长裤可以比较腰位、裤长、裤腿宽度、褶量和垂落线，也可以说明一条线条更直，另一条轮廓更放松。问题出在“更直的裤线会更显高”这一句，它把可见线条差异推出身体效果。修复时应改为“裤线更连续，视觉重心更集中”，并把身高、显瘦、遮肉等结果词移出比较正文。
+    mechanism_chain: *id012
+    apparel_domain_anchors:
+    - 长度
+    - 厚薄
+    - 版型
+    - 可见工艺
+    - 使用场景
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id014
+    method_claims: *id015
+    creative_hypotheses: *id016
+    source_required_claims: *id017
+    prohibited_claims: *id018
+    downgrade_paths: *id019
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id012
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - comparison_boundary
+    - claim_downgrade
+    - evidence_policy
+    - GRC-P0-03-F005_COMPARISON_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC022-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_022
+  cluster_title: 面料家族与属性边界
+  cluster_owner: P0-03
+  source_cluster_refs: &id021
+  - P0-03-RS02-CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      面料家族解释要拆成纤维、纱线和面料结构三层。纤维层回答原料类别，纱线层回答捻度、粗细和成纱形态，面料层回答针织、梭织、起绒、提花、罗纹等结构如何形成表面观感。内容可以说明针织更容易呈现线圈感和弹性方向，梭织更容易呈现经纬交织和片状稳定感，但不能因此自动推出透气、保暖、抗皱、耐磨或舒适。手感词只能写成触点观察，结构词可以写成可见组织，性能词必须进入待补依据或降级为非结论表达。
+    mechanism_chain: &id020
+    - fiber_layer -> yarn_layer
+    - yarn_layer -> fabric_structure
+    - fabric_structure -> observable_surface_cue
+    - performance_word -> source_required_claim
+    apparel_domain_anchors:
+    - 纤维
+    - 纱线
+    - 面料结构
+    - 针织
+    - 梭织
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id022
+    - 纤维、纱线和面料结构属于不同层级。
+    - 针织、梭织、起绒和罗纹可形成表面观察入口。
+    method_claims: &id023
+    - 材料解释应先分层，再判断可说边界。
+    - 性能词不能由材料名称直接推出。
+    creative_hypotheses: &id024
+    - 面料结构可以形成镜头细节和内容解释入口。
+    source_required_claims: &id025
+    - 透气表现
+    - 保暖表现
+    - 抗皱表现
+    - 耐磨表现
+    - 长期舒适体验
+    prohibited_claims: &id026
+    - 材料天然更好
+    - 材料默认高端
+    - 无依据性能承诺
+    downgrade_paths: &id027
+    - 性能词 -> 待补依据
+    - 手感结论 -> 触点观察
+    - 材料优劣 -> 结构差异
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id020
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - fiber_yarn_fabric_layering
+    - fabric_structure_boundary
+    - performance_claim_downgrade
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC022-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_022
+  cluster_title: 面料家族与属性边界
+  cluster_owner: P0-03
+  source_cluster_refs: *id021
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      面料家族本身就能说明品质。羊毛天然更保暖，棉麻一定更透气，真丝一定更高级，梭织一定更挺括，针织一定更舒服。只要知道材料名称，就可以判断这件衣服是否耐穿、是否抗皱、是否适合长时间穿着，不需要再看结构、场景或其他依据。
+    mechanism_chain: *id020
+    apparel_domain_anchors:
+    - 纤维
+    - 纱线
+    - 面料结构
+    - 针织
+    - 梭织
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id022
+    method_claims: *id023
+    creative_hypotheses: *id024
+    source_required_claims: *id025
+    prohibited_claims: *id026
+    downgrade_paths: *id027
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id020
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F004_MATERIAL_PROPERTY_OVERGENERALIZATION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - fiber_yarn_fabric_layering
+    - fabric_structure_boundary
+    - performance_claim_downgrade
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC022-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_022
+  cluster_title: 面料家族与属性边界
+  cluster_owner: P0-03
+  source_cluster_refs: *id021
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      正文已经区分了纤维、纱线和面料结构，也能说明针织线圈、梭织经纬、起绒表面和罗纹组织这些观察入口。问题是把“表面孔隙更明显”直接写成“透气性更好”。修复时应改为“表面空隙更容易被镜头捕捉，透气表现需要另有依据”，把性能词从方法正文中降级出去。
+    mechanism_chain: *id020
+    apparel_domain_anchors:
+    - 纤维
+    - 纱线
+    - 面料结构
+    - 针织
+    - 梭织
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id022
+    method_claims: *id023
+    creative_hypotheses: *id024
+    source_required_claims: *id025
+    prohibited_claims: *id026
+    downgrade_paths: *id027
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id020
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - fiber_yarn_fabric_layering
+    - fabric_structure_boundary
+    - performance_claim_downgrade
+    - GRC-P0-03-F004_MATERIAL_PROPERTY_OVERGENERALIZATION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC023-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_023
+  cluster_title: 颜色表达与视觉解释边界
+  cluster_owner: P0-03
+  source_cluster_refs: &id029
+  - P0-03-RS02-CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      颜色表达应从色相、明度、纯度、冷暖倾向和色彩家族进入，再连接镜头条件。米色、灰色、黑色、藏蓝、卡其等可以作为色彩家族或中性色入口；偏冷、偏暖、偏灰、偏亮只能说明视觉方向。室内暖光、自然光、逆光和手机白平衡都会改变颜色观感，所以正文应使用“在某种光线下呈现”“画面中更接近”“与相邻颜色形成对比”等条件句。颜色故事不能推出显白、显瘦、显气色、色牢度、耐洗或染色结果。
+    mechanism_chain: &id028
+    - color_dimension -> visual_observation
+    - lighting_condition -> color_perception_shift
+    - color_story -> quality_claim_cutoff
+    - complexion_effect_word -> downgrade_expression
+    apparel_domain_anchors:
+    - 色相
+    - 明度
+    - 纯度
+    - 冷暖
+    - 光线
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id030
+    - 色相、明度、纯度、冷暖和中性色可以描述颜色方向。
+    - 光线和白平衡会改变颜色观感。
+    method_claims: &id031
+    - 颜色表达要带条件，不承诺身体或肤色结果。
+    - 颜色故事不得替代品质或染色证明。
+    creative_hypotheses: &id032
+    - 颜色可作为画面层次和系列氛围的入口。
+    source_required_claims: &id033
+    - 色牢度
+    - 耐洗结果
+    - 染色结果
+    - 真实肤色反馈
+    prohibited_claims: &id034
+    - 某颜色一定显白
+    - 某颜色一定显瘦
+    - 无依据耐洗色牢度
+    downgrade_paths: &id035
+    - 显白 -> 光线下的对比关系
+    - 显瘦 -> 边界收束观察
+    - 色牢度 -> 待补依据
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id028
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - color_visual_boundary
+    - lighting_condition
+    - no_complexion_effect_claim
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC023-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_023
+  cluster_title: 颜色表达与视觉解释边界
+  cluster_owner: P0-03
+  source_cluster_refs: *id029
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      颜色是最容易给用户结果判断的属性。黑色一定显瘦，冷白色会让所有人更显白，暖色一定显气色，深色更耐脏也更耐洗。只要画面里颜色看起来稳定，就可以说明染色好、色牢度高、穿久也不容易变旧。
+    mechanism_chain: *id028
+    apparel_domain_anchors:
+    - 色相
+    - 明度
+    - 纯度
+    - 冷暖
+    - 光线
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id030
+    method_claims: *id031
+    creative_hypotheses: *id032
+    source_required_claims: *id033
+    prohibited_claims: *id034
+    downgrade_paths: *id035
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id028
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - color_visual_boundary
+    - lighting_condition
+    - no_complexion_effect_claim
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC023-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_023
+  cluster_title: 颜色表达与视觉解释边界
+  cluster_owner: P0-03
+  source_cluster_refs: *id029
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      正文能够从色相、明度、冷暖和中性色解释颜色，也提醒光线会改变画面观感。问题是出现“这个冷灰更显白，黑色更显瘦”这类结果判断。修复时应改为“冷灰在偏冷光线下对比更清楚，黑色在画面中收束边界更明显”，保留视觉条件，不承诺肤色或身体效果。
+    mechanism_chain: *id028
+    apparel_domain_anchors:
+    - 色相
+    - 明度
+    - 纯度
+    - 冷暖
+    - 光线
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id030
+    method_claims: *id031
+    creative_hypotheses: *id032
+    source_required_claims: *id033
+    prohibited_claims: *id034
+    downgrade_paths: *id035
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id028
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - color_visual_boundary
+    - lighting_condition
+    - no_complexion_effect_claim
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC024-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_024
+  cluster_title: 版型廓形剪裁术语
+  cluster_owner: P0-03
+  source_cluster_refs: &id037
+  - P0-03-RS02-CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      版型说明要区分“版型结构”和“廓形轮廓”。版型关注衣片分割、肩线位置、腰线位置、松量、长度和剪裁路径；廓形关注外轮廓在画面中形成的直线、弧线、A形、H形、收腰、放量或箱形关系。正文可以说肩线位置改变上装重心，衣长改变上下装衔接，裤腿宽窄改变下装轮廓，松量影响衣物与身体之间的空间关系。它不能把这些结构观察直接写成显瘦、显高、遮肉、修饰某部位或适合所有身材。
+    mechanism_chain: &id036
+    - fit_term -> structural_observation
+    - silhouette_line -> visual_relation
+    - ease_amount -> wearing_condition_note
+    - body_effect_word -> claim_boundary
+    apparel_domain_anchors:
+    - 肩线
+    - 腰线
+    - 衣长
+    - 松量
+    - 廓形
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id038
+    - 版型结构和廓形轮廓需要区分。
+    - 长度、宽窄、松量和重心可以作为结构观察。
+    method_claims: &id039
+    - 版型术语应连接结构节点，不直接承诺身体效果。
+    - 视觉关系可以写，身体结果不能保证。
+    creative_hypotheses: &id040
+    - 同一廓形可因长度与松量不同形成不同解释入口。
+    source_required_claims: &id041
+    - 真实试穿效果
+    - 适合所有身材
+    - 显瘦显高结果
+    prohibited_claims: &id042
+    - 版型一定遮肉
+    - 所有人适合
+    - 无依据修饰身体部位
+    downgrade_paths: &id043
+    - 显瘦显高 -> 视觉关系
+    - 遮肉 -> 外轮廓变化
+    - 适合所有人 -> 条件表达
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id036
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - fit_silhouette_terms
+    - visual_relation_not_body_result
+    - cutting_language_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC024-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_024
+  cluster_title: 版型廓形剪裁术语
+  cluster_owner: P0-03
+  source_cluster_refs: *id037
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      版型术语可以直接转成穿着效果。A字裙遮胯显瘦，H型外套适合所有身材，收腰剪裁一定显腰细，九分裤一定显腿长。只要使用这些版型词，用户就能知道自己穿上会被修饰到什么程度。
+    mechanism_chain: *id036
+    apparel_domain_anchors:
+    - 肩线
+    - 腰线
+    - 衣长
+    - 松量
+    - 廓形
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id038
+    method_claims: *id039
+    creative_hypotheses: *id040
+    source_required_claims: *id041
+    prohibited_claims: *id042
+    downgrade_paths: *id043
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id036
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - fit_silhouette_terms
+    - visual_relation_not_body_result
+    - cutting_language_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC024-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_024
+  cluster_title: 版型廓形剪裁术语
+  cluster_owner: P0-03
+  source_cluster_refs: *id037
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      正文已经说明版型、廓形、肩线、腰线、衣长、裤腿宽窄和松量，也能把它们放进结构观察。问题是把“腰线位置更高”写成“一定显高”，把“裙摆外扩”写成“遮胯”。修复时应改为“腰线位置让上下比例关系更清楚”“裙摆外扩改变外轮廓宽窄”，不承诺身体结果。
+    mechanism_chain: *id036
+    apparel_domain_anchors:
+    - 肩线
+    - 腰线
+    - 衣长
+    - 松量
+    - 廓形
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id038
+    method_claims: *id039
+    creative_hypotheses: *id040
+    source_required_claims: *id041
+    prohibited_claims: *id042
+    downgrade_paths: *id043
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id036
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - fit_silhouette_terms
+    - visual_relation_not_body_result
+    - cutting_language_boundary
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC025-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_025
+  cluster_title: 工艺观察线索与讲解节点
+  cluster_owner: P0-03
+  source_cluster_refs: &id045
+  - P0-03-RS02-CL04
+  - P0-03-RS04-CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      工艺讲解应从可见节点开始，而不是从质量结论开始。可观察节点包括领口压线、门襟结构、袖口收口、下摆处理、口袋边缘、纽扣孔、里布衔接、包边、明线和拼接处。讲解顺序可以是外观位置、结构作用、细节观察、表达边界：先指出节点在哪里，再说明它连接了哪些衣片或边缘，接着描述线迹、转角、贴合、层次和收口，最后停在观察线索。工艺名称不能自动证明功能、耐用、高端或专业，也不能补写工厂流程、质检结果或认证状态。
+    mechanism_chain: &id044
+    - visible_craft_node -> explanation_order
+    - construction_detail -> observation_cue
+    - craft_name -> function_claim_cutoff
+    - process_story_gap -> source_required_claim
+    apparel_domain_anchors:
+    - 领口压线
+    - 门襟
+    - 袖口
+    - 包边
+    - 纽扣孔
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id046
+    - 线迹、包边、门襟、袖口和里布衔接属于可见工艺节点。
+    - 工艺节点可按外观、结构、细节顺序讲解。
+    method_claims: &id047
+    - 工艺讲解应停在观察线索，不能自动上升为质量证明。
+    - 工艺故事需要来源，不可补写流程。
+    creative_hypotheses: &id048
+    - 工艺节点可以形成细节讲解顺序。
+    source_required_claims: &id049
+    - 真实工厂流程
+    - 真实质检结果
+    - 真实认证状态
+    - 真实耐用结论
+    prohibited_claims: &id050
+    - 某工艺天然更高端
+    - 工艺存在即更耐穿
+    - 编造质检或认证
+    downgrade_paths: &id051
+    - 品质保证 -> 观察线索
+    - 工厂流程 -> 待补依据
+    - 耐用结论 -> 禁出或补源
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id044
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - craft_observation_sequence
+    - visible_construction_node
+    - no_factory_or_certification_fabrication
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC025-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_025
+  cluster_title: 工艺观察线索与讲解节点
+  cluster_owner: P0-03
+  source_cluster_refs: *id045
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      只要衣服有双线车缝和包边，就可以说明它更耐穿、更专业，也不容易变形。若门襟和袖口看起来平整，就代表工厂流程严格、质检已经通过。工艺越多，品质越高，用户可以放心长期穿。
+    mechanism_chain: *id044
+    apparel_domain_anchors:
+    - 领口压线
+    - 门襟
+    - 袖口
+    - 包边
+    - 纽扣孔
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id046
+    method_claims: *id047
+    creative_hypotheses: *id048
+    source_required_claims: *id049
+    prohibited_claims: *id050
+    downgrade_paths: *id051
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id044
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - craft_observation_sequence
+    - visible_construction_node
+    - no_factory_or_certification_fabrication
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC025-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_025
+  cluster_title: 工艺观察线索与讲解节点
+  cluster_owner: P0-03
+  source_cluster_refs: *id045
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      正文按领口、门襟、袖口、下摆和口袋边缘组织工艺观察，也说明线迹、转角和收口可作为讲解节点。问题是把“包边整齐”写成“整体品质更可靠”。修复时应改为“包边整齐是局部观察线索，整体品质或耐用表现需要另有依据”，把证明语气降回观察语气。
+    mechanism_chain: *id044
+    apparel_domain_anchors:
+    - 领口压线
+    - 门襟
+    - 袖口
+    - 包边
+    - 纽扣孔
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id046
+    method_claims: *id047
+    creative_hypotheses: *id048
+    source_required_claims: *id049
+    prohibited_claims: *id050
+    downgrade_paths: *id051
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id044
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - craft_observation_sequence
+    - visible_construction_node
+    - no_factory_or_certification_fabrication
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC026-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_026
+  cluster_title: 身材效果语言阶梯与场景化观察
+  cluster_owner: P0-03
+  source_cluster_refs: &id053
+  - P0-03-RS03-CL01
+  - P0-03-RS03-CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: >-
+      身材效果表达应分成观察词、关系词和结果词三层。观察词描述服装本身，如线条更直、外轮廓更清楚、下摆位置更高、腰线更明确、裤腿更宽或更窄；关系词描述画面中的条件关系，如上下比例更集中、层次边界更分明、内外搭宽窄对比更明显；结果词涉及穿着者身体，如显瘦、显高、遮肉、修饰腿型、显白或适合所有人。前两层可以在具体场景下使用，第三层必须降级或阻断。场景化观察只允许说服装线条和画面关系如何变化，不能保证身体结果。
+    mechanism_chain: &id052
+    - observation_word -> low_risk_visual_statement
+    - relation_word -> conditional_visual_relation
+    - body_result_word -> prohibited_or_source_required_claim
+    - scene_cue -> non_conclusive_observation
+    apparel_domain_anchors:
+    - 观察词
+    - 关系词
+    - 结果词
+    - 线条
+    - 场景化观察
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id054
+    - 线条、轮廓、下摆、腰线和层次边界可以被观察。
+    - 场景化表达只能说明视觉关系。
+    method_claims: &id055
+    - 观察词、关系词和结果词必须分层。
+    - 身体效果词应降级为视觉关系或阻断。
+    creative_hypotheses: &id056
+    - 同一套搭配可以通过线条顺序形成不同观察表达。
+    source_required_claims: &id057
+    - 真实试穿反馈
+    - 显瘦显高结果
+    - 适合所有身材
+    prohibited_claims: &id058
+    - 绝对显瘦
+    - 一定遮肉
+    - 身体焦虑导向词
+    - 医学化身体描述
+    downgrade_paths: &id059
+    - 身体结果 -> 视觉关系
+    - 普适结论 -> 条件观察
+    - 主观感受 -> 删除
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id052
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - body_effect_language_ladder
+    - visual_relation_downgrade
+    - scene_observation_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC026-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_026
+  cluster_title: 身材效果语言阶梯与场景化观察
+  cluster_owner: P0-03
+  source_cluster_refs: *id053
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: >-
+      身材效果要说得明确。直筒裤绝对显瘦，短外套一定显高，深色上衣能遮肉，V领可以修饰所有脸型，宽松版型适合所有身材。用户看内容就是为了知道穿上会不会变好看，所以这些效果词可以直接写。
+    mechanism_chain: *id052
+    apparel_domain_anchors:
+    - 观察词
+    - 关系词
+    - 结果词
+    - 线条
+    - 场景化观察
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id054
+    method_claims: *id055
+    creative_hypotheses: *id056
+    source_required_claims: *id057
+    prohibited_claims: *id058
+    downgrade_paths: *id059
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id052
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - body_effect_language_ladder
+    - visual_relation_downgrade
+    - scene_observation_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC026-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_026
+  cluster_title: 身材效果语言阶梯与场景化观察
+  cluster_owner: P0-03
+  source_cluster_refs: *id053
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: claim_boundary_body
+    gold_body: >-
+      正文已经把观察词和关系词分开，也能用通勤、叠穿、镜前站姿等场景说明视觉变化。问题是出现“更修饰腿型”和“一定显瘦”的结果词。修复时应改为“裤线更连续，腿部轮廓在画面中更整齐”“外轮廓更直”，只保留服装线条和视觉关系。
+    mechanism_chain: *id052
+    apparel_domain_anchors:
+    - 观察词
+    - 关系词
+    - 结果词
+    - 线条
+    - 场景化观察
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id054
+    method_claims: *id055
+    creative_hypotheses: *id056
+    source_required_claims: *id057
+    prohibited_claims: *id058
+    downgrade_paths: *id059
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id052
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - body_effect_language_ladder
+    - visual_relation_downgrade
+    - scene_observation_boundary
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC027-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_027
+  cluster_title: 舒适性能耐用品质证据阶梯
+  cluster_owner: P0-03
+  source_cluster_refs: &id061
+  - P0-03-RS03-CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: evidence_policy_body
+    gold_body: >-
+      舒适、性能、耐用和品质要按证据强度分层。最低层是可观察表达，如面料表面更柔、触点更平滑、松量更充足、结构留有活动空间、线迹更密或边缘处理更完整；第二层是体验表达，如穿着舒适、久穿不累、亲肤，需要试穿记录或明确来源；第三层是性能表达，如保暖、透气、抗皱、耐磨，需要测试、标准或可信证明；第四层是整体品质或耐用承诺，需要更高强度依据。没有依据时只能保留观察层，不得用面料名、工艺名或镜头细节替代证明。
+    mechanism_chain: &id060
+    - comfort_word -> subjective_experience_claim
+    - performance_word -> test_or_source_required_claim
+    - durability_word -> proof_required_claim
+    - evidence_absence -> downgrade_to_observation
+    apparel_domain_anchors:
+    - 舒适
+    - 性能
+    - 耐用
+    - 品质
+    - 证据阶梯
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id062
+    - 触点柔和、松量充足、结构留空和线迹密度属于观察层。
+    - 舒适、性能、耐用和品质属于不同 claim 强度。
+    method_claims: &id063
+    - 无依据时只能保留最低观察层。
+    - 体验、性能、耐用与整体品质需要更高证明。
+    creative_hypotheses: &id064
+    - 可观察结构可以为后续补证问题提供入口。
+    source_required_claims: &id065
+    - 长期舒适体验
+    - 保暖透气抗皱
+    - 耐磨耐穿
+    - 整体品质保证
+    prohibited_claims: &id066
+    - 永不起球
+    - 不缩水
+    - 不变形
+    - 一定保暖
+    - 绝对透气
+    downgrade_paths: &id067
+    - 舒适承诺 -> 触点观察
+    - 性能承诺 -> 待补依据
+    - 耐用承诺 -> 证明需求
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id060
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - comfort_performance_durability_ladder
+    - evidence_threshold
+    - downgrade_without_source
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC027-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_027
+  cluster_title: 舒适性能耐用品质证据阶梯
+  cluster_owner: P0-03
+  source_cluster_refs: *id061
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: evidence_policy_body
+    gold_body: >-
+      舒适和品质可以从面料与工艺直接判断。柔软面料穿一天也舒服，厚实面料一定保暖，密实走线说明更耐穿，挺括版型不会变形。只要镜头拍到这些细节，就能证明衣服耐用、品质好、值得长期购买。
+    mechanism_chain: *id060
+    apparel_domain_anchors:
+    - 舒适
+    - 性能
+    - 耐用
+    - 品质
+    - 证据阶梯
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id062
+    method_claims: *id063
+    creative_hypotheses: *id064
+    source_required_claims: *id065
+    prohibited_claims: *id066
+    downgrade_paths: *id067
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id060
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - comfort_performance_durability_ladder
+    - evidence_threshold
+    - downgrade_without_source
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC027-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_027
+  cluster_title: 舒适性能耐用品质证据阶梯
+  cluster_owner: P0-03
+  source_cluster_refs: *id061
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: evidence_policy_body
+    gold_body: >-
+      正文已经把观察、体验、性能和耐用分成不同层级，也知道无依据时要降级。问题是把“触感柔软”继续写成“长时间穿也舒服”。修复时应保留“表面触点柔和、松量更充足”等观察表达，把长时间体验改为待补依据项，不能用局部触感替代体验证明。
+    mechanism_chain: *id060
+    apparel_domain_anchors:
+    - 舒适
+    - 性能
+    - 耐用
+    - 品质
+    - 证据阶梯
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id062
+    method_claims: *id063
+    creative_hypotheses: *id064
+    source_required_claims: *id065
+    prohibited_claims: *id066
+    downgrade_paths: *id067
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id060
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - comfort_performance_durability_ladder
+    - evidence_threshold
+    - downgrade_without_source
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC028-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_028
+  cluster_title: 品质观察项与证明类型路由
+  cluster_owner: P0-03
+  source_cluster_refs: &id069
+  - P0-03-RS04-CL02
+  - P0-03-RS04-CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: evidence_policy_body
+    gold_body: >-
+      品质观察项必须先路由到证明类型，而不是直接形成整体保证。线迹平整、边缘收口、纽扣孔形态、里布衔接、拼接对位、面料表面稳定性都属于局部观察；它们可以提示需要观察哪些位置，但不能单独证明整体品质。若要写认证、执行标准、检测结果或耐用等级，应进入更高证明类型，需要明确来源。若只有镜头细节，只能写成“可观察线索”；若有工艺说明，可写成“方法说明”；若有标准或测试，才可进入强证明表达。路由规则是观察先降级，证明另取源，局部不能替代整体。
+    mechanism_chain: &id068
+    - quality_observation -> proof_type
+    - proof_type -> claim_routing
+    - certification_signal -> higher_evidence_need
+    - unsupported_proof -> source_gap
+    apparel_domain_anchors:
+    - 线迹
+    - 收口
+    - 拼接
+    - proof_type
+    - 局部观察
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id070
+    - 线迹、收口、纽扣孔、拼接和里布属于局部观察项。
+    - 局部观察不能直接证明整体品质。
+    method_claims: &id071
+    - quality_observation 需要先连接 proof_type。
+    - 认证、标准、检测类表达应被路由到更高证明要求。
+    creative_hypotheses: &id072
+    - 品质观察项可以形成拍摄和讲解清单。
+    source_required_claims: &id073
+    - 真实证书
+    - 真实检测结果
+    - 真实执行标准
+    - 真实质检结论
+    prohibited_claims: &id074
+    - 局部观察等于整体保证
+    - 无依据标准认证
+    - 用镜头细节证明耐用
+    downgrade_paths: &id075
+    - 整体品质保证 -> 局部观察
+    - 认证状态 -> 待补依据
+    - 耐用证明 -> proof_required
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id068
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - quality_observation_to_proof_type
+    - certification_route_away
+    - observation_not_quality_guarantee
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC028-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_028
+  cluster_title: 品质观察项与证明类型路由
+  cluster_owner: P0-03
+  source_cluster_refs: *id069
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: evidence_policy_body
+    gold_body: >-
+      只要局部细节做得好，就能说明整体品质可靠。线迹密就代表耐穿，纽扣孔整齐就证明工艺标准高，里布平服就说明执行标准严格。若画面拍到这些细节，就可以写成品质保证，也可以顺带说已经达到相关标准。
+    mechanism_chain: *id068
+    apparel_domain_anchors:
+    - 线迹
+    - 收口
+    - 拼接
+    - proof_type
+    - 局部观察
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id070
+    method_claims: *id071
+    creative_hypotheses: *id072
+    source_required_claims: *id073
+    prohibited_claims: *id074
+    downgrade_paths: *id075
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id068
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - quality_observation_to_proof_type
+    - certification_route_away
+    - observation_not_quality_guarantee
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC028-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_028
+  cluster_title: 品质观察项与证明类型路由
+  cluster_owner: P0-03
+  source_cluster_refs: *id069
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: evidence_policy_body
+    gold_body: >-
+      正文已经把线迹、收口、纽扣孔、拼接和里布作为品质观察项，也提到不同证明类型。问题是把“纽扣更牢固”写成“整件衣服更耐用”。修复时应改为“纽扣位置和固定方式是局部观察项，耐用结论需要另有证明”，把观察项路由到 proof_required
+      或 source_gap。
+    mechanism_chain: *id068
+    apparel_domain_anchors:
+    - 线迹
+    - 收口
+    - 拼接
+    - proof_type
+    - 局部观察
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id070
+    method_claims: *id071
+    creative_hypotheses: *id072
+    source_required_claims: *id073
+    prohibited_claims: *id074
+    downgrade_paths: *id075
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id068
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - quality_observation_to_proof_type
+    - certification_route_away
+    - observation_not_quality_guarantee
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC029-POS-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_029
+  cluster_title: 工艺品质内容的可拍摄表达
+  cluster_owner: P0-03
+  source_cluster_refs: &id077
+  - P0-03-RS04-CL04
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      工艺品质内容的可拍摄表达要把对象、镜头、解释槽位和边界分开。对象可以是领口压线、袖口收口、门襟层次、包边转角、纽扣孔、里布衔接、拼接处、面料纹理和下摆处理；镜头可以选择远景定位服装位置，中景说明结构关系，近景捕捉线迹、边缘和转角；动作可以是翻开、摊平、对比、轻拉、转向光线或展示内外层。解释槽位只说明“看到什么、它位于哪里、连接了什么、画面如何呈现”，不能把镜头细节写成耐用、舒适或整体品质证明。
+    mechanism_chain: &id076
+    - object_cue -> camera_cue
+    - camera_cue -> explanation_slot
+    - explanation_slot -> claim_boundary
+    - process_detail -> filmability
+    apparel_domain_anchors:
+    - 对象线索
+    - 镜头线索
+    - 解释槽位
+    - 近景
+    - 边界
+    output_effect: 作为该簇合格正文机制参照，约束生成时先写对象与机制，再写边界和降级路径。
+    failure_signal: 缺少该簇独有机制、把观察外推为效果承诺、或混入品牌实例事实。
+    repair_instruction_if_failed: 补足对象、机制、边界与降级路径；删除实例事实和无依据效果词。
+  epistemic_contract:
+    observation_statements: &id078
+    - 领口、袖口、门襟、包边、纽扣孔和面料纹理都可被拍摄。
+    - 远景、中景、近景承载不同说明任务。
+    method_claims: &id079
+    - 可拍摄表达应区分对象、镜头、解释槽位和边界。
+    - 镜头细节不能自动证明质量。
+    creative_hypotheses: &id080
+    - 同一工艺节点可通过不同镜头层级形成不同解释顺序。
+    source_required_claims: &id081
+    - 真实耐用结果
+    - 真实舒适体验
+    - 整体品质证明
+    prohibited_claims: &id082
+    - 用镜头证明耐穿
+    - 用细节证明舒适
+    - 把拍摄对象写成质量保证
+    downgrade_paths: &id083
+    - 质量证明 -> 解释槽位
+    - 拍摄脚本 -> 方法节点
+    - 耐用结论 -> 待补依据
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id076
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - filmable_craft_expression
+    - camera_cue_not_proof
+    - explanation_slot_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC029-ANTI-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_029
+  cluster_title: 工艺品质内容的可拍摄表达
+  cluster_owner: P0-03
+  source_cluster_refs: *id077
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      拍摄工艺细节时可以直接写脚本：先拍袖口，再说这件衣服做工很好；再拍门襟，说明它会更耐穿；最后拍面料纹理，证明穿起来很舒服。镜头越近，越能证明品质，用户看到细节就会相信这件衣服长期穿也没问题。
+    mechanism_chain: *id076
+    apparel_domain_anchors:
+    - 对象线索
+    - 镜头线索
+    - 解释槽位
+    - 近景
+    - 边界
+    output_effect: 作为负样本，训练识别无依据外推、错层路由、实例污染或观察到证明的混淆。
+    failure_signal: 正文把可观察线索直接升级为事实、效果、性能或实例结论。
+    repair_instruction_if_failed: 按对应簇的机制重写；删除无依据结论，改为观察、待补依据或禁止表达。
+  epistemic_contract:
+    observation_statements: *id078
+    method_claims: *id079
+    creative_hypotheses: *id080
+    source_required_claims: *id081
+    prohibited_claims: *id082
+    downgrade_paths: *id083
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id076
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id011
+    expected_failure_codes:
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - filmable_craft_expression
+    - camera_cue_not_proof
+    - explanation_slot_boundary
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-03-MKC029-BDR-001
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  capability_group: P0-03
+  cluster_id: mkc_029
+  cluster_title: 工艺品质内容的可拍摄表达
+  cluster_owner: P0-03
+  source_cluster_refs: *id077
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry: *id003
+    forbidden_storage_targets: *id004
+  body_contract:
+    body_form: domain_method_body
+    gold_body: >-
+      正文已经列出领口、袖口、门襟、包边、纽扣孔和面料纹理，也能把远景、中景、近景对应到对象解释。问题是把“近景拍到线迹”写成“可以证明更耐穿”。修复时应改为“近景用于呈现线迹和转角，耐穿结论需要另有依据”，把镜头对象退回解释槽位。
+    mechanism_chain: *id076
+    apparel_domain_anchors:
+    - 对象线索
+    - 镜头线索
+    - 解释槽位
+    - 近景
+    - 边界
+    output_effect: 作为边界修复样本，训练识别机制已成立但局部表达需要降级的情况。
+    failure_signal: 主体机制成立，但局部表达强度超过当前依据层。
+    repair_instruction_if_failed: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  epistemic_contract:
+    observation_statements: *id078
+    method_claims: *id079
+    creative_hypotheses: *id080
+    source_required_claims: *id081
+    prohibited_claims: *id082
+    downgrade_paths: *id083
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real supplier or factory fact
+    - real testing or certification fact
+    anti_hallucination_guard: 不得编造真实品牌、商品、门店、顾客、供应商、工厂、检测、认证、库存、价格或护理结果；涉及效果、性能、耐用和品质时必须按观察、待补依据、禁出三层处理。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    forbidden_in_gold_body:
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - W7
+    - 第几批
+    - production-ready
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id076
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id011
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - filmable_craft_expression
+    - camera_cue_not_proof
+    - explanation_slot_boundary
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true

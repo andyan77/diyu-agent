@@ -1,0 +1,769 @@
+formal_120_manifest:
+  manifest_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  p0_00_included: false
+  total_case_count: 120
+  unique_case_id_count: 120
+  cluster_count: 40
+  cluster_range: mkc_007..mkc_046
+  per_cluster_case_count_invariant: 3
+  case_type_distribution:
+    positive_gold: 40
+    anti_gold: 40
+    borderline_repair: 40
+  batches:
+  - batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+    capability_group: P0-01
+    normalized_gold_reference_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    normalized_batch_manifest_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/batch_manifest.yaml
+    case_count: 18
+    cluster_count: 6
+    cluster_count_source: derived_from_selected_clusters
+    clusters:
+    - mkc_007
+    - mkc_008
+    - mkc_009
+    - mkc_010
+    - mkc_011
+    - mkc_012
+    case_type_distribution:
+      positive_gold: 6
+      anti_gold: 6
+      borderline_repair: 6
+    case_ids:
+    - GRC-P001-MKC007-POS-001
+    - GRC-P001-MKC007-ANTI-001
+    - GRC-P001-MKC007-BDR-001
+    - GRC-P001-MKC008-POS-001
+    - GRC-P001-MKC008-ANTI-001
+    - GRC-P001-MKC008-BDR-001
+    - GRC-P001-MKC009-POS-001
+    - GRC-P001-MKC009-ANTI-001
+    - GRC-P001-MKC009-BDR-001
+    - GRC-P001-MKC010-POS-001
+    - GRC-P001-MKC010-ANTI-001
+    - GRC-P001-MKC010-BDR-001
+    - GRC-P001-MKC011-POS-001
+    - GRC-P001-MKC011-ANTI-001
+    - GRC-P001-MKC011-BDR-001
+    - GRC-P001-MKC012-POS-001
+    - GRC-P001-MKC012-ANTI-001
+    - GRC-P001-MKC012-BDR-001
+  - batch_id: GRC-P0-02-PROOF-AND-DISPLAY-001
+    capability_group: P0-02
+    normalized_gold_reference_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    normalized_batch_manifest_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/batch_manifest.yaml
+    case_count: 21
+    cluster_count: 7
+    cluster_count_source: derived_from_selected_clusters
+    clusters:
+    - mkc_013
+    - mkc_014
+    - mkc_015
+    - mkc_016
+    - mkc_017
+    - mkc_018
+    - mkc_019
+    case_type_distribution:
+      positive_gold: 7
+      anti_gold: 7
+      borderline_repair: 7
+    case_ids:
+    - GRC-P0-02-MKC013-POS-001
+    - GRC-P0-02-MKC013-ANTI-001
+    - GRC-P0-02-MKC013-BDR-001
+    - GRC-P0-02-MKC014-POS-001
+    - GRC-P0-02-MKC014-ANTI-001
+    - GRC-P0-02-MKC014-BDR-001
+    - GRC-P0-02-MKC015-POS-001
+    - GRC-P0-02-MKC015-ANTI-001
+    - GRC-P0-02-MKC015-BDR-001
+    - GRC-P0-02-MKC016-POS-001
+    - GRC-P0-02-MKC016-ANTI-001
+    - GRC-P0-02-MKC016-BDR-001
+    - GRC-P0-02-MKC017-POS-001
+    - GRC-P0-02-MKC017-ANTI-001
+    - GRC-P0-02-MKC017-BDR-001
+    - GRC-P0-02-MKC018-POS-001
+    - GRC-P0-02-MKC018-ANTI-001
+    - GRC-P0-02-MKC018-BDR-001
+    - GRC-P0-02-MKC019-POS-001
+    - GRC-P0-02-MKC019-ANTI-001
+    - GRC-P0-02-MKC019-BDR-001
+  - batch_id: GRC-P0-03-CLAIM-AND-EVIDENCE-001
+    capability_group: P0-03
+    normalized_gold_reference_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    normalized_batch_manifest_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/batch_manifest.yaml
+    case_count: 30
+    cluster_count: 10
+    cluster_count_source: derived_from_selected_clusters
+    clusters:
+    - mkc_020
+    - mkc_021
+    - mkc_022
+    - mkc_023
+    - mkc_024
+    - mkc_025
+    - mkc_026
+    - mkc_027
+    - mkc_028
+    - mkc_029
+    case_type_distribution:
+      positive_gold: 10
+      anti_gold: 10
+      borderline_repair: 10
+    case_ids:
+    - GRC-P0-03-MKC020-POS-001
+    - GRC-P0-03-MKC020-ANTI-001
+    - GRC-P0-03-MKC020-BDR-001
+    - GRC-P0-03-MKC021-POS-001
+    - GRC-P0-03-MKC021-ANTI-001
+    - GRC-P0-03-MKC021-BDR-001
+    - GRC-P0-03-MKC022-POS-001
+    - GRC-P0-03-MKC022-ANTI-001
+    - GRC-P0-03-MKC022-BDR-001
+    - GRC-P0-03-MKC023-POS-001
+    - GRC-P0-03-MKC023-ANTI-001
+    - GRC-P0-03-MKC023-BDR-001
+    - GRC-P0-03-MKC024-POS-001
+    - GRC-P0-03-MKC024-ANTI-001
+    - GRC-P0-03-MKC024-BDR-001
+    - GRC-P0-03-MKC025-POS-001
+    - GRC-P0-03-MKC025-ANTI-001
+    - GRC-P0-03-MKC025-BDR-001
+    - GRC-P0-03-MKC026-POS-001
+    - GRC-P0-03-MKC026-ANTI-001
+    - GRC-P0-03-MKC026-BDR-001
+    - GRC-P0-03-MKC027-POS-001
+    - GRC-P0-03-MKC027-ANTI-001
+    - GRC-P0-03-MKC027-BDR-001
+    - GRC-P0-03-MKC028-POS-001
+    - GRC-P0-03-MKC028-ANTI-001
+    - GRC-P0-03-MKC028-BDR-001
+    - GRC-P0-03-MKC029-POS-001
+    - GRC-P0-03-MKC029-ANTI-001
+    - GRC-P0-03-MKC029-BDR-001
+  - batch_id: GRC-P0-04-CROSS-DOMAIN-RELATION-001
+    capability_group: P0-04
+    normalized_gold_reference_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    normalized_batch_manifest_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/batch_manifest.yaml
+    case_count: 27
+    cluster_count: 9
+    cluster_count_source: derived_from_selected_clusters
+    clusters:
+    - mkc_030
+    - mkc_031
+    - mkc_032
+    - mkc_033
+    - mkc_034
+    - mkc_035
+    - mkc_036
+    - mkc_037
+    - mkc_038
+    case_type_distribution:
+      positive_gold: 9
+      anti_gold: 9
+      borderline_repair: 9
+    case_ids:
+    - GRC-P0-04-MKC030-POS-001
+    - GRC-P0-04-MKC030-ANTI-001
+    - GRC-P0-04-MKC030-BDR-001
+    - GRC-P0-04-MKC031-POS-001
+    - GRC-P0-04-MKC031-ANTI-001
+    - GRC-P0-04-MKC031-BDR-001
+    - GRC-P0-04-MKC032-POS-001
+    - GRC-P0-04-MKC032-ANTI-001
+    - GRC-P0-04-MKC032-BDR-001
+    - GRC-P0-04-MKC033-POS-001
+    - GRC-P0-04-MKC033-ANTI-001
+    - GRC-P0-04-MKC033-BDR-001
+    - GRC-P0-04-MKC034-POS-001
+    - GRC-P0-04-MKC034-ANTI-001
+    - GRC-P0-04-MKC034-BDR-001
+    - GRC-P0-04-MKC035-POS-001
+    - GRC-P0-04-MKC035-ANTI-001
+    - GRC-P0-04-MKC035-BDR-001
+    - GRC-P0-04-MKC036-POS-001
+    - GRC-P0-04-MKC036-ANTI-001
+    - GRC-P0-04-MKC036-BDR-001
+    - GRC-P0-04-MKC037-POS-001
+    - GRC-P0-04-MKC037-ANTI-001
+    - GRC-P0-04-MKC037-BDR-001
+    - GRC-P0-04-MKC038-POS-001
+    - GRC-P0-04-MKC038-ANTI-001
+    - GRC-P0-04-MKC038-BDR-001
+  - batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+    capability_group: P0-05
+    normalized_gold_reference_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    normalized_batch_manifest_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/batch_manifest.yaml
+    case_count: 24
+    cluster_count: 8
+    cluster_count_source: derived_from_selected_clusters
+    clusters:
+    - mkc_039
+    - mkc_040
+    - mkc_041
+    - mkc_042
+    - mkc_043
+    - mkc_044
+    - mkc_045
+    - mkc_046
+    case_type_distribution:
+      positive_gold: 8
+      anti_gold: 8
+      borderline_repair: 8
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+  clusters:
+  - cluster_id: mkc_007
+    case_count: 3
+    case_ids:
+    - GRC-P001-MKC007-POS-001
+    - GRC-P001-MKC007-ANTI-001
+    - GRC-P001-MKC007-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_008
+    case_count: 3
+    case_ids:
+    - GRC-P001-MKC008-POS-001
+    - GRC-P001-MKC008-ANTI-001
+    - GRC-P001-MKC008-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_009
+    case_count: 3
+    case_ids:
+    - GRC-P001-MKC009-POS-001
+    - GRC-P001-MKC009-ANTI-001
+    - GRC-P001-MKC009-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_010
+    case_count: 3
+    case_ids:
+    - GRC-P001-MKC010-POS-001
+    - GRC-P001-MKC010-ANTI-001
+    - GRC-P001-MKC010-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_011
+    case_count: 3
+    case_ids:
+    - GRC-P001-MKC011-POS-001
+    - GRC-P001-MKC011-ANTI-001
+    - GRC-P001-MKC011-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_012
+    case_count: 3
+    case_ids:
+    - GRC-P001-MKC012-POS-001
+    - GRC-P001-MKC012-ANTI-001
+    - GRC-P001-MKC012-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_013
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC013-POS-001
+    - GRC-P0-02-MKC013-ANTI-001
+    - GRC-P0-02-MKC013-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_014
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC014-POS-001
+    - GRC-P0-02-MKC014-ANTI-001
+    - GRC-P0-02-MKC014-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_015
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC015-POS-001
+    - GRC-P0-02-MKC015-ANTI-001
+    - GRC-P0-02-MKC015-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_016
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC016-POS-001
+    - GRC-P0-02-MKC016-ANTI-001
+    - GRC-P0-02-MKC016-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_017
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC017-POS-001
+    - GRC-P0-02-MKC017-ANTI-001
+    - GRC-P0-02-MKC017-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_018
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC018-POS-001
+    - GRC-P0-02-MKC018-ANTI-001
+    - GRC-P0-02-MKC018-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_019
+    case_count: 3
+    case_ids:
+    - GRC-P0-02-MKC019-POS-001
+    - GRC-P0-02-MKC019-ANTI-001
+    - GRC-P0-02-MKC019-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_020
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC020-POS-001
+    - GRC-P0-03-MKC020-ANTI-001
+    - GRC-P0-03-MKC020-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_021
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC021-POS-001
+    - GRC-P0-03-MKC021-ANTI-001
+    - GRC-P0-03-MKC021-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_022
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC022-POS-001
+    - GRC-P0-03-MKC022-ANTI-001
+    - GRC-P0-03-MKC022-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_023
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC023-POS-001
+    - GRC-P0-03-MKC023-ANTI-001
+    - GRC-P0-03-MKC023-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_024
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC024-POS-001
+    - GRC-P0-03-MKC024-ANTI-001
+    - GRC-P0-03-MKC024-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_025
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC025-POS-001
+    - GRC-P0-03-MKC025-ANTI-001
+    - GRC-P0-03-MKC025-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_026
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC026-POS-001
+    - GRC-P0-03-MKC026-ANTI-001
+    - GRC-P0-03-MKC026-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_027
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC027-POS-001
+    - GRC-P0-03-MKC027-ANTI-001
+    - GRC-P0-03-MKC027-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_028
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC028-POS-001
+    - GRC-P0-03-MKC028-ANTI-001
+    - GRC-P0-03-MKC028-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_029
+    case_count: 3
+    case_ids:
+    - GRC-P0-03-MKC029-POS-001
+    - GRC-P0-03-MKC029-ANTI-001
+    - GRC-P0-03-MKC029-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_030
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC030-POS-001
+    - GRC-P0-04-MKC030-ANTI-001
+    - GRC-P0-04-MKC030-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_031
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC031-POS-001
+    - GRC-P0-04-MKC031-ANTI-001
+    - GRC-P0-04-MKC031-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_032
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC032-POS-001
+    - GRC-P0-04-MKC032-ANTI-001
+    - GRC-P0-04-MKC032-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_033
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC033-POS-001
+    - GRC-P0-04-MKC033-ANTI-001
+    - GRC-P0-04-MKC033-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_034
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC034-POS-001
+    - GRC-P0-04-MKC034-ANTI-001
+    - GRC-P0-04-MKC034-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_035
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC035-POS-001
+    - GRC-P0-04-MKC035-ANTI-001
+    - GRC-P0-04-MKC035-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_036
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC036-POS-001
+    - GRC-P0-04-MKC036-ANTI-001
+    - GRC-P0-04-MKC036-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_037
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC037-POS-001
+    - GRC-P0-04-MKC037-ANTI-001
+    - GRC-P0-04-MKC037-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_038
+    case_count: 3
+    case_ids:
+    - GRC-P0-04-MKC038-POS-001
+    - GRC-P0-04-MKC038-ANTI-001
+    - GRC-P0-04-MKC038-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_039
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_040
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_041
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_042
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_043
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_044
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_045
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  - cluster_id: mkc_046
+    case_count: 3
+    case_ids:
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+    case_types:
+    - positive_gold
+    - anti_gold
+    - borderline_repair
+  all_case_ids:
+  - GRC-P001-MKC007-POS-001
+  - GRC-P001-MKC007-ANTI-001
+  - GRC-P001-MKC007-BDR-001
+  - GRC-P001-MKC008-POS-001
+  - GRC-P001-MKC008-ANTI-001
+  - GRC-P001-MKC008-BDR-001
+  - GRC-P001-MKC009-POS-001
+  - GRC-P001-MKC009-ANTI-001
+  - GRC-P001-MKC009-BDR-001
+  - GRC-P001-MKC010-POS-001
+  - GRC-P001-MKC010-ANTI-001
+  - GRC-P001-MKC010-BDR-001
+  - GRC-P001-MKC011-POS-001
+  - GRC-P001-MKC011-ANTI-001
+  - GRC-P001-MKC011-BDR-001
+  - GRC-P001-MKC012-POS-001
+  - GRC-P001-MKC012-ANTI-001
+  - GRC-P001-MKC012-BDR-001
+  - GRC-P0-02-MKC013-POS-001
+  - GRC-P0-02-MKC013-ANTI-001
+  - GRC-P0-02-MKC013-BDR-001
+  - GRC-P0-02-MKC014-POS-001
+  - GRC-P0-02-MKC014-ANTI-001
+  - GRC-P0-02-MKC014-BDR-001
+  - GRC-P0-02-MKC015-POS-001
+  - GRC-P0-02-MKC015-ANTI-001
+  - GRC-P0-02-MKC015-BDR-001
+  - GRC-P0-02-MKC016-POS-001
+  - GRC-P0-02-MKC016-ANTI-001
+  - GRC-P0-02-MKC016-BDR-001
+  - GRC-P0-02-MKC017-POS-001
+  - GRC-P0-02-MKC017-ANTI-001
+  - GRC-P0-02-MKC017-BDR-001
+  - GRC-P0-02-MKC018-POS-001
+  - GRC-P0-02-MKC018-ANTI-001
+  - GRC-P0-02-MKC018-BDR-001
+  - GRC-P0-02-MKC019-POS-001
+  - GRC-P0-02-MKC019-ANTI-001
+  - GRC-P0-02-MKC019-BDR-001
+  - GRC-P0-03-MKC020-POS-001
+  - GRC-P0-03-MKC020-ANTI-001
+  - GRC-P0-03-MKC020-BDR-001
+  - GRC-P0-03-MKC021-POS-001
+  - GRC-P0-03-MKC021-ANTI-001
+  - GRC-P0-03-MKC021-BDR-001
+  - GRC-P0-03-MKC022-POS-001
+  - GRC-P0-03-MKC022-ANTI-001
+  - GRC-P0-03-MKC022-BDR-001
+  - GRC-P0-03-MKC023-POS-001
+  - GRC-P0-03-MKC023-ANTI-001
+  - GRC-P0-03-MKC023-BDR-001
+  - GRC-P0-03-MKC024-POS-001
+  - GRC-P0-03-MKC024-ANTI-001
+  - GRC-P0-03-MKC024-BDR-001
+  - GRC-P0-03-MKC025-POS-001
+  - GRC-P0-03-MKC025-ANTI-001
+  - GRC-P0-03-MKC025-BDR-001
+  - GRC-P0-03-MKC026-POS-001
+  - GRC-P0-03-MKC026-ANTI-001
+  - GRC-P0-03-MKC026-BDR-001
+  - GRC-P0-03-MKC027-POS-001
+  - GRC-P0-03-MKC027-ANTI-001
+  - GRC-P0-03-MKC027-BDR-001
+  - GRC-P0-03-MKC028-POS-001
+  - GRC-P0-03-MKC028-ANTI-001
+  - GRC-P0-03-MKC028-BDR-001
+  - GRC-P0-03-MKC029-POS-001
+  - GRC-P0-03-MKC029-ANTI-001
+  - GRC-P0-03-MKC029-BDR-001
+  - GRC-P0-04-MKC030-POS-001
+  - GRC-P0-04-MKC030-ANTI-001
+  - GRC-P0-04-MKC030-BDR-001
+  - GRC-P0-04-MKC031-POS-001
+  - GRC-P0-04-MKC031-ANTI-001
+  - GRC-P0-04-MKC031-BDR-001
+  - GRC-P0-04-MKC032-POS-001
+  - GRC-P0-04-MKC032-ANTI-001
+  - GRC-P0-04-MKC032-BDR-001
+  - GRC-P0-04-MKC033-POS-001
+  - GRC-P0-04-MKC033-ANTI-001
+  - GRC-P0-04-MKC033-BDR-001
+  - GRC-P0-04-MKC034-POS-001
+  - GRC-P0-04-MKC034-ANTI-001
+  - GRC-P0-04-MKC034-BDR-001
+  - GRC-P0-04-MKC035-POS-001
+  - GRC-P0-04-MKC035-ANTI-001
+  - GRC-P0-04-MKC035-BDR-001
+  - GRC-P0-04-MKC036-POS-001
+  - GRC-P0-04-MKC036-ANTI-001
+  - GRC-P0-04-MKC036-BDR-001
+  - GRC-P0-04-MKC037-POS-001
+  - GRC-P0-04-MKC037-ANTI-001
+  - GRC-P0-04-MKC037-BDR-001
+  - GRC-P0-04-MKC038-POS-001
+  - GRC-P0-04-MKC038-ANTI-001
+  - GRC-P0-04-MKC038-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+  - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

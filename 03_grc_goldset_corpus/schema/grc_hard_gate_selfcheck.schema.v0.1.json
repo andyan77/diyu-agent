@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "grc_hard_gate_selfcheck.schema.v0.1.json",
+  "title": "GRC hard gate selfcheck",
+  "description": "Structural contract for normalized/formal_120/p0_0X/hard_gate_selfcheck.yaml. Batch bodies drift; only universally-present keys are required.",
+  "type": "object",
+  "required": ["hard_gate_selfcheck"],
+  "properties": {
+    "hard_gate_selfcheck": {
+      "type": "object",
+      "required": ["batch_id", "summary"],
+      "properties": {
+        "batch_id": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

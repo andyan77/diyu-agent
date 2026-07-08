@@ -1,0 +1,12 @@
+final_verdict:
+  p0_00_should_be_generated_first: true
+  p0_00_case_count: 18
+  p0_01_to_p0_05_case_count: 120
+  total_gold_reference_system_count: 138
+
+  decision:
+    - "P0-00 的 18 条不是领域正文金样，而是控制面金样。"
+    - "P0-00 的 40 簇调度矩阵必须成为后续 120 条领域金样的前置约束。"
+    - "P0-03 与 P0-05 中所有 claim-heavy 知识簇必须经过 mkc_003。"
+    - "P0-04 与 P0-05 的跨域关系簇只能输出 relation_design_hint，不得输出正式 ontology edge。"
+    - "所有 gold reference cases 仍是 EvaluationOnly，不得直接入 KE / Serving / RAG / DIFY。"

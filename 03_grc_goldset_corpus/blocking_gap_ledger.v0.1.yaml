@@ -1,0 +1,56 @@
+blocking_gap_ledger:
+  ledger_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  gaps:
+  - gap_id: EVIDENCE_POLICY_OUTBOX_ENUM_GAP
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    case_count: 15
+    clusters:
+    - mkc_021
+    - mkc_026
+    - mkc_027
+    - mkc_028
+    - mkc_044
+    by_batch:
+      P0-03: 12
+      P0-05: 3
+    case_ids:
+    - GRC-P0-03-MKC021-ANTI-001
+    - GRC-P0-03-MKC021-BDR-001
+    - GRC-P0-03-MKC021-POS-001
+    - GRC-P0-03-MKC026-ANTI-001
+    - GRC-P0-03-MKC026-BDR-001
+    - GRC-P0-03-MKC026-POS-001
+    - GRC-P0-03-MKC027-ANTI-001
+    - GRC-P0-03-MKC027-BDR-001
+    - GRC-P0-03-MKC027-POS-001
+    - GRC-P0-03-MKC028-ANTI-001
+    - GRC-P0-03-MKC028-BDR-001
+    - GRC-P0-03-MKC028-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    description: current strict generation schema enum does not accept EvidencePolicyOutbox / evidence_policy_candidate; recorded as blocking gap only
+    silently_mapped_to_general_knowledge_base: false
+    resolved_in_this_task: false
+    must_not_resolve_in_this_task: true
+    blocks:
+    - canary_generation
+    - 3600_generation
+    - CandidatePack
+    - Four_Gate
+    does_not_block:
+    - corpus_lock
+    - normalization
+    - digest_manifest
+    - judge_calibration_index_reference
+    requires_next_task: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

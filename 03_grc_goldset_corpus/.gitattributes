@@ -1,0 +1,6 @@
+# GRC canonical corpus — verbatim byte-exact copies.
+# Disable EOL/text normalization so committed blobs stay byte-identical to their
+# tmp/ sources and match the sha256 recorded in source_digest_manifest.v0.1.yaml.
+# (Repo core.autocrlf=input would otherwise rewrite CRLF->LF at commit time,
+#  desyncing 6 CRLF sources from their recorded digest.)
+normalized/** -text

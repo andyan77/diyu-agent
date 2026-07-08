@@ -1,0 +1,380 @@
+owner_storage_audit:
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  audit_scope: semantic_owner / storage_target / artifact_kind / body_form alignment for P0-03 gold reference cases
+  expected_matrix_rows:
+    apparel_general_method:
+      semantic_owner: apparel_domain_method
+      storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      body_forms:
+      - domain_method_body
+      - full_rich_body
+      clusters:
+      - mkc_020
+      - mkc_022
+      - mkc_023
+      - mkc_024
+      - mkc_025
+      - mkc_029
+    apparel_claim_boundary:
+      semantic_owner: apparel_claim_boundary
+      storage_target: EvidencePolicyOutbox
+      artifact_kind: evidence_policy_candidate
+      body_forms:
+      - claim_boundary_body
+      - evidence_policy_body
+      clusters:
+      - mkc_021
+      - mkc_026
+      - mkc_027
+      - mkc_028
+  hard_rules_checked:
+  - rule_id: OAR-001
+    rule: semantic_owner=apparel_claim_boundary 时，storage_target 不得为 GeneralKnowledgeBase。
+    fail_code: F05_WRONG_OWNER_ROUTING
+    applicable: true
+    result: pass
+  - rule_id: OAR-004
+    rule: GeneralKnowledgeBase 条目不得包含品牌实例、真实顾客、真实员工、真实门店、真实库存。
+    fail_code: F14_BRAND_FACT_POLLUTION
+    applicable: true
+    result: pass
+  audit_items:
+  - case_id: GRC-P0-03-MKC020-POS-001
+    cluster_id: mkc_020
+    case_type: positive_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC020-ANTI-001
+    cluster_id: mkc_020
+    case_type: anti_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC020-BDR-001
+    cluster_id: mkc_020
+    case_type: borderline_repair
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC021-POS-001
+    cluster_id: mkc_021
+    case_type: positive_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC021-ANTI-001
+    cluster_id: mkc_021
+    case_type: anti_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC021-BDR-001
+    cluster_id: mkc_021
+    case_type: borderline_repair
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC022-POS-001
+    cluster_id: mkc_022
+    case_type: positive_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC022-ANTI-001
+    cluster_id: mkc_022
+    case_type: anti_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC022-BDR-001
+    cluster_id: mkc_022
+    case_type: borderline_repair
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC023-POS-001
+    cluster_id: mkc_023
+    case_type: positive_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC023-ANTI-001
+    cluster_id: mkc_023
+    case_type: anti_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC023-BDR-001
+    cluster_id: mkc_023
+    case_type: borderline_repair
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC024-POS-001
+    cluster_id: mkc_024
+    case_type: positive_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC024-ANTI-001
+    cluster_id: mkc_024
+    case_type: anti_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC024-BDR-001
+    cluster_id: mkc_024
+    case_type: borderline_repair
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC025-POS-001
+    cluster_id: mkc_025
+    case_type: positive_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC025-ANTI-001
+    cluster_id: mkc_025
+    case_type: anti_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC025-BDR-001
+    cluster_id: mkc_025
+    case_type: borderline_repair
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC026-POS-001
+    cluster_id: mkc_026
+    case_type: positive_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC026-ANTI-001
+    cluster_id: mkc_026
+    case_type: anti_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC026-BDR-001
+    cluster_id: mkc_026
+    case_type: borderline_repair
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC027-POS-001
+    cluster_id: mkc_027
+    case_type: positive_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC027-ANTI-001
+    cluster_id: mkc_027
+    case_type: anti_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC027-BDR-001
+    cluster_id: mkc_027
+    case_type: borderline_repair
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC028-POS-001
+    cluster_id: mkc_028
+    case_type: positive_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC028-ANTI-001
+    cluster_id: mkc_028
+    case_type: anti_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC028-BDR-001
+    cluster_id: mkc_028
+    case_type: borderline_repair
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC029-POS-001
+    cluster_id: mkc_029
+    case_type: positive_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC029-ANTI-001
+    cluster_id: mkc_029
+    case_type: anti_gold
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  - case_id: GRC-P0-03-MKC029-BDR-001
+    cluster_id: mkc_029
+    case_type: borderline_repair
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+  audit_summary:
+    total_cases_checked: 30
+    owner_alignment_pass: 30
+    owner_routing_error_count: 0
+    brand_instance_pollution_count: 0
+    evidence_policy_stored_in_general_knowledge_count: 0
+    mkc_021_026_027_028_routed_to_evidence_policy_outbox: true
+    audit_verdict: pass

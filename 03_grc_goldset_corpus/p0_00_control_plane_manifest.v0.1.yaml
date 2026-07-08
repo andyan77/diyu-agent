@@ -1,0 +1,61 @@
+p0_00_control_plane_manifest:
+  manifest_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  role: control_plane_calibration
+  formal_120_included: false
+  case_count: 18
+  unique_case_id_count: 18
+  cluster_count: 6
+  cluster_range: mkc_001..mkc_006
+  clusters:
+  - mkc_001
+  - mkc_002
+  - mkc_003
+  - mkc_004
+  - mkc_005
+  - mkc_006
+  per_cluster_case_count:
+    mkc_001: 3
+    mkc_002: 3
+    mkc_003: 3
+    mkc_004: 3
+    mkc_005: 3
+    mkc_006: 3
+  case_ids:
+  - GRC-P0-00-MKC001-POS-001
+  - GRC-P0-00-MKC001-ANTI-001
+  - GRC-P0-00-MKC001-BDR-001
+  - GRC-P0-00-MKC002-POS-001
+  - GRC-P0-00-MKC002-ANTI-001
+  - GRC-P0-00-MKC002-BDR-001
+  - GRC-P0-00-MKC003-POS-001
+  - GRC-P0-00-MKC003-ANTI-001
+  - GRC-P0-00-MKC003-BDR-001
+  - GRC-P0-00-MKC004-POS-001
+  - GRC-P0-00-MKC004-ANTI-001
+  - GRC-P0-00-MKC004-BDR-001
+  - GRC-P0-00-MKC005-POS-001
+  - GRC-P0-00-MKC005-ANTI-001
+  - GRC-P0-00-MKC005-BDR-001
+  - GRC-P0-00-MKC006-POS-001
+  - GRC-P0-00-MKC006-ANTI-001
+  - GRC-P0-00-MKC006-BDR-001
+  files:
+  - path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/acceptance_criteria.yaml
+    role: acceptance_criteria
+  - path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/final_verdict.yaml
+    role: final_verdict
+  - path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    role: control_gold_cases
+  - path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_to_40_cluster_dispatch_matrix.yaml
+    role: cluster_dispatch_matrix
+  - path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/scope_decision.yaml
+    role: scope_decision
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

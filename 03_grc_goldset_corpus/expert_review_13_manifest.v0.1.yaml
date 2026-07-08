@@ -1,0 +1,20 @@
+expert_review_13_manifest:
+  manifest_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  action: copy_verbatim_to_canonical_ascii_path
+  canonical_ascii_path: 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+  canonical_filename: expert_review_13_batches.v0.1.txt
+  canonical_filename_is_ascii: true
+  source_path: tmp/13个批次专家评审.txt
+  source_path_is_ascii: false
+  chinese_source_path_allowed_only_as:
+  - source_path
+  - provenance_path
+  - digest_input
+  source_sha256: 3691babc9ff5d3bc368e5de013edafeb0ddbfbda541d301b4222f7eb040822a5
+  normalized_sha256: 3691babc9ff5d3bc368e5de013edafeb0ddbfbda541d301b4222f7eb040822a5
+  byte_size: 326803
+  line_count: 7223
+  preserve_original_text: true
+  do_not_rewrite_judgments: true
+  judgment_rewrite_performed: false

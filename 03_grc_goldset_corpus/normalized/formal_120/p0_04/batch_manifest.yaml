@@ -1,0 +1,240 @@
+batch_manifest:
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  batch_type: formal_gold_reference_case_batch
+  formal_120_counting_policy: count_as_formal_batch_cases
+  pilot_reuse_policy:
+    pilot_batch_id: GRC-PILOT-006-CONTRACT-CALIBRATION
+    formal_120_counting_policy_for_pilot: do_not_count_by_default
+    allowed_reuse:
+    - reuse metadata policy
+    - reuse hard gate namespace
+    - reuse failure code registry logic
+    - use as generation exemplar only
+    not_allowed:
+    - do not count pilot cases as formal 120
+    - do not copy pilot body phrasing
+    - do not reuse P0-01 / P0-02 / P0-03 paragraph skeletons
+  capability_group: P0-04
+  selected_clusters:
+  - cluster_id: mkc_030
+    cluster_title: Look 拆解观察骨架
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS01_CL01
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_031
+    cluster_title: 主题与色彩故事关系网
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS01_CL02
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_032
+    cluster_title: 陈列区位与可拍摄视觉锚点
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS01_CL03
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_033
+    cluster_title: 门店日常动作观察切片
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS02_CL01
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_034
+    cluster_title: 动作转内容槽位与演示三段式
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS02_CL02
+    - W5_P0_04_RS03_CL02
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_035
+    cluster_title: 门店日常内容化风险红线
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS02_CL03
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_036
+    cluster_title: 陈列动作 SOP 节点框架
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS03_CL01
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_037
+    cluster_title: 零售角色动作权限与加盟改写边界
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS04_CL01
+    - W5_P0_04_RS04_CL02
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_038
+    cluster_title: 异常回退与前复核路由提示
+    cluster_owner: P0-04
+    source_cluster_refs:
+    - W5_P0_04_RS03_CL03
+    - W5_P0_04_RS04_CL03
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  expected_case_count: 27
+  actual_case_count: 27
+  global_case_type_distribution:
+    positive_gold: 9
+    anti_gold: 9
+    borderline_repair: 9
+  readiness_assertions:
+    all_readiness_flags_false: true
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  relation_assertions:
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+    all_cases_checked: 27
+  mixed_owner_route_summary:
+    ExecutionAssetOutbox:
+    - mkc_030
+    - mkc_031
+    - mkc_032
+    - mkc_033
+    - mkc_034
+    - mkc_036
+    GovernanceOutbox:
+    - mkc_035
+    - mkc_037
+    - mkc_038
+    owner_routing_error: 0
+  metadata_contract:
+    scoring_max: 120
+    hard_gate_precedence: true
+    verdict_score_floor:
+      accept_gold_candidate:
+        expected_score_floor: 108
+        hard_gate_fail_count: 0
+      accept_with_minor_fix:
+        expected_score_floor: 96
+        hard_gate_fail_count: 0
+      reject_or_blocking_revise:
+        expected_score_floor: 0
+        hard_gate_fail_required: true
+    failure_code_registry:
+      global_failure_codes_allowed:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F02_TEMPLATE_REUSE
+      - F03_GOVERNANCE_TEXT_IN_BODY
+      - F05_WRONG_OWNER_ROUTING
+      - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      - F14_BRAND_FACT_POLLUTION
+      - F16_NO_GOLD_VALUE
+      batch_local_failure_code_namespace: GRC-P0-04-F###_*
+      batch_local_failure_codes:
+      - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+      - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+      - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+      - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+      - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+      - GRC-P0-04-F006_DISPLAY_SYSTEM_OVERBUILD
+      - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+      forbidden_unregistered_global_codes:
+      - F15_*
+      - F17_*
+      - F18_*
+      - F19_*
+    hard_gate_id_namespace:
+      canonical_gate_ids:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+      forbidden_legacy_aliases:
+      - HG01_NO_MECHANISM
+      - HG02_TEMPLATE_OR_BOILERPLATE
+      - HG03_GOVERNANCE_TEXT_IN_BODY
+      - HG05_WRONG_OWNER_ROUTING
+      - HG10_READINESS_DRIFT
+      - HG13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+  delivery_outputs:
+  - gold_reference_cases.yaml
+  - batch_manifest.yaml
+  - owner_storage_audit.yaml
+  - hard_gate_selfcheck.yaml
+  - judge_calibration_index.yaml
+  batch_manifest_verdict: pass

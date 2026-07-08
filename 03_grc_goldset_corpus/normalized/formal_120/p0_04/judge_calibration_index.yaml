@@ -1,0 +1,256 @@
+judge_calibration_index:
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  positive_examples_count: 9
+  negative_examples_count: 9
+  borderline_examples_count: 9
+  positive_examples:
+  - case_id: GRC-P0-04-MKC030-POS-001
+    cluster_id: mkc_030
+    cluster_title: Look 拆解观察骨架
+    expected_verdict: accept_gold_candidate
+    key_reason: Look 拆解观察骨架 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_030
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC031-POS-001
+    cluster_id: mkc_031
+    cluster_title: 主题与色彩故事关系网
+    expected_verdict: accept_gold_candidate
+    key_reason: 主题与色彩故事关系网 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_031
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC032-POS-001
+    cluster_id: mkc_032
+    cluster_title: 陈列区位与可拍摄视觉锚点
+    expected_verdict: accept_gold_candidate
+    key_reason: 陈列区位与可拍摄视觉锚点 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_032
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC033-POS-001
+    cluster_id: mkc_033
+    cluster_title: 门店日常动作观察切片
+    expected_verdict: accept_gold_candidate
+    key_reason: 门店日常动作观察切片 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_033
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC034-POS-001
+    cluster_id: mkc_034
+    cluster_title: 动作转内容槽位与演示三段式
+    expected_verdict: accept_gold_candidate
+    key_reason: 动作转内容槽位与演示三段式 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_034
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC035-POS-001
+    cluster_id: mkc_035
+    cluster_title: 门店日常内容化风险红线
+    expected_verdict: accept_gold_candidate
+    key_reason: 门店日常内容化风险红线 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_035
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC036-POS-001
+    cluster_id: mkc_036
+    cluster_title: 陈列动作 SOP 节点框架
+    expected_verdict: accept_gold_candidate
+    key_reason: 陈列动作 SOP 节点框架 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_036
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC037-POS-001
+    cluster_id: mkc_037
+    cluster_title: 零售角色动作权限与加盟改写边界
+    expected_verdict: accept_gold_candidate
+    key_reason: 零售角色动作权限与加盟改写边界 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_037
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  - case_id: GRC-P0-04-MKC038-POS-001
+    cluster_id: mkc_038
+    cluster_title: 异常回退与前复核路由提示
+    expected_verdict: accept_gold_candidate
+    key_reason: 异常回退与前复核路由提示 的机制链、对象边界、owner 路由和输出资产完整，可作为合格正样本。
+    use_as_reference_for:
+    - mkc_038
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+  negative_examples:
+  - case_id: GRC-P0-04-MKC030-ANTI-001
+    cluster_id: mkc_030
+    cluster_title: Look 拆解观察骨架
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F01_NO_CLUSTER_SPECIFIC_MECHANISM, GRC-P0-04-F001_REAL_STORE_FACT_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC031-ANTI-001
+    cluster_id: mkc_031
+    cluster_title: 主题与色彩故事关系网
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F01_NO_CLUSTER_SPECIFIC_MECHANISM, GRC-P0-04-F001_REAL_STORE_FACT_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC032-ANTI-001
+    cluster_id: mkc_032
+    cluster_title: 陈列区位与可拍摄视觉锚点
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F01_NO_CLUSTER_SPECIFIC_MECHANISM, GRC-P0-04-F001_REAL_STORE_FACT_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC033-ANTI-001
+    cluster_id: mkc_033
+    cluster_title: 门店日常动作观察切片
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F01_NO_CLUSTER_SPECIFIC_MECHANISM, GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+  - case_id: GRC-P0-04-MKC034-ANTI-001
+    cluster_id: mkc_034
+    cluster_title: 动作转内容槽位与演示三段式
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F01_NO_CLUSTER_SPECIFIC_MECHANISM, F16_NO_GOLD_VALUE, GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+  - case_id: GRC-P0-04-MKC035-ANTI-001
+    cluster_id: mkc_035
+    cluster_title: 门店日常内容化风险红线
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F16_NO_GOLD_VALUE, GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC036-ANTI-001
+    cluster_id: mkc_036
+    cluster_title: 陈列动作 SOP 节点框架
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F01_NO_CLUSTER_SPECIFIC_MECHANISM, GRC-P0-04-F004_SOP_INSTANCE_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+  - case_id: GRC-P0-04-MKC037-ANTI-001
+    cluster_id: mkc_037
+    cluster_title: 零售角色动作权限与加盟改写边界
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F14_BRAND_FACT_POLLUTION, F01_NO_CLUSTER_SPECIFIC_MECHANISM, GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC038-ANTI-001
+    cluster_id: mkc_038
+    cluster_title: 异常回退与前复核路由提示
+    expected_verdict: reject_or_blocking_revise
+    key_reason: 该例故意触发 F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY, F16_NO_GOLD_VALUE, GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH，用于识别实例污染、机制缺失或越界输出。
+    failure_code_refs:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+  borderline_examples:
+  - case_id: GRC-P0-04-MKC030-BDR-001
+    cluster_id: mkc_030
+    cluster_title: Look 拆解观察骨架
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 Look 拆解观察骨架 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC031-BDR-001
+    cluster_id: mkc_031
+    cluster_title: 主题与色彩故事关系网
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 主题与色彩故事关系网 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC032-BDR-001
+    cluster_id: mkc_032
+    cluster_title: 陈列区位与可拍摄视觉锚点
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 陈列区位与可拍摄视觉锚点 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC033-BDR-001
+    cluster_id: mkc_033
+    cluster_title: 门店日常动作观察切片
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 门店日常动作观察切片 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+  - case_id: GRC-P0-04-MKC034-BDR-001
+    cluster_id: mkc_034
+    cluster_title: 动作转内容槽位与演示三段式
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 动作转内容槽位与演示三段式 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+  - case_id: GRC-P0-04-MKC035-BDR-001
+    cluster_id: mkc_035
+    cluster_title: 门店日常内容化风险红线
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 门店日常内容化风险红线 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC036-BDR-001
+    cluster_id: mkc_036
+    cluster_title: 陈列动作 SOP 节点框架
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 陈列动作 SOP 节点框架 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+  - case_id: GRC-P0-04-MKC037-BDR-001
+    cluster_id: mkc_037
+    cluster_title: 零售角色动作权限与加盟改写边界
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 零售角色动作权限与加盟改写边界 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC038-BDR-001
+    cluster_id: mkc_038
+    cluster_title: 异常回退与前复核路由提示
+    expected_verdict: accept_with_minor_fix
+    key_reason: 该例保留 异常回退与前复核路由提示 的主机制，但局部需要抽象、降级或删除越界表述。
+    repair_path: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_code_refs:
+    - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+  calibration_notes:
+  - positive_gold 要求 cluster-specific mechanism、owner 路由、边界和输出资产同时成立。
+  - anti_gold 不得因字段齐全而通过；若存在实例事实、成稿输出、错误授权或 route taxonomy overreach，应阻断。
+  - borderline_repair 不写 expected_failure_codes；修复码只进入 repair_code_refs 或 codex_usage。
+  judge_calibration_index_verdict: pass

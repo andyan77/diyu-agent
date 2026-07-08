@@ -1,0 +1,2650 @@
+gold_reference_cases:
+- case_id: GRC-P0-02-MKC013-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_013
+  cluster_title: 角色发声寄存器
+  cluster_owner: P0-02
+  source_cluster_refs: &id001
+  - P0-02-RS01-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 角色发声寄存器的作用，是把“谁在说”转成可控的叙述站位，而不是制造人物经历。店主视角适合承接取舍与经营判断，句子可以更像“为什么这样摆、为什么这样搭”；导购视角适合承接试穿前后的观察与提醒，动作词更多，限制语也更多；搭配师视角适合解释比例、层次、色彩和场景任务，信息密度较高；品牌旁白适合做稳定说明，只保留可见对象、选择逻辑和价值边界。角色一旦确定，主语、动词、观察词和解释词都要同步变化：导购可以说“先看肩线和活动量”，旁白更适合说“肩线与松量共同决定上身轮廓”。该机制只定义通用角色的发声范围，不生成真实身份、真实经历或可直接发布的人设话术。
+    mechanism_chain:
+    - role_subject -> narrative_stance
+    - narrative_stance -> information_density
+    - role_subject -> allowed_action_words
+    - role_subject -> allowed_observation_words
+    - role_boundary -> de_personalized_voice
+    apparel_domain_anchors: &id002
+    - 店主视角
+    - 导购视角
+    - 搭配师视角
+    - 品牌旁白
+    - 动作词
+    - 观察词
+    - 解释词
+    output_effect: 让同一服装对象能够按店主、导购、搭配师或品牌旁白切换表达密度与限制语，同时避免人物事实幻觉。
+    failure_signal: 把角色发声写成某个真实员工的经历、授权口吻、固定人设话术或门店现场记录。
+    repair_instruction_if_failed: 删除真实身份和经历暗示，只保留角色主语、观察范围、动作词类型和解释深度。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 角色发声寄存器 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: &id003
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    anti_hallucination_guard: 不得把角色口吻写成真实员工、真实门店、真实顾客或默认授权；角色只作为表达功能和观察位置。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id004
+    - depends_on:P0-02-RS04-C01
+    - modulated_by:P0-02-RS03-C01
+    - shares_boundary_with:P0-01
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: &id005
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - role_voice_register
+    - narrative_stance
+    - de_personalized_role_voice
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC013-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_013
+  cluster_title: 角色发声寄存器
+  cluster_owner: P0-02
+  source_cluster_refs: *id001
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 角色口吻最好来自真实员工故事。可以让一位导购用第一人称讲自己在门店接待顾客的经历，再加上顾客试穿后的反馈，这样语气会更像真人。店主也可以直接代表品牌保证某件衣服值得信任，搭配师可以用自己的专业身份告诉用户这套一定适合。只要写得自然，这些内容就能直接成为人设话术。
+    mechanism_chain:
+    - role_voice -> real_staff_story
+    - real_customer_feedback -> trust_claim
+    - role_identity -> authority_backing
+    apparel_domain_anchors: *id002
+    output_effect: 错误地把角色发声寄存器变成真实人物、真实反馈和授权背书生成器。
+    failure_signal: 依赖真实员工、真实顾客、真实门店或默认授权来制造口吻可信度。
+    repair_instruction_if_failed: 阻断；改写为通用角色主语、信息密度、动作词和观察词边界。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把角色口吻写成真实员工、真实门店、真实顾客或默认授权；角色只作为表达功能和观察位置。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id004
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC013-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_013
+  cluster_title: 角色发声寄存器
+  cluster_owner: P0-02
+  source_cluster_refs: *id001
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 角色发声可以先分成店主、导购、搭配师和品牌旁白四类。店主负责解释取舍，导购负责提示试穿顺序，搭配师负责说明比例和层次，旁白负责稳定说明。当前写法的问题在于偶尔会出现“我们门店常这样给客人搭”或“店主亲自确认过”这类句子，使通用角色口吻开始像具体身份和默认授权。修复时应把这类句子改成“适合用门店观察口吻说明搭配顺序”或“适合用取舍口吻说明选择逻辑”，让角色只保留表达功能，不携带真实身份。
+    mechanism_chain:
+    - role_bucket -> speaking_function
+    - speaking_function -> allowed_information_depth
+    - identity_hint -> de_personalization_repair
+    - default_authority_hint -> method_layer_rewrite
+    apparel_domain_anchors: *id002
+    output_effect: 接近可用：角色分桶成立，但需要去掉真实身份和默认授权暗示。
+    failure_signal: 角色说明中出现“我们门店”“店主确认”一类真实身份或授权感。
+    repair_instruction_if_failed: 把身份句改为通用表达功能句；保留角色类型、动作词、观察词和信息深度。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把角色口吻写成真实员工、真实门店、真实顾客或默认授权；角色只作为表达功能和观察位置。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id004
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_real_persona_hint
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC014-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_014
+  cluster_title: 语气校准与去人物化
+  cluster_owner: P0-02
+  source_cluster_refs: &id006
+  - P0-02-RS01-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 语气校准不是把内容写得更像某个人，而是让表达强度匹配材料强度和场景强度。低风险的搭配提醒可以使用轻口吻，例如“更适合先看比例关系”；涉及面料、版型、舒适度、品质感时，应增加观察限定，例如“从画面能看到”“更像是”“需要结合实物信息判断”。允许的人设表面层只保留节奏、礼貌度、解释耐心和词汇偏好，不保留年龄、经历、岗位履历或真实关系。高风险断言前必须降调：把“穿着一定舒服”改为“从松量与触点看，活动空间可以作为观察项”；把“显瘦”改为“线条更集中在纵向”。语气只能调节可理解度，不能替代证据。
+    mechanism_chain:
+    - scene_intensity -> tone_strength
+    - material_strength -> assertion_limit
+    - persona_surface -> style_without_identity
+    - high_risk_claim -> softened_observation
+    - tone_strength -> evidence_boundary_preserved
+    apparel_domain_anchors: &id007
+    - 语气强度
+    - 场景强度
+    - 限制语
+    - 观察化表达
+    - 人设表面层
+    - 高风险断言
+    output_effect: 让角色口吻既有风格差异，又不会把温柔、专业或老练写成事实证明。
+    failure_signal: 用语气词暗示质量保证、身体效果、舒适性能或真实人物存在。
+    repair_instruction_if_failed: 把口吻词降级为表达约束，把事实性内容改为观察、限制语或待补依据。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 语气校准与去人物化 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用语气强度替代事实依据；不得把人设表面层写成真实人物画像。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id008
+    - constrained_by:P0-02-RS04-C02
+    - modulated_by:P0-02-RS03-C02
+    - intersects_with:P0-03
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - tone_calibration
+    - persona_surface_limit
+    - claim_downgrade_language
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC014-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_014
+  cluster_title: 语气校准与去人物化
+  cluster_owner: P0-02
+  source_cluster_refs: *id006
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 为了让语气更真实，可以给导购安排一个成熟温柔的人设：她多年在门店服务，知道顾客穿上后会觉得舒服、显瘦、有安全感。语气要像朋友一样保证这件衣服不会踩雷，也可以引用创始人的一句话来增加可信度。只要语气足够专业，质量和舒适度就会显得更可靠。
+    mechanism_chain:
+    - warm_tone -> fabricated_persona
+    - professional_tone -> quality_proof
+    - founder_quote -> authority_signal
+    - comfort_word -> guaranteed_result
+    apparel_domain_anchors: *id007
+    output_effect: 错误地把语气当成证据，把人设表面层扩写为真实人物画像和权威背书。
+    failure_signal: 出现员工经历、创始人语录、舒适保证、显瘦保证或语气替代证据。
+    repair_instruction_if_failed: 阻断；删除人物经历和保证式表达，改成语气强度、限制语和观察化表达规则。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用语气强度替代事实依据；不得把人设表面层写成真实人物画像。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id008
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC014-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_014
+  cluster_title: 语气校准与去人物化
+  cluster_owner: P0-02
+  source_cluster_refs: *id006
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 语气可以分为轻提醒、经验解释和专业说明三层。轻提醒适合搭配顺序，经验解释适合试穿前的观察，专业说明适合面料、版型、结构等需要解释的对象。当前写法的问题是把“温柔”“老练”“专业”这些口吻词放到了证明位置，例如让“专业口吻”暗示品质可靠，让“温柔口吻”暗示穿着体验。修复时应把口吻词改成表达方式：温柔表示少用命令句，专业表示多用观察条件，老练表示先讲取舍再讲限制。
+    mechanism_chain:
+    - tone_layer -> expression_constraint
+    - soft_tone -> non_commanding_sentence
+    - professional_tone -> conditional_observation
+    - mature_tone -> tradeoff_first_explanation
+    - tone_as_proof -> repair_to_tone_as_form
+    apparel_domain_anchors: *id007
+    output_effect: 接近可用：语气分层成立，但需阻断口吻词承担证明功能。
+    failure_signal: 口吻词开始证明品质、舒适度或人物权威。
+    repair_instruction_if_failed: 保留语气层级；把证明句改成表达形式、限制语和观察条件。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用语气强度替代事实依据；不得把人设表面层写成真实人物画像。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id008
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_tone_as_proof
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC015-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_015
+  cluster_title: 组织生态角色网格
+  cluster_owner: P0-02
+  source_cluster_refs: &id009
+  - P0-02-RS02-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 组织生态角色网格要描述的是通用内容职责与观察接口，不是真实组织结构。一个服装品牌可以抽象出五类公开可用角色：商品解释者负责品类、面料、版型和卖点边界；造型组织者负责色彩、比例、层次和场景任务；空间观察者负责陈列区位、视觉焦点和动线提示；服务转译者负责把试穿前后的疑问改成可公开提醒；方法旁白负责把以上角色的判断整理成稳定说明。每个角色只暴露对应的信息颗粒度：商品解释者不能替代检测报告，空间观察者不能透露门店经营数据，服务转译者不能转述真实顾客反馈。该网格的价值在于把生态视角变成内容角度，而不是把内部组织搬到通用知识里。
+    mechanism_chain:
+    - role_function_layer -> content_responsibility
+    - content_responsibility -> observation_interface
+    - role_function_layer -> information_granularity
+    - public_role_grid -> reusable_content_angle
+    - private_org_fact -> excluded_from_grid
+    apparel_domain_anchors: &id010
+    - 角色功能层级
+    - 内容职责
+    - 观察接口
+    - 信息颗粒度
+    - 生态视角
+    - 公开表达
+    output_effect: 让组织生态被抽象为可复用角色功能层级，支持内容角度生成但不暴露真实组织。
+    failure_signal: 写成真实部门、真实岗位汇报、门店配置、加盟关系或私域经营资料。
+    repair_instruction_if_failed: 把组织关系改为功能层级与观察接口；删除具体职位链、配置链和经营链。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 组织生态角色网格 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把通用角色网格写成真实组织结构、门店配置、加盟关系或私域经营资料。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id011
+    - feeds:P0-02-RS02-C02
+    - constrained_by:P0-02-RS04-C01
+    - shared_with:P0-04
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - role_grid
+    - content_responsibility
+    - observation_interface
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC015-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_015
+  cluster_title: 组织生态角色网格
+  cluster_owner: P0-02
+  source_cluster_refs: *id009
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 组织生态内容应把总部、区域、门店、加盟商和导购的真实协作关系写清楚。可以说明谁负责订货、谁审批陈列、谁管理库存、谁负责私域跟进，再把这些信息转成用户能理解的品牌专业感。角色越具体，越能证明品牌运转成熟。
+    mechanism_chain:
+    - real_org_chart -> content_authority
+    - private_operations -> brand_maturity_claim
+    - franchise_relation -> trust_signal
+    apparel_domain_anchors: *id010
+    output_effect: 错误地把组织生态角色网格写成内部组织结构和私域经营资料。
+    failure_signal: 使用真实组织配置、审批职责、库存管理、加盟协作或私域跟进来证明品牌。
+    repair_instruction_if_failed: 阻断；改写为公开可复用的角色功能层级、信息颗粒度和观察接口。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把通用角色网格写成真实组织结构、门店配置、加盟关系或私域经营资料。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id011
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC015-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_015
+  cluster_title: 组织生态角色网格
+  cluster_owner: P0-02
+  source_cluster_refs: *id009
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 组织生态可以抽象为商品解释者、造型组织者、空间观察者、服务转译者和方法旁白五类角色。当前写法基本能说明不同角色提供不同内容角度，但“空间观察者交给导购执行”“服务转译者反馈给商品端”这样的关系过像真实组织协作链。修复时应把关系改成内容接口：空间观察者提供区位与焦点信息，服务转译者提供疑问类型与表达限制，商品解释者提供属性解释入口。角色之间不写管理关系，只写信息如何被不同视角重述。
+    mechanism_chain:
+    - role_grid -> content_angle
+    - role_relation -> information_interface
+    - org_like_relation -> abstract_interface_repair
+    - management_chain -> removed_from_body
+    apparel_domain_anchors: *id010
+    output_effect: 接近可用：角色功能层级成立，但需从组织关系修复为内容接口关系。
+    failure_signal: 角色之间出现执行、反馈、管理、审批等组织链暗示。
+    repair_instruction_if_failed: 删除组织链动词，替换为提供信息、限制表达、改变视角、调整颗粒度。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把通用角色网格写成真实组织结构、门店配置、加盟关系或私域经营资料。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id011
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_org_like_relation
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC016-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_016
+  cluster_title: 视角切换与公开安全边界
+  cluster_owner: P0-02
+  source_cluster_refs: &id012
+  - P0-02-RS02-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 视角切换的核心，是同一对象在不同角色中改变命名、解释重点和可公开上下文。某件外套在商品解释者口中是品类、面料、版型和结构节点；在造型组织者口中是层次、比例和场景任务；在空间观察者口中是陈列焦点、色块关系和镜头入口；在服务转译者口中是试穿前应先观察的问题。公开安全边界要在切换时同步执行：能公开的是可见对象、通用方法、非个人化提醒和不含经营数据的观察；不能公开的是真实审批链、销售表现、库存细节、培训记录、加盟关系和渠道安排。遇到内部运营信息，只能转成待补依据、内部保留或排除，不把它包装成生态视角。
+    mechanism_chain:
+    - same_object -> role_specific_name
+    - role_specific_name -> explanation_focus
+    - context_switch -> public_safe_filter
+    - private_operations_signal -> route_away
+    - public_safe_view -> generalized_method_expression
+    apparel_domain_anchors: &id013
+    - 命名变化
+    - 解释重点
+    - 上下文切换
+    - 公开安全
+    - 内部运营切断
+    - 边界分流
+    output_effect: 让跨角色内容能安全切换角度，同时切断内部运营事实和公开表达之间的错误通道。
+    failure_signal: 用角色切换包装真实流程、库存、销售、培训、审批、加盟或渠道事实。
+    repair_instruction_if_failed: 保留命名变化和解释重点；把内部运营信息改为待补依据、内部保留或排除。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 视角切换与公开安全边界 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用视角切换公开内部运营、审批、库存、销售、培训、加盟或渠道信息。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id014
+    - depends_on:P0-02-RS02-C01
+    - downgraded_by:P0-02-RS04-C02
+    - shared_boundary_with:P0-00
+    - shared_boundary_with:P0-04
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - perspective_switch
+    - public_safe_boundary
+    - private_ops_cutoff
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC016-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_016
+  cluster_title: 视角切换与公开安全边界
+  cluster_owner: P0-02
+  source_cluster_refs: *id012
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 同一件商品可以先从导购视角写试穿流程，再从店长视角写门店培训安排，最后从运营视角写库存和销售变化，这样生态感会更完整。为了体现组织协同，可以补充审批链、陈列调整记录和渠道反馈，把内部信息包装成公开故事。
+    mechanism_chain:
+    - role_switch -> private_SOP
+    - operations_record -> public_story
+    - inventory_sales_fact -> ecology_content
+    apparel_domain_anchors: *id013
+    output_effect: 错误地把视角切换变成内部运营资料公开化。
+    failure_signal: 出现培训安排、审批链、库存销售、渠道反馈或真实运营记录。
+    repair_instruction_if_failed: 阻断；改写为对象命名变化、解释重点变化和公开安全过滤。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用视角切换公开内部运营、审批、库存、销售、培训、加盟或渠道信息。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id014
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC016-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_016
+  cluster_title: 视角切换与公开安全边界
+  cluster_owner: P0-02
+  source_cluster_refs: *id012
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 视角切换可以把同一条服装信息改写成商品解释、搭配解释、陈列解释和试穿提醒。当前写法的问题是公开安全边界不够明确：它允许把“门店如何调整陈列”作为空间观察，但没有说明哪些是可见陈列变化，哪些是内部安排。修复时应把区位、色块、层次、镜头入口保留为可公开观察；把审批、库存、业绩、培训、渠道和加盟安排标为不能公开的内部运营信息。
+    mechanism_chain:
+    - object_view -> perspective_variant
+    - perspective_variant -> public_context_check
+    - ambiguous_store_adjustment -> split_visible_vs_private
+    - private_operations -> excluded_or_internal_only
+    apparel_domain_anchors: *id013
+    output_effect: 接近可用：视角切换机制成立，但需明确可见观察与内部运营的切断线。
+    failure_signal: 门店调整、运营安排等词没有被拆成公开观察与内部信息。
+    repair_instruction_if_failed: 把可见陈列变化留在正文，把运营安排移动到不能公开或待补依据类别。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用视角切换公开内部运营、审批、库存、销售、培训、加盟或渠道信息。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id014
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_private_ops_boundary
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC017-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_017
+  cluster_title: 受众距离与信息深浅轴
+  cluster_owner: P0-02
+  source_cluster_refs: &id015
+  - P0-02-RS03-C01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 受众距离与信息深浅轴由三个变量共同决定：knowledge distance 表示对服装术语、面料、版型和搭配逻辑的熟悉程度；decision stage 表示只是浏览、正在比较、准备试穿还是需要承接建议；interaction
+      intensity 表示内容关系是公开种草、门店讲解还是私域承接。距离越远，表达越应从可见对象和简单选择开始，例如先说颜色、长度、层次和场景任务；距离越近，才增加结构词、取舍逻辑和替代方案。新客、熟客、试穿前后只能作为通用阶段模型，不能写成真实顾客画像。角色发声也要随距离调整：旁白负责低门槛解释，导购负责决策前提醒，搭配师负责高密度结构说明。
+    mechanism_chain:
+    - knowledge_distance -> explanation_depth
+    - decision_stage -> information_sequence
+    - interaction_intensity -> role_voice_density
+    - audience_stage_model -> no_real_user_profile
+    - role_voice -> adjusted_explanation_density
+    apparel_domain_anchors: &id016
+    - knowledge distance
+    - decision stage
+    - interaction intensity
+    - 新客阶段
+    - 熟客阶段
+    - 信息深浅
+    output_effect: 让角色发声根据受众距离控制信息深浅，不把阶段模型写成真实用户画像。
+    failure_signal: 把新客、熟客或私域承接写成真实顾客数据、真实反馈或具体购买路径。
+    repair_instruction_if_failed: 把具体顾客心理和行为改成阶段模型、信息深度和解释顺序。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 受众距离与信息深浅轴 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把受众阶段模型写成真实顾客画像、敏感数据、真实反馈或真实购买路径。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id017
+    - modulates:P0-02-RS01-C01
+    - modulates:P0-02-RS01-C02
+    - feeds:P0-02-RS03-C02
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - audience_distance_axis
+    - information_depth
+    - stage_model
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC017-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_017
+  cluster_title: 受众距离与信息深浅轴
+  cluster_owner: P0-02
+  source_cluster_refs: *id015
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 受众距离可以根据顾客年龄、消费能力、购买记录和聊天反馈来决定。新客一般担心价格，熟客一般追求质感，私域顾客通常已经信任品牌，所以可以直接给她们更强的购买建议。也可以把真实试穿反馈写进模型，这样信息深浅更准确。
+    mechanism_chain:
+    - sensitive_personal_data -> audience_model
+    - real_feedback -> information_depth
+    - purchase_record -> role_voice
+    apparel_domain_anchors: *id016
+    output_effect: 错误地把受众距离模型写成真实顾客画像和敏感数据推断。
+    failure_signal: 使用年龄、消费能力、购买记录、真实反馈或具体心理画像来决定表达。
+    repair_instruction_if_failed: 阻断；改写为 knowledge distance、decision stage、interaction intensity 三个通用变量。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把受众阶段模型写成真实顾客画像、敏感数据、真实反馈或真实购买路径。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id017
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    - F14_BRAND_FACT_POLLUTION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC017-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_017
+  cluster_title: 受众距离与信息深浅轴
+  cluster_owner: P0-02
+  source_cluster_refs: *id015
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 信息深浅可以按浏览、比较、试穿前、承接建议四个阶段展开。浏览阶段先讲可见颜色和轮廓，比较阶段加入材质和版型取舍，试穿前提示观察顺序，承接建议阶段可以提供搭配替代。当前写法的问题是偶尔推测“用户会觉得自己被理解”或“熟客一定更愿意听细节”，这些句子把阶段模型过度真实化。修复时应改成“该阶段需要更少术语”或“该阶段可以增加替代方案”，不描述真实心理。
+    mechanism_chain:
+    - decision_stage -> content_depth
+    - stage_model -> explanation_sequence
+    - psychology_guess -> repair_to_information_need
+    - real_user_assumption -> abstract_stage_model
+    apparel_domain_anchors: *id016
+    output_effect: 接近可用：阶段与信息深浅成立，但需去掉真实心理与熟客推断。
+    failure_signal: 出现用户心理、熟客偏好或真实反馈式判断。
+    repair_instruction_if_failed: 把心理推测改为信息需求、术语密度、解释顺序和替代方案。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得把受众阶段模型写成真实顾客画像、敏感数据、真实反馈或真实购买路径。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id017
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_audience_psychology
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC018-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_018
+  cluster_title: 情绪温度层与信任门控
+  cluster_owner: P0-02
+  source_cluster_refs: &id018
+  - P0-02-RS03-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 情绪温度层用于调节表达距离，不用于证明事实。冷温层适合清楚说明对象，例如“这件外套的重点在长度和肩线”；中温层适合给出场景化提醒，例如“通勤场景可以先看活动空间和层次”；暖温层适合降低理解压力，例如“先从最容易观察的袖口和领口看起”。信任门控要把低风险信号和强证据信号分开：耐心解释、限制语、可见细节属于低风险信任信号；检测、认证、真实反馈、性能结论属于强证据信号，需要外部依据。没有依据时，情绪句只能降级为观察或提醒，不能写成舒适保证、质量保证或确定结果。
+    mechanism_chain:
+    - emotion_temperature -> expression_distance
+    - low_risk_trust_signal -> readability_support
+    - strong_evidence_signal -> source_required_claim
+    - unsupported_trust_claim -> downgrade_to_observation
+    - emotion -> not_evidence
+    apparel_domain_anchors: &id019
+    - 情绪温度
+    - 低风险信任信号
+    - 强证据信号
+    - 降级表达
+    - 待补依据
+    - 确定性禁区
+    output_effect: 让温度感服务解释和距离控制，同时阻断用温柔感、信任感替代证据。
+    failure_signal: 用亲切、温柔、可靠、安心等词暗示质量、舒适、确定效果或真实感受。
+    repair_instruction_if_failed: 把情绪词改为表达温度，把强信任句改为观察、限制语或待补依据。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 情绪温度层与信任门控 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用情绪温度替代证据；不得模拟真实顾客感受或暗示确定性结果。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id020
+    - depends_on:P0-02-RS03-C01
+    - modulates:P0-02-RS01-C02
+    - gated_by:P0-02-RS04-C01
+    - intersects_with:P0-03
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - emotion_temperature
+    - trust_gate
+    - emotion_not_evidence
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC018-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_018
+  cluster_title: 情绪温度层与信任门控
+  cluster_owner: P0-02
+  source_cluster_refs: *id018
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 内容只要足够温柔，就能让用户相信衣服舒服可靠。可以写“摸到就知道很安心”“穿上一定会放松下来”“很多顾客都会喜欢这种被照顾的感觉”。情绪越真诚，越能替代复杂证据，也能让品质感更有说服力。
+    mechanism_chain:
+    - warm_tone -> trust_proof
+    - emotional_sentence -> comfort_guarantee
+    - simulated_customer_feeling -> quality_claim
+    apparel_domain_anchors: *id019
+    output_effect: 错误地用情绪温度替代证据，并模拟真实顾客感受。
+    failure_signal: 温柔感、安心感、顾客喜欢、穿上放松等句子承担事实证明或结果保证。
+    repair_instruction_if_failed: 阻断；改写为情绪温度分层、低风险信号、强证据信号和降级触发条件。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用情绪温度替代证据；不得模拟真实顾客感受或暗示确定性结果。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id020
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    - F14_BRAND_FACT_POLLUTION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC018-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_018
+  cluster_title: 情绪温度层与信任门控
+  cluster_owner: P0-02
+  source_cluster_refs: *id018
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: full_rich_body
+    gold_body: 情绪温度可以分为清楚说明、耐心解释和轻度陪伴三层。清楚说明负责对象，耐心解释负责原因，轻度陪伴负责降低理解压力。当前写法的问题是把“更让人信任”“让人安心”放在结论位置，容易被读成品质或舒适度证明。修复时应把这些句子改为“表达上更少命令感”“解释顺序更容易跟上”“仅作为阅读温度，不证明衣物效果”。
+    mechanism_chain:
+    - temperature_layer -> expression_function
+    - trust_word -> risk_check
+    - strong_trust_phrase -> downgrade_to_readability
+    - emotion_boundary -> evidence_gate
+    apparel_domain_anchors: *id019
+    output_effect: 接近可用：温度分层成立，但信任句式过强，需要降级为阅读温度或待补依据。
+    failure_signal: 信任、安心、可靠等词出现在结论位置。
+    repair_instruction_if_failed: 保留温度层级；把信任结论改成表达功能、限制语或待补依据。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得用情绪温度替代证据；不得模拟真实顾客感受或暗示确定性结果。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id020
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_trust_overclaim
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC019-POS-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_019
+  cluster_title: 角色授权表面与人物故事红线
+  cluster_owner: P0-02
+  source_cluster_refs: &id021
+  - P0-02-RS04-C01
+  - P0-02-RS04-C02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 角色授权表面要把可说的方法层和不可说的事实层分开。可说的是角色作为表达方法能承担什么：导购口吻可以提示观察顺序，搭配师口吻可以解释比例与层次，店主口吻可以表达取舍逻辑，旁白可以整理公开说明。不可说的是角色背后是否真的存在某个人、是否获得同意、是否代表组织立场、是否掌握内部资料。默认背书的危险信号包括“我们保证”“店里都这样说”“某位角色亲自确认”“代表品牌宣布”。越权表述要拆成三类：角色方法可以保留，待授权事实必须补依据，真实身份和默认代表应直接删除。
+    mechanism_chain:
+    - speakable_method_layer -> role_expression_allowed
+    - not_speakable_fact_layer -> authorization_required
+    - default_endorsement_signal -> authority_overclaim
+    - overclaim_statement -> split_method_source_required_prohibited
+    - real_identity_hint -> remove_or_deauthorize
+    apparel_domain_anchors: &id022
+    - 可说方法层
+    - 不可说事实层
+    - 默认背书
+    - 越权表述
+    - 去授权化
+    - 身份暗示
+    output_effect: 让角色视角保留表达方法价值，同时阻断真实授权、真实身份和组织立场幻觉。
+    failure_signal: 角色口吻被写成官方声明、真实人员同意、真实身份或默认组织背书。
+    repair_instruction_if_failed: 把越权句拆成方法层、待授权事实和禁出内容；删除默认代表和真实身份暗示。
+  epistemic_contract:
+    observation_statements:
+    - 服装对象、门店动作、陈列区位、角色主语和表达限制只能作为可观察或可解释材料。
+    - 角色视角可改变信息密度、叙述站位和说明顺序。
+    method_claims:
+    - 角色授权表面与人物故事红线 是通用角色视角方法，不绑定具体品牌或真实人物。
+    - 高风险事实必须降级为观察、限制语、待补依据或排除项。
+    creative_hypotheses:
+    - 同一服装对象可以因角色主语、受众距离和情绪温度不同形成不同表达入口。
+    source_required_claims:
+    - 真实人物身份
+    - 真实员工经历
+    - 真实顾客反馈
+    - 真实授权同意
+    - 真实门店运营事实
+    prohibited_claims:
+    - 无来源授权背书
+    - 无来源质量保证
+    - 无来源舒适保证
+    - 无来源身体效果
+    - 无来源组织立场
+    downgrade_paths:
+    - 真实身份 -> 通用角色口吻
+    - 组织事实 -> 公开观察接口
+    - 顾客反馈 -> 阶段模型
+    - 强信任断言 -> 低风险观察
+    - 授权口吻 -> 去授权表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得输出真实授权、真实同意、真实身份、组织立场或官方声明式角色背书。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: &id023
+    - constrains:P0-02-RS01-C01
+    - constrains:P0-02-RS02-C01
+    - feeds:P0-02-RS04-C02
+    - shares_boundary_with:P0-00
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - authorization_surface
+    - speakable_not_speakable_split
+    - deauthorization
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC019-ANTI-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_019
+  cluster_title: 角色授权表面与人物故事红线
+  cluster_owner: P0-02
+  source_cluster_refs: *id021
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 为了让角色更可信，可以写“导购本人确认过”“店主代表品牌承诺”“搭配师以专业身份保证”。如果要讲人物故事，也可以把真实人员经历包装成通用方法，因为这些经历能让角色更有说服力。只要不写姓名，就可以默认角色已经授权。
+    mechanism_chain:
+    - real_identity -> generic_method_layer
+    - default_consent -> role_authority
+    - role_voice -> official_statement
+    apparel_domain_anchors: *id022
+    output_effect: 错误地把真实授权、真实身份和组织立场包装成角色方法。
+    failure_signal: 默认同意、默认代表、真实经历转方法层、官方承诺式表达。
+    repair_instruction_if_failed: 阻断；拆分为可说方法层、待授权事实和禁出事实层。
+  epistemic_contract:
+    observation_statements:
+    - 正文依赖真实人物、真实组织、真实反馈、授权背书或内部运营资料。
+    - 正文没有保持方法层与事实层分离。
+    method_claims:
+    - 错误地把角色语气、情绪温度或生态视角当作事实证明。
+    - 错误地把可公开方法扩写为真实身份、真实关系或真实组织立场。
+    creative_hypotheses:
+    - 用更像真人、更有信任感或更有组织感来替代证据与边界。
+    source_required_claims:
+    - 真实人物经历
+    - 真实授权
+    - 真实顾客感受
+    - 真实门店经营事实
+    - 真实组织关系
+    prohibited_claims:
+    - 默认授权
+    - 默认代表品牌
+    - 无来源顾客反馈
+    - 无来源品质或舒适承诺
+    - 内部运营公开化
+    downgrade_paths:
+    - 人物故事 -> 阻断
+    - 授权背书 -> 阻断
+    - 内部运营事实 -> 排除
+    - 顾客画像 -> 阶段模型
+    - 情绪证明 -> 观察表达
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得输出真实授权、真实同意、真实身份、组织立场或官方声明式角色背书。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id023
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates: *id005
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - anti_gold_reject_role_boundary_violation
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-02-MKC019-BDR-001
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  capability_group: P0-02
+  cluster_id: mkc_019
+  cluster_title: 角色授权表面与人物故事红线
+  cluster_owner: P0-02
+  source_cluster_refs: *id021
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: role_voice_body
+    gold_body: 角色授权可以先分为可说和不可说两层。可说的是“用导购口吻提示观察顺序”“用搭配师口吻解释比例”“用店主口吻说明取舍”；不可说的是“真实导购是否这样说过”“真实店主是否授权”“角色是否代表组织立场”。当前写法的问题是仍有半授权表达，例如“以店主的角度替品牌说明”或“像导购亲自提醒”。修复时应改成“采用取舍说明口吻”或“采用试穿提醒口吻”，让角色变成表达位置，而不是默认真实身份。
+    mechanism_chain:
+    - speakable_not_speakable_split -> role_method_boundary
+    - semi_authorized_phrase -> deauthorization_repair
+    - default_representative_hint -> role_position_rewrite
+    - real_identity_signal -> remove_from_method_layer
+    apparel_domain_anchors: *id022
+    output_effect: 接近可用：可说/不可说分层成立，但需要去掉半授权和默认代表暗示。
+    failure_signal: 出现替品牌说明、亲自提醒、代表角色等半授权句式。
+    repair_instruction_if_failed: 把半授权句改为表达口吻或观察位置；删除真实身份与代表关系。
+  epistemic_contract:
+    observation_statements:
+    - 正文已有可保留的方法层，但局部表达开始接近真实身份、真实授权、真实反馈或内部运营。
+    - 问题集中在边界句式而非整体机制缺失。
+    method_claims:
+    - 边界样本应保留通用方法链，并修复越权句。
+    - 修复后仍不得进入真实人物、真实组织或真实顾客层。
+    creative_hypotheses:
+    - 通过改写主语、限制语和观察对象，可把边界风险拉回通用方法。
+    source_required_claims:
+    - 真实身份
+    - 真实授权
+    - 真实反馈
+    - 真实门店配置
+    - 真实组织安排
+    prohibited_claims:
+    - 半授权表达
+    - 默认代表
+    - 心理效果证明
+    - 内部安排公开化
+    - 真实人物方法化
+    downgrade_paths:
+    - 半授权句 -> 角色口吻
+    - 真实身份暗示 -> 表达位置
+    - 顾客心理 -> 信息需求
+    - 内部安排 -> 可见观察或排除
+    - 信任结论 -> 阅读温度
+  boundary_contract:
+    do_not_include: *id003
+    anti_hallucination_guard: 不得输出真实授权、真实同意、真实身份、组织立场或官方声明式角色背书。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints: *id023
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates: *id005
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_deauthorization
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true

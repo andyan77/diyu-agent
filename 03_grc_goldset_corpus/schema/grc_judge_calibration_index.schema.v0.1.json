@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "grc_judge_calibration_index.schema.v0.1.json",
+  "title": "GRC judge calibration index",
+  "description": "Structural contract for normalized/formal_120/p0_0X/judge_calibration_index.yaml. Batch bodies drift; only universally-present keys are required.",
+  "type": "object",
+  "required": ["judge_calibration_index"],
+  "properties": {
+    "judge_calibration_index": {
+      "type": "object",
+      "required": ["batch_id", "positive_examples", "negative_examples", "borderline_examples"],
+      "properties": {
+        "batch_id": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

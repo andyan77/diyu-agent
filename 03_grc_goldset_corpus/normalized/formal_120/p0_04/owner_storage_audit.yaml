@@ -1,0 +1,429 @@
+owner_storage_audit:
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  audit_scope: semantic_owner / storage_target / artifact_kind / execution field / pollution boundary alignment
+  summary:
+    total_cases_checked: 27
+    owner_alignment_pass: 27
+    owner_routing_error: 0
+    brand_instance_pollution_actual: 0
+    execution_asset_missing_required_fields: 0
+    formal_ontology_edge_count: 0
+    readiness_true_count: 0
+  expected_routes:
+    display_to_content_execution:
+      clusters:
+      - mkc_030
+      - mkc_031
+      - mkc_032
+      - mkc_033
+      - mkc_034
+      - mkc_036
+      semantic_owner: display_to_content
+      storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      required_execution_fields:
+      - input_condition
+      - executable_action
+      - output_asset
+      - stop_condition
+    governance_boundary_policy:
+      clusters:
+      - mkc_035
+      - mkc_037
+      - mkc_038
+      semantic_owner: governance_control_plane
+      storage_target: GovernanceOutbox
+      artifact_kind: governance_outbox_candidate
+      allowed_body_forms:
+      - governance_policy_body
+      - asset_binding_policy_body
+  hard_rules_checked:
+  - rule_id: OAR-P0-04-001
+    rule: ExecutionAssetOutbox 条目必须有 input_condition / executable_action / output_asset / stop_condition。
+    result: pass
+  - rule_id: OAR-P0-04-002
+    rule: GovernanceOutbox 条目必须字段化为局部边界，不得扩展 P0-00 route taxonomy。
+    result: pass
+  - rule_id: OAR-P0-04-003
+    rule: 所有条目不得泄漏真实品牌、真实门店、真实员工、真实顾客、真实库存、真实加盟、真实授权。
+    result: pass
+  audit_items:
+  - case_id: GRC-P0-04-MKC030-POS-001
+    cluster_id: mkc_030
+    case_type: positive_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC030-ANTI-001
+    cluster_id: mkc_030
+    case_type: anti_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC030-BDR-001
+    cluster_id: mkc_030
+    case_type: borderline_repair
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC031-POS-001
+    cluster_id: mkc_031
+    case_type: positive_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC031-ANTI-001
+    cluster_id: mkc_031
+    case_type: anti_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC031-BDR-001
+    cluster_id: mkc_031
+    case_type: borderline_repair
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC032-POS-001
+    cluster_id: mkc_032
+    case_type: positive_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC032-ANTI-001
+    cluster_id: mkc_032
+    case_type: anti_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC032-BDR-001
+    cluster_id: mkc_032
+    case_type: borderline_repair
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC033-POS-001
+    cluster_id: mkc_033
+    case_type: positive_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC033-ANTI-001
+    cluster_id: mkc_033
+    case_type: anti_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC033-BDR-001
+    cluster_id: mkc_033
+    case_type: borderline_repair
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC034-POS-001
+    cluster_id: mkc_034
+    case_type: positive_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC034-ANTI-001
+    cluster_id: mkc_034
+    case_type: anti_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC034-BDR-001
+    cluster_id: mkc_034
+    case_type: borderline_repair
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC035-POS-001
+    cluster_id: mkc_035
+    case_type: positive_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC035-ANTI-001
+    cluster_id: mkc_035
+    case_type: anti_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC035-BDR-001
+    cluster_id: mkc_035
+    case_type: borderline_repair
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC036-POS-001
+    cluster_id: mkc_036
+    case_type: positive_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC036-ANTI-001
+    cluster_id: mkc_036
+    case_type: anti_gold
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC036-BDR-001
+    cluster_id: mkc_036
+    case_type: borderline_repair
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    body_form: execution_asset_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC037-POS-001
+    cluster_id: mkc_037
+    case_type: positive_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC037-ANTI-001
+    cluster_id: mkc_037
+    case_type: anti_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC037-BDR-001
+    cluster_id: mkc_037
+    case_type: borderline_repair
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC038-POS-001
+    cluster_id: mkc_038
+    case_type: positive_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC038-ANTI-001
+    cluster_id: mkc_038
+    case_type: anti_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: true
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  - case_id: GRC-P0-04-MKC038-BDR-001
+    cluster_id: mkc_038
+    case_type: borderline_repair
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    execution_required_fields_complete: true
+    brand_instance_pollution_actual: false
+    anti_gold_simulated_violation_pattern: false
+    formal_ontology_edge_allowed: false
+    readiness_all_false: true
+  owner_storage_audit_verdict: pass

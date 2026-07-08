@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "grc_case.schema.v0.1.json",
+  "title": "GRC formal gold reference case",
+  "description": "Structural contract for a single formal_120 gold reference case. Applied to every case in normalized/formal_120/p0_0X/gold_reference_cases.yaml.",
+  "type": "object",
+  "required": ["case_id", "cluster_id", "case_type"],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Verbatim source case id; preserved, never rewritten."
+    },
+    "cluster_id": {
+      "type": "string",
+      "pattern": "^mkc_[0-9]{3}$"
+    },
+    "case_type": {
+      "enum": ["positive_gold", "anti_gold", "borderline_repair"]
+    }
+  }
+}

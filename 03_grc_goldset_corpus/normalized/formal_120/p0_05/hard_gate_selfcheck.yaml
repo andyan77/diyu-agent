@@ -1,0 +1,792 @@
+hard_gate_selfcheck:
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  allowed_gate_ids_only:
+  - HG-001
+  - HG-002
+  - HG-003
+  - HG-004
+  - HG-005
+  - HG-006
+  - HG-007
+  - HG-008
+  legacy_hard_gate_alias_count: 0
+  summary:
+    checked_cases: 24
+    positive_expected_pass: 8
+    anti_expected_fail: 8
+    borderline_expected_accept_with_minor_fix: 8
+    readiness_flag_true_count: 0
+    formal_ontology_edge_count: 0
+    legacy_hard_gate_id_count: 0
+    governance_text_in_gold_body_count: 0
+    brand_instance_pollution_count: 0
+  check_items:
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+    cluster_id: mkc_039
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+    cluster_id: mkc_039
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    hard_gate_fail_count: 3
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+    cluster_id: mkc_039
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+    cluster_id: mkc_040
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+    cluster_id: mkc_040
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: pass
+      note: 元数据层仍保持安全设置。
+    hard_gate_fail_count: 2
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+    cluster_id: mkc_040
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+    cluster_id: mkc_041
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+    cluster_id: mkc_041
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    hard_gate_fail_count: 2
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+    cluster_id: mkc_041
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+    cluster_id: mkc_042
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+    cluster_id: mkc_042
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    hard_gate_fail_count: 2
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+    cluster_id: mkc_042
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+    cluster_id: mkc_043
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+    cluster_id: mkc_043
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    hard_gate_fail_count: 3
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+    cluster_id: mkc_043
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    cluster_id: mkc_044
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    cluster_id: mkc_044
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: pass
+      note: 元数据层仍保持安全设置。
+    hard_gate_fail_count: 2
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    cluster_id: mkc_044
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+    cluster_id: mkc_045
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+    cluster_id: mkc_045
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-004
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-005
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    hard_gate_fail_count: 2
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+    cluster_id: mkc_045
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+    cluster_id: mkc_046
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-002
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-003
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-004
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-005
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-006
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-007
+      result: pass
+      note: 符合该门禁要求。
+    - gate_id: HG-008
+      result: pass
+      note: 符合该门禁要求。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+    cluster_id: mkc_046
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-002
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-003
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-004
+      result: fail
+      note: anti_gold 故意触发，用于拒绝校准。
+    - gate_id: HG-005
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-006
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-007
+      result: pass
+      note: 元数据层仍保持安全设置。
+    - gate_id: HG-008
+      result: pass
+      note: 元数据层仍保持安全设置。
+    hard_gate_fail_count: 3
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+    cluster_id: mkc_046
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-002
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-003
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-004
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-005
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-006
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-007
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    - gate_id: HG-008
+      result: pass
+      note: 硬门禁通过，但存在轻微修复路径。
+    hard_gate_fail_count: 0
+    readiness_flags_all_false: true
+    legacy_hard_gate_alias_used: false
+  hard_gate_selfcheck_verdict: pass

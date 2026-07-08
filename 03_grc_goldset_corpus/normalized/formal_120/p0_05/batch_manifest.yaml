@@ -1,0 +1,242 @@
+batch_manifest:
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  batch_type: formal_gold_reference_case_generation
+  purpose: 生成 P0-05 产品角色 / 产品叙事能力组 24 条 gold reference cases，用于 Codex 生成参考与裁判校准，不作为正式知识入库。
+  capability_group: P0-05
+  selected_clusters:
+  - cluster_id: mkc_039
+    cluster_title: 产品叙事角色入场框架
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS01-C01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_040
+    cluster_title: 叙事到 CTA 的非硬卖边界
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS01-C02
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_041
+    cluster_title: 产品生命周期角色窗口
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS02-C01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_042
+    cluster_title: 组货角色与渠道边界矩阵
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS02-C02
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_043
+    cluster_title: 场景适配条件与不适配条件
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS03-C01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_044
+    cluster_title: 使用教育与结果 claim 分界
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS03-C02
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_045
+    cluster_title: 产品到陈列叙事关系语法
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS04-C01
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_046
+    cluster_title: 产品到角色到叙事跨域关系
+    cluster_owner: P0-05
+    source_cluster_refs:
+    - P0-05-RS04-C02
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  expected_case_count: 24
+  actual_case_count: 24
+  global_case_type_distribution:
+    positive_gold: 8
+    anti_gold: 8
+    borderline_repair: 8
+  metadata_contract:
+    contract_id: P0-01-05-40CLUSTER-120-GOLD-REFERENCE-CASE-GENERATION-CONTRACT-001
+    batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    expected_score_policy:
+      scoring_max: 120
+      hard_gate_precedence: true
+      positive_gold:
+        expected_verdict: accept_gold_candidate
+        expected_score_floor: 108
+        hard_gate_fail_count: 0
+      anti_gold:
+        expected_verdict: reject_or_blocking_revise
+        expected_score_floor: 0
+        hard_gate_fail_expected: true
+      borderline_repair:
+        expected_verdict: accept_with_minor_fix
+        expected_score_floor: 96
+        hard_gate_fail_count: 0
+        repair_path_required: true
+    hard_gate_id_namespace:
+      allowed_gate_ids_only:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+      legacy_alias_count: 0
+    failure_code_registry:
+      global_failure_codes_allowed:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F02_TEMPLATE_REUSE
+      - F03_GOVERNANCE_TEXT_IN_BODY
+      - F05_WRONG_OWNER_ROUTING
+      - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      - F14_BRAND_FACT_POLLUTION
+      - F16_NO_GOLD_VALUE
+      batch_local_failure_code_namespace: GRC-P0-05-F###_*
+      batch_local_failure_codes:
+      - GRC-P0-05-F001_REAL_SKU_FACT_LEAK
+      - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+      - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+      - GRC-P0-05-F004_LIFECYCLE_INSTANCE_LEAK
+      - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+      - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+      - GRC-P0-05-F007_CROSS_DOMAIN_WORKFLOW_OVERREACH
+      - GRC-P0-05-F008_SCENE_FIT_OVERGENERALIZATION
+      forbidden_unregistered_global_codes:
+      - F15_*
+      - F17_*
+      - F18_*
+      - F19_*
+      borderline_rule: borderline_repair expected_failure_codes must be empty; repair code refs appear in codex_usage and
+        judge_calibration_index.
+    body_sidecar_separation:
+      gold_body_forbidden_terms:
+      - W7
+      - 第几批
+      - judge
+      - brief
+      - batch
+      - CandidatePack
+      - KE
+      - RAG
+      - DIFY
+      - production-ready
+      - gold candidate
+      - readiness
+      - 人审
+      - 评测
+      sidecar_allowed_fields:
+      - batch_id
+      - review_note
+      - expected_judge_result
+      - failure_code
+      - readiness_flags
+      - relation_design_hints
+      - source_gap_note
+      - codex_usage
+  mixed_owner_route_summary:
+    GeneralKnowledgeBase:
+    - mkc_039
+    - mkc_040
+    - mkc_041
+    - mkc_042
+    - mkc_043
+    - mkc_045
+    EvidencePolicyOutbox:
+    - mkc_044
+    GovernanceOutbox:
+    - mkc_046
+  readiness_assertions:
+    all_readiness_flags_false: true
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  final_120_case_closeout_note:
+    planned_total_cases: 120
+    this_batch_case_count: 24
+    this_batch_position: P0-05 final capability-group batch
+    counting_policy: pilot excluded unless founder explicitly decides otherwise
+    formal_120_status_after_this_batch: P0-01 to P0-05 planned formal case count can reach 120 when prior four formal batches
+      are accepted.
+  delivery_outputs:
+  - gold_reference_cases.yaml
+  - batch_manifest.yaml
+  - owner_storage_audit.yaml
+  - hard_gate_selfcheck.yaml
+  - judge_calibration_index.yaml
+  batch_manifest_verdict: pass

@@ -1,0 +1,195 @@
+normalization_map:
+  map_version: v0.1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  canonical_machine_path_must_be_ascii: true
+  chinese_source_path_allowed_only_as:
+  - source_path
+  - provenance_path
+  - digest_input
+  filename_normalizations:
+  - source_path: tmp/13个批次专家评审.txt
+    reason: non_ascii_filename
+    canonical_ascii_path: 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+  path_normalizations:
+  - source_path: tmp/GRC-P0-00/acceptance_criteria.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/acceptance_criteria.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/final_verdict.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/final_verdict.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/p0_00_18_control_gold_cases.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/p0_00_to_40_cluster_dispatch_matrix.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_to_40_cluster_dispatch_matrix.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-00/scope_decision.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/scope_decision.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/batch_manifest.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/batch_manifest.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/gold_reference_cases.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/hard_gate_selfcheck.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/hard_gate_selfcheck.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/judge_calibration_index.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/judge_calibration_index.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/owner_storage_audit.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/owner_storage_audit.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-01/validation_summary.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/validation_summary.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/batch_manifest.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/batch_manifest.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/gold_reference_cases.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/hard_gate_selfcheck.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/hard_gate_selfcheck.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/judge_calibration_index.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/judge_calibration_index.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-02/owner_storage_audit.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/owner_storage_audit.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/batch_manifest.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/batch_manifest.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/gold_reference_cases.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/hard_gate_selfcheck.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/hard_gate_selfcheck.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/judge_calibration_index.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/judge_calibration_index.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-03/owner_storage_audit.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/owner_storage_audit.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/batch_manifest.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/batch_manifest.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/gold_reference_cases.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/hard_gate_selfcheck.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/hard_gate_selfcheck.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/judge_calibration_index.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/judge_calibration_index.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-04/owner_storage_audit.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/owner_storage_audit.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/batch_manifest.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/batch_manifest.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/gold_reference_cases.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/hard_gate_selfcheck.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/hard_gate_selfcheck.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/judge_calibration_index.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/judge_calibration_index.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/GRC-P0-05/owner_storage_audit.yaml
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/owner_storage_audit.yaml
+    transform: verbatim_byte_copy
+    source_path_is_ascii: true
+  - source_path: tmp/13个批次专家评审.txt
+    canonical_normalized_path: 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+    transform: verbatim_byte_copy
+    source_path_is_ascii: false
+  cluster_count_derivations:
+  - batch_id: GRC-P0-01-ENTERPRISE-NARRATIVE-001
+    capability_group: P0-01
+    derived_field: cluster_count
+    derived_value: 6
+    derived_from: selected_clusters
+    cross_check_distinct_clusters_in_cases: 6
+    note: source batch_manifest has no explicit top-level cluster_count; derived from len(selected_clusters)
+  - batch_id: GRC-P0-02-PROOF-AND-DISPLAY-001
+    capability_group: P0-02
+    derived_field: cluster_count
+    derived_value: 7
+    derived_from: selected_clusters
+    cross_check_distinct_clusters_in_cases: 7
+    note: source batch_manifest has no explicit top-level cluster_count; derived from len(selected_clusters)
+  - batch_id: GRC-P0-03-CLAIM-AND-EVIDENCE-001
+    capability_group: P0-03
+    derived_field: cluster_count
+    derived_value: 10
+    derived_from: selected_clusters
+    cross_check_distinct_clusters_in_cases: 10
+    note: source batch_manifest has no explicit top-level cluster_count; derived from len(selected_clusters)
+  - batch_id: GRC-P0-04-CROSS-DOMAIN-RELATION-001
+    capability_group: P0-04
+    derived_field: cluster_count
+    derived_value: 9
+    derived_from: selected_clusters
+    cross_check_distinct_clusters_in_cases: 9
+    note: source batch_manifest has no explicit top-level cluster_count; derived from len(selected_clusters)
+  - batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+    capability_group: P0-05
+    derived_field: cluster_count
+    derived_value: 8
+    derived_from: selected_clusters
+    cross_check_distinct_clusters_in_cases: 8
+    note: source batch_manifest has no explicit top-level cluster_count; derived from len(selected_clusters)
+  case_id_format_observations:
+  - capability_group: P0-01
+    sample_case_id: GRC-P001-MKC007-POS-001
+    note: case_id preserved verbatim from source; not rewritten
+  - capability_group: P0-02
+    sample_case_id: GRC-P0-02-MKC013-POS-001
+    note: case_id preserved verbatim from source; not rewritten
+  - capability_group: P0-03
+    sample_case_id: GRC-P0-03-MKC020-POS-001
+    note: case_id preserved verbatim from source; not rewritten
+  - capability_group: P0-04
+    sample_case_id: GRC-P0-04-MKC030-POS-001
+    note: case_id preserved verbatim from source; not rewritten
+  - capability_group: P0-05
+    sample_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+    note: case_id preserved verbatim from source; not rewritten
+  case_id_rewrite_performed: false
+  judgment_rewrite_performed: false

@@ -1,0 +1,921 @@
+hard_gate_selfcheck:
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  allowed_gate_ids_only:
+  - HG-001
+  - HG-002
+  - HG-003
+  - HG-004
+  - HG-005
+  - HG-006
+  - HG-007
+  - HG-008
+  legacy_hard_gate_alias_count: 0
+  selfcheck_items:
+  - case_id: GRC-P0-02-MKC013-POS-001
+    cluster_id: mkc_013
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC013-ANTI-001
+    cluster_id: mkc_013
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC013-BDR-001
+    cluster_id: mkc_013
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC014-POS-001
+    cluster_id: mkc_014
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC014-ANTI-001
+    cluster_id: mkc_014
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC014-BDR-001
+    cluster_id: mkc_014
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC015-POS-001
+    cluster_id: mkc_015
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC015-ANTI-001
+    cluster_id: mkc_015
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC015-BDR-001
+    cluster_id: mkc_015
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC016-POS-001
+    cluster_id: mkc_016
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC016-ANTI-001
+    cluster_id: mkc_016
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC016-BDR-001
+    cluster_id: mkc_016
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC017-POS-001
+    cluster_id: mkc_017
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC017-ANTI-001
+    cluster_id: mkc_017
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    - F14_BRAND_FACT_POLLUTION
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC017-BDR-001
+    cluster_id: mkc_017
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC018-POS-001
+    cluster_id: mkc_018
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC018-ANTI-001
+    cluster_id: mkc_018
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    - F14_BRAND_FACT_POLLUTION
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC018-BDR-001
+    cluster_id: mkc_018
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC019-POS-001
+    cluster_id: mkc_019
+    case_type: positive_gold
+    expected_verdict: accept_gold_candidate
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  - case_id: GRC-P0-02-MKC019-ANTI-001
+    cluster_id: mkc_019
+    case_type: anti_gold
+    expected_verdict: reject_or_blocking_revise
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: fail_expected
+      note: 负例故意缺失或扭曲该知识簇的合格机制。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: fail_expected
+      note: 负例故意混淆方法、观察、事实和需来源断言。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: fail_expected
+      note: 负例故意依赖真实人物、真实组织、真实顾客或内部运营事实。
+    hard_gate_fail_count: 3
+    expected_failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: fail_expected_for_anti_gold
+  - case_id: GRC-P0-02-MKC019-BDR-001
+    cluster_id: mkc_019
+    case_type: borderline_repair
+    expected_verdict: accept_with_minor_fix
+    hard_gate_results:
+    - gate_id: HG-001
+      gate_name: cluster_specific_mechanism
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-002
+      gate_name: no_template_reuse
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-003
+      gate_name: no_governance_text_in_body
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-004
+      gate_name: owner_storage_artifact_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-005
+      gate_name: epistemic_label_alignment
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-006
+      gate_name: relation_hint_boundary
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-007
+      gate_name: readiness_false_lock
+      result: pass
+      note: 符合本闸要求。
+    - gate_id: HG-008
+      gate_name: brand_instance_pollution
+      result: pass
+      note: 符合本闸要求。
+    hard_gate_fail_count: 0
+    expected_failure_codes: []
+    readiness_flags_all_false: true
+    formal_ontology_edge_allowed: false
+    selfcheck_verdict: pass_expected
+  summary:
+    case_count: 21
+    positive_expected_pass: 7
+    anti_expected_fail: 7
+    borderline_expected_accept_with_minor_fix: 7
+    readiness_true_count: 0
+    formal_ontology_edge_count: 0
+    legacy_hard_gate_id_count: 0
+    verdict: pass

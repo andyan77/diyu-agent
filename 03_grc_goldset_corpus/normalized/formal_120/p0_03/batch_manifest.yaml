@@ -1,0 +1,311 @@
+batch_manifest:
+  batch_id: GRC-P0-03-FABRIC-CRAFT-CLAIM-001
+  batch_type: formal_gold_reference_case_generation
+  purpose: Generate P0-03 fabric, craft, fit, quality-science and claim-boundary gold reference cases for Codex generation
+    reference and judge calibration only.
+  capability_group: P0-03
+  selected_clusters:
+  - cluster_id: mkc_020
+    cluster_title: 品类解释与属性槽位骨架
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS01-CL01
+    - P0-03-RS01-CL02
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_021
+    cluster_title: 同类比较维度与禁比边界
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS01-CL03
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_022
+    cluster_title: 面料家族与属性边界
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS02-CL01
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_023
+    cluster_title: 颜色表达与视觉解释边界
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS02-CL02
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_024
+    cluster_title: 版型廓形剪裁术语
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS02-CL03
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_025
+    cluster_title: 工艺观察线索与讲解节点
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS02-CL04
+    - P0-03-RS04-CL01
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_026
+    cluster_title: 身材效果语言阶梯与场景化观察
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS03-CL01
+    - P0-03-RS03-CL03
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_027
+    cluster_title: 舒适性能耐用品质证据阶梯
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS03-CL02
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_028
+    cluster_title: 品质观察项与证明类型路由
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS04-CL02
+    - P0-03-RS04-CL03
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: evidence_policy_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  - cluster_id: mkc_029
+    cluster_title: 工艺品质内容的可拍摄表达
+    cluster_owner: P0-03
+    source_cluster_refs:
+    - P0-03-RS04-CL04
+    semantic_owner: apparel_domain_method
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    case_count: 3
+    case_type_distribution:
+      positive_gold: 1
+      anti_gold: 1
+      borderline_repair: 1
+  expected_case_count: 30
+  actual_case_count: 30
+  global_case_type_distribution:
+    positive_gold: 10
+    anti_gold: 10
+    borderline_repair: 10
+  scope_control:
+    target_bucket: EvaluationOnly
+    not_allowed_as:
+    - accepted CandidatePack
+    - KE truth source
+    - Serving passage
+    - RAG context item
+    - DIFY runtime material
+    - production generation material
+    readiness_flags_default:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_ready: false
+      generation_allowed: false
+  metadata_contract:
+    expected_score_policy:
+      scoring_max: 120
+      hard_gate_precedence: true
+      verdict_score_floor:
+        accept_gold_candidate:
+          expected_score_floor: 108
+          hard_gate_fail_count: 0
+        accept_with_minor_fix:
+          expected_score_floor: 96
+          hard_gate_fail_count: 0
+        reject_or_blocking_revise:
+          expected_score_floor: 0
+          hard_gate_fail_required: true
+    failure_code_registry:
+      registry_id: GRC-P0-03-FAILURE-CODE-REGISTRY
+      registry_scope: batch_local
+      canonical_global_failure_codes_allowed:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F02_TEMPLATE_REUSE
+      - F03_GOVERNANCE_TEXT_IN_BODY
+      - F05_WRONG_OWNER_ROUTING
+      - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      - F14_BRAND_FACT_POLLUTION
+      - F16_NO_GOLD_VALUE
+      batch_local_failure_code_namespace: GRC-P0-03-F###_*
+      batch_local_diagnostic_codes:
+      - code: GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+        description: 由面料、工艺、版型、颜色或视觉观察直接推出透气、保暖、抗皱、耐磨、舒适、耐用等性能结论。
+      - code: GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+        description: 把版型、廓形、颜色、长度、比例直接写成显瘦、遮肉、显高、显白、修饰身材等身体效果保证。
+      - code: GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+        description: 编造检测、认证、执行标准、质检结果、工厂证明、供应商证明。
+      - code: GRC-P0-03-F004_MATERIAL_PROPERTY_OVERGENERALIZATION
+        description: 把某类材料、面料家族或工艺写成在所有场景下天然更好、更高端或更耐穿。
+      - code: GRC-P0-03-F005_COMPARISON_OVERCLAIM
+        description: 同类比较越界为优劣承诺、竞品比较、上一代比较或未证实性能比较。
+      - code: GRC-P0-03-F006_SKU_OR_FACTORY_FACT_LEAK
+        description: 通用知识中泄漏真实 SKU、价格、库存、工厂、产地、供应商、门店配货等实例事实。
+      - code: GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+        description: 把局部视觉观察、镜头细节、手感词或工艺节点误写成整体质量证明。
+      forbidden_unregistered_global_codes:
+      - F15_*
+      - F17_*
+      - F18_*
+      - F19_*
+      borderline_repair_rule: borderline_repair does not put repair codes in expected_failure_codes; repair references are
+        carried by codex_usage and judge_calibration_index.repair_code_refs.
+    hard_gate_id_namespace:
+      registry_id: GRC-P0-03-HARD-GATE-NAMESPACE
+      canonical_namespace: HG-###
+      canonical_gate_ids:
+      - gate_id: HG-001
+        name: cluster_specific_mechanism
+      - gate_id: HG-002
+        name: no_template_reuse
+      - gate_id: HG-003
+        name: no_governance_text_in_body
+      - gate_id: HG-004
+        name: owner_storage_artifact_alignment
+      - gate_id: HG-005
+        name: epistemic_label_alignment
+      - gate_id: HG-006
+        name: relation_hint_boundary
+      - gate_id: HG-007
+        name: readiness_false_lock
+      - gate_id: HG-008
+        name: brand_instance_pollution
+      forbidden_legacy_aliases:
+      - HG01_NO_MECHANISM
+      - HG02_TEMPLATE_OR_BOILERPLATE
+      - HG03_GOVERNANCE_TEXT_IN_BODY
+      - HG05_WRONG_OWNER_ROUTING
+      - HG08_INDEX_SHELL
+      - HG10_READINESS_DRIFT
+      - HG13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    pilot_reuse_policy:
+      pilot_batch_id: GRC-PILOT-006-CONTRACT-CALIBRATION
+      reuse_scope: schema_and_judgement_logic_only
+      must_not_copy_phrasing: true
+  mixed_owner_route_summary:
+    GeneralKnowledgeBase:
+      case_count: 18
+      clusters:
+      - mkc_020
+      - mkc_022
+      - mkc_023
+      - mkc_024
+      - mkc_025
+      - mkc_029
+    EvidencePolicyOutbox:
+      case_count: 12
+      clusters:
+      - mkc_021
+      - mkc_026
+      - mkc_027
+      - mkc_028
+  pass_condition_mapping:
+    schema_valid:
+      expected: 30/30
+      actual: 30/30
+      status: pass
+    positive_cases_can_be_accepted:
+      expected: 10/10
+      actual: 10/10
+      status: pass
+    anti_cases_clearly_rejectable:
+      expected: 10/10
+      actual: 10/10
+      status: pass
+    borderline_cases_identify_repair_path:
+      expected: 10/10
+      actual: 10/10
+      status: pass
+    owner_routing_error:
+      expected: 0
+      actual: 0
+      status: pass
+    evidence_policy_stored_in_general_knowledge:
+      expected: 0
+      actual: 0
+      status: pass
+    governance_text_in_gold_body:
+      expected: 0
+      actual: 0
+      status: pass
+    legacy_hard_gate_id_in_new_output:
+      expected: 0
+      actual: 0
+      status: pass
+  delivery_outputs:
+  - gold_reference_cases.yaml
+  - batch_manifest.yaml
+  - owner_storage_audit.yaml
+  - hard_gate_selfcheck.yaml
+  - judge_calibration_index.yaml
+  batch_manifest_verdict: pass

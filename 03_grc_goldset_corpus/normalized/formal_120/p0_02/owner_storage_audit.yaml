@@ -1,0 +1,279 @@
+owner_storage_audit:
+  batch_id: GRC-P0-02-ROLE-ORGANIZATION-001
+  audit_scope: semantic_owner / storage_target / artifact_kind alignment for P0-02 role_and_persona_method
+  expected_matrix_row: role_and_persona_method
+  expected_alignment:
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    allowed_body_form:
+    - full_rich_body
+    - role_voice_body
+  hard_rules_checked:
+  - rule_id: OAR-004
+    rule: GeneralKnowledgeBase 条目不得包含品牌实例、真实顾客、真实员工、真实门店、真实库存。
+    fail_code: F14_BRAND_FACT_POLLUTION
+    applicable: true
+    result: pass
+  audit_items:
+  - case_id: GRC-P0-02-MKC013-POS-001
+    cluster_id: mkc_013
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC013-ANTI-001
+    cluster_id: mkc_013
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC013-BDR-001
+    cluster_id: mkc_013
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC014-POS-001
+    cluster_id: mkc_014
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC014-ANTI-001
+    cluster_id: mkc_014
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC014-BDR-001
+    cluster_id: mkc_014
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC015-POS-001
+    cluster_id: mkc_015
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC015-ANTI-001
+    cluster_id: mkc_015
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC015-BDR-001
+    cluster_id: mkc_015
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC016-POS-001
+    cluster_id: mkc_016
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC016-ANTI-001
+    cluster_id: mkc_016
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC016-BDR-001
+    cluster_id: mkc_016
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC017-POS-001
+    cluster_id: mkc_017
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC017-ANTI-001
+    cluster_id: mkc_017
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC017-BDR-001
+    cluster_id: mkc_017
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC018-POS-001
+    cluster_id: mkc_018
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC018-ANTI-001
+    cluster_id: mkc_018
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC018-BDR-001
+    cluster_id: mkc_018
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: full_rich_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC019-POS-001
+    cluster_id: mkc_019
+    case_type: positive_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC019-ANTI-001
+    cluster_id: mkc_019
+    case_type: anti_gold
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  - case_id: GRC-P0-02-MKC019-BDR-001
+    cluster_id: mkc_019
+    case_type: borderline_repair
+    semantic_owner: role_perspective_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: role_voice_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    real_person_or_authorization_leak: false
+    private_ops_leak: false
+  summary:
+    audited_count: 21
+    owner_alignment_pass_count: 21
+    owner_alignment_fail_count: 0
+    owner_routing_error_count: 0
+    brand_instance_pollution_count: 0
+    real_person_or_authorization_leak_count: 0
+    private_ops_leak_count: 0
+    verdict: pass

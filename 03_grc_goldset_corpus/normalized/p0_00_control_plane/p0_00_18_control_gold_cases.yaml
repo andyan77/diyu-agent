@@ -1,0 +1,552 @@
+p0_00_18_control_gold_cases:
+  batch_id: "GRC-P0-00-CONTROL-PLANE-ORCHESTRATION-001"
+  capability_group: "P0-00"
+  batch_role: "control_plane_gold_reference_pack"
+  cluster_count: 6
+  cases_per_cluster: 3
+  expected_case_count: 18
+
+  common_contract:
+    scope_type: "GoldReferenceCase"
+    target_bucket: "EvaluationOnly"
+    relation_status: "design_hint_not_ontology_edge"
+    formal_ontology_edge_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      serving_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_ready: false
+      generation_allowed: false
+    hard_gates:
+      - "HG-001 cluster_specific_mechanism"
+      - "HG-002 no_template_reuse"
+      - "HG-003 no_governance_text_in_domain_body"
+      - "HG-004 owner_storage_artifact_alignment"
+      - "HG-005 epistemic_label_alignment"
+      - "HG-006 relation_hint_boundary"
+      - "HG-007 readiness_false_lock"
+      - "HG-008 brand_instance_pollution"
+      - "HG-009 control_policy_fieldability"
+
+  cases:
+
+    - case_id: "GRC-P0-00-MKC001-POS-001"
+      cluster_id: "mkc_001"
+      cluster_title: "入口槽位契约"
+      case_type: "positive_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "route_contract"
+      body_form: "input_slot_contract"
+      control_body:
+        purpose: "把用户请求先规整为可路由槽位，而不是直接生成领域正文。"
+        required_slots:
+          - "request_intent"
+          - "requested_output_type"
+          - "material_type"
+          - "brand_instance_fact_present"
+          - "claim_risk_level"
+          - "evidence_anchor_present"
+          - "requested_asset_type"
+          - "target_capability_hint"
+        slot_status_values:
+          - "complete"
+          - "partial"
+          - "missing"
+          - "unsafe"
+        route_outputs:
+          - "slot_completeness_report"
+          - "initial_route_hint"
+          - "missing_slot_list"
+          - "blocking_or_gap_signal"
+      mechanism_chain:
+        - "request_payload -> required_slot_scan"
+        - "slot_completeness -> route_ladder"
+        - "instance_fact_presence -> blocking_or_gap"
+        - "claim_risk_level -> evidence_checker"
+        - "requested_asset_type -> asset_binding_gate"
+      expected_judge_result:
+        expected_verdict: "accept_gold_candidate"
+        expected_score_floor: 108
+        expected_failure_codes: []
+      codex_usage:
+        use_as_reference_for:
+          - "input normalizer"
+          - "slot completeness checker"
+          - "prevent direct domain body generation"
+        must_copy_logic: true
+        must_not_copy_phrasing: true
+
+    - case_id: "GRC-P0-00-MKC001-ANTI-001"
+      cluster_id: "mkc_001"
+      cluster_title: "入口槽位契约"
+      case_type: "anti_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "route_contract"
+      body_form: "invalid_input_slot_contract"
+      control_body:
+        invalid_pattern: "把真实品牌故事、商品库存、门店照片、顾客反馈直接设计成通用入口槽位，并默认进入 GeneralKnowledgeBase。"
+        why_invalid:
+          - "真实品牌字段不能被抽象成通用槽位"
+          - "品牌实例事实不能污染 GeneralKnowledge"
+          - "入口槽位不能绕过 claim / owner / source gate"
+        reject_signal:
+          - "brand_instance_fact_present 被忽略"
+          - "slot_completeness 未定义"
+          - "缺少 blocking_or_gap_signal"
+      expected_judge_result:
+        expected_verdict: "reject_or_blocking_revise"
+        expected_score_floor: 0
+        expected_failure_codes:
+          - "F14_BRAND_FACT_POLLUTION"
+          - "F01_NO_CLUSTER_SPECIFIC_MECHANISM"
+      codex_usage:
+        use_as_reference_for:
+          - "reject brand fact as generic slot"
+          - "anti-gold owner pollution"
+        must_copy_logic: true
+        must_not_copy_phrasing: true
+
+    - case_id: "GRC-P0-00-MKC001-BDR-001"
+      cluster_id: "mkc_001"
+      cluster_title: "入口槽位契约"
+      case_type: "borderline_control_repair"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "route_contract"
+      body_form: "input_slot_contract_repair"
+      control_body:
+        borderline_pattern: "已列出 request_intent、material_type、claim_risk_level，但没有区分品牌事实槽位与通用方法槽位。"
+        repair_required:
+          - "新增 brand_instance_fact_present"
+          - "新增 tenant_scope"
+          - "新增 forbidden_generic_slot_list"
+          - "将具体品牌事实转入 BrandInstance 或 source_gap"
+        acceptable_after_repair: true
+      expected_judge_result:
+        expected_verdict: "accept_with_minor_fix"
+        expected_score_floor: 96
+        expected_failure_codes: []
+      codex_usage:
+        use_as_reference_for:
+          - "slot contract minor repair"
+          - "generic slot vs brand fact distinction"
+
+    - case_id: "GRC-P0-00-MKC002-POS-001"
+      cluster_id: "mkc_002"
+      cluster_title: "路由阶梯与降级触发"
+      case_type: "positive_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "control_plane_candidate"
+      body_form: "route_ladder_contract"
+      control_body:
+        purpose: "根据 checker_result 决定单能力路由、组合路由、降级、source_gap、decision_required 或 hard block。"
+        route_levels:
+          - level: "L0_BLOCK"
+            trigger: "unsafe_brand_fact_or_privacy_or_prohibited_claim"
+            output: "blocked"
+          - level: "L1_SINGLE_CAPABILITY"
+            trigger: "clear_primary_capability"
+            output: "single_capability_route"
+          - level: "L2_COMPOSITION_CHECK"
+            trigger: "multi_capability_request"
+            output: "composition_check"
+          - level: "L3_SOURCE_GAP"
+            trigger: "evidence_need_missing"
+            output: "source_gap_record"
+          - level: "L4_DECISION_REQUIRED"
+            trigger: "ontology_conflict_or_owner_ambiguity"
+            output: "decision_packet"
+        degradation_types:
+          - "hard_block"
+          - "source_gap"
+          - "review_only"
+          - "downgrade_to_observation"
+          - "decision_required"
+      mechanism_chain:
+        - "checker_result -> route_decision"
+        - "evidence_need_missing -> source_gap"
+        - "ontology_conflict -> decision_required"
+        - "risk_sensitive_override -> founder_review"
+      expected_judge_result:
+        expected_verdict: "accept_gold_candidate"
+        expected_score_floor: 108
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC002-ANTI-001"
+      cluster_id: "mkc_002"
+      cluster_title: "路由阶梯与降级触发"
+      case_type: "anti_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GeneralKnowledgeBase"
+      artifact_kind: "general_knowledge_candidate"
+      body_form: "invalid_route_ladder_body"
+      control_body:
+        invalid_pattern: "把降级触发写成服装内容建议：证据不足时也可以写得保守一点，然后进入内容生成。"
+        why_invalid:
+          - "没有 route_levels"
+          - "没有 source_gap / decision_required / hard_block 的结构化输出"
+          - "把控制面规则写成领域正文"
+          - "错误允许证据不足继续生成"
+      expected_judge_result:
+        expected_verdict: "reject_or_blocking_revise"
+        expected_score_floor: 0
+        expected_failure_codes:
+          - "F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY"
+          - "F03_GOVERNANCE_TEXT_IN_BODY"
+
+    - case_id: "GRC-P0-00-MKC002-BDR-001"
+      cluster_id: "mkc_002"
+      cluster_title: "路由阶梯与降级触发"
+      case_type: "borderline_control_repair"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "control_plane_candidate"
+      body_form: "route_ladder_contract_repair"
+      control_body:
+        borderline_pattern: "已有 soft fallback / hard block，但没有 reentry_condition。"
+        repair_required:
+          - "为 source_gap 增加 source_anchor_added_and_verified"
+          - "为 decision_required 增加 founder_or_architect_decision_recorded"
+          - "为 blocked 增加 scope_rewritten_required"
+        acceptable_after_repair: true
+      expected_judge_result:
+        expected_verdict: "accept_with_minor_fix"
+        expected_score_floor: 96
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC003-POS-001"
+      cluster_id: "mkc_003"
+      cluster_title: "全局 claim 与证据边界检查"
+      case_type: "positive_control_gold"
+      semantic_owner: "evidence_boundary"
+      storage_target: "EvidencePolicyOutbox"
+      artifact_kind: "evidence_policy_candidate"
+      body_form: "claim_evidence_gate"
+      control_body:
+        purpose: "把方法陈述、可见观察、创意假设、需来源事实、禁出断言分层，并给出对应路由。"
+        claim_tiers:
+          - tier: "T0_METHOD_ONLY"
+            route: "GeneralKnowledge_or_control_policy"
+          - tier: "T1_VISIBLE_OBSERVATION"
+            route: "GeneralKnowledge"
+          - tier: "T2_CREATIVE_HYPOTHESIS"
+            route: "draft_or_gold_reference_only"
+          - tier: "T3_SOURCE_REQUIRED_CLAIM"
+            route: "EvidencePolicyOutbox_or_source_gap"
+          - tier: "T4_PROHIBITED_OR_UNSAFE"
+            route: "blocked"
+        high_risk_claims:
+          - "显瘦"
+          - "舒适"
+          - "耐穿"
+          - "抗皱"
+          - "保暖"
+          - "检测认证"
+          - "顾客反馈"
+          - "品牌历史"
+      mechanism_chain:
+        - "claim_strength -> evidence_need_class"
+        - "evidence_absence -> source_gap"
+        - "instance_fact -> excluded_or_decision_required"
+        - "claim_risk_override -> founder_review"
+      expected_judge_result:
+        expected_verdict: "accept_gold_candidate"
+        expected_score_floor: 110
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC003-ANTI-001"
+      cluster_id: "mkc_003"
+      cluster_title: "全局 claim 与证据边界检查"
+      case_type: "anti_control_gold"
+      semantic_owner: "evidence_boundary"
+      storage_target: "GeneralKnowledgeBase"
+      artifact_kind: "general_knowledge_candidate"
+      body_form: "invalid_claim_boundary_body"
+      control_body:
+        invalid_pattern: "把‘更显瘦、更舒适、更耐穿’改写成‘看起来比较修饰、穿起来舒服、质量不错’，并作为普通通用知识通过。"
+        why_invalid:
+          - "风险 claim 被改写成看似中性的通用知识"
+          - "source support 与 evidence support 未区分"
+          - "缺少 source_gap 路由"
+          - "evidence policy 错落 GeneralKnowledgeBase"
+      expected_judge_result:
+        expected_verdict: "reject_or_blocking_revise"
+        expected_score_floor: 0
+        expected_failure_codes:
+          - "F05_WRONG_OWNER_ROUTING"
+          - "F15_UNSUPPORTED_PERFORMANCE_CLAIM"
+
+    - case_id: "GRC-P0-00-MKC003-BDR-001"
+      cluster_id: "mkc_003"
+      cluster_title: "全局 claim 与证据边界检查"
+      case_type: "borderline_control_repair"
+      semantic_owner: "evidence_boundary"
+      storage_target: "EvidencePolicyOutbox"
+      artifact_kind: "evidence_policy_candidate"
+      body_form: "claim_evidence_gate_repair"
+      control_body:
+        borderline_pattern: "能区分观察与结果 claim，但没有列出 downgrade_paths。"
+        repair_required:
+          - "performance_claim -> visible_observation"
+          - "body_effect_claim -> fit_geometry_observation"
+          - "customer_feedback_claim -> source_required_or_delete"
+          - "certification_claim -> source_anchor_required"
+        acceptable_after_repair: true
+      expected_judge_result:
+        expected_verdict: "accept_with_minor_fix"
+        expected_score_floor: 96
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC004-POS-001"
+      cluster_id: "mkc_004"
+      cluster_title: "异常分发与再进入规则"
+      case_type: "positive_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "control_plane_candidate"
+      body_form: "exception_dispatch_contract"
+      control_body:
+        purpose: "把异常项分发到 source_gap、decision_required、founder_review、excluded，并定义再进入条件。"
+        exception_routes:
+          - route: "source_gap"
+            trigger: "missing_source_or_weak_evidence"
+            reentry_condition: "source_anchor_added_and_verified"
+          - route: "decision_required"
+            trigger: "ontology_conflict_or_owner_ambiguity"
+            reentry_condition: "decision_recorded"
+          - route: "founder_review"
+            trigger: "risk_sensitive_item_or_high_authorization"
+            reentry_condition: "explicit_founder_decision"
+          - route: "excluded"
+            trigger: "forbidden_output_or_unsafe_route"
+            reentry_condition: "scope_rewritten_and_rechecked"
+        fail_closed_default: true
+      mechanism_chain:
+        - "missing_source -> source_gap"
+        - "modeling_conflict -> decision_required"
+        - "risk_sensitive_item -> founder_review"
+        - "forbidden_output_request -> excluded"
+      expected_judge_result:
+        expected_verdict: "accept_gold_candidate"
+        expected_score_floor: 108
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC004-ANTI-001"
+      cluster_id: "mkc_004"
+      cluster_title: "异常分发与再进入规则"
+      case_type: "anti_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "control_plane_candidate"
+      body_form: "invalid_exception_dispatch"
+      control_body:
+        invalid_pattern: "把 founder_review 当作万能兜底：凡是不确定的内容都交给 founder_review，并可暂时继续生成。"
+        why_invalid:
+          - "founder_review 不是绿色通道"
+          - "未区分 source_gap / decision_required / excluded"
+          - "缺少 fail_closed_default"
+          - "错误允许未裁决项继续生成"
+      expected_judge_result:
+        expected_verdict: "reject_or_blocking_revise"
+        expected_score_floor: 0
+        expected_failure_codes:
+          - "F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY"
+          - "F10_READINESS_DRIFT"
+
+    - case_id: "GRC-P0-00-MKC004-BDR-001"
+      cluster_id: "mkc_004"
+      cluster_title: "异常分发与再进入规则"
+      case_type: "borderline_control_repair"
+      semantic_owner: "governance_control_plane"
+      storage_target: "ControlPlaneContractSource"
+      artifact_kind: "control_plane_candidate"
+      body_form: "exception_dispatch_repair"
+      control_body:
+        borderline_pattern: "source_gap 与 decision_required 已分开，但 excluded 触发条件含糊。"
+        repair_required:
+          - "新增 forbidden_output_request"
+          - "新增 unsafe_route"
+          - "新增 brand_private_leakage"
+          - "excluded 默认 no_reentry，除非 scope_rewritten"
+        acceptable_after_repair: true
+      expected_judge_result:
+        expected_verdict: "accept_with_minor_fix"
+        expected_score_floor: 96
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC005-POS-001"
+      cluster_id: "mkc_005"
+      cluster_title: "能力组合与 strictest-wins 裁定"
+      case_type: "positive_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GovernanceOutbox"
+      artifact_kind: "governance_outbox_candidate"
+      body_form: "capability_composition_policy"
+      control_body:
+        purpose: "处理多能力命中时的主从关系、冲突裁定和 strictest-wins。"
+        strictest_wins_order:
+          - "privacy_or_brand_instance_boundary"
+          - "claim_evidence_boundary"
+          - "owner_storage_boundary"
+          - "control_plane_route_boundary"
+          - "domain_method_preference"
+          - "creative_expression_preference"
+        composition_examples:
+          - request_pattern: "品牌故事 + 工艺证明"
+            primary_capability: "P0-01"
+            constraint_capability: "P0-03"
+            strictest_rule: "claim_evidence_boundary"
+          - request_pattern: "门店陈列 + 内容脚本"
+            primary_capability: "P0-04"
+            constraint_capability: "P0-02"
+            strictest_rule: "privacy_or_authorization_boundary"
+          - request_pattern: "产品角色 + CTA"
+            primary_capability: "P0-05"
+            constraint_capability: "P0-03"
+            strictest_rule: "claim_evidence_boundary"
+        prohibited_new_axis:
+          - "content_x_display_as_new_scenario_family"
+      mechanism_chain:
+        - "multi_capability_request -> composition_check"
+        - "composition_conflict -> decision_required"
+        - "support_only_context -> no_full_ontology"
+        - "strictest_rule -> final_route"
+      expected_judge_result:
+        expected_verdict: "accept_gold_candidate"
+        expected_score_floor: 108
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC005-ANTI-001"
+      cluster_id: "mkc_005"
+      cluster_title: "能力组合与 strictest-wins 裁定"
+      case_type: "anti_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GovernanceOutbox"
+      artifact_kind: "governance_outbox_candidate"
+      body_form: "invalid_composition_policy"
+      control_body:
+        invalid_pattern: "把内容 × 陈列扩展成第三业务场景轴，并让 P0-04 覆盖 P0-03 的 claim evidence 规则。"
+        why_invalid:
+          - "新增 scenario family 越权"
+          - "A2 support-only 被误写成完整陈列系统"
+          - "违反 strictest-wins"
+          - "领域能力覆盖证据闸"
+      expected_judge_result:
+        expected_verdict: "reject_or_blocking_revise"
+        expected_score_floor: 0
+        expected_failure_codes:
+          - "F19_UNAUTHORIZED_SCENARIO_AXIS"
+          - "F05_WRONG_OWNER_ROUTING"
+
+    - case_id: "GRC-P0-00-MKC005-BDR-001"
+      cluster_id: "mkc_005"
+      cluster_title: "能力组合与 strictest-wins 裁定"
+      case_type: "borderline_control_repair"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GovernanceOutbox"
+      artifact_kind: "governance_outbox_candidate"
+      body_form: "capability_composition_repair"
+      control_body:
+        borderline_pattern: "能识别 P0-01 + P0-03 组合，但没有明确 primary_capability 与 constraint_capability。"
+        repair_required:
+          - "设置 primary_capability=P0-01"
+          - "设置 constraint_capability=P0-03"
+          - "设置 strictest_rule=claim_evidence_boundary"
+          - "禁止 proof slot 直接升级为产品效果 claim"
+        acceptable_after_repair: true
+      expected_judge_result:
+        expected_verdict: "accept_with_minor_fix"
+        expected_score_floor: 96
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC006-POS-001"
+      cluster_id: "mkc_006"
+      cluster_title: "研究资产绑定与非生产封印"
+      case_type: "positive_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GovernanceOutbox"
+      artifact_kind: "asset_binding_policy_candidate"
+      body_form: "research_asset_binding_policy"
+      control_body:
+        purpose: "限定 gold reference、anti-gold、borderline、source_gap、decision_packet、review_only_stub 的绑定范围，并保持非生产封印。"
+        asset_types:
+          - "gold_reference_case"
+          - "anti_gold_fixture"
+          - "borderline_repair_case"
+          - "source_gap_record"
+          - "decision_packet"
+          - "review_only_stub"
+        allowed_consumers:
+          gold_reference_case:
+            - "Codex generation reference"
+            - "judge calibration"
+          anti_gold_fixture:
+            - "hard gate negative test"
+            - "judge calibration"
+          borderline_repair_case:
+            - "repair instruction calibration"
+        forbidden_consumers:
+          - "KE truth source"
+          - "Serving Projection"
+          - "RAG Context Bundle"
+          - "DIFY runtime"
+          - "production generation"
+        non_production_seal: true
+      mechanism_chain:
+        - "route_decision -> allowed_asset_stub"
+        - "slot_completeness -> bindability"
+        - "review_only_label -> non_production_asset_only"
+        - "conflict_pair -> block_or_split"
+      expected_judge_result:
+        expected_verdict: "accept_gold_candidate"
+        expected_score_floor: 108
+        expected_failure_codes: []
+
+    - case_id: "GRC-P0-00-MKC006-ANTI-001"
+      cluster_id: "mkc_006"
+      cluster_title: "研究资产绑定与非生产封印"
+      case_type: "anti_control_gold"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GovernanceOutbox"
+      artifact_kind: "asset_binding_policy_candidate"
+      body_form: "invalid_asset_binding_policy"
+      control_body:
+        invalid_pattern: "把 gold reference case、review-only stub 或 source_gap_record 绑定为可直接进入 KE / RAG / DIFY 的下游材料。"
+        why_invalid:
+          - "review-only 被误读为半可用"
+          - "source_gap 未补证就被下游消费"
+          - "non-production seal 被绕过"
+          - "readiness 被误置 true"
+      expected_judge_result:
+        expected_verdict: "reject_or_blocking_revise"
+        expected_score_floor: 0
+        expected_failure_codes:
+          - "F10_READINESS_DRIFT"
+          - "F18_SOURCE_MAP_AS_KNOWLEDGE"
+
+    - case_id: "GRC-P0-00-MKC006-BDR-001"
+      cluster_id: "mkc_006"
+      cluster_title: "研究资产绑定与非生产封印"
+      case_type: "borderline_control_repair"
+      semantic_owner: "governance_control_plane"
+      storage_target: "GovernanceOutbox"
+      artifact_kind: "asset_binding_policy_candidate"
+      body_form: "research_asset_binding_repair"
+      control_body:
+        borderline_pattern: "已声明 non-production，但没有列出 forbidden_consumers。"
+        repair_required:
+          - "显式禁止 KE truth source"
+          - "显式禁止 Serving Projection"
+          - "显式禁止 RAG Context Bundle"
+          - "显式禁止 DIFY runtime"
+          - "显式禁止 production generation"
+        acceptable_after_repair: true
+      expected_judge_result:
+        expected_verdict: "accept_with_minor_fix"
+        expected_score_floor: 96
+        expected_failure_codes: []

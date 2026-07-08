@@ -1,0 +1,333 @@
+owner_storage_audit:
+  batch_id: GRC-P0-05-PRODUCT-NARRATIVE-001
+  audit_scope: semantic_owner / storage_target / artifact_kind / body_form alignment
+  summary:
+    checked_cases: 24
+    owner_alignment_pass: 24
+    owner_routing_error: 0
+    brand_instance_pollution: 0
+    evidence_policy_stored_in_general_knowledge: 0
+    cross_domain_relation_emitted_as_runtime_object: 0
+  route_expectation_by_cluster:
+    GeneralKnowledgeBase:
+    - mkc_039
+    - mkc_040
+    - mkc_041
+    - mkc_042
+    - mkc_043
+    - mkc_045
+    EvidencePolicyOutbox:
+    - mkc_044
+    GovernanceOutbox:
+    - mkc_046
+  hard_rules_checked:
+  - rule_id: OAR-P0-05-001
+    rule: semantic_owner=apparel_claim_boundary 时，storage_target 必须为 EvidencePolicyOutbox。
+    applicable_clusters:
+    - mkc_044
+    result: pass
+  - rule_id: OAR-P0-05-002
+    rule: semantic_owner=governance_control_plane 时，storage_target 必须为 GovernanceOutbox，且不得输出实现结构。
+    applicable_clusters:
+    - mkc_046
+    result: pass
+  - rule_id: OAR-P0-05-003
+    rule: GeneralKnowledgeBase 条目不得包含品牌实例、真实商品、真实库存、真实门店、真实渠道或真实顾客事实。
+    applicable_clusters:
+    - mkc_039
+    - mkc_040
+    - mkc_041
+    - mkc_042
+    - mkc_043
+    - mkc_045
+    result: pass
+  audit_items:
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+    cluster_id: mkc_039
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+    cluster_id: mkc_039
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+    cluster_id: mkc_039
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+    cluster_id: mkc_040
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+    cluster_id: mkc_040
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+    cluster_id: mkc_040
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+    cluster_id: mkc_041
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+    cluster_id: mkc_041
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+    cluster_id: mkc_041
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+    cluster_id: mkc_042
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+    cluster_id: mkc_042
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+    cluster_id: mkc_042
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+    cluster_id: mkc_043
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+    cluster_id: mkc_043
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+    cluster_id: mkc_043
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    cluster_id: mkc_044
+    case_type: positive_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    cluster_id: mkc_044
+    case_type: anti_gold
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    cluster_id: mkc_044
+    case_type: borderline_repair
+    semantic_owner: apparel_claim_boundary
+    storage_target: EvidencePolicyOutbox
+    artifact_kind: evidence_policy_candidate
+    body_form: claim_boundary_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+    cluster_id: mkc_045
+    case_type: positive_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+    cluster_id: mkc_045
+    case_type: anti_gold
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+    cluster_id: mkc_045
+    case_type: borderline_repair
+    semantic_owner: creative_content_operating
+    storage_target: GeneralKnowledgeBase
+    artifact_kind: general_knowledge_candidate
+    body_form: domain_method_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+    cluster_id: mkc_046
+    case_type: positive_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+    cluster_id: mkc_046
+    case_type: anti_gold
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+    cluster_id: mkc_046
+    case_type: borderline_repair
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    body_form: governance_policy_body
+    owner_alignment: pass
+    routing_error: false
+    brand_instance_pollution: false
+    evidence_policy_stored_in_general_knowledge: false
+    cross_domain_relation_emitted_as_runtime_object: false
+  owner_storage_audit_verdict: pass

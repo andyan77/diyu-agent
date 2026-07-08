@@ -1,0 +1,40 @@
+scope_decision:
+  artifact_set_id: "P0-00-CONTROL-PLANE-GOLD-CASES-AND-DISPATCH-MATRIX-001"
+
+  p0_00_final_positioning:
+    role: "40 个领域知识簇的调度中枢"
+    not_role: "第 6 组领域内容能力"
+    cluster_count: 6
+    output_type:
+      - "control_policy"
+      - "route_contract"
+      - "claim_gate"
+      - "exception_ledger_rule"
+      - "composition_policy"
+      - "asset_binding_policy"
+    recommended_gold_cases: 18
+    relationship_to_120_cases: "先生成 P0-00 18 条控制面金样，再用它约束 P0-01 到 P0-05 的 120 条领域金样"
+
+  target_bucket:
+    - "EvaluationOnly"
+    - "GovernanceOutbox"
+    - "ControlPlaneContractSource"
+    - "DecisionPacketLedger"
+
+  not_target_bucket:
+    - "GeneralKnowledgeBase ordinary body"
+    - "BrandInstance"
+    - "BrandTemplate"
+    - "KE truth source"
+    - "Serving Projection"
+    - "RAG Context Bundle"
+    - "DIFY runtime"
+
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false

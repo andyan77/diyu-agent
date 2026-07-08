@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "grc_owner_storage_audit.schema.v0.1.json",
+  "title": "GRC owner / storage audit",
+  "description": "Structural contract for normalized/formal_120/p0_0X/owner_storage_audit.yaml. Only universally-present keys are required.",
+  "type": "object",
+  "required": ["owner_storage_audit"],
+  "properties": {
+    "owner_storage_audit": {
+      "type": "object",
+      "required": ["batch_id", "audit_items"],
+      "properties": {
+        "batch_id": {"type": "string", "minLength": 1},
+        "audit_items": {"type": "array"}
+      }
+    }
+  }
+}

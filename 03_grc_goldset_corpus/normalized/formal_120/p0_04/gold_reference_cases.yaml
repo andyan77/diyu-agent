@@ -1,0 +1,4221 @@
+gold_reference_cases:
+- case_id: GRC-P0-04-MKC030-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_030
+  cluster_title: Look 拆解观察骨架
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: Look 拆解应先把画面中的搭配关系拆成主体、陪体、层次、轮廓和搭配位。主体回答哪一件服装承担视觉重心，陪体回答哪些单品支持主体，层次回答内外、长短、厚薄如何相互显现，轮廓回答整体线条是收、放、直还是展开，搭配位回答领口、腰部、下摆、鞋包等位置如何完成连接。单套搭配只需形成一条清晰观察线；成组陈列则要比较每套之间的主次、节奏和重复点。可拍摄结构按前景、主体、陪体拆开，前景提供进入点，主体提供解释对象，陪体提供关系说明。这个骨架只处理通用观察节点，不替代任何品牌造型事实。
+    input_condition: 输入为一套或一组成组服装画面，只能看见单品、层次、轮廓、搭配位和画面主次。
+    executable_action: 按主体、陪体、层次、轮廓、搭配位逐项标注，并将前景、主体、陪体转成镜头锚点。
+    output_asset: Look 拆解观察清单与镜头锚点列表。
+    stop_condition: 出现具体品牌造型事实、具体门店记录或完整陈列系统推导时停止扩写。
+    mechanism_chain:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 主体
+    - 陪体
+    - 层次
+    - 轮廓
+    - 搭配位
+    - 前景
+    output_effect: 为 Look 拆解观察骨架 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - Look 拆解观察骨架 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - match_position -> content_anchor
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_030
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC030-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_030
+  cluster_title: Look 拆解观察骨架
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL01
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: Look 拆解可以直接写成某品牌某门店的橱窗记录：本季主推套装摆在入口左侧，店内已经把这组搭配定为重点陈列，顾客看到后会更容易理解品牌风格。只要把橱窗、流水台、模特搭配和主推款全部串起来，就能得到完整陈列系统。这个写法把具体空间、主推判断和顾客反应都混入通用方法，且没有拆出主体、陪体、层次、轮廓和搭配位。
+    input_condition: 输入被错误理解为具体门店陈列记录。
+    executable_action: 错误动作是直接归纳门店橱窗、主推判断和顾客反应。
+    output_asset: 无法合格的实例化陈列说明。
+    stop_condition: 应在出现具体空间、主推结论或顾客反应时立即停止。
+    mechanism_chain:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 主体
+    - 陪体
+    - 层次
+    - 轮廓
+    - 搭配位
+    - 前景
+    output_effect: 暴露 Look 拆解观察骨架 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - match_position -> content_anchor
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_030
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC030-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_030
+  cluster_title: Look 拆解观察骨架
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL01
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: Look 观察可以从主体、陪体、层次、轮廓和搭配位展开，也可以把前景、主体、陪体转成镜头锚点。当前表达的问题是把“入口处那组套装”和“本店这次陈列”当成说明对象，导致观察骨架靠近具体空间记录。修复时应保留主体与陪体的关系、内外层次的顺序、轮廓变化和搭配位连接，把具体空间词改为一般化区位，把“本店这次”改为“成组陈列中出现该结构时”。
+    input_condition: 输入为可见 Look 画面，但局部表述带有具体空间或实例暗示。
+    executable_action: 保留通用拆解维度，删除实例化地点与具体陈列批注，改写为一般化观察节点。
+    output_asset: 修复后的 Look 观察清单。
+    stop_condition: 如果无法去除具体门店或品牌事实，则转为待补证据问题。
+    mechanism_chain:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 主体
+    - 陪体
+    - 层次
+    - 轮廓
+    - 搭配位
+    - 前景
+    output_effect: 提供 Look 拆解观察骨架 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - match_position -> content_anchor
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_030
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC031-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_031
+  cluster_title: 主题与色彩故事关系网
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 主题与色彩故事不是先命名一个季节主题，而是先识别色彩组之间的结构。主色承担画面稳定面，辅色承担过渡和面积协调，点缀色承担记忆点或节奏变化。主题词只能从这些关系中抽出，例如温和、清爽、低对比、明暗层次或同色延展；不能反过来用一句主题词强行解释所有颜色。观察顺序应从主色面积进入，再看辅色如何连接主体单品，最后看点缀色是否回到领口、包袋、内搭、鞋履或陈列小物。色彩故事最终要回扣
+      Look 结构，说明颜色如何服务主体、陪体和层次，而不是写成品牌季度计划。
+    input_condition: 输入为一组 Look 或陈列画面，可见主色、辅色、点缀色及其面积关系。
+    executable_action: 识别色彩组、排序主辅点缀关系，并把主题词绑定到可见配色结构。
+    output_asset: 色彩故事观察顺序与主题词生成提示。
+    stop_condition: 出现真实季度主题、门店陈列计划或消费者偏好结论时停止。
+    mechanism_chain:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 主色
+    - 辅色
+    - 点缀色
+    - 色彩组
+    - Look 结构
+    - 主题词
+    output_effect: 为 主题与色彩故事关系网 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 主题与色彩故事关系网 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - color_contrast -> explanation_node
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_031
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC031-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_031
+  cluster_title: 主题与色彩故事关系网
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL02
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 色彩故事可以直接写成某品牌本季主题：春季主打柔雾粉和奶白色，门店计划用这组色彩提升进店率，消费者普遍喜欢这种温柔感。只要颜色看起来统一，就可以说明品牌本季正在主推这种氛围。这个写法把主题、门店计划和消费者反馈都当成已知事实，缺少主色、辅色、点缀色之间的观察顺序，也没有回扣
+      Look 结构。
+    input_condition: 输入被错误理解为品牌季度主题与门店计划。
+    executable_action: 错误动作是把色彩偏好和经营目标写成事实。
+    output_asset: 无法合格的色彩主题实例稿。
+    stop_condition: 应在出现季度主题、门店计划、消费者普遍反馈时停止。
+    mechanism_chain:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 主色
+    - 辅色
+    - 点缀色
+    - 色彩组
+    - Look 结构
+    - 主题词
+    output_effect: 暴露 主题与色彩故事关系网 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - color_contrast -> explanation_node
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_031
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC031-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_031
+  cluster_title: 主题与色彩故事关系网
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL02
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 色彩关系可以成立：主色决定画面基调，辅色连接单品，点缀色制造节奏。但当前表述把“本季主题”“门店统一计划”这类词放进了正文，使通用观察结构靠近品牌季节策略。修复路径是把主题词改为色彩关系词，例如低对比、同色延展、冷暖过渡、明暗层次；把门店计划改为一般化陈列组；把消费者偏好改为可见色彩效果，不推导真实反馈。
+    input_condition: 输入中有明确色彩关系，但局部主题表达过像品牌计划。
+    executable_action: 将季节主题和计划词改成色彩关系词，保留主辅点缀顺序。
+    output_asset: 修复后的色彩故事关系网。
+    stop_condition: 如果仍需要真实品牌季度主题支撑，则停止扩写。
+    mechanism_chain:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 主色
+    - 辅色
+    - 点缀色
+    - 色彩组
+    - Look 结构
+    - 主题词
+    output_effect: 提供 主题与色彩故事关系网 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - color_contrast -> explanation_node
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_031
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC032-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_032
+  cluster_title: 陈列区位与可拍摄视觉锚点
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 陈列区位决定观察入口，但不能替代真实空间平面。入口区适合建立远景，先交代整体色块、轮廓和第一视觉重心；中岛适合中景，观察成组搭配、叠装层级和触手可及的主次关系；端架适合从侧向或斜角捕捉主题集中点；挂通适合近景，提取颜色递进、长短节奏、材质差异和单件细节。区位到镜头的最小映射是：先判断区位承担的信息任务，再决定远景、中景或近景，最后只记录可见视觉锚点。若需要真实动线、真实平面或真实执行记录，则该条不再属于通用拍摄提示。
+    input_condition: 输入为一般化陈列区位和静态画面，不含真实平面图或真实动线数据。
+    executable_action: 按区位选择远景、中景、近景，并提取可拍摄视觉锚点。
+    output_asset: 区位到镜头顺序提示与视觉锚点清单。
+    stop_condition: 出现真实门店平面、真实动线表现或真实执行记录时停止。
+    mechanism_chain:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 入口区
+    - 中岛
+    - 端架
+    - 挂通
+    - 远景
+    - 中景
+    - 近景
+    output_effect: 为 陈列区位与可拍摄视觉锚点 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 陈列区位与可拍摄视觉锚点 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - zone_constraint -> stop_condition
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_032
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC032-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_032
+  cluster_title: 陈列区位与可拍摄视觉锚点
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL03
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 陈列区位可以写成门店平面：入口左侧第一组货架承接进门动线，中岛正对收银台，顾客会先看橱窗再走到端架，因此镜头应按这条真实路线拍摄。这个写法把通用区位变成具体空间和真实动线，还把顾客行为当成已知表现，缺少区位信息任务、镜头距离和可见锚点的抽象映射。
+    input_condition: 输入被错误理解为真实门店平面与真实动线。
+    executable_action: 错误动作是按假定真实路线安排镜头。
+    output_asset: 无法合格的空间执行记录。
+    stop_condition: 应在出现具体空间路线或顾客行为表现时停止。
+    mechanism_chain:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 入口区
+    - 中岛
+    - 端架
+    - 挂通
+    - 远景
+    - 中景
+    - 近景
+    output_effect: 暴露 陈列区位与可拍摄视觉锚点 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - zone_constraint -> stop_condition
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_032
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC032-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_032
+  cluster_title: 陈列区位与可拍摄视觉锚点
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS01_CL03
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 区位到镜头映射已经成立：入口区用远景，中岛用中景，挂通用近景。但当前表达出现“进门左转”“顾客经过这里会停留”等真实空间和动线暗示。修复时保留区位承担的信息任务，把位置词改成入口区、中岛、端架、挂通等一般化区位，把行为推断改为可见锚点，例如色块、层级、轮廓、挂杆节奏和细节面。
+    input_condition: 输入有区位与镜头关系，但局部带真实空间暗示。
+    executable_action: 删去具体动线和空间方向，改成一般化区位到镜头距离的映射。
+    output_asset: 修复后的镜头顺序提示。
+    stop_condition: 如果必须依赖真实平面或真实动线，停止生成通用提示。
+    mechanism_chain:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 入口区
+    - 中岛
+    - 端架
+    - 挂通
+    - 远景
+    - 中景
+    - 近景
+    output_effect: 提供 陈列区位与可拍摄视觉锚点 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - zone_constraint -> stop_condition
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_032
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC033-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_033
+  cluster_title: 门店日常动作观察切片
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 门店日常动作应被切成前提、对象、动作和结束标志。开场准备的前提是陈列或商品需要整理，对象可以是衣架、挂通、叠装、模特或搭配组，动作可以是扶正、拉齐、比对、翻折、递示、讲解或复位，结束标志是对象达到可观察的整齐、对齐、展开或完成状态。动作切片只记录通用示范动作，不记录真实店员、真实顾客和真实繁忙度。动作与道具的最小关系是：手接触什么、对象发生什么可见变化、变化完成后可输出什么内容槽位。
+    input_condition: 输入为一般化门店动作画面，可见动作对象和动作完成状态。
+    executable_action: 按动作前提、动作对象、动作过程、结束标志切片，并标注可内容化槽位。
+    output_asset: 门店动作观察切片表。
+    stop_condition: 出现真实店员记录、真实顾客互动或经营繁忙度时停止。
+    mechanism_chain:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 整理
+    - 比对
+    - 讲解
+    - 递示
+    - 动作对象
+    - 结束标志
+    output_effect: 为 门店日常动作观察切片 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 门店日常动作观察切片 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - scene_prop -> minimal_context
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_033
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC033-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_033
+  cluster_title: 门店日常动作观察切片
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL01
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 门店日常动作可以写成某导购今天接待顾客的过程：她先整理衣架，又根据顾客试穿反馈讲解搭配，店里人很多，说明这个动作很有成交价值。这个写法把真实店员行为、真实顾客互动和经营繁忙度当成内容依据，没有拆出通用动作前提、动作对象、结束标志，也没有形成可复用动作切片。
+    input_condition: 输入被错误理解为真实店员与顾客互动记录。
+    executable_action: 错误动作是把接待过程和繁忙程度写成事实。
+    output_asset: 无法合格的门店行为记录。
+    stop_condition: 应在出现真实人员、真实顾客或经营状态时停止。
+    mechanism_chain:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 整理
+    - 比对
+    - 讲解
+    - 递示
+    - 动作对象
+    - 结束标志
+    output_effect: 暴露 门店日常动作观察切片 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - scene_prop -> minimal_context
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_033
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC033-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_033
+  cluster_title: 门店日常动作观察切片
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL01
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 动作切片机制已经存在：整理、比对、讲解、递示都可以被拆成动作前提、对象和结束标志。问题是局部写成“导购正在给顾客解释”“顾客试穿后反馈不错”，使通用动作变成实例记录。修复时应把人物换成动作角色，把顾客反馈换成可见动作结果，例如衣架被拉齐、叠装被展开、两件单品被并置、讲解对象从单品转到搭配关系。
+    input_condition: 输入有可切片动作，但局部像真实门店记录。
+    executable_action: 将真实人物和互动迹象改为通用动作角色与可见完成状态。
+    output_asset: 修复后的动作观察切片。
+    stop_condition: 无法去除真实互动细节时停止。
+    mechanism_chain:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 整理
+    - 比对
+    - 讲解
+    - 递示
+    - 动作对象
+    - 结束标志
+    output_effect: 提供 门店日常动作观察切片 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - scene_prop -> minimal_context
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_033
+    - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC034-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_034
+  cluster_title: 动作转内容槽位与演示三段式
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL02
+  - W5_P0_04_RS03_CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 动作转内容槽位要先保留动作本身，再决定解释强度。三段式不是成稿结构，而是执行观察顺序：第一段记录动作起点，例如取下、展开、靠近、并置；第二段记录动作中的可见变化，例如领口被整理、面料被对比、层搭被打开、色彩关系被并排；第三段记录完成判断，例如轮廓更清楚、主次关系更明显、可拍细节已出现。强观察适合写对象和变化，弱解释只说明为什么这样观察，不承诺效果。平台提示只能停留在素材使用注释，不能固化成固定模板或口播。
+    input_condition: 输入为通用门店动作或演示动作，能看见起点、变化和完成状态。
+    executable_action: 把动作拆成起点、变化、完成三段，并为每段匹配观察槽位和弱解释槽位。
+    output_asset: 动作转内容槽位表与演示三段式提示。
+    stop_condition: 出现发布成稿、真实口播、真实培训口径或固定平台模板时停止。
+    mechanism_chain:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 动作起点
+    - 可见变化
+    - 解释槽位
+    - 镜头跟随
+    - 完成判断
+    output_effect: 为 动作转内容槽位与演示三段式 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 动作转内容槽位与演示三段式 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - completion_marker -> asset_boundary
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_034
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC034-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_034
+  cluster_title: 动作转内容槽位与演示三段式
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL02
+  - W5_P0_04_RS03_CL02
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 动作转内容可以直接整理成平台口播：开头吸引注意，中段讲卖点，结尾引导购买；导购把衣服拿起来后就可以说这件适合所有日常场景。这个写法跳过动作起点、可见变化和完成判断，把执行资产变成成稿，并把平台模板和卖点承诺写成固定规则。
+    input_condition: 输入被错误理解为可直接生成平台内容成稿。
+    executable_action: 错误动作是把门店动作直接改成口播和购买引导。
+    output_asset: 无法合格的发布级内容草稿。
+    stop_condition: 应在出现成稿、口播、购买引导或固定平台模板时停止。
+    mechanism_chain:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 动作起点
+    - 可见变化
+    - 解释槽位
+    - 镜头跟随
+    - 完成判断
+    output_effect: 暴露 动作转内容槽位与演示三段式 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - completion_marker -> asset_boundary
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_034
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC034-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_034
+  cluster_title: 动作转内容槽位与演示三段式
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL02
+  - W5_P0_04_RS03_CL02
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 动作、解释和镜头的关系已经成立：先有动作起点，再有变化，再有完成判断。问题是局部句子变成了可直接发布的开头和结尾，还把平台表达固定为模板。修复时应退回执行资产结构：动作起点只写发生了什么，变化段只写看见了什么，解释段只写为什么值得观察，结尾改成输出资产边界，不给成稿或购买引导。
+    input_condition: 输入中已有动作三段，但局部滑向成稿或平台模板。
+    executable_action: 删除成稿式开头结尾，恢复动作起点、可见变化、完成判断三类槽位。
+    output_asset: 修复后的动作转内容槽位表。
+    stop_condition: 仍需要输出发布内容时停止。
+    mechanism_chain:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 动作起点
+    - 可见变化
+    - 解释槽位
+    - 镜头跟随
+    - 完成判断
+    output_effect: 提供 动作转内容槽位与演示三段式 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - completion_marker -> asset_boundary
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_034
+    - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC035-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_035
+  cluster_title: 门店日常内容化风险红线
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 门店日常内容化的风险红线应先区分方法层和事实层。方法层可以保留一般化角色、一般化动作和一般化观察对象，例如导购角色、整理动作、递示动作、搭配讲解节点。事实层包括真实员工身份、真实顾客反馈、真实销售表现、真实繁忙度、真实授权状态、真实门店事件；这些不能写入通用内容化方法。隐私信号出现时应停止输出人物化细节；经营表现出现时应改成不可公开项；授权不明时只形成决策提示；证据不足时只形成
+      source_gap 提示。该红线不是法律意见，也不代表授权已经通过。
+    policy_scope: 门店日常内容化的局部风险边界。
+    allowed_expression: 一般化角色、一般化动作、一般化观察对象、可见陈列变化。
+    blocked_expression: 真实员工、真实顾客、真实销售表现、真实授权状态、真实门店事件。
+    escalation_trigger: 出现隐私、授权、经营表现或实例事实依赖时。
+    safe_fallback: 改写为一般化角色表达或 source_gap / decision_required 提示。
+    mechanism_chain:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 隐私边界
+    - 经营表现
+    - 顾客反馈
+    - 一般化角色
+    - 授权不明
+    output_effect: 为 门店日常内容化风险红线 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 门店日常内容化风险红线 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - business_performance_claim -> prohibited_zone
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_035
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC035-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_035
+  cluster_title: 门店日常内容化风险红线
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL03
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 只要门店内部同意，日常内容就可以写出员工姓名、顾客好评、当天成交表现和具体接待过程；这些都能增强真实感。风险红线可以直接判断素材已经授权，并据此允许门店发布。这个写法把一般化角色写成真实员工肖像，把顾客反馈和经营表现写成公开事实，还把风险红线误写成授权通过结论。
+    policy_scope: 错误地把风险边界当成授权结论。
+    allowed_expression: 无。
+    blocked_expression: 真实员工身份、真实顾客反馈、经营表现、授权通过结论。
+    escalation_trigger: 出现任何真实人物、顾客、销售或授权判断。
+    safe_fallback: 全部退回一般化角色与动作表达。
+    mechanism_chain:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 隐私边界
+    - 经营表现
+    - 顾客反馈
+    - 一般化角色
+    - 授权不明
+    output_effect: 暴露 门店日常内容化风险红线 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - business_performance_claim -> prohibited_zone
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_035
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC035-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_035
+  cluster_title: 门店日常内容化风险红线
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS02_CL03
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 风险边界已经能识别隐私、经营表现、顾客反馈和真实角色事实，但局部表述过像法律意见或授权判断，例如“可以发布”“已获得授权”“不会违规”。修复时应把这些结论改成内容化守门语言：只说明哪些信息不能进入通用方法、哪些应泛化、哪些形成
+      source_gap 提示、哪些形成 decision_required 提示，不评价法律责任，也不替代真实授权。
+    policy_scope: 门店日常内容化风险守门。
+    allowed_expression: 不能公开项、泛化改写项、待补证据项、授权不明提示。
+    blocked_expression: 法律结论、授权通过结论、真实角色事实。
+    escalation_trigger: 表述需要判断合法性或授权状态时。
+    safe_fallback: 改成内容化风险提示与最小问题清单。
+    mechanism_chain:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 隐私边界
+    - 经营表现
+    - 顾客反馈
+    - 一般化角色
+    - 授权不明
+    output_effect: 提供 门店日常内容化风险红线 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - business_performance_claim -> prohibited_zone
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_035
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC036-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_036
+  cluster_title: 陈列动作 SOP 节点框架
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS03_CL01
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 陈列动作 SOP 节点只能抽象为陈列前检查、实施和复核三个一般节点。陈列前检查看输入是否齐：单品是否在位、搭配组是否完整、颜色顺序是否可见、拍摄对象是否清楚。实施节点记录动作：调整挂距、整理领口、并置上下装、补齐层次、调整模特主次。复核节点看输出：主色是否稳定、轮廓是否清楚、重点是否可拍、异常是否被标记。节点关系必须有输入、动作、输出和结束标志，不写真实门店
+      SOP、库存流程、上新流程或销售结果。
+    input_condition: 输入为通用陈列动作任务，需要抽象节点而非记录真实作业。
+    executable_action: 按检查、实施、复核三节点标注输入、动作、输出和结束标志。
+    output_asset: 陈列动作节点框架与复核清单。
+    stop_condition: 出现真实 SOP、库存流程、上新流程或销售结果时停止。
+    mechanism_chain:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 陈列前检查
+    - 实施
+    - 复核
+    - 节点输入
+    - 节点输出
+    - 完成标志
+    output_effect: 为 陈列动作 SOP 节点框架 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 陈列动作 SOP 节点框架 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - node_completion_marker -> visible_result
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_036
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC036-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_036
+  cluster_title: 陈列动作 SOP 节点框架
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS03_CL01
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 陈列动作 SOP 可以写成门店内部作业流程：先查库存，再按上新表调货，店长确认后把主推款放到指定区位，最后看销售转化。这个写法把真实库存流程、内部职责和销售结果放进通用节点框架，且没有把节点抽象为检查、实施、复核，也没有用可见结束标志判断动作完成。
+    input_condition: 输入被错误理解为真实门店作业流程。
+    executable_action: 错误动作是把库存、调货、岗位确认和销售转化写入节点。
+    output_asset: 无法合格的内部 SOP 记录。
+    stop_condition: 应在出现库存、上新、岗位职责或销售转化时停止。
+    mechanism_chain:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 陈列前检查
+    - 实施
+    - 复核
+    - 节点输入
+    - 节点输出
+    - 完成标志
+    output_effect: 暴露 陈列动作 SOP 节点框架 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - node_completion_marker -> visible_result
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_036
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC036-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_036
+  cluster_title: 陈列动作 SOP 节点框架
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS03_CL01
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: display_to_content
+    storage_target: ExecutionAssetOutbox
+    artifact_kind: execution_asset_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: execution_asset_body
+    gold_body: 节点框架成立：陈列前检查、实施、复核能组织动作顺序。问题是局部用了“店长确认”“按库存调拨”“执行门店标准”等内部流程词。修复时保留节点依赖顺序，把内部流程改成可见输入和输出：单品在位、搭配完整、颜色顺序清楚、重点可拍；把确认动作改为复核标记，把销售结果改为视觉完成状态。
+    input_condition: 输入已有节点顺序，但夹带真实 SOP 或内部流程迹象。
+    executable_action: 将内部流程词替换为通用节点输入、输出和可见完成状态。
+    output_asset: 修复后的 SOP 节点框架。
+    stop_condition: 仍需真实作业流程支撑时停止。
+    mechanism_chain:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - stop_condition -> output_boundary
+    apparel_domain_anchors:
+    - 陈列前检查
+    - 实施
+    - 复核
+    - 节点输入
+    - 节点输出
+    - 完成标志
+    output_effect: 提供 陈列动作 SOP 节点框架 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - node_completion_marker -> visible_result
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_036
+    - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC037-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_037
+  cluster_title: 零售角色动作权限与加盟改写边界
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS04_CL01
+  - W5_P0_04_RS04_CL02
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 零售角色动作权限要把角色、动作、可说范围和不可说事实分开。导购角色可以一般化表达整理、递示、讲解、比对等动作；陈列角色可以一般化表达区位、层次、色组、复核等方法；店长或加盟相关角色不能被写成真实授权主体，除非另有明确材料支撑。加盟、授权、合同、组织制度只要没有明确依据，就只能泛化为“门店角色”“零售角色”“本地执行角色”等授权表面，或转为
+      decision_required 提示。真实制度与通用方法层必须切断，不能用方法说明替代真实授权。
+    policy_scope: 零售角色动作权限与加盟改写边界。
+    allowed_expression: 一般化零售角色、通用动作、一般化授权表面。
+    blocked_expression: 真实加盟事实、合同事实、真实员工身份、真实授权结论。
+    escalation_trigger: 出现加盟、授权、合同、门店身份或组织制度依赖时。
+    safe_fallback: 改为一般化角色或 decision_required 提示。
+    mechanism_chain:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 零售角色
+    - 动作权限
+    - 一般化授权表面
+    - 加盟边界
+    - 制度事实
+    output_effect: 为 零售角色动作权限与加盟改写边界 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 零售角色动作权限与加盟改写边界 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - real_policy_dependency -> not_method_layer
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_037
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC037-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_037
+  cluster_title: 零售角色动作权限与加盟改写边界
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS04_CL01
+  - W5_P0_04_RS04_CL02
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 加盟店主已经同意门店自主发布，导购可以代表品牌说明陈列标准，店长可以确认所有门店动作都获得授权。这个写法把加盟事实、员工身份、授权同意和组织立场写成方法层，还把零售角色动作扩展成全链路显示系统主张。
+    policy_scope: 错误地把角色权限写成真实授权事实。
+    allowed_expression: 无。
+    blocked_expression: 加盟事实、合同事实、真实员工事实、授权通过结论。
+    escalation_trigger: 出现任何真实授权或组织事实。
+    safe_fallback: 删除实例事实，退回一般化角色动作边界。
+    mechanism_chain:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 零售角色
+    - 动作权限
+    - 一般化授权表面
+    - 加盟边界
+    - 制度事实
+    output_effect: 暴露 零售角色动作权限与加盟改写边界 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - real_policy_dependency -> not_method_layer
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_037
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC037-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_037
+  cluster_title: 零售角色动作权限与加盟改写边界
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS04_CL01
+  - W5_P0_04_RS04_CL02
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 权限边界基本成立：角色动作可以泛化，授权不明时不写真实制度。但局部仍像真实授权，例如“门店已同意”“加盟体系允许”“店长可以代表品牌”。修复时应把这些表述改成一般化授权表面：角色只承担动作说明，不承担制度证明；加盟或授权信息只作为待确认项；方法层只保留可说动作、不可说事实和改写边界。
+    policy_scope: 零售角色权限的泛化改写。
+    allowed_expression: 可说动作、一般化角色、待确认授权表面。
+    blocked_expression: 真实同意、真实加盟制度、真实身份背书。
+    escalation_trigger: 句子需要真实组织授权才能成立时。
+    safe_fallback: 改写为一般化授权表面或 decision_required 提示。
+    mechanism_chain:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 零售角色
+    - 动作权限
+    - 一般化授权表面
+    - 加盟边界
+    - 制度事实
+    output_effect: 提供 零售角色动作权限与加盟改写边界 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - real_policy_dependency -> not_method_layer
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_037
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC038-POS-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_038
+  cluster_title: 异常回退与前复核路由提示
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS03_CL03
+  - W5_P0_04_RS04_CL03
+  case_type: positive_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 异常回退只处理局部缺口，不改变控制路由。节点缺失时，先回退到最小观察：看得见什么区位、什么动作、什么对象、什么完成标志；证据不足时，形成 source_gap 提示，说明缺的是素材、公开依据、授权材料还是节点说明；授权不明时，形成
+      decision_required 提示，只记录需确认的问题，不给组织结论。异常项最小记录格式应包含异常类型、缺失对象、不可输出内容、可保留观察、建议补充材料和安全替代表达。该提示不写系统实现方案，也不声明任何真实复核结果。
+    policy_scope: P0-04 局部异常回退与前置复核提示。
+    allowed_expression: 最小观察、source_gap 提示、decision_required 提示、异常项最小记录。
+    blocked_expression: route mutation、真实组织复核结论、系统实现方案。
+    escalation_trigger: 节点缺失、证据不足、授权不明或输出对象越界。
+    safe_fallback: 保留可见观察，记录缺失项，阻断不可确认内容。
+    mechanism_chain:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 节点缺失
+    - source_gap 提示
+    - decision_required 提示
+    - 异常项记录
+    - 安全替代表达
+    output_effect: 为 异常回退与前复核路由提示 提供可校准的合格机制样本。
+    failure_signal: 无 blocking 失败信号；仅需检查是否保持通用化、字段化和非实例化。
+    repair_instruction_if_failed: 保持机制链，若出现实例事实或成稿输出则回退到观察节点与执行槽位。
+  epistemic_contract:
+    observation_statements:
+    - 只描述通用可见对象、动作、区位、色彩或节点。
+    - 观察结论必须落在一般化门店与陈列语义上。
+    - 输出资产不包含真实门店、真实员工、真实顾客或真实经营事实。
+    method_claims:
+    - 异常回退与前复核路由提示 必须呈现该知识簇独有机制。
+    - 执行类内容必须能形成输入条件、动作、输出资产和停止条件。
+    - 治理类内容必须字段化为风险边界或局部提示。
+    creative_hypotheses:
+    - 同一组通用陈列对象可按不同观察入口形成不同执行提示。
+    source_required_claims:
+    - 真实门店平面
+    - 真实员工授权
+    - 真实顾客反馈
+    - 真实加盟或合同事实
+    - 真实销售或库存结果
+    prohibited_claims:
+    - 具体品牌事实
+    - 真实门店事件
+    - 真实员工或顾客身份
+    - 真实授权结论
+    - 发布级脚本或口播成稿
+    downgrade_paths:
+    - 实例事实 -> 一般化观察
+    - 授权不明 -> decision_required 提示
+    - 证据不足 -> source_gap 提示
+    - 成稿输出 -> 执行资产槽位
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - exception_item -> minimal_record
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_gold_candidate
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 108
+  codex_usage:
+    use_as_reference_for:
+    - mkc_038
+    - cluster_specific_mechanism
+    - owner_storage_alignment
+    - non_boilerplate_body
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC038-ANTI-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_038
+  cluster_title: 异常回退与前复核路由提示
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS03_CL03
+  - W5_P0_04_RS04_CL03
+  case_type: anti_gold
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 异常出现时可以自动修改路由，把门店内容交给控制面统一处理，并直接给出组织复核结论：如果授权材料缺失，系统可以判定门店暂不可发布；如果节点缺失，就改成新的执行流程。这个写法把局部提示写成 route mutation
+      和系统实现方案，还给出真实组织复核结论。
+    policy_scope: 错误地把局部异常提示扩展为路由变更。
+    allowed_expression: 无。
+    blocked_expression: route mutation、组织复核结论、系统实现方案、真实授权判断。
+    escalation_trigger: 出现路由变更或组织结论。
+    safe_fallback: 退回最小异常项记录，不给结论。
+    mechanism_chain:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 节点缺失
+    - source_gap 提示
+    - decision_required 提示
+    - 异常项记录
+    - 安全替代表达
+    output_effect: 暴露 异常回退与前复核路由提示 中必须阻断的越界模式。
+    failure_signal: 出现实例事实、成稿输出、错误授权或机制缺失。
+    repair_instruction_if_failed: 删除越界事实和成稿表达，按该 cluster 的输入、动作、输出、停止条件重写。
+  epistemic_contract:
+    observation_statements:
+    - 正文把通用方法误写成实例事实或成稿输出。
+    - 正文缺少该知识簇可复用的机制链。
+    method_claims:
+    - 错误地把真实门店、真实角色、授权或发布内容当作通用方法。
+    - 错误地绕过输入条件、动作、输出资产或停止条件。
+    creative_hypotheses:
+    - 用具体场景或假定结果填补缺失证据。
+    source_required_claims:
+    - 真实门店记录
+    - 真实员工行为
+    - 真实顾客互动
+    - 真实授权与加盟材料
+    - 真实经营结果
+    prohibited_claims:
+    - 无来源实例事实
+    - 无来源授权结论
+    - 无来源经营表现
+    - 通用规则中的具体门店细节
+    - 发布级口播成稿
+    downgrade_paths:
+    - 实例记录 -> 拒绝或重写
+    - 发布成稿 -> 执行资产槽位
+    - 真实授权 -> decision_required 提示
+    - 真实门店事实 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - exception_item -> minimal_record
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: reject_or_blocking_revise
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+    expected_score_floor: 0
+  codex_usage:
+    use_as_reference_for:
+    - reject_mkc_038
+    - anti_gold_boundary
+    - failure_signal_training
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
+- case_id: GRC-P0-04-MKC038-BDR-001
+  batch_id: GRC-P0-04-STORE-DISPLAY-CONTENT-001
+  capability_group: P0-04
+  cluster_id: mkc_038
+  cluster_title: 异常回退与前复核路由提示
+  cluster_owner: P0-04
+  source_cluster_refs:
+  - W5_P0_04_RS03_CL03
+  - W5_P0_04_RS04_CL03
+  case_type: borderline_repair
+  scope_control:
+    scope_type: GoldReferenceCase
+    target_bucket: EvaluationOnly
+    not_candidatepack: true
+    not_ke_truth: true
+    not_serving: true
+    not_rag: true
+    not_dify: true
+    not_production: true
+  routing_contract:
+    semantic_owner: governance_control_plane
+    storage_target: GovernanceOutbox
+    artifact_kind: governance_outbox_candidate
+    allowed_registry:
+    - gold_reference_case_registry
+    - judge_calibration_registry
+    forbidden_storage_targets:
+    - KE truth source
+    - Serving Projection
+    - RAG Context Bundle
+    - DIFY
+  body_contract:
+    body_form: governance_policy_body
+    gold_body: 异常回退逻辑成立：节点缺失退回最小观察，证据不足形成 source_gap 提示，授权不明形成 decision_required 提示。问题是局部表达过度接近控制路由或系统实现，例如“自动派发”“修改路径”“复核已通过”。修复时只保留局部提示：异常类型、缺失对象、不可输出内容、可保留观察、建议补充材料和安全替代表达；不写路由变更，不写组织结论。
+    policy_scope: 局部异常回退提示修复。
+    allowed_expression: 异常项最小记录、缺失项、可保留观察、安全替代表达。
+    blocked_expression: route mutation、系统实现、复核通过结论。
+    escalation_trigger: 表达超出局部提示范围时。
+    safe_fallback: 改成最小记录格式。
+    mechanism_chain:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - risk_signal -> safe_fallback
+    apparel_domain_anchors:
+    - 节点缺失
+    - source_gap 提示
+    - decision_required 提示
+    - 异常项记录
+    - 安全替代表达
+    output_effect: 提供 异常回退与前复核路由提示 的轻微修复路径，保留机制并移除越界部分。
+    failure_signal: 机制存在，但局部出现实例化、成稿化、授权化或路由过度表述。
+    repair_instruction_if_failed: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  epistemic_contract:
+    observation_statements:
+    - 机制主体基本成立，但局部夹带实例化、成稿化或路由化表述。
+    - 可保留通用对象、动作、区位、节点或边界框架。
+    method_claims:
+    - 修复应优先保留机制链，删除越界事实和过强结论。
+    - 修复后不得改变 owner / storage / artifact 路由。
+    creative_hypotheses:
+    - 同一素材可通过抽象回通用观察节点恢复可用性。
+    source_required_claims:
+    - 真实品牌主题
+    - 真实门店空间
+    - 真实员工或顾客事实
+    - 真实授权与加盟证明
+    prohibited_claims:
+    - 未证实实例事实
+    - 法律或授权通过结论
+    - 真实经营结果
+    - 系统实现或路由变更
+    downgrade_paths:
+    - 具体事实 -> 一般化观察
+    - 成稿句 -> 槽位提示
+    - 授权判断 -> decision_required 提示
+    - 缺证断言 -> source_gap 提示
+  boundary_contract:
+    do_not_include:
+    - specific brand fact
+    - specific founder story
+    - specific SKU
+    - specific price
+    - specific inventory
+    - specific store event
+    - real customer feedback
+    - private SOP
+    - unauthorized staff/customer/persona fact
+    - real franchise fact
+    - real authorization conclusion
+    anti_hallucination_guard: 不得把通用观察、通用动作、一般化角色或局部风险提示扩写为真实品牌、真实门店、真实员工、真实顾客、真实授权、真实加盟、真实库存或真实销售事实。
+  sidecar_contract:
+    sidecar_allowed: true
+    sidecar_fields:
+    - review_notes
+    - batch_metadata
+    - judge_usage
+    - readiness_assertions
+    - relation_design_hints
+    - source_gap_notes
+    - codex_usage
+    forbidden_in_gold_body:
+    - W7
+    - 第几批
+    - judge
+    - brief
+    - batch
+    - CandidatePack
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - 人审
+    - 评测
+    - gold candidate
+    - readiness
+  relation_contract:
+    relation_status: design_hint_not_ontology_edge
+    relation_hints:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - exception_item -> minimal_record
+    formal_ontology_edge_allowed: false
+    human_review_required_for_relation: true
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+  expected_judge_result:
+    expected_verdict: accept_with_minor_fix
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    expected_failure_codes: []
+    expected_score_floor: 96
+  codex_usage:
+    use_as_reference_for:
+    - borderline_repair_mkc_038
+    - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+    - minor_fix_path
+    - mechanism_preserving_rewrite
+    must_copy_structure: false
+    must_copy_logic: true
+    must_not_copy_phrasing: true
