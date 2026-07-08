@@ -1,0 +1,87 @@
+{
+  "task_id": "GKB-CANARY-40-GENERATION-AND-GATE-001",
+  "step_id": "P4",
+  "head_before": "46927856bc04222a3188aab6120acf823fc59c6c",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "worktree_after": "clean",
+  "verdict": "PASS",
+  "canary_total": 40,
+  "cluster_range": "mkc_007..mkc_046",
+  "per_cluster_exactly_one": true,
+  "generation_status_uniform": "gpt_generated_structured_draft",
+  "owner_distribution": {
+    "GeneralKnowledgeBase": 25,
+    "EvidencePolicyOutbox": 5,
+    "ExecutionAssetOutbox": 6,
+    "GovernanceOutbox": 4
+  },
+  "candidate_kind_distribution": {
+    "general_knowledge_candidate": 25,
+    "evidence_policy_candidate": 5,
+    "execution_asset_outbox_candidate": 6,
+    "governance_outbox_candidate": 4
+  },
+  "evidence_policy_outbox_clusters": [
+    "mkc_021",
+    "mkc_026",
+    "mkc_027",
+    "mkc_028",
+    "mkc_044"
+  ],
+  "evidence_policy_mapped_to_gkb_count": 0,
+  "min_body_chars": 380,
+  "min_body_chars_standard": 350,
+  "max_gold_surface_lcs_title_stripped": 12,
+  "gold_surface_copy_threshold": 16,
+  "max_cross_cluster_lcs": 14,
+  "template_reuse_threshold": 18,
+  "gates": {
+    "judge_pass": true,
+    "owner_layer_pass": true,
+    "dedupe_pass": true,
+    "style_copy_pass": true,
+    "no_template_reuse": true,
+    "no_governance_text": true,
+    "no_real_instance_fact": true,
+    "readiness_false": true
+  },
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p2_checker_live": "PASS",
+    "p3_checker_live": "PASS",
+    "contract_lock_checker_live": "PASS",
+    "p4_checker_live": "PASS",
+    "p4_checker_selftest": "PASS",
+    "p4_checker_python_O_fail_closed": "exit_2",
+    "yaml_json_csv_parse": true,
+    "forbidden_scope_clean": true,
+    "exact_stage_only": true
+  },
+  "codex_required_notes_applied": {
+    "note1_p4_unlocks_only_founder_review_not_3600": true,
+    "note2_canary_authorized_this_task_only_flags": true,
+    "note3_external_resource_prohibitions": true,
+    "note4_negative_3600_marked_next_fixture": true
+  },
+  "canary_generation_authorized_for_this_task_only": true,
+  "global_generation_allowed": false,
+  "generation_3600_unlocked": false,
+  "external_resources_allowed": false,
+  "embedding_allowed": false,
+  "web_access_allowed": false,
+  "source_repo_live_dependency": false,
+  "google_drive_live_read": false,
+  "object_count": 0,
+  "readiness_all_false": true,
+  "p5_unlocked": true,
+  "next_real_action_unlocked": "GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001",
+  "must_not_claim": [
+    "generation_3600_unlocked",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ],
+  "blocking_issues": "none"
+}

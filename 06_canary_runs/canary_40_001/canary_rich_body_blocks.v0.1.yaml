@@ -1,0 +1,1374 @@
+canary_40_rich_body_blocks:
+  run_id: canary_40_001
+  task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+  block_count: 40
+  min_body_chars_standard: 350
+  blocks:
+  - rich_body_id: CANARY-40-RB-001
+    canary_id: CANARY-40-001
+    canonical_cluster_id: mkc_007
+    cluster_title: 企业叙事骨架
+    body_form: full_rich_body
+    body: 企业叙事骨架要先回答“这家企业在替谁解决什么问题”，把问题场景确定成叙事的起点，而不是从口号或成立年份写起。举个具体例子，一段内容若从“怎么把控交期”这一问题场景切入，就比从“成立于哪一年”切入更容易接上后面的做法与证明，起点选错，后面几层都会悬空。问题场景确定之后，才展开长期采用的组织性做法：它在选料、排产、协作分工上做了哪些反复出现的选择，这些选择构成可复述的经营方法。方法之后要预留证明位，供应链、组织结构、过程记录各留一个可后续填充的槽位，暂时没有材料时保持空槽而不去编造。最后把方法与证明转译成对外可感知的价值表达，并按系列轴拆成可重复的叙事单元，让同一套骨架能派生出多条内容而不互相重复。这套骨架在企业确有稳定做法可讲时成立；若只有一次性事件或临时活动，则它失效，应降级为普通信息条目而不是硬撑成叙事。守住一条线：通用做法不能写成某一时点的经营成果或市场地位，凡触及规模、份额、增长这类硬结论，必须先有官方资料，缺材料时把该句挂起为待补，正文只留方法层。
+    body_char_count: 434
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - problem_domain -> operating_method
+    - operating_method -> proof_slot
+    - proof_slot -> value_expression
+    - value_expression -> series_axis
+    domain_anchors:
+    - 货品结构
+    - 面料取舍
+    - 版型稳定性
+    - 系列一致性
+    - 门店解释难度
+    - 顾客选择成本
+    - 复核节点
+    expected_body_topics_covered:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - 供应链 / 组织 / 过程证明的预留槽位
+    - 价值表达与可观察差异
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-002
+    canary_id: CANARY-40-002
+    canonical_cluster_id: mkc_008
+    cluster_title: 证明槽位与价值转译
+    body_form: full_rich_body
+    body: 这一簇处理的是“怎么把组织内部的分工和工序，翻译成外部能看懂的证明”。比如“成品复核”这个节点，可以讲存在一道二次确认的关口，但不能顺势说出某次复核挑出了多少件问题，那已经落进具体经营数据了。第一步是把角色分工与协作边界摆清：谁负责设计打样、谁负责工艺把关、谁负责成品复核，边界清楚才不会把功劳含糊化。第二步沿关键工序节点排布叙事位置，把面料进厂、裁剪、缝制、整烫、检验这些节点标成可讲解的先后段落。每个节点后面挂一道门：质量门看是否达标、复核门看是否二次确认、交接门看责任是否清晰移交，门与门之间形成可追溯的链条。供应链上的选择要连着约束一起讲，选某种做法往往是为了应对交期、批量或稳定性的限制，把选择与约束成对写出，方法才显得可信。它在存在可核验流程时适用；把想象的流程当既有流程时不适用。这里必须收住：具体供应商、工厂、检测报告属于实例事实，无授权材料一律不写，需要时挂为待补，正文只承认“存在这样一类工序节点”。
+    body_char_count: 410
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - organization_role -> process_node
+    - process_node -> quality_gate
+    - supply_chain_choice -> constraint
+    - constraint -> method_credibility
+    - proof_slot -> value_expression
+    domain_anchors:
+    - 设计角色
+    - 版型角色
+    - 陈列角色
+    - 导购角色
+    - 选料节点
+    - 打样节点
+    - 试穿节点
+    - 复核门
+    expected_body_topics_covered:
+    - 角色分工与协作边界
+    - 关键工序或流程节点的叙事位置
+    - 质量门、复核门、交接门
+    - 供应链选择与约束处理的通用叙事位
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-003
+    canary_id: CANARY-40-003
+    canonical_cluster_id: mkc_009
+    cluster_title: 故事弧线适用边界
+    body_form: full_rich_body
+    body: 故事弧线适用边界解决的是“这段内容该用哪种叙事结构，以及哪种结构会带来风险”。比如同样讲一件外套，用成长弧要交代能力如何一步步积累，用对照弧则要摆出两种做法的差别，选哪条取决于手上能拿出哪种可核验的过程材料。不同弧线对应不同问题类型：成长弧适合讲能力如何积累，转折弧适合讲一次方法调整，对照弧适合讲两种做法的差异，先按内容的问题类型去挑弧线，而不是先定弧线再硬凑情节。选定弧线后要绑定证据强度，越是强调结果反差的弧线，对可核验事实的要求越高。弧线还要与价值表达和证明位兼容，若某条弧线必须依赖尚无材料支撑的关键情节，就说明它此刻并不适用。识别不适用的信号包括：必须搬出具体业绩数字、必须替人物编造内心、必须假设读者已相信某个未证明的前提。内容确有可展开的过程时它成立；只想用弧线包装空洞结论时它失效，此时把弧线压回一句方法说明。要点在于不得用叙事张力替代证据，凡涉及承诺性结果或对比性优劣而无据，一律改写成中性观察或标注为缺来源。
+    body_char_count: 415
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - material_problem_type -> story_arc_selection
+    - story_arc_selection -> required_proof_intensity
+    - required_proof_intensity -> compatible_value_expression
+    - arc_mismatch -> downgrade_to_observation_or_question
+    domain_anchors:
+    - 领型
+    - 腰线
+    - 门襟
+    - 面料肌理
+    - 版型修改
+    - 面料比较
+    - 陈列调整
+    - 搭配比例
+    expected_body_topics_covered:
+    - 不同叙事弧线对应的问题类型
+    - 弧线与证据要求的绑定
+    - 弧线与价值表达、proof slot 的兼容性
+    - 不适用弧线的识别信号
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-004
+    canary_id: CANARY-40-004
+    canonical_cluster_id: mkc_010
+    cluster_title: 反模板叙事锚点
+    body_form: full_rich_body
+    body: 反模板叙事锚点用来对治“千篇一律的空泛叙述”，做法是先找到能被镜头和文字抓住的具体锚点，再围绕锚点展开。举例来说，与其写“这件衣服很好看”，不如把镜头落到“袖口那道明线的走向”这个对象锚点上，再接上“翻起袖口能看到里料收边”这个动作，叙述立刻有了抓手。锚点分四类：对象锚点是可指认的物件，比如一处走线、一枚纽扣、一段拼接；动作锚点是可观察的处理动作，比如翻折、比对、归位；约束锚点是取舍的表达，比如为活动量而放大的松度；节点锚点是前后台衔接处，比如从库房到陈列面的交接点。抓住锚点后，把对象连到动作、动作连到可见线索、约束连到取舍说明、节点连到场景可拍性，叙述就有了落点，也天然区别于其他条目的写法。内容里确有可指认细节时这套方法适用；只有情绪形容而无实物依托时不适用，这类稿子应先补锚点再落笔。要守的边界是：锚点必须是通用可复现的结构特征，不能把某件在售商品的独有卖点当锚点；凡带具体货号、价格或库存的描述都要剔除，或先标为缺来源再议。
+    body_char_count: 419
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - abstract_style_word -> anchor_requirement
+    - anchor_object -> anchor_action
+    - anchor_action -> visible_cue
+    - constraint -> tradeoff_expression
+    - process_node -> narrative_sceneability
+    domain_anchors:
+    - 领口
+    - 袖口
+    - 腰线
+    - 门襟
+    - 叠装层次
+    - 挂通色组
+    - 翻折
+    - 递示
+    expected_body_topics_covered:
+    - 对象锚点类型
+    - 动作锚点与处理逻辑
+    - 约束锚点与取舍表达
+    - 节点锚点与前后台衔接
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-005
+    canary_id: CANARY-40-005
+    canonical_cluster_id: mkc_011
+    cluster_title: 叙事放大禁区与风险路由
+    body_form: full_rich_body
+    body: 这一簇给叙事划出高风险禁区，并规定越界后往哪里分流。举个边界例子，“穿上显年轻十岁”既踩了身体效果承诺，又暗含绝对化比较，遇到这类表达应先判定它属于哪个禁区，再决定改写、挂起还是送审。先对高风险区做分类：身体效果承诺区、健康或功效暗示区、身份与背书区、绝对化比较区，每一类都容易把内容从方法说明推成事实断言。针对不同禁区给出分流动作：能改写的降级为观察语言，不能改写的挂起等材料，涉及敏感承诺的交人工复核。同时维护一份放大词清单，像“彻底”“永久”“最”“一定”这类会把普通描述抬成硬结论的词，默认回避或加限定。内容触及可能被读成承诺的表达时，这套路由生效；纯结构性、无任何效果暗示的说明则用不到它。这里有一条硬边界：凡依赖具体人物、具体案例才成立的叙述都算实例依赖，缺授权即不得出现；当放大表达与证据强度不匹配时，优先牺牲表达强度而非准确性，把结论回收成“能观察到什么、还缺什么才能下判断”。任何功效类断言无据时一律标为缺来源。
+    body_char_count: 415
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - risk_zone -> routing_target
+    - authority_signal -> evidence_requirement
+    - instance_fact_dependency -> evidence_question
+    - sensitive_promise -> decision_required
+    domain_anchors:
+    - 排名
+    - 认证
+    - 奖项
+    - 顾客反馈
+    - 员工经历
+    - 门店事件
+    - 更显瘦
+    - 更耐穿
+    expected_body_topics_covered:
+    - 高风险 narrative zone 分类
+    - 不同风险 zone 对应的路由动作
+    - 风险放大词与禁用表达类别
+    - 需要 founder review 的典型边界
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-006
+    canary_id: CANARY-40-006
+    canonical_cluster_id: mkc_012
+    cluster_title: 系列轴与跨形态资产单元
+    body_form: full_rich_body
+    body: 系列轴与跨形态资产单元解决的是“一批内容如何组织成不重复的序列”。比如按工序轴串一批内容时，第一条讲选料判断，第二条讲结构处理，第三条讲收尾细节，相邻两条各有侧重，就不会三条都在重复同一个卖点。第一步选系列轴：可以按品类轴、场景轴、工序轴或主题轴来串，轴一旦选定，就决定了后面每一条讲什么、彼此靠什么区分。第二步做序列编排，给每个单元分配不同切入点，并设去重复机制，避免相邻单元反复讲同一个卖点。证明节奏要和话题级联绑定：强证据的点稀疏出现，方法性的点密集铺陈，让读者既不疲劳也不空洞。前台价值和后台能力交替穿插，一段讲看得到的好处，一段讲背后怎么做到，节奏才有起伏。确有成批同源内容需要编排时它适用；只有单条孤立内容时不适用，硬套系列轴反而空转。关键收口是：系列轴只是编排方法，不能据此虚构出并不存在的产品线或时间线，凡把序列写成某品牌的上新排期都算越界，涉及具体排期与货号的部分先挂为待补，正文只留编排结构本身。
+    body_char_count: 408
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - master_narrative -> series_axis
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - sequence_order -> repetition_control
+    domain_anchors:
+    - 流程节点
+    - 场景任务
+    - 品类角色
+    - 面料取舍
+    - 版型变化
+    - 陈列关系
+    - 图文
+    - 短视频
+    expected_body_topics_covered:
+    - 系列轴的类型与选用条件
+    - 序列编排逻辑与去重复机制
+    - proof cadence 与 topic cascade 的绑定
+    - 前台价值与后台能力穿插规则
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-007
+    canary_id: CANARY-40-007
+    canonical_cluster_id: mkc_013
+    cluster_title: 角色发声寄存器
+    body_form: role_voice_body
+    body: 角色发声寄存器规定“这段话由谁的口吻说、能说到什么颗粒度”。举例说，同讲一条裤子，陈列视角会落在“它在这组里怎么摆、和谁相邻”，导购视角会落在“它适合完成什么穿着任务”，两种站位可用的信息本就不同。先做主语选择与叙述站位：是以导购视角讲搭配，还是以陈列视角讲布局，还是以内容编导视角讲拍摄，站位不同，可用的信息和语气都随之不同。再控制信息密度和限制语，专业视角可以多用结构性描述，但要配限制语，防止把观察说成定论。动作词、观察词、解释词各守边界：动作词说做了什么，观察词说看到什么，解释词说可能的原因，三者不混用才不会把猜测当事实。在服装零售场景里为每类角色设一个稳定的发声锚点，口吻就能复用而不飘。内容有明确叙述者视角时它适用；需要冒充真实员工或顾客现身说法时不适用。发声寄存器只提供口吻分桶这一件事，不能据此编造具体人物的经历或原话；凡出现真实姓名、职务、门店的引述，都要剔除或先标为缺来源，等授权到位再谈。
+    body_char_count: 406
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - role_subject -> narrative_stance
+    - narrative_stance -> information_density
+    - role_subject -> allowed_action_words
+    - role_subject -> allowed_observation_words
+    - role_boundary -> de_personalized_voice
+    domain_anchors:
+    - 店主视角
+    - 导购视角
+    - 搭配师视角
+    - 品牌旁白
+    - 动作词
+    - 观察词
+    - 解释词
+    expected_body_topics_covered:
+    - 主语选择与叙述站位
+    - 信息密度与限制语
+    - 动作词、观察词、解释词边界
+    - apparel / retail 场景中的 role anchor
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-008
+    canary_id: CANARY-40-008
+    canonical_cluster_id: mkc_014
+    cluster_title: 语气校准与去人物化
+    body_form: role_voice_body
+    body: 语气校准与去人物化处理“怎么把语气调到与场景匹配，同时不留真人痕迹”。比如描述一处拼接，可以说“接缝走得较平整”，这是观察；若顺口改成“做工一定过硬”，就把语气当成了结论，需要退回并补上限定。核心是语气强度要跟场景强度对齐：讲日常整理用平稳语气，讲重要工艺节点可略微郑重，不能用夸张语气去撑普通内容。允许保留一层功能化人设，比如“懂行的讲解者”，但不可写入能指认到真实个人的细节。不可写的真人痕迹包括具体长相、家庭情况、真实对话、真实业绩。遇到高风险断言前先降调，加“通常”“在多数情况下”“需视具体情况”这类限定，把绝对表达收回来。内容需要一个稳定叙述口吻时它适用；必须依赖某个真实人物才成立的稿子则不适用。要认清一点：去人物化不等于去责任，凡涉及效果、耐用、安全的说法，即便语气放软也仍要有证据支撑，无证据时标为缺来源；语气调整只改表达强度，改不了事实门槛，这两件事必须分开处理。
+    body_char_count: 392
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - scene_intensity -> tone_strength
+    - material_strength -> assertion_limit
+    - persona_surface -> style_without_identity
+    - high_risk_claim -> softened_observation
+    - tone_strength -> evidence_boundary_preserved
+    domain_anchors:
+    - 语气强度
+    - 场景强度
+    - 限制语
+    - 观察化表达
+    - 人设表面层
+    - 高风险断言
+    expected_body_topics_covered:
+    - 语气强度与场景强度匹配
+    - 允许的人设表面层
+    - 不可写的真人痕迹
+    - 高风险 claim 前的降调与限制语
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-009
+    canary_id: CANARY-40-009
+    canonical_cluster_id: mkc_015
+    cluster_title: 组织生态角色网格
+    body_form: full_rich_body
+    body: 组织生态角色网格给出一张“谁在这个内容生态里承担什么功能”的通用视角图。举例来说，讲“负责陈列的角色”能看到货品在陈列面上的组合关系，讲“负责复核的角色”则看到是否达标，内容该由哪种视角产出，取决于要讲的是布局还是把关。先分角色功能层级：有负责选品与组货的、有负责陈列与视觉的、有负责讲解与内容的、有负责复核与把关的，层级清楚才知道每种内容该由哪种功能视角产出。再给每个角色配内容职责和观察接口，说明它能看到什么、适合讲什么。不同角色的信息颗粒度不同：偏运营的角色掌握较粗的结构信息，偏一线的角色掌握较细的操作信息，内容要按角色能合法掌握的颗粒度来写。需要按角色分工组织内容时，这张网格用得上；要暴露真实组织架构或人员编制时，它就不该被拿来当依据。整张网格停在抽象功能模型这一层：不能据此写出某企业的真实部门、真实人数或真实汇报关系，这类组织事实一旦冒出来，先删或先挂待补，能被正文接纳的只有“存在这样一类功能角色”。
+    body_char_count: 409
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - role_function_layer -> content_responsibility
+    - content_responsibility -> observation_interface
+    - role_function_layer -> information_granularity
+    - public_role_grid -> reusable_content_angle
+    - private_org_fact -> excluded_from_grid
+    domain_anchors:
+    - 角色功能层级
+    - 内容职责
+    - 观察接口
+    - 信息颗粒度
+    - 生态视角
+    - 公开表达
+    expected_body_topics_covered:
+    - 角色功能层级
+    - 内容职责与观察接口
+    - 不同角色的信息颗粒度
+    - 公开可复用的生态视角
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-010
+    canary_id: CANARY-40-010
+    canonical_cluster_id: mkc_016
+    cluster_title: 视角切换与公开安全边界
+    body_form: full_rich_body
+    body: 视角切换与公开安全边界解决“同一个对象在不同角色视角下怎么改名、以及哪些内容必须切断”。比如同一件外套，在选品视角登记为组货单元，进入拍摄时改称拍摄主体，若不把这层改名写清楚，读者在两段之间就会以为是两件东西。同一件商品，在选品视角叫组货单元，在陈列视角叫展示对象，在内容视角叫拍摄主体，要把这些命名变化显式登记，避免跨视角时读者对不上号。视角之间有交接节点，在节点处要做上下文切换说明，交代从哪个视角转到哪个视角。最要紧的是划出公开可讲与内部运营的切断线：面向公众的内容只用公开安全信息，涉及内部操作细节的转入受限区。异常项按可接受、待补、剔除三条路分流。内容会在多角色间流转时它适用；把内部运营信息直接外发时它禁止。切换只改视角命名，不改事实门槛，不能借视角切换把未证明的说法洗成可用结论；凡触及内部作业规程或真实经营数据的，一律切断，能改写就改写，改不了就挂起或删除。
+    body_char_count: 387
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - same_object -> role_specific_name
+    - role_specific_name -> explanation_focus
+    - context_switch -> public_safe_filter
+    - private_operations_signal -> route_away
+    - public_safe_view -> generalized_method_expression
+    domain_anchors:
+    - 命名变化
+    - 解释重点
+    - 上下文切换
+    - 公开安全
+    - 内部运营切断
+    - 边界分流
+    expected_body_topics_covered:
+    - 对象在不同角色中的命名变化
+    - 交接节点与上下文切换
+    - public-safe 与 private-ops 切断规则
+    - accepted / gap / excluded 路由
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-011
+    canary_id: CANARY-40-011
+    canonical_cluster_id: mkc_017
+    cluster_title: 受众距离与信息深浅轴
+    body_form: full_rich_body
+    body: 受众距离与信息深浅轴用来决定“对不同阶段的受众，内容该讲多深”。举例说，面对刚接触某品类的人，要先把基础概念讲清；面对已在几件之间权衡的人，则直接给可对比的维度，两者需要的信息深浅完全不同。第一条轴是知识距离：受众对品类越陌生，越要从基础概念讲起；越熟悉，越可以直接进入细节比较。第二条轴是决策阶段：处在了解阶段的人需要框架性说明，处在权衡阶段的人需要维度对比，处在确认阶段的人需要注意事项。第三条轴是互动强度：能反复观看的内容可以密一些，一次性浏览的内容要疏一些。把三条轴叠起来，就能给一段内容定出合适的深浅。能大致判断受众所处阶段时，这套方法适用；要求给出真实用户画像或个人数据时，它不适用也不允许。深浅轴只调整讲解粒度，不能据此虚构出某类顾客的真实身份、消费记录或偏好数据；一旦内容里出现这类真实用户信息，先剔除或挂为待补，正文里承认的只有“不同阶段需要不同信息深度”这一条方法。
+    body_char_count: 393
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - knowledge_distance -> explanation_depth
+    - decision_stage -> information_sequence
+    - interaction_intensity -> role_voice_density
+    - audience_stage_model -> no_real_user_profile
+    - role_voice -> adjusted_explanation_density
+    domain_anchors:
+    - knowledge distance
+    - decision stage
+    - interaction intensity
+    - 新客阶段
+    - 熟客阶段
+    - 信息深浅
+    expected_body_topics_covered:
+    - knowledge distance
+    - decision stage
+    - interaction intensity
+    - 不同阶段对应的信息深浅
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-012
+    canary_id: CANARY-40-012
+    canonical_cluster_id: mkc_018
+    cluster_title: 情绪温度层与信任门控
+    body_form: full_rich_body
+    body: 情绪温度层与信任门控处理“内容用多热的情绪、以及信任靠什么建立”。比如“这件耐穿”属于想让人相信的性能，必须先过证据门；而“表面能看到细密的走线”只是可核验的观察，可以放心使用，两者不能混为一谈。先给情绪温度分层：冷层是纯结构与事实描述，温层是带一点场景代入的解释，热层是带明显情感召唤的表达，越热越要谨慎。低风险的信任信号可以自由使用，比如可核验的工序说明、可观察的细节展示。强证据信号则受门控：凡想让读者相信某个效果或性能，必须先过证据门，有据才写，无据就回收为观察。从可接受表达滑向需补来源的触发条件包括：出现结果承诺、出现横向对比、出现权威背书暗示。内容需要建立可信度时它适用；用情绪替代证据去推动结论时它拦截。有一条不能破：情绪温度越高，越不能夹带未证明的硬结论，凡涉及功效、安全、耐久的说法一律先过证据门，不足即标为缺来源。情绪只负责表达，不负责举证，这两件事在这一簇里始终分开。
+    body_char_count: 396
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - emotion_temperature -> expression_distance
+    - low_risk_trust_signal -> readability_support
+    - strong_evidence_signal -> source_required_claim
+    - unsupported_trust_claim -> downgrade_to_observation
+    - emotion -> not_evidence
+    domain_anchors:
+    - 情绪温度
+    - 低风险信任信号
+    - 强证据信号
+    - 降级表达
+    - 待补依据
+    - 确定性禁区
+    expected_body_topics_covered:
+    - 情绪温度分层
+    - 低风险信任信号
+    - 强证据信号
+    - 从 accepted cluster 到 source gap 的触发条件
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-013
+    canary_id: CANARY-40-013
+    canonical_cluster_id: mkc_019
+    cluster_title: 角色授权表面与人物故事红线
+    body_form: role_voice_body
+    body: 角色授权表面与人物故事红线区分“借角色能说的方法层”和“借角色不能说的事实层”。举个越权的例子，“店里最有经验的师傅说这件最值”，把一个功能角色当成了证据来源，遇到这种表达要拆回方法层，去掉替读者下判断的部分。可说的是方法与通用经验：某类角色通常怎么看货、怎么讲搭配、按什么顺序检查，这些属于可复用方法。不可说的是事实层：具体某人的真实履历、真实业绩、真实私下言论，无授权一律不写。要警惕默认背书的危险信号，比如让一个功能化角色去“保证”某种效果，这等于用虚构权威替读者做了判断。对越权表述要拆解：把“某位资深店员说这件最显瘦”拆回“显瘦属于身体效果承诺，需证据；店员为实例人物，需授权”，两头都不成立就改写或删除。内容需要一个讲解者身份时它适用；必须依赖真实人物证词才成立的稿子则不适用。授权表面只能承载方法，承载不了事实与承诺；凡把角色当证据来源的表达，都要回收成中性观察，或先挂为缺来源。
+    body_char_count: 397
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - speakable_method_layer -> role_expression_allowed
+    - not_speakable_fact_layer -> authorization_required
+    - default_endorsement_signal -> authority_overclaim
+    - overclaim_statement -> split_method_source_required_prohibited
+    - real_identity_hint -> remove_or_deauthorize
+    domain_anchors:
+    - 可说方法层
+    - 不可说事实层
+    - 默认背书
+    - 越权表述
+    - 去授权化
+    - 身份暗示
+    expected_body_topics_covered:
+    - 可说的方法层
+    - 不可说的事实层
+    - 默认背书的危险信号
+    - 越权表述拆解
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-014
+    canary_id: CANARY-40-014
+    canonical_cluster_id: mkc_020
+    cluster_title: 品类解释与属性槽位骨架
+    body_form: domain_method_body
+    body: 做品类说明时，应当先把对象在服装结构里的位置定下来，再逐层打开它的属性格子，顺序不能颠倒。举例来说，讲一件上衣时先认定它属于上衣结构，再依次打开领口、袖型、门襟这些格子，就不会一上来就跳到“这款卖得好”这类与结构无关的话。服装大类通常先分成上装、下装、连衣类与外搭类四组，每组之下再挂各自的属性槽位。上衣一类可以打开的格子有领口形态、袖子结构、门襟方式、肩部走向、衣身长度以及表层材质；裤装裙装一类可以打开腰头高低、下摆或裤长、腿型或裙型轮廓、开衩与褶裥、以及活动余量；一体连身的一类要同时照顾上下衔接、腰线落点、下摆结构与整体比例；外层搭配的一类还要补上开合方式、厚薄层次和对内搭的容纳。这个格子体系只回答“可以观察什么、还能补什么、哪里必须收住”，替代不了某件具体商品的资料。面对可归类的品类时它适用；把通用格子直接说成某个正在售卖的款式时，它就被误用了。一旦缺少款号、定价、库存或上新信息，正文只能停在品类、属性、边界三层；把通用品类写成某品牌在售事实即越界，这类信息要么剔除，要么先挂为缺来源。
+    body_char_count: 451
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - category_family -> attribute_slot_group
+    - attribute_slot_group -> claim_boundary_entry
+    - category_description -> sku_fact_cutoff
+    - category_slot_gap -> neutral_question_prompt
+    domain_anchors:
+    - 上装
+    - 下装
+    - 连衣类
+    - 外搭类
+    - 属性槽位
+    expected_body_topics_covered:
+    - 上装/下装/连衣类/外搭类等抽象品类分层
+    - 单品解释时可使用的通用属性槽位
+    - 品类说明与真实 SKU 事实的切断规则
+    - 面料/材质槽位
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-015
+    canary_id: CANARY-40-015
+    canonical_cluster_id: mkc_021
+    cluster_title: 同类比较维度与禁比边界
+    body_form: claim_boundary_body
+    body: 同类比较维度与禁比边界要回答“两件同类商品，哪些能比、哪些不能比、比不出来的怎么办”。比如两条同类裤子，版型几何差异可以直接比，但“哪条更耐穿”需要检测支撑，缺数据时就在该维度标一个“此项未知”，而不是凭手感给结论。可比的一般是可观察且口径一致的维度：结构差异、材质类别、工艺可见度、覆盖或版型的几何特征，这些放在一起比较不会误导。不可直接比较的是需要检测或长期使用才能判定的维度：耐久、保暖、功能强弱，以及任何“谁更显瘦、谁更高档”的主观结果。比较时若某一维度缺乏可核验数据，应当显式标出“此项未知”，而不是用印象填补。判断何时必须要证据：当读者可能据比较结论做出与效果、性能相关的决定时，就要求证据到位，否则只呈现可见差异并注明未知项。两件商品确属同类且信息对称时才适用；跨品类或信息不对称的强行对比不适用。这一簇的输出是一份关于“证据够不够”的判断依据：无证据的优劣一律降级为观察加未知标注，涉及性能与效果的比较全部挂为待补证据，绝不并入普通领域说明。
+    body_char_count: 429
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - comparison_dimension -> allowed_observation
+    - comparison_dimension -> prohibited_effect_claim
+    - unknown_comparison_item -> downgrade_expression
+    - comparative_superiority -> source_required_claim
+    domain_anchors:
+    - 长度
+    - 厚薄
+    - 版型
+    - 可见工艺
+    - 使用场景
+    expected_body_topics_covered:
+    - 同类之间可比的维度
+    - 不可直接比较的维度
+    - 比较时如何显示未知项
+    - 何时必须触发 source gap
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-016
+    canary_id: CANARY-40-016
+    canonical_cluster_id: mkc_022
+    cluster_title: 面料家族与属性边界
+    body_form: domain_method_body
+    body: 面料家族与属性边界解决“怎么讲材料才既有信息量又不越界”。举例说，看到面料“表面有明显纹理、悬垂时略沉”是可讲的观察；若据此断言“所以很保暖”，就跨到了需要检测支撑的性能层，必须收回。先把层级分清：纤维是原料层，如棉、麻、聚酯；纱线是纤维加工成的线；面料是纱线织成的布，三层不能混着说。再区分结构：梭织由经纬交织、相对稳定，针织由线圈串套、相对有弹性，结构差异是很多手感和外观差别的入口。可讲的是常见可观察项：表面纹理、光泽、悬垂状态、厚薄。不可直接外推的是性能项：保暖、透气、耐磨、免烫这类需要测试支撑的结论。手感词要和事实词划界：“摸起来偏厚”是观察，“很保暖”是性能断言，后者无据不写。面对可归类的材料时它适用；把通用材料特征说成某件商品的实测结果时不适用。这一簇专门盯着证据边界：凡涉及性能、成分含量、护理结果的具体结论，都需检测或标准来源，缺来源时只留结构与可见线索，把性能话术整体挂为待补证据。
+    body_char_count: 403
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - fiber_layer -> yarn_layer
+    - yarn_layer -> fabric_structure
+    - fabric_structure -> observable_surface_cue
+    - performance_word -> source_required_claim
+    domain_anchors:
+    - 纤维
+    - 纱线
+    - 面料结构
+    - 针织
+    - 梭织
+    expected_body_topics_covered:
+    - 纤维/纱线/面料层级区分
+    - 梭织/针织等结构差异的解释入口
+    - 常见观察项与不可直接外推的性能项
+    - 手感词与事实词的边界
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-017
+    canary_id: CANARY-40-017
+    canonical_cluster_id: mkc_023
+    cluster_title: 颜色表达与视觉解释边界
+    body_form: domain_method_body
+    body: 颜色表达与视觉解释边界处理“怎么讲颜色才准确又不越界”。比如一件米白外套，可以讲它在暖光下偏黄、在屏幕上偏冷，这是带观察条件的描述；但说“穿上显白”就滑到了对人的效果结论，需要退回。先立基础维度：色相决定是什么色系，明度决定深浅，纯度决定鲜或灰，先用这三项把颜色说清。再引入色彩家族与冷暖中性的通用表达，便于归类和搭配说明。然后加镜头与光线的观察提醒：同一颜色在自然光、暖光、屏幕下会有偏差，描述时要注明观察条件，避免把某一环境下的呈现当成绝对色值。最关键的切断是：颜色故事可以讲氛围联想，但不能滑向“显白”“显瘦”“更高档”这类身体或价值结论，这些属于效果承诺。面对可描述的颜色对象时它适用；对具体商品做未经验证的上身效果判断时不适用。把颜色与身材效果、肤色改善、品质等级挂钩的说法都要证据支撑，没有依据时回收成“在某光线下看到的色彩关系”这类观察，并把相关效果句挂为缺来源，等材料再议。
+    body_char_count: 395
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - color_dimension -> visual_observation
+    - lighting_condition -> color_perception_shift
+    - color_story -> quality_claim_cutoff
+    - complexion_effect_word -> downgrade_expression
+    domain_anchors:
+    - 色相
+    - 明度
+    - 纯度
+    - 冷暖
+    - 光线
+    expected_body_topics_covered:
+    - 颜色基础维度
+    - 色彩家族与中性/冷暖等通用表达
+    - 颜色在镜头与光线下的观察提醒
+    - 颜色故事与品质/显白/显瘦等结论切断
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-018
+    canary_id: CANARY-40-018
+    canonical_cluster_id: mkc_024
+    cluster_title: 版型廓形剪裁术语
+    body_form: domain_method_body
+    body: 版型廓形剪裁术语这一簇，先要把版型和廓形分开：版型是纸样与结构的处理方式，廓形是穿着后外部呈现的整体轮廓，一个在内一个在外，说的时候不能混为一谈。举例来说，可以讲“腰线落点偏高，从轮廓上看上下比例被抬高了”，这是结构到视觉的解释；但接着说“所以人人穿都显高”，就越过了结构能担保的范围。描述廓形可用轮廓线走向、衣长、宽窄比例、松量分布和视觉重心这几项通用语言。结构节点要与视觉结果连起来解释：肩线位置影响肩部走向，腰线落点影响上下比例，下摆处理影响整体收放，把“做了什么结构”对到“看上去有什么变化”。关键切断在于：版型术语只描述结构与视觉，不能直接跳到身材效果承诺，比如“这个版型一定显高显瘦”属于对身体结果的保证。面对可归类的版型时它适用；把结构特征说成对任何人都成立的身材改善时不适用。凡涉及显高、显瘦、遮肉的说法都算需证据的结论，缺乏依据时改写成“从轮廓上能看到的线条变化”，效果承诺部分先挂为缺来源。
+    body_char_count: 405
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - fit_term -> structural_observation
+    - silhouette_line -> visual_relation
+    - ease_amount -> wearing_condition_note
+    - body_effect_word -> claim_boundary
+    domain_anchors:
+    - 肩线
+    - 腰线
+    - 衣长
+    - 松量
+    - 廓形
+    expected_body_topics_covered:
+    - 版型与廓形区别
+    - 轮廓线、长度、宽窄、松量、重心等表达
+    - 结构节点与视觉结果的关系提示
+    - 版型词与身材效果承诺的切断
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-019
+    canary_id: CANARY-40-019
+    canonical_cluster_id: mkc_025
+    cluster_title: 工艺观察线索与讲解节点
+    body_form: domain_method_body
+    body: 工艺观察线索与讲解节点回答“看一件衣服的工艺，该按什么顺序看、讲到哪儿要停”。比如看到“锁边干净、扣位牢固”是观察，可以讲；若顺势说“所以这件特别耐穿”，就把一处细节放大成了整体耐用结论，需要退回补证据。先列可见工艺节点：走线是否平整、拼接是否对位、锁边是否干净、扣位与开口的处理、里布与衬的收口。观察顺序建议从外观到结构再到细节：先看整体呈现，再看关键结构处理，最后看收尾细节，层层深入而不是一上来就抠局部。工艺名词要与耐用、功能结论切断：看到“走线密而齐”是观察，断言“所以特别耐穿”是性能结论，后者需要使用或测试支撑。讲解时给工艺节点排一个叙事先后，让内容有推进感而非罗列。工艺特征可被直接观察时它适用；把局部工艺当整体质量保证时不适用。凡从可见工艺推向耐用度、使用寿命、功能表现的说法，都属需证据的结论，缺来源时只描述看到的处理方式，质量承诺一律挂为待补证据，不用“工艺好”笼统替代举证。
+    body_char_count: 398
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - visible_craft_node -> explanation_order
+    - construction_detail -> observation_cue
+    - craft_name -> function_claim_cutoff
+    - process_story_gap -> source_required_claim
+    domain_anchors:
+    - 领口压线
+    - 门襟
+    - 袖口
+    - 包边
+    - 纽扣孔
+    expected_body_topics_covered:
+    - 可见工艺节点清单
+    - 观察顺序：外观→结构→细节→不可直接外推的质量结论
+    - 工艺名词与功能/耐用结论的风险切断
+    - 工艺节点的叙事先后顺序
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-020
+    canary_id: CANARY-40-020
+    canonical_cluster_id: mkc_026
+    cluster_title: 身材效果语言阶梯与场景化观察
+    body_form: claim_boundary_body
+    body: 身材效果语言阶梯与场景化观察给出一套“想说效果时先降到观察”的用语梯度。举例说，与其写“这条裙显瘦”，不如降到观察层写“裙身在腰侧收进去，视觉上纵向线条更连贯”，把对身体的保证换成对线条的描述。最底层是观察词，只讲看到的线条与结构关系，比如“腰线位置偏高，视觉上把上下分割抬高了”。中间层是关系词，讲结构与呈现之间的因果倾向，但用“倾向于”“通常会”限定。最高层的结果词——“显高”“显瘦”“遮肉”——属于对身体的结果保证，默认不直接使用。当内容想表达效果时，提供替代表达和回避表达：把结果词换成线条描述，把绝对判断换成条件判断。场景化观察是允许的：在具体动作或姿态下描述视觉变化，但仍不下身体结论。内容涉及穿着呈现时它适用；向任意个体承诺身材改善时它拦下。这一簇的核心产出是“证据够不够、该不该降级”的判断：结果词一旦出现即视为需证据的承诺，缺依据时沿阶梯降为观察或关系表达，并把该承诺挂为待补证据。
+    body_char_count: 401
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - observation_word -> low_risk_visual_statement
+    - relation_word -> conditional_visual_relation
+    - body_result_word -> prohibited_or_source_required_claim
+    - scene_cue -> non_conclusive_observation
+    domain_anchors:
+    - 观察词
+    - 关系词
+    - 结果词
+    - 线条
+    - 场景化观察
+    expected_body_topics_covered:
+    - 观察词/关系词/结果词分层
+    - 能说视觉线条变化与不能保证身体结果的边界
+    - 替代表达与回避表达
+    - 场景化但非结论化的观察方式
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-021
+    canary_id: CANARY-40-021
+    canonical_cluster_id: mkc_027
+    cluster_title: 舒适性能耐用品质证据阶梯
+    body_form: evidence_policy_body
+    body: 舒适、性能、耐用这类品质话术，要按“断言强度—证据类别—可保留表达”三段来管。比如“透气”这类具体性能属于强断言，要有检测或标准撑着；实在没有材料时，只能退到“面料结构较疏松”这种可观察的最低表达。先给断言分级：泛泛的“穿着体验”属弱断言，具体的“透气、保暖、抗皱、耐洗”属强断言，涉及数值或对比的属最强断言。每一级对应可接受的证据类别：标准依据、检测方法、专业方法说明，强断言要匹配更硬的证据。当没有任何证据时，规定一个最低可保留的表达层级——只描述可观察的材料与结构线索，不下性能结论。触发补来源的阈值很明确：一旦话术从“看到什么”滑到“会带来什么效果”，且无证据支撑，即整体挂起等材料。内容确需谈及品质时它适用；用体验词暗示未验证的性能时它拦截。这一簇本身就是一份证据分级依据：所有性能与耐用结论都需检测或标准支撑，缺失时不得用“亲测”“很耐用”替代，必须回收为观察并注明还缺哪一类证据。
+    body_char_count: 397
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - comfort_word -> subjective_experience_claim
+    - performance_word -> test_or_source_required_claim
+    - durability_word -> proof_required_claim
+    - evidence_absence -> downgrade_to_observation
+    domain_anchors:
+    - 舒适
+    - 性能
+    - 耐用
+    - 品质
+    - 证据阶梯
+    expected_body_topics_covered:
+    - claim 分级
+    - 不同 claim 对应的证据类别
+    - 无证据时允许保留的最低表达层级
+    - source gap 触发阈值
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-022
+    canary_id: CANARY-40-022
+    canonical_cluster_id: mkc_028
+    cluster_title: 品质观察项与证明类型路由
+    body_form: evidence_policy_body
+    body: 品质观察项与证明类型路由回答“看到的品质线索，该配哪种证明，以及哪些必须转走”。举例来说，看到一处走线整齐只能支撑“这一处处理到位”，若写成“整件品质可靠”，就把局部观察放大成了整体保证，必须拆回去。先整理可观察品质线索：接缝平整度、面料克重的直观厚薄、五金件的做工、边缘处理是否毛糙，这些是肉眼可判的。再建立证明类型的分类：有的靠可见证据，有的靠标准或检测，有的靠专业方法说明，不同结论要匹配不同证明。凡涉及认证、标准、等级这类声称，必须转到更高证据要求，不能凭观察直接认定。核心禁令是：不得把局部观察写成整体保证，看到一处做工好不等于整体品质达标。品质线索可被直接观察时它适用；用单点线索给出总体品质结论时不适用。这一簇给出的是一份“该走哪条证据路”的判断：认证与标准类声称一律要官方来源，缺失即挂为待补证据；局部观察只支撑局部描述，任何整体性、承诺性的品质结论无据不写，绝不并入普通说明。
+    body_char_count: 397
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - quality_observation -> proof_type
+    - proof_type -> claim_routing
+    - certification_signal -> higher_evidence_need
+    - unsupported_proof -> source_gap
+    domain_anchors:
+    - 线迹
+    - 收口
+    - 拼接
+    - proof_type
+    - 局部观察
+    expected_body_topics_covered:
+    - 可观察品质线索
+    - proof-type taxonomy
+    - certification / standard claim 的 route-away 规则
+    - 不得把局部观察写成整体保证
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-023
+    canary_id: CANARY-40-023
+    canonical_cluster_id: mkc_029
+    cluster_title: 工艺品质内容的可拍摄表达
+    body_form: domain_method_body
+    body: 这一簇讲“怎么把工艺讲清楚又能真的拍出来”。比如要拍“里料收口”，就翻开衣里让镜头对准那一处，用近景交代针脚走向，旁白只讲看到的处理，而不替观众断定这样就一定结实。先定可拍摄对象：走线、拼缝、扣位、里料收口这些细节都是能对上焦的实物点。再定可拍摄动作：翻开衣里展示收口、拉动开合展示顺滑、对比正反两面展示处理，动作要能被镜头完整记录下来。画面按层次安排：远景交代整体，中景交代结构区域，近景交代关键细节，层层清楚才不至于糊成一团。所有画面都配非结论化的说明：讲“这里能看到怎样的处理”，而不是“这说明质量一定好”。工艺细节具备可视性时它适用；把无法观察的性能硬拍成“证据”时不适用。它的产出只是看得到的处理方式，供后续内容采用，不构成成品，也不得借画面暗示未经验证的耐用或功能结论；凡涉及性能承诺的旁白都改成观察语言，改不动的先挂为缺来源，镜头能拍到的永远是做法而非效果。
+    body_char_count: 386
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - object_cue -> camera_cue
+    - camera_cue -> explanation_slot
+    - explanation_slot -> claim_boundary
+    - process_detail -> filmability
+    domain_anchors:
+    - 对象线索
+    - 镜头线索
+    - 解释槽位
+    - 近景
+    - 边界
+    expected_body_topics_covered:
+    - 可拍摄对象
+    - 可拍摄动作
+    - 画面层级
+    - 说明与非结论化提示
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-024
+    canary_id: CANARY-40-024
+    canonical_cluster_id: mkc_030
+    cluster_title: Look 拆解观察骨架
+    body_form: execution_asset_body
+    body: Look拆解观察骨架给出一套“把一整套搭配拆成可讲的观察节点”的方法。举例说，拆一套通勤搭配，可以点出外套的整体轮廓、内搭与外套的层次关系、以及包和鞋这些搭配位，但不引申到“穿的人身材如何”。先分拆解维度：整体轮廓、层次关系、色彩分布、材质对比、搭配位（上下内外与配件）。单套搭配看内部节点，成组陈列还要看套与套之间的呼应节点。轮廓、层次、搭配位这些命名停在通用几何与位置描述上，不引申到穿着者的身材结论。画面结构可分成三层来组织：打底交代场景关系的一层、要突出的单品所在的一层、以及起衬托作用的一层，主次分明镜头才有落点。存在可观察的成套或成组对象时它适用；把拆解直接说成对某人的搭配建议或效果保证时不适用。这套骨架产出的是观察结构与拍摄节点，属于供后续内容取用的编排素材，不是可对外发布的成品文案；凡掺入具体门店实景或在售商品事实的部分，先剔除或挂为缺来源，正文这一层只认可复用的拆解结构。
+    body_char_count: 397
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 主体
+    - 陪体
+    - 层次
+    - 轮廓
+    - 搭配位
+    - 前景
+    expected_body_topics_covered:
+    - Look层级拆解维度
+    - 单套搭配与成组陈列的观察节点
+    - 轮廓/层次/搭配位的命名边界
+    - 可拍摄的前景-主体-陪体结构
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-025
+    canary_id: CANARY-40-025
+    canonical_cluster_id: mkc_031
+    cluster_title: 主题与色彩故事关系网
+    body_form: execution_asset_body
+    body: 主题与色彩故事关系网处理“一个主题下，颜色该怎么组织成有逻辑的故事”。比如以一个冷调主题组色，主色定下灰蓝，辅色接上雾白，点缀色用一点旧金，讲的是三者的呼应与轻重，而不是断言这组色会让人产生某种确定情绪。先建立主题词与色彩组的对应：一个主题通常对应一个主色加若干辅色的色板，主题决定色板的冷暖与明暗基调。观察顺序按主色、辅色、点缀色展开：主色定调，辅色承接，点缀色制造节奏点。系列感和节奏感的表达要有边界：可以讲色彩之间的呼应与轻重，但不夸大成情绪保证或风格定论。色彩故事最后要回扣Look结构，说明这组颜色如何落到具体的搭配位与陈列面上，形成一个闭环。存在可归纳的主题与色板时它适用；把配色联想说成对观者情绪的确定作用时不适用。这一簇产出的是可复用的编排关系素材，供后续内容参考，本身不是成品发布物；凡绑定具体品牌活动或档期事实的地方，都要抽离出去，涉及真实主题企划的信息先挂为缺来源，落到正文的只有颜色与结构的关系。
+    body_char_count: 410
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - theme_word -> color_group
+    - main_secondary_accent_color -> observation_order
+    - color_story -> look_structure
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 主色
+    - 辅色
+    - 点缀色
+    - 色彩组
+    - Look 结构
+    - 主题词
+    expected_body_topics_covered:
+    - 主题词与色彩组的关系
+    - 主色/辅色/点缀色的观察顺序
+    - 系列感与节奏感的表达边界
+    - 色彩故事如何回扣Look结构
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-026
+    canary_id: CANARY-40-026
+    canonical_cluster_id: mkc_032
+    cluster_title: 陈列区位与可拍摄视觉锚点
+    body_form: execution_asset_body
+    body: 陈列区位与可拍摄视觉锚点回答“店内不同位置该怎么观察、怎么转成镜头”。举例来说，端架适合放一件重点单品，用中景交代它和周围的关系，再用近景对准它的一处细节，这是从位置类型推出的镜头顺序，与某家店的真实货架无关。先用通用区位语言：入口区负责第一印象，中岛适合成组展示，端架适合重点单品，挂通适合系列铺陈，这些是抽象位置类型而非某家店的真实布局。观察按远景、中景、近景切换：远景看区位关系，中景看陈列组合，近景看单品细节。每个区位挑出能拍的重点，作为静态陈列里的视觉锚点。再给出从区位到镜头的最小对应：某类区位适合哪种景别、哪个角度切入。面对可归类的陈列区位时它适用；复制某一具体门店的真实陈列与商品时不适用。区位与镜头的对应是供拍摄参考的编排素材，不构成可直接发布的脚本；凡写到真实门店的位置、面积、动线或在售商品事实，都算越界，先撤下，缺来源的挂起，正文只保留位置类型与镜头之间的通用映射。
+    body_char_count: 395
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - display_zone -> observation_entry
+    - shot_distance -> visual_anchor
+    - static_display -> camera_focus
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 入口区
+    - 中岛
+    - 端架
+    - 挂通
+    - 远景
+    - 中景
+    - 近景
+    expected_body_topics_covered:
+    - 入口区/中岛/端架/挂通等一般化区位表达
+    - 远景-中景-近景的观察切换
+    - 静态陈列中的可拍摄重点
+    - 从区位到镜头的最小映射
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-027
+    canary_id: CANARY-40-027
+    canonical_cluster_id: mkc_033
+    cluster_title: 门店日常动作观察切片
+    body_form: execution_asset_body
+    body: 门店日常动作观察切片解决“把日常动作切成可内容化的片段”。比如“理正一排挂装”这个动作，前提是挂装已经上架、有明显歪斜，结束标志是间距和朝向归整，把前提和收尾都标出来，这个片段才切得干净。先分动作类型：开场准备类，如理货、上架、整面；整理比对类，如理正挂装、比对尺码、归位；讲解递示类，如展示细节、递给顾客试看。每个动作都标出前提和结束标志：前提是动作开始需要的条件，结束标志是动作完成的可见信号，有头有尾才切得干净。动作还要连上场景道具：某个动作通常在什么区位、用到什么道具，把动作嵌回场景里。目的是识别“可内容化动作”，避免只剩“门店很忙”这类空泛氛围。动作可被直接观察且可复现时它适用；把某位真实员工的具体行为当内容对象时不适用。切片产出的是通用动作素材，供后续内容编排；凡记录或呈现真实人员的可识别行为、对话与业绩的部分，一律先删或挂为缺来源，涉及真实个人的一概不留在正文。
+    body_char_count: 391
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - action_precondition -> action_slice
+    - action_object -> content_condition
+    - completion_marker -> output_asset
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 整理
+    - 比对
+    - 讲解
+    - 递示
+    - 动作对象
+    - 结束标志
+    expected_body_topics_covered:
+    - 开场准备类动作
+    - 整理/比对/讲解/递示等一般化动作
+    - 动作前提与结束标志
+    - 动作与场景道具的最小关系
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-028
+    canary_id: CANARY-40-028
+    canonical_cluster_id: mkc_034
+    cluster_title: 动作转内容槽位与演示三段式
+    body_form: execution_asset_body
+    body: 动作转内容槽位与演示三段式给出“把一个动作做成一段可用内容”的编排法。举例说，演示“如何翻看内衬”时，起交代要看的位置，承展开翻看动作，转点出收口这个关键处，合落到整体呈现，旁白只在“转”这一步给一句解释。演示按起承转合排：起是交代要做什么，承是展开动作过程，转是点出关键处理或注意点，合是收束到结果呈现。每个动作段配一个解释槽位，说明这一步在做什么、为什么这么做，把强观察和弱解释组合起来——画面多给观察，旁白少而准地给解释。平台侧的提示只作为编排上的注记存在，不写进内容本身。它产出的是“动作—解释—镜头”的对应关系，为后续内容准备结构而非成品。动作具备可演示性时它适用；把演示直接当成对外发布的完成稿时不适用。三段式只组织通用动作的讲解结构，不能据此虚构真实门店流程或真实人物示范，也不夹带效果承诺；凡涉及具体经营场景或在售商品的细节，先删或先挂待补，留下的只是可复用的演示编排。
+    body_char_count: 393
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - store_action -> demonstration_segment
+    - demonstration_segment -> explanation_slot
+    - observation_strength -> wording_level
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 动作起点
+    - 可见变化
+    - 解释槽位
+    - 镜头跟随
+    - 完成判断
+    expected_body_topics_covered:
+    - 动作镜头起承转合
+    - 动作对应的解释槽位
+    - 强观察/弱解释的组合方式
+    - 平台提示仅作为研究注释
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-029
+    canary_id: CANARY-40-029
+    canonical_cluster_id: mkc_035
+    cluster_title: 门店日常内容化风险红线
+    body_form: governance_policy_body
+    body: 门店日常内容化风险红线用来在“把日常搬上内容”之前先做剔除与改写判断。比如“有位顾客反复来试同一件”这类带真实个体的表述，要改写成“存在这样一类反复比较的咨询场景”，把可识别的人抽掉，只留通用情形。核心红线是隐私与实例事实边界：真实顾客的样貌、对话、消费记录一律不可写，真实员工的可识别信息同样受限。不可写的还包括具体经营表现——真实销售额、客流、库存周转、顾客反馈原话，这些都属于实例事实。可以保留的是一般化的角色表达和通用动作说明，把“某位顾客说很好”改写成“存在这样一类咨询场景”。遇到缺乏授权的材料时挂起等补，遇到边界不清的归属问题时交人工裁决。内容源于真实门店场景、需要脱敏时它适用；直接搬运未脱敏实况时它拦下。这一簇产出的是内容化前的风险处置规则，属于流程约束而非领域正文；任何触及真实个人、真实经营数据的项，都必须先经剔除、改写或升级判断，判不清的先挂起，绝不径直进入内容。
+    body_char_count: 394
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - privacy_signal -> stop_or_generalize
+    - instance_fact_signal -> source_gap_hint
+    - role_expression -> generalized_role_surface
+    - risk_signal -> safe_fallback
+    domain_anchors:
+    - 隐私边界
+    - 经营表现
+    - 顾客反馈
+    - 一般化角色
+    - 授权不明
+    expected_body_topics_covered:
+    - 隐私与实例事实边界
+    - 不可写的经营表现与顾客反馈
+    - 可保留的一般化角色表达
+    - 何时转source_gap或decision_required
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-030
+    canary_id: CANARY-40-030
+    canonical_cluster_id: mkc_036
+    cluster_title: 陈列动作 SOP 节点框架
+    body_form: execution_asset_body
+    body: 陈列动作SOP节点框架把“陈列这件事”拆成可复核的节点序列。举例来说，“陈列前检查”这个节点的输入是待陈列的货品与道具清单，输出是一份“区位与货品已核对”的可见状态，它正好成为“实施”节点的前置。先给通用节点：陈列前检查，如核对货品、清点道具、确认区位；实施，如按规划上架与组合；复核，如比对规划、检查安全与整齐。每个节点标出输入和输出：输入是这一步需要的前置物，输出是这一步完成后的可见状态，前一节点的输出正好成为后一节点的输入。节点之间的依赖顺序要固定，缺了前置就不能进入下一步。节点还要可见化，便于讲解和培训演示。陈列过程可被节点化时它适用；把某家店的真实排班或真实执行记录当节点内容时不适用。SOP框架是通用流程模型，产出可复核的流程素材，本身不承载实例；凡写入真实门店的具体执行数据、人员安排或商品实况的部分，先删或挂为缺来源，能落进正文的只是节点、输入输出与依赖关系这三样。
+    body_char_count: 393
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - precheck_node -> implementation_node
+    - implementation_node -> recheck_node
+    - node_input -> node_output
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 陈列前检查
+    - 实施
+    - 复核
+    - 节点输入
+    - 节点输出
+    - 完成标志
+    expected_body_topics_covered:
+    - 陈列前检查/实施/复核的一般节点
+    - 节点输入与节点输出
+    - 节点之间的依赖顺序
+    - 节点可见化表达
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-031
+    canary_id: CANARY-40-031
+    canonical_cluster_id: mkc_037
+    cluster_title: 零售角色动作权限与加盟改写边界
+    body_form: governance_policy_body
+    body: 零售角色动作权限与加盟改写边界这一簇，规定“哪些角色权限能讲、加盟与授权信息怎么泛化”。比如某地的加盟返点条款属于实例，不能原样写；要泛化成“存在这样一类按区域约定的授权安排”，把具体数字和区域名都抽掉才可保留。先把角色、动作、权限连成关系：某类角色能做某类动作，是因为拥有对应权限，三者要对齐，不能让角色去做超出权限的动作。可讲的是一般化的授权表面——“存在这样一类被授权处理陈列的角色”，这属于方法层。加盟与授权类信息必须经过泛化改写才能出现：把具体的加盟条件、区域划分、真实合同条款，抽象成“存在这样一类授权安排”，去掉可识别的实例。真实制度与内部方法层要切断，不得原样外露。需要说明角色权限关系时它适用；想沉淀任何真实授权信息时它禁止。这一簇产出的是权限与改写的边界规则，属于治理性约束；遇到具体授权事实先挂起等材料，遇到边界不清交人工裁决，真实加盟、授权、合同信息一概不进正文。
+    body_char_count: 394
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - retail_role -> speakable_action
+    - permission_surface -> generalized_rewrite
+    - franchise_fact_signal -> route_away
+    - risk_signal -> safe_fallback
+    domain_anchors:
+    - 零售角色
+    - 动作权限
+    - 一般化授权表面
+    - 加盟边界
+    - 制度事实
+    expected_body_topics_covered:
+    - 零售角色、动作、权限关系
+    - speakable 的一般化授权表面
+    - 加盟/授权信息的泛化改写条件
+    - 真实制度与方法层的切断
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-032
+    canary_id: CANARY-40-032
+    canonical_cluster_id: mkc_038
+    cluster_title: 异常回退与前复核路由提示
+    body_form: governance_policy_body
+    body: 异常回退与前复核路由提示规定“流程出问题时停在哪、转向哪”。举例说，若“复核”节点因为缺规划底稿无法进行，就回退到能补齐底稿的那一步，而不是跳过复核硬把这批陈列算作完成。先列异常类型与对应回退：某个节点缺失时，回退到能补齐前置的最近节点，而不是硬往下走。证据不足时，把缺乏支撑的结论挂起，标明还需要什么证据。授权不明时，交人工裁决：归属或权限不清的项交由人工判断，不自行认定。所有异常项都用一个最小记录格式登记：发生在哪一步、属于哪类异常、转向了哪里，便于后续复核。流程中确实出现可识别异常时它适用；把正常步骤当异常处理时不适用。这一簇约束的是遇到证据缺口、边界冲突或控制面信息泄漏时的停机与转向方式，属于流程治理规则。异常处置只做记录与转向，不在此处补写未经证实的结论；任何涉及真实经营异常的具体数据都属实例事实，先挂起或删除，正文只留通用的回退与路由规则。
+    body_char_count: 380
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - missing_node -> local_fallback
+    - insufficient_evidence -> source_gap_hint
+    - unclear_permission -> decision_required_hint
+    - risk_signal -> safe_fallback
+    domain_anchors:
+    - 节点缺失
+    - source_gap 提示
+    - decision_required 提示
+    - 异常项记录
+    - 安全替代表达
+    expected_body_topics_covered:
+    - 节点缺失时的回退
+    - 证据不足时的source_gap路由
+    - 授权不明时的decision_required路由
+    - 异常项的最小记录格式
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-033
+    canary_id: CANARY-40-033
+    canonical_cluster_id: mkc_039
+    cluster_title: 产品叙事角色入场框架
+    body_form: domain_method_body
+    body: 产品叙事角色入场框架回答“产品以什么身份进入一段内容、在哪里首次出现”。比如让一件针织衫作为“解决项”登场，就要先铺一个“换季早晚偏凉”的场景任务，再让它在这个任务里首次出现，入场才有由头。先给产品做功能命名：它在这段内容里是主角、对比项、解决项还是过渡项，身份不同，叙述位置就不同。再定首次出现位置：是开头即亮相，还是在铺垫场景任务后才登场，入场时机决定读者对它的第一印象。产品要和场景任务绑定：它是来完成某个具体使用任务的，而不是凭空展示。围绕这些，把产品角色连到场景任务、叙事段落、视觉锚点和教育节点上，形成可检查的叙事骨架。内容确有可承担叙事功能的产品对象时它适用；把通用叙事结构写成某个在售商品的推广稿时不适用。入场框架只产出“产品以何种角色进入故事”的结构槽位，不能填入具体货号、价格、卖点承诺这类实例事实；涉及真实商品信息的部分先挂为缺来源，正文只留角色与位置这两层方法。
+    body_char_count: 393
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - first_appearance_position -> product_role_name
+    - product_role_name -> narrative_section
+    - narrative_section -> scene_task_binding
+    - visible_detail -> education_node
+    domain_anchors:
+    - 领口
+    - 门襟
+    - 腰线
+    - 面料纹理
+    - 层次变化
+    - 搭配重心
+    expected_body_topics_covered:
+    - 角色功能命名方式
+    - 产品在镜头中的首出现位置
+    - 产品与场景任务的绑定方式
+    - 产品作为对比项、解决项、过渡项的结构位置
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-034
+    canary_id: CANARY-40-034
+    canonical_cluster_id: mkc_040
+    cluster_title: 叙事到 CTA 的非硬卖边界
+    body_form: domain_method_body
+    body: 叙事到CTA的非硬卖边界处理“内容里要不要引导行动、怎么引导才不硬卖”。举例来说，一段内容把搭配方法讲透之后，收尾用“想看更多穿法可以进一步了解”这类引导即可，而不是塞进一句带具体价格的促销。核心原则是CTA需要前置教育条件：只有当内容已经把该讲的方法或场景讲清楚，引导才有落点，不能开头就催促。CTA的信息密度要控制，点到为止，避免堆叠促销话术。关键切断是CTA与商品事实隔离：引导可以指向“了解更多”这类动作，但不得夹带未经证实的价格、库存、效果承诺。CTA还要和陈列或场景连接，让行动引导落在具体情境里而非空喊。内容已完成足够铺垫时它适用；在缺乏内容支撑时强行收尾催单则不适用。CTA只作为方法节点存在，不产出可直接投放的销售句；凡涉及具体优惠、具体商品事实的表达都属实例信息，先挂为缺来源。引导行动的表达不得替代证据去暗示效果，整段收束保持在非成品状态，把“怎么收尾”和“承诺什么结果”彻底分开。
+    body_char_count: 402
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - education_condition -> cta_permission
+    - cta_density -> low_pressure_action
+    - product_fact_isolation -> no_sales_overreach
+    - display_or_scene_cue -> observation_prompt
+    domain_anchors:
+    - 观察对象
+    - 搭配条件
+    - 陈列主次
+    - 领口连接
+    - 场景提示
+    expected_body_topics_covered:
+    - CTA 的前置教育条件
+    - CTA 的信息密度控制
+    - CTA 与商品事实的隔离
+    - CTA 与陈列/场景的连接点
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-035
+    canary_id: CANARY-40-035
+    canonical_cluster_id: mkc_041
+    cluster_title: 产品生命周期角色窗口
+    body_form: domain_method_body
+    body: 产品生命周期角色窗口给出“同一产品在不同阶段承担不同叙事任务”的方法。比如同一件单品，在导入阶段要多讲它怎么用、怎么搭，到了成熟阶段就可以只做一句提示，叙事密度随阶段递减，而不是每次都从头讲。先做阶段抽象命名：导入、成长、成熟、退场，用抽象阶段而非具体档期来讲。阶段与叙事密度相关：导入期需要多讲背景与用法，成熟期可以精简，退场期转向收尾表达。阶段与教育重心相关：早期偏认知教育，中期偏使用与搭配，后期偏场景延展。阶段还与陈列更新相关：不同阶段对应不同的陈列强调点。据此为每个阶段构造一个可比较的角色窗口。能对产品所处阶段做抽象判断时它适用；据此推断具体经营节奏或销售结论时不适用。生命周期窗口只产出可比较的叙事任务结构，不能写成对某商品真实上市时间、销量走势或库存状态的判断；凡涉及真实经营阶段数据的地方，先挂为缺来源，正文里能留下的只有阶段与叙事任务的对应方法。
+    body_char_count: 383
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - abstract_lifecycle_stage -> narrative_task
+    - narrative_task -> education_focus
+    - abstract_stage -> cta_strength_ceiling
+    - business_status -> prohibited_instance_fact
+    domain_anchors:
+    - 认知进入期
+    - 结构教育期
+    - 组合扩展期
+    - 场景验证期
+    - 复盘维护期
+    expected_body_topics_covered:
+    - 阶段抽象命名
+    - 阶段与叙事密度关系
+    - 阶段与教育重心关系
+    - 阶段与陈列更新关系
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-036
+    canary_id: CANARY-40-036
+    canonical_cluster_id: mkc_042
+    cluster_title: 组货角色与渠道边界矩阵
+    body_form: domain_method_body
+    body: 组货角色与渠道边界矩阵处理“一组商品之间的角色关系，以及不同渠道能讲多少”。举例说，一组里若一件作引流角色、一件作利润角色，内容就该讲清谁主谁次、如何呼应，而不是把每件都当成独立主角平铺直叙。先分组货角色类型：引流角色、利润角色、形象角色、连带角色，不同角色在一组里承担不同功能。再理主次与陪衬关系：哪件是主推、哪件是搭配衬托，关系清楚才不会每件都空讲。渠道差异带来信息删减规则：不同渠道能承载的信息类型和密度不同，面向浏览场景的要精简，面向深度了解场景的可展开。产品角色还要与主题化组合关联，让一组商品在一个主题下彼此呼应。存在可归纳的商品组合关系时它适用；把角色矩阵写成对某真实货盘的经营安排时不适用。组货矩阵产出的是“商品间角色关系”的编排结构，用来降低单品空讲；凡写入真实货号、真实渠道数据或真实促销安排的部分，先剔除或挂为缺来源，写进正文的仅限角色关系这一层。
+    body_char_count: 385
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - assortment_role -> primary_secondary_relation
+    - supporting_item -> explanation_function
+    - channel_context -> information_reduction_rule
+    - theme_grouping -> product_role_combination
+    domain_anchors:
+    - 主推叙事项
+    - 陪衬解释项
+    - 风格过渡项
+    - 颜色连接项
+    - 层次补足项
+    - 场景补位项
+    expected_body_topics_covered:
+    - 组货角色类型
+    - 主次关系与陪衬关系
+    - 渠道差异下的信息删减规则
+    - 产品角色与主题化组合关系
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-037
+    canary_id: CANARY-40-037
+    canonical_cluster_id: mkc_043
+    cluster_title: 场景适配条件与不适配条件
+    body_form: domain_method_body
+    body: 场景适配条件与不适配条件回答“一件产品适合什么场景、不适合什么场景、边界在哪”。比如一件轻薄外套，适配“室内外温差大的通勤”这个场景任务，但并不适配“正式场合的庄重要求”，把不适配的场景也点出来，判断才完整。先定场景任务锚点：每个场景有它要完成的核心任务，比如通勤要方便活动、聚会要有存在感，产品要对着任务讲。再给场景切换条件：什么情况下从一个场景过渡到另一个，过渡处要交代清楚。场景里对动作有限制，要说明在该场景下产品能怎么用、不宜怎么用。关键是显式表达不适配条件：哪些场景并不适合这件产品，把边界讲出来比一味说“百搭”更可信。场景与产品任务可对应时它适用；对所有场景一律宣称适配时不适用。这一簇围绕“场景条件—动作任务—产品角色”展开，不滑向“穿上就能达到某种效果”的保证；凡涉及效果、适用人群的硬结论都需证据支撑，缺失时先挂为缺来源，正文最终留下的是场景与任务之间的匹配方法。
+    body_char_count: 391
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - scene_task -> fit_condition
+    - action_limit -> unsuitable_condition
+    - scene_switch -> product_role_shift
+    - fit_confidence -> cta_strength_ceiling
+    domain_anchors:
+    - 坐立切换
+    - 步行距离
+    - 外搭层次
+    - 室内外温差
+    - 携带物限制
+    - 正式程度
+    expected_body_topics_covered:
+    - 场景任务锚点
+    - 场景切换条件
+    - 场景中的动作限制
+    - 不适配条件表达
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-038
+    canary_id: CANARY-40-038
+    canonical_cluster_id: mkc_044
+    cluster_title: 使用教育与结果 claim 分界
+    body_form: claim_boundary_body
+    body: 使用教育与结果claim分界这一簇，划定“教用户怎么用可以、承诺用了有什么结果不可以”的界线。举例来说，讲“怎么把这件衣服的褶皱抚平”属于教育性说明，可以讲；而“这样处理就不会再皱”是效果承诺，需要证据支撑，不能顺口带出。允许的是教育性说明：怎么穿、怎么搭、怎么打理、注意哪些使用事项，这些帮助用户正确使用。要把演示和证明分开：演示是展示一个用法或过程，证明是断言某种效果成立，展示动作不等于证明结果。比较语言要设边界：同类之间讲可见差异可以，断言“更好、更有效”则需要证据分级支撑。注意事项要明确表达，提醒使用限制。内容聚焦正确使用方法时它适用；把使用说明包装成效果承诺时它拦下。这一簇本质是一条证据分界线：凡从“怎么用”滑向“用了会怎样”的结果性表达，都视为需证据的结论，按证据等级要求处理，不足时整体挂为待补证据；高风险的结果claim必须与教育说明隔离，绝不让演示动作替读者得出效果结论。
+    body_char_count: 398
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - usage_education -> allowed_instruction
+    - demonstration -> observation_only
+    - comparison_wording -> evidence_requirement
+    - result_claim -> downgrade_or_source_needed
+    domain_anchors:
+    - 穿着顺序
+    - 调节方式
+    - 翻折
+    - 层搭
+    - 同一光线
+    - 标签条件
+    expected_body_topics_covered:
+    - 教育性说明的允许范围
+    - 演示与证明的区别
+    - 比较语言的边界
+    - 注意事项表达
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-039
+    canary_id: CANARY-40-039
+    canonical_cluster_id: mkc_045
+    cluster_title: 产品到陈列叙事关系语法
+    body_form: domain_method_body
+    body: 产品到陈列叙事关系语法回答“产品与陈列之间用什么关系来组织画面”。比如把一件外套放在陈列面中心作主角，两侧用内搭作邻接呼应，背景压低作陪衬，这组位置关系就能直接转成一条“中心—两侧—背景”的镜头线索。先讲位置关系：产品在陈列面里处于中心、侧位还是背景，位置决定视觉权重。再讲邻接关系：它旁边放什么、和什么形成呼应或对比，邻接对象影响读者对它的理解。还有主次层级：一组里谁主谁次，层级清楚画面才有重点。以及主题化组合：一组产品在同一主题下如何摆放才能讲出关系。把这些关系连起来，产品角色就能对到具体的陈列位置、邻接对象和拍摄镜头线索，让内容具备可视结构。存在可观察的产品与陈列关系时它适用；落到某个真实门店的具体陈列实况时不适用。关系语法产出的是产品与陈列的关系槽位，供后续内容参考；凡写入真实门店的位置、商品与实景照片事实的部分，先脱敏，不行就挂为待补，正文这一层只承认位置、邻接、主次与主题这几层关系结构。
+    body_char_count: 404
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - product_role -> display_position
+    - adjacent_object -> narrative_emphasis
+    - primary_secondary_level -> shot_order
+    - display_cue -> shot_hint
+    domain_anchors:
+    - 中心位置
+    - 侧边位置
+    - 相邻位置
+    - 层次后方
+    - 同色邻接
+    - 异材质邻接
+    - 留白
+    expected_body_topics_covered:
+    - 位置关系
+    - 邻接关系
+    - 主次层级
+    - 主题化组合
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+  - rich_body_id: CANARY-40-RB-040
+    canary_id: CANARY-40-040
+    canonical_cluster_id: mkc_046
+    cluster_title: 产品到角色到叙事跨域关系
+    body_form: governance_policy_body
+    body: 产品到角色到叙事的跨域关系，是把不同能力面上的接口对齐，而不是新建一条执行流程。举例说，同一件产品，用一线讲解视角说话会偏具体操作，用生态观察视角说话会偏关系梳理，当这两种规则在一处冲突时，取更严的一方并记下这处冲突。它要处理四组接口：产品与角色语气的关系，即同一产品在不同叙述视角下语气如何调整；产品与组织生态视角的连接，即产品由哪种功能角色来讲更合适；产品与陈列动作的接口，即产品叙事如何落到展示动作上；产品与叙事段落的跨域对齐，即产品角色如何贯穿整段内容。当多个能力面在同一处交叉、彼此规则不一致时，采用更严的一方作为约束，并把冲突记录下来供后续判断。内容确实跨越多个能力面需要对接口时它适用；把跨域关系写成一张可直接执行的流程图或产线对象时不适用。这一簇只提供跨域接口提示，属于关系与路由层面的治理性说明，不形成执行图，也不写入真实商品、真实门店或真实组织事实；遇到具体实例或归属冲突，先挂起或交人工裁决。
+    body_char_count: 407
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - product_role -> role_perspective_hint
+    - product_role -> display_action_hint
+    - product_role -> narrative_sequence_hint
+    - cross_domain_overlap -> strictest_wins_note
+    domain_anchors:
+    - 导购式表达
+    - 设计解释式表达
+    - 品牌旁白式表达
+    - 主角
+    - 陪衬
+    - 过渡
+    - 教育节点
+    expected_body_topics_covered:
+    - 产品与角色语气的关系
+    - 产品与组织生态视角的连接
+    - 产品与 display 动作的接口
+    - 产品与 narrative 段落的跨域对齐
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索
+      method_layer: 解释可复用的判断机制与顺序
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false

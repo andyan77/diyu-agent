@@ -1,0 +1,374 @@
+expected_total: 2
+expected_clusters:
+- mkc_007
+- mkc_021
+cards:
+- canary_id: CANARY-40-001
+  source_task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+  canonical_cluster_id: mkc_007
+  generation_assignment_id: CANARY-40-ASSIGN-MKC_007
+  candidate_kind: general_knowledge_candidate
+  proposed_target_owner: GeneralKnowledgeBase
+  declared_layer: TBox_candidate
+  target_layer_candidate: TBox_candidate
+  allowed_landing_layers:
+  - TBox_candidate
+  - Rule_candidate
+  forbidden_landing_layers:
+  - EvidencePolicy_candidate
+  - ExecutionAssetOutbox_candidate
+  - GovernanceContract_candidate
+  - ABox
+  - TBox_Object
+  - BrandInstance
+  - Product
+  - Store
+  - PersonProfile
+  - KE_truth_source
+  - ServingProjection
+  - RAG
+  - DIFY
+  - CandidatePack
+  source_policy:
+    provenance_class: gpt_generated_canary_draft
+    is_source_anchor: false
+    expert_synthesis_policy: allowed_after_human_review
+    human_review_status: pending
+    source_repo_live_dependency: false
+    external_resources_allowed: false
+  judge_calibration_refs:
+    judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+    positive_gold_case_id: GRC-P001-MKC007-POS-001
+    case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+  gold_reference_case_refs:
+    positive_gold_case_id: GRC-P001-MKC007-POS-001
+    anti_gold_case_id: GRC-P001-MKC007-ANTI-001
+    borderline_repair_case_id: GRC-P001-MKC007-BDR-001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  anti_gold_avoidance_refs:
+    anti_gold_case_id: GRC-P001-MKC007-ANTI-001
+    failure_codes_to_avoid:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-101_GENERIC_ORIGIN_MYTH
+  do_not_copy_surface_style_refs:
+    policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+    rules:
+    - DNC-01
+    - DNC-02
+    - DNC-03
+    - DNC-04
+  body_proposition_refs:
+  - CANARY-40-RB-001#mechanism_01
+  - CANARY-40-RB-001#mechanism_02
+  - CANARY-40-RB-001#mechanism_03
+  - CANARY-40-RB-001#mechanism_04
+  rich_body_ref: canary_rich_body_blocks.v0.1.yaml#CANARY-40-RB-001
+  relation_candidate_refs:
+  - CANARY-40-001-REL-01
+  - CANARY-40-001-REL-02
+  - CANARY-40-001-REL-03
+  - CANARY-40-001-REL-04
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+  generation_status: gpt_generated_structured_draft
+- canary_id: CANARY-40-015
+  source_task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+  canonical_cluster_id: mkc_021
+  generation_assignment_id: CANARY-40-ASSIGN-MKC_021
+  candidate_kind: evidence_policy_candidate
+  proposed_target_owner: GeneralKnowledgeBase
+  declared_layer: EvidencePolicy_candidate
+  target_layer_candidate: EvidencePolicy_candidate
+  allowed_landing_layers:
+  - EvidencePolicy_candidate
+  forbidden_landing_layers:
+  - GeneralKnowledgeBase
+  - ABox
+  - TBox_Object
+  - BrandInstance
+  - Product
+  - Store
+  - PersonProfile
+  - KE_truth_source
+  - ServingProjection
+  - RAG
+  - DIFY
+  - CandidatePack
+  source_policy:
+    provenance_class: gpt_generated_canary_draft
+    is_source_anchor: false
+    expert_synthesis_policy: allowed_after_human_review
+    human_review_status: pending
+    source_repo_live_dependency: false
+    external_resources_allowed: false
+  judge_calibration_refs:
+    judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+    positive_gold_case_id: GRC-P0-03-MKC021-POS-001
+    case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+  gold_reference_case_refs:
+    positive_gold_case_id: GRC-P0-03-MKC021-POS-001
+    anti_gold_case_id: GRC-P0-03-MKC021-ANTI-001
+    borderline_repair_case_id: GRC-P0-03-MKC021-BDR-001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  anti_gold_avoidance_refs:
+    anti_gold_case_id: GRC-P0-03-MKC021-ANTI-001
+    failure_codes_to_avoid:
+    - GRC-P0-03-F005_COMPARISON_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+  do_not_copy_surface_style_refs:
+    policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+    rules:
+    - DNC-01
+    - DNC-02
+    - DNC-03
+    - DNC-04
+  body_proposition_refs:
+  - CANARY-40-RB-015#mechanism_01
+  - CANARY-40-RB-015#mechanism_02
+  - CANARY-40-RB-015#mechanism_03
+  - CANARY-40-RB-015#mechanism_04
+  rich_body_ref: canary_rich_body_blocks.v0.1.yaml#CANARY-40-RB-015
+  relation_candidate_refs:
+  - CANARY-40-015-REL-01
+  - CANARY-40-015-REL-02
+  - CANARY-40-015-REL-03
+  - CANARY-40-015-REL-04
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+  generation_status: gpt_generated_structured_draft
+rich_bodies:
+- rich_body_id: CANARY-40-RB-001
+  canary_id: CANARY-40-001
+  canonical_cluster_id: mkc_007
+  cluster_title: 企业叙事骨架
+  body_form: full_rich_body
+  body: 企业叙事骨架要先回答“这家企业在替谁解决什么问题”，把问题场景确定成叙事的起点，而不是从口号或成立年份写起。举个具体例子，一段内容若从“怎么把控交期”这一问题场景切入，就比从“成立于哪一年”切入更容易接上后面的做法与证明，起点选错，后面几层都会悬空。问题场景确定之后，才展开长期采用的组织性做法：它在选料、排产、协作分工上做了哪些反复出现的选择，这些选择构成可复述的经营方法。方法之后要预留证明位，供应链、组织结构、过程记录各留一个可后续填充的槽位，暂时没有材料时保持空槽而不去编造。最后把方法与证明转译成对外可感知的价值表达，并按系列轴拆成可重复的叙事单元，让同一套骨架能派生出多条内容而不互相重复。这套骨架在企业确有稳定做法可讲时成立；若只有一次性事件或临时活动，则它失效，应降级为普通信息条目而不是硬撑成叙事。守住一条线：通用做法不能写成某一时点的经营成果或市场地位，凡触及规模、份额、增长这类硬结论，必须先有官方资料，缺材料时把该句挂起为待补，正文只留方法层。
+  body_char_count: 434
+  min_body_chars_standard: 350
+  min_body_chars_met: true
+  cluster_specific_mechanism_chain:
+  - problem_domain -> operating_method
+  - operating_method -> proof_slot
+  - proof_slot -> value_expression
+  - value_expression -> series_axis
+  domain_anchors:
+  - 货品结构
+  - 面料取舍
+  - 版型稳定性
+  - 系列一致性
+  - 门店解释难度
+  - 顾客选择成本
+  - 复核节点
+  expected_body_topics_covered:
+  - 企业所回应的问题场景
+  - 组织性方法与长期选择
+  - 供应链 / 组织 / 过程证明的预留槽位
+  - 价值表达与可观察差异
+  epistemic_split:
+    observation_layer: 只描述可观察的结构、材质、动作与画面线索
+    method_layer: 解释可复用的判断机制与顺序
+    boundary_layer: 对效果/性能/身体结果等硬结论设边界
+    downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+  hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+  governance_text_in_body: false
+  gold_body_surface_copied: false
+- rich_body_id: CANARY-40-RB-015
+  canary_id: CANARY-40-015
+  canonical_cluster_id: mkc_021
+  cluster_title: 同类比较维度与禁比边界
+  body_form: claim_boundary_body
+  body: 同类比较维度与禁比边界要回答“两件同类商品，哪些能比、哪些不能比、比不出来的怎么办”。比如两条同类裤子，版型几何差异可以直接比，但“哪条更耐穿”需要检测支撑，缺数据时就在该维度标一个“此项未知”，而不是凭手感给结论。可比的一般是可观察且口径一致的维度：结构差异、材质类别、工艺可见度、覆盖或版型的几何特征，这些放在一起比较不会误导。不可直接比较的是需要检测或长期使用才能判定的维度：耐久、保暖、功能强弱，以及任何“谁更显瘦、谁更高档”的主观结果。比较时若某一维度缺乏可核验数据，应当显式标出“此项未知”，而不是用印象填补。判断何时必须要证据：当读者可能据比较结论做出与效果、性能相关的决定时，就要求证据到位，否则只呈现可见差异并注明未知项。两件商品确属同类且信息对称时才适用；跨品类或信息不对称的强行对比不适用。这一簇的输出是一份关于“证据够不够”的判断依据：无证据的优劣一律降级为观察加未知标注，涉及性能与效果的比较全部挂为待补证据，绝不并入普通领域说明。
+  body_char_count: 429
+  min_body_chars_standard: 350
+  min_body_chars_met: true
+  cluster_specific_mechanism_chain:
+  - comparison_dimension -> allowed_observation
+  - comparison_dimension -> prohibited_effect_claim
+  - unknown_comparison_item -> downgrade_expression
+  - comparative_superiority -> source_required_claim
+  domain_anchors:
+  - 长度
+  - 厚薄
+  - 版型
+  - 可见工艺
+  - 使用场景
+  expected_body_topics_covered:
+  - 同类之间可比的维度
+  - 不可直接比较的维度
+  - 比较时如何显示未知项
+  - 何时必须触发 source gap
+  epistemic_split:
+    observation_layer: 只描述可观察的结构、材质、动作与画面线索
+    method_layer: 解释可复用的判断机制与顺序
+    boundary_layer: 对效果/性能/身体结果等硬结论设边界
+    downgrade_path: 无证据的硬结论回收为观察或挂为待补来源
+  hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+  governance_text_in_body: false
+  gold_body_surface_copied: false
+relations:
+- relation_id: CANARY-40-001-REL-01
+  canary_id: CANARY-40-001
+  canonical_cluster_id: mkc_007
+  relation_from: problem_domain
+  relation_to: operating_method
+  relation_hint: problem_domain -> operating_method
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-001-REL-02
+  canary_id: CANARY-40-001
+  canonical_cluster_id: mkc_007
+  relation_from: operating_method
+  relation_to: proof_slot
+  relation_hint: operating_method -> proof_slot
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-001-REL-03
+  canary_id: CANARY-40-001
+  canonical_cluster_id: mkc_007
+  relation_from: proof_slot
+  relation_to: value_expression
+  relation_hint: proof_slot -> value_expression
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-001-REL-04
+  canary_id: CANARY-40-001
+  canonical_cluster_id: mkc_007
+  relation_from: value_expression
+  relation_to: series_axis
+  relation_hint: value_expression -> series_axis
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-015-REL-01
+  canary_id: CANARY-40-015
+  canonical_cluster_id: mkc_021
+  relation_from: comparison_dimension
+  relation_to: allowed_observation
+  relation_hint: comparison_dimension -> allowed_observation
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-015-REL-02
+  canary_id: CANARY-40-015
+  canonical_cluster_id: mkc_021
+  relation_from: comparison_dimension
+  relation_to: prohibited_effect_claim
+  relation_hint: comparison_dimension -> prohibited_effect_claim
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-015-REL-03
+  canary_id: CANARY-40-015
+  canonical_cluster_id: mkc_021
+  relation_from: unknown_comparison_item
+  relation_to: downgrade_expression
+  relation_hint: unknown_comparison_item -> downgrade_expression
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+- relation_id: CANARY-40-015-REL-04
+  canary_id: CANARY-40-015
+  canonical_cluster_id: mkc_021
+  relation_from: comparative_superiority
+  relation_to: source_required_claim
+  relation_hint: comparative_superiority -> source_required_claim
+  relation_status: design_hint_not_ontology_edge
+  formal_ontology_edge_allowed: 'False'
+  ontology_edge_created: 'False'
+  human_review_required_for_relation: 'True'
+manifest:
+  canary_generation_authorized_for_this_task_only: true
+  global_generation_allowed: false
+  generation_3600_unlocked: false
+  external_resources_allowed: false
+  embedding_allowed: false
+  web_access_allowed: false
+  source_repo_live_dependency: false
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+  object_count: 0
+  evidence_policy_mapped_to_gkb_count: 0
+ledger_steps:
+- step_id: P1
+  task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+  status: DONE
+- step_id: P2
+  task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  status: DONE
+- step_id: P3
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  status: DONE
+- step_id: P4
+  task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+  status: DONE
+- step_id: P5
+  task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+  status: NEXT
+- step_id: P6
+  task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+  status: PLANNED_BLOCKED_BY_P5
+- step_id: P7
+  task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+  status: PLANNED_BLOCKED_BY_P6
+- step_id: P8
+  task_id: reserved_not_executable
+  status: RESERVED_NOT_EXECUTABLE
+fs_state:
+  forbidden_present: []
+  three600_created: false
+  candidatepack_created: false

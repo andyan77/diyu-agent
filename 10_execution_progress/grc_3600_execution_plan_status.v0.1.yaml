@@ -1,12 +1,19 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  updated_by_task: GKB-CANARY-40-GENERATION-AND-GATE-001
   roadmap_authority: founder_approved_2026-07-08
   route_authority_for_grc_sequence:
     primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
     project_infra_current_workspace_status: legacy_status_read_only_for_this_sequence
     current_workspace_status_route_stale_known: true
     checker_must_use_execution_progress_ledger_for_P1_to_P8_route: true
+  canary_p4_route_note:
+    p4_pass_unlocks_only: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+    three600_microbatch_task: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    three600_must_not_be_next_after_p4: true
+    three600_stays_blocked_until: P5_founder_quality_review_closeout
+    rationale: canary machine-gate green is not a 3600 unlock; founder quality review (P5) gates 3600.
+    applied_from: codex_prompt_pre_review_required_note_1
   generation_unlocked: false
   readiness:
     candidatepack_ready: false
@@ -101,44 +108,54 @@ grc_3600_execution_plan_status:
     - production_ready
   - step_id: P4
     task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+    status: DONE
+    head_before: 46927856bc04222a3188aab6120acf823fc59c6c
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: generate exactly 40 controlled canary drafts (one per formal cluster mkc_007..mkc_046) as gpt_generated_structured_draft + run canary gate (schema/judge/owner-layer/route/style-copy/dedupe/readiness) + reports
+    standard_validation: check_canary_40_generation_and_gate.py live+selftest PASS; python -O fail-closed; P1+P2+P3+contract-lock checkers still PASS; 40/40 coverage; owner routing matches gold; readiness all false; no 3600/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 06_canary_runs/canary_40_001/**
+    - ci/checkers/check_canary_40_generation_and_gate.py
+    - ci/fixtures/canary_40_generation_and_gate/**
+    blocked_by: []
+    next_unlocked: P5
+    readiness_claims_allowed:
+    - canary_40_generated
+    - canary_40_machine_gated
+    - ready_for_canary_40_quality_review
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P5
+    task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
     status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: canary 40 generation + gate (executable now that P3 is DONE, under its own brief + authorization)
-    standard_validation: to_be_defined_at_P4_brief
-    deliverables:
-    - to_be_defined_at_P4_brief
-    blocked_by: []
-    next_unlocked: P5
-    readiness_claims_allowed: []
-    readiness_claims_forbidden:
-    - generation_3600_unlocked
-    - candidatepack_ready
-  - step_id: P5
-    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
-    status: PLANNED_BLOCKED_BY_P4
-    head_before: null
-    head_after: null
-    worktree_after: null
-    objective: 3600 structured draft microbatch generation (planned; executable only after P4)
+    objective: founder quality review of the 40 canary drafts + closeout decision (accept as training positives or route back); the ONLY step unlocked by P4 PASS. 3600 stays blocked.
     standard_validation: to_be_defined_at_P5_brief
     deliverables:
     - to_be_defined_at_P5_brief
-    blocked_by:
-    - P4
+    blocked_by: []
     next_unlocked: P6
     readiness_claims_allowed: []
     readiness_claims_forbidden:
     - generation_3600_unlocked
+    - global_generation_allowed
     - candidatepack_ready
   - step_id: P6
-    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
     status: PLANNED_BLOCKED_BY_P5
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P5)
+    objective: 3600 structured draft microbatch generation (planned; executable only after P5 founder quality review closeout; NOT unlocked by P4)
     standard_validation: to_be_defined_at_P6_brief
     deliverables:
     - to_be_defined_at_P6_brief
@@ -150,21 +167,22 @@ grc_3600_execution_plan_status:
     - generation_3600_unlocked
     - candidatepack_ready
   - step_id: P7
-    task_id: reserved_not_executable
-    status: RESERVED_NOT_EXECUTABLE
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: PLANNED_BLOCKED_BY_P6
     head_before: null
     head_after: null
     worktree_after: null
-    objective: reserved (objective TBD by founder)
-    standard_validation: reserved
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P6)
+    standard_validation: to_be_defined_at_P7_brief
     deliverables:
-    - reserved
+    - to_be_defined_at_P7_brief
     blocked_by:
     - P6
     next_unlocked: P8
     readiness_claims_allowed: []
     readiness_claims_forbidden:
-    - generation_unlocked
+    - generation_3600_unlocked
+    - candidatepack_ready
   - step_id: P8
     task_id: reserved_not_executable
     status: RESERVED_NOT_EXECUTABLE

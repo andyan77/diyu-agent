@@ -1,0 +1,32 @@
+{
+  "task_id": "GKB-CANARY-40-GENERATION-AND-GATE-001",
+  "run_id": "canary_40_001",
+  "schema_version": "v0.1",
+  "actual_total": 40,
+  "cluster_range": "mkc_007..mkc_046",
+  "owner_distribution": {
+    "GeneralKnowledgeBase": 25,
+    "EvidencePolicyOutbox": 5,
+    "ExecutionAssetOutbox": 6,
+    "GovernanceOutbox": 4
+  },
+  "candidate_kind_distribution": {
+    "general_knowledge_candidate": 25,
+    "evidence_policy_candidate": 5,
+    "execution_asset_outbox_candidate": 6,
+    "governance_outbox_candidate": 4
+  },
+  "generation_status_uniform": "gpt_generated_structured_draft",
+  "canary_generation_authorized_for_this_task_only": true,
+  "global_generation_allowed": false,
+  "generation_3600_unlocked": false,
+  "external_resources_allowed": false,
+  "embedding_allowed": false,
+  "web_access_allowed": false,
+  "source_repo_live_dependency": false,
+  "object_count": 0,
+  "readiness_all_false": true,
+  "min_body_chars": 380,
+  "max_gold_surface_lcs": 12,
+  "max_cross_cluster_lcs": 14
+}

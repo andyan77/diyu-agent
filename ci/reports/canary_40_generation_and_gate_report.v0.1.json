@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "task_id": "GKB-CANARY-40-GENERATION-AND-GATE-001",
+  "run": "06_canary_runs/canary_40_001",
+  "canary_total": 40,
+  "cluster_coverage": "mkc_007..mkc_046",
+  "per_cluster_exactly_one": true,
+  "owner_distribution": {
+    "GeneralKnowledgeBase": 25,
+    "EvidencePolicyOutbox": 5,
+    "ExecutionAssetOutbox": 6,
+    "GovernanceOutbox": 4
+  },
+  "evidence_policy_owner_cases": 5,
+  "evidence_policy_mapped_to_gkb": 0,
+  "generation_status_all_gpt_generated_structured_draft": true,
+  "prior_checkers": {
+    "p1_corpus": 0,
+    "p2_alignment": 0,
+    "p3_judge_calibration": 0,
+    "contract_lock": 0
+  },
+  "readiness_all_false": true,
+  "generation_3600_unlocked": false,
+  "global_generation_allowed": false,
+  "canary_generation_authorized_for_this_task_only": true,
+  "p5_review_closeout_unlocked": true,
+  "three600_task_not_next": true,
+  "recommended_next_step": "GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001",
+  "error_count": 0,
+  "errors": []
+}
