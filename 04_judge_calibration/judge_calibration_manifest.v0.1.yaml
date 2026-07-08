@@ -1,0 +1,25 @@
+judge_calibration_manifest:
+  manifest_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  formal_120_total: 120
+  positive_gold: 40
+  anti_gold: 40
+  borderline_repair: 40
+  p0_00_total: 18
+  evidence_policy_outbox_cases: 15
+  expert_review_batches_indexed: 13
+  all_registered_case_ids_unique: true
+  ready_for_canary_40_execution: true
+  generation_3600_unlocked: false
+  object_count: 0
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

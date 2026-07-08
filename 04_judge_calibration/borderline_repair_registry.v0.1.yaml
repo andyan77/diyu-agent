@@ -1,0 +1,367 @@
+borderline_repair_registry:
+  registry_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  role: repair calibration fixtures
+  count: 40
+  expected_judge_result: accept_with_minor_fix_or_repair_required
+  eval_only: true
+  cases:
+  - case_id: GRC-P001-MKC007-BDR-001
+    cluster_id: mkc_007
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留问题—方法—证明链，把多年积累和用户认可改为仅在有依据时使用。
+    repair_refs:
+    - borderline_repair_mkc_007
+    - GRCF-107_ORGANIZATIONAL_METHOD_REPAIR
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC008-BDR-001
+    cluster_id: mkc_008
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 把强结论改为处理意识、取舍依据或待补依据问题。
+    repair_refs:
+    - borderline_repair_mkc_008
+    - GRCF-108_SOURCE_REQUIRED_VALUE_REPAIR
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC009-BDR-001
+    cluster_id: mkc_009
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留选择过程弧线，把长期坚持和行业见证降级为待补依据问题。
+    repair_refs:
+    - borderline_repair_mkc_009
+    - GRCF-109_SOURCE_REQUIRED_STORY_CLAIM_REPAIR
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC010-BDR-001
+    cluster_id: mkc_010
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留锚点链，把心理推断改为观看顺序、视觉路径或结构变化。
+    repair_refs:
+    - borderline_repair_mkc_010
+    - GRCF-110_AUDIENCE_PSYCHOLOGY_REPAIR
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC011-BDR-001
+    cluster_id: mkc_011
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 为每类风险词补 route_target：删除、降级、补依据、裁决项。
+    repair_refs:
+    - borderline_repair_mkc_011
+    - GRCF-111_RISK_ZONE_DOWNGRADE_REPAIR
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC012-BDR-001
+    cluster_id: mkc_012
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 为每个单元指定唯一证明槽位；没有新证明槽位时合并或停止。
+    repair_refs:
+    - borderline_repair_mkc_012
+    - GRCF-112_SERIES_PROOF_CADENCE_REPAIR
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P0-02-MKC013-BDR-001
+    cluster_id: mkc_013
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 把身份句改为通用表达功能句；保留角色类型、动作词、观察词和信息深度。
+    repair_refs:
+    - borderline_repair_real_persona_hint
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC014-BDR-001
+    cluster_id: mkc_014
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留语气层级；把证明句改成表达形式、限制语和观察条件。
+    repair_refs:
+    - borderline_repair_tone_as_proof
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC015-BDR-001
+    cluster_id: mkc_015
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 删除组织链动词，替换为提供信息、限制表达、改变视角、调整颗粒度。
+    repair_refs:
+    - borderline_repair_org_like_relation
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC016-BDR-001
+    cluster_id: mkc_016
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 把可见陈列变化留在正文，把运营安排移动到不能公开或待补依据类别。
+    repair_refs:
+    - borderline_repair_private_ops_boundary
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC017-BDR-001
+    cluster_id: mkc_017
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 把心理推测改为信息需求、术语密度、解释顺序和替代方案。
+    repair_refs:
+    - borderline_repair_audience_psychology
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC018-BDR-001
+    cluster_id: mkc_018
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留温度层级；把信任结论改成表达功能、限制语或待补依据。
+    repair_refs:
+    - borderline_repair_trust_overclaim
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC019-BDR-001
+    cluster_id: mkc_019
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 把半授权句改为表达口吻或观察位置；删除真实身份与代表关系。
+    repair_refs:
+    - borderline_repair_deauthorization
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-03-MKC020-BDR-001
+    cluster_id: mkc_020
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC021-BDR-001
+    cluster_id: mkc_021
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC022-BDR-001
+    cluster_id: mkc_022
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC023-BDR-001
+    cluster_id: mkc_023
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC024-BDR-001
+    cluster_id: mkc_024
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC025-BDR-001
+    cluster_id: mkc_025
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC026-BDR-001
+    cluster_id: mkc_026
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC027-BDR-001
+    cluster_id: mkc_027
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC028-BDR-001
+    cluster_id: mkc_028
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC029-BDR-001
+    cluster_id: mkc_029
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-04-MKC030-BDR-001
+    cluster_id: mkc_030
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_030
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC031-BDR-001
+    cluster_id: mkc_031
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_031
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC032-BDR-001
+    cluster_id: mkc_032
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_032
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC033-BDR-001
+    cluster_id: mkc_033
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_033
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC034-BDR-001
+    cluster_id: mkc_034
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_034
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC035-BDR-001
+    cluster_id: mkc_035
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_035
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC036-BDR-001
+    cluster_id: mkc_036
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_036
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC037-BDR-001
+    cluster_id: mkc_037
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_037
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC038-BDR-001
+    cluster_id: mkc_038
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+    repair_refs:
+    - borderline_repair_mkc_038
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+    cluster_id: mkc_039
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留角色槽位；把购买理由改成叙事功能，把结果承诺改成观察语言。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+    cluster_id: mkc_040
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留一项动作；改为观察、保存、对照、询问条件等非硬卖动作。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+    cluster_id: mkc_041
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 替换为抽象阶段族，并删除经营处置含义。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+    cluster_id: mkc_042
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 把渠道策略词改为信息删减规则和入口差异。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+    cluster_id: mkc_043
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 改写为动作条件、结构观察和不适配边界。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    cluster_id: mkc_044
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 保留教育步骤，结果类句子改为说明、观察或需额外来源支持。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+    cluster_id: mkc_045
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 改回 relation grammar 和拍摄线索，删除执行系统化表述。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+    cluster_id: mkc_046
+    case_type: borderline_repair
+    expected_judge_result: accept_with_minor_fix
+    repair_reason: 改写为 relation hint、routing hint、ownership hint 和 strictest-wins note。
+    repair_refs: []
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

@@ -1,0 +1,194 @@
+control_plane_calibration_registry:
+  registry_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  role: P0-00 control plane calibration fixtures
+  count: 18
+  formal_120_included: false
+  clusters: mkc_001..mkc_006
+  eval_only: true
+  cases:
+  - case_id: GRC-P0-00-MKC001-POS-001
+    cluster_id: mkc_001
+    control_case_type: positive_control_gold
+    expected_judge_result: accept_control_policy_candidate
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC001-ANTI-001
+    cluster_id: mkc_001
+    control_case_type: anti_control_gold
+    expected_judge_result: reject_control_policy_misrouting
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC001-BDR-001
+    cluster_id: mkc_001
+    control_case_type: borderline_control_repair
+    expected_judge_result: control_policy_repair_required
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC002-POS-001
+    cluster_id: mkc_002
+    control_case_type: positive_control_gold
+    expected_judge_result: accept_control_policy_candidate
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC002-ANTI-001
+    cluster_id: mkc_002
+    control_case_type: anti_control_gold
+    expected_judge_result: reject_control_policy_misrouting
+    storage_target: GeneralKnowledgeBase
+    control_plane_failure_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC002-BDR-001
+    cluster_id: mkc_002
+    control_case_type: borderline_control_repair
+    expected_judge_result: control_policy_repair_required
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC003-POS-001
+    cluster_id: mkc_003
+    control_case_type: positive_control_gold
+    expected_judge_result: accept_control_policy_candidate
+    storage_target: EvidencePolicyOutbox
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC003-ANTI-001
+    cluster_id: mkc_003
+    control_case_type: anti_control_gold
+    expected_judge_result: reject_control_policy_misrouting
+    storage_target: GeneralKnowledgeBase
+    control_plane_failure_codes:
+    - F05_WRONG_OWNER_ROUTING
+    - F15_UNSUPPORTED_PERFORMANCE_CLAIM
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC003-BDR-001
+    cluster_id: mkc_003
+    control_case_type: borderline_control_repair
+    expected_judge_result: control_policy_repair_required
+    storage_target: EvidencePolicyOutbox
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC004-POS-001
+    cluster_id: mkc_004
+    control_case_type: positive_control_gold
+    expected_judge_result: accept_control_policy_candidate
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC004-ANTI-001
+    cluster_id: mkc_004
+    control_case_type: anti_control_gold
+    expected_judge_result: reject_control_policy_misrouting
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F10_READINESS_DRIFT
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC004-BDR-001
+    cluster_id: mkc_004
+    control_case_type: borderline_control_repair
+    expected_judge_result: control_policy_repair_required
+    storage_target: ControlPlaneContractSource
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC005-POS-001
+    cluster_id: mkc_005
+    control_case_type: positive_control_gold
+    expected_judge_result: accept_control_policy_candidate
+    storage_target: GovernanceOutbox
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC005-ANTI-001
+    cluster_id: mkc_005
+    control_case_type: anti_control_gold
+    expected_judge_result: reject_control_policy_misrouting
+    storage_target: GovernanceOutbox
+    control_plane_failure_codes:
+    - F19_UNAUTHORIZED_SCENARIO_AXIS
+    - F05_WRONG_OWNER_ROUTING
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC005-BDR-001
+    cluster_id: mkc_005
+    control_case_type: borderline_control_repair
+    expected_judge_result: control_policy_repair_required
+    storage_target: GovernanceOutbox
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC006-POS-001
+    cluster_id: mkc_006
+    control_case_type: positive_control_gold
+    expected_judge_result: accept_control_policy_candidate
+    storage_target: GovernanceOutbox
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC006-ANTI-001
+    cluster_id: mkc_006
+    control_case_type: anti_control_gold
+    expected_judge_result: reject_control_policy_misrouting
+    storage_target: GovernanceOutbox
+    control_plane_failure_codes:
+    - F10_READINESS_DRIFT
+    - F18_SOURCE_MAP_AS_KNOWLEDGE
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  - case_id: GRC-P0-00-MKC006-BDR-001
+    cluster_id: mkc_006
+    control_case_type: borderline_control_repair
+    expected_judge_result: control_policy_repair_required
+    storage_target: GovernanceOutbox
+    control_plane_failure_codes: []
+    repair_reason: ''
+    source_normalized_path: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/p0_00_control_plane/p0_00_18_control_gold_cases.yaml@sha256:4c4f8dcc5e59edfbd04e365a73dfb779a9f4c36665c260305ce063347c5fd7fa
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

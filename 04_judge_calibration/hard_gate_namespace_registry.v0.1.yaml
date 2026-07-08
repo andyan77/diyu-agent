@@ -1,0 +1,48 @@
+hard_gate_namespace_registry:
+  registry_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  role: canonical hard gate id namespace for GRC judge calibration
+  eval_only: true
+  ontology_truth: false
+  canonical_namespace: HG-###
+  source_trace:
+    source_kind: formal_gold_reference_batch_manifest
+    source_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/batch_manifest.yaml
+    source_field: metadata_contract.hard_gate_id_namespace.canonical_gate_ids
+  gates:
+  - gate_id: HG-001
+    name: cluster_specific_mechanism
+    hard_gate: true
+  - gate_id: HG-002
+    name: no_template_reuse
+    hard_gate: true
+  - gate_id: HG-003
+    name: no_governance_text_in_body
+    hard_gate: true
+  - gate_id: HG-004
+    name: owner_storage_artifact_alignment
+    hard_gate: true
+  - gate_id: HG-005
+    name: epistemic_label_alignment
+    hard_gate: true
+  - gate_id: HG-006
+    name: relation_hint_boundary
+    hard_gate: true
+  - gate_id: HG-007
+    name: readiness_false_lock
+    hard_gate: true
+  - gate_id: HG-008
+    name: brand_instance_pollution
+    hard_gate: true
+  output_rule:
+    expected_hard_gates_must_use_canonical_ids_only: true
+    forbid_dynamic_gate_name_keys: true
+    forbid_legacy_numeric_aliases: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

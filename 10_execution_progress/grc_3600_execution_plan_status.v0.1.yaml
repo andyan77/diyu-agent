@@ -1,7 +1,12 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  updated_by_task: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
   roadmap_authority: founder_approved_2026-07-08
+  route_authority_for_grc_sequence:
+    primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+    project_infra_current_workspace_status: legacy_status_read_only_for_this_sequence
+    current_workspace_status_route_stale_known: true
+    checker_must_use_execution_progress_ledger_for_P1_to_P8_route: true
   generation_unlocked: false
   readiness:
     candidatepack_ready: false
@@ -67,41 +72,52 @@ grc_3600_execution_plan_status:
     - production_ready
   - step_id: P3
     task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+    status: DONE
+    head_before: 9e590c287dfbf9f5f6401f6f687bb3c95bd2c1f9
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: land judge calibration registries (positive/anti/borderline/control/failure_code/hard_gate/expert_index/creative/do_not_copy) + judge calibration checker
+    standard_validation: check_judge_calibration_against_grc.py live+selftest PASS; python -O fail-closed; P1+P2+contract-lock checkers still PASS
+    deliverables:
+    - 04_judge_calibration/**
+    - ci/checkers/check_judge_calibration_against_grc.py
+    - ci/fixtures/judge_calibration_against_grc/**
+    blocked_by: []
+    next_unlocked: P4
+    readiness_claims_allowed:
+    - judge_calibration_registry_landed
+    - failure_code_registry_landed
+    - hard_gate_namespace_registry_landed
+    - p0_00_control_plane_judge_ready
+    - formal_120_judge_ready
+    - ready_for_canary_40_execution
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - generation_3600_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P4
+    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
     status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: land strict judge calibration checker consuming formal_120 + P0-00 + 15 evidence fixtures
-    standard_validation: to_be_defined_at_P3_brief
-    deliverables:
-    - to_be_defined_at_P3_brief
-    blocked_by: []
-    next_unlocked: P4
-    readiness_claims_allowed:
-    - judge_calibration_checker_landed
-    readiness_claims_forbidden:
-    - generation_unlocked
-    - candidatepack_ready
-  - step_id: P4
-    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
-    status: BLOCKED_BY_P3
-    head_before: null
-    head_after: null
-    worktree_after: null
-    objective: canary 40 generation + gate (planned; executable only after P3)
+    objective: canary 40 generation + gate (executable now that P3 is DONE, under its own brief + authorization)
     standard_validation: to_be_defined_at_P4_brief
     deliverables:
     - to_be_defined_at_P4_brief
-    blocked_by:
-    - P3
+    blocked_by: []
     next_unlocked: P5
     readiness_claims_allowed: []
     readiness_claims_forbidden:
-    - generation_unlocked
+    - generation_3600_unlocked
     - candidatepack_ready
   - step_id: P5
     task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
-    status: BLOCKED_BY_P4
+    status: PLANNED_BLOCKED_BY_P4
     head_before: null
     head_after: null
     worktree_after: null
@@ -114,11 +130,11 @@ grc_3600_execution_plan_status:
     next_unlocked: P6
     readiness_claims_allowed: []
     readiness_claims_forbidden:
-    - generation_unlocked
+    - generation_3600_unlocked
     - candidatepack_ready
   - step_id: P6
     task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
-    status: BLOCKED_BY_P5
+    status: PLANNED_BLOCKED_BY_P5
     head_before: null
     head_after: null
     worktree_after: null
@@ -131,11 +147,11 @@ grc_3600_execution_plan_status:
     next_unlocked: P7
     readiness_claims_allowed: []
     readiness_claims_forbidden:
-    - generation_unlocked
+    - generation_3600_unlocked
     - candidatepack_ready
   - step_id: P7
     task_id: reserved_not_executable
-    status: BLOCKED_BY_P6
+    status: RESERVED_NOT_EXECUTABLE
     head_before: null
     head_after: null
     worktree_after: null
@@ -151,7 +167,7 @@ grc_3600_execution_plan_status:
     - generation_unlocked
   - step_id: P8
     task_id: reserved_not_executable
-    status: BLOCKED_BY_P7
+    status: RESERVED_NOT_EXECUTABLE
     head_before: null
     head_after: null
     worktree_after: null

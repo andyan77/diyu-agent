@@ -190,8 +190,11 @@ def validate_alignment_model(m: dict[str, Any]) -> list[str]:
         e.append("execution ledger P1 status must be DONE")
     p2 = m.get("ledger_p2_status")
     p3 = m.get("ledger_p3_status")
-    if p2 == "DONE" and p3 != "NEXT":
-        e.append("ledger P2 DONE requires P3 = NEXT")
+    # Robust roadmap-advancement rule: once P2 is DONE, P3 must be UNBLOCKED
+    # (NEXT or already advanced to DONE/beyond) — not asserted to be exactly NEXT,
+    # which would break the moment the roadmap frontier moves past P3.
+    if p2 == "DONE" and p3 in (None, "BLOCKED_BY_P2"):
+        e.append("ledger P2 DONE requires P3 unblocked (NEXT or advanced)")
     if p2 == "BLOCKED" and p3 != "BLOCKED_BY_P2":
         e.append("ledger P2 BLOCKED requires P3 = BLOCKED_BY_P2")
     if p2 not in ("DONE", "BLOCKED"):

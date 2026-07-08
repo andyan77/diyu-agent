@@ -1,0 +1,101 @@
+{
+  "task_id": "GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001",
+  "task_category": "judge_calibration_registry + failure_code_registry + checker",
+  "repo_after": {
+    "branch": "master",
+    "head_before": "9e590c287dfbf9f5f6401f6f687bb3c95bd2c1f9",
+    "head_after": "recorded_in_git_log_for_this_commit",
+    "worktree_after": "clean"
+  },
+  "files_written": {
+    "added": [
+      "04_judge_calibration/ (README + 12 registries/policies/manifest)",
+      "ci/checkers/check_judge_calibration_against_grc.py",
+      "ci/fixtures/judge_calibration_against_grc/ (positive + 11 negatives)",
+      "ci/reports/judge_calibration_against_grc_report.v0.1.json",
+      "docs/reports/grc_judge_calibration_checker_landing_report.md",
+      "docs/reports/grc_judge_calibration_checker_landing_receipt.json"
+    ],
+    "modified": [
+      "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+      "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+      "ci/checkers/check_grc_contract_ontology_alignment.py"
+    ],
+    "deleted": []
+  },
+  "p2_checker_protocol_fix": {
+    "finding": "P2 alignment checker hard-coded 'P2 DONE => P3 must be NEXT'; P3 completing (P3->DONE) broke it (snapshot-supersession defect that recurs each step).",
+    "fix": "loosened to 'P2 DONE => P3 unblocked (NEXT or advanced)'; same robust rule applied to P3's own P3->P4 assertion.",
+    "founder_approved_allowed_write_expansion": true,
+    "p3_checker_recomputes_p1_p2_no_subprocess": true
+  },
+  "judge_calibration_counts": {
+    "formal_120_total": 120,
+    "positive_gold": 40,
+    "anti_gold": 40,
+    "borderline_repair": 40,
+    "p0_00_total": 18,
+    "positive_control_gold": 6,
+    "anti_control_gold": 6,
+    "borderline_control_repair": 6,
+    "evidence_policy_outbox_cases": 15,
+    "evidence_mapped_to_general_knowledge_base": 0,
+    "expert_review_indexed": 13,
+    "case_to_judge_rule_map_entries": 138,
+    "creative_metadata_entries": 120
+  },
+  "registry_outputs": {
+    "judge_calibration_registry": "04_judge_calibration/judge_calibration_registry.v0.1.yaml",
+    "failure_code_registry": "04_judge_calibration/failure_code_registry.v0.1.yaml (12 canonical categories)",
+    "hard_gate_namespace_registry": "04_judge_calibration/hard_gate_namespace_registry.v0.1.yaml (HG-001..HG-008)",
+    "creative_inspiration_aesthetic_metadata": "04_judge_calibration/creative_inspiration_aesthetic_metadata.v0.1.yaml (eval_only)",
+    "do_not_copy_surface_style_policy": "04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml"
+  },
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p2_checker_live": "PASS (after robust ledger-rule fix)",
+    "contract_lock_checker_live": "PASS",
+    "p3_checker_live": "PASS",
+    "p3_checker_selftest": "PASS (11/11 negatives fail-closed)",
+    "p3_checker_python_O_fail_closed": "exit_2_fail_closed",
+    "yaml_json_parse": "PASS",
+    "readiness_false": true,
+    "forbidden_scope_clean": true,
+    "exact_stage_only": true
+  },
+  "route_authority": {
+    "execution_progress_ledger_is_primary": true,
+    "current_workspace_status_modified": false,
+    "current_workspace_status_route_stale_known": true
+  },
+  "execution_progress_ledger": {
+    "yaml_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+    "md_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+    "p1_status": "DONE",
+    "p2_status": "DONE",
+    "p3_status": "DONE",
+    "p4_status_after_p3": "NEXT",
+    "p5_status_after_p3": "PLANNED_BLOCKED_BY_P4",
+    "p6_status_after_p3": "PLANNED_BLOCKED_BY_P5",
+    "p7_status_after_p3": "RESERVED_NOT_EXECUTABLE",
+    "p8_status_after_p3": "RESERVED_NOT_EXECUTABLE"
+  },
+  "declared_status": {
+    "judge_calibration_registry_landed": true,
+    "failure_code_registry_landed": true,
+    "hard_gate_namespace_registry_landed": true,
+    "p0_00_control_plane_judge_ready": true,
+    "formal_120_judge_ready": true,
+    "ready_for_canary_40_execution": true,
+    "generation_3600_unlocked": false
+  },
+  "next_real_action_unlocked": ["GKB-CANARY-40-GENERATION-AND-GATE-001"],
+  "must_not_claim": [
+    "generation_3600_unlocked",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ]
+}

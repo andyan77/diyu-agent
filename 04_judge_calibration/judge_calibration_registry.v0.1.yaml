@@ -1,0 +1,35 @@
+judge_calibration_registry:
+  registry_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  registries:
+    positive_gold_registry: 04_judge_calibration/positive_gold_registry.v0.1.yaml
+    anti_gold_fixture_registry: 04_judge_calibration/anti_gold_fixture_registry.v0.1.yaml
+    borderline_repair_registry: 04_judge_calibration/borderline_repair_registry.v0.1.yaml
+    control_plane_calibration_registry: 04_judge_calibration/control_plane_calibration_registry.v0.1.yaml
+    failure_code_registry: 04_judge_calibration/failure_code_registry.v0.1.yaml
+    hard_gate_namespace_registry: 04_judge_calibration/hard_gate_namespace_registry.v0.1.yaml
+    expert_review_13_index: 04_judge_calibration/expert_review_13_index.v0.1.yaml
+    case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+    creative_inspiration_aesthetic_metadata: 04_judge_calibration/creative_inspiration_aesthetic_metadata.v0.1.yaml
+    do_not_copy_surface_style_policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+  verdict_policy:
+    positive_gold: accept_gold_candidate
+    anti_gold: reject_or_blocking_revise
+    borderline_repair: accept_with_minor_fix
+    positive_control_gold: accept_control_policy_candidate
+    anti_control_gold: reject_control_policy_misrouting
+    borderline_control_repair: control_policy_repair_required
+  ready_for_canary_40_execution: true
+  generation_3600_unlocked: false
+  generation_allowed: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

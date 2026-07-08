@@ -1,0 +1,260 @@
+p1_checker_pass: true
+p2_checker_pass: true
+formal_total: 120
+positive_count: 40
+anti_count: 40
+borderline_count: 40
+formal_clusters:
+  mkc_007: 3
+  mkc_008: 3
+  mkc_009: 3
+  mkc_010: 3
+  mkc_011: 3
+  mkc_012: 3
+  mkc_013: 3
+  mkc_014: 3
+  mkc_015: 3
+  mkc_016: 3
+  mkc_017: 3
+  mkc_018: 3
+  mkc_019: 3
+  mkc_020: 3
+  mkc_021: 3
+  mkc_022: 3
+  mkc_023: 3
+  mkc_024: 3
+  mkc_025: 3
+  mkc_026: 3
+  mkc_027: 3
+  mkc_028: 3
+  mkc_029: 3
+  mkc_030: 3
+  mkc_031: 3
+  mkc_032: 3
+  mkc_033: 3
+  mkc_034: 3
+  mkc_035: 3
+  mkc_036: 3
+  mkc_037: 3
+  mkc_038: 3
+  mkc_039: 3
+  mkc_040: 3
+  mkc_041: 3
+  mkc_042: 3
+  mkc_043: 3
+  mkc_044: 3
+  mkc_045: 3
+  mkc_046: 3
+p0_total: 18
+p0_clusters:
+  mkc_001: 3
+  mkc_002: 3
+  mkc_003: 3
+  mkc_004: 3
+  mkc_005: 3
+  mkc_006: 3
+p0_00_included_in_formal: false
+evidence_ids:
+- EV-00
+- EV-01
+- EV-02
+- EV-03
+- EV-04
+- EV-05
+- EV-06
+- EV-07
+- EV-08
+- EV-09
+- EV-10
+- EV-11
+- EV-12
+- EV-13
+- EV-14
+evidence_mapped_gkb_count: 0
+positive_ids:
+- PG-00
+- PG-01
+- PG-02
+- PG-03
+- PG-04
+- PG-05
+- PG-06
+- PG-07
+- PG-08
+- PG-09
+- PG-10
+- PG-11
+- PG-12
+- PG-13
+- PG-14
+- PG-15
+- PG-16
+- PG-17
+- PG-18
+- PG-19
+- PG-20
+- PG-21
+- PG-22
+- PG-23
+- PG-24
+- PG-25
+- PG-26
+- PG-27
+- PG-28
+- PG-29
+- PG-30
+- PG-31
+- PG-32
+- PG-33
+- PG-34
+- PG-35
+- PG-36
+- PG-37
+- PG-38
+- PG-39
+anti_ids:
+- PG-00
+- AG-01
+- AG-02
+- AG-03
+- AG-04
+- AG-05
+- AG-06
+- AG-07
+- AG-08
+- AG-09
+- AG-10
+- AG-11
+- AG-12
+- AG-13
+- AG-14
+- AG-15
+- AG-16
+- AG-17
+- AG-18
+- AG-19
+- AG-20
+- AG-21
+- AG-22
+- AG-23
+- AG-24
+- AG-25
+- AG-26
+- AG-27
+- AG-28
+- AG-29
+- AG-30
+- AG-31
+- AG-32
+- AG-33
+- AG-34
+- AG-35
+- AG-36
+- AG-37
+- AG-38
+- AG-39
+borderline_ids:
+- BR-00
+- BR-01
+- BR-02
+- BR-03
+- BR-04
+- BR-05
+- BR-06
+- BR-07
+- BR-08
+- BR-09
+- BR-10
+- BR-11
+- BR-12
+- BR-13
+- BR-14
+- BR-15
+- BR-16
+- BR-17
+- BR-18
+- BR-19
+- BR-20
+- BR-21
+- BR-22
+- BR-23
+- BR-24
+- BR-25
+- BR-26
+- BR-27
+- BR-28
+- BR-29
+- BR-30
+- BR-31
+- BR-32
+- BR-33
+- BR-34
+- BR-35
+- BR-36
+- BR-37
+- BR-38
+- BR-39
+control_ids:
+- CT-00
+- CT-01
+- CT-02
+- CT-03
+- CT-04
+- CT-05
+- CT-06
+- CT-07
+- CT-08
+- CT-09
+- CT-10
+- CT-11
+- CT-12
+- CT-13
+- CT-14
+- CT-15
+- CT-16
+- CT-17
+anti_without_failure_code: []
+borderline_without_repair: []
+control_anti_without_failure_code: []
+hard_gate_registry_present: true
+hard_gate_count: 8
+failure_registry_categories:
+- no_cluster_specific_mechanism
+- template_reuse
+- governance_text_in_body
+- wrong_owner_routing
+- no_gold_value
+- evidence_policy_owner_mismatch
+- control_plane_mixed_with_domain_body
+- surface_style_copy_risk
+- unsupported_claim_without_evidence
+- real_instance_fact_leak
+- readiness_flag_true
+- candidatepack_or_downstream_materialization_leak
+expert_index_present: true
+expert_batch_count: 13
+expert_has_digest_ref: true
+expert_do_not_rewrite: true
+creative_eval_only: true
+creative_ontology_truth: false
+creative_production_servable: false
+do_not_copy_policy_present: true
+relation_ontology_edge_count: 0
+readiness_flags:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_ready: false
+  generation_allowed: false
+  generation_eligible: false
+  production_servable: false
+  release_ready: false
+  readiness_all_false: true
+generation_3600_unlocked: false
+generated_knowledge_dirs_present: []
+forbidden_dirs_present: []
+ledger_p1: DONE
+ledger_p2: DONE
+ledger_p3: DONE
+ledger_p4: NEXT

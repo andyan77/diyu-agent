@@ -1,0 +1,42 @@
+do_not_copy_surface_style_policy:
+  policy_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  role: prevent downstream generators from copying gold-body surface phrasing
+  eval_only: true
+  ontology_truth: false
+  production_servable: false
+  aesthetic_score_is_not_generation_gate: true
+  source_trace:
+    source_kind: formal_gold_reference_case
+    source_field: codex_usage.{must_copy_logic,must_copy_structure,must_not_copy_phrasing}
+    source_path_glob: 03_grc_goldset_corpus/normalized/formal_120/p0_0*/gold_reference_cases.yaml
+  rules:
+  - id: DNC-01
+    rule: must_preserve_mechanism_and_logic
+    from_corpus_field: codex_usage.must_copy_logic
+    meaning: 下游生成必须保留 cluster-specific 机制链与推理逻辑
+  - id: DNC-02
+    rule: must_not_copy_surface_phrasing
+    from_corpus_field: codex_usage.must_not_copy_phrasing
+    meaning: 不得照抄 gold_body 的句式 / 措辞 / 段落骨架
+  - id: DNC-03
+    rule: structure_reuse_is_optional_not_verbatim
+    from_corpus_field: codex_usage.must_copy_structure
+    meaning: 结构可参考但不得逐句复制（避免 F02_TEMPLATE_REUSE / FC-02）
+  - id: DNC-04
+    rule: abstract_style_word_stack_is_a_repair_signal
+    maps_to_failure_code: FC-08
+    meaning: 高级 / 松弛 / 自然 / 温柔 / 有质感等抽象风格词堆叠触发 surface_style_copy_risk
+  enforcement:
+    judge_metadata_only: true
+    not_written_to_ontology_truth_source: true
+    not_production_servable: true
+    does_not_gate_generation_allowed: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

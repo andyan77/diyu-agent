@@ -1,0 +1,141 @@
+expert_review_13_index:
+  index_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  batch_count: 13
+  source_normalized_path: 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt
+  source_digest_ref: 03_grc_goldset_corpus/normalized/expert_review/expert_review_13_batches.v0.1.txt@sha256:3691babc9ff5d3bc368e5de013edafeb0ddbfbda541d301b4222f7eb040822a5
+  preserve_original_text: true
+  do_not_rewrite_judgments: true
+  role:
+  - failure taxonomy source
+  - anti-gold source
+  - reviewer calibration source
+  - not domain knowledge source
+  batches:
+  - index: 1
+    batch_id: 01_first_cross_type_pilot
+    line_start: 1
+    line_end: 825
+    dominant_failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F02_TEMPLATE_REUSE
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F05_WRONG_OWNER_ROUTING
+    - F16_NO_GOLD_VALUE
+    do_not_rewrite_original_judgments: true
+  - index: 2
+    batch_id: 02_semantic_regen_v2
+    line_start: 826
+    line_end: 1483
+    dominant_failure_codes:
+    - F02_TEMPLATE_REUSE
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F05_WRONG_OWNER_ROUTING
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    do_not_rewrite_original_judgments: true
+  - index: 3
+    batch_id: 03_semantic_v3
+    line_start: 1484
+    line_end: 2117
+    dominant_failure_codes:
+    - F02_TEMPLATE_REUSE
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F05_WRONG_OWNER_ROUTING
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    do_not_rewrite_original_judgments: true
+  - index: 4
+    batch_id: 04_semantic_v4
+    line_start: 2118
+    line_end: 2465
+    dominant_failure_codes:
+    - F02_TEMPLATE_REUSE
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F07_INDEX_SHELL
+    - F08_BOUNDARY_ONLY_BODY
+    do_not_rewrite_original_judgments: true
+  - index: 5
+    batch_id: 05_semantic_v4_1
+    line_start: 2466
+    line_end: 2874
+    dominant_failure_codes:
+    - F02_TEMPLATE_REUSE
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F05_WRONG_OWNER_ROUTING
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    do_not_rewrite_original_judgments: true
+  - index: 6
+    batch_id: 06_semantic_v4_2
+    line_start: 2875
+    line_end: 3357
+    dominant_failure_codes:
+    - F05_WRONG_OWNER_ROUTING
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  - index: 7
+    batch_id: 07_semantic_v4_3
+    line_start: 3358
+    line_end: 3841
+    dominant_failure_codes:
+    - F05_WRONG_OWNER_ROUTING
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  - index: 8
+    batch_id: 08_semantic_v4_4
+    line_start: 3842
+    line_end: 4351
+    dominant_failure_codes:
+    - F05_WRONG_OWNER_ROUTING
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  - index: 9
+    batch_id: 09_semantic_v4_5
+    line_start: 4352
+    line_end: 4788
+    dominant_failure_codes:
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F05_WRONG_OWNER_ROUTING
+    do_not_rewrite_original_judgments: true
+  - index: 10
+    batch_id: 10_semantic_v4_6
+    line_start: 4789
+    line_end: 5298
+    dominant_failure_codes:
+    - F05_WRONG_OWNER_ROUTING
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  - index: 11
+    batch_id: 11_semantic_v4_7
+    line_start: 5299
+    line_end: 5812
+    dominant_failure_codes:
+    - F05_WRONG_OWNER_ROUTING
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  - index: 12
+    batch_id: 12_holdout_microbatch_001
+    line_start: 5813
+    line_end: 6517
+    dominant_failure_codes:
+    - F02_TEMPLATE_REUSE
+    - F03_GOVERNANCE_TEXT_IN_BODY
+    - F05_WRONG_OWNER_ROUTING
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  - index: 13
+    batch_id: 13_holdout_mb001_repair
+    line_start: 6518
+    line_end: 7223
+    dominant_failure_codes:
+    - 'null'
+    do_not_rewrite_original_judgments: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

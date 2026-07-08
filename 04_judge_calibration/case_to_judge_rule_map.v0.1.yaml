@@ -1,0 +1,772 @@
+case_to_judge_rule_map:
+  map_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  total_cases: 138
+  formal_120_count: 120
+  p0_00_count: 18
+  entries:
+  - case_id: GRC-P001-MKC007-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P001-MKC007-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-101_GENERIC_ORIGIN_MYTH
+  - case_id: GRC-P001-MKC007-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留问题—方法—证明链，把多年积累和用户认可改为仅在有依据时使用。
+  - case_id: GRC-P001-MKC008-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P001-MKC008-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-102_PROOF_SLOT_OVERCLAIM
+  - case_id: GRC-P001-MKC008-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 把强结论改为处理意识、取舍依据或待补依据问题。
+  - case_id: GRC-P001-MKC009-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P001-MKC009-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-103_UNSUPPORTED_STORY_ARC
+  - case_id: GRC-P001-MKC009-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留选择过程弧线，把长期坚持和行业见证降级为待补依据问题。
+  - case_id: GRC-P001-MKC010-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P001-MKC010-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+  - case_id: GRC-P001-MKC010-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留锚点链，把心理推断改为观看顺序、视觉路径或结构变化。
+  - case_id: GRC-P001-MKC011-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P001-MKC011-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+  - case_id: GRC-P001-MKC011-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 为每类风险词补 route_target：删除、降级、补依据、裁决项。
+  - case_id: GRC-P001-MKC012-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P001-MKC012-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+  - case_id: GRC-P001-MKC012-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 为每个单元指定唯一证明槽位；没有新证明槽位时合并或停止。
+  - case_id: GRC-P0-02-MKC013-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC013-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-02-MKC013-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 把身份句改为通用表达功能句；保留角色类型、动作词、观察词和信息深度。
+  - case_id: GRC-P0-02-MKC014-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC014-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+  - case_id: GRC-P0-02-MKC014-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留语气层级；把证明句改成表达形式、限制语和观察条件。
+  - case_id: GRC-P0-02-MKC015-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC015-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-02-MKC015-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 删除组织链动词，替换为提供信息、限制表达、改变视角、调整颗粒度。
+  - case_id: GRC-P0-02-MKC016-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC016-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-02-MKC016-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 把可见陈列变化留在正文，把运营安排移动到不能公开或待补依据类别。
+  - case_id: GRC-P0-02-MKC017-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC017-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-02-MKC017-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 把心理推测改为信息需求、术语密度、解释顺序和替代方案。
+  - case_id: GRC-P0-02-MKC018-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC018-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-02-MKC018-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留温度层级；把信任结论改成表达功能、限制语或待补依据。
+  - case_id: GRC-P0-02-MKC019-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-02-MKC019-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-02-MKC019-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 把半授权句改为表达口吻或观察位置；删除真实身份与代表关系。
+  - case_id: GRC-P0-03-MKC020-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC020-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-03-F006_SKU_OR_FACTORY_FACT_LEAK
+  - case_id: GRC-P0-03-MKC020-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC021-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC021-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F005_COMPARISON_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+  - case_id: GRC-P0-03-MKC021-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC022-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC022-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F004_MATERIAL_PROPERTY_OVERGENERALIZATION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+  - case_id: GRC-P0-03-MKC022-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC023-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC023-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+  - case_id: GRC-P0-03-MKC023-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC024-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC024-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+  - case_id: GRC-P0-03-MKC024-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC025-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC025-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+  - case_id: GRC-P0-03-MKC025-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC026-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC026-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+  - case_id: GRC-P0-03-MKC026-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC027-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC027-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+  - case_id: GRC-P0-03-MKC027-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC028-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC028-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+  - case_id: GRC-P0-03-MKC028-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-03-MKC029-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-03-MKC029-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+  - case_id: GRC-P0-03-MKC029-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留机制链；把越界句改为观察表达、条件表达或待补依据项。
+  - case_id: GRC-P0-04-MKC030-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC030-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC030-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC031-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC031-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC031-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC032-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC032-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC032-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC033-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC033-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+  - case_id: GRC-P0-04-MKC033-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC034-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC034-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+  - case_id: GRC-P0-04-MKC034-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC035-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC035-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC035-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC036-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC036-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+  - case_id: GRC-P0-04-MKC036-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC037-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC037-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-04-MKC037-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-04-MKC038-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-04-MKC038-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+  - case_id: GRC-P0-04-MKC038-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留主机制，删除具体事实、过强结论和越界路由，改为一般化观察或局部提示。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F001_REAL_SKU_FACT_LEAK
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留角色槽位；把购买理由改成叙事功能，把结果承诺改成观察语言。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留一项动作；改为观察、保存、对照、询问条件等非硬卖动作。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F004_LIFECYCLE_INSTANCE_LEAK
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 替换为抽象阶段族，并删除经营处置含义。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 把渠道策略词改为信息删减规则和入口差异。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    - GRC-P0-05-F008_SCENE_FIT_OVERGENERALIZATION
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 改写为动作条件、结构观察和不适配边界。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 保留教育步骤，结果类句子改为说明、观察或需额外来源支持。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    - F14_BRAND_FACT_POLLUTION
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 改回 relation grammar 和拍摄线索，删除执行系统化表述。
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+    registry: positive_gold_registry
+    expected_judge_result: accept_gold_candidate
+    failure_or_repair_ref:
+    - accept_gold_candidate
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+    registry: anti_gold_fixture_registry
+    expected_judge_result: reject_or_blocking_revise
+    failure_or_repair_ref:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - GRC-P0-05-F007_CROSS_DOMAIN_WORKFLOW_OVERREACH
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+    registry: borderline_repair_registry
+    expected_judge_result: accept_with_minor_fix
+    failure_or_repair_ref:
+    - 改写为 relation hint、routing hint、ownership hint 和 strictest-wins note。
+  - case_id: GRC-P0-00-MKC001-POS-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: accept_control_policy_candidate
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC001-ANTI-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: reject_control_policy_misrouting
+    failure_or_repair_ref:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+  - case_id: GRC-P0-00-MKC001-BDR-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: control_policy_repair_required
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC002-POS-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: accept_control_policy_candidate
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC002-ANTI-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: reject_control_policy_misrouting
+    failure_or_repair_ref:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F03_GOVERNANCE_TEXT_IN_BODY
+  - case_id: GRC-P0-00-MKC002-BDR-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: control_policy_repair_required
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC003-POS-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: accept_control_policy_candidate
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC003-ANTI-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: reject_control_policy_misrouting
+    failure_or_repair_ref:
+    - F05_WRONG_OWNER_ROUTING
+    - F15_UNSUPPORTED_PERFORMANCE_CLAIM
+  - case_id: GRC-P0-00-MKC003-BDR-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: control_policy_repair_required
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC004-POS-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: accept_control_policy_candidate
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC004-ANTI-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: reject_control_policy_misrouting
+    failure_or_repair_ref:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F10_READINESS_DRIFT
+  - case_id: GRC-P0-00-MKC004-BDR-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: control_policy_repair_required
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC005-POS-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: accept_control_policy_candidate
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC005-ANTI-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: reject_control_policy_misrouting
+    failure_or_repair_ref:
+    - F19_UNAUTHORIZED_SCENARIO_AXIS
+    - F05_WRONG_OWNER_ROUTING
+  - case_id: GRC-P0-00-MKC005-BDR-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: control_policy_repair_required
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC006-POS-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: accept_control_policy_candidate
+    failure_or_repair_ref:
+    - control_calibration
+  - case_id: GRC-P0-00-MKC006-ANTI-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: reject_control_policy_misrouting
+    failure_or_repair_ref:
+    - F10_READINESS_DRIFT
+    - F18_SOURCE_MAP_AS_KNOWLEDGE
+  - case_id: GRC-P0-00-MKC006-BDR-001
+    registry: control_plane_calibration_registry
+    expected_judge_result: control_policy_repair_required
+    failure_or_repair_ref:
+    - control_calibration
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

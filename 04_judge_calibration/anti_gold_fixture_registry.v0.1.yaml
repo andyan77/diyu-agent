@@ -1,0 +1,581 @@
+anti_gold_fixture_registry:
+  registry_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  role: anti-gold negative fixtures
+  count: 40
+  expected_judge_result: reject_or_blocking_revise
+  eval_only: true
+  cases:
+  - case_id: GRC-P001-MKC007-ANTI-001
+    cluster_id: mkc_007
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-101_GENERIC_ORIGIN_MYTH
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC008-ANTI-001
+    cluster_id: mkc_008
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-102_PROOF_SLOT_OVERCLAIM
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC009-ANTI-001
+    cluster_id: mkc_009
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-103_UNSUPPORTED_STORY_ARC
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC010-ANTI-001
+    cluster_id: mkc_010
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC011-ANTI-001
+    cluster_id: mkc_011
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P001-MKC012-ANTI-001
+    cluster_id: mkc_012
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+  - case_id: GRC-P0-02-MKC013-ANTI-001
+    cluster_id: mkc_013
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: &id001
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC014-ANTI-001
+    cluster_id: mkc_014
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    expected_hard_gates: *id001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC015-ANTI-001
+    cluster_id: mkc_015
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: *id001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC016-ANTI-001
+    cluster_id: mkc_016
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: *id001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC017-ANTI-001
+    cluster_id: mkc_017
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: *id001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC018-ANTI-001
+    cluster_id: mkc_018
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: *id001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-02-MKC019-ANTI-001
+    cluster_id: mkc_019
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: *id001
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+  - case_id: GRC-P0-03-MKC020-ANTI-001
+    cluster_id: mkc_020
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-03-F006_SKU_OR_FACTORY_FACT_LEAK
+    expected_hard_gates: &id002
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC021-ANTI-001
+    cluster_id: mkc_021
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F005_COMPARISON_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC022-ANTI-001
+    cluster_id: mkc_022
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F004_MATERIAL_PROPERTY_OVERGENERALIZATION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC023-ANTI-001
+    cluster_id: mkc_023
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC024-ANTI-001
+    cluster_id: mkc_024
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC025-ANTI-001
+    cluster_id: mkc_025
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC026-ANTI-001
+    cluster_id: mkc_026
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC027-ANTI-001
+    cluster_id: mkc_027
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC028-ANTI-001
+    cluster_id: mkc_028
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-03-MKC029-ANTI-001
+    cluster_id: mkc_029
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    expected_hard_gates: *id002
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+  - case_id: GRC-P0-04-MKC030-ANTI-001
+    cluster_id: mkc_030
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC031-ANTI-001
+    cluster_id: mkc_031
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC032-ANTI-001
+    cluster_id: mkc_032
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC033-ANTI-001
+    cluster_id: mkc_033
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC034-ANTI-001
+    cluster_id: mkc_034
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC035-ANTI-001
+    cluster_id: mkc_035
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC036-ANTI-001
+    cluster_id: mkc_036
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC037-ANTI-001
+    cluster_id: mkc_037
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+    - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-04-MKC038-ANTI-001
+    cluster_id: mkc_038
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - F16_NO_GOLD_VALUE
+    - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+    expected_hard_gates:
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+    cluster_id: mkc_039
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F001_REAL_SKU_FACT_LEAK
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    expected_hard_gates: &id003
+    - HG-001
+    - HG-002
+    - HG-003
+    - HG-004
+    - HG-005
+    - HG-006
+    - HG-007
+    - HG-008
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+    cluster_id: mkc_040
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+    cluster_id: mkc_041
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F004_LIFECYCLE_INSTANCE_LEAK
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+    cluster_id: mkc_042
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+    cluster_id: mkc_043
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    - GRC-P0-05-F008_SCENE_FIT_OVERGENERALIZATION
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    cluster_id: mkc_044
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+    cluster_id: mkc_045
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    - F14_BRAND_FACT_POLLUTION
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  - case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+    cluster_id: mkc_046
+    case_type: anti_gold
+    expected_judge_result: reject_or_blocking_revise
+    failure_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+    - GRC-P0-05-F007_CROSS_DOMAIN_WORKFLOW_OVERREACH
+    expected_hard_gates: *id003
+    source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+    source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

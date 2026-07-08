@@ -1,0 +1,138 @@
+failure_code_registry:
+  registry_version: v0.1
+  task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  role: canonical failure taxonomy for GRC judge calibration
+  eval_only: true
+  ontology_truth: false
+  note: >
+    12 canonical categories. Each anti_gold / anti_control case keeps its VERBATIM corpus
+    failure_codes in anti_gold_fixture_registry / control_plane_calibration_registry (source-traced,
+    primary); those granular corpus codes roll up into the canonical categories below.
+    Expert-review failure signals are indexed (not rewritten) in expert_review_13_index.
+  severity_levels:
+  - blocking
+  - repair
+  - report_only
+  codes:
+  - id: FC-01
+    canonical_name: no_cluster_specific_mechanism
+    label: 缺少 cluster-specific 机制
+    severity: blocking
+    expected_detection_surface:
+    - gold_body
+    - mechanism_chain
+    example_corpus_codes:
+    - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+  - id: FC-02
+    canonical_name: template_reuse
+    label: 模板化正文复用
+    severity: blocking
+    expected_detection_surface:
+    - batch_body_set
+    - phrasing
+    example_corpus_codes:
+    - F02_TEMPLATE_REUSE
+    - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+  - id: FC-03
+    canonical_name: governance_text_in_body
+    label: 治理话术混入正文
+    severity: blocking
+    expected_detection_surface:
+    - gold_body
+    example_corpus_codes:
+    - F03_GOVERNANCE_TEXT_IN_BODY
+  - id: FC-04
+    canonical_name: wrong_owner_routing
+    label: owner / storage / artifact 错层
+    severity: blocking
+    expected_detection_surface:
+    - routing_contract
+    example_corpus_codes:
+    - F05_WRONG_OWNER_ROUTING
+  - id: FC-05
+    canonical_name: no_gold_value
+    label: 无金样校准价值
+    severity: blocking
+    expected_detection_surface:
+    - calibration_value
+    example_corpus_codes:
+    - F16_NO_GOLD_VALUE
+    - F18_SOURCE_MAP_AS_KNOWLEDGE
+  - id: FC-06
+    canonical_name: evidence_policy_owner_mismatch
+    label: EvidencePolicyOutbox owner 错配 / 被并入 GeneralKnowledgeBase
+    severity: blocking
+    expected_detection_surface:
+    - routing_contract
+    - evidence_policy_owner
+    example_corpus_codes:
+    - F05_WRONG_OWNER_ROUTING
+    detection_contract_ref: 03_grc_goldset_corpus/alignment/evidence_policy_outbox_resolution.v0.1.yaml
+  - id: FC-07
+    canonical_name: control_plane_mixed_with_domain_body
+    label: 控制面条目混写成领域正文
+    severity: blocking
+    expected_detection_surface:
+    - p0_00_control_body
+    example_corpus_codes:
+    - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+  - id: FC-08
+    canonical_name: surface_style_copy_risk
+    label: 表层句式抄袭风险 / 抽象风格词堆叠
+    severity: repair
+    expected_detection_surface:
+    - phrasing
+    - surface_style
+    example_corpus_codes:
+    - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    policy_ref: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+  - id: FC-09
+    canonical_name: unsupported_claim_without_evidence
+    label: 无来源硬结论 / 过度断言
+    severity: blocking
+    expected_detection_surface:
+    - claim
+    - evidence_slot
+    example_corpus_codes:
+    - GRCF-102_PROOF_SLOT_OVERCLAIM
+    - GRCF-103_UNSUPPORTED_STORY_ARC
+    - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+  - id: FC-10
+    canonical_name: real_instance_fact_leak
+    label: 真实品牌 / SKU / 门店 / 人物 / 私有 SOP 事实泄漏
+    severity: blocking
+    expected_detection_surface:
+    - gold_body
+    - boundary_contract
+    example_corpus_codes:
+    - F14_BRAND_FACT_POLLUTION
+    - GRC-P0-02-F001_REAL_PERSONA_LEAK
+    - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    - GRC-P0-05-F001_REAL_SKU_FACT_LEAK
+  - id: FC-11
+    canonical_name: readiness_flag_true
+    label: readiness 漂移为 true
+    severity: blocking
+    expected_detection_surface:
+    - readiness_flags
+    example_corpus_codes:
+    - F10_READINESS_DRIFT
+  - id: FC-12
+    canonical_name: candidatepack_or_downstream_materialization_leak
+    label: CandidatePack / KE / Serving / RAG / DIFY 下游物化泄漏
+    severity: blocking
+    expected_detection_surface:
+    - scope_control
+    - downstream_materialization
+    detection_only: true
+    note: guards against any gold/eval artifact being materialized downstream; no corpus anti-case needed
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true
