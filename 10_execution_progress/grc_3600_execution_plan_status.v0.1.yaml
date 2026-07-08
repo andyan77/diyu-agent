@@ -1,6 +1,6 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  updated_by_task: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
   roadmap_authority: founder_approved_2026-07-08
   route_authority_for_grc_sequence:
     primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
@@ -24,6 +24,16 @@ grc_3600_execution_plan_status:
     three600_generation_stays_blocked_until: P6_briefing_and_go_nogo_pass
     rationale: proposition_pack_v1 done is not a 3600 unlock; a 3600 briefing/go-no-go (P6) gates 3600 generation.
     applied_from: codex_prompt_pre_review_required_notes_1_and_2
+  canary_p6_route_note:
+    p6_task: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    p6_pass_unlocks_only: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    p6_unlock_is_execution_brief_only: true
+    p7_real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    go_decision: GO_TO_P7
+    rationale: GO_TO_P7 means ready to prepare/submit the P7 execution brief; it does NOT authorize real 3600 generation. Real 3600 generation needs a separate founder authorization + Codex three-gate.
+    applied_from: codex_prompt_pre_review_required_notes_1_and_2_and_3
   generation_unlocked: false
   readiness:
     candidatepack_ready: false
@@ -147,7 +157,7 @@ grc_3600_execution_plan_status:
     supersedes_task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
     status: DONE
     head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
-    head_after: recorded_in_git_log_for_this_commit
+    head_after: f71f4425b3f54458f5f65889ce9101d6ff66bb68
     worktree_after: clean
     objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not formal knowledge.
     standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact substring of its canary rich body; EPO props not mapped to GKB; readiness all false
@@ -173,36 +183,59 @@ grc_3600_execution_plan_status:
     - production_ready
   - step_id: P6
     task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: DONE
+    head_before: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: compile proposition_pack_v1 + Creative Content Principle into a 3600 pre-generation briefing (Governance Gate + Creative Gate + creative score rubric + 6 capability requirements + consumption plan + stop conditions) and a go/no-go decision. Does NOT generate 3600.
+    standard_validation: check_3600_microbatch_briefing_go_nogo.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+contract-lock still PASS; creative gate 8 dims; governance gate 10 checks not weakened; 6 capability families briefing_requirement_only (0 ontology objects); go_decision in allowed values; readiness all false; no 3600/07_microbatch_runs/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 07_microbatch_briefing/**
+    - ci/checkers/check_3600_microbatch_briefing_go_nogo.py
+    - ci/fixtures/3600_microbatch_briefing_go_nogo/**
+    go_decision: GO_TO_P7
+    p7_unlocked_for_execution_brief_only: true
+    p7_real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    blocked_by: []
+    next_unlocked: P7
+    readiness_claims_allowed:
+    - microbatch_3600_briefing_landed
+    - creative_gate_landed
+    - governance_gate_landed
+    - proposition_pack_v1_consumed_for_briefing
+    - ready_for_p7_3600_microbatch_generation_prompt
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
     status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 microbatch briefing + go/no-go decision (the ONLY step unlocked by P5; consumes proposition_pack_v1; a go decision here is required before any 3600 generation). 3600 generation itself stays blocked.
-    standard_validation: to_be_defined_at_P6_brief
-    deliverables:
-    - to_be_defined_at_P6_brief
-    blocked_by: []
-    next_unlocked: P7
-    readiness_claims_allowed: []
-    readiness_claims_forbidden:
-    - generation_3600_unlocked
-    - candidatepack_ready
-  - step_id: P7
-    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
-    status: PLANNED_BLOCKED_BY_P6
-    head_before: null
-    head_after: null
-    worktree_after: null
-    objective: 3600 structured draft microbatch generation (planned; executable only after P6 briefing/go-no-go passes; NOT unlocked by P5)
+    objective: 3600 structured draft microbatch generation. Unlocked by P6 go/no-go = GO_TO_P7, but ONLY for preparing/submitting the P7 execution brief. Real 3600 generation requires a separate founder authorization + Codex three-gate; not authorized by P6.
+    unlock_kind: execution_brief_only
+    real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
     standard_validation: to_be_defined_at_P7_brief
     deliverables:
     - to_be_defined_at_P7_brief
-    blocked_by:
-    - P6
+    blocked_by: []
     next_unlocked: P8
     readiness_claims_allowed: []
     readiness_claims_forbidden:
     - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
     - candidatepack_ready
   - step_id: P8
     task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001

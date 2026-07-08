@@ -1,0 +1,54 @@
+p6_go_no_go_decision:
+  decision_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  status: briefing_requirement_only
+
+  go_decision:
+    allowed_values:
+      - GO_TO_P7
+      - NO_GO_FIX_REQUIRED
+      - HOLD_FOR_FOUNDER_DECISION
+    value: GO_TO_P7
+
+  # Codex Prompt-Pre-Review required note 2: GO_TO_P7 只表示可以进入 P7 brief / 授权流程，
+  # 绝不等于已授权真实 3600 生成。
+  GO_TO_P7_means: ready_to_prepare_or_submit_P7_execution_brief
+  GO_TO_P7_does_not_mean: authorized_to_generate_3600
+
+  # Codex Prompt-Pre-Review required note 1: P7 只是 brief-only 解锁；真实生成需另行 founder 授权；
+  # generation_allowed 与 generation_3600_executed 保持 false。
+  P7_unlocked_for_execution_brief_only: true
+  P7_real_generation_requires_separate_founder_authorization: true
+  generation_allowed: false
+  generation_eligible: false
+  generation_3600_executed: false
+
+  preconditions_for_GO_TO_P7:
+    p1_checker_live_pass: true
+    p2_checker_live_pass: true
+    p3_checker_live_pass: true
+    p4_checker_live_pass: true
+    p5_checker_live_pass: true
+    contract_lock_checker_live_pass: true
+    proposition_pack_v1_valid: true
+    creative_content_principle_landed: true
+    creative_gate_landed: true
+    governance_gate_landed: true
+    p7_stop_conditions_landed: true
+    no_3600_generation_created: true
+    readiness_flags_all_false: true
+    execution_progress_ledger_updated: true
+    no_unresolved_blocker_except_p7_execution_authorization: true
+  all_preconditions_satisfied: true
+
+  decision_rationale: >
+    P1-P5 与 contract lock 全部 live PASS；proposition_pack_v1 有效（160 命题 / 40 簇 / span 全为逐字子串）；
+    creative_content_principle / creative_gate（8 维）/ governance_gate（10 检，不被弱化）/
+    creative_score_rubric（不作 production 条件）/ 6 类 capability（briefing_requirement_only，不注册 ontology）/
+    proposition_pack_consumption_plan / stop_conditions_for_p7 全部落盘；未创建 3600 生成、未创建 07_microbatch_runs、
+    未触碰 CandidatePack/KE/RAG/DIFY；readiness 全 false；ledger 已更新。唯一剩余阻塞是"真实 3600 生成的单独 founder 授权"。
+    因此裁决为 GO_TO_P7：可以起草/提交 P7 的 3600 generation Execution Brief，但这不等于已授权生成。
+
+  remediation_if_no_go: none_required_this_pass
+  next_gate: P7_3600_generation_execution_brief_plus_codex_pre_review_plus_founder_authorization
+  readiness_all_false: true

@@ -1,0 +1,47 @@
+creative_score_rubric:
+  rubric_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  status: briefing_requirement_only
+
+  # Codex Prompt-Pre-Review required note 3:
+  # Creative Score 只用于内容生产价值排序与生成要求引导，绝不作为 production / readiness 条件，
+  # 也绝不替代或弱化 Governance Gate。
+  creative_score_used_for:
+    - content_production_value_ranking
+    - generation_requirement_guidance
+    - human_review_prioritization
+  creative_score_used_as_production_readiness: false
+  creative_score_used_as_generation_authorization: false
+  creative_score_replaces_governance_gate: false
+  creative_score_can_override_governance_veto: false
+  high_creative_score_does_not_unlock:
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - generation_allowed
+    - generation_eligible
+    - production_ready
+    - release_ready
+    - production_servable
+
+  scale: 0_to_5_per_dimension
+  aggregation: mean_of_8_creative_dimensions
+  dimensions_scored:
+    - visual_scene_quality
+    - apparel_detail_density
+    - real_scene_feeling
+    - aesthetic_judgment
+    - narrative_beat
+    - human_voice_quality
+    - platform_fit
+    - inspiration_and_actionability
+  interpretation:
+    high_score_means: strong_content_production_value_candidate_for_review
+    high_score_does_not_mean: passed_governance_or_authorized_or_production_ready
+    low_score_means: weak_content_value_needs_rework_or_deprioritize
+    low_score_does_not_mean: governance_violation
+  precedence_rule:
+    governance_veto_is_absolute: true
+    creative_score_only_ranks_governance_passing_content: true
+    note: 一条内容必须先过治理门（无否决），Creative Score 才有意义；治理否决的内容不进入评分排序。

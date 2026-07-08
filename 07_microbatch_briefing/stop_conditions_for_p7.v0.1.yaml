@@ -1,0 +1,32 @@
+stop_conditions_for_p7:
+  version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  applies_to: P7_GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+  status: briefing_requirement_only
+  landed: true
+
+  # P7 生成时任一条件出现必须 STOP。
+  stop_conditions:
+    - baseline HEAD mismatch at P7 start
+    - worktree not clean at P7 start
+    - any of P1-P6 checkers live FAIL
+    - contract lock checker FAIL
+    - a draft cites no proposition_id
+    - a draft fabricates a fact beyond proposition_pack_v1
+    - a draft leaks real brand/SKU/store/person/customer/price/stock/discount fact
+    - governance jargon appears in a domain body
+    - Governance Gate is weakened or bypassed
+    - Creative Gate replaces or overrides Governance Gate
+    - Creative Score is used as production readiness
+    - AestheticFrame/VisualScene/StylingLogic/NarrativeBeat/HumanVoice/CreativePattern registered as ontology object
+    - CandidatePack is created
+    - Four-Gate is run
+    - KE / Serving / RAG / DIFY is touched
+    - any readiness flag set true
+    - generation_allowed / generation_eligible set true without separate founder authorization
+    - Google Drive live access required
+    - checker cannot fail-closed
+    - python -O bypasses checker
+
+  on_stop: halt_and_report_to_founder_no_self_adaptation
+  readiness_all_false: true

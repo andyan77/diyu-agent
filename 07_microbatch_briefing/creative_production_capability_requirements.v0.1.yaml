@@ -1,0 +1,122 @@
+creative_production_capability_requirements:
+  requirements_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+
+  # Codex Prompt-Pre-Review required note 4 + Brief §10:
+  # 6 类 creative production capability 只能是 briefing requirement，
+  # 绝不注册为 ontology Object / TBox / ABox / KE。仅允许存在于 07_microbatch_briefing/**。
+  global_constraint:
+    all_families_status: briefing_requirement_only
+    registered_as_ontology_object: false
+    registered_as_tbox: false
+    registered_as_abox: false
+    registered_as_ke: false
+    allowed_only_in: 07_microbatch_briefing/**
+    ontology_object_count_added: 0
+
+  capability_families:
+    - family: AestheticFrame
+      capability_role: 为内容提供可辩护的审美框架（配色/比例/风格立场与取舍逻辑）。
+      generation_requirement: 生成正文时给出审美因果与取舍，不得只贴风格标签。
+      required_fields_or_tags: [aesthetic_stance, color_logic, proportion_logic, tradeoff_condition]
+      examples_of_positive_signal:
+        - 说明为什么低饱和撞色在通勤场景显得克制不廉价
+        - 给出高腰线拉长比例的适用与不适用身形
+      examples_of_negative_signal:
+        - 只写"高级感/气质感"不解释原因
+        - 审美主张无法迁移到其他单品
+      forbidden_misuse:
+        - 注册为 ontology object
+        - 写进治理正文话术
+      relation_to_existing_proposition_pack: 消费 GeneralKnowledgeBase 命题中的审美判断，落为生成时的审美要求
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+
+    - family: VisualScene
+      capability_role: 为内容提供可拍可视的具体场景（地点/光线/时间/镜头/氛围）。
+      generation_requirement: 生成正文时给出具体场景锚点，能直接转成拍摄脚本或 moodboard。
+      required_fields_or_tags: [scene_anchor, lighting, time_of_day, camera_feel]
+      examples_of_positive_signal:
+        - 初秋写字楼下沉广场的侧逆光通勤画面
+        - 周末美术馆自然光下的静态单品特写
+      examples_of_negative_signal:
+        - 只有"氛围感"无地点无光线
+        - 场景与季节/品类矛盾
+      forbidden_misuse:
+        - 注册为 ontology object
+        - 编造真实门店/真实事件场景
+      relation_to_existing_proposition_pack: 消费 GeneralKnowledgeBase / ExecutionAssetOutbox 命题的场景适用条件
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+
+    - family: StylingLogic
+      capability_role: 为内容提供搭配与陈列逻辑（层次/配比/呼应/身形适配）。
+      generation_requirement: 生成正文时给出可执行搭配逻辑，而非零散单品罗列。
+      required_fields_or_tags: [layering_logic, ratio_logic, body_fit_logic, display_pairing]
+      examples_of_positive_signal:
+        - 三层叠穿的长度差与体积配比规则
+        - 上宽下窄的比例呼应及其适用身形
+      examples_of_negative_signal:
+        - 只列单品不给搭配逻辑
+        - 搭配逻辑与身形/场景矛盾
+      forbidden_misuse:
+        - 注册为 ontology object
+        - 越权写成 CandidatePack 物化
+      relation_to_existing_proposition_pack: 消费 ExecutionAssetOutbox / GeneralKnowledgeBase 命题的搭配方法
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+
+    - family: NarrativeBeat
+      capability_role: 为内容提供叙事节拍（钩子—展开—转折—落点）。
+      generation_requirement: 生成正文时具备开头钩子与结尾落点，节拍服务于服装内容。
+      required_fields_or_tags: [hook, development, turn, landing_point]
+      examples_of_positive_signal:
+        - 开头一个反差钩子，结尾落到一个可执行动作
+        - 情绪弧线服务于单品价值
+      examples_of_negative_signal:
+        - 说明书式平铺罗列
+        - 叙事喧宾夺主盖过服装内容
+      forbidden_misuse:
+        - 注册为 ontology object
+        - 用叙事掩盖硬主张无证据
+      relation_to_existing_proposition_pack: 组织 GeneralKnowledgeBase 命题为有节拍的正文
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+
+    - family: HumanVoice
+      capability_role: 为内容提供可辨识的真人口吻（角色一致/语气自然）。
+      generation_requirement: 生成正文时保持一致的角色口吻，不用通稿腔与治理话术腔。
+      required_fields_or_tags: [persona_role, tone, person_perspective]
+      examples_of_positive_signal:
+        - 买手口吻一致地讲选款取舍
+        - 生活博主口吻讲真实穿着处境
+      examples_of_negative_signal:
+        - 通稿腔/翻译腔/无主体
+        - 正文混入治理话术
+      forbidden_misuse:
+        - 注册为 ontology object
+        - 把 GovernanceOutbox 命题当口吻写进正文
+      relation_to_existing_proposition_pack: 为面向正文命题赋予一致口吻，控制面命题不进入正文口吻
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+
+    - family: CreativePattern
+      capability_role: 为内容提供可复用的内容玩法（选题结构/钩子模式/转化路径），但不得跨簇模板空转。
+      generation_requirement: 生成正文时可用玩法结构，但每簇必须保持 cluster-specific，禁止模板复用。
+      required_fields_or_tags: [play_structure, hook_pattern, conversion_path, cluster_specificity_guard]
+      examples_of_positive_signal:
+        - 一个可复用的"痛点—反差—方案"结构，但每簇填充不同专业内容
+        - 玩法服务于该簇独有的服装知识
+      examples_of_negative_signal:
+        - 跨簇套同一段模板文字（holdout 式空转）
+        - 玩法空洞无服装内容
+      forbidden_misuse:
+        - 注册为 ontology object
+        - 用玩法模板绕过 cluster-specificity 治理检查
+      relation_to_existing_proposition_pack: 组织多条命题为可复用但 cluster-specific 的内容结构
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+
+  expected_family_count: 6
+  all_marked_briefing_requirement_only: true
+  no_ontology_object_registered: true

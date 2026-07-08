@@ -247,17 +247,24 @@ def validate(closeout, pack_clusters, manifest, ledger_steps, fs_state, refs,
     for st in ("P1", "P2", "P3", "P4", "P5"):
         if by_id.get(st, {}).get("status") != "DONE":
             e.append(f"ledger {st} status {by_id.get(st, {}).get('status')!r} != DONE")
+    # note1 (E7.1 robust roadmap-advancement fix; founder-authorized at P6):
+    # once P5 is DONE, P6 must be the briefing task (or its supersessor) and unblocked (NEXT or
+    # advanced) -- do NOT hardcode "P6 == NEXT" (that snapshot goes stale the moment P6 advances
+    # to DONE at the P6 step). And 3600 GENERATION must never be DONE, and must not be NEXT until
+    # P6 go-no-go has passed (P6 status DONE); it is not a hardcoded "never NEXT" snapshot.
     p6 = by_id.get("P6", {})
-    if p6.get("status") != "NEXT":
-        e.append(f"ledger P6 status {p6.get('status')!r} != NEXT")
-    if p6.get("task_id") != BRIEFING_TASK:
-        e.append(f"ledger P6 task {p6.get('task_id')!r} != {BRIEFING_TASK}")
-    # note1: 3600 GENERATION task must exist and not be NEXT
+    p6_status = p6.get("status")
+    if p6.get("task_id") != BRIEFING_TASK and p6.get("supersedes_task_id") != BRIEFING_TASK:
+        e.append(f"ledger P6 task {p6.get('task_id')!r} is neither {BRIEFING_TASK} nor its supersessor")
+    if p6_status is None or "BLOCKED" in str(p6_status):
+        e.append(f"ledger P5 DONE requires P6 unblocked (NEXT or advanced), got {p6_status!r}")
     t3 = by_task.get(THREE600_GEN_TASK)
     if t3 is None:
         e.append(f"ledger: {THREE600_GEN_TASK} step missing")
-    elif t3.get("status") == "NEXT":
-        e.append(f"ledger: {THREE600_GEN_TASK} marked NEXT after P5 (3600 generation must stay blocked)")
+    elif t3.get("status") == "DONE":
+        e.append(f"ledger: {THREE600_GEN_TASK} marked DONE (3600 generation must never be generated without authorization)")
+    elif t3.get("status") == "NEXT" and p6_status != "DONE":
+        e.append(f"ledger: {THREE600_GEN_TASK} marked NEXT before P6 go-no-go passed (3600 generation must stay blocked)")
     # note2: P5 supersession recorded
     if by_id.get("P5", {}).get("supersedes_task_id") not in (SUPERSEDED_P5, None):
         pass  # if present, must be the superseded name; absence tolerated (recorded in route note)
@@ -306,7 +313,7 @@ def run_live(ws, report_out=None):
         "evidence_policy_to_gkb_violations": sum(1 for x in errors if "mapped to GeneralKnowledgeBase" in x),
         "generation_3600_unlocked": False, "prior_checkers": prior,
         "p6_briefing_unlocked": not any("P6" in x for x in errors),
-        "three600_generation_not_next": not any(THREE600_GEN_TASK in x and "NEXT" in x for x in errors),
+        "three600_generation_not_prematurely_unlocked_or_generated": not any(THREE600_GEN_TASK in x for x in errors),
         "next_real_action_unlocked": BRIEFING_TASK,
         "error_count": len(errors), "errors": errors,
     }

@@ -1,0 +1,141 @@
+creative_gate_for_3600:
+  gate_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  gate_role: creative_content_value_judgment
+  status: briefing_requirement_only
+
+  # Codex Prompt-Pre-Review required note 3: Creative Gate 不替代、不弱化 Governance Gate，
+  # 也不产生 production readiness。
+  does_not_replace_governance_gate: true
+  does_not_weaken_governance_gate: true
+  does_not_produce_production_readiness: true
+  runs_alongside_governance_gate: true
+  gate_is_orthogonal_to_governance_gate: true
+
+  owner_types_body_facing: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+  owner_types_control_plane: [EvidencePolicyOutbox, GovernanceOutbox, SourceGapLedger]
+
+  dimensions:
+    - dimension: visual_scene_quality
+      definition: 内容是否给出可拍可视的具体服装场景（地点、光线、时间、氛围、镜头感），而不是抽象空话。
+      positive_signals:
+        - 有明确场景锚点：通勤地铁口的清晨光、周末美术馆的侧逆光、初秋写字楼下沉广场
+        - 场景能直接转成一条拍摄脚本或一张 moodboard
+        - 场景与服装品类、身形、季节自洽
+      negative_signals:
+        - 只有"高级感/氛围感/松弛感"等抽象词，落不到具体场景
+        - 场景与服装/季节矛盾（羽绒服配盛夏海边）
+        - 场景无光线、无地点、无镜头，无法拍摄
+      machine_proxy: body 中出现具体场景锚点词（地点/光线/时间/镜头）的密度与去重后独立场景数
+      human_review_note: 审稿人判断"照这段能不能立刻拍出一条内容"；不能拍即不达标
+      failure_code_if_missing: CG-01
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: apparel_detail_density
+      definition: 内容是否含足够密度的服装专业细节（廓形、材质、工艺、版型、配比、层次），而非泛泛而谈。
+      positive_signals:
+        - 点到廓形/面料/工艺/版型的具体名词：落肩、醋酸垂坠、明线压边、H 版、九分直筒
+        - 细节能指导选款与搭配决策
+        - 细节与品类知识自洽、可核验为通用行业常识
+      negative_signals:
+        - 通篇形容词无一个服装专业名词
+        - 细节错误或自相矛盾（真丝还免烫又厚重挺括）
+        - 堆砌名词但不服务于任何判断或场景
+      machine_proxy: body 中服装专业名词（材质/廓形/工艺/版型词表）命中数与去重种类
+      human_review_note: 审稿人判断细节是否专业、准确、可用于选搭；错误细节直接否
+      failure_code_if_missing: CG-02
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: real_scene_feeling
+      definition: 内容是否有真实生活感——像真的人在真的生活里穿，而不是模特摆拍的悬浮设定。
+      positive_signals:
+        - 有真实生活情境：接送孩子、赶早高峰、临时加班改约会、雨天挤地铁
+        - 承认真实约束：怕冷、要能走路、要抱娃、预算有限
+        - 语气贴近读者的真实处境
+      negative_signals:
+        - 悬浮人设：无职业无处境的"精致女孩"
+        - 无视真实约束（高跟鞋逛一天不累）
+        - 编造具体真实顾客情节或真实门店事件（越治理红线，见 Governance Gate）
+      machine_proxy: body 中真实生活情境词与真实约束词的出现，且不触发 real-instance-fact 泄露模式
+      human_review_note: 审稿人判断"这像不像真实生活"，同时确认没有编造真实人物/门店事实
+      failure_code_if_missing: CG-03
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: aesthetic_judgment
+      definition: 内容是否给出可辩护的审美判断（为什么好看、为什么协调），而不是只贴风格标签。
+      positive_signals:
+        - 给出审美因果：为什么这个配色显白、为什么这个比例拉长身形
+        - 有取舍立场：什么情况该收、什么情况该放
+        - 判断能迁移到其他单品
+      negative_signals:
+        - 只贴标签（高级、气质、温柔）不解释原因
+        - 审美判断无因果、无法迁移
+        - 自相矛盾的审美主张
+      machine_proxy: body 中"因为/所以/显/拉长/协调"等审美因果连接词与判断句的密度
+      human_review_note: 审稿人判断审美主张是否成立且可迁移，纯标签堆砌不达标
+      failure_code_if_missing: CG-04
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: narrative_beat
+      definition: 内容是否有叙事节拍（钩子—展开—转折—落点），读起来有节奏，而不是平铺罗列。
+      positive_signals:
+        - 有开头钩子、中段展开、结尾落点
+        - 有一个清晰的内容主张或情绪弧线
+        - 节拍服务于服装内容，不是为叙事而叙事
+      negative_signals:
+        - 从头到尾平铺，无钩子无落点
+        - 罗列要点像说明书
+        - 叙事喧宾夺主、盖过服装内容
+      machine_proxy: body 段落结构与首尾句功能（钩子/落点）识别；单一平铺段落判弱
+      human_review_note: 审稿人判断读起来有没有节奏和落点，说明书式罗列不达标
+      failure_code_if_missing: CG-05
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: human_voice_quality
+      definition: 内容是否有可辨识的真人口吻（角色一致、语气自然），而不是无主体的通稿腔或治理话术腔。
+      positive_signals:
+        - 口吻一致、像一个具体的人在说话
+        - 语气自然、可信、有温度
+        - 角色口吻与内容主题匹配（买手/搭配师/生活博主）
+      negative_signals:
+        - 通稿腔、翻译腔、无主体
+        - 正文混入 checker / source_gap / route_decision 等治理话术（越原则，见 principle §3）
+        - 口吻前后不一致
+      machine_proxy: body 中治理话术词命中即判负；第一/第二人称与口语连接词密度作正向代理
+      human_review_note: 审稿人判断像不像一个真人在说话；出现治理话术直接否
+      failure_code_if_missing: CG-06
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: platform_fit
+      definition: 内容是否贴合投放平台的形态与消费习惯（小红书/抖音/公众号/店播的长度、结构、钩子差异）。
+      positive_signals:
+        - 结构与长度匹配目标平台
+        - 钩子与落点符合平台消费习惯
+        - 可直接改成该平台的一条内容
+      negative_signals:
+        - 平台错配（长图文逻辑塞进 15 秒口播）
+        - 无平台意识的通用文案
+        - 结构与平台习惯冲突
+      machine_proxy: body 或其 tag 是否声明目标平台形态且长度/结构与之自洽
+      human_review_note: 审稿人判断放到目标平台是否可用；错配不达标
+      failure_code_if_missing: CG-07
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+    - dimension: inspiration_and_actionability
+      definition: 内容是否既给灵感又可执行（读完既被触动，又知道下一步怎么穿/怎么搭/怎么拍/怎么买）。
+      positive_signals:
+        - 有可迁移灵感点，也有可执行动作
+        - 读者能据此做一次选款/搭配/拍摄/转化
+        - 灵感与执行不脱节
+      negative_signals:
+        - 只有灵感无执行，或只有执行无灵感
+        - 动作空泛、无法照做
+        - 与转化目标脱节
+      machine_proxy: body 中可执行动作句与灵感触发句的共现；两者缺一即判弱
+      human_review_note: 审稿人判断读者读完能不能既被触动又知道怎么做
+      failure_code_if_missing: CG-08
+      applies_to_owner_types: [GeneralKnowledgeBase, ExecutionAssetOutbox]
+
+  creative_failure_codes: [CG-01, CG-02, CG-03, CG-04, CG-05, CG-06, CG-07, CG-08]
+  note_creative_failure_codes_are_content_value_signals_not_governance_veto: true
+  note_governance_veto_codes_live_in_governance_gate: true

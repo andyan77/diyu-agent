@@ -1,0 +1,26 @@
+microbatch_allocation_update:
+  allocation_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  status: briefing_requirement_only
+  note: 分配是 P7 的 planning input，不是生成本身；不物化任何 draft。
+
+  target_total_drafts: 3600
+  cluster_count: 40
+  cluster_coverage: mkc_007..mkc_046
+  nominal_per_cluster: 90
+  allocation_basis: even_across_40_formal_clusters_then_adjust_by_proposition_density
+  microbatch_size_planning: to_be_finalized_in_P7_brief
+  microbatch_count_planning: to_be_finalized_in_P7_brief
+
+  owner_split_reference_from_proposition_pack:
+    GeneralKnowledgeBase: 60
+    EvidencePolicyOutbox: 42
+    GovernanceOutbox: 34
+    ExecutionAssetOutbox: 15
+    SourceGapLedger: 9
+  owner_split_note: 分配参考 P5 命题 owner 分布；控制面 owner（EvidencePolicyOutbox/GovernanceOutbox/SourceGapLedger）产出进 sidecar/route，不进正文 body。
+
+  allocation_is_planning_only: true
+  no_draft_materialized: true
+  three600_generation_executed: false
+  generation_allowed: false

@@ -16,8 +16,8 @@
 | **P3** | GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001 | ✅ DONE | 落地 judge 校准 registry（正/反/边界/控制面/failure_code/hard_gate/expert_index/creative/do_not_copy）+ 校验器 | — | P4 |
 | **P4** | GKB-CANARY-40-GENERATION-AND-GATE-001 | ✅ DONE | 生成 40 条受控 canary 草稿（每簇 1 条，`gpt_generated_structured_draft`）+ 过机器闸 | — | P5 |
 | **P5** | GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001 | ✅ DONE | 吸收两位专家共识做质量收口（不复评/不重打分）+ 从 40 条 canary 抽 `proposition_pack_v1`（每簇 3–5 条 source-traced 命题）（**supersede** 原 P5 复审名）| — | P6 |
-| **P6** | GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001 | ▶️ NEXT | 3600 微批 briefing + go/no-go 裁决（唯一被 P5 解锁；消费 proposition_pack_v1；**3600 generation 本身仍锁**）| — | P7 |
-| **P7** | GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001 | ⛔ PLANNED_BLOCKED_BY_P6 | 3600 结构化草稿微批生成（planned；**只有 P6 go 决策后才解锁，P5 不解锁 3600 generation**）| P6 | P8 |
+| **P6** | GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001 | ✅ DONE | 把 proposition_pack_v1 + Creative Content Principle 编译成 3600 开工前 briefing（Governance Gate + Creative Gate + 创意分 + 6 类能力要求 + 消费计划 + stop conditions）+ go/no-go 裁决=**GO_TO_P7**（**仅解锁 P7 brief/授权流程，非授权真实生成**）| — | P7 |
+| **P7** | GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001 | ▶️ NEXT（brief-only）| 3600 结构化草稿微批生成。P6 GO_TO_P7 **只解锁"起草/提交 P7 execution brief"**；**真实 3600 生成须单独 founder 授权 + Codex 三关**，P6 不授权 | — | P8 |
 | **P8** | GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001 | ⛔ PLANNED_BLOCKED_BY_P7 | 3600 质量/去重/路由资格（planned）| P7 | — |
 
 ## head 记录
@@ -28,12 +28,16 @@
 | P2 | `df2caca…` | `9e590c2…` |
 | P3 | `9e590c2…` | `4692785…` |
 | P4 | `4692785…` | `9b8769f…` |
-| P5 | `9b8769f…` | 见本次 commit（`git rev-parse HEAD`）|
+| P5 | `9b8769f…` | `f71f442…`（hash hygiene 已回填）|
+| P6 | `f71f442…` | 见本次 commit（`git rev-parse HEAD`）|
 
 ## 说明
 
-- **P6 是唯一 NEXT**（3600 微批 briefing / go-no-go）；P5 命题包完成≠3600 解锁，**3600 generation（P7）仍 blocked，须先过 P6 go 决策**（Codex Prompt Pre-Review note 1，见 YAML `canary_p5_route_note`）。
-- **P5 supersede**：原 ledger P5 名 `GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001` 被扩展为 `...QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001`（Codex note 2；见 YAML `supersedes_task_id`）。
-- **P7–P8 = 3600 路线**，标 `PLANNED_BLOCKED_BY 前序`，当前不可执行。
-- 每步 `readiness_claims_*` 见 YAML；**任何 generation_3600/candidatepack/KE/RAG/DIFY/production ready 在 P5 阶段一律 forbidden**（P5 只解锁 P6 briefing 一步）。
-- P5 允许声明：`canary_40_quality_closeout_landed` / `expert_review_input_absorbed` / `proposition_pack_v1_landed` / `ready_for_p6_microbatch_briefing`；`generation_3600_unlocked: false` 保持。
+- **P6 已 DONE，P7 是唯一 NEXT（brief-only）**。go/no-go 裁决 = **GO_TO_P7**：只表示可以起草/提交 P7 的 3600 generation Execution Brief，**不等于已授权真实 3600 生成**。真实生成须**单独 founder 授权 + Codex 三关**（Codex Prompt Pre-Review note 1+2，见 YAML `canary_p6_route_note`）。
+- **P6 保持全锁**：`generation_allowed: false` / `generation_3600_executed: false` / `generation_3600_unlocked: false`；未创建 3600 生成物或 `07_microbatch_runs/`；未触碰 CandidatePack/KE/RAG/DIFY；readiness 全 false。
+- **双门并列**：新增 Creative Gate（8 维内容生产价值）与既有 Governance Gate（10 检否决权）并列，Creative Gate/Creative Score **不替代不弱化**治理门，**不作 production/readiness 条件**（Codex note 3）。
+- **6 类创意生产能力**（AestheticFrame/VisualScene/StylingLogic/NarrativeBeat/HumanVoice/CreativePattern）均 `briefing_requirement_only`，**不注册为 ontology object**（Codex note 4）。
+- **P5 hash hygiene**：把 P5 step 与 P5 receipt 的 `recorded_in_git_log_for_this_commit` 占位回填为实际 P5 commit `f71f4425b3f54458f5f65889ce9101d6ff66bb68`；P5 counts/verdict/route/命题事实一律未改（Codex note 5）。
+- **P5 supersede**：原 ledger P5 名 `GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001` 被扩展为 `...QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001`（见 YAML `supersedes_task_id`）。
+- **P8 = 3600 质量/去重/路由**，标 `PLANNED_BLOCKED_BY_P7`，当前不可执行。
+- P6 允许声明：`microbatch_3600_briefing_landed` / `creative_gate_landed` / `governance_gate_landed` / `proposition_pack_v1_consumed_for_briefing` / `ready_for_p7_3600_microbatch_generation_prompt`；`generation_allowed: false` 保持。

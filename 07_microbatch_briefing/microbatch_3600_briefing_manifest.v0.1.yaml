@@ -1,0 +1,64 @@
+microbatch_3600_briefing_manifest:
+  manifest_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  step_id: P6
+  briefing_role: pre_generation_briefing_and_go_no_go
+  consumes: 06_canary_runs/canary_40_001/proposition_pack_v1
+
+  briefing_landed: true
+  creative_gate_landed: true
+  governance_gate_landed: true
+  creative_score_rubric_landed: true
+  creative_capability_requirements_landed: true
+  proposition_pack_consumption_plan_landed: true
+  proposition_pack_v1_consumed_for_briefing: true
+  p6_go_no_go_decision_landed: true
+
+  go_decision: GO_TO_P7
+  p7_go_decision: true
+  p7_unlocked_for_execution_brief_only: true
+  p7_real_generation_requires_separate_founder_authorization: true
+  ready_for_p7_3600_microbatch_generation_prompt: true
+
+  members:
+    creative_content_principle: 07_microbatch_briefing/creative_content_principle.v0.1.md
+    creative_gate: 07_microbatch_briefing/creative_gate_for_3600.v0.1.yaml
+    governance_gate: 07_microbatch_briefing/governance_gate_for_3600.v0.1.yaml
+    creative_score_rubric: 07_microbatch_briefing/creative_score_rubric.v0.1.yaml
+    creative_production_capability_requirements: 07_microbatch_briefing/creative_production_capability_requirements.v0.1.yaml
+    proposition_pack_consumption_plan: 07_microbatch_briefing/proposition_pack_consumption_plan.v0.1.yaml
+    microbatch_generation_constraints: 07_microbatch_briefing/microbatch_generation_constraints.v0.1.yaml
+    microbatch_allocation_update: 07_microbatch_briefing/microbatch_allocation_update.v0.1.yaml
+    p7_execution_readiness_checklist: 07_microbatch_briefing/p7_execution_readiness_checklist.v0.1.yaml
+    stop_conditions_for_p7: 07_microbatch_briefing/stop_conditions_for_p7.v0.1.yaml
+    p6_go_no_go_decision: 07_microbatch_briefing/p6_go_no_go_decision.v0.1.yaml
+
+  # no ontology object created by this briefing
+  ontology_object_count_added: 0
+  ontology_objects_added: []
+  external_resources_allowed: false
+  embedding_allowed: false
+  web_access_allowed: false
+  source_repo_live_dependency: false
+  google_drive_live_access: false
+
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+    generation_3600_completed: false
+    generation_3600_unlocked: false
+    readiness_all_false: true
+
+  # P5 facts reused (not recomputed / not altered here)
+  p5_facts_reused:
+    p5_commit: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    total_proposition_count: 160
+    cluster_count: 40
+    verdict: PASS

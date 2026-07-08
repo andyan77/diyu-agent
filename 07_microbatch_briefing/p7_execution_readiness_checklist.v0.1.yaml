@@ -1,0 +1,64 @@
+p7_execution_readiness_checklist:
+  version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  status: briefing_requirement_only
+
+  # P7 起草/执行前必须全部满足的前置清单（consumed by p6_go_no_go_decision）。
+  checklist:
+    - id: RC-01
+      requirement: P1 checker live PASS
+      satisfied: true
+    - id: RC-02
+      requirement: P2 checker live PASS
+      satisfied: true
+    - id: RC-03
+      requirement: P3 checker live PASS
+      satisfied: true
+    - id: RC-04
+      requirement: P4 checker live PASS
+      satisfied: true
+    - id: RC-05
+      requirement: P5 checker live PASS
+      satisfied: true
+    - id: RC-06
+      requirement: contract lock checker live PASS
+      satisfied: true
+    - id: RC-07
+      requirement: proposition_pack_v1 valid (160 props, 40 clusters, spans exact substrings)
+      satisfied: true
+    - id: RC-08
+      requirement: creative_content_principle landed
+      satisfied: true
+    - id: RC-09
+      requirement: creative_gate landed (8 dimensions)
+      satisfied: true
+    - id: RC-10
+      requirement: governance_gate landed (10 safety checks, not weakened)
+      satisfied: true
+    - id: RC-11
+      requirement: creative_production_capability_requirements landed (6 families, briefing_requirement_only)
+      satisfied: true
+    - id: RC-12
+      requirement: proposition_pack_consumption_plan landed
+      satisfied: true
+    - id: RC-13
+      requirement: stop_conditions_for_p7 landed
+      satisfied: true
+    - id: RC-14
+      requirement: no 3600 generation created
+      satisfied: true
+    - id: RC-15
+      requirement: no 07_microbatch_runs directory created
+      satisfied: true
+    - id: RC-16
+      requirement: readiness flags all false
+      satisfied: true
+    - id: RC-17
+      requirement: execution progress ledger updated
+      satisfied: true
+    - id: RC-18
+      requirement: P6 checker live + selftest PASS + python -O fail-closed
+      satisfied: true
+
+  all_satisfied: true
+  remaining_blocker: P7_real_generation_requires_separate_founder_authorization

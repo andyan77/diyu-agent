@@ -16,8 +16,10 @@ Modes:
   --selftest   run positive + negative fixtures; every negative must fail-closed
 
 Codex Prompt-Pre-Review required notes baked in:
-  note1: P4 PASS unlocks ONLY GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001;
-         the 3600 microbatch task must NOT be NEXT (fail-closed if it is).
+  note1: P4 PASS unlocks ONLY GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001 (or its
+         supersessor); the 3600 microbatch task must stay blocked until P6 go-no-go passes and
+         must never be DONE (E7.1-robust fix, founder-authorized at P6: not a hardcoded
+         "never NEXT" snapshot -- see ledger-route section).
   note2: manifest/receipt assert canary_generation_authorized_for_this_task_only=true,
          global_generation_allowed=false, generation_3600_unlocked=false.
   note3: external_resources/embedding/web_access/source_repo_live_dependency = false.
@@ -413,12 +415,20 @@ def validate_canary(run, ledger_steps, fs_state, refs,
             e.append(f"ledger P5 is neither {REVIEW_CLOSEOUT_TASK} nor its supersessor (got {p5_task!r})")
         if p5_status in (None, "BLOCKED_BY_P4"):
             e.append(f"ledger P4 DONE requires P5 unblocked (NEXT or advanced), got {p5_status!r}")
-    # note1/note4: 3600 microbatch must exist and must NOT be NEXT (fail-closed)
+    # note1/note4 (E7.1 robust roadmap-advancement fix; founder-authorized at P6):
+    # the real invariant is that 3600 generation is never actually GENERATED/DONE without
+    # authorization, and must stay blocked *until P6 briefing/go-no-go passes* -- NOT that it
+    # can never be NEXT. A hardcoded "must not be NEXT" snapshot goes stale the moment P6
+    # legitimately advances 3600 generation to the brief-only NEXT step. Assert: never DONE,
+    # and not NEXT while P6 has not yet reached DONE.
     t3_status = status_of(THREE600_TASK)
+    p6_status = by_id.get("P6", {}).get("status")
     if t3_status is None:
         e.append(f"ledger: {THREE600_TASK} step missing")
-    elif t3_status == "NEXT":
-        e.append(f"ledger: {THREE600_TASK} marked NEXT after canary pass (3600 must stay blocked)")
+    elif t3_status == "DONE":
+        e.append(f"ledger: {THREE600_TASK} marked DONE (no 3600 generation is authorized/executed at canary stage)")
+    elif t3_status == "NEXT" and p6_status != "DONE":
+        e.append(f"ledger: {THREE600_TASK} marked NEXT before P6 go-no-go passed (3600 must stay blocked)")
 
     return e
 
@@ -473,7 +483,7 @@ def run_live(ws, run_rel, report_out=None):
         "global_generation_allowed": False,
         "canary_generation_authorized_for_this_task_only": True,
         "p5_review_closeout_unlocked": not any(REVIEW_CLOSEOUT_TASK in e for e in errors),
-        "three600_task_not_next": not any(THREE600_TASK in e and "NEXT" in e for e in errors),
+        "three600_task_not_prematurely_unlocked_or_generated": not any(THREE600_TASK in e for e in errors),
         "recommended_next_step": REVIEW_CLOSEOUT_TASK,
         "error_count": len(errors),
         "errors": errors,

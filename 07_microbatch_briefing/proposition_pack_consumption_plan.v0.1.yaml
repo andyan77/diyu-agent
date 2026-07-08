@@ -1,0 +1,67 @@
+proposition_pack_consumption_plan:
+  plan_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  consumes: 06_canary_runs/canary_40_001/proposition_pack_v1
+  status: briefing_requirement_only
+
+  # Brief §12 — proposition_pack_v1 的角色与消费规则。
+  proposition_pack_role: derived_review_asset_and_generation_requirement_input
+  proposition_pack_is_briefing_input: true
+  proposition_pack_is_generation_requirement_input: true
+  proposition_pack_is_accepted_domain_knowledge: false
+  proposition_pack_is_candidatepack_ready: false
+  proposition_pack_can_enter_KE_directly: false
+
+  p7_generation_rules:
+    p7_generation_must_cite_proposition_id: true
+    p7_generation_must_not_fabricate_new_facts_beyond_propositions: true
+    p7_generation_bounded_by_proposition_pack: true
+
+  owner_type_consumption_rules:
+    - owner_candidate: SourceGapLedger
+      allowed_use: [gap_hint, routing_hint]
+      forbidden_use: [positive_domain_fact_in_body]
+      used_as_positive_domain_fact: false
+      note: SourceGapLedger 命题只能作 gap / routing hint，不得作为正向领域事实生成进正文。
+    - owner_candidate: GovernanceOutbox
+      allowed_use: [control_rule, route_rule, stop_rule]
+      forbidden_use: [domain_body_content]
+      allowed_in_domain_body: false
+      note: GovernanceOutbox 命题只能作 control / route / stop rule，不得写进 domain body。
+    - owner_candidate: EvidencePolicyOutbox
+      allowed_use: [claim_policy, evidence_policy]
+      forbidden_use: [general_knowledge_body_content]
+      mapped_to_general_knowledge_base: false
+      note: EvidencePolicyOutbox 命题只能作 claim/evidence policy，不得误写为普通 GeneralKnowledgeBase 内容。
+    - owner_candidate: ExecutionAssetOutbox
+      allowed_use: [execution_asset_method_in_body]
+      forbidden_use: [governance_control_masquerade]
+      note: ExecutionAssetOutbox 命题作执行资产方法，面向正文可用。
+    - owner_candidate: GeneralKnowledgeBase
+      allowed_use: [domain_method_in_body]
+      forbidden_use: [absorbing_control_plane_propositions]
+      note: GeneralKnowledgeBase 命题面向正文，但不得吸收控制面命题冒充领域知识。
+
+  consumed_pack_facts_reused_from_p5:
+    total_proposition_count: 160
+    cluster_count: 40
+    per_cluster_range: 3_to_5
+    owner_candidate_distribution:
+      GeneralKnowledgeBase: 60
+      EvidencePolicyOutbox: 42
+      GovernanceOutbox: 34
+      ExecutionAssetOutbox: 15
+      SourceGapLedger: 9
+    source_span_all_exact_substring: true
+    note: 计数复用 P5 receipt，不在本步重算或改写 P5 事实。
+
+  readiness_unchanged:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false

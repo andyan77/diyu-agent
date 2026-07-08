@@ -1,0 +1,60 @@
+governance_gate_for_3600:
+  gate_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  gate_role: correctness_veto
+  status: briefing_requirement_only
+
+  # 治理门是否决权：任一 check FAIL -> 整条内容否决，Creative Score 再高也不能抵消。
+  gate_is_veto: true
+  not_weakened_by_creative_gate: true
+  not_replaced_by_creative_gate: true
+  creative_score_cannot_override_governance_veto: true
+
+  checks:
+    - check: owner_routing_correct
+      definition: 每条内容的 owner_candidate 与其 epistemic_class 一致，且路由符合 P2 合同（EvidencePolicy/Governance/ExecutionAsset/SourceGap 不得误并入 GeneralKnowledgeBase）。
+      failure_code: FC-06
+      veto_on_fail: true
+    - check: readiness_all_false
+      definition: 全部 readiness flag 保持 false（candidatepack_ready / KE_ready / RAG_ready / DIFY_ready / generation_allowed / generation_eligible / production_ready / release_ready / production_servable）。
+      failure_code: FC-11
+      veto_on_fail: true
+    - check: no_real_instance_fact_leak
+      definition: 正文不得出现真实品牌/SKU/货号/门店/人物/顾客/价格/库存/折扣等真实实例事实。
+      failure_code: FC-10
+      veto_on_fail: true
+    - check: no_hard_claim_without_evidence_policy
+      definition: 硬主张（功能性/性能/绝对化断言）必须挂 EvidencePolicy，否则否决。
+      failure_code: FC-05
+      veto_on_fail: true
+    - check: no_governance_text_in_domain_body
+      definition: 正文 body 不得混入 checker / source_gap / route_decision / readiness / owner_candidate / epistemic_class 等治理话术。
+      failure_code: FC-03
+      veto_on_fail: true
+    - check: no_gold_body_surface_copy
+      definition: 正文不得对 gold 语料做表层抄袭（去标题后最大公共子串低于阈值）。
+      failure_code: FC-07
+      veto_on_fail: true
+    - check: no_template_reuse
+      definition: 跨簇不得模板复用（跨簇最大公共子串低于阈值），杜绝 holdout 式模板空转。
+      failure_code: FC-08
+      veto_on_fail: true
+    - check: no_candidatepack_or_downstream_materialization
+      definition: 不得创建 CandidatePack 或任何下游物化（Four-Gate / eligibility / instances）。
+      failure_code: FC-12
+      veto_on_fail: true
+    - check: no_KE_RAG_DIFY_touch
+      definition: 不得触碰 KE / Serving / serving_projection / RAG / DIFY 任何路径。
+      failure_code: FC-12
+      veto_on_fail: true
+    - check: no_generation_allowed_true
+      definition: 不得把 generation_allowed / generation_eligible 置 true；briefing/go-no-go 不等于生成授权。
+      failure_code: FC-11
+      veto_on_fail: true
+
+  governance_failure_codes: [FC-03, FC-05, FC-06, FC-07, FC-08, FC-10, FC-11, FC-12]
+  relation_to_creative_gate:
+    both_gates_must_pass: true
+    creative_gate_orthogonal: true
+    order: governance_veto_first_then_creative_value
+    note: 只过治理门不算好知识；只过创意门但越治理红线不得进入后续。

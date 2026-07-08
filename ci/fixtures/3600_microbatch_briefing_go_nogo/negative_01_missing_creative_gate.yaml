@@ -1,0 +1,799 @@
+pack:
+  principle_text: '# Creative Content Principle — 3600 微批次开工核心原则 (v0.1)
+
+
+    任务 / task: `GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001` (P6)
+
+    状态 / status: `briefing_requirement_only`（开工前 briefing 原则，不是 ontology、不是分数、不是 production 条件）
+
+
+    ---
+
+
+    ## 0. 一句话 / TL;DR
+
+
+    笛语不是安全合规模型，笛语是服装行业内容生产系统。治理门负责不犯错，Creative Gate 负责判断有没有内容生产价值。两个门并列，都要过，谁也不能替代谁。
+
+
+    ---
+
+
+    ## 1. 定位纠偏 / What 笛语 actually is
+
+
+    - **笛语不是安全合规模型。** 只会"不越权、不胡说、不错层、不伪闭环"是必要底线，不是产品价值本身。
+
+    - **笛语是服装行业内容生产系统。** 它的产出最终要变成能看、能拍、能穿、能带货的服装内容：视觉场景、单品细节、真实生活场景、审美判断、叙事节拍、角色口吻、内容玩法。
+
+    - 只强化治理系统 = 造了一个不会犯错但也不会创作的空壳。P6 之后的所有生成，必须同时被治理门和 Creative Gate 约束。
+
+
+    ## 2. 两个门的分工 / Two gates, orthogonal
+
+
+    | 门 / gate | 负责判断 | 判据本质 |
+
+    |---|---|---|
+
+    | **治理门 / Governance Gate** | 内容有没有犯错：越权 / 胡说 / 错层 / 伪闭环 / 泄露真实实例事实 / 硬主张无证据 | 不犯错才能进入后续；这是**否决权**，不是加分项 |
+
+    | **创意门 / Creative Gate** | 内容有没有生产价值：好不好看、好不好拍、真不真实、有没有情绪审美生活感转化力 | 有内容生产价值才算好知识；这是**内容价值判断**，不产生 production readiness |
+
+
+    **关键规则**：
+
+
+    - **只过治理门，不算好知识。** 一条"绝对安全但毫无内容生产价值"的知识，治理门放行，但 Creative Gate 判为无价值，它不是好知识。
+
+    - **只过创意门但越权，也不能进入后续。** 一条"很好看很会写但泄露了真实门店/顾客/SKU 事实或越权解锁下游"的内容，Creative Gate 再高分也被治理门否决，不得进入后续。
+
+    - **Creative Gate 不替代 Governance Gate，也不弱化它。** 两门是并列的、正交的；创意分高不能抵消任何一条治理红线。
+
+
+    ## 3. 治理知识 vs 面向正文的知识 / Governance knowledge vs body-facing knowledge
+
+
+    - **治理知识只进入 compiler / judge / sidecar / route。** owner 为 GovernanceOutbox / EvidencePolicyOutbox / SourceGapLedger 的知识是控制面，它们进入编译器、裁判、旁车、路由决策，**不写进面向读者的正文 body**。
+
+    - **面向正文的知识必须使用服装内容生产语言。** 进入正文的知识（GeneralKnowledgeBase / ExecutionAssetOutbox 语义）要说人话、说服装话：场景、单品、搭配、材质、光线、身形、情绪、玩法，而不是治理术语。
+
+    - **正文不得被治理话术污染。** 正文里不允许出现 checker / source_gap / route_decision / readiness / owner_candidate / epistemic_class 等治理话术；这些词只属于 sidecar 与 route，不属于读者看到的内容。
+
+
+    ## 4. 对 P7 3600 生成的硬约束 / Hard constraints on P7 generation
+
+
+    - 生成正文时**必须引用 proposition_id**，不得在 proposition 之外编造新事实。
+
+    - SourceGapLedger 命题只能作 gap / routing hint，**不得**当正向领域事实写进正文。
+
+    - GovernanceOutbox 命题只能作 control / route / stop rule，**不得**写进正文。
+
+    - EvidencePolicyOutbox 命题只能作 claim / evidence policy，**不得**误写成普通 GeneralKnowledgeBase 正文内容。
+
+    - Creative Score 只用于内容生产价值排序与生成要求引导，**不得**变成 production / readiness 条件。
+
+
+    ## 5. 这份原则不做什么 / What this principle is NOT
+
+
+    - **不**把 AestheticFrame / VisualScene / StylingLogic / NarrativeBeat / HumanVoice / CreativePattern 注册为 ontology Object / TBox / ABox / KE。它们只是 briefing 阶段的生产能力要求（`briefing_requirement_only`）。
+
+    - **不**解锁 3600 生成、**不**解锁 CandidatePack / Four-Gate / KE / Serving / RAG / DIFY。
+
+    - **不**把 proposition_pack_v1 标为 accepted domain knowledge。
+
+    - **不**翻任何 readiness flag。
+
+
+    > 本文件是 P6 briefing 的原则声明。它约束 P7 将来"怎么生成"，但它本身不授权 P7 生成。真实 3600 生成需要单独的 founder 授权 + Codex 三关。
+
+    '
+  creative_gate: {}
+  governance_gate:
+    gate_version: v0.1
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    gate_role: correctness_veto
+    status: briefing_requirement_only
+    gate_is_veto: true
+    not_weakened_by_creative_gate: true
+    not_replaced_by_creative_gate: true
+    creative_score_cannot_override_governance_veto: true
+    checks:
+    - check: owner_routing_correct
+      definition: 每条内容的 owner_candidate 与其 epistemic_class 一致，且路由符合 P2 合同（EvidencePolicy/Governance/ExecutionAsset/SourceGap 不得误并入 GeneralKnowledgeBase）。
+      failure_code: FC-06
+      veto_on_fail: true
+    - check: readiness_all_false
+      definition: 全部 readiness flag 保持 false（candidatepack_ready / KE_ready / RAG_ready / DIFY_ready / generation_allowed / generation_eligible / production_ready / release_ready / production_servable）。
+      failure_code: FC-11
+      veto_on_fail: true
+    - check: no_real_instance_fact_leak
+      definition: 正文不得出现真实品牌/SKU/货号/门店/人物/顾客/价格/库存/折扣等真实实例事实。
+      failure_code: FC-10
+      veto_on_fail: true
+    - check: no_hard_claim_without_evidence_policy
+      definition: 硬主张（功能性/性能/绝对化断言）必须挂 EvidencePolicy，否则否决。
+      failure_code: FC-05
+      veto_on_fail: true
+    - check: no_governance_text_in_domain_body
+      definition: 正文 body 不得混入 checker / source_gap / route_decision / readiness / owner_candidate / epistemic_class 等治理话术。
+      failure_code: FC-03
+      veto_on_fail: true
+    - check: no_gold_body_surface_copy
+      definition: 正文不得对 gold 语料做表层抄袭（去标题后最大公共子串低于阈值）。
+      failure_code: FC-07
+      veto_on_fail: true
+    - check: no_template_reuse
+      definition: 跨簇不得模板复用（跨簇最大公共子串低于阈值），杜绝 holdout 式模板空转。
+      failure_code: FC-08
+      veto_on_fail: true
+    - check: no_candidatepack_or_downstream_materialization
+      definition: 不得创建 CandidatePack 或任何下游物化（Four-Gate / eligibility / instances）。
+      failure_code: FC-12
+      veto_on_fail: true
+    - check: no_KE_RAG_DIFY_touch
+      definition: 不得触碰 KE / Serving / serving_projection / RAG / DIFY 任何路径。
+      failure_code: FC-12
+      veto_on_fail: true
+    - check: no_generation_allowed_true
+      definition: 不得把 generation_allowed / generation_eligible 置 true；briefing/go-no-go 不等于生成授权。
+      failure_code: FC-11
+      veto_on_fail: true
+    governance_failure_codes:
+    - FC-03
+    - FC-05
+    - FC-06
+    - FC-07
+    - FC-08
+    - FC-10
+    - FC-11
+    - FC-12
+    relation_to_creative_gate:
+      both_gates_must_pass: true
+      creative_gate_orthogonal: true
+      order: governance_veto_first_then_creative_value
+      note: 只过治理门不算好知识；只过创意门但越治理红线不得进入后续。
+  creative_score_rubric:
+    rubric_version: v0.1
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: briefing_requirement_only
+    creative_score_used_for:
+    - content_production_value_ranking
+    - generation_requirement_guidance
+    - human_review_prioritization
+    creative_score_used_as_production_readiness: false
+    creative_score_used_as_generation_authorization: false
+    creative_score_replaces_governance_gate: false
+    creative_score_can_override_governance_veto: false
+    high_creative_score_does_not_unlock:
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - generation_allowed
+    - generation_eligible
+    - production_ready
+    - release_ready
+    - production_servable
+    scale: 0_to_5_per_dimension
+    aggregation: mean_of_8_creative_dimensions
+    dimensions_scored:
+    - visual_scene_quality
+    - apparel_detail_density
+    - real_scene_feeling
+    - aesthetic_judgment
+    - narrative_beat
+    - human_voice_quality
+    - platform_fit
+    - inspiration_and_actionability
+    interpretation:
+      high_score_means: strong_content_production_value_candidate_for_review
+      high_score_does_not_mean: passed_governance_or_authorized_or_production_ready
+      low_score_means: weak_content_value_needs_rework_or_deprioritize
+      low_score_does_not_mean: governance_violation
+    precedence_rule:
+      governance_veto_is_absolute: true
+      creative_score_only_ranks_governance_passing_content: true
+      note: 一条内容必须先过治理门（无否决），Creative Score 才有意义；治理否决的内容不进入评分排序。
+  capabilities:
+    requirements_version: v0.1
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    global_constraint:
+      all_families_status: briefing_requirement_only
+      registered_as_ontology_object: false
+      registered_as_tbox: false
+      registered_as_abox: false
+      registered_as_ke: false
+      allowed_only_in: 07_microbatch_briefing/**
+      ontology_object_count_added: 0
+    capability_families:
+    - family: AestheticFrame
+      capability_role: 为内容提供可辩护的审美框架（配色/比例/风格立场与取舍逻辑）。
+      generation_requirement: 生成正文时给出审美因果与取舍，不得只贴风格标签。
+      required_fields_or_tags:
+      - aesthetic_stance
+      - color_logic
+      - proportion_logic
+      - tradeoff_condition
+      examples_of_positive_signal:
+      - 说明为什么低饱和撞色在通勤场景显得克制不廉价
+      - 给出高腰线拉长比例的适用与不适用身形
+      examples_of_negative_signal:
+      - 只写"高级感/气质感"不解释原因
+      - 审美主张无法迁移到其他单品
+      forbidden_misuse:
+      - 注册为 ontology object
+      - 写进治理正文话术
+      relation_to_existing_proposition_pack: 消费 GeneralKnowledgeBase 命题中的审美判断，落为生成时的审美要求
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+    - family: VisualScene
+      capability_role: 为内容提供可拍可视的具体场景（地点/光线/时间/镜头/氛围）。
+      generation_requirement: 生成正文时给出具体场景锚点，能直接转成拍摄脚本或 moodboard。
+      required_fields_or_tags:
+      - scene_anchor
+      - lighting
+      - time_of_day
+      - camera_feel
+      examples_of_positive_signal:
+      - 初秋写字楼下沉广场的侧逆光通勤画面
+      - 周末美术馆自然光下的静态单品特写
+      examples_of_negative_signal:
+      - 只有"氛围感"无地点无光线
+      - 场景与季节/品类矛盾
+      forbidden_misuse:
+      - 注册为 ontology object
+      - 编造真实门店/真实事件场景
+      relation_to_existing_proposition_pack: 消费 GeneralKnowledgeBase / ExecutionAssetOutbox 命题的场景适用条件
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+    - family: StylingLogic
+      capability_role: 为内容提供搭配与陈列逻辑（层次/配比/呼应/身形适配）。
+      generation_requirement: 生成正文时给出可执行搭配逻辑，而非零散单品罗列。
+      required_fields_or_tags:
+      - layering_logic
+      - ratio_logic
+      - body_fit_logic
+      - display_pairing
+      examples_of_positive_signal:
+      - 三层叠穿的长度差与体积配比规则
+      - 上宽下窄的比例呼应及其适用身形
+      examples_of_negative_signal:
+      - 只列单品不给搭配逻辑
+      - 搭配逻辑与身形/场景矛盾
+      forbidden_misuse:
+      - 注册为 ontology object
+      - 越权写成 CandidatePack 物化
+      relation_to_existing_proposition_pack: 消费 ExecutionAssetOutbox / GeneralKnowledgeBase 命题的搭配方法
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+    - family: NarrativeBeat
+      capability_role: 为内容提供叙事节拍（钩子—展开—转折—落点）。
+      generation_requirement: 生成正文时具备开头钩子与结尾落点，节拍服务于服装内容。
+      required_fields_or_tags:
+      - hook
+      - development
+      - turn
+      - landing_point
+      examples_of_positive_signal:
+      - 开头一个反差钩子，结尾落到一个可执行动作
+      - 情绪弧线服务于单品价值
+      examples_of_negative_signal:
+      - 说明书式平铺罗列
+      - 叙事喧宾夺主盖过服装内容
+      forbidden_misuse:
+      - 注册为 ontology object
+      - 用叙事掩盖硬主张无证据
+      relation_to_existing_proposition_pack: 组织 GeneralKnowledgeBase 命题为有节拍的正文
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+    - family: HumanVoice
+      capability_role: 为内容提供可辨识的真人口吻（角色一致/语气自然）。
+      generation_requirement: 生成正文时保持一致的角色口吻，不用通稿腔与治理话术腔。
+      required_fields_or_tags:
+      - persona_role
+      - tone
+      - person_perspective
+      examples_of_positive_signal:
+      - 买手口吻一致地讲选款取舍
+      - 生活博主口吻讲真实穿着处境
+      examples_of_negative_signal:
+      - 通稿腔/翻译腔/无主体
+      - 正文混入治理话术
+      forbidden_misuse:
+      - 注册为 ontology object
+      - 把 GovernanceOutbox 命题当口吻写进正文
+      relation_to_existing_proposition_pack: 为面向正文命题赋予一致口吻，控制面命题不进入正文口吻
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+    - family: CreativePattern
+      capability_role: 为内容提供可复用的内容玩法（选题结构/钩子模式/转化路径），但不得跨簇模板空转。
+      generation_requirement: 生成正文时可用玩法结构，但每簇必须保持 cluster-specific，禁止模板复用。
+      required_fields_or_tags:
+      - play_structure
+      - hook_pattern
+      - conversion_path
+      - cluster_specificity_guard
+      examples_of_positive_signal:
+      - 一个可复用的"痛点—反差—方案"结构，但每簇填充不同专业内容
+      - 玩法服务于该簇独有的服装知识
+      examples_of_negative_signal:
+      - 跨簇套同一段模板文字（holdout 式空转）
+      - 玩法空洞无服装内容
+      forbidden_misuse:
+      - 注册为 ontology object
+      - 用玩法模板绕过 cluster-specificity 治理检查
+      relation_to_existing_proposition_pack: 组织多条命题为可复用但 cluster-specific 的内容结构
+      status: briefing_requirement_only
+      registered_as_ontology_object: false
+    expected_family_count: 6
+    all_marked_briefing_requirement_only: true
+    no_ontology_object_registered: true
+  consumption_plan:
+    plan_version: v0.1
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    consumes: 06_canary_runs/canary_40_001/proposition_pack_v1
+    status: briefing_requirement_only
+    proposition_pack_role: derived_review_asset_and_generation_requirement_input
+    proposition_pack_is_briefing_input: true
+    proposition_pack_is_generation_requirement_input: true
+    proposition_pack_is_accepted_domain_knowledge: false
+    proposition_pack_is_candidatepack_ready: false
+    proposition_pack_can_enter_KE_directly: false
+    p7_generation_rules:
+      p7_generation_must_cite_proposition_id: true
+      p7_generation_must_not_fabricate_new_facts_beyond_propositions: true
+      p7_generation_bounded_by_proposition_pack: true
+    owner_type_consumption_rules:
+    - owner_candidate: SourceGapLedger
+      allowed_use:
+      - gap_hint
+      - routing_hint
+      forbidden_use:
+      - positive_domain_fact_in_body
+      used_as_positive_domain_fact: false
+      note: SourceGapLedger 命题只能作 gap / routing hint，不得作为正向领域事实生成进正文。
+    - owner_candidate: GovernanceOutbox
+      allowed_use:
+      - control_rule
+      - route_rule
+      - stop_rule
+      forbidden_use:
+      - domain_body_content
+      allowed_in_domain_body: false
+      note: GovernanceOutbox 命题只能作 control / route / stop rule，不得写进 domain body。
+    - owner_candidate: EvidencePolicyOutbox
+      allowed_use:
+      - claim_policy
+      - evidence_policy
+      forbidden_use:
+      - general_knowledge_body_content
+      mapped_to_general_knowledge_base: false
+      note: EvidencePolicyOutbox 命题只能作 claim/evidence policy，不得误写为普通 GeneralKnowledgeBase 内容。
+    - owner_candidate: ExecutionAssetOutbox
+      allowed_use:
+      - execution_asset_method_in_body
+      forbidden_use:
+      - governance_control_masquerade
+      note: ExecutionAssetOutbox 命题作执行资产方法，面向正文可用。
+    - owner_candidate: GeneralKnowledgeBase
+      allowed_use:
+      - domain_method_in_body
+      forbidden_use:
+      - absorbing_control_plane_propositions
+      note: GeneralKnowledgeBase 命题面向正文，但不得吸收控制面命题冒充领域知识。
+    consumed_pack_facts_reused_from_p5:
+      total_proposition_count: 160
+      cluster_count: 40
+      per_cluster_range: 3_to_5
+      owner_candidate_distribution:
+        GeneralKnowledgeBase: 60
+        EvidencePolicyOutbox: 42
+        GovernanceOutbox: 34
+        ExecutionAssetOutbox: 15
+        SourceGapLedger: 9
+      source_span_all_exact_substring: true
+      note: 计数复用 P5 receipt，不在本步重算或改写 P5 事实。
+    readiness_unchanged:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+  go_no_go:
+    decision_version: v0.1
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: briefing_requirement_only
+    go_decision:
+      allowed_values:
+      - GO_TO_P7
+      - NO_GO_FIX_REQUIRED
+      - HOLD_FOR_FOUNDER_DECISION
+      value: GO_TO_P7
+    GO_TO_P7_means: ready_to_prepare_or_submit_P7_execution_brief
+    GO_TO_P7_does_not_mean: authorized_to_generate_3600
+    P7_unlocked_for_execution_brief_only: true
+    P7_real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_eligible: false
+    generation_3600_executed: false
+    preconditions_for_GO_TO_P7:
+      p1_checker_live_pass: true
+      p2_checker_live_pass: true
+      p3_checker_live_pass: true
+      p4_checker_live_pass: true
+      p5_checker_live_pass: true
+      contract_lock_checker_live_pass: true
+      proposition_pack_v1_valid: true
+      creative_content_principle_landed: true
+      creative_gate_landed: true
+      governance_gate_landed: true
+      p7_stop_conditions_landed: true
+      no_3600_generation_created: true
+      readiness_flags_all_false: true
+      execution_progress_ledger_updated: true
+      no_unresolved_blocker_except_p7_execution_authorization: true
+    all_preconditions_satisfied: true
+    decision_rationale: 'P1-P5 与 contract lock 全部 live PASS；proposition_pack_v1 有效（160 命题 / 40 簇 / span 全为逐字子串）； creative_content_principle / creative_gate（8 维）/ governance_gate（10 检，不被弱化）/ creative_score_rubric（不作 production 条件）/ 6 类 capability（briefing_requirement_only，不注册 ontology）/ proposition_pack_consumption_plan / stop_conditions_for_p7 全部落盘；未创建 3600 生成、未创建 07_microbatch_runs、 未触碰 CandidatePack/KE/RAG/DIFY；readiness 全 false；ledger 已更新。唯一剩余阻塞是"真实 3600 生成的单独 founder 授权"。 因此裁决为 GO_TO_P7：可以起草/提交 P7 的 3600 generation Execution Brief，但这不等于已授权生成。
+
+      '
+    remediation_if_no_go: none_required_this_pass
+    next_gate: P7_3600_generation_execution_brief_plus_codex_pre_review_plus_founder_authorization
+    readiness_all_false: true
+  manifest:
+    manifest_version: v0.1
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    step_id: P6
+    briefing_role: pre_generation_briefing_and_go_no_go
+    consumes: 06_canary_runs/canary_40_001/proposition_pack_v1
+    briefing_landed: true
+    creative_gate_landed: true
+    governance_gate_landed: true
+    creative_score_rubric_landed: true
+    creative_capability_requirements_landed: true
+    proposition_pack_consumption_plan_landed: true
+    proposition_pack_v1_consumed_for_briefing: true
+    p6_go_no_go_decision_landed: true
+    go_decision: GO_TO_P7
+    p7_go_decision: true
+    p7_unlocked_for_execution_brief_only: true
+    p7_real_generation_requires_separate_founder_authorization: true
+    ready_for_p7_3600_microbatch_generation_prompt: true
+    members:
+      creative_content_principle: 07_microbatch_briefing/creative_content_principle.v0.1.md
+      creative_gate: 07_microbatch_briefing/creative_gate_for_3600.v0.1.yaml
+      governance_gate: 07_microbatch_briefing/governance_gate_for_3600.v0.1.yaml
+      creative_score_rubric: 07_microbatch_briefing/creative_score_rubric.v0.1.yaml
+      creative_production_capability_requirements: 07_microbatch_briefing/creative_production_capability_requirements.v0.1.yaml
+      proposition_pack_consumption_plan: 07_microbatch_briefing/proposition_pack_consumption_plan.v0.1.yaml
+      microbatch_generation_constraints: 07_microbatch_briefing/microbatch_generation_constraints.v0.1.yaml
+      microbatch_allocation_update: 07_microbatch_briefing/microbatch_allocation_update.v0.1.yaml
+      p7_execution_readiness_checklist: 07_microbatch_briefing/p7_execution_readiness_checklist.v0.1.yaml
+      stop_conditions_for_p7: 07_microbatch_briefing/stop_conditions_for_p7.v0.1.yaml
+      p6_go_no_go_decision: 07_microbatch_briefing/p6_go_no_go_decision.v0.1.yaml
+    ontology_object_count_added: 0
+    ontology_objects_added: []
+    external_resources_allowed: false
+    embedding_allowed: false
+    web_access_allowed: false
+    source_repo_live_dependency: false
+    google_drive_live_access: false
+    readiness:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+      generation_3600_completed: false
+      generation_3600_unlocked: false
+      readiness_all_false: true
+    p5_facts_reused:
+      p5_commit: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+      total_proposition_count: 160
+      cluster_count: 40
+      verdict: PASS
+fs_state:
+  forbidden_present: []
+  three600_created: false
+  microbatch_runs_created: false
+  candidatepack_created: false
+ledger:
+  steps:
+  - step_id: P1
+    task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+    status: DONE
+    head_before: 09fdb37ce4e47f1d277420f606a44395e5b4132a
+    head_after: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    worktree_after: clean
+    objective: lock tmp GRC corpus into canonical 03_grc_goldset_corpus + registry + corpus checker
+    standard_validation: check_grc_corpus_registry.py live+selftest PASS; python -O fail-closed; 32/32 byte-exact
+    deliverables:
+    - 03_grc_goldset_corpus/**
+    - ci/checkers/check_grc_corpus_registry.py
+    blocked_by: []
+    next_unlocked: P2
+    readiness_claims_allowed:
+    - grc_corpus_canonicalized
+    - formal_120_corpus_locked
+    - p0_00_control_plane_corpus_locked
+    - expert_review_13_source_locked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P2
+    task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+    status: DONE
+    head_before: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: add evidence_policy_candidate / EvidencePolicyOutbox to contract enums + owner policy; align 15 formal evidence cases as strict judge fixtures; alignment checker
+    standard_validation: check_grc_contract_ontology_alignment.py live+selftest PASS; python -O fail-closed; P1 checker still PASS; contract lock checker still PASS
+    deliverables:
+    - 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    - 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+    - 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    - 03_grc_goldset_corpus/alignment/**
+    - ci/checkers/check_grc_contract_ontology_alignment.py
+    blocked_by: []
+    next_unlocked: P3
+    readiness_claims_allowed:
+    - grc_evidence_policy_owner_contract_delta_landed
+    - grc_contract_ontology_alignment_checker_landed
+    - formal_120_strict_mapping_ready
+    - judge_calibration_unlocked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P3
+    task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+    status: DONE
+    head_before: 9e590c287dfbf9f5f6401f6f687bb3c95bd2c1f9
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: land judge calibration registries (positive/anti/borderline/control/failure_code/hard_gate/expert_index/creative/do_not_copy) + judge calibration checker
+    standard_validation: check_judge_calibration_against_grc.py live+selftest PASS; python -O fail-closed; P1+P2+contract-lock checkers still PASS
+    deliverables:
+    - 04_judge_calibration/**
+    - ci/checkers/check_judge_calibration_against_grc.py
+    - ci/fixtures/judge_calibration_against_grc/**
+    blocked_by: []
+    next_unlocked: P4
+    readiness_claims_allowed:
+    - judge_calibration_registry_landed
+    - failure_code_registry_landed
+    - hard_gate_namespace_registry_landed
+    - p0_00_control_plane_judge_ready
+    - formal_120_judge_ready
+    - ready_for_canary_40_execution
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - generation_3600_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P4
+    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+    status: DONE
+    head_before: 46927856bc04222a3188aab6120acf823fc59c6c
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: generate exactly 40 controlled canary drafts (one per formal cluster mkc_007..mkc_046) as gpt_generated_structured_draft + run canary gate (schema/judge/owner-layer/route/style-copy/dedupe/readiness) + reports
+    standard_validation: check_canary_40_generation_and_gate.py live+selftest PASS; python -O fail-closed; P1+P2+P3+contract-lock checkers still PASS; 40/40 coverage; owner routing matches gold; readiness all false; no 3600/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 06_canary_runs/canary_40_001/**
+    - ci/checkers/check_canary_40_generation_and_gate.py
+    - ci/fixtures/canary_40_generation_and_gate/**
+    blocked_by: []
+    next_unlocked: P5
+    readiness_claims_allowed:
+    - canary_40_generated
+    - canary_40_machine_gated
+    - ready_for_canary_40_quality_review
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P5
+    task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+    supersedes_task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+    status: DONE
+    head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
+    head_after: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    worktree_after: clean
+    objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not formal knowledge.
+    standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact substring of its canary rich body; EPO props not mapped to GKB; readiness all false
+    deliverables:
+    - 06_canary_runs/canary_40_001/review_closeout/**
+    - 06_canary_runs/canary_40_001/proposition_pack_v1/**
+    - ci/checkers/check_canary_40_quality_closeout_and_proposition_pack.py
+    - ci/fixtures/canary_40_quality_closeout_and_proposition_pack/**
+    blocked_by: []
+    next_unlocked: P6
+    readiness_claims_allowed:
+    - canary_40_quality_closeout_landed
+    - expert_review_input_absorbed
+    - proposition_pack_v1_landed
+    - ready_for_p6_microbatch_briefing
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P6
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: DONE
+    head_before: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: compile proposition_pack_v1 + Creative Content Principle into a 3600 pre-generation briefing (Governance Gate + Creative Gate + creative score rubric + 6 capability requirements + consumption plan + stop conditions) and a go/no-go decision. Does NOT generate 3600.
+    standard_validation: check_3600_microbatch_briefing_go_nogo.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+contract-lock still PASS; creative gate 8 dims; governance gate 10 checks not weakened; 6 capability families briefing_requirement_only (0 ontology objects); go_decision in allowed values; readiness all false; no 3600/07_microbatch_runs/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 07_microbatch_briefing/**
+    - ci/checkers/check_3600_microbatch_briefing_go_nogo.py
+    - ci/fixtures/3600_microbatch_briefing_go_nogo/**
+    go_decision: GO_TO_P7
+    p7_unlocked_for_execution_brief_only: true
+    p7_real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    blocked_by: []
+    next_unlocked: P7
+    readiness_claims_allowed:
+    - microbatch_3600_briefing_landed
+    - creative_gate_landed
+    - governance_gate_landed
+    - proposition_pack_v1_consumed_for_briefing
+    - ready_for_p7_3600_microbatch_generation_prompt
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: NEXT
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 structured draft microbatch generation. Unlocked by P6 go/no-go = GO_TO_P7, but ONLY for preparing/submitting the P7 execution brief. Real 3600 generation requires a separate founder authorization + Codex three-gate; not authorized by P6.
+    unlock_kind: execution_brief_only
+    real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    standard_validation: to_be_defined_at_P7_brief
+    deliverables:
+    - to_be_defined_at_P7_brief
+    blocked_by: []
+    next_unlocked: P8
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - candidatepack_ready
+  - step_id: P8
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: PLANNED_BLOCKED_BY_P7
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7)
+    standard_validation: to_be_defined_at_P8_brief
+    deliverables:
+    - to_be_defined_at_P8_brief
+    blocked_by:
+    - P7
+    next_unlocked: null
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true
+  generation_unlocked: false
+p5_receipt:
+  task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+  step_id: P5
+  supersedes_task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+  head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
+  head_after: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+  worktree_after: clean
+  verdict: PASS
+  p1_checker_live: PASS
+  p2_checker_live: PASS
+  p3_checker_live: PASS
+  p4_checker_live: PASS
+  contract_lock_checker_live: PASS
+  p5_checker_live: PASS
+  p5_checker_selftest: PASS
+  p5_checker_python_O_fail_closed: exit_2
+  expert_review_count: 2
+  repeated_review_performed: false
+  review_input_form: founder_provided_expert_consensus_summary
+  raw_expert_review_files_available: false
+  cluster_count: 40
+  cluster_coverage: mkc_007..mkc_046
+  total_proposition_count: 160
+  min_propositions_per_cluster: 4
+  max_propositions_per_cluster: 4
+  owner_candidate_distribution:
+    GeneralKnowledgeBase: 60
+    EvidencePolicyOutbox: 42
+    GovernanceOutbox: 34
+    SourceGapLedger: 9
+    ExecutionAssetOutbox: 15
+  epistemic_class_distribution:
+    domain_method: 60
+    claim_boundary_policy: 42
+    governance_control_policy: 34
+    source_gap_candidate: 9
+    execution_asset_method: 15
+  all_source_spans_exact_substring_of_rich_body: true
+  evidence_policy_to_gkb_violations: 0
+  owner_epistemic_consistency_violations: 0
+  accepted_domain_knowledge_true_count: 0
+  candidatepack_ready_true_count: 0
+  generation_3600_unlocked: false
+  proposition_pack_role: derived_review_asset
+  external_resources_allowed: false
+  embedding_allowed: false
+  web_access_allowed: false
+  source_repo_live_dependency: false
+  object_count: 0
+  readiness_all_false: true
+  codex_required_notes_applied:
+    note1_p5_unlocks_only_briefing_not_3600gen: true
+    note2_p5_task_supersede_recorded: true
+    note3_source_span_machine_verified_exact_substring: true
+    note4_honest_expert_input_provenance: true
+    note5_proposition_pack_role_derived_review_asset: true
+    note6_external_resource_prohibitions: true
+  p4_checker_snapshot_defect_fixed_founder_authorized: true
+  execution_progress_ledger_updated: true
+  p6_unlocked: true
+  next_real_action_unlocked: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  must_not_claim:
+  - generation_3600_completed
+  - generation_3600_unlocked
+  - candidatepack_ready
+  - KE_ready
+  - RAG_ready
+  - DIFY_ready
+  - production_ready
+  blocking_issues: none (P4 checker snapshot defect surfaced + founder-authorized minimal fix applied)

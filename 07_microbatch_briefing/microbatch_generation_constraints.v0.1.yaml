@@ -1,0 +1,29 @@
+microbatch_generation_constraints:
+  constraints_version: v0.1
+  task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  applies_to: P7_GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+  status: briefing_requirement_only
+
+  allowed_for_p7:
+    - generate structured drafts as gpt_generated_structured_draft
+    - cite proposition_id from proposition_pack_v1 for every claim
+    - apply both Governance Gate and Creative Gate
+    - keep every draft cluster-specific (no cross-cluster template reuse)
+    - route each draft to its owner_candidate consistent with epistemic_class
+    - produce a machine gate report + reviewable outputs
+
+  forbidden_for_p7:
+    - fabricate facts beyond proposition_pack_v1
+    - write real brand / SKU / store / person / customer / price / stock / discount facts
+    - write governance jargon into domain body
+    - create CandidatePack or any downstream materialization
+    - touch KE / Serving / serving_projection / RAG / DIFY
+    - register AestheticFrame/VisualScene/StylingLogic/NarrativeBeat/HumanVoice/CreativePattern as ontology object
+    - set any readiness flag true
+    - set generation_allowed / generation_eligible true
+    - treat Creative Score as production readiness
+
+  stop_conditions_ref: 07_microbatch_briefing/stop_conditions_for_p7.v0.1.yaml
+  readiness_all_false: true
+  generation_allowed: false
+  generation_eligible: false
