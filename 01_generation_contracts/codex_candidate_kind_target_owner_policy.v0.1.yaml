@@ -9,6 +9,7 @@ candidate_kind_target_owner_policy:
   - cso_outbox_candidate
   - execution_asset_outbox_candidate
   - governance_outbox_candidate
+  - evidence_policy_candidate
   - source_gap
   - decision_packet
   proposed_target_owner_allowed:
@@ -17,6 +18,7 @@ candidate_kind_target_owner_policy:
   - CSOOutbox
   - ExecutionAssetOutbox
   - GovernanceOutbox
+  - EvidencePolicyOutbox
   - SourceGapLedger
   - DecisionPacketLedger
   rules:
@@ -44,3 +46,50 @@ candidate_kind_target_owner_policy:
     - candidatepack_ready_true
     - KE_ready_true
     - generation_eligible_true
+  - if: candidate_kind == evidence_policy_candidate
+    role: claim_and_evidence_policy_outbox
+    allowed_target_owner:
+    - EvidencePolicyOutbox
+    forbidden_target_owner:
+    - GeneralKnowledgeBase
+    - ControlPlaneContractSource
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    allowed_target_layer:
+    - EvidencePolicy_candidate
+    forbidden_target_layer:
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    not_role:
+    - GeneralKnowledgeBase
+    - KE_truth_source
+    - production_servable_content
+    allowed_use_now:
+    - judge_fixture
+    - canary_contract_input_after_P3
+    - draft_generation_owner_target_after_canary_authorization
+    not_allowed_use_now:
+    - CandidatePack
+    - Four_Gate
+    - KE
+    - Serving
+    - RAG
+    - DIFY
+    - production
+    forbidden:
+    - candidatepack_ready_true
+    - KE_ready_true
+    - generation_eligible_true
+    - object_creation
+    - map_to_general_knowledge_candidate
+    - map_to_GeneralKnowledgeBase

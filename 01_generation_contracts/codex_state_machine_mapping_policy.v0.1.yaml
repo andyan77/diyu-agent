@@ -26,3 +26,15 @@ state_machine_mapping:
   - KE landing
   - RAG context_bundle
   - DIFY workflow
+  evidence_policy_candidate:
+    generation_output_status: gpt_generated_structured_draft
+    allowed_post_generation_routes:
+    - candidatepack_ready_after_review
+    - source_workorder_needed
+    - decision_required
+    - excluded
+    - draft_backlog
+    landed_by_task: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+    note: >
+      本状态机只表示 draft 生成后的分流候选，不代表本任务创建 CandidatePack、Evidence 对象或 ClaimBinding 对象。
+      evidence_policy_candidate 的 owner 为 EvidencePolicyOutbox，不并入 GeneralKnowledgeBase。

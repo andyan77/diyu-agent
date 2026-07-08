@@ -1,0 +1,91 @@
+evidence_policy_outbox_resolution:
+  resolution_version: v0.1
+  task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  gap_id: EVIDENCE_POLICY_OUTBOX_ENUM_GAP
+  contract_delta:
+    candidate_kind_added: evidence_policy_candidate
+    proposed_target_owner_added: EvidencePolicyOutbox
+    schema_file: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    candidate_kind_policy_file: 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+    state_machine_file: 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    layer_annotation_policy_file: 01_generation_contracts/codex_layer_annotation_policy.v0.1.yaml
+    layer_annotation_policy_modified: false
+    layer_evidence_policy_candidate_pre_existing: true
+  owner_mapping:
+    EvidencePolicyOutbox:
+      role: claim_and_evidence_policy_outbox
+      not_role:
+      - GeneralKnowledgeBase
+      - KE_truth_source
+      - production_servable_content
+      allowed_target_layer:
+      - EvidencePolicy_candidate
+      forbidden_target_layer:
+      - ABox
+      - TBox_Object
+      - BrandInstance
+      - Product
+      - Store
+      - PersonProfile
+      - KE_truth_source
+      - ServingProjection
+      - RAG
+      - DIFY
+      allowed_use_now:
+      - judge_fixture
+      - canary_contract_input_after_P3
+      - draft_generation_owner_target_after_canary_authorization
+      not_allowed_use_now:
+      - CandidatePack
+      - Four_Gate
+      - KE
+      - Serving
+      - RAG
+      - DIFY
+      - production
+  candidate_kind_mapping:
+    evidence_policy_candidate:
+      allowed_target_owner:
+      - EvidencePolicyOutbox
+      forbidden_target_owner:
+      - GeneralKnowledgeBase
+      map_to_general_knowledge_candidate: false
+  formal_120_evidence_cases:
+    count: 15
+    clusters:
+    - mkc_021
+    - mkc_026
+    - mkc_027
+    - mkc_028
+    - mkc_044
+    by_batch:
+      P0-03: 12
+      P0-05: 3
+    mapped_to_general_knowledge_base_count: 0
+    case_ids:
+    - GRC-P0-03-MKC021-ANTI-001
+    - GRC-P0-03-MKC021-BDR-001
+    - GRC-P0-03-MKC021-POS-001
+    - GRC-P0-03-MKC026-ANTI-001
+    - GRC-P0-03-MKC026-BDR-001
+    - GRC-P0-03-MKC026-POS-001
+    - GRC-P0-03-MKC027-ANTI-001
+    - GRC-P0-03-MKC027-BDR-001
+    - GRC-P0-03-MKC027-POS-001
+    - GRC-P0-03-MKC028-ANTI-001
+    - GRC-P0-03-MKC028-BDR-001
+    - GRC-P0-03-MKC028-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+  object_creation: false
+  generation_unlocked: false
+  resolved_gap_semantics: contract enum + owner policy landed; 15 formal evidence cases now strict-consumable as judge fixtures; generation remains locked
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

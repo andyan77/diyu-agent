@@ -1,0 +1,84 @@
+grc_contract_ontology_alignment_manifest:
+  manifest_version: v0.1
+  task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  contract_surface:
+    schema: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    candidate_kind_policy: 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+    state_machine_policy: 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    layer_annotation_policy_reference_only: 01_generation_contracts/codex_layer_annotation_policy.v0.1.yaml
+  candidate_kind_enum_includes_evidence_policy_candidate: true
+  proposed_target_owner_enum_includes_evidence_policy_outbox: true
+  formal_120_mapping:
+    total: 120
+    all_strict_mappable: true
+    by_owner_candidate_kind:
+    - storage_target: GeneralKnowledgeBase
+      artifact_kind: general_knowledge_candidate
+      count: 75
+    - storage_target: ExecutionAssetOutbox
+      artifact_kind: execution_asset_outbox_candidate
+      count: 18
+    - storage_target: EvidencePolicyOutbox
+      artifact_kind: evidence_policy_candidate
+      count: 15
+    - storage_target: GovernanceOutbox
+      artifact_kind: governance_outbox_candidate
+      count: 12
+    evidence_policy_case_count: 15
+    evidence_policy_case_ids:
+    - GRC-P0-03-MKC021-ANTI-001
+    - GRC-P0-03-MKC021-BDR-001
+    - GRC-P0-03-MKC021-POS-001
+    - GRC-P0-03-MKC026-ANTI-001
+    - GRC-P0-03-MKC026-BDR-001
+    - GRC-P0-03-MKC026-POS-001
+    - GRC-P0-03-MKC027-ANTI-001
+    - GRC-P0-03-MKC027-BDR-001
+    - GRC-P0-03-MKC027-POS-001
+    - GRC-P0-03-MKC028-ANTI-001
+    - GRC-P0-03-MKC028-BDR-001
+    - GRC-P0-03-MKC028-POS-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+    - GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+    evidence_mapped_to_general_knowledge_base_count: 0
+  p0_00_mapping:
+    total: 18
+    included_in_formal_120: false
+    clusters:
+    - mkc_001
+    - mkc_002
+    - mkc_003
+    - mkc_004
+    - mkc_005
+    - mkc_006
+    control_plane_owner_case_count: 16
+    anti_control_gold_demonstrating_gkb_misroute_count: 2
+    anti_control_gold_demonstrating_gkb_misroute_case_ids:
+    - GRC-P0-00-MKC002-ANTI-001
+    - GRC-P0-00-MKC003-ANTI-001
+    positive_or_borderline_control_targeting_gkb_violation_count: 0
+    note: P0-00 uses a broader control-plane artifact vocabulary (route_contract / control_plane_candidate / governance_outbox_candidate / asset_binding_policy_candidate / evidence_policy_candidate). The only cases pointing to GeneralKnowledgeBase are anti_control_gold anti-examples that demonstrate the forbidden P0-00->GKB misroute; zero positive/borderline control cases target GKB.
+  object_count: 0
+  object_creation: false
+  no_object_types_created:
+  - BrandInstance
+  - Product
+  - Store
+  - PersonProfile
+  - Evidence
+  - ClaimBinding
+  - ABox
+  - TBox_Object
+  relation_hints_remain_design_only: true
+  generation_unlocked: false
+  judge_calibration_unlocked: true
+  next_task: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true

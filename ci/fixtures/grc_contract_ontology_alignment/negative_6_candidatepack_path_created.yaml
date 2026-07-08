@@ -1,0 +1,509 @@
+schema_candidate_kind_enum:
+- general_knowledge_candidate
+- control_plane_candidate
+- cso_outbox_candidate
+- execution_asset_outbox_candidate
+- governance_outbox_candidate
+- evidence_policy_candidate
+- source_gap
+- decision_packet
+schema_target_owner_enum:
+- GeneralKnowledgeBase
+- ControlPlaneContractSource
+- CSOOutbox
+- ExecutionAssetOutbox
+- GovernanceOutbox
+- EvidencePolicyOutbox
+- SourceGapLedger
+- DecisionPacketLedger
+policy_candidate_kind_allowed:
+- general_knowledge_candidate
+- control_plane_candidate
+- cso_outbox_candidate
+- execution_asset_outbox_candidate
+- governance_outbox_candidate
+- evidence_policy_candidate
+- source_gap
+- decision_packet
+policy_target_owner_allowed:
+- GeneralKnowledgeBase
+- ControlPlaneContractSource
+- CSOOutbox
+- ExecutionAssetOutbox
+- GovernanceOutbox
+- EvidencePolicyOutbox
+- SourceGapLedger
+- DecisionPacketLedger
+evidence_allowed_target_layer:
+- EvidencePolicy_candidate
+evidence_forbidden_target_layer:
+- ABox
+- TBox_Object
+- BrandInstance
+- Product
+- Store
+- PersonProfile
+evidence_recomputed_ids:
+- EV-00
+- EV-01
+- EV-02
+- EV-03
+- EV-04
+- EV-05
+- EV-06
+- EV-07
+- EV-08
+- EV-09
+- EV-10
+- EV-11
+- EV-12
+- EV-13
+- EV-14
+resolution_evidence_ids:
+- EV-00
+- EV-01
+- EV-02
+- EV-03
+- EV-04
+- EV-05
+- EV-06
+- EV-07
+- EV-08
+- EV-09
+- EV-10
+- EV-11
+- EV-12
+- EV-13
+- EV-14
+evidence_mapped_to_gkb_count: 0
+evidence_kind_mapped_to_general_knowledge_candidate: false
+formal_pairs:
+- case_id: F-000
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-001
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-002
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-003
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-004
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-005
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-006
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-007
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-008
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-009
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-010
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-011
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-012
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-013
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-014
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-015
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-016
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-017
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-018
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-019
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-020
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-021
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-022
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-023
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-024
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-025
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-026
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-027
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-028
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-029
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-030
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-031
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-032
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-033
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-034
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-035
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-036
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-037
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-038
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-039
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-040
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-041
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-042
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-043
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-044
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-045
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-046
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-047
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-048
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-049
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-050
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-051
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-052
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-053
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-054
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-055
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-056
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-057
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-058
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-059
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-060
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-061
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-062
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-063
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-064
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-065
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-066
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-067
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-068
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-069
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-070
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-071
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-072
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-073
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-074
+  storage_target: GeneralKnowledgeBase
+  artifact_kind: general_knowledge_candidate
+- case_id: F-075
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-076
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-077
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-078
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-079
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-080
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-081
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-082
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-083
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-084
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-085
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-086
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-087
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-088
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-089
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-090
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-091
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-092
+  storage_target: ExecutionAssetOutbox
+  artifact_kind: execution_asset_outbox_candidate
+- case_id: F-093
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-094
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-095
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-096
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-097
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-098
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-099
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-100
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-101
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-102
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-103
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-104
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-105
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-106
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-107
+  storage_target: EvidencePolicyOutbox
+  artifact_kind: evidence_policy_candidate
+- case_id: F-108
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-109
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-110
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-111
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-112
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-113
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-114
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-115
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-116
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-117
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-118
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+- case_id: F-119
+  storage_target: GovernanceOutbox
+  artifact_kind: governance_outbox_candidate
+formal_clusters:
+- mkc_007
+- mkc_008
+- mkc_009
+- mkc_010
+- mkc_011
+- mkc_012
+- mkc_013
+- mkc_014
+- mkc_015
+- mkc_016
+- mkc_017
+- mkc_018
+- mkc_019
+- mkc_020
+- mkc_021
+- mkc_022
+- mkc_023
+- mkc_024
+- mkc_025
+- mkc_026
+- mkc_027
+- mkc_028
+- mkc_029
+- mkc_030
+- mkc_031
+- mkc_032
+- mkc_033
+- mkc_034
+- mkc_035
+- mkc_036
+- mkc_037
+- mkc_038
+- mkc_039
+- mkc_040
+- mkc_041
+- mkc_042
+- mkc_043
+- mkc_044
+- mkc_045
+- mkc_046
+p0_total: 18
+p0_clusters:
+  mkc_001: 3
+  mkc_002: 3
+  mkc_003: 3
+  mkc_004: 3
+  mkc_005: 3
+  mkc_006: 3
+p0_00_included_in_formal: false
+p0_positive_or_borderline_gkb_violation_count: 0
+relation_ontology_edge_count: 0
+object_count: 0
+object_definition_hits: []
+object_landing_dirs_present: []
+forbidden_dirs_present:
+- CandidatePack
+readiness_flags:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_ready: false
+  generation_allowed: false
+  readiness_all_false: true
+generation_unlocked: false
+ledger_p1_status: DONE
+ledger_p2_status: DONE
+ledger_p3_status: NEXT

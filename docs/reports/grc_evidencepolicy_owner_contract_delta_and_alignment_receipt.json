@@ -1,0 +1,93 @@
+{
+  "task_id": "GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001",
+  "task_category": "contract_delta + schema_delta + alignment_checker",
+  "repo_after": {
+    "branch": "master",
+    "head_before": "df2cacacfdd49c232e3b496b1205f3f78a0eca63",
+    "head_after": "recorded_in_git_log_for_this_commit",
+    "worktree_after": "clean"
+  },
+  "files_written": {
+    "modified": [
+      "01_generation_contracts/codex_generation_output_contract.v0.1.schema.json",
+      "01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml",
+      "01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml",
+      "03_grc_goldset_corpus/blocking_gap_ledger.v0.1.yaml"
+    ],
+    "added": [
+      "03_grc_goldset_corpus/alignment/grc_contract_ontology_alignment_manifest.v0.1.yaml",
+      "03_grc_goldset_corpus/alignment/evidence_policy_outbox_resolution.v0.1.yaml",
+      "ci/checkers/check_grc_contract_ontology_alignment.py",
+      "ci/fixtures/grc_contract_ontology_alignment/ (positive + 9 negatives)",
+      "ci/reports/grc_contract_ontology_alignment_report.v0.1.json",
+      "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+      "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+      "docs/reports/grc_evidencepolicy_owner_contract_delta_and_alignment_report.md",
+      "docs/reports/grc_evidencepolicy_owner_contract_delta_and_alignment_receipt.json"
+    ],
+    "deleted": []
+  },
+  "contract_delta": {
+    "candidate_kind_added": "evidence_policy_candidate",
+    "target_owner_added": "EvidencePolicyOutbox",
+    "state_machine_mapping_added": "evidence_policy_candidate (gpt_generated_structured_draft -> 5 post-generation routes)",
+    "layer_evidence_policy_candidate_pre_existing": true,
+    "layer_annotation_policy_modified": false,
+    "schema_files_changed": ["01_generation_contracts/codex_generation_output_contract.v0.1.schema.json"],
+    "policy_files_changed": [
+      "01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml",
+      "01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml"
+    ],
+    "delta_is_additive_only": true
+  },
+  "alignment_counts": {
+    "formal_120_total": 120,
+    "p0_00_total": 18,
+    "evidence_policy_outbox_case_count": 15,
+    "evidence_policy_candidate_case_count": 15,
+    "evidence_outbox_and_candidate_same_case_set": true,
+    "evidence_mapped_to_general_knowledge_base_count": 0,
+    "all_formal_120_mappable": true,
+    "all_p0_00_mappable": true,
+    "p0_00_positive_borderline_gkb_violation_count": 0,
+    "p0_00_anti_control_gold_gkb_demo_count": 2,
+    "object_count_remains_zero": true
+  },
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p1_checker_selftest": "PASS",
+    "p2_checker_live": "PASS",
+    "p2_checker_selftest": "PASS (9/9 negatives fail-closed)",
+    "p2_checker_python_O_fail_closed": "exit_2_fail_closed",
+    "contract_lock_checker_live": "PASS (additive delta tolerated)",
+    "contract_lock_checker_selftest": "PASS",
+    "yaml_json_parse": "PASS",
+    "readiness_false": true,
+    "forbidden_scope_clean": true,
+    "exact_stage_only": true
+  },
+  "execution_progress_ledger": {
+    "yaml_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+    "md_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+    "p1_status": "DONE",
+    "p2_status": "DONE",
+    "p3_status_after_p2": "NEXT",
+    "p4_to_p8_status_after_p2": "P4=BLOCKED_BY_P3, P5=BLOCKED_BY_P4, P6=BLOCKED_BY_P5, P7=BLOCKED_BY_P6 (reserved), P8=BLOCKED_BY_P7 (reserved)"
+  },
+  "declared_status": {
+    "grc_evidence_policy_owner_contract_delta_landed": true,
+    "grc_contract_ontology_alignment_checker_landed": true,
+    "formal_120_strict_mapping_ready": true,
+    "judge_calibration_unlocked": true,
+    "generation_unlocked": false
+  },
+  "next_real_action_unlocked": ["GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001"],
+  "must_not_claim": [
+    "generation_unlocked",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ]
+}

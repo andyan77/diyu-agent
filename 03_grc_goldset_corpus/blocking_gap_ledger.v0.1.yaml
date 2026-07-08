@@ -46,6 +46,22 @@ blocking_gap_ledger:
     - digest_manifest
     - judge_calibration_index_reference
     requires_next_task: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  p2_contract_delta_status:
+    landed_by_task: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+    evidence_policy_candidate_added_to_candidate_kind_enum: true
+    evidence_policy_outbox_added_to_proposed_target_owner_enum: true
+    mapped_to_general_knowledge_base: false
+    mapped_to_general_knowledge_candidate: false
+    object_created: false
+    judge_fixture_ready: true
+    generation_still_locked: true
+    resolution_record: 03_grc_goldset_corpus/alignment/evidence_policy_outbox_resolution.v0.1.yaml
+    alignment_manifest: 03_grc_goldset_corpus/alignment/grc_contract_ontology_alignment_manifest.v0.1.yaml
+    next_task_after_contract_delta: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+    note: >
+      P1 checker reads resolved_in_this_task / requires_next_task from the gap object above;
+      those are left unchanged (P1 semantics). This sibling block records the P2 contract-delta
+      landing without disturbing the P1 corpus-lock contract.
   readiness:
     candidatepack_ready: false
     KE_ready: false

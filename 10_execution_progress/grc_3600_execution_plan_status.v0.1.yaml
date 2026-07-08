@@ -1,0 +1,167 @@
+grc_3600_execution_plan_status:
+  ledger_version: v0.1
+  updated_by_task: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+  roadmap_authority: founder_approved_2026-07-08
+  generation_unlocked: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true
+  steps:
+  - step_id: P1
+    task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+    status: DONE
+    head_before: 09fdb37ce4e47f1d277420f606a44395e5b4132a
+    head_after: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    worktree_after: clean
+    objective: lock tmp GRC corpus into canonical 03_grc_goldset_corpus + registry + corpus checker
+    standard_validation: check_grc_corpus_registry.py live+selftest PASS; python -O fail-closed; 32/32 byte-exact
+    deliverables:
+    - 03_grc_goldset_corpus/**
+    - ci/checkers/check_grc_corpus_registry.py
+    blocked_by: []
+    next_unlocked: P2
+    readiness_claims_allowed:
+    - grc_corpus_canonicalized
+    - formal_120_corpus_locked
+    - p0_00_control_plane_corpus_locked
+    - expert_review_13_source_locked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P2
+    task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+    status: DONE
+    head_before: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: add evidence_policy_candidate / EvidencePolicyOutbox to contract enums + owner policy; align 15 formal evidence cases as strict judge fixtures; alignment checker
+    standard_validation: check_grc_contract_ontology_alignment.py live+selftest PASS; python -O fail-closed; P1 checker still PASS; contract lock checker still PASS
+    deliverables:
+    - 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    - 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+    - 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    - 03_grc_goldset_corpus/alignment/**
+    - ci/checkers/check_grc_contract_ontology_alignment.py
+    blocked_by: []
+    next_unlocked: P3
+    readiness_claims_allowed:
+    - grc_evidence_policy_owner_contract_delta_landed
+    - grc_contract_ontology_alignment_checker_landed
+    - formal_120_strict_mapping_ready
+    - judge_calibration_unlocked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P3
+    task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+    status: NEXT
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: land strict judge calibration checker consuming formal_120 + P0-00 + 15 evidence fixtures
+    standard_validation: to_be_defined_at_P3_brief
+    deliverables:
+    - to_be_defined_at_P3_brief
+    blocked_by: []
+    next_unlocked: P4
+    readiness_claims_allowed:
+    - judge_calibration_checker_landed
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+  - step_id: P4
+    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+    status: BLOCKED_BY_P3
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: canary 40 generation + gate (planned; executable only after P3)
+    standard_validation: to_be_defined_at_P4_brief
+    deliverables:
+    - to_be_defined_at_P4_brief
+    blocked_by:
+    - P3
+    next_unlocked: P5
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+  - step_id: P5
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: BLOCKED_BY_P4
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 structured draft microbatch generation (planned; executable only after P4)
+    standard_validation: to_be_defined_at_P5_brief
+    deliverables:
+    - to_be_defined_at_P5_brief
+    blocked_by:
+    - P4
+    next_unlocked: P6
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+  - step_id: P6
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: BLOCKED_BY_P5
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P5)
+    standard_validation: to_be_defined_at_P6_brief
+    deliverables:
+    - to_be_defined_at_P6_brief
+    blocked_by:
+    - P5
+    next_unlocked: P7
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+  - step_id: P7
+    task_id: reserved_not_executable
+    status: BLOCKED_BY_P6
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: reserved (objective TBD by founder)
+    standard_validation: reserved
+    deliverables:
+    - reserved
+    blocked_by:
+    - P6
+    next_unlocked: P8
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+  - step_id: P8
+    task_id: reserved_not_executable
+    status: BLOCKED_BY_P7
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: reserved (objective TBD by founder)
+    standard_validation: reserved
+    deliverables:
+    - reserved
+    blocked_by:
+    - P7
+    next_unlocked: null
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
