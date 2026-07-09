@@ -1,0 +1,109 @@
+{
+  "task_id": "GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001",
+  "step_id": "P7C-GEN",
+  "founder_authorization": "authorized; Codex Prompt Pre-Review CONDITIONAL_PASS (safe_to_execute: yes_after_required_fixes); 6 required fixes applied",
+  "head_before": "f99e9608238e799d6647df2c6aee8945844ad491",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "worktree_after": "clean",
+  "verdict": "PASS",
+
+  "codex_required_fixes_applied": {
+    "fix1_route_phase_snapshot": "P7C-GEN checker runs the committed P7C-BRIEF/P7A/P7B priors in a PRE-GENERATION snapshot (scoped_content_microbatch_120_001 removed, ledger reset to HEAD) so their hard-reads (P7C-GEN==NEXT, P7D==BLOCKED_BY_P7C_GEN, run_dirs=={proof_microbatch_001}) still hold; no committed checker edited",
+    "fix2_p7a_anchor_unchanged": "P7A.status stays DONE; classification stays agent_authored_quality_probe_pass (Brief 14's DONE_AS_QUALITY_PROBE overridden per Codex to keep committed-checker anchor)",
+    "fix3_assignments_immutable": "checker verifies 07_microbatch_briefing/scoped_content_microbatch_120/** + P7B alignment + proof + all committed checkers are unmodified in the live git surface",
+    "fix4_reference_integrity": "every draft's assignment_id / target_output_id / cluster / p0_group / generation_mode / proposition_refs / gold+anti-gold refs / creative_pattern_refs / owner is re-checked to EQUAL the consumed P7C-BRIEF assignment",
+    "fix5_body_recompute": "every quality gate (>=350 chars, anti-copy LCS gold<16/canary<18/proof<18/cross-draft<18, governance/meta-vocab, real-fact leak, abstract-style stacking, cluster fingerprint, checklist scaffold, per-mode fact rule) re-derived from body text; report files must also claim PASS and agree with the recompute",
+    "fix6_provenance_honesty": "generation_receipt declares execution_ai_authored=true and automatic_generator_capability_proven=false; NOT re-badged as an automatic generator proof"
+  },
+
+  "scoped_120_generation": {
+    "expected_total": 120,
+    "actual_total": 120,
+    "assignment_count": 120,
+    "every_assignment_exactly_one_draft": true,
+    "cluster_coverage": "mkc_007..mkc_046 (each 3)",
+    "p0_00_used_as_body_draft": false,
+    "generation_mode_distribution": {"creative_prototype": 36, "fact_slot_script": 36, "evidence_bound_candidate": 24, "display_solution": 24},
+    "counts_toward_3600": false
+  },
+
+  "generation_provenance": {
+    "note": "integrity gate = the committed deterministic checker; ALL 120 pass it. Creative quality is NOT proven here and is deferred to P7C-REVIEW (human).",
+    "sub_agent_generated_or_repaired_adversarial_verify_PASS": 111,
+    "sub_agent_repaired_new_body_independent_verify_pending": 2,
+    "main_assistant_authored_rate_limit_fallback_deterministic_clean": 7,
+    "pending_or_fallback_flagged_for_p7c_review_first": ["SCM120-A033", "SCM120-A102", "SCM120-A032", "SCM120-A035", "SCM120-A037", "SCM120-A059", "SCM120-A062", "SCM120-A101", "SCM120-A106"]
+  },
+
+  "quality_results": {
+    "governance_gate_pass": true,
+    "creative_gate_pass": true,
+    "body_entailment_pass": true,
+    "semantic_alignment_pass": true,
+    "dedupe_pass": true,
+    "style_copy_pass": true,
+    "generation_mode_report_pass": true,
+    "fact_binding_report_pass": true,
+    "cso_overlay_report_pass": true,
+    "semantic_checklist_leakage": "none above deterministic threshold; residual subjective courseware-tone deferred to P7C-REVIEW",
+    "gold_body_copy_found": false,
+    "p4_canary_body_copy_found": false,
+    "p7a_proof_body_copy_found": false
+  },
+
+  "forbidden_results": {
+    "accepted_domain_knowledge_true_count": 0,
+    "candidatepack_ready_true_count": 0,
+    "production_servable_true_count": 0,
+    "readiness_false": true,
+    "candidatepack_created": false,
+    "KE_RAG_DIFY_touched": false,
+    "generation_320_created": false,
+    "generation_3600_created": false
+  },
+
+  "checks": {
+    "p1_checker_live": "PASS", "p2_checker_live": "PASS", "p3_checker_live": "PASS",
+    "p4_checker_live": "PASS", "p5_checker_live": "PASS", "p6_checker_live": "PASS (no-07_microbatch_runs snapshot)",
+    "p6r_checker_live": "PASS (no-07_microbatch_runs snapshot)", "p7a_checker_live": "PASS (pre-generation snapshot)",
+    "p7b_checker_live": "PASS (pre-generation snapshot)", "p7c_brief_checker_live": "PASS (pre-generation snapshot)",
+    "contract_lock_checker_live": "PASS",
+    "p7c_gen_checker_live": "PASS (error_count=0)",
+    "p7c_gen_checker_selftest": "PASS (positive + 49 negatives all fail-closed)",
+    "p7c_gen_checker_python_O_fail_closed": "exit_2 FAIL_CLOSED",
+    "yaml_json_csv_parse": "all new YAML/JSON/CSV parse",
+    "forbidden_scope_clean": true,
+    "committed_artifacts_modified": [],
+    "exact_stage_only": "no git add . / -A / commit -a; exact paths only"
+  },
+
+  "execution_progress_ledger": {
+    "yaml_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+    "md_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+    "p1_to_p6r_status": "DONE",
+    "p7a_status": "DONE (classification agent_authored_quality_probe_pass; Codex fix 2)",
+    "p7b_status": "DONE", "p7c_brief_status": "DONE",
+    "p7c_gen_status": "DONE (scoped_120_generated=true, counts_toward_3600=false)",
+    "p7c_review_status_after_gen": "NEXT",
+    "p7d_status_after_gen": "BLOCKED_BY_P7C_REVIEW",
+    "p8_status_after_gen": "BLOCKED_BY_P7D",
+    "generation_unlocked": false,
+    "route_migration_3": "additive; no_old_checker_edited=true; no_readiness_flipped=true"
+  },
+
+  "next_real_action_unlocked": "GKB-SCOPED-120-QUALITY-REVIEW-AND-SCALE-DECISION-001 (P7C-REVIEW) — human quality review (first targets: the 9 pending/fallback drafts) + scale decision; separate founder authorization + Codex three-gate; no generation, no readiness flip",
+
+  "must_not_claim": [
+    "generation_3600_completed",
+    "generation_3600_unlocked",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ],
+
+  "new_draft_generated": true,
+  "readiness_false": true,
+  "blocking_issues": "none"
+}

@@ -23,8 +23,9 @@
 | **P7** | GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001 | ▷ NEXT（**legacy 锚点 / = 规范节点 P7D**）| 旧 3600 生成步；status/unlock_kind/generation_allowed 字段**保持不变仅为兼容已提交的 P7A checker**（该 checker 不在本任务写面）。**规范的 3600 节点已迁移为 P7D（现 BLOCKED_BY_P7C_GEN）**，活跃链 = P7C-BRIEF→P7C-GEN→P7D。本锚点不授权任何事。详见 YAML `route_migration` / `route_migration_2` | — | （见 P7C-GEN/P7D）|
 | **P7C** | GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001 | ▷ NEXT（**legacy 锚点**）| scoped 内容生产微批锚点；status/next_unlocked/generation_authorized 字段**保持不变仅为兼容已提交 P7B checker**。其 brief=**P7C-BRIEF**（本次已 DONE），实际生成节点=**P7C-GEN**。详见 YAML `route_migration_2` | — | P7C-GEN |
 | **P7C-BRIEF** | GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001 | ✅ DONE | **scoped 120 brief + go/no-go**：120 个 future assignment（mkc_007..046 各 ≥3），按 P0 组/生成模式(36/36/24/24)/创意模式(6 类≥10)/owner/命题锚定/事实绑定分配，**引用全部真实**（P5 命题/goldset/P7B 模式与模式）。go/no-go=**GO_TO_SCOPED_120_GENERATION_BRIEF**（只解锁下一步 brief，不授权生成）。**零草稿生成**；`briefing_orchestration_contract`；readiness 全 false | — | P7C-GEN |
-| **P7C-GEN** | GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001 | ▶️ NEXT | scoped 120 真实生成（最多 120 条 `gpt_generated_structured_draft`）。**本任务未授权**；须单独 founder 授权 + Codex 三关；120 为免新授权上限，320 需另权，绝不 one-shot 3600 | — | P7D |
-| **P7D** | GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001 | ⛔ BLOCKED_BY_P7C_GEN | 3600 结构化草稿微批生成（规范节点，与 legacy P7 锚点同一底层任务）。被 **P7C-GEN** 阻塞（scoped 120 须先跑）；P7A/P7B/P7C 后直接 3600 不允许；真实生成须单独 founder 授权 + Codex 三关，绝不 one-shot | P7C-GEN | P8 |
+| **P7C-GEN** | GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001 | ✅ DONE | **scoped 120 真实生成完成**：120 条 `gpt_generated_structured_draft`（execution-AI-authored），每条对应 1 个 P7C-BRIEF assignment；模式分布 36/36/24/24；机器闸（≥350字/反抄 LCS gold<16·canary<18·proof<18·跨稿<18/无治理元词汇/无价格货号真实事实/簇指纹锚定/按模式事实槽位规则）逐条重算通过。**创意质量留待 P7C-REVIEW（人审）**；`counts_toward_3600=false`；readiness 全 false；未解锁 CandidatePack/KE/RAG/DIFY/production。详见 YAML `route_migration_3` | — | P7C-REVIEW |
+| **P7C-REVIEW** | GKB-SCOPED-120-QUALITY-REVIEW-AND-SCALE-DECISION-001 | ▶️ NEXT | scoped 120 质量评审（创意动人质量=人审）+ 规模决策（是否/如何扩到 320/3600）。**须单独 founder 授权 + Codex 三关**；不生成、不翻 readiness | — | P7D |
+| **P7D** | GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001 | ⛔ BLOCKED_BY_P7C_REVIEW | 3600 结构化草稿微批生成（规范节点，与 legacy P7 锚点同一底层任务）。被 **P7C-REVIEW** 阻塞（scoped 120 质量评审+规模决策须先过）；直接 3600 不允许；真实生成须单独 founder 授权 + Codex 三关，绝不 one-shot | P7C-REVIEW | P8 |
 | **P8** | GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001 | ⛔ BLOCKED_BY_P7D | 3600 质量/去重/路由资格（planned；被 P7D 阻塞，P7D 又被 P7C-GEN 阻塞，未授权）| P7D | — |
 
 ## head 记录
@@ -41,6 +42,7 @@
 | P7A | `f8015a4…` | `eadf59a…` |
 | P7B | `eadf59a…` | `651d80f…` |
 | P7C-BRIEF | `651d80f…` | 见本次 commit（`git rev-parse HEAD`）|
+| P7C-GEN | `f99e960…` | 见本次 commit（`git rev-parse HEAD`）|
 
 ## 说明
 
