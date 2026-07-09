@@ -1,0 +1,49 @@
+scoped_120_gate_requirements:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # These are the gates the FUTURE P7C-GEN drafts must pass. This task only declares them.
+  governance_gate:
+    source: 07_microbatch_briefing/governance_gate_for_3600.v0.1.yaml
+    is_veto_gate: true
+    checks:
+    - owner_routing_correct
+    - readiness_all_false
+    - no_real_instance_fact_leak
+    - no_generation_allowed_true
+    - every_evidence_bound_claim_has_evidence_anchor
+    - no_fabricated_brand_fact
+    - no_governance_vocabulary_in_body
+    not_weakened_by_creative_gate: true
+
+  creative_gate:
+    source: 07_microbatch_briefing/creative_gate_for_3600.v0.1.yaml
+    is_veto_gate: false
+    does_not_produce_production_readiness: true
+    dimensions_focus:
+    - AestheticFrame
+    - VisualScene
+    - StylingLogic
+    - NarrativeBeat
+    - HumanVoice
+    - CreativePattern
+    creative_gate_is_production_readiness: false
+
+  per_mode_gate_focus:
+    creative_prototype: [platform_native_not_courseware, human_voice_present, not_semantic_checklist]
+    fact_slot_script: [human_voice_present, slots_declared_for_missing_facts, platform_native_not_courseware]
+    evidence_bound_candidate: [every_factual_claim_has_evidence_anchor, human_voice_present]
+    display_solution: [visual_scene_present, scene_facts_present_or_slotted_for_final_execution, human_voice_present]
+
+  deterministic_gate_bar_inherited_from_p4_canary:
+    anti_copy_lcs_vs_gold_lt: 16
+    anti_copy_lcs_vs_canary_lt: 18
+    cross_cluster_lcs_lt: 18
+    min_body_chars: 350
+    red_line_scans: [no_brand_sku_price, no_pipeline_meta_vocab, no_abstract_style_stacking]
+    cluster_specific_fingerprint_required: true
+    aesthetic_score_is_not_generation_gate: true

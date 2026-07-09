@@ -1,0 +1,42 @@
+scoped_120_stop_conditions:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # Any of these during THIS briefing task -> STOP.
+  stop_conditions_for_this_brief_task:
+  - baseline_head_mismatch
+  - worktree_not_clean
+  - p1_to_p7b_checker_live_fail
+  - contract_lock_checker_fail
+  - task_attempts_to_generate_new_drafts
+  - task_authorizes_120_generation_directly
+  - target_count_exceeds_120
+  - direct_3600_allowed_true
+  - p0_00_or_mkc_001_006_used_as_body_generation_assignment
+  - generation_mode_missing
+  - cso_overlay_missing
+  - cso_marked_ontology_truth
+  - brandkb_slot_creates_brandkb_instance
+  - creative_prototype_requires_brand_facts
+  - evidence_bound_candidate_lacks_evidence_requirement
+  - display_solution_lacks_scene_fact_requirement
+  - three600_run_manifest_created
+  - candidatepack_created
+  - ke_serving_rag_dify_touched
+  - google_drive_live_or_external_web_or_source_repo_live_or_embedding_required
+  - any_readiness_flag_true
+  - checker_cannot_fail_closed
+  - python_O_bypasses_checker
+
+  # Stop conditions the FUTURE P7C-GEN generation task must also honor.
+  stop_conditions_for_future_generation_task:
+  - any_draft_leaks_real_brand_sku_price
+  - any_evidence_bound_draft_makes_unsupported_claim
+  - any_draft_reuses_gold_or_canary_body_over_lcs_threshold
+  - any_draft_is_semantic_checklist_or_courseware
+  - fabricated_real_customer_or_life_episode
+  - count_exceeds_authorized_120

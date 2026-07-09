@@ -1,0 +1,40 @@
+scoped_120_next_execution_contract:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # Defines the NEXT task (P7C-GEN) — it is NOT authorized by this task.
+  next_task:
+    recommended_task_id: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
+    step_id: P7C-GEN
+    unlock_kind: scoped_content_production_microbatch_generation
+    authorized_by_this_task: false
+    requires_before_start:
+    - separate_founder_authorization
+    - codex_prompt_pre_review_pass_or_conditional_pass
+    - baseline_head_equals_this_commit
+    - all_p1_to_p7c_checkers_live_pass
+    consumes:
+    - 07_microbatch_briefing/scoped_content_microbatch_120/scoped_120_assignment_plan.v0.1.yaml
+    - 07_microbatch_briefing/scoped_content_microbatch_120/scoped_120_generation_mode_distribution.v0.1.yaml
+    - 07_microbatch_briefing/scoped_content_microbatch_120/scoped_120_cso_overlay_plan.v0.1.yaml
+    - 07_microbatch_briefing/scoped_content_microbatch_120/scoped_120_creative_pattern_assignment.v0.1.yaml
+    - 07_microbatch_briefing/scoped_content_microbatch_120/scoped_120_fact_binding_assignment.v0.1.yaml
+    - 07_microbatch_briefing/scoped_content_microbatch_120/scoped_120_gate_requirements.v0.1.yaml
+    produces_target:
+    - up_to_120_gpt_generated_structured_drafts
+    hard_limits:
+      max_count: 120
+      count_320_requires_new_founder_authorization: true
+      direct_3600_allowed: false
+      counts_toward_3600: only_if_separately_authorized
+    forbidden:
+    - generate_more_than_120
+    - one_shot_3600
+    - create_candidatepack
+    - run_four_gate
+    - write_ke_serving_rag_dify
+    - flip_readiness

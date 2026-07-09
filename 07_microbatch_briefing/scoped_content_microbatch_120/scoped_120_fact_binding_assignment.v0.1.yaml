@@ -1,0 +1,1187 @@
+scoped_120_fact_binding_assignment:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+  slot_families:
+  - brand_voice
+  - brand_claim
+  - event_anchor
+  - role_anchor
+  - product_anchor
+  - media_anchor
+  BrandKB_slot_contract:
+    status: interface_boundary_only
+    creates_BrandKB_instance: false
+    writes_brand_facts: false
+    writes_KE: false
+    blocks_creative_prototype: false
+    blocks_fact_slot_script: false
+  no_fact_does_not_block_creative_generation: true
+  no_fact_blocks_evidence_bound_candidate_publish: true
+  display_solution_final_execution_requires_scene_facts: true
+  per_assignment:
+    SCM120-A001:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: &id001
+      - fabricate_specific_brand_event
+      - fabricate_real_person_experience
+      - fabricate_product_fact
+      - claim_published_fact_status
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A002:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A003:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A004:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A005:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A006:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A007:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A008:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A009:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A010:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: &id002
+      - fill_missing_fact_with_invention
+      - fabricate_product_fact
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A011:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A012:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A013:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A014:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A015:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A016:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A017:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A018:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A019:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A020:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A021:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A022:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A023:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A024:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A025:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A026:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A027:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A028:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A029:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A030:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A031:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A032:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A033:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A034:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A035:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A036:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A037:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A038:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A039:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A040:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: &id003
+      - make_unsupported_factual_claim
+      - fabricate_product_fact
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A041:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A042:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A043:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A044:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A045:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A046:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A047:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A048:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A049:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A050:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A051:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A052:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A053:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A054:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A055:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A056:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A057:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A058:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A059:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A060:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A061:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A062:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A063:
+      generation_mode: evidence_bound_candidate
+      required_fact_slots:
+      - brand_claim
+      - product_anchor
+      missing_fact_behavior: block_until_evidence
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication: *id003
+      evidence_requirement: required
+      brandkb_slot_interface_only: true
+    SCM120-A064:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A065:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A066:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A067:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A068:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A069:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A070:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: &id004
+      - pretend_specific_store_scene_exists_without_input
+      - fabricate_product_fact
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A071:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A072:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A073:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A074:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A075:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A076:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A077:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A078:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A079:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A080:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A081:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A082:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A083:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A084:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A085:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A086:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A087:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A088:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A089:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A090:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A091:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A092:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A093:
+      generation_mode: display_solution
+      required_fact_slots:
+      - scene_anchor
+      - product_anchor
+      - media_anchor
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication: *id004
+      evidence_requirement: scene_facts_required_for_final_execution
+      brandkb_slot_interface_only: true
+    SCM120-A094:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A095:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A096:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A097:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A098:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A099:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A100:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A101:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A102:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A103:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A104:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A105:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A106:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A107:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A108:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A109:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A110:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A111:
+      generation_mode: creative_prototype
+      required_fact_slots: []
+      missing_fact_behavior: not_needed
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication: *id001
+      evidence_requirement: none
+      brandkb_slot_interface_only: true
+    SCM120-A112:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A113:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A114:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A115:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A116:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A117:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A118:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A119:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true
+    SCM120-A120:
+      generation_mode: fact_slot_script
+      required_fact_slots:
+      - brand_voice
+      - event_anchor
+      missing_fact_behavior: express_as_named_slot_never_invent
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication: *id002
+      evidence_requirement: none_slots_only
+      brandkb_slot_interface_only: true

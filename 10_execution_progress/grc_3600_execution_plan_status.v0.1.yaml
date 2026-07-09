@@ -1,7 +1,33 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  updated_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
   roadmap_authority: founder_approved_2026-07-08
+  route_migration_2:
+    applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+    applied_from: codex_prompt_pre_review_required_note_1_founder_chose_additive_option
+    option: additive_route_extension_keep_committed_checker_anchors
+    reason: >
+      The committed P7B checker (ci/checkers/check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py)
+      hard-reads step_id P7A(status DONE)+classification and step_id P7C(status NEXT,
+      generation_authorized_by_this_task false); the committed P7A checker hard-reads P7A(DONE)/P7(NEXT).
+      Neither checker is in this task's allowed writes. Per founder decision on Codex note 1, the anchor
+      steps are kept intact and P7C-BRIEF (this task, DONE) + P7C-GEN (next, NEXT) are ADDED; P7D is
+      re-pointed to BLOCKED_BY_P7C_GEN. No committed checker was edited; no readiness flag was flipped.
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    added_steps:
+      P7C-BRIEF:
+        task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+        meaning: scoped_120_content_production_microbatch_brief_and_go_nogo
+        status: DONE
+      P7C-GEN:
+        task_id: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
+        meaning: scoped_120_content_production_microbatch_generation
+        status: NEXT
+        generation_authorized_by_this_task: false
+    anchor_steps_kept_for_committed_checkers: [P7A, P7, P7B, P7C]
+    p7d_now_blocked_by: P7C-GEN
+    active_route: [P1, P2, P3, P4, P5, P6, P6R, P7A, P7B, P7C-BRIEF, P7C-GEN, P7D, P8]
   route_migration:
     applied_by_task: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
     applied_from: codex_prompt_pre_review_required_notes_1_and_2
@@ -481,13 +507,76 @@ grc_3600_execution_plan_status:
     - generation_allowed
     - candidatepack_ready
     - production_ready
-  - step_id: P7D
-    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
-    status: BLOCKED_BY_P7C
+  - step_id: P7C-BRIEF
+    task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+    status: DONE
+    head_before: 651d80fdeaaa1b523c2fe7bf76a2932f36bf6c7b
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: 'Design the scoped 120 content-production microbatch as an executable/checkable/stoppable brief: 120 future assignments across mkc_007..046 (>=3 each) by P0 group / generation_mode / creative_pattern / owner / proposition grounding / fact-binding, every reference real (P5 propositions, goldset cases, P7B patterns/modes); plus a go/no-go for the next (generation) task. Generates ZERO drafts.'
+    deliverable_kind: scoped_120_brief_and_go_nogo_orchestration_contract
+    contract_status: briefing_orchestration_contract
+    formal_schema_contract: false
+    ontology_truth_source: false
+    standard_validation: check_scoped_content_microbatch_brief_go_nogo.py live+selftest PASS; python -O fail-closed; P1..P6R + P7A + P7B + contract-lock PASS (2-snapshot 10-prior runner); 120 assignments; mkc_007..046 each >=2; 4 modes each >=10; 6 creative patterns each >=10; P0_00/mkc_001..006 not body assignments; all proposition/gold/pattern/mode refs real; BrandKB slots interface-only; CSO not ontology truth; readiness all false; zero new draft/3600/CandidatePack/KE/RAG/DIFY
+    deliverables:
+    - 07_microbatch_briefing/scoped_content_microbatch_120/**
+    - ci/checkers/check_scoped_content_microbatch_brief_go_nogo.py
+    - ci/fixtures/scoped_content_microbatch_brief_go_nogo/**
+    assignment_count: 120
+    generation_authorized_by_this_task: false
+    go_no_go_decision: GO_TO_SCOPED_120_GENERATION_BRIEF
+    new_draft_generated: false
+    blocked_by: []
+    next_unlocked: P7C-GEN
+    readiness_claims_allowed:
+    - scoped_120_microbatch_brief_landed
+    - scoped_120_assignment_plan_landed
+    - generation_mode_aware_assignments_landed
+    - ontology_cso_overlay_assignments_landed
+    - ready_for_scoped_120_generation_brief
+    readiness_claims_forbidden:
+    - scoped_120_generated
+    - generation_3600_completed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7C-GEN
+    task_id: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
+    status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: '3600 structured-draft microbatch generation (canonical route node; same underlying task as the legacy P7 anchor). Blocked by P7C; direct 3600 after P7A/P7B is not allowed. Real generation requires a separate founder authorization + Codex three-gate; never one-shot.'
+    objective: 'Scoped 120 content-production microbatch GENERATION (up to 120 gpt_generated_structured_drafts per the P7C-BRIEF assignment plan). NOT authorized by P7C-BRIEF; requires a separate founder authorization + Codex three-gate. Max 120 without new authorization; 320 requires a separate founder decision; never one-shot 3600.'
+    unlock_kind: scoped_content_production_microbatch_generation
+    next_unlocked: P7C_GEN_execution_brief_and_founder_authorization_only
+    generation_authorized_by_this_task: false
+    real_generation_requires_separate_founder_authorization: true
+    max_count_without_new_authorization: 120
+    count_320_requires_separate_founder_authorization: true
+    direct_3600_allowed: false
+    generation_allowed: false
+    standard_validation: to_be_defined_at_P7C_GEN_brief
+    deliverables:
+    - to_be_defined_at_P7C_GEN_brief
+    blocked_by: []
+    next_unlocked_step: P7D
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_allowed
+    - candidatepack_ready
+    - production_ready
+  - step_id: P7D
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: BLOCKED_BY_P7C_GEN
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: '3600 structured-draft microbatch generation (canonical route node; same underlying task as the legacy P7 anchor). Blocked by P7C-GEN (scoped 120 must run first); direct 3600 after P7A/P7B/P7C is not allowed. Real generation requires a separate founder authorization + Codex three-gate; never one-shot.'
     same_underlying_task_as_legacy_anchor: P7
     unlock_kind: governed_incremental_microbatch
     one_shot_3600_generation_allowed: false
@@ -498,7 +587,7 @@ grc_3600_execution_plan_status:
     deliverables:
     - to_be_defined_at_P7D_brief
     blocked_by:
-    - P7C
+    - P7C-GEN
     next_unlocked: P8
     readiness_claims_allowed: []
     readiness_claims_forbidden:

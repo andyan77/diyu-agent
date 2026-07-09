@@ -1,0 +1,65 @@
+scoped_120_generation_brief:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  purpose: >
+    A single executable brief that ties the scoped-120 plan together for the future P7C-GEN
+    generation task: 120 assignments across mkc_007..046 (>=3 each), each with a generation_mode,
+    creative_pattern, CSO overlay, fact-binding rule, owner routing, proposition grounding, and
+    gold/anti-gold references. This task compiles the brief; it does NOT generate.
+
+  scope:
+    target_count: 120
+    cluster_scope: mkc_007..mkc_046
+    per_cluster_min_assignments: 3
+    p0_groups_covered: [P0_01, P0_02, P0_03, P0_04, P0_05]
+    p0_00_in_body_generation: false
+    generation_authorized_by_this_task: false
+
+  generation_mode_distribution:
+    creative_prototype: 36
+    fact_slot_script: 36
+    evidence_bound_candidate: 24
+    display_solution: 24
+
+  linked_files:
+    manifest: scoped_120_microbatch_manifest.v0.1.yaml
+    assignment_plan: scoped_120_assignment_plan.v0.1.yaml
+    generation_mode_distribution: scoped_120_generation_mode_distribution.v0.1.yaml
+    p0_group_distribution: scoped_120_p0_group_distribution.v0.1.yaml
+    cso_overlay_plan: scoped_120_cso_overlay_plan.v0.1.yaml
+    creative_pattern_assignment: scoped_120_creative_pattern_assignment.v0.1.yaml
+    fact_binding_assignment: scoped_120_fact_binding_assignment.v0.1.yaml
+    gate_requirements: scoped_120_gate_requirements.v0.1.yaml
+    stop_conditions: scoped_120_stop_conditions.v0.1.yaml
+    go_no_go_decision: scoped_120_go_no_go_decision.v0.1.yaml
+    next_execution_contract: scoped_120_next_execution_contract.v0.1.yaml
+
+  source_contracts_consumed:
+    generation_mode_contract: 07_microbatch_briefing/generation_mode_cso_alignment/generation_mode_contract.v0.1.yaml
+    fact_binding_policy: 07_microbatch_briefing/generation_mode_cso_alignment/fact_binding_policy.v0.1.yaml
+    ontology_cso_composition_contract: 07_microbatch_briefing/generation_mode_cso_alignment/ontology_cso_composition_contract.v0.1.yaml
+    creative_pattern_requirements: 07_microbatch_briefing/generation_mode_cso_alignment/creative_pattern_requirements.v0.1.yaml
+    p0_generation_mode_matrix: 07_microbatch_briefing/generation_mode_cso_alignment/p0_generation_mode_matrix.v0.1.yaml
+    proposition_pack_v1: 06_canary_runs/canary_40_001/proposition_pack_v1/cluster_propositions.v0.1.yaml
+    gold_reference_cases: 03_grc_goldset_corpus/normalized/formal_120/
+
+  reference_integrity:
+    all_proposition_refs_exist_in_p5_pack: true
+    all_gold_refs_exist_in_goldset: true
+    all_creative_pattern_refs_exist_in_p7b_contract: true
+    all_generation_modes_exist_in_p7b_contract: true
+    no_invented_p0_cluster_owner_or_mode: true
+
+  readiness:
+    generation_allowed: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    readiness_all_false: true

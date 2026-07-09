@@ -1,0 +1,44 @@
+scoped_120_go_no_go_decision:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  allowed_decision_values:
+  - GO_TO_SCOPED_120_GENERATION_BRIEF
+  - NO_GO_FIX_REQUIRED
+  - HOLD_FOR_FOUNDER_DECISION
+
+  decision: GO_TO_SCOPED_120_GENERATION_BRIEF
+
+  preconditions_for_GO:
+    p1_to_p7b_checker_live_pass: true
+    generation_mode_contract_valid: true
+    fact_binding_policy_valid: true
+    ontology_cso_contract_valid: true
+    scoped_120_assignment_plan_valid: true
+    no_new_draft_generated: true
+    no_3600_generated: true
+    no_candidatepack_ke_rag_dify_touched: true
+    readiness_all_false: true
+    direct_3600_still_blocked: true
+    max_authorized_next_count_is_120: true
+    count_320_requires_separate_founder_authorization: true
+
+  GO_meaning:
+    unlocks: P7C_GEN_execution_brief_and_founder_authorization_only
+    next_unlocked: P7C_GEN_execution_brief_and_founder_authorization_only
+    generation_authorized_now: false
+    does_not_mean: authorized_to_generate_120_now
+    next_task_id: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
+    next_task_still_requires: separate_founder_authorization_plus_codex_three_gate
+
+  preserved_locks:
+    generation_unlocked: false
+    generation_allowed: false
+    generation_3600_unlocked: false
+    generation_3600_completed: false
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false

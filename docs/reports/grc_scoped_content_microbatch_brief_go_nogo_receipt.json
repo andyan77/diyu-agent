@@ -1,0 +1,112 @@
+{
+  "task_id": "GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001",
+  "step_id": "P7C-BRIEF",
+  "founder_authorization": "authorized; Codex Prompt Pre-Review CONDITIONAL_PASS (safe_to_execute: yes_after_required_execution_notes_applied); 6 required notes applied; note 1 fork resolved by founder = additive route extension (keep committed checker anchors)",
+  "head_before": "651d80fdeaaa1b523c2fe7bf76a2932f36bf6c7b",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "worktree_after": "clean",
+  "verdict": "PASS",
+
+  "codex_required_notes_applied": {
+    "note1_route_sync_fork": "founder chose ADDITIVE option (Codex recommended editing the committed P7B checker, but that checker is not in this task's allowed writes and §6 forbids self-expansion). Kept P7A/P7/P7B/P7C anchors intact; ADDED P7C-BRIEF(DONE)/P7C-GEN(NEXT); P7D->BLOCKED_BY_P7C_GEN; route_migration_2 records it.",
+    "note2_p7a_status_unchanged": "P7A.status stays DONE; classification stays agent_authored_quality_probe_pass",
+    "note3_p7c_gen_brief_only": "go/no-go next_unlocked=P7C_GEN_execution_brief_and_founder_authorization_only; generation_authorized_now=false; ledger P7C-GEN.generation_authorized_by_this_task=false",
+    "note4_reference_existence_enforced": "checker verifies every assignment's proposition_refs ∈ P5 pack, gold/anti-gold refs ∈ goldset, creative_pattern_refs ∈ P7B contract, generation_mode ∈ P7B contract, owner ∈ P5 owner_candidate, cluster ∈ mkc_007..046; no invented refs",
+    "note5_independent_recompute": "checker recomputes 120 count / cluster coverage (>=2 each) / mode counts (>=10) / pattern counts (>=10) / P0-00 absence / per-mode fact rules / readiness from the assignment plan, not the manifest",
+    "note6_prior_snapshot_strategy": "10 priors across two snapshots (P1..P6R+contract-lock in a no-07_microbatch_runs snapshot; P7A+P7B in a proof+alignment-present snapshot); no .git in either; ledger reset to HEAD; no whitelisting"
+  },
+
+  "scoped_120_brief": {
+    "target_count": 120,
+    "generation_authorized_by_this_task": false,
+    "direct_3600_allowed": false,
+    "count_320_requires_new_authorization": true,
+    "assignment_count": 120,
+    "cluster_coverage": "mkc_007..mkc_046 (each >=3)",
+    "p0_00_used_as_body_assignment": false
+  },
+
+  "generation_mode_distribution": {
+    "creative_prototype": 36,
+    "fact_slot_script": 36,
+    "evidence_bound_candidate": 24,
+    "display_solution": 24
+  },
+
+  "cso_overlay": {
+    "required_fields_present": true,
+    "marked_ontology_truth": false
+  },
+
+  "creative_patterns": {
+    "pattern_family_count": 6,
+    "all_families_used_at_least_10_times": true,
+    "usage": {"enterprise_narrative_pattern": 10, "role_voice_pattern": 11, "visual_scene_pattern": 12,
+              "display_to_content_pattern": 23, "product_role_story_pattern": 27, "platform_expression_pattern": 37}
+  },
+
+  "fact_binding": {
+    "brandkb_slots_interface_only": true,
+    "brandkb_instance_created": false,
+    "no_fact_blocks_creative_generation": false
+  },
+
+  "go_no_go": {
+    "decision": "GO_TO_SCOPED_120_GENERATION_BRIEF",
+    "next_task_unlocked": "GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001 (P7C-GEN) execution brief + founder authorization ONLY",
+    "generation_authorized_now": false
+  },
+
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p2_checker_live": "PASS",
+    "p3_checker_live": "PASS",
+    "p4_checker_live": "PASS",
+    "p5_checker_live": "PASS",
+    "p6_checker_live": "PASS (no-07_microbatch_runs snapshot)",
+    "p6r_checker_live": "PASS (no-07_microbatch_runs snapshot)",
+    "p7a_checker_live": "PASS (proof+alignment snapshot)",
+    "p7b_checker_live": "PASS (proof+alignment snapshot)",
+    "contract_lock_checker_live": "PASS",
+    "p7c_checker_live": "PASS (error_count=0)",
+    "p7c_checker_selftest": "PASS (positive + 35 negatives all fail-closed)",
+    "p7c_checker_python_O_fail_closed": "exit_2 FAIL_CLOSED",
+    "yaml_json_parse": "all new YAML/JSON parse",
+    "forbidden_scope_clean": true,
+    "committed_p7a_p7b_artifacts_modified": [],
+    "exact_stage_only": "no git add . / -A / commit -a; exact paths only"
+  },
+
+  "execution_progress_ledger": {
+    "yaml_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+    "md_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+    "steps": ["P1","P2","P3","P4","P5","P6","P6R","P7A","P7B","P7","P7C","P7C-BRIEF","P7C-GEN","P7D","P8"],
+    "p1_to_p6r_status": "DONE",
+    "p7a_status": "DONE (classification agent_authored_quality_probe_pass)",
+    "p7b_status": "DONE",
+    "p7_status": "NEXT (legacy anchor)",
+    "p7c_status": "NEXT (anchor for committed P7B checker)",
+    "p7c_brief_status": "DONE",
+    "p7c_gen_status_after_p7c": "NEXT (generation NOT authorized by this task)",
+    "p7d_status_after_p7c": "BLOCKED_BY_P7C_GEN",
+    "p8_status_after_p7c": "BLOCKED_BY_P7D",
+    "generation_unlocked": false,
+    "route_migration_2": "additive; no_old_checker_edited=true; no_readiness_flipped=true"
+  },
+
+  "next_real_action_unlocked": "GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001 (P7C-GEN) — execution brief + separate founder authorization + Codex three-gate; max 120 (320 requires separate founder authorization); never one-shot 3600; does NOT count toward 3600 unless separately authorized",
+
+  "must_not_claim": [
+    "scoped_120_generated",
+    "generation_3600_completed",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ],
+
+  "new_draft_generated": false,
+  "readiness_false": true,
+  "blocking_issues": "none"
+}

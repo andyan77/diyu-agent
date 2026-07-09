@@ -1,0 +1,99 @@
+scoped_120_generation_mode_distribution:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+  total: 120
+  distribution:
+    creative_prototype: 36
+    fact_slot_script: 36
+    evidence_bound_candidate: 24
+    display_solution: 24
+  modes:
+    creative_prototype:
+      target_count: 36
+      p0_group_coverage:
+      - P0_01
+      - P0_02
+      - P0_05
+      cluster_coverage_count: 12
+      allowed_fact_behavior: not_needed
+      required_cso_signals:
+      - creative_tension
+      - emotional_temperature
+      - human_scene
+      - narrative_rhythm
+      - platform_native_expression
+      - role_voice
+      gate_focus: governance_gate + creative_gate (creative gate not production readiness)
+      failure_codes_to_watch:
+      - semantic_checklist
+      - courseware_tone
+      - governance_vocabulary_leak
+      - fabricated_brand_fact
+      - cross_cluster_template_reuse
+    fact_slot_script:
+      target_count: 36
+      p0_group_coverage:
+      - P0_01
+      - P0_02
+      - P0_03
+      - P0_04
+      - P0_05
+      cluster_coverage_count: 12
+      allowed_fact_behavior: express_as_named_slot_never_invent
+      required_cso_signals:
+      - creative_tension
+      - emotional_temperature
+      - human_scene
+      - narrative_rhythm
+      - platform_native_expression
+      gate_focus: governance_gate + creative_gate (creative gate not production readiness)
+      failure_codes_to_watch:
+      - semantic_checklist
+      - courseware_tone
+      - governance_vocabulary_leak
+      - fabricated_brand_fact
+      - cross_cluster_template_reuse
+    evidence_bound_candidate:
+      target_count: 24
+      p0_group_coverage:
+      - P0_03
+      cluster_coverage_count: 8
+      allowed_fact_behavior: block_until_evidence
+      required_cso_signals:
+      - aesthetic_framing
+      - emotional_temperature
+      - human_scene
+      - narrative_rhythm
+      - platform_native_expression
+      - visual_scene
+      gate_focus: governance_gate + creative_gate (creative gate not production readiness)
+      failure_codes_to_watch:
+      - semantic_checklist
+      - courseware_tone
+      - governance_vocabulary_leak
+      - fabricated_brand_fact
+      - cross_cluster_template_reuse
+    display_solution:
+      target_count: 24
+      p0_group_coverage:
+      - P0_04
+      cluster_coverage_count: 8
+      allowed_fact_behavior: general_method_first_scene_facts_for_final
+      required_cso_signals:
+      - aesthetic_framing
+      - creative_tension
+      - narrative_rhythm
+      - platform_native_expression
+      - real_scene_feeling
+      - visual_scene
+      gate_focus: governance_gate + creative_gate (creative gate not production readiness)
+      failure_codes_to_watch:
+      - semantic_checklist
+      - courseware_tone
+      - governance_vocabulary_leak
+      - fabricated_brand_fact
+      - cross_cluster_template_reuse

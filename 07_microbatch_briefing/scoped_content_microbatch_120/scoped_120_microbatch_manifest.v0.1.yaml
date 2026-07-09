@@ -1,0 +1,48 @@
+scoped_120_microbatch_manifest:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
+  step_id: P7C-BRIEF
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  scoped_microbatch:
+    scope_id: scoped_content_microbatch_120_001
+    target_count: 120
+    generation_authorized_by_this_task: false
+    next_generation_task_required: true
+    next_generation_task_id: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
+    counts_toward_3600: false_until_next_task_authorizes_counting
+    output_status_if_generated_later: gpt_generated_structured_draft
+    max_count_without_new_authorization: 120
+    count_320_requires_new_founder_authorization: true
+    direct_3600_allowed: false
+
+  what_this_task_does:
+  - Designs the scoped 120 content-production microbatch as an executable, checkable, stoppable brief.
+  - Assigns 120 future drafts by P0 group / generation_mode / creative_pattern / owner / fact-binding.
+  - Produces a go/no-go for the NEXT (generation) task.
+  what_this_task_does_not_do:
+  - Does NOT generate any draft (0 of 120 generated).
+  - Does NOT count P7A proof drafts toward 3600.
+  - Does NOT create CandidatePack / run Four-Gate / write KE / Serving / RAG / DIFY.
+  - Does NOT flip any readiness flag.
+
+  note: >
+    This task does not generate. Only the next task (P7C-GEN,
+    GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001) may generate the 120 drafts,
+    and only under a separate founder authorization + Codex three-gate. 120 is the max count
+    without new authorization; 320 requires a separate founder decision. Direct 3600 stays
+    forbidden (contract-immutable + shared_rules.global_forbidden).
+
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true
