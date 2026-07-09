@@ -1,0 +1,35 @@
+{
+ "proof_microbatch_id": "proof_microbatch_001",
+ "task_id": "GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001",
+ "deliverable_kind": "agent_authored_quality_probe",
+ "expected_total": 40,
+ "actual_total": 40,
+ "cluster_coverage": "mkc_007..mkc_046",
+ "per_cluster_exactly_one": true,
+ "generation_status_all": "gpt_generated_structured_draft",
+ "human_authored": false,
+ "reused_old_pilot_artifacts": false,
+ "reused_p4_canary_body": false,
+ "generator_capability_proven": false,
+ "automatic_stable_generation_demonstrated": false,
+ "ready_for_P7B_3600_generation_brief": false,
+ "counts_toward_3600": false,
+ "gates": {
+  "governance_gate_pass": true,
+  "creative_gate_pass": true,
+  "semantic_alignment_pass": true,
+  "body_entailment_pass": true,
+  "dedupe_pass": true,
+  "style_copy_pass": true
+ },
+ "readiness_all_false": true,
+ "must_not_claim": [
+  "generation_3600_completed",
+  "candidatepack_ready",
+  "KE_ready",
+  "RAG_ready",
+  "DIFY_ready",
+  "production_ready",
+  "generator_capability_proven"
+ ]
+}

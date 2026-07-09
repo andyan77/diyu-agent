@@ -1,6 +1,6 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+  updated_by_task: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
   roadmap_authority: founder_approved_2026-07-08
   route_authority_for_grc_sequence:
     primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
@@ -262,7 +262,7 @@ grc_3600_execution_plan_status:
     generation_authorized_by_this_task: false
     three600_generated_count: 0
     blocked_by: []
-    next_unlocked: P7
+    next_unlocked: P7A
     readiness_claims_allowed:
     - legacy_semantic_pilot_lock_retired
     - grc_route_recorded_as_valid_unlock_evidence
@@ -272,6 +272,55 @@ grc_3600_execution_plan_status:
     - generation_3600_completed
     - generation_allowed
     - one_shot_3600_generation
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7A
+    task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    status: DONE
+    head_before: f8015a4308cb21529ddd429b991bc36ae5d566db
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: 'AI-author 40 fresh, non-copied, proposition-grounded, dual-gate-passing structured drafts (one per formal cluster mkc_007..046) as an HONEST generator-capability quality PROBE. Founder Option 2 re-scope: proves an execution AI can author gate-passing drafts; does NOT prove automatic/stable generation (no standalone generator harness exists in repo).'
+    deliverable_kind: agent_authored_quality_probe
+    proof_microbatch_generated: true
+    proof_drafts_count: 40
+    all_dual_gate_pass: true
+    human_authored: false
+    generator_capability_proven: false
+    automatic_stable_generation_demonstrated: false
+    ready_for_P7B_3600_generation_brief: false
+    counts_toward_3600: false
+    three600_generation_executed: false
+    accepted_domain_knowledge: false
+    standard_validation: check_generator_capability_proof_microbatch.py live+selftest PASS; python -O fail-closed; P1..P6R+contract-lock live PASS (worktree-isolated at HEAD); 40 drafts mkc_007..046 each 1; anti-copy LCS vs gold<16 vs P4 canary<18 cross-cluster<18; cluster-specific fingerprint; red-line scans (no brand/SKU/price); owner routing; readiness all false; no forbidden materialization
+    deliverables:
+    - 07_microbatch_runs/proof_microbatch_001/**
+    - ci/checkers/check_generator_capability_proof_microbatch.py
+    - ci/fixtures/generator_capability_proof_microbatch/**
+    machine_verified_scope:
+    - structure
+    - anti_copy_lcs_vs_gold_and_canary
+    - cluster_specificity
+    - red_line_no_brand_sku_price
+    - owner_routing
+    - readiness_false
+    - proposition_grounding
+    not_machine_verified:
+    - subjective_aesthetic_creative_quality_is_ai_self_assessed
+    blocked_by: []
+    next_unlocked: P7
+    readiness_claims_allowed:
+    - agent_authored_quality_probe_generated
+    - proof_microbatch_machine_gated
+    readiness_claims_forbidden:
+    - generator_capability_proven
+    - automatic_stable_generation
+    - generation_3600_completed
+    - generation_3600_unlocked
+    - generation_allowed
     - candidatepack_ready
     - KE_ready
     - RAG_ready
@@ -308,13 +357,17 @@ grc_3600_execution_plan_status:
     - generation_allowed
     - one_shot_3600_generation
     - candidatepack_ready
+    phase_alias: P7B
+    p7a_prerequisite_status: DONE
+    p7a_added_readiness: false
+    p7a_note: P7A generator-capability quality probe is DONE but added NO readiness; real 3600 generation still requires a separate founder authorization + Codex three-gate. P7 == Brief's P7B.
   - step_id: P8
     task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
-    status: PLANNED_BLOCKED_BY_P7
+    status: BLOCKED_BY_P7B
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7)
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7) (blocked by P7/P7B 3600 governed generation, not yet authorized)
     standard_validation: to_be_defined_at_P8_brief
     deliverables:
     - to_be_defined_at_P8_brief
@@ -324,3 +377,21 @@ grc_3600_execution_plan_status:
     readiness_claims_allowed: []
     readiness_claims_forbidden:
     - generation_unlocked
+  p7a_proof_microbatch_note:
+    task: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    step_id: P7A
+    deliverable_kind: agent_authored_quality_probe
+    founder_decision: Option 2 honest AI-authored quality probe (not a generator-capability proof)
+    drafts: 40
+    all_dual_gate_pass: true
+    proves: an execution AI can author 40 gate-passing, non-copied, proposition-grounded drafts
+    does_not_prove:
+    - automatic_stable_generation
+    - 3600_mechanical_feasibility
+    - standalone_generator_harness_exists
+    no_generator_harness_exists_in_repo: true
+    generator_capability_proven: false
+    ready_for_P7B_3600_generation_brief: false
+    counts_toward_3600: false
+    p7b_alias: the existing P7 step is the Brief's P7B (3600 governed generation, brief-only unlock, status NEXT)
+    generation_unlocked_top_level: false

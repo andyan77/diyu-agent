@@ -1,0 +1,2601 @@
+proof_microbatch_rich_body_blocks:
+  proof_microbatch_id: proof_microbatch_001
+  task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+  block_count: 40
+  min_body_chars_standard: 350
+  human_authored: false
+  blocks:
+  - rich_body_id: PROOF-MB-001-RB-001
+    candidate_id: PROOF-MB-001-001
+    canonical_cluster_id: mkc_007
+    cluster_title: 企业叙事骨架
+    body_form: full_rich_body
+    body: 给一家服装企业搭建企业叙事骨架，第一笔不该落在成立于哪一年或喊了什么口号上，而要先把它长年在替哪一类穿衣人化解哪一种经营难题讲明白——这道难题可能是同一批版型在换季返单后走样，也可能是导购站在货架前解释一件外套为何选这种面料时反复卡壳。锚点定下来，才轮到把企业在挑面料、排布生产节奏、分派各道责任上那些一再重复的动作摊开，它们不是某回临时起意，而是旁人能照着复述一遍的组织性做法。做法讲到位，往下就空出几格证明位：一格留给供应链上下游的协同，一格留给内部谁盯哪个复核节点，一格留给过程里攒下的可追溯记录，材料没到手时先空着，不拿想象去填。再往后，把这套做法折算成穿的人能亲眼比对的差别，比如同系列不同款之间版型对得上、拼接处收边不飘，让读者从画面里看出门道，而不是只读到一串形容词；这层价值还能沿系列轴切成若干可反复展开的段落，同一副骨架派生出多篇而彼此不撞。要守住的边界是：这副骨架只有在企业确实攒下可复述的稳定做法时才立得住，若手上只是一场限时活动或一桩孤立事件，就别硬撑成一段叙事，退回成一条普通信息记着便可；同时凡话头碰到体量、占比或增速这类要拿数据背书的判断，一律先按住，等官方材料补齐再讲，没材料就把那句挂起来待补，正文只保留能复述的方法层，绝不用观察口吻把经营成果硬写死。
+    body_char_count: 543
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 问题场景 -> 经营方法
+    - 经营方法 -> 证明槽位
+    - 证明槽位 -> 价值表达
+    - 价值表达 -> 系列轴
+    domain_anchors:
+    - 面料取舍
+    - 版型稳定性
+    - 门店解释难度
+    - 复核节点
+    - 系列一致性
+    expected_body_topics_covered:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - 供应链 / 组织 / 过程证明的预留槽位
+    - 价值表达与可观察差异
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面：版型换季返单后是否走样、拼接处收边是否发飘、导购在货架前解释面料时是否卡壳。
+      method_layer: 解释可复用的判断顺序：先定问题场景，再摊开一再重复的组织性做法，再空出证明槽位，最后折算成能亲眼比对的价值并沿系列轴展开。
+      boundary_layer: 对体量、占比、增速这类经营成果与市场地位的硬结论设边界，不用观察口吻硬写死。
+      downgrade_path: 缺官方材料的硬结论先按住挂为待补，正文只留可复述的方法层；只有一次性活动或孤立事件时整体退回为普通信息条目。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-001
+    - PROP-V1-002
+    - PROP-V1-003
+    - PROP-V1-004
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-001
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-002
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-003
+        proposition_type: boundary_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-004
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 同一批版型在换季返单后走样，导购站在货架前解释一件外套为何选这种面料时反复卡壳，以及同系列不同款之间版型对得上、拼接处收边不飘。
+    domain_mechanism: 先把问题场景定为起点，再摊开一再重复、旁人能照着复述的组织性做法，往下空出供应链/复核节点/可追溯记录三格证明位，最后折算成能亲眼比对的价值并沿系列轴切段。
+    downstream_content_effect: 起点与做法接得上后，同一副骨架能沿系列轴派生出多篇彼此不撞的内容，而不至于层层悬空。
+    risk_boundary_handling: 无稳定做法只有临时活动时整体降级为普通信息条目；凡触及体量、占比、增速等硬结论一律先按住、等官方材料补齐，缺料挂为待补，正文只保留方法层。
+  - rich_body_id: PROOF-MB-001-RB-002
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    cluster_title: 证明槽位与价值转译
+    body_form: full_rich_body
+    body: 聚焦'证明槽位与价值转译'这一簇，核心动作是把公司内部谁做了什么、在哪一步做的，改写成外部读者能核对的说法，而不是直接抛出'品质过硬、供应链够强'这类空话。落到服装场景，先把参与判断的岗位摆开：出款式的设计岗、定合身度的版型岗、管货架呈现的陈列岗、面对面讲解的导购岗，各自的职责界线要划清，功劳才不会被搅成一团。接着沿真实经手的环节铺开叙事——布料入库、开裁、车缝、熨烫定型、成衣检验，让每一步都成为读者可跟随的段落。随后在环节后面接上关卡：一类看做工有没有到线，另一类看有没有人回头再对一遍，这样一个个关卡串起来，工序讲解就有了可回溯的骨架，而不是一句空洞的保证。谈到备料与代工这类上游安排时，得把为什么选这种做法和它要应付的限制一起端出来，比如交期紧、起订量高、批次要稳，选择连着约束写，方法听起来才站得住。但要在这里勒住缰绳：可以说明存在一个事后再核一遍的关卡，却不能顺着讲某回对货挑出了几件毛病，那已经跨进了具体经营数字的地界，缺授权就改用观察式说法或标注留待补充来源。至于叫得出名字的代工厂、检验单据，属于个案事实，没有拿到授权材料的一概不写，正文只认这里有这么一类环节存在。
+    body_char_count: 493
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 组织角色 -> 工序节点
+    - 工序节点 -> 质量门与复核门
+    - 供应链选择 -> 约束
+    - 约束 -> 方法可信度
+    - 证明槽位 -> 价值表达
+    domain_anchors:
+    - 设计角色
+    - 版型角色
+    - 陈列角色
+    - 导购角色
+    - 选料节点
+    - 复核门
+    expected_body_topics_covered:
+    - 角色分工与协作边界
+    - 关键工序或流程节点的叙事位置
+    - 质量门、复核门、交接门
+    - 供应链选择与约束处理的通用叙事位
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如布料入库、开裁、车缝、熨烫定型、成衣检验这些看得见的工序环节与岗位分工
+      method_layer: 解释可复用的判断机制与顺序：岗位分工→工序节点→节点后接质量门与复核门形成可回溯关卡链→供应链做法与约束成对呈现以支撑方法可信度
+      boundary_layer: 对复核件数、问题件数等经营数字与具名代工厂/检验单据等实例事实设边界，一律不当既有事实写出
+      downgrade_path: 无授权的硬结论回收为'存在此类工序环节'的观察语言，或标注留待补充来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-005
+    - PROP-V1-006
+    - PROP-V1-007
+    - PROP-V1-008
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-005
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-006
+        proposition_type: downstream_effect
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-007
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-008
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 布料入库、开裁、车缝、熨烫定型、成衣检验的成衣工序环节，以及设计、版型、陈列、导购的岗位分工画面
+    domain_mechanism: 在每个工序环节后接上关卡（一类看做工是否到线、一类看有没有人回头再对一遍），关卡串成可追溯链条，工序讲解才立得住。
+    downstream_content_effect: 工序讲解有了可回溯的骨架，供应链做法与其约束成对呈现，方法叙事更站得住，避免把抽象价值直接写成产品效果或经营事实。
+    risk_boundary_handling: 涉及某次复核挑出的具体件数等经营数字，以及具名代工厂、检验单据等实例事实一律不写，缺授权时改用观察语言或标注留待补充来源。
+  - rich_body_id: PROOF-MB-001-RB-003
+    candidate_id: PROOF-MB-001-003
+    canonical_cluster_id: mkc_009
+    cluster_title: 故事弧线适用边界
+    body_form: full_rich_body
+    body: 这一簇要回答的是：手上这段素材配得上哪种叙事线，配错会踩哪些坑。判断的入口不在写手预设的情绪，而在素材本身在回答哪类问题。若画面呈现的是一件对象的静态差别——一件衬衫的门襟从明扣改成暗门襟、领座较常规抬高一指、两块面料肌理凑近才分得出粗细——它回答的是结构上哪里不同，就配一条把可见差异讲清、把取舍缘由说明、落在眼睛能确认之处的结构线，而非硬撑成跌宕起伏的历程。若画面记录的是一连串动作——反复改版型、把候选料两两并置做面料比较、为陈列挪动搭配比例——它回答的是这个选择怎样被逐步收拢，就配一条讲清难题、铺开取舍次序、交代如何定案的过程线。顺序必须先认素材、后配弧线；掉头先钉死一条线再回填桥段，只会空转套路。选好线，紧接着配上匹配的证明分量：越想突出前后落差、越想制造反转，越得拿出经得起查证的实打实事实，证明扛不动时线的强度就得往回收，能承载的价值表达与留给证据的位置随之变化。有几个信号一冒头就说明这条线不该用：非得摆出成绩数据撑场面、非得给画面里的人硬塞一段心理戏、非得让读者先默认一个尚未被证过的前提。真有过程可摊开，线才立得住；只想给一句空结论镶花边，它便失效，此时退回成一句朴素的做法交代。这样内容动笔前就先分清该做结构说明、过程展开还是退回观察问题，弱素材不会被硬架成撑不住的大历程。凡涉及效果好坏、体感优劣这类硬话，缺来源时先换成不带评判的观察说法，或挂起来等补可靠出处，别让叙事张力顶替本该拿出的证据。
+    body_char_count: 611
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 素材问题类型 -> 叙事弧线选择
+    - 叙事弧线选择 -> 所需证明强度
+    - 所需证明强度 -> 可兼容的价值表达与证据位置
+    - 弧线不匹配 -> 降级为观察或问题
+    domain_anchors:
+    - 门襟
+    - 领型
+    - 面料肌理
+    - 版型修改
+    - 面料比较
+    - 搭配比例
+    - 陈列调整
+    expected_body_topics_covered:
+    - 不同叙事弧线对应的问题类型
+    - 弧线与证据要求的绑定
+    - 弧线与价值表达、proof slot 的兼容性
+    - 不适用弧线的识别信号
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面：门襟从单排明扣改成暗门襟、领座抬高、两块面料肌理凑近才见粗细、反复改版型与挪动搭配比例等可见线索。
+      method_layer: 解释可复用的判断机制与顺序：先认素材在回答哪类问题，再据此选弧线，选定后绑定匹配的证明分量，让价值表达与证据位置随之调整。
+      boundary_layer: 对效果好坏、体感优劣这类硬结论设边界，缺来源时不下断言，改用观察语言或挂为待补出处。
+      downgrade_path: 弧线不匹配或无实质过程时，把它退回成一句朴素的做法交代、一个观察问题，或标注缺来源。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-009
+    - PROP-V1-010
+    - PROP-V1-011
+    - PROP-V1-012
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-009
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-010
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-011
+        proposition_type: failure_signal
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-012
+        proposition_type: boundary_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+    concrete_apparel_anchor: 一件衬衫的门襟从单排明扣改成暗门襟、领座比常规抬高约一指，两块面料肌理凑近才分得出粗细。
+    domain_mechanism: 先判断素材在回答结构差异还是选择过程，据此挑弧线，再按弧线强反差程度绑定相应的可核验证明分量。
+    downstream_content_effect: 让内容在动笔前先分清该做成结构说明、过程展开还是退回观察问题，弱素材不会被硬架成撑不住的大历程。
+    risk_boundary_handling: 命中编造内心或硬搬无源数字等信号即判弧线不适用，涉及效果或优劣的硬话缺来源时改写为中性观察或挂为待补出处。
+  - rich_body_id: PROOF-MB-001-RB-004
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    cluster_title: 反模板叙事锚点
+    body_form: full_rich_body
+    body: 当一段服装文案只剩下整体印象，读者看不到任何物件，也弄不清作者究竟在讲什么，这时就该换一种写法：先在画面里圈定一个既能被镜头对准、又能被句子直接点名的落点，再让整段叙述绕着它生长。这样的落点大致分四种。第一种是可被指认的物件，比如门襟上那排纽扣的疏密，或挂通上同一色组衣物的排布；第二种是施加在物件上的处理，比如把领口翻折过来、把腰线抬到坐姿高度去比对；第三种是解释为何不能随意夸大的约束，比如层次叠装会牵动外轮廓，取景光会改变颜色的观感，这类限制得连着取舍一起交代；第四种是内容切入的时间点，比如上身之前、整理途中、递示给顾客的那一刻。真正让叙述立住的，是把这四种落点串成一条线：让物件牵出处理手法，让处理手法牵出眼睛可核验的痕迹，让约束托住一句取舍说明，让某个时刻撑起可拍可读的场面。要注意，这套办法只在稿子里确有可指认的实物细节时才管用；若整篇都是空洞的情绪渲染、拿不出实物细节，就得先补齐落点再动笔，硬套只会继续空转。还有一条边界：落点得是换到别处也能复现的通用结构，任何带着具体货号、售价或库存的说法都要先剔掉，或标成来源待补再议；凡涉及销量、增长这类效果结论，也只用观察语言描述、不急着下定论。
+    body_char_count: 503
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 抽象风格词 -> 需要具体锚点
+    - 对象锚点 -> 动作锚点
+    - 动作锚点 -> 可见线索
+    - 约束 -> 取舍表达
+    - 节点 -> 场景可拍性
+    domain_anchors:
+    - 门襟
+    - 领口
+    - 腰线
+    - 翻折
+    - 挂通色组
+    - 叠装层次
+    - 递示
+    expected_body_topics_covered:
+    - 对象锚点类型
+    - 动作锚点与处理逻辑
+    - 约束锚点与取舍表达
+    - 节点锚点与前后台衔接
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如门襟纽扣疏密、领口翻折、挂通色组排布
+      method_layer: 解释可复用的判断机制与顺序：先锁定可指认落点，再让物件牵动作、动作牵可见线索、约束连取舍、节点撑可拍性
+      boundary_layer: 对销量、增长等效果结论设边界，只用观察语言描述、不直接下结论
+      downgrade_path: 无证据的硬结论回收为观察，或把带货号价格库存的实例事实标为来源待补再议
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-013
+    - PROP-V1-014
+    - PROP-V1-015
+    - PROP-V1-016
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-013
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-014
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-015
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-016
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 门襟上那排纽扣的疏密与挂通上同一色组衣物的排布
+    domain_mechanism: 先锁定一个能被镜头对准、被句子点名的落点，再让物件牵动作、动作牵可见线索、约束连取舍、节点撑可拍性，把四类落点串成一条可核验的线。
+    downstream_content_effect: 让文案从整体印象回到可指认的物件、动作、约束和时间点，天然区别于套路化写法。
+    risk_boundary_handling: 落点须是换到别处也能复现的通用结构；带货号、售价、库存的说法先剔除或标为来源待补，销量增长等效果结论只用观察语言描述、不下定论。
+  - rich_body_id: PROOF-MB-001-RB-005
+    candidate_id: PROOF-MB-001-005
+    canonical_cluster_id: mkc_011
+    cluster_title: 叙事放大禁区与风险路由
+    body_form: full_rich_body
+    body: 做服装零售内容，先按'叙事放大禁区与风险路由'认出哪些表达一旦被继续拔高就会越线，再据此选处置路径。容易出问题的地方大致归成四个方向：一是拿身材或身体变化去许诺，比如给一条直筒裤配上'上身立刻少五斤'，或强调高腰线让腿显长；二是暗示健康益处或功能疗效，例如称某种面料能'调理'皮肤；三是牵扯身份标签与第三方背书，像行业排名、专业奖项、机构认证这类信号；四是用极端而绝对的比较口吻。顺序上先归位，一段话落在哪个方向定下来，才谈处置。处置分三档：口径还能收的，把话收成只讲看得见的版型与做工，不替顾客下结论；一时改不动的，先按住等补充材料；碰到敏感承诺的，转交人工再判，不自行放行，这也是需要升级把关的典型边界。另有一条不让步的红线：只要某段叙述必须靠某个具体的人、某桩具体门店事件才站得住，就得先备齐授权凭据才允许露出，凭据不足一律按不能出现处理，像员工经历、顾客反馈这类实例事实都圈进来。至于'更显瘦'这样的身材话术、'更耐穿'这样的功效说法，只要拿不出支撑，就先记成来源待补，不当成已定事实外发；表达强度和证据对不上时，宁可把结论收回成'眼下只能看到什么、还欠哪些依据'。还要盯住那些把平常说法拔高成定论的加码词，像'绝对''从不'这类，默认先回避或加限定。这样内容在成稿前就分成删改、挂起、送审或降级几路，不把权威信号、实例事实和结果承诺，写成看着安全其实越界的表达。
+    body_char_count: 586
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 识别叙事放大禁区 -> 判定所属禁区类别
+    - 判定所属禁区类别 -> 选择删改/挂起/送审的路由动作
+    - 选择路由动作 -> 设定授权与证据边界
+    domain_anchors:
+    - 更显瘦
+    - 更耐穿
+    - 排名
+    - 奖项
+    - 认证
+    - 员工经历
+    - 顾客反馈
+    - 门店事件
+    expected_body_topics_covered:
+    - 高风险 narrative zone 分类
+    - 不同风险 zone 对应的路由动作
+    - 风险放大词与禁用表达类别
+    - 需要 founder review 的典型边界
+    epistemic_split:
+      observation_layer: 只描述可观察的版型、面料、动作与画面细节，如直筒裤剪裁、高腰线让腿显长这类眼睛能看见的结构，不替顾客下结论
+      method_layer: 先把表达归入身体承诺、健康功效、身份背书、绝对比较四类禁区，再按能改写、挂起、送审三档顺序分流，缺授权的实例叙述一律回收
+      boundary_layer: 对更显瘦、更耐穿等身体或功效结论设边界，无支撑证据时不作硬事实，敏感承诺转人工再判
+      downgrade_path: 无支撑的功效或结果承诺回收成只讲能看到什么、还欠哪些依据的观察语言，或先记为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-017
+    - PROP-V1-018
+    - PROP-V1-019
+    - PROP-V1-020
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-017
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-018
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-019
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-020
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 给一条直筒裤配上'上身立刻少五斤'、以高腰线让腿显长的身体效果画面
+    domain_mechanism: 写作前先把表达归入身体承诺/健康功效/身份背书/绝对比较四类禁区，再按能改写者降为只讲可见结构的观察语言、改不动者挂起等材料、涉及敏感承诺者转人工三档分流
+    downstream_content_effect: 内容在成稿前就被分成删改、挂起、送审或降级几路，避免把权威、实例与结果承诺当硬结论直接外发
+    risk_boundary_handling: 更显瘦、更耐穿等功效或结果无支撑时记为待补来源并回收成观察语言；靠具体人物或门店事件才成立的实例叙述，缺授权凭据一律按不能出现处理
+  - rich_body_id: PROOF-MB-001-RB-006
+    candidate_id: PROOF-MB-001-006
+    canonical_cluster_id: mkc_012
+    cluster_title: 系列轴与跨形态资产单元
+    body_form: full_rich_body
+    body: 把一组同源内容当序列经营，起点是先定下贯穿其间的那根轴。一条主线企业叙事要立得住，靠的是它能被哪个维度反复佐证：立足点在做工顺序，就沿工艺流程节点切；在穿着情境，就沿场景任务切；落在服装本身的抉择，就沿品类的角色定位、面料上的取舍、版型的松紧变化、或货架陈列的搭配关系来切分。这根轴一旦落定，序列里每一格该讲哪件事、相邻两格靠哪个维度拉开距离，也随之定了——同讲一件外套，前一格盯住肩线与门襟的结构做法，后一格转去看它挂上货架后与内搭的层次关系，画面各管一段，不致让人反复听同一句话。接着要给每一格派一个不同的切入角度，并架起一道防重叠的约束：一旦发现相邻两格都在夸同一处好处，就强制换角度或换证据层级，让它们各有侧重而非彼此盖章。证明的疏密还得跟话题的层层展开对齐，分量重的证据点疏着放、轻的方法点密着铺；看得见的前台益处与藏在后头的能力交替出场，一段给好处、一段给缘由，读来才见起伏。同一根轴还能横跨不同载体，图文里讲得细些、短视频里讲得紧些，疏密各异而轴心不变。要留意的是，这套办法只在手上确有一批同源素材可供串联时才转得动；若只剩孤零零一条内容，硬架轴线只会空转，得先掂量有没有能连成一串的批量。还须守住一条边界：轴线终究只是编排骨架，不能借它凭空造出根本没有的产品序列或上市节点；一旦把序列坐实成某家的上新节奏、写进具体货号与排期，都超出可写范围，这类应标记为待补来源，正文只保留编排骨架本身。
+    body_char_count: 602
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - master_narrative -> series_axis
+    - series_axis -> episode_unit
+    - episode_unit -> proof_slot_distribution
+    - sequence_order -> repetition_control
+    domain_anchors:
+    - 流程节点
+    - 场景任务
+    - 品类角色
+    - 面料取舍
+    - 版型变化
+    - 陈列关系
+    - 图文
+    - 短视频
+    expected_body_topics_covered:
+    - 系列轴的类型与选用条件
+    - 序列编排逻辑与去重复机制
+    - proof cadence 与 topic cascade 的绑定
+    - 前台价值与后台能力穿插规则
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面：外套的肩线与门襟做法、挂上货架后与内搭的层次关系、图文与短视频的疏密差异
+      method_layer: 解释可复用的判断机制与顺序：先由主线叙事定轴，轴一落定就决定每格讲什么与相邻靠哪个维度区分，再给各格派不同切入角度并架防重叠约束，证明疏密与话题层层展开对齐
+      boundary_layer: 对效果、规模、排期等硬结论设边界：不据编排结构断言存在真实产品序列，成批同源才适用、单条硬套只会空转
+      downgrade_path: 无授权来源的具体货号与上市排期不写入正文，标记为待补来源，正文只保留编排骨架本身
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-021
+    - PROP-V1-022
+    - PROP-V1-023
+    - PROP-V1-024
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-021
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-022
+        proposition_type: execution_instruction
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-023
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-024
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 同讲一件外套，前一格盯住肩线与门襟的结构做法，后一格看它挂上货架后与内搭的层次关系
+    domain_mechanism: 系列轴一旦选定，就决定序列里每一格讲什么、相邻两格靠哪个维度拉开距离，再给各格派不同切入角度并架起防重叠约束
+    downstream_content_effect: 产出彼此不重复、各有侧重的内容序列，而非反复夸同一处好处的口号连载
+    risk_boundary_handling: 轴线只是编排骨架，不得凭空造出并不存在的产品序列或上市节点，具体货号与排期缺授权来源则标记为待补，正文只留编排结构
+  - rich_body_id: PROOF-MB-001-RB-007
+    candidate_id: PROOF-MB-001-007
+    canonical_cluster_id: mkc_013
+    cluster_title: 角色发声寄存器
+    body_form: full_rich_body
+    body: 当同一件外套要在店里被反复讲起，先要回答的不是它好不好看，而是这段文字究竟由谁开口，这正是角色发声寄存器最先处理的事。选定主语，就等于选定了叙述站位：店主开口，落点偏向为什么把这批货这样归类、这样陈列的经营取舍；导购开口，落点偏向顾客上身以后能不能抬臂、门襟扣拢会不会发紧这类当场可核的线索；搭配师开口，落点偏向腰线高低、外套与内搭的层次怎么铺排；轮到品牌旁白，则退回只讲得清的可见部分，把落肩、袖长这些结构交代明白就收住。站位定了，信息密度也随之定档，越专业的口吻越能铺陈结构，可每往前推一句，就得补一句限制语，别让“看着显瘦”这种主观感受滑成板上钉钉的判断。再往下是措辞分工：动作词只交代手上做了什么，比如把袖口向外翻两折；观察词只交代眼睛看见什么，比如面料在肩头微微起量；解释词只交代或许的缘由，比如可能和裁片走向有关，一旦把或许说成必然，就成了拿臆测顶替事实。这套约定仅在文字确有叙述者时才立得住，若要扮成某位真人来讲亲历，它就兜不了底；行文中一旦冒出具体姓名、职务或某家店的原话，要么整段撤掉，要么先挂为缺来源、等凭据补齐再启用，凡触及上身效果、走货这类硬话，也先用观察语言落笔，把下结论的权力留给后续能补上的来源。
+    body_char_count: 513
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 角色主语 -> 叙述站位
+    - 叙述站位 -> 信息密度与限制语
+    - 角色主语 -> 允许的动作词与观察词
+    - 角色边界 -> 去个人化口吻
+    domain_anchors:
+    - 店主视角
+    - 导购视角
+    - 搭配师视角
+    - 品牌旁白
+    - 动作词
+    - 观察词
+    - 解释词
+    expected_body_topics_covered:
+    - 主语选择与叙述站位
+    - 信息密度与限制语
+    - 动作词、观察词、解释词边界
+    - apparel / retail 场景中的 role anchor
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如门襟扣拢的松紧、面料在肩头的起量、袖口翻折的动作
+      method_layer: 解释可复用的判断机制与顺序：选主语即定站位，站位定信息密度并配限制语，动作词、观察词、解释词各守边界
+      boundary_layer: 对上身效果、走货等硬结论设边界，一律先用观察语言落笔，不直接下定论
+      downgrade_path: 无证据的硬结论回收为观察描述，或挂为缺来源、等凭据补齐再启用
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-025
+    - PROP-V1-026
+    - PROP-V1-027
+    - PROP-V1-028
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-025
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-026
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-027
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-028
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件外套的门襟扣拢松紧、落肩与袖长、面料在肩头的起量以及袖口向外翻折两折
+    domain_mechanism: 选定角色主语即选定叙述站位，站位决定信息密度并配限制语，动作词只说做了什么、观察词只说看到什么、解释词只说可能原因，三类词各守边界不混用。
+    downstream_content_effect: 让同一件外套能按店主、导购、搭配师或品牌旁白切换表达密度与口吻而不飘，同时不虚构任何人物经历。
+    risk_boundary_handling: 遇真实姓名、职务、门店引述即整段撤掉或标为缺来源等授权，上身效果与走货等硬话先用观察语言写、把下结论权留给后续来源。
+  - rich_body_id: PROOF-MB-001-RB-008
+    candidate_id: PROOF-MB-001-008
+    canonical_cluster_id: mkc_014
+    cluster_title: 语气校准与去人物化
+    body_form: full_rich_body
+    body: 这个聚类要解决的是让叙述口吻随场景轻重而变，同时不把任何一句话写成能对上某个真人的样子。先从场景轻重定口吻：给一组上衣与下装做日常换位提示时，用平缓、点到为止的说法就够了；只有走到关键工艺环节，比如一处滚边或一道明线的走向，才允许把语气稍稍收紧、显出郑重，绝不能反过来拿激动的措辞去顶一段本来很平常的整理动作。第二步把材料的分量和断言的分寸绑在一起：画面里能看清的，只说看得到的部分，例如“这条门襟的缉线排布得比较均匀”属于观察；一旦顺势滑向“这做工绝对靠得住”，就越过了画面能承载的范围，得退回改写、把限定语补齐。人设这一层只留可复用的表面特征——讲解的节奏、语序习惯、答疑时的耐心程度，而把长相、家里的事、原话对白、过往成绩这类能指向具体个人的东西全部剔除，保留的是“内行讲解者”的功能壳，不是某一个人。到了讲效果、说耐用、谈安全这类高风险说法跟前，先把绝对口气松下来，换成“一般而言”“多数场合下”“要看具体件况”之类的限定词，把话往回收；但要记牢，软化口气只改可读的强度，改不动事实这道门槛：凡主张效果或安全，哪怕把口气放得再软，也仍要有可核验的依据托底，缺依据就先按观察语言写，或标成待补来源暂时挂起，不能直接当结论抛出去。
+    body_char_count: 517
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 场景强度 -> 语气强度
+    - 材料证据强度 -> 断言限度
+    - 人设表面层 -> 有风格无身份
+    - 高风险断言 -> 降调为观察
+    - 语气强度调整 -> 证据边界仍保留
+    domain_anchors:
+    - 场景强度
+    - 语气强度
+    - 限制语
+    - 观察化表达
+    - 人设表面层
+    - 高风险断言
+    expected_body_topics_covered:
+    - 语气强度与场景强度匹配
+    - 允许的人设表面层
+    - 不可写的真人痕迹
+    - 高风险断言前的降调与限制语
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面，如门襟缉线的排布、滚边与明线的走向
+      method_layer: 解释可复用的判断顺序：先按场景轻重定语气，再让断言分寸跟画面能承载的信息量绑定，人设只留功能表面层
+      boundary_layer: 对效果、耐用、安全等身体或性能类硬结论设边界，语气再软也不改事实门槛
+      downgrade_path: 无证据的硬结论回收为观察语言，或标成待补来源暂时挂起，不直接当结论抛出
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-029
+    - PROP-V1-030
+    - PROP-V1-031
+    - PROP-V1-032
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-029
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-030
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-031
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-032
+        proposition_type: execution_instruction
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+    concrete_apparel_anchor: 门襟缉线的排布，以及滚边、明线走向等可见工艺画面
+    domain_mechanism: 先按场景轻重定语气，再让断言分寸跟画面能承载的信息量绑定，人设只保留功能化表面层。
+    downstream_content_effect: 叙述口吻随内容分量稳定伸缩，不用夸张情绪去撑普通内容，也不把语气写成质量证明。
+    risk_boundary_handling: 效果、耐用、安全类断言即便降调仍需可核验依据，缺依据就回收为观察语言或标成待补来源。
+  - rich_body_id: PROOF-MB-001-RB-009
+    candidate_id: PROOF-MB-001-009
+    canonical_cluster_id: mkc_015
+    cluster_title: 组织生态角色网格
+    body_form: full_rich_body
+    body: 把服装内容生态想成一张职能坐标图，上面排的不是某家公司的编制名单，而是几处不重叠的功能位置——组织生态里的这张角色网格，回答的是“哪一类功能该看什么、又能开口讲什么”，而非谁向谁汇报。落到操作上，先按角色功能层级把视角拆开：贴着货品那端的功能，眼里是品类怎样铺陈、一件粗针织的面料取舍偏挺括还是偏垂坠、一条西裤的版型稳定性会不会在反复上身后走形；贴着搭配与卖场那端的功能，看的是配色比例与叠穿层次，以及货架上哪件落在视线正落点、客流绕过中岛的走向。给每类功能各配一副观察接口，就圈定了它能合法看见的画面边界，也顺带定下内容职责：管货品的那端不越界替材质安全性打包票，管卖场的那端不该把只有后台才掌握的经营数字讲出去。角色一换，能摸到的那层信息颗粒度跟着变，越靠统筹握的是粗线条结构，越贴一线握的是细到某个动作的操作细节，一条内容写多细，得看它挂在哪类角色名下。这样切分后，内容生产时就能立刻判断某条该交给哪一种功能视角来讲，也把对外公开的功能视角转成能反复取用的内容角度。要提醒的是，这张网格只停留在功能模型的抽象层面：一旦冒出某企业的具体部门叫什么、编制放了多少人、谁又管着谁这类真实组织事实，就先删掉或先挂成待补来源，正文能收下的仅是“确实存在某一类承担特定功能的角色”。至于它究竟能不能让产出更省力，属于效果结论，先用观察语言描述、留待补充官方来源后再定。
+    body_char_count: 581
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 角色功能层级 -> 内容职责
+    - 内容职责 -> 观察接口
+    - 角色功能层级 -> 信息颗粒度
+    - 公开角色网格 -> 可复用内容角度
+    - 私域组织事实 -> 从网格剔除
+    domain_anchors:
+    - 角色功能层级
+    - 内容职责
+    - 观察接口
+    - 信息颗粒度
+    - 生态视角
+    - 公开表达
+    - 面料取舍
+    - 版型稳定性
+    expected_body_topics_covered:
+    - 角色功能层级
+    - 内容职责与观察接口
+    - 不同角色的信息颗粒度
+    - 公开可复用的生态视角
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面，如粗针织偏挺括还是偏垂坠、货架上哪件落在视线正落点、客流绕过中岛的走向
+      method_layer: 解释可复用的判断机制与顺序：先按角色功能层级拆视角，再给每类功能配观察接口与内容职责，并按其能合法看到的信息颗粒度约束可讲范围
+      boundary_layer: 对效果、性能、身体结果等硬结论设边界，不直接断言这套切分能提升产出，只先用观察语言描述
+      downgrade_path: 无证据的硬结论回收为观察语言，或先挂成待补官方来源；真实部门、编制人数、汇报关系等组织事实先删或先挂待补
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-033
+    - PROP-V1-034
+    - PROP-V1-035
+    - PROP-V1-036
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-033
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-034
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-035
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-036
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件粗针织的面料取舍偏挺括还是偏垂坠、一条西裤的版型稳定性会不会在反复上身后走形
+    domain_mechanism: 给每类功能配一副观察接口，按它能合法看见的画面边界定下内容职责与可讲的信息颗粒度
+    downstream_content_effect: 内容生产时能立刻判断某条内容该交给哪一种功能视角来讲，并把对外公开的功能视角转成可反复取用的内容角度
+    risk_boundary_handling: 真实部门、编制人数与汇报关系等组织事实先删或先挂成待补来源，正文只接纳抽象功能角色；效果类硬结论先用观察语言描述、留待补充官方来源
+  - rich_body_id: PROOF-MB-001-RB-010
+    candidate_id: PROOF-MB-001-010
+    canonical_cluster_id: mkc_016
+    cluster_title: 视角切换与公开安全边界
+    body_form: full_rich_body
+    body: 以一条百褶半裙为例，可观察的线索是固定的：压褶是深压还是软风琴、腰头有没有内衬、下摆随走动张开的幅度、垂坠时折痕的走向，这些结构本身不会变。但它在不同环节被接手时，称呼会跟着换——组货这头它是组货单元，看的是能否和同系列上装凑成整套；陈列这头它是展示对象，注意力落到色块排布和视线停留点；到了内容这头它又成了拍摄主体，得盘算镜头怎么带出褶量的动态。同一件东西三个名字，若不把这层对应登记清楚，读的人容易在前后两段里把它错当成两条裙子。所以第一步是先钉住被指对象，再让称呼随角色走并逐一登记，解释重点也随之切换。第二步管切换那一刻的过滤：每次从一个角色转到另一个，都在交接处架一道筛子，只放行可见款式结构、可复述的通用做法和不涉经营内幕的观察；一旦冒出内部作业步骤或真实经营数字，就拦在公开安全的边界外。这里有条底线：换角色只换称呼和角度，事实门槛一分不松，没被证实的说法别想换个措辞就洗成能用结论。凡沾上内部作业的具体规程、或真实的经营数字，一律切断，能改写成通用表达就改写、改不动就挂起、留不得就删掉，分别对应可接受、需待补、须剔除三条走向。这套办法只在内容需跨多角色流转、交接时才用，绝不能反过来当成把内部信息往外送的暗道。它的下游作用，是让读者把三个称呼都对回同一条裙子，同时堵死内部运营与对外表达之间的错误通路。至于效果、销量、增长这类硬话，只用观察语言描述现象，真要下判断必须挂为待补来源，不凭切换当定论。
+    body_char_count: 608
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 同一对象 -> 角色专属命名
+    - 角色专属命名 -> 解释重点切换
+    - 上下文切换 -> 公开安全过滤
+    - 内部运营信号 -> 切断改走
+    - 公开安全视图 -> 通用方法表达
+    domain_anchors:
+    - 解释重点
+    - 公开安全
+    - 内部运营切断
+    expected_body_topics_covered:
+    - 对象在不同角色中的命名变化
+    - 交接节点与上下文切换
+    - public-safe 与 private-ops 切断规则
+    - accepted / gap / excluded 路由
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与画面：百褶半裙的压褶形态、腰头内衬、下摆张开幅度、折痕走向、色块排布与视线停留点
+      method_layer: 解释可复用的判断顺序：先钉住被指对象，再让称呼随角色变化并登记对应，切换时用公开安全筛子过滤，内部运营信号一律切断
+      boundary_layer: 对效果、销量、增长等硬结论设边界，只用观察语言描述现象，不凭视角切换把未证说法升格为定论
+      downgrade_path: 无证据的硬结论回收为观察语言，或挂为待补来源，触及内部规程与经营数字的内容改写不成即挂起或删除
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-037
+    - PROP-V1-038
+    - PROP-V1-039
+    - PROP-V1-040
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-037
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-038
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-039
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-040
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一条百褶半裙的压褶形态、腰头内衬与下摆随走动张开的幅度、垂坠折痕走向
+    domain_mechanism: 先钉住被指对象，再让称呼随角色变化并登记对应关系，切换时用公开安全筛子过滤，内部运营信号一律切断改走。
+    downstream_content_effect: 读者始终能把组货单元、展示对象、拍摄主体三个称呼对回同一条裙子，同时堵死内部运营与对外表达之间的错误通路。
+    risk_boundary_handling: 涉及效果、销量、增长的硬结论只用观察语言描述现象，需下判断则挂为待补来源，不凭视角切换当定论。
+  - rich_body_id: PROOF-MB-001-RB-011
+    candidate_id: PROOF-MB-001-011
+    canonical_cluster_id: mkc_017
+    cluster_title: 受众距离与信息深浅轴
+    body_form: full_rich_body
+    body: 把受众和内容之间的远近拆开来看，第一个能落地的判断是知识距离：一个人对某类衣服的术语、面料手感和版型语言了解到什么程度，决定了讲解该从哪一层起步。就拿一件落肩针织开衫来说，对几乎没听过组织密度、刚接触这一品类的观众，先被画面抓住的是领口开度、下摆那圈微卷的边和它能穿去什么场合，讲解就从这些看得见的东西铺开；而对已经能分清罗纹与平针的人，可以直接跳到落肩量大小与替代款之间怎么取舍。第二个判断是决策阶段——只有当大致看得出对方是在随手翻看、在几件里比来比去、还是快要拿定主意时，这套调粒度的做法才立得住；顺着阶段排信息次序：翻看期给框架，比选期给可对照的维度，拿定期给上身注意点。第三个判断是互动强度：一段能被反复回看的内容，密度不妨叠得高些；只在指间划过一回的内容，就得把信息摊得稀些。新客阶段和熟客阶段在这里只是一把通用的距离刻度，用来让不同角色的口吻调整解释密度——旁白管入门口径、导购管临门提醒、搭配师管结构细节，绝不能被反推成某位顾客到底是谁、买过哪些、平时偏好什么这类落到个人头上的真实信息。内容里一旦冒出这种具体到个人的东西，必须先摘掉或挂起等授权来源；这也就是把“受众距离”和“信息深浅”并成一组调节轴的用法。至于哪一档距离该配多密的信息、又能带来多好的吸收，暂时只用观察语言去描述，不急着下硬结论。
+    body_char_count: 558
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 知识距离 -> 讲解起点与深度
+    - 决策阶段 -> 信息排布次序
+    - 互动强度 -> 角色口吻的信息密度
+    - 阶段刻度 -> 不等于真实用户画像
+    - 角色发声 -> 按距离调整解释密度
+    domain_anchors:
+    - knowledge distance/知识距离
+    - decision stage/决策阶段
+    - interaction intensity/互动强度
+    - 新客阶段
+    - 熟客阶段
+    - 信息深浅
+    expected_body_topics_covered:
+    - knowledge distance
+    - decision stage
+    - interaction intensity
+    - 不同阶段对应的信息深浅
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如落肩针织开衫的领口开度、下摆微卷的边、罗纹与平针的区别
+      method_layer: 解释可复用的判断机制与顺序：先按知识距离定讲解起点，再按决策阶段排信息次序，再按互动强度调角色口吻的密度
+      boundary_layer: 哪一档距离对应多密的信息、能带来多好的吸收效果属于硬结论，只用观察语言描述，不直接下结论
+      downgrade_path: 无证据的密度/吸收效果结论回收为观察语言，真实个人信息一律先剔除或挂起等授权来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-041
+    - PROP-V1-042
+    - PROP-V1-043
+    - PROP-V1-044
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-041
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-042
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-043
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-044
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件落肩针织开衫的领口开度、下摆微卷的边，以及罗纹与平针、落肩量大小的结构差异
+    domain_mechanism: 先按受众对品类的知识距离定讲解起点，再按决策阶段排信息次序，再按内容能否反复回看的互动强度调角色口吻的信息密度。
+    downstream_content_effect: 让旁白、导购、搭配师三种角色的发声按受众距离控制解释密度，使同一段内容对新客与熟客都能被吸收。
+    risk_boundary_handling: 阶段刻度只调讲解粒度，一旦出现某位顾客的真实身份、买过什么或个人偏好等落到个人的信息，先剔除或挂起等授权来源；密度与吸收效果只作观察描述不下硬结论。
+  - rich_body_id: PROOF-MB-001-RB-012
+    candidate_id: PROOF-MB-001-012
+    canonical_cluster_id: mkc_018
+    cluster_title: 情绪温度层与信任门控
+    body_form: full_rich_body
+    body: 在服装内容里，情绪温度层与它配套的信任门控在处理两件互不相干的事：一段话该带多少温度，读者的信任又靠什么撑起来。先看温度分档：把情绪按由凉到暖排成梯度，最靠下的两档最克制——一档只交代结构和肉眼可见的事实，比如“这条直筒裤的侧缝笔直、裤脚是双道卷边”，不掺情绪；往上一档允许带点使用画面，比如“久坐时膝盖处不太顶褶”，用场景把结构讲得更好懂。这两档就是温度梯度的低端，越靠这里措辞越贴近客观陈述。温度只负责调节内容的距离或亲近感，本身证明不了任何东西，这条线不能松。接着是门控：信任信号得分两类。像可核验的缝制说明、数得清的针脚，属低风险信号，帮读者把衣服看懂，尽管用；可一旦想让人相信某种效果或耐用程度，就落进强证据信号，得先迈过一道证据门——握着可核验的依据才落成主张，拿不出就把这句话收回成一条能核对的观察，绝不写成“穿着必定舒适”“肯定耐穿”这类板上钉钉的话。判断有没有越门，盯三个滑坡口子：抛出结果承诺、搬来横向对比、暗示某种权威背书；命中其一而手边无据，要么补可核验来源，要么退回观察，缺依据的硬结论一律挂成待补依据、不进正文。分层理清后，就能按各档温度给内容配上对应的谨慎度。它也有边界：内容确实要立起可信度、要把“怎么说”和“凭什么信”分开时才启用；若有人拿亲切、可靠的语气去顶替举证、去推动没证据的结论，就得把结论拦下。总之，温度只管怎么说，证据才管能不能下结论。
+    body_char_count: 591
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 情绪温度 -> 表达距离
+    - 低风险信任信号 -> 支撑可读性
+    - 强证据信号 -> 需挂来源的主张
+    - 无依据的信任主张 -> 降级为观察
+    - 情绪 -> 不等于证据
+    domain_anchors:
+    - 情绪温度
+    - 低风险信任信号
+    - 强证据信号
+    - 待补依据
+    - 降级表达
+    expected_body_topics_covered:
+    - 情绪温度分层
+    - 低风险信任信号
+    - 强证据信号
+    - 越门触发条件：结果承诺/横向对比/权威背书
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面，如侧缝走向、裤脚卷边、针脚与久坐时膝盖处顶褶
+      method_layer: 解释可复用的判断顺序：先按由凉到暖的情绪温度分档控制表达距离，再用证据门把低风险信任信号与需挂来源的强证据信号分开处置
+      boundary_layer: 对效果、耐用等硬结论设边界，未过证据门不得写成确定结果
+      downgrade_path: 无据的硬结论回收为可核对的观察，或挂为待补依据不进正文
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-045
+    - PROP-V1-046
+    - PROP-V1-047
+    - PROP-V1-048
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-045
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-046
+        proposition_type: mechanism
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-047
+        proposition_type: failure_signal
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-048
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+    concrete_apparel_anchor: 直筒裤的侧缝笔直、裤脚双道卷边，以及久坐时膝盖处是否顶褶
+    domain_mechanism: 先按由凉到暖的情绪温度分档控制表达距离，再用证据门把低风险信任信号与强证据信号分开处置
+    downstream_content_effect: 分层理清后能按各档温度给内容配上对应的谨慎度与门控力度
+    risk_boundary_handling: 涉及效果或耐用的硬结论必须过证据门，无据则降级为可核对的观察或挂成待补依据、不进正文
+  - rich_body_id: PROOF-MB-001-RB-013
+    candidate_id: PROOF-MB-001-013
+    canonical_cluster_id: mkc_019
+    cluster_title: 角色授权表面与人物故事红线
+    body_form: full_rich_body
+    body: 角色的授权表面，和人物故事那条红线，说到底要先分清镜头里那个讲解者替内容承担了什么。它能承担的是可说方法层——某种讲解身份在验看一件大衣时，怎样先判断廓形立不立得住、再顺着门襟和肩线核对走线是否平整、接着翻看里襟的收口做工、最后上身对一遍上下装的比例。这一整套验货的先后次序是能搬运、能反复用的判断路径，不依附于任何一个真实的人，所以借这个身份把它讲出来是允许的。真正越界的是不可说事实层：一旦把画面里的人坐实成干了很多年的那位、成交最多的那位，牵出能对上号的真实过往、真实成交额、私底下说过的话，而手里没有任何授权凭据，这段就不能落进稿子，只能删掉指名的成分，或做去授权化，改回泛指的讲解身份。比这更隐蔽的是默认背书：让这个角色张口“我担保这件上身一定收腰”，等于拿一个虚构身份的权威，替看的人把结论提前定死，这种身份暗示式的担保就是危险信号。碰到越权表述要当场拆成三段——属于验货方法的照旧保留；“收腰”这类落在身体结果上的承诺，是要有证据才成立的主张，证据不到位就先降成挂待补来源的中性说法；直指某个真人的身份则整段抹掉。归结起来，凡是只靠“角色开口就算数”撑起来的结论，都得退回到能被看见、能被核对的描述，或暂时记成来源缺口；上身成效、影响大小这类硬话，不由角色拍板，先用观察语言写下，等补进官方来源再定。
+    body_char_count: 557
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 可说方法层 -> 允许借角色输出通用方法
+    - 不可说事实层 -> 写真实人物须先有授权
+    - 默认背书信号 -> 构成角色权威越权
+    - 越权表述 -> 拆成方法保留/证据待补/身份删除
+    - 真实身份暗示 -> 删除或去授权化
+    domain_anchors:
+    - 可说方法层
+    - 不可说事实层
+    - 默认背书
+    - 越权表述
+    - 去授权化
+    - 身份暗示
+    expected_body_topics_covered:
+    - 可说的方法层
+    - 不可说的事实层
+    - 默认背书的危险信号
+    - 越权表述拆解
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面——大衣廓形是否立得住、门襟肩线的走线是否平整、里襟收口做工与上下装比例。
+      method_layer: 解释可复用的验货判断顺序：先看廓形、再核走线、后看里做、末上身对比例，这套路径由讲解身份承载，不绑定任何真实个人。
+      boundary_layer: 对上身效果、成效大小、影响规模等硬结论设边界，不由角色的权威拍板担保。
+      downgrade_path: 无证据的效果承诺回收为可观察、可核对的中性描述，或标记为来源缺口待补；真实人物履历/成交/私下言论无授权即删除或去授权化。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-049
+    - PROP-V1-050
+    - PROP-V1-051
+    - PROP-V1-052
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-049
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-050
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-051
+        proposition_type: failure_signal
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-052
+        proposition_type: downstream_effect
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 讲解身份在镜头前验看一件大衣，指看廓形是否立得住、门襟与肩线的走线是否平整、里襟收口做工与上下装比例。
+    domain_mechanism: 把角色能说的限定为可复用的验货顺序（廓形—走线—里做—上身比例），把指向真实个人的履历/成交/私下言论划入需授权的事实层。
+    downstream_content_effect: 借讲解身份输出的方法可作为不绑定实例人物的可复用内容沉淀，指名成分与效果担保则被删改或降级。
+    risk_boundary_handling: 凡靠角色权威担保的效果结论一律回收为中性观察或挂为待补来源，真实身份暗示直接删除或去授权化。
+  - rich_body_id: PROOF-MB-001-RB-014
+    candidate_id: PROOF-MB-001-014
+    canonical_cluster_id: mkc_020
+    cluster_title: 品类解释与属性槽位骨架
+    body_form: full_rich_body
+    body: 品类解释与属性槽位骨架的用法，是先给对象在整件衣服的结构里安一个落点，再顺着落点把属性格子一格一格打开，先后不能倒过来。顶层家族只立四个：套在上半身的上装、包住下半身的下装、上下连成一件的连衣类，以及罩在最外层的外搭类，每族底下各挂一串属性槽位。比如遇到一件套头上装，先认定它落在上装族，再依次看衣领是圆口还是带翻折、袖子怎么裁、前身如何闭合、衣身收到多长、贴身那层用什么材质。换成下装，格子就变成腰头落在哪个高度、裤管或裙身到多长、外廓怎样、有没有开衩和褶。连衣类要同时照看上下两段在哪儿接合、腰线卡在什么位置、下摆如何收放；外搭类则多出外层如何扣合、能压住几档厚度、给里面留多少容身空间。这套骨架只回答哪些看得见、哪些还能往里填、哪些必须刹住，替不了一件具体货品的资料。所以顺序一旦颠倒，落点还没定就急着说“这件好卖”之类跟结构不搭界的话，属性格子就会挂错层级，话题跟着跑偏。边界上同样要收住：缺了款式编号、售价、剩余数量或上架时间这些实例信息时，能写的就封顶在品类、属性和边界这三层，不许再往具体在售那一层探。要是有人把这套通用格子改口说成某家正在卖的货，那已经越界，处理办法只有两条，要么直接删掉，要么标成来源缺失、先搁置等待核对，绝不让品牌层面的事实顺着格子渗进正文。
+    body_char_count: 539
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 品类家族 -> 属性槽位组
+    - 属性槽位组 -> 边界判定入口
+    - 品类说明 -> 在售事实切断
+    - 品类槽位缺口 -> 中性追问提示
+    domain_anchors:
+    - 上装
+    - 下装
+    - 连衣类
+    - 外搭类
+    - 属性槽位
+    expected_body_topics_covered:
+    - 上装/下装/连衣类/外搭类等抽象品类分层
+    - 单品解释时可使用的通用属性槽位
+    - 品类说明与真实 SKU 事实的切断规则
+    - 面料/材质槽位
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质与画面线索，如衣领是圆口还是带翻折、腰头落在哪个高度、下摆如何收放
+      method_layer: 解释先给对象在服装结构里定落点、再按层级逐格打开属性槽位这一不可颠倒的判断顺序
+      boundary_layer: 对具体在售、销量之类硬结论设边界，缺实例信息时只写品类、属性、边界三层
+      downgrade_path: 无证据的在售或品牌事实回收为观察语言，或标成来源缺失、先搁置等待核对
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-053
+    - PROP-V1-054
+    - PROP-V1-055
+    - PROP-V1-056
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-053
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-054
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-055
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-056
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件套头上装的衣领是圆口还是带翻折、袖子怎么裁、贴身那层用什么材质
+    domain_mechanism: 先给对象在整件衣服的结构里安一个落点，再顺着落点把属性格子一格一格打开，先后不可颠倒
+    downstream_content_effect: 让属性格子始终挂在正确的结构层级，并把可写内容封顶在品类、属性、边界三层，避免话题跑偏到在售话术
+    risk_boundary_handling: 缺款式编号、售价、库存、上新等实例信息时停在三层，通用格子被改口说成某家在售事实则直接删掉或标成来源缺失待核对
+  - rich_body_id: PROOF-MB-001-RB-015
+    candidate_id: PROOF-MB-001-015
+    canonical_cluster_id: mkc_021
+    cluster_title: 同类比较维度与禁比边界
+    body_form: full_rich_body
+    body: 把两件同类衣服摆到一起讲差别，第一步不是急着断谁好谁差，而是先圈出哪些点眼睛看得见、尺子量得到、能如实记下来。拿两件针织连衣裙来说，可以并排陈述的是它们的几何与用料事实：一件裙摆停在膝上、另一件垂过小腿，这是长度差；一件织得偏薄、迎光能见织纹疏松，另一件密实压手，这是厚薄差；一件顺身形收出腰线、另一件直筒垂落，这是版型轮廓差；下摆一处走双明线、一处用包边把线头收起，领口一处罗纹一处滚边，这是可见工艺差。这些落在结构门类、材质分类、工艺可见度和覆盖几何上，口径统一，摆一处不会把读者带偏，能直接写成差异描述，进入常规品类讲解。但另有一批维度不能照此直接下结论：穿几季会不会起球走形的耐久、贴身后暖不暖、某项功能强到什么程度，都得靠检测或久穿才判得准；再加上哪件显瘦、哪件档次更靠上这类主观评断，也不能凭并排观感一句锁死。碰到这些，正确做法是替它单挂一个待补记号，而非拿印象顶替数据。要不要证据的分水岭，是读者会不会据此做跟效果或性能有关的选择：会，就得等可核验依据齐了再讲；没齐就只摆看得见的那部分，在缺口处显式标注此项暂缺。落到内容生产上，这要求先讲清对象与判断顺序、再谈边界，凡碰到效果、性能、规模的硬话，一律改成只描述所见的观察语言，或标成待补来源后再提口径，绝不把没依据的优劣混进正常品类说明当成既定事实。
+    body_char_count: 558
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 可观察可比维度 -> 直接观察陈述
+    - 直接观察陈述 -> 拦截效果或性能外推
+    - 拦截外推后未知或优劣项 -> 降级标注并挂待补来源
+    domain_anchors:
+    - 长度
+    - 厚薄
+    - 版型
+    - 可见工艺
+    expected_body_topics_covered:
+    - 同类之间可比的维度
+    - 不可直接比较的维度
+    - 比较时如何显示未知项
+    - 何时必须触发 source gap
+    epistemic_split:
+      observation_layer: 只描述可观察可记录的结构、材质、几何与工艺画面，如裙摆长度、织纹疏密、腰线走向、明线与包边
+      method_layer: 先圈定口径一致的可观察维度直接成差异描述，再把需检测或久穿才知的维度与主观评断另行归口，按对象-机制-边界的顺序推进
+      boundary_layer: 对耐久、保暖、功能强弱及显瘦、档次一类效果与主观硬结论设边界，不由几何差异直接外推
+      downgrade_path: 无证据的优劣改写为只描述所见的观察语言并显式标注未知项，效果与性能类比较标成待补来源后再提升口径
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-057
+    - PROP-V1-058
+    - PROP-V1-059
+    - PROP-V1-060
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-057
+        proposition_type: definition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-058
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-059
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-060
+        proposition_type: downstream_effect
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 两件针织连衣裙：一件裙摆停在膝上、另一件垂过小腿，下摆一处走双明线、一处用包边收起线头，领口一处罗纹一处滚边
+    domain_mechanism: 比较句只能停在可观察且口径一致的结构、材质与工艺事实，不得由几何差异直接推出更舒适、更耐穿或更显瘦的效果结论
+    downstream_content_effect: 约束内容先写对象与判断顺序再谈边界，可观察差异直接成文，效果与性能类结论一律降级为观察或挂待补来源
+    risk_boundary_handling: 凡涉及效果、性能、规模的硬话改用只描述所见的观察语言，或标成待补来源后再提口径，未知维度显式标缺不用印象填补
+  - rich_body_id: PROOF-MB-001-RB-016
+    candidate_id: PROOF-MB-001-016
+    canonical_cluster_id: mkc_022
+    cluster_title: 面料家族与属性边界
+    body_form: full_rich_body
+    body: 聊面料家族、给属性划边界，头一件事是把'纤维—纱线—面料'这三档拆开摆，别叠在一起混讲。最底下是原料这一档，棉、麻、聚酯各算一种纤维；把纤维捻合、纺成一根根线，是纱线这一档；线再上机织成整片布，才轮到面料这一档，去谈针织、梭织、罗纹、提花。三档各答各的问题，层级说岔了，后面手感和结构的落点全跟着错。往上走看织法：一件衬衫的门襟，经线纬线交叠得规规矩矩、摊平像一块挺括的片，多半走的是经纬互压那一路，稳、不太走形；一个领口的罗纹一圈圈线圈勾套、拉一下会回弹，走的是串圈那一路，弹性是它的脾气。这层织法差别，恰是许多上手触感和外观分野的起点，可以顺着它去讲线圈的纹路、片状的挺度、垂下来是压手还是飘。但话只能停在这儿。若从'表面起纹、垂感偏沉'一步跳到'因此特别御寒'，就越过了看得见的这层、闯进得靠检测才立得住的性能层，这类没凭据的性能话得当场撤回。所以手感词和事实词要划清：'上手偏沉'是观察，'很扛冻'是性能定论，后者无据就不落笔。做内容时的规矩是，织法、可见的组织、触点上的观察照写；凡碰到保暖透气、成分占比、洗护后果这类具体判断，一旦拿不出检测报告或行业标准佐证，就只留结构和看得见的线索，把整段性能说法移进待补来源清单，等凭证补齐再放行，绝不先替读者把结论坐实。
+    body_char_count: 536
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 纤维层 -> 纱线层
+    - 纱线层 -> 面料结构
+    - 面料结构 -> 可观察表面线索
+    - 性能词 -> 需来源支撑的断言
+    domain_anchors:
+    - 纤维
+    - 纱线
+    - 面料结构
+    - 针织
+    - 梭织
+    expected_body_topics_covered:
+    - 纤维/纱线/面料层级区分
+    - 梭织/针织等结构差异的解释入口
+    - 常见观察项与不可直接外推的性能项
+    - 手感词与事实词的边界
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与材质线索：衬衫门襟经纬交叠的片状挺度、领口罗纹线圈勾套拉伸回弹、表面纹路、悬垂时压手还是飘。
+      method_layer: 先按纤维—纱线—面料三档拆层不混讲，再用经纬互压与线圈串套两种织法差别，作为解释上手触感与外观分野的入口。
+      boundary_layer: 凡从可见线索一步跳到保暖透气、成分占比、洗护后果等性能结论，即越入需检测支撑的性能层，须设边界当场收回。
+      downgrade_path: 无检测或行业标准佐证的性能话术，整段移进待补来源清单，只保留结构与看得见的线索，凭证补齐前不替读者把结论坐实。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-061
+    - PROP-V1-062
+    - PROP-V1-063
+    - PROP-V1-064
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-061
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-062
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-063
+        proposition_type: failure_signal
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-064
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 衬衫门襟经纬交叠像挺括的片，对照领口罗纹一圈圈线圈勾套、拉一下会回弹。
+    domain_mechanism: 先把纤维、纱线、面料三档拆开不混讲，再用经纬互压与线圈串套的织法差别解释可见的手感与外观分野。
+    downstream_content_effect: 让内容只把织法、可见组织与触点观察照写，性能判断先扣住不写。
+    risk_boundary_handling: 从可见线索外推到保暖等性能结论时当场撤回，缺检测或标准来源就整段挂待补，只留结构与可见线索。
+  - rich_body_id: PROOF-MB-001-RB-017
+    candidate_id: PROOF-MB-001-017
+    canonical_cluster_id: mkc_023
+    cluster_title: 颜色表达与视觉解释边界
+    body_form: full_rich_body
+    body: 讲清一件衣服的颜色，别急着先下判断，而要把它拆成三个能相互对照的坐标：第一是它落在哪个色系，色相负责把它归进蓝、绿还是橙这一族；第二是它的深浅位置，明度让它偏向近乎黑的沉，还是接近白的浅；第三是它看着鲜亮还是发闷，纯度区分饱满与灰调。拿一件灰绿调的棉麻衬衫来说，只有把这三个坐标各自说出口，这块颜色才算讲到可以核对，而不是丢一个结论词就算交代完。有了这套底层语言，才好往上接色彩家族的归类，以及偏冷偏暖、近乎中性这类方向性的通用说法，让后面写搭配时口径能对齐。接着得补一条镜头提醒：同一块布，摆在窗边的日光里、店内的暖黄灯下，或隔着手机屏幕，反射出的样子并不一致，因此落笔时要把当时是在哪种光下看到的一并交代，别拿某个场景里的一瞬呈现，去钉死这件衣服固定不变的色值。真正要守住的红线在最后一步：围绕颜色去编氛围、做联想是允许的，可一旦话头拐向穿上会变白、显得瘦一圈、看着更上档次这类落到人身上或品质等级的说法，就跨出了可观察的范围，成了拿不出凭据的效果承诺，必须当场掐断。凡是把某个颜色与身材修饰、肤色变好、用料等级绑在一起、却给不出支撑材料的句子，处理办法是退回到‘在这种光下看它与旁边颜色的关系’这种只讲所见的表述，同时把那句效果话单独记到缺来源的清单里，等日后有了可查依据再回头重议，不抢先对外抛出结论。
+    body_char_count: 555
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 颜色基础维度 -> 可核对的视觉观察
+    - 光线条件 -> 颜色呈现偏移
+    - 颜色氛围联想 -> 效果结论切断
+    - 无据效果词 -> 降级为观察或挂缺来源
+    domain_anchors:
+    - 色相
+    - 明度
+    - 纯度
+    - 冷暖
+    - 光线
+    expected_body_topics_covered:
+    - 颜色基础维度
+    - 色彩家族与中性/冷暖等通用表达
+    - 颜色在镜头与光线下的观察提醒
+    - 颜色故事与品质/显白/显瘦等结论切断
+    epistemic_split:
+      observation_layer: 只描述可观察的色相深浅、灰绿棉麻衬衫在不同光下反射出的样子、以及与相邻颜色的关系
+      method_layer: 先用色相、明度、纯度三坐标把颜色说到可核对，再接色彩家族与冷暖中性归类，末尾补镜头光线提醒
+      boundary_layer: 颜色叙述一旦拐向变白、显瘦、更上档次等身体或品质结论即视为效果承诺，当场掐断
+      downgrade_path: 无据的颜色-效果挂钩句退回到带光线条件的所见表述，并把效果话单独记到缺来源清单等材料再议
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-065
+    - PROP-V1-066
+    - PROP-V1-067
+    - PROP-V1-068
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-065
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-066
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-067
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-068
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 一件灰绿调的棉麻衬衫在窗边日光、店内暖黄灯与手机屏幕下反射出不一致的样子
+    domain_mechanism: 描述颜色先立色相、明度、纯度三项可对照坐标，再补当时是在哪种光下看到的观察条件，才算把这块颜色讲到可核对。
+    downstream_content_effect: 让颜色描述自带条件限定与可核对坐标，后面写搭配口径能对齐、跨光线不误读。
+    risk_boundary_handling: 颜色滑向身体或品质效果结论时当场掐断，无据效果句退回观察语言并记入缺来源清单待材料补充再议。
+  - rich_body_id: PROOF-MB-001-RB-018
+    candidate_id: PROOF-MB-001-018
+    canonical_cluster_id: mkc_024
+    cluster_title: 版型廓形剪裁术语
+    body_form: full_rich_body
+    body: 围绕版型、廓形这类剪裁术语来梳理，第一步要把两个常被混说的词各自摆正：版型讲的是纸样层面怎样分割衣片、怎样安排结构处理，属于藏在里面的做法；廓形则指成衣上身以后从外部看到的那圈整体轮廓，落在外面。二者一个偏内部工艺、一个偏外部呈现，落笔时得各归各位，别搅在一句里当同义词替换。往下走，要把结构上的每个节点对应到肉眼能捕捉的视觉走向来讲，才算解释到位：肩线抬高或压低，会牵动肩部的走势；腰线定在偏上或偏下，会改变上下身的分割比例，视觉重心随之上移或下沉；衣长的长短决定上装和下装怎样衔接；裤脚与袖口的宽窄，牵动着四肢一段的轮廓收放；松量给得多还是少，则关系到布料和身体之间留出多大的活动空间。如此把“结构上动了什么”逐条映射成“外观上看着有什么不同”，链条便不会停在打版行话那一层。真正要卡住的一道界线是：这类术语只能说到结构与轮廓为止，不可顺势跳到对身体的保证，像“这版型穿上必定显高显瘦”就已越过了结构所能担保的范围。凡是显瘦、遮肉、显高这一类说法，都算需要依据支撑的结论；手头没有可核证据时，应把它改写成轮廓层面肉眼可辨的线条走向，而把带效果承诺的那半句暂时标为待补来源，不补齐就不落断言。
+    body_char_count: 497
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 版型术语 -> 结构与轮廓的可观察描述
+    - 结构与轮廓的可观察描述 -> 结构节点对应视觉走向的解释
+    - 视觉走向的解释 -> 身材效果词的边界与降级为待补来源
+    domain_anchors:
+    - 肩线
+    - 腰线
+    - 衣长
+    - 松量
+    - 廓形
+    expected_body_topics_covered:
+    - 版型与廓形区别
+    - 轮廓线、长度、宽窄、松量、重心等表达
+    - 结构节点与视觉结果的关系提示
+    - 版型词与身材效果承诺的切断
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与轮廓，如肩线高低、腰线落点、衣长长短、裤脚袖口宽窄、松量多少这些看得见的线条走向
+      method_layer: 解释可复用的判断顺序：先把版型与廓形各归其位，再把每个结构节点逐条映射到肉眼能捕捉的视觉走向
+      boundary_layer: 版型术语只能说到结构与轮廓为止，凡涉及身体结果的显高、显瘦、遮肉一律设边界，不得顺势外溢成承诺
+      downgrade_path: 缺可核证据的效果结论回收为轮廓可见的线条走向观察，效果承诺那部分暂时挂为待补来源，不补齐不落断言
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-069
+    - PROP-V1-070
+    - PROP-V1-071
+    - PROP-V1-072
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-069
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-070
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-071
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-072
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 肩线抬高或压低牵动肩部走势、腰线偏上偏下改变上下身分割比例的画面
+    domain_mechanism: 先把版型与廓形分开表述，再把每个结构节点逐条映射成肉眼可见的视觉走向，解释停在轮廓层面
+    downstream_content_effect: 结构到视觉形成可解释链条，文案不会停在打版行话那一层，也不会空谈轮廓
+    risk_boundary_handling: 显高、显瘦、遮肉这类身材效果结论须有可核证据，缺证据时改写成轮廓可见的线条走向并把承诺挂为待补来源
+  - rich_body_id: PROOF-MB-001-RB-019
+    candidate_id: PROOF-MB-001-019
+    canonical_cluster_id: mkc_025
+    cluster_title: 工艺观察线索与讲解节点
+    body_form: full_rich_body
+    body: 面对一件挂在展架上的外套，先别急着替它下“做工好”的判断。真正能被镜头和文字抓住的，是那些看得见的处理点：领口压线走得直不直、门襟两侧对合是否咬合到位、袖口翻折后线脚是否收干净、包边有没有起皱露茬、纽扣孔锁得是否规整，还有里布与衬在下摆处怎么归拢收尾。把这些逐一点名，等于给一段成衣讲述搭好可复用的支点，落到内容里就有具体可说的画面，而不是空喊一句评价。接着要给观看排一个先后：起手交代整体轮廓与面料垂在身上的样子，随后把视线移到承力的结构处，看衣片如何拼接、开口如何加固，最后才落到转角、层叠这些收尾。这样一层压一层地推进，一段讲述才有节奏，而不是开口就死抠某个角落。这里有一条必须守住的界线：“锁边齐整”“扣位服帖”是眼睛能确认的处理，可以照实说；可一旦顺着这句接出“所以它格外禁穿”，就把一个局部悄悄放大成了整件衣服的寿命承诺，这一步已经跨过能看见的范围。凡是把某处针脚推向耐磨、使用年限或功能层面的说法，都不再是观察而是需要举证的结论；在拿到穿着或测试凭据之前，只能停在描述自己看到了什么，不能用一句含糊的“工艺过硬”替掉真凭实据，也不能替它脑补车间工序或检验证明。若确实想给出耐用判断，就把它标成待补来源，等证据到手再说。
+    body_char_count: 516
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 可见工艺节点 -> 讲解顺序
+    - 结构细节 -> 观察线索
+    - 工艺名称 -> 功能结论切断
+    - 工序缺口 -> 需来源的结论
+    domain_anchors:
+    - 领口压线
+    - 门襟
+    - 袖口
+    - 包边
+    - 纽扣孔
+    expected_body_topics_covered:
+    - 可见工艺节点清单
+    - 观察顺序：外观→结构→细节→不可直接外推的质量结论
+    - 工艺名词与功能/耐用结论的风险切断
+    - 工艺节点的叙事先后顺序
+    epistemic_split:
+      observation_layer: 只描述看得见的处理点——领口压线是否走直、门襟对合、袖口线脚、包边起皱与否、纽扣孔锁得是否规整、里布与衬在下摆的归拢。
+      method_layer: 把可见节点逐一点名后排一个先后：先整体轮廓与面料垂坠，再承力结构处的拼接与加固，最后转角层叠的收尾，层层推进。
+      boundary_layer: 从单处针脚滑向耐磨、使用年限或功能层面的说法属越界，须在可见范围内收住，不下整体寿命承诺。
+      downgrade_path: 无凭据的耐用结论退回为“看到了什么”的观察语言，或标成待补来源，不用“工艺过硬”笼统替代举证。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-073
+    - PROP-V1-074
+    - PROP-V1-075
+    - PROP-V1-076
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-073
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-074
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-075
+        proposition_type: failure_signal
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-076
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 领口压线是否走直、袖口翻折后线脚是否收干净、包边有没有起皱露茬
+    domain_mechanism: 把可见工艺节点逐一点名，再按整体轮廓→承力结构→收尾细节的先后排定观察与讲述顺序。
+    downstream_content_effect: 为成衣讲述提供一组可直接观察的支点，使内容有具体画面和推进节奏而非平铺罗列评价。
+    risk_boundary_handling: 凡把局部针脚推向耐磨、寿命或功能的结论一律退回，改为观察语言或挂为待补来源，缺证据不做整体质量背书。
+  - rich_body_id: PROOF-MB-001-RB-020
+    candidate_id: PROOF-MB-001-020
+    canonical_cluster_id: mkc_026
+    cluster_title: 身材效果语言阶梯与场景化观察
+    body_form: full_rich_body
+    body: 谈身材效果这件事，要有一套语言阶梯，也要讲清楚怎么做场景化观察：写文案时先把话落在眼睛看得见的地方，再决定能不能往下说。设想镜头里一条高腰直筒裤，腰头往里收进一道褶，裤缝的竖线从胯骨一路落到脚踝——这种只讲线条走向、外轮廓清不清楚、下摆停在小腿哪一段的表述最稳，属于观察词，它只报告结构和线条本身，不必另找依据就成立。往上一档是关系词，讲画面里两块结构之间的条件关联，比如上半身与下装的分割被抬起后，纵向看更连贯；这一档得带‘多半’‘在多数情况下’这类限定，说的是倾向而非定论。最高一档是结果词，最要留神：收腰、拔个子、把腰腹藏起来这些直指穿着者身体的说法，等于给身体结果打包票，默认就不直接写出。可复用的做法是把想夸的效果翻译成线条动作——与其断言这条裙让人瘦一圈，不如描述腰侧那道收口让竖向线条不被打断，把绝对的论断改写成‘若……则……’的条件句，这就是替代表达与回避表达。这套梯度只在内容确实涉及穿着如何呈现在身上时启用；一旦开始对某个具体的人许诺身材变好，就当场拦下或退回观察语言。凡牵涉能不能瘦、显不显高这类硬结论，缺个体化证据一律不放行，要么改回可观察描述，要么把这句保证暂挂成待补来源。至于在某个动作或站姿下描述视觉怎么变，这类场景化的观察被允许，但收尾仍不替身体下结论。
+    body_char_count: 543
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 观察词 -> 只报告可见线条与结构的低风险陈述
+    - 关系词 -> 带限定词的条件性视觉关联
+    - 结果词 -> 需证据支撑、否则被拦下或改回观察的身体承诺
+    - 场景线索 -> 只描述视觉变化、不下身体结论的观察
+    domain_anchors:
+    - 观察词
+    - 关系词
+    - 结果词
+    - 线条
+    - 场景化观察
+    expected_body_topics_covered:
+    - 观察词/关系词/结果词分层
+    - 能说视觉线条变化与不能保证身体结果的边界
+    - 替代表达与回避表达
+    - 场景化但非结论化的观察方式
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、线条走向、外轮廓与下摆位置等画面线索
+      method_layer: 解释先落观察词、再用带限定的关系词、把结果词当需证据承诺处理的可复用顺序
+      boundary_layer: 对身材改善、显瘦显高等身体结果的硬结论设边界，默认不直接写出
+      downgrade_path: 缺个体化证据的身体承诺当场拦下或降回观察语言，并把该保证暂挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-077
+    - PROP-V1-078
+    - PROP-V1-079
+    - PROP-V1-080
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-077
+        proposition_type: definition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-078
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-079
+        proposition_type: applicable_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-080
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 镜头里一条高腰直筒裤，腰头收进一道褶、裤缝竖线从胯骨落到脚踝
+    domain_mechanism: 先用观察词只报告可见线条与结构，再用带‘多半’‘在多数情况下’限定的关系词表达条件关联，结果词一律当成需证据的身体承诺来处理
+    downstream_content_effect: 让文案把想说的效果改写成可见的线条动作，减少对具体个人身体的越界承诺
+    risk_boundary_handling: 对个人的身材改善承诺缺个体化证据时当场拦下或降回观察语言，并把该保证暂挂为待补来源
+  - rich_body_id: PROOF-MB-001-RB-021
+    candidate_id: PROOF-MB-001-021
+    canonical_cluster_id: mkc_027
+    cluster_title: 舒适性能耐用品质证据阶梯
+    body_form: full_rich_body
+    body: 给一件外套或针织单品写品质卖点之前，先把嘴边的形容词按'能说到哪一步'排队，这就是证据阶梯要处理的事。面对同一处袖口、同一块里布，话术拆成三步走：先辨清这句到底是软主张还是强主张，再给它配一类站得住的凭据，最后划出没凭据时最多能说到哪一层。像'上身松快''肩线不压''坐下不顶胯'这种，讲的是穿的人当下体感，属于偏软的体验类说法，落笔时得挂靠试穿过程里看到的情形，不能当成对所有身形都成立的定论。一旦词汇跳到'透气''挡风''洗后不走形''久穿不塌'，性质就变了——这些是能被测的功能主张，需要检测口径、行业标准或专业工艺说明来托底；讲到'反复水洗仍不起球''边缝扛得住拉扯'这类耐久话，门槛更高，要拿得出经得起核对的凭证。判断凭据够不够硬有个次序：主张越往功能与耐久靠，需要的证据就越实，用一句私人化的体感去顶一个功能承诺，等于偷换了层级。真正的边界卡在这里：当描述从看得见的线迹密度、织物垂坠、余量分布，悄悄滑成'所以它保暖、它耐穿'，而手上又没有对应材料时，就不能硬发，要把这句压回可观察的说法，同时标明缺的是检测还是标准这一类凭据，等材料补齐再谈功能。这样门店解释货品时，说出口的每句都对得上一层证据，而不是拿体验词去暗示没验证过的性能。
+    body_char_count: 523
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 舒适话术 -> 主观体验类断言（挂靠试穿观察，不外推所有身形）
+    - 性能话术 -> 需检测口径或行业标准支撑的功能断言
+    - 耐用话术 -> 需可核对凭证的证明类断言
+    - 证据缺失 -> 回落为可观察描述并标明所缺证据类别
+    domain_anchors:
+    - 舒适
+    - 性能
+    - 耐用
+    - 品质
+    - 证据阶梯
+    - 门店解释
+    expected_body_topics_covered:
+    - claim 分级
+    - 不同 claim 对应的证据类别
+    - 无证据时允许保留的最低表达层级
+    - source gap 触发阈值
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与材质线索：袖口线迹密度、里布触感、织物垂坠、余量分布、边缝走线
+      method_layer: 先辨软/强主张，再按主张往功能与耐久靠的程度匹配对应硬度的凭据，最后为无凭据情形划最低可说层级
+      boundary_layer: 保暖、透气、耐穿等效果/性能结论必须有检测口径、行业标准或专业工艺说明支撑，不得由体感直接外推
+      downgrade_path: 无凭据的效果结论压回可观察说法，同时标明缺的是检测还是标准这一类凭据，待材料补齐再谈功能
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-081
+    - PROP-V1-082
+    - PROP-V1-083
+    - PROP-V1-084
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-081
+        proposition_type: definition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-082
+        proposition_type: applicable_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-083
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-084
+        proposition_type: failure_signal
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 同一处袖口、同一块里布上的线迹密度、织物垂坠与余量分布
+    domain_mechanism: 把品质形容词先辨软/强主张，再匹配对应硬度的凭据，最后为无凭据情形划定最低可说的可观察层级
+    downstream_content_effect: 门店解释货品时每句话术都能对上一层证据，不用体验词暗示未验证的性能
+    risk_boundary_handling: 描述从可观察线索滑向效果结论且无对应材料时不硬发，压回可观察说法并标明缺检测还是标准
+  - rich_body_id: PROOF-MB-001-RB-022
+    candidate_id: PROOF-MB-001-022
+    canonical_cluster_id: mkc_028
+    cluster_title: 品质观察项与证明类型路由
+    body_form: full_rich_body
+    body: 面对一件成衣，镜头往往先落在某个能被看清的角落——比如袖口一圈锁边收得服不服帖、门襟上那一段走线有没有跳针、两片衣身拼缝的花位对得齐不齐。这类画面都归在局部观察这一层，正确的用法是先把它送去归类，判断这条线索究竟能撑起哪一级说法，而不是被顺手拿来当成对整件衣服的背书。归类的骨架分三档：一档单靠眼睛就能看见的直观凭据，一档得依赖公开的执行规范或第三方检测才站得住，还有一档要靠对工艺流程的专业解释来说明。每写下一句关于做工的话，都先问它落在哪一档，话的分量必须与这一档能拿出的凭据相称。一旦措辞里带上认证、分级或某项规范达标的意味，它就跳出了肉眼能裁定的范围，得往更硬的凭据台阶上爬，单凭看得见的细节不足以拍板。这里最要守住的一条底线是：某一处收口干净利落，至多说明那一处被处理妥当，不能顺势推断整件都靠得住；把一个点的表现摊开成全身的许诺，就得被拆回它原本的局部范围。至于认证或规范类的措辞，只要拿不出官方出处，就不能当既定事实写下去，而应挂成来源待补、暂不采信；凡牵涉整体耐用、能否达标这类硬结论，没有相称凭据就先不落判断，只保留看见什么就讲什么的观察口吻，或明确标注来源仍需补齐。
+    body_char_count: 493
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 品质局部观察 -> 归入证明档次
+    - 证明档次 -> 结论分量路由
+    - 认证/等级信号 -> 更高证据台阶
+    - 无据的证明 -> 来源待补
+    domain_anchors:
+    - 线迹
+    - 收口
+    - 拼接
+    - 局部观察
+    expected_body_topics_covered:
+    - 可观察品质线索
+    - proof-type taxonomy
+    - certification / standard claim 的 route-away 规则
+    - 不得把局部观察写成整体保证
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与画面：袖口锁边是否服帖、门襟一段走线有无跳针、两片衣身拼缝花位是否对齐
+      method_layer: 解释可复用的判断顺序：先把局部线索归到三档凭据（眼见直观/执行规范或检测/工艺解释），再让说法分量与该档凭据相称
+      boundary_layer: 对整体耐用、能否达标这类硬结论设边界：无相称凭据不落判断；认证声称跳出肉眼裁定范围须升到更硬台阶
+      downgrade_path: 无证据的整体性结论回收为局部观察口吻，缺官方出处的认证声称挂成来源待补、暂不采信
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-085
+    - PROP-V1-086
+    - PROP-V1-087
+    - PROP-V1-088
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-085
+        proposition_type: definition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-086
+        proposition_type: mechanism
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-087
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-088
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 袖口一圈锁边是否服帖、门襟一段走线有无跳针、两片衣身拼缝花位是否对齐
+    domain_mechanism: 先把品质线索归到三档凭据（眼见直观/执行规范或检测/工艺解释），让说法分量与该档凭据相称，涉认证或等级须升到更硬的证据台阶。
+    downstream_content_effect: 生成时先写被观察对象与归类机制，再写边界与降级，局部线索只用于支撑局部描述、不外推整件。
+    risk_boundary_handling: 整体耐用/达标类硬结论无相称凭据就不落判断，缺官方出处的认证声称挂成来源待补、暂不采信。
+  - rich_body_id: PROOF-MB-001-RB-023
+    candidate_id: PROOF-MB-001-023
+    canonical_cluster_id: mkc_029
+    cluster_title: 工艺品质内容的可拍摄表达
+    body_form: full_rich_body
+    body: 要把工艺与品质这类内容做成真能拍下来的画面，落地顺序是先认对象、再给镜头、再填说明、最后收边界，而不是反过来先琢磨旁白怎么夸。所谓可拍摄对象，指的是镜头能真正对上焦的那种实物点：一道走线的起落、两片拼缝的咬合、一颗扣位在布面上的钉法，还有里料收口翻过来后的那处折边——它们都能被光打到、被特写顶住，属于实打实的对象线索；而看不见摸不着的所谓性能不算对象，硬塞进镜头只会让画面空转。对象定住之后再排镜头线索：先用一个拉开的画面把衣服在身上的整体轮廓交代出来，接着收进中景锁住它所在的那一块结构区域，末了压到贴身的近景，把那个细节点单独顶到画面正中，层级从大往小走一遍，观众的视线才不至于在糊在一起的信息里迷路。镜头前还得配上能被完整记录的动作——把里料那一面翻转过来让折边正对光、顺着开合处缓缓带一下、或让正反两面并排摆着做个照应。每一层画面都对应一个解释槽位，槽位里只填得下几句话：这儿看到的是哪种处理、它长在衣服的哪个位置、跟旁边哪一块连着、镜头又是怎么把它呈现出来的。到了收边界这一步得格外守规矩：镜头交出来的始终是处理的手法，而不是它耐不耐穿、护不护身的结论；凡是旁白想往耐用、功能一类效果上滑，一律改回只讲眼睛看见了什么的说法，实在改不动、又拿不出可核验的独立来源，就先标成待补来源挂起来，绝不用一段特写去替代本该由检测给出的证明。
+    body_char_count: 570
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 对象线索 -> 镜头线索
+    - 镜头线索 -> 解释槽位
+    - 解释槽位 -> 边界
+    - 工艺细节 -> 可拍摄性
+    domain_anchors:
+    - 对象线索
+    - 镜头线索
+    - 解释槽位
+    - 近景
+    - 边界
+    expected_body_topics_covered:
+    - 可拍摄对象
+    - 可拍摄动作
+    - 画面层级
+    - 说明与非结论化提示
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与材质：走线起落、拼缝咬合、扣位钉法、里料收口折边，以及远中近三层画面里看得见的动作与位置。
+      method_layer: 解释可复用的顺序机制——先认镜头能对焦的实物对象，再按远、中、近逐级铺画面，每层配一个只讲所见的解释槽位。
+      boundary_layer: 对耐用、功能等性能结论设边界：镜头只呈现处理手法，不用特写替代检测给出的证明。
+      downgrade_path: 涉及性能承诺的旁白改回观察语言，改不动又无可核验独立来源的先标成待补来源挂起来。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-089
+    - PROP-V1-090
+    - PROP-V1-091
+    - PROP-V1-092
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-089
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-090
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-091
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-092
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 里料收口翻过来后的那处折边，作为近景能对焦的实物细节点。
+    domain_mechanism: 先认镜头能对上焦的实物对象，再按远景整体、中景结构区域、近景关键细节逐级安排，每层配只讲所见处理的解释槽位。
+    downstream_content_effect: 为后续镜头动作与画面层次提供确定的实物落点，让展示层层交代整体、结构与细节而不糊成一片。
+    risk_boundary_handling: 镜头只呈现可见的处理手法而非性能结论，性能承诺一律改回观察语言，改不动的挂为待补来源，不以画面替代检测证据。
+  - rich_body_id: PROOF-MB-001-RB-024
+    candidate_id: PROOF-MB-001-024
+    canonical_cluster_id: mkc_030
+    cluster_title: Look 拆解观察骨架
+    body_form: full_rich_body
+    body: 这套 Look 的拆解观察骨架，做法是先把观察维度立稳，再顺着维度把一整身穿搭切成一个个能单独讲的节点。它固定五个入手角度：整套的外部线条即轮廓、内外长短叠压出的层次、颜色在全身如何铺陈的分布、软硬厚薄面料并置产生的对比，还有上下、里外连同配件各自落到的搭配位。维度立住，一身搭配就被切成互不重叠、可供后续取景与讲解直接取用的观察节点，而不是上来只盯着某件孤立单品。要落成能拍的画面，再把结构分三层安排：打头的前景一层交代场景与位置关系，居中一层托起这一轮要突出的那件也就是主体，另有一层作陪体去衬托，把主次压出来，如此镜头才找得到落点，主体与陪体不会糊作一团。成套与成组两种对象读法并不一样：单独一套，沿五个维度走通一条内部观察线就够；若干套并排，就得比对套与套在轮廓、搭配位上是呼应还是错开。要守的边界在于，给层次、搭配位或轮廓命名时，措辞只落在几何形状与所在位置，譬如一件敞口长外套露出内搭、腰间束带把线条收住，描述到此为止，不能顺手推出穿着者身材如何这类结论。一旦内容里混进了某家门店的实拍场景、或货架上正卖的商品这类具体事实，先摘除或标为缺来源，这一层只留下能反复套用的拆解骨架；至于好不好看、显不显之类的判断，要么换成看得见的画面语言，要么挂起等授权来源补齐，绝不在骨架里直接下断言。
+    body_char_count: 546
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - look_layer -> observation_node
+    - foreground_subject_companion -> shot_structure
+    - group_display -> look_decomposition
+    - stop_condition -> output_boundary
+    domain_anchors:
+    - 轮廓
+    - 层次
+    - 搭配位
+    - 主体
+    - 陪体
+    - 前景
+    expected_body_topics_covered:
+    - Look层级拆解维度
+    - 单套搭配与成组陈列的观察节点
+    - 轮廓/层次/搭配位的命名边界
+    - 可拍摄的前景-主体-陪体结构
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如轮廓线条、内外层次叠压、面料软硬对比、束带位置
+      method_layer: 解释可复用的判断机制与顺序：先固定五个拆解维度切出互不重叠的观察节点，再按前景/主体/陪体分三层组织画面，成套与成组分别走内部观察线与套间比对
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界：命名只停在几何与位置，不推穿着者身材，好不好看、显不显之类判断不直接下断言
+      downgrade_path: 无证据的硬结论回收为观察语言，门店实景与在售商品事实剔除或挂为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-093
+    - PROP-V1-094
+    - PROP-V1-095
+    - PROP-V1-096
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-093
+        proposition_type: definition
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-094
+        proposition_type: mechanism
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-095
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-096
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件敞口长外套露出内搭、腰间束带把线条收住
+    domain_mechanism: 先固定整体轮廓、层次、色彩分布、材质对比、搭配位五个拆解维度把整身搭配切成互不重叠的观察节点，再按前景/主体/陪体分三层组织画面
+    downstream_content_effect: 为后续取景与讲解提供统一、可直接取用的观察节点与主陪体层次骨架
+    risk_boundary_handling: 命名只停在几何与位置不推身材结论，门店实景与在售商品事实剔除或挂为缺来源，效果类判断改用画面语言或挂待补来源，不在骨架里直接下断言
+  - rich_body_id: PROOF-MB-001-RB-025
+    candidate_id: PROOF-MB-001-025
+    canonical_cluster_id: mkc_031
+    cluster_title: 主题与色彩故事关系网
+    body_form: full_rich_body
+    body: 这一簇要理清的，是主题词与色彩故事之间的那张关系网，重点是把一个主题词怎样落成一组有主次的颜色说清楚。做法上先建立主题词到色彩组的对位：一个能被归纳出来的主题词，往往牵出一块以单一主色为骨、再加上几个辅色的配色，主题本身把这块配色的冷暖偏向和明暗深浅先框了一个大致口径，比如偏灰的蓝搭一层带雾感的白，就落在低对比、往冷调走的一组里。有了色彩组之后，观察和讲述要按固定次第推进：先由主色把整幅画面的基调压住、占住最大面积；再让辅色去衔接主体单品与背景、内搭之间的过渡；最后才轮到点缀色，在领口、袖口、腰带扣或陈列面上的小物件这类位置敲一个记忆点，制造轻重变化。顺着这条次序推下来，色彩故事才回得到 Look 结构上，交代每块颜色各自是在服务主体、陪衬还是层次。这也是在给系列感、节奏感这类整体印象划出可说的边界：颜色彼此的呼应、面积的轻重都能描述，但不能把它写成“看了就放松”“一眼就显得贵”这类对观者情绪或风格下定论的话——这种效果类说法在拿到可核来源之前只能按观察语言处理，或先标成待补来源。凡是牵扯到某个真实档期、活动或企划的具体信息，都得从正文里抽走、单独挂起来待补，正文只留颜色与结构本身的关系，让它成为一段能反复取用的通用编排，而不是某一季的成品方案。
+    body_char_count: 529
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 主题词 -> 色彩组
+    - 主色/辅色/点缀色 -> 观察与讲述顺序
+    - 色彩故事 -> Look 结构回扣
+    - 停写条件 -> 输出边界
+    domain_anchors:
+    - 主题词
+    - 色彩组
+    - 主色
+    - 辅色
+    - 点缀色
+    - Look 结构
+    expected_body_topics_covered:
+    - 主题词与色彩组的关系
+    - 主色/辅色/点缀色的观察顺序
+    - 系列感与节奏感的表达边界
+    - 色彩故事如何回扣Look结构
+    epistemic_split:
+      observation_layer: 只描述可观察的色彩组结构、色块面积与它们落在领口、袖口、腰带扣、陈列面上的位置
+      method_layer: 解释主题词→色彩组、再按主色定基调/辅色衔接/点缀色敲记忆点的固定观察顺序，最后回扣 Look 结构
+      boundary_layer: 系列感、节奏感只讲呼应与轻重，不把配色写成对观者情绪或风格的确定结论
+      downgrade_path: 情绪/风格等效果类说法在没有可核来源前回收为观察语言，真实档期与企划事实抽离并标为待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-097
+    - PROP-V1-098
+    - PROP-V1-099
+    - PROP-V1-100
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-097
+        proposition_type: mechanism
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-098
+        proposition_type: execution_instruction
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-099
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-100
+        proposition_type: owner_split_hint
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 偏灰的蓝搭带雾感的白构成的一组配色，点缀色落在领口、袖口、腰带扣或陈列面上的小物件
+    domain_mechanism: 先把主题词对到一块单主色加若干辅色的色彩组，再按主色压基调、辅色衔接过渡、点缀色敲记忆点的固定次序讲，最终回扣到 Look 结构
+    downstream_content_effect: 产出一段可反复取用的主题-色板与观察顺序编排，指导内容按主辅点缀落位到搭配位与陈列面
+    risk_boundary_handling: 系列感/节奏感只描述呼应与轻重，情绪或风格效果无可核来源前按观察语言处理或标待补来源，真实档期与企划事实一律抽离挂缺来源
+  - rich_body_id: PROOF-MB-001-RB-026
+    candidate_id: PROOF-MB-001-026
+    canonical_cluster_id: mkc_032
+    cluster_title: 陈列区位与可拍摄视觉锚点
+    body_form: full_rich_body
+    body: 把一间卖场的空间先读成一组抽象的位置类型，是处理陈列区位、并从中标出可拍视觉锚点的起点。不去对照哪一处真实平面，只按功能给位置归档：入口区承担进店的第一眼，居中的中岛便于把几件货凑成一组来端详，走道尽头的端架把注意力压到一件主推单品上，沿墙的长挂通则用来把一个系列一字排开。这些都是位置类型的抽象说法，不落到某家店的面积或走动路线。观察它们时，镜头由远及近分三档推进：先取远景，交代该区位在整片货场里的位置与相邻关系；再切到中景，让一组搭配的叠压层次、色彩过渡和前后主次显出来；最后进近景，把领口的一道缝线、面料的织纹或纽扣的光泽这类单件线索单独框住。景别的先后不是随手排的，而是顺着该位置本身要说明的内容倒推出来的——位置先讲清它要交代什么，镜头再决定退到多远。每一类位置据此挑出一两个能入画的重点，就是静态陈列里给拍摄留的视觉锚点，采集时按远、中、近逐档取画面。要说清的是，从区位到景别的这份对应只是拍摄前的参考编排，属于半成品，还没到能直接对外发布的程度，真要发布还得另行脚本化并过合规一关。它还守着一条硬边界：正文一旦写进某家店的真实位置、面积、走动路线或正在卖的具体货品，就算越了界，得先撤下来，来源不明的先挂起，只把位置类型与景别之间的通用对应留在文里。至于某种区位究竟能带来多少停留或转化，这类涉及效果的说法没有实拍数据就不下结论，先用可观察的画面语言描述，或标为待补来源。
+    body_char_count: 594
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 区位归为位置类型 -> 定观察入口
+    - 景别由远及近推进 -> 定视觉锚点
+    - 静态陈列挑可拍重点 -> 定镜头聚焦
+    - 越界与缺源停止条件 -> 定输出边界
+    domain_anchors:
+    - 入口区
+    - 中岛
+    - 端架
+    - 挂通
+    - 远景
+    - 中景
+    - 近景
+    expected_body_topics_covered:
+    - 入口区/中岛/端架/挂通等一般化区位表达
+    - 远景-中景-近景的观察切换
+    - 静态陈列中的可拍摄重点
+    - 从区位到镜头的最小映射
+    epistemic_split:
+      observation_layer: 只描述可见的区位形态、货品成组方式，以及远中近画面里的缝线、织纹、纽扣光泽等单件线索
+      method_layer: 把区位归为抽象位置类型，顺着各类位置要交代的信息反推远、中、近的景别顺序，并为每类位置挑出可拍锚点
+      boundary_layer: 对区位能带来的停留或转化等效果不下硬结论，区位到景别的映射只作拍摄参考、不当成品脚本
+      downgrade_path: 涉及效果的无据表述改为可观察画面描述或标为待补来源；真实门店位置、面积、动线、货品等实例事实撤下并挂起
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-101
+    - PROP-V1-102
+    - PROP-V1-103
+    - PROP-V1-104
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-101
+        proposition_type: mechanism
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-102
+        proposition_type: definition
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-103
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-104
+        proposition_type: failure_signal
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 近景里领口的一道缝线、面料织纹与纽扣光泽这类单件线索
+    domain_mechanism: 按各类位置要交代的信息任务，从远景到近景反推景别顺序，并为每类抽象区位挑出可拍视觉锚点
+    downstream_content_effect: 供采集团队按远、中、近景别逐档取静态陈列画面
+    risk_boundary_handling: 区位到景别的映射只作拍摄参考、须再经脚本化与审查才可发布；正文写入真实门店位置、面积、动线或在售货品即判越界，先撤下、缺来源者挂起，仅保留位置类型与景别的通用映射
+  - rich_body_id: PROOF-MB-001-RB-027
+    candidate_id: PROOF-MB-001-027
+    canonical_cluster_id: mkc_033
+    cluster_title: 门店日常动作观察切片
+    body_form: full_rich_body
+    body: 这个聚类处理的是门店里日常动作的观察切片：把营业时段里能看见、能上手的动作，一段段抽出来当成可拍可讲的素材，而不是把卖场糊成一团忙碌背景。起点是先认出哪些动作值得单拎出来——它得指向清楚的动作对象，还带着肉眼跟得住的变化。给个画面：叠装台上一摞针织衫被翻松、领线和下摆错位，示范者挨件对折、把折边压齐，直到整摞显出棱角。这一段立得住，是因为它既有起手的缘由，也有收住的一刻。所以每抽一段都要补两个记号：一头写清它凭什么起手（如货品上架后出现歪斜、叠面塌散），另一头写清凭什么算做完（对象对齐、归拢或摊平到位这类看得见的样子，即结束标志），少了任一头，片段就头尾含糊、切不利落。动作还得跟身边道具与区位对上：手先碰到哪件、对象起了哪种可见改变、改变定住后又能填进哪个内容位置，这条最短关系把动作按回它发生的场合。顺着这套次序，整理、比对、讲解、递示这些一般化动作才能逐个落成具体、可再现的观察片段，而不是只攒下一句“全场都在忙”式的空场面；产出停在这种笼统气氛里，就说明动作没被认出来，得退回去重新分型、标注起止。还有一条不让步的边界：凡指向某个可辨认真实人员的举止、话语或经手成绩，都不许留在正文，要么当场抹去，要么标成等待补授权来源的空位，只保留不落到具体个人的通用动作。至于这类切片能替内容产出省多少工、罩住多大范围场景，眼下只拿看得见的样本来描述，硬结论留到补齐可核来源后再论。
+    body_char_count: 592
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 动作前提 -> 动作切片
+    - 动作对象 -> 可内容化条件
+    - 完成标志 -> 内容素材产出
+    - 停止条件 -> 产出边界
+    domain_anchors:
+    - 整理
+    - 比对
+    - 讲解
+    - 递示
+    - 动作对象
+    - 结束标志
+    expected_body_topics_covered:
+    - 开场准备类动作
+    - 整理/比对/讲解/递示等一般化动作
+    - 动作前提与结束标志
+    - 动作与场景道具的最小关系
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与画面：叠装台上针织衫被翻松、领线下摆错位、挨件对折压齐后整摞显出棱角，以及对象对齐、归拢、摊平到位这类看得见的完成状态。
+      method_layer: 解释可复用的判断顺序：先认出指向清楚动作对象、带可见变化的动作，再为每段补起手前提与结束标志两个记号，并把动作接回身边道具与区位的最短关系，方能逐个切出干净片段。
+      boundary_layer: 对省工、覆盖范围等效果类硬结论设边界，眼下只用看得见的样本来描述，不直接下定论。
+      downgrade_path: 无证据的硬结论回收为观察语言，触及真实个人的可辨认举止、话语或成绩先抹去或标成等待补授权来源的空位。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-105
+    - PROP-V1-106
+    - PROP-V1-107
+    - PROP-V1-108
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-105
+        proposition_type: definition
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-106
+        proposition_type: execution_instruction
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-107
+        proposition_type: failure_signal
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-108
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 叠装台上一摞被翻松、领线与下摆错位的针织衫，被挨件对折、把折边压齐到整摞显出棱角。
+    domain_mechanism: 每抽一段动作都要补起手前提与结束标志两个记号，缺任一头片段就头尾含糊、切不利落。
+    downstream_content_effect: 顺着前提—对象—完成标志—停止条件的次序，把整理、比对、讲解、递示等动作落成具体可再现的观察片段供后续内容化。
+    risk_boundary_handling: 凡指向可辨认真实人员的举止、话语或经手成绩一律不留在正文，先当场抹去或标成等待补授权来源的空位。
+  - rich_body_id: PROOF-MB-001-RB-028
+    candidate_id: PROOF-MB-001-028
+    canonical_cluster_id: mkc_034
+    cluster_title: 动作转内容槽位与演示三段式
+    body_form: full_rich_body
+    body: 围绕把一个动作转成内容槽位、再用演示三段式来编排它，先认清一个前提：一个店内可见的动作，比如把针织开衫从叠放堆里取出来、顺肩线抖开、套到人台上看门襟对不对齐，本身不是现成的稿子，而是一串能被拆开、被跟随、被讲解的素材。要把它组织成内容，靠给动作排出先后：从动作起点算起，第一拍交代此刻要处理的对象与位置，第二拍让动作真正展开、把过程走完，接着找那个值得停一停的节点点破要领，末尾把画面收到一处可下完成判断的结果上——四拍照着起、承、转、合推进，缺了转和合，看的人就读不出这段动作想说明什么。每一拍旁边都挂一个解释槽位，只交代当下这只手在忙什么、为何这样处理，不外扩到别的结论。镜头跟随谁跟得久、旁白落几个字，取决于观察强不强：可见变化越清楚，画面就多给、话越省，观察薄弱时才补一两句。边界要设两道：其一，这套办法只在动作确实拆得开、演示得出来时才用得上，且它产出的是动作、解释、镜头三者彼此对应的骨架，是留给后面组稿的半成品，不能当对外那一版成品直接发出去；其二，它只整理可通用、可复用的讲解结构，凡会牵出某家店真实流程或某个真人上阵示范的片段，一律先摘掉或标成待补授权，任何关于效果、身体结果的说法都不能就此下结论，只能改用观察语言描述或挂为待补来源。至于平台侧给出的那些提示，只当研究阶段的旁注收着，既不固化成模板，也不念进正片。
+    body_char_count: 567
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 店内动作 -> 演示分段
+    - 演示分段 -> 解释槽位
+    - 观察强度 -> 措辞繁简
+    - 停止条件 -> 产出边界
+    domain_anchors:
+    - 动作起点
+    - 可见变化
+    - 解释槽位
+    - 镜头跟随
+    - 完成判断
+    expected_body_topics_covered:
+    - 动作镜头起承转合
+    - 动作对应的解释槽位
+    - 强观察/弱解释的组合方式
+    - 平台提示仅作为研究注释
+    epistemic_split:
+      observation_layer: 只描述可观察的动作、材质与画面线索，如抖开针织、套上人台、门襟是否对齐这类可见变化
+      method_layer: 解释可复用的判断顺序：动作按起承转合分段、每段挂解释槽位，以及观察强弱如何定画面与旁白的比重
+      boundary_layer: 对效果、身体结果等硬结论设边界，不当对外成品发布，不虚构真实门店流程或真人示范
+      downgrade_path: 无证据的硬结论回收为观察语言描述，或挂为待补授权来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-109
+    - PROP-V1-110
+    - PROP-V1-111
+    - PROP-V1-112
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-109
+        proposition_type: mechanism
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-110
+        proposition_type: execution_instruction
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-111
+        proposition_type: applicable_condition
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-112
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 把一件针织开衫从叠放堆里拿起、顺肩线抖开、套上人台看门襟是否对齐
+    domain_mechanism: 把一个店内动作按起承转合排出先后，每一拍挂一个解释槽位，画面与旁白的繁简随观察强度伸缩
+    downstream_content_effect: 产出动作—解释—镜头彼此对应的分段骨架，作为后续组稿可复用的半成品结构
+    risk_boundary_handling: 只留可通用的演示编排，不当对外成品发布、不虚构真实门店流程或真人示范，效果与身体结果类说法改用观察语言或挂为待补来源
+  - rich_body_id: PROOF-MB-001-RB-029
+    candidate_id: PROOF-MB-001-029
+    canonical_cluster_id: mkc_035
+    cluster_title: 门店日常内容化风险红线
+    body_form: full_rich_body
+    body: 把门店里的日常搬进内容之前，这一簇立的是一道处置约束：它管的是哪些能留、哪些得改、哪些要先停手，本身并不是能直接拿去召回、讲给读者听的领域正文。先给一个画面——试衣镜前有人捏着两件领型相近的针织衫来回掂量，脚边搁着刚脱下的外套。这样的构图可以照用，可一旦落笔带上某位真实到店者的相貌、随口那句原话、或是他从前买过哪些单品，就踩过了第一道界线。这道界线横在个人隐私和真实的实例事实之间：凡能指认到某个具体人的痕迹，不论长相、交谈还是购买记录，都不进内容。真遇上了，办法是把人抽掉、把情形留住——不写某位客人，而改成一类在相近版型间反复斟酌的到店问询，让画面从认得出的个人退回到通用角色。凡碰到真实的经营表现，像某段日子卖动没卖动、进店人多人少、货转得快转得慢，或是顾客反馈里那句原话，都归为实例事实，先剔除或改写；改写过关只看一条，就是回头再也倒推不出那个具体的人。至于授权说不清、来源没交代的材料，既不硬塞也不硬扔，先挂起，等授权或来源补齐再动。要说清的是，这条红线只管内容化前怎么处置，并不代表授权已经放行；碰上卖得好不好这类效果判断，也先用观察的话去描述、把定论留给后面补来源，不在这里拍板。
+    body_char_count: 498
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 隐私信号出现 -> 停止人物化细节的输出，或改走通用化
+    - 实例事实信号出现 -> 标为待补来源线索、先剔除或改写
+    - 角色表达 -> 收敛成一般化角色的表面情形
+    - 风险信号出现 -> 回退到安全挂起等授权或来源补齐
+    domain_anchors:
+    - 隐私边界
+    - 经营表现
+    - 顾客反馈
+    - 一般化角色
+    - 授权不明
+    expected_body_topics_covered:
+    - 隐私与实例事实边界
+    - 不可写的经营表现与顾客反馈
+    - 可保留的一般化角色表达
+    - 何时转source_gap或decision_required
+    epistemic_split:
+      observation_layer: 只描述可观察的画面构图与动作，如试衣镜前拿着两件领型相近针织衫来回掂量、脚边搁着刚脱下的外套
+      method_layer: 解释可复用的处置顺序：先辨隐私信号停手或通用化，再把实例事实剔除或改写，收敛成一般化角色，风险不清则挂起
+      boundary_layer: 对经营表现、效果判断等硬结论设边界，不在此处下定论
+      downgrade_path: 无证据的效果类硬结论回收为观察语言描述，或挂为待授权、待补来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-113
+    - PROP-V1-114
+    - PROP-V1-115
+    - PROP-V1-116
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-113
+        proposition_type: definition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-114
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-115
+        proposition_type: mechanism
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-116
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 试衣镜前有人捏着两件领型相近的针织衫来回掂量、脚边搁着刚脱下的外套的到店画面
+    domain_mechanism: 先辨隐私信号停手或通用化，再把可指认到具体个人的实例事实剔除或改写成一般化角色情形，授权或来源不清的先挂起。
+    downstream_content_effect: 下游把它当作内容化前的处置口径执行，只放行已脱敏的一般化角色表达，不把它当领域知识召回。
+    risk_boundary_handling: 涉及经营表现与效果判断的硬结论先用观察语言描述、留给后续补来源，授权说不清的材料一律挂起不径直使用。
+  - rich_body_id: PROOF-MB-001-RB-030
+    candidate_id: PROOF-MB-001-030
+    canonical_cluster_id: mkc_036
+    cluster_title: 陈列动作 SOP 节点框架
+    body_form: full_rich_body
+    body: 想把门店里的陈列动作沉淀成一套 SOP 式的节点框架，要留下的只是一副做法骨架：它把'该怎么摆货'拆成几个能回看核对的环节，内部只放判断做法与环节间的咬合，不装进任何一家卖场的现场实况。头一环是陈列前检查，负责盘点这步要备齐的进料——主推款有没有上位、连带的上下装是否成组、色系深浅走向能不能一眼读出；这环收工，交出的是一个'区位与货品都已对齐'的可见状态。它不停在原地，而是递给实施环节当开工底料，于是调衣架间距、把领口线捋顺、让外搭与内搭并肩立住这些动作才有据可依。实施一收尾便转进复核，回看主色压不压得住场、外廓够不够干净、视觉重心能否被镜头收进画面。就这样一环的出料恰好垫成下一环的进料，先后被钉死；谁若前一环产物还空着就硬往后闯，链子当场断开，这正是要拦下的跳步信号，也是整条流程走通与否的完成标志。为便于在店内讲清每步，这些环节还应摆成一条看得见的先后线索。边界上，骨架只管各环节本身、进料出料与彼此先后咬合这几件事；一旦有人把某处卖场当天的排班表、实到人手或货品现况塞进正文，就得先摘走或标成来源待补，不能就地当流程写。正因里头只有做法而非实况，后续照它做讲解或培训内容时，才不至于顺带把某家店的私有事实带出去。至于'照这么陈列能拉动多少成交'这类涉及效果的话，框架不下硬结论，只用观察语言把现象描出来，或挂为待补来源，日后核实。
+    body_char_count: 570
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 陈列前检查 -> 实施
+    - 实施 -> 复核
+    - 节点输入 -> 节点输出
+    - 结束条件 -> 输出边界
+    domain_anchors:
+    - 陈列前检查
+    - 实施
+    - 复核
+    - 节点输入
+    - 节点输出
+    - 完成标志
+    expected_body_topics_covered:
+    - 陈列前检查/实施/复核的一般节点
+    - 节点输入与节点输出
+    - 节点之间的依赖顺序
+    - 节点可见化表达
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与画面：主推款是否上位、上下装是否成组、色系深浅走向、领口与内外搭并肩、主色与外廓、视觉重心能否入镜
+      method_layer: 解释可复用的判断顺序：前一环节交出的可见状态恰好充当下一环节的进料，陈列前检查→实施→复核依序推进，先后咬合固定
+      boundary_layer: 对'能拉动多少成交'这类效果/性能硬结论设边界，不擅自下结论
+      downgrade_path: 无证据的硬结论回收为观察语言的现象描述，或挂为待补来源日后核实
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-117
+    - PROP-V1-118
+    - PROP-V1-119
+    - PROP-V1-120
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-117
+        proposition_type: definition
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-118
+        proposition_type: mechanism
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-119
+        proposition_type: failure_signal
+        epistemic_class: execution_asset_method
+        owner_candidate: ExecutionAssetOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-120
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 调衣架间距、把领口线捋顺、让外搭与内搭并肩立住，并回看主色是否压得住场、外廓是否干净、视觉重心能否被镜头收进画面
+    domain_mechanism: 前一环节交出的可见状态恰好充当下一环节的开工进料，顺序被钉死，缺了前置产物就不得进入下一步
+    downstream_content_effect: 骨架只装做法不装现场实况，后续据此产出店内讲解或培训内容时不会顺带带出某家店的私有事实
+    risk_boundary_handling: 夹带真实排班表、实到人手或货品现况须先摘走或标成来源待补；涉及效果的硬话不下结论，只作观察描述或挂为待补来源
+  - rich_body_id: PROOF-MB-001-RB-031
+    candidate_id: PROOF-MB-001-031
+    canonical_cluster_id: mkc_037
+    cluster_title: 零售角色动作权限与加盟改写边界
+    body_form: full_rich_body
+    body: 在零售场景里，先要把角色、能做的动作和背后的权限三样东西对齐：某个岗位之所以能上手某类操作，是因为它握有对应授权，缺了这层授权，动作就不该落到它头上。以卖场里最常见的画面为例，站在货架前把叠装按色阶重新码放、把挂通间距拉匀、给顾客解说一件外套的肩线与落肩差别，这些整理、码放、讲解、比对类动作可以用泛化的口吻讲清楚，因为它们描述的是可复用的做法，而不是某个真人被谁授了什么权。真正要设卡的是加盟与授权那一类信息：一旦素材里冒出谈定的划片范围、返点比例或合同里的具体条目，就不能照抄，得先把可识别的数字、地名、条款抽干净，只留下“确有这么一类按约定成立的授权关系”这种抽象表面，让读者知道有这么一层结构，却摸不到任何真实实例。判断顺序上，遇到带有加盟或授权气味的硬事实，第一步是把它拦下、挂进缺口清单等后续可核材料补齐，而不是凭印象先写后补；材料没到位之前，宁可用观察式的语言把画面和做法描述出来，也不下缺来源的硬结论。若某条信息卡在“像规则又像实例”的模糊地带，边界一时说不清，就别自动放行，转给人来定夺。这样一来，正文里始终只有可讲的做法层和一般化后的授权表面，真实制度、真实合同、真实授权被稳稳挡在外面，既不越权表达，也不让内部安排顺着方法说明漏出去。
+    body_char_count: 528
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 零售角色 -> 可泛化表达的动作
+    - 授权表面 -> 泛化改写
+    - 加盟/授权事实信号 -> 拦下改道
+    - 风险信号 -> 安全回退
+    domain_anchors:
+    - 零售角色
+    - 动作权限
+    - 一般化授权表面
+    - 加盟边界
+    - 制度事实
+    expected_body_topics_covered:
+    - 零售角色、动作、权限关系
+    - speakable 的一般化授权表面
+    - 加盟/授权信息的泛化改写条件
+    - 真实制度与方法层的切断
+    epistemic_split:
+      observation_layer: 只描述可观察的动作与画面，如站在货架前按色阶码放叠装、拉匀挂通间距、解说外套肩线与落肩差别
+      method_layer: 解释角色-动作-权限先对齐、再把授权类信息抽掉可识别实例做泛化改写的判断顺序
+      boundary_layer: 对加盟返点比例、划片范围、合同条目这类实例事实与任何效果性硬结论设边界，不照抄也不下缺来源结论
+      downgrade_path: 缺来源的授权硬事实回收为观察语言或挂进缺口清单等待可核材料，边界模糊转交人来裁定
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-121
+    - PROP-V1-122
+    - PROP-V1-123
+    - PROP-V1-124
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-121
+        proposition_type: mechanism
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-122
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-123
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+      mechanism_04:
+        proposition_id: PROP-V1-124
+        proposition_type: failure_signal
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 站在货架前按色阶重新码放叠装、拉匀挂通间距、解说一件外套的肩线与落肩差别
+    domain_mechanism: 角色、动作、权限三者先对齐，超出权限的动作不写；加盟与授权类信息先抽掉数字、地名、合同条款，只留一般化后的授权表面。
+    downstream_content_effect: 正文里只沉淀可讲的做法层与一般化后的授权表面，越权动作与真实授权实例都被挡在外面。
+    risk_boundary_handling: 缺来源的授权硬结论先挂起等可核材料、宁用观察语言，边界说不清就不自动放行、转给人来定夺。
+  - rich_body_id: PROOF-MB-001-RB-032
+    candidate_id: PROOF-MB-001-032
+    canonical_cluster_id: mkc_038
+    cluster_title: 异常回退与前复核路由提示
+    body_form: full_rich_body
+    body: 这一簇要立的规矩，是异常出现后先回退、再看前复核环节的路由提示：当内容生产链上的某一步出了岔子，正文该停在哪一步、又该把处置权转给哪一步，都得有既定去向，而不是让各个环节各凭手感乱补。举个画面，一组以落肩廓形上衣配直筒下装的陈列，要写清它为何看着利落，可支撑这句判断的肩线走向与面料垂坠还没被记录进来，这时对应的读图环节其实缺了前置。碰到这种情况，做法是往回退到最靠近、又能把所缺观察补起来的那一步，先把肩线、克重、廓形这些看得见的线索补录，再让后面的解释接着走，而不是把这段陈列硬算成写完。若退回之后仍拿不出足够支撑，就给那句结论挂上一处证据缺口的标记，写明还差哪一类东西——是缺实拍画面、缺能公开引用的依据，还是缺环节说明——把没有凭据的话先摁住，不放它往下游解释里流。再碰到某一项谁来负责、能不能改都说不清楚时，则转成一条待确认的路由记号，只把需要拍板的问题原样摆出来，请由人工来敲定，不自己替组织下结论。每一条异常都用一份精简登记留痕：属于哪一类、缺的到底是什么、还能保留的观察有哪些、以及在敏感之处应改用的安全替代表达。至于任何牵扯真实经营波动的具体数字，都算实例事实，一律先摁住或摘掉，正文只留下这套通用的停与转规矩；效果、规模一类硬话在没有官方来源之前，只用观察语言去描述、挂为待补，也不在这段文字里替它补上未证的结论。
+    body_char_count: 567
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 某节点缺前置 -> 回退到最靠近且能补齐观察的那一步
+    - 回退后仍证据不足 -> 挂起结论并标出证据缺口
+    - 归属或改动权限不清 -> 转成待确认路由，交人工敲定
+    - 触发敏感风险信号 -> 改用安全替代表达
+    domain_anchors:
+    - 节点缺失回退
+    - 异常项最小记录
+    - 安全替代表达
+    - 落肩廓形上衣配直筒下装的陈列
+    - 肩线走向与面料垂坠（版型线索）
+    expected_body_topics_covered:
+    - 节点缺失时的回退
+    - 证据不足时的证据缺口路由
+    - 授权不明时的待确认路由
+    - 异常项的最小记录格式
+    epistemic_split:
+      observation_layer: 只描述看得见的结构与材质线索——落肩廓形、直筒下装、肩线走向、面料垂坠，以及可保留的观察对象
+      method_layer: 按顺序判断：某节点缺前置就回退补齐，证据不足就挂起并标缺口，权限不清就转待确认交人工，触发风险就改用安全替代表达
+      boundary_layer: 对利落度、陈列效果、规模一类硬结论不直接下定论，先设边界
+      downgrade_path: 无官方来源的硬结论回收为观察语言或挂为待补来源，真实经营异动的具体数字一律先摁住或摘除
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-125
+    - PROP-V1-126
+    - PROP-V1-127
+    - PROP-V1-128
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-125
+        proposition_type: definition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-126
+        proposition_type: mechanism
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-127
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+      mechanism_04:
+        proposition_id: PROP-V1-128
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一组以落肩廓形上衣配直筒下装的陈列，及其肩线走向与面料垂坠等读图线索
+    domain_mechanism: 某读图环节缺前置时，回退到最靠近且能补齐所缺观察的那一步，先补录肩线、克重、廓形等线索再往下解释，而不是硬算成写完
+    downstream_content_effect: 没有凭据的结论被先摁住、不流入下游解释，缺口标明所差证据后才恢复，保证解释稿不带缺陷完成
+    risk_boundary_handling: 利落度、陈列效果、规模等硬话在没有官方来源前只用观察语言描述并挂为待补，真实经营异动的具体数字一律先摁住或摘除、只留通用停转规则
+  - rich_body_id: PROOF-MB-001-RB-033
+    candidate_id: PROOF-MB-001-033
+    canonical_cluster_id: mkc_039
+    cluster_title: 产品叙事角色入场框架
+    body_form: full_rich_body
+    body: 为内容里的某件衣服设计它的叙事角色、安排它怎样入场,要回答的核心是:这件产品究竟以什么身份走进一段内容、又在哪一格画面里第一次露面。动手时不妨先盯住它在镜头里的首次落点——是开场第一帧就被推到眼前,还是在铺完一段情境之后才被带出来,这个落点会反过来提示该替它定一个什么功能身份。命名这一步是骨架:拿一件开衫来说,若用来撑起整段叙述,它就是主角;若被拿去和另一种穿法并置、把差别摊开,它便退成对比项;若它出现在某个困扰被提出之后、给出一条看得见的处理路子,它是解决项;若它只负责把前一个场景过渡到后一个场景、把一种层次接到另一种搭配重心上,那它是过渡项。角色一旦定下,它该落进开头段、对比段、解释段还是收束段也就跟着定了;而每一段都要求把这件衣服绑到一个具体的使用情境上,不让它凭空亮相。当画面把焦点收到门襟的走线、腰线的位置或面料纹理这类局部时,这件产品更适合当作解释结构的教育落点,而不是被催着去卖。要提醒的是,这套办法只搭角色和位置两层空槽,槽里不填价格、款号、卖点式保证这类具体商品信息;只要内容里压根没有一件能在故事里担起角色的衣服可写,或者只想把它写成一篇在售货品的推广文,这框架就不适用。凡涉及真实商品的说法,一律先留成待补来源,正文只保留角色和位置的判断,不替读者下购买或效果的结论。
+    body_char_count: 549
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 首次出现位置 -> 产品角色命名
+    - 产品角色命名 -> 叙事段落
+    - 叙事段落 -> 场景任务绑定
+    - 可见细节 -> 教育节点
+    domain_anchors:
+    - 门襟
+    - 腰线
+    - 面料纹理
+    - 搭配重心
+    - 层次变化
+    expected_body_topics_covered:
+    - 角色功能命名方式
+    - 产品在镜头中的首出现位置
+    - 产品与场景任务的绑定方式
+    - 产品作为对比项、解决项、过渡项的结构位置
+    epistemic_split:
+      observation_layer: 只描述可观察的画面线索:产品在镜头里的首次落点、开场第一帧、门襟走线、腰线位置、面料纹理这类局部特写。
+      method_layer: 解释可复用的判断顺序:先看首次落点,据此把产品命名为主角、对比项、解决项或过渡项,角色再决定它落进哪个叙事段落并绑定到具体使用情境。
+      boundary_layer: 对购买、效果等硬结论设边界:框架只产出角色与位置两层空槽,不替读者下购买或效果结论。
+      downgrade_path: 凡涉及真实商品的说法一律不直接写入,先留成待补来源,正文只保留角色与位置的判断。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-129
+    - PROP-V1-130
+    - PROP-V1-131
+    - PROP-V1-132
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-129
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-130
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-131
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-132
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 镜头收到门襟的走线、腰线的位置与面料纹理这类局部特写
+    domain_mechanism: 先看产品在镜头里的首次落点,据此把它命名为主角、对比项、解决项或过渡项,角色再决定它落进哪个叙事段落并绑定到一个具体使用情境。
+    downstream_content_effect: 角色与位置一旦判定,开头段、对比段、解释段、收束段的取舍随之确定,形成可检查的叙事骨架。
+    risk_boundary_handling: 框架只搭角色与位置两层空槽,不填价格、款号、卖点承诺等具体商品信息,涉及真实商品的说法一律先挂为待补来源。
+  - rich_body_id: PROOF-MB-001-RB-034
+    candidate_id: PROOF-MB-001-034
+    canonical_cluster_id: mkc_040
+    cluster_title: 叙事到 CTA 的非硬卖边界
+    body_form: full_rich_body
+    body: 一段服装内容走到结尾、要递出那句引导读者行动的话时，先确认的不是怎么把人推向下单，而是前面有没有把话讲够。这条从叙事收束走向非硬卖引导的分界，落点全在教育是否先行：只有当一套搭配的判断已交代明白、或某个穿着情境已说清楚，收尾那句引导才有依附之处，否则一开篇就喊人行动，等于把话悬在半空。判据很朴素：读者手里是否已有能照着做的方法，眼前是否见过至少一个能核对的画面细节，比如挂在货架中段、上装靠前下装错开排布的一组同系列单品，或袖口翻折后露出的内搭层次。铺垫落地之后，引导的信息量要收得很窄，最好只留一个可执行的小动作配一处观察点，例如提示把这组搭配条件记下来、回看陈列里谁主谁次、留意下摆开衩走动时的摆幅、或问一句这样穿更适合哪种场合。经过这样处理，叙事末端便从推销式口播换成保存、比对、端详与发问这类低压力动作，读者会把它当成内容顺下来的延伸，而非被推着买。边界还得焊死：引导句不能越过证据去替效果说话，凡是效果、身体反应、规模一类硬结论，在没有实证撑住时一律退回到只描述看得见的现象，或先记成待补来源；至于具体优惠、货品数字这些落在实例上的事实，属于要另行核实的信息，不能直接写成投得出去的销售句，而应按缺来源先挂起。反过来，若前文只有一张图或几个情绪词、方法根本没展开，这套收尾就不适用，此时更该把引导退成一句观察提示，而不是硬凑一句催单。
+    body_char_count: 573
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 教育铺垫到位 -> 引导获得落点
+    - 引导信息量收窄 -> 低压力动作
+    - 商品事实隔离 -> 不越界硬卖
+    - 陈列或场景线索 -> 观察提问
+    domain_anchors:
+    - 陈列主次
+    - 搭配条件
+    - 场景提示
+    - 观察对象
+    expected_body_topics_covered:
+    - CTA 的前置教育条件
+    - CTA 的信息密度控制
+    - CTA 与商品事实的隔离
+    - CTA 与陈列/场景的连接点
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如货架上同系列单品上装靠前下装错开的主次排布、袖口翻折露出的内搭层次、下摆开衩走动时的摆幅
+      method_layer: 解释可复用的判断顺序：先确认搭配方法或穿着场景是否讲透，再决定收尾引导是否有落点，并把引导信息量压到一个可执行动作加一处观察点
+      boundary_layer: 对效果、身体反应、规模等硬结论设边界，引导句不得越过证据替效果背书
+      downgrade_path: 无实证的效果暗示回收为只描述看得见的现象，或先记成待补来源；具体优惠、货品数字先挂缺来源，不落成可投放销售句
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-133
+    - PROP-V1-134
+    - PROP-V1-135
+    - PROP-V1-136
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-133
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-134
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-135
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-136
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 挂在货架中段、上装靠前下装错开排布的一组同系列单品，以及袖口翻折露出的内搭层次
+    domain_mechanism: 只有当搭配方法或穿着场景已讲透，收尾引导才有落点，且引导信息量压到一个可执行小动作加一处观察点
+    downstream_content_effect: 叙事末端从推销式口播改为保存、比对、观察、提问这类低压力动作，被读者当作内容顺下来的延伸而非硬卖
+    risk_boundary_handling: 效果类硬结论无实证时退回观察语言或挂待补来源，具体优惠与货品事实先记为缺来源，不直接写成可投放销售句
+  - rich_body_id: PROOF-MB-001-RB-035
+    candidate_id: PROOF-MB-001-035
+    canonical_cluster_id: mkc_041
+    cluster_title: 产品生命周期角色窗口
+    body_form: full_rich_body
+    body: 把一件单品放进产品在生命周期中的角色窗口来看，第一步不是对应哪个上架时点，而是先给它安排一个抽象的阶段坐标；这套坐标可借服装内容里熟悉的说法，从认知进入期起步，经结构教育期打底，再进入组合扩展期，随后走到场景验证期，最终收在复盘维护期，若换成更粗的命名，也就是导入、随后的成长、趋稳的成熟与缓行的退场。按抽象阶段而不是具体档期来编排，为的是让同一件衣服在各时点承担的叙事任务能横向对照。阶段一旦定下，叙事的信息密度与教育侧重随之移动：刚进入认知那一段，正文要多花笔墨说明这件外套在整套货品结构里扮演什么角色，画面不妨停在肩线走向或袖口收束这类能被看见的细节上；往中段推，重心转向面料取舍与版型稳定性的交代，以及它跟陪衬款、过渡款如何搭配成组；到偏后的验证段，则改说它适合与不适合的穿着条件，密度收窄成一句提醒而非从头铺陈。这条由阶段推向叙事任务、再落到教育重心的顺序，也决定了每一段的陈列更新往哪个方向强调，供门店解释时取用。要设边界的是，这个窗口只回答产品此刻处在哪个抽象阶段，据此给出能横向对照的叙事安排；一旦有人拿它反推具体的经营节奏或成交走向，方法便不再成立，行动号召的力度也得压在该阶段允许的上限里。凡牵涉真实的上架时点、走量情况或存货多寡这类经营信息，先以观察语言描述，并标记为待补授权来源，绝不把未经核实的经营状态写成正文的硬结论。
+    body_char_count: 573
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - abstract_lifecycle_stage -> narrative_task
+    - narrative_task -> education_focus
+    - abstract_stage -> cta_strength_ceiling
+    - business_status -> prohibited_instance_fact
+    domain_anchors:
+    - 认知进入期
+    - 结构教育期
+    - 组合扩展期
+    - 场景验证期
+    - 复盘维护期
+    - 货品结构
+    - 面料取舍
+    - 版型稳定性
+    - 门店解释
+    expected_body_topics_covered:
+    - 阶段抽象命名
+    - 阶段与叙事密度关系
+    - 阶段与教育重心关系
+    - 阶段与陈列更新关系
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如外套的肩线走向、袖口收束、与陪衬款过渡款的搭配组合
+      method_layer: 解释可复用的判断机制与顺序：先给单品定抽象阶段坐标，再由阶段推向叙事任务、叙事密度与教育重心，并据阶段确定陈列更新方向与行动号召的强度上限
+      boundary_layer: 对经营节奏、成交、走量等效果类硬结论设边界，阶段窗口不反推经营节奏或销售结论
+      downgrade_path: 无证据的真实上架时点、走量、存货等经营数据回收为观察语言，并标记为待补授权来源，不写成正文硬结论
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-137
+    - PROP-V1-138
+    - PROP-V1-139
+    - PROP-V1-140
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-137
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-138
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-139
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-140
+        proposition_type: evidence_requirement
+        epistemic_class: source_gap_candidate
+        owner_candidate: SourceGapLedger
+    concrete_apparel_anchor: 外套的肩线走向与袖口收束等可被看见的画面细节
+    domain_mechanism: 先给单品安排抽象阶段坐标，再按阶段决定叙事密度、教育重心与陈列更新方向，并压住行动号召的强度上限
+    downstream_content_effect: 让同一单品在各阶段的内容侧重、陈列强调与行动号召上限可横向对照，并供门店解释时取用
+    risk_boundary_handling: 阶段窗口只判断抽象阶段、不反推经营节奏或成交；真实上架时点、走量、存货等经营信息用观察语言描述并标记为待补授权来源，不写成硬结论
+  - rich_body_id: PROOF-MB-001-RB-036
+    candidate_id: PROOF-MB-001-036
+    canonical_cluster_id: mkc_042
+    cluster_title: 组货角色与渠道边界矩阵
+    body_form: full_rich_body
+    body: 给一组服装编排叙述之前，第一步不是问它在哪个入口更走量，而是替每件单品定下一个功能位置。角色可以先归成几类：一件承担把人引进来看的功能，一件承担撑起整组利润的功能，一件承担立住整组样貌的形象功能，还有一件承担带动同组其余件一起被看见的连带功能。有了这层分型，主次关系才立得住——比如让一件肩线利落的驼色大衣做主推叙事项，负责把这一组想讲的主题先开口说出来；再让一件同色系细针织做陪衬解释项，它的任务是把大衣为什么好搭这件事讲得更省力，替看的人减掉理解成本，而不是自己抢戏；接着放一条把大衣的驼调与内搭的燕麦白接上的围巾做颜色连接项，让整组的颜色走向一眼能被认出来。角色顺了以后，同一套编排投到承载力不同的入口时，只调信息的疏密：碰上随手翻看的场景，就把主次和主题组合留住、其余压掉；碰上愿意细看的场景，才展开穿着任务、替代条件、相邻搭配这类更密的说明，切忌两头一个密度，也切忌在快翻处硬塞深讲。最后所有件收进同一个主题里彼此呼应，角色的组合关系才算成立。要提醒的是，这套矩阵只在商品之间存在能被抽象归纳的组合关系时才管用；一旦被改写成对某一盘真实货品的调度指令，它就不再是角色语言。凡是把真实货号、某个入口的真实经营数据、或某场真实让利动作混进来的段落，都要先摘掉或标成缺来源待补，正文只承认角色关系那一层，不替任何真实货盘下经营结论。
+    body_char_count: 568
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 组货角色分型 -> 主次与陪衬关系确立
+    - 陪衬项 -> 承担解释与降理解成本功能
+    - 渠道承载力语境 -> 信息密度删减规则
+    - 主题化编排 -> 产品角色组合关系
+    domain_anchors:
+    - 主推叙事项
+    - 陪衬解释项
+    - 颜色连接项
+    expected_body_topics_covered:
+    - 组货角色类型
+    - 主次关系与陪衬关系
+    - 渠道差异下的信息删减规则
+    - 产品角色与主题化组合关系
+    epistemic_split:
+      observation_layer: 只描述可观察的画面线索：肩线利落的驼色大衣、同色系细针织、把驼调与燕麦白接上的围巾等结构与颜色关系
+      method_layer: 解释可复用的判断顺序：先按引流/利润/形象/连带给单品分型定功能，再立主次与陪衬，再按入口承载力调信息疏密，最后归入同一主题成组
+      boundary_layer: 角色矩阵仅在存在可抽象归纳的组合关系时成立；被写成对真实货盘的调度指令则失效，走量/效果类硬结论一律回收
+      downgrade_path: 真实货号、入口经营数据、让利动作等实例事实先剔除或挂为缺来源待补，不当硬事实写入
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-141
+    - PROP-V1-142
+    - PROP-V1-143
+    - PROP-V1-144
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-141
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-142
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-143
+        proposition_type: boundary_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-144
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 肩线利落的驼色大衣做主推、同色系细针织做陪衬、把驼调与燕麦白接上的围巾做颜色连接项
+    domain_mechanism: 先按引流/利润/形象/连带给单品分型定功能，再立主次与陪衬，再按入口承载力调信息疏密，最后归入同一主题成组
+    downstream_content_effect: 把组货知识变成可复用的角色关系语言，降低单品被平铺空讲，指导按入口承载力裁剪信息密度
+    risk_boundary_handling: 矩阵仅在可归纳的组合关系下成立，真实货号/入口数据/促销安排先剔除或挂缺来源，不替真实货盘下经营结论
+  - rich_body_id: PROOF-MB-001-RB-037
+    candidate_id: PROOF-MB-001-037
+    canonical_cluster_id: mkc_043
+    cluster_title: 场景适配条件与不适配条件
+    body_form: full_rich_body
+    body: 以一件薄款针织开衫为例，讲清它能落在哪些场景、又会在哪些场景失手，出发点不是先谈人群或上身效果，而是先给每个场景锚定它非办成不可的核心正事。通勤要不停上下车、在工位间走动，眼下的正事是应付坐立切换与一段步行距离，这件开衫恰好垫在室内外温差之间充当过渡，任务就对上了；一旦换到正式程度更高的会客场合，庄重感升为头等要务，它偏软的廓形反而托不住，这便是必须写明的不适配条件。把动作上的限制翻译成不适配条件是关键：坐下时料子会不会堆在腿面、拎着随身物件时外搭层次会不会松垮，都要照具体动作交代。场合一换，这件衣服所担的角色也随之挪动——通勤里是收尾外层，短途出行里可能顶上主角，多件叠穿时又退成中间的连接件。只有当场景正事与角色一一对上，判断才立得住；若对任何场合都声称合用、连一个失配的例子都举不出，方法就塌了；越敢点出它接不住的场合越可信，只用一句处处都行来遮掩，恰是可信度松动的信号。场合对不对得上，至多决定招呼读者行动时的语气上限，推不出穿着舒不舒服、耐不耐磨或身形会怎样。一旦叙述滑向穿上会更衬某种身形、或断言某类人必然合身，这类关乎成效与人群的强判断都得有可核验凭据兜底；拿不出出处，就退回肉眼可见的画面陈述，先记为来源待补，正文里最终沉淀下来的只是场景正事与这件衣服之间如何对位的方法。
+    body_char_count: 547
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 场景任务 -> 适配条件
+    - 动作限制 -> 不适配条件
+    - 场景切换 -> 产品角色转变
+    - 适配把握度 -> 号召力度上限
+    domain_anchors:
+    - 坐立切换
+    - 步行距离
+    - 室内外温差
+    - 外搭层次
+    - 正式程度
+    - 携带物限制
+    expected_body_topics_covered:
+    - 场景任务锚点
+    - 场景切换条件
+    - 场景中的动作限制
+    - 不适配条件表达
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面（如开衫偏软的廓形、坐下时料子是否堆在腿面、随身物件带来的层次松垮）
+      method_layer: 解释可复用的判断机制与顺序：先给场景锚定核心正事，再据动作限制翻译不适配条件，随场景切换调整这件衣服的角色，适配把握度只约束号召力度
+      boundary_layer: 对穿着舒适、耐磨性能、身形结果、人群适配等硬结论一律设边界，不由场景词直接推出
+      downgrade_path: 无证据的成效或人群硬结论回收为可观察画面描述，或先记为来源待补
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-145
+    - PROP-V1-146
+    - PROP-V1-147
+    - PROP-V1-148
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-145
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-146
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-147
+        proposition_type: failure_signal
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-148
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 薄款针织开衫偏软的廓形，以及坐下时料子会不会堆在腿面、拎着随身物件时外搭层次会不会松垮
+    domain_mechanism: 先给每个场景锚定非办成不可的核心正事，再把动作限制翻译成不适配条件，并随场景切换调整这件衣服所担的角色。
+    downstream_content_effect: 卖点能对着场景正事来讲，叙述带边界、角色不会安错地方，避免场景过度泛化。
+    risk_boundary_handling: 凡滑向穿着成效或人群适配的硬结论都退回可观察画面、挂为来源待补，适配把握度至多决定招呼读者行动的语气上限。
+  - rich_body_id: PROOF-MB-001-RB-038
+    candidate_id: PROOF-MB-001-038
+    canonical_cluster_id: mkc_044
+    cluster_title: 使用教育与结果 claim 分界
+    body_form: full_rich_body
+    body: 这一簇要处理的，是把「怎么用」的教学和「用了会怎样」的许诺拆成两件事。先看画面：镜头拍一件外套先扣好内层再把领口翻出来、腰带绕到哪一格算贴身、袖口翻折两道后停在虎口上方，这些是在教穿着顺序与调节方式，属于可以放开讲的教学范围。第一道判断机制是，句子只要停在「先做什么、后做什么、眼睛看哪里对齐」，它就是使用指引；一旦拐向「这样穿就不走形、会更耐穿」，它已经变成对身体或产品结果的许诺，得另找依据才配说出口。第二道机制是把动作和结论分开：镜头里演过一遍层搭的过程，只能说明观众看见了哪几个步骤，它并没有替谁验证任何效力，把一段操作画面直接读成「效果因此成立」，就是越了界。第三道机制管比较：同类之间指出看得见的差异、上手时的差异、标签条件的差异都行，比如同一光线下两块布谁的纹路更平整，可只要冒出「谁更好、谁更值得选」这类评价词，就必须挂上与之相称的依据，否则这句留不住。收尾对结果性表达设边界：凡碰到耐久、贴合、性能这类硬结论，在拿到可核来源前一律先用观察语言描述，或整段回收为待补来源；风险高的结果说法要和教学句物理隔开，不能混排在同一段里顺势带出。洗护收纳也照此办，只说按标签条件与材料属性去操作，不预告任何结果。
+    body_char_count: 509
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 使用教学 -> 允许的操作指引
+    - 允许的操作指引 -> 演示只作观察展示
+    - 演示只作观察展示 -> 比较用语受依据约束
+    - 比较用语受依据约束 -> 结果表达降级或待补来源
+    domain_anchors:
+    - 穿着顺序
+    - 调节方式
+    - 翻折
+    - 层搭
+    - 同一光线
+    - 标签条件
+    expected_body_topics_covered:
+    - 教育性说明的允许范围
+    - 演示与证明的区别
+    - 比较语言的边界
+    - 注意事项表达
+    epistemic_split:
+      observation_layer: 只描述可观察的画面：先扣内层再翻领口、腰带绕到哪一格、袖口翻折停在虎口上方、同一光线下两块布的纹路。
+      method_layer: 解释可复用的判断顺序：句子停在步骤即教学、拐向结果即许诺；动作不替人得结论；比较只讲可见与条件差异，评价词需相称依据。
+      boundary_layer: 对耐久、贴合、性能这类硬结论设边界，风险高的结果说法与教学句物理隔开，不混排顺势带出。
+      downgrade_path: 无可核来源的结果结论先用观察语言描述，或整段回收为待补来源。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-149
+    - PROP-V1-150
+    - PROP-V1-151
+    - PROP-V1-152
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-149
+        proposition_type: definition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-150
+        proposition_type: mechanism
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-151
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-152
+        proposition_type: downstream_effect
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 外套先扣内层再翻出领口、袖口翻折两道后停在虎口上方、同一光线下两块布的纹路对比
+    domain_mechanism: 句子只停在先后步骤与对齐位置就是使用指引，一旦拐向不走形、更耐穿等结果就变成需另找依据的许诺。
+    downstream_content_effect: 为后续演示、比较与结果表达提供统一分界，演示归观察展示、评价词须挂相称依据。
+    risk_boundary_handling: 耐久、贴合、性能等硬结论在拿到可核来源前先用观察语言描述或整段回收为待补来源，高风险结果说法与教学句物理隔开。
+  - rich_body_id: PROOF-MB-001-RB-039
+    candidate_id: PROOF-MB-001-039
+    canonical_cluster_id: mkc_045
+    cluster_title: 产品到陈列叙事关系语法
+    body_form: full_rich_body
+    body: 谈产品到陈列的叙事关系语法，核心是挑几种关系把一件产品和它所处的陈列面组织进同一幅画面，而非铺一整套门店运作。第一层看位置关系：同一件衣服放在画面中轴、挪去侧边还是退到层次后方，读者感到的分量不同，这份分量便是它的视觉权重，也是把产品角色对到某个陈列位置的头道依据。第二层看邻接关系：一件廓形外套旁边若搁相邻的同色针织，整组读起来像一个系列；换成异材质相邻，如挺括面料紧挨起绒面料，注意力就转向触感落差；再在一侧留白，焦点反倒收紧。旁边摆什么、呼应还是相抵，会改变别人对这件衣服的读法，故邻接对象要单独记成一条可复述的叙事侧重。第三层是主次层级：先在同一组里定谁主谁辅，镜头先后才有落点，通常先交代主项再带出辅项。第四层主题化组合：几件产品收在一个主题下怎么摆，决定叙事往哪儿使劲。这套语法只在产品与陈列面之间的关系可被观察、能抽象成上述关系槽位时才启用；若画面只剩某家门店的实拍实况、抽不出关系，就不该硬套。其下游用处是把这些槽位翻成远景读层级、中景读邻接、近景读细节这类拍摄线索，供后续内容取用，而非生出可执行的陈列步骤。至于邻接会不会带来更好的阅读或成交，这类硬结论不能径直下，只能先用观察语言描述或标注为待补来源；凡要写进真实门店里的商品、位置或实景照片这类事实，都得先脱敏，脱不了就挂为待补，而正文只认位置、主次、邻接和主题这几种抽象关系结构。
+    body_char_count: 577
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 产品角色 -> 陈列位置
+    - 邻接对象 -> 叙事侧重
+    - 主次层级 -> 镜头先后
+    - 陈列线索 -> 拍摄线索
+    domain_anchors:
+    - 中心位置
+    - 侧边位置
+    - 层次后方
+    - 相邻位置
+    - 同色邻接
+    - 异材质邻接
+    - 留白
+    expected_body_topics_covered:
+    - 位置关系
+    - 邻接关系
+    - 主次层级
+    - 主题化组合
+    epistemic_split:
+      observation_layer: 只描述可观察的结构与材质：画面中轴/侧边/层次后方的相对位置、相邻同色针织、挺括面料紧挨起绒面料、一侧留白这些可看见的线索。
+      method_layer: 解释可复用的判断顺序：先由产品角色定位置权重，再由邻接对象定叙事侧重，接着由主次层级定镜头先后，最后由主题化组合定叙事着力点。
+      boundary_layer: 对阅读、成交等效果类硬结论设边界，不径直下判断，只承认邻接参与叙事侧重这一关系机制。
+      downgrade_path: 无证据的效果硬结论回收为观察语言，或标注为待补来源；真实门店位置、商品、实景照片脱敏不了即挂为待补。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-153
+    - PROP-V1-154
+    - PROP-V1-155
+    - PROP-V1-156
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-153
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-154
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-155
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-156
+        proposition_type: owner_split_hint
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件廓形外套居于画面中轴，旁边搁相邻同色针织，异材质挺括面料紧挨起绒面料，一侧留出空白收紧焦点。
+    domain_mechanism: 按位置->邻接->主次->主题四层，把产品在陈列面里的相对关系抽象成视觉权重与叙事侧重，再据此定镜头先后。
+    downstream_content_effect: 把位置/邻接/主次/主题这些关系槽位翻成远中近景的拍摄线索，供后续内容取用，而非生成可执行的陈列步骤。
+    risk_boundary_handling: 阅读或成交等效果硬结论回收为观察语言或待补来源；真实门店位置、商品与实景照片事实须先脱敏，脱不了就挂为待补，正文只认抽象关系结构。
+  - rich_body_id: PROOF-MB-001-RB-040
+    candidate_id: PROOF-MB-001-040
+    canonical_cluster_id: mkc_046
+    cluster_title: 产品到角色到叙事跨域关系
+    body_form: full_rich_body
+    body: 围绕产品、角色与叙事之间的这层跨域关系先立一个前提：产品的讲述与角色、陈列、叙事段落之间的连线，是把几张已经现成的能力面各自的接口对到一处口径，而不是另起一条新的执行走法。拿一件系腰带的风衣来说，在导购式表达里，落点是腰带怎么系、袖口要不要翻起、上身后腰线抬到哪；切到设计解释式表达，视角就移向立领的结构和面料的垂坠走向；再切到品牌旁白式表达，语速和限制语又换一套——这就是产品跟讲述口吻之间的对应，同一件衣服的信息密度随视角而变。往组织生态视角搭时，只提示它更宜由哪一类功能角色来开口、要不要过程或来源垫在下面；往陈列动作接上时，只标这件衣服在一组画面里是坐主角位、还是作陪衬、承担过渡，或当讲解知识的教育节点；往整段叙事里对齐时，只提示它宜进开头、宜作解释、宜作对比还是宜收尾。这里有一条能反复用的判断顺序：当两张能力面正好压到一块、给出的规矩彼此不合，就以约束更紧的那一侧为准，同时把这处不一致原样记下来，让后面的判断有据可查，而不预先替它定结论。这套说明只有在内容真的横跨好几张能力面、要把接口对上时才动用；内容只落在单面里就别硬套。边界还要焊死：一旦有人把这些连线固化成能照着直接跑的执行流程图，或者变成产线上的对象，它就出界、不再适用；本簇只给关系与归属层面的提示，不去接管本不属于它的控制规矩，也不碰真实商品、门店与组织事实，更不宣称任何已落地的效果，牵涉到具体的实例、或者归属上打架时，先挂起等人工裁断。
+    body_char_count: 610
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 产品角色 -> 角色视角提示
+    - 产品角色 -> 陈列动作提示
+    - 产品角色 -> 叙事顺序提示
+    - 跨域交叠 -> 取更严一方并留痕
+    domain_anchors:
+    - 导购式表达
+    - 设计解释式表达
+    - 品牌旁白式表达
+    - 主角
+    - 陪衬
+    - 过渡
+    - 教育节点
+    expected_body_topics_covered:
+    - 产品与角色语气的关系
+    - 产品与组织生态视角的连接
+    - 产品与 display 动作的接口
+    - 产品与 narrative 段落的跨域对齐
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索：系腰带的风衣、腰带系法、袖口翻折、立领结构、面料垂坠走向、以及它在画面里坐主角位还是作陪衬、过渡、教育节点。
+      method_layer: 解释可复用的判断机制与顺序：把产品映到角色视角提示、陈列动作提示、叙事顺序提示三处既有接口；两面规矩打架时取约束更紧一侧为准并原样留痕。
+      boundary_layer: 对效果/性能/身体结果等硬结论设边界：不宣称任何已落地的效果，只作关系与归属层面的观察式提示。
+      downgrade_path: 无证据的硬结论回收为观察或挂为待补来源：涉及具体实例或归属冲突先挂起等人工裁断，超出接口对齐的执行主张另需执行资产来源。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-157
+    - PROP-V1-158
+    - PROP-V1-159
+    - PROP-V1-160
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-157
+        proposition_type: definition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_02:
+        proposition_id: PROP-V1-158
+        proposition_type: mechanism
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-159
+        proposition_type: applicable_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-160
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 一件系腰带的风衣——腰带系法、袖口翻折、立领结构与面料垂坠走向，以及它在一组画面里坐主角位还是作陪衬、过渡或教育节点。
+    domain_mechanism: 两张能力面在同一处规矩打架时，以约束更紧的一侧为准，并把这处不一致原样留痕供后续判断，不预先替它定结论。
+    downstream_content_effect: 让产品与讲述口吻、陈列动作、叙事段落三处接口在同一处对上口径，避免各能力面各说各话、口径打架。
+    risk_boundary_handling: 一旦把跨域连线固化成可直接照跑的执行流程图或产线对象即出界；只给关系与归属层面的提示，不碰真实商品、门店与组织事实，不宣称已落地效果，实例或归属冲突先挂起等人工裁断。

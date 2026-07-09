@@ -1,0 +1,4174 @@
+proof_microbatch_candidate_cards:
+  proof_microbatch_id: proof_microbatch_001
+  task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+  candidate_count: 40
+  generation_status_uniform: gpt_generated_structured_draft
+  deliverable_kind: agent_authored_quality_probe
+  human_authored: false
+  generator_capability_proven: false
+  automatic_stable_generation_demonstrated: false
+  ready_for_P7B_3600_generation_brief: false
+  counts_toward_3600: false
+  candidates:
+  - candidate_id: PROOF-MB-001-001
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_007
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_007
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P001-MKC007-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P001-MKC007-POS-001
+      anti_gold_case_id: GRC-P001-MKC007-ANTI-001
+      borderline_repair_case_id: GRC-P001-MKC007-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P001-MKC007-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRCF-101_GENERIC_ORIGIN_MYTH
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-001
+    - PROP-V1-002
+    - PROP-V1-003
+    - PROP-V1-004
+    body_proposition_refs:
+    - PROOF-MB-001-RB-001#mechanism_01
+    - PROOF-MB-001-RB-001#mechanism_02
+    - PROOF-MB-001-RB-001#mechanism_03
+    - PROOF-MB-001-RB-001#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-001
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-001
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-001
+    relation_candidate_refs:
+    - PROOF-MB-001-001-REL-01
+    - PROOF-MB-001-001-REL-02
+    - PROOF-MB-001-001-REL-03
+    - PROOF-MB-001-001-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-002
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_008
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_008
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: Rule_candidate
+    target_layer_candidate: Rule_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P001-MKC008-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P001-MKC008-POS-001
+      anti_gold_case_id: GRC-P001-MKC008-ANTI-001
+      borderline_repair_case_id: GRC-P001-MKC008-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P001-MKC008-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRCF-102_PROOF_SLOT_OVERCLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-005
+    - PROP-V1-006
+    - PROP-V1-007
+    - PROP-V1-008
+    body_proposition_refs:
+    - PROOF-MB-001-RB-002#mechanism_01
+    - PROOF-MB-001-RB-002#mechanism_02
+    - PROOF-MB-001-RB-002#mechanism_03
+    - PROOF-MB-001-RB-002#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-002
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-002
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-002
+    relation_candidate_refs:
+    - PROOF-MB-001-002-REL-01
+    - PROOF-MB-001-002-REL-02
+    - PROOF-MB-001-002-REL-03
+    - PROOF-MB-001-002-REL-04
+    - PROOF-MB-001-002-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-003
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_009
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_009
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: Rule_candidate
+    target_layer_candidate: Rule_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P001-MKC009-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P001-MKC009-POS-001
+      anti_gold_case_id: GRC-P001-MKC009-ANTI-001
+      borderline_repair_case_id: GRC-P001-MKC009-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P001-MKC009-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRCF-103_UNSUPPORTED_STORY_ARC
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-009
+    - PROP-V1-010
+    - PROP-V1-011
+    - PROP-V1-012
+    body_proposition_refs:
+    - PROOF-MB-001-RB-003#mechanism_01
+    - PROOF-MB-001-RB-003#mechanism_02
+    - PROOF-MB-001-RB-003#mechanism_03
+    - PROOF-MB-001-RB-003#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-003
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-003
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-003
+    relation_candidate_refs:
+    - PROOF-MB-001-003-REL-01
+    - PROOF-MB-001-003-REL-02
+    - PROOF-MB-001-003-REL-03
+    - PROOF-MB-001-003-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-004
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_010
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_010
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P001-MKC010-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P001-MKC010-POS-001
+      anti_gold_case_id: GRC-P001-MKC010-ANTI-001
+      borderline_repair_case_id: GRC-P001-MKC010-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P001-MKC010-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-013
+    - PROP-V1-014
+    - PROP-V1-015
+    - PROP-V1-016
+    body_proposition_refs:
+    - PROOF-MB-001-RB-004#mechanism_01
+    - PROOF-MB-001-RB-004#mechanism_02
+    - PROOF-MB-001-RB-004#mechanism_03
+    - PROOF-MB-001-RB-004#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-004
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-004
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-004
+    relation_candidate_refs:
+    - PROOF-MB-001-004-REL-01
+    - PROOF-MB-001-004-REL-02
+    - PROOF-MB-001-004-REL-03
+    - PROOF-MB-001-004-REL-04
+    - PROOF-MB-001-004-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-005
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_011
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_011
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: Rule_candidate
+    target_layer_candidate: Rule_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P001-MKC011-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P001-MKC011-POS-001
+      anti_gold_case_id: GRC-P001-MKC011-ANTI-001
+      borderline_repair_case_id: GRC-P001-MKC011-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P001-MKC011-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRCF-105_NARRATIVE_RISK_AMPLIFICATION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-017
+    - PROP-V1-018
+    - PROP-V1-019
+    - PROP-V1-020
+    body_proposition_refs:
+    - PROOF-MB-001-RB-005#mechanism_01
+    - PROOF-MB-001-RB-005#mechanism_02
+    - PROOF-MB-001-RB-005#mechanism_03
+    - PROOF-MB-001-RB-005#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-005
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-005
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-005
+    relation_candidate_refs:
+    - PROOF-MB-001-005-REL-01
+    - PROOF-MB-001-005-REL-02
+    - PROOF-MB-001-005-REL-03
+    - PROOF-MB-001-005-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-006
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_012
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_012
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P001-MKC012-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P001-MKC012-POS-001
+      anti_gold_case_id: GRC-P001-MKC012-ANTI-001
+      borderline_repair_case_id: GRC-P001-MKC012-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P001-MKC012-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRCF-106_SERIES_AXIS_SCHEDULE_SHELL
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-021
+    - PROP-V1-022
+    - PROP-V1-023
+    - PROP-V1-024
+    body_proposition_refs:
+    - PROOF-MB-001-RB-006#mechanism_01
+    - PROOF-MB-001-RB-006#mechanism_02
+    - PROOF-MB-001-RB-006#mechanism_03
+    - PROOF-MB-001-RB-006#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-006
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-006
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-006
+    relation_candidate_refs:
+    - PROOF-MB-001-006-REL-01
+    - PROOF-MB-001-006-REL-02
+    - PROOF-MB-001-006-REL-03
+    - PROOF-MB-001-006-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-007
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_013
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_013
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC013-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC013-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC013-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC013-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC013-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F001_REAL_PERSONA_LEAK
+      - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-025
+    - PROP-V1-026
+    - PROP-V1-027
+    - PROP-V1-028
+    body_proposition_refs:
+    - PROOF-MB-001-RB-007#mechanism_01
+    - PROOF-MB-001-RB-007#mechanism_02
+    - PROOF-MB-001-RB-007#mechanism_03
+    - PROOF-MB-001-RB-007#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-007
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-007
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-007
+    relation_candidate_refs:
+    - PROOF-MB-001-007-REL-01
+    - PROOF-MB-001-007-REL-02
+    - PROOF-MB-001-007-REL-03
+    - PROOF-MB-001-007-REL-04
+    - PROOF-MB-001-007-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-008
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_014
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_014
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC014-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC014-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC014-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC014-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC014-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F001_REAL_PERSONA_LEAK
+      - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+      - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-029
+    - PROP-V1-030
+    - PROP-V1-031
+    - PROP-V1-032
+    body_proposition_refs:
+    - PROOF-MB-001-RB-008#mechanism_01
+    - PROOF-MB-001-RB-008#mechanism_02
+    - PROOF-MB-001-RB-008#mechanism_03
+    - PROOF-MB-001-RB-008#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-008
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-008
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-008
+    relation_candidate_refs:
+    - PROOF-MB-001-008-REL-01
+    - PROOF-MB-001-008-REL-02
+    - PROOF-MB-001-008-REL-03
+    - PROOF-MB-001-008-REL-04
+    - PROOF-MB-001-008-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-009
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_015
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_015
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC015-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC015-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC015-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC015-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC015-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-033
+    - PROP-V1-034
+    - PROP-V1-035
+    - PROP-V1-036
+    body_proposition_refs:
+    - PROOF-MB-001-RB-009#mechanism_01
+    - PROOF-MB-001-RB-009#mechanism_02
+    - PROOF-MB-001-RB-009#mechanism_03
+    - PROOF-MB-001-RB-009#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-009
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-009
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-009
+    relation_candidate_refs:
+    - PROOF-MB-001-009-REL-01
+    - PROOF-MB-001-009-REL-02
+    - PROOF-MB-001-009-REL-03
+    - PROOF-MB-001-009-REL-04
+    - PROOF-MB-001-009-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-010
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_016
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_016
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC016-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC016-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC016-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC016-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC016-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F003_PRIVATE_OPS_LEAK
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-037
+    - PROP-V1-038
+    - PROP-V1-039
+    - PROP-V1-040
+    body_proposition_refs:
+    - PROOF-MB-001-RB-010#mechanism_01
+    - PROOF-MB-001-RB-010#mechanism_02
+    - PROOF-MB-001-RB-010#mechanism_03
+    - PROOF-MB-001-RB-010#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-010
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-010
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-010
+    relation_candidate_refs:
+    - PROOF-MB-001-010-REL-01
+    - PROOF-MB-001-010-REL-02
+    - PROOF-MB-001-010-REL-03
+    - PROOF-MB-001-010-REL-04
+    - PROOF-MB-001-010-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-011
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_017
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_017
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC017-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC017-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC017-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC017-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC017-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F005_AUDIENCE_MODEL_TO_REAL_FEEDBACK
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-041
+    - PROP-V1-042
+    - PROP-V1-043
+    - PROP-V1-044
+    body_proposition_refs:
+    - PROOF-MB-001-RB-011#mechanism_01
+    - PROOF-MB-001-RB-011#mechanism_02
+    - PROOF-MB-001-RB-011#mechanism_03
+    - PROOF-MB-001-RB-011#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-011
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-011
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-011
+    relation_candidate_refs:
+    - PROOF-MB-001-011-REL-01
+    - PROOF-MB-001-011-REL-02
+    - PROOF-MB-001-011-REL-03
+    - PROOF-MB-001-011-REL-04
+    - PROOF-MB-001-011-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-012
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_018
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_018
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC018-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC018-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC018-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC018-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC018-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F004_EMOTION_AS_EVIDENCE
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-045
+    - PROP-V1-046
+    - PROP-V1-047
+    - PROP-V1-048
+    body_proposition_refs:
+    - PROOF-MB-001-RB-012#mechanism_01
+    - PROOF-MB-001-RB-012#mechanism_02
+    - PROOF-MB-001-RB-012#mechanism_03
+    - PROOF-MB-001-RB-012#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-012
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-012
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-012
+    relation_candidate_refs:
+    - PROOF-MB-001-012-REL-01
+    - PROOF-MB-001-012-REL-02
+    - PROOF-MB-001-012-REL-03
+    - PROOF-MB-001-012-REL-04
+    - PROOF-MB-001-012-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-013
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_019
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_019
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: Rule_candidate
+    target_layer_candidate: Rule_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-02-MKC019-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-02-MKC019-POS-001
+      anti_gold_case_id: GRC-P0-02-MKC019-ANTI-001
+      borderline_repair_case_id: GRC-P0-02-MKC019-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_02/gold_reference_cases.yaml@sha256:6aa06abacc246f87b7d929ba2f5f39b134bbe2df5b180ffc1448f41647f5322f
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-02-MKC019-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-02-F001_REAL_PERSONA_LEAK
+      - GRC-P0-02-F002_AUTHORITY_OVERCLAIM
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-049
+    - PROP-V1-050
+    - PROP-V1-051
+    - PROP-V1-052
+    body_proposition_refs:
+    - PROOF-MB-001-RB-013#mechanism_01
+    - PROOF-MB-001-RB-013#mechanism_02
+    - PROOF-MB-001-RB-013#mechanism_03
+    - PROOF-MB-001-RB-013#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-013
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-013
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-013
+    relation_candidate_refs:
+    - PROOF-MB-001-013-REL-01
+    - PROOF-MB-001-013-REL-02
+    - PROOF-MB-001-013-REL-03
+    - PROOF-MB-001-013-REL-04
+    - PROOF-MB-001-013-REL-05
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-014
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_020
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_020
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC020-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC020-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC020-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC020-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC020-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - GRC-P0-03-F006_SKU_OR_FACTORY_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-053
+    - PROP-V1-054
+    - PROP-V1-055
+    - PROP-V1-056
+    body_proposition_refs:
+    - PROOF-MB-001-RB-014#mechanism_01
+    - PROOF-MB-001-RB-014#mechanism_02
+    - PROOF-MB-001-RB-014#mechanism_03
+    - PROOF-MB-001-RB-014#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-014
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-014
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-014
+    relation_candidate_refs:
+    - PROOF-MB-001-014-REL-01
+    - PROOF-MB-001-014-REL-02
+    - PROOF-MB-001-014-REL-03
+    - PROOF-MB-001-014-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-015
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_021
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_021
+    candidate_kind: evidence_policy_candidate
+    proposed_target_owner: EvidencePolicyOutbox
+    declared_layer: EvidencePolicy_candidate
+    target_layer_candidate: EvidencePolicy_candidate
+    allowed_landing_layers:
+    - EvidencePolicy_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC021-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC021-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC021-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC021-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC021-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F005_COMPARISON_OVERCLAIM
+      - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-057
+    - PROP-V1-058
+    - PROP-V1-059
+    - PROP-V1-060
+    body_proposition_refs:
+    - PROOF-MB-001-RB-015#mechanism_01
+    - PROOF-MB-001-RB-015#mechanism_02
+    - PROOF-MB-001-RB-015#mechanism_03
+    - PROOF-MB-001-RB-015#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-015
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-015
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-015
+    relation_candidate_refs:
+    - PROOF-MB-001-015-REL-01
+    - PROOF-MB-001-015-REL-02
+    - PROOF-MB-001-015-REL-03
+    - PROOF-MB-001-015-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-016
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_022
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_022
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC022-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC022-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC022-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC022-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC022-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F004_MATERIAL_PROPERTY_OVERGENERALIZATION
+      - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-061
+    - PROP-V1-062
+    - PROP-V1-063
+    - PROP-V1-064
+    body_proposition_refs:
+    - PROOF-MB-001-RB-016#mechanism_01
+    - PROOF-MB-001-RB-016#mechanism_02
+    - PROOF-MB-001-RB-016#mechanism_03
+    - PROOF-MB-001-RB-016#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-016
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-016
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-016
+    relation_candidate_refs:
+    - PROOF-MB-001-016-REL-01
+    - PROOF-MB-001-016-REL-02
+    - PROOF-MB-001-016-REL-03
+    - PROOF-MB-001-016-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-017
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_023
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_023
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC023-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC023-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC023-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC023-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC023-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+      - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-065
+    - PROP-V1-066
+    - PROP-V1-067
+    - PROP-V1-068
+    body_proposition_refs:
+    - PROOF-MB-001-RB-017#mechanism_01
+    - PROOF-MB-001-RB-017#mechanism_02
+    - PROOF-MB-001-RB-017#mechanism_03
+    - PROOF-MB-001-RB-017#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-017
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-017
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-017
+    relation_candidate_refs:
+    - PROOF-MB-001-017-REL-01
+    - PROOF-MB-001-017-REL-02
+    - PROOF-MB-001-017-REL-03
+    - PROOF-MB-001-017-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-018
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_024
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_024
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC024-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC024-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC024-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC024-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC024-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-069
+    - PROP-V1-070
+    - PROP-V1-071
+    - PROP-V1-072
+    body_proposition_refs:
+    - PROOF-MB-001-RB-018#mechanism_01
+    - PROOF-MB-001-RB-018#mechanism_02
+    - PROOF-MB-001-RB-018#mechanism_03
+    - PROOF-MB-001-RB-018#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-018
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-018
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-018
+    relation_candidate_refs:
+    - PROOF-MB-001-018-REL-01
+    - PROOF-MB-001-018-REL-02
+    - PROOF-MB-001-018-REL-03
+    - PROOF-MB-001-018-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-019
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_025
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_025
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC025-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC025-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC025-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC025-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC025-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+      - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-073
+    - PROP-V1-074
+    - PROP-V1-075
+    - PROP-V1-076
+    body_proposition_refs:
+    - PROOF-MB-001-RB-019#mechanism_01
+    - PROOF-MB-001-RB-019#mechanism_02
+    - PROOF-MB-001-RB-019#mechanism_03
+    - PROOF-MB-001-RB-019#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-019
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-019
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-019
+    relation_candidate_refs:
+    - PROOF-MB-001-019-REL-01
+    - PROOF-MB-001-019-REL-02
+    - PROOF-MB-001-019-REL-03
+    - PROOF-MB-001-019-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-020
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_026
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_026
+    candidate_kind: evidence_policy_candidate
+    proposed_target_owner: EvidencePolicyOutbox
+    declared_layer: EvidencePolicy_candidate
+    target_layer_candidate: EvidencePolicy_candidate
+    allowed_landing_layers:
+    - EvidencePolicy_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC026-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC026-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC026-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC026-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC026-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F002_BODY_EFFECT_OVERCLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-077
+    - PROP-V1-078
+    - PROP-V1-079
+    - PROP-V1-080
+    body_proposition_refs:
+    - PROOF-MB-001-RB-020#mechanism_01
+    - PROOF-MB-001-RB-020#mechanism_02
+    - PROOF-MB-001-RB-020#mechanism_03
+    - PROOF-MB-001-RB-020#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-020
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-020
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-020
+    relation_candidate_refs:
+    - PROOF-MB-001-020-REL-01
+    - PROOF-MB-001-020-REL-02
+    - PROOF-MB-001-020-REL-03
+    - PROOF-MB-001-020-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-021
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_027
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_027
+    candidate_kind: evidence_policy_candidate
+    proposed_target_owner: EvidencePolicyOutbox
+    declared_layer: EvidencePolicy_candidate
+    target_layer_candidate: EvidencePolicy_candidate
+    allowed_landing_layers:
+    - EvidencePolicy_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC027-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC027-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC027-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC027-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC027-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+      - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-081
+    - PROP-V1-082
+    - PROP-V1-083
+    - PROP-V1-084
+    body_proposition_refs:
+    - PROOF-MB-001-RB-021#mechanism_01
+    - PROOF-MB-001-RB-021#mechanism_02
+    - PROOF-MB-001-RB-021#mechanism_03
+    - PROOF-MB-001-RB-021#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-021
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-021
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-021
+    relation_candidate_refs:
+    - PROOF-MB-001-021-REL-01
+    - PROOF-MB-001-021-REL-02
+    - PROOF-MB-001-021-REL-03
+    - PROOF-MB-001-021-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-022
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_028
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_028
+    candidate_kind: evidence_policy_candidate
+    proposed_target_owner: EvidencePolicyOutbox
+    declared_layer: EvidencePolicy_candidate
+    target_layer_candidate: EvidencePolicy_candidate
+    allowed_landing_layers:
+    - EvidencePolicy_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC028-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC028-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC028-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC028-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC028-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+      - GRC-P0-03-F003_FAKE_TEST_CERTIFICATION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-085
+    - PROP-V1-086
+    - PROP-V1-087
+    - PROP-V1-088
+    body_proposition_refs:
+    - PROOF-MB-001-RB-022#mechanism_01
+    - PROOF-MB-001-RB-022#mechanism_02
+    - PROOF-MB-001-RB-022#mechanism_03
+    - PROOF-MB-001-RB-022#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-022
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-022
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-022
+    relation_candidate_refs:
+    - PROOF-MB-001-022-REL-01
+    - PROOF-MB-001-022-REL-02
+    - PROOF-MB-001-022-REL-03
+    - PROOF-MB-001-022-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-023
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_029
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_029
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-03-MKC029-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-03-MKC029-POS-001
+      anti_gold_case_id: GRC-P0-03-MKC029-ANTI-001
+      borderline_repair_case_id: GRC-P0-03-MKC029-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_03/gold_reference_cases.yaml@sha256:bb877527510f11dad3062ac1e16079c787d43dfdea345bae90fc12d8c03f9e21
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-03-MKC029-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-03-F007_OBSERVATION_TO_PROOF_CONFUSION
+      - GRC-P0-03-F001_UNSUPPORTED_PERFORMANCE_CLAIM
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-089
+    - PROP-V1-090
+    - PROP-V1-091
+    - PROP-V1-092
+    body_proposition_refs:
+    - PROOF-MB-001-RB-023#mechanism_01
+    - PROOF-MB-001-RB-023#mechanism_02
+    - PROOF-MB-001-RB-023#mechanism_03
+    - PROOF-MB-001-RB-023#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-023
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-023
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-023
+    relation_candidate_refs:
+    - PROOF-MB-001-023-REL-01
+    - PROOF-MB-001-023-REL-02
+    - PROOF-MB-001-023-REL-03
+    - PROOF-MB-001-023-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-024
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_030
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_030
+    candidate_kind: execution_asset_outbox_candidate
+    proposed_target_owner: ExecutionAssetOutbox
+    declared_layer: ExecutionAssetOutbox_candidate
+    target_layer_candidate: ExecutionAssetOutbox_candidate
+    allowed_landing_layers:
+    - ExecutionAssetOutbox_candidate
+    - L3_ExecutionAsset_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC030-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC030-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC030-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC030-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC030-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-093
+    - PROP-V1-094
+    - PROP-V1-095
+    - PROP-V1-096
+    body_proposition_refs:
+    - PROOF-MB-001-RB-024#mechanism_01
+    - PROOF-MB-001-RB-024#mechanism_02
+    - PROOF-MB-001-RB-024#mechanism_03
+    - PROOF-MB-001-RB-024#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-024
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-024
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-024
+    relation_candidate_refs:
+    - PROOF-MB-001-024-REL-01
+    - PROOF-MB-001-024-REL-02
+    - PROOF-MB-001-024-REL-03
+    - PROOF-MB-001-024-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-025
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_031
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_031
+    candidate_kind: execution_asset_outbox_candidate
+    proposed_target_owner: ExecutionAssetOutbox
+    declared_layer: ExecutionAssetOutbox_candidate
+    target_layer_candidate: ExecutionAssetOutbox_candidate
+    allowed_landing_layers:
+    - ExecutionAssetOutbox_candidate
+    - L3_ExecutionAsset_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC031-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC031-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC031-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC031-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC031-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-097
+    - PROP-V1-098
+    - PROP-V1-099
+    - PROP-V1-100
+    body_proposition_refs:
+    - PROOF-MB-001-RB-025#mechanism_01
+    - PROOF-MB-001-RB-025#mechanism_02
+    - PROOF-MB-001-RB-025#mechanism_03
+    - PROOF-MB-001-RB-025#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-025
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-025
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-025
+    relation_candidate_refs:
+    - PROOF-MB-001-025-REL-01
+    - PROOF-MB-001-025-REL-02
+    - PROOF-MB-001-025-REL-03
+    - PROOF-MB-001-025-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-026
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_032
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_032
+    candidate_kind: execution_asset_outbox_candidate
+    proposed_target_owner: ExecutionAssetOutbox
+    declared_layer: ExecutionAssetOutbox_candidate
+    target_layer_candidate: ExecutionAssetOutbox_candidate
+    allowed_landing_layers:
+    - ExecutionAssetOutbox_candidate
+    - L3_ExecutionAsset_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC032-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC032-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC032-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC032-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC032-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRC-P0-04-F001_REAL_STORE_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-101
+    - PROP-V1-102
+    - PROP-V1-103
+    - PROP-V1-104
+    body_proposition_refs:
+    - PROOF-MB-001-RB-026#mechanism_01
+    - PROOF-MB-001-RB-026#mechanism_02
+    - PROOF-MB-001-RB-026#mechanism_03
+    - PROOF-MB-001-RB-026#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-026
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-026
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-026
+    relation_candidate_refs:
+    - PROOF-MB-001-026-REL-01
+    - PROOF-MB-001-026-REL-02
+    - PROOF-MB-001-026-REL-03
+    - PROOF-MB-001-026-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-027
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_033
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_033
+    candidate_kind: execution_asset_outbox_candidate
+    proposed_target_owner: ExecutionAssetOutbox
+    declared_layer: ExecutionAssetOutbox_candidate
+    target_layer_candidate: ExecutionAssetOutbox_candidate
+    allowed_landing_layers:
+    - ExecutionAssetOutbox_candidate
+    - L3_ExecutionAsset_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC033-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC033-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC033-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC033-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC033-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRC-P0-04-F002_REAL_STAFF_OR_CUSTOMER_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-105
+    - PROP-V1-106
+    - PROP-V1-107
+    - PROP-V1-108
+    body_proposition_refs:
+    - PROOF-MB-001-RB-027#mechanism_01
+    - PROOF-MB-001-RB-027#mechanism_02
+    - PROOF-MB-001-RB-027#mechanism_03
+    - PROOF-MB-001-RB-027#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-027
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-027
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-027
+    relation_candidate_refs:
+    - PROOF-MB-001-027-REL-01
+    - PROOF-MB-001-027-REL-02
+    - PROOF-MB-001-027-REL-03
+    - PROOF-MB-001-027-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-028
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_034
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_034
+    candidate_kind: execution_asset_outbox_candidate
+    proposed_target_owner: ExecutionAssetOutbox
+    declared_layer: ExecutionAssetOutbox_candidate
+    target_layer_candidate: ExecutionAssetOutbox_candidate
+    allowed_landing_layers:
+    - ExecutionAssetOutbox_candidate
+    - L3_ExecutionAsset_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC034-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC034-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC034-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC034-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC034-ANTI-001
+      failure_codes_to_avoid:
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - F16_NO_GOLD_VALUE
+      - GRC-P0-04-F003_SCRIPT_OUTPUT_OVERREACH
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-109
+    - PROP-V1-110
+    - PROP-V1-111
+    - PROP-V1-112
+    body_proposition_refs:
+    - PROOF-MB-001-RB-028#mechanism_01
+    - PROOF-MB-001-RB-028#mechanism_02
+    - PROOF-MB-001-RB-028#mechanism_03
+    - PROOF-MB-001-RB-028#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-028
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-028
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-028
+    relation_candidate_refs:
+    - PROOF-MB-001-028-REL-01
+    - PROOF-MB-001-028-REL-02
+    - PROOF-MB-001-028-REL-03
+    - PROOF-MB-001-028-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-029
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_035
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_035
+    candidate_kind: governance_outbox_candidate
+    proposed_target_owner: GovernanceOutbox
+    declared_layer: GovernanceContract_candidate
+    target_layer_candidate: GovernanceContract_candidate
+    allowed_landing_layers:
+    - GovernanceContract_candidate
+    - CSOOutbox_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC035-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC035-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC035-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC035-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC035-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F16_NO_GOLD_VALUE
+      - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-113
+    - PROP-V1-114
+    - PROP-V1-115
+    - PROP-V1-116
+    body_proposition_refs:
+    - PROOF-MB-001-RB-029#mechanism_01
+    - PROOF-MB-001-RB-029#mechanism_02
+    - PROOF-MB-001-RB-029#mechanism_03
+    - PROOF-MB-001-RB-029#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-029
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-029
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-029
+    relation_candidate_refs:
+    - PROOF-MB-001-029-REL-01
+    - PROOF-MB-001-029-REL-02
+    - PROOF-MB-001-029-REL-03
+    - PROOF-MB-001-029-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-030
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_036
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_036
+    candidate_kind: execution_asset_outbox_candidate
+    proposed_target_owner: ExecutionAssetOutbox
+    declared_layer: ExecutionAssetOutbox_candidate
+    target_layer_candidate: ExecutionAssetOutbox_candidate
+    allowed_landing_layers:
+    - ExecutionAssetOutbox_candidate
+    - L3_ExecutionAsset_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC036-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC036-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC036-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC036-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC036-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRC-P0-04-F004_SOP_INSTANCE_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-117
+    - PROP-V1-118
+    - PROP-V1-119
+    - PROP-V1-120
+    body_proposition_refs:
+    - PROOF-MB-001-RB-030#mechanism_01
+    - PROOF-MB-001-RB-030#mechanism_02
+    - PROOF-MB-001-RB-030#mechanism_03
+    - PROOF-MB-001-RB-030#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-030
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-030
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-030
+    relation_candidate_refs:
+    - PROOF-MB-001-030-REL-01
+    - PROOF-MB-001-030-REL-02
+    - PROOF-MB-001-030-REL-03
+    - PROOF-MB-001-030-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-031
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_037
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_037
+    candidate_kind: governance_outbox_candidate
+    proposed_target_owner: GovernanceOutbox
+    declared_layer: GovernanceContract_candidate
+    target_layer_candidate: GovernanceContract_candidate
+    allowed_landing_layers:
+    - GovernanceContract_candidate
+    - CSOOutbox_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC037-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC037-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC037-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC037-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC037-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+      - GRC-P0-04-F005_AUTHORIZATION_OR_FRANCHISE_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-121
+    - PROP-V1-122
+    - PROP-V1-123
+    - PROP-V1-124
+    body_proposition_refs:
+    - PROOF-MB-001-RB-031#mechanism_01
+    - PROOF-MB-001-RB-031#mechanism_02
+    - PROOF-MB-001-RB-031#mechanism_03
+    - PROOF-MB-001-RB-031#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-031
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-031
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-031
+    relation_candidate_refs:
+    - PROOF-MB-001-031-REL-01
+    - PROOF-MB-001-031-REL-02
+    - PROOF-MB-001-031-REL-03
+    - PROOF-MB-001-031-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-032
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_038
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_038
+    candidate_kind: governance_outbox_candidate
+    proposed_target_owner: GovernanceOutbox
+    declared_layer: GovernanceContract_candidate
+    target_layer_candidate: GovernanceContract_candidate
+    allowed_landing_layers:
+    - GovernanceContract_candidate
+    - CSOOutbox_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-04-MKC038-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-04-MKC038-POS-001
+      anti_gold_case_id: GRC-P0-04-MKC038-ANTI-001
+      borderline_repair_case_id: GRC-P0-04-MKC038-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_04/gold_reference_cases.yaml@sha256:9a2b50af454bfb8e96bdedd2b8b36b4dda20ae9c24c398cf1f0123e223dd0623
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-04-MKC038-ANTI-001
+      failure_codes_to_avoid:
+      - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      - F16_NO_GOLD_VALUE
+      - GRC-P0-04-F007_ROUTE_TAXONOMY_OVERREACH
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-125
+    - PROP-V1-126
+    - PROP-V1-127
+    - PROP-V1-128
+    body_proposition_refs:
+    - PROOF-MB-001-RB-032#mechanism_01
+    - PROOF-MB-001-RB-032#mechanism_02
+    - PROOF-MB-001-RB-032#mechanism_03
+    - PROOF-MB-001-RB-032#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-032
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-032
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-032
+    relation_candidate_refs:
+    - PROOF-MB-001-032-REL-01
+    - PROOF-MB-001-032-REL-02
+    - PROOF-MB-001-032-REL-03
+    - PROOF-MB-001-032-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-033
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_039
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_039
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_039-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - GRC-P0-05-F001_REAL_SKU_FACT_LEAK
+      - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+      - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-129
+    - PROP-V1-130
+    - PROP-V1-131
+    - PROP-V1-132
+    body_proposition_refs:
+    - PROOF-MB-001-RB-033#mechanism_01
+    - PROOF-MB-001-RB-033#mechanism_02
+    - PROOF-MB-001-RB-033#mechanism_03
+    - PROOF-MB-001-RB-033#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-033
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-033
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-033
+    relation_candidate_refs:
+    - PROOF-MB-001-033-REL-01
+    - PROOF-MB-001-033-REL-02
+    - PROOF-MB-001-033-REL-03
+    - PROOF-MB-001-033-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-034
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_040
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_040
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: Rule_candidate
+    target_layer_candidate: Rule_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_040-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-05-F002_DIRECT_SALES_COPY_OVERREACH
+      - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-133
+    - PROP-V1-134
+    - PROP-V1-135
+    - PROP-V1-136
+    body_proposition_refs:
+    - PROOF-MB-001-RB-034#mechanism_01
+    - PROOF-MB-001-RB-034#mechanism_02
+    - PROOF-MB-001-RB-034#mechanism_03
+    - PROOF-MB-001-RB-034#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-034
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-034
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-034
+    relation_candidate_refs:
+    - PROOF-MB-001-034-REL-01
+    - PROOF-MB-001-034-REL-02
+    - PROOF-MB-001-034-REL-03
+    - PROOF-MB-001-034-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-035
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_041
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_041
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_041-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - GRC-P0-05-F004_LIFECYCLE_INSTANCE_LEAK
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-137
+    - PROP-V1-138
+    - PROP-V1-139
+    - PROP-V1-140
+    body_proposition_refs:
+    - PROOF-MB-001-RB-035#mechanism_01
+    - PROOF-MB-001-RB-035#mechanism_02
+    - PROOF-MB-001-RB-035#mechanism_03
+    - PROOF-MB-001-RB-035#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-035
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-035
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-035
+    relation_candidate_refs:
+    - PROOF-MB-001-035-REL-01
+    - PROOF-MB-001-035-REL-02
+    - PROOF-MB-001-035-REL-03
+    - PROOF-MB-001-035-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-036
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_042
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_042
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_042-ANTI-001
+      failure_codes_to_avoid:
+      - F14_BRAND_FACT_POLLUTION
+      - GRC-P0-05-F005_CHANNEL_OR_FRANCHISE_FACT_LEAK
+      - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-141
+    - PROP-V1-142
+    - PROP-V1-143
+    - PROP-V1-144
+    body_proposition_refs:
+    - PROOF-MB-001-RB-036#mechanism_01
+    - PROOF-MB-001-RB-036#mechanism_02
+    - PROOF-MB-001-RB-036#mechanism_03
+    - PROOF-MB-001-RB-036#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-036
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-036
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-036
+    relation_candidate_refs:
+    - PROOF-MB-001-036-REL-01
+    - PROOF-MB-001-036-REL-02
+    - PROOF-MB-001-036-REL-03
+    - PROOF-MB-001-036-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-037
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_043
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_043
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: Rule_candidate
+    target_layer_candidate: Rule_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_043-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+      - GRC-P0-05-F008_SCENE_FIT_OVERGENERALIZATION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-145
+    - PROP-V1-146
+    - PROP-V1-147
+    - PROP-V1-148
+    body_proposition_refs:
+    - PROOF-MB-001-RB-037#mechanism_01
+    - PROOF-MB-001-RB-037#mechanism_02
+    - PROOF-MB-001-RB-037#mechanism_03
+    - PROOF-MB-001-RB-037#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-037
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-037
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-037
+    relation_candidate_refs:
+    - PROOF-MB-001-037-REL-01
+    - PROOF-MB-001-037-REL-02
+    - PROOF-MB-001-037-REL-03
+    - PROOF-MB-001-037-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-038
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_044
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_044
+    candidate_kind: evidence_policy_candidate
+    proposed_target_owner: EvidencePolicyOutbox
+    declared_layer: EvidencePolicy_candidate
+    target_layer_candidate: EvidencePolicy_candidate
+    allowed_landing_layers:
+    - EvidencePolicy_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_044-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-05-F003_PRODUCT_EFFECT_CLAIM_OVERREACH
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-149
+    - PROP-V1-150
+    - PROP-V1-151
+    - PROP-V1-152
+    body_proposition_refs:
+    - PROOF-MB-001-RB-038#mechanism_01
+    - PROOF-MB-001-RB-038#mechanism_02
+    - PROOF-MB-001-RB-038#mechanism_03
+    - PROOF-MB-001-RB-038#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-038
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-038
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-038
+    relation_candidate_refs:
+    - PROOF-MB-001-038-REL-01
+    - PROOF-MB-001-038-REL-02
+    - PROOF-MB-001-038-REL-03
+    - PROOF-MB-001-038-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-039
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_045
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_045
+    candidate_kind: general_knowledge_candidate
+    proposed_target_owner: GeneralKnowledgeBase
+    declared_layer: TBox_candidate
+    target_layer_candidate: TBox_candidate
+    allowed_landing_layers:
+    - TBox_candidate
+    - Rule_candidate
+    forbidden_landing_layers:
+    - EvidencePolicy_candidate
+    - ExecutionAssetOutbox_candidate
+    - GovernanceContract_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_045-ANTI-001
+      failure_codes_to_avoid:
+      - GRC-P0-05-F006_DISPLAY_SYSTEM_OVERBUILD
+      - F14_BRAND_FACT_POLLUTION
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-153
+    - PROP-V1-154
+    - PROP-V1-155
+    - PROP-V1-156
+    body_proposition_refs:
+    - PROOF-MB-001-RB-039#mechanism_01
+    - PROOF-MB-001-RB-039#mechanism_02
+    - PROOF-MB-001-RB-039#mechanism_03
+    - PROOF-MB-001-RB-039#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-039
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-039
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-039
+    relation_candidate_refs:
+    - PROOF-MB-001-039-REL-01
+    - PROOF-MB-001-039-REL-02
+    - PROOF-MB-001-039-REL-03
+    - PROOF-MB-001-039-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+  - candidate_id: PROOF-MB-001-040
+    proof_microbatch_id: proof_microbatch_001
+    source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    canonical_cluster_id: mkc_046
+    generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_046
+    candidate_kind: governance_outbox_candidate
+    proposed_target_owner: GovernanceOutbox
+    declared_layer: GovernanceContract_candidate
+    target_layer_candidate: GovernanceContract_candidate
+    allowed_landing_layers:
+    - GovernanceContract_candidate
+    - CSOOutbox_candidate
+    forbidden_landing_layers:
+    - GeneralKnowledgeBase
+    - EvidencePolicy_candidate
+    - ABox
+    - TBox_Object
+    - BrandInstance
+    - Product
+    - Store
+    - PersonProfile
+    - KE_truth_source
+    - ServingProjection
+    - RAG
+    - DIFY
+    - CandidatePack
+    source_policy:
+      provenance_class: gpt_generated_proof_microbatch_draft
+      is_source_anchor: false
+      expert_synthesis_policy: allowed_after_human_review
+      human_review_status: pending
+      source_repo_live_dependency: false
+      external_resources_allowed: false
+    judge_calibration_refs:
+      judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+      case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+      expected_hard_gates:
+      - HG-001
+      - HG-002
+      - HG-003
+      - HG-004
+      - HG-005
+      - HG-006
+      - HG-007
+      - HG-008
+    gold_reference_case_refs:
+      positive_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-POS-001
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+      borderline_repair_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-BDR-001
+      source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml
+      source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_05/gold_reference_cases.yaml@sha256:a9156c7d2c9636d54ff70fe7ad95e434d6151ebdc36b866bbaec9727eb95fede
+    anti_gold_avoidance_refs:
+      anti_gold_case_id: GRC-P0-05-PRODUCT-NARRATIVE-001-MKC_046-ANTI-001
+      failure_codes_to_avoid:
+      - F13_CONTROL_PLANE_MIXED_WITH_DOMAIN_BODY
+      - GRC-P0-05-F007_CROSS_DOMAIN_WORKFLOW_OVERREACH
+    do_not_copy_surface_style_refs:
+      policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+      rules:
+      - DNC-01
+      - DNC-02
+      - DNC-03
+      - DNC-04
+    proposition_refs:
+    - PROP-V1-157
+    - PROP-V1-158
+    - PROP-V1-159
+    - PROP-V1-160
+    body_proposition_refs:
+    - PROOF-MB-001-RB-040#mechanism_01
+    - PROOF-MB-001-RB-040#mechanism_02
+    - PROOF-MB-001-RB-040#mechanism_03
+    - PROOF-MB-001-RB-040#mechanism_04
+    creative_gate_refs:
+      report: creative_gate_report.json
+      item: PROOF-MB-001-040
+    governance_gate_refs:
+      report: governance_gate_report.json
+      item: PROOF-MB-001-040
+    rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-040
+    relation_candidate_refs:
+    - PROOF-MB-001-040-REL-01
+    - PROOF-MB-001-040-REL-02
+    - PROOF-MB-001-040-REL-03
+    - PROOF-MB-001-040-REL-04
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+    generation_status: gpt_generated_structured_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false

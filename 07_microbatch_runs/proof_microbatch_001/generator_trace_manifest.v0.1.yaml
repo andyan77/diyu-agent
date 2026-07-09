@@ -1,0 +1,42 @@
+generator_capability_proof_microbatch_trace:
+  proof_microbatch_id: proof_microbatch_001
+  task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+  generator_identity:
+    provider: execution_environment_not_disclosed
+    model: execution_environment_not_disclosed
+    disclosure_status: unavailable_in_execution_environment
+  generator_runtime_context: multi_agent_ai_authoring_within_single_execution_session
+  execution_agent: claude_code_execution_agent_subagents
+  human_authored: false
+  old_pilot_reuse: false
+  reused_old_pilot_artifacts: false
+  p4_canary_body_copy: false
+  reused_p4_canary_body: false
+  generated_item_count: 40
+  prompt_or_instruction_digest: sha256:ff55fc1202aff2c160c6d80bd3e0314e168a1837be857c30b93318c5f701d49b
+  input_manifest_digest: sha256:2452e945f05cb2fb082f8b2dc6f7d977eb6574118c8104517261aa44ad59661e
+  proposition_pack_digest: sha256:ffe20e66d17f58ffa5a71a0019f034e1097fcc819ffea3df214da24bd0f91f75
+  creative_gate_digest: sha256:cb0b701cafba889a285bcb80c271d1be3483b08e17abe22e332e12e31224f519
+  governance_gate_digest: sha256:e67d158015be686d382b2fcccb0cf39278ada8843ffb5c584093c86ff037ffd8
+  generated_at: '2026-07-09T04:15:35Z'
+  limitations:
+    honest_scope: agent_authored_quality_probe_not_standalone_automated_pipeline
+    generator_capability_proven: false
+    automatic_stable_generation_demonstrated: false
+    ready_for_P7B_3600_generation_brief: false
+    counts_toward_3600: false
+    mechanism: per_item_ai_authoring_by_execution_agent_subagents
+    machine_verified_scope:
+    - structure
+    - anti_copy_lcs_vs_gold_and_canary
+    - cluster_specificity
+    - red_line_scans_no_brand_sku_price
+    - owner_routing
+    - readiness_false
+    - proposition_grounding
+    not_machine_verified:
+    - subjective_aesthetic_creative_quality_is_ai_self_assessed_not_scored
+    does_not_prove:
+    - automatic_stable_generation
+    - 3600_mechanical_feasibility
+    - standalone_generator_harness_exists

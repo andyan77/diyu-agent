@@ -1,0 +1,1431 @@
+expected_total: 4
+expected_clusters:
+- mkc_007
+- mkc_008
+- mkc_009
+- mkc_010
+proof:
+  cards_container:
+    deliverable_kind: agent_authored_quality_probe
+    human_authored: false
+    generator_capability_proven: false
+    automatic_stable_generation_demonstrated: false
+    ready_for_P7B_3600_generation_brief: false
+    counts_toward_3600: false
+    candidates: &id001
+    - candidate_id: PROOF-MB-001-001
+      proof_microbatch_id: proof_microbatch_001
+      source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+      canonical_cluster_id: mkc_007
+      generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_007
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      declared_layer: TBox_candidate
+      target_layer_candidate: TBox_candidate
+      allowed_landing_layers:
+      - TBox_candidate
+      - Rule_candidate
+      forbidden_landing_layers:
+      - EvidencePolicy_candidate
+      - ExecutionAssetOutbox_candidate
+      - GovernanceContract_candidate
+      - ABox
+      - TBox_Object
+      - BrandInstance
+      - Product
+      - Store
+      - PersonProfile
+      - KE_truth_source
+      - ServingProjection
+      - RAG
+      - DIFY
+      - CandidatePack
+      source_policy:
+        provenance_class: gpt_generated_proof_microbatch_draft
+        is_source_anchor: false
+        expert_synthesis_policy: allowed_after_human_review
+        human_review_status: pending
+        source_repo_live_dependency: false
+        external_resources_allowed: false
+      judge_calibration_refs:
+        judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+        positive_gold_case_id: GRC-P001-MKC007-POS-001
+        case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+        expected_hard_gates:
+        - HG-001
+        - HG-002
+        - HG-003
+        - HG-004
+        - HG-005
+        - HG-006
+        - HG-007
+        - HG-008
+      gold_reference_case_refs:
+        positive_gold_case_id: GRC-P001-MKC007-POS-001
+        anti_gold_case_id: GRC-P001-MKC007-ANTI-001
+        borderline_repair_case_id: GRC-P001-MKC007-BDR-001
+        source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+        source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+      anti_gold_avoidance_refs:
+        anti_gold_case_id: GRC-P001-MKC007-ANTI-001
+        failure_codes_to_avoid:
+        - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+        - F16_NO_GOLD_VALUE
+        - GRCF-101_GENERIC_ORIGIN_MYTH
+      do_not_copy_surface_style_refs:
+        policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+        rules:
+        - DNC-01
+        - DNC-02
+        - DNC-03
+        - DNC-04
+      proposition_refs:
+      - PROP-V1-001
+      - PROP-V1-002
+      - PROP-V1-003
+      - PROP-V1-004
+      body_proposition_refs:
+      - PROOF-MB-001-RB-001#mechanism_01
+      - PROOF-MB-001-RB-001#mechanism_02
+      - PROOF-MB-001-RB-001#mechanism_03
+      - PROOF-MB-001-RB-001#mechanism_04
+      creative_gate_refs:
+        report: creative_gate_report.json
+        item: PROOF-MB-001-001
+      governance_gate_refs:
+        report: governance_gate_report.json
+        item: PROOF-MB-001-001
+      rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-001
+      relation_candidate_refs:
+      - PROOF-MB-001-001-REL-01
+      - PROOF-MB-001-001-REL-02
+      - PROOF-MB-001-001-REL-03
+      - PROOF-MB-001-001-REL-04
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_allowed: false
+        generation_eligible: false
+        production_ready: false
+        release_ready: false
+        production_servable: false
+      generation_status: gpt_generated_structured_draft
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    - candidate_id: PROOF-MB-001-002
+      proof_microbatch_id: proof_microbatch_001
+      source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+      canonical_cluster_id: mkc_008
+      generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_008
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      declared_layer: Rule_candidate
+      target_layer_candidate: Rule_candidate
+      allowed_landing_layers:
+      - TBox_candidate
+      - Rule_candidate
+      forbidden_landing_layers:
+      - EvidencePolicy_candidate
+      - ExecutionAssetOutbox_candidate
+      - GovernanceContract_candidate
+      - ABox
+      - TBox_Object
+      - BrandInstance
+      - Product
+      - Store
+      - PersonProfile
+      - KE_truth_source
+      - ServingProjection
+      - RAG
+      - DIFY
+      - CandidatePack
+      source_policy:
+        provenance_class: gpt_generated_proof_microbatch_draft
+        is_source_anchor: false
+        expert_synthesis_policy: allowed_after_human_review
+        human_review_status: pending
+        source_repo_live_dependency: false
+        external_resources_allowed: false
+      judge_calibration_refs:
+        judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+        positive_gold_case_id: GRC-P001-MKC008-POS-001
+        case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+        expected_hard_gates:
+        - HG-001
+        - HG-002
+        - HG-003
+        - HG-004
+        - HG-005
+        - HG-006
+        - HG-007
+        - HG-008
+      gold_reference_case_refs:
+        positive_gold_case_id: GRC-P001-MKC008-POS-001
+        anti_gold_case_id: GRC-P001-MKC008-ANTI-001
+        borderline_repair_case_id: GRC-P001-MKC008-BDR-001
+        source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+        source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+      anti_gold_avoidance_refs:
+        anti_gold_case_id: GRC-P001-MKC008-ANTI-001
+        failure_codes_to_avoid:
+        - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+        - F16_NO_GOLD_VALUE
+        - GRCF-102_PROOF_SLOT_OVERCLAIM
+      do_not_copy_surface_style_refs:
+        policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+        rules:
+        - DNC-01
+        - DNC-02
+        - DNC-03
+        - DNC-04
+      proposition_refs:
+      - PROP-V1-005
+      - PROP-V1-006
+      - PROP-V1-007
+      - PROP-V1-008
+      body_proposition_refs:
+      - PROOF-MB-001-RB-002#mechanism_01
+      - PROOF-MB-001-RB-002#mechanism_02
+      - PROOF-MB-001-RB-002#mechanism_03
+      - PROOF-MB-001-RB-002#mechanism_04
+      creative_gate_refs:
+        report: creative_gate_report.json
+        item: PROOF-MB-001-002
+      governance_gate_refs:
+        report: governance_gate_report.json
+        item: PROOF-MB-001-002
+      rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-002
+      relation_candidate_refs:
+      - PROOF-MB-001-002-REL-01
+      - PROOF-MB-001-002-REL-02
+      - PROOF-MB-001-002-REL-03
+      - PROOF-MB-001-002-REL-04
+      - PROOF-MB-001-002-REL-05
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_allowed: false
+        generation_eligible: false
+        production_ready: false
+        release_ready: false
+        production_servable: false
+      generation_status: gpt_generated_structured_draft
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    - candidate_id: PROOF-MB-001-003
+      proof_microbatch_id: proof_microbatch_001
+      source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+      canonical_cluster_id: mkc_009
+      generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_009
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      declared_layer: Rule_candidate
+      target_layer_candidate: Rule_candidate
+      allowed_landing_layers:
+      - TBox_candidate
+      - Rule_candidate
+      forbidden_landing_layers:
+      - EvidencePolicy_candidate
+      - ExecutionAssetOutbox_candidate
+      - GovernanceContract_candidate
+      - ABox
+      - TBox_Object
+      - BrandInstance
+      - Product
+      - Store
+      - PersonProfile
+      - KE_truth_source
+      - ServingProjection
+      - RAG
+      - DIFY
+      - CandidatePack
+      source_policy:
+        provenance_class: gpt_generated_proof_microbatch_draft
+        is_source_anchor: false
+        expert_synthesis_policy: allowed_after_human_review
+        human_review_status: pending
+        source_repo_live_dependency: false
+        external_resources_allowed: false
+      judge_calibration_refs:
+        judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+        positive_gold_case_id: GRC-P001-MKC009-POS-001
+        case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+        expected_hard_gates:
+        - HG-001
+        - HG-002
+        - HG-003
+        - HG-004
+        - HG-005
+        - HG-006
+        - HG-007
+        - HG-008
+      gold_reference_case_refs:
+        positive_gold_case_id: GRC-P001-MKC009-POS-001
+        anti_gold_case_id: GRC-P001-MKC009-ANTI-001
+        borderline_repair_case_id: GRC-P001-MKC009-BDR-001
+        source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+        source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+      anti_gold_avoidance_refs:
+        anti_gold_case_id: GRC-P001-MKC009-ANTI-001
+        failure_codes_to_avoid:
+        - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+        - F16_NO_GOLD_VALUE
+        - GRCF-103_UNSUPPORTED_STORY_ARC
+      do_not_copy_surface_style_refs:
+        policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+        rules:
+        - DNC-01
+        - DNC-02
+        - DNC-03
+        - DNC-04
+      proposition_refs:
+      - PROP-V1-009
+      - PROP-V1-010
+      - PROP-V1-011
+      - PROP-V1-012
+      body_proposition_refs:
+      - PROOF-MB-001-RB-003#mechanism_01
+      - PROOF-MB-001-RB-003#mechanism_02
+      - PROOF-MB-001-RB-003#mechanism_03
+      - PROOF-MB-001-RB-003#mechanism_04
+      creative_gate_refs:
+        report: creative_gate_report.json
+        item: PROOF-MB-001-003
+      governance_gate_refs:
+        report: governance_gate_report.json
+        item: PROOF-MB-001-003
+      rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-003
+      relation_candidate_refs:
+      - PROOF-MB-001-003-REL-01
+      - PROOF-MB-001-003-REL-02
+      - PROOF-MB-001-003-REL-03
+      - PROOF-MB-001-003-REL-04
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_allowed: false
+        generation_eligible: false
+        production_ready: false
+        release_ready: false
+        production_servable: false
+      generation_status: gpt_generated_structured_draft
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    - candidate_id: PROOF-MB-001-004
+      proof_microbatch_id: proof_microbatch_001
+      source_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+      canonical_cluster_id: mkc_010
+      generation_assignment_id: PROOF-MB-001-ASSIGN-MKC_010
+      candidate_kind: general_knowledge_candidate
+      proposed_target_owner: GeneralKnowledgeBase
+      declared_layer: TBox_candidate
+      target_layer_candidate: TBox_candidate
+      allowed_landing_layers:
+      - TBox_candidate
+      - Rule_candidate
+      forbidden_landing_layers:
+      - EvidencePolicy_candidate
+      - ExecutionAssetOutbox_candidate
+      - GovernanceContract_candidate
+      - ABox
+      - TBox_Object
+      - BrandInstance
+      - Product
+      - Store
+      - PersonProfile
+      - KE_truth_source
+      - ServingProjection
+      - RAG
+      - DIFY
+      - CandidatePack
+      source_policy:
+        provenance_class: gpt_generated_proof_microbatch_draft
+        is_source_anchor: false
+        expert_synthesis_policy: allowed_after_human_review
+        human_review_status: pending
+        source_repo_live_dependency: false
+        external_resources_allowed: false
+      judge_calibration_refs:
+        judge_calibration_registry: 04_judge_calibration/judge_calibration_registry.v0.1.yaml
+        positive_gold_case_id: GRC-P001-MKC010-POS-001
+        case_to_judge_rule_map: 04_judge_calibration/case_to_judge_rule_map.v0.1.yaml
+        expected_hard_gates:
+        - HG-001
+        - HG-002
+        - HG-003
+        - HG-004
+        - HG-005
+        - HG-006
+        - HG-007
+        - HG-008
+      gold_reference_case_refs:
+        positive_gold_case_id: GRC-P001-MKC010-POS-001
+        anti_gold_case_id: GRC-P001-MKC010-ANTI-001
+        borderline_repair_case_id: GRC-P001-MKC010-BDR-001
+        source_normalized_path: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml
+        source_digest_ref: 03_grc_goldset_corpus/normalized/formal_120/p0_01/gold_reference_cases.yaml@sha256:bf8b6bf603209cbddbbb26bcfc3da62240d48e29996e3ee60a6750024761af61
+      anti_gold_avoidance_refs:
+        anti_gold_case_id: GRC-P001-MKC010-ANTI-001
+        failure_codes_to_avoid:
+        - F01_NO_CLUSTER_SPECIFIC_MECHANISM
+        - F16_NO_GOLD_VALUE
+        - GRCF-104_ABSTRACT_STYLE_WORD_STACK
+      do_not_copy_surface_style_refs:
+        policy: 04_judge_calibration/do_not_copy_surface_style_policy.v0.1.yaml
+        rules:
+        - DNC-01
+        - DNC-02
+        - DNC-03
+        - DNC-04
+      proposition_refs:
+      - PROP-V1-013
+      - PROP-V1-014
+      - PROP-V1-015
+      - PROP-V1-016
+      body_proposition_refs:
+      - PROOF-MB-001-RB-004#mechanism_01
+      - PROOF-MB-001-RB-004#mechanism_02
+      - PROOF-MB-001-RB-004#mechanism_03
+      - PROOF-MB-001-RB-004#mechanism_04
+      creative_gate_refs:
+        report: creative_gate_report.json
+        item: PROOF-MB-001-004
+      governance_gate_refs:
+        report: governance_gate_report.json
+        item: PROOF-MB-001-004
+      rich_body_ref: rich_body_blocks.yaml#PROOF-MB-001-RB-004
+      relation_candidate_refs:
+      - PROOF-MB-001-004-REL-01
+      - PROOF-MB-001-004-REL-02
+      - PROOF-MB-001-004-REL-03
+      - PROOF-MB-001-004-REL-04
+      - PROOF-MB-001-004-REL-05
+      readiness_flags:
+        candidatepack_ready: false
+        KE_ready: false
+        RAG_ready: false
+        DIFY_ready: false
+        generation_allowed: false
+        generation_eligible: false
+        production_ready: false
+        release_ready: false
+        production_servable: false
+      generation_status: gpt_generated_structured_draft
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+  cards: *id001
+  rich_bodies:
+  - rich_body_id: PROOF-MB-001-RB-001
+    candidate_id: PROOF-MB-001-001
+    canonical_cluster_id: mkc_007
+    cluster_title: 企业叙事骨架
+    body_form: full_rich_body
+    body: 给一家服装企业搭建企业叙事骨架，第一笔不该落在成立于哪一年或喊了什么口号上，而要先把它长年在替哪一类穿衣人化解哪一种经营难题讲明白——这道难题可能是同一批版型在换季返单后走样，也可能是导购站在货架前解释一件外套为何选这种面料时反复卡壳。锚点定下来，才轮到把企业在挑面料、排布生产节奏、分派各道责任上那些一再重复的动作摊开，它们不是某回临时起意，而是旁人能照着复述一遍的组织性做法。做法讲到位，往下就空出几格证明位：一格留给供应链上下游的协同，一格留给内部谁盯哪个复核节点，一格留给过程里攒下的可追溯记录，材料没到手时先空着，不拿想象去填。再往后，把这套做法折算成穿的人能亲眼比对的差别，比如同系列不同款之间版型对得上、拼接处收边不飘，让读者从画面里看出门道，而不是只读到一串形容词；这层价值还能沿系列轴切成若干可反复展开的段落，同一副骨架派生出多篇而彼此不撞。要守住的边界是：这副骨架只有在企业确实攒下可复述的稳定做法时才立得住，若手上只是一场限时活动或一桩孤立事件，就别硬撑成一段叙事，退回成一条普通信息记着便可；同时凡话头碰到体量、占比或增速这类要拿数据背书的判断，一律先按住，等官方材料补齐再讲，没材料就把那句挂起来待补，正文只保留能复述的方法层，绝不用观察口吻把经营成果硬写死。
+    body_char_count: 543
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 问题场景 -> 经营方法
+    - 经营方法 -> 证明槽位
+    - 证明槽位 -> 价值表达
+    - 价值表达 -> 系列轴
+    domain_anchors:
+    - 面料取舍
+    - 版型稳定性
+    - 门店解释难度
+    - 复核节点
+    - 系列一致性
+    expected_body_topics_covered:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - 供应链 / 组织 / 过程证明的预留槽位
+    - 价值表达与可观察差异
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面：版型换季返单后是否走样、拼接处收边是否发飘、导购在货架前解释面料时是否卡壳。
+      method_layer: 解释可复用的判断顺序：先定问题场景，再摊开一再重复的组织性做法，再空出证明槽位，最后折算成能亲眼比对的价值并沿系列轴展开。
+      boundary_layer: 对体量、占比、增速这类经营成果与市场地位的硬结论设边界，不用观察口吻硬写死。
+      downgrade_path: 缺官方材料的硬结论先按住挂为待补，正文只留可复述的方法层；只有一次性活动或孤立事件时整体退回为普通信息条目。
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-001
+    - PROP-V1-002
+    - PROP-V1-003
+    - PROP-V1-004
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-001
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-002
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-003
+        proposition_type: boundary_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-004
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+    concrete_apparel_anchor: 同一批版型在换季返单后走样，导购站在货架前解释一件外套为何选这种面料时反复卡壳，以及同系列不同款之间版型对得上、拼接处收边不飘。
+    domain_mechanism: 先把问题场景定为起点，再摊开一再重复、旁人能照着复述的组织性做法，往下空出供应链/复核节点/可追溯记录三格证明位，最后折算成能亲眼比对的价值并沿系列轴切段。
+    downstream_content_effect: 起点与做法接得上后，同一副骨架能沿系列轴派生出多篇彼此不撞的内容，而不至于层层悬空。
+    risk_boundary_handling: 无稳定做法只有临时活动时整体降级为普通信息条目；凡触及体量、占比、增速等硬结论一律先按住、等官方材料补齐，缺料挂为待补，正文只保留方法层。
+  - rich_body_id: PROOF-MB-001-RB-002
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    cluster_title: 证明槽位与价值转译
+    body_form: full_rich_body
+    body: 聚焦'证明槽位与价值转译'这一簇，核心动作是把公司内部谁做了什么、在哪一步做的，改写成外部读者能核对的说法，而不是直接抛出'品质过硬、供应链够强'这类空话。落到服装场景，先把参与判断的岗位摆开：出款式的设计岗、定合身度的版型岗、管货架呈现的陈列岗、面对面讲解的导购岗，各自的职责界线要划清，功劳才不会被搅成一团。接着沿真实经手的环节铺开叙事——布料入库、开裁、车缝、熨烫定型、成衣检验，让每一步都成为读者可跟随的段落。随后在环节后面接上关卡：一类看做工有没有到线，另一类看有没有人回头再对一遍，这样一个个关卡串起来，工序讲解就有了可回溯的骨架，而不是一句空洞的保证。谈到备料与代工这类上游安排时，得把为什么选这种做法和它要应付的限制一起端出来，比如交期紧、起订量高、批次要稳，选择连着约束写，方法听起来才站得住。但要在这里勒住缰绳：可以说明存在一个事后再核一遍的关卡，却不能顺着讲某回对货挑出了几件毛病，那已经跨进了具体经营数字的地界，缺授权就改用观察式说法或标注留待补充来源。至于叫得出名字的代工厂、检验单据，属于个案事实，没有拿到授权材料的一概不写，正文只认这里有这么一类环节存在。
+    body_char_count: 493
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 组织角色 -> 工序节点
+    - 工序节点 -> 质量门与复核门
+    - 供应链选择 -> 约束
+    - 约束 -> 方法可信度
+    - 证明槽位 -> 价值表达
+    domain_anchors:
+    - 设计角色
+    - 版型角色
+    - 陈列角色
+    - 导购角色
+    - 选料节点
+    - 复核门
+    expected_body_topics_covered:
+    - 角色分工与协作边界
+    - 关键工序或流程节点的叙事位置
+    - 质量门、复核门、交接门
+    - 供应链选择与约束处理的通用叙事位
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如布料入库、开裁、车缝、熨烫定型、成衣检验这些看得见的工序环节与岗位分工
+      method_layer: 解释可复用的判断机制与顺序：岗位分工→工序节点→节点后接质量门与复核门形成可回溯关卡链→供应链做法与约束成对呈现以支撑方法可信度
+      boundary_layer: 对复核件数、问题件数等经营数字与具名代工厂/检验单据等实例事实设边界，一律不当既有事实写出
+      downgrade_path: 无授权的硬结论回收为'存在此类工序环节'的观察语言，或标注留待补充来源
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-005
+    - PROP-V1-006
+    - PROP-V1-007
+    - PROP-V1-008
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-005
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-006
+        proposition_type: downstream_effect
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-007
+        proposition_type: boundary_condition
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-008
+        proposition_type: execution_instruction
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 布料入库、开裁、车缝、熨烫定型、成衣检验的成衣工序环节，以及设计、版型、陈列、导购的岗位分工画面
+    domain_mechanism: 在每个工序环节后接上关卡（一类看做工是否到线、一类看有没有人回头再对一遍），关卡串成可追溯链条，工序讲解才立得住。
+    downstream_content_effect: 工序讲解有了可回溯的骨架，供应链做法与其约束成对呈现，方法叙事更站得住，避免把抽象价值直接写成产品效果或经营事实。
+    risk_boundary_handling: 涉及某次复核挑出的具体件数等经营数字，以及具名代工厂、检验单据等实例事实一律不写，缺授权时改用观察语言或标注留待补充来源。
+  - rich_body_id: PROOF-MB-001-RB-003
+    candidate_id: PROOF-MB-001-003
+    canonical_cluster_id: mkc_009
+    cluster_title: 故事弧线适用边界
+    body_form: full_rich_body
+    body: 这一簇要回答的是：手上这段素材配得上哪种叙事线，配错会踩哪些坑。判断的入口不在写手预设的情绪，而在素材本身在回答哪类问题。若画面呈现的是一件对象的静态差别——一件衬衫的门襟从明扣改成暗门襟、领座较常规抬高一指、两块面料肌理凑近才分得出粗细——它回答的是结构上哪里不同，就配一条把可见差异讲清、把取舍缘由说明、落在眼睛能确认之处的结构线，而非硬撑成跌宕起伏的历程。若画面记录的是一连串动作——反复改版型、把候选料两两并置做面料比较、为陈列挪动搭配比例——它回答的是这个选择怎样被逐步收拢，就配一条讲清难题、铺开取舍次序、交代如何定案的过程线。顺序必须先认素材、后配弧线；掉头先钉死一条线再回填桥段，只会空转套路。选好线，紧接着配上匹配的证明分量：越想突出前后落差、越想制造反转，越得拿出经得起查证的实打实事实，证明扛不动时线的强度就得往回收，能承载的价值表达与留给证据的位置随之变化。有几个信号一冒头就说明这条线不该用：非得摆出成绩数据撑场面、非得给画面里的人硬塞一段心理戏、非得让读者先默认一个尚未被证过的前提。真有过程可摊开，线才立得住；只想给一句空结论镶花边，它便失效，此时退回成一句朴素的做法交代。这样内容动笔前就先分清该做结构说明、过程展开还是退回观察问题，弱素材不会被硬架成撑不住的大历程。凡涉及效果好坏、体感优劣这类硬话，缺来源时先换成不带评判的观察说法，或挂起来等补可靠出处，别让叙事张力顶替本该拿出的证据。
+    body_char_count: 611
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 素材问题类型 -> 叙事弧线选择
+    - 叙事弧线选择 -> 所需证明强度
+    - 所需证明强度 -> 可兼容的价值表达与证据位置
+    - 弧线不匹配 -> 降级为观察或问题
+    domain_anchors:
+    - 门襟
+    - 领型
+    - 面料肌理
+    - 版型修改
+    - 面料比较
+    - 搭配比例
+    - 陈列调整
+    expected_body_topics_covered:
+    - 不同叙事弧线对应的问题类型
+    - 弧线与证据要求的绑定
+    - 弧线与价值表达、proof slot 的兼容性
+    - 不适用弧线的识别信号
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面：门襟从单排明扣改成暗门襟、领座抬高、两块面料肌理凑近才见粗细、反复改版型与挪动搭配比例等可见线索。
+      method_layer: 解释可复用的判断机制与顺序：先认素材在回答哪类问题，再据此选弧线，选定后绑定匹配的证明分量，让价值表达与证据位置随之调整。
+      boundary_layer: 对效果好坏、体感优劣这类硬结论设边界，缺来源时不下断言，改用观察语言或挂为待补出处。
+      downgrade_path: 弧线不匹配或无实质过程时，把它退回成一句朴素的做法交代、一个观察问题，或标注缺来源。
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-009
+    - PROP-V1-010
+    - PROP-V1-011
+    - PROP-V1-012
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-009
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-010
+        proposition_type: evidence_requirement
+        epistemic_class: claim_boundary_policy
+        owner_candidate: EvidencePolicyOutbox
+      mechanism_03:
+        proposition_id: PROP-V1-011
+        proposition_type: failure_signal
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+      mechanism_04:
+        proposition_id: PROP-V1-012
+        proposition_type: boundary_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+    concrete_apparel_anchor: 一件衬衫的门襟从单排明扣改成暗门襟、领座比常规抬高约一指，两块面料肌理凑近才分得出粗细。
+    domain_mechanism: 先判断素材在回答结构差异还是选择过程，据此挑弧线，再按弧线强反差程度绑定相应的可核验证明分量。
+    downstream_content_effect: 让内容在动笔前先分清该做成结构说明、过程展开还是退回观察问题，弱素材不会被硬架成撑不住的大历程。
+    risk_boundary_handling: 命中编造内心或硬搬无源数字等信号即判弧线不适用，涉及效果或优劣的硬话缺来源时改写为中性观察或挂为待补出处。
+  - rich_body_id: PROOF-MB-001-RB-004
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    cluster_title: 反模板叙事锚点
+    body_form: full_rich_body
+    body: 当一段服装文案只剩下整体印象，读者看不到任何物件，也弄不清作者究竟在讲什么，这时就该换一种写法：先在画面里圈定一个既能被镜头对准、又能被句子直接点名的落点，再让整段叙述绕着它生长。这样的落点大致分四种。第一种是可被指认的物件，比如门襟上那排纽扣的疏密，或挂通上同一色组衣物的排布；第二种是施加在物件上的处理，比如把领口翻折过来、把腰线抬到坐姿高度去比对；第三种是解释为何不能随意夸大的约束，比如层次叠装会牵动外轮廓，取景光会改变颜色的观感，这类限制得连着取舍一起交代；第四种是内容切入的时间点，比如上身之前、整理途中、递示给顾客的那一刻。真正让叙述立住的，是把这四种落点串成一条线：让物件牵出处理手法，让处理手法牵出眼睛可核验的痕迹，让约束托住一句取舍说明，让某个时刻撑起可拍可读的场面。要注意，这套办法只在稿子里确有可指认的实物细节时才管用；若整篇都是空洞的情绪渲染、拿不出实物细节，就得先补齐落点再动笔，硬套只会继续空转。还有一条边界：落点得是换到别处也能复现的通用结构，任何带着具体货号、售价或库存的说法都要先剔掉，或标成来源待补再议；凡涉及销量、增长这类效果结论，也只用观察语言描述、不急着下定论。
+    body_char_count: 503
+    min_body_chars_standard: 350
+    min_body_chars_met: true
+    cluster_specific_mechanism_chain:
+    - 抽象风格词 -> 需要具体锚点
+    - 对象锚点 -> 动作锚点
+    - 动作锚点 -> 可见线索
+    - 约束 -> 取舍表达
+    - 节点 -> 场景可拍性
+    domain_anchors:
+    - 门襟
+    - 领口
+    - 腰线
+    - 翻折
+    - 挂通色组
+    - 叠装层次
+    - 递示
+    expected_body_topics_covered:
+    - 对象锚点类型
+    - 动作锚点与处理逻辑
+    - 约束锚点与取舍表达
+    - 节点锚点与前后台衔接
+    epistemic_split:
+      observation_layer: 只描述可观察的结构、材质、动作与画面线索，如门襟纽扣疏密、领口翻折、挂通色组排布
+      method_layer: 解释可复用的判断机制与顺序：先锁定可指认落点，再让物件牵动作、动作牵可见线索、约束连取舍、节点撑可拍性
+      boundary_layer: 对销量、增长等效果结论设边界，只用观察语言描述、不直接下结论
+      downgrade_path: 无证据的硬结论回收为观察，或把带货号价格库存的实例事实标为来源待补再议
+    hard_claim_routing: performance_or_effect_claims_without_source_routed_to_missing_source_or_observation
+    governance_text_in_body: false
+    gold_body_surface_copied: false
+    p4_canary_body_copied: false
+    source_proposition_ids:
+    - PROP-V1-013
+    - PROP-V1-014
+    - PROP-V1-015
+    - PROP-V1-016
+    mechanisms:
+      mechanism_01:
+        proposition_id: PROP-V1-013
+        proposition_type: definition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_02:
+        proposition_id: PROP-V1-014
+        proposition_type: mechanism
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_03:
+        proposition_id: PROP-V1-015
+        proposition_type: applicable_condition
+        epistemic_class: domain_method
+        owner_candidate: GeneralKnowledgeBase
+      mechanism_04:
+        proposition_id: PROP-V1-016
+        proposition_type: boundary_condition
+        epistemic_class: governance_control_policy
+        owner_candidate: GovernanceOutbox
+    concrete_apparel_anchor: 门襟上那排纽扣的疏密与挂通上同一色组衣物的排布
+    domain_mechanism: 先锁定一个能被镜头对准、被句子点名的落点，再让物件牵动作、动作牵可见线索、约束连取舍、节点撑可拍性，把四类落点串成一条可核验的线。
+    downstream_content_effect: 让文案从整体印象回到可指认的物件、动作、约束和时间点，天然区别于套路化写法。
+    risk_boundary_handling: 落点须是换到别处也能复现的通用结构；带货号、售价、库存的说法先剔除或标为来源待补，销量增长等效果结论只用观察语言描述、不下定论。
+  relations:
+  - relation_id: PROOF-MB-001-001-REL-01
+    candidate_id: PROOF-MB-001-001
+    canonical_cluster_id: mkc_007
+    relation_from: problem_domain
+    relation_to: operating_method
+    relation_hint: problem_domain -> operating_method
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-001-REL-02
+    candidate_id: PROOF-MB-001-001
+    canonical_cluster_id: mkc_007
+    relation_from: operating_method
+    relation_to: proof_slot
+    relation_hint: operating_method -> proof_slot
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-001-REL-03
+    candidate_id: PROOF-MB-001-001
+    canonical_cluster_id: mkc_007
+    relation_from: proof_slot
+    relation_to: value_expression
+    relation_hint: proof_slot -> value_expression
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-001-REL-04
+    candidate_id: PROOF-MB-001-001
+    canonical_cluster_id: mkc_007
+    relation_from: value_expression
+    relation_to: series_axis
+    relation_hint: value_expression -> series_axis
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-002-REL-01
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    relation_from: organization_role
+    relation_to: process_node
+    relation_hint: organization_role -> process_node
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-002-REL-02
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    relation_from: process_node
+    relation_to: quality_gate
+    relation_hint: process_node -> quality_gate
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-002-REL-03
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    relation_from: supply_chain_choice
+    relation_to: constraint
+    relation_hint: supply_chain_choice -> constraint
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-002-REL-04
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    relation_from: constraint
+    relation_to: method_credibility
+    relation_hint: constraint -> method_credibility
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-002-REL-05
+    candidate_id: PROOF-MB-001-002
+    canonical_cluster_id: mkc_008
+    relation_from: proof_slot
+    relation_to: value_expression
+    relation_hint: proof_slot -> value_expression
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-003-REL-01
+    candidate_id: PROOF-MB-001-003
+    canonical_cluster_id: mkc_009
+    relation_from: material_problem_type
+    relation_to: story_arc_selection
+    relation_hint: material_problem_type -> story_arc_selection
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-003-REL-02
+    candidate_id: PROOF-MB-001-003
+    canonical_cluster_id: mkc_009
+    relation_from: story_arc_selection
+    relation_to: required_proof_intensity
+    relation_hint: story_arc_selection -> required_proof_intensity
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-003-REL-03
+    candidate_id: PROOF-MB-001-003
+    canonical_cluster_id: mkc_009
+    relation_from: required_proof_intensity
+    relation_to: compatible_value_expression
+    relation_hint: required_proof_intensity -> compatible_value_expression
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-003-REL-04
+    candidate_id: PROOF-MB-001-003
+    canonical_cluster_id: mkc_009
+    relation_from: arc_mismatch
+    relation_to: downgrade_to_observation_or_question
+    relation_hint: arc_mismatch -> downgrade_to_observation_or_question
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-004-REL-01
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    relation_from: abstract_style_word
+    relation_to: anchor_requirement
+    relation_hint: abstract_style_word -> anchor_requirement
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-004-REL-02
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    relation_from: anchor_object
+    relation_to: anchor_action
+    relation_hint: anchor_object -> anchor_action
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-004-REL-03
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    relation_from: anchor_action
+    relation_to: visible_cue
+    relation_hint: anchor_action -> visible_cue
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-004-REL-04
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    relation_from: constraint
+    relation_to: tradeoff_expression
+    relation_hint: constraint -> tradeoff_expression
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  - relation_id: PROOF-MB-001-004-REL-05
+    candidate_id: PROOF-MB-001-004
+    canonical_cluster_id: mkc_010
+    relation_from: process_node
+    relation_to: narrative_sceneability
+    relation_hint: process_node -> narrative_sceneability
+    relation_status: design_hint_not_ontology_edge
+    formal_ontology_edge_allowed: 'False'
+    ontology_edge_created: 'False'
+    human_review_required_for_relation: 'True'
+  trace:
+    proof_microbatch_id: proof_microbatch_001
+    task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    generator_identity:
+      provider: execution_environment_not_disclosed
+      model: execution_environment_not_disclosed
+      disclosure_status: unavailable_in_execution_environment
+    generator_runtime_context: multi_agent_ai_authoring_within_single_execution_session
+    execution_agent: claude_code_execution_agent_subagents
+    human_authored: false
+    old_pilot_reuse: false
+    reused_old_pilot_artifacts: false
+    p4_canary_body_copy: false
+    reused_p4_canary_body: false
+    generated_item_count: 40
+    prompt_or_instruction_digest: sha256:ff55fc1202aff2c160c6d80bd3e0314e168a1837be857c30b93318c5f701d49b
+    input_manifest_digest: sha256:2452e945f05cb2fb082f8b2dc6f7d977eb6574118c8104517261aa44ad59661e
+    proposition_pack_digest: sha256:ffe20e66d17f58ffa5a71a0019f034e1097fcc819ffea3df214da24bd0f91f75
+    creative_gate_digest: sha256:cb0b701cafba889a285bcb80c271d1be3483b08e17abe22e332e12e31224f519
+    governance_gate_digest: sha256:e67d158015be686d382b2fcccb0cf39278ada8843ffb5c584093c86ff037ffd8
+    generated_at: '2026-07-09T04:15:35Z'
+    limitations:
+      honest_scope: agent_authored_quality_probe_not_standalone_automated_pipeline
+      generator_capability_proven: false
+      automatic_stable_generation_demonstrated: false
+      ready_for_P7B_3600_generation_brief: false
+      counts_toward_3600: false
+      mechanism: per_item_ai_authoring_by_execution_agent_subagents
+      machine_verified_scope:
+      - structure
+      - anti_copy_lcs_vs_gold_and_canary
+      - cluster_specificity
+      - red_line_scans_no_brand_sku_price
+      - owner_routing
+      - readiness_false
+      - proposition_grounding
+      not_machine_verified:
+      - subjective_aesthetic_creative_quality_is_ai_self_assessed_not_scored
+      does_not_prove:
+      - automatic_stable_generation
+      - 3600_mechanical_feasibility
+      - standalone_generator_harness_exists
+  dedupe:
+    unique_body_hashes: 4
+    body_count: 4
+    max_cross_cluster_lcs: 4
+    near_duplicate_threshold: 18
+    near_duplicate_found: false
+    dedupe_pass: true
+  style:
+    min_body_chars_standard: 350
+    max_gold_surface_lcs_title_stripped: 6
+    gold_surface_copy_threshold: 16
+    max_p4_canary_body_lcs: 8
+    p4_canary_body_copy_threshold: 18
+    max_cross_cluster_lcs: 4
+    abstract_style_stack_found: false
+    governance_text_in_body_found: false
+    gold_body_surface_copy_found: false
+    p4_canary_body_copy_found: false
+    template_reuse_found: false
+    style_copy_pass: true
+  creative:
+    creative_gate_pass: true
+    assessed_by: execution_ai_agent
+    subjective_dimensions_are_ai_self_assessed_not_scored: true
+  governance:
+    owner_distribution: {}
+    evidence_policy_mapped_to_gkb_count: 0
+    readiness_all_false: true
+    governance_gate_pass: true
+  semantic:
+    semantic_alignment_pass: true
+    all_proposition_refs_valid: true
+  entailment:
+    body_entailment_pass: true
+  receipt:
+    actual_total: 4
+    human_authored: false
+    generator_capability_proven: false
+refs:
+  gold:
+    mkc_007:
+      gold_body: 企业叙事骨架的起点不是“品牌想显得更有理想”，而是先界定企业长期回应的服装经营问题。这个问题可以来自货品结构、面料取舍、版型稳定性、系列一致性、门店解释难度或顾客选择成本，但只能停留在通用问题层。骨架展开时应按四步组织：先说明问题场景，再说明企业采用的组织性方法，再列出需要被证明的槽位，最后把方法翻译成用户能够观察到的价值。若只有价值词而没有方法和证明槽位，只能形成主题提示；若有流程、角色分工、复核节点或系列结构线索，才可以进入企业叙事骨架。该机制把企业叙事从口号改成“问题—方法—证明—价值”的可复用结构。
+    mkc_008:
+      gold_body: 证明槽位不是给价值词找装饰，而是把“为什么这样做”拆成可核对的叙事位置。角色槽位说明谁在做判断，例如设计、版型、陈列、导购等通用角色；流程槽位说明判断发生在哪个节点，例如选料、打样、试穿、复核、上架前调整；质量门槽位说明哪里需要停下来确认；约束槽位说明为什么不能只追求好看或好卖。价值转译只能从这些槽位向外推一层：把“复核”转成稳定性意识，把“取舍”转成适用场景意识，把“交接”转成服务一致性意识。没有证据的槽位不能转译成耐穿、权威认证、销量结果或行业评价。
+    mkc_009:
+      gold_body: 故事弧线应由材料的问题类型决定，而不是由写作者想要的情绪决定。若材料展示的是一个服装对象的结构差异，例如领型、腰线、门襟、面料肌理，适合使用“结构说明弧线”：从可见差异进入，解释取舍逻辑，再停在可观察价值。若材料展示的是连续处理过程，例如修改版型、比较面料、调整陈列、确认搭配比例，适合使用“选择过程弧线”：先提出需要解决的选择问题，再展示取舍顺序，最后说明选择被如何收束。若材料只包含价值词或单张无上下文图片，不应展开成困境、坚持、转折、结果，只能降级为观察问题或补依据清单。弧线越强，需要的证明越强。
+    mkc_010:
+      gold_body: 反模板叙事的锚点由四类信息共同组成。对象锚点说明画面里可被指出的服装部位或陈列对象，例如领口、袖口、腰线、门襟、叠装层次、挂通色组；动作锚点说明对象如何被处理，例如整理、翻折、对比、递示、试穿、转身；约束锚点说明表达为什么不能任意放大，例如光线会影响颜色观感，层搭会影响轮廓关系，场景会影响单品任务；节点锚点说明内容从哪个时刻切入，例如上身前、整理中、对比后、陈列完成时。只有锚点组合能回答“看见什么、怎样处理、受什么限制、从哪里切入”，抽象词才有落点。
+  canary_bodies:
+    mkc_007: 企业叙事骨架要先回答“这家企业在替谁解决什么问题”，把问题场景确定成叙事的起点，而不是从口号或成立年份写起。举个具体例子，一段内容若从“怎么把控交期”这一问题场景切入，就比从“成立于哪一年”切入更容易接上后面的做法与证明，起点选错，后面几层都会悬空。问题场景确定之后，才展开长期采用的组织性做法：它在选料、排产、协作分工上做了哪些反复出现的选择，这些选择构成可复述的经营方法。方法之后要预留证明位，供应链、组织结构、过程记录各留一个可后续填充的槽位，暂时没有材料时保持空槽而不去编造。最后把方法与证明转译成对外可感知的价值表达，并按系列轴拆成可重复的叙事单元，让同一套骨架能派生出多条内容而不互相重复。这套骨架在企业确有稳定做法可讲时成立；若只有一次性事件或临时活动，则它失效，应降级为普通信息条目而不是硬撑成叙事。守住一条线：通用做法不能写成某一时点的经营成果或市场地位，凡触及规模、份额、增长这类硬结论，必须先有官方资料，缺材料时把该句挂起为待补，正文只留方法层。
+    mkc_008: 这一簇处理的是“怎么把组织内部的分工和工序，翻译成外部能看懂的证明”。比如“成品复核”这个节点，可以讲存在一道二次确认的关口，但不能顺势说出某次复核挑出了多少件问题，那已经落进具体经营数据了。第一步是把角色分工与协作边界摆清：谁负责设计打样、谁负责工艺把关、谁负责成品复核，边界清楚才不会把功劳含糊化。第二步沿关键工序节点排布叙事位置，把面料进厂、裁剪、缝制、整烫、检验这些节点标成可讲解的先后段落。每个节点后面挂一道门：质量门看是否达标、复核门看是否二次确认、交接门看责任是否清晰移交，门与门之间形成可追溯的链条。供应链上的选择要连着约束一起讲，选某种做法往往是为了应对交期、批量或稳定性的限制，把选择与约束成对写出，方法才显得可信。它在存在可核验流程时适用；把想象的流程当既有流程时不适用。这里必须收住：具体供应商、工厂、检测报告属于实例事实，无授权材料一律不写，需要时挂为待补，正文只承认“存在这样一类工序节点”。
+    mkc_009: 故事弧线适用边界解决的是“这段内容该用哪种叙事结构，以及哪种结构会带来风险”。比如同样讲一件外套，用成长弧要交代能力如何一步步积累，用对照弧则要摆出两种做法的差别，选哪条取决于手上能拿出哪种可核验的过程材料。不同弧线对应不同问题类型：成长弧适合讲能力如何积累，转折弧适合讲一次方法调整，对照弧适合讲两种做法的差异，先按内容的问题类型去挑弧线，而不是先定弧线再硬凑情节。选定弧线后要绑定证据强度，越是强调结果反差的弧线，对可核验事实的要求越高。弧线还要与价值表达和证明位兼容，若某条弧线必须依赖尚无材料支撑的关键情节，就说明它此刻并不适用。识别不适用的信号包括：必须搬出具体业绩数字、必须替人物编造内心、必须假设读者已相信某个未证明的前提。内容确有可展开的过程时它成立；只想用弧线包装空洞结论时它失效，此时把弧线压回一句方法说明。要点在于不得用叙事张力替代证据，凡涉及承诺性结果或对比性优劣而无据，一律改写成中性观察或标注为缺来源。
+    mkc_010: 反模板叙事锚点用来对治“千篇一律的空泛叙述”，做法是先找到能被镜头和文字抓住的具体锚点，再围绕锚点展开。举例来说，与其写“这件衣服很好看”，不如把镜头落到“袖口那道明线的走向”这个对象锚点上，再接上“翻起袖口能看到里料收边”这个动作，叙述立刻有了抓手。锚点分四类：对象锚点是可指认的物件，比如一处走线、一枚纽扣、一段拼接；动作锚点是可观察的处理动作，比如翻折、比对、归位；约束锚点是取舍的表达，比如为活动量而放大的松度；节点锚点是前后台衔接处，比如从库房到陈列面的交接点。抓住锚点后，把对象连到动作、动作连到可见线索、约束连到取舍说明、节点连到场景可拍性，叙述就有了落点，也天然区别于其他条目的写法。内容里确有可指认细节时这套方法适用；只有情绪形容而无实物依托时不适用，这类稿子应先补锚点再落笔。要守的边界是：锚点必须是通用可复现的结构特征，不能把某件在售商品的独有卖点当锚点；凡带具体货号、价格或库存的描述都要剔除，或先标为缺来源再议。
+  titles:
+    mkc_007: 企业叙事骨架
+    mkc_008: 证明槽位与价值转译
+    mkc_009: 故事弧线适用边界
+    mkc_010: 反模板叙事锚点
+  topics:
+    mkc_007:
+    - 企业所回应的问题场景
+    - 组织性方法与长期选择
+    - 供应链 / 组织 / 过程证明的预留槽位
+    - 价值表达与可观察差异
+    mkc_008:
+    - 角色分工与协作边界
+    - 关键工序或流程节点的叙事位置
+    - 质量门、复核门、交接门
+    - 供应链选择与约束处理的通用叙事位
+    mkc_009:
+    - 不同叙事弧线对应的问题类型
+    - 弧线与证据要求的绑定
+    - 弧线与价值表达、proof slot 的兼容性
+    - 不适用弧线的识别信号
+    mkc_010:
+    - 对象锚点类型
+    - 动作锚点与处理逻辑
+    - 约束锚点与取舍表达
+    - 节点锚点与前后台衔接
+  anchors:
+    mkc_007:
+    - 货品结构
+    - 面料取舍
+    - 版型稳定性
+    - 系列一致性
+    - 门店解释难度
+    - 顾客选择成本
+    - 复核节点
+    mkc_008:
+    - 设计角色
+    - 版型角色
+    - 陈列角色
+    - 导购角色
+    - 选料节点
+    - 打样节点
+    - 试穿节点
+    - 复核门
+    mkc_009:
+    - 领型
+    - 腰线
+    - 门襟
+    - 面料肌理
+    - 版型修改
+    - 面料比较
+    - 陈列调整
+    - 搭配比例
+    mkc_010:
+    - 领口
+    - 袖口
+    - 腰线
+    - 门襟
+    - 叠装层次
+    - 挂通色组
+    - 翻折
+    - 递示
+  p5_prop_ids:
+    mkc_007:
+    - PROP-V1-001
+    - PROP-V1-002
+    - PROP-V1-003
+    - PROP-V1-004
+    mkc_008:
+    - PROP-V1-005
+    - PROP-V1-006
+    - PROP-V1-007
+    - PROP-V1-008
+    mkc_009:
+    - PROP-V1-009
+    - PROP-V1-010
+    - PROP-V1-011
+    - PROP-V1-012
+    mkc_010:
+    - PROP-V1-013
+    - PROP-V1-014
+    - PROP-V1-015
+    - PROP-V1-016
+  owner_allowed:
+  - GeneralKnowledgeBase
+  - ControlPlaneContractSource
+  - CSOOutbox
+  - ExecutionAssetOutbox
+  - GovernanceOutbox
+  - EvidencePolicyOutbox
+  - SourceGapLedger
+  - DecisionPacketLedger
+  kind_allowed:
+  - general_knowledge_candidate
+  - control_plane_candidate
+  - cso_outbox_candidate
+  - execution_asset_outbox_candidate
+  - governance_outbox_candidate
+  - evidence_policy_candidate
+  - source_gap
+  - decision_packet
+  layer_allowed:
+  - TBox_candidate
+  - Rule_candidate
+  - EvidencePolicy_candidate
+  - L2_PlayCard_candidate
+  - L3_ExecutionAsset_candidate
+  - SlotContract_candidate
+  - SourceIntakeContract_candidate
+  - GovernanceContract_candidate
+  - CSOOutbox_candidate
+  - ExecutionAssetOutbox_candidate
+  - SourceGapLedger
+  - DecisionPacketLedger
+  - Excluded
+  - DraftBacklog
+ledger:
+  steps:
+  - step_id: P1
+    task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+    status: DONE
+    head_before: 09fdb37ce4e47f1d277420f606a44395e5b4132a
+    head_after: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    worktree_after: clean
+    objective: lock tmp GRC corpus into canonical 03_grc_goldset_corpus + registry + corpus checker
+    standard_validation: check_grc_corpus_registry.py live+selftest PASS; python -O fail-closed; 32/32 byte-exact
+    deliverables:
+    - 03_grc_goldset_corpus/**
+    - ci/checkers/check_grc_corpus_registry.py
+    blocked_by: []
+    next_unlocked: P2
+    readiness_claims_allowed:
+    - grc_corpus_canonicalized
+    - formal_120_corpus_locked
+    - p0_00_control_plane_corpus_locked
+    - expert_review_13_source_locked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P2
+    task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+    status: DONE
+    head_before: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: add evidence_policy_candidate / EvidencePolicyOutbox to contract enums + owner policy; align 15 formal evidence cases as strict judge fixtures; alignment checker
+    standard_validation: check_grc_contract_ontology_alignment.py live+selftest PASS; python -O fail-closed; P1 checker still PASS; contract lock checker still PASS
+    deliverables:
+    - 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    - 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+    - 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    - 03_grc_goldset_corpus/alignment/**
+    - ci/checkers/check_grc_contract_ontology_alignment.py
+    blocked_by: []
+    next_unlocked: P3
+    readiness_claims_allowed:
+    - grc_evidence_policy_owner_contract_delta_landed
+    - grc_contract_ontology_alignment_checker_landed
+    - formal_120_strict_mapping_ready
+    - judge_calibration_unlocked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P3
+    task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+    status: DONE
+    head_before: 9e590c287dfbf9f5f6401f6f687bb3c95bd2c1f9
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: land judge calibration registries (positive/anti/borderline/control/failure_code/hard_gate/expert_index/creative/do_not_copy) + judge calibration checker
+    standard_validation: check_judge_calibration_against_grc.py live+selftest PASS; python -O fail-closed; P1+P2+contract-lock checkers still PASS
+    deliverables:
+    - 04_judge_calibration/**
+    - ci/checkers/check_judge_calibration_against_grc.py
+    - ci/fixtures/judge_calibration_against_grc/**
+    blocked_by: []
+    next_unlocked: P4
+    readiness_claims_allowed:
+    - judge_calibration_registry_landed
+    - failure_code_registry_landed
+    - hard_gate_namespace_registry_landed
+    - p0_00_control_plane_judge_ready
+    - formal_120_judge_ready
+    - ready_for_canary_40_execution
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - generation_3600_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P4
+    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+    status: DONE
+    head_before: 46927856bc04222a3188aab6120acf823fc59c6c
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: generate exactly 40 controlled canary drafts (one per formal cluster mkc_007..mkc_046) as gpt_generated_structured_draft + run canary gate (schema/judge/owner-layer/route/style-copy/dedupe/readiness) + reports
+    standard_validation: check_canary_40_generation_and_gate.py live+selftest PASS; python -O fail-closed; P1+P2+P3+contract-lock checkers still PASS; 40/40 coverage; owner routing matches gold; readiness all false; no 3600/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 06_canary_runs/canary_40_001/**
+    - ci/checkers/check_canary_40_generation_and_gate.py
+    - ci/fixtures/canary_40_generation_and_gate/**
+    blocked_by: []
+    next_unlocked: P5
+    readiness_claims_allowed:
+    - canary_40_generated
+    - canary_40_machine_gated
+    - ready_for_canary_40_quality_review
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P5
+    task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+    supersedes_task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+    status: DONE
+    head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
+    head_after: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    worktree_after: clean
+    objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not formal knowledge.
+    standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact substring of its canary rich body; EPO props not mapped to GKB; readiness all false
+    deliverables:
+    - 06_canary_runs/canary_40_001/review_closeout/**
+    - 06_canary_runs/canary_40_001/proposition_pack_v1/**
+    - ci/checkers/check_canary_40_quality_closeout_and_proposition_pack.py
+    - ci/fixtures/canary_40_quality_closeout_and_proposition_pack/**
+    blocked_by: []
+    next_unlocked: P6
+    readiness_claims_allowed:
+    - canary_40_quality_closeout_landed
+    - expert_review_input_absorbed
+    - proposition_pack_v1_landed
+    - ready_for_p6_microbatch_briefing
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P6
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: DONE
+    head_before: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: compile proposition_pack_v1 + Creative Content Principle into a 3600 pre-generation briefing (Governance Gate + Creative Gate + creative score rubric + 6 capability requirements + consumption plan + stop conditions) and a go/no-go decision. Does NOT generate 3600.
+    standard_validation: check_3600_microbatch_briefing_go_nogo.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+contract-lock still PASS; creative gate 8 dims; governance gate 10 checks not weakened; 6 capability families briefing_requirement_only (0 ontology objects); go_decision in allowed values; readiness all false; no 3600/07_microbatch_runs/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 07_microbatch_briefing/**
+    - ci/checkers/check_3600_microbatch_briefing_go_nogo.py
+    - ci/fixtures/3600_microbatch_briefing_go_nogo/**
+    go_decision: GO_TO_P7
+    p7_unlocked_for_execution_brief_only: true
+    p7_real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    blocked_by: []
+    next_unlocked: P6R
+    readiness_claims_allowed:
+    - microbatch_3600_briefing_landed
+    - creative_gate_landed
+    - governance_gate_landed
+    - proposition_pack_v1_consumed_for_briefing
+    - ready_for_p7_3600_microbatch_generation_prompt
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P6R
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    status: DONE
+    head_before: 0433feb7fb84f4be3bbb6aefc95833cacf58cd52
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: retire the legacy semantic-pilot batch-generation lock's block on the GRC route (additive supersession + inventory; no evidence deletion; no flag flip; central supersession, no 02_generation_brief_pack edits) and establish a governed GRC microbatch unlock scoped to mkc_007..mkc_046; keep direct one-shot 3600 forbidden; hold P0-00; generate and authorize zero drafts. Phase A of the founder-split merged task.
+    standard_validation: check_grc_legacy_lock_retire_and_governed_unlock.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+P6+contract-lock still PASS; unlock scope mkc_007..mkc_046; P0-00 held; direct_3600 forbidden preserved (contract immutable + shared_rules global_forbidden); project-infra unmodified + false-flag count discovered not hardcoded; readiness all false; zero generation; no 07_microbatch_runs/CandidatePack/KE/RAG/DIFY
+    deliverables:
+    - 08_batch_unlock_reconciliation/**
+    - ci/checkers/check_grc_legacy_lock_retire_and_governed_unlock.py
+    - ci/fixtures/grc_legacy_lock_retire_and_governed_unlock/**
+    legacy_line_status: superseded_failed_line
+    old_20_regen_used_as_p7_evidence: false
+    direct_one_shot_generation_still_forbidden: true
+    p0_00_held: true
+    governed_microbatch_generation_allowed_under_grc: true
+    generation_executed: false
+    generation_authorized_by_this_task: false
+    three600_generated_count: 0
+    blocked_by: []
+    next_unlocked: P7A
+    readiness_claims_allowed:
+    - legacy_semantic_pilot_lock_retired
+    - grc_route_recorded_as_valid_unlock_evidence
+    - governed_microbatch_generation_allowed_under_grc
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - one_shot_3600_generation
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7A
+    task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+    status: DONE
+    head_before: f8015a4308cb21529ddd429b991bc36ae5d566db
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: 'AI-author 40 fresh, non-copied, proposition-grounded, dual-gate-passing structured drafts (one per formal cluster mkc_007..046) as an HONEST generator-capability quality PROBE. Founder Option 2 re-scope: proves an execution AI can author gate-passing drafts; does NOT prove automatic/stable generation (no standalone generator harness exists in repo).'
+    deliverable_kind: agent_authored_quality_probe
+    proof_microbatch_generated: true
+    proof_drafts_count: 40
+    all_dual_gate_pass: true
+    human_authored: false
+    generator_capability_proven: false
+    automatic_stable_generation_demonstrated: false
+    ready_for_P7B_3600_generation_brief: false
+    counts_toward_3600: false
+    three600_generation_executed: false
+    accepted_domain_knowledge: false
+    standard_validation: check_generator_capability_proof_microbatch.py live+selftest PASS; python -O fail-closed; P1..P6R+contract-lock live PASS (worktree-isolated at HEAD); 40 drafts mkc_007..046 each 1; anti-copy LCS vs gold<16 vs P4 canary<18 cross-cluster<18; cluster-specific fingerprint; red-line scans (no brand/SKU/price); owner routing; readiness all false; no forbidden materialization
+    deliverables:
+    - 07_microbatch_runs/proof_microbatch_001/**
+    - ci/checkers/check_generator_capability_proof_microbatch.py
+    - ci/fixtures/generator_capability_proof_microbatch/**
+    machine_verified_scope:
+    - structure
+    - anti_copy_lcs_vs_gold_and_canary
+    - cluster_specificity
+    - red_line_no_brand_sku_price
+    - owner_routing
+    - readiness_false
+    - proposition_grounding
+    not_machine_verified:
+    - subjective_aesthetic_creative_quality_is_ai_self_assessed
+    blocked_by: []
+    next_unlocked: P7
+    readiness_claims_allowed:
+    - agent_authored_quality_probe_generated
+    - proof_microbatch_machine_gated
+    readiness_claims_forbidden:
+    - generator_capability_proven
+    - automatic_stable_generation
+    - generation_3600_completed
+    - generation_3600_unlocked
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: NEXT
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 structured draft microbatch generation. RE-SCOPED by P6R (legacy-lock retirement + governed GRC unlock) from one-shot 3600 to governed incremental authored microbatch. Real generation requires a separate founder authorization + Codex three-gate; not authorized by P6 or P6R.
+    unlock_kind: governed_incremental_microbatch
+    re_scoped_by: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    re_scoped_from: one_shot_3600
+    re_scoped_to: incremental_authored_microbatch
+    governed_microbatch_generation_allowed_under_grc: true
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false
+    generate_without_grc_pilot_allowed: false
+    real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    next_real_action: GKB-3600 batch-001 real authored microbatch (~20-40 drafts; separate founder authorization + Codex three-gate; never one-shot)
+    standard_validation: to_be_defined_at_P7_batch_001_brief
+    deliverables:
+    - to_be_defined_at_P7_batch_001_brief
+    blocked_by: []
+    next_unlocked: P8
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - one_shot_3600_generation
+    - candidatepack_ready
+    phase_alias: P7B
+    p7a_prerequisite_status: DONE
+    p7a_added_readiness: false
+    p7a_note: P7A generator-capability quality probe is DONE but added NO readiness; real 3600 generation still requires a separate founder authorization + Codex three-gate. P7 == Brief's P7B.
+  - step_id: P8
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: BLOCKED_BY_P7B
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7) (blocked by P7/P7B 3600 governed generation, not yet authorized)
+    standard_validation: to_be_defined_at_P8_brief
+    deliverables:
+    - to_be_defined_at_P8_brief
+    blocked_by:
+    - P7
+    next_unlocked: null
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true
+  generation_unlocked: false
+fs_state:
+  forbidden_present: []
+  three600_created: false
+  microbatches_created: false
+  consolidated_created: false
+  eligibility_created: false
+live:
+  git_changed_outside_allowed: []
+  project_infra_modified: false
+  brief_pack_unmodified: true
+  contract_or_pilot_modified: false
+  prior_checkers:
+    p1: 0
+    p2: 0
+    p3: 0
+    p4: 0
+    p5: 0
+    p6: 0
+    p6r: 0
+    contract_lock: 0

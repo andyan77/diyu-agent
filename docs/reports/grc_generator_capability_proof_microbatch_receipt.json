@@ -1,0 +1,113 @@
+{
+  "task_id": "GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001",
+  "step_id": "P7A",
+  "deliverable_kind": "agent_authored_quality_probe",
+  "founder_decision": "Option 2 — honest AI-authored quality probe (not a generator-capability proof)",
+  "head_before": "f8015a4308cb21529ddd429b991bc36ae5d566db",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "worktree_after": "clean",
+  "verdict": "PASS",
+
+  "recon_finding_that_forced_rescope": {
+    "no_automated_generator_harness_in_repo": true,
+    "p4_canary_was_human_authored": "06_canary_runs/canary_40_001/canary_generation_manifest.v0.1.yaml:50 authored_bodies: human_authored_canary_bodies",
+    "only_generation_mechanism": "execution_ai_per_item_authoring",
+    "brief_and_codex_stop_condition": "if generator provenance cannot be honestly attested / execution can only hand-author 40, STOP",
+    "resolution": "founder chose Option 2: honest AI-authored quality probe with truthful labels + explicit limitations"
+  },
+
+  "proof_microbatch": {
+    "proof_total": 40,
+    "expected_total": 40,
+    "cluster_coverage": "mkc_007..mkc_046",
+    "per_cluster_exactly_one": true,
+    "generation_status_all": "gpt_generated_structured_draft",
+    "human_authored": false,
+    "reused_old_pilot_artifacts": false,
+    "reused_p4_canary_body": false,
+    "generator_capability_proven": false,
+    "automatic_stable_generation_demonstrated": false,
+    "ready_for_P7B_3600_generation_brief": false,
+    "counts_toward_3600": false
+  },
+
+  "machine_verified_dual_gate": {
+    "dedupe_unique_body_hashes": 40,
+    "max_cross_cluster_lcs": 9,
+    "cross_cluster_lcs_threshold": 18,
+    "max_gold_surface_lcs": 7,
+    "gold_surface_copy_threshold": 16,
+    "max_p4_canary_body_lcs": 9,
+    "p4_canary_body_copy_threshold": 18,
+    "min_body_chars_standard": 350,
+    "no_governance_tokens_in_body": true,
+    "no_real_brand_sku_price_leak": true,
+    "no_abstract_style_stacking": true,
+    "cluster_specific_fingerprint_all_pass": true,
+    "owner_routing_contract_consistent": true,
+    "proposition_refs_all_valid_in_p5": true,
+    "governance_gate_pass": true,
+    "creative_gate_pass": true,
+    "semantic_alignment_pass": true,
+    "body_entailment_pass": true,
+    "dedupe_pass": true,
+    "style_copy_pass": true,
+    "readiness_false": true
+  },
+
+  "not_machine_verified_honest": {
+    "subjective_creative_aesthetic_dimensions": "ai_self_assessed_not_scored",
+    "note": "the deterministic gate covers structure/anti-copy/specificity/red-lines/routing/grounding; subjective aesthetic quality is AI self-assessment, documented as such (anti-false-green)"
+  },
+
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p2_checker_live": "PASS",
+    "p3_checker_live": "PASS",
+    "p4_checker_live": "PASS",
+    "p5_checker_live": "PASS",
+    "p6_checker_live": "PASS",
+    "p6r_checker_live": "PASS",
+    "contract_lock_checker_live": "PASS",
+    "prior_checkers_run_against": "pre_P7A_snapshot (working-tree copy minus .git + P7A deliverables, ledger reset to HEAD)",
+    "why_snapshot": "p6/p6r assert phase-scoped no-07_microbatch_runs invariant that P7A legitimately supersedes; p1/p3 read an untracked working-tree input absent from any HEAD-only snapshot; the pre-P7A snapshot is the exact state upstream checkers validated",
+    "p7a_checker_live": "PASS (error_count=0)",
+    "p7a_checker_selftest": "PASS (positive clean + 36 negatives all fail-closed)",
+    "p7a_checker_python_O_fail_closed": "exit_2",
+    "git_changed_outside_allowed": [],
+    "forbidden_scope_clean": true,
+    "project_infra_unmodified": true,
+    "brief_pack_unmodified": true,
+    "contract_pilot_canary_unmodified": true
+  },
+
+  "execution_progress_ledger": {
+    "updated": true,
+    "steps": ["P1", "P2", "P3", "P4", "P5", "P6", "P6R", "P7A", "P7", "P8"],
+    "p1_to_p6r_status": "DONE",
+    "p7a_status": "DONE",
+    "p7_status": "NEXT",
+    "p7_is_briefs_P7B": true,
+    "p7_unlock_kind": "governed_incremental_microbatch",
+    "p7_generation_allowed": false,
+    "p8_status": "BLOCKED_BY_P7B",
+    "generation_unlocked": false,
+    "e7_1_snapshot_trap": "avoided — kept P7 step pristine (NEXT + generation fields false), inserted P7A, flipped P8 to BLOCKED_BY_P7B; both committed P6/P6R checkers stay green on the new ledger"
+  },
+
+  "p7b_unlocked": "only P7B 3600 generation brief/go-no-go drafting; NOT real 3600 generation / CandidatePack / KE / RAG / DIFY",
+  "generation_3600_completed": false,
+  "next_real_action": "GKB-P7B-3600-GENERATION-BRIEF-AND-GO-NOGO (separate founder authorization + Codex three-gate; never one-shot 3600; proof_microbatch_001 does not count toward 3600 unless separately authorized)",
+
+  "must_not_claim": [
+    "generation_3600_completed",
+    "generator_capability_proven",
+    "automatic_stable_generation",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ],
+  "blocking_issues": "none"
+}
