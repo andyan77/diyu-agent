@@ -1,0 +1,72 @@
+proof_microbatch_identity_decision:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  subject_run: 07_microbatch_runs/proof_microbatch_001
+  subject_run_step: P7A
+  subject_run_task_id: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+  decision_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # --- what the P7A run actually is (honest identity) ---
+  proof_microbatch_identity:
+    deliverable_kind: agent_authored_quality_probe
+    proof_total: 40
+    cluster_coverage: mkc_007..mkc_046
+    per_cluster_exactly_one: true
+    machine_gate_passed: true
+    counts_toward_3600: false
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+
+  # --- what P7A proved and (crucially) what it did NOT prove ---
+  generator_capability_assessment:
+    automatic_generator_capability_proven: false
+    automatic_stable_generation_demonstrated: false
+    reusable_generator_harness_proven: false
+    ai_execution_quality_probe_passed: true
+    direct_3600_unlocked: false
+    rationale: >
+      Recon at P7A confirmed there is NO standalone automated generator harness in the
+      repository and the P4 canary bodies were human-authored
+      (06_canary_runs/canary_40_001/canary_generation_manifest.v0.1.yaml:50). The only
+      mechanism that produced the 40 proof drafts was an execution AI authoring them per
+      item. That proves an execution AI CAN author 40 gate-passing, non-copied,
+      proposition-grounded drafts; it does NOT prove a reusable/stable/automatic generator
+      exists, and it does NOT mechanically de-risk a 3600 run. No detector can distinguish
+      "AI authored per item" from "automatic pipeline generated"; asserting the latter with
+      no detector would be a false-green. Hence: honest quality PROBE, not capability proof.
+
+  # --- the single classification flag the ledger + checker key on ---
+  agent_authored_quality_probe_pass: true
+  classified_as: agent_authored_quality_probe_pass
+
+  must_preserve:
+  - no_claim_that_P7A_proves_automatic_3600_generation
+  - no_claim_that_proof_microbatch_001_can_be_counted_into_3600
+  - no_claim_that_proof_drafts_are_accepted_domain_knowledge
+  - no_claim_that_proof_drafts_are_candidatepack_ready
+  - no_claim_that_proof_drafts_are_production_servable
+
+  # --- Codex Pre-Review required note 6: P7A original artifacts are immutable here ---
+  P7A_original_artifacts_modified: false
+  allowed_exception: 07_microbatch_runs/proof_microbatch_001/closeout/**
+  protected_original_artifacts:
+  - 07_microbatch_runs/proof_microbatch_001/knowledge_candidate_cards.yaml
+  - 07_microbatch_runs/proof_microbatch_001/rich_body_blocks.yaml
+  - 07_microbatch_runs/proof_microbatch_001/relation_candidates.csv
+  - 07_microbatch_runs/proof_microbatch_001/generator_trace_manifest.v0.1.yaml
+  - 07_microbatch_runs/proof_microbatch_001/generation_receipt.json
+  - 07_microbatch_runs/proof_microbatch_001/proof_microbatch_closeout.v0.1.md
+  - 07_microbatch_runs/proof_microbatch_001/semantic_alignment_report.json
+  - 07_microbatch_runs/proof_microbatch_001/body_entailment_report.json
+  - 07_microbatch_runs/proof_microbatch_001/governance_gate_report.json
+  - 07_microbatch_runs/proof_microbatch_001/creative_gate_report.json
+  - 07_microbatch_runs/proof_microbatch_001/dedupe_report.json
+  - 07_microbatch_runs/proof_microbatch_001/style_copy_report.json

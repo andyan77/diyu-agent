@@ -1,0 +1,38 @@
+proof_microbatch_not_3600_unlock_decision:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  subject_run: 07_microbatch_runs/proof_microbatch_001
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # P7A passing its machine gate is NOT a 3600 unlock and is NOT a count toward 3600.
+  decision:
+    proof_microbatch_counts_toward_3600: false
+    direct_3600_unlocked: false
+    direct_3600_after_P7A_allowed: false
+    proof_drafts_promotable_to_accepted_knowledge_by_this_task: false
+    proof_drafts_promotable_to_candidatepack_by_this_task: false
+
+  why_not_direct_3600:
+  - P7A is an agent-authored quality probe, not an automatic generator capability proof.
+  - No standalone generator harness exists; per-item AI authoring does not de-risk mechanical 3600 scale.
+  - generation_mode / fact_binding / Ontology-x-CSO composition were not compiled until this task (P7B), and are still contract text, not an executed pipeline.
+  - Direct 3600 remains forbidden at the contract layer (immutable) and by shared_rules.global_forbidden.
+
+  required_before_any_scale:
+    next_step: P7C
+    next_step_kind: scoped_content_production_microbatch_execution_brief_and_go_nogo_only
+    next_step_generation_authorized: false
+    three600_step: P7D
+    three600_status: BLOCKED_BY_P7C
+
+  preserved_global_locks:
+    generation_unlocked: false
+    generation_allowed: false
+    generation_eligible: false
+    generation_3600_unlocked: false
+    generation_3600_completed: false
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false

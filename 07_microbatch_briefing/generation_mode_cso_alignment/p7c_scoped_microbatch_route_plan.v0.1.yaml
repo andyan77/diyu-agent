@@ -1,0 +1,51 @@
+p7c_scoped_microbatch_route_plan:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # Codex Pre-Review required note 3: P7C unlock is brief/go-no-go next, NOT direct generation.
+  # Codex Pre-Review required note 4: scale default 120; 320 requires separate founder authorization.
+  P7C:
+    recommended_task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001
+    unlock_kind: scoped_content_production_microbatch
+    next_unlocked: P7C_execution_brief_and_go_nogo_only
+    generation_authorized_by_this_task: false
+    real_generation_requires_separate_founder_authorization: true
+    recommended_count:
+      allowed_values:
+      - 120
+      - 320
+      default_recommendation: 120
+      max_without_additional_founder_decision: 120
+      "320_requires_separate_founder_authorization": true
+    purpose:
+    - 验证 generation_mode 生效
+    - 验证 Ontology Axis × CSO Axis 组合能否稳定产出内容生产价值
+    - 验证不再产出 semantic checklist / courseware style
+    not:
+    - not_3600
+    - not_CandidatePack
+    - not_KE
+    - not_RAG
+    - not_DIFY
+    - not_direct_generation_authorized_by_this_task
+    directly_unlocks_3600: false
+
+  P7D:
+    recommended_task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: BLOCKED_BY_P7C
+    reason: direct_3600_after_P7A_is_not_allowed
+
+  P8:
+    status: BLOCKED_BY_P7D
+
+  route_summary:
+    active_route: [P7A, P7B, P7C, P7D, P8]
+    P7A: agent_authored_quality_probe_pass
+    P7B: this_task_closeout_plus_generation_mode_cso_alignment
+    P7C: scoped_content_production_microbatch_brief_and_go_nogo_only
+    P7D: three600_structured_draft_microbatch_generation_blocked_by_P7C
+    P8: three600_quality_dedupe_routing_blocked_by_P7D

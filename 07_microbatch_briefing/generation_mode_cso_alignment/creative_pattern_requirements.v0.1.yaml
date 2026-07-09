@@ -1,0 +1,103 @@
+creative_pattern_requirements:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  clarifications:
+    creative_pattern_is_generation_mode_input: true
+    creative_pattern_is_ontology_truth: false
+    creative_pattern_usable_as_cso_overlay_or_generation_brief_input: true
+    creative_pattern_enters_KE: false
+    creative_pattern_equals_accepted_content_gold: false
+    creative_pattern_may_reuse_semantic_pilot_governance_language: false
+
+  required_pattern_family_min_count: 6
+
+  creative_patterns:
+
+    enterprise_narrative_pattern:
+      pattern_id: enterprise_narrative_pattern
+      applies_to_p0_group: [P0_01]
+      supports_generation_modes: [creative_prototype, fact_slot_script, evidence_bound_candidate]
+      creative_value: 把企业价值观/经营选择讲成有张力的叙事，而非口号或课件
+      required_cso_signals: [narrative_rhythm, emotional_temperature, creative_tension]
+      forbidden_template_risks: [semantic_checklist, courseware_bullet_list, slogan_stacking]
+      positive_generation_signals: [具体经营选择做叙事锚, 有转折与代价, 平台原生口吻]
+      negative_generation_signals: [抽象价值词堆叠, 无场景无冲突, 治理话术入正文]
+      relation_to_ontology_axis: 叙事挂在 owner=GeneralKnowledgeBase 的 claim 上，不新增 object
+      relation_to_creative_gate: 供 NarrativeBeat / HumanVoice 维度评估
+      role_in_future_scoped_microbatch: P0_01 主力创意模式来源
+
+    role_voice_pattern:
+      pattern_id: role_voice_pattern
+      applies_to_p0_group: [P0_02]
+      supports_generation_modes: [creative_prototype, fact_slot_script]
+      creative_value: 用角色人设的真实口吻说话（店长/主理人/买手），而非中立旁白
+      required_cso_signals: [role_voice, human_scene, emotional_temperature]
+      forbidden_template_risks: [neutral_narrator, persona_flattening, courseware_tone]
+      positive_generation_signals: [第一人称职业口吻, 岗位真实细节, 平台原生表达]
+      negative_generation_signals: [编造真实人物经历, 无差别口吻, 抽象人设标签]
+      relation_to_ontology_axis: role_permission 边界内发声，不伪造真实个人事实
+      relation_to_creative_gate: 供 HumanVoice / role_voice 维度评估
+      role_in_future_scoped_microbatch: P0_02 角色内容主力
+
+    visual_scene_pattern:
+      pattern_id: visual_scene_pattern
+      applies_to_p0_group: [P0_04]
+      supports_generation_modes: [creative_prototype, fact_slot_script, display_solution]
+      creative_value: 把陈列/门店现场写出画面感与空间调度，能被看见
+      required_cso_signals: [visual_scene, aesthetic_framing, real_scene_feeling]
+      forbidden_template_risks: [abstract_style_word_stacking, no_spatial_detail]
+      positive_generation_signals: [具体动作与空间关系, 可拍摄的画面, 材质光线细节]
+      negative_generation_signals: [假装某具体门店场景存在, 无输入编造现场]
+      relation_to_ontology_axis: 场景事实以 slot 表达，最终执行需 scene facts
+      relation_to_creative_gate: 供 VisualScene / AestheticFrame 维度评估
+      role_in_future_scoped_microbatch: P0_04 陈列内容化主力
+
+    display_to_content_pattern:
+      pattern_id: display_to_content_pattern
+      applies_to_p0_group: [P0_04, P0_03]
+      supports_generation_modes: [display_solution, fact_slot_script]
+      creative_value: 把陈列/搭配动作转成可传播内容（方法论 + 创意组合）
+      required_cso_signals: [visual_scene, platform_native_expression, aesthetic_framing]
+      forbidden_template_risks: [dry_sop_list, hard_sell_pitch]
+      positive_generation_signals: [通用搭配方法先行, 内容化钩子, 平台原生]
+      negative_generation_signals: [无场景硬套模板, 假装门店落地已发生]
+      relation_to_ontology_axis: StylingLogic 方法挂 claim，落地场景走 slot
+      relation_to_creative_gate: 供 StylingLogic / VisualScene 维度评估
+      role_in_future_scoped_microbatch: P0_04→内容 转化主力
+
+    product_role_story_pattern:
+      pattern_id: product_role_story_pattern
+      applies_to_p0_group: [P0_05, P0_03]
+      supports_generation_modes: [creative_prototype, fact_slot_script, evidence_bound_candidate]
+      creative_value: 让商品在场景里承担角色，讲非硬广的产品故事
+      required_cso_signals: [narrative_rhythm, human_scene, emotional_temperature]
+      forbidden_template_risks: [hard_sell_script, spec_dump]
+      positive_generation_signals: [商品在真实使用场景中的角色, 非硬广钩子, 细节作证]
+      negative_generation_signals: [编造产品事实, 无源具体卖点, 硬广话术]
+      relation_to_ontology_axis: 产品事实需 evidence/ product_anchor slot，禁编造
+      relation_to_creative_gate: 供 NarrativeBeat / HumanVoice 维度评估
+      role_in_future_scoped_microbatch: P0_05 产品角色叙事主力
+
+    platform_expression_pattern:
+      pattern_id: platform_expression_pattern
+      applies_to_p0_group: [P0_01, P0_02, P0_04, P0_05]
+      supports_generation_modes: [creative_prototype, fact_slot_script, evidence_bound_candidate, display_solution]
+      creative_value: 用平台原生的语感/结构/节奏表达，而非课件或说明书
+      required_cso_signals: [platform_native_expression, narrative_rhythm, creative_tension]
+      forbidden_template_risks: [courseware_tone, semantic_checklist, governance_vocabulary_leak]
+      positive_generation_signals: [平台原生开头钩子, 口语节奏, 真实人味]
+      negative_generation_signals: [流水线元词汇入正文, 抽象风格词堆叠, 中立百科腔]
+      relation_to_ontology_axis: 表达层不改事实/owner，仅覆盖 CSO 轴
+      relation_to_creative_gate: 供 HumanVoice / platform_native 维度评估
+      role_in_future_scoped_microbatch: 跨 P0 组通用表达覆盖层
+
+  forbidden:
+  - use_creative_pattern_as_ontology_truth
+  - push_creative_pattern_into_KE
+  - treat_creative_pattern_as_accepted_content_gold
+  - reuse_semantic_pilot_governance_language_in_pattern

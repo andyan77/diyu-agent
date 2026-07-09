@@ -1,0 +1,58 @@
+proof_microbatch_closeout:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  subject_run: 07_microbatch_runs/proof_microbatch_001
+  subject_run_step: P7A
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  closeout_summary:
+    classified_as: agent_authored_quality_probe_pass
+    proof_total: 40
+    cluster_coverage: mkc_007..mkc_046
+    per_cluster_exactly_one: true
+    machine_gate_passed: true
+    automatic_generator_capability_proven: false
+    counts_toward_3600: false
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+
+  what_this_closeout_does:
+  - Records the honest identity of proof_microbatch_001 (agent-authored quality probe, not a generator-capability proof).
+  - Declares proof_microbatch_001 does NOT count toward 3600 and does NOT unlock direct 3600.
+  - Compiles the generation_mode / fact_binding / Ontology-x-CSO composition layer that P7A left uncompiled.
+  - Routes the next real action to P7C (scoped content-production microbatch brief + go/no-go), NOT direct 3600.
+
+  what_this_closeout_does_not_do:
+  - Does not generate any new draft.
+  - Does not modify the P7A proof draft bodies or original artifacts (see identity_decision.P7A_original_artifacts_modified=false).
+  - Does not generate 3600.
+  - Does not create CandidatePack / run Four-Gate / write KE / Serving / RAG / DIFY.
+  - Does not mark proof drafts accepted / CandidatePack-ready / production-servable.
+  - Does not add ontology Object.
+  - Does not flip any readiness flag.
+
+  linked_deliverables:
+    identity_decision: 07_microbatch_runs/proof_microbatch_001/closeout/proof_microbatch_identity_decision.v0.1.yaml
+    not_3600_unlock_decision: 07_microbatch_runs/proof_microbatch_001/closeout/proof_microbatch_not_3600_unlock_decision.v0.1.yaml
+    generation_mode_contract: 07_microbatch_briefing/generation_mode_cso_alignment/generation_mode_contract.v0.1.yaml
+    fact_binding_policy: 07_microbatch_briefing/generation_mode_cso_alignment/fact_binding_policy.v0.1.yaml
+    ontology_cso_composition_contract: 07_microbatch_briefing/generation_mode_cso_alignment/ontology_cso_composition_contract.v0.1.yaml
+    creative_pattern_requirements: 07_microbatch_briefing/generation_mode_cso_alignment/creative_pattern_requirements.v0.1.yaml
+    p0_generation_mode_matrix: 07_microbatch_briefing/generation_mode_cso_alignment/p0_generation_mode_matrix.v0.1.yaml
+    p7c_route_plan: 07_microbatch_briefing/generation_mode_cso_alignment/p7c_scoped_microbatch_route_plan.v0.1.yaml
+    p7d_3600_deferral: 07_microbatch_briefing/generation_mode_cso_alignment/p7d_3600_deferral_decision.v0.1.yaml
+
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true

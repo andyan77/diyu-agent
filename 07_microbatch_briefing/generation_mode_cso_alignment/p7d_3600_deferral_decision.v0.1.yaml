@@ -1,0 +1,28 @@
+p7d_3600_deferral_decision:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  decision:
+    three600_generation_step: P7D
+    three600_status: BLOCKED_BY_P7C
+    direct_3600_after_P7A_allowed: false
+    direct_3600_after_P7B_allowed: false
+    three600_requires: P7C_scoped_microbatch_pass_then_separate_founder_authorization_and_codex_three_gate
+    one_shot_3600_allowed: false
+
+  why_deferred:
+  - P7A is a quality probe, not an automatic generator capability proof.
+  - P7C must first prove generation_mode + Ontology×CSO composition produces stable content-production value at scoped scale (120).
+  - Direct 3600 remains forbidden at the contract layer (immutable) and by shared_rules.global_forbidden.
+
+  preserved_locks:
+    generation_unlocked: false
+    generation_allowed: false
+    generation_3600_unlocked: false
+    generation_3600_completed: false
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false

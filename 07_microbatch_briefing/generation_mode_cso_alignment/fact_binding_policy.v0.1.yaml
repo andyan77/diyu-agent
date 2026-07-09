@@ -1,0 +1,56 @@
+fact_binding_policy:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+
+  # Core rule: "no fact" does NOT mean "cannot generate".
+  core_principles:
+    no_fact_does_not_block_creative_generation: true
+    no_fact_only_blocks_specific_factual_claim: true
+    no_fact_only_blocks_evidence_bound_candidate: true
+    creative_prototype_generatable_without_facts: true
+    fact_slot_script_generatable_without_facts_via_slots: true
+    evidence_bound_candidate_requires_facts_or_evidence: true
+    display_solution_general_method_first_then_scene_fact_bound_for_final_execution: true
+
+  per_mode_fact_requirement:
+    creative_prototype: no_fact_required
+    fact_slot_script: missing_facts_expressed_as_slots_never_invented
+    evidence_bound_candidate: fact_or_source_evidence_required
+    display_solution: general_method_without_facts_final_execution_requires_scene_facts
+
+  general_kb_rules:
+    general_kb_must_not_fabricate_brand_fact: true
+    general_kb_may_declare_which_brand_fact_slots_are_needed: true
+    general_kb_writes_brand_facts: false
+
+  # Slot families the orchestration layer may declare as needed brand-fact interfaces.
+  slot_families:
+  - brand_voice
+  - brand_claim
+  - event_anchor
+  - role_anchor
+  - product_anchor
+  - media_anchor
+
+  # BrandKB is a FUTURE brand-fact interface, not current GKB fact and not created here.
+  BrandKB_slot_contract:
+    status: interface_boundary_only
+    creates_BrandKB_instance: false
+    writes_brand_facts: false
+    writes_KE: false
+    blocks_creative_prototype: false
+    blocks_fact_slot_script: false
+    note: >
+      BrandKB slots name what brand facts a future evidence-bound draft would need. Declaring a
+      slot never creates a BrandKB instance, never writes a brand fact, never writes KE, and never
+      blocks creative_prototype or fact_slot_script generation. It is an interface boundary only.
+
+  forbidden:
+  - fabricate_brand_fact_in_general_kb
+  - fill_fact_slot_with_invention
+  - create_BrandKB_instance_from_a_slot_declaration
+  - treat_slot_declaration_as_a_real_brand_fact

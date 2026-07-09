@@ -1,0 +1,122 @@
+{
+  "task_id": "GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001",
+  "step_id": "P7B",
+  "founder_authorization": "authorized; Codex Prompt Pre-Review CONDITIONAL_PASS (safe_to_execute: yes_after_required_execution_notes_applied); all 6 required notes applied",
+  "head_before": "eadf59a352bd34bb4f5c8d3e36fa5102de75c356",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "worktree_after": "clean",
+  "verdict": "PASS",
+
+  "repo_after": {
+    "branch": "master",
+    "head_before": "eadf59a352bd34bb4f5c8d3e36fa5102de75c356",
+    "worktree_after": "clean"
+  },
+
+  "codex_required_notes_applied": {
+    "note1_route_naming_P7B_not_P7A2_plus_route_migration": "applied — this step is P7B; P7C scoped microbatch; P7D 3600 gen; top-level route_migration block added",
+    "note2_old_p7a_checker_route_sync_option_a": "applied — option (a): kept P7A(status DONE)/P7(status NEXT, governed_incremental, gen_allowed=false) fields backward-compatible; ADDED P7B/P7C/P7D; did NOT edit ci/checkers/check_generator_capability_proof_microbatch.py (not in allowed writes); P7A quality-probe reclassification carried by P7A.classification + closeout, not by mutating status",
+    "note3_p7c_brief_only": "applied — P7C.next_unlocked=P7C_execution_brief_and_go_nogo_only; generation_authorized_by_this_task=false",
+    "note4_p7c_scale": "applied — default_recommendation=120; max_without_additional_founder_decision=120; 320_requires_separate_founder_authorization=true",
+    "note5_not_formal_schema": "applied — every closeout/briefing file: contract_status=briefing_orchestration_contract, formal_schema_contract=false, ontology_truth_source=false",
+    "note6_p7a_artifacts_immutable": "applied — identity_decision.P7A_original_artifacts_modified=false; only closeout/** written; git audit confirms zero P7A original artifacts changed"
+  },
+
+  "proof_microbatch_closeout": {
+    "proof_total": 40,
+    "classified_as": "agent_authored_quality_probe_pass",
+    "automatic_generator_capability_proven": false,
+    "automatic_stable_generation_demonstrated": false,
+    "counts_toward_3600": false,
+    "accepted_domain_knowledge": false,
+    "candidatepack_ready": false,
+    "direct_3600_unlocked": false,
+    "P7A_original_artifacts_modified": false
+  },
+
+  "generation_mode_contract": {
+    "modes": ["creative_prototype", "fact_slot_script", "evidence_bound_candidate", "display_solution"],
+    "creative_prototype_no_fact_required": true,
+    "fact_slot_script_slots_missing_facts": true,
+    "evidence_bound_candidate_fact_required": true,
+    "display_solution_scene_fact_for_final_execution": true
+  },
+
+  "fact_binding_policy": {
+    "no_fact_does_not_block_creative_generation": true,
+    "brandkb_slots_interface_only": true,
+    "brandkb_instance_created": false
+  },
+
+  "ontology_cso_alignment": {
+    "conceptual_model": "orthogonal_cross_cutting",
+    "runtime_model": "compositional_overlay",
+    "cso_written_to_ontology_truth": false
+  },
+
+  "creative_patterns": {
+    "pattern_family_count": 6,
+    "families": ["enterprise_narrative_pattern", "role_voice_pattern", "visual_scene_pattern",
+                 "display_to_content_pattern", "product_role_story_pattern", "platform_expression_pattern"]
+  },
+
+  "route_plan": {
+    "p7c_status": "NEXT (execution brief + go/no-go only; generation NOT authorized)",
+    "p7c_recommended_count": "120 default; 320 requires separate founder authorization",
+    "p7d_status": "BLOCKED_BY_P7C",
+    "direct_3600_status": "forbidden (contract-immutable + shared_rules.global_forbidden; not unlocked)"
+  },
+
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p2_checker_live": "PASS",
+    "p3_checker_live": "PASS",
+    "p4_checker_live": "PASS",
+    "p5_checker_live": "PASS",
+    "p6_checker_live": "PASS (pre-microbatch snapshot — 07_microbatch_runs phase-invariant legitimately superseded by P7A)",
+    "p6r_checker_live": "PASS (pre-microbatch snapshot)",
+    "p7a_proof_checker_live": "PASS (proof-present snapshot: keeps 07_microbatch_runs/proof_microbatch_001, drops this task's in-flight files)",
+    "contract_lock_checker_live": "PASS",
+    "prior_runner": "two snapshots (see checker docstring); 9/9 priors exit 0; no whitelisting",
+    "p7b_checker_live": "PASS (error_count=0)",
+    "p7b_checker_selftest": "PASS (positive + 35 negatives all fail-closed)",
+    "p7b_checker_python_O_fail_closed": "exit_2 FAIL_CLOSED",
+    "yaml_json_parse": "all new YAML/JSON parse",
+    "git_changed_outside_allowed": [],
+    "p7a_original_modified": [],
+    "forbidden_scope_clean": true,
+    "exact_stage_only": "no git add . / -A / commit -a; exact paths only"
+  },
+
+  "execution_progress_ledger": {
+    "yaml_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml",
+    "md_path": "10_execution_progress/grc_3600_execution_plan_status.v0.1.md",
+    "steps": ["P1","P2","P3","P4","P5","P6","P6R","P7A","P7B","P7","P7C","P7D","P8"],
+    "p1_to_p6r_status": "DONE",
+    "p7a_status": "DONE",
+    "p7a_classification": "agent_authored_quality_probe_pass",
+    "p7b_status": "DONE",
+    "p7_status": "NEXT (legacy anchor for committed P7A checker; canonical node = P7D)",
+    "p7c_status": "NEXT (brief/go-no-go only)",
+    "p7d_status": "BLOCKED_BY_P7C",
+    "p8_status": "BLOCKED_BY_P7D",
+    "generation_unlocked": false,
+    "route_migration": "top-level block; no_old_checker_edited=true; no_readiness_flipped=true"
+  },
+
+  "next_real_action_unlocked": "GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001 (P7C) execution brief + go/no-go ONLY — separate founder authorization + Codex three-gate; default 120; does NOT authorize generation, 3600, CandidatePack, KE, RAG, DIFY",
+
+  "must_not_claim": [
+    "automatic_generator_capability_proven",
+    "generation_3600_completed",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ],
+
+  "readiness_false": true,
+  "new_draft_generated": false,
+  "blocking_issues": "none"
+}

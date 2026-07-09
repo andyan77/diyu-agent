@@ -1,0 +1,63 @@
+ontology_cso_composition_contract:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+  purpose: >
+    Fix the relationship between the Ontology Axis (object/fact/claim/owner/evidence/boundary)
+    and the CSO Axis (narrative rhythm, emotion, platform-native expression, aesthetics). They
+    are conceptually orthogonal and cross-cutting; at runtime the generation orchestration layer
+    composes them into one Creative Brief. Neither replaces the other; CSO never crosses the fact
+    boundary and is never written as ontology truth.
+
+  relationship:
+    conceptual_model: orthogonal_cross_cutting
+    runtime_model: compositional_overlay
+    not:
+    - ontology_first_then_copywriting_later
+    - cso_freewriting_without_ontology_guardrails
+
+  ontology_axis_controls:
+  - object
+  - fact
+  - claim
+  - owner
+  - evidence
+  - role_permission
+  - source_boundary
+  - readiness
+
+  cso_axis_controls:
+  - narrative_rhythm
+  - emotional_temperature
+  - platform_native_expression
+  - role_voice
+  - aesthetic_framing
+  - creative_tension
+  - human_scene
+  - real_scene_feeling
+
+  runtime_output:
+  - generation_brief
+  - mode_specific_constraints
+  - governance_gate
+  - creative_gate
+
+  # CSO axis fields are overlay/generation inputs only; they never become ontology truth.
+  cso_written_to_ontology_truth: false
+  cso_fields_forbidden_in_abox: true
+  cso_fields_forbidden_in_tbox: true
+
+  forbidden:
+  - write_cso_field_into_ABox
+  - write_cso_field_into_TBox
+  - let_cso_cross_the_fact_boundary
+  - let_ontology_directly_replace_creative_mode
+  - treat_creative_gate_as_production_readiness
+
+  boundary_notes:
+    creative_gate_is_production_readiness: false
+    cso_can_override_fact_boundary: false
+    ontology_can_author_copywriting_alone: false

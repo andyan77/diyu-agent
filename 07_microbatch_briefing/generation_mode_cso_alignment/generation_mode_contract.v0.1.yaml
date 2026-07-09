@@ -1,0 +1,182 @@
+generation_mode_contract:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  # Codex Pre-Review required note 5: this is a briefing/orchestration contract, NOT a
+  # 01_generation_contracts formal schema; it is not an ontology truth source.
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+  purpose: >
+    Define the four generation modes that the generation orchestration layer may compile a
+    Creative Brief into. A mode fixes how much brand FACT a draft needs, how much creative
+    freedom it has, what it may never fabricate, and where its output may route next. No mode
+    authorizes real generation, 3600, CandidatePack, KE, RAG, DIFY, or production by itself.
+
+  required_mode_ids:
+  - creative_prototype
+  - fact_slot_script
+  - evidence_bound_candidate
+  - display_solution
+
+  generation_modes:
+
+    creative_prototype:
+      mode_id: creative_prototype
+      meaning: 高品质创意原型 / 企业叙事 / 价值观表达 / 内容玩法（不依赖任何品牌真实事实即可产出）
+      allowed_without_brand_facts: true
+      fact_evidence_required: false
+      required_fact_binding: none
+      allowed_creative_freedom: high
+      forbidden_fabrication:
+      - fabricate_specific_brand_event
+      - fabricate_real_person_experience
+      - fabricate_product_fact
+      - claim_published_fact_status
+      allowed_claim_behavior: general_method_and_value_expression_only_no_specific_factual_claim
+      required_slot_behavior: no_fact_slots_required
+      required_cso_overlay:
+      - narrative_rhythm
+      - emotional_temperature
+      - platform_native_expression
+      - creative_tension
+      governance_gate_requirements:
+      - owner_routing_correct
+      - readiness_all_false
+      - no_real_instance_fact_leak
+      - no_generation_allowed_true
+      creative_gate_requirements:
+      - platform_native_not_courseware
+      - human_voice_present
+      - not_semantic_checklist
+      output_status: creative_prototype_draft
+      publishability_status: not_publishable_without_downstream_fact_binding_or_review
+      allowed_next_routes:
+      - creative_gate_review
+      - fact_slot_script
+      - display_solution
+      forbidden_next_routes:
+      - accepted_domain_knowledge
+      - candidatepack_ready
+      - production_servable
+      - direct_3600
+
+    fact_slot_script:
+      mode_id: fact_slot_script
+      meaning: 高质感脚本，但关键事实留槽（在没有完整品牌事实时也能产出，缺的事实必须以槽位表达而非编造）
+      allowed_without_brand_facts: true
+      allowed_without_full_brand_facts: true
+      fact_evidence_required: false
+      required_fact_binding: slots_for_missing_facts
+      missing_facts_must_be_slots: true
+      allowed_creative_freedom: high
+      forbidden_fabrication:
+      - fill_missing_fact_with_invention
+      - fabricate_product_fact
+      - fabricate_real_person_experience
+      - claim_published_fact_status
+      allowed_claim_behavior: claims_only_via_declared_fact_slots
+      required_slot_behavior: every_missing_key_fact_rendered_as_explicit_named_slot
+      required_cso_overlay:
+      - narrative_rhythm
+      - role_voice
+      - platform_native_expression
+      governance_gate_requirements:
+      - owner_routing_correct
+      - readiness_all_false
+      - no_real_instance_fact_leak
+      - slots_declared_for_missing_facts
+      creative_gate_requirements:
+      - human_voice_present
+      - platform_native_not_courseware
+      output_status: fact_slot_script_draft
+      publishability_status: not_publishable_until_slots_filled_by_brand_facts
+      allowed_next_routes:
+      - evidence_bound_candidate
+      - creative_gate_review
+      forbidden_next_routes:
+      - accepted_domain_knowledge
+      - candidatepack_ready
+      - production_servable
+      - direct_3600
+
+    evidence_bound_candidate:
+      mode_id: evidence_bound_candidate
+      meaning: 事实绑定发布候选稿（只有当提供了品牌事实或存在 BrandKB/source 锚点时才允许）
+      allowed_without_brand_facts: false
+      fact_evidence_required: true
+      required_fact_binding: required
+      only_allowed_when:
+      - provided_brand_facts_exist
+      - or_BrandKB_or_source_anchor_exists
+      allowed_creative_freedom: medium_bounded_by_evidence
+      forbidden_fabrication:
+      - make_unsupported_factual_claim
+      - fabricate_product_fact
+      - fabricate_real_person_experience
+      allowed_claim_behavior: only_claims_backed_by_provided_fact_or_source_anchor
+      required_slot_behavior: all_fact_slots_must_be_filled_by_evidence_not_invention
+      required_cso_overlay:
+      - platform_native_expression
+      - emotional_temperature
+      governance_gate_requirements:
+      - owner_routing_correct
+      - readiness_all_false
+      - every_factual_claim_has_evidence_anchor
+      - no_real_instance_fact_leak_without_authorized_source
+      creative_gate_requirements:
+      - human_voice_present
+      - platform_native_not_courseware
+      output_status: evidence_bound_candidate_draft
+      publishability_status: publishable_candidate_only_after_governance_and_review_not_by_this_task
+      allowed_next_routes:
+      - governance_gate_review
+      forbidden_next_routes:
+      - accepted_without_evidence
+      - candidatepack_ready_by_this_task
+      - production_servable_by_this_task
+      - direct_3600
+
+    display_solution:
+      mode_id: display_solution
+      meaning: 陈列搭配落地方案，事实 + 方法论 + 创意组合（通用方法可先产，最终落地必须绑定门店/商品/素材事实）
+      allowed_without_brand_facts: true
+      general_method_allowed_first: true
+      scene_fact_required_for_final_execution: true
+      fact_evidence_required_for_final_execution: true
+      allowed_creative_freedom: high_for_method_bounded_for_final_execution
+      forbidden_fabrication:
+      - pretend_specific_store_scene_exists_without_input
+      - fabricate_product_fact
+      - fabricate_real_person_experience
+      allowed_claim_behavior: general_styling_method_freely_specific_store_execution_only_with_scene_facts
+      required_slot_behavior: store_product_media_facts_as_slots_until_scene_input_provided
+      required_cso_overlay:
+      - visual_scene
+      - aesthetic_framing
+      - platform_native_expression
+      governance_gate_requirements:
+      - owner_routing_correct
+      - readiness_all_false
+      - final_execution_scene_facts_present_or_slotted
+      creative_gate_requirements:
+      - visual_scene_present
+      - human_voice_present
+      output_status: display_solution_draft
+      publishability_status: method_prototype_not_final_execution_until_scene_facts_bound
+      allowed_next_routes:
+      - fact_slot_script
+      - evidence_bound_candidate
+      - creative_gate_review
+      forbidden_next_routes:
+      - final_store_execution_without_scene_facts
+      - candidatepack_ready_by_this_task
+      - production_servable_by_this_task
+      - direct_3600
+
+  cross_mode_invariants:
+    no_mode_authorizes_real_generation: true
+    no_mode_authorizes_3600: true
+    no_mode_authorizes_candidatepack_or_KE_or_RAG_or_DIFY: true
+    no_mode_flips_readiness: true
+    creative_gate_is_not_production_readiness: true

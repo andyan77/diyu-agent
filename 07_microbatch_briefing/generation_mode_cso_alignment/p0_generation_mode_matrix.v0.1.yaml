@@ -1,0 +1,90 @@
+p0_generation_mode_matrix:
+  schema_version: v0.1
+  task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+  step_id: P7B
+  contract_status: briefing_orchestration_contract
+  formal_schema_contract: false
+  ontology_truth_source: false
+  purpose: >
+    Map each P0 group to the generation modes it defaults to. P0_00 is the control plane:
+    it decides route and generation mode and never itself enters GKB body generation.
+
+  p0_groups:
+
+    P0_00:
+      role: route_and_generation_mode_decision
+      enters_gkb_body_generation: false
+      is_control_plane: true
+      decides:
+      - creative_prototype
+      - fact_slot_script
+      - evidence_bound_candidate
+      - display_solution
+      note: control plane only; mkc_001..006 held; never produces GKB body content
+
+    P0_01:
+      role: enterprise_narrative_and_value
+      enters_gkb_body_generation: true
+      supports:
+      - enterprise_narrative
+      - founder_ip
+      - brand_value_expression
+      - operating_choice_story
+      default_modes:
+      - creative_prototype
+      - fact_slot_script
+      - evidence_bound_candidate
+
+    P0_02:
+      role: role_persona_and_organization
+      enters_gkb_body_generation: true
+      supports:
+      - role_persona
+      - organization_ecology
+      - role_work_vlog
+      - persona_matrix
+      default_modes:
+      - creative_prototype
+      - fact_slot_script
+
+    P0_03:
+      role: product_development_and_detail
+      enters_gkb_body_generation: true
+      supports:
+      - product_development
+      - sample_revision
+      - material_fit_craft_detail
+      - detail_as_evidence
+      default_modes:
+      - fact_slot_script
+      - evidence_bound_candidate
+
+    P0_04:
+      role: store_daily_and_display
+      enters_gkb_body_generation: true
+      supports:
+      - store_daily
+      - display_action_contentization
+      - guide_store_manager_vlog
+      - onsite_judgment
+      default_modes:
+      - creative_prototype
+      - fact_slot_script
+      - display_solution
+
+    P0_05:
+      role: product_role_story
+      enters_gkb_body_generation: true
+      supports:
+      - product_role_story
+      - product_in_scene
+      - non_hard_sell_script
+      default_modes:
+      - creative_prototype
+      - fact_slot_script
+      - evidence_bound_candidate
+
+  invariants:
+    p0_00_is_control_plane_not_body_generation: true
+    p0_00_held: true
+    p0_00_enters_gkb_body_generation: false

@@ -1,7 +1,41 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-GENERATOR-CAPABILITY-PROOF-MICROBATCH-001
+  updated_by_task: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
   roadmap_authority: founder_approved_2026-07-08
+  route_migration:
+    applied_by_task: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+    applied_from: codex_prompt_pre_review_required_notes_1_and_2
+    option: a_backward_compatible_route_extension
+    reason: >
+      P7A proof-microbatch closeout reclassifies the route into finer generation-mode-aware
+      steps. The committed P7A checker (ci/checkers/check_generator_capability_proof_microbatch.py)
+      hard-reads step_id P7A (status DONE) and step_id P7 (status NEXT / unlock_kind
+      governed_incremental_microbatch / generation_allowed false); that checker is NOT in this
+      task's allowed writes. Per Codex required note 2 option (a), the P7A/P7 step FIELDS are kept
+      backward-compatible and the P7B/P7C/P7D route is ADDED. No old checker was edited; no
+      readiness flag was flipped.
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    old_to_new_naming:
+      P7A:
+        legacy_status_field: DONE
+        classification: agent_authored_quality_probe_pass
+        note: status field kept DONE for committed-checker back-compat; the quality-probe reclassification is carried by P7A.classification + the closeout files, not by mutating the status field
+      P7_legacy_3600_gen_anchor:
+        canonical_new_step: P7D
+        status_field_kept: NEXT
+        role: legacy_route_anchor_for_committed_p7a_checker
+      P7B:
+        task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+        meaning: proof_microbatch_closeout_plus_generation_mode_cso_alignment
+      P7C:
+        recommended_task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001
+        meaning: scoped_content_production_microbatch_brief_and_go_nogo_only
+      P7D:
+        recommended_task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+        meaning: three600_structured_draft_microbatch_generation_blocked_by_P7C
+    active_route: [P1, P2, P3, P4, P5, P6, P6R, P7A, P7B, P7C, P7D, P8]
+    legacy_anchor_steps_not_active_nodes: [P7]
   route_authority_for_grc_sequence:
     primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
     project_infra_current_workspace_status: legacy_status_read_only_for_this_sequence
@@ -285,6 +319,9 @@ grc_3600_execution_plan_status:
     worktree_after: clean
     objective: 'AI-author 40 fresh, non-copied, proposition-grounded, dual-gate-passing structured drafts (one per formal cluster mkc_007..046) as an HONEST generator-capability quality PROBE. Founder Option 2 re-scope: proves an execution AI can author gate-passing drafts; does NOT prove automatic/stable generation (no standalone generator harness exists in repo).'
     deliverable_kind: agent_authored_quality_probe
+    classification: agent_authored_quality_probe_pass
+    p7b_reclassified: true
+    p7b_closeout: 07_microbatch_runs/proof_microbatch_001/closeout/proof_microbatch_identity_decision.v0.1.yaml
     proof_microbatch_generated: true
     proof_drafts_count: 40
     all_dual_gate_pass: true
@@ -311,7 +348,7 @@ grc_3600_execution_plan_status:
     not_machine_verified:
     - subjective_aesthetic_creative_quality_is_ai_self_assessed
     blocked_by: []
-    next_unlocked: P7
+    next_unlocked: P7B
     readiness_claims_allowed:
     - agent_authored_quality_probe_generated
     - proof_microbatch_machine_gated
@@ -320,6 +357,53 @@ grc_3600_execution_plan_status:
     - automatic_stable_generation
     - generation_3600_completed
     - generation_3600_unlocked
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7B
+    task_id: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
+    status: DONE
+    head_before: eadf59a352bd34bb4f5c8d3e36fa5102de75c356
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: 'Honestly close out P7A proof_microbatch_001 as an agent_authored_quality_probe_pass (NOT an automatic generator-capability proof; does NOT count toward 3600; does NOT unlock direct 3600) and compile the generation_mode / fact_binding / Ontology-x-CSO composition + creative-pattern layer that P7A left uncompiled. Generates zero new drafts.'
+    deliverable_kind: closeout_plus_briefing_orchestration_contract
+    contract_status: briefing_orchestration_contract
+    formal_schema_contract: false
+    ontology_truth_source: false
+    standard_validation: check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py live+selftest PASS; python -O fail-closed; P1..P6R + contract-lock + P7A proof checker PASS (2-snapshot prior runner); 4 generation modes; BrandKB slots interface-only; Ontology-x-CSO orthogonal_cross_cutting + compositional_overlay; >=6 creative patterns; P0_00 control-plane not body-gen; P7C brief-only scale 120 (320 needs separate founder auth); P7A original artifacts immutable; readiness all false; zero new draft / 3600 / CandidatePack / KE / RAG / DIFY
+    deliverables:
+    - 07_microbatch_runs/proof_microbatch_001/closeout/**
+    - 07_microbatch_briefing/generation_mode_cso_alignment/**
+    - ci/checkers/check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py
+    - ci/fixtures/proof_microbatch_closeout_and_generation_mode_cso_alignment/**
+    classification_of_subject_run: agent_authored_quality_probe_pass
+    automatic_generator_capability_proven: false
+    counts_toward_3600: false
+    direct_3600_unlocked: false
+    generation_mode_contract_landed: true
+    fact_binding_policy_landed: true
+    ontology_cso_composition_contract_landed: true
+    creative_pattern_requirements_landed: true
+    p0_generation_mode_matrix_landed: true
+    new_draft_generated: false
+    P7A_original_artifacts_modified: false
+    blocked_by: []
+    next_unlocked: P7C
+    readiness_claims_allowed:
+    - proof_microbatch_closeout_landed
+    - P7A_classified_as_agent_authored_quality_probe
+    - generation_mode_contract_landed
+    - fact_binding_policy_landed
+    - ontology_cso_composition_contract_landed
+    - ready_for_scoped_content_microbatch_brief
+    readiness_claims_forbidden:
+    - automatic_generator_capability_proven
+    - ready_for_direct_3600_generation
+    - generation_3600_completed
     - generation_allowed
     - candidatepack_ready
     - KE_ready
@@ -357,22 +441,84 @@ grc_3600_execution_plan_status:
     - generation_allowed
     - one_shot_3600_generation
     - candidatepack_ready
-    phase_alias: P7B
+    phase_alias: P7D
+    role: legacy_route_anchor_for_committed_p7a_checker
+    canonical_route_node: P7D
+    route_migration_note: >
+      This step is the legacy 3600-generation anchor. Its status field is kept NEXT and its
+      unlock_kind/generation_allowed fields are kept intact ONLY to satisfy the committed P7A
+      checker, which is not in this task's allowed writes. The ACTIVE canonical 3600-generation
+      node is now step P7D (status BLOCKED_BY_P7C); the active next step is P7C. See top-level
+      route_migration. This anchor authorizes nothing.
+    not_active_route_node: true
     p7a_prerequisite_status: DONE
     p7a_added_readiness: false
-    p7a_note: P7A generator-capability quality probe is DONE but added NO readiness; real 3600 generation still requires a separate founder authorization + Codex three-gate. P7 == Brief's P7B.
-  - step_id: P8
-    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
-    status: BLOCKED_BY_P7B
+    p7a_note: P7A quality probe is DONE but added NO readiness; real 3600 generation still requires a separate founder authorization + Codex three-gate. Under the P7B route migration, 3600 generation is canonical step P7D (blocked by P7C).
+  - step_id: P7C
+    task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001
+    status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7) (blocked by P7/P7B 3600 governed generation, not yet authorized)
+    objective: 'Scoped content-production microbatch to verify generation_mode + Ontology-x-CSO composition produces stable content-production value (not semantic checklist / courseware). Brief + go/no-go ONLY; this step does NOT authorize real generation.'
+    unlock_kind: scoped_content_production_microbatch
+    next_unlocked: P7C_execution_brief_and_go_nogo_only
+    generation_authorized_by_this_task: false
+    real_generation_requires_separate_founder_authorization: true
+    recommended_count_default: 120
+    max_without_additional_founder_decision: 120
+    count_320_requires_separate_founder_authorization: true
+    directly_unlocks_3600: false
+    generation_allowed: false
+    standard_validation: to_be_defined_at_P7C_brief
+    deliverables:
+    - to_be_defined_at_P7C_brief
+    blocked_by: []
+    next_real_action: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001 execution brief + go/no-go (separate founder authorization + Codex three-gate)
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_allowed
+    - candidatepack_ready
+    - production_ready
+  - step_id: P7D
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: BLOCKED_BY_P7C
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: '3600 structured-draft microbatch generation (canonical route node; same underlying task as the legacy P7 anchor). Blocked by P7C; direct 3600 after P7A/P7B is not allowed. Real generation requires a separate founder authorization + Codex three-gate; never one-shot.'
+    same_underlying_task_as_legacy_anchor: P7
+    unlock_kind: governed_incremental_microbatch
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false
+    generation_allowed: false
+    generation_3600_executed: false
+    standard_validation: to_be_defined_at_P7D_brief
+    deliverables:
+    - to_be_defined_at_P7D_brief
+    blocked_by:
+    - P7C
+    next_unlocked: P8
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - one_shot_3600_generation
+    - candidatepack_ready
+  - step_id: P8
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: BLOCKED_BY_P7D
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7D 3600 governed generation, which is itself blocked by P7C; not yet authorized)
     standard_validation: to_be_defined_at_P8_brief
     deliverables:
     - to_be_defined_at_P8_brief
     blocked_by:
-    - P7
+    - P7D
     next_unlocked: null
     readiness_claims_allowed: []
     readiness_claims_forbidden:
@@ -393,5 +539,5 @@ grc_3600_execution_plan_status:
     generator_capability_proven: false
     ready_for_P7B_3600_generation_brief: false
     counts_toward_3600: false
-    p7b_alias: the existing P7 step is the Brief's P7B (3600 governed generation, brief-only unlock, status NEXT)
+    p7b_alias: SUPERSEDED by top-level route_migration (P7B task GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001). 3600 governed generation is now canonical step P7D (blocked by P7C); the legacy step_id P7 is kept only as a back-compat anchor for the committed P7A checker.
     generation_unlocked_top_level: false
