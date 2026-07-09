@@ -1,0 +1,62 @@
+grc_batch_unlock_decision:
+  schema_version: v0.1
+  task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+  decision: governed_grc_microbatch_generation_unlocked_route_level_only
+  # Route authority: the ledger + this reconciliation dir are authoritative;
+  # the old 02_generation_brief_pack locks and project-infra flags are legacy.
+  authoritative_route: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+  reconciliation_authority: 08_batch_unlock_reconciliation/**
+  # What is unlocked: the legacy semantic-pilot blanket block no longer blocks
+  # the GRC route. Governed incremental authored microbatch is the sanctioned
+  # path. This is a ROUTE-LEVEL unlock; it does NOT execute or authorize any
+  # generation by itself.
+  legacy_blanket_block_retired: true
+  governed_microbatch_generation_allowed_under_grc: true
+  unlock_scope_clusters: mkc_007..mkc_046
+  unlock_scope_cluster_count: 40
+  held_clusters: mkc_001..mkc_006
+  p0_00_held: true
+  # What stays forbidden (unchanged; enforced at the immutable contract layer).
+  still_forbidden:
+  - direct_3600_generation
+  - one_shot_3600_generation
+  - generate_without_grc_pilot
+  - runtime_generation_allowed
+  - readiness_true
+  - p0_00_gkb_body_generation
+  direct_3600_forbidden_preserved_in:
+  - path: 01_generation_contracts/w7_generation_baseline_lock.v0.1.yaml
+    field: direct_3600_generation_allowed
+    value: false
+    mutation_this_task: none_contract_immutable
+  - path: 02_generation_brief_pack/00_shared_generation_rules.yaml
+    field: global_forbidden
+    contains:
+    - direct_3600_generation
+    - generate_without_pilot
+    mutation_this_task: none_central_supersession
+  # This task executes and authorizes zero generation.
+  generation_executed_this_task: false
+  generation_authorized_by_this_task: false
+  three600_generated_count_this_task: 0
+  generation_unlocked_top_level: false
+  # The only next real generation action, separately gated.
+  next_real_action:
+    task: GKB-3600 batch-001 real authored microbatch
+    size_range: 20_to_40
+    cluster_scope: mkc_007..mkc_046
+    generation_status_target: gpt_generated_structured_draft
+    requires: separate_founder_authorization_plus_codex_three_gate
+    authorized_by_this_task: false
+    rationale: prove human-authored non-templated transfer at small scale before any governed scale-up; never one-shot.
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    release_ready: false
+    production_servable: false
+    readiness_all_false: true

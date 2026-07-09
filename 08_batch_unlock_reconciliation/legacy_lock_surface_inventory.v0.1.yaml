@@ -1,0 +1,55 @@
+legacy_lock_surface_inventory:
+  schema_version: v0.1
+  task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+  # Codex required note: the project-infra false-flag count MUST be discovered
+  # (grep-recomputed), never hardcoded (not 10). The checker re-greps live and
+  # asserts the recorded observed_at_build equals the live-discovered count.
+  discovery_method: grep_recompute_not_hardcoded
+  surfaces:
+    brief_pack_02:
+      classification: legacy_read_only_superseded_by_grc_route
+      mutation_this_task: none_central_supersession
+      lock_files:
+      - path: 02_generation_brief_pack/00_brief_pack_manifest.yaml
+        field: semantic_hardening.batch_generation_unlocked
+        value: false
+      - path: 02_generation_brief_pack/00_pilot_sampling_plan.yaml
+        field: current_44_closeout.batch_generation_unlocked
+        value: false
+      - path: 02_generation_brief_pack/00_batch_allocation_matrix.yaml
+        field: semantic_quality_blocking_policy.batch_generation_blocked_until_semantic_pilot_pass
+        value: true
+      - path: 02_generation_brief_pack/00_shared_generation_rules.yaml
+        field: global_forbidden
+        contains:
+        - direct_3600_generation
+        - generate_without_pilot
+      batch_briefs:
+        classification: legacy_read_only_superseded_by_grc_route
+        count: 14
+        path_glob: 02_generation_brief_pack/batch_001..014/batch_0NN_generation_brief.yaml
+        field: batch_generation_unlocked
+        value: false
+    project_infra:
+      path: project-infra/current_workspace_status.yaml
+      classification: legacy_read_only_not_active_route_authority
+      mutation_this_task: none
+      batch_generation_unlocked_false_count:
+        mode: discovered_count_not_hardcoded
+        observed_at_build: 23
+      direct_3600_generation_allowed:
+        field: direct_3600_generation_allowed
+        value: false
+      readiness_all_false_still_required: true
+    contract_immutable:
+      path: 01_generation_contracts/w7_generation_baseline_lock.v0.1.yaml
+      field: direct_3600_generation_allowed
+      value: false
+      classification: contract_immutable_preserved
+      mutation_this_task: none
+  active_route_authority:
+    primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+    reconciliation: 08_batch_unlock_reconciliation/**
+    project_infra_current_workspace_status: legacy_read_only_not_active_route_authority
+    checker_must_not_treat_project_infra_legacy_false_flags_as_active_blocker: true
+    checker_must_still_verify_readiness_false_in_project_infra: true

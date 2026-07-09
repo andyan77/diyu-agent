@@ -1,0 +1,31 @@
+grc_unlock_evidence_index:
+  schema_version: v0.1
+  task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+  role: record_grc_route_p4_p5_p6_as_the_valid_current_unlock_evidence
+  evidence:
+  - step: P4
+    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+    status: DONE
+    role: new_grc_pilot_probe
+    artifact_path: 06_canary_runs/canary_40_001/
+    checker: ci/checkers/check_canary_40_generation_and_gate.py
+  - step: P5
+    task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+    status: DONE
+    role: generation_planning_asset
+    artifact_path: 06_canary_runs/canary_40_001/proposition_pack_v1/
+    receipt: docs/reports/grc_canary_40_quality_closeout_and_proposition_pack_receipt.json
+    proposition_count: 160
+    cluster_count: 40
+    checker: ci/checkers/check_canary_40_quality_closeout_and_proposition_pack.py
+  - step: P6
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: DONE
+    go_decision: GO_TO_P7
+    role: governed_generation_briefing
+    artifact_path: 07_microbatch_briefing/
+    receipt: docs/reports/grc_3600_microbatch_briefing_go_nogo_receipt.json
+    checker: ci/checkers/check_3600_microbatch_briefing_go_nogo.py
+  old_20_regen_used_as_evidence: false
+  legacy_failed_line_used_as_evidence: false
+  evidence_supports: governed_incremental_microbatch_generation_not_one_shot_3600

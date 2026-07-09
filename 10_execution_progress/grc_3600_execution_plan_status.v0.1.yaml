@@ -1,6 +1,6 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+  updated_by_task: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
   roadmap_authority: founder_approved_2026-07-08
   route_authority_for_grc_sequence:
     primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
@@ -34,6 +34,32 @@ grc_3600_execution_plan_status:
     go_decision: GO_TO_P7
     rationale: GO_TO_P7 means ready to prepare/submit the P7 execution brief; it does NOT authorize real 3600 generation. Real 3600 generation needs a separate founder authorization + Codex three-gate.
     applied_from: codex_prompt_pre_review_required_notes_1_and_2_and_3
+  grc_legacy_lock_retire_route_note:
+    task: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    step_id: P6R
+    retires: legacy_semantic_pilot_batch_generation_lock_block_on_grc_route
+    legacy_line_status: superseded_failed_line
+    legacy_evidence_preserved: true
+    legacy_line_rewritten_as_pass: false
+    grc_unlock_evidence:
+    - P4_canary_40_PASS
+    - P5_proposition_pack_v1_PASS
+    - P6_dual_gate_briefing_GO_TO_P7
+    old_20_regen_used_as_p7_evidence: false
+    legacy_blanket_block_retired: true
+    governed_microbatch_generation_allowed_under_grc: true
+    unlock_scope_clusters: mkc_007..mkc_046
+    p0_00_held: true
+    direct_one_shot_3600_generation_allowed: false
+    generate_without_grc_pilot_allowed: false
+    runtime_generation_allowed: false
+    generation_executed_or_authorized_by_this_task: false
+    three600_generated_count_this_task: 0
+    p7_re_scoped_to: governed_incremental_microbatch
+    p7_real_generation_requires_separate_founder_authorization: true
+    project_infra_current_workspace_status: legacy_read_only_not_active_route_authority
+    reconciliation_authority: 08_batch_unlock_reconciliation/**
+    applied_from: founder_split_decision_plus_codex_conditional_pass_required_note
   generation_unlocked: false
   readiness:
     candidatepack_ready: false
@@ -199,7 +225,7 @@ grc_3600_execution_plan_status:
     generation_allowed: false
     generation_3600_executed: false
     blocked_by: []
-    next_unlocked: P7
+    next_unlocked: P6R
     readiness_claims_allowed:
     - microbatch_3600_briefing_landed
     - creative_gate_landed
@@ -215,20 +241,64 @@ grc_3600_execution_plan_status:
     - RAG_ready
     - DIFY_ready
     - production_ready
+  - step_id: P6R
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    status: DONE
+    head_before: 0433feb7fb84f4be3bbb6aefc95833cacf58cd52
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: retire the legacy semantic-pilot batch-generation lock's block on the GRC route (additive supersession + inventory; no evidence deletion; no flag flip; central supersession, no 02_generation_brief_pack edits) and establish a governed GRC microbatch unlock scoped to mkc_007..mkc_046; keep direct one-shot 3600 forbidden; hold P0-00; generate and authorize zero drafts. Phase A of the founder-split merged task.
+    standard_validation: check_grc_legacy_lock_retire_and_governed_unlock.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+P6+contract-lock still PASS; unlock scope mkc_007..mkc_046; P0-00 held; direct_3600 forbidden preserved (contract immutable + shared_rules global_forbidden); project-infra unmodified + false-flag count discovered not hardcoded; readiness all false; zero generation; no 07_microbatch_runs/CandidatePack/KE/RAG/DIFY
+    deliverables:
+    - 08_batch_unlock_reconciliation/**
+    - ci/checkers/check_grc_legacy_lock_retire_and_governed_unlock.py
+    - ci/fixtures/grc_legacy_lock_retire_and_governed_unlock/**
+    legacy_line_status: superseded_failed_line
+    old_20_regen_used_as_p7_evidence: false
+    direct_one_shot_generation_still_forbidden: true
+    p0_00_held: true
+    governed_microbatch_generation_allowed_under_grc: true
+    generation_executed: false
+    generation_authorized_by_this_task: false
+    three600_generated_count: 0
+    blocked_by: []
+    next_unlocked: P7
+    readiness_claims_allowed:
+    - legacy_semantic_pilot_lock_retired
+    - grc_route_recorded_as_valid_unlock_evidence
+    - governed_microbatch_generation_allowed_under_grc
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - one_shot_3600_generation
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
   - step_id: P7
     task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
     status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 structured draft microbatch generation. Unlocked by P6 go/no-go = GO_TO_P7, but ONLY for preparing/submitting the P7 execution brief. Real 3600 generation requires a separate founder authorization + Codex three-gate; not authorized by P6.
-    unlock_kind: execution_brief_only
+    objective: 3600 structured draft microbatch generation. RE-SCOPED by P6R (legacy-lock retirement + governed GRC unlock) from one-shot 3600 to governed incremental authored microbatch. Real generation requires a separate founder authorization + Codex three-gate; not authorized by P6 or P6R.
+    unlock_kind: governed_incremental_microbatch
+    re_scoped_by: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    re_scoped_from: one_shot_3600
+    re_scoped_to: incremental_authored_microbatch
+    governed_microbatch_generation_allowed_under_grc: true
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false
+    generate_without_grc_pilot_allowed: false
     real_generation_requires_separate_founder_authorization: true
     generation_allowed: false
     generation_3600_executed: false
-    standard_validation: to_be_defined_at_P7_brief
+    next_real_action: GKB-3600 batch-001 real authored microbatch (~20-40 drafts; separate founder authorization + Codex three-gate; never one-shot)
+    standard_validation: to_be_defined_at_P7_batch_001_brief
     deliverables:
-    - to_be_defined_at_P7_brief
+    - to_be_defined_at_P7_batch_001_brief
     blocked_by: []
     next_unlocked: P8
     readiness_claims_allowed: []
@@ -236,6 +306,7 @@ grc_3600_execution_plan_status:
     - generation_3600_unlocked
     - generation_3600_completed
     - generation_allowed
+    - one_shot_3600_generation
     - candidatepack_ready
   - step_id: P8
     task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001

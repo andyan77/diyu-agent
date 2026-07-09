@@ -1,0 +1,570 @@
+recon:
+  reconciliation:
+    schema_version: v0.1
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    role: reconciliation_decision_between_failed_legacy_semantic_pilot_line_and_grc_route
+    supersedes_route: legacy_semantic_pilot_line
+    legacy_failed_line:
+      first_cross_type_pilot_44:
+        task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+        status: failed_or_superseded
+        verdict: semantic_fail
+        reason: same_category_template_cards_not_independent_knowledge
+        use_as_p7_evidence: false
+        rewritten_as_pass: false
+        evidence_path: 03_pilot/pilot_semantic_fail_closeout.yaml
+      semantic_regen_20:
+        status: stale_or_superseded
+        use_as_p7_evidence: false
+        rewritten_as_pass: false
+        evidence_path: 03_pilot/semantic_regen/
+      holdout_14:
+        task_id: CODEX-SEMANTIC-PILOT-V4_7-PASS-CLOSEOUT-METADATA-CLEANUP-AND-HOLDOUT-MICROBATCH-001
+        status: no_go_or_failed_line
+        semantic_verdict: NO_GO_FOR_BATCH
+        use_as_p7_evidence: false
+        rewritten_as_pass: false
+        evidence_path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_no_go_closeout.yaml
+      v3_to_v4_7_line:
+        status: superseded_by_grc_route
+        use_as_p7_evidence: false
+        rewritten_as_pass: false
+        evidence_path_range: 03_pilot/semantic_v3 .. 03_pilot/semantic_v4_7
+    legacy_line_not_rewritten_as_pass: true
+    legacy_evidence_preserved_not_deleted: true
+    grc_unlock_evidence:
+      P4_canary_40:
+        task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+        status: PASS
+        role: new_grc_pilot_probe
+      P5_proposition_pack_v1:
+        task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+        status: PASS
+        role: generation_planning_asset
+      P6_dual_gate_briefing:
+        task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+        status: GO_TO_P7
+        role: governed_generation_briefing
+    old_20_regen_used_as_p7_evidence: false
+    unlock_scope:
+      included_clusters: mkc_007..mkc_046
+      included_cluster_count: 40
+      excluded_or_held_clusters: mkc_001..mkc_006
+      p0_00_status: held_control_plane_not_gkb_body_generation
+    unlock_form:
+      legacy_blanket_block_retired: true
+      governed_microbatch_generation_allowed_under_grc: true
+      direct_one_shot_3600_generation_allowed: false
+      generate_without_grc_pilot_allowed: false
+      runtime_generation_allowed: false
+      generation_executed_or_authorized_by_this_task: false
+    honest_caveats:
+    - canary_40_to_full_scale_is_large_next_generation_must_start_as_small_authored_microbatch_batch_001_not_one_shot
+    - quality_guarded_by_per_item_governance_gate_and_creative_gate_from_P6
+    - this_task_generates_zero_drafts_and_authorizes_zero_generation
+    - no_candidatepack_or_ke_rag_dify_readiness
+    readiness:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+      readiness_all_false: true
+  unlock_decision:
+    schema_version: v0.1
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    decision: governed_grc_microbatch_generation_unlocked_route_level_only
+    authoritative_route: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+    reconciliation_authority: 08_batch_unlock_reconciliation/**
+    legacy_blanket_block_retired: true
+    governed_microbatch_generation_allowed_under_grc: true
+    unlock_scope_clusters: mkc_007..mkc_046
+    unlock_scope_cluster_count: 40
+    held_clusters: mkc_001..mkc_006
+    p0_00_held: true
+    still_forbidden:
+    - direct_3600_generation
+    - one_shot_3600_generation
+    - generate_without_grc_pilot
+    - runtime_generation_allowed
+    - readiness_true
+    - p0_00_gkb_body_generation
+    direct_3600_forbidden_preserved_in:
+    - path: 01_generation_contracts/w7_generation_baseline_lock.v0.1.yaml
+      field: direct_3600_generation_allowed
+      value: false
+      mutation_this_task: none_contract_immutable
+    - path: 02_generation_brief_pack/00_shared_generation_rules.yaml
+      field: global_forbidden
+      contains:
+      - direct_3600_generation
+      - generate_without_pilot
+      mutation_this_task: none_central_supersession
+    generation_executed_this_task: false
+    generation_authorized_by_this_task: false
+    three600_generated_count_this_task: 0
+    generation_unlocked_top_level: false
+    next_real_action:
+      task: GKB-3600 batch-001 real authored microbatch
+      size_range: 20_to_40
+      cluster_scope: mkc_007..mkc_046
+      generation_status_target: gpt_generated_structured_draft
+      requires: separate_founder_authorization_plus_codex_three_gate
+      authorized_by_this_task: false
+      rationale: prove human-authored non-templated transfer at small scale before any governed scale-up; never one-shot.
+    readiness:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      generation_allowed: false
+      generation_eligible: false
+      production_ready: false
+      release_ready: false
+      production_servable: false
+      readiness_all_false: true
+  inventory:
+    schema_version: v0.1
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    discovery_method: grep_recompute_not_hardcoded
+    surfaces:
+      brief_pack_02:
+        classification: legacy_read_only_superseded_by_grc_route
+        mutation_this_task: none_central_supersession
+        lock_files:
+        - path: 02_generation_brief_pack/00_brief_pack_manifest.yaml
+          field: semantic_hardening.batch_generation_unlocked
+          value: false
+        - path: 02_generation_brief_pack/00_pilot_sampling_plan.yaml
+          field: current_44_closeout.batch_generation_unlocked
+          value: false
+        - path: 02_generation_brief_pack/00_batch_allocation_matrix.yaml
+          field: semantic_quality_blocking_policy.batch_generation_blocked_until_semantic_pilot_pass
+          value: true
+        - path: 02_generation_brief_pack/00_shared_generation_rules.yaml
+          field: global_forbidden
+          contains:
+          - direct_3600_generation
+          - generate_without_pilot
+        batch_briefs:
+          classification: legacy_read_only_superseded_by_grc_route
+          count: 14
+          path_glob: 02_generation_brief_pack/batch_001..014/batch_0NN_generation_brief.yaml
+          field: batch_generation_unlocked
+          value: false
+      project_infra:
+        path: project-infra/current_workspace_status.yaml
+        classification: legacy_read_only_not_active_route_authority
+        mutation_this_task: none
+        batch_generation_unlocked_false_count:
+          mode: discovered_count_not_hardcoded
+          observed_at_build: 23
+        direct_3600_generation_allowed:
+          field: direct_3600_generation_allowed
+          value: false
+        readiness_all_false_still_required: true
+      contract_immutable:
+        path: 01_generation_contracts/w7_generation_baseline_lock.v0.1.yaml
+        field: direct_3600_generation_allowed
+        value: false
+        classification: contract_immutable_preserved
+        mutation_this_task: none
+    active_route_authority:
+      primary: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+      reconciliation: 08_batch_unlock_reconciliation/**
+      project_infra_current_workspace_status: legacy_read_only_not_active_route_authority
+      checker_must_not_treat_project_infra_legacy_false_flags_as_active_blocker: true
+      checker_must_still_verify_readiness_false_in_project_infra: true
+  provenance:
+    schema_version: v0.1
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    role: preserve_failed_line_provenance_without_deletion_or_rewrite
+    preserved_not_deleted: true
+    none_rewritten_as_pass: true
+    entries:
+    - line: first_cross_type_pilot_44
+      task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+      verdict: semantic_fail
+      reason: same_category_template_cards_not_independent_knowledge
+      evidence_path: 03_pilot/pilot_semantic_fail_closeout.yaml
+      use_as_p7_evidence: false
+      rewritten_as_pass: false
+    - line: holdout_microbatch_001
+      verdict: NO_GO_FOR_BATCH
+      key_no_go_reasons:
+      - normalized_sentence_reuse_across_multiple_cards
+      - expected_body_topics_not_semantically_covered
+      - checker_false_green_on_governance_dump_and_mechanism_coverage
+      evidence_path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_no_go_closeout.yaml
+      use_as_p7_evidence: false
+      rewritten_as_pass: false
+    - line: semantic_regen_20
+      verdict: stale_or_superseded
+      evidence_path: 03_pilot/semantic_regen/
+      use_as_p7_evidence: false
+      rewritten_as_pass: false
+    - line: semantic_v3_to_v4_7
+      verdict: superseded_by_grc_route
+      evidence_path_range: 03_pilot/semantic_v3 .. 03_pilot/semantic_v4_7
+      use_as_p7_evidence: false
+      rewritten_as_pass: false
+  evidence_index:
+    schema_version: v0.1
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    role: record_grc_route_p4_p5_p6_as_the_valid_current_unlock_evidence
+    evidence:
+    - step: P4
+      task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+      status: DONE
+      role: new_grc_pilot_probe
+      artifact_path: 06_canary_runs/canary_40_001/
+      checker: ci/checkers/check_canary_40_generation_and_gate.py
+    - step: P5
+      task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+      status: DONE
+      role: generation_planning_asset
+      artifact_path: 06_canary_runs/canary_40_001/proposition_pack_v1/
+      receipt: docs/reports/grc_canary_40_quality_closeout_and_proposition_pack_receipt.json
+      proposition_count: 160
+      cluster_count: 40
+      checker: ci/checkers/check_canary_40_quality_closeout_and_proposition_pack.py
+    - step: P6
+      task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+      status: DONE
+      go_decision: GO_TO_P7
+      role: governed_generation_briefing
+      artifact_path: 07_microbatch_briefing/
+      receipt: docs/reports/grc_3600_microbatch_briefing_go_nogo_receipt.json
+      checker: ci/checkers/check_3600_microbatch_briefing_go_nogo.py
+    old_20_regen_used_as_evidence: false
+    legacy_failed_line_used_as_evidence: false
+    evidence_supports: governed_incremental_microbatch_generation_not_one_shot_3600
+  p0_hold:
+    schema_version: v0.1
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    p0_00_clusters: mkc_001..mkc_006
+    p0_00_cluster_count: 6
+    status: held_control_plane_not_gkb_body_generation
+    included_in_gkb_body_generation: false
+    included_in_governed_unlock_scope: false
+    reason: control_plane_governance_clusters_must_not_enter_gkb_domain_body
+    unlock_scope_excludes_p0_00: true
+    governed_unlock_scope_clusters: mkc_007..mkc_046
+ledger:
+  steps:
+  - step_id: P1
+    task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
+    status: DONE
+    head_before: 09fdb37ce4e47f1d277420f606a44395e5b4132a
+    head_after: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    worktree_after: clean
+    objective: lock tmp GRC corpus into canonical 03_grc_goldset_corpus + registry + corpus checker
+    standard_validation: check_grc_corpus_registry.py live+selftest PASS; python -O fail-closed; 32/32 byte-exact
+    deliverables:
+    - 03_grc_goldset_corpus/**
+    - ci/checkers/check_grc_corpus_registry.py
+    blocked_by: []
+    next_unlocked: P2
+    readiness_claims_allowed:
+    - grc_corpus_canonicalized
+    - formal_120_corpus_locked
+    - p0_00_control_plane_corpus_locked
+    - expert_review_13_source_locked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P2
+    task_id: GKB-GRC-EVIDENCEPOLICY-OWNER-CONTRACT-DELTA-AND-ALIGNMENT-001
+    status: DONE
+    head_before: df2cacacfdd49c232e3b496b1205f3f78a0eca63
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: add evidence_policy_candidate / EvidencePolicyOutbox to contract enums + owner policy; align 15 formal evidence cases as strict judge fixtures; alignment checker
+    standard_validation: check_grc_contract_ontology_alignment.py live+selftest PASS; python -O fail-closed; P1 checker still PASS; contract lock checker still PASS
+    deliverables:
+    - 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    - 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
+    - 01_generation_contracts/codex_state_machine_mapping_policy.v0.1.yaml
+    - 03_grc_goldset_corpus/alignment/**
+    - ci/checkers/check_grc_contract_ontology_alignment.py
+    blocked_by: []
+    next_unlocked: P3
+    readiness_claims_allowed:
+    - grc_evidence_policy_owner_contract_delta_landed
+    - grc_contract_ontology_alignment_checker_landed
+    - formal_120_strict_mapping_ready
+    - judge_calibration_unlocked
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P3
+    task_id: GKB-JUDGE-CALIBRATION-CHECKER-LANDING-001
+    status: DONE
+    head_before: 9e590c287dfbf9f5f6401f6f687bb3c95bd2c1f9
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: land judge calibration registries (positive/anti/borderline/control/failure_code/hard_gate/expert_index/creative/do_not_copy) + judge calibration checker
+    standard_validation: check_judge_calibration_against_grc.py live+selftest PASS; python -O fail-closed; P1+P2+contract-lock checkers still PASS
+    deliverables:
+    - 04_judge_calibration/**
+    - ci/checkers/check_judge_calibration_against_grc.py
+    - ci/fixtures/judge_calibration_against_grc/**
+    blocked_by: []
+    next_unlocked: P4
+    readiness_claims_allowed:
+    - judge_calibration_registry_landed
+    - failure_code_registry_landed
+    - hard_gate_namespace_registry_landed
+    - p0_00_control_plane_judge_ready
+    - formal_120_judge_ready
+    - ready_for_canary_40_execution
+    readiness_claims_forbidden:
+    - generation_unlocked
+    - generation_3600_unlocked
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P4
+    task_id: GKB-CANARY-40-GENERATION-AND-GATE-001
+    status: DONE
+    head_before: 46927856bc04222a3188aab6120acf823fc59c6c
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: generate exactly 40 controlled canary drafts (one per formal cluster mkc_007..mkc_046) as gpt_generated_structured_draft + run canary gate (schema/judge/owner-layer/route/style-copy/dedupe/readiness) + reports
+    standard_validation: check_canary_40_generation_and_gate.py live+selftest PASS; python -O fail-closed; P1+P2+P3+contract-lock checkers still PASS; 40/40 coverage; owner routing matches gold; readiness all false; no 3600/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 06_canary_runs/canary_40_001/**
+    - ci/checkers/check_canary_40_generation_and_gate.py
+    - ci/fixtures/canary_40_generation_and_gate/**
+    blocked_by: []
+    next_unlocked: P5
+    readiness_claims_allowed:
+    - canary_40_generated
+    - canary_40_machine_gated
+    - ready_for_canary_40_quality_review
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P5
+    task_id: GKB-CANARY-40-QUALITY-CLOSEOUT-AND-PROPOSITION-PACK-V1-001
+    supersedes_task_id: GKB-CANARY-40-FOUNDER-QUALITY-REVIEW-CLOSEOUT-001
+    status: DONE
+    head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
+    head_after: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    worktree_after: clean
+    objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not formal knowledge.
+    standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact substring of its canary rich body; EPO props not mapped to GKB; readiness all false
+    deliverables:
+    - 06_canary_runs/canary_40_001/review_closeout/**
+    - 06_canary_runs/canary_40_001/proposition_pack_v1/**
+    - ci/checkers/check_canary_40_quality_closeout_and_proposition_pack.py
+    - ci/fixtures/canary_40_quality_closeout_and_proposition_pack/**
+    blocked_by: []
+    next_unlocked: P6
+    readiness_claims_allowed:
+    - canary_40_quality_closeout_landed
+    - expert_review_input_absorbed
+    - proposition_pack_v1_landed
+    - ready_for_p6_microbatch_briefing
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - global_generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P6
+    task_id: GKB-3600-MICROBATCH-BRIEFING-AND-GO-NOGO-001
+    status: DONE
+    head_before: f71f4425b3f54458f5f65889ce9101d6ff66bb68
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: compile proposition_pack_v1 + Creative Content Principle into a 3600 pre-generation briefing (Governance Gate + Creative Gate + creative score rubric + 6 capability requirements + consumption plan + stop conditions) and a go/no-go decision. Does NOT generate 3600.
+    standard_validation: check_3600_microbatch_briefing_go_nogo.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+contract-lock still PASS; creative gate 8 dims; governance gate 10 checks not weakened; 6 capability families briefing_requirement_only (0 ontology objects); go_decision in allowed values; readiness all false; no 3600/07_microbatch_runs/CandidatePack/KE/RAG/DIFY materialization
+    deliverables:
+    - 07_microbatch_briefing/**
+    - ci/checkers/check_3600_microbatch_briefing_go_nogo.py
+    - ci/fixtures/3600_microbatch_briefing_go_nogo/**
+    go_decision: GO_TO_P7
+    p7_unlocked_for_execution_brief_only: true
+    p7_real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    blocked_by: []
+    next_unlocked: P6R
+    readiness_claims_allowed:
+    - microbatch_3600_briefing_landed
+    - creative_gate_landed
+    - governance_gate_landed
+    - proposition_pack_v1_consumed_for_briefing
+    - ready_for_p7_3600_microbatch_generation_prompt
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P6R
+    task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    status: DONE
+    head_before: 0433feb7fb84f4be3bbb6aefc95833cacf58cd52
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean
+    objective: retire the legacy semantic-pilot batch-generation lock's block on the GRC route (additive supersession + inventory; no evidence deletion; no flag flip; central supersession, no 02_generation_brief_pack edits) and establish a governed GRC microbatch unlock scoped to mkc_007..mkc_046; keep direct one-shot 3600 forbidden; hold P0-00; generate and authorize zero drafts. Phase A of the founder-split merged task.
+    standard_validation: check_grc_legacy_lock_retire_and_governed_unlock.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+P6+contract-lock still PASS; unlock scope mkc_007..mkc_046; P0-00 held; direct_3600 forbidden preserved (contract immutable + shared_rules global_forbidden); project-infra unmodified + false-flag count discovered not hardcoded; readiness all false; zero generation; no 07_microbatch_runs/CandidatePack/KE/RAG/DIFY
+    deliverables:
+    - 08_batch_unlock_reconciliation/**
+    - ci/checkers/check_grc_legacy_lock_retire_and_governed_unlock.py
+    - ci/fixtures/grc_legacy_lock_retire_and_governed_unlock/**
+    legacy_line_status: superseded_failed_line
+    old_20_regen_used_as_p7_evidence: false
+    direct_one_shot_generation_still_forbidden: true
+    p0_00_held: true
+    governed_microbatch_generation_allowed_under_grc: true
+    generation_executed: false
+    generation_authorized_by_this_task: false
+    three600_generated_count: 0
+    blocked_by: []
+    next_unlocked: P7
+    readiness_claims_allowed:
+    - legacy_semantic_pilot_lock_retired
+    - grc_route_recorded_as_valid_unlock_evidence
+    - governed_microbatch_generation_allowed_under_grc
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - one_shot_3600_generation
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+  - step_id: P7
+    task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
+    status: DONE
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 structured draft microbatch generation. RE-SCOPED by P6R (legacy-lock retirement + governed GRC unlock) from one-shot 3600 to governed incremental authored microbatch. Real generation requires a separate founder authorization + Codex three-gate; not authorized by P6 or P6R.
+    unlock_kind: governed_incremental_microbatch
+    re_scoped_by: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    re_scoped_from: one_shot_3600
+    re_scoped_to: incremental_authored_microbatch
+    governed_microbatch_generation_allowed_under_grc: true
+    one_shot_3600_generation_allowed: false
+    direct_3600_generation_allowed: false
+    generate_without_grc_pilot_allowed: false
+    real_generation_requires_separate_founder_authorization: true
+    generation_allowed: false
+    generation_3600_executed: false
+    next_real_action: GKB-3600 batch-001 real authored microbatch (~20-40 drafts; separate founder authorization + Codex three-gate; never one-shot)
+    standard_validation: to_be_defined_at_P7_batch_001_brief
+    deliverables:
+    - to_be_defined_at_P7_batch_001_brief
+    blocked_by: []
+    next_unlocked: P8
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_3600_unlocked
+    - generation_3600_completed
+    - generation_allowed
+    - one_shot_3600_generation
+    - candidatepack_ready
+  - step_id: P8
+    task_id: GKB-3600-QUALITY-DEDUPE-ROUTING-ELIGIBILITY-001
+    status: PLANNED_BLOCKED_BY_P7
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7)
+    standard_validation: to_be_defined_at_P8_brief
+    deliverables:
+    - to_be_defined_at_P8_brief
+    blocked_by:
+    - P7
+    next_unlocked: null
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - generation_unlocked
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    readiness_all_false: true
+  generation_unlocked: false
+  route_note:
+    task: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+    step_id: P6R
+    retires: legacy_semantic_pilot_batch_generation_lock_block_on_grc_route
+    legacy_line_status: superseded_failed_line
+    legacy_evidence_preserved: true
+    legacy_line_rewritten_as_pass: false
+    grc_unlock_evidence:
+    - P4_canary_40_PASS
+    - P5_proposition_pack_v1_PASS
+    - P6_dual_gate_briefing_GO_TO_P7
+    old_20_regen_used_as_p7_evidence: false
+    legacy_blanket_block_retired: true
+    governed_microbatch_generation_allowed_under_grc: true
+    unlock_scope_clusters: mkc_007..mkc_046
+    p0_00_held: true
+    direct_one_shot_3600_generation_allowed: false
+    generate_without_grc_pilot_allowed: false
+    runtime_generation_allowed: false
+    generation_executed_or_authorized_by_this_task: false
+    three600_generated_count_this_task: 0
+    p7_re_scoped_to: governed_incremental_microbatch
+    p7_real_generation_requires_separate_founder_authorization: true
+    project_infra_current_workspace_status: legacy_read_only_not_active_route_authority
+    reconciliation_authority: 08_batch_unlock_reconciliation/**
+    applied_from: founder_split_decision_plus_codex_conditional_pass_required_note
+fs_state:
+  forbidden_present: []
+  three600_created: false
+  microbatch_runs_created: false
+  candidatepack_created: false
+  consolidated_created: false
+  eligibility_created: false
+  evidence_files_present:
+    03_pilot/pilot_semantic_fail_closeout.yaml: true
+    03_pilot/holdout_microbatch_001/holdout_microbatch_001_no_go_closeout.yaml: true
+live:
+  project_infra_false_count: 23
+  project_infra_readiness_all_false: true
+  contract_direct3600_forbidden: true
+  shared_global_forbidden:
+  - direct_3600_generation
+  - generate_without_pilot
+  - create_candidatepack
+  - write_KE
+  project_infra_modified: false
+  brief_pack_unmodified: true
+  git_changed_outside_allowed: []
+  git_changed: []

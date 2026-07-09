@@ -1,0 +1,11 @@
+p0_00_hold_decision:
+  schema_version: v0.1
+  task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+  p0_00_clusters: mkc_001..mkc_006
+  p0_00_cluster_count: 6
+  status: held_control_plane_not_gkb_body_generation
+  included_in_gkb_body_generation: false
+  included_in_governed_unlock_scope: false
+  reason: control_plane_governance_clusters_must_not_enter_gkb_domain_body
+  unlock_scope_excludes_p0_00: true
+  governed_unlock_scope_clusters: mkc_007..mkc_046

@@ -1,0 +1,89 @@
+{
+  "task_id": "GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001",
+  "step_id": "P6R",
+  "phase": "Phase A of founder-split merged task GKB-LEGACY-LOCK-RETIRE-AND-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001",
+  "head_before": "0433feb7fb84f4be3bbb6aefc95833cacf58cd52",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "worktree_after": "clean",
+  "verdict": "PASS",
+  "legacy_lock_retirement": {
+    "old_semantic_pilot_line_status": "superseded_failed_line",
+    "legacy_lines_inventoried": ["first_cross_type_pilot_44", "semantic_regen_20", "holdout_14", "v3_to_v4_7_line"],
+    "legacy_line_rewritten_as_pass": false,
+    "legacy_evidence_preserved_not_deleted": true,
+    "old_20_regen_used_as_p7_evidence": false,
+    "direct_one_shot_generation_still_forbidden": true,
+    "p0_00_held": true,
+    "governed_microbatch_generation_allowed_under_grc": true,
+    "unlock_scope_clusters": "mkc_007..mkc_046",
+    "held_clusters": "mkc_001..mkc_006"
+  },
+  "lock_surface_inventory": {
+    "brief_pack_02_top_level": ["00_brief_pack_manifest.yaml", "00_pilot_sampling_plan.yaml", "00_batch_allocation_matrix.yaml", "00_shared_generation_rules.yaml"],
+    "brief_pack_02_batch_briefs": 14,
+    "project_infra_batch_generation_unlocked_false_count_discovered": 23,
+    "project_infra_count_hardcoded": false,
+    "contract_immutable_direct_3600_forbidden_preserved": true,
+    "central_supersession_zero_brief_pack_edits": true
+  },
+  "generation": {
+    "any_draft_generated": false,
+    "microbatch_runs_created": false,
+    "actual_3600_draft_count": 0,
+    "generation_authorized_by_this_task": false
+  },
+  "grc_unlock_evidence": {
+    "P4_canary_40": "PASS",
+    "P5_proposition_pack_v1": "PASS",
+    "P6_dual_gate_briefing": "GO_TO_P7"
+  },
+  "checks": {
+    "p1_checker_live": "PASS",
+    "p2_checker_live": "PASS",
+    "p3_checker_live": "PASS",
+    "p4_checker_live": "PASS",
+    "p5_checker_live": "PASS",
+    "p6_checker_live": "PASS",
+    "contract_lock_checker_live": "PASS",
+    "p6r_checker_live": "PASS",
+    "p6r_checker_selftest": "PASS",
+    "p6r_checker_python_O_fail_closed": "exit_2",
+    "negative_fixture_count": 26,
+    "negative_fixtures_all_fail_closed": true,
+    "readiness_all_false": true,
+    "forbidden_scope_clean": true,
+    "project_infra_unmodified": true,
+    "brief_pack_unmodified": true,
+    "git_changed_outside_allowed": []
+  },
+  "e7_1_snapshot_trap": {
+    "caught_before_tripping": true,
+    "detail": "Brief §13 literal P7.status=RE_SCOPED_TO_INCREMENTAL_MICROBATCH would break check_3600_microbatch_briefing_go_nogo.py:343 (go_decision=GO_TO_P7 requires P7.status in UNBLOCKED_STATES={NEXT,IN_PROGRESS,DONE}); that checker is out of allowed-writes and its live-PASS is required by this task.",
+    "founder_confirmed_resolution": "P7.status stays NEXT; re-scoping expressed via unlock_kind=governed_incremental_microbatch + governed-unlock fields; zero checker edits; all upstream checkers stay green (verified P4/P5/P6 exit 0 post-advance)."
+  },
+  "codex_required_note_applied": {
+    "do_not_hardcode_project_infra_false_flag_count_as_10": true,
+    "checker_discovers_and_records_actual_count": true,
+    "current_observed_count": 23,
+    "project_infra_legacy_read_only_not_active_blocker_but_readiness_still_false": true
+  },
+  "execution_progress_ledger_updated": true,
+  "ledger_p6r_status": "DONE",
+  "ledger_p7_status": "NEXT",
+  "ledger_p7_unlock_kind": "governed_incremental_microbatch",
+  "ledger_p8_status": "PLANNED_BLOCKED_BY_P7",
+  "ledger_generation_unlocked": false,
+  "next_real_action_unlocked": "GKB-3600 batch-001 real authored microbatch (~20-40 drafts; requires separate founder authorization + Codex three-gate; never one-shot)",
+  "must_not_claim": [
+    "generation_3600_completed",
+    "generation_3600_unlocked",
+    "generation_allowed",
+    "one_shot_3600_generation",
+    "candidatepack_ready",
+    "KE_ready",
+    "RAG_ready",
+    "DIFY_ready",
+    "production_ready"
+  ],
+  "blocking_issues": "none (E7.1 snapshot trap caught pre-trip; resolved by founder-confirmed status=NEXT+fields encoding with zero checker edits)"
+}

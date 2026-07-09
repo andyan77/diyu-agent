@@ -1,0 +1,33 @@
+legacy_failed_line_provenance_index:
+  schema_version: v0.1
+  task_id: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
+  role: preserve_failed_line_provenance_without_deletion_or_rewrite
+  preserved_not_deleted: true
+  none_rewritten_as_pass: true
+  entries:
+  - line: first_cross_type_pilot_44
+    task_id: CODEX-GENERATION-CROSS-TYPE-PILOT-001
+    verdict: semantic_fail
+    reason: same_category_template_cards_not_independent_knowledge
+    evidence_path: 03_pilot/pilot_semantic_fail_closeout.yaml
+    use_as_p7_evidence: false
+    rewritten_as_pass: false
+  - line: holdout_microbatch_001
+    verdict: NO_GO_FOR_BATCH
+    key_no_go_reasons:
+    - normalized_sentence_reuse_across_multiple_cards
+    - expected_body_topics_not_semantically_covered
+    - checker_false_green_on_governance_dump_and_mechanism_coverage
+    evidence_path: 03_pilot/holdout_microbatch_001/holdout_microbatch_001_no_go_closeout.yaml
+    use_as_p7_evidence: false
+    rewritten_as_pass: false
+  - line: semantic_regen_20
+    verdict: stale_or_superseded
+    evidence_path: 03_pilot/semantic_regen/
+    use_as_p7_evidence: false
+    rewritten_as_pass: false
+  - line: semantic_v3_to_v4_7
+    verdict: superseded_by_grc_route
+    evidence_path_range: 03_pilot/semantic_v3 .. 03_pilot/semantic_v4_7
+    use_as_p7_evidence: false
+    rewritten_as_pass: false
