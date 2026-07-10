@@ -1,0 +1,30 @@
+selftest_cases:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+  fixture_strategy: live_positive_bundle_plus_single_invariant_in_memory_mutations
+  authoring_classifier_imported_by_checker: false
+  positive_fixture:
+    name: live_clean_120_semantic_asset_bundle
+    expected: PASS
+  negative_fixtures:
+    - customer_reference_as_executor
+    - absent_customer_counted
+    - removed_customer_story_counted
+    - you_counted_as_capture_participant
+    - quoted_person_as_event_actor
+    - mannequin_as_human
+    - publisher_default_executor
+    - action_without_action_span
+    - old_kernel_soak_test_in_expression
+    - business_judgment_strengthened
+    - unsupported_expression_person
+    - six_body_metadata_leak
+    - seventh_body_changed
+    - unchanged_body_digest_drift
+    - source_kernel_mutated
+    - readiness_true
+    - scale_or_downstream_unlocked
+  invariant:
+    every_negative_must_fail_closed: true
+    python_optimized_mode_exit: 2
+    machine_semantics_scope: STRUCTURAL_EVIDENCE_ONLY

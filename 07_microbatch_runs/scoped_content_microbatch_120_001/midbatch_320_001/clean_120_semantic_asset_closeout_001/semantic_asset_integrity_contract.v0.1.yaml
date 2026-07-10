@@ -1,0 +1,120 @@
+semantic_asset_integrity_contract:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+  baseline_head: 54e248032a815fa1fe7877cf913326cce5e6ff9e
+  contract_role: scoped_review_semantic_index_not_ontology_truth
+  formal_schema_contract: false
+  ontology_truth_source: false
+  machine_semantics_scope: STRUCTURAL_EVIDENCE_ONLY
+  forbidden_machine_claim: FULL_NATURAL_LANGUAGE_ROLE_SEMANTICS_PROVEN
+  parent:
+    manifest: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_surgical_recovery_001/clean_120_candidate_manifest.v0.1.jsonl
+    semantic_contract: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_surgical_recovery_001/clean_120_semantic_integrity_contract.v0.1.yaml
+    expected_asset_count: 120
+    expected_unique_kernel_count: 120
+    immutable: true
+  canonical_machine_source:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_asset_closeout_001/clean_120_semantic_asset_manifest.v0.1.jsonl
+    row_count: 120
+    duplicate_role_or_kernel_matrices_forbidden: true
+  body_repair:
+    frozen_packet: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_asset_closeout_001/six_body_before_after_packet.v0.1.yaml
+    authorized_ids:
+      - RV80-ASSET-017
+      - RV80-ASSET-018
+      - RV80-ASSET-059
+      - RV80-ASSET-060
+      - P7D40-REPAIR-234
+      - P7D40-REPAIR-243
+    changed_count: 6
+    unchanged_count: 114
+    policy: execution_metadata_to_execution_card_only
+  role_semantic_model:
+    local_index_only: true
+    creates_global_role_ontology: false
+    entity_kinds: [human, mannequin_prop, abstract_group, audience]
+    semantic_functions:
+      - narrator
+      - event_owner
+      - action_executor
+      - visible_participant
+      - audience_addressee
+      - hypothetical_role
+      - absent_or_prohibited_role
+      - quoted_or_referenced_role
+    action_polarities: [actual, hypothetical, negated, quoted_or_referenced]
+    rules:
+      mentioned_role_is_not_automatically_executor: true
+      publisher_is_not_automatically_executor: true
+      narrator_is_not_automatically_executor: true
+      actor_and_action_spans_required: true
+      audience_excluded_from_headcount: true
+      hypothetical_role_excluded_from_headcount: true
+      absent_role_excluded_from_headcount: true
+      quoted_role_excluded_from_headcount_unless_separately_actual: true
+      mannequin_is_prop_not_human: true
+      event_and_capture_headcounts_separate: true
+  kernel_split:
+    source_knowledge_kernel_ref:
+      role: immutable_upstream_support_material_only
+      reference_count: 120
+      digest_match_required: 120
+      mutation_allowed: false
+      boundaries:
+        not_ontology_truth: true
+        not_candidatepack: true
+        not_KE: true
+        not_serving_ready: true
+        not_RAG_ready: true
+        not_DIFY_ready: true
+    expression_content_kernel_candidate:
+      role: review_candidate_derived_from_final_body_only
+      count: 120
+      fields:
+        - human_subject
+        - object_anchor
+        - observable_action
+        - scene
+        - business_judgment
+        - tension_or_question
+        - spoken_seed
+        - claim_surface
+        - event_surface
+      derivation_modes: [extractive, minimally_normalized, faithful_paraphrase]
+      default_derivation_modes: [extractive, minimally_normalized]
+      every_nonempty_field_requires_body_evidence: true
+      source_kernel_copy_forbidden: true
+      unsupported_source_detail_forbidden: true
+      creates_new_knowledge: false
+      runtime_ready: false
+  explicit_negative_truths:
+    P7D40-REPAIR-006:
+      customer_semantic_function: quoted_or_referenced_role
+      customer_is_executor: false
+      customer_is_participant: false
+    RV80-ASSET-006:
+      customer_semantic_function: absent_or_prohibited_role
+      customer_is_executor: false
+      customer_is_participant: false
+    RV80-ASSET-015:
+      customer_semantic_function: absent_or_prohibited_role
+      customer_is_executor: false
+      customer_is_participant: false
+  acceptance:
+    success_status: CLEAN_120_SEMANTIC_ASSET_REPAIR_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_ACCEPTANCE
+    failure_status: SEMANTIC_ASSET_CLOSEOUT_BLOCKED
+    clean_120_final_acceptance: false
+    runtime_content_kernel_ready: false
+    semantic_asset_integrity_final_pass: false
+    next_if_guardian_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE
+  scale_and_downstream:
+    knowledge_count_increment: 0
+    expand_600: false
+    expand_3600: false
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED
+    readiness_all_false: true

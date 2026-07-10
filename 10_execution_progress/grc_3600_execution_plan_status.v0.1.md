@@ -112,3 +112,11 @@
 - 旧 6 条 Kernel overlap blocker 按统一 NFKC comparator 在 source 上重算为 5/5/7/5/9/5，均属 false positive；全体 clean candidate 最大 overlap 为 12，阈值保持 17 不变。
 - 机器闸只声明结构性保义证据；Clean-120 仍待 Claude Code 全量 Guardian Review 与 Founder 最终接受，不自称 canonical accepted corpus。
 - `route_migration_14` 只 additive 记录恢复事实；旧 step status、`expand_600=false`、`expand_3600=false`、全部下游与 readiness 均保持不变。
+
+## P7D Clean-120 Semantic Asset Integrity Closeout
+
+- `GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001` 只净化 6 条正文中的执行/审计说明；其余 114 条正文与 Clean-120 父版本 byte-identical，知识计数增量为 0。
+- 120 条资产重新区分动作执行者、受众、假设/缺席/引用角色与人台道具；事件人数和拍摄人数只从有正文动作证据的实际真人角色推导。
+- 上游 `source_knowledge_kernel_ref` 保持不可变；新增 `expression_content_kernel_candidate` 只摘取最终正文实际表达且带 span 的人、物、动作、场景、判断、claim 与 event surface。
+- 机器结论仅为 `STRUCTURAL_ROLE_EVIDENCE_PASS`，不得解释为完整自然语言语义已证明；当前仍待 Claude Code 全量语义 Guardian Review 与 Founder 最终接受。
+- `route_migration_15` 只 additive 记录本次定向收口；旧 step status、旧 migration、`expand_600=false`、`expand_3600=false`、下游与全部 readiness 均保持不变。

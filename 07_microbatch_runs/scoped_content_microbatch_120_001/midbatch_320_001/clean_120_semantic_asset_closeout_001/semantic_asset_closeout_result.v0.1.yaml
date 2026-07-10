@@ -1,0 +1,65 @@
+semantic_asset_closeout_result:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+  result_status: CLEAN_120_SEMANTIC_ASSET_REPAIR_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_ACCEPTANCE
+  machine_semantics_scope: STRUCTURAL_EVIDENCE_ONLY
+  structural_role_evidence: STRUCTURAL_ROLE_EVIDENCE_PASS
+  full_natural_language_role_semantics_proven: false
+  machine_acceptance:
+    asset_count: 120
+    unique_kernel_count: 120
+    knowledge_count_increment: 0
+    body_changed_count: 6
+    changed_body_ids:
+    - RV80-ASSET-017
+    - RV80-ASSET-018
+    - RV80-ASSET-059
+    - P7D40-REPAIR-234
+    - RV80-ASSET-060
+    - P7D40-REPAIR-243
+    unchanged_body_count: 114
+    unchanged_body_byte_identity: 114/114
+    unauthorized_body_change_count: 0
+    body_execution_metadata_leak_count: 0
+    body_business_judgment_change_count: 0
+    body_claim_stance_change_count: 0
+    body_new_fact_count: 0
+    source_knowledge_kernel_ref_count: 120
+    source_knowledge_kernel_digest_match_count: 120
+    source_knowledge_kernel_mutation_count: 0
+    expression_content_kernel_count: 120
+    expression_kernel_nonempty_field_count: 895
+    expression_kernel_evidence_span_count: 895
+    expression_kernel_field_evidence_coverage: 100%
+    expression_kernel_unsupported_element_count: 0
+    unresolved_generic_subject_or_placeholder_count: 0
+    classified_role_mention_count: 333
+    unclassified_role_mention_count: 0
+    action_binding_count: 282
+    actual_action_binding_count: 174
+    action_without_actor_and_action_evidence_count: 0
+    absent_or_hypothetical_executor_count: 0
+    audience_counted_as_participant_count: 0
+    mannequin_counted_as_human_count: 0
+    participant_headcount_mismatch_count: 0
+    execution_card_role_mismatch_count: 0
+    event_truth_failure_count: 0
+    claim_route_failure_count: 0
+    language_surface_failure_count: 0
+  guardian_and_founder:
+    claude_code_guardian_review: PENDING
+    founder_final_acceptance: false
+    next_if_guardian_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE
+  expression_diversity:
+    status: OPEN_SCALE_RISK
+  scale:
+    expand_600: false
+    expand_3600: false
+  downstream_and_readiness:
+    all_false: true
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED

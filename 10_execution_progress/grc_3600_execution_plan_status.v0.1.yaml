@@ -340,6 +340,35 @@ grc_3600_execution_plan_status:
       P7C_SCALE_PREP: DONE
       P7D: BLOCKED_BY_P7C_SCALE_DECISION
       P8: BLOCKED_BY_P7D
+  route_migration_15:
+    applied_by_task: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    prior_task:
+      execution_integrity: PASS
+      claude_code_guardian_review: PASS
+      founder_semantic_asset_review: NOT_ACCEPTED
+      clean_120_final_acceptance: false
+    current_task:
+      task_id: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+      result: CLEAN_120_SEMANTIC_ASSET_REPAIR_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_ACCEPTANCE
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_asset_closeout_001/semantic_asset_closeout_result.v0.1.yaml
+    scope:
+      body_repairs: 6
+      role_semantic_bindings: 120
+      source_expression_kernel_splits: 120
+      knowledge_count_increment: 0
+    next_if_guardian_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE
+    expression_diversity:
+      status: OPEN_SCALE_RISK
+    scale:
+      expand_600: false
+      expand_3600: false
+    downstream_and_readiness:
+      all_false: true
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

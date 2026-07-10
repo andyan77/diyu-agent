@@ -1,0 +1,167 @@
+six_body_before_after_packet:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+  parent_manifest: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_surgical_recovery_001/clean_120_candidate_manifest.v0.1.jsonl
+  frozen_before_semantic_manifest_build: true
+  authorized_body_change_count: 6
+  body_change_policy: remove_execution_or_audit_explanation_only_preserve_event_business_judgment_and_claim_stance
+  records:
+    - asset_id: RV80-ASSET-017
+      before_body_text: >-
+        上新交接时，驼色大衣挂在墙中间。店长把手机固定在中岛旁，不另找演员。买手指出落肩和扣子的选款考虑，陈列师退到入口看它怎样稳住两侧灰蓝针织，导购最后演示上身时先看肩线还是先松腰带。店长只提醒一句：各讲自己碰过的那一层，别替下个岗位补话。四名当班同事各完成一个真实工作动作，三段观察合起来，衣服才完整。
+      after_body_text: >-
+        上新交接时，驼色大衣挂在墙中间。买手指出落肩和扣子的选款考虑，陈列师退到入口看它怎样稳住两侧灰蓝针织，导购最后演示上身时先看肩线还是先松腰带。店长只提醒一句：各讲自己碰过的那一层，别替下个岗位补话。三段观察接起来，衣服才完整。
+      removed_execution_metadata:
+        - 店长把手机固定在中岛旁
+        - 不另找演员
+        - 四名当班同事各完成一个真实工作动作
+      preserved_business_judgment:
+        before_evidence: 各讲自己碰过的那一层，别替下个岗位补话。
+        after_evidence: 各讲自己碰过的那一层，别替下个岗位补话。
+      preserved_event_evidence:
+        - 驼色大衣挂在墙中间
+        - 买手指出落肩和扣子的选款考虑
+        - 陈列师退到入口判断整组关系
+        - 导购演示肩线与腰带动作
+      execution_card_delta:
+        capture_operator_mode: fixed_phone_self_operated
+        capture_setup: fixed_at_center_island
+        independent_capture_human_required: false
+        hired_performer_count: 0
+        event_required_people_min: 4
+        capture_required_people_min: 4
+        event_human_roles: [buyer, visual_merchandiser, sales_associate, store_manager]
+
+    - asset_id: RV80-ASSET-018
+      before_body_text: >-
+        开门前的中岛交接，可以把驼色大衣分成三段来讲。买手说明落肩和扣子的选择，陈列师站到入口判断挂高与整组重心，导购在镜前演示腰带松开和收起。店长把三段按岗位署名，不让任何人替别人补事实。一件衣服可以有三种入口，但只有同一组可核对的结构与穿法；手机固定拍下这次交接，不需要谁扮演谁。
+      after_body_text: >-
+        开门前的中岛交接，可以把驼色大衣分成三段来讲。买手说明落肩和扣子的选择，陈列师站到入口判断挂高与整组重心，导购在镜前演示腰带松开和收起。店长把三段按岗位署名，不让任何人替别人补事实。一件衣服可以有三种入口，但只有同一组可核对的结构与穿法。
+      removed_execution_metadata:
+        - 手机固定拍下这次交接
+        - 不需要谁扮演谁
+      preserved_business_judgment:
+        before_evidence: 店长把三段按岗位署名，不让任何人替别人补事实。
+        after_evidence: 店长把三段按岗位署名，不让任何人替别人补事实。
+      preserved_event_evidence:
+        - 买手说明落肩和扣子的选择
+        - 陈列师判断挂高与整组重心
+        - 导购演示腰带松开和收起
+      execution_card_delta:
+        capture_operator_mode: fixed_phone_self_operated
+        capture_setup: fixed_for_center_island_handoff
+        independent_capture_human_required: false
+        hired_performer_count: 0
+        event_required_people_min: 4
+        capture_required_people_min: 4
+        event_human_roles: [buyer, visual_merchandiser, sales_associate, store_manager]
+
+    - asset_id: RV80-ASSET-059
+      before_body_text: >-
+        陈列上墙前，店长先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤。衣服穿好后，她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上。检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。手机固定在陈列台侧面，现场只有店长一人，人台是道具，不计真人。
+      after_body_text: >-
+        陈列上墙前，店长先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤。衣服穿好后，她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上。检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。
+      removed_execution_metadata:
+        - 手机固定在陈列台侧面
+        - 现场只有店长一人
+        - 人台是道具，不计真人
+      preserved_business_judgment:
+        before_evidence: 检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。
+        after_evidence: 检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。
+      preserved_event_evidence:
+        - 店长核对可用服装与尺码
+        - 给橱窗人台套上廓形西装和阔腿裤
+        - 退到玻璃外复核肩部与裤长视线
+      execution_card_delta:
+        capture_operator_mode: fixed_phone_self_operated
+        capture_setup: fixed_at_display_table_side
+        independent_capture_human_required: false
+        hired_performer_count: 0
+        event_required_people_min: 1
+        capture_required_people_min: 1
+        event_human_roles: [store_manager]
+        mannequin_role: display_prop_not_human
+
+    - asset_id: RV80-ASSET-060
+      before_body_text: >-
+        遇到风衣还没整烫、层板尺码也没核清时，店长先暂停给橱窗人台换装，把衣服从人台上取下。整烫与尺码检查完成后，再让人台敞穿风衣，露出针织领口，由阔腿裤接住下半身；最后从入口复核整组。返工常常不是手慢，而是顺序抢跑。手机固定在入口层板，店长一人完成，人台只是陈列道具。
+      after_body_text: >-
+        遇到风衣还没整烫、层板尺码也没核清时，店长先暂停给橱窗人台换装，把衣服从人台上取下。整烫与尺码检查完成后，再让人台敞穿风衣，露出针织领口，由阔腿裤接住下半身；最后从入口复核整组。返工常常不是手慢，而是顺序抢跑。
+      removed_execution_metadata:
+        - 手机固定在入口层板
+        - 店长一人完成
+        - 人台只是陈列道具
+      preserved_business_judgment:
+        before_evidence: 返工常常不是手慢，而是顺序抢跑。
+        after_evidence: 返工常常不是手慢，而是顺序抢跑。
+      preserved_event_evidence:
+        - 店长暂停未满足前置条件的换装
+        - 完成整烫与尺码检查后再实施
+        - 从入口复核整组
+      execution_card_delta:
+        capture_operator_mode: fixed_phone_self_operated
+        capture_setup: fixed_at_entry_shelf
+        independent_capture_human_required: false
+        hired_performer_count: 0
+        event_required_people_min: 1
+        capture_required_people_min: 1
+        event_human_roles: [store_manager]
+        mannequin_role: display_prop_not_human
+
+    - asset_id: P7D40-REPAIR-234
+      before_body_text: >-
+        橱窗里的藏青西装外套压住白色上衣，直筒牛仔裤把正式感放松下来。陈列师给橱窗人台完成穿搭后，退到玻璃外复核：肩线有没有被灯压暗，裤脚是否挡住底座，主角能不能第一眼被看见。人台只负责承载衣服，是陈列道具；现场动作由陈列师一人完成。每次移动，都对应一个能在橱窗里看清的问题。
+      after_body_text: >-
+        橱窗里的藏青西装外套压住白色上衣，直筒牛仔裤把正式感放松下来。陈列师给橱窗人台完成穿搭后，退到玻璃外复核：肩线有没有被灯压暗，裤脚是否挡住底座，主角能不能第一眼被看见。每次移动，都对应一个能在橱窗里看清的问题。
+      removed_execution_metadata:
+        - 人台只负责承载衣服，是陈列道具
+        - 现场动作由陈列师一人完成
+      preserved_business_judgment:
+        before_evidence: 每次移动，都对应一个能在橱窗里看清的问题。
+        after_evidence: 每次移动，都对应一个能在橱窗里看清的问题。
+      preserved_event_evidence:
+        - 藏青西装外套、白色上衣与直筒牛仔裤的橱窗组合
+        - 陈列师完成穿搭并退到玻璃外复核
+      execution_card_delta:
+        capture_operator_mode: fixed_phone_self_operated
+        capture_setup: fixed_phone_or_existing_operator
+        independent_capture_human_required: false
+        hired_performer_count: 0
+        event_required_people_min: 1
+        capture_required_people_min: 1
+        event_human_roles: [visual_merchandiser]
+        mannequin_role: display_prop_not_human
+
+    - asset_id: P7D40-REPAIR-243
+      before_body_text: >-
+        换季陈列时，店长先把权限分清：导购整理挂通，陈列师给橱窗人台调整风衣、针织和阔腿裤，店长检查通道与安全。人台朝向入口，只是承载服装的道具，不计作真人。三名当班员工各做自己的工作，不抢同一动作；方法可以复用，具体位置仍服从现场空间。
+      after_body_text: >-
+        换季陈列时，店长先把权限分清：导购整理挂通，陈列师给橱窗人台调整风衣、针织和阔腿裤，店长检查通道与安全。人台朝向入口。每个岗位各做自己的工作，不抢同一动作；方法可以复用，具体位置仍服从现场空间。
+      removed_execution_metadata:
+        - 人台只是承载服装的道具，不计作真人
+        - 三名当班员工
+      preserved_business_judgment:
+        before_evidence: 方法可以复用，具体位置仍服从现场空间。
+        after_evidence: 方法可以复用，具体位置仍服从现场空间。
+      preserved_event_evidence:
+        - 店长分清权限并检查通道与安全
+        - 导购整理挂通
+        - 陈列师调整橱窗人台穿搭
+      execution_card_delta:
+        capture_operator_mode: fixed_phone_self_operated
+        capture_setup: fixed_phone_or_existing_operator
+        independent_capture_human_required: false
+        hired_performer_count: 0
+        event_required_people_min: 3
+        capture_required_people_min: 3
+        event_human_roles: [store_manager, sales_associate, visual_merchandiser]
+        mannequin_role: display_prop_not_human
+
+  locked_claims:
+    business_judgment_change_count: 0
+    claim_stance_change_count: 0
+    new_fact_count: 0
+    execution_metadata_moved_not_discarded: true
+  final_acceptance:
+    clean_120_final_acceptance: false
+    pending: [CLAUDE_CODE_GUARDIAN, FOUNDER_FINAL_ACCEPTANCE]

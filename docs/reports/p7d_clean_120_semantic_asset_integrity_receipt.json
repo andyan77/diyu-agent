@@ -1,0 +1,60 @@
+{
+  "task_id": "GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001",
+  "head_before": "54e248032a815fa1fe7877cf913326cce5e6ff9e",
+  "head_after": "recorded_by_git_commit_object",
+  "branch": "master",
+  "body": {
+    "changed_count": 6,
+    "changed_ids": [
+      "RV80-ASSET-017",
+      "RV80-ASSET-018",
+      "RV80-ASSET-059",
+      "RV80-ASSET-060",
+      "P7D40-REPAIR-234",
+      "P7D40-REPAIR-243"
+    ],
+    "unchanged_byte_identical_count": 114,
+    "metadata_leak_count": 0
+  },
+  "role_semantics": {
+    "machine_semantics_scope": "STRUCTURAL_EVIDENCE_ONLY",
+    "classified_mention_count": 333,
+    "unclassified_count": 0,
+    "action_binding_count": 282,
+    "action_without_evidence_count": 0,
+    "absent_or_hypothetical_executor_count": 0,
+    "participant_mismatch_count": 0
+  },
+  "kernel_split": {
+    "source_ref_count": 120,
+    "source_digest_match_count": 120,
+    "source_mutation_count": 0,
+    "expression_kernel_count": 120,
+    "nonempty_field_count": 895,
+    "evidence_span_count": 895,
+    "evidence_coverage": "100%",
+    "unsupported_element_count": 0,
+    "placeholder_subject_count": 0
+  },
+  "checks": {
+    "live": "PASS",
+    "selftest": "PASS",
+    "negative_fixture_count": 17,
+    "python_O_fail_closed": "exit_2",
+    "ruff": "PASS",
+    "py_compile": "PASS"
+  },
+  "result_status": "CLEAN_120_SEMANTIC_ASSET_REPAIR_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_ACCEPTANCE",
+  "claude_code_guardian_review": "PENDING",
+  "founder_final_acceptance": false,
+  "expression_diversity": {
+    "status": "OPEN_SCALE_RISK"
+  },
+  "scale": {
+    "expand_600": false,
+    "expand_3600": false
+  },
+  "downstream_and_readiness": {
+    "all_false": true
+  }
+}
