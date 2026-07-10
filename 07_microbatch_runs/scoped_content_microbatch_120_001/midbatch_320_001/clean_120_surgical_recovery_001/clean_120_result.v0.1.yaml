@@ -1,0 +1,46 @@
+clean_120_result:
+  task_id: GKB-P7D-CLEAN-120-SURGICAL-RECOVERY-AND-FINAL-REVIEW-HANDOFF-001
+  result_status: CLEAN_120_SURGICAL_RECOVERY_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_REVIEW
+  source_120:
+    founder_40_count: 40
+    repair_80_count: 80
+    unique_kernel_count: 120
+    knowledge_count_increment: 0
+  audit:
+    repair_registry_sha256: 9bd9d2b89966f62942bc1c09e0eadcf3aa0923ac096dc427c03b884797cddb9c
+    approved_body_change_count: 6
+    body_repair_count: 6
+    metadata_only_repair_count: 7
+    unchanged_source_body_count: 114
+    rejected_body_parent_count: 0
+  machine_gate:
+    status: PASS
+    cross_layer_failure_count: 0
+    event_mismatch_count: 0
+    claim_route_mismatch_count: 0
+    unsupported_claim_count: 0
+    semantic_invariant_failure_count: 0
+    language_surface_failure_count: 0
+    formula_blocker_count: 0
+    exact_duplicate_count: 0
+    normalized_duplicate_count: 0
+    exact_opening_sentence_reuse_max: 1
+    exact_closing_sentence_reuse_max: 1
+    exact_claim_boundary_sentence_reuse_max: 1
+    kernel_overlap_max: 12
+    l2_asset_count: 5
+    l2_asset_share: 0.041667
+  semantic_claim: structural_semantic_preservation_evidence_only_pending_expert_review
+  claude_code_guardian_review: PENDING
+  founder_final_acceptance: PENDING
+  scale:
+    expand_600: false
+    expand_3600: false
+  downstream:
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED
+  readiness_all_false: true

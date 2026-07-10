@@ -104,3 +104,11 @@
 - composite machine gate 诚实返回 `PARTIAL_REPAIR_BLOCKED`：仍有 3 条 prototype depiction mismatch、4 条 claim-route mismatch、1 条 unsupported-claim 句、69 条批次公式浓度 blocker，以及独立 checker 发现的 6 条 Kernel overlap 超限（阈值 17，最大 19）。
 - L2 明示边界为 33/120（27.5%），事实安全未因反公式目标被削弱；该比例及全部剩余 blocker 必须交 Claude Code 做 120 条全量 Guardian Review。
 - 本次不改变任何旧 step status；`expand_600=false`、`expand_3600=false`，CandidatePack/KE/Serving/RAG/DIFY/production 与全部 readiness 继续关闭。
+
+## P7D Clean-120 Surgical Recovery
+
+- `GKB-P7D-CLEAN-120-SURGICAL-RECOVERY-AND-FINAL-REVIEW-HANDOFF-001` 只从不可变 Founder-40 与 Repair-80 恢复正文；上一轮 `final_120_semantic_repair_001` 保留为 negative result，不作正文父版本。
+- 先冻结 120 行 repair registry，再逐条完成 6 条获批正文外科修复；其余 114 条正文与 source 保持一致，知识计数增量为 0。
+- 旧 6 条 Kernel overlap blocker 按统一 NFKC comparator 在 source 上重算为 5/5/7/5/9/5，均属 false positive；全体 clean candidate 最大 overlap 为 12，阈值保持 17 不变。
+- 机器闸只声明结构性保义证据；Clean-120 仍待 Claude Code 全量 Guardian Review 与 Founder 最终接受，不自称 canonical accepted corpus。
+- `route_migration_14` 只 additive 记录恢复事实；旧 step status、`expand_600=false`、`expand_3600=false`、全部下游与 readiness 均保持不变。

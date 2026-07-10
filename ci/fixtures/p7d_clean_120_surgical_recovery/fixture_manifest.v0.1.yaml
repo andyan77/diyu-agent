@@ -1,0 +1,25 @@
+p7d_clean_120_surgical_recovery_selftest:
+  schema_version: v0.1
+  positive_fixture: live_clean_120_package_without_repository_side_effect_checks
+  negative_cases:
+    - rejected_body_parent
+    - registry_outside_body_change
+    - polarity_inversion
+    - deferral_lost
+    - action_order_changed
+    - claim_stance_changed
+    - orphan_quote
+    - role_undeclared
+    - participant_undercount
+    - human_mannequin_confusion
+    - prototype_as_actual
+    - high_risk_to_l0
+    - generic_l2_reuse
+    - threshold_tamper
+    - normalization_tamper
+    - readiness_true
+    - scale_true
+    - kernel_changed
+    - mechanical_transform
+    - knowledge_inflation
+  separate_primitive_case: kernel_overlap_18

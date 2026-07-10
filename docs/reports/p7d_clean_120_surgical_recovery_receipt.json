@@ -1,0 +1,38 @@
+{
+  "task_id": "GKB-P7D-CLEAN-120-SURGICAL-RECOVERY-AND-FINAL-REVIEW-HANDOFF-001",
+  "head_before": "045065bc364dca508b8783503f3601089c9ecbf8",
+  "head_after": "recorded_by_git_commit_object",
+  "branch": "master",
+  "source_120": {
+    "founder_40_count": 40,
+    "repair_80_count": 80,
+    "unique_kernel_count": 120
+  },
+  "audit": {
+    "body_repair_count": 6,
+    "metadata_only_repair_count": 7,
+    "unchanged_source_body_count": 114,
+    "rejected_body_parent_count": 0,
+    "repair_registry_sha256": "9bd9d2b89966f62942bc1c09e0eadcf3aa0923ac096dc427c03b884797cddb9c"
+  },
+  "machine_gate": {
+    "status": "PASS",
+    "cross_layer_failure_count": 0,
+    "event_mismatch_count": 0,
+    "claim_route_mismatch_count": 0,
+    "unsupported_claim_count": 0,
+    "semantic_invariant_failure_count": 0,
+    "language_surface_failure_count": 0,
+    "formula_blocker_count": 0,
+    "kernel_overlap_max": 12
+  },
+  "result_status": "CLEAN_120_SURGICAL_RECOVERY_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_REVIEW",
+  "claude_code_guardian_review": "PENDING",
+  "founder_final_acceptance": "PENDING",
+  "scale": {
+    "expand_600": false,
+    "expand_3600": false
+  },
+  "downstream_all_blocked": true,
+  "readiness_all_false": true
+}

@@ -1,0 +1,206 @@
+clean_120_guardian_review_packet:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-SURGICAL-RECOVERY-AND-FINAL-REVIEW-HANDOFF-001
+  candidate_manifest: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_surgical_recovery_001/clean_120_candidate_manifest.v0.1.jsonl
+  candidate_count: 120
+  changed_asset_count: 6
+  changed_assets_before_after:
+  - asset_id: P7D40-REPAIR-234
+    kernel_id: SCM120-CAND-089
+    source_body: 橱窗里的藏青西装外套先压住白色上衣，再用直筒牛仔裤把正式感放松下来。陈列师完成穿搭后退到玻璃外看：肩线是否被灯压暗，裤脚有没有挡住底座，主角是否一眼可见。模特负责呈现，陈列师负责调整。每一次移动都要回答一个清楚的问题。
+    clean_body: 橱窗里的藏青西装外套压住白色上衣，直筒牛仔裤把正式感放松下来。陈列师给橱窗人台完成穿搭后，退到玻璃外复核：肩线有没有被灯压暗，裤脚是否挡住底座，主角能不能第一眼被看见。人台只负责承载衣服，是陈列道具；现场动作由陈列师一人完成。每次移动，都对应一个能在橱窗里看清的问题。
+    repair_reason_codes:
+    - model_participation_disambiguation
+    meaning_invariants:
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 陈列师完成穿搭后退到玻璃外看
+      target_evidence: 陈列师给橱窗人台完成穿搭后，退到玻璃外复核
+      change_allowed: false
+    - kind: observe_only
+      canonical_value: observe_only_preserved_from_source
+      source_evidence: 模特负责呈现，陈列师负责调整
+      target_evidence: 人台只负责承载衣服，是陈列道具；现场动作由陈列师一人完成
+      change_allowed: false
+    - kind: recommendation_direction
+      canonical_value: recommendation_direction_preserved_from_source
+      source_evidence: 每一次移动都要回答一个清楚的问题
+      target_evidence: 每次移动，都对应一个能在橱窗里看清的问题
+      change_allowed: false
+    facts_changed: false
+    kernel_changed: false
+    claim_safety_reduced: false
+  - asset_id: P7D40-REPAIR-243
+    kernel_id: SCM120-CAND-093
+    source_body: 换季陈列前，店长先划清谁能动什么：导购整理挂通，陈列师调整模特，店长确认通道和安全。风衣敞开搭在针织外，阔腿裤在鞋面处留一点堆量，模特的身体朝向入口。方法可以复用，具体位置必须服从当下空间；三个人不抢同一个动作，陈列才不会隔夜又散。
+    clean_body: 换季陈列时，店长先把权限分清：导购整理挂通，陈列师给橱窗人台调整风衣、针织和阔腿裤，店长检查通道与安全。人台朝向入口，只是承载服装的道具，不计作真人。三名当班员工各做自己的工作，不抢同一动作；方法可以复用，具体位置仍服从现场空间。
+    repair_reason_codes:
+    - model_participation_disambiguation
+    meaning_invariants:
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 店长先划清谁能动什么
+      target_evidence: 店长先把权限分清
+      change_allowed: false
+    - kind: observe_only
+      canonical_value: observe_only_preserved_from_source
+      source_evidence: 模特的身体朝向入口
+      target_evidence: 人台朝向入口，只是承载服装的道具，不计作真人
+      change_allowed: false
+    - kind: recommendation_direction
+      canonical_value: recommendation_direction_preserved_from_source
+      source_evidence: 具体位置必须服从当下空间
+      target_evidence: 具体位置仍服从现场空间
+      change_allowed: false
+    facts_changed: false
+    kernel_changed: false
+    claim_safety_reduced: false
+  - asset_id: RV80-ASSET-017
+    kernel_id: SCM120-CAND-026
+    source_body: 店还没开，我正站在驼色大衣墙前分派今天的讲法。买手只说为什么把它放进这批货，陈列师讲它怎样稳住两侧灰蓝针织，导购则准备回答上身先看哪里。只说你这个岗位真正碰过的那一层。三个人不抢同一句，整件衣服反而更完整。
+    clean_body: 上新交接时，驼色大衣挂在墙中间。店长把手机固定在中岛旁，不另找演员。买手指出落肩和扣子的选款考虑，陈列师退到入口看它怎样稳住两侧灰蓝针织，导购最后演示上身时先看肩线还是先松腰带。店长只提醒一句：各讲自己碰过的那一层，别替下个岗位补话。四名当班同事各完成一个真实工作动作，三段观察合起来，衣服才完整。
+    repair_reason_codes:
+    - known_c_role_participant_repair
+    meaning_invariants:
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 买手只说为什么把它放进这批货，陈列师讲它怎样稳住两侧灰蓝针织，导购则准备回答上身先看哪里
+      target_evidence: 买手指出落肩和扣子的选款考虑，陈列师退到入口看它怎样稳住两侧灰蓝针织，导购最后演示上身时先看肩线还是先松腰带
+      change_allowed: false
+    - kind: prohibition
+      canonical_value: prohibition_preserved_from_source
+      source_evidence: 三个人不抢同一句
+      target_evidence: 别替下个岗位补话
+      change_allowed: false
+    - kind: recommendation_direction
+      canonical_value: recommendation_direction_preserved_from_source
+      source_evidence: 只说你这个岗位真正碰过的那一层
+      target_evidence: 各讲自己碰过的那一层
+      change_allowed: false
+    facts_changed: false
+    kernel_changed: false
+    claim_safety_reduced: false
+  - asset_id: RV80-ASSET-018
+    kernel_id: SCM120-CAND-027
+    source_body: 开门前，我们围着中岛那件驼色大衣重新对了一次话。买手只讲为何选择落肩与扣子，陈列师说它该放在哪个高度，导购演示腰带松开和收起的两种状态。一件衣服可以有三种入口，但不能有三套事实。三段各自署上岗位，之后谁接着讲，也知道边界在哪里。
+    clean_body: 开门前的中岛交接，可以把驼色大衣分成三段来讲。买手说明落肩和扣子的选择，陈列师站到入口判断挂高与整组重心，导购在镜前演示腰带松开和收起。店长把三段按岗位署名，不让任何人替别人补事实。一件衣服可以有三种入口，但只有同一组可核对的结构与穿法；手机固定拍下这次交接，不需要谁扮演谁。
+    repair_reason_codes:
+    - known_c_role_participant_repair
+    meaning_invariants:
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 买手只讲为何选择落肩与扣子，陈列师说它该放在哪个高度，导购演示腰带松开和收起的两种状态
+      target_evidence: 买手说明落肩和扣子的选择，陈列师站到入口判断挂高与整组重心，导购在镜前演示腰带松开和收起
+      change_allowed: false
+    - kind: prohibition
+      canonical_value: prohibition_preserved_from_source
+      source_evidence: 不能有三套事实
+      target_evidence: 不让任何人替别人补事实
+      change_allowed: false
+    - kind: recommendation_direction
+      canonical_value: recommendation_direction_preserved_from_source
+      source_evidence: 三段各自署上岗位
+      target_evidence: 店长把三段按岗位署名
+      change_allowed: false
+    facts_changed: false
+    kernel_changed: false
+    claim_safety_reduced: false
+  - asset_id: RV80-ASSET-059
+    kernel_id: SCM120-CAND-088
+    source_body: 我正拿着清单核对今天能上墙的服装。确认尺码与状态后，才给模特换上廓形西装和阔腿裤；完成以后再退后，看肩部与裤长是否在同一条视线上。检查、实施、复核，各有一个结束标志。先把前一步做完，后一步才有东西可接，也少一次半途返工。
+    clean_body: 陈列上墙前，店长先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤。衣服穿好后，她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上。检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。手机固定在陈列台侧面，现场只有店长一人，人台是道具，不计真人。
+    repair_reason_codes:
+    - known_c_mannequin_event_repair
+    meaning_invariants:
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 确认尺码与状态后，才给模特换上廓形西装和阔腿裤；完成以后再退后
+      target_evidence: 先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤
+      change_allowed: false
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 检查、实施、复核
+      target_evidence: 检查结束才实施，实施结束再复核
+      change_allowed: false
+    - kind: observe_only
+      canonical_value: observe_only_preserved_from_source
+      source_evidence: 给模特换上廓形西装和阔腿裤
+      target_evidence: 人台是道具，不计真人
+      change_allowed: false
+    facts_changed: false
+    kernel_changed: false
+    claim_safety_reduced: false
+  - asset_id: RV80-ASSET-060
+    kernel_id: SCM120-CAND-090
+    source_body: 今早模特换到一半，我们又把衣服全部拿了下来。风衣还没整烫，层板尺码也没核清，继续搭只会越做越乱。先处理这两件事，再让风衣敞穿、针织露出领口、阔腿裤接住下半身。返工往往不是手慢，是顺序快了。开门前再从入口完整看一遍。
+    clean_body: 遇到风衣还没整烫、层板尺码也没核清时，店长先暂停给橱窗人台换装，把衣服从人台上取下。整烫与尺码检查完成后，再让人台敞穿风衣，露出针织领口，由阔腿裤接住下半身；最后从入口复核整组。返工常常不是手慢，而是顺序抢跑。手机固定在入口层板，店长一人完成，人台只是陈列道具。
+    repair_reason_codes:
+    - known_c_mannequin_event_repair
+    meaning_invariants:
+    - kind: deferral
+      canonical_value: deferral_preserved_from_source
+      source_evidence: 继续搭只会越做越乱
+      target_evidence: 店长先暂停给橱窗人台换装
+      change_allowed: false
+    - kind: action_order
+      canonical_value: action_order_preserved_from_source
+      source_evidence: 先处理这两件事，再让风衣敞穿
+      target_evidence: 整烫与尺码检查完成后，再让人台敞穿风衣
+      change_allowed: false
+    - kind: observe_only
+      canonical_value: observe_only_preserved_from_source
+      source_evidence: 模特换到一半
+      target_evidence: 人台只是陈列道具
+      change_allowed: false
+    facts_changed: false
+    kernel_changed: false
+    claim_safety_reduced: false
+  canonical_overlap_recomputation:
+    metric: longest_contiguous_exact_overlap
+    maximum_allowed_chars: 17
+    corpus_max_chars: 12
+    prior_six_false_positives:
+    - asset_id: RV80-ASSET-043
+      overlap_length: 5
+      matched_kernel_id: SCM120-CAND-012
+      matched_kernel_field: tradeoff_or_tension
+      matched_substring: 先把袖口翻
+    - asset_id: RV80-ASSET-052
+      overlap_length: 5
+      matched_kernel_id: SCM120-CAND-118
+      matched_kernel_field: spoken_line_seed
+      matched_substring: 焦糖灯芯绒
+    - asset_id: RV80-ASSET-056
+      overlap_length: 7
+      matched_kernel_id: SCM120-CAND-084
+      matched_kernel_field: object_anchor
+      matched_substring: 针织内搭的袖口
+    - asset_id: RV80-ASSET-063
+      overlap_length: 5
+      matched_kernel_id: SCM120-CAND-006
+      matched_kernel_field: business_judgment
+      matched_substring: 能当场看见
+    - asset_id: RV80-ASSET-070
+      overlap_length: 9
+      matched_kernel_id: SCM120-CAND-105
+      matched_kernel_field: spoken_line_seed
+      matched_substring: 一件米白风衣第一次
+    - asset_id: RV80-ASSET-075
+      overlap_length: 5
+      matched_kernel_id: SCM120-CAND-114
+      matched_kernel_field: business_judgment
+      matched_substring: 穿了会怎样
+  prior_negative_result:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/final_120_semantic_repair_001
+    status: NEGATIVE_RESULT_REJECTED_AS_CANONICAL_CORPUS
+    body_source_used: false
+  guardian_must_review:
+    all_120_bodies: true
+    all_changed_before_after: true
+    independent_metric_recompute: true
+    exact_abcd_required: true
+    final_acceptance_authority: Founder
+  machine_limitations:
+  - machine gates do not claim full semantic understanding
+  - platform naturalness and content quality remain expert review questions
+  - no scale or downstream readiness follows from this package

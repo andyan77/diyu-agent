@@ -1,0 +1,866 @@
+{
+  "checker_status": "PASS",
+  "error_count": 0,
+  "errors": [],
+  "execution_result_status": "CLEAN_120_SURGICAL_RECOVERY_EXECUTED_PENDING_CLAUDE_GUARDIAN_AND_FOUNDER_FINAL_REVIEW",
+  "metrics": {
+    "asset_count": 120,
+    "body_repair_count": 6,
+    "claim_route_mismatch_count": 0,
+    "cross_layer_failure_count": 0,
+    "event_mismatch_count": 0,
+    "false_positive_or_closed_by_recovery_count": 90,
+    "formula_blocker_count": 0,
+    "kernel_overlap_max": 12,
+    "l2_asset_count": 5,
+    "language_surface_failure_count": 0,
+    "metadata_only_repair_count": 7,
+    "overlap_details": [
+      {
+        "asset_id": "RV80-ASSET-001",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-001",
+        "matched_substring": "试衣间外",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-002",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-001",
+        "matched_substring": "先别急着",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-006",
+        "matched_kernel_field": "scene_premise",
+        "matched_kernel_id": "SCM120-CAND-003",
+        "matched_substring": "样衣间",
+        "overlap_length": 3
+      },
+      {
+        "asset_id": "P7D40-REPAIR-012",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-004",
+        "matched_substring": "羊毛大衣从",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-003",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-020",
+        "matched_substring": "了一下",
+        "overlap_length": 3
+      },
+      {
+        "asset_id": "RV80-ASSET-004",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-007",
+        "matched_substring": "刚从工作台下来",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-005",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-007",
+        "matched_substring": "在第一件",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-021",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-008",
+        "matched_substring": "门襟扣到第二颗",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-006",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-038",
+        "matched_substring": "打烊后我把",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-007",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-010",
+        "matched_substring": "腰线以下留",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-008",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-011",
+        "matched_substring": "顺门襟往下",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-030",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-024",
+        "matched_substring": "外套袖口",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-009",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-013",
+        "matched_substring": "走动时下摆",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-040",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-014",
+        "matched_substring": "一条高腰直筒牛仔裤",
+        "overlap_length": 9
+      },
+      {
+        "asset_id": "RV80-ASSET-010",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-015",
+        "matched_substring": "驼色大衣",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-011",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-016",
+        "matched_substring": "白T阔腿裤针织裙",
+        "overlap_length": 8
+      },
+      {
+        "asset_id": "P7D40-REPAIR-048",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-025",
+        "matched_substring": "一件衣服在不同",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-012",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-024",
+        "matched_substring": "水洗牛仔外套",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-013",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-021",
+        "matched_substring": "同一件衣服",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-014",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-020",
+        "matched_substring": "的卡其风衣",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-054",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-021",
+        "matched_substring": "燕麦色针织",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-063",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-025",
+        "matched_substring": "能看见的",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-015",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-038",
+        "matched_substring": "分量压住下摆",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-016",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-024",
+        "matched_substring": "水洗牛仔外套",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "P7D40-REPAIR-071",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-025",
+        "matched_substring": "一件风衣挂在",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-017",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-026",
+        "matched_substring": "两侧灰蓝针织",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-018",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-015",
+        "matched_substring": "驼色大衣",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-019",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-028",
+        "matched_substring": "暖光下绒色偏红",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "P7D40-REPAIR-077",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-064",
+        "matched_substring": "色粗针毛衣",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-020",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-030",
+        "matched_substring": "买手账本里",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-021",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-031",
+        "matched_substring": "腰头明线裤脚压鞋面",
+        "overlap_length": 9
+      },
+      {
+        "asset_id": "P7D40-REPAIR-082",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-032",
+        "matched_substring": "藏青羊毛西装外套",
+        "overlap_length": 8
+      },
+      {
+        "asset_id": "RV80-ASSET-022",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-033",
+        "matched_substring": "风衣的讲",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-089",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-041",
+        "matched_substring": "先别急着夸这件",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-023",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-010",
+        "matched_substring": "手停在一",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-024",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-013",
+        "matched_substring": "身体效果",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-097",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-037",
+        "matched_substring": "砂色工装衬衫",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-025",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-038",
+        "matched_substring": "在收银台上",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-026",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-036",
+        "matched_substring": "两件事",
+        "overlap_length": 3
+      },
+      {
+        "asset_id": "P7D40-REPAIR-105",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-040",
+        "matched_substring": "圆领上装从",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-027",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-042",
+        "matched_substring": "到下装一件到底的",
+        "overlap_length": 8
+      },
+      {
+        "asset_id": "RV80-ASSET-028",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-042",
+        "matched_substring": "成分与克重",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-029",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-064",
+        "matched_substring": "当场核对的",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-030",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-044",
+        "matched_substring": "两件同色",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-115",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-045",
+        "matched_substring": "一件落肩宽",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-127",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-046",
+        "matched_substring": "白衬衫和",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-031",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-012",
+        "matched_substring": "先把袖口",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-032",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-046",
+        "matched_substring": "针织线圈",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-129",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-049",
+        "matched_substring": "姜黄色缎面衬衫在冷白",
+        "overlap_length": 10
+      },
+      {
+        "asset_id": "RV80-ASSET-033",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-050",
+        "matched_substring": "窗边天光",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-034",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-051",
+        "matched_substring": "灯芯绒衬衫",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-035",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-052",
+        "matched_substring": "肩部走向",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-138",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-053",
+        "matched_substring": "茧型毛呢外套",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-036",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-052",
+        "matched_substring": "视觉重心",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-151",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-055",
+        "matched_substring": "棉麻外套翻到内侧",
+        "overlap_length": 8
+      },
+      {
+        "asset_id": "RV80-ASSET-037",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-055",
+        "matched_substring": "和领口压线",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-038",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-012",
+        "matched_substring": "这件外套",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-039",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-013",
+        "matched_substring": "这件长风衣",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-154",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-059",
+        "matched_substring": "卡其直筒裤",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-040",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-053",
+        "matched_substring": "线怎么走",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-041",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-061",
+        "matched_substring": "照实说耐磨不掉色久穿不松",
+        "overlap_length": 12
+      },
+      {
+        "asset_id": "P7D40-REPAIR-162",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-062",
+        "matched_substring": "羊毛混纺针织衫",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-042",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-006",
+        "matched_substring": "能当场看",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-043",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-012",
+        "matched_substring": "先把袖口翻",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-170",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-068",
+        "matched_substring": "把整件衣服",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-044",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-066",
+        "matched_substring": "后袋两片布的",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "P7D40-REPAIR-177",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-067",
+        "matched_substring": "说不清的性能",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-045",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-068",
+        "matched_substring": "看不见的性能",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-046",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-069",
+        "matched_substring": "坐在高凳上",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-191",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-070",
+        "matched_substring": "整体轮廓层次",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-047",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-071",
+        "matched_substring": "叠穿针织",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-048",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-072",
+        "matched_substring": "卷起的袖口",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-049",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-073",
+        "matched_substring": "面积辅色",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-050",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-013",
+        "matched_substring": "件长风衣",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-195",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-076",
+        "matched_substring": "第一眼找不到",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-051",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-056",
+        "matched_substring": "先不急着",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-202",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-012",
+        "matched_substring": "门襟领口",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-052",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-118",
+        "matched_substring": "焦糖灯芯绒",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-053",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-033",
+        "matched_substring": "一件风衣的",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-054",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-080",
+        "matched_substring": "再捏起风衣下摆翻出内衬指",
+        "overlap_length": 12
+      },
+      {
+        "asset_id": "P7D40-REPAIR-214",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-080",
+        "matched_substring": "搭在手臂上比",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-055",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-092",
+        "matched_substring": "把白衬衫",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-224",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-059",
+        "matched_substring": "留给穿的人",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-056",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-084",
+        "matched_substring": "针织内搭的袖口",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-057",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-085",
+        "matched_substring": "掖进百褶裙腰",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "P7D40-REPAIR-226",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-001",
+        "matched_substring": "试衣间外",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-058",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-072",
+        "matched_substring": "在画面里",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-059",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-088",
+        "matched_substring": "在同一条视线上",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "P7D40-REPAIR-234",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-089",
+        "matched_substring": "藏青西装外套压",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-060",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-090",
+        "matched_substring": "敞穿风衣",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-061",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-091",
+        "matched_substring": "巧克力色直筒裤",
+        "overlap_length": 7
+      },
+      {
+        "asset_id": "RV80-ASSET-062",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-092",
+        "matched_substring": "导购已经把中岛那摞",
+        "overlap_length": 9
+      },
+      {
+        "asset_id": "P7D40-REPAIR-243",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-010",
+        "matched_substring": "挂通陈列",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-063",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-006",
+        "matched_substring": "能当场看见",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-064",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-095",
+        "matched_substring": "墨绿灯芯绒",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-254",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-028",
+        "matched_substring": "焦糖色灯芯绒阔腿裤",
+        "overlap_length": 9
+      },
+      {
+        "asset_id": "P7D40-REPAIR-263",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-098",
+        "matched_substring": "在这段生活里",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-065",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-020",
+        "matched_substring": "卡其风衣腰带",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-066",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-008",
+        "matched_substring": "门襟扣到",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-067",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-118",
+        "matched_substring": "焦糖灯芯绒",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-068",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-112",
+        "matched_substring": "领口与袖口",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-267",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-102",
+        "matched_substring": "无里衬对折边缲缝线脚",
+        "overlap_length": 10
+      },
+      {
+        "asset_id": "P7D40-REPAIR-276",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-087",
+        "matched_substring": "一件卡其风衣",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-069",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-105",
+        "matched_substring": "风衣第一次",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "RV80-ASSET-070",
+        "matched_kernel_field": "spoken_line_seed",
+        "matched_kernel_id": "SCM120-CAND-105",
+        "matched_substring": "一件米白风衣第一次",
+        "overlap_length": 9
+      },
+      {
+        "asset_id": "P7D40-REPAIR-287",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-106",
+        "matched_substring": "围巾牵住颜色",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-071",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-107",
+        "matched_substring": "把姜黄与藏青",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-072",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-107",
+        "matched_substring": "补住画面",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "P7D40-REPAIR-289",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-014",
+        "matched_substring": "能不能",
+        "overlap_length": 3
+      },
+      {
+        "asset_id": "RV80-ASSET-073",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-110",
+        "matched_substring": "换成能塞进裤腰的短打",
+        "overlap_length": 10
+      },
+      {
+        "asset_id": "RV80-ASSET-074",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-111",
+        "matched_substring": "直筒西装裤配针织背心",
+        "overlap_length": 10
+      },
+      {
+        "asset_id": "RV80-ASSET-075",
+        "matched_kernel_field": "business_judgment",
+        "matched_kernel_id": "SCM120-CAND-114",
+        "matched_substring": "穿了会怎样",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-298",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-011",
+        "matched_substring": "只剩一句",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-076",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-035",
+        "matched_substring": "针织开衫",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-077",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-115",
+        "matched_substring": "主角同色针织",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "P7D40-REPAIR-312",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-116",
+        "matched_substring": "延续还是对比",
+        "overlap_length": 6
+      },
+      {
+        "asset_id": "RV80-ASSET-078",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-117",
+        "matched_substring": "延伸款退到",
+        "overlap_length": 5
+      },
+      {
+        "asset_id": "P7D40-REPAIR-316",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-118",
+        "matched_substring": "焦糖色灯芯绒半裙",
+        "overlap_length": 8
+      },
+      {
+        "asset_id": "RV80-ASSET-079",
+        "matched_kernel_field": "object_anchor",
+        "matched_kernel_id": "SCM120-CAND-119",
+        "matched_substring": "米色风衣",
+        "overlap_length": 4
+      },
+      {
+        "asset_id": "RV80-ASSET-080",
+        "matched_kernel_field": "tradeoff_or_tension",
+        "matched_kernel_id": "SCM120-CAND-028",
+        "matched_substring": "一条阔腿裤",
+        "overlap_length": 5
+      }
+    ],
+    "prior_blocker_disposition_count": 97,
+    "semantic_invariant_failure_count": 0,
+    "unique_kernel_count": 120,
+    "unsupported_claim_count": 0
+  },
+  "task_id": "GKB-P7D-CLEAN-120-SURGICAL-RECOVERY-AND-FINAL-REVIEW-HANDOFF-001"
+}
