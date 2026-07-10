@@ -759,7 +759,17 @@ def validate_live(root: Path) -> tuple[list[str], dict[str, Any]]:
     for pattern in true_patterns:
         if re.search(pattern, all_task_text, re.I):
             errors.append(f"forbidden readiness/scale truth found: {pattern}")
-    metrics.update({"branch": branch, "head": head, "changed_path_count": len(paths), "original_assets_unchanged": not validate_original_midbatch_immutable(root), "readiness_false": not any("readiness" in error or "improperly unlocks" in error for error in errors)})
+    metrics.update({
+        "branch": branch,
+        "baseline_head": BASELINE_HEAD,
+        "validated_head_relation": "baseline_or_descendant",
+        "changed_path_count": len(paths),
+        "original_assets_unchanged": not validate_original_midbatch_immutable(root),
+        "readiness_false": not any(
+            "readiness" in error or "improperly unlocks" in error
+            for error in errors
+        ),
+    })
     return errors, metrics
 
 
