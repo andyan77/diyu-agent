@@ -1,0 +1,4624 @@
+repair_validation_80_guardian_review_packet:
+  task_id: GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001
+  entry_count: 80
+  codex_does_not_fill_guardian_verdict: true
+  required_review:
+    quality_grade:
+    - A
+    - B
+    - C
+    - D
+    platform_native_fit:
+    - PASS
+    - FAIL
+    daily_execution_fit:
+    - PASS
+    - FAIL
+    event_authenticity:
+    - PASS
+    - FAIL
+    natural_spoken_voice:
+    - PASS
+    - FAIL
+  entries:
+  - asset_id: RV80-ASSET-001
+    kernel_id: SCM120-CAND-001
+    canonical_cluster_id: mkc_007
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    body_text: 晚班交接前，试衣间外还留着两件米白外套。导购没有替人讲品牌故事，只把它们重新挂到镜前：一件肩部更平，另一件抬手时背后更松。她说，先把难选的地方摆在一起看。衣服真正要接住的，是眼前这次犹豫。想再比，就带上常穿的内搭走两步。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 试衣间外那件顾客放不下也拿不起的米白外套，以及它两批之间仍压得住的肩线。
+      human_action: 导购把两件外套并排挂回镜前，只比较肩线落点与活动余量
+      scene_premise: 试衣间外的晚班交接
+      event_trigger: 两件米白外套都合身，导购发现顾客反复拿起又放下
+      visible_detail: 一件肩部更平整，另一件抬臂时后背更松
+      business_judgment: 叙事从顾客当下最想卸掉的那份选择成本起笔，再逐层展开选料、排产、分工上反复出现的组织性做法，最后才谈值得被谁记住。
+      tradeoff_or_tension: 顾客站在两件都合适的外套前放不下也拿不起 -> 把叙事起点定在这份顾客选择成本上，而非成立年份或口号
+      spoken_line_seed: 先把难选的地方摆在一起看。
+      natural_next_action: 到店时可用自己的内搭再走动比较一次
+      organization_choice: 叙事从顾客当下最想卸掉的那份选择成本起笔，再逐层展开选料、排产、分工上反复出现的组织性做法，最后才谈值得被谁记住。
+      long_term_tradeoff: 顾客站在两件都合适的外套前放不下也拿不起 -> 把叙事起点定在这份顾客选择成本上，而非成立年份或口号
+      visible_product_trace: 一件肩部更平整，另一件抬臂时后背更松
+      founder_or_team_decision: 导购把两件外套并排挂回镜前，只比较肩线落点与活动余量
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 先把难选的地方摆在一起看。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机固定在试衣镜侧面的窄台上
+      real_work_action: 导购把两件外套并排挂回镜前，只比较肩线落点与活动余量
+      natural_spoken_line: 先把难选的地方摆在一起看。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 到店时可用自己的内搭再走动比较一次
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-002
+    kernel_id: SCM120-CAND-002
+    canonical_cluster_id: mkc_007
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    body_text: 后场刚拆完箱，台面上留了两件针织衫。负责人轻轻拉开领边，再松手看它怎么回位，又顺手捏了捏袖口罗纹。两件的反应并不一样。她没急着给这批货贴上漂亮形容词，只说这一批先别急着全挂出去，先把观察记下来，再往后查。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 买手
+      - 人
+      object_anchor: 针织衫到货回弹抽检——每批抽几件泡水甩干后用手捏领口，看撑开再松手能否弹回原样，作为版型稳定性的可观察证据。
+      human_action: 负责人各拿一件轻拉领口，再平放看恢复状态
+      scene_premise: 到货整理后的后场台面
+      event_trigger: 店员整理针织衫时发现两件领口松紧不同
+      visible_detail: 领边受力后回位速度不同，袖口罗纹也有松紧差
+      business_judgment: 以针织克重下限加到货复核节点的回弹抽检，把版型稳定性与系列一致性锁死，使面料取舍与货品结构围绕同一条克重线排布；由此价值表达与可观察差异对齐，门店解释难度与顾客选择成本一并下降。
+      tradeoff_or_tension: 先锁定顾客买针织衫时背着的选择成本（怕洗两水就领口发垮、袖口起球），把它立成企业所回应的问题场景，作为叙事的第一锚点，而不是从年份或走红事件起笔
+      spoken_line_seed: 这一批先别急着全挂出去。
+      natural_next_action: 把观察记到到货复核表，再继续检查同批货
+      organization_choice: 以针织克重下限加到货复核节点的回弹抽检，把版型稳定性与系列一致性锁死，使面料取舍与货品结构围绕同一条克重线排布；由此价值表达与可观察差异对齐，门店解释难度与顾客选择成本一并下降。
+      long_term_tradeoff: 先锁定顾客买针织衫时背着的选择成本（怕洗两水就领口发垮、袖口起球），把它立成企业所回应的问题场景，作为叙事的第一锚点，而不是从年份或走红事件起笔
+      visible_product_trace: 领边受力后回位速度不同，袖口罗纹也有松紧差
+      founder_or_team_decision: 负责人各拿一件轻拉领口，再平放看恢复状态
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 这一批先别急着全挂出去。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机靠在后场台面的文件架上
+      real_work_action: 负责人各拿一件轻拉领口，再平放看恢复状态
+      natural_spoken_line: 这一批先别急着全挂出去。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 把观察记到到货复核表，再继续检查同批货
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-003
+    kernel_id: SCM120-CAND-005
+    canonical_cluster_id: mkc_008
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    body_text: 大衣已经快定版，领口却在最后一次扣合时起了皱。负责人把厚料摊平，和版师一起把弧线放缓，再别回人台上看翻折。她笑了一下：不是图上好看，布就一定肯配合。今天不讲宏大的认真，只留下这次改动；等样衣回来，还要再扣上、转头、复看。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 一件羊绒混纺大衣，领口收窄、下摆放大，因布厚一压起皱，只得在选料节点上把领口弧度改缓。
+      human_action: 产品负责人展开领口弧线，让版师放缓转折后重新别样
+      scene_premise: 样衣台的领口复核
+      event_trigger: 厚实大衣收窄领口后出现压皱
+      visible_detail: 原弧线在厚料上堆起细皱，放缓后翻折更顺
+      business_judgment: 沿选料、打样、试穿到质量门、复核门、交接门的判断顺序，把每个设计选择与它应对的面料或版型约束成对呈现。
+      tradeoff_or_tension: 厚布收窄领口一压起皱 -> 在选料节点把设计选择与面料约束成对摆出再定领口弧度
+      spoken_line_seed: 不是图上好看，布就一定肯配合。
+      natural_next_action: 修改完成后再做一次扣合与转头测试
+      organization_choice: 沿选料、打样、试穿到质量门、复核门、交接门的判断顺序，把每个设计选择与它应对的面料或版型约束成对呈现。
+      long_term_tradeoff: 厚布收窄领口一压起皱 -> 在选料节点把设计选择与面料约束成对摆出再定领口弧度
+      visible_product_trace: 原弧线在厚料上堆起细皱，放缓后翻折更顺
+      founder_or_team_decision: 产品负责人展开领口弧线，让版师放缓转折后重新别样
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 不是图上好看，布就一定肯配合。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机固定在样衣台对面的书架格中
+      real_work_action: 产品负责人展开领口弧线，让版师放缓转折后重新别样
+      natural_spoken_line: 不是图上好看，布就一定肯配合。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 修改完成后再做一次扣合与转头测试
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-004
+    kernel_id: SCM120-CAND-006
+    canonical_cluster_id: mkc_008
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    body_text: 七月的样衣间里，秋装大衣刚从工作台下来。负责人看了一眼介绍卡，把那些替人下结论的话划掉，转而翻开袖口记录针路，再请版师指一指肩线为什么这样落。能指给人看的，我们就说清楚；其余的先留白。内容不必替衣服抢答，也不必替顾客决定。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 一件刚过打样节点的秋装大衣，袖口针脚走向翻开就能看，肩线的取舍则由版型角色在现场讲清。
+      human_action: 负责人划掉结果词，翻开袖口记录针路，再指向肩线让版师说明取舍
+      scene_premise: 秋装样衣初审后的记录台
+      event_trigger: 介绍卡上同时出现耐穿与修饰身形等结论
+      visible_detail: 袖口针脚方向清楚，肩线位置可在镜前观察
+      business_judgment: 凡是耐穿、显瘦、高级这类替顾客把话说满的硬结论，都在选料节点、打样节点、复核门到交接门的链路上被按住，改成能当场看见的动作，或留空等授权材料补齐，绝不无据落纸。
+      tradeoff_or_tension: 文案想把耐穿显瘦够高级写进吊牌 -> 设计角色按住这类替顾客把话说满的硬结论，只留能在镜前被看见的描述
+      spoken_line_seed: 能指给人看的，我们就说清楚。
+      natural_next_action: 把其余结论留待资料与试穿反馈齐全后再审
+      organization_choice: 凡是耐穿、显瘦、高级这类替顾客把话说满的硬结论，都在选料节点、打样节点、复核门到交接门的链路上被按住，改成能当场看见的动作，或留空等授权材料补齐，绝不无据落纸。
+      long_term_tradeoff: 文案想把耐穿显瘦够高级写进吊牌 -> 设计角色按住这类替顾客把话说满的硬结论，只留能在镜前被看见的描述
+      visible_product_trace: 袖口针脚方向清楚，肩线位置可在镜前观察
+      founder_or_team_decision: 负责人划掉结果词，翻开袖口记录针路，再指向肩线让版师说明取舍
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 能指给人看的，我们就说清楚。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机立在记录台的笔筒旁
+      real_work_action: 负责人划掉结果词，翻开袖口记录针路，再指向肩线让版师说明取舍
+      natural_spoken_line: 能指给人看的，我们就说清楚。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 把其余结论留待资料与试穿反馈齐全后再审
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-005
+    kernel_id: SCM120-CAND-007
+    canonical_cluster_id: mkc_009
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    body_text: 午后经过样衣架，我在第一件外套前停了一会儿。腰线只抬了一点，明扣收进门襟，领子也窄了些。这样的变化不需要反转音乐，更不用替谁安排情绪。先退后看比例，再走近看三处细节。小改动，就按小改动的样子讲，下一轮试穿再看它是否真的更顺。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      - 他
+      object_anchor: 一件腰线上提一指、明扣改暗门襟、领型收窄的外套，改动安静而细小。
+      human_action: 负责人先退后看整体比例，再靠近指腰线、门襟与领型
+      scene_premise: 午后样衣架前
+      event_trigger: 三件外套的改动都很小，内容同事却想硬做反转
+      visible_detail: 腰线略抬、明扣藏起、立领收窄，变化安静但可辨
+      business_judgment: 先按内容要解决的问题类型判断该用哪种叙事弧线，再据结果反差强度决定证据要求，撑不住的反差一律降为可观察镜头。
+      tradeoff_or_tension: 改动细微的版型（提腰线、收领型、改暗门襟）却硬套大反转开头 -> 换成由远及近的观察式讲法，先给搭配比例远景再推腰线落位再停在面料肌理
+      spoken_line_seed: 小改动，就按小改动的样子讲。
+      natural_next_action: 下一次试穿时从远近两个位置再看比例
+      organization_choice: 先按内容要解决的问题类型判断该用哪种叙事弧线，再据结果反差强度决定证据要求，撑不住的反差一律降为可观察镜头。
+      long_term_tradeoff: 改动细微的版型（提腰线、收领型、改暗门襟）却硬套大反转开头 -> 换成由远及近的观察式讲法，先给搭配比例远景再推腰线落位再停在面料肌理
+      visible_product_trace: 腰线略抬、明扣藏起、立领收窄，变化安静但可辨
+      founder_or_team_decision: 负责人先退后看整体比例，再靠近指腰线、门襟与领型
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 小改动，就按小改动的样子讲。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机放在样衣架对面的稳固矮柜上
+      real_work_action: 负责人先退后看整体比例，再靠近指腰线、门襟与领型
+      natural_spoken_line: 小改动，就按小改动的样子讲。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 下一次试穿时从远近两个位置再看比例
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-006
+    kernel_id: SCM120-CAND-009
+    canonical_cluster_id: mkc_009
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    body_text: 打烊后，我把那段过分动人的开头删掉了。店里没有那位被写哭的顾客，也没人说过那些对白。留下来的只有这件棉衬衫：立领收窄，暗扣藏在门襟里，袖口斜纹在灯下很清楚。没发生过的，就别替别人感动。明早让导购拿着实物，再讲一次真的看见了什么。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 收窄立领、暗扣门襟、袖口细密斜纹的棉衬衫
+      human_action: 店长删掉人物情节，拿起棉衬衫展示窄领、暗扣和袖口斜纹
+      scene_premise: 打烊后的收银台旁
+      event_trigger: 草稿替一位并不存在的顾客写了动情经历
+      visible_detail: 立领收得干净，门襟看不到明扣，袖口斜纹在灯下清楚
+      business_judgment: 店长判断一条服装内容该不该用戏剧化讲法，靠的是看讲清它是否必须替顾客编造情绪、或搬出没凭据的话；一旦发现要靠硬编一段内心戏才立得住，就把这种讲法压回对版型、领型、门襟与面料肌理的可验证描述，让看的人自己上手判断。
+      tradeoff_or_tension: 草稿开头把一位顾客写成试穿后红了眼眶、要送自己三十岁礼物，可这段情绪没有任何客人真的对店里讲过，属凭空替陌生人安上的内心戏
+      spoken_line_seed: 没发生过的，就别替别人感动。
+      natural_next_action: 第二天让导购按实物细节重新讲一遍
+      organization_choice: 店长判断一条服装内容该不该用戏剧化讲法，靠的是看讲清它是否必须替顾客编造情绪、或搬出没凭据的话；一旦发现要靠硬编一段内心戏才立得住，就把这种讲法压回对版型、领型、门襟与面料肌理的可验证描述，让看的人自己上手判断。
+      long_term_tradeoff: 草稿开头把一位顾客写成试穿后红了眼眶、要送自己三十岁礼物，可这段情绪没有任何客人真的对店里讲过，属凭空替陌生人安上的内心戏
+      visible_product_trace: 立领收得干净，门襟看不到明扣，袖口斜纹在灯下清楚
+      founder_or_team_decision: 店长删掉人物情节，拿起棉衬衫展示窄领、暗扣和袖口斜纹
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 没发生过的，就别替别人感动。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机固定在收银台侧面的陈列托架上
+      real_work_action: 店长删掉人物情节，拿起棉衬衫展示窄领、暗扣和袖口斜纹
+      natural_spoken_line: 没发生过的，就别替别人感动。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 第二天让导购按实物细节重新讲一遍
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-007
+    kernel_id: SCM120-CAND-010
+    canonical_cluster_id: mkc_010
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    body_text: 靠窗那排衬衫很整齐，可我站在门口什么也没记住。于是先翻起砂色那件的领口，把整杆朝向调一致，再把颜色收成三段，腰线以下留一点空。整齐不够，还得让眼睛知道先看哪里。今天先这样开门，等自然光进来，再从入口复看一次。
+    content_kernel:
+      human_subject:
+      - 店长
+      - 顾客
+      - 陈列师
+      - 她
+      object_anchor: 砂色棉麻衬衫解开最上两颗门襟后、领口向外翻折立起的那个角度
+      human_action: 店长翻起砂色衬衫领口，让整杆领向一致并重新留出腰线下方空隙
+      scene_premise: 靠窗挂通的开店前整理
+      event_trigger: 整排衬衫很齐，却没有一件成为视线入口
+      visible_detail: 翻领形成第一个落点，色组压成三档，袖口方向一致
+      business_judgment: 在挂通陈列里先锁定一处可被指认的领口翻折作视线入口，整杆复制同一朝向，再用色组收束到三档与腰线以下留白强化，让顾客视线沿领口—腰线—袖口一路滑落成一条可复述的路径。
+      tradeoff_or_tension: 整杆按色阶挂满、只讲整体齐整，顾客走近却抓不到任何一件可记住的落点，陷入空泛铺陈的失败态
+      spoken_line_seed: 整齐不够，还得让眼睛知道先看哪里。
+      natural_next_action: 开门后从入口复看第一眼是否仍落在领口
+      organization_choice: 在挂通陈列里先锁定一处可被指认的领口翻折作视线入口，整杆复制同一朝向，再用色组收束到三档与腰线以下留白强化，让顾客视线沿领口—腰线—袖口一路滑落成一条可复述的路径。
+      long_term_tradeoff: 整杆按色阶挂满、只讲整体齐整，顾客走近却抓不到任何一件可记住的落点，陷入空泛铺陈的失败态
+      visible_product_trace: 翻领形成第一个落点，色组压成三档，袖口方向一致
+      founder_or_team_decision: 店长翻起砂色衬衫领口，让整杆领向一致并重新留出腰线下方空隙
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 整齐不够，还得让眼睛知道先看哪里。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机固定在入口一侧的层板上
+      real_work_action: 店长翻起砂色衬衫领口，让整杆领向一致并重新留出腰线下方空隙
+      natural_spoken_line: 整齐不够，还得让眼睛知道先看哪里。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 开门后从入口复看第一眼是否仍落在领口
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-008
+    kernel_id: SCM120-CAND-011
+    canonical_cluster_id: mkc_010
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    body_text: 上新前试讲了三遍，最常出现的词还是好看。我把外套挂近一点，先让同事看翻领的角度，再顺门襟往下指扣位，最后翻开袖口。别把好看当成答案，选一处你真能指出来的细节再开口。她挑了袖口，下一遍就从手上的动作讲起。
+    content_kernel:
+      human_subject:
+      - 搭配师
+      - 人
+      object_anchor: 镜头怼近领口那道翻折、手指顺门襟往下捋这排扣子，是全条最先被指认、也最好动起来的实物落点。
+      human_action: 店长把衣服挂近手机，沿领口、门襟、袖口依次指给同事看
+      scene_premise: 上新前的内容试讲
+      event_trigger: 同事连续几次只说外套好看，讲不出具体理由
+      visible_detail: 翻领角度、扣位间距和袖口内侧成为三个可说落点
+      business_judgment: 把对象锚点（领口翻折/门襟）连到动作（挽袖口、收腰线），动作再连到能说出口的取舍表达，先穿后叠的叠装层次连到节点锚点与前后台衔接，叙述才从空泛形容变成可拍可读的落点。
+      tradeoff_or_tension: 观众半秒就划走、开头只剩一句空泛好看 -> 先在领口翻折或门襟上抓一个能被指认的对象锚点，再让它当镜头下动起来
+      spoken_line_seed: 别把好看当成答案。
+      natural_next_action: 同事任选一处细节，录一段自己的观察
+      organization_choice: 把对象锚点（领口翻折/门襟）连到动作（挽袖口、收腰线），动作再连到能说出口的取舍表达，先穿后叠的叠装层次连到节点锚点与前后台衔接，叙述才从空泛形容变成可拍可读的落点。
+      long_term_tradeoff: 观众半秒就划走、开头只剩一句空泛好看 -> 先在领口翻折或门襟上抓一个能被指认的对象锚点，再让它当镜头下动起来
+      visible_product_trace: 翻领角度、扣位间距和袖口内侧成为三个可说落点
+      founder_or_team_decision: 店长把衣服挂近手机，沿领口、门襟、袖口依次指给同事看
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 别把好看当成答案。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机靠在挂通旁的价格牌底座上
+      real_work_action: 店长把衣服挂近手机，沿领口、门襟、袖口依次指给同事看
+      natural_spoken_line: 别把好看当成答案。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 同事任选一处细节，录一段自己的观察
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-009
+    kernel_id: SCM120-CAND-013
+    canonical_cluster_id: mkc_011
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    body_text: 推文发出前，我又把那件长风衣穿了一次。肩部向下走得直，布带松开时前襟自然分开，走动时下摆留着空间。我把原来那句身体结论删掉，只留下眼睛能核对的状态：我只讲这件衣服现在怎么落。想知道适不适合，还是要把腰带松开、系上，各试一次。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      object_anchor: 一件从肩线直筒垂到脚踝、腰间系一根同色布带、走动时下摆兜风的长风衣。
+      human_action: 店长删去结果承诺，穿上风衣展示肩线、布带和行走时的下摆
+      scene_premise: 门店推文发布前的复核
+      event_trigger: 长风衣文案把直筒轮廓直接写成身体效果
+      visible_detail: 肩部向下垂直，腰带可松可系，下摆走动时留有空间
+      business_judgment: 写服装内容时先把每一句按高风险 narrative zone 分类，再对不同风险 zone 对应的路由动作分别做改写降级、挂起等材料或送复核。
+      tradeoff_or_tension: 文案里冒出'更显瘦'这类身体效果承诺 -> 先归入身体效果承诺区，再把结论改写成肩线到脚踝直筒廓形这种眼睛能验证的观察语言
+      spoken_line_seed: 我只讲这件衣服现在怎么落。
+      natural_next_action: 顾客可到店分别试松腰与系腰状态
+      organization_choice: 写服装内容时先把每一句按高风险 narrative zone 分类，再对不同风险 zone 对应的路由动作分别做改写降级、挂起等材料或送复核。
+      long_term_tradeoff: 文案里冒出'更显瘦'这类身体效果承诺 -> 先归入身体效果承诺区，再把结论改写成肩线到脚踝直筒廓形这种眼睛能验证的观察语言
+      visible_product_trace: 肩部向下垂直，腰带可松可系，下摆走动时留有空间
+      founder_or_team_decision: 店长删去结果承诺，穿上风衣展示肩线、布带和行走时的下摆
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 我只讲这件衣服现在怎么落。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机固定在试衣镜外的小桌上
+      real_work_action: 店长删去结果承诺，穿上风衣展示肩线、布带和行走时的下摆
+      natural_spoken_line: 我只讲这件衣服现在怎么落。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 顾客可到店分别试松腰与系腰状态
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-010
+    kernel_id: SCM120-CAND-015
+    canonical_cluster_id: mkc_011
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    body_text: 闭店后，我把推文里那句夸张的话删了第三次。驼色大衣挂到镜前，肩部平直，腰后暗褶把下摆轻轻撑开，袖口则收得干净。这三处看得见，就够讲一条了。至于穿在谁身上是什么感觉，不由文字抢答；想看，就约个时间到店照一次镜子。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 第一排挂出的那件驼色大衣，肩线压得笔直，腰上一道暗褶让下摆自己荡开，袖口收得利落不压个子。
+      human_action: 店长把大衣挂到镜前，改写为肩线、暗褶、袖口三处观察
+      scene_premise: 闭店后的内容修改
+      event_trigger: 驼色大衣推文反复出现身体效果词，但没有支持材料
+      visible_detail: 肩部平直，腰后暗褶让下摆张开，袖口收束利落
+      business_judgment: 店长写店铺内容时按一句话的风险轻重分档处理：当场看得见的照实写，功效类无出处的降级或留口子，依赖具体同事、顾客、门店事件才成立的一律改成命名槽位并等授权补齐。
+      tradeoff_or_tension: 顾客当面追问'显不显瘦'但店里没有量体数据 -> 店长把功效话术改成当场看得见的腰线与袖口描述
+      spoken_line_seed: 这三处看得见，就够讲一条了。
+      natural_next_action: 私聊预约试穿时按自己的身形再观察
+      organization_choice: 店长写店铺内容时按一句话的风险轻重分档处理：当场看得见的照实写，功效类无出处的降级或留口子，依赖具体同事、顾客、门店事件才成立的一律改成命名槽位并等授权补齐。
+      long_term_tradeoff: 顾客当面追问'显不显瘦'但店里没有量体数据 -> 店长把功效话术改成当场看得见的腰线与袖口描述
+      visible_product_trace: 肩部平直，腰后暗褶让下摆张开，袖口收束利落
+      founder_or_team_decision: 店长把大衣挂到镜前，改写为肩线、暗褶、袖口三处观察
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 这三处看得见，就够讲一条了。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机竖在收银台内侧的文件架上
+      real_work_action: 店长把大衣挂到镜前，改写为肩线、暗褶、袖口三处观察
+      natural_spoken_line: 这三处看得见，就够讲一条了。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 私聊预约试穿时按自己的身形再观察
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-011
+    kernel_id: SCM120-CAND-016
+    canonical_cluster_id: mkc_012
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    body_text: 早会看完排期板，六条风衣内容像同一句话写了六遍。我把白T、阔腿裤、针织裙和卫衣分进四个格子，让同一件风衣分别接住通勤、周末、叠穿和换季。衣服没换，问题可以换。下一条只拍周末那组，不再把通勤卖点换个标题重说。
+    content_kernel:
+      human_subject:
+      - 模特
+      - 人
+      - 她
+      object_anchor: 以一件风衣为主轴，串起白T、阔腿裤、针织裙、卫衣的跨场景与跨形态出镜。
+      human_action: 负责人把白T、阔腿裤、针织裙与卫衣四种组合分到不同主题格
+      scene_premise: 内容排期板前的早会
+      event_trigger: 六条风衣内容都在重复同一个卖点
+      visible_detail: 同一件风衣分别承担通勤、周末、叠穿和换季四种任务
+      business_judgment: 用系列轴统一序列顺序，再靠去重复机制让品类角色轮换主角，保证相邻内容切入点不撞。
+      tradeoff_or_tension: 一批内容彼此撞车、反复喊同一句好看 -> 先定系列轴，用它锁死每条讲什么、相邻靠哪个维度拉开
+      spoken_line_seed: 衣服没换，问题可以换。
+      natural_next_action: 下一条只拍周末组合，暂不重复通勤讲法
+      organization_choice: 用系列轴统一序列顺序，再靠去重复机制让品类角色轮换主角，保证相邻内容切入点不撞。
+      long_term_tradeoff: 一批内容彼此撞车、反复喊同一句好看 -> 先定系列轴，用它锁死每条讲什么、相邻靠哪个维度拉开
+      visible_product_trace: 同一件风衣分别承担通勤、周末、叠穿和换季四种任务
+      founder_or_team_decision: 负责人把白T、阔腿裤、针织裙与卫衣四种组合分到不同主题格
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 衣服没换，问题可以换。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机固定在排期板对面的资料柜上
+      real_work_action: 负责人把白T、阔腿裤、针织裙与卫衣四种组合分到不同主题格
+      natural_spoken_line: 衣服没换，问题可以换。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 下一条只拍周末组合，暂不重复通勤讲法
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-012
+    kernel_id: SCM120-CAND-018
+    canonical_cluster_id: mkc_012
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    body_text: 挂样墙排到第三遍，我先停下来数手里的素材。水洗牛仔外套有平铺图，也有袖口车线特写，却没有真实上身动作。料不够，就先别装成一整个系列。今天只做一条细节记录，等上身段补齐，再按平铺、动作、局部三种形态排成连续内容。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件牛仔外套（偏软水洗牛仔布，可搭阔腿裤）在挂样墙上以平铺图、上身短视频、袖口车缝特写三种形态编排
+      human_action: 负责人核对平铺、上身和车缝特写是否齐全，再给素材排顺序
+      scene_premise: 挂样墙前的素材盘点
+      event_trigger: 团队只有一张平铺图，却想硬排成连续系列
+      visible_detail: 水洗牛仔外套已有袖口车线和平铺轮廓，但缺少真实上身段
+      business_judgment: 系列轴把一批同源跨形态素材（图文、短视频、局部特写）按品类角色与场景任务编排成有序内容序列，用去重复机制保证相邻内容切入点不撞，其成立前提是素材确已成批同源；单条孤立内容硬套则编排空转。
+      tradeoff_or_tension: 先掂量手里是否攒够成批同源素材：够成批（同一件牛仔外套的平铺图、上身段、车缝特写）才启用系列轴，只有孤条则放弃，硬套会让画面空转
+      spoken_line_seed: 料不够，就先别装成一整个系列。
+      natural_next_action: 补齐上身动作后再启动三条连续内容
+      organization_choice: 系列轴把一批同源跨形态素材（图文、短视频、局部特写）按品类角色与场景任务编排成有序内容序列，用去重复机制保证相邻内容切入点不撞，其成立前提是素材确已成批同源；单条孤立内容硬套则编排空转。
+      long_term_tradeoff: 先掂量手里是否攒够成批同源素材：够成批（同一件牛仔外套的平铺图、上身段、车缝特写）才启用系列轴，只有孤条则放弃，硬套会让画面空转
+      visible_product_trace: 水洗牛仔外套已有袖口车线和平铺轮廓，但缺少真实上身段
+      founder_or_team_decision: 负责人核对平铺、上身和车缝特写是否齐全，再给素材排顺序
+      not_claimed_result: 不声称属于某个真实品牌，也不声称经营结果
+      safe_spoken_line: 料不够，就先别装成一整个系列。
+    execution_card:
+      who_executes: 创始人或一名被授权的经营者
+      who_appears: 创始人或一名被授权的经营者
+      phone_placement: 手机放在挂样墙侧边的样册架上
+      real_work_action: 负责人核对平铺、上身和车缝特写是否齐全，再给素材排顺序
+      natural_spoken_line: 料不够，就先别装成一整个系列。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 补齐上身动作后再启动三条连续内容
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-013
+    kernel_id: SCM120-CAND-019
+    canonical_cluster_id: mkc_013
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正把门口风衣的腰带重新绕好。同一件衣服，买手先说为什么选它，搭配师比较直筒裤和阔腿裤的重心，导购只讲顾客上身后先动哪一处。岗位不同，先看的地方也不同。今天不让三个人背同一段话；下一班，导购只录最容易照做的那个动作。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 顾客
+      - 搭配师
+      - 人
+      object_anchor: 门口木衣架上那件卡其色风衣，配直筒裤显利落、配阔腿裤重心往下压，成为三个岗位轮流开口的同一个落点。
+      human_action: 店长先整理腰带，再分别示范选品、搭配与试穿三种观察入口
+      scene_premise: 开店前门口木衣架旁
+      event_trigger: 卡其风衣需要由三个岗位分别讲，旧稿却口吻完全相同
+      visible_detail: 直筒裤让线条利落，阔腿裤会把视觉重量往下带
+      business_judgment: 让店主视角、导购视角、搭配师视角对同一件风衣各说一段，靠动作词、观察词、解释词的边界保证同一颗粒度不越界。
+      tradeoff_or_tension: 同一件卡其色风衣要被店主、导购、搭配师三个岗位分别讲 -> 先用角色发声寄存器定谁开口、站在哪儿说，口吻不撞车
+      spoken_line_seed: 同一件衣服，岗位不同，先看的地方也不同。
+      natural_next_action: 下一班让导购只录顾客最容易操作的一处
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在入口鞋凳上
+      real_work_action: 店长先整理腰带，再分别示范选品、搭配与试穿三种观察入口
+      natural_spoken_line: 同一件衣服，岗位不同，先看的地方也不同。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 下一班让导购只录顾客最容易操作的一处
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-014
+    kernel_id: SCM120-CAND-020
+    canonical_cluster_id: mkc_013
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 开门前，我穿上新到的卡其风衣走了两步。先说动作：腰带松挽，转身。再说观察：下摆跟着动，肩部落点清楚。至于为什么适合谁，只能留成可能。做过什么、看见什么、猜什么，别揉成一句。导购听完，按这三个层次重录了自己的版本。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 顾客
+      - 搭配师
+      - 人
+      object_anchor: 一排刚上架的卡其风衣，腰带松挽成结、落肩剪裁、下摆随转身荡开半圈。
+      human_action: 店长穿上风衣走两步，逐句区分动作、观察和解释
+      scene_premise: 开门前的风衣试穿区
+      event_trigger: 同事把做过的动作、看到的变化和可能原因混在一句话里
+      visible_detail: 腰带松挽时下摆活动，落肩位置在镜中可见
+      business_judgment: 同一排风衣，靠店主、导购、搭配师三种叙述站位切换主语，让信息密度与情绪温度各自不同。
+      tradeoff_or_tension: 把猜测当成看到的事实写进正文，说法会失控 -> 用动作词只记做过什么、观察词只记看到什么、解释词只挂'也许'的可能原因，三类各守边界
+      spoken_line_seed: 做过什么、看见什么、猜什么，别揉成一句。
+      natural_next_action: 导购按三类词重录一段自己的门店说明
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在试穿区的矮柜上
+      real_work_action: 店长穿上风衣走两步，逐句区分动作、观察和解释
+      natural_spoken_line: 做过什么、看见什么、猜什么，别揉成一句。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 导购按三类词重录一段自己的门店说明
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-015
+    kernel_id: SCM120-CAND-023
+    canonical_cluster_id: mkc_014
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我刚把橱窗里的大衣肩部重新理顺。它静静挂着，肩部被衣料的分量压住，下摆落到小腿附近，风口开着也没有乱成一团。旧稿原本借了一个顾客故事，我把它撤掉了。不借谁的私事，这件衣服也有东西可讲。路过时，可以近一点看它怎么垂下来。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 橱窗里静挂的羊毛大衣，垂坠压住肩线、下摆到小腿肚、风过纹丝不动，用来演示语气强度贴着场景强度写的分寸。
+      human_action: 店长撤掉人物故事，整理羊毛大衣肩部与下摆后直接说现场观察
+      scene_premise: 橱窗大衣整理的午后
+      event_trigger: 旧稿借用了可识别的老顾客经历来制造亲近感
+      visible_detail: 大衣垂坠压住肩部，下摆到小腿位置，静挂时轮廓稳定
+      business_judgment: 把中立旁白换成一个没有脸的懂行讲解者口吻，既留住职业手感与情绪温度，又抹掉任何能指认到某个真人的痕迹。
+      tradeoff_or_tension: 文案想借真实老顾客故事拉近距离 -> 只保留没有脸的懂行讲解者口吻，把长相家庭对白业绩这些能指认真人的细节一律划掉
+      spoken_line_seed: 不借谁的私事，这件衣服也有东西可讲。
+      natural_next_action: 到店近看肩部与下摆的实际状态
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在橱窗内侧的低层板上
+      real_work_action: 店长撤掉人物故事，整理羊毛大衣肩部与下摆后直接说现场观察
+      natural_spoken_line: 不借谁的私事，这件衣服也有东西可讲。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 到店近看肩部与下摆的实际状态
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-016
+    kernel_id: SCM120-CAND-024
+    canonical_cluster_id: mkc_014
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 上新前，我把水洗牛仔外套又翻了一遍。袖口双线走得平，铜扣就在眼前，肩缝落在哪里也能穿上看。可耐磨、不掉色这些话，仅凭一眼说不出来。语气再肯定，也不能替记录作证。今天先讲三处实物，水洗和穿着资料齐了，再决定下一段怎么写。
+    content_kernel:
+      human_subject:
+      - 买手
+      - 人
+      object_anchor: 水洗牛仔外套（袖口两道明线、铜扣、肩缝落在肩头下半寸）
+      human_action: 店长拿起外套查看袖口明线、铜扣和肩缝，再把高风险结论移出正文
+      scene_premise: 上新文案交接前
+      event_trigger: 牛仔外套稿件把外观判断写成耐磨与身形效果
+      visible_detail: 袖口双线平直，铜扣表面可见，肩缝落点能够上身核对
+      business_judgment: 牛仔耐磨与水洗掉色属需实测支撑的效果/耐用类事实，硬挺牛仔对腰臀的收束又因人肩宽体型而异；此类判断不能靠语气软化替代证据，只能挂待补证据槽或降调为带限定的个体可观察描述，无源不直断。
+      tradeoff_or_tension: 买手看顺眼样衣后本能想替它喊硬话（耐磨/不掉色/显瘦），这些落进效果与耐用类断言，正是要证据才敢下结论的高风险区
+      spoken_line_seed: 语气再肯定，也不能替记录作证。
+      natural_next_action: 水洗与穿着记录齐全后再决定是否补充性能说明
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在工作台上方的置物格中
+      real_work_action: 店长拿起外套查看袖口明线、铜扣和肩缝，再把高风险结论移出正文
+      natural_spoken_line: 语气再肯定，也不能替记录作证。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 水洗与穿着记录齐全后再决定是否补充性能说明
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-017
+    kernel_id: SCM120-CAND-026
+    canonical_cluster_id: mkc_015
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 店还没开，我正站在驼色大衣墙前分派今天的讲法。买手只说为什么把它放进这批货，陈列师讲它怎样稳住两侧灰蓝针织，导购则准备回答上身先看哪里。只说你这个岗位真正碰过的那一层。三个人不抢同一句，整件衣服反而更完整。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 陈列师
+      - 人
+      - 她
+      object_anchor: 那件挂在墙正中的驼色大衣，把两侧灰蓝针织衫稳住了，成了整排货的重心。
+      human_action: 店长按顺序让三人各指出自己负责的一层，不互相补话
+      scene_premise: 上新日的驼色大衣墙前
+      event_trigger: 买手、陈列师和导购同时想解释墙中央的大衣
+      visible_detail: 大衣稳住两侧灰蓝针织，成为整面墙的视觉重心
+      business_judgment: 给每个岗位配一副只看得见自己那层的眼睛（观察接口）和一段只讲那层的内容职责，再把不同角色的信息颗粒度拼成整件衣服的生态视角。
+      tradeoff_or_tension: 同一批衣服谁都想插一嘴、口径互相打架 -> 按各人看得见的那一层分工开口，谁也不替谁讲
+      spoken_line_seed: 只说你这个岗位真正碰过的那一层。
+      natural_next_action: 让下一班导购用顾客听得懂的话接续陈列判断
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在中岛边缘的稳固台面上
+      real_work_action: 店长按顺序让三人各指出自己负责的一层，不互相补话
+      natural_spoken_line: 只说你这个岗位真正碰过的那一层。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 让下一班导购用顾客听得懂的话接续陈列判断
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-018
+    kernel_id: SCM120-CAND-027
+    canonical_cluster_id: mkc_015
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 开门前，我们围着中岛那件驼色大衣重新对了一次话。买手只讲为何选择落肩与扣子，陈列师说它该放在哪个高度，导购演示腰带松开和收起的两种状态。一件衣服可以有三种入口，但不能有三套事实。三段各自署上岗位，之后谁接着讲，也知道边界在哪里。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 买手
+      - 陈列师
+      - 人
+      object_anchor: 一件驼色羊毛大衣，从落肩版型、羊绒手感、牛角扣到系腰带的两穿方式，被买手、陈列师、导购各自讲述。
+      human_action: 店长请买手讲选择、陈列师讲位置、导购讲两种腰带穿法
+      scene_premise: 开门前的中岛交接
+      event_trigger: 驼色大衣被三个岗位讲成互相矛盾的版本
+      visible_detail: 落肩、牛角扣和腰带在三个岗位的说明中各有落点
+      business_judgment: 把同一件衣服按角色功能层级和信息颗粒度分派内容职责，让每个岗位从自己的观察接口做面向外部的公开表达。
+      tradeoff_or_tension: 同一件驼色羊毛大衣被买手、陈列师、导购讲成三套彼此打架的话 -> 用组织生态角色网格按角色功能层级派活，各人只讲自己最懂的那一层
+      spoken_line_seed: 一件衣服可以有三种入口，但不能有三套事实。
+      natural_next_action: 把三段按岗位署名留给之后的内容接力
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在中岛对面的层板上
+      real_work_action: 店长请买手讲选择、陈列师讲位置、导购讲两种腰带穿法
+      natural_spoken_line: 一件衣服可以有三种入口，但不能有三套事实。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 把三段按岗位署名留给之后的内容接力
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-019
+    kernel_id: SCM120-CAND-028
+    canonical_cluster_id: mkc_016
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正蹲在中岛边，把灯芯绒裤脚往回折半寸。买手账本里它有代号，陈列时又成了画面中心，可面对顾客，只需要说眼前这些：暖光下绒色偏红，腰头明线清楚，裤长会随鞋跟变化。后场怎么叫它可以变，面对顾客讲什么不能乱。开门后再配两双鞋试给人看。
+    content_kernel:
+      human_subject:
+      - 买手
+      - 模特
+      - 运营
+      - 人
+      object_anchor: 焦糖色灯芯绒阔腿裤（腰头两指宽、斜插口袋、暖光下绒色偏红、站直时裤线垂感）
+      human_action: 店长翻折裤脚半寸，登记内部称呼后只留下公开可见细节
+      scene_premise: 开店前的中岛调整
+      event_trigger: 焦糖灯芯绒裤从买手代号转到镜头主角，叫法不断变化
+      visible_detail: 暖光下绒色偏红，腰头明线和裤脚长度清楚
+      business_judgment: 在视觉陈列的后场—台前交接处，同一件单品随角色（选品/陈列/拍摄）更换称呼，需在挂牌登记以便跨视角对回同一对象；同时按能否露出把信息分成公开安全与内部运营两半，内部运营信息在外发面被切断，只保留客人可验证的展示描述，讲述角度变了只挪解释重点、不动可露与该压的边界。
+      tradeoff_or_tension: 同一条阔腿裤从后场作业流转到台前展示、再到镜头拍摄，每换一个角色就换一副称呼（买手笔下的代号→门口位置上的东西→镜头正中央的主角），这些称呼要在挂牌背面挨个登记，三张嘴才对得回同一条
+      spoken_line_seed: 后场怎么叫它可以变，面对顾客讲什么不能乱。
+      natural_next_action: 开门后用同一条裤子示范平底鞋与矮跟鞋的裤长差
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在中岛另一侧的陈列盒上
+      real_work_action: 店长翻折裤脚半寸，登记内部称呼后只留下公开可见细节
+      natural_spoken_line: 后场怎么叫它可以变，面对顾客讲什么不能乱。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 开门后用同一条裤子示范平底鞋与矮跟鞋的裤长差
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-020
+    kernel_id: SCM120-CAND-030
+    canonical_cluster_id: mkc_016
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 烟灰百褶裙的推文在待发箱里躺了一整天。我把买手账本里的补货判断移走，只留下顾客能看见的部分：腰头收着活褶，走两步时裙摆会荡出一圈弧。账本里的话，不必全搬到顾客眼前。发布前再请买手看一遍，公开内容与内部经营各回各的位置。
+    content_kernel:
+      human_subject:
+      - 买手
+      - 运营
+      - 人
+      - 她
+      object_anchor: 烟灰色醋酸百褶裙——腰头一道活褶收着，人走两步裙摆漾开一圈弧，垂坠顺着腿往里走
+      human_action: 店长把经营信息移出正文，只保留腰头活褶与走动垂坠的观察
+      scene_premise: 百褶裙推文发布前
+      event_trigger: 买手账本里的补货判断混进了公开稿件
+      visible_detail: 烟灰裙腰头收着活褶，走两步时裙摆形成柔和弧线
+      business_judgment: 内容编辑坐在后场买手口径和对外推文之间：同一件单品在买手账本里是走量与补货的对象、在推文里是要被眼睛抓住的展示对象，角色变则命名与解释重点随之切换；但这套切换只改措辞，不改一句话能不能下结论的门槛，编辑逐句把话拨到留用、待补、删除三处。
+      tradeoff_or_tension: 同一条烟灰色百褶裙从买手账本挪到公开推文，角色一换，叫法与解释重点跟着换——这趟从账本到镜头的交接，就是内容编辑每天要过的一次上下文切换
+      spoken_line_seed: 账本里的话，不必全搬到顾客眼前。
+      natural_next_action: 公开稿发布前再由买手确认是否还有内部信息
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在收银台后的文件夹支架上
+      real_work_action: 店长把经营信息移出正文，只保留腰头活褶与走动垂坠的观察
+      natural_spoken_line: 账本里的话，不必全搬到顾客眼前。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 公开稿发布前再由买手确认是否还有内部信息
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-021
+    kernel_id: SCM120-CAND-031
+    canonical_cluster_id: mkc_017
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我已经穿着这条雾蓝阔腿裤走到镜前了。第一次接触这类裤型，先看整体垂下来是什么样，不必一开口就塞满细节。有人继续问，我再靠近讲腰头明线、裤脚压鞋面多少。第一次看，先把整条裤子看懂；熟悉以后，再把信息往深处拆。
+    content_kernel:
+      human_subject:
+      - 人
+      - 他
+      object_anchor: 一条雾蓝色醋酸阔腿裤——落裆、腰头明线、裤脚压鞋面一指、配平底或矮跟踩出不同裤长
+      human_action: 店长穿上雾蓝阔腿裤走动，先给整体，再根据追问补腰头与裤长
+      scene_premise: 门店裤装讲解练习
+      event_trigger: 新顾客只想先看轮廓，旧稿却从腰头工艺一路讲到底
+      visible_detail: 落裆、明线与裤脚压鞋面的位置能分层展示
+      business_judgment: 把「受众距离与信息深浅轴」落到裤装内容上：用知识距离（新客还是熟客）定讲解起点、用熟悉度定细节展开的深浅、用互动强度（可反复回看还是一次划过）来调信息密度。
+      tradeoff_or_tension: 先估这条阔腿裤的观众离这个品类有多远——是面生还是熟门熟路，用这段生疏定讲解从哪一圈起步
+      spoken_line_seed: 第一次看，先把整条裤子看懂。
+      natural_next_action: 有进一步疑问时再靠近看腰头明线与鞋面关系
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在试衣镜侧边的矮凳上
+      real_work_action: 店长穿上雾蓝阔腿裤走动，先给整体，再根据追问补腰头与裤长
+      natural_spoken_line: 第一次看，先把整条裤子看懂。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 有进一步疑问时再靠近看腰头明线与鞋面关系
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-022
+    kernel_id: SCM120-CAND-033
+    canonical_cluster_id: mkc_017
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 开播前，我把风衣的讲法拆成了两层。刚进来的人先看翻领、整体长度和腰带松开时的状态；已经比较过几次的人，再往里看暗门襟、扣位和叠穿。不是每个人都需要同样多的信息。不知道对方走到哪一步，就先讲浅一点；等问题具体了，再把那一层打开。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      - 他
+      object_anchor: 卡其色系带风衣——腰带活结、荡开的下摆量感、暗门襟走线、翻领与扣位挺括度
+      human_action: 店长先展示整体轮廓，再按问题深度补充扣位、腰带和叠穿
+      scene_premise: 直播前的风衣讲款准备
+      event_trigger: 同一场里既有刚进来的观众，也有反复比较过的熟悉观众
+      visible_detail: 翻领、暗门襟与腰带的状态可由浅到深展开
+      business_judgment: 以“能否判断受众决策阶段”为闸门：先分辨对方是刚接触品类、卡在了解阶段的新客阶段，还是翻过多次、走到权衡与确认之间的熟客阶段；再沿受众距离与信息深浅轴，把同一件风衣的讲解粒度由浅到深分层——生客先给一眼可接住的廓形与动作，熟客才逐层拆版型、扣位与叠搭；同时按观众停留时长与互动热度收放信息密度。阶段读不出时降级讲浅，不硬拨粒度。
+      tradeoff_or_tension: 先辨受众处在了解、权衡还是确认哪一档——是刚碰品类的新客阶段，还是翻过多次的熟客阶段，阶段能读出才动手
+      spoken_line_seed: 不知道对方走到哪一步，就先讲浅一点。
+      natural_next_action: 观众提出具体使用场景后，再进入对应细节
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在直播台已有支架上
+      real_work_action: 店长先展示整体轮廓，再按问题深度补充扣位、腰带和叠穿
+      natural_spoken_line: 不知道对方走到哪一步，就先讲浅一点。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众提出具体使用场景后，再进入对应细节
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-023
+    kernel_id: SCM120-CAND-035
+    canonical_cluster_id: mkc_018
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正准备给燕麦开衫配字，手停在一句太满的话前。拿起实物，粗针竖纹、哑光扣和收高的领口都在眼前，这些足够把冬日的感觉讲出来。暖意可以说，没根据的年限不能说。先发布可见细节，成分与穿着记录补齐后，再决定是否多写一步。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 燕麦色麻花针织开衫——粗针竖条、哑光牛角扣、领口收高
+      human_action: 店长停下输入，拿起开衫检查粗针、扣子与领口后重写
+      scene_premise: 上新图片选定后的文案桌
+      event_trigger: 燕麦开衫稿件差点写入未经支持的耐用结论
+      visible_detail: 粗针竖纹、哑光扣与较高领口都能近距离观察
+      business_judgment: 把耐穿保暖显瘦这类会被当真的硬结论挡在证据门外，无据就改讲开衫可见特征，情绪的暖意先摆事实后再带、不倒序。
+      tradeoff_or_tension: 想写一冬天不松垮这类会被当真的硬话 -> 手上没证据就不许上屏
+      spoken_line_seed: 暖意可以说，没根据的年限不能说。
+      natural_next_action: 把成分和穿着记录补齐后再审性能相关表达
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在文案桌旁的样册架上
+      real_work_action: 店长停下输入，拿起开衫检查粗针、扣子与领口后重写
+      natural_spoken_line: 暖意可以说，没根据的年限不能说。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 把成分和穿着记录补齐后再审性能相关表达
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-024
+    kernel_id: SCM120-CAND-036
+    canonical_cluster_id: mkc_018
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 开播前，我又把深蓝牛仔裤的提词卡顺了一遍。直筒轮廓、裤缝和拉链都能拿到手机前展示，走两步也能看出裤脚怎么落。再往后的身体效果，我用红笔删掉。好感可以慢慢加，结论不能凭气氛加。直播里先让人看，再按自己的身高和场景继续问。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 深蓝高腰直筒牛仔裤
+      human_action: 店长用红笔保留裤缝、拉链与走动状态，删去结果词
+      scene_premise: 直播开始前的提词卡复核
+      event_trigger: 深蓝牛仔裤讲稿从直筒结构滑向没有依据的效果承诺
+      visible_detail: 直筒轮廓、笔直裤缝和金属拉链可以当场展示
+      business_judgment: 在服装直播口播里，情绪温度层与信任门控把"表达"和"举证"拆成两件事：可观察特征走中性描述先立低风险信任信号，情绪温度分层负责一档档升温维持人味；一旦话头滑向结果承诺、横向对比或权威背书暗示，就判定越过证据门，改降级表达或挂待补依据，绝不无源硬下结论。
+      tradeoff_or_tension: 先只报可核对的客观特征——直筒版型、笔挺裤缝、金属拉链——用低风险信任信号把观众戒备压到最低
+      spoken_line_seed: 好感可以慢慢加，结论不能凭气氛加。
+      natural_next_action: 直播中邀请观众按身高与穿着任务继续提问
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在直播台的原有支架上
+      real_work_action: 店长用红笔保留裤缝、拉链与走动状态，删去结果词
+      natural_spoken_line: 好感可以慢慢加，结论不能凭气氛加。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 直播中邀请观众按身高与穿着任务继续提问
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-025
+    kernel_id: SCM120-CAND-038
+    canonical_cluster_id: mkc_019
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正在收银台上逐句清理一篇上新稿。熟客的名字和过去经历全部删掉，搭配师替衣服作保证的句子也撤下。留下的是能现场做的事：看收窄袖口，翻下领口，比较腰带松开与系起。人的履历不拿来卖衣服，穿法照样能讲清。明天让导购匿名示范一遍。
+    content_kernel:
+      human_subject:
+      - 店长
+      - 顾客
+      - 搭配师
+      - 人
+      object_anchor: 一件羊毛分量压住下摆、袖口收窄、领口翻下来能挡住手腕风的廓形大衣。
+      human_action: 店长删去身份信息，只保留大衣袖口、领口与两种穿法
+      scene_premise: 打烊后的上新稿复核
+      event_trigger: 草稿写入熟客真名与履历，还让搭配师替效果背书
+      visible_detail: 领口翻下可挡住手腕附近，袖口收窄，腰带可松可系
+      business_judgment: 店长在上新文案里把触及真实顾客履历的句子和让搭配师"保证效果"的句子分别识别为不可说的事实层与默认背书，做去授权化和越权表述拆解，退回只讲穿法的可说的方法层。
+      tradeoff_or_tension: 草稿把熟客真名和过往职务、业绩写进店铺上新文案 -> 圈掉整句、摘掉真名履历、去授权化改成'常来的客人'匿名描述
+      spoken_line_seed: 人的履历不拿来卖衣服，穿法照样能讲清。
+      natural_next_action: 第二天由导购匿名示范两种腰带状态
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在收银台边的票据架上
+      real_work_action: 店长删去身份信息，只保留大衣袖口、领口与两种穿法
+      natural_spoken_line: 人的履历不拿来卖衣服，穿法照样能讲清。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 第二天由导购匿名示范两种腰带状态
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-026
+    kernel_id: SCM120-CAND-039
+    canonical_cluster_id: mkc_019
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    body_text: 闭店后，我把直播卡摊开，先划掉最响亮的一句。版师懂结构，不代表能替时间保证一条裤子会怎样。明天直播只演示两件事：裤线现在是否平，蹲下再站起时膝部当下怎么恢复。懂版型的人，也不能替时间作保证；耐用问题等水洗和穿着记录来回答。
+    content_kernel:
+      human_subject:
+      - 版师
+      - 人
+      - 他
+      object_anchor: 阔腿裤——以裤线烫平度、蹲下起身的回弹速度作为能拍能看的观察卖点，替代'三年膝盖不鼓包'那种由角色背书的耐穿硬结论
+      human_action: 店长划掉背书，改为展示裤线平整与蹲起后的当下状态
+      scene_premise: 直播话术卡的闭店复核
+      event_trigger: 话术让版师替阔腿裤作长期耐穿保证
+      visible_detail: 裤线是否平、膝部蹲起后如何恢复，可以在一次演示中观察
+      business_judgment: 在直播话术这一层，把'角色替效果打包票'的硬承诺回收成可观察的做工描述：耐穿硬结论要么降级成能拍能看的观察，要么挂进待补证据槽等实测；角色的真实履历与门面资质一律改写成命名槽位，不让虚构权威替观众拍板。
+      tradeoff_or_tension: 话术卡里冒出'打版老师傅拍胸脯保证三年不鼓包'——一个功能角色替屏幕那头的人把'耐穿'这类硬结论一口咬死
+      spoken_line_seed: 懂版型的人，也不能替时间作保证。
+      natural_next_action: 水洗和反复穿着记录形成后再处理耐用问题
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在直播桌边的夹具上
+      real_work_action: 店长划掉背书，改为展示裤线平整与蹲起后的当下状态
+      natural_spoken_line: 懂版型的人，也不能替时间作保证。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 水洗和反复穿着记录形成后再处理耐用问题
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-027
+    kernel_id: SCM120-CAND-041
+    canonical_cluster_id: mkc_020
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 上新桌堆满衣服时，我先不写标题，先把它们分开：贴身穿的上装放一边，裤裙归到下装，一件到底的单独放，最外层再成一组。拿起其中一件上装，先看领型，再看袖长和轮廓。先给衣服找到位置，再谈它有什么；资料没核到的部分，不在这一步抢答。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件上装从圆领或翻领的领型、到手肘或手腕的袖长，一路填到面料/材质槽位与廓形版型，格子按层级依次亮起。
+      human_action: 商品同事先按上装、下装、连衣与外搭分区，再拿一件上装逐项查看
+      scene_premise: 上新前的商品整理桌
+      event_trigger: 一桌不同衣物混在一起，内容同事不知道从哪里开始说明
+      visible_detail: 领型、袖长和整体轮廓依次出现，材质信息留到资料核对
+      business_judgment: 品类说明先给对象在服装结构中定层级（上装/下装/连衣类/外搭类），再顺着领型、袖长、面料/材质槽位逐格打开属性，先后顺序不可颠倒。
+      tradeoff_or_tension: 一桌衣服混作一堆无从下笔 -> 先按上装/下装/连衣类/外搭类归位再动笔
+      spoken_line_seed: 先给衣服找到位置，再谈它有什么。
+      natural_next_action: 保存这套顺序，下次遇到混合上新先做分类
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在商品桌上方的层板边
+      real_work_action: 商品同事先按上装、下装、连衣与外搭分区，再拿一件上装逐项查看
+      natural_spoken_line: 先给衣服找到位置，再谈它有什么。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存这套顺序，下次遇到混合上新先做分类
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-028
+    kernel_id: SCM120-CAND-042
+    canonical_cluster_id: mkc_020
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 我手里这件米白西装，先不报一串参数。靠近看，表面有细斜纹；手捏起来有些分量；扣上以后，腰部轮廓会收一点。眼前能看的先看，标签上的等标签。你想继续看领口、袖长还是整体版型，可以接着问；成分与克重没有核对前，我不会把它说成确定信息。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件米白廓形西装外套，表面是细密斜纹肌理、捏起来偏厚、扣上后腰线微微内收，成分与克重待吊牌确认。
+      human_action: 商品同事拿起外套依次展示斜纹、厚薄手感与扣合后的轮廓
+      scene_premise: 商品讲解台
+      event_trigger: 米白西装只有外观观察，成分与克重尚未核对
+      visible_detail: 表面有细斜纹，手捏有一定厚度，扣起后腰部略收
+      business_judgment: 先按上装/下装/连衣类/外搭类做抽象品类分层，再给每件衣服挂领型、袖长、版型与面料/材质槽位等通用属性槽位，让品类说明与真实单品事实之间保持切断。
+      tradeoff_or_tension: 缺款号定价库存又想给某件衣服下具体在售结论 -> 把可讲的内容封顶在品类/属性/边界三层，不越到实例事实
+      spoken_line_seed: 眼前能看的先看，标签上的等标签。
+      natural_next_action: 观众可继续问领型、袖长或版型，成分待资料确认
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在商品台已有支架上
+      real_work_action: 商品同事拿起外套依次展示斜纹、厚薄手感与扣合后的轮廓
+      natural_spoken_line: 眼前能看的先看，标签上的等标签。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众可继续问领型、袖长或版型，成分待资料确认
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-029
+    kernel_id: SCM120-CAND-043
+    canonical_cluster_id: mkc_021
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 两件通勤大衣并排时，我先把它们拉到同一束光下。左边长到小腿，线条直；右边停在胯部附近，轮廓更向内收。接着才看厚薄和缝线。至于哪件更暖、更耐穿，单靠这次观察回答不了。同类对比，先统一尺子，把能在当场核对的四项记下来就够了。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 货架上并排挂着两件同为通勤外套的大衣，左边是长及小腿的直筒款、右边是短到胯骨的茧型廓形，被拽到打光板前逐处捋看。
+      human_action: 商品同事把两件大衣并排挂在同一光线下，逐项比长度、轮廓与可见做工
+      scene_premise: 货架旁的同类对比
+      event_trigger: 两件通勤大衣看起来接近，介绍稿却直接比较性能
+      visible_detail: 左边长至小腿且线条直，右边短到胯部并向内收
+      business_judgment: 把可观察、口径一致的结构性维度（版型、长度、厚薄、可见工艺）当场做成直接差异描述，把需检测或长期上身才能判定的维度按住不下结论，中间用显式证据位隔开两类。
+      tradeoff_or_tension: 两件同类大衣并排要给对比 -> 只把结构、材质类别、可见工艺、版型、长度、厚薄这些可观察且口径一致的维度做成直接差异描述
+      spoken_line_seed: 同类对比，先统一尺子。
+      natural_next_action: 保存版型、长度、厚薄和可见工艺四项对照法
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在货架侧面的层板上
+      real_work_action: 商品同事把两件大衣并排挂在同一光线下，逐项比长度、轮廓与可见做工
+      natural_spoken_line: 同类对比，先统一尺子。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存版型、长度、厚薄和可见工艺四项对照法
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-030
+    kernel_id: SCM120-CAND-044
+    canonical_cluster_id: mkc_021
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 这两件同色大衣，我先举到同一高度。左边线条直，长度到膝附近；右边腰部收起，下摆短一些。你问哪件更暖、更耐穿，我能帮你比结构，性能要看资料。平时步行多还是主要在室内，也会影响你更在意长度还是活动空间。把场景说清，我们再往下比。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 两件同色系的羊毛大衣并排挂着，一件直筒版型及膝长度，另一件收腰、下摆短一截。
+      human_action: 商品同事并排举起两件，先展示直筒与收腰、及膝与短款差别
+      scene_premise: 直播台前的两件羊毛大衣
+      event_trigger: 观众询问两件同色大衣哪件更保暖耐穿
+      visible_detail: 一件长度及膝且线条直，另一件腰部收起、下摆更短
+      business_judgment: 把同类之间可比的维度（版型、长度、厚薄、可见工艺）当场拍成特写做对比，把要检测或长期穿才知道的维度按住不下结论。
+      tradeoff_or_tension: 弹幕追问哪件更保暖更耐穿 -> 当场按住硬结论，只讲镜头能看见的版型、长度、厚薄
+      spoken_line_seed: 我能帮你比结构，性能要看资料。
+      natural_next_action: 观众说明通勤方式后，再比较长度与活动需求
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在直播台正前方
+      real_work_action: 商品同事并排举起两件，先展示直筒与收腰、及膝与短款差别
+      natural_spoken_line: 我能帮你比结构，性能要看资料。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众说明通勤方式后，再比较长度与活动需求
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-031
+    kernel_id: SCM120-CAND-047
+    canonical_cluster_id: mkc_022
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 两件浅色上衣挂在一起时，我先把袖口提到窗边。一边的线条纵横压得紧，轻拉后变化不大；另一边能看见线圈相连，手上拉开会跟着伸展。别先猜手感，先看线是怎么连起来的。结构能帮助解释眼前差异，但不能单凭这一幕替性能作结论。
+    content_kernel:
+      human_subject:
+      - 待人工复核主体
+      object_anchor: 一件浅色梭织衬衫和一件同色系针织开衫并排挂着，两只袖口提到光下做面料结构对照。
+      human_action: 商品同事把两只袖口并到窗边，分别轻拉并观察结构
+      scene_premise: 面料对比工作台
+      event_trigger: 两件浅色上衣外观看起来相近，观众分不清梭织与针织
+      visible_detail: 一边线条纵横交错较紧，另一边由线圈相连并能明显伸展
+      business_judgment: 按纤维原料→纱线形态→梭织或针织的三层顺序拆解，把结构差异当作解释手感与外观的入口，而不当性能证据。
+      tradeoff_or_tension: 两件外观相近的上衣观众分不清差别 -> 把袖口并到光下拍特写，让经纬紧压与线圈串套的结构在镜头里被肉眼看见
+      spoken_line_seed: 别先猜手感，先看线是怎么连起来的。
+      natural_next_action: 保存袖口并排观察法，再用实物确认自己的感受
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在窗边工作台的书立上
+      real_work_action: 商品同事把两只袖口并到窗边，分别轻拉并观察结构
+      natural_spoken_line: 别先猜手感，先看线是怎么连起来的。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存袖口并排观察法，再用实物确认自己的感受
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-032
+    kernel_id: SCM120-CAND-048
+    canonical_cluster_id: mkc_022
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 桌上这两块布，一块是格纹梭织，一块能明显拉开的针织。我先把它们靠近手机：梭织的交错方向保持得更稳，针织线圈受力会伸开，松手后再回去。手上能演示结构，保暖不能靠这一拉就定。你想看表面还是回位，我可以继续做；性能问题等资料回答。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一块梭织格纹布与一块会回弹的针织布并排入镜，从纤维捻成纱线、纱线织成整块面料结构逐层展示。
+      human_action: 商品同事把格纹梭织与弹性针织靠近手机，分别弯折和轻拉
+      scene_premise: 直播桌的两块面料
+      event_trigger: 弹幕催促商品同事直接判断哪块布更保暖
+      visible_detail: 梭织格纹保持交错方向，针织线圈受力后会伸开再回缩
+      business_judgment: 从可观察的织法、层级与手感说起，一旦跨到保暖等性能结论就停手，改成当场可验证的描述或挂进待补证据槽。
+      tradeoff_or_tension: 弹幕催着说'肯定很保暖' -> 手感词照说、性能结论按住，改成当场能验证的可观察描述
+      spoken_line_seed: 手上能演示结构，保暖不能靠这一拉就定。
+      natural_next_action: 继续展示表面、垂感或回位，性能问题留待资料
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在直播桌的夹具上
+      real_work_action: 商品同事把格纹梭织与弹性针织靠近手机，分别弯折和轻拉
+      natural_spoken_line: 手上能演示结构，保暖不能靠这一拉就定。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 继续展示表面、垂感或回位，性能问题留待资料
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-033
+    kernel_id: SCM120-CAND-050
+    canonical_cluster_id: mkc_023
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 这件雾蓝开衫，我换了三个位置才开始写颜色。窗边天光下偏冷，暖灯一开，灰感更明显；打开手机预览，自动曝光又会改变屏幕里的明暗。颜色没变，观察它的光先变了。做颜色记录时，把光线条件一起写下，比只给一个绝对色名更诚实。
+    content_kernel:
+      human_subject:
+      - 人
+      - 他
+      object_anchor: 一件带螺纹领口、前襟扣子与下摆罗纹的雾蓝色针织开衫。
+      human_action: 商品同事把开衫依次放到窗边、暖灯下和手机预览中做记录
+      scene_premise: 商品拍摄前的颜色记录
+      event_trigger: 雾蓝开衫在窗边与室内暖光下呈现不同
+      visible_detail: 天光下偏冷，暖灯下略向灰绿移动，屏幕预览受曝光影响
+      business_judgment: 描述服装颜色时先锁定当下观察的光线环境，再用色相、明度、纯度、冷暖这些颜色基础维度分层表达，避免把某一环境下的呈现当成商品的绝对色值。
+      tradeoff_or_tension: 同一件针织开衫在窗边天光、屋内暖光、手机屏幕下呈现三种色相 -> 描述颜色前先交代观察光线，再按色相/明度/纯度/冷暖分维度说，不报绝对色名
+      spoken_line_seed: 颜色没变，观察它的光先变了。
+      natural_next_action: 保存颜色记录时连同光线条件一起写下
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在商品桌边的支架上
+      real_work_action: 商品同事把开衫依次放到窗边、暖灯下和手机预览中做记录
+      natural_spoken_line: 颜色没变，观察它的光先变了。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存颜色记录时连同光线条件一起写下
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-034
+    kernel_id: SCM120-CAND-051
+    canonical_cluster_id: mkc_023
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 我手上是砖红灯芯绒衬衫，先转一下让绒条吃到侧光。明暗会沿着纹理变化，暖灯下颜色也更深。我再放一件中性色内搭作参照。颜色可以拆开看，身体效果得本人试。你常在冷白办公室还是暖光环境，可以告诉我；我只比较眼前的色相、明暗与冷暖。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      - 他
+      object_anchor: 砖红色灯芯绒衬衫
+      human_action: 商品同事转动衬衫展示绒面受光变化，再放中性色内搭作参照
+      scene_premise: 直播台的砖红灯芯绒衬衫
+      event_trigger: 观众追问砖红色是否普遍显白、是否更显高级
+      visible_detail: 侧光扫过绒条时明暗交替，颜色在暖光下更深
+      business_judgment: 颜色可以被讲成一组可观察维度（色相/明度/纯度/冷暖）并叠加对拍摄光线的观察提醒，但叙述一旦逼近身体效果或品质等级的结论（显瘦/显白/更高档/耐磨），那属于创作者没验证、没看见的效果承诺，必须从口头叙述里切断——降级为可观察或条件化描述，或按住挂到显式证据槽位，直到真人试穿与检测材料到位。
+      tradeoff_or_tension: 镜头前观众只能看到画面里的那团色块，看不见创作者嘴里的结论，所以颜色得先被拆成能复述、能核对的东西——色相偏哪、明度深浅、纯度鲜灰、冷暖倾向——观众才有坐标
+      spoken_line_seed: 颜色可以拆开看，身体效果得本人试。
+      natural_next_action: 到店或在真实使用光线下上身比较
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在直播台已有支架上
+      real_work_action: 商品同事转动衬衫展示绒面受光变化，再放中性色内搭作参照
+      natural_spoken_line: 颜色可以拆开看，身体效果得本人试。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 到店或在真实使用光线下上身比较
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-035
+    kernel_id: SCM120-CAND-052
+    canonical_cluster_id: mkc_024
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 这件燕麦西装上身后，我先找四个位置：肩点落在哪里，腰位在什么高度，衣长停到哪儿，袖窿留了多少空间。落肩会改变肩部走向，腰位会动上下比例，衣长又影响整体重心。先把结构点找出来，再看外面形成什么形，术语才不会飘在画面外。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件燕麦色西装外套的落肩肩线、上提腰线、盖胯衣长与袖窿到胸围的松量。
+      human_action: 商品同事穿上燕麦西装，依次指肩点、腰位、衣长与袖窿松量
+      scene_premise: 试衣镜前的西装观察
+      event_trigger: 同事把内部版型处理和外部轮廓混成一句术语
+      visible_detail: 落肩改变肩部走向，上提腰位改变上下比例，盖胯长度影响重心
+      business_judgment: 把肩线落点、腰线高低、衣长长度、松量大小这些结构节点，逐一映射到镜头里能看见的肩部走向、上下比例与视觉重心变化。
+      tradeoff_or_tension: 观众把内部结构处理和外部整体轮廓混着讲、术语站不稳 -> 先用在里/在外把版型与廓形二分切开，再逐项对到画面解释
+      spoken_line_seed: 先把结构点找出来，再看外面形成什么形。
+      natural_next_action: 保存肩、腰、衣长、松量四点观察顺序
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在试衣镜侧方的台面上
+      real_work_action: 商品同事穿上燕麦西装，依次指肩点、腰位、衣长与袖窿松量
+      natural_spoken_line: 先把结构点找出来，再看外面形成什么形。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存肩、腰、衣长、松量四点观察顺序
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-036
+    kernel_id: SCM120-CAND-054
+    canonical_cluster_id: mkc_024
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 人台上这条雾蓝裙，我先移动肩缝的别针，再把腰位标记往上挪一点，最后折起下摆比较长度。肩线一动，外轮廓会松；腰位改变，视觉重心也跟着走。里面动半寸，外面就会换一个重心。人台只帮助看结构，真实穿着还要本人上身再判断。
+    content_kernel:
+      human_subject:
+      - 陈列师
+      - 人
+      - 她
+      object_anchor: 一条雾蓝色直筒连衣裙套在人台上：肩缝外偏的落肩、往上挪半寸的腰线接缝、停在小腿肚的衣长
+      human_action: 商品同事在人台上移动肩缝别针、腰位标记和下摆折线
+      scene_premise: 人台旁的连衣裙调整
+      event_trigger: 雾蓝裙的肩缝、腰接与衣长需要在立体状态中复核
+      visible_detail: 肩线外移后轮廓变松，腰位上移后重心变化，衣长停在小腿
+      business_judgment: 版型是纸样与剪裁的内部处理（缝份走向、肩点位置、接缝落点），廓形是上台上身后从外部收到的整体形状；肩线、腰线、衣长这些结构节点各自决定轮廓线、宽窄、长度、重心等可见结果，词与画面一一对应才站得住。
+      tradeoff_or_tension: 陈列师在人台上用别针调整落肩肩缝、腰线接缝与衣长取舍，把内部剪裁改动做成看得见的立体变化
+      spoken_line_seed: 里面动半寸，外面就会换一个重心。
+      natural_next_action: 继续并排展示调整前后，不代替真人试穿结论
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在人台正前方的工作台上
+      real_work_action: 商品同事在人台上移动肩缝别针、腰位标记和下摆折线
+      natural_spoken_line: 里面动半寸，外面就会换一个重心。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 继续并排展示调整前后，不代替真人试穿结论
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-037
+    kernel_id: SCM120-CAND-056
+    canonical_cluster_id: mkc_025
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 木台上这件浅灰衬衫，我没有一开始就数针脚。先把整件展开，看外观是否顺；再打开门襟，看结构怎样连接；最后才靠近纽扣孔、袖口包边和领口压线。先认整件，再往里面看。这个顺序能让细节有来路，也避免把一串局部写成没有重点的参数表。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 一件浅灰衬衫的门襟、袖口、纽扣孔与领口压线，构成一份能被逐层讲解的可见工艺观察线索。
+      human_action: 商品同事先展开衬衫看整体，再打开门襟，最后靠近袖口和领线
+      scene_premise: 木台上的衬衫工艺观察
+      event_trigger: 介绍一开始就钻进针脚，读者看不懂整件衣服
+      visible_detail: 门襟结构、纽扣孔、袖口包边和领口压线依次出现
+      business_judgment: 按外观→结构→细节的顺序逐个展开工艺节点，先看整体呈现，再看关键结构处理，最后看收尾细节，让讲解有推进感而不是罗列参数。
+      tradeoff_or_tension: 观众一上来就被抠局部、听不出讲解重点 -> 按外观到结构再到细节的先后顺序逐层推进，让内容有递进感而非平铺
+      spoken_line_seed: 先认整件，再往里面看。
+      natural_next_action: 保存整体、结构、细节三步检查法
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在木台上方的层板边
+      real_work_action: 商品同事先展开衬衫看整体，再打开门襟，最后靠近袖口和领线
+      natural_spoken_line: 先认整件，再往里面看。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存整体、结构、细节三步检查法
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-038
+    kernel_id: SCM120-CAND-057
+    canonical_cluster_id: mkc_025
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 这件外套先看整体，再翻到里面。门襟的纽扣孔能靠近看，袖口包边有没有盖住布边也看得清，领口双针是否规整同样可以展示。做工可以给你看，寿命不能靠这一眼说满。你点一个位置，我继续靠近；耐用问题留给长期穿着与记录。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 一件翻过来看内里的外套，门襟上一排纽扣孔、袖口内侧的包边和双针走的领口压线，是它可被镜头看见的工艺节点。
+      human_action: 商品同事先展示整件外观，再翻到门襟、袖口包边和领口压线
+      scene_premise: 直播台前的外套内里展示
+      event_trigger: 工艺讲解顺势滑向整体耐用保证
+      visible_detail: 纽扣孔形状、包边是否盖住布边、双针线迹是否规整
+      business_judgment: 按外观→结构→细节的观察顺序，把可见工艺一处处摊给镜头，在讲解要从单处针脚滑向整体耐用度的那个节点上主动切断，只说眼睛当场能证明的处理方式。
+      tradeoff_or_tension: 讲解顺口想接'所以特别耐穿' -> 主动把这句咽回去，改成'针脚走得规整、包边包得住布边'这类眼睛能证明的观察语言
+      spoken_line_seed: 做工可以给你看，寿命不能靠这一眼说满。
+      natural_next_action: 继续近看指定位置，耐用问题等待长期记录
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在直播台正前方
+      real_work_action: 商品同事先展示整件外观，再翻到门襟、袖口包边和领口压线
+      natural_spoken_line: 做工可以给你看，寿命不能靠这一眼说满。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 继续近看指定位置，耐用问题等待长期记录
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-039
+    kernel_id: SCM120-CAND-058
+    canonical_cluster_id: mkc_026
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 靠窗这件长风衣，我先让前襟自然敞开。领口到下摆形成连续竖线，腰带没有收紧，走动时两侧会分开。这里能说的是线条与衣服在身体周围的位置关系，再往前就是替人写身体答案。线条可以讲，身体答案不能替人写。把观察、关系、结果分三层检查，会稳很多。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 一件未系腰带、前襟从领口一路开到底的卡其色长风衣
+      human_action: 商品同事敞穿长风衣，沿领口到下摆指出连续线，再说明与身体位置关系
+      scene_premise: 靠窗试衣镜前
+      event_trigger: 风衣介绍从门襟线条直接跳到身体效果
+      visible_detail: 前襟竖向展开，腰带未系，下摆活动范围清楚
+      business_judgment: 服装身材效果表达按“看得见的视觉线条—衣物与身体及光的位置关系—对身体的结果保证”由低到高排布；导购只在低两层描述当下可见的门襟走向与位置摆放，最高层对身体下保证的说法（显高/显瘦/遮肉）默认拦截不顺口接，凡触及面料配比、克重、抗皱、耐穿等产品事实则挂证据槽等实测填补，绝不无源写死。
+      tradeoff_or_tension: 把女儿脱口而出的‘显高’这类对身体下保证的说法按在嘴边、不顺口接，先归到最高一档拦住
+      spoken_line_seed: 线条可以讲，身体答案不能替人写。
+      natural_next_action: 保存观察词、关系词、结果词三层检查
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在试衣镜外的窗台上
+      real_work_action: 商品同事敞穿长风衣，沿领口到下摆指出连续线，再说明与身体位置关系
+      natural_spoken_line: 线条可以讲，身体答案不能替人写。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存观察词、关系词、结果词三层检查
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-040
+    kernel_id: SCM120-CAND-060
+    canonical_cluster_id: mkc_026
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 这组是竖纹衬衫配直筒长裤。我先站着让线条连起来，再坐下看前片，最后起身走两步。手机能记录竖向关系怎样延续，也能看到动作后的衣物状态。我只演示线怎么走，不替你下身体结论。你是久坐开会还是走动通勤，我们就接着看对应动作。
+    content_kernel:
+      human_subject:
+      - 她
+      object_anchor: 一条高腰直筒长裤配竖条纹衬衫，竖条从领口经直筒一路走到脚踝的一整条连续线条。
+      human_action: 商品同事穿上组合，从站立、坐下到起身展示连续线条
+      scene_premise: 试穿区的裤装演示
+      event_trigger: 直筒裤与竖纹衬衫的组合被直接写成身体结果
+      visible_detail: 竖纹从上衣延续到直筒裤，坐下时前片与裤线状态可见
+      business_judgment: 把描述穿着呈现的话拆成观察词、关系词、结果词三层台阶，能实拍的线条变化说满，不能保证的身体结果一律降级或按住。
+      tradeoff_or_tension: 文案里冒出'显瘦'这类身体结果保证 -> 先按住结果词，改写成镜头能实拍的连续线条描述
+      spoken_line_seed: 我只演示线怎么走，不替你下身体结论。
+      natural_next_action: 观众说明久坐或步行任务后再看对应动作
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在试穿区的矮柜上
+      real_work_action: 商品同事穿上组合，从站立、坐下到起身展示连续线条
+      natural_spoken_line: 我只演示线怎么走，不替你下身体结论。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众说明久坐或步行任务后再看对应动作
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-041
+    kernel_id: SCM120-CAND-061
+    canonical_cluster_id: mkc_027
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 打烊后拍牛仔外套，我先做了一个弯肘动作。门襟双线能靠近看，肘部已有的浅色褶也在画面里，翻领扣起后会不会外翻同样可观察。这些都能照实说。耐磨、不掉色、久穿不松却要更长的记录。眼前的细节照实说，时间才知道的先等。
+    content_kernel:
+      human_subject:
+      - 人
+      - 他
+      object_anchor: 靛蓝牛仔外套——门襟走双线车缝、肘弯已洗出几道浅色褶痕、翻领扣上不外翻
+      human_action: 商品同事抬臂、弯肘并靠近展示门襟双线与洗色褶痕
+      scene_premise: 打烊后的牛仔外套拍摄
+      event_trigger: 屏幕文案把双线与褶痕写成长期耐磨证明
+      visible_detail: 双线车缝清楚，肘弯已有浅褶，翻领扣起后状态可观察
+      business_judgment: 给牛仔外套拍上身短视频、配屏幕文案时，用一道内部的证据台阶来判断每句话能不能写成结论：可当场压到、观众能跟着看清的织造细节可以照实说；耐磨、不掉色、久穿不松这类关于耐用与性能的硬断言，必须由检测和反复水洗记录这一类更硬的证据支撑，缺证据就整句按住并挂待补槽，舒适一类结论则降级为观众可自证的现场反应。
+      tradeoff_or_tension: 抬手能压到、观众能跟着看清的细节（双线车缝、布纹、肘弯褶痕）先归为可直接照实说的现场可观察描述
+      spoken_line_seed: 眼前的细节照实说，时间才知道的先等。
+      natural_next_action: 保存可见细节，性能问题等待水洗与穿着资料
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在试穿区已有支架上
+      real_work_action: 商品同事抬臂、弯肘并靠近展示门襟双线与洗色褶痕
+      natural_spoken_line: 眼前的细节照实说，时间才知道的先等。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存可见细节，性能问题等待水洗与穿着资料
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-042
+    kernel_id: SCM120-CAND-063
+    canonical_cluster_id: mkc_027
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 收播后我把那条牛仔裤重新拿到手机前。水洗颜色、直筒裤腿和缝线都能当场看到，也可以穿上走动比较。耐磨、久坐是否变形、身体效果却不是一场直播能证明的。看得到的先答，必须测试的就等测试。你想看轮廓还是细节，我继续展开。
+    content_kernel:
+      human_subject:
+      - 人
+      - 他
+      object_anchor: 靛蓝色水洗直筒牛仔裤
+      human_action: 商品同事拿起牛仔裤展示水洗颜色、直筒轮廓和缝线，逐项回收硬结论
+      scene_premise: 收播后的牛仔裤复盘
+      event_trigger: 口播把水洗感受扩成耐磨、久坐不变形和身体效果
+      visible_detail: 靛蓝水洗色、直筒裤腿与缝线可以当场看到
+      business_judgment: 在牛仔裤口播稿撰写里，按 claim 分级把随口的上身感受与硬结论分层：耐用、耐磨、久坐不走形属需送检的重档，须对应水洗测试与面料克重这类硬证据；一旦缺证据即触发 source gap 阈值，把结论回收成可观察的缝制/试穿细节或挂上证据槽，绝不无源盖章、不把通用说法写成产品事实。
+      tradeoff_or_tension: 把'越洗越耐磨、久坐一天不走形、上腿显高'识别为高级别硬断言，须匹配送检级证据才可当事实落笔
+      spoken_line_seed: 看得到的先答，必须测试的就等测试。
+      natural_next_action: 观众可继续问尺码与穿法，性能问题等待记录
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在直播桌角的夹具上
+      real_work_action: 商品同事拿起牛仔裤展示水洗颜色、直筒轮廓和缝线，逐项回收硬结论
+      natural_spoken_line: 看得到的先答，必须测试的就等测试。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众可继续问尺码与穿法，性能问题等待记录
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-043
+    kernel_id: SCM120-CAND-064
+    canonical_cluster_id: mkc_028
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 暖灯下看燕麦毛衣，我先把袖口翻到手边。罗纹怎样收、肩部拼接是否对位、织纹是否连贯，都能用眼睛和手指核对。含量、等级、认证与长期耐穿则不在这次观察里。局部做工是线索，不是整件品质的万能证明。把两类话分开，发布前就不容易越界。
+    content_kernel:
+      human_subject:
+      - 他
+      object_anchor: 燕麦色粗针毛衣：袖口罗纹收口、前片与袖片肩部拼接、织纹线迹
+      human_action: 商品同事近看袖口收针、肩部拼接和织纹，再把资料型结论单列
+      scene_premise: 暖灯下的毛衣检查
+      event_trigger: 粗针毛衣局部做工被写成含量、等级与耐穿保证
+      visible_detail: 罗纹收口、拼接对位与线迹可由眼睛和手指核对
+      business_judgment: 把毛衣上的每一句品质说法按它需要的证据分流：肉眼与指腹能当场核对的收口、拼接、线迹走可见证据；成分、含毛量、羊绒等级、认证这类声称必须往上抬一档、由检测凭据承接；耐穿与显瘦这种整体结论则降级为局部可观察描述或交由试穿者判断；任何拿不出出处的硬结论一律写成【产品事实】【品牌事实】命名槽位，绝不用虚构填进去。
+      tradeoff_or_tension: 把袖口罗纹收口、肩部拼接、织纹线迹这些当场看得见摸得着的信号，先当作可观察品质线索归入可见证据一类，只讲此处能核对的事
+      spoken_line_seed: 局部做工是线索，不是整件品质的万能证明。
+      natural_next_action: 保存可见与需资料两类清单，发布前逐项核对
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在货架旁的陈列托上
+      real_work_action: 商品同事近看袖口收针、肩部拼接和织纹，再把资料型结论单列
+      natural_spoken_line: 局部做工是线索，不是整件品质的万能证明。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存可见与需资料两类清单，发布前逐项核对
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-044
+    kernel_id: SCM120-CAND-066
+    canonical_cluster_id: mkc_028
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 我先把直筒牛仔裤的裤脚翻起来。收口线迹能数，内缝走向看得见，后袋两片布的接缝也可以靠近看。看完再把裤脚放回原位，观察整体。可是这几处只能证明自己，不能替整条裤子盖章。耐久和身体结果需要别的证据，你想看哪一处，我继续靠近。
+    content_kernel:
+      human_subject:
+      - 人
+      - 他
+      object_anchor: 直筒牛仔裤脚踝上方那圈翻折收口，配后袋两片布叠合的拼接接缝
+      human_action: 商品同事翻起裤脚，指内缝与后袋拼接，再恢复原样
+      scene_premise: 试衣区的牛仔裤细节演示
+      event_trigger: 裤脚与后袋局部被拿来证明整条裤子的耐久与身体效果
+      visible_detail: 收口线迹、内缝走向和后袋接缝平整度可近看
+      business_judgment: 把牛仔裤上可直接观察的局部做工线索（收口、线迹、拼接的平整与对位）与需检测或官方来源背书的整体耐久、显瘦、认证类声称分开路由：前者据实描述且只支撑局部，后者一律按住或写成命名待补证据槽位，不用肉眼替标准盖章。
+      tradeoff_or_tension: 视角落在裤脚翻折收口、内缝走线与后袋两片布的拼接接缝——这些能凑近数清、上手摸到的细节，只登记为局部观察层面的可观察品质线索，不越位
+      spoken_line_seed: 这几处只能证明自己，不能替整条裤子盖章。
+      natural_next_action: 继续看指定局部，耐久和身体结果留待其他证据
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在试衣区的低位支架上
+      real_work_action: 商品同事翻起裤脚，指内缝与后袋拼接，再恢复原样
+      natural_spoken_line: 这几处只能证明自己，不能替整条裤子盖章。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 继续看指定局部，耐久和身体结果留待其他证据
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-045
+    kernel_id: SCM120-CAND-068
+    canonical_cluster_id: mkc_029
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    body_text: 收工后只开一盏台灯，我把开衫平放在桌上。先退一点收全轮廓，再走近看门襟纽襻，最后才到袖口罗纹和领口收边。先远后近，细节才知道自己属于哪里。这个顺序能把做工拍清，却不替看不见的性能下判断，下一件针织也可以照着走一遍。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 一件米白针织开衫，看点落在罗纹袖口、门襟纽襻与下摆收口罗纹上
+      human_action: 商品同事依次拍整体轮廓、门襟结构和袖口罗纹
+      scene_premise: 收工后的台灯工作桌
+      event_trigger: 开衫细节全部挤在同一距离，观众看不懂整体与局部关系
+      visible_detail: 远处认整件，中距离看纽襻，近处看罗纹与收边
+      business_judgment: 用退远、往里、落近三段推进的画面层级，把开衫的做工拍成可被复述的可拍摄对象与对象线索；同时对镜头看不见的性能设边界，越界处或降级为可见描述、或挂成命名解释槽位。
+      tradeoff_or_tension: 傍晚台灯下把开衫平铺，先让镜头从桌沿退远，把整件衣服躺着的轮廓收进一个远的画面，观众先认全它的形，不急着夸
+      spoken_line_seed: 先远后近，细节才知道自己属于哪里。
+      natural_next_action: 保存三段距离顺序，下一件针织照此检查
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在工作桌旁的书架上
+      real_work_action: 商品同事依次拍整体轮廓、门襟结构和袖口罗纹
+      natural_spoken_line: 先远后近，细节才知道自己属于哪里。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存三段距离顺序，下一件针织照此检查
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-046
+    kernel_id: SCM120-CAND-069
+    canonical_cluster_id: mkc_029
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    body_text: 我先穿着这件米色开衫坐在高凳上，让你看完整肩线和门襟，再走近展示插肩拼接，最后轻拉袖口罗纹看当下回位。先让你认得这件，再把细节送到眼前。至于保暖、起球或耐穿，今天的画面回答不了。你想回到整体还是继续看袖口，可以直接说。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 米色针织开衫的袖口罗纹松紧与领口收边那道包缝
+      human_action: 商品同事先穿着坐在高凳，再靠近展示肩缝、罗纹和包缝
+      scene_premise: 窗边高凳的开衫讲解
+      event_trigger: 讲解只拍局部，观众无法判断袖口与整体轮廓的关系
+      visible_detail: 整体肩线先出现，随后才看插肩拼接与袖口回位
+      business_judgment: 针织类工艺品质靠镜头分层呈现：远景给整体轮廓，中景暴露肩缝插肩的线圈拼接与收针，近景对焦罗纹回弹、包缝、内里藏线等能对上焦的看点；把能拍到的结构细节当证据，把暖/起球/耐穿这类不可见性能挡在观察语言之外。
+      tradeoff_or_tension: 远景先把整件针织开衫的上身轮廓交代干净，肩线、门襟、下摆罗纹落成最外一层，让人认清整体形
+      spoken_line_seed: 先让你认得这件，再把细节送到眼前。
+      natural_next_action: 观众选择整体、肩缝或袖口后继续展示
+    execution_card:
+      who_executes: 一名品牌商品或内容工作人员
+      who_appears: 一名品牌商品或内容工作人员
+      phone_placement: 手机固定在窗边矮柜上
+      real_work_action: 商品同事先穿着坐在高凳，再靠近展示肩缝、罗纹和包缝
+      natural_spoken_line: 先让你认得这件，再把细节送到眼前。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众选择整体、肩缝或袖口后继续展示
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-047
+    kernel_id: SCM120-CAND-071
+    canonical_cluster_id: mkc_030
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正在把围巾从风衣肩上拿下来，往前挪一点。风衣半开着站在中间，叠穿针织和乐福鞋退到后面，围巾只在前侧带出关系。原来四样东西同时抢话，现在眼睛先落在风衣，再顺着配件走。先把主角站稳，旁边的东西才有位置。调整完，我还要回门口看一次。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一套以主推单品为主体、半开风衣下摆与围巾作前景、叠穿针织与乐福鞋作陪体的可拍摄陈列画面。
+      human_action: 店长先定风衣主体，再把围巾压到前侧、针织和鞋退作陪体
+      scene_premise: 开门前的主推搭配调整
+      event_trigger: 风衣、围巾、针织与鞋同时入画，主次完全挤在一起
+      visible_detail: 半开下摆形成主体，围巾贴近手机前沿，鞋与针织撑开层次
+      business_judgment: 把 Look 拆解观察骨架落成前景-主体-陪体三层分工，前景交代场景关系、主体压光成落点、陪体撑开层次，让单套搭配与成组陈列共用一套观察节点。
+      tradeoff_or_tension: 镜头飘、主次不分找不到落点 -> 用前景交代场景、主体压光、陪体衬托的三层分工先定主体落点再排引导与陪衬
+      spoken_line_seed: 先把主角站稳，旁边的东西才有位置。
+      natural_next_action: 回到门口再看第一眼是否落在风衣上
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在入口对面的层板上
+      real_work_action: 店长先定风衣主体，再把围巾压到前侧、针织和鞋退作陪体
+      natural_spoken_line: 先把主角站稳，旁边的东西才有位置。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 回到门口再看第一眼是否落在风衣上
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-048
+    kernel_id: SCM120-CAND-072
+    canonical_cluster_id: mkc_030
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 打烊后把中岛复位，最费时间的是这组三层。长风衣往后站稳，肩上的针织只露一点，挎包拉到胯侧前面，卷起的袖口再接住视线。不是多挂一件，是把前后分开。关灯前看着顺了，明早自然光进来还得再看一遍。今天的记录就到这里。
+    content_kernel:
+      human_subject:
+      - 待人工复核主体
+      object_anchor: 占画面重心的长风衣作主体，肩上针织退作陪体，胯侧挎包与卷起的袖口压在前景，三者按前景-主体-陪体结构拉开纵深。
+      human_action: 店长把长风衣往后立稳，针织退到肩后，挎包拉到胯侧前方
+      scene_premise: 打烊后的中岛复位
+      event_trigger: 长风衣、肩上针织和挎包叠在同一平面，画面没有纵深
+      visible_detail: 风衣占重心，针织只露一层，包与卷袖形成前后差
+      business_judgment: 把一组搭配拆成主体、前景、陪体三个位置，再用轮廓、层次、搭配位标清叠压顺序，让画面能被看见也能被复用。
+      tradeoff_or_tension: 一组搭配堆在画面里主次不分 -> 先定占重心的主体，再向外铺前景与陪体拉出纵深
+      spoken_line_seed: 不是多挂一件，是把前后分开。
+      natural_next_action: 明早开灯后再看三层是否仍清楚
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在中岛边缘的托盘架上
+      real_work_action: 店长把长风衣往后立稳，针织退到肩后，挎包拉到胯侧前方
+      natural_spoken_line: 不是多挂一件，是把前后分开。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 明早开灯后再看三层是否仍清楚
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-049
+    kernel_id: SCM120-CAND-073
+    canonical_cluster_id: mkc_031
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正把橱窗上沿那块亮色往旁边挪。驼色毛衣裙留在中间占最大面积，辅色只在两侧接住高度，最亮的小配件收在上方一点。暖不是把所有暖色都堆满，面积和位置也要有分寸。摆完后我会走到街对面停几秒，看第一眼是否仍回到主色上。
+    content_kernel:
+      human_subject:
+      - 陈列师
+      - 模特
+      - 人
+      - 她
+      object_anchor: 驼色堆堆领毛衣裙（正中模特身上的主色单品）
+      human_action: 店长让驼色毛衣裙占中间，辅色接住高度，小配件只留少量亮点
+      scene_premise: 临街橱窗的色彩重排
+      event_trigger: 暖色主题里主色、辅色与点缀色面积接近，路人找不到重点
+      visible_detail: 主色覆盖最大面积，辅色在两侧承接，点缀只停在上沿
+      business_judgment: 在临街橱窗的模特组陈列上，主题词先锁定色板的冷暖与明暗，再按主色定调、辅色承接、点缀色制造节奏的观察顺序，把色彩组翻译成能被路人看见的Look结构；主色占面积、辅色接高度、点缀色落在视线哪一格，这三项空间关系构成色彩故事对Look结构的回扣。
+      tradeoff_or_tension: 主题词『暖房里的下午』先锁住整组色的冷暖与明暗基调（偏暖、明度压中段），一个词生出以主色为核心的一块色板
+      spoken_line_seed: 暖不是把所有暖色都堆满。
+      natural_next_action: 到街对面停一下，确认远看仍有一个明确落点
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在橱窗内侧的低层板上
+      real_work_action: 店长让驼色毛衣裙占中间，辅色接住高度，小配件只留少量亮点
+      natural_spoken_line: 暖不是把所有暖色都堆满。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 到街对面停一下，确认远看仍有一个明确落点
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-050
+    kernel_id: SCM120-CAND-074
+    canonical_cluster_id: mkc_031
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 闭店整理这组颜色时，我拿掉了两个太抢眼的小配件。长风衣留在中心定调，阔腿裤把颜色往下接，腰带扣和袜子只留下两个小停顿。颜色也得有先后，不是排成一条就完了。现在眼睛能从主色走到辅色，再落到一点点亮处。明早从门口再验一次。
+    content_kernel:
+      human_subject:
+      - 模特
+      - 人
+      object_anchor: 以一件铺底的长风衣当主色、阔腿裤承接辅色、腰带扣与袜子点出点缀色，构成一条能被眼睛走一遍的色彩路线。
+      human_action: 店长用长风衣压住中心，裤装承接，腰带扣和袜子只作小点
+      scene_premise: 挂杆色组的闭店整理
+      event_trigger: 长风衣、阔腿裤和配件颜色平均分布，整组没有阅读顺序
+      visible_detail: 大面积主色先出现，辅色延续轮廓，小配件形成两个停顿
+      business_judgment: 按主色→辅色→点缀色的观察顺序把一组色彩组落位成能被看见的Look结构，让色彩故事逐层回扣主题词。
+      tradeoff_or_tension: 整组挂上杆后画面没有秩序、观者不知道先看哪 -> 让最大面积的主色压住视觉中心定调，辅色左右承接，点缀色只收在小配件上做节奏点
+      spoken_line_seed: 颜色也得有先后，不是排成一条就完了。
+      natural_next_action: 次日从入口验证视线是否按主色、辅色、点缀移动
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机靠在挂杆侧面的陈列牌底座上
+      real_work_action: 店长用长风衣压住中心，裤装承接，腰带扣和袜子只作小点
+      natural_spoken_line: 颜色也得有先后，不是排成一条就完了。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 次日从入口验证视线是否按主色、辅色、点缀移动
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-051
+    kernel_id: SCM120-CAND-076
+    canonical_cluster_id: mkc_032
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我已经从门口往里走，先不急着靠近衣服。入口要看整个空间和第一落点；到中岛再收近，看一套搭配怎样组合；走到端架，才靠近翻领缉线、扣子和袖口。走到哪一区，就换哪一种看法。下次到店，可以在这三个位置各停一下，看看自己先被什么吸引。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 端架上压一件廓形大衣，用近景怼住翻领缉线、纽扣光泽与袖口罗纹，逐寸看清单品细节。
+      human_action: 店长从入口远看空间，到中岛收中景，再靠近端架翻领与袖口
+      scene_premise: 开店前的卖场巡走
+      event_trigger: 内容同事用同一种距离拍入口、中岛、端架和挂通
+      visible_detail: 入口交代整体，中岛看组合，端架可见缉线、扣子和罗纹
+      business_judgment: 把入口区、中岛、端架、挂通抽象为区位类型，各配远景、中景、近景，形成从区位到镜头的最小映射。
+      tradeoff_or_tension: 人进门第一眼找不到落点 -> 入口区用远景交代空间关系，退到三四米外把顶灯、反光、衣架排布收进画面负责第一印象
+      spoken_line_seed: 走到哪一区，就换哪一种看法。
+      natural_next_action: 到店时在入口、中岛、端架各停一次比较
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机由店长依次固定在各区现有稳固台面上
+      real_work_action: 店长从入口远看空间，到中岛收中景，再靠近端架翻领与袖口
+      natural_spoken_line: 走到哪一区，就换哪一种看法。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 到店时在入口、中岛、端架各停一次比较
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-052
+    kernel_id: SCM120-CAND-078
+    canonical_cluster_id: mkc_032
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 第三遍看陈列标注，我把一句太满的话划掉了。焦糖灯芯绒裤放在端架，近一点能看绒条方向；回到挂通的中距离，可以看裤腿怎样落下来。陈列能告诉你去哪看，不能替衣服下所有结论。身体效果与品质等级先不写，等人真正上身、资料真正到位再说。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      object_anchor: 焦糖色灯芯绒阔腿裤
+      human_action: 店长保留区位、距离和可见纹理，删掉无支持的结果词
+      scene_premise: 门店陈列标注复核
+      event_trigger: 焦糖灯芯绒裤的陈列说明混入身体效果与品质等级
+      visible_detail: 端架近处能看绒条方向，挂通中景能看裤腿落位
+      business_judgment: 静态陈列按区位类型（入口区/中岛/端架/挂通）分派景别（远景/中景/近景），构成从区位到镜头的最小映射；每当画面要给出品质类价值判断，即触发硬结论证据门——有可拍观察就写观察，无源就挂待补证据槽，最终门店/商品/出镜实例事实全部留槽。
+      tradeoff_or_tension: 写陈列文案时一旦想落下'显瘦/耐穿/高级'这类硬断语，因手里没有可核对依据，先物理按住不写出结论
+      spoken_line_seed: 陈列能告诉你去哪看，不能替衣服下所有结论。
+      natural_next_action: 顾客到店后用实物和试穿继续判断
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在端架旁的价签托上
+      real_work_action: 店长保留区位、距离和可见纹理，删掉无支持的结果词
+      natural_spoken_line: 陈列能告诉你去哪看，不能替衣服下所有结论。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 顾客到店后用实物和试穿继续判断
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-053
+    kernel_id: SCM120-CAND-079
+    canonical_cluster_id: mkc_033
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正把挂杆上最后一件风衣的肩部搭正。先把翻卷的袖口理回去，再把腰带统一系向一侧，最后退后一步看整杆。手停下来以前，这个动作还没做完；肩线回正、方向一致，才是结束标志。下一位同事接班时，也能一眼知道哪里需要复位。
+    content_kernel:
+      human_subject:
+      - 顾客
+      object_anchor: 挂杆上那件风衣的腰带被重新系向同一方向、肩线搭正，作为整理动作可被看见的结束标志。
+      human_action: 店长搭正肩部、把腰带统一系向一侧，再退后确认整杆状态
+      scene_premise: 开门前的一分钟挂杆整理
+      event_trigger: 风衣腰带方向混乱、肩部歪斜，动作片段没有明确结束
+      visible_detail: 腰带朝向一致、肩线回正、袖口不再翻卷
+      business_judgment: 把整理、比对、讲解、递示等一般化动作各自标出动作前提与结束标志，让每段门店日常动作观察切片有头有尾、动作对象与场景道具的最小关系一目了然。
+      tradeoff_or_tension: 衣物歪斜、袖口翻卷导致片段头尾含混 -> 用一段整理动作补齐开场准备类动作，先定动作前提再定结束标志才切得干净
+      spoken_line_seed: 手停下来以前，这个动作还没做完。
+      natural_next_action: 让下一位同事按同一结束标志复位挂杆
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在挂杆对面的鞋凳上
+      real_work_action: 店长搭正肩部、把腰带统一系向一侧，再退后确认整杆状态
+      natural_spoken_line: 手停下来以前，这个动作还没做完。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 让下一位同事按同一结束标志复位挂杆
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-054
+    kernel_id: SCM120-CAND-080
+    canonical_cluster_id: mkc_033
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 今天试衣镜前的记录，最后只留下两个短动作。先把两件不同色大衣搭在手臂上，比完就放回；停一下，再捏起风衣下摆，翻出内衬指一处走线。一次只把一件事做完整，片段才有清楚的开头和收尾。下次也不狂录，先选一个动作再开始。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 试衣镜前把两件同款不同色的大衣搭在手臂上比对、再捏起风衣下摆翻出内衬指着走线讲解的这组手上动作。
+      human_action: 店长先完成两件大衣比色，再单独翻风衣下摆指内衬走线
+      scene_premise: 试衣镜前的门店动作记录
+      event_trigger: 比色、翻内衬和讲走线三个动作被一次性拍成混乱长段
+      visible_detail: 手臂上的两色对照结束后，第二段才出现内衬与缝线
+      business_judgment: 把门店一般化动作按动作前提与结束标志切成有头有尾的片段，并锁定动作对象与场景道具的最小关系，才能得到镜头能对准、可拍摄的干净切片。
+      tradeoff_or_tension: 整片忙碌无从下手 -> 拆成开场准备类动作与整理/比对/讲解/递示等一般化动作分型切片
+      spoken_line_seed: 一次只把一件事做完整。
+      natural_next_action: 下一次从比对、递示、讲解中只选一个动作记录
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在试衣镜侧方的小桌上
+      real_work_action: 店长先完成两件大衣比色，再单独翻风衣下摆指内衬走线
+      natural_spoken_line: 一次只把一件事做完整。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 下一次从比对、递示、讲解中只选一个动作记录
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-055
+    kernel_id: SCM120-CAND-082
+    canonical_cluster_id: mkc_034
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我已经把白衬衫的第一只袖口卷起来了。接着只掖前襟，后摆继续放着，最后再在侧腰轻轻系一条细带。每一步做完都停一下：手腕露出来，前侧腰线出现，后面还保留长度。先动一处，看清变化，再动下一处。到店可以按自己的裤腰位置慢慢试。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 把一件敞开平塌的长身白衬衫，通过翻袖口、把前襟下摆掖进裤腰、侧腰系细腰带三步改出收腰轮廓。
+      human_action: 店长卷袖、前掖后放，再用细腰带在侧腰轻收
+      scene_premise: 木台旁的衬衫改型演示
+      event_trigger: 长身白衬衫平塌，顾客不知道从哪一步调整
+      visible_detail: 袖口露出手腕，前侧腰线出现，后摆仍保留长度
+      business_judgment: 以动作起点为镜头首帧，按起承转合分段推进，镜头跟随手部不切走，每段挂一个解释槽位，用强观察弱解释把改型过程拍成可复看的示范。
+      tradeoff_or_tension: 宽松衬衫上身敞塌没轮廓 -> 用卷袖口、前掖后放、系松扣三步改出收腰立体
+      spoken_line_seed: 先动一处，看清变化，再动下一处。
+      natural_next_action: 到店按自己的裤腰高度依次试三个动作
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在木台对面的层架上
+      real_work_action: 店长卷袖、前掖后放，再用细腰带在侧腰轻收
+      natural_spoken_line: 先动一处，看清变化，再动下一处。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 到店按自己的裤腰高度依次试三个动作
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-056
+    kernel_id: SCM120-CAND-084
+    canonical_cluster_id: mkc_034
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 椅背上的风衣，今天只做三件小事。先把领子翻到舒服的高度，停一下；再卷出针织内搭的袖口，停一下；最后把腰带系起，看整体如何收住。每次只动一个地方，衣服才不会突然变魔术。你平时内搭厚或薄，可以决定做到第二步还是第三步。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件搭在椅背上的卡其风衣，从翻软硬领、卷起针织内搭的袖口到系上腰带收出腰线的一连串上身动作。
+      human_action: 店长先翻领，再卷内搭袖口，最后系腰带，每步都停一下
+      scene_premise: 搭在椅背上的风衣试穿
+      event_trigger: 风衣叠穿动作太快，旁观者看不清每一步改变
+      visible_detail: 领口层次、露出的内搭袖口与腰部收束依次出现
+      business_judgment: 把每个上身动作拆成"动作起点—解释槽位—镜头跟随"三段，用强观察弱解释让可见变化先被看见，再用一个完成判断收住画面。
+      tradeoff_or_tension: 上身动作太快观众看不懂好在哪 -> 每个动作起点后紧跟一句只报可见变化的解释槽位
+      spoken_line_seed: 每次只动一个地方，衣服才不会突然变魔术。
+      natural_next_action: 顾客可按常穿内搭厚度调整停在哪一步
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在椅背对面的陈列台上
+      real_work_action: 店长先翻领，再卷内搭袖口，最后系腰带，每步都停一下
+      natural_spoken_line: 每次只动一个地方，衣服才不会突然变魔术。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 顾客可按常穿内搭厚度调整停在哪一步
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-057
+    kernel_id: SCM120-CAND-085
+    canonical_cluster_id: mkc_035
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正在把毛衣前面一小截掖进百褶裙腰，后面继续松着，再穿乐福鞋走两步看裙摆。实习生原本想请一位顾客一起入画，我说不用。方法可以拍，路过的人不用被拉进来。今天只演示掖与不掖的区别；真正穿到谁身上，还是让本人照镜子决定。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 燕麦色高领毛衣的下摆掖进墨绿百褶裙的裙腰、只掖前面一小截露出腰线，脚下配一双乐福鞋，竖屏给腰腹一个掖与不掖的对比
+      human_action: 店长自己示范前掖毛衣、整理百褶裙腰，再走两步看裙摆
+      scene_premise: 打烊前的毛衣与半裙搭配
+      event_trigger: 实习生想拉真实顾客入画演示掖腰效果
+      visible_detail: 前侧腰位被看见，后摆保持松量，裙摆走动时展开
+      business_judgment: 通用搭配与陈列拍摄画面（掖腰造腰线、机位、竖屏钩子、走步甩裙摆）可以先充分写出并放开拍；但一旦镜头带进真实到店的人，隐私与实例事实边界就成为不可碰的处置线：真实顾客的脸、名字、随口对话一律不入镜，用一个进店添冬衣的一般化角色替换掉可识别实例事实；对无核实来源的顾客夸赞（顾客反馈）与走货快慢（经营表现）先当不存在、不写进内容，授权不明的素材搁置等补齐；真正落地所需的门店、商品、镜头、角色现场事实全部声明为显式槽位，不假装某具体门店现场已存在。
+      tradeoff_or_tension: 先把通用的毛衣配裙子搭配与拍摄画面充分写出来：高领毛衣掖进百褶裙腰做腰线、乐福鞋收脚、落地镜斜前方竖屏机位、掖与不掖对比加钩子文案，这一段可以放开写
+      spoken_line_seed: 方法可以拍，路过的人不用被拉进来。
+      natural_next_action: 顾客到店后按自己的腰位与鞋型尝试
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在试穿区外的矮柜上
+      real_work_action: 店长自己示范前掖毛衣、整理百褶裙腰，再走两步看裙摆
+      natural_spoken_line: 方法可以拍，路过的人不用被拉进来。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 顾客到店后按自己的腰位与鞋型尝试
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-058
+    kernel_id: SCM120-CAND-087
+    canonical_cluster_id: mkc_035
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 清晨卷帘门刚开，我把通勤那套重新穿了一遍。风衣半敞，针织从领口和袖口露一点，阔腿裤把下半身线条接下去。原本想顺手拍进真实试穿的人，我停了下来。搭配留在画面里，顾客留在自己的生活里。想看上身，可以私聊约时间，自己慢慢比。
+    content_kernel:
+      human_subject:
+      - 店长
+      - 顾客
+      - 人
+      - 她
+      object_anchor: 一件卡其风衣内叠米色针织开衫、下接阔腿裤的通勤搭配，是店长想拍成竖屏短片的那套画面主体。
+      human_action: 店长自己穿风衣叠针织开衫和阔腿裤，走一遍门店动线
+      scene_premise: 清晨卷帘门刚打开
+      event_trigger: 店长想拍风衣通勤搭配，又差点把真实试穿顾客录进去
+      visible_detail: 风衣半敞、针织露出领口与袖口，阔腿裤延续下半身线条
+      business_judgment: 把门店日常里看得见的搭配画面转成平台原生短内容时，凡触到真实个人就改写成一般化角色、凡碰到授权不明就搁置待补，守住隐私边界与不可写的经营表现与顾客反馈这条门店日常内容化风险红线。
+      tradeoff_or_tension: 想把真实客人试穿一起录进内容 -> 抽掉可辨认的脸、名字与对话，只留一般化角色出镜
+      spoken_line_seed: 搭配留在画面里，顾客留在自己的生活里。
+      natural_next_action: 私聊预约后由顾客自行试穿比较
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在货架端头的稳固层板上
+      real_work_action: 店长自己穿风衣叠针织开衫和阔腿裤，走一遍门店动线
+      natural_spoken_line: 搭配留在画面里，顾客留在自己的生活里。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 私聊预约后由顾客自行试穿比较
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-059
+    kernel_id: SCM120-CAND-088
+    canonical_cluster_id: mkc_036
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正拿着清单核对今天能上墙的服装。确认尺码与状态后，才给模特换上廓形西装和阔腿裤；完成以后再退后，看肩部与裤长是否在同一条视线上。检查、实施、复核，各有一个结束标志。先把前一步做完，后一步才有东西可接，也少一次半途返工。
+    content_kernel:
+      human_subject:
+      - 陈列师
+      - 模特
+      object_anchor: 模特身上换成廓形西装配阔腿裤，肩宽和裙长在同一条视线上收齐，是实施节点最直接的画面锚点。
+      human_action: 店长先核清可用服装，再换西装与阔腿裤，最后退后复核肩宽和裤长
+      scene_premise: 开店前的陈列窗口
+      event_trigger: 同事没检查服装与尺码就开始给模特换装
+      visible_detail: 清单、上身组合与肩线裤脚的最终对齐形成三个完成点
+      business_judgment: 把陈列动作拆成陈列前检查、实施、复核三个动作节点，前一节点的节点输出恰好构成后一节点的节点输入，按节点之间的依赖顺序逐步推进到完成标志。
+      tradeoff_or_tension: 开店前服装没检查就直接上墙 -> 先立陈列前检查节点，把当天要上墙的服装与尺码段当作节点输入，产出一张可上手清单作为节点输出
+      spoken_line_seed: 先把前一步做完，后一步才有东西可接。
+      natural_next_action: 把三节点完成标志留给下一次换陈列复用
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在模特侧后的陈列台上
+      real_work_action: 店长先核清可用服装，再换西装与阔腿裤，最后退后复核肩宽和裤长
+      natural_spoken_line: 先把前一步做完，后一步才有东西可接。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 把三节点完成标志留给下一次换陈列复用
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-060
+    kernel_id: SCM120-CAND-090
+    canonical_cluster_id: mkc_036
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 今早模特换到一半，我们又把衣服全部拿了下来。风衣还没整烫，层板尺码也没核清，继续搭只会越做越乱。先处理这两件事，再让风衣敞穿、针织露出领口、阔腿裤接住下半身。返工往往不是手慢，是顺序快了。开门前再从入口完整看一遍。
+    content_kernel:
+      human_subject:
+      - 模特
+      object_anchor: 模特敞穿风衣、内搭高领针织、下接阔腿裤，侧挂按深浅渐变、针织衫叠成方块的整组秋装陈列。
+      human_action: 店长先停下换装，完成熨烫与尺码检查，再搭风衣、针织和阔腿裤
+      scene_premise: 上新日开门前的陈列
+      event_trigger: 风衣未整烫、层板尺码不齐，团队却已经开始搭模特
+      visible_detail: 风衣敞穿、针织领口露出、侧挂由深到浅，层板叠放方正
+      business_judgment: 把陈列动作拆成陈列前检查、实施、复核三个节点，各自明确节点输入与节点输出，用固定的依赖顺序和每步的完成标志挡住跳步返工。
+      tradeoff_or_tension: 一上来就往模特上套衣服、摆到一半发现风衣没熨层板断码只能返工 -> 先把动作拆成陈列前检查、实施、复核三个一般节点，一级一级踩台阶再动手
+      spoken_line_seed: 返工往往不是手慢，是顺序快了。
+      natural_next_action: 开门前从入口复核整组秋装一次
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在入口内侧的层板上
+      real_work_action: 店长先停下换装，完成熨烫与尺码检查，再搭风衣、针织和阔腿裤
+      natural_spoken_line: 返工往往不是手慢，是顺序快了。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 开门前从入口复核整组秋装一次
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-061
+    kernel_id: SCM120-CAND-091
+    canonical_cluster_id: mkc_037
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 我正在把墨绿西装的翻领重新压到衬衫领外，再把巧克力色直筒裤的裤缝对正，灯往主推位斜一点。这套方法谁都可以照着做。实习生问要不要顺便讲合作与授权，我说不必：摆法可以教，合同里的事不在这条里讲。制度问题走正式渠道，画面只留陈列动作。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 人
+      - 她
+      object_anchor: 墨绿羊毛西装敞穿、燕麦色条纹衬衫翻领压在西装领上、巧克力色直筒裤、复古乐福鞋与焦糖色托特包组成的正挂主推搭配
+      human_action: 店长整理西装、衬衫、直筒裤和灯光，同时制止披露制度信息
+      scene_premise: 正挂主推位的午后调整
+      event_trigger: 实习生拍通用陈列方法时想顺带讲加盟与授权细节
+      visible_detail: 翻领压在西装领上，裤缝沿台沿向下，灯光斜落在主推位
+      business_judgment: 在零售现场，通用搭配与陈列打光属方法层，谁都能照着摆得出来；但具体门店里哪个零售角色能做哪个动作由其动作权限锁定，越权动作（例如对外披露授权来源）要当场拦下。加盟、片区、合同等制度事实不能原样进内容，需按加盟/授权信息的泛化改写条件抽成一层一般化授权表面，仅留'存在此类合作安排'的抽象口径，由此完成真实制度与方法层的切断。
+      tradeoff_or_tension: 店内可放开写的是通用陈列方法：正挂主推位的单品叠层、翻领压西装领、层板斜切打光，这类画面可以充分铺开写细
+      spoken_line_seed: 摆法可以教，合同里的事不在这条里讲。
+      natural_next_action: 保存通用陈列步骤，制度问题走正式渠道
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在正挂对面的层板上
+      real_work_action: 店长整理西装、衬衫、直筒裤和灯光，同时制止披露制度信息
+      natural_spoken_line: 摆法可以教，合同里的事不在这条里讲。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 保存通用陈列步骤，制度问题走正式渠道
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-062
+    kernel_id: SCM120-CAND-092
+    canonical_cluster_id: mkc_037
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 打烊前，导购已经把中岛那摞衣服抱了下来。我们先把灯芯绒夹克对半立码，让绒条朝向一致，再把白衬衫和直筒裤的竖线落在台边。她还想换掉主推配色，我让这一步先停。会做这个动作，不等于能改所有决定。明天由陈列负责人确认后再动。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 模特
+      - 人
+      - 她
+      object_anchor: 焦糖色灯芯绒工装夹克对半叠好立码于中岛，旁边半身模特内搭白衬衫、松一颗扣、下接直筒裤、裤缝压台沿的叠放陈列
+      human_action: 店长让导购先完成灯芯绒夹克立码与模特内搭，配色变更暂时停下
+      scene_premise: 打烊前的中岛重叠
+      event_trigger: 导购想重叠开衫并擅自替换主推配色
+      visible_detail: 夹克绒条同向反光，白衬衫与直筒裤形成竖向线条
+      business_judgment: 中岛叠放借对半立码让灯芯绒绒条同向反光形成规整块面，半身模特把白衬衫内搭与直筒裤的竖向线条压在中岛边沿，再把灯往台心收，使进店动线的第一视线被引导锚定在夹克肩线上——这是一套不依赖任何具体门店的可复用通用陈列/搭配方法。
+      tradeoff_or_tension: 用打烊前导购要重叠中岛开衫、还想擅自换主推配色这一现场动作切入，平台原生地把读者拽进店里，同时立起一个'该不该停手'的张力，而不是先讲道理
+      spoken_line_seed: 会做这个动作，不等于能改所有决定。
+      natural_next_action: 配色调整留给次日陈列负责人确认
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在中岛旁的价签台上
+      real_work_action: 店长让导购先完成灯芯绒夹克立码与模特内搭，配色变更暂时停下
+      natural_spoken_line: 会做这个动作，不等于能改所有决定。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 配色调整留给次日陈列负责人确认
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-063
+    kernel_id: SCM120-CAND-094
+    canonical_cluster_id: mkc_038
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    body_text: 橱窗刚擦好，我又把酒红半裙的褶子理了一遍。褶向、腰头和走动时的下摆都能当场看见，小牌就写这些。显瘦、首发、到货色系若没有确认，不因为牌子空着就随手补上。牌子写得少一点，未知就不会被假装成已知。资料到了，再单独更新。
+    content_kernel:
+      human_subject:
+      - 顾客
+      - 模特
+      - 她
+      object_anchor: 橱窗模特身上那条酒红羊毛百褶裙，以及它陈列小牌上那句待写、待核的文案
+      human_action: 店长整理褶向与腰头，保留可见描述，把其余内容移出小牌
+      scene_premise: 橱窗小牌上墙前
+      event_trigger: 酒红百褶裙的说明混入显瘦、首发与到货色系等未核信息
+      visible_detail: 褶子方向清楚，腰头收窄，走动时下摆垂落可观察
+      business_judgment: 以门店陈列组长在橱窗上牌文案时的分寸为载体：把裙子上手能看能摸的可核特征（褶向、腰头、走动垂坠）与量不出、问不到、拍不了板的主张（显瘦、到货色系、本店首发）分开——前者敢写，后者一律先停，或挂起换观察，或留成命名槽、或递上级，用先停后查这条自立的规矩替代随手往下填。
+      tradeoff_or_tension: 陈列牌上手可见的特征（褶向、腰头收窄、走动垂坠）→ 当场核实得了 → 直接落到牌子文案
+      spoken_line_seed: 牌子写得少一点，未知就不会被假装成已知。
+      natural_next_action: 到货与首发信息确认后再单独更新门店说明
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在橱窗内侧的展示台上
+      real_work_action: 店长整理褶向与腰头，保留可见描述，把其余内容移出小牌
+      natural_spoken_line: 牌子写得少一点，未知就不会被假装成已知。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 到货与首发信息确认后再单独更新门店说明
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-064
+    kernel_id: SCM120-CAND-095
+    canonical_cluster_id: mkc_038
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    body_text: 晚班复核稿件时，我把最顺口的那句按住了。墨绿灯芯绒半裙的绒条、腰头衬里和侧缝拉链都能拿近看，也能用手感受当下状态；长期耐洗与几年后的变化却不在眼前。手能摸到的照实写，时间才知道的先停。成分、克重和洗护记录齐了，再回来复核。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一条墨绿灯芯绒的A字半裙：绒条压得密、腰头宽且里子加衬、侧缝隐形拉链藏得平、走动时下摆往外荡半寸；耐洗与克重成分为未证信息，改写稿把它夸成"越洗越糯、穿三年不起坨"。
+      human_action: 店长摸绒条、看腰头与侧缝拉链，把性能句单独挂起
+      scene_premise: 加盟改写稿的晚班复核
+      event_trigger: 墨绿灯芯绒半裙被写成长期耐洗与不起变化
+      visible_detail: 绒条密度、腰头衬里与隐形拉链平整度都能近看
+      business_judgment: 门店/加盟内容改写的前复核分寸：可观察触感照实写，需数据支撑的硬话先挂起并写清所缺凭证、画面换安全替代表达，被跳过的核对环节回退补齐，实例异常单独三行留档，缺失的关键事实统一写成命名槽位待补。
+      tradeoff_or_tension: 店长复核加盟改写稿时，先给每句夸赞设一道'这句谁核过'的自查，把眼睛能看、手能摸的触感，与需要数据兜底的硬话分成两堆
+      spoken_line_seed: 手能摸到的照实写，时间才知道的先停。
+      natural_next_action: 补齐成分、克重和洗护记录后再复核硬结论
+      scoped_subroute: store_daily_display_action
+    execution_card:
+      who_executes: 店长本人
+      who_appears: 店长本人
+      phone_placement: 手机固定在复核桌旁的文件架上
+      real_work_action: 店长摸绒条、看腰头与侧缝拉链，把性能句单独挂起
+      natural_spoken_line: 手能摸到的照实写，时间才知道的先停。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 补齐成分、克重和洗护记录后再复核硬结论
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-065
+    kernel_id: SCM120-CAND-098
+    canonical_cluster_id: mkc_039
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 清晨那段内容，我没有先把风衣推到手机前。先放好通勤包和水杯，人物准备出门时，才从椅背拿起卡其风衣，腰带轻收，门襟保留一点活动空间。衣服先解决一件事，再谈它是不是主角。这样观众看到的是一次出门选择，不是商品突然闯进生活。试穿时再比较敞穿与收腰。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件卡其色风衣，从椅背上被拿起，腰线一收、门襟半敞地入画。
+      human_action: 导购先放好通勤包和水杯，再拿起风衣收腰、半敞门襟准备出门
+      scene_premise: 清晨出门前的走廊
+      event_trigger: 内容一开场就把风衣怼到手机前，人物任务完全消失
+      visible_detail: 卡其风衣从椅背被拿起，腰带轻收，前襟保留活动空间
+      business_judgment: 先给单品做角色功能命名（主角/对比项/解决项/过渡项），再据身份决定它在镜头中的首出现位置与叙述段落。
+      tradeoff_or_tension: 商品一入画就被硬塞卖点、看的人立刻划走 -> 先定产品在镜头中的首出现位置，让它有理由出现在这段生活里再登场
+      spoken_line_seed: 衣服先解决一件事，再谈它是不是主角。
+      natural_next_action: 保存场景任务，试穿时比较收腰与敞穿
+      customer_task: 通勤出门时兼顾活动与整洁
+      product_role: 帮人物完成出门转场的解决项
+      scene_use_case: 清晨出门前的走廊
+      trial_or_tryon_trigger: 顾客需要比较敞穿与收腰两种状态时
+      safe_observation: 卡其风衣从椅背被拿起，腰带轻收，前襟保留活动空间
+      guide_next_line: 衣服先解决一件事，再谈它是不是主角。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在门店模拟走廊的窄柜上
+      real_work_action: 导购先放好通勤包和水杯，再拿起风衣收腰、半敞门襟准备出门
+      natural_spoken_line: 衣服先解决一件事，再谈它是不是主角。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 保存场景任务，试穿时比较收腰与敞穿
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-066
+    kernel_id: SCM120-CAND-099
+    canonical_cluster_id: mkc_039
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 这件燕麦风衣先不报卖点。下班后你是要步行一段，还是直接开车？如果要走路，可以把领口立起、门襟扣到中段，腰带在身后松系；如果一直在车里，就先看敞开时是否顺手。先说你要去哪，再看这件衣服怎么跟上。穿法能演示，身体效果不在这里作保证。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 一件燕麦色风衣:立着的领口、只扣中间两颗的门襟、可在身后打松结的腰带,面料是灯下泛起细密斜织手感的挺括料。
+      human_action: 导购先问通勤方式，再展示立领、半扣门襟和后腰松结
+      scene_premise: 下班转凉场景的讲款台
+      event_trigger: 风衣讲解从卖点开始，没有说明它要接住什么场景任务
+      visible_detail: 领口可立起，门襟只扣中段，腰带在身后松系不妨碍走动
+      business_judgment: 让同一件产品作为对比项、解决项、过渡项在场景任务里轮流站位,用人物动作决定它在镜头中的首出现位置,再以搭配重心与层次变化代替硬广话术。
+      tradeoff_or_tension: 衣服一露脸就被当成待售商品硬推、观众先看到价签而非人 -> 让它踩着人物往外走的动作首次登场,把产品在镜头中的首出现位置绑定到'谁需要它'这个场景任务上
+      spoken_line_seed: 先说你要去哪，再看这件衣服怎么跟上。
+      natural_next_action: 顾客说明步行或驾车后，再选择领口与腰带状态
+      customer_task: 下班后应对室外风与继续走动
+      product_role: 从室内到室外的过渡项
+      scene_use_case: 下班转凉场景的讲款台
+      trial_or_tryon_trigger: 顾客要比较步行与驾车穿法时
+      safe_observation: 领口可立起，门襟只扣中段，腰带在身后松系不妨碍走动
+      guide_next_line: 先说你要去哪，再看这件衣服怎么跟上。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在直播台正前方
+      real_work_action: 导购先问通勤方式，再展示立领、半扣门襟和后腰松结
+      natural_spoken_line: 先说你要去哪，再看这件衣服怎么跟上。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 顾客说明步行或驾车后，再选择领口与腰带状态
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-067
+    kernel_id: SCM120-CAND-100
+    canonical_cluster_id: mkc_040
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 午后中岛这组搭配，先让橄榄绿夹克站在中心。大贴袋、铜扣和翻立领都有清楚落点，焦糖灯芯绒裤把颜色接暖，米色高领只做缓冲。结尾别把人拽去结账，带回刚才那处细节：如果你常穿深色裤装，到店可以把两组颜色并排，看哪一组更接近自己的日常。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      - 他
+      object_anchor: 橄榄绿工装夹克（大贴袋、翻立领、铜扣门襟），配焦糖色灯芯绒裤、米色高领与厚底德训鞋
+      human_action: 导购整理夹克大贴袋、翻立领与裤装配色，再把承接改成到店比较
+      scene_premise: 午后中岛的工装夹克搭配
+      event_trigger: 内容结尾突然催人购买，与前面的穿着场景完全断开
+      visible_detail: 橄榄绿夹克的贴袋、铜扣和翻领与焦糖灯芯绒形成色彩关系
+      business_judgment: 在一段短片里，先把场景提示与可看见的单品细节铺够、让观众自己读出信息，再用一句克制的搭配条件把注意力收到具体单品上；收尾那句行动引导既不替商品认下需证据的效果，也不空喊催单，而是挂回观众刚盯着看的画面，形成叙事到
+        CTA 的非硬卖边界。
+      tradeoff_or_tension: 先让画面自证：用台灯暖光、磨白走线、下摆长度这类场景提示把信息喂给眼睛，读者被看见的细节说服，而不是被话术告知
+      spoken_line_seed: 结尾别把人拽去结账，带回刚才那处细节。
+      natural_next_action: 保存配色思路，到店把夹克与常穿裤装并排比较
+      customer_task: 为日常通勤找到不单调又容易复用的配色
+      product_role: 搭配组合里的领头单品
+      scene_use_case: 午后中岛的工装夹克搭配
+      trial_or_tryon_trigger: 顾客想比较夹克与自己常穿裤装时
+      safe_observation: 橄榄绿夹克的贴袋、铜扣和翻领与焦糖灯芯绒形成色彩关系
+      guide_next_line: 结尾别把人拽去结账，带回刚才那处细节。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在中岛旁的价签台上
+      real_work_action: 导购整理夹克大贴袋、翻立领与裤装配色，再把承接改成到店比较
+      natural_spoken_line: 结尾别把人拽去结账，带回刚才那处细节。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 保存配色思路，到店把夹克与常穿裤装并排比较
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-068
+    kernel_id: SCM120-CAND-101
+    canonical_cluster_id: mkc_040
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 我手里是白衬衫，先把领口解开一点，再把袖子挽到小臂。开会时可以把线条收得整齐，日常走动时再松开一处。你更多是哪种场景？看懂一个动作，再决定要不要继续试。今天不在结尾催单，只把领口与袖口两种变化摆出来，穿在自己身上再选。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 白衬衫——领口开度配细链、挽到小臂露腕骨的袖子
+      human_action: 导购解开领口、挽袖到小臂，再让观众比较放下与收起的状态
+      scene_premise: 直播台的白衬衫穿法演示
+      event_trigger: 白衬衫内容结尾只剩硬催购买
+      visible_detail: 领口开度、露出的腕部与袖子堆叠形成不同松紧感
+      business_judgment: 把行动引导搭在前面场景的连接点上，让人顺着看懂的搭配自己走一步，而非用空口号推着掏钱，铺垫不够就不收尾催单。
+      tradeoff_or_tension: 结尾忍不住加点它带走同款的硬催 -> 删掉，那把人从场景拽进收银台
+      spoken_line_seed: 看懂一个动作，再决定要不要继续试。
+      natural_next_action: 顾客说明工作场景后，再选择领口与袖口状态
+      customer_task: 在正式与放松之间调整白衬衫状态
+      product_role: 场景语气的调节项
+      scene_use_case: 直播台的白衬衫穿法演示
+      trial_or_tryon_trigger: 顾客要比较扣领与松领、长袖与挽袖时
+      safe_observation: 领口开度、露出的腕部与袖子堆叠形成不同松紧感
+      guide_next_line: 看懂一个动作，再决定要不要继续试。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在直播台已有支架上
+      real_work_action: 导购解开领口、挽袖到小臂，再让观众比较放下与收起的状态
+      natural_spoken_line: 看懂一个动作，再决定要不要继续试。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 顾客说明工作场景后，再选择领口与袖口状态
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-069
+    kernel_id: SCM120-CAND-104
+    canonical_cluster_id: mkc_041
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 风衣第一次上架，我只做了三件事：把它挂正，让人看清长度和宽松轮廓，再把腰带放到容易看见的位置。没有急着拆插肩、翻领与多种穿法。第一次见面，先让人认得它。等有人愿意停下来，下一条再往细处走。内容多少，要跟这件衣服此刻被认识到哪一步匹配。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件卡其风衣，从可绕手一圈的腰带、过膝衣摆到藏在衣领内衬里的插肩缝，都是它在各窗口里被讲述的抓手。
+      human_action: 导购先挂正风衣，只记录整体长度、重量感与腰带位置
+      scene_premise: 风衣第一次上架的早班
+      event_trigger: 新品刚出现，内容却塞入过多结构与穿法信息
+      visible_detail: 长度、宽松轮廓和腰带成为第一次认识的三个信号
+      business_judgment: 同一件衣服按它此刻所处的角色窗口切换讲法：越靠前叙事密度越稀、越靠后越拆细节，教育重心与陈列语气都跟着窗口一起换。
+      tradeoff_or_tension: 新品刚挂架没人认得它 -> 认知进入期只交代轮廓与重量感，把叙事密度压到最低，一句话配一个画面
+      spoken_line_seed: 第一次见面，先让人认得它。
+      natural_next_action: 保存阶段顺序，下一次再展开领口和插肩结构
+      customer_task: 先快速判断这件风衣是否值得进一步了解
+      product_role: 认知进入期的轮廓主角
+      scene_use_case: 风衣第一次上架的早班
+      trial_or_tryon_trigger: 顾客对整体轮廓产生兴趣后
+      safe_observation: 长度、宽松轮廓和腰带成为第一次认识的三个信号
+      guide_next_line: 第一次见面，先让人认得它。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在新款挂架对面的层板上
+      real_work_action: 导购先挂正风衣，只记录整体长度、重量感与腰带位置
+      natural_spoken_line: 第一次见面，先让人认得它。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 保存阶段顺序，下一次再展开领口和插肩结构
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-070
+    kernel_id: SCM120-CAND-105
+    canonical_cluster_id: mkc_041
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 同一件米白风衣，第一次见只看轮廓；已经看过几次，再靠近插肩和翻领；准备搭配时，它又可以退到组合里。不是换一件衣服，是换它这次要承担的任务。你是第一次看到，还是已经比较过几次？我按你的熟悉程度继续讲，不用一次把所有信息塞满。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件米白风衣作为贯穿线索，从只拍轮廓的认知进入期，到讲插肩袖与翻领的结构教育期，再到退居配角的组合扩展期，展示同一件衣服在不同角色窗口里的讲述方式。
+      human_action: 导购先展示轮廓，再根据观众熟悉度决定是否展开插肩与翻领
+      scene_premise: 直播台的米白风衣阶段讲解
+      event_trigger: 同一件风衣在不同内容阶段一直使用相同信息密度
+      visible_detail: 第一层只见整体，第二层才靠近肩部与领口，组合阶段又退回搭配
+      business_judgment: 先对一件衣服处在哪个抽象阶段做判断，用这个判断决定这条内容的叙事密度、教育重心和陈列更新节奏，而不是反推它卖得好不好。
+      tradeoff_or_tension: 新款刚上镜观众还认不出它 -> 用认知进入期的低密度画面先立轮廓，只让它被看见，不堆卖点
+      spoken_line_seed: 不是换一件衣服，是换它这次要承担的任务。
+      natural_next_action: 观众说明是否第一次看到，再进入对应层次
+      customer_task: 按自己的了解程度获取合适深度的信息
+      product_role: 随内容阶段切换的信息载体
+      scene_use_case: 直播台的米白风衣阶段讲解
+      trial_or_tryon_trigger: 顾客从认识进入比较阶段时
+      safe_observation: 第一层只见整体，第二层才靠近肩部与领口，组合阶段又退回搭配
+      guide_next_line: 不是换一件衣服，是换它这次要承担的任务。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在直播台正前方
+      real_work_action: 导购先展示轮廓，再根据观众熟悉度决定是否展开插肩与翻领
+      natural_spoken_line: 不是换一件衣服，是换它这次要承担的任务。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 观众说明是否第一次看到，再进入对应层次
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-071
+    kernel_id: SCM120-CAND-107
+    canonical_cluster_id: mkc_042
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 秋装到货后，我在长桌上重新排了一组。姜黄粗针毛衣先领头，橄榄绿丝巾把姜黄与藏青裤子接起来，焦茶帽子只补住画面上方。一组衣服里，不是每件都要站在最前面。先分清领头、连接和补位，再决定拍到哪一层；换平台时删信息，也不会把关系删散。
+    content_kernel:
+      human_subject:
+      - 人
+      - 她
+      object_anchor: 以一件姜黄粗棒针毛衣为领头单品，配橄榄绿窄丝巾、焦茶贝雷帽、藏青直筒裤组成一组秋装造型，丝巾负责把姜黄与藏青两块颜色接上、贝雷帽补住画面上沿。
+      human_action: 导购让毛衣领头，丝巾接色，帽子补画面上沿，裤装稳住下方
+      scene_premise: 秋装到货后的长桌组货
+      event_trigger: 姜黄毛衣、丝巾、帽子和裤装都在争当主推
+      visible_detail: 姜黄与藏青由橄榄绿连接，焦茶帽子只补上方空位
+      business_judgment: 在服装零售内容里，一组搭配靠两条规则协同：先按主次关系与陪衬关系及产品角色与主题化组合关系给每件单品分派一种组货角色类型（谁领头、谁做颜色连接、谁做场景补位），再据各渠道承载力按渠道差异下的信息删减规则裁剪信息密度，最终把角色分工与渠道裁剪固化成可复用的组货角色与渠道边界矩阵。
+      tradeoff_or_tension: 先按主次关系与陪衬关系定出一组里谁领唱、谁陪衬、谁只补一口气，确立单件之间的主从秩序
+      spoken_line_seed: 一组衣服里，不是每件都要站在最前面。
+      natural_next_action: 保存领头、连接、补位三类角色后再按平台删减
+      customer_task: 快速看懂一组搭配中各单品的作用
+      product_role: 毛衣领头、丝巾连接、帽子补位、裤装承接
+      scene_use_case: 秋装到货后的长桌组货
+      trial_or_tryon_trigger: 顾客想替换其中一件仍保持整体关系时
+      safe_observation: 姜黄与藏青由橄榄绿连接，焦茶帽子只补上方空位
+      guide_next_line: 一组衣服里，不是每件都要站在最前面。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在长桌末端的样册架上
+      real_work_action: 导购让毛衣领头，丝巾接色，帽子补画面上沿，裤装稳住下方
+      natural_spoken_line: 一组衣服里，不是每件都要站在最前面。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 保存领头、连接、补位三类角色后再按平台删减
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-072
+    kernel_id: SCM120-CAND-108
+    canonical_cluster_id: mkc_042
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 我先拿铁锈红夹克放到手机正面，它负责领头；芥末背心只露一点，把红色与灰调接起来；德训鞋补住画面下方。实物可以慢慢看，直播先把角色讲清。你更想换接色那件，还是换补位的鞋？我们可以当场替换，再看这组关系是否还站得住。
+    content_kernel:
+      human_subject:
+      - 人
+      - 他
+      object_anchor: 打烊后中岛上以铁锈红灯芯绒夹克为主推、芥末黄薄背心在红与灰之间接色、复古德训鞋补构图空位重新码起来的一组秋装
+      human_action: 导购先拿铁锈红夹克，再用芥末背心接色，最后把鞋放到构图空位
+      scene_premise: 打烊后的中岛组货讲解
+      event_trigger: 实物陈列细节很多，直播却只有几秒正面展示时间
+      visible_detail: 夹克占正面，背心只露接色部分，德训鞋补下方空处
+      business_judgment: 组货角色分配叠加渠道边界信息删减：先立一件主推、按主次陪衬排位、用颜色连接件与场景补位件完形，再对同一组按'实物陈列可细看'与'直播镜头只留正面几秒'两种渠道做详略删减，最后把这套关系沉淀成可复用的角色×渠道矩阵。
+      tradeoff_or_tension: 从一组秋装里挑出铁锈红灯芯绒夹克独占正对门口的位置，让它作主推叙事项先替全组把当晚要讲的那句话定下，其余单品退半步不抢话
+      spoken_line_seed: 实物可以慢慢看，直播先把角色讲清。
+      natural_next_action: 观众选择想替换的角色，再看组合是否仍成立
+      customer_task: 在有限时间内理解一组秋装的主次关系
+      product_role: 夹克主推、背心连接、鞋补位
+      scene_use_case: 打烊后的中岛组货讲解
+      trial_or_tryon_trigger: 顾客想替换单品但保留整组节奏时
+      safe_observation: 夹克占正面，背心只露接色部分，德训鞋补下方空处
+      guide_next_line: 实物可以慢慢看，直播先把角色讲清。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在中岛对面的层板上
+      real_work_action: 导购先拿铁锈红夹克，再用芥末背心接色，最后把鞋放到构图空位
+      natural_spoken_line: 实物可以慢慢看，直播先把角色讲清。
+      simple_segment_count_max: 3
+      estimated_minutes: 10
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 观众选择想替换的角色，再看组合是否仍成立
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-073
+    kernel_id: SCM120-CAND-110
+    canonical_cluster_id: mkc_043
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 选外搭前，我会先问四件事：要走多远，坐下起身多不多，室内外温差怎样，还要带什么。步行一长，下摆若总扫腿，就把外搭层次往上收，内层换成能塞进裤腰的短打。百搭不是答案，今天要做什么才是。把真实行程带进试衣间，选择会具体很多。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件长款外搭，随场景在往上收的外搭层次、能塞进裤腰的短打和到膝盖上一点的中长款之间切换穿法。
+      human_action: 导购按步行、坐立、温差和携带物四件事调整外搭长度与内层
+      scene_premise: 行程变化前的外搭选择
+      event_trigger: 一件长外搭被一句百搭覆盖，步行与室内外温差都没被考虑
+      visible_detail: 步行多时上移外搭层次，内层短打可塞腰，长下摆减少拖拽
+      business_judgment: 先问这件衣服在哪个场景要完成什么动作——步行距离、坐立切换、室内外温差、携带物限制、正式程度——再决定它的层次与穿法，而不是一句百搭盖过所有边界。
+      tradeoff_or_tension: 步行距离一拉长、下摆扫腿要拽 -> 把外搭层次往上收、里面换成能塞进裤腰的短打
+      spoken_line_seed: 百搭不是答案，今天要做什么才是。
+      natural_next_action: 保存四个场景问题，试穿时按真实行程逐一核对
+      customer_task: 根据步行、坐立与温差选择外搭层次
+      product_role: 帮助完成场景切换的解决项
+      scene_use_case: 行程变化前的外搭选择
+      trial_or_tryon_trigger: 顾客行程包含长距离步行或频繁坐立时
+      safe_observation: 步行多时上移外搭层次，内层短打可塞腰，长下摆减少拖拽
+      guide_next_line: 百搭不是答案，今天要做什么才是。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在试穿区外的小桌上
+      real_work_action: 导购按步行、坐立、温差和携带物四件事调整外搭长度与内层
+      natural_spoken_line: 百搭不是答案，今天要做什么才是。
+      simple_segment_count_max: 4
+      estimated_minutes: 11
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 保存四个场景问题，试穿时按真实行程逐一核对
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-074
+    kernel_id: SCM120-CAND-111
+    canonical_cluster_id: mkc_043
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 这套是直筒西装裤配针织背心。坐下、起身、拿文件时，可以观察裤腰与背心是否保持位置；如果行程还要骑车，腿部动作变大，问题就不同了。同一套衣服，换一个动作，边界就出来了。你是全天室内，还是还要骑车、走很远？先说行程，我们再判断这套要不要调整。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 直筒西装裤配针织背心，在全天久坐开会的写字楼里适配，一旦行程加进骑车通勤就明显露怯。
+      human_action: 导购模拟坐下起身，再加入骑车动作讨论场景切换
+      scene_premise: 直播台的通勤搭配比较
+      event_trigger: 西装裤与针织背心适合久坐，却被写成适合所有通勤
+      visible_detail: 坐立时裤腰与背心位置可观察，骑车任务会增加腿部活动需求
+      business_judgment: 用正式程度、室内外温差、携带物限制三问推导出场景任务锚点与场景切换条件，据此划出这套穿搭适配与不适配的分界。
+      tradeoff_or_tension: 全天久坐、偶尔起身打印的写字楼行程 -> 用坐立切换时裤子不勒、背心不上跑作为这套是否适配的场景任务锚点
+      spoken_line_seed: 同一套衣服，换一个动作，边界就出来了。
+      natural_next_action: 顾客说明是否骑车、步行或全天室内，再继续搭配
+      customer_task: 在久坐办公与骑车通勤之间判断搭配边界
+      product_role: 适合特定任务、但有切换条件的组合
+      scene_use_case: 直播台的通勤搭配比较
+      trial_or_tryon_trigger: 顾客行程从室内久坐切换到骑车或长步行时
+      safe_observation: 坐立时裤腰与背心位置可观察，骑车任务会增加腿部活动需求
+      guide_next_line: 同一套衣服，换一个动作，边界就出来了。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在直播台侧面的稳固支架上
+      real_work_action: 导购模拟坐下起身，再加入骑车动作讨论场景切换
+      natural_spoken_line: 同一套衣服，换一个动作，边界就出来了。
+      simple_segment_count_max: 5
+      estimated_minutes: 12
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      interaction_handoff: 顾客说明是否骑车、步行或全天室内，再继续搭配
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-075
+    kernel_id: SCM120-CAND-112
+    canonical_cluster_id: mkc_044
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 同一束光下，我先穿短打，再套敞开的棉衬衫，最后加针织背心。每加一层都停一下：翻多少领口，袖口露多少，腰侧抽绳只收多少。怎么穿可以一步步看，穿了会怎样别抢着定。把顺序保存下来，再按自己的内搭厚度重做一次，才知道哪一步适合你。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件敞穿棉衬衫叠内搭短打、外压针织背心的三件层搭，配领口与袖口翻折、腰侧抽绳调节。
+      human_action: 导购先穿短打，再套棉衬衫与针织背心，逐步翻领、袖口并调抽绳
+      scene_premise: 同一光线下的层搭演示
+      event_trigger: 三层搭配被直接写成身体效果，没有展示具体动作
+      visible_detail: 每加一层，领口与袖口露出比例变化，抽绳只改变当下轮廓
+      business_judgment: 在同一光线下把穿着顺序、领口袖口翻折与抽绳调节方式逐步演示出来，只呈现镜头可见的变化，不替观众下效果结论。
+      tradeoff_or_tension: 读者可能把翻折演示动作当成效果已被证明 -> 明说镜头只做展示、把结果结论另挂证据阶梯
+      spoken_line_seed: 怎么穿可以一步步看，穿了会怎样别抢着定。
+      natural_next_action: 保存穿着顺序，按自己的内搭厚度重新试
+      customer_task: 学会三层叠穿的顺序与局部调节
+      product_role: 提供层次变化的穿法工具
+      scene_use_case: 同一光线下的层搭演示
+      trial_or_tryon_trigger: 顾客需要按内搭厚度调整翻折和抽绳时
+      safe_observation: 每加一层，领口与袖口露出比例变化，抽绳只改变当下轮廓
+      guide_next_line: 怎么穿可以一步步看，穿了会怎样别抢着定。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在试穿区的层板上
+      real_work_action: 导购先穿短打，再套棉衬衫与针织背心，逐步翻领、袖口并调抽绳
+      natural_spoken_line: 怎么穿可以一步步看，穿了会怎样别抢着定。
+      simple_segment_count_max: 3
+      estimated_minutes: 13
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存穿着顺序，按自己的内搭厚度重新试
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-076
+    kernel_id: SCM120-CAND-114
+    canonical_cluster_id: mkc_044
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 我先穿针织开衫，再把风衣罩上。领口翻出大约两指宽，袖口留一点层次，最后调后腰的隐藏扣，看外轮廓当下怎么变化。我演示的是调法，不替你宣布结果。你的内搭偏薄还是有明显厚度？告诉我以后，我们再决定领口露多少、后腰收在哪一档。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 一件针织开衫外罩风衣的层搭演示，靠领口翻折两指宽与后腰隐藏扣的调节方式呈现腰线的可见变化。
+      human_action: 导购先穿针织开衫，再罩风衣，调整领口翻折与后腰扣
+      scene_premise: 直播台的开衫外罩风衣演示
+      event_trigger: 穿法口播把领口翻折与腰部调节直接说成身体效果
+      visible_detail: 两指宽领口露出，后腰扣改变当下外轮廓，袖口形成层次
+      business_judgment: 把"怎么穿"的可视动作（穿着顺序、翻折、调节方式、层搭）与"穿了会怎样"的结果结论切开，前者在同一光线下放开演示，后者一旦无源即降级或挂起。
+      tradeoff_or_tension: 口播里冒出'显瘦''耐穿'这类硬结论 -> 当场按住，改成揉一把再松开、镜头怼近看回弹的可观察演示
+      spoken_line_seed: 我演示的是调法，不替你宣布结果。
+      natural_next_action: 顾客说明内搭厚薄后，再调整翻折和后腰位置
+      customer_task: 在开衫与风衣叠穿中控制领口和腰部层次
+      product_role: 层搭中的外层调节项
+      scene_use_case: 直播台的开衫外罩风衣演示
+      trial_or_tryon_trigger: 顾客内搭厚度不同、需要调整外层空间时
+      safe_observation: 两指宽领口露出，后腰扣改变当下外轮廓，袖口形成层次
+      guide_next_line: 我演示的是调法，不替你宣布结果。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在直播台已有支架上
+      real_work_action: 导购先穿针织开衫，再罩风衣，调整领口翻折与后腰扣
+      natural_spoken_line: 我演示的是调法，不替你宣布结果。
+      simple_segment_count_max: 4
+      estimated_minutes: 14
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 顾客说明内搭厚薄后，再调整翻折和后腰位置
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-077
+    kernel_id: SCM120-CAND-115
+    canonical_cluster_id: mkc_045
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 这面陈列原来每件都挤在中心。我把廓形大衣留作主角，同色针织放在旁边接话，丝质衬衫再退半步，麂皮马甲只在侧边给一点材质对比。谁站中间，旁边是谁，已经是在说话。看懂中心、邻接和后方三层，再补留白，整排就不会每件都抢着开口。
+    content_kernel:
+      human_subject:
+      - 模特
+      - 人
+      object_anchor: 廓形大衣占住中心位置当主角，同色针织开衫、丝质衬衫做同色邻接求呼应，麂皮皮质马甲以异材质邻接贴在相邻位置制造对比。
+      human_action: 导购让廓形大衣居中，同色针织邻接，异材质马甲退到侧边
+      scene_premise: 陈列面留白调整
+      event_trigger: 大衣、开衫、衬衫与马甲都挤在中心位置争抢注意
+      visible_detail: 主角占中心，同色形成呼应，麂皮材质只在相邻位置制造对比
+      business_judgment: 产品在陈列面处于中心、侧位还是层次后方决定它的视觉权重，而旁边放什么、是同色还是异材质决定它被怎么读，两条线合成一句可被复述的叙事关系。
+      tradeoff_or_tension: 一面陈列谁都想抢眼、看点全散掉 -> 用中心位置锁死主角，其余按主次层级往下退成配角
+      spoken_line_seed: 谁站中间，旁边是谁，已经是在说话。
+      natural_next_action: 保存中心、邻接、后方三层读法，再检查留白
+      customer_task: 快速识别陈列中的主角与搭配关系
+      product_role: 大衣主角、同色开衫呼应、异材质马甲对比
+      scene_use_case: 陈列面留白调整
+      trial_or_tryon_trigger: 顾客想从主角延伸到同色或异材质搭配时
+      safe_observation: 主角占中心，同色形成呼应，麂皮材质只在相邻位置制造对比
+      guide_next_line: 谁站中间，旁边是谁，已经是在说话。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在陈列面正前方的层板上
+      real_work_action: 导购让廓形大衣居中，同色针织邻接，异材质马甲退到侧边
+      natural_spoken_line: 谁站中间，旁边是谁，已经是在说话。
+      simple_segment_count_max: 5
+      estimated_minutes: 15
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存中心、邻接、后方三层读法，再检查留白
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-078
+    kernel_id: SCM120-CAND-117
+    canonical_cluster_id: mkc_045
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 这排挂通先看中间的主推，它是主角。右边同色针织像一句顺着说下去的话，左边硬挺梭织则给出材质对比，延伸款退到后方。主角、逗号和背景，挂杆上也分得出来。你更喜欢顺色还是材质对比？选一个方向，我再拿对应组合给你看。
+    content_kernel:
+      human_subject:
+      - 人
+      object_anchor: 主角位放主推单品，右邻挂同色针织顺色、左邻换硬挺梭织形成异材质邻接，配角延伸款退到层次后方。
+      human_action: 导购先指出中心主角，再展示同色针织与硬挺梭织两个邻位
+      scene_premise: 直播中的挂通陈列讲解
+      event_trigger: 主推单品与左右邻接关系没有被解释，观众只看到一排货
+      visible_detail: 主角位居中，右侧顺色，左侧异材质，延伸款退在后方
+      business_judgment: 该做法把一排货读成一句话：谁在中心位置当主角、谁靠邻接关系当逗号、谁退到层次后方当背景，用位置和留白而非文字排出阅读顺序。
+      tradeoff_or_tension: 每件衣服都想当主角、观众抓不到重点 -> 用中心位置锁第一落点、左右留白隔出主次层级
+      spoken_line_seed: 主角、逗号和背景，挂杆上也分得出来。
+      natural_next_action: 观众选择顺色或材质对比后，再拿出对应搭配
+      customer_task: 从一排陈列中找到主推与两种延伸搭配
+      product_role: 主推是主角，邻接是连接，后方是背景
+      scene_use_case: 直播中的挂通陈列讲解
+      trial_or_tryon_trigger: 顾客在顺色与异材质两种方向中犹豫时
+      safe_observation: 主角位居中，右侧顺色，左侧异材质，延伸款退在后方
+      guide_next_line: 主角、逗号和背景，挂杆上也分得出来。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在挂通正前方的陈列台上
+      real_work_action: 导购先指出中心主角，再展示同色针织与硬挺梭织两个邻位
+      natural_spoken_line: 主角、逗号和背景，挂杆上也分得出来。
+      simple_segment_count_max: 3
+      estimated_minutes: 16
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 观众选择顺色或材质对比后，再拿出对应搭配
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-079
+    kernel_id: SCM120-CAND-119
+    canonical_cluster_id: mkc_046
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    body_text: 早班练米色风衣口播时，导购讲穿法，品牌稿想讲态度，设计说明又要拆结构，三种声音挤在一起。我让导购先站在前面，只拿腰带、落肩和门襟说清怎样穿；其他角度记进本子，留给以后。一次只让一种声音站在前面，产品才不会被口吻淹没。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 人
+      - 她
+      object_anchor: 橱窗里那件系着腰带、走落肩线条的米色风衣，是这条口播真正的主角。
+      human_action: 店长让导购先完成穿法说明，其余两种口吻退到备忘
+      scene_premise: 早班橱窗口播练习
+      event_trigger: 同一件米色风衣同时塞入导购、品牌旁白与设计解释三种语气
+      visible_detail: 腰带、落肩和门襟成为导购口吻里的三个实物落点
+      business_judgment: 同一件风衣被导购式、品牌旁白式、设计解释式三种表达争抢时，店长按最克制的一条收口并留痕，其余语气退成过渡与陪衬。
+      tradeoff_or_tension: 导购式表达、品牌旁白式表达、设计解释式表达在同一件风衣的挂点撞车 -> 取最克制的那条语气收口，并把让掉的说法记在本子上供下次改脚本复用
+      spoken_line_seed: 一次只让一种声音站在前面。
+      natural_next_action: 保存未采用的角度，后续内容按不同任务再使用
+      customer_task: 快速理解风衣的实际穿法，不被多重口吻干扰
+      product_role: 口播中的穿法主角
+      scene_use_case: 早班橱窗口播练习
+      trial_or_tryon_trigger: 顾客需要比较腰带和门襟状态时
+      safe_observation: 腰带、落肩和门襟成为导购口吻里的三个实物落点
+      guide_next_line: 一次只让一种声音站在前面。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在橱窗内侧的小台上
+      real_work_action: 店长让导购先完成穿法说明，其余两种口吻退到备忘
+      natural_spoken_line: 一次只让一种声音站在前面。
+      simple_segment_count_max: 4
+      estimated_minutes: 17
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 保存未采用的角度，后续内容按不同任务再使用
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING
+  - asset_id: RV80-ASSET-080
+    kernel_id: SCM120-CAND-120
+    canonical_cluster_id: mkc_046
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    body_text: 同一件外套放在橱窗中心时，我会把完整轮廓讲清；移到针织旁边作陪衬，只露领口和一层颜色；带人走向试衣间时，它又可以指向下一条阔腿裤。它站在哪个位置，就说那个位置该说的话。你想先看外套本身，还是看它怎样接进整套搭配？我按当前任务继续。
+    content_kernel:
+      human_subject:
+      - 导购
+      - 人
+      - 他
+      object_anchor: 一件外套在橱窗当主角、在搭配短视频里退为针织开衫的陪衬、在店员领客走向试衣间的动线里又成阔腿裤那句话的过渡衔接。
+      human_action: 导购把外套依次放在橱窗中心、针织旁边和试衣间引导动线上说明
+      scene_premise: 直播台与试衣间动线之间
+      event_trigger: 新店员无论外套处于主角、陪衬还是过渡位置都用同一种猛夸口吻
+      visible_detail: 居中时轮廓完整，作陪衬时只露领口，作过渡时指向阔腿裤
+      business_judgment: 同一件服装按所处画面切换主角/陪衬/过渡三种身份，并各配品牌旁白式表达、导购式表达、设计解释式表达三种语气，靠产品与 display 动作的接口把陈列和讲解缝到一起。
+      tradeoff_or_tension: 新店员把每件衣服都当主角猛夸 -> 先教他们按画面分清主角/陪衬/过渡三种身份再开口
+      spoken_line_seed: 它站在哪个位置，就说那个位置该说的话。
+      natural_next_action: 顾客说明当前想看外套还是整套搭配，再继续讲解
+      customer_task: 在单品与整套搭配之间切换关注点
+      product_role: 可按画面切换主角、陪衬与过渡项
+      scene_use_case: 直播台与试衣间动线之间
+      trial_or_tryon_trigger: 顾客从单看外套转向比较整套搭配时
+      safe_observation: 居中时轮廓完整，作陪衬时只露领口，作过渡时指向阔腿裤
+      guide_next_line: 它站在哪个位置，就说那个位置该说的话。
+    execution_card:
+      who_executes: 导购本人
+      who_appears: 导购本人
+      phone_placement: 手机固定在直播台面向试衣间动线的一侧
+      real_work_action: 导购把外套依次放在橱窗中心、针织旁边和试衣间引导动线上说明
+      natural_spoken_line: 它站在哪个位置，就说那个位置该说的话。
+      simple_segment_count_max: 5
+      estimated_minutes: 18
+      do_not_perform:
+      - 不扮演顾客
+      - 不制造冲突
+      - 不背品牌理念
+      do_not_say:
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      interaction_handoff: 顾客说明当前想看外套还是整套搭配，再继续讲解
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      hired_actor_count: 0
+      required_people_max: 1
+      phone_count: 1
+      production_time_minutes_max: 20
+      special_lighting_required: false
+      scripted_performance_required: false
+      fake_customer: false
+      manufactured_conflict: false
+    quality_grade: PENDING
+    platform_native_fit: PENDING
+    daily_execution_fit: PENDING
+    event_authenticity: PENDING
+    natural_spoken_voice: PENDING
+    guardian_notes: PENDING

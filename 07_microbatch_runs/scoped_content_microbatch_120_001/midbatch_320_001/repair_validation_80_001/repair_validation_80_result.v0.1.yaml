@@ -1,0 +1,35 @@
+repair_validation_80_result:
+  task_id: GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001
+  result_status: REPAIR_VALIDATION_80_EXECUTED_PENDING_CLAUDE_GUARDIAN
+  execution_status: COMPLETE
+  machine_gate_status: PASS
+  claude_code_domain_review: PENDING
+  expected_count: 80
+  actual_accepted_count: 80
+  first_pass_machine_pass_count: 80
+  bounded_correction_count: 0
+  unresolved_failure_count: 0
+  checkpoint_count: 4
+  coverage:
+    repaired_kernel_coverage: 120/120
+    knowledge_count_increment: 0
+  founder_40_full_grading: deferred_by_founder_scale_authority
+  combined_120_full_grading_required_before_600_decision: true
+  external_LLM_called: false
+  original_assets_modified: false
+  scale:
+    expand_600: false
+    expand_3600: false
+  downstream:
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED
+  evaluation_axes:
+    knowledge_and_fact_boundary: PASS
+    content_fuel_support: PENDING_CLAUDE_CODE
+    platform_native_fit: PENDING_CLAUDE_CODE
+    daily_execution_fit: PENDING_CLAUDE_CODE
+    publication_readiness: false

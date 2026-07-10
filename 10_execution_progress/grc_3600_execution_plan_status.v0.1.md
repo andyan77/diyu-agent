@@ -87,3 +87,12 @@
 - 机器闸只确认绑定、复制/重复阈值、payload shape、明确事实边界和低成本执行约束；平台原生度、自然口语和真实可拍性仍待 Claude Code 与 Founder 人审。
 - 当前结果仅为 `PLATFORM_NATIVE_10_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW`；`expand_80/600/3600=false`，下游与 readiness 全部保持关闭。
 - 只有平台 10 条与 founder 40 条两组人审阈值同时满足，才可起草 80 条验证批 Brief；不得自动执行 80。
+
+## P7D Repair Rule Validation 80
+
+- `GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001` 冻结并消费 founder 40 之外的 80 个内容核：40 个簇各 2 个，与既有 founder 40 合计覆盖 120/120 个内容核；知识计数增量为 0。
+- 80 条 Codex-native 表达资产均在首轮通过确定性机器闸，未使用 bounded correction；4 个 checkpoint 各覆盖 20 条且均完成。
+- 机器 PASS 只确认绑定、四层结构、事实边界、反复制/反模板、平台 payload 与低成本执行约束，不代表内容质量、平台原生度或日常真实感已获人审确认。
+- Founder 对既有 40 条的完整结构化分级记为 `deferred_by_founder_scale_authority`；任何 600 决策前仍须完成合并 120 条的完整分级。
+- 当前结果为 `REPAIR_VALIDATION_80_EXECUTED_PENDING_CLAUDE_GUARDIAN`，下一动作仅为 Claude Code 对全部 80 条做独立 Guardian Review。
+- `expand_600=false`、`expand_3600=false`；CandidatePack/KE/Serving/RAG/DIFY/production 与全部 readiness 继续关闭。

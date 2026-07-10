@@ -1,0 +1,49 @@
+repair_validation_80_contract_freeze_manifest:
+  schema_version: v0.1
+  task_id: GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001
+  baseline_head: 3f1beedd65f42b9c3fffe79dadfd878534216361
+  frozen_before_first_generation: true
+  generation_started_at_freeze: false
+  contracts_must_not_change_after_freeze: true
+  source_digests:
+    07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml: 222500f9861c38ca0946abb11e7b3d6c5e9f839f38c4551c4a17eecee93e36c1
+    07_microbatch_runs/scoped_content_microbatch_120_001/knowledge_candidate_cards.yaml: 5e9841a6017d9f965b0205143b9922a9350d6848c14ed7fd57ce9696a2c7776a
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_repaired_assets.v0.1.jsonl
+    : 418fc980ef376448a0746194e9bc7889f421000f731571cac1b806863b0f2d70
+  contract_digests:
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_repair_contract.v0.1.yaml
+    : 5d34837588e867ca6857b92247590bcc147e382edf004cfb2418e2e7ef22759f
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_scoped_prompt_patch.v0.1.md
+    : 4b89390912bc12b2cecd8338f65a5eae049893a0fefd30458f7ee7fd70b608d0
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/platform_native_5x2_001/platform_native_everyday_expression_contract.v0.1.yaml
+    : d0f983616ef04f21e06cf6326dee4c7bf249081e24f3eec2a639a7e6977ab37a
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/repair_validation_80_001/repair_validation_80_validation_spec.v0.1.yaml
+    : d4d95d559cd72c2e791b5646d65d4c3bbef4dd65c3112bcab66c34e89c2cb5d5
+  checker_reference_digests:
+    ci/checkers/check_p7d_founder_40_repair.py: cb940391231163213b9a86a2244741427d33b68daa460fd353a42949297e8048
+    ci/checkers/check_p7d_platform_native_5x2.py: 563bb4cba6f6c5c35854abe31479c2b6da66c10fd9fafdef5689cd280ba6a636
+  selection_algorithm:
+    canonical_source: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml
+    subtract_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_repaired_assets.v0.1.jsonl
+    per_cluster_total: 3
+    per_cluster_subtract: 1
+    per_cluster_remaining: 2
+    stable_sort: candidate_id_ascending
+    source_record_tiebreak: minimum_legal_output_id
+    platform_assignment: first_remaining_to_A_second_remaining_to_B
+  platform_matrix:
+    P0_01:
+    - wechat_channels
+    - moments
+    P0_02:
+    - douyin
+    - wechat_channels
+    P0_03: &id001
+    - xiaohongshu
+    - live
+    P0_04:
+    - douyin
+    - moments
+    P0_05: *id001
+  validation_spec_digest: d4d95d559cd72c2e791b5646d65d4c3bbef4dd65c3112bcab66c34e89c2cb5d5
+  freeze_digest: 5183aea37eacee589493da0982f6aac1e1b2560eb40cf7f633a6fbd89cdcff1f

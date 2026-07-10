@@ -1,0 +1,93 @@
+repair_validation_80_validation_spec:
+  schema_version: v0.1
+  task_id: GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001
+  scope: remaining_80_existing_content_kernels_expression_validation_only
+  canonical_status: scoped_validation_contract
+  creates_new_knowledge: false
+  selection:
+    expected_cluster_count: 40
+    expected_total_kernel_count: 120
+    expected_existing_repaired_count: 40
+    expected_remaining_count: 80
+    expected_per_cluster_total: 3
+    expected_per_cluster_existing: 1
+    expected_per_cluster_remaining: 2
+    stable_sort: candidate_id_ascending
+    platform_assignment: first_remaining_to_platform_A_second_to_platform_B
+  checkpoint:
+    size: 20
+    expected_count: 4
+    same_blocking_failure_stop_at: 3
+    first_pass_failure_rate_stop_above: 0.10
+    bounded_correction_max_per_item: 1
+  machine_thresholds:
+    minimum_normalized_body_chars: 60
+    source_kernel_longest_overlap_max_chars: 17
+    skeleton_fingerprint_reuse_max: 2
+    cross_item_five_shingle_jaccard_max: 0.42
+    exact_duplicate_max: 0
+    normalized_duplicate_max: 0
+    explicit_role_failure_max: 0
+    explicit_claim_failure_max: 0
+    knowledge_count_increment: 0
+  daily_native_constraints:
+    capture_mode: daily_native
+    dedicated_crew_count: 0
+    hired_actor_count: 0
+    required_people_max: 1
+    phone_count: 1
+    production_time_minutes_max: 20
+    simple_segment_count_max: 5
+    special_lighting_required: false
+    scripted_performance_required: false
+    fake_customer: false
+    manufactured_conflict: false
+  body_blocking_markers:
+    governance:
+      - CandidatePack
+      - generation_allowed
+      - production_servable
+      - readiness
+      - 治理门
+      - 证据策略
+      - Content Kernel
+      - Event Spine
+      - P0_
+    fact_slots:
+      - "【"
+      - "】"
+      - "{{"
+      - "}}"
+      - <slot
+    director_or_script:
+      - 短剧
+      - 剧情反转
+      - 导演
+      - 演员
+      - 布光
+      - 分镜
+      - 第一镜
+      - 第二镜
+      - 第三镜
+      - 宣传片
+  review_trigger_only:
+    - suspected_invented_event
+    - suspected_unnatural_voice
+    - suspected_platform_formula
+    - restraint_wording_density
+    - suspected_slang_stacking
+    - suspected_platform_shape_similarity
+    - implicit_role_implausibility
+    - suspected_fake_life
+    - tone_monoculture
+  result_ceiling: REPAIR_VALIDATION_80_EXECUTED_PENDING_CLAUDE_GUARDIAN
+  scale_after_machine_pass:
+    expand_600: false
+    expand_3600: false
+  downstream_after_machine_pass:
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED

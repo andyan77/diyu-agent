@@ -1,0 +1,46 @@
+{
+  "task_id": "GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001",
+  "baseline_head": "3f1beedd65f42b9c3fffe79dadfd878534216361",
+  "status": "PASS",
+  "error_count": 0,
+  "errors": [],
+  "machine_metrics": {
+    "governance_body_leak_count": 0,
+    "fact_slot_body_count": 0,
+    "director_or_screenplay_marker_count": 0,
+    "explicit_role_failure_count": 0,
+    "explicit_claim_failure_count": 0,
+    "exact_duplicate_count": 0,
+    "normalized_duplicate_count": 0,
+    "skeleton_max_reuse": 1,
+    "kernel_overlap_max": 12,
+    "knowledge_count_inflation_count": 0,
+    "max_cross_item_five_shingle_jaccard": 0.016484,
+    "nearest_cross_item_pair": [
+      "RV80-ASSET-041",
+      "RV80-ASSET-064"
+    ],
+    "platform_distribution": {
+      "wechat_channels": 13,
+      "moments": 15,
+      "douyin": 16,
+      "xiaohongshu": 18,
+      "live": 18
+    },
+    "P0_distribution": {
+      "P0_01": 12,
+      "P0_02": 14,
+      "P0_03": 20,
+      "P0_04": 18,
+      "P0_05": 16
+    },
+    "generation_mode_distribution": {
+      "creative_prototype": 24,
+      "fact_slot_script": 24,
+      "evidence_bound_candidate": 16,
+      "display_solution": 16
+    },
+    "event_fact_binding_count": 80
+  },
+  "result_scope": "machine_integrity_only_all_80_require_claude_code_domain_review"
+}
