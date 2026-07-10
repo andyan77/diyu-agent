@@ -1,0 +1,39 @@
+p7c_capability_heatmap:
+  source: existing_expert_review
+  source_reference: /tmp/diyu_cpss_runtime_ab_eval/expert_review_opinion_scoped_120_cpss.md sections 5-6; canonicalized in
+    prior P7C-REVIEW closeout
+  full_rescore_performed: false
+  capability_groups:
+    P0_01:
+      count: 18
+      CPSS_avg: 96.0
+      scale_signal: strongest
+      common_gap: none_systemic
+    P0_02:
+      count: 21
+      CPSS_avg: 90.3
+      scale_signal: strong_with_minor_gap
+      common_gap:
+      - apparel_detail_density
+      - real_scene_feeling
+    P0_03:
+      count: 30
+      CPSS_avg: 91.8
+      scale_signal: strong
+      common_gap:
+      - some_evidence_bound_items_lack_visual_fuel
+    P0_04:
+      count: 27
+      CPSS_avg: 93.8
+      scale_signal: very_strong
+      common_gap: none_systemic
+    P0_05:
+      count: 24
+      CPSS_avg: 89.9
+      scale_signal: acceptable_but_weakest
+      common_gap:
+      - scene_premise
+      - customer_task
+      - product_role_differentiation
+      - spoken_line_conversion
+  use_in_scale_gate: coverage_signal_only_not_final_scale_authority

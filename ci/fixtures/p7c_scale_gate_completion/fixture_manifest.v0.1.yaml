@@ -1,0 +1,20 @@
+p7c_scale_gate_completion_fixtures:
+  positive_fixture:
+    mode: in_code_reduced_surface
+    expected: PASS
+  negative_fixtures:
+    - candidate_sample_id_not_found
+    - duplicate_runtime_sample
+    - wrong_4_4_4_distribution
+    - missing_generation_mode_coverage
+    - missing_claim_risk_samples
+    - missing_store_display_samples
+    - fabricated_per_item_CPSS
+    - overlapping_primary_dispositions
+    - raw_kernel_marked_context_bundle_ready
+    - runtime_AB_pending_but_3600_allowed
+    - scalability_pending_but_3600_allowed
+    - Codex_marked_final_scale_authority
+    - original_review_or_kernel_modified
+    - readiness_or_downstream_flag_true
+  python_O_expected_exit: 2

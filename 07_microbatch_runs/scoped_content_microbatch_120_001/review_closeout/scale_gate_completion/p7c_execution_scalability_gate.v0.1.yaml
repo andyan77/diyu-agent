@@ -1,0 +1,32 @@
+p7c_execution_scalability_gate:
+  gate_status: PENDING
+  does_not_use_as_proof:
+  - P7A_quality_probe
+  - P7C_scoped_120_generation
+  required_capabilities:
+    deterministic_assignment_consumption:
+      status: PENDING
+    checkpoint_and_resume:
+      status: PENDING
+    per_microbatch_stop:
+      status: PENDING
+    provenance_trace:
+      status: PENDING
+    cost_guard:
+      status: PENDING
+    duplicate_drift_monitor:
+      status: PENDING
+    failure_resume_protocol:
+      status: PENDING
+  passing_rule:
+    all_required_capabilities_must_pass: true
+  does_not_allow:
+  - generation_3600
+  - CandidatePack
+  - KE
+  - Serving
+  - RAG
+  - DIFY
+  - production
+  expand_to_3600_allowed: false
+  execution_scalability_gate_passed: false

@@ -1,0 +1,73 @@
+{
+  "task_id": "GKB-P7C-SCALE-GATE-COMPLETION-AND-RUNTIME-AB-HANDOFF-001",
+  "repo": {
+    "head_before": "858729f1fed46c174f300831e8fe4e0ca208a07b",
+    "head_after": "recorded_in_git_log_for_this_commit",
+    "worktree_after": "clean_after_commit"
+  },
+  "roles": {
+    "review_guardian": "Claude Code",
+    "execution_agent": "Codex"
+  },
+  "artifacts": {
+    "scale_decision_standard": "07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/scale_gate_completion/p7c_scale_decision_standard.v0.1.yaml",
+    "capability_heatmap": "07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/scale_gate_completion/p7c_capability_heatmap.v0.1.yaml",
+    "runtime_ab_sample_plan": "07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/scale_gate_completion/p7c_runtime_ab_sample_plan.v0.1.yaml",
+    "execution_scalability_gate": "07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/scale_gate_completion/p7c_execution_scalability_gate.v0.1.yaml",
+    "scale_hold_decision": "07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/scale_gate_completion/p7c_scale_hold_decision.v0.1.yaml"
+  },
+  "static_review": {
+    "evaluated_count": 120,
+    "CPSS_avg": 92.2,
+    "A_count": 105,
+    "B_count": 12,
+    "C_count": 3,
+    "D_count": 0,
+    "full_rescore_performed": false
+  },
+  "runtime_ab_plan": {
+    "sample_count": 12,
+    "high_support_count": 4,
+    "medium_support_count": 4,
+    "low_support_count": 4,
+    "generation_mode_coverage": [
+      "creative_prototype",
+      "display_solution",
+      "evidence_bound_candidate",
+      "fact_slot_script"
+    ],
+    "p0_group_coverage_count": 5,
+    "claim_risk_sample_count": 6,
+    "store_display_sample_count": 4,
+    "fabricated_CPSS_count": 0,
+    "runtime_ab_executed_by_this_task": false
+  },
+  "scalability": {
+    "gate_status": "PENDING",
+    "pending_capability_count": 7
+  },
+  "scale_status": {
+    "final_scale_decision": "HOLD",
+    "expand_to_3600_allowed": false,
+    "midbatch_300_600_allowed": false,
+    "next_allowed_task": "GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001"
+  },
+  "checks": {
+    "p7c_review_checker_live": "PASS (preflight before edits; baseline report verified by new checker)",
+    "new_checker_live": "PASS",
+    "new_checker_selftest": "PASS",
+    "new_checker_python_O_fail_closed": "exit_2 FAIL_CLOSED",
+    "original_assets_unmodified": true,
+    "forbidden_scope_clean": true,
+    "readiness_false": true,
+    "exact_stage_only": "pending exact-stage commit"
+  },
+  "ledger": {
+    "P7C_SCALE_PREP": "DONE",
+    "P7C_AB": "NEXT",
+    "P7C_SCALE": "BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY",
+    "P7D": "BLOCKED_BY_P7C_SCALE_DECISION",
+    "P8": "BLOCKED_BY_P7D"
+  },
+  "blocking_issues": "none"
+}

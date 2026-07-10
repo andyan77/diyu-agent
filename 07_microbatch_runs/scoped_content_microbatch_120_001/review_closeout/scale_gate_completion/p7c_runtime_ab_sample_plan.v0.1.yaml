@@ -1,0 +1,226 @@
+p7c_runtime_ab_sample_plan:
+  plan_id: P7C-RUNTIME-AB-SAMPLE-PLAN-v0.1
+  runtime_ab_executed_by_this_task: false
+  model_prompt_parameters_to_be_frozen_in_next_task: true
+  sample_count: 12
+  buckets:
+    high_support: 4
+    medium_support: 4
+    low_support: 4
+  selection_policy:
+    high: derived clean-A content-kernel candidate pool; no review-caveat samples; no fabricated per-item CPSS
+    medium: B-grade manual review queue
+    low: all 3 C-grade samples plus one B/receipt-first high-priority sample
+  arm_A:
+    input:
+    - baseline generation context
+    - capability / mode / output request
+    excludes:
+    - P7C user_visible_kernel
+  arm_B:
+    input:
+    - same baseline generation context
+    - same capability / mode / output request
+    - selected P7C user_visible_kernel
+    - bounded review_packet constraints
+  output_type_candidates:
+  - douyin_short_video_script
+  - xiaohongshu_post
+  - guide_spoken_script
+  - store_daily_video
+  - product_explanation
+  - display_adjustment_script
+  - live_commerce_segment
+  samples:
+  - candidate_id: SCM120-CAND-002
+    assignment_id: SCM120-A002
+    support_bucket: high_support
+    selection_reason: derived clean-A pool; high content-kernel support sample from enterprise narrative creative prototype;
+      no per-item CPSS asserted
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    canonical_cluster_id: mkc_007
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-002
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-002
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-002-RB
+    output_types: &id001
+    - douyin_short_video_script
+    - xiaohongshu_post
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-016
+    assignment_id: SCM120-A016
+    support_bucket: high_support
+    selection_reason: derived clean-A pool; high fact-slot script sample; no per-item CPSS asserted
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    canonical_cluster_id: mkc_012
+    claim_risk_profile: medium_fact_slot_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-016
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-016
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-016-RB
+    output_types: &id004
+    - guide_spoken_script
+    - xiaohongshu_post
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-040
+    assignment_id: SCM120-A040
+    support_bucket: high_support
+    selection_reason: derived clean-A pool; high evidence/claim-boundary sample; no per-item CPSS asserted
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    canonical_cluster_id: mkc_020
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: true
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-040
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-040
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-040-RB
+    output_types: &id002
+    - product_explanation
+    - live_commerce_segment
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-070
+    assignment_id: SCM120-A070
+    support_bucket: high_support
+    selection_reason: derived clean-A pool; high store/display execution sample; no per-item CPSS asserted
+    p0_group: P0_04
+    generation_mode: display_solution
+    canonical_cluster_id: mkc_030
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: true
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-070
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-070
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-070-RB
+    output_types: &id003
+    - store_daily_video
+    - display_adjustment_script
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-023
+    assignment_id: SCM120-A023
+    support_bucket: medium_support
+    selection_reason: B-grade manual review queue; medium support role/governance-sensitive sample
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    canonical_cluster_id: mkc_014
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-023
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-023
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-023-RB
+    output_types: *id001
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-045
+    assignment_id: SCM120-A045
+    support_bucket: medium_support
+    selection_reason: B-grade manual review queue; medium support evidence-bound sample
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    canonical_cluster_id: mkc_021
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: true
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-045
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-045
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-045-RB
+    output_types: *id002
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-080
+    assignment_id: SCM120-A080
+    support_bucket: medium_support
+    selection_reason: B-grade manual review queue; medium support display/store sample
+    p0_group: P0_04
+    generation_mode: display_solution
+    canonical_cluster_id: mkc_033
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: true
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-080
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-080
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-080-RB
+    output_types: *id003
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-113
+    assignment_id: SCM120-A113
+    support_bucket: medium_support
+    selection_reason: B-grade manual review queue; medium support fact-slot/evidence-policy sample
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    canonical_cluster_id: mkc_044
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-113
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-113
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-113-RB
+    output_types: *id004
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-101
+    assignment_id: SCM120-A101
+    support_bucket: low_support
+    selection_reason: C-grade must-review-first queue; low support product-role narrative sample
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    canonical_cluster_id: mkc_040
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-101
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-101
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-101-RB
+    output_types: *id001
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-059
+    assignment_id: SCM120-A059
+    support_bucket: low_support
+    selection_reason: C-grade and receipt-first-review overlap; low support evidence-bound sample
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    canonical_cluster_id: mkc_026
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-059
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-059
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-059-RB
+    output_types: *id002
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-106
+    assignment_id: SCM120-A106
+    support_bucket: low_support
+    selection_reason: C-grade and receipt-first-review overlap; low support product-role narrative sample
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    canonical_cluster_id: mkc_042
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-106
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-106
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-106-RB
+    output_types: *id001
+    CPSS_total_note: not provided; per-item CPSS not invented
+  - candidate_id: SCM120-CAND-062
+    assignment_id: SCM120-A062
+    support_bucket: low_support
+    selection_reason: B-grade and receipt-first-review overlap; low bucket filler per rule, high-priority review sample
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    canonical_cluster_id: mkc_027
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: false
+    user_visible_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/user_visible_kernel_matrix.v0.1.yaml#SCM120-CAND-062
+    review_packet_kernel_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/content_kernel_extraction/review_packet_kernel_matrix.v0.1.yaml#SCM120-CAND-062
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-062-RB
+    output_types: *id002
+    CPSS_total_note: not provided; per-item CPSS not invented
+  coverage_summary:
+    generation_mode_coverage:
+    - creative_prototype
+    - display_solution
+    - evidence_bound_candidate
+    - fact_slot_script
+    p0_group_coverage:
+    - P0_01
+    - P0_02
+    - P0_03
+    - P0_04
+    - P0_05
+    claim_risk_sample_count: 6
+    store_display_sample_count: 4
+    fabricated_CPSS_count: 0

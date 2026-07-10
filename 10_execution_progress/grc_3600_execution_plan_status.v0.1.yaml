@@ -1,6 +1,6 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  updated_by_task: GKB-P7C-SCALE-GATE-COMPLETION-AND-RUNTIME-AB-HANDOFF-001
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
@@ -163,6 +163,7 @@ grc_3600_execution_plan_status:
     generation_eligible: false
     production_servable: false
     release_ready: false
+    Serving_ready: false
   steps:
   - step_id: P1
     task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
@@ -693,37 +694,72 @@ grc_3600_execution_plan_status:
     - generation_allowed
     route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
     runtime_ab_executed_by_this_task: false
+  - step_id: P7C_SCALE_PREP
+    task_id: GKB-P7C-SCALE-GATE-COMPLETION-AND-RUNTIME-AB-HANDOFF-001
+    status: DONE
+    head_before: 858729f1fed46c174f300831e8fe4e0ca208a07b
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean_after_commit
+    objective: Complete scoped-120 scale gate standard, capability heatmap, runtime A/B sample plan, execution scalability
+      gate, and scale HOLD handoff without generation or downstream materialization.
+    unlock_kind: scale_gate_completion_and_runtime_ab_handoff
+    generation_authorized_by_this_task: false
+    runtime_ab_executed_by_this_task: false
+    standard_validation: check_p7c_scale_gate_completion.py live PASS + selftest PASS + python -O fail-closed; P7C-REVIEW
+      prior PASS; original assets unchanged; readiness false
+    deliverables:
+    - review_closeout/scale_gate_completion/*.v0.1.yaml
+    - ci/checkers/check_p7c_scale_gate_completion.py
+    - docs/reports/p7c_scale_gate_completion_receipt.json
+    blocked_by: []
+    next_unlocked: P7C-AB
+    readiness_claims_allowed:
+    - p7c_scale_gate_completion_landed
+    - runtime_ab_sample_plan_landed
+    - execution_scalability_requirements_landed
+    - ready_for_real_runtime_ab_brief
+    readiness_claims_forbidden:
+    - expand_to_3600_allowed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - Serving_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+    route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
   - step_id: P7C-AB
-    task_id: GKB-CONTENT-KERNEL-RUNTIME-AB-PLAN-OR-SMOKE-001
+    task_id: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
     status: NEXT
     head_before: recorded_after_P7C_REVIEW_commit
     head_after: null
     worktree_after: null
-    objective: Plan or run a controlled runtime A/B smoke using extracted content kernels; no Serving/RAG/DIFY/production
-      write unless separately authorized.
+    objective: Real runtime A/B execution brief and separate authorization only; must not be inferred from P7C scale prep
+      completion.
     unlock_kind: runtime_ab_plan_or_smoke_only
     generation_authorized_by_this_task: false
     standard_validation: separate founder authorization + Codex/guardian review; runtime boundaries explicit
     deliverables:
     - runtime_ab_plan_or_smoke_report
     blocked_by: []
-    next_unlocked: P7C-SCALE-DECISION
+    next_unlocked: P7C_SCALE
     readiness_claims_allowed:
     - runtime_ab_plan_landed_or_smoke_completed_if_authorized
     readiness_claims_forbidden:
-    - direct_serving_ready
-    - raw_context_bundle_ready
+    - expand_to_3600_allowed
+    - generation_allowed
     - candidatepack_ready
     - KE_ready
+    - Serving_ready
     - RAG_ready
     - DIFY_ready
     - production_ready
-    - generation_3600_unlocked
-    - generation_allowed
     route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+    authorization: separate_founder_authorization_required
+    runtime_ab_authorized_by_previous_task: false
   - step_id: P7C-SCALE-DECISION
     task_id: GKB-SCOPED-120-SCALE-DECISION-001
-    status: BLOCKED_BY_P7C_AB
+    status: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
     head_before: null
     head_after: null
     worktree_after: null
@@ -735,6 +771,7 @@ grc_3600_execution_plan_status:
     - scale_decision_packet
     blocked_by:
     - P7C-AB
+    - execution_scalability_gate
     next_unlocked: P7D
     readiness_claims_allowed: []
     readiness_claims_forbidden:
@@ -745,14 +782,45 @@ grc_3600_execution_plan_status:
     - DIFY_ready
     - production_ready
     route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+    compatibility_alias_for: P7C_SCALE
+  - step_id: P7C_SCALE
+    task_id: GKB-SCOPED-120-TO-SCALE-DECISION-001
+    status: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: Founder scale decision after real runtime A/B and execution scalability assessment. Not issued by P7C scale
+      prep.
+    unlock_kind: founder_scale_decision_only
+    generation_authorized_by_this_task: false
+    final_scale_decision_issued: false
+    expand_to_3600_allowed: false
+    standard_validation: requires real runtime A/B PASS + execution scalability gate PASS + founder final scale decision
+    deliverables:
+    - scale decision packet
+    blocked_by:
+    - P7C-AB
+    - execution_scalability_gate
+    next_unlocked: P7D
+    readiness_claims_allowed: []
+    readiness_claims_forbidden:
+    - expand_to_3600_allowed
+    - generation_allowed
+    - candidatepack_ready
+    - KE_ready
+    - Serving_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+    route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
   - step_id: P7D
     task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
     status: BLOCKED_BY_P7C_SCALE_DECISION
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 structured-draft microbatch generation (canonical route node) remains blocked until content-kernel runtime
-      A/B and explicit scale decision pass; direct 3600 remains forbidden.
+    objective: 3600 structured-draft microbatch generation remains blocked until real runtime A/B, execution scalability gate,
+      and founder final scale decision pass; direct 3600 remains forbidden.
     same_underlying_task_as_legacy_anchor: P7
     unlock_kind: governed_incremental_microbatch
     one_shot_3600_generation_allowed: false
@@ -763,7 +831,7 @@ grc_3600_execution_plan_status:
     deliverables:
     - to_be_defined_at_P7D_brief
     blocked_by:
-    - P7C-SCALE-DECISION
+    - P7C_SCALE
     next_unlocked: P8
     readiness_claims_allowed: []
     readiness_claims_forbidden:
@@ -850,3 +918,17 @@ grc_3600_execution_plan_status:
     p7a_classification: agent_authored_quality_probe_pass
     score_detail_source: summary_only
     next_real_action: GKB-CONTENT-KERNEL-RUNTIME-AB-PLAN-OR-SMOKE-001
+  expand_to_3600_allowed: false
+  route_migration_5:
+    applied_by_task: GKB-P7C-SCALE-GATE-COMPLETION-AND-RUNTIME-AB-HANDOFF-001
+    applied_from: claude_code_prompt_pre_review_conditional_pass_NA_to_NE
+    option: additive_scale_gate_completion_keep_p7d_status_compatibility
+    reason: P7C-REVIEW checker hard-reads P7D.status == BLOCKED_BY_P7C_SCALE_DECISION; preserve that exact string while adding
+      scale gate prep/runtime AB handoff steps.
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    p7d_status_preserved: BLOCKED_BY_P7C_SCALE_DECISION
+    runtime_ab_executed_by_this_task: false
+    execution_scalability_gate_passed: false
+    final_scale_decision: HOLD
+    next_real_action: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001

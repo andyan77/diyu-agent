@@ -1,0 +1,25 @@
+p7c_scale_hold_decision:
+  static_CPSS_gate: PASS
+  content_kernel_extraction: COMPLETE
+  real_runtime_AB: PENDING
+  execution_scalability_gate: PENDING
+  founder_final_scale_decision: NOT_ISSUED
+  final_scale_decision: HOLD
+  expand_to_3600_allowed: false
+  midbatch_300_600_allowed: false
+  blockers:
+  - real_runtime_AB_not_completed
+  - execution_scalability_not_assessed
+  - founder_scale_decision_not_issued
+  next_allowed_task:
+    task_id: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+    scope: execution_brief_and_separate_authorization_only
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    production_servable: false

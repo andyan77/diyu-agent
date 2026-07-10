@@ -1,0 +1,92 @@
+p7c_scale_decision_standard:
+  standard_id: P7C-SCALE-DECISION-STANDARD-v0.1
+  purpose: decide_whether_scoped_120_can_scale
+  formal_schema_contract: false
+  ontology_truth_source: false
+  KE_admission_standard: false
+  review_roles:
+    execution_agent: Codex
+    prompt_and_delivery_guardian: Claude Code
+    domain_review_authority:
+    - founder
+    - authorized_domain_expert
+    final_scale_decision_authority: founder
+    codex_final_scale_authority: false
+  quality_key:
+    required:
+    - static_CPSS_gate_pass
+    - hard_gate_summary_pass
+    - capability_coverage_pass
+    - real_runtime_AB_pass
+  execution_key:
+    required:
+    - deterministic_assignment_consumption
+    - checkpoint_and_resume
+    - per_microbatch_stop
+    - provenance_trace
+    - cost_guard
+    - duplicate_drift_monitor
+    - failure_resume_protocol
+  scale_decision_values:
+  - ALLOW_3600
+  - CONDITIONAL_MIDBATCH_300_600
+  - BLOCK_AND_REPAIR
+  static_thresholds:
+    hard_gate_fail_rate_max: 0.05
+    severe_source_boundary_fail_count_max: 0
+    severe_authorization_fail_count_max: 0
+    relation_safety_fail_count_max: 0
+    A_grade_rate_min: 0.3
+    A_or_B_grade_rate_min: 0.65
+    D_grade_rate_max: 0.1
+    average_CPSS_min: 76
+    median_CPSS_min: 75
+    each_core_P0_group_A_or_B_min: 3
+  runtime_ab_thresholds:
+    B_preferred_rate_min: 0.6
+    visual_anchor_lift_required: true
+    human_action_lift_required: true
+    spoken_line_lift_required: true
+    courseware_body_must_not_increase: true
+    hard_claim_risk_must_not_increase: true
+    governance_leakage_forbidden: true
+  CPSS_does_not_authorize:
+  - CandidatePack
+  - ontology_edge
+  - KE_landing
+  - Serving
+  - RAG
+  - DIFY
+  - production
+  content_kernel_does_not_mean:
+  - direct_context_bundle_ready
+  - direct_serving_ready
+  - direct_RAG_ready
+  - direct_DIFY_ready
+  routing_model:
+    primary_disposition:
+      exactly_one: true
+      values:
+      - content_kernel_candidate
+      - content_kernel_repair_candidate
+      - strategy_rule_candidate
+      - source_gap
+      - anti_gold_candidate
+      - reject
+    secondary_candidate_tags:
+      multi_select: true
+      values:
+      - execution_asset_candidate
+      - evidence_policy_candidate
+      - platform_signal_candidate
+      - cso_strategy_candidate
+      - relation_design_hint
+  not_authorized_by_this_standard:
+  - expand_to_3600_allowed
+  - generation_allowed
+  - CandidatePack
+  - KE
+  - Serving
+  - RAG
+  - DIFY
+  - production
