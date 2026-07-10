@@ -1,0 +1,40 @@
+{
+  "checker": "check_p7c_execution_scalability.py",
+  "task_id": "GKB-P7C-EXECUTION-SCALABILITY-PROOF-AND-SCALE-DECISION-PACKET-001",
+  "status": "PASS",
+  "error_count": 0,
+  "errors": [],
+  "planned_work_item_count": 3600,
+  "actual_consumed_count": 3600,
+  "event_count": 14402,
+  "capabilities": {
+    "deterministic_assignment_consumption": "PASS",
+    "checkpoint_and_resume": "PASS",
+    "per_microbatch_stop": "PASS",
+    "provenance_trace": "PASS",
+    "native_execution_budget_guard": "PASS",
+    "duplicate_drift_monitor": "PASS",
+    "failure_resume_protocol": "PASS"
+  },
+  "execution_key": "PASS",
+  "quality_key": "PASS",
+  "founder_final_decision": "PENDING",
+  "final_scale_decision": "HOLD",
+  "expand_to_3600_allowed": false,
+  "content_generated": false,
+  "prior_results": {
+    "p7c_review": 0,
+    "p7c_scale_prep": 0,
+    "p7c_ab_001": 0,
+    "p7c_ab_002": 0
+  },
+  "runner_rerun": {
+    "status": "PASS",
+    "work_item_count": 3600,
+    "manifest_digest": "3b22ae70573112983b817b2ce13937f6f60ee79a601f272979e4d1a7f9ab3a33",
+    "clean_run_a_digest": "287209abbbb320989fc203924d58bf77e94ecad6a65534da9db45d827cf67340",
+    "clean_run_b_digest": "287209abbbb320989fc203924d58bf77e94ecad6a65534da9db45d827cf67340",
+    "event_count": 14402
+  },
+  "readiness_false": true
+}

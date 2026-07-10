@@ -1,0 +1,35 @@
+execution_scalability_result:
+  task_id: GKB-P7C-EXECUTION-SCALABILITY-PROOF-AND-SCALE-DECISION-PACKET-001
+  status: PASS
+  work_item_count: 3600
+  clean_run_a_digest: 287209abbbb320989fc203924d58bf77e94ecad6a65534da9db45d827cf67340
+  clean_run_b_digest: 287209abbbb320989fc203924d58bf77e94ecad6a65534da9db45d827cf67340
+  deterministic_second_run_match: true
+  actual_consumed_count: 3600
+  content_generated: false
+  capabilities:
+    deterministic_assignment_consumption: PASS
+    checkpoint_and_resume: PASS
+    per_microbatch_stop: PASS
+    provenance_trace: PASS
+    native_execution_budget_guard: PASS
+    duplicate_drift_monitor: PASS
+    failure_resume_protocol: PASS
+  execution_key:
+    status: PASS
+  quality_key:
+    status: PASS
+    evidence:
+    - static_CPSS
+    - hard_gate_summary
+    - capability_coverage
+    - AB_002_guardian_confirmed_bounded_uplift
+    caveats:
+    - AI_taste_caveat
+    - not_customer_validation
+    - not_production_ready
+  founder_final_decision:
+    status: PENDING
+  final_scale_decision: HOLD
+  expand_to_3600_allowed: false
+  midbatch_300_600_allowed: false

@@ -1,0 +1,17 @@
+execution_scalability_contract:
+  task_id: GKB-P7C-EXECUTION-SCALABILITY-PROOF-AND-SCALE-DECISION-PACKET-001
+  runner: ci/runners/run_p7c_execution_scalability_probe.py
+  runner_version: p7c-execution-scalability-probe-v0.1
+  runtime_kind: local_deterministic_no_content_runner
+  content_generation_allowed: false
+  ack_value: NO_CONTENT_EXECUTION_ACK
+  capabilities:
+  - deterministic_assignment_consumption
+  - checkpoint_and_resume
+  - per_microbatch_stop
+  - provenance_trace
+  - native_execution_budget_guard
+  - duplicate_drift_monitor
+  - failure_resume_protocol
+  cost_guard_semantics: native_execution_budget_guard_not_monetary_api_cost
+  semantic_body_dedup_not_claimed: true

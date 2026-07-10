@@ -1,0 +1,52 @@
+founder_scale_decision_packet:
+  task_id: GKB-P7C-EXECUTION-SCALABILITY-PROOF-AND-SCALE-DECISION-PACKET-001
+  quality_key:
+    status: PASS
+    evidence:
+    - static_CPSS
+    - hard_gate_summary
+    - capability_coverage
+    - AB_002_guardian_confirmed_bounded_uplift
+    caveats:
+    - AI_taste_caveat
+    - not_customer_validation
+    - not_production_ready
+  execution_key:
+    status: PASS
+  capability_results:
+    deterministic_assignment_consumption: PASS
+    checkpoint_and_resume: PASS
+    per_microbatch_stop: PASS
+    provenance_trace: PASS
+    native_execution_budget_guard: PASS
+    duplicate_drift_monitor: PASS
+    failure_resume_protocol: PASS
+  full_manifest_dry_run:
+    planned_work_item_count: 3600
+    actual_consumed_count: 3600
+    deterministic_second_run_match: true
+    content_generated: false
+  fault_injection:
+    scenarios_run: 10
+    scenarios_passed: 10
+    scenarios_failed: 0
+  unverified_risks:
+  - customer_preference_not_validated
+  - production_readiness_not_validated
+  - external_API_cost_not_validated
+  - semantic_body_dedup_not_validated_because_no_body_generated
+  native_execution_budget_semantics: guards work items, microbatches, retries, failed items; not money or token cost
+  founder_final_decision: PENDING
+  final_scale_decision: HOLD
+  expand_to_3600_allowed: false
+  midbatch_300_600_allowed: false
+  eligible_options:
+  - option: A
+    decision: ALLOW_3600
+    meaning: allow P7D batched generation; not CandidatePack/KE/production
+  - option: B
+    decision: CONDITIONAL_MIDBATCH_300_600
+    meaning: run 300-600 first, then review drift, duplication, and quality
+  - option: C
+    decision: BLOCK_AND_REPAIR
+    meaning: repair before scale decision

@@ -77,6 +77,52 @@ grc_3600_execution_plan_status:
       P7C_SCALE_PREP: DONE
       P7D: BLOCKED_BY_P7C_SCALE_DECISION
       P8: BLOCKED_BY_P7D
+  route_migration_8:
+    applied_by_task: GKB-P7C-EXECUTION-SCALABILITY-PROOF-AND-SCALE-DECISION-PACKET-001
+    applied_from: founder_authorized_execution_scalability_proof_after_guardian_conditional_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    P7C_AB:
+      operational_state: GUARDIAN_CONFIRMED_PASS_WITH_BOUNDED_EVIDENCE
+      historical_status_literal_preserved: NEXT
+    P7C_EXECUTION_SCALE:
+      operational_state: PASS
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/execution_scalability_001/execution_scalability_result.v0.1.yaml
+      runner_path: ci/runners/run_p7c_execution_scalability_probe.py
+      checker_path: ci/checkers/check_p7c_execution_scalability.py
+      planned_work_item_count: 3600
+      actual_consumed_count: 3600
+      content_generated: false
+      capabilities:
+        deterministic_assignment_consumption: PASS
+        checkpoint_and_resume: PASS
+        per_microbatch_stop: PASS
+        provenance_trace: PASS
+        native_execution_budget_guard: PASS
+        duplicate_drift_monitor: PASS
+        failure_resume_protocol: PASS
+      execution_key:
+        status: PASS
+    P7C_SCALE:
+      operational_state:
+      - FOUNDER_DECISION_READY
+      - BLOCKED_UNTIL_FOUNDER_FINAL_DECISION
+      historical_status_literal_preserved: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+    founder_final_decision:
+      status: PENDING
+      decision_packet_path: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/execution_scalability_001/founder_scale_decision_packet.v0.1.yaml
+    final_scale_decision: HOLD
+    expand_to_3600_allowed: false
+    midbatch_300_600_allowed: false
+    generation_allowed: false
+    preserved_status_literals:
+      P7C-AB: NEXT
+      P7C_SCALE: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+      P7C_SCALE_PREP: DONE
+      P7D: BLOCKED_BY_P7C_SCALE_DECISION
+      P8: BLOCKED_BY_P7D
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

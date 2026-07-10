@@ -52,3 +52,12 @@
 - 新 checker 强制 `treatment` 与对应 user-visible kernel 最长逐字重合 `<18` 字，并强制 control 输出唯一、无模式模板复用。
 - 结果状态仍只写 `CODEX_NATIVE_FAIR_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN`；需 Claude Code 再次盲评 X/Y 后揭盲。
 - `runtime_ab_001` 历史保留为 confounded/not-confirmed，不删除、不翻案；`P7C-AB.status`、`P7D.status`、readiness 与扩量锁均保持不变。
+
+## P7C Execution Scalability Proof
+
+- `GKB-P7C-EXECUTION-SCALABILITY-PROOF-AND-SCALE-DECISION-PACKET-001` 执行本地确定性 no-content 控制面测试：从 `microbatch_allocation_update.v0.1.yaml` 派生 40 簇 × 90 = 3600 个 execution-only work item。
+- runner 只返回 `NO_CONTENT_EXECUTION_ACK`，不生成任何知识正文、不调用外部 LLM、不读取密钥、不创建 CandidatePack/KE/Serving/RAG/DIFY。
+- 7 项 execution capability 均为 PASS：确定性派工消费、checkpoint/resume、microbatch 边界 stop、provenance trace、native execution budget guard、duplicate/drift monitor、failure/resume protocol。
+- `cost_guard` 在 Codex/Claude 原生路线下仅表示 work-item/microbatch/retry/failure 额度守卫，不表示外部 API 金额、算力或时间成本已验证。
+- `founder_scale_decision_packet` 已生成，`founder_final_decision` 仍为 `PENDING`；`final_scale_decision=HOLD`，`expand_to_3600_allowed=false`。
+- 旧状态字面保持不变：`P7C-AB.status=NEXT`，`P7C_SCALE.status=BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY`，`P7D.status=BLOCKED_BY_P7C_SCALE_DECISION`。

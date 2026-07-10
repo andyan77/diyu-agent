@@ -1,0 +1,23 @@
+p7c_ab_002_guardian_evidence:
+  source_kind: founder_supplied_claude_code_guardian_review
+  review_guardian: Claude Code
+  transcribed_by: Codex
+  transcription_only: true
+  codex_did_not_author_guardian_verdict: true
+  ab_001_evidence_status: invalidated_confounded_not_positive_evidence
+  ab_001_uses:
+  - protocol_failure_fixture
+  - anti_gold
+  - provenance
+  - checker_gap_case
+  ab_002_execution: CONFIRMED_PASS
+  ab_002_bounded_uplift: CONFIRMED_PASS
+  judge_kind: AI_blind_panel
+  frozen_guardian_votes: 12_of_12_treatment
+  independent_panel_votes: 60_of_60_treatment
+  combined_votes: 72_of_72_treatment
+  ai_taste_caveat: true
+  not_production_ready: true
+  not_customer_validation: true
+  not_execution_scalability_evidence: true
+  global_hold: true

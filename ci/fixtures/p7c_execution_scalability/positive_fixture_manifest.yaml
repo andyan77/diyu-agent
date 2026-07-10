@@ -1,0 +1,17 @@
+positive_fixture:
+  name: valid_execution_scalability_bundle
+  reduced_count_mode: true
+  expected_behavior: PASS
+  covered_invariants:
+    - derived_manifest_exists
+    - deterministic_second_run_match
+    - checkpoint_resume_pass
+    - per_microbatch_stop_pass
+    - provenance_trace_complete
+    - native_execution_budget_guard_pass
+    - duplicate_drift_monitor_pass
+    - failure_resume_protocol_pass
+    - content_generated_false
+    - founder_decision_pending
+    - final_scale_decision_hold
+

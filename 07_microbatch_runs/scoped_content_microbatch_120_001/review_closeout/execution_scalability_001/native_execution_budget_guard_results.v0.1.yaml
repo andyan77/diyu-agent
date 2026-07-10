@@ -1,0 +1,15 @@
+native_execution_budget_guard_results:
+  status: PASS
+  monetary_API_cost_applicable: false
+  work_item_limit_triggered: true
+  microbatch_limit_triggered: true
+  retry_limit_per_item_triggered: true
+  total_retry_limit_triggered: true
+  hard_stop_before_next_microbatch: true
+  resume_cannot_bypass_budget: true
+  fake_api_cost_recorded: false
+  limits:
+    maximum_work_items_per_run: 100
+    maximum_microbatches_per_run: 2
+    maximum_retry_count_per_item: 2
+    maximum_total_retry_count: 3

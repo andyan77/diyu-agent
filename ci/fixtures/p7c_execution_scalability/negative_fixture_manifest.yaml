@@ -1,0 +1,22 @@
+negative_fixtures:
+  - name: missing_guardian_evidence
+    expected_behavior: FAIL
+  - name: ab_001_used_as_positive_evidence
+    expected_behavior: FAIL
+  - name: manifest_count_mismatch
+    expected_behavior: FAIL
+  - name: duplicate_work_item_id
+    expected_behavior: FAIL
+  - name: content_generated_true
+    expected_behavior: FAIL
+  - name: checkpoint_resume_fail
+    expected_behavior: FAIL
+  - name: budget_guard_fail
+    expected_behavior: FAIL
+  - name: final_scale_decision_allow
+    expected_behavior: FAIL
+  - name: readiness_true
+    expected_behavior: FAIL
+  - name: malformed_bundle
+    expected_behavior: FAIL
+
