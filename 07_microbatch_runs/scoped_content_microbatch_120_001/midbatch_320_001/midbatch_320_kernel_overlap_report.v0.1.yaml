@@ -1,0 +1,8 @@
+midbatch_320_kernel_overlap_report:
+  comparison_scope: each draft against all 120 user-visible kernels
+  single_self_declared_binding_trusted: false
+  kernel_count: 120
+  threshold_max_chars: 17
+  observed_max_chars: 10
+  failure_count: 0
+  method: normalized exact substring index over every kernel text segment

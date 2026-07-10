@@ -1,0 +1,35 @@
+midbatch_320_prior_checker_evidence:
+  task_id: GKB-P7D-CONDITIONAL-MIDBATCH-320-GENERATION-AND-REVIEW-HANDOFF-001
+  baseline_head: 3254e8546c10edb26dea52ada4b6b0c2b760471d
+  execution_mode: isolated_clean_baseline_clone
+  executed_at_utc: '2026-07-10T04:38:26Z'
+  rationale: >-
+    The five committed prior checkers reject new task paths or create nested Git worktrees. They were run from a clean,
+    detached baseline clone before the new task commit. The new checker also verifies their bytes and source assets did not
+    change from the pinned baseline. Core 320 validation is recomputed live and does not rely on this evidence.
+  checks:
+  - checker_path: ci/checkers/check_scoped_120_quality_review_and_content_kernel_extraction.py
+    command: python3 ci/checkers/check_scoped_120_quality_review_and_content_kernel_extraction.py --live
+    exit_code: 0
+    reported_status: PASS
+    stdout_sha256: 7db89fa1c617667ac428baeb970a3766ca8885a7046e91c18093e5abafae313f
+  - checker_path: ci/checkers/check_p7c_scale_gate_completion.py
+    command: python3 ci/checkers/check_p7c_scale_gate_completion.py --live
+    exit_code: 0
+    reported_status: PASS
+    stdout_sha256: dd4bc2ac983fa2fa5fb20d2d3903a1dfc4d3d0b817b6e62cdd08e38f3a6a74a9
+  - checker_path: ci/checkers/check_p7c_content_kernel_runtime_ab.py
+    command: python3 ci/checkers/check_p7c_content_kernel_runtime_ab.py --live
+    exit_code: 0
+    reported_status: PASS
+    stdout_sha256: 11a2044108df1100a681065dabf1f7acb55c13fe741e05b0411a1170cf969e6e
+  - checker_path: ci/checkers/check_p7c_content_kernel_runtime_ab_002.py
+    command: python3 ci/checkers/check_p7c_content_kernel_runtime_ab_002.py --live
+    exit_code: 0
+    reported_status: PASS
+    stdout_sha256: a250c9b7de16ef659a3fe322a35b1fbe67f4c9e53a50e264cef9b4ffafd61025
+  - checker_path: ci/checkers/check_p7c_execution_scalability.py
+    command: python3 ci/checkers/check_p7c_execution_scalability.py --live
+    exit_code: 0
+    reported_status: PASS
+    stdout_sha256: d7cd5b4e2c25bc57fb7871a0026e3bd7070b705b86fccc2c1afccb403d1aef28

@@ -1,0 +1,19 @@
+p7d_midbatch_320_fixture_manifest:
+  positive_fixture:
+    - valid_selection_binding_overlap_dedupe_human_review_and_hold
+  negative_fixtures:
+    - deterministic_selection_tamper
+    - authorized_count_mismatch_or_321st_output
+    - duplicate_work_item
+    - wrong_work_item_to_assignment_binding
+    - overlap_with_any_of_120_kernels_exceeds_17
+    - normalized_duplicate
+    - within_cluster_sister_draft_jaccard_failure
+    - narrative_fabrication_machine_overclaim
+    - missing_human_review_sample
+    - route_migration_8_pending_rewritten
+    - expand_to_3600_allowed_true
+    - codex_fills_founder_verdict
+  fail_closed:
+    python_optimized_mode_exit: 2
+    malformed_or_missing_artifact_exit_nonzero: true

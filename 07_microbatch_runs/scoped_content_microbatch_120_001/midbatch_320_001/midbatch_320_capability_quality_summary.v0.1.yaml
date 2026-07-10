@@ -1,0 +1,33 @@
+midbatch_320_capability_quality_summary:
+  machine_quality_status: PASS_PENDING_HUMAN_SEMANTIC_REVIEW
+  mode_counts:
+    creative_prototype: 96
+    fact_slot_script: 96
+    evidence_bound_candidate: 64
+    display_solution: 64
+  P0_counts:
+    P0_01: 48
+    P0_02: 56
+    P0_03: 80
+    P0_04: 72
+    P0_05: 64
+  kernel_seed_reuse_pressure_tested: approximately_2.67x
+  does_not_prove_kernel_supply_for_3600: true
+  fact_boundary:
+    deterministic_scope_pass: true
+    scope: slot markers, unsupported numeric claims, source binding, readiness flags
+    narrative_fabrication_machine_proven_absent: false
+    human_review_required: true
+  P0_05:
+    record_count: 64
+    monitoring_fields:
+    - scene_prerequisite_completeness
+    - customer_task_clarity
+    - product_role_differentiation
+    - non_hard_sell_quality
+    - spoken_conversion
+    - product_as_character_overreach
+    - generic_product_praise_rate
+    machine_scope: presence/risk heuristics only
+    human_review_required: true
+    new_ontology_or_cso_axis_created: false

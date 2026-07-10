@@ -1,0 +1,60 @@
+{
+  "task_id": "GKB-P7D-CONDITIONAL-MIDBATCH-320-GENERATION-AND-REVIEW-HANDOFF-001",
+  "head_before": "3254e8546c10edb26dea52ada4b6b0c2b760471d",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "branch": "master",
+  "execution_result": "MIDBATCH_320_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW",
+  "founder_decision": {
+    "decision": "CONDITIONAL_MIDBATCH_300_600",
+    "authorized_count": 320,
+    "full_scale_3600_status": "HOLD"
+  },
+  "selection": {
+    "selected_count": 320,
+    "cluster_count": 40,
+    "per_cluster_count": 8,
+    "selection_digest": "a095efc9b59e7358ccfe51ceafc35e2650ece350ebc5cb5b72923f8a7071a58a"
+  },
+  "generation": {
+    "actual_accepted_count": 320,
+    "failed_count": 0,
+    "retry_count": 0,
+    "external_LLM_called": false,
+    "secret_accessed": false
+  },
+  "machine_gates": {
+    "kernel_overlap_max_all_120": 10,
+    "kernel_overlap_failures": 0,
+    "exact_duplicates": 0,
+    "normalized_duplicates": 0,
+    "within_cluster_shingle_max_jaccard": 0.242857,
+    "assignment_mismatch_count": 0,
+    "checkpoint_count": 40,
+    "resume_event_count": 1,
+    "budget_limit_exceeded": false
+  },
+  "review": {
+    "guardian_packet_count": 320,
+    "founder_review_sample_count": 40,
+    "guardian_status": "PENDING",
+    "founder_human_review_status": "PENDING",
+    "narrative_fabrication_machine_proven_absent": false,
+    "candidate_specificity_machine_proven": false
+  },
+  "evidence_scope": {
+    "kernel_seed_count": 120,
+    "average_reuse_pressure": 2.666667,
+    "does_not_prove_kernel_supply_for_3600": true,
+    "does_not_prove_30x_reuse_stability": true
+  },
+  "readiness": {
+    "expand_to_3600_allowed": false,
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "Serving_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_ready": false
+  },
+  "handoff_to_guardian": "Claude Code"
+}

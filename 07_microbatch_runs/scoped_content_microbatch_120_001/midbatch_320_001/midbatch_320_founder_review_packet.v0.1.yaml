@@ -1,0 +1,3079 @@
+midbatch_320_founder_review_packet:
+  sample_count: 40
+  selection_policy: one per cluster; existing high-claim-risk assignment first, otherwise cluster hash modulo eight; never
+    quality-score sorted
+  codex_does_not_fill_founder_verdict: true
+  human_review_questions:
+  - 是否有真实服装行业现场感
+  - 是否愿意用于品牌自媒体内容生产
+  - 是否仍有明显 AI 腔
+  - 是否重复或模板化
+  - 事实边界是否可信
+  - kernel 是否被化用而非机械搬运
+  - 哪些 P0 group 仍需修复
+  - 是否出现机器无法识别的假顾客或假生活情节
+  samples:
+  - output_id: P7D320-OUT-006
+    accepted_generation_record_id: P7D320-GEN-006
+    work_item_id: P7D-WI-MKC_007-057
+    cluster_id: mkc_007
+    P0_group: P0_01
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 6
+    bound_assignment_id: SCM120-A003
+    bound_assignment_payload_digest: be514393d51db845b3464191e8eba97c344f19bb84fd51d45677fb82f06d1fb1
+    bound_kernel_candidate_id: SCM120-CAND-003
+    bound_kernel_payload_digest: 58f9598cdc66225b94d37e7760ac0bcef8e0213e912301cf1af1422bb6cec01b
+    proposition_refs:
+    - PROP-V1-003
+    - PROP-V1-004
+    creative_pattern_refs:
+    - enterprise_narrative_pattern
+    cso_overlay_requirements: &id001
+    - narrative_rhythm
+    - emotional_temperature
+    - creative_tension
+    fact_binding_requirements: &id002
+      brand_facts_required: false
+      missing_fact_behavior: not_needed
+      evidence_requirement: none
+      allowed_placeholder_behavior: no_fact_slots_needed
+      forbidden_fabrication:
+      - fabricate_specific_brand_event
+      - fabricate_real_person_experience
+      - fabricate_product_fact
+      - claim_published_fact_status
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '货架里有一次很小的返工：版师把外套挂上去又取下，因为表面纹理还没在画面里站稳。拍摄者往后退两步，只说“再看一眼”。
+
+
+      画面的转折不用特效：版师拿起的瞬间，表面纹理和轮廓的关系变了。拍摄者的目光跟着动，理由就站住了。版师把原来的提词卡抽走，换成一句更像现场的话：“把企业选择放进衣服细节。”然后用表面纹理和轮廓先后入镜，让先给犹豫，再给反复做的动作可以被看见。
+
+
+      这是一段可拍原型，场景成立即可，不把原型伪装成某家店已经发生的往事。
+
+
+      片尾不把衣服变成口号。外套被折好或挂回，人物的选择留在现场；让价值被看见而非被喊出。'
+    body_char_count: 259
+    body_digest: e9acc71da3fb0c4837213c0ae6130d3f7e8e881eeaaebe0ffcaa9ce82c6542a5
+    normalized_body_digest: 720287b216ffb5e623909758b7a348275a73f12a9f244ae04026515afcf4e987
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-116
+    kernel_overlap_fragment: 外套挂上去
+    content_metadata:
+      object_term: 外套
+      detail_term: 表面纹理
+      second_detail_term: 轮廓
+      human_subject: 版师
+      human_action: 拿
+      human_action_phrase: 拿起
+      scene: 货架
+      content_form: detail_closeup_script
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-012
+    accepted_generation_record_id: P7D320-GEN-012
+    work_item_id: P7D-WI-MKC_008-034
+    cluster_id: mkc_008
+    P0_group: P0_01
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 4
+    bound_assignment_id: SCM120-A004
+    bound_assignment_payload_digest: e55a2158abc512b1bed262bf4dcf9859b4a0f03d03db4028df48704f42554bcb
+    bound_kernel_candidate_id: SCM120-CAND-004
+    bound_kernel_payload_digest: 5da60d6e94633e9583d160c5eadf6cc11f8eb091a6cd5f4d827db417a5399cf1
+    proposition_refs:
+    - PROP-V1-005
+    - PROP-V1-006
+    creative_pattern_refs:
+    - enterprise_narrative_pattern
+    cso_overlay_requirements: *id001
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头先不拍脸，只拍羊毛大衣从正面转到侧面。导购用指腹顺过表面纹理，再退到货架的镜子边看轮廓落在整体里是什么样子。
+
+
+      同一机位留两次画面：一次保留原状，一次完成比。观众先看出变化，才听见“沿工序追一件衣服的来路”这个判断。声音放得很轻：“今天不追着证明它多好，先把表面纹理拍清。”这样的克制服务于沿工序追一件衣服的来路，而每次交手都要留下可拍动作是画面真正的骨架。
+
+
+      让情绪来自动作之间的停顿，不靠虚构品牌战绩把分量抬高。
+
+
+      导购离开画面后，羊毛大衣仍在原位。环境声多留一拍，让把抽象承诺换成过程画面这个意思自己落下。'
+    body_char_count: 258
+    body_digest: 731ba031def8762f19114b7a7582a2c1a2d927e245662602c98558952faaf9b6
+    normalized_body_digest: e29496a5e4a217d48eba335fd6465328569d5378a0d8fe192c90fa0a603cd831
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-004
+    - SCM120-CAND-027
+    kernel_overlap_fragment: 羊毛大衣从
+    content_metadata:
+      object_term: 羊毛大衣
+      detail_term: 表面纹理
+      second_detail_term: 轮廓
+      human_subject: 导购
+      human_action: 比
+      human_action_phrase: 并排比较
+      scene: 货架
+      content_form: role_exchange
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-021
+    accepted_generation_record_id: P7D320-GEN-021
+    work_item_id: P7D-WI-MKC_009-046
+    cluster_id: mkc_009
+    P0_group: P0_01
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 5
+    bound_assignment_id: SCM120-A008
+    bound_assignment_payload_digest: 2cf22e82459f47fcaa98ddf3929d4a69c24a5800be4387d3a3f4564d5352a9c3
+    bound_kernel_candidate_id: SCM120-CAND-008
+    bound_kernel_payload_digest: baddaf58237c08143f32c59a48e0a288a81c1dfc22523494308ef18d1ddaa367
+    proposition_refs:
+    - PROP-V1-010
+    - PROP-V1-011
+    creative_pattern_refs:
+    - enterprise_narrative_pattern
+    cso_overlay_requirements: *id001
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '打烊后的样衣间安静下来，风衣还留在木台上。模特重做一次并排比较：先看袖口，再摸门襟，最后把衣服放回原位。
+
+
+      口播放到动作之后：“让小改动撑起完整故事，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。如果关掉声音，观众仍能从那次并排比较里看懂让小改动撑起完整故事。不是因为字幕写了答案，而是用前后差异而非宏大口号推进被放进了人与衣服的距离。
+
+
+      这里可以保留想象力，但不替任何品牌补写年份、销量或真实人物经历。
+
+
+      最后一句口播只说选择，不说奇迹：“我们先把这个动作做对。”然后用袖口完成在细节处留下叙事余味。'
+    body_char_count: 259
+    body_digest: 3b68c6910b1d7590a525da75b8e9d3cae14d3f213c56e073a7bcec7d3fbb8288
+    normalized_body_digest: ab8abd8a9657ae483ba23cfe741a3a58571416f6b75afe6dc48ca8657124af4a
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-007
+    kernel_overlap_fragment: 后的样衣间
+    content_metadata:
+      object_term: 风衣
+      detail_term: 袖口
+      second_detail_term: 门襟
+      human_subject: 模特
+      human_action: 比
+      human_action_phrase: 并排比较
+      scene: 样衣间
+      content_form: store_vlog_slice
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-030
+    accepted_generation_record_id: P7D320-GEN-030
+    work_item_id: P7D-WI-MKC_010-057
+    cluster_id: mkc_010
+    P0_group: P0_01
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 6
+    bound_assignment_id: SCM120-A012
+    bound_assignment_payload_digest: 7f827b3cb66e4220a2dca0c179a4820a25b3881526012cae8571ddf245fac107
+    bound_kernel_candidate_id: SCM120-CAND-012
+    bound_kernel_payload_digest: 22cc187630aebb6e5909244bf2e5ac8a8278bf71867e48f6fa500f53498bb4fb
+    proposition_refs:
+    - PROP-V1-015
+    - PROP-V1-016
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: &id003
+    - platform_native_expression
+    - narrative_rhythm
+    - creative_tension
+    fact_binding_requirements: &id004
+      brand_facts_required: false
+      missing_fact_behavior: express_as_named_slot_never_invent
+      evidence_requirement: none_slots_only
+      allowed_placeholder_behavior: named_slot
+      forbidden_fabrication:
+      - fill_missing_fact_with_invention
+      - fabricate_product_fact
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '挂通里有一次很小的返工：模特把这件衣服挂上去又取下，因为走线还没在画面里站稳。拍摄者往后退两步，只说“再看一眼”。
+
+
+      画面的转折不用特效：模特换个角度看的瞬间，走线和袖口的关系变了。拍摄者的目光跟着动，理由就站住了。模特把原来的提词卡抽走，换成一句更像现场的话：“用实物锚点拆掉空泛形容。”然后用走线和袖口先后入镜，让先让手与衣服发生动作可以被看见。
+
+
+      脚本可先完整成形，但【品牌口吻】和【可核事件】必须等资料接入后再替换。
+
+
+      片尾不把衣服变成口号。这件衣服被折好或挂回，人物的选择留在现场；把槽位留给真实身份和事件。'
+    body_char_count: 259
+    body_digest: 8efe69ae22f1c143974b0ed4fbb3317ce3b170e4976defa0bcbd7165f26ded4f
+    normalized_body_digest: 681af7a6618db2c3a0c6281618718151e9f2b1a61fd35a3885be8c9f9371c134
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-055
+    - SCM120-CAND-057
+    - SCM120-CAND-110
+    kernel_overlap_fragment: 这件衣服
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 走线
+      second_detail_term: 袖口
+      human_subject: 模特
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 挂通
+      content_form: detail_closeup_script
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-040
+    accepted_generation_record_id: P7D320-GEN-040
+    work_item_id: P7D-WI-MKC_011-079
+    cluster_id: mkc_011
+    P0_group: P0_01
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 8
+    bound_assignment_id: SCM120-A014
+    bound_assignment_payload_digest: 391b1c03b07407fc601d140330204c54e98f9ec0d9b5b8992b70ba8e030eb8c4
+    bound_kernel_candidate_id: SCM120-CAND-014
+    bound_kernel_payload_digest: deaf63d252c907e139247b2d76fc2de2523ef9939fe447780bdc568760d29a81
+    proposition_refs:
+    - PROP-V1-018
+    - PROP-V1-019
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '这条内容不从正面全身开始。模特先把这件衣服叠在门店的一角，手掌压过垂坠，然后展开，让腰线自己进入画面。
+
+
+      结构是一近一远再一近：先看垂坠，再看这件衣服在门店里承担的任务，最后回到模特手上的腰线。镜头外有人问：“为什么不直接说结论？”模特指指这件衣服，回答“先把这个选择让人看懂”。这正好对应把夸张结果降为可观察画面，也保住了只描述镜头能确认的变化。
+
+
+      把未知项写成【待绑定事实】，其余段落仍按可直接拍摄的节奏完成。
+
+
+      收尾让搭配师接过这件衣服，重复一次刚才的动作。方法被人真正用起来时，保住感染力也保住说话分寸。'
+    body_char_count: 256
+    body_digest: 755a73d6cd012502e07b84fabe8933f92c4c09f3f35f62ecca3904ea7632ba22
+    normalized_body_digest: af051934f705263cd4f536c2cc3680e0e75435e7e96f948868b739b5fbfb5db0
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-110
+    kernel_overlap_fragment: 这件衣服在
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 垂坠
+      second_detail_term: 腰线
+      human_subject: 模特
+      human_action: 摸
+      human_action_phrase: 用手确认
+      scene: 门店
+      content_form: spoken_demo
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-048
+    accepted_generation_record_id: P7D320-GEN-048
+    work_item_id: P7D-WI-MKC_012-079
+    cluster_id: mkc_012
+    P0_group: P0_01
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 8
+    bound_assignment_id: SCM120-A017
+    bound_assignment_payload_digest: e4f4aa66cd10232ba8cc6d7d4d94cfe9cfd0e886b21eaf918d27aee321a33aa5
+    bound_kernel_candidate_id: SCM120-CAND-017
+    bound_kernel_payload_digest: b696d86d88c6e39399a68231b1f99356337e672aa2e03960a4a9ca5ee970e819
+    proposition_refs:
+    - PROP-V1-022
+    - PROP-V1-023
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '这条内容不从正面全身开始。他先把衬衫叠在短视频的一角，手掌压过下摆，然后展开，让面料自己进入画面。
+
+
+      中段保持机位，让他再做一遍改。动作前后的差别留在面料上，口播只说一句：“按场景重排切口而非换标题。”镜头外有人问：“为什么不直接说结论？”他指指衬衫，回答“先把这个选择让人看懂”。这正好对应让同一单品承担不同内容任务，也保住了按场景重排切口而非换标题。
+
+
+      把未知项写成【待绑定事实】，其余段落仍按可直接拍摄的节奏完成。
+
+
+      片尾不把衣服变成口号。衬衫被折好或挂回，人物的选择留在现场；形成可持续的系列表达。'
+    body_char_count: 253
+    body_digest: 6f57e65ea3683e5d292a324e8ff2fb3872350e21c43ce03f97e51a457aa799a3
+    normalized_body_digest: 55a7df8f761ee218ec8322ace7e591e12a316901af903f328df210d468a8532e
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-105
+    kernel_overlap_fragment: 这条内容
+    content_metadata:
+      object_term: 衬衫
+      detail_term: 下摆
+      second_detail_term: 面料
+      human_subject: 他
+      human_action: 改
+      human_action_phrase: 重新整理
+      scene: 短视频
+      content_form: spoken_demo
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-054
+    accepted_generation_record_id: P7D320-GEN-054
+    work_item_id: P7D-WI-MKC_013-057
+    cluster_id: mkc_013
+    P0_group: P0_02
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 6
+    bound_assignment_id: SCM120-A021
+    bound_assignment_payload_digest: 73e9865e3df8ae46e2853262c01cda5a504333683445046bd1d68b4b313ca612
+    bound_kernel_candidate_id: SCM120-CAND-021
+    bound_kernel_payload_digest: 65e85fe44ca2f7b0f8d6e6456a298ae6c1778efc344357ce76e382816528287c
+    proposition_refs:
+    - PROP-V1-027
+    - PROP-V1-028
+    creative_pattern_refs:
+    - role_voice_pattern
+    cso_overlay_requirements: &id005
+    - role_voice
+    - human_scene
+    - emotional_temperature
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '货架里有一次很小的返工：导购把燕麦针织挂上去又取下，因为腰带还没在画面里站稳。拍摄者往后退两步，只说“再看一眼”。
+
+
+      口播放到动作之后：“让岗位用各自眼睛说衣服，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。导购把原来的提词卡抽走，换成一句更像现场的话：“让岗位用各自眼睛说衣服。”然后用腰带和袖口先后入镜，让同一物件承接不同角色动作可以被看见。
+
+
+      这是一段可拍原型，场景成立即可，不把原型伪装成某家店已经发生的往事。
+
+
+      片尾不把衣服变成口号。燕麦针织被折好或挂回，人物的选择留在现场；声音不同但对象始终一致。'
+    body_char_count: 263
+    body_digest: a520a4a215bad9e896a065274d449aaf8bfc66f1ef5f1ff62636f3b8b0e884db
+    normalized_body_digest: 300121ecf3c3475d7c9f9d76adedc5102613854f57578fc6a8e7286df4167f6b
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-072
+    kernel_overlap_fragment: 在画面里
+    content_metadata:
+      object_term: 燕麦针织
+      detail_term: 腰带
+      second_detail_term: 袖口
+      human_subject: 导购
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 货架
+      content_form: detail_closeup_script
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-063
+    accepted_generation_record_id: P7D320-GEN-063
+    work_item_id: P7D-WI-MKC_014-068
+    cluster_id: mkc_014
+    P0_group: P0_02
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A022
+    bound_assignment_payload_digest: b7fbd6456278b94fe6458c9a1b8c95044a1b98eadcd8a6f704701af529670892
+    bound_kernel_candidate_id: SCM120-CAND-022
+    bound_kernel_payload_digest: 38a941418cc78734ebeecb90c479298b91085f683fbefddaf55c3a38176ca7f2
+    proposition_refs:
+    - PROP-V1-029
+    - PROP-V1-030
+    creative_pattern_refs:
+    - role_voice_pattern
+    cso_overlay_requirements: *id005
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，拍摄者把提词卡反扣在货架的台面上。她拿起羊毛这件衣服，让袖口在近景里过一遍，再用表面纹理接住下一句口播。
+
+
+      口播放到动作之后：“让语气跟随现场强弱，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把让语气跟随现场强弱从概念变成感受，也让普通动作平说，关键细节抬高不显得像教程。
+
+
+      人物只承担表达任务，不背负未经提供的履历、成绩或顾客证言。
+
+
+      最后不放链接，也不催人下结论。镜头退回货架，让表面纹理在光里停一秒；减少表演腔并保留温度。'
+    body_char_count: 255
+    body_digest: cd9e7e9da867bf4e3a73c2c956daedab3343a40b2b24824a2b0c11cd5fe1ef48
+    normalized_body_digest: e8c47105da834177cecf9527ab58746620e2d8f900690732272ce26e7fb61b42
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-036
+    kernel_overlap_fragment: 把提词卡
+    content_metadata:
+      object_term: 羊毛这件衣服
+      detail_term: 袖口
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 货架
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-071
+    accepted_generation_record_id: P7D320-GEN-071
+    work_item_id: P7D-WI-MKC_015-068
+    cluster_id: mkc_015
+    P0_group: P0_02
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A025
+    bound_assignment_payload_digest: 6923cc162339d6800e059c4276bf4fe534e85b8a810fb70447bd7382211e9e75
+    bound_kernel_candidate_id: SCM120-CAND-025
+    bound_kernel_payload_digest: 3706cfe9065112880a27a7e1898e4e76fae4458d2bcef515ce4a8eb18abe7494
+    proposition_refs:
+    - PROP-V1-033
+    - PROP-V1-034
+    creative_pattern_refs:
+    - role_voice_pattern
+    cso_overlay_requirements: *id005
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，买手把提词卡反扣在试衣间的台面上。她拿起灯芯绒风衣，让门襟在近景里过一遍，再用橱窗接住下一句口播。
+
+
+      第一镜拍人与衣服的距离，第二镜只跟门襟，第三镜回到顾客的反应。镜头不换对象，只换观察深度。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把把一件衣服交给多岗位接力从概念变成感受，也让每个人只说自己真正看见的部分不显得像教程。
+
+
+      人物只承担表达任务，不背负未经提供的履历、成绩或顾客证言。
+
+
+      片尾不把衣服变成口号。灯芯绒风衣被折好或挂回，人物的选择留在现场；拼出组织协作的生活感。'
+    body_char_count: 249
+    body_digest: 6ae27e0cbb129479bc8dab3c487a39e599d8b3a34eef861faf1a766dda42e542
+    normalized_body_digest: a1b55c193907d7526b858cfd53844b9b46eab26eaa58de0bb07d64fad4d3c0d2
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-036
+    kernel_overlap_fragment: 把提词卡
+    content_metadata:
+      object_term: 灯芯绒风衣
+      detail_term: 门襟
+      second_detail_term: 橱窗
+      human_subject: 买手
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 试衣间
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-077
+    accepted_generation_record_id: P7D320-GEN-077
+    work_item_id: P7D-WI-MKC_016-046
+    cluster_id: mkc_016
+    P0_group: P0_02
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 5
+    bound_assignment_id: SCM120-A029
+    bound_assignment_payload_digest: 7afd268cd08dc5331e82e8f6c4857b180ef8d4ef121200029831626a76509079
+    bound_kernel_candidate_id: SCM120-CAND-029
+    bound_kernel_payload_digest: f3144dd1f1d5c088be94c1d993f7583f0b99745f389147eff4d9b1a2d20b4efc
+    proposition_refs:
+    - PROP-V1-038
+    - PROP-V1-039
+    creative_pattern_refs:
+    - role_voice_pattern
+    cso_overlay_requirements: *id005
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '打烊后的订货会安静下来，豆绿针织毛衣还留在木台上。模特重做一次完成一次整理：先看轮廓，再摸表面纹理，最后把衣服放回原位。
+
+
+      模特把衣服递给陈列师，对方只接管表面纹理的那一步。谁先动手、谁后退观察，就是这段内容里的角色关系。如果关掉声音，观众仍能从那次完成一次整理里看懂切换视角但不冒领经历。不是因为字幕写了答案，而是用第一现场动作替代身份背书被放进了人与衣服的距离。
+
+
+      这里可以保留想象力，但不替任何品牌补写年份、销量或真实人物经历。
+
+
+      片尾不把衣服变成口号。豆绿针织毛衣被折好或挂回，人物的选择留在现场；公开表达保持可信距离。'
+    body_char_count: 264
+    body_digest: 53bfab641d613a7af59e3921c3f97e27e3d0f2cee3c26e2eab421ef82baeb4d3
+    normalized_body_digest: ea2bfff02694fb50f62fb76f859f9f17035a22dc4b867bdfa556ffcb4601a587
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-092
+    kernel_overlap_fragment: 一现场动作
+    content_metadata:
+      object_term: 豆绿针织毛衣
+      detail_term: 轮廓
+      second_detail_term: 表面纹理
+      human_subject: 模特
+      human_action: 拍
+      human_action_phrase: 完成一次整理
+      scene: 订货会
+      content_form: store_vlog_slice
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-082
+    accepted_generation_record_id: P7D320-GEN-082
+    work_item_id: P7D-WI-MKC_017-012
+    cluster_id: mkc_017
+    P0_group: P0_02
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A032
+    bound_assignment_payload_digest: 90afec29440901512e32e38e88d989ba7745c76358fc7aac0e7f1b4c2025b0e9
+    bound_kernel_candidate_id: SCM120-CAND-032
+    bound_kernel_payload_digest: b82dc9e5477a613fdc4d3bb5127b684d830c10f2dee3dd987806fccaf658d2cc
+    proposition_refs:
+    - PROP-V1-042
+    - PROP-V1-043
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在短视频外一步，画面里只有藏青羊毛外套和拍摄者的手。她不报卖点，先用手确认，又把肩线和表面纹理对着镜头留了两秒。
+
+
+      中段保持机位，让拍摄者再做一遍摸。动作前后的差别留在表面纹理上，口播只说一句：“新客先看画面，熟客再进细节。”重点留在选择的先后上。拍摄者先处理肩线，后看表面纹理；这个顺序就是按受众距离调整信息深度，也使新客先看画面，熟客再进细节不再只是一句话。
+
+
+      脚本可先完整成形，但【品牌口吻】和【可核事件】必须等资料接入后再替换。
+
+
+      拍摄者离开画面后，藏青羊毛外套仍在原位。环境声多留一拍，让同一对象生成不同入口这个意思自己落下。'
+    body_char_count: 271
+    body_digest: d276dc4df39d52bf89042180ccdd9380d90508a0cffacd49cf5ced2bbb988ac0
+    normalized_body_digest: b96e594c971ff549e0acccf72736758ce2f2e1804ebf692bdce05bbff3ecb187
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-032
+    kernel_overlap_fragment: 藏青羊毛
+    content_metadata:
+      object_term: 藏青羊毛外套
+      detail_term: 肩线
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 摸
+      human_action_phrase: 用手确认
+      scene: 短视频
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-089
+    accepted_generation_record_id: P7D320-GEN-089
+    work_item_id: P7D-WI-MKC_018-001
+    cluster_id: mkc_018
+    P0_group: P0_02
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 1
+    bound_assignment_id: SCM120-A034
+    bound_assignment_payload_digest: 106cc69d1d433ec1326578f292aafafda4a889634999a7eb0bcd98e288d83fc3
+    bound_kernel_candidate_id: SCM120-CAND-034
+    bound_kernel_payload_digest: 67c8a951c57914ef6e355350e2522fc1ad58ff553f4130f9e629cd9f25fa0eaa
+    proposition_refs:
+    - PROP-V1-045
+    - PROP-V1-046
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '试衣镜边刚亮灯，拍摄者把卡其风衣从衣架上取下，先理下摆，再把腰带转向侧光。店长没催，等手停下才问：“今天先看哪一处？”
+
+
+      中段保持机位，让拍摄者再做一遍看。动作前后的差别留在腰带上，口播只说一句：“把情绪落在动作和停顿里。”店长原本想加一句更响亮的话，拍摄者摇了摇头：“控制情绪温度而不制造承诺。”她用手势把声音压低，因为把情绪落在动作和停顿里。
+
+
+      发布前把【角色称呼】、【商品信息】与【现场依据】补齐；空位留着，也不拿想象填满。
+
+
+      画面停在下摆与腰带同时入镜的瞬间。不替观众总结价值，因为让信任来自克制的观察。'
+    body_char_count: 256
+    body_digest: 01982fc26ae75afcd32bd413bf644c14517dd2bfb15f1c48a486534fe868f1fc
+    normalized_body_digest: 86f8553227cf1b3ae74e95d8ad55da06967ba8e0cb7f5611bb6b636d618c1769
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-050
+    - SCM120-CAND-056
+    kernel_overlap_fragment: 从衣架上取下
+    content_metadata:
+      object_term: 卡其风衣
+      detail_term: 下摆
+      second_detail_term: 腰带
+      human_subject: 拍摄者
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 试衣镜边
+      content_form: three_shot_scene
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-097
+    accepted_generation_record_id: P7D320-GEN-097
+    work_item_id: P7D-WI-MKC_019-001
+    cluster_id: mkc_019
+    P0_group: P0_02
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 1
+    bound_assignment_id: SCM120-A037
+    bound_assignment_payload_digest: 932c106e7f5569aeb1e8cb7a58ccca35006c24843289ba203a59b1a38c373172
+    bound_kernel_candidate_id: SCM120-CAND-037
+    bound_kernel_payload_digest: d7f9fb425474e6d984c99a6b1671792718a3e3f0eaec51bc63220f5a4b79594d
+    proposition_refs:
+    - PROP-V1-049
+    - PROP-V1-050
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '试衣镜边刚亮灯，导购把砂色衬衫从衣架上取下，先理袖口，再把下摆转向侧光。店长没催，等手停下才问：“今天先看哪一处？”
+
+
+      第一镜拍人与衣服的距离，第二镜只跟袖口，第三镜回到店长的反应。镜头不换对象，只换观察深度。店长原本想加一句更响亮的话，导购摇了摇头：“让角色权限决定能说多深。”她用手势把声音压低，因为经验不清时用现场观察替代履历。
+
+
+      发布前把【角色称呼】、【商品信息】与【现场依据】补齐；空位留着，也不拿想象填满。
+
+
+      结尾回到开头的位置，导购把砂色衬衫挂回去，只留一句：“别急，再看一眼袖口。”人物故事不越过事实线。'
+    body_char_count: 260
+    body_digest: ea1ff39feb694e924852a1c4470b455f9362d23922df991303f31710bf868969
+    normalized_body_digest: 007b73c44172c6617c0049266e96e85e4d9c5ebf6a360e9016c6df77083826fe
+    kernel_overlap_max_chars_all_120: 8
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-056
+    kernel_overlap_fragment: 衬衫从衣架上取下
+    content_metadata:
+      object_term: 砂色衬衫
+      detail_term: 袖口
+      second_detail_term: 下摆
+      human_subject: 导购
+      human_action: 比
+      human_action_phrase: 并排比较
+      scene: 试衣镜边
+      content_form: three_shot_scene
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-105
+    accepted_generation_record_id: P7D320-GEN-105
+    work_item_id: P7D-WI-MKC_020-001
+    cluster_id: mkc_020
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 1
+    bound_assignment_id: SCM120-A040
+    bound_assignment_payload_digest: 07149ce8dd3884ff68383f31c70385b2c15c5f92c6c9c18b6536bee8ff3a0405
+    bound_kernel_candidate_id: SCM120-CAND-040
+    bound_kernel_payload_digest: c6e692f8e3f4d18fa71ba25a2d0c61faf088786d816ac2535f9dc1b04ff26bc2
+    proposition_refs:
+    - PROP-V1-053
+    - PROP-V1-054
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: &id006
+    - visual_scene
+    - platform_native_expression
+    - aesthetic_framing
+    fact_binding_requirements: &id007
+      brand_facts_required: true
+      missing_fact_behavior: block_until_evidence
+      evidence_requirement: required
+      allowed_placeholder_behavior: none_must_be_filled_by_evidence
+      forbidden_fabrication:
+      - make_unsupported_factual_claim
+      - fabricate_product_fact
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: true
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '试衣镜边刚亮灯，拍摄者把这件衣服从衣架上取下，先理领口，再把面料转向侧光。店长没催，等手停下才问：“今天先看哪一处？”
+
+
+      第一镜拍人与衣服的距离，第二镜只跟领口，第三镜回到店长的反应。镜头不换对象，只换观察深度。店长原本想加一句更响亮的话，拍摄者摇了摇头：“按品类层级拆解单品。”她用手势把声音压低，因为从领型袖长走到材质与廓形。
+
+
+      材质、性能和效果只写到镜头可见处；【标签或检验记录】未接入前，不把观察升格为结论。
+
+
+      结尾回到开头的位置，拍摄者把这件衣服挂回去，只留一句：“别急，再看一眼领口。”把未知属性留成可绑定槽位。'
+    body_char_count: 262
+    body_digest: 8da65d8681e4ff4cfc448d4e018ed387722a2844867cf5d2f226b1cd2aaa0400
+    normalized_body_digest: 27bc6fc0076aa30c481ad34a6a86567d50c16ccc3959e266bc344c0f5cf913fc
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-050
+    - SCM120-CAND-056
+    kernel_overlap_fragment: 从衣架上取下
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 领口
+      second_detail_term: 面料
+      human_subject: 拍摄者
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 试衣镜边
+      content_form: three_shot_scene
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: existing_sample_plan_high_claim_risk_first
+  - output_id: P7D320-OUT-115
+    accepted_generation_record_id: P7D320-GEN-115
+    work_item_id: P7D-WI-MKC_021-023
+    cluster_id: mkc_021
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 3
+    bound_assignment_id: SCM120-A045
+    bound_assignment_payload_digest: 41aa0276f1eb9f029b093ebcf959b1894a4d94023afcec82fc5b9aa40acdedf2
+    bound_kernel_candidate_id: SCM120-CAND-045
+    bound_kernel_payload_digest: 483358b57433ee3d108e356f6ee28dada2cad536256f4d0e4f25a58a25333ddb
+    proposition_refs:
+    - PROP-V1-059
+    - PROP-V1-060
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id007
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: true
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头外的同事把羊毛这件衣服搭在臂弯，拍摄者没接过去，只指了指下摆。两人在样衣桌旁对望一下，内容从这个没有被剪掉的停顿开始。
+
+
+      画面从全景走到手部，再退回人物关系。镜头外的同事问为什么，拍摄者不讲道理，把羊毛这件衣服翻到下摆那一面回答。两个人的分歧没被剪掉。镜头外的同事想看整体，拍摄者坚持先看下摆。这段小小的拉扯让只比较同一任务下的可见差异落地，最后又回到并排拍版型长度和结构。
+
+
+      把能看见的部分拍清，把需要证明的部分交给【成分/工艺记录】后置确认。
+
+
+      最后一句口播只说选择，不说奇迹：“我们先把这个动作做对。”然后用下摆完成不把观察偷换成优劣结论。'
+    body_char_count: 275
+    body_digest: 7a0da24e32a0fc0bdbac2a7d176b2a0ad13470013fdc43f384aae2df644df7ad
+    normalized_body_digest: 66175e8922f9d6a6db320b41763eecc9e8987b62d7e56bf401aef4ee80ef8339
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-055
+    - SCM120-CAND-057
+    - SCM120-CAND-110
+    kernel_overlap_fragment: 这件衣服
+    content_metadata:
+      object_term: 羊毛这件衣服
+      detail_term: 下摆
+      second_detail_term: 罗纹
+      human_subject: 拍摄者
+      human_action: 量
+      human_action_phrase: 重新比量
+      scene: 样衣桌旁
+      content_form: before_after_action
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: existing_sample_plan_high_claim_risk_first
+  - output_id: P7D320-OUT-127
+    accepted_generation_record_id: P7D320-GEN-127
+    work_item_id: P7D-WI-MKC_022-068
+    cluster_id: mkc_022
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A046
+    bound_assignment_payload_digest: e45ec64b105b1a6bd4dfd4e9ed7a2e6b7cad93086f58698c932dd0b6aeafef79
+    bound_kernel_candidate_id: SCM120-CAND-046
+    bound_kernel_payload_digest: 6caed5e96ad1b43c945e4a422ed011df604d18d76f36b9d0f6fc9e862b284b0a
+    proposition_refs:
+    - PROP-V1-061
+    - PROP-V1-062
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id007
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，拍摄者把提词卡反扣在试穿区外的台面上。她拿起梭织针织衫，让领口在近景里过一遍，再用回弹接住下一句口播。
+
+
+      口播放到动作之后：“从织造结构解释面料感受，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把从织造结构解释面料感受从概念变成感受，也让用拉伸垂坠和表面纹理入镜不显得像教程。
+
+
+      把能看见的部分拍清，把需要证明的部分交给【成分/工艺记录】后置确认。
+
+
+      不用大字报幕，只让顾客轻声问一句“为什么这样处理？”拍摄者指向回弹，成分结论等待标签或检测。'
+    body_char_count: 263
+    body_digest: e1dafa93a81d1f87cd6e3c9b105200611ae0c73e21f2fc045454b61d57e03a79
+    normalized_body_digest: 128e402bd3d70f82c884ff910ff9b039bc6152522d8bf6d84c9a5cb0f901e7cc
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-036
+    kernel_overlap_fragment: 把提词卡
+    content_metadata:
+      object_term: 梭织针织衫
+      detail_term: 领口
+      second_detail_term: 回弹
+      human_subject: 拍摄者
+      human_action: 摸
+      human_action_phrase: 用手确认
+      scene: 试穿区外
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-129
+    accepted_generation_record_id: P7D320-GEN-129
+    work_item_id: P7D-WI-MKC_023-001
+    cluster_id: mkc_023
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 1
+    bound_assignment_id: SCM120-A049
+    bound_assignment_payload_digest: 2b714d12329b216887c38d8a7f607d4de598db99de34e98de524076db57a74cc
+    bound_kernel_candidate_id: SCM120-CAND-049
+    bound_kernel_payload_digest: 7b825d7b9767c0e1dcb6c16b0cda1564b027ea5189da1d6665b106542394d7a6
+    proposition_refs:
+    - PROP-V1-065
+    - PROP-V1-066
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id007
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '试衣镜边刚亮灯，拍摄者把炭灰缎面衬衫从衣架上取下，先理轮廓，再把表面纹理转向侧光。店长没催，等手停下才问：“今天先看哪一处？”
+
+
+      第一镜拍人与衣服的距离，第二镜只跟轮廓，第三镜回到店长的反应。镜头不换对象，只换观察深度。店长原本想加一句更响亮的话，拍摄者摇了摇头：“把颜色放进真实光线。”她用手势把声音压低，因为同时拍光源和中性色参照。
+
+
+      材质、性能和效果只写到镜头可见处；【标签或检验记录】未接入前，不把观察升格为结论。
+
+
+      画面停在轮廓与表面纹理同时入镜的瞬间。不替观众总结价值，因为避免把屏幕观感写成固定色值。'
+    body_char_count: 257
+    body_digest: 198fa6a95a0b0df0cedfb66526c9b594e3ce298196edbefab8969123d007f92c
+    normalized_body_digest: 3e6aea14c83a4e2dd7e9840b0aec99d84b53391368ad41b2176b902dc925a907
+    kernel_overlap_max_chars_all_120: 8
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-056
+    kernel_overlap_fragment: 衬衫从衣架上取下
+    content_metadata:
+      object_term: 炭灰缎面衬衫
+      detail_term: 轮廓
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 试
+      human_action_phrase: 试穿
+      scene: 试衣镜边
+      content_form: three_shot_scene
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-138
+    accepted_generation_record_id: P7D320-GEN-138
+    work_item_id: P7D-WI-MKC_024-012
+    cluster_id: mkc_024
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A053
+    bound_assignment_payload_digest: 7586be63d16cffb9554a34ae73ca88a43be676c3bffbf3bdf0192221c382cf18
+    bound_kernel_candidate_id: SCM120-CAND-053
+    bound_kernel_payload_digest: ea9ccd147fc3b006a629918ee2b3ec20f5dac93c6805937c7b50ee651ce0ce7c
+    proposition_refs:
+    - PROP-V1-070
+    - PROP-V1-071
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id007
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在开门前的卖场外一步，画面里只有毛呢外套和他的手。她不报卖点，先并排比较，又把衣长和下摆对着镜头留了两秒。
+
+
+      画面从全景走到手部，再退回人物关系。版师问为什么，他不讲道理，把毛呢外套翻到衣长那一面回答。重点留在选择的先后上。他先处理衣长，后看下摆；这个顺序就是用剪裁术语服务上身观察，也使先定位肩腰衣长再谈轮廓不再只是一句话。
+
+
+      若【证据来源】尚缺，口播只描述结构与动作，不承诺耐用、舒适或身材结果。
+
+
+      收尾让版师接过毛呢外套，重复一次刚才的动作。方法被人真正用起来时，不把版型画面包装成身材保证。'
+    body_char_count: 252
+    body_digest: 6a618d23e662d2842edce131cfab65a7827d72bf7b3db7ba3a59bc775524d5ef
+    normalized_body_digest: 78ebd2cf4b3a0d7a7d042a4c9296296843dc5ea8bc70237774c49a419ca81f13
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-027
+    kernel_overlap_fragment: 在开门前
+    content_metadata:
+      object_term: 毛呢外套
+      detail_term: 衣长
+      second_detail_term: 下摆
+      human_subject: 他
+      human_action: 比
+      human_action_phrase: 并排比较
+      scene: 开门前的卖场
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-151
+    accepted_generation_record_id: P7D320-GEN-151
+    work_item_id: P7D-WI-MKC_025-068
+    cluster_id: mkc_025
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A055
+    bound_assignment_payload_digest: 3e2f5ac1eda6022937aefc0727b3a0adf09ac129b7c64bc1e18347c1b6df082c
+    bound_kernel_candidate_id: SCM120-CAND-055
+    bound_kernel_payload_digest: 322ca7739fdf7b9df1fdced3491eea2851680f7f17f8ec03b03ea0dfac1ecc7f
+    proposition_refs:
+    - PROP-V1-073
+    - PROP-V1-074
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: &id008
+    - narrative_rhythm
+    - human_scene
+    - emotional_temperature
+    fact_binding_requirements: *id007
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，拍摄者把提词卡反扣在试穿区外的台面上。她拿起棉麻外套，让袖口在近景里过一遍，再用领口接住下一句口播。
+
+
+      口播放到动作之后：“把工艺节点拍成手上动作，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把把工艺节点拍成手上动作从概念变成感受，也让由整体逐步靠近收口与走线不显得像教程。
+
+
+      把能看见的部分拍清，把需要证明的部分交给【成分/工艺记录】后置确认。
+
+
+      结尾回到开头的位置，拍摄者把棉麻外套挂回去，只留一句：“别急，再看一眼袖口。”让可见线索承担讲解。'
+    body_char_count: 265
+    body_digest: 7ba71790c17bde3ef2ddd4a49d8efcd001296fc289d9968a5056c32be0d6d025
+    normalized_body_digest: 5d233dcd601bb80084caf289872eb2a007ac15bb97696bd1aef355c6bded9a2b
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-036
+    kernel_overlap_fragment: 把提词卡
+    content_metadata:
+      object_term: 棉麻外套
+      detail_term: 袖口
+      second_detail_term: 领口
+      human_subject: 拍摄者
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 试穿区外
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-154
+    accepted_generation_record_id: P7D320-GEN-154
+    work_item_id: P7D-WI-MKC_026-012
+    cluster_id: mkc_026
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A059
+    bound_assignment_payload_digest: 07d4816e3517b97b98ff1cc2f085acbc138ff2c2782dd17f61908f506908cd42
+    bound_kernel_candidate_id: SCM120-CAND-059
+    bound_kernel_payload_digest: 140432a263c9d396eb25e579630816fcc0dd8c48b813bf2d13504186ce38a863
+    proposition_refs:
+    - PROP-V1-078
+    - PROP-V1-079
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id007
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在镜子外一步，画面里只有卡其直筒裤和拍摄者的手。她不报卖点，先试穿，又把裤脚和表面纹理对着镜头留了两秒。
+
+
+      画面从全景走到手部，再退回人物关系。版师问为什么，拍摄者不讲道理，把卡其直筒裤翻到裤脚那一面回答。重点留在选择的先后上。拍摄者先处理裤脚，后看表面纹理；这个顺序就是把身材效果改写成场景观察，也使描述线条位置和行动限制不再只是一句话。
+
+
+      若【证据来源】尚缺，口播只描述结构与动作，不承诺耐用、舒适或身材结果。
+
+
+      画面停在裤脚与表面纹理同时入镜的瞬间。不替观众总结价值，因为拒绝数字化的身体承诺。'
+    body_char_count: 253
+    body_digest: 720c94efe09552d1f3b93de88959ccf116894e5f495981504a7d2215c6257e3f
+    normalized_body_digest: 0520c51f90275e706d0b6ba88fd319fc43bbd657c5de0bb087b04e07cfbef743
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-059
+    kernel_overlap_fragment: 卡其直筒裤
+    content_metadata:
+      object_term: 卡其直筒裤
+      detail_term: 裤脚
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 试
+      human_action_phrase: 试穿
+      scene: 镜子
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: existing_sample_plan_high_claim_risk_first
+  - output_id: P7D320-OUT-162
+    accepted_generation_record_id: P7D320-GEN-162
+    work_item_id: P7D-WI-MKC_027-012
+    cluster_id: mkc_027
+    P0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A062
+    bound_assignment_payload_digest: ad3cdbc0696f2998da1a096ddd4aa7a8a96781907356f61b6083de47b4858e41
+    bound_kernel_candidate_id: SCM120-CAND-062
+    bound_kernel_payload_digest: 7e8eb0364378c15b57bbd9d1c42291e3202b0f8cad4e3719db4c726621e157f6
+    proposition_refs:
+    - PROP-V1-082
+    - PROP-V1-083
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id007
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在开门前的卖场外一步，画面里只有羊毛针织和拍摄者的手。她不报卖点，先用手确认，又把下摆和针脚对着镜头留了两秒。
+
+
+      画面从全景走到手部，再退回人物关系。版师问为什么，拍摄者不讲道理，把羊毛针织翻到下摆那一面回答。重点留在选择的先后上。拍摄者先处理下摆，后看针脚；这个顺序就是按证据强度谈舒适与耐用，也使先拍触感结构和使用状态不再只是一句话。
+
+
+      若【证据来源】尚缺，口播只描述结构与动作，不承诺耐用、舒适或身材结果。
+
+
+      拍摄者离开画面后，羊毛针织仍在原位。环境声多留一拍，让没有记录就不提前下结论这个意思自己落下。'
+    body_char_count: 258
+    body_digest: 0de71dac64b07e0f18478ea76940e4dc60b405ff97ab64d56d6f7e52e30ec340
+    normalized_body_digest: d5db249d9e23a130f255a0be71a1f61ae1b98a6a3863e0da0c60fa375832cd6c
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-027
+    kernel_overlap_fragment: 在开门前
+    content_metadata:
+      object_term: 羊毛针织
+      detail_term: 下摆
+      second_detail_term: 针脚
+      human_subject: 拍摄者
+      human_action: 摸
+      human_action_phrase: 用手确认
+      scene: 开门前的卖场
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: existing_sample_plan_high_claim_risk_first
+  - output_id: P7D320-OUT-170
+    accepted_generation_record_id: P7D320-GEN-170
+    work_item_id: P7D-WI-MKC_028-012
+    cluster_id: mkc_028
+    P0_group: P0_03
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A065
+    bound_assignment_payload_digest: 406f3ab07ddf32f47cf1cbc91fda74f0f8b9662551954a8032db889547fc0c34
+    bound_kernel_candidate_id: SCM120-CAND-065
+    bound_kernel_payload_digest: ad0588f40adeae19b382444394888d07bcba0a9c81cb0aeadc0710d9743021a2
+    proposition_refs:
+    - PROP-V1-086
+    - PROP-V1-087
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在镜子外一步，画面里只有藏青风衣和顾客的手。她不报卖点，先用手确认，又把针脚和走线对着镜头留了两秒。
+
+
+      画面从全景走到手部，再退回人物关系。版师问为什么，顾客不讲道理，把藏青风衣翻到针脚那一面回答。重点留在选择的先后上。顾客先处理针脚，后看走线；这个顺序就是把品质观察与证明来源配对，也使每个近景后接一个待核槽位不再只是一句话。
+
+
+      脚本可先完整成形，但【品牌口吻】和【可核事件】必须等资料接入后再替换。
+
+
+      收尾让版师接过藏青风衣，重复一次刚才的动作。方法被人真正用起来时，让脚本可继续补证。'
+    body_char_count: 248
+    body_digest: 002c95f44170d97d7cec416dd57236b25805996ebc758c3625b736841c224b30
+    normalized_body_digest: 3986ccbaf46199dd6625a8470cc6c1182617ab112da5e453e099d176c5041228
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-065
+    kernel_overlap_fragment: 藏青风衣
+    content_metadata:
+      object_term: 藏青风衣
+      detail_term: 针脚
+      second_detail_term: 走线
+      human_subject: 顾客
+      human_action: 摸
+      human_action_phrase: 用手确认
+      scene: 镜子
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-177
+    accepted_generation_record_id: P7D320-GEN-177
+    work_item_id: P7D-WI-MKC_029-001
+    cluster_id: mkc_029
+    P0_group: P0_03
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 1
+    bound_assignment_id: SCM120-A067
+    bound_assignment_payload_digest: 20fe3c93a1da0430869e06eba3ac0222fc2485e833a8b46aa592d8c85270e9a4
+    bound_kernel_candidate_id: SCM120-CAND-067
+    bound_kernel_payload_digest: 94fdcb4e305abd80b5be84088bf36d2d680d9b84e58b7f0b2628d90c7f9c7840
+    proposition_refs:
+    - PROP-V1-089
+    - PROP-V1-090
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '试衣镜边刚亮灯，拍摄者把这件衣服从衣架上取下，先理轮廓，再把表面纹理转向侧光。店长没催，等手停下才问：“今天先看哪一处？”
+
+
+      画面从全景走到手部，再退回人物关系。店长问为什么，拍摄者不讲道理，把这件衣服翻到轮廓那一面回答。店长原本想加一句更响亮的话，拍摄者摇了摇头：“把做工翻译成可拍摄细节。”她用手势把声音压低，因为用光线手势和镜头距离组织。
+
+
+      发布前把【角色称呼】、【商品信息】与【现场依据】补齐；空位留着，也不拿想象填满。
+
+
+      结尾回到开头的位置，拍摄者把这件衣服挂回去，只留一句：“别急，再看一眼轮廓。”让观众知道该看哪里。'
+    body_char_count: 265
+    body_digest: fc4d26bf53a56255aa83f0d34a09f5674dc21623da2a0233f618bef4f86e5bae
+    normalized_body_digest: f84d6f2c573f24f9d1e3bff6af325c52c67ace742ed1b305ffd260860b3eaff2
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-050
+    - SCM120-CAND-056
+    kernel_overlap_fragment: 从衣架上取下
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 轮廓
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 挂
+      human_action_phrase: 挂正
+      scene: 试衣镜边
+      content_form: three_shot_scene
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-191
+    accepted_generation_record_id: P7D320-GEN-191
+    work_item_id: P7D-WI-MKC_030-068
+    cluster_id: mkc_030
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A070
+    bound_assignment_payload_digest: ff3b707721f161e07b6b7244e463c21e3812c186c821c0404a02ae1974a74895
+    bound_kernel_candidate_id: SCM120-CAND-070
+    bound_kernel_payload_digest: bfdfc40e53ba2b0df85a252c0366a605b761d5332d876667f2201ea79c4afcc0
+    proposition_refs:
+    - PROP-V1-093
+    - PROP-V1-094
+    creative_pattern_refs:
+    - visual_scene_pattern
+    cso_overlay_requirements: &id009
+    - visual_scene
+    - aesthetic_framing
+    - real_scene_feeling
+    fact_binding_requirements: &id010
+      brand_facts_required: false
+      missing_fact_behavior: general_method_first_scene_facts_for_final
+      evidence_requirement: scene_facts_required_for_final_execution
+      allowed_placeholder_behavior: scene_slot
+      forbidden_fabrication:
+      - pretend_specific_store_scene_exists_without_input
+      - fabricate_product_fact
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: true
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，店员把提词卡反扣在门店的台面上。她拿起这件衣服，让腰带在近景里过一遍，再用表面纹理接住下一句口播。
+
+
+      结构是一近一远再一近：先看腰带，再看这件衣服在门店里承担的任务，最后回到店员手上的表面纹理。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把把一套穿搭拆成视觉层次从概念变成感受，也让明确主体陪体和前景位置不显得像教程。
+
+
+      先给可复用的调整方法，最终位置须由【门店现场信息】决定。
+
+
+      最后不放链接，也不催人下结论。镜头退回门店，让表面纹理在光里停一秒；让搭配判断能被复现。'
+    body_char_count: 245
+    body_digest: a3e9442ed3a47693e797607b53b582d07f02a44ee9638977347e824d21a026d4
+    normalized_body_digest: c8e8dfeb7981d14dc6346d6bee55036074ec98944dd0796fc291ef36d165e1a7
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-110
+    kernel_overlap_fragment: 这件衣服在
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 腰带
+      second_detail_term: 表面纹理
+      human_subject: 店员
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 门店
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-195
+    accepted_generation_record_id: P7D320-GEN-195
+    work_item_id: P7D-WI-MKC_031-023
+    cluster_id: mkc_031
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 3
+    bound_assignment_id: SCM120-A075
+    bound_assignment_payload_digest: 24fdf92ae74f0b95e8d47f8133e798522a66d812a2a0a9555449990838751004
+    bound_kernel_candidate_id: SCM120-CAND-075
+    bound_kernel_payload_digest: e983aab1a40ae8dd0d4dce7e70796cd7a6cc5e671c9efdb290edb77fc23b545a
+    proposition_refs:
+    - PROP-V1-099
+    - PROP-V1-100
+    creative_pattern_refs:
+    - visual_scene_pattern
+    cso_overlay_requirements: *id009
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头外的同事把针织搭在臂弯，店员没接过去，只指了指色彩。两人在门店对望一下，内容从这个没有被剪掉的停顿开始。
+
+
+      画面从全景走到手部，再退回人物关系。镜头外的同事问为什么，店员不讲道理，把针织翻到色彩那一面回答。两个人的分歧没被剪掉。镜头外的同事想看整体，店员坚持先看色彩。这段小小的拉扯让让色彩沿视线形成路线落地，最后又回到先定主色再安排承接与跳点。
+
+
+      先给可复用的调整方法，最终位置须由【门店现场信息】决定。
+
+
+      店员离开画面后，针织仍在原位。环境声多留一拍，让使主题在画面里自然出现这个意思自己落下。'
+    body_char_count: 251
+    body_digest: 2980551baeb09dfd0ed5245e22d25ff214ce71db0bd5e68de576fb6e4d56d55c
+    normalized_body_digest: 05984b94ecbf762659c22ff8850f4977629d30e26e59929b69b1b693755b63c5
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-107
+    - SCM120-CAND-108
+    kernel_overlap_fragment: 可复用的
+    content_metadata:
+      object_term: 针织
+      detail_term: 色彩
+      second_detail_term: 表面纹理
+      human_subject: 店员
+      human_action: 比
+      human_action_phrase: 并排比较
+      scene: 门店
+      content_form: before_after_action
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-202
+    accepted_generation_record_id: P7D320-GEN-202
+    work_item_id: P7D-WI-MKC_032-012
+    cluster_id: mkc_032
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A077
+    bound_assignment_payload_digest: 2ad91066dd457d9c95d2c125b76c41ea3a8bc714e7b1edbf941329100cfcd2da
+    bound_kernel_candidate_id: SCM120-CAND-077
+    bound_kernel_payload_digest: 33ad6f43f006ee97fbd7a8332728889ad4c652efb66eb142891910e37991bd2d
+    proposition_refs:
+    - PROP-V1-102
+    - PROP-V1-103
+    creative_pattern_refs:
+    - visual_scene_pattern
+    cso_overlay_requirements: *id009
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在挂通外一步，画面里只有这件衣服和店员的手。她不报卖点，先挂正，又把袖口和领口对着镜头留了两秒。
+
+
+      同一机位留两次画面：一次保留原状，一次完成挂。观众先看出变化，才听见“把卖场区位变成镜头地图”这个判断。重点留在选择的先后上。店员先处理袖口，后看领口；这个顺序就是把卖场区位变成镜头地图，也使入口中岛端架各承担不同景别不再只是一句话。
+
+
+      现场执行仍要核对【动线】与【陈列资源】，不能假装某家门店已经具备这些条件。
+
+
+      画面停在袖口与领口同时入镜的瞬间。不替观众总结价值，因为让空间动作直接产出内容。'
+    body_char_count: 251
+    body_digest: 9d08d03922535cea60c5ed2d82a437428e8afced0daa1a83dcd742ec00c320ec
+    normalized_body_digest: 5e0e35ad4f35427246a4e21f10d5afe24558966e6279e3e2a84f08547340ec35
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-055
+    - SCM120-CAND-057
+    - SCM120-CAND-110
+    kernel_overlap_fragment: 这件衣服
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 袖口
+      second_detail_term: 领口
+      human_subject: 店员
+      human_action: 挂
+      human_action_phrase: 挂正
+      scene: 挂通
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-214
+    accepted_generation_record_id: P7D320-GEN-214
+    work_item_id: P7D-WI-MKC_033-057
+    cluster_id: mkc_033
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 6
+    bound_assignment_id: SCM120-A081
+    bound_assignment_payload_digest: c93a197db2bf60f45747bfe77aa05dd9bdd68fab321fcce9b1e7dd7fff319f19
+    bound_kernel_candidate_id: SCM120-CAND-081
+    bound_kernel_payload_digest: b2a44a5b51edb0af6a53e8134729daa743a4160869ccdb224b37004f638c164d
+    proposition_refs:
+    - PROP-V1-107
+    - PROP-V1-108
+    creative_pattern_refs:
+    - visual_scene_pattern
+    cso_overlay_requirements: *id009
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '门店里有一次很小的返工：顾客把外套挂上去又取下，因为肩线还没在画面里站稳。拍摄者往后退两步，只说“再看一眼”。
+
+
+      口播放到动作之后：“从门店一分钟里截取完整动作，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。顾客把原来的提词卡抽走，换成一句更像现场的话：“从门店一分钟里截取完整动作。”然后用肩线和表面纹理先后入镜，让拍清开始调整与结束标志可以被看见。
+
+
+      现场执行仍要核对【动线】与【陈列资源】，不能假装某家门店已经具备这些条件。
+
+
+      不用大字报幕，只让拍摄者轻声问一句“为什么这样处理？”顾客指向表面纹理，让日常忙碌具有故事单位。'
+    body_char_count: 273
+    body_digest: d9fade0b212afe107ef9c545f5dce0ae90e72f57646516c8a032dc0e8d85afca
+    normalized_body_digest: 23f7b27f6e5546bcf00ddcac5b2d95c26848f60b02bf0160df161f1603abdffe
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-116
+    kernel_overlap_fragment: 外套挂上去
+    content_metadata:
+      object_term: 外套
+      detail_term: 肩线
+      second_detail_term: 表面纹理
+      human_subject: 顾客
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 门店
+      content_form: detail_closeup_script
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-224
+    accepted_generation_record_id: P7D320-GEN-224
+    work_item_id: P7D-WI-MKC_034-079
+    cluster_id: mkc_034
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 8
+    bound_assignment_id: SCM120-A083
+    bound_assignment_payload_digest: 931b64768a24988047180609b4a30c2b123b0c5e7c5534144f6d5ddffd9347fe
+    bound_kernel_candidate_id: SCM120-CAND-083
+    bound_kernel_payload_digest: 997593e24e36aed12006cffb4b92a4951dffc339cd9f6dc7c50dea7ad114ee41
+    proposition_refs:
+    - PROP-V1-110
+    - PROP-V1-111
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '这条内容不从正面全身开始。店员先把米白阔腿裤叠在窗边木台的一角，手掌压过腰线，然后展开，让表面纹理自己进入画面。
+
+
+      中段保持机位，让店员再做一遍改。动作前后的差别留在表面纹理上，口播只说一句：“同一物件保持机位完成前后对照。”镜头外有人问：“为什么不直接说结论？”店员指指米白阔腿裤，回答“先把这个选择让人看懂”。这正好对应用三段动作展示造型变化，也保住了同一物件保持机位完成前后对照。
+
+
+      这组画面是陈列原型；【空间尺度】与【库存结构】接入后才形成执行单。
+
+
+      收尾让搭配师接过米白阔腿裤，重复一次刚才的动作。方法被人真正用起来时，把方法变成可照做的演示。'
+    body_char_count: 277
+    body_digest: 90525e43c7cdd79f6d9c4691714f829edd7b76c3caaa72e43ec11aedc9f3ac85
+    normalized_body_digest: c07f0ac28388c2f4cb49faa6e90a1d7b1684c0f3bed6674871a5a06fead94a93
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-083
+    kernel_overlap_fragment: 米白阔腿裤
+    content_metadata:
+      object_term: 米白阔腿裤
+      detail_term: 腰线
+      second_detail_term: 表面纹理
+      human_subject: 店员
+      human_action: 改
+      human_action_phrase: 重新整理
+      scene: 窗边木台
+      content_form: spoken_demo
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-226
+    accepted_generation_record_id: P7D320-GEN-226
+    work_item_id: P7D-WI-MKC_035-012
+    cluster_id: mkc_035
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A086
+    bound_assignment_payload_digest: 40e5fa97331d370d691bbe416639865d1dfaf40176bd910f87bbea4333a9789c
+    bound_kernel_candidate_id: SCM120-CAND-086
+    bound_kernel_payload_digest: 88ee0587b0eeeba3860b289a462bf3c531d0b9a386b4b2c969a6453033031f01
+    proposition_refs:
+    - PROP-V1-114
+    - PROP-V1-115
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在试衣间外一步，画面里只有针织阔腿裤和顾客的手。她不报卖点，先重新整理，又把腰带和下摆对着镜头留了两秒。
+
+
+      画面从全景走到手部，再退回人物关系。版师问为什么，顾客不讲道理，把针织阔腿裤翻到腰带那一面回答。重点留在选择的先后上。顾客先处理腰带，后看下摆；这个顺序就是让门店内容先保护人物和现场，也使镜头对衣服与动作而非隐私不再只是一句话。
+
+
+      现场执行仍要核对【动线】与【陈列资源】，不能假装某家门店已经具备这些条件。
+
+
+      画面停在腰带与下摆同时入镜的瞬间。不替观众总结价值，因为现场感不靠冒充真实事件。'
+    body_char_count: 252
+    body_digest: 815766c58d6190ad97deafdf1a6c69fed8d5a5d741d64346e19dddded3ba92d7
+    normalized_body_digest: 5d825004c26cac2ca69dd0aa17e5242bd6ff6e30505a5dd78a31f47cc66e3b88
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-001
+    - SCM120-CAND-086
+    kernel_overlap_fragment: 试衣间外
+    content_metadata:
+      object_term: 针织阔腿裤
+      detail_term: 腰带
+      second_detail_term: 下摆
+      human_subject: 顾客
+      human_action: 改
+      human_action_phrase: 重新整理
+      scene: 试衣间
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-234
+    accepted_generation_record_id: P7D320-GEN-234
+    work_item_id: P7D-WI-MKC_036-012
+    cluster_id: mkc_036
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A089
+    bound_assignment_payload_digest: 4be52d2d8c4f1ac59f2ccf040c002a58aac34c8b7fd325584aabb4c835c6ed8a
+    bound_kernel_candidate_id: SCM120-CAND-089
+    bound_kernel_payload_digest: 73cc8da53ba561d3dcff6f6488b7f87c8086db896fd8854200179de7a879cac0
+    proposition_refs:
+    - PROP-V1-118
+    - PROP-V1-119
+    creative_pattern_refs:
+    - display_to_content_pattern
+    cso_overlay_requirements: *id006
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在门店外一步，画面里只有藏青外套和模特的手。她不报卖点，先后退查看，又把橱窗和表面纹理对着镜头留了两秒。
+
+
+      中段保持机位，让模特再做一遍退。动作前后的差别留在表面纹理上，口播只说一句：“每一步保留前后画面。”重点留在选择的先后上。模特先处理橱窗，后看表面纹理；这个顺序就是按观察实施复核完成陈列，也使每一步保留前后画面不再只是一句话。
+
+
+      现场执行仍要核对【动线】与【陈列资源】，不能假装某家门店已经具备这些条件。
+
+
+      画面停在橱窗与表面纹理同时入镜的瞬间。不替观众总结价值，因为使调整理由可以回看。'
+    body_char_count: 251
+    body_digest: 717a95e77e7175e45da011b6bc9e544d2fb64111110ca143e65bed198d37fcc7
+    normalized_body_digest: 0f44065990bf74d5cc2d13f34ed6433abb82c11c77025e2a02c26da2aab60849
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-011
+    kernel_overlap_fragment: 只说一句
+    content_metadata:
+      object_term: 藏青外套
+      detail_term: 橱窗
+      second_detail_term: 表面纹理
+      human_subject: 模特
+      human_action: 退
+      human_action_phrase: 后退查看
+      scene: 门店
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-243
+    accepted_generation_record_id: P7D320-GEN-243
+    work_item_id: P7D-WI-MKC_037-023
+    cluster_id: mkc_037
+    P0_group: P0_04
+    generation_mode: display_solution
+    selection_rank_within_cluster: 3
+    bound_assignment_id: SCM120-A093
+    bound_assignment_payload_digest: 0c74bf39d50b48542e9b7b3ea1fc88001dbf5a7847c6d61854864c49ccc779b3
+    bound_kernel_candidate_id: SCM120-CAND-093
+    bound_kernel_payload_digest: 09a42785a2a6f6c092cfe148d01dd2b125212a79986ca638d95c6d7b7136dfbf
+    proposition_refs:
+    - PROP-V1-123
+    - PROP-V1-124
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id010
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头外的同事把针织风衣搭在臂弯，陈列师没接过去，只指了指翻领。两人在门店对望一下，内容从这个没有被剪掉的停顿开始。
+
+
+      陈列师把衣服递给镜头外的同事，对方只接管表面纹理的那一步。谁先动手、谁后退观察，就是这段内容里的角色关系。两个人的分歧没被剪掉。镜头外的同事想看整体，陈列师坚持先看翻领。这段小小的拉扯让让角色权限约束陈列改动落地，最后又回到先确认可动范围再开始上手。
+
+
+      先给可复用的调整方法，最终位置须由【门店现场信息】决定。
+
+
+      画面停在翻领与表面纹理同时入镜的瞬间。不替观众总结价值，因为不同门店保留改写边界。'
+    body_char_count: 257
+    body_digest: 3cb287d6e6e811ddc1799fcff0629ffec8f49f182e534eeaad707f31c260b835
+    normalized_body_digest: f37b111f858fe65d84091b2b365bb88834f5140047a18c59ea4d8a5ff500a40e
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-093
+    kernel_overlap_fragment: 风衣搭在
+    content_metadata:
+      object_term: 针织风衣
+      detail_term: 翻领
+      second_detail_term: 表面纹理
+      human_subject: 陈列师
+      human_action: 改
+      human_action_phrase: 重新整理
+      scene: 门店
+      content_form: before_after_action
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-254
+    accepted_generation_record_id: P7D320-GEN-254
+    work_item_id: P7D-WI-MKC_038-057
+    cluster_id: mkc_038
+    P0_group: P0_04
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 6
+    bound_assignment_id: SCM120-A096
+    bound_assignment_payload_digest: 8c6b333aa5f18535c2e96d9a18f2a966ec3c45974cf1cfb62cbc26a95a56acdc
+    bound_kernel_candidate_id: SCM120-CAND-096
+    bound_kernel_payload_digest: 75f9868ab0607f2e561f638e80b4ebca9cfae215175faece3b83020f90a9720b
+    proposition_refs:
+    - PROP-V1-127
+    - PROP-V1-128
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '陈列墙前里有一次很小的返工：店员把焦糖灯芯绒阔腿裤挂上去又取下，因为裤脚还没在画面里站稳。拍摄者往后退两步，只说“再看一眼”。
+
+
+      口播放到动作之后：“遇到硬结论立即回退核对，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。店员把原来的提词卡抽走，换成一句更像现场的话：“遇到硬结论立即回退核对。”然后用裤脚和表面纹理先后入镜，让保留原句问题与可用改写可以被看见。
+
+
+      脚本可先完整成形，但【品牌口吻】和【可核事件】必须等资料接入后再替换。
+
+
+      最后一句口播只说选择，不说奇迹：“我们先把这个动作做对。”然后用裤脚完成修复过程本身也可被审计。'
+    body_char_count: 275
+    body_digest: 962c847d7cd6b412a72e6708c77a96a4e261f6404b0e22b349090a2d2a3e8328
+    normalized_body_digest: b9a8fcee7bd2f3994c8a8a610a7e770f85fb1093c14aaf16b053abcf59fb92e7
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-028
+    - SCM120-CAND-078
+    - SCM120-CAND-096
+    kernel_overlap_fragment: 灯芯绒阔腿裤
+    content_metadata:
+      object_term: 焦糖灯芯绒阔腿裤
+      detail_term: 裤脚
+      second_detail_term: 表面纹理
+      human_subject: 店员
+      human_action: 拿
+      human_action_phrase: 拿起
+      scene: 陈列墙前
+      content_form: detail_closeup_script
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-263
+    accepted_generation_record_id: P7D320-GEN-263
+    work_item_id: P7D-WI-MKC_039-068
+    cluster_id: mkc_039
+    P0_group: P0_05
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A097
+    bound_assignment_payload_digest: 660070f0949d054aac43b81ef4146b1fe1fffbe9eabafb0cf1da1ead0c5aa04b
+    bound_kernel_candidate_id: SCM120-CAND-097
+    bound_kernel_payload_digest: 43c652eb90af8b38247ec577c2e35872352b81ac56989716068882103d08f88f
+    proposition_refs:
+    - PROP-V1-129
+    - PROP-V1-130
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，他把提词卡反扣在试穿区外的台面上。她拿起豆绿粗针针织开衫，让领口在近景里过一遍，再用门襟接住下一句口播。
+
+
+      第一镜拍人与衣服的距离，第二镜只跟领口，第三镜回到顾客的反应。镜头不换对象，只换观察深度。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把让产品以场景任务进入故事从概念变成感受，也让先出现人的处境再让衣服接手不显得像教程。
+
+
+      人物只承担表达任务，不背负未经提供的履历、成绩或顾客证言。
+
+
+      片尾不把衣服变成口号。豆绿粗针针织开衫被折好或挂回，人物的选择留在现场；单品成为动作节点而非广告牌。'
+    body_char_count: 257
+    body_digest: 3b59bee91167eca8ecabf4f919467dab786649ba38cd7f68e7944898ab02bf08
+    normalized_body_digest: 4a5c4bb336e9ac3a397092d47b3bbcbd1653fc2103234e49a9ba816ef1bb47d6
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-097
+    kernel_overlap_fragment: 粗针针织开衫
+    content_metadata:
+      object_term: 豆绿粗针针织开衫
+      detail_term: 领口
+      second_detail_term: 门襟
+      human_subject: 他
+      human_action: 量
+      human_action_phrase: 重新比量
+      scene: 试穿区外
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-267
+    accepted_generation_record_id: P7D320-GEN-267
+    work_item_id: P7D-WI-MKC_040-023
+    cluster_id: mkc_040
+    P0_group: P0_05
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 3
+    bound_assignment_id: SCM120-A102
+    bound_assignment_payload_digest: 87eb252bc4ba84c987e6d45142e0c72be7649d0c1b0b3471f8c87740bc203a1e
+    bound_kernel_candidate_id: SCM120-CAND-102
+    bound_kernel_payload_digest: 5026d35c3c31c42f4a3ce79e9df717317a4f4b0778f056c9d35860229cde816d
+    proposition_refs:
+    - PROP-V1-135
+    - PROP-V1-136
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头外的同事把炭灰羊绒大衣搭在臂弯，拍摄者没接过去，只指了指领口。两人在镜子对望一下，内容从这个没有被剪掉的停顿开始。
+
+
+      拍摄者把衣服递给镜头外的同事，对方只接管表面纹理的那一步。谁先动手、谁后退观察，就是这段内容里的角色关系。两个人的分歧没被剪掉。镜头外的同事想看整体，拍摄者坚持先看领口。这段小小的拉扯让把行动邀请放在故事余韵后落地，最后又回到先完成观察再给轻量下一步。
+
+
+      人物只承担表达任务，不背负未经提供的履历、成绩或顾客证言。
+
+
+      最后一句口播只说选择，不说奇迹：“我们先把这个动作做对。”然后用领口完成避免内容突然转成硬卖。'
+    body_char_count: 267
+    body_digest: 41bcc39c5a009fb1dc6fe46669b991f2b1c510eb197bb818d5a2e0daa3a509a5
+    normalized_body_digest: 19340559473944827cee94c13a72191fb44d0695cea39028902f50f542b1e4f8
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-080
+    kernel_overlap_fragment: 大衣搭在
+    content_metadata:
+      object_term: 炭灰羊绒大衣
+      detail_term: 领口
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 指
+      human_action_phrase: 指向
+      scene: 镜子
+      content_form: before_after_action
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-276
+    accepted_generation_record_id: P7D320-GEN-276
+    work_item_id: P7D-WI-MKC_041-034
+    cluster_id: mkc_041
+    P0_group: P0_05
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 4
+    bound_assignment_id: SCM120-A103
+    bound_assignment_payload_digest: ba0fb952fe91a67847e5540e6c4c2dbef5b68e1567c8fa41d6a8b1409b99f935
+    bound_kernel_candidate_id: SCM120-CAND-103
+    bound_kernel_payload_digest: ec4a416a0b56bc35e42b98943983347ded273e2ff2ca50878a42c801ce783b41
+    proposition_refs:
+    - PROP-V1-137
+    - PROP-V1-138
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头先不拍脸，只拍卡其风衣从正面转到侧面。顾客用指腹顺过表面纹理，再退到货架的镜子边看轮廓落在整体里是什么样子。
+
+
+      画面的转折不用特效：顾客完成一次整理的瞬间，表面纹理和轮廓的关系变了。导购的目光跟着动，理由就站住了。声音放得很轻：“今天不追着证明它多好，先把表面纹理拍清。”这样的克制服务于按生命周期改变单品戏份，而从轮廓认知走到结构教育再退场是画面真正的骨架。
+
+
+      让情绪来自动作之间的停顿，不靠虚构品牌战绩把分量抬高。
+
+
+      最后一句口播只说选择，不说奇迹：“我们先把这个动作做对。”然后用表面纹理完成同一产品拥有阶段化角色。'
+    body_char_count: 263
+    body_digest: 64910017b32a8ca8a4b82f73bc7249288ca14fbe3904f2a65ccea6bba635a89b
+    normalized_body_digest: 4f1d6fd578a08f8b4c2fa11d70bfa35b456f232be752c03aa62c75a3b7369dd7
+    kernel_overlap_max_chars_all_120: 5
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-084
+    - SCM120-CAND-104
+    kernel_overlap_fragment: 卡其风衣从
+    content_metadata:
+      object_term: 卡其风衣
+      detail_term: 表面纹理
+      second_detail_term: 轮廓
+      human_subject: 顾客
+      human_action: 走
+      human_action_phrase: 完成一次整理
+      scene: 货架
+      content_form: role_exchange
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-287
+    accepted_generation_record_id: P7D320-GEN-287
+    work_item_id: P7D-WI-MKC_042-068
+    cluster_id: mkc_042
+    P0_group: P0_05
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 7
+    bound_assignment_id: SCM120-A106
+    bound_assignment_payload_digest: f6b575981d2eef600edd58a3cbd3abd54a212f91bc997d6e552231d33d9491d9
+    bound_kernel_candidate_id: SCM120-CAND-106
+    bound_kernel_payload_digest: 21528995f864cc06395355df5812ac0b85e672d63db5b6aa9e6409242b9078db
+    proposition_refs:
+    - PROP-V1-141
+    - PROP-V1-142
+    creative_pattern_refs:
+    - product_role_story_pattern
+    cso_overlay_requirements: *id008
+    fact_binding_requirements: *id002
+    claim_risk_profile: low_or_creative_boundary
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '开拍前，拍摄者把提词卡反扣在试穿区外的台面上。她拿起驼色针织外套，让轮廓在近景里过一遍，再用表面纹理接住下一句口播。
+
+
+      口播放到动作之后：“用组货关系分配产品角色，但先看眼前这一处。”说完不追加形容词，让环境声和手感继续一秒。中间留出一个呼吸位，不接配乐，只听见衣料的摩擦声。这一拍把用组货关系分配产品角色从概念变成感受，也让主推承接搭配与补位各司其职不显得像教程。
+
+
+      人物只承担表达任务，不背负未经提供的履历、成绩或顾客证言。
+
+
+      结尾回到开头的位置，拍摄者把驼色针织外套挂回去，只留一句：“别急，再看一眼轮廓。”避免所有商品同时抢话。'
+    body_char_count: 268
+    body_digest: b76fdcf38e7ca9510ab7e88a67af76a1cb1ce31f67e8798b07f972c7cfa48b73
+    normalized_body_digest: 61035d6a28a323431fff55e2381f101bb71f2b5ae8b700ed80ca02d7036c6c7a
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-036
+    kernel_overlap_fragment: 把提词卡
+    content_metadata:
+      object_term: 驼色针织外套
+      detail_term: 轮廓
+      second_detail_term: 表面纹理
+      human_subject: 拍摄者
+      human_action: 调
+      human_action_phrase: 微调
+      scene: 试穿区外
+      content_form: narrative_post
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-289
+    accepted_generation_record_id: P7D320-GEN-289
+    work_item_id: P7D-WI-MKC_043-001
+    cluster_id: mkc_043
+    P0_group: P0_05
+    generation_mode: creative_prototype
+    selection_rank_within_cluster: 1
+    bound_assignment_id: SCM120-A109
+    bound_assignment_payload_digest: 892faf24a9bf1c0f06aa6c879399d5c3cba527d5885c674e2b36f8272ee8f99f
+    bound_kernel_candidate_id: SCM120-CAND-109
+    bound_kernel_payload_digest: 46d35d4246cd54a2803d05c4a3a7e7cff5d3de8f4c9c1dba487338b2b30532f7
+    proposition_refs:
+    - PROP-V1-145
+    - PROP-V1-146
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id002
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '试衣镜边刚亮灯，他把风衣从衣架上取下，先理下摆，再把表面纹理转向侧光。店长没催，等手停下才问：“今天先看哪一处？”
+
+
+      第一镜拍人与衣服的距离，第二镜只跟下摆，第三镜回到店长的反应。镜头不换对象，只换观察深度。店长原本想加一句更响亮的话，他摇了摇头：“把适配写成带条件的任务。”她用手势把声音压低，因为同时给适用和不适用现场。
+
+
+      这里可以保留想象力，但不替任何品牌补写年份、销量或真实人物经历。
+
+
+      结尾回到开头的位置，他把风衣挂回去，只留一句：“别急，再看一眼下摆。”百搭被还原为具体选择。'
+    body_char_count: 244
+    body_digest: 1c4c63c7b7bc7b690ef9e931d8ff8f187c5591d549947e3d4e4faaf5753d1086
+    normalized_body_digest: e054e3b8af2cc93db72f89361d1d3f191f26d7dfa1c4816e98db538e970df692
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-050
+    - SCM120-CAND-056
+    kernel_overlap_fragment: 从衣架上取下
+    content_metadata:
+      object_term: 风衣
+      detail_term: 下摆
+      second_detail_term: 表面纹理
+      human_subject: 他
+      human_action: 看
+      human_action_phrase: 换个角度看
+      scene: 试衣镜边
+      content_form: three_shot_scene
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-298
+    accepted_generation_record_id: P7D320-GEN-298
+    work_item_id: P7D-WI-MKC_044-012
+    cluster_id: mkc_044
+    P0_group: P0_05
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 2
+    bound_assignment_id: SCM120-A113
+    bound_assignment_payload_digest: eeeb1733fe51b0d44f262a7ac723026346242de36e900a1250cf26b0d8ea59be
+    bound_kernel_candidate_id: SCM120-CAND-113
+    bound_kernel_payload_digest: 2546de40dae3cf5ac0d1a2ea4431b45fd916f8737005a0553b59a3173b9422c9
+    proposition_refs:
+    - PROP-V1-150
+    - PROP-V1-151
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: high_claim_or_evidence_boundary
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '手机竖在开门前的卖场外一步，画面里只有这件衣服和拍摄者的手。她不报卖点，先微调，又把裤脚和罗纹对着镜头留了两秒。
+
+
+      画面从全景走到手部，再退回人物关系。版师问为什么，拍摄者不讲道理，把这件衣服翻到裤脚那一面回答。重点留在选择的先后上。拍摄者先处理裤脚，后看罗纹；这个顺序就是把使用教育与效果承诺分开，也使动作可以演示，结果必须留证不再只是一句话。
+
+
+      脚本可先完整成形，但【品牌口吻】和【可核事件】必须等资料接入后再替换。
+
+
+      画面停在裤脚与罗纹同时入镜的瞬间。不替观众总结价值，因为让脚本完整却不冒充证明。'
+    body_char_count: 252
+    body_digest: 2e9c7f7cc168f463bb9bb7decd0ca8ed77777a8a96333c55ae3c205c89bfad4d
+    normalized_body_digest: f4e1649c65bf2913bce4a4dff45ae660d9b6c6660dd3c664ddee75d52c907788
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-027
+    kernel_overlap_fragment: 在开门前
+    content_metadata:
+      object_term: 这件衣服
+      detail_term: 裤脚
+      second_detail_term: 罗纹
+      human_subject: 拍摄者
+      human_action: 调
+      human_action_phrase: 微调
+      scene: 开门前的卖场
+      content_form: single_take_voiceover
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: existing_sample_plan_high_claim_risk_first
+  - output_id: P7D320-OUT-312
+    accepted_generation_record_id: P7D320-GEN-312
+    work_item_id: P7D-WI-MKC_045-079
+    cluster_id: mkc_045
+    P0_group: P0_05
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 8
+    bound_assignment_id: SCM120-A116
+    bound_assignment_payload_digest: ef09dc6a9720e27adaf332fa1895e4401be521bdfd34f3a3698719fddcd56d79
+    bound_kernel_candidate_id: SCM120-CAND-116
+    bound_kernel_payload_digest: 275352c8fca92a631db996c8deef994221034555e8618836c794b52983a9affd
+    proposition_refs:
+    - PROP-V1-154
+    - PROP-V1-155
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '这条内容不从正面全身开始。拍摄者先把针织叠在货架的一角，手掌压过表面纹理，然后展开，让轮廓自己进入画面。
+
+
+      中段保持机位，让拍摄者再做一遍退。动作前后的差别留在轮廓上，口播只说一句：“同色延续异材质制造转折。”镜头外有人问：“为什么不直接说结论？”拍摄者指指针织，回答“先把这个选择让人看懂”。这正好对应用邻接关系讲产品与陈列，也保住了同色延续异材质制造转折。
+
+
+      把未知项写成【待绑定事实】，其余段落仍按可直接拍摄的节奏完成。
+
+
+      收尾让搭配师接过针织，重复一次刚才的动作。方法被人真正用起来时，让画面关系成为叙事语法。'
+    body_char_count: 259
+    body_digest: b8d184ca2bf38a6fee8dd000fc6b7a30ea7cb730cc160cdc92fa3589927adec7
+    normalized_body_digest: b9006523397767d70ebc9fd67b8e43b52560c4e93de07b06c2ecffadaaa44ade
+    kernel_overlap_max_chars_all_120: 4
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-105
+    kernel_overlap_fragment: 这条内容
+    content_metadata:
+      object_term: 针织
+      detail_term: 表面纹理
+      second_detail_term: 轮廓
+      human_subject: 拍摄者
+      human_action: 退
+      human_action_phrase: 后退查看
+      scene: 货架
+      content_form: spoken_demo
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting
+  - output_id: P7D320-OUT-316
+    accepted_generation_record_id: P7D320-GEN-316
+    work_item_id: P7D-WI-MKC_046-034
+    cluster_id: mkc_046
+    P0_group: P0_05
+    generation_mode: fact_slot_script
+    selection_rank_within_cluster: 4
+    bound_assignment_id: SCM120-A118
+    bound_assignment_payload_digest: 1cbc812d712d24310ff3015dee554e011ce766b3b003f18d378921a0f829853f
+    bound_kernel_candidate_id: SCM120-CAND-118
+    bound_kernel_payload_digest: 0acf34071336a3add007437dbc45ffceffb49a85bfbf378cc5e777be5d9ad839
+    proposition_refs:
+    - PROP-V1-157
+    - PROP-V1-158
+    creative_pattern_refs:
+    - platform_expression_pattern
+    cso_overlay_requirements: *id003
+    fact_binding_requirements: *id004
+    claim_risk_profile: not_tagged_by_existing_sample_plan
+    store_display_or_guide_action_sample: false
+    runtime_kind: codex_native_agent_execution
+    external_LLM_called: false
+    secret_accessed: false
+    body: '镜头先不拍脸，只拍焦糖灯芯绒裙子从正面转到侧面。老板用指腹顺过橱窗，再退到直播间的镜子边看表面纹理落在整体里是什么样子。
+
+
+      老板把衣服递给导购，对方只接管表面纹理的那一步。谁先动手、谁后退观察，就是这段内容里的角色关系。声音放得很轻：“今天不追着证明它多好，先把橱窗拍清。”这样的克制服务于让产品在角色和渠道间换位置，而每次切换都重写任务而非套话是画面真正的骨架。
+
+
+      把未知项写成【待绑定事实】，其余段落仍按可直接拍摄的节奏完成。
+
+
+      老板离开画面后，焦糖灯芯绒裙子仍在原位。环境声多留一拍，让跨域内容仍保持同一事实边界这个意思自己落下。'
+    body_char_count: 268
+    body_digest: 55a27f6756f1034bdc177c056edb4e402c515d7a7192519bc1643bfd53873b82
+    normalized_body_digest: fda1021609ef6a372664aaef7123d5d8ec45cb952b66d4675569ef681e33b722
+    kernel_overlap_max_chars_all_120: 6
+    kernel_overlap_max_candidate_ids:
+    - SCM120-CAND-118
+    kernel_overlap_fragment: 焦糖灯芯绒裙
+    content_metadata:
+      object_term: 焦糖灯芯绒裙子
+      detail_term: 橱窗
+      second_detail_term: 表面纹理
+      human_subject: 老板
+      human_action: 讲
+      human_action_phrase: 轻声讲解
+      scene: 直播间
+      content_form: role_exchange
+    generation_status: gpt_generated_structured_draft
+    generation_output_scope: scoped_midbatch_draft
+    accepted_domain_knowledge: false
+    candidatepack_ready: false
+    production_servable: false
+    serving_ready: false
+    rag_ready: false
+    dify_ready: false
+    generation_allowed: false
+    readiness_flags:
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+      generation_eligible: false
+      generation_allowed: false
+      release_ready: false
+      production_ready: false
+    fact_boundary_machine_scope: deterministic_slots_claim_terms_and_source_binding_only
+    narrative_fabrication_machine_proven_absent: false
+    candidate_specificity_machine_proven: false
+    requires_human_review_for_narrative_fabrication_and_candidate_specificity: true
+    accepted: true
+    retry_count: 0
+    founder_sample_selection_reason: cluster_hash_mod_8_no_quality_score_sorting

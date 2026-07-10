@@ -1,0 +1,30 @@
+midbatch_320_result:
+  task_id: GKB-P7D-CONDITIONAL-MIDBATCH-320-GENERATION-AND-REVIEW-HANDOFF-001
+  result: MIDBATCH_320_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW
+  execution_status: COMPLETE
+  machine_gate_status: PASS
+  guardian_review: PENDING
+  founder_human_review: PENDING
+  accepted_output_count: 320
+  kernel_seed_count: 120
+  seed_reuse_pressure: approximately_2.67x
+  evidence_scope:
+    proves: bounded 320-item Codex-native execution and roughly 2.67x same-cluster kernel reuse under deterministic gates
+    does_not_prove:
+    - 3600 seed supply sufficiency
+    - 30x kernel reuse stability
+    - customer preference
+    - production readiness
+    - narrative fabrication absence
+    - semantic duplicate absence
+  full_scale_3600:
+    status: HOLD
+    expand_to_3600_allowed: false
+  downstream:
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED
+  readiness_false: true

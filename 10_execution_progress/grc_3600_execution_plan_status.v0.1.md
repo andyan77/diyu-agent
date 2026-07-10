@@ -61,3 +61,12 @@
 - `cost_guard` 在 Codex/Claude 原生路线下仅表示 work-item/microbatch/retry/failure 额度守卫，不表示外部 API 金额、算力或时间成本已验证。
 - `founder_scale_decision_packet` 已生成，`founder_final_decision` 仍为 `PENDING`；`final_scale_decision=HOLD`，`expand_to_3600_allowed=false`。
 - 旧状态字面保持不变：`P7C-AB.status=NEXT`，`P7C_SCALE.status=BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY`，`P7D.status=BLOCKED_BY_P7C_SCALE_DECISION`。
+
+## P7D Conditional Midbatch 320
+
+- Founder 已选择 `CONDITIONAL_MIDBATCH_300_600`，本次仅授权 320 条 Codex-native scoped drafts；未授权第 321 条、600 或 3600。
+- 从原始 3600 planning-only manifest 按每簇固定分位点重算选取 `40 x 8 = 320`，再在簇内绑定 3 个真实 assignment/kernel 种子，复用压力为约 `2.67x`。
+- 机器闸对每条正文与全部 120 个 user-visible kernel 实算最长逐字重合，并进行簇内 5-shingle Jaccard 近似去重；不信任单一自报绑定。
+- 320 条已执行完成，但结果仅为 `MIDBATCH_320_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW`；候选专属性与叙事编造风险不声称机器已证，交 40 条每簇一条的 founder 人审样本。
+- 这一结果只证明约 `2.67x` 核化用与有界中批执行，不证明 3600 需要的种子供给或约 `30x` 复用稳定性。
+- `route_migration_9` 仅 additive 记录运行事实；`route_migration_8.founder_final_decision=PENDING`、旧 step status、readiness 与 `expand_to_3600_allowed=false` 均保持不变。

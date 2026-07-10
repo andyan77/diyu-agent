@@ -1,0 +1,84 @@
+midbatch_320_selection_summary:
+  task_id: GKB-P7D-CONDITIONAL-MIDBATCH-320-GENERATION-AND-REVIEW-HANDOFF-001
+  baseline_head: 3254e8546c10edb26dea52ada4b6b0c2b760471d
+  source_manifest: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/execution_scalability_001/scale_work_item_manifest.v0.1.jsonl
+  source_manifest_digest: 47458c8f96f97d275b4bbb144e84f53a767da937d6cd71aede6a5c3f96de3a06
+  selection_algorithm:
+    grouping: cluster_id
+    sorting_key:
+    - cluster_id
+    - ordinal
+    - work_item_id
+    breakpoint_indexes_zero_based:
+    - 0
+    - 11
+    - 22
+    - 33
+    - 45
+    - 56
+    - 67
+    - 78
+    rule: take eight fixed quantile-like breakpoints from each sorted 90-item cluster
+    mode_stratification_note: full 40-cluster coverage automatically preserves canonical mode coverage; each cluster has one
+      canonical mode
+  selected_count: 320
+  cluster_count: 40
+  per_cluster_count:
+    mkc_007: 8
+    mkc_008: 8
+    mkc_009: 8
+    mkc_010: 8
+    mkc_011: 8
+    mkc_012: 8
+    mkc_013: 8
+    mkc_014: 8
+    mkc_015: 8
+    mkc_016: 8
+    mkc_017: 8
+    mkc_018: 8
+    mkc_019: 8
+    mkc_020: 8
+    mkc_021: 8
+    mkc_022: 8
+    mkc_023: 8
+    mkc_024: 8
+    mkc_025: 8
+    mkc_026: 8
+    mkc_027: 8
+    mkc_028: 8
+    mkc_029: 8
+    mkc_030: 8
+    mkc_031: 8
+    mkc_032: 8
+    mkc_033: 8
+    mkc_034: 8
+    mkc_035: 8
+    mkc_036: 8
+    mkc_037: 8
+    mkc_038: 8
+    mkc_039: 8
+    mkc_040: 8
+    mkc_041: 8
+    mkc_042: 8
+    mkc_043: 8
+    mkc_044: 8
+    mkc_045: 8
+    mkc_046: 8
+  P0_coverage:
+    P0_01: 48
+    P0_02: 56
+    P0_03: 80
+    P0_04: 72
+    P0_05: 64
+  generation_mode_distribution:
+    creative_prototype: 96
+    fact_slot_script: 96
+    evidence_bound_candidate: 64
+    display_solution: 64
+  selection_digest: a095efc9b59e7358ccfe51ceafc35e2650ece350ebc5cb5b72923f8a7071a58a
+  binding_rule: same_cluster_sorted_seed_cycle_rank_mod_3
+  kernel_reuse_distribution:
+    3: 80
+    2: 40
+  claim_risk_axis_source: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/scale_gate_completion/p7c_runtime_ab_sample_plan.v0.1.yaml
+  new_claim_risk_axis_created: false

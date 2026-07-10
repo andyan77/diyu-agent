@@ -1,0 +1,25 @@
+founder_conditional_midbatch_decision:
+  decision_id: FOUNDER-P7C-CONDITIONAL-MIDBATCH-320-20260709
+  decision: CONDITIONAL_MIDBATCH_300_600
+  status: GRANTED
+  authorized_output_count: 320
+  selected_option: A_120_KERNELS_REUSED_AT_APPROX_2_67X_WITH_HARDENED_GATES
+  seed_supply_reality:
+    kernel_seed_count: 120
+    generated_draft_count: 320
+    average_reuse_pressure: 2.666667
+    per_cluster_seed_count: 3
+    per_cluster_output_count: 8
+  does_not_authorize:
+  - output_321
+  - '600'
+  - '3600'
+  - CandidatePack
+  - KE
+  - Serving
+  - RAG
+  - DIFY
+  - production
+  prior_runtime_ab_evidence_use:
+    AB_001: anti_gold_protocol_failure_only_not_positive_quality_evidence
+    AB_002: guardian_confirmed_bounded_codex_native_directional_evidence
