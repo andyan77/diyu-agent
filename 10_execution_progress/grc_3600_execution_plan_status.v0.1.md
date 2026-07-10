@@ -138,3 +138,12 @@
 - 冻结语料仅可用于离线评测、gold/reference 校准、合同与 judge 设计、未来批次比较及有界 exemplar reference；不得解释为本体真值、下游准入、runtime 或 production readiness。
 - 表达多样性仍为 `OPEN_SCALE_RISK`。只解锁 600 表达多样性与抽样验收合同的设计，不授权生成 600，不解锁 600、3600 或任何下游。
 - `route_migration_17` 只 additive 记录本次冻结；旧 step status、旧 migration 与全部 readiness 字面保持不变。
+
+## P7D 600 Expression Diversity Contract Design
+
+- `GKB-P7D-600-EXPRESSION-DIVERSITY-AND-SAMPLED-ACCEPTANCE-CONTRACT-001` 只设计 600 表达多样性、双声道、claim 安全、预冻结抽样与分层人审合同；本任务生成 0 条 assignment、0 条 sample ID、0 条正文。
+- 合同唯一消费真源为 Founder-reviewed Clean-120 Reference Corpus v1.0，冻结 SHA256 为 `b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91`。
+- 设计分母为 `120 x 5 = 600`、`40 clusters x 15`；P0 配额为 `90/105/150/135/120`，平台各 120，generation mode 为 `240/240/120/0`，capture mode 为 `488/90/22`。
+- 抽样排序与 risk stratum 只允许使用生成前字段；不得读取正文、CPSS、grade、成功/失败、偏好或任何输出指标，也不得替换失败项或重抽。
+- 否定词与“先/再”等顺序词频仅作诊断，不得单独失败资产、触发自动改写或降低 claim 安全；机器结构 PASS 与 Guardian PASS 均无权签发 600 GO。
+- 当前结果仅为 `P7D_600_SCALE_CONTRACT_DESIGN_COMPLETE_HOLD_FOR_FOUNDER_SINGLE_CLUSTER_PROBE_AUTHORIZATION`。下一步若 Guardian 通过，也只允许 Founder 另行授权单簇 15 条双声道探针；600/3600、下游及全部 readiness 继续关闭。

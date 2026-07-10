@@ -1,0 +1,56 @@
+p7d_600_scale_contract_design_result:
+  schema_version: v0.1
+  task_id: GKB-P7D-600-EXPRESSION-DIVERSITY-AND-SAMPLED-ACCEPTANCE-CONTRACT-001
+  result_status: P7D_600_SCALE_CONTRACT_DESIGN_COMPLETE_HOLD_FOR_FOUNDER_SINGLE_CLUSTER_PROBE_AUTHORIZATION
+  canonical_contract:
+    count: 1
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/scale_contract_600_001/p7d_600_expression_diversity_and_sampled_acceptance_contract.v0.1.yaml
+    sha256: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+    frozen_corpus_sha256_match: true
+    planning_target_count: 600
+  quota_validation:
+    cluster_total: 600
+    P0_total: 600
+    platform_total: 600
+    generation_mode_total: 600
+    capture_mode_total: 600
+  materialization:
+    assignment_count: 0
+    draft_count: 0
+    sample_id_count: 0
+    generation_record_count: 0
+    runtime_checkpoint_event_count: 0
+    external_llm_called: false
+    knowledge_count_increment: 0
+  contract_sections_complete:
+    voice_contract: true
+    narrative_truth_gate: true
+    personal_claim_gate: true
+    platform_contract: true
+    anti_formula_contract: true
+    single_cluster_probe: true
+    sample_protocol: true
+    checkpoint_stop_resume: true
+    human_acceptance: true
+    authority_state_machine: true
+  decision_state:
+    contract_design_complete: true
+    generation_authorization: NOT_ISSUED
+    single_cluster_probe_authorization: NOT_ISSUED
+    generation_600_go_decision: NOT_ISSUED
+    batch_acceptance: NOT_EXECUTED
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+  next_task:
+    task_id: GKB-P7D-SINGLE-CLUSTER-DUAL-VOICE-DIVERSITY-PROBE-15-001
+    separate_founder_authorization_required: true
+    generation_authorized_by_this_task: false
+  downstream_and_readiness:
+    all_false: true
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED

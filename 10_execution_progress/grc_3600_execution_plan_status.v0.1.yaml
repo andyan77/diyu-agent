@@ -439,6 +439,37 @@ grc_3600_execution_plan_status:
       expand_3600_allowed: false
     downstream_and_readiness:
       all_false: true
+  route_migration_18:
+    applied_by_task: GKB-P7D-600-EXPRESSION-DIVERSITY-AND-SAMPLED-ACCEPTANCE-CONTRACT-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    prior_task:
+      task_id: GKB-P7D-CLEAN-120-FOUR-ANCHOR-NORMALIZATION-AND-REFERENCE-CORPUS-FREEZE-001
+      founder_final_acceptance: PASS
+      reference_corpus_status: FROZEN_FOUNDER_REVIEWED
+      guardian_delivery_review: PASS
+      corpus_sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    current_task:
+      task_id: GKB-P7D-600-EXPRESSION-DIVERSITY-AND-SAMPLED-ACCEPTANCE-CONTRACT-001
+      task_type: contract_design_only
+      canonical_contract_sha256: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+    completion:
+      contract_design_status: COMPLETE
+      generation_authorization: NOT_ISSUED
+      generation_600_allowed: false
+      result_status: P7D_600_SCALE_CONTRACT_DESIGN_COMPLETE_HOLD_FOR_FOUNDER_SINGLE_CLUSTER_PROBE_AUTHORIZATION
+    next_if_guardian_pass: GKB-P7D-SINGLE-CLUSTER-DUAL-VOICE-DIVERSITY-PROBE-15-001
+    next_task_authorization:
+      separate_founder_authorization_required: true
+    scale:
+      generation_600_allowed: false
+      expand_600_allowed: false
+      expand_3600_allowed: false
+    downstream_and_readiness:
+      all_false: true
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

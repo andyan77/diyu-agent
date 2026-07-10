@@ -1,0 +1,34 @@
+selftest_cases:
+  schema_version: v0.1
+  task_id: GKB-P7D-600-EXPRESSION-DIVERSITY-AND-SAMPLED-ACCEPTANCE-CONTRACT-001
+  fixture_strategy: live_positive_bundle_plus_single_invariant_in_memory_mutations
+  result_pass_booleans_trusted_by_checker: false
+  positive_fixture:
+    name: frozen_clean_120_to_contract_design_600
+    expected: PASS
+  negative_fixtures:
+    - frozen_digest_wrong
+    - P0_total_not_600
+    - platform_missing
+    - cluster_count_missing
+    - voice_lane_coverage_missing
+    - assignment_materialized
+    - sample_id_materialized
+    - sample_depends_on_body_or_score
+    - failed_item_replacement_allowed
+    - checkpoint_auto_continue
+    - machine_pass_auto_GO
+    - negation_frequency_becomes_hard_gate
+    - claim_safety_lowered_for_diversity
+    - ordinary_voice_erases_role
+    - credential_claim_without_anchor
+    - prototype_presented_as_real
+    - second_canonical_truth_source
+    - generation_600_allowed_true
+    - downstream_readiness_true
+  invariant:
+    every_negative_must_fail_closed: true
+    python_optimized_mode_exit: 2
+    no_assignment_sample_or_draft_materialization: true
+    checker_or_guardian_cannot_issue_generation_GO: true
+    risk_stratum_uses_pre_generation_features_only: true

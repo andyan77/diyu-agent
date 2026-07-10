@@ -1,0 +1,675 @@
+p7d_600_expression_diversity_and_sampled_acceptance_contract:
+  schema_version: v0.1
+  task_id: GKB-P7D-600-EXPRESSION-DIVERSITY-AND-SAMPLED-ACCEPTANCE-CONTRACT-001
+  contract_kind: contract_design_only_not_generation_authority
+  baseline_head: 42d8a07948161bef1956a76da78f75890ae554a0
+  canonical_contract: true
+  formal_ontology_schema: false
+  writes_to_ontology_truth: false
+  frozen_reference_corpus:
+    corpus_id: FOUNDER-REVIEWED-CLEAN-120-REFERENCE-CORPUS-001
+    version: 1.0.0
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+    sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    asset_count: 120
+    unique_kernel_count: 120
+    immutable: true
+    reference_only: true
+  current_task_state:
+    planning_target_count: 600
+    actual_assignment_count: 0
+    actual_draft_count: 0
+    actual_generation_record_count: 0
+    materialized_sample_id_count: 0
+    runtime_checkpoint_event_count: 0
+    external_llm_called: false
+    knowledge_count_increment: 0
+    contract_design_complete: true
+    generation_authorization: NOT_ISSUED
+    single_cluster_probe_authorization: NOT_ISSUED
+    generation_600_go_decision: NOT_ISSUED
+    batch_acceptance: NOT_EXECUTED
+  aggregate_topology:
+    parent_reference_asset_count: 120
+    planned_expression_variant_count: 600
+    variants_per_parent_reference: 5
+    knowledge_count_after_generation: 120
+    knowledge_count_increment: 0
+    cluster_count: 40
+    planned_items_per_cluster: 15
+    cluster_total: 600
+    P0_00_body_generation_count: 0
+    parent_kernel_reuse_is_expression_variation_not_new_knowledge: true
+    new_kernel_creation_allowed: false
+  P0_allocation:
+    P0_01:
+      cluster_count: 6
+      planned_count: 90
+    P0_02:
+      cluster_count: 7
+      planned_count: 105
+    P0_03:
+      cluster_count: 10
+      planned_count: 150
+    P0_04:
+      cluster_count: 9
+      planned_count: 135
+    P0_05:
+      cluster_count: 8
+      planned_count: 120
+    total: 600
+    derivation: frozen_corpus_cluster_to_P0_mapping_times_15
+  platform_allocation:
+    douyin: 120
+    xiaohongshu: 120
+    wechat_channels: 120
+    moments: 120
+    live: 120
+    total: 600
+    per_cluster:
+      planned_count: 15
+      platform_family_coverage_min: 5
+      any_single_platform_max: 5
+    per_parent_reference:
+      variant_count: 5
+      platforms_min: 3
+      opening_families_min: 3
+      voice_lanes_min: 2
+      reasoning_shapes_min: 2
+      platform_label_only_variation_forbidden: true
+  generation_mode_allocation:
+    aggregate:
+      creative_prototype: 240
+      fact_slot_script: 240
+      display_solution: 120
+      evidence_bound_candidate: 0
+      total: 600
+    by_P0:
+      P0_01:
+        creative_prototype: 45
+        fact_slot_script: 45
+        display_solution: 0
+        total: 90
+      P0_02:
+        creative_prototype: 53
+        fact_slot_script: 52
+        display_solution: 0
+        total: 105
+      P0_03:
+        creative_prototype: 60
+        fact_slot_script: 75
+        display_solution: 15
+        total: 150
+      P0_04:
+        creative_prototype: 45
+        fact_slot_script: 30
+        display_solution: 60
+        total: 135
+      P0_05:
+        creative_prototype: 37
+        fact_slot_script: 38
+        display_solution: 45
+        total: 120
+    evidence_bound_enablement:
+      enabled_in_current_plan: false
+      required_before_enablement:
+      - versioned_evidence_qualified_input
+      - source_anchor
+      - claim_permission
+      - separate_Founder_authorization
+      executor_quota_reallocation_allowed: false
+      future_assignment_contract_change_required: true
+    fact_slot_user_visible_boundary:
+      field_slot_leak_allowed: false
+      governance_language_leak_allowed: false
+      evidence_status_leak_allowed: false
+      readiness_language_leak_allowed: false
+      missing_fact_surface: natural_prototype_or_conditional_expression_without_brand_fact
+  voice_contract:
+    layer: CSO_and_Generation_Orchestration_not_ontology_truth
+    principles:
+      professional_identity_is_authority_source: true
+      professional_identity_does_not_require_lecture_voice: true
+      ordinary_person_voice_does_not_erase_role_identity: true
+    identity_roles:
+    - Founder
+    - store_manager
+    - sales_associate
+    - buyer
+    - pattern_maker
+    - visual_merchandiser
+    - design_merchandising_or_content_role
+    primary_voice_lanes:
+    - professional_role_voice
+    - ordinary_person_voice
+    optional_overlays:
+    - none
+    - professional_role
+    - ordinary_person
+    professional_role_voice:
+      required_signals:
+      - specific_apparel_or_business_object
+      - observable_action
+      - professional_judgment
+      - judgment_boundary
+      forbidden:
+      - training_course_voice
+      - governance_explanation
+      - textbook_chapter
+      - broadcast_announcer_script
+    ordinary_person_voice:
+      identity_role_must_remain: true
+      required_signals:
+      - ordinary_work_moment
+      - hesitation_trouble_relief_embarrassment_or_tradeoff
+      - daily_spoken_language
+      - theme_emerges_through_event
+      forbidden:
+      - erase_professional_source
+      - generic_inspirational_slogan
+      - naked_brand_value_statement
+      - fake_autobiography
+      - fake_customer_story
+      - internet_buzzword_stacking
+    per_cluster_15:
+      professional_role_voice_min: 5
+      ordinary_person_voice_min: 5
+      remaining_flexible: 5
+      joint_constraint_must_be_satisfied_with_platform_and_modes: true
+      infeasible_route: STOP_AND_REPAIR
+    max_share:
+      scope:
+      - each_P0
+      - each_platform
+      - each_cluster
+      any_primary_voice_lane_max_share: 0.6
+  narrative_truth_contract:
+    hard_boundary: no_new_unsupported_real_world_assertion
+    creative_processing_is_not_automatically_fabrication: true
+    modes:
+      verified_real_event:
+        requires:
+        - source_anchor
+        - owner_or_person_authorization
+        - claim_scope_alignment
+        may_use:
+        - specific_date
+        - specific_customer
+        - specific_brand_event
+        - real_personal_memory
+      routine_work_demonstration:
+        meaning: repeatable_role_method_demonstration
+        allowed_surface:
+        - performative_present
+        - habitual
+        - conditional
+        forbidden:
+        - pretend_just_happened
+        - pretend_real_customer_participated
+      role_embodied_generalization:
+        meaning: role_grounded_general_work_feeling_or_judgment
+        conditions:
+        - no_specific_person
+        - no_specific_date
+        - no_hard_result
+        - no_verified_history_claim
+      bounded_composite_prototype:
+        meaning: compressed_non_specific_common_work_scene
+        allowed_surface:
+        - conditional
+        - habitual
+        - demonstrative
+        forbidden:
+        - today_our_store_just_happened
+        - a_customer_just_arrived
+        - team_decided_last_night
+        - disguised_brand_history
+      creative_fiction:
+        allowed_in_current_600: false
+        reason: current_scope_tests_daily_brand_content_not_fiction
+    allowed_creative_operations:
+    - viewpoint_selection
+    - routine_action_reenactment
+    - non_specific_composite_scene
+    - garment_personification
+    - rhetorical_question
+    - sequencing_and_framing
+    - time_compression_without_false_date
+  personal_experience_claim_gate:
+    non_historical_role_procedure:
+      evidence_required: false
+      must_remain_non_specific: true
+    role_grounded_affective_framing:
+      evidence_required: false
+      requires:
+      - no_specific_event
+      - no_specific_person
+      - no_credential
+      - no_hard_result
+    autobiographical_credential_claim:
+      requires:
+      - person_source_anchor
+      - persona_owner_authorization
+    episodic_memory_claim:
+      requires:
+      - event_source_anchor
+      - participant_authorization
+    testimonial_or_outcome_claim:
+      requires:
+      - evidence
+      - claim_permission
+      - correct_generation_mode
+    hard_gate:
+      unsupported_credential_claim_count: 0
+      unsupported_episodic_claim_count: 0
+      unsupported_customer_story_count: 0
+      unsupported_outcome_or_testimonial_count: 0
+      prototype_presented_as_verified_history_count: 0
+    no_evidence_routes:
+    - role_grounded_generalization
+    - conditional_demonstration
+    - fact_binding_metadata_only
+    - stop_assignment
+    fabricated_evidence_allowed: false
+    delete_all_first_person_for_safety_allowed: false
+  capture_mode_allocation:
+    by_P0:
+      P0_01:
+        total: 90
+        daily_native: 75
+        lightly_guided: 12
+        campaign_directed: 3
+      P0_02:
+        total: 105
+        daily_native: 95
+        lightly_guided: 8
+        campaign_directed: 2
+      P0_03:
+        total: 150
+        daily_native: 102
+        lightly_guided: 38
+        campaign_directed: 10
+      P0_04:
+        total: 135
+        daily_native: 122
+        lightly_guided: 11
+        campaign_directed: 2
+      P0_05:
+        total: 120
+        daily_native: 94
+        lightly_guided: 21
+        campaign_directed: 5
+    aggregate:
+      daily_native: 488
+      lightly_guided: 90
+      campaign_directed: 22
+      total: 600
+    daily_native_contract:
+      one_phone: true
+      completion_time_minutes_max: 20
+      simple_segment_count_max: 5
+      hired_actor_count: 0
+      fake_customer_count: 0
+      fabricated_conflict_count: 0
+      dedicated_crew_required: false
+      special_lighting_required: false
+      forced_dialogue_required: false
+      cinematic_plot_required: false
+      natural_work_participants_allowed: true
+      natural_work_participants_must_declare_roles_and_count: true
+      single_person_only: false
+    campaign_directed_boundary:
+      meaning: more_formal_visual_organization
+      fiction_or_short_drama_implied: false
+  event_and_platform_expression:
+    event_carried_expression:
+      required_except_strategy_or_evidence:
+      - trigger_or_question
+      - apparel_or_work_object
+      - observable_action_or_comparison
+      - decision_or_visible_change
+      - theme_inferred_from_event
+      forbidden:
+      - naked_brand_value
+      - empty_professional_conclusion
+      - generic_emotional_slogan
+      - governance_explanation_as_content
+      strategy_or_evidence_exception:
+        human_required: false
+        specific_apparel_choice_or_observation_required: true
+        compliance_courseware_forbidden: true
+    platforms:
+      douyin:
+        requires:
+        - action_or_object_opening
+        - one_primary_content_point
+        - natural_next_step
+        forbids:
+        - complete_long_lecture
+        - fake_internet_buzzwords
+      xiaohongshu:
+        requires:
+        - searchable_question_or_object
+        - saveable_method_or_observation
+        - specific_apparel_detail
+        forbids:
+        - ad_script_reformatted_as_post
+      wechat_channels:
+        requires:
+        - complete_small_work_event
+        - role_trust_and_judgment
+        forbids:
+        - corporate_documentary_voiceover
+      moments:
+        requires:
+        - short_work_record
+        - familiar_private_tone
+        forbids:
+        - shortened_douyin
+        - unsupported_just_happened_claim
+      live:
+        requires:
+        - real_time_object_handling
+        - scene_question
+        - comparison_or_demonstration
+        - next_interaction
+        forbids:
+        - read_an_essay
+        - repeated_generic_disclaimer
+  anti_formula_contract:
+    semantic_safety_priority: true
+    diagnostic_only:
+      features:
+      - negation_word_frequency
+      - sequence_word_frequency
+      - first_person_progressive
+      - time_words
+      - opening_family_distribution
+      - closing_family_distribution
+      may_trigger_human_review: true
+      may_trigger_automatic_rewrite: false
+      may_fail_asset_by_itself: false
+    anti_copy_hard_gate:
+      exact_body_duplicate_count: 0
+      normalized_body_duplicate_count: 0
+      exact_opening_sentence_reuse_max: 3
+      exact_closing_sentence_reuse_max: 3
+      exact_claim_boundary_sentence_reuse_max: 3
+      near_duplicate_claim_boundary:
+        similarity_threshold: 0.92
+        cluster_size_max: 5
+    reference_overlap:
+      longest_contiguous_exact_overlap_max_chars: 17
+      compare_against:
+      - frozen_clean_120_body_text
+      - frozen_expression_content_kernel
+    rhetorical_fingerprint:
+      dimensions:
+      - primary_voice_lane
+      - opening_family
+      - event_carrier_family
+      - reasoning_shape
+      - claim_surface_route
+      - closing_family
+      - platform
+      - account_role
+      opening_families:
+      - action_in_progress
+      - result_first
+      - mistake_correction
+      - object_comparison
+      - customer_question
+      - work_decision
+      - silent_visual_opening
+      - comment_response
+      reasoning_shapes:
+      - observation
+      - comparison
+      - decision
+      - tradeoff
+      - correction
+      - demonstration
+      - record
+      - question_answer
+      closing_families:
+      - no_explicit_close
+      - observation_close
+      - question_close
+      - store_action_close
+      - private_domain_close
+      - next_test_close
+    cluster_diversity_floor:
+      opening_families_min: 6
+      reasoning_shapes_min: 5
+      closing_families_min: 4
+      same_complete_fingerprint_max: 2
+      deep_same_person_voice_requires_human_review: true
+    forbidden_repairs:
+    - regex_bulk_body_rewrite
+    - delete_negation_words
+    - move_sentences_to_lower_fingerprint
+    - synonym_skinning
+    - lower_claim_safety_for_diversity
+  pre_600_probe:
+    task_id: GKB-P7D-SINGLE-CLUSTER-DUAL-VOICE-DIVERSITY-PROBE-15-001
+    output_count: 15
+    cluster_selection:
+      eligible_group: P0_05
+      reason: weaker_group_testing_product_role_customer_task_and_spoken_expression
+      algorithm: sha256(frozen_corpus_digest || cluster_id), ascending_min
+      materialize_cluster_id_now: false
+      assignment_created_now: false
+    required_allocation:
+      professional_role_voice_min: 5
+      ordinary_person_voice_min: 5
+      remaining_flexible: 5
+      five_platform_coverage: true
+      constraints_must_be_jointly_satisfied: true
+    diversity_floor:
+      opening_families_min: 6
+      reasoning_shapes_min: 5
+      closing_families_min: 4
+      same_complete_fingerprint_max: 2
+    human_review:
+      review_count: 15
+      A_or_B_min: 13
+      D_count: 0
+      hard_failure_count: 0
+      each_voice_lane_has_pass: true
+      each_platform_has_pass: true
+    generation_600_unlocked_by_probe: false
+    founder_separate_authorization_required: true
+    founder_post_probe_scale_decision_required: true
+    probe_generation_authorized_by_current_contract: false
+  checkpoint_stop_resume_contract:
+    checkpoint_plan:
+      checkpoint_count: 10
+      work_items_per_checkpoint: 60
+      planned_total: 600
+      checkpoint_default_state: STOPPED
+      complete_clusters_per_checkpoint: 4
+      items_per_cluster: 15
+    advance_requirements:
+    - checkpoint_manifest_complete
+    - machine_hard_gates_pass
+    - unresolved_failure_count_zero
+    - reference_contract_assignment_digests_match
+    - quota_drift_recoverable
+    - sample_review_meets_current_gate
+    - future_generation_brief_resume_condition_satisfied
+    forbidden:
+    - automatic_checkpoint_continue
+    - silent_continue_after_failure
+    - delete_failed_work_item
+    - resample_or_replace_failed_sample
+    - overgenerate_then_select_best
+    bounded_correction:
+      correction_per_item_max: 1
+      total_correction_count_max: 60
+      silent_regeneration_allowed: false
+      systemic_threshold: 0.1
+      threshold_route: STOP_AND_REPAIR_CONTRACT_OR_GENERATOR
+  pre_generation_sampling_protocol:
+    materialize_sample_ids_now: false
+    order:
+    - freeze_contract_digest
+    - freeze_assignment_manifest_digest
+    - compute_sample_ids_before_body_generation
+    - freeze_sample_plan_digest
+    - obtain_separate_Founder_generation_authorization
+    - generate
+    sample_rank:
+      algorithm: sha256
+      ordered_inputs:
+      - contract_digest
+      - assignment_manifest_digest
+      - sample_scope
+      - work_item_id
+    risk_stratum_function:
+      timing: pre_generation_only
+      allowed_inputs:
+      - p0_group
+      - canonical_cluster_id
+      - generation_mode
+      - capture_mode
+      - required_claim_route
+      - platform
+      - primary_voice_lane
+      - narrative_truth_mode
+      canonicalization: canonical_json_of_allowed_inputs_sorted_by_key_then_sha256
+      forbidden_inputs:
+      - body_text
+      - CPSS
+      - grade
+      - success_or_failure
+      - machine_verdict
+      - human_verdict
+      - human_preference
+      - generated_quality_metric
+      output_score_or_post_generation_feature_count: 0
+    selection_forbidden_inputs:
+    - body_text
+    - CPSS
+    - grade
+    - success_or_failure
+    - human_preference
+    - post_generation_selection
+    guardian_sample:
+      count: 120
+      base_per_cluster: 3
+      requirements_per_cluster:
+      - at_least_one_professional_voice
+      - at_least_one_ordinary_person_voice
+      - third_by_pre_generation_risk_stratum
+    founder_sample:
+      count: 60
+      subset_of_guardian_sample: true
+      base_per_cluster: 1
+      pre_generation_risk_stratum_extra: 20
+      coverage:
+      - five_P0_groups
+      - five_platforms
+      - both_voice_lanes
+      - narrative_truth_modes
+      - capture_modes
+    adverse_case_policy:
+      machine_hard_failures_appended_to_review: true
+      adverse_cases_appended_to_review: true
+      replace_base_sample: false
+      count_as_resample: false
+    failed_work_item_policy:
+      retain_original_id: true
+      retain_failure_record: true
+      replacement_allowed: false
+  human_review_contract:
+    machine_cannot_self_prove:
+    - spoken_naturalness
+    - platform_quality
+    - deep_non_formulaicity
+    dimensions:
+    - apparel_specificity
+    - event_carried_meaning
+    - role_identity_preserved
+    - ordinary_person_voice_naturalness
+    - professional_voice_not_textbook
+    - interpretation_without_false_reality
+    - personal_claim_integrity
+    - spoken_naturalness
+    - platform_native_fit
+    - daily_execution_feasibility
+    - expression_non_formulaicity
+    - claim_and_fact_safety
+    acceptance:
+      overall_A_or_B_rate_min: 0.9
+      each_P0_A_or_B_rate_min: 0.85
+      each_platform_A_or_B_rate_min: 0.85
+      professional_voice_A_or_B_rate_min: 0.85
+      ordinary_person_voice_A_or_B_rate_min: 0.85
+      D_count: 0
+      fake_as_real_hard_failure_count: 0
+      personal_claim_hard_failure_count: 0
+      role_or_claim_hard_failure_count: 0
+      daily_native_feasible_rate_min: 0.95
+      formulaic_voice_failure_rate_max: 0.1
+      any_stratum_formulaic_voice_failure_rate_max: 0.15
+      hard_failure_cannot_be_averaged_away: true
+  future_machine_gate_and_stop:
+    machine_hard_gates:
+    - assignment_count_id_and_quota_complete
+    - frozen_corpus_digest_pin
+    - contract_digest_pin
+    - sample_plan_digest_pin
+    - role_action_event_claim_consistent
+    - unsupported_personal_customer_outcome_claim_zero
+    - prototype_as_real_zero
+    - body_metadata_leak_zero
+    - exact_and_normalized_duplicate_zero
+    - reference_overlap_max_17
+    - capture_platform_P0_quota_pass
+    - knowledge_count_increment_zero
+    - downstream_and_readiness_all_false
+    stop_conditions:
+    - any_fake_as_real
+    - any_unsupported_personal_or_customer_claim
+    - any_unsupported_product_or_outcome_hard_claim
+    - any_role_event_or_claim_hard_failure
+    - any_body_metadata_leak
+    - any_D_grade
+    - sample_C_rate_above_0_15
+    - ordinary_person_voice_erases_professional_identity
+    - professional_voice_becomes_training_course
+    - same_formula_family_concentrates_in_two_consecutive_checkpoints
+    - reference_contract_assignment_or_sample_digest_drift
+    - unrecoverable_quota
+    - unresolved_failure_above_zero
+    - correction_count_above_limit
+    - any_auto_GO_or_readiness_true
+  authority_state_machine:
+    current_result_if_contract_checker_passes: P7D_600_SCALE_CONTRACT_DESIGN_COMPLETE_HOLD_FOR_FOUNDER_SINGLE_CLUSTER_PROBE_AUTHORIZATION
+    contract_checker_may_issue_generation_GO: false
+    guardian_may_issue_generation_GO: false
+    probe_authorization: FOUNDER_SEPARATE_AUTHORIZATION_REQUIRED
+    probe_execution_changes_generation_600_allowed: false
+    post_probe_scale_decision_authority: Founder
+    generation_600_requires_later_separate_authorization: true
+    generation_authorization: NOT_ISSUED
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    CandidatePack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    runtime_content_kernel_ready: false
+  forbidden_current_materialization:
+    assignment_manifest_count: 0
+    draft_count: 0
+    generation_record_count: 0
+    sample_id_file_count: 0
+    checkpoint_event_count: 0
+    runner_count: 0
+    second_quota_truth_source_count: 0
+    second_sample_truth_source_count: 0
+    second_acceptance_truth_source_count: 0
