@@ -1,0 +1,27 @@
+founder_40_repair_result:
+  task_id: GKB-P7D-FOUNDER-40-CREATIVE-REPAIR-AND-SCOPED-GATE-PATCH-001
+  result: REPAIR_40_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW
+  execution_status: COMPLETE
+  machine_gate_status: PASS
+  repair_count: 40
+  class_counts:
+    A: 12
+    B: 16
+    C: 7
+    D: 5
+  claude_code_guardian_review: PENDING
+  founder_second_review: PENDING
+  external_LLM_called: false
+  original_assets_modified: false
+  P0_findings:
+    P0_01: 6/6 enterprise kernels include organization choice and tradeoff; human quality review remains pending.
+    P0_02: 7/7 role-perspective repairs use plausible observation boundaries; human role naturalness remains pending.
+    P0_03: 10/10 process/material/fit repairs separate observable detail from evidence-bound claims.
+    P0_04: 9/9 repairs route to scoped display-method or store-capture fuel without creating ontology objects.
+    P0_05: 8/8 product-role repairs include customer task, product role, try-on trigger, and guide handoff.
+  content_quality_confirmed: false
+  scale:
+    expand_80: false
+    expand_600: false
+    expand_3600: false
+  readiness_all_false: true

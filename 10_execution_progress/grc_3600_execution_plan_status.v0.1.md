@@ -70,3 +70,11 @@
 - 320 条已执行完成，但结果仅为 `MIDBATCH_320_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW`；候选专属性与叙事编造风险不声称机器已证，交 40 条每簇一条的 founder 人审样本。
 - 这一结果只证明约 `2.67x` 核化用与有界中批执行，不证明 3600 需要的种子供给或约 `30x` 复用稳定性。
 - `route_migration_9` 仅 additive 记录运行事实；`route_migration_8.founder_final_decision=PENDING`、旧 step status、readiness 与 `expand_to_3600_allowed=false` 均保持不变。
+
+## P7D Founder 40 Creative Repair
+
+- `GKB-P7D-FOUNDER-40-CREATIVE-REPAIR-AND-SCOPED-GATE-PATCH-001` 只处理既有 founder 40 样本，为每条创建独立 `repair_id` 和 `body_text / content_kernel / review_metadata / execution_card` 四层修复资产；原 320 与原 40 不改。
+- 40 条由 Codex 逐条创作并确定性封装，状态为 `REPAIR_40_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW`；机器闸通过不等于内容质量已由人审确认。
+- scoped capture mode 为 `daily_native=32 / lightly_guided=6 / campaign_directed=2`；该参数不登记为本体真值或正式 CSO 轴。
+- Claude Code Guardian Review 与 founder 第二次人审均为 `PENDING`；`expand_80=false`、`expand_600=false`、`expand_3600=false`，不得自动执行 80。
+- `route_migration_10` 只 additive 记录修复事实；旧 step status、`route_migration_5–9`、readiness 和下游阻塞全部保持不变。

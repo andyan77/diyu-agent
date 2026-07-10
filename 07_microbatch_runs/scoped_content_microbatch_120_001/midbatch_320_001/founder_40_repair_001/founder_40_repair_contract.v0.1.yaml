@@ -1,0 +1,30 @@
+founder_40_repair_contract:
+  task_id: GKB-P7D-FOUNDER-40-CREATIVE-REPAIR-AND-SCOPED-GATE-PATCH-001
+  scope: fixed_founder_40_only
+  repair_count: 40
+  four_layers:
+  - body_text
+  - content_kernel
+  - review_metadata
+  - execution_card
+  capture_mode:
+    scoped_only: true
+    formal_schema_contract: false
+    ontology_truth_source: false
+  gates:
+  - role_action_plausibility
+  - narrative_skeleton_fingerprint
+  - body_metadata_separation
+  original_assets_immutable: true
+  external_LLM_called: false
+  scale:
+    expand_80: false
+    expand_600: false
+    expand_3600: false
+  downstream:
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED

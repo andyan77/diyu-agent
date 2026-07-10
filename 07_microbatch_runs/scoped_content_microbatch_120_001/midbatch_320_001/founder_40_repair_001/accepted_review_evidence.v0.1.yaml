@@ -1,0 +1,25 @@
+accepted_review_evidence:
+  task_id: GKB-P7D-FOUNDER-40-CREATIVE-REPAIR-AND-SCOPED-GATE-PATCH-001
+  baseline_head: 4d5ce09cda5909bdc3ba6b1b8c8f8921099e8250
+  founder_sample_packet_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/midbatch_320_founder_review_packet.v0.1.yaml
+  founder_sample_packet_sha256: 658056c7624c0ad654dc34a6fcbaba6602c118662ca3051e41276d2fa73f1ea5
+  founder_review_verdict: CONDITIONAL_PASS_FOR_REVIEW_ONLY
+  founder_review_source: founder_current_request_attachment_not_versioned
+  founder_review_source_sha256: 49f5ea78d81eaf28629356a7019ea2fea0be3896756e9d9a27ecdba3c5a629aa
+  prompt_guardian_verdict: CONDITIONAL_PASS
+  prompt_guardian_safe_to_execute: true
+  execution_brief_source_sha256: a8be1ed2116ce0dd8b934b5c1ad7b8d5c1cfa6457a55ee645ddb95e76246f160
+  evidence_boundary: Founder and guardian opinions are accepted review inputs; machine gates do not replace their pending
+    post-execution reviews.
+  fixed_sample_count: 40
+  review_class_counts:
+    A: 12
+    B: 16
+    C: 7
+    D: 5
+  accepted_findings:
+  - narrative skeleton reuse is visible across the founder sample
+  - governance and fact-slot language leaked into audience-facing bodies
+  - some role actions are implausible in real apparel operations
+  - platform-native targeting is under-specified
+  - P0-01 enterprise choice and P0-05 customer task need stronger kernels

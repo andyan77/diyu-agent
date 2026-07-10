@@ -1,0 +1,26 @@
+p7d_founder_40_repair_fixtures:
+  positive_fixture: live_repair_assets_reduced_to_pure_record_validation
+  negative_cases:
+    - missing_record
+    - duplicate_original
+    - governance_body_leak
+    - director_body_leak
+    - fact_slot_body_leak
+    - missing_layer
+    - p0_01_missing_field
+    - p0_05_missing_field
+    - bad_p0_04_subroute
+    - capture_quota_mismatch
+    - campaign_in_p0_01
+    - unknown_platform
+    - implausible_role_action
+    - forged_fingerprint
+    - duplicate_body
+    - kernel_copy
+    - readiness_true
+    - founder_verdict_prefilled
+    - external_llm_true
+    - wrong_generation_status
+    - human_review_bypassed
+    - malformed_yaml
+    - malformed_json

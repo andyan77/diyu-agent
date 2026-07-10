@@ -1,0 +1,11 @@
+founder_40_capture_mode_quota:
+  scope_only_not_formal_schema: true
+  counts:
+    daily_native: 32
+    lightly_guided: 6
+    campaign_directed: 2
+  constraints:
+    daily_native_min: 32
+    campaign_directed_max: 2
+    P0_01_P0_02_campaign_forbidden: true
+  status: PASS

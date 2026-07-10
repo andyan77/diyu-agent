@@ -174,6 +174,45 @@ grc_3600_execution_plan_status:
       P7C_SCALE_PREP: DONE
       P7D: BLOCKED_BY_P7C_SCALE_DECISION
       P8: BLOCKED_BY_P7D
+  route_migration_10:
+    applied_by_task: GKB-P7D-FOUNDER-40-CREATIVE-REPAIR-AND-SCOPED-GATE-PATCH-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_conditional_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    repair_count: 40
+    source_set: existing_founder_40_sample_only
+    result: REPAIR_40_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW
+    result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_repair_result.v0.1.yaml
+    repaired_assets_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_repaired_assets.v0.1.jsonl
+    before_after_packet_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_before_after_review_packet.v0.1.yaml
+    original_320_modified: false
+    original_founder_40_modified: false
+    external_LLM_called: false
+    capture_mode_scope: scoped_repair_orchestration_only_not_ontology_or_formal_CSO_axis
+    capture_mode_counts:
+      daily_native: 32
+      lightly_guided: 6
+      campaign_directed: 2
+    guardian_review: PENDING
+    founder_second_review: PENDING
+    expand_80: false
+    expand_600: false
+    expand_3600: false
+    downstream:
+      CandidatePack: BLOCKED
+      KE: BLOCKED
+      Serving: BLOCKED
+      RAG: BLOCKED
+      DIFY: BLOCKED
+      production: BLOCKED
+    preserved_status_literals:
+      P7C-AB: NEXT
+      P7C_SCALE: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+      P7C_SCALE_PREP: DONE
+      P7D: BLOCKED_BY_P7C_SCALE_DECISION
+      P8: BLOCKED_BY_P7D
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
