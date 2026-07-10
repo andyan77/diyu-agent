@@ -78,3 +78,12 @@
 - scoped capture mode 为 `daily_native=32 / lightly_guided=6 / campaign_directed=2`；该参数不登记为本体真值或正式 CSO 轴。
 - Claude Code Guardian Review 与 founder 第二次人审均为 `PENDING`；`expand_80=false`、`expand_600=false`、`expand_3600=false`，不得自动执行 80。
 - `route_migration_10` 只 additive 记录修复事实；旧 step status、`route_migration_5–9`、readiness 和下游阻塞全部保持不变。
+
+## P7D Everyday-Native Platform Variant 5x2
+
+- `GKB-P7D-EVERYDAY-NATIVE-PLATFORM-VARIANT-CONTRACT-AND-10-PROBE-001` 从既有 40 条 repaired assets 中按可复算规则冻结 5 个父内容核，每个 P0 组 1 个。
+- 每个父核保持同一 Event Spine、事实边界、核心判断和账号角色，仅编译为 2 种不同平台表达，共 10 个 expression variants；知识计数增量为 0。
+- 10 条全部为 `daily_native`：一人一手机、20 分钟内、不超过 5 个简单片段，不依赖演员、假顾客、假冲突或专门布光。
+- 机器闸只确认绑定、复制/重复阈值、payload shape、明确事实边界和低成本执行约束；平台原生度、自然口语和真实可拍性仍待 Claude Code 与 Founder 人审。
+- 当前结果仅为 `PLATFORM_NATIVE_10_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW`；`expand_80/600/3600=false`，下游与 readiness 全部保持关闭。
+- 只有平台 10 条与 founder 40 条两组人审阈值同时满足，才可起草 80 条验证批 Brief；不得自动执行 80。

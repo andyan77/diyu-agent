@@ -1,0 +1,284 @@
+parent_kernel_selection_manifest:
+  task_id: GKB-P7D-EVERYDAY-NATIVE-PLATFORM-VARIANT-CONTRACT-AND-10-PROBE-001
+  source_asset_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/founder_40_repaired_assets.v0.1.jsonl
+  source_asset_sha256: 418fc980ef376448a0746194e9bc7889f421000f731571cac1b806863b0f2d70
+  parent_kernel_count: 5
+  selection_algorithm:
+    group_by: p0_group
+    review_class_priority: A_only_when_A_exists_else_B_only
+    stable_sort: original_output_id_ascending
+    median_rule: lower_median_zero_based_index_(n_minus_1)_floor_div_2
+  selection_digest: 930d94ee96c39067e27ff1e7070ed9e0c2314671b35c95f72a04a82c20b7e3e5
+  selection_reproducible: true
+  entries:
+  - capability_group: P0_01
+    eligible_set_rule: A_only_when_A_exists_else_B_only
+    eligible_review_class: A
+    stable_sort_key: original_output_id_ascending
+    even_tiebreak: lower_median_zero_based_index_(n_minus_1)_floor_div_2
+    eligible_parent_ids:
+    - P7D40-REPAIR-021
+    - P7D40-REPAIR-040
+    eligible_source_output_ids:
+    - P7D320-OUT-021
+    - P7D320-OUT-040
+    selection_ordinal_zero_based: 0
+    selected_parent_id: P7D40-REPAIR-021
+    selected_source_output_id: P7D320-OUT-021
+    selected_parent_payload_digest: e3c5cc11631b56315fa67bfe878831804ddf4ac6d5f7c5f76492930c2cedf390
+    parent_kernel_id: SCM120-CAND-008
+    source_repair_id: P7D40-REPAIR-021
+    source_output_id: P7D320-OUT-021
+    source_assignment_ref: SCM120-A008
+    parent_kernel_digest: 0abb6d9ee08c6127fbe91b18d686274d115b82f275b9415fe513e583f03928e9
+    fact_boundary_digest: d7944baf252fe6b7301a9a239e79a8c6eddcefbea2cf0617132f054fd4be57d5
+    fact_boundary:
+      fact_boundary_mode: creative_without_claimed_real_event
+      required_fact_slots:
+      - 如改写成品牌真实故事，需确认组织选择和事件来源
+      forbidden_claims: &id001
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      authorization_boundary: 仅限本轮 Codex-native 修复草稿，不是正式知识或发布资产。
+      non_claimed_result: 不声称某真实品牌发生过该事件或因此取得经营结果
+    prohibited_claims: *id001
+    core_business_judgment: 经营选择可由一次小而明确的返工表达
+    account_role: founder
+    event_spine:
+      event_type: sample_revision_decision
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 样衣确认台
+      event_trigger: 风衣门襟已顺但抬手时袖口仍显得偏重
+      real_role: 创始人或产品负责人
+      observable_action: 让版师再抬臂复看并把袖口退回收半寸
+      apparel_or_display_object: 接近定版的风衣
+      visible_detail: 第二颗门襟扣与抬手时的袖口重量
+      choice_or_change: 不按可交付状态直接放行，增加一次小幅修改
+      situational_judgment: 能交付不等于这处不适感值得忽略
+      implicit_theme: 长期选择藏在小而具体的产品决定里
+      natural_next_action: 修改回来后再做一次抬臂确认
+      non_claimed_result: 不声称某真实品牌发生过该事件或因此取得经营结果
+    event_spine_digest: fb41c10afe7efd0dbd1d4afa899f8313ed18891af36d04222a06a67b9f870e0d
+    capture_mode: daily_native
+  - capability_group: P0_02
+    eligible_set_rule: A_only_when_A_exists_else_B_only
+    eligible_review_class: A
+    stable_sort_key: original_output_id_ascending
+    even_tiebreak: lower_median_zero_based_index_(n_minus_1)_floor_div_2
+    eligible_parent_ids:
+    - P7D40-REPAIR-082
+    - P7D40-REPAIR-089
+    - P7D40-REPAIR-097
+    eligible_source_output_ids:
+    - P7D320-OUT-082
+    - P7D320-OUT-089
+    - P7D320-OUT-097
+    selection_ordinal_zero_based: 1
+    selected_parent_id: P7D40-REPAIR-089
+    selected_source_output_id: P7D320-OUT-089
+    selected_parent_payload_digest: 5de8b96d5ef50c60ffaece2cd0c83aeeccde4f4151c977824f96d7fc45453b11
+    parent_kernel_id: SCM120-CAND-034
+    source_repair_id: P7D40-REPAIR-089
+    source_output_id: P7D320-OUT-089
+    source_assignment_ref: SCM120-A034
+    parent_kernel_digest: 35e240bcebd566d06a80b6a8519a0990b71b536c79d96d5d6ee52a5836c000d5
+    fact_boundary_digest: 2dcd0bd0774c842ae9cbeba4dd3c41d02e6888d178debf3da98f1cae52116467
+    fact_boundary:
+      fact_boundary_mode: complete_draft_with_facts_kept_out_of_body
+      required_fact_slots:
+      - 发布时使用的品牌口吻
+      - 若指向具体商品则补商品资料
+      - 若声称真实发生则补场景来源
+      forbidden_claims: &id002
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      authorization_boundary: 仅限本轮 Codex-native 修复草稿，不是正式知识或发布资产。
+      non_claimed_result: 不虚构顾客反馈，不保证普遍身体效果
+    prohibited_claims: *id002
+    core_business_judgment: 人味来自具体动作与克制判断
+    account_role: store_manager
+    event_spine:
+      event_type: store_manager_fit_walkthrough
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 门店开店前的试穿区
+      event_trigger: 卡其风衣腰带系紧后只看得见静态轮廓
+      real_role: 店长
+      observable_action: 立起领子、松开腰带并走两步观察下摆
+      apparel_or_display_object: 卡其色双排扣风衣
+      visible_detail: 高领、同料腰带与走动中的下摆
+      choice_or_change: 先让顾客看到走动状态，再决定是否收紧腰带
+      situational_judgment: 风衣要在动作中判断，不能只靠站立时的赞美
+      implicit_theme: 真实岗位用普通动作帮助顾客选择
+      natural_next_action: 邀请顾客分别试松腰和收腰两种状态
+      non_claimed_result: 不虚构顾客反馈，不保证普遍身体效果
+    event_spine_digest: b4524c06fb10807385603dc1f037d58fbee6a3a551220188a9423d00d8578ffe
+    capture_mode: daily_native
+  - capability_group: P0_03
+    eligible_set_rule: A_only_when_A_exists_else_B_only
+    eligible_review_class: A
+    stable_sort_key: original_output_id_ascending
+    even_tiebreak: lower_median_zero_based_index_(n_minus_1)_floor_div_2
+    eligible_parent_ids:
+    - P7D40-REPAIR-115
+    - P7D40-REPAIR-129
+    - P7D40-REPAIR-154
+    eligible_source_output_ids:
+    - P7D320-OUT-115
+    - P7D320-OUT-129
+    - P7D320-OUT-154
+    selection_ordinal_zero_based: 1
+    selected_parent_id: P7D40-REPAIR-129
+    selected_source_output_id: P7D320-OUT-129
+    selected_parent_payload_digest: 8bb5c3b99abac199d6e5286f21b771818b3fd60c0077ab820ff425bccc036ae5
+    parent_kernel_id: SCM120-CAND-049
+    source_repair_id: P7D40-REPAIR-129
+    source_output_id: P7D320-OUT-129
+    source_assignment_ref: SCM120-A049
+    parent_kernel_digest: eccf5f955d83ca25f72890075119dbe1d40e5ac1dfb029ba91ee6e665e0f33e4
+    fact_boundary_digest: 0cced8970229fee6dc259f3db7dd5fdc4294161b803737bf4f922dae894a2f40
+    fact_boundary:
+      fact_boundary_mode: observable_only_until_evidence
+      required_fact_slots:
+      - 涉及成分、工艺或性能时对应的标签或记录
+      - 发布时使用的具体商品资料
+      forbidden_claims: &id003
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      authorization_boundary: 仅限本轮 Codex-native 修复草稿，不是正式知识或发布资产。
+      non_claimed_result: 不保证显白、肤色改善或绝对色值
+    prohibited_claims: *id003
+    core_business_judgment: 颜色描述必须带观察光线
+    account_role: brand_headquarters
+    event_spine:
+      event_type: color_description_light_check
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 商品工作台
+      event_trigger: 姜黄色缎面在不同现场光线下呈现明显差异
+      real_role: 品牌商品编辑
+      observable_action: 把衬衫分别移到冷顶灯、暖桌灯和手机屏幕旁比较
+      apparel_or_display_object: 姜黄色缎面衬衫与炭灰色参照内搭
+      visible_detail: 颜色明暗、冷暖偏移与缎面反光
+      choice_or_change: 颜色描述必须同时写明观察光线
+      situational_judgment: 脱离光线谈绝对颜色会误导，显白也不能由色卡代判
+      implicit_theme: 专业内容的可信度来自可复核的观察条件
+      natural_next_action: 根据顾客常见使用光线继续比较搭配
+      non_claimed_result: 不保证显白、肤色改善或绝对色值
+    event_spine_digest: 79ae8b38a4c35a879edaa28734a4b42eb41f394b2122653981d3f107e9330a9d
+    capture_mode: daily_native
+  - capability_group: P0_04
+    eligible_set_rule: A_only_when_A_exists_else_B_only
+    eligible_review_class: A
+    stable_sort_key: original_output_id_ascending
+    even_tiebreak: lower_median_zero_based_index_(n_minus_1)_floor_div_2
+    eligible_parent_ids:
+    - P7D40-REPAIR-202
+    - P7D40-REPAIR-224
+    eligible_source_output_ids:
+    - P7D320-OUT-202
+    - P7D320-OUT-224
+    selection_ordinal_zero_based: 0
+    selected_parent_id: P7D40-REPAIR-202
+    selected_source_output_id: P7D320-OUT-202
+    selected_parent_payload_digest: 0a1d4ea45d12719e7ddaded39e2b5ce20c665175e2c69f469d358c1e5bab45d6
+    parent_kernel_id: SCM120-CAND-077
+    source_repair_id: P7D40-REPAIR-202
+    source_output_id: P7D320-OUT-202
+    source_assignment_ref: SCM120-A077
+    parent_kernel_digest: fd85f01a637c5e4ed58b414302efa03c51175dcf9882b5fe1cf70492a862ed72
+    fact_boundary_digest: e3e943e845aebbba6087e6395e4112482b0d9df951da844f42b0f4d13f10d1b3
+    fact_boundary:
+      fact_boundary_mode: method_first_scene_facts_required_for_execution
+      required_fact_slots:
+      - 门店空间与动线
+      - 库存和可用陈列资源
+      forbidden_claims: &id004
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      authorization_boundary: 仅限本轮 Codex-native 修复草稿，不是正式知识或发布资产。
+      non_claimed_result: 不声称具体门店销量或陈列调整后的经营结果
+    prohibited_claims: *id004
+    core_business_judgment: 卖场区位应承担不同信息任务
+    account_role: store_manager
+    event_spine:
+      event_type: opening_store_display_walk
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 门店开店前卖场
+      event_trigger: 入口和中岛清楚，但端架同时挤着三件外套
+      real_role: 店长
+      observable_action: 从门口沿顾客路径走到端架并拿掉两件陪衬外套
+      apparel_or_display_object: 入口色块、中岛搭配、端架重点外套与挂通
+      visible_detail: 端架主角被两件邻近外套淹没
+      choice_or_change: 端架只保留一件重点外套
+      situational_judgment: 顾客第一眼找不到主角时应先做减法
+      implicit_theme: 门店判断体现在一次普通巡场和一个减法动作里
+      natural_next_action: 回到入口复看第一眼落点
+      non_claimed_result: 不声称具体门店销量或陈列调整后的经营结果
+    event_spine_digest: d565724038e8e2c68630c22ad5aa0c469da22689c777152b5260a6ab24b229c9
+    capture_mode: daily_native
+  - capability_group: P0_05
+    eligible_set_rule: A_only_when_A_exists_else_B_only
+    eligible_review_class: A
+    stable_sort_key: original_output_id_ascending
+    even_tiebreak: lower_median_zero_based_index_(n_minus_1)_floor_div_2
+    eligible_parent_ids:
+    - P7D40-REPAIR-298
+    - P7D40-REPAIR-312
+    eligible_source_output_ids:
+    - P7D320-OUT-298
+    - P7D320-OUT-312
+    selection_ordinal_zero_based: 0
+    selected_parent_id: P7D40-REPAIR-298
+    selected_source_output_id: P7D320-OUT-298
+    selected_parent_payload_digest: 673cf6bd1fa5837dc482055e0959c204d449e21ba9793e9017c93b6479fa772e
+    parent_kernel_id: SCM120-CAND-113
+    source_repair_id: P7D40-REPAIR-298
+    source_output_id: P7D320-OUT-298
+    source_assignment_ref: SCM120-A113
+    parent_kernel_digest: e31b23d29d0bdc2a735b6979bf426b4bd02eacd3c949c2d2912463b79f68107e
+    fact_boundary_digest: 597801c492fa5ac092e31140e16d3671ab79afe67b66162f57847ff83eab0d79
+    fact_boundary:
+      fact_boundary_mode: complete_draft_with_facts_kept_out_of_body
+      required_fact_slots:
+      - 发布时使用的品牌口吻
+      - 若指向具体商品则补商品资料
+      - 若声称真实发生则补场景来源
+      forbidden_claims: &id005
+      - 虚构品牌事件
+      - 虚构顾客反馈
+      - 无来源经营结果
+      - 无依据身体效果
+      - 无依据材质身份
+      - 无依据耐用或性能结论
+      authorization_boundary: 仅限本轮 Codex-native 修复草稿，不是正式知识或发布资产。
+      non_claimed_result: 不保证显高、显瘦或适合所有身高
+    prohibited_claims: *id005
+    core_business_judgment: 产品使用教育应落在可调动作而非身体结果
+    account_role: sales_associate
+    event_spine:
+      event_type: overall_fit_adjustment_demo
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 门店开店前试穿区
+      event_trigger: 背带裤腰线和裤脚位置没有落在适合当下搭配的位置
+      real_role: 导购
+      observable_action: 调整肩带一格并比较裤脚放下和翻起的状态
+      apparel_or_display_object: 带金属肩带扣的背带裤、罗纹打底与短开衫
+      visible_detail: 肩带档位、腰线位置、裤脚与鞋面的关系
+      choice_or_change: 先调肩带，再决定裤脚和外层长度
+      situational_judgment: 穿法教育要给可操作动作，不替个体保证显高效果
+      implicit_theme: 商品角色通过帮助完成真实穿着任务而成立
+      natural_next_action: 根据顾客常穿鞋型继续微调裤脚
+      non_claimed_result: 不保证显高、显瘦或适合所有身高
+    event_spine_digest: e8dc6b73aadbcf314c4d918feb20297bb683105320f1baf387a5dd0cc3d05ad1
+    capture_mode: daily_native

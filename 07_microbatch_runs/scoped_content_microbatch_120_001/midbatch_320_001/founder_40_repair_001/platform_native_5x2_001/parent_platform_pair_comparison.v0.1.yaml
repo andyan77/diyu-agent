@@ -1,0 +1,109 @@
+parent_platform_pair_comparison:
+  pair_count: 5
+  variant_count: 10
+  pairs:
+  - capability_group: P0_01
+    parent_kernel_id: SCM120-CAND-008
+    source_repair_id: P7D40-REPAIR-021
+    account_role_fixed: founder
+    event_spine_digest_fixed: fb41c10afe7efd0dbd1d4afa899f8313ed18891af36d04222a06a67b9f870e0d
+    fact_boundary_digest_fixed: d7944baf252fe6b7301a9a239e79a8c6eddcefbea2cf0617132f054fd4be57d5
+    core_business_judgment_fixed: 经营选择可由一次小而明确的返工表达
+    variant_ids:
+    - PN5X2-P001-WECHAT_CHANNELS
+    - PN5X2-P001-MOMENTS
+    platforms:
+    - wechat_channels
+    - moments
+    pair_jaccard_3_shingle: 0.046243
+    pair_longest_verbatim_overlap_chars: 5
+    pair_longest_verbatim_fragment: 门襟已经顺
+    same_skeleton_fingerprint: false
+    machine_thresholds_pass: true
+    human_pair_differentiation_review: PENDING
+    left_body: 样衣确认最容易卡在这种小地方。风衣门襟已经顺了，抬手时袖口还是有点坠。产品同事觉得可以往下交，版师又试了一遍，决定收回半寸再看。做衣服很多时候不是遇到大问题，而是大家都看见那点不舒服后，愿不愿意多走一轮。能往下走，不代表这半寸不用管。等袖口改回来，再抬一次手，答案就有了。
+    right_body: 样衣快定了，袖口一抬还是有点沉。版师把它退回去收半寸。门襟已经顺，问题只剩抬手时那一点重量。能交和现在就交，中间有时只差这一眼。等改回来再试。
+  - capability_group: P0_02
+    parent_kernel_id: SCM120-CAND-034
+    source_repair_id: P7D40-REPAIR-089
+    account_role_fixed: store_manager
+    event_spine_digest_fixed: b4524c06fb10807385603dc1f037d58fbee6a3a551220188a9423d00d8578ffe
+    fact_boundary_digest_fixed: 2dcd0bd0774c842ae9cbeba4dd3c41d02e6888d178debf3da98f1cae52116467
+    core_business_judgment_fixed: 人味来自具体动作与克制判断
+    variant_ids:
+    - PN5X2-P002-DOUYIN
+    - PN5X2-P002-WECHAT_CHANNELS
+    platforms:
+    - douyin
+    - wechat_channels
+    pair_jaccard_3_shingle: 0.023392
+    pair_longest_verbatim_overlap_chars: 3
+    pair_longest_verbatim_fragment: 一点我
+    same_skeleton_fingerprint: false
+    machine_thresholds_pass: true
+    human_pair_differentiation_review: PENDING
+    left_body: 腰带先松一点，我已经把卡其风衣穿上了。领子立住，腰带别系死，往前走两步看下摆。这件别站着猜，动一下才知道腰要不要收。门店试风衣就做三个动作：立领、松腰带、走两步。想看另一种状态，到店把腰带系紧再比一次。
+    right_body: 我在店里讲风衣，通常会先让人多走两步。卡其领子立起来、腰带松开时，下摆会跟着人动；腰带收紧后，整件又利落一点。我不急着替人选，只把两种状态都摆出来：“你平时走动多，就看看腰带松开时顺不顺手。”两种状态都看过，再决定会轻松很多。
+  - capability_group: P0_03
+    parent_kernel_id: SCM120-CAND-049
+    source_repair_id: P7D40-REPAIR-129
+    account_role_fixed: brand_headquarters
+    event_spine_digest_fixed: 79ae8b38a4c35a879edaa28734a4b42eb41f394b2122653981d3f107e9330a9d
+    fact_boundary_digest_fixed: 0cced8970229fee6dc259f3db7dd5fdc4294161b803737bf4f922dae894a2f40
+    core_business_judgment_fixed: 颜色描述必须带观察光线
+    variant_ids:
+    - PN5X2-P003-XIAOHONGSHU
+    - PN5X2-P003-LIVE
+    platforms:
+    - xiaohongshu
+    - live
+    pair_jaccard_3_shingle: 0.030172
+    pair_longest_verbatim_overlap_chars: 7
+    pair_longest_verbatim_fragment: 放一件炭灰内搭
+    same_skeleton_fingerprint: false
+    machine_thresholds_pass: true
+    human_pair_differentiation_review: PENDING
+    left_body: 姜黄缎面总看不准？问题可能在现场的光。做商品颜色记录时，我会换三处光再决定怎么写：顶灯偏冷，布面更亮；桌灯偏暖，颜色会往橙里走；手机屏幕靠近后，纯度又容易被推高。旁边放一件炭灰内搭，差异更好辨。值得存下的只有一个方法：描述颜色时，把当时的光一起记下来。至于显不显白，色卡不能替任何人回答。
+    right_body: 我手上是姜黄色缎面，现在直播灯偏冷，颜色看着会亮一点。你平时更多在办公室，还是暖光餐厅？我把它挪到暖灯边，再放一件炭灰内搭作参照，两种状态一起看。这里能说的是当下看到的冷暖和明暗变化；显白不显白，要上身后由你自己判断。告诉我常去的场景，我继续换一组光给你看。
+  - capability_group: P0_04
+    parent_kernel_id: SCM120-CAND-077
+    source_repair_id: P7D40-REPAIR-202
+    account_role_fixed: store_manager
+    event_spine_digest_fixed: d565724038e8e2c68630c22ad5aa0c469da22689c777152b5260a6ab24b229c9
+    fact_boundary_digest_fixed: e3e943e845aebbba6087e6395e4112482b0d9df951da844f42b0f4d13f10d1b3
+    core_business_judgment_fixed: 卖场区位应承担不同信息任务
+    variant_ids:
+    - PN5X2-P004-DOUYIN
+    - PN5X2-P004-MOMENTS
+    platforms:
+    - douyin
+    - moments
+    pair_jaccard_3_shingle: 0.034247
+    pair_longest_verbatim_overlap_chars: 4
+    pair_longest_verbatim_fragment: 拿掉两件
+    same_skeleton_fingerprint: false
+    machine_thresholds_pass: true
+    human_pair_differentiation_review: PENDING
+    left_body: 我正从门口往里走。入口看整组颜色，中岛看搭配；到了端架，我把旁边两件外套收走，只留一件。第一眼没主角，就先拿掉两件。挂通再把尺码排清楚，这趟开店前巡场就完成了。到店时你也可以在门口停一秒，看自己第一眼落在哪件。
+    right_body: 开店前巡了一遍。端架挤了三件外套，拿掉两件后主角出来了。入口色块顺，中岛搭配清楚，挂通也好找尺码。陈列有时候不是加，是少说两句。今天先这样开门。
+  - capability_group: P0_05
+    parent_kernel_id: SCM120-CAND-113
+    source_repair_id: P7D40-REPAIR-298
+    account_role_fixed: sales_associate
+    event_spine_digest_fixed: e8dc6b73aadbcf314c4d918feb20297bb683105320f1baf387a5dd0cc3d05ad1
+    fact_boundary_digest_fixed: 597801c492fa5ac092e31140e16d3671ab79afe67b66162f57847ff83eab0d79
+    core_business_judgment_fixed: 产品使用教育应落在可调动作而非身体结果
+    variant_ids:
+    - PN5X2-P005-XIAOHONGSHU
+    - PN5X2-P005-LIVE
+    platforms:
+    - xiaohongshu
+    - live
+    pair_jaccard_3_shingle: 0.078049
+    pair_longest_verbatim_overlap_chars: 8
+    pair_longest_verbatim_fragment: 短开衫最后再加这
+    same_skeleton_fingerprint: false
+    machine_thresholds_pass: true
+    human_pair_differentiation_review: PENDING
+    left_body: 背带裤腰线总不对？问题可能在肩带这两格。门店做穿法记录时，我会把肩带调两个位置再比较：肩带往上，腰线跟着移；裤脚翻两道，鞋面露得更多；罗纹打底和短开衫最后再加。这个顺序可以存下来：调肩带、看裤脚、再定外层，不要同时乱动三处。它只帮助比较，显不显高仍由本人试穿判断。
+    right_body: 这条背带裤先看肩带和裤脚。你平时配平底鞋还是短靴？我把肩带往上调一格，再把裤脚翻起来，你看腰线和鞋面露出的变化。罗纹打底可以留在里面，短开衫最后再加。这里能演示的是怎么调、怎么叠；显不显高得本人上身后决定。告诉我常穿什么鞋，我再把裤脚长度对一下。

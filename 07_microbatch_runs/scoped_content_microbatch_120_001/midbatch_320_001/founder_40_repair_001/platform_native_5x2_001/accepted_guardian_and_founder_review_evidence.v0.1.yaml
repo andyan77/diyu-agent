@@ -1,0 +1,23 @@
+accepted_guardian_and_founder_review_evidence:
+  baseline_head: bbee53ab33132c567ce6d4dd539fef5339ab9b40
+  founder_40_repair:
+    machine_gate_status: PASS
+    parent_asset_count: 40
+  claude_code_guardian_review:
+    status: PASS
+    structural_repair: PASS
+    content_safety: PASS
+    role_action_plausibility: PASS
+    content_diversity: PASS
+  founder_updated_review:
+    verdict: CONDITIONAL_PASS_FOR_FOUNDER_SECOND_REVIEW
+    content_fuel_quality: B_PLUS
+    platform_native_content_quality: NOT_YET_PASS
+    publication_readiness: false
+  runtime_ab_002_record_hygiene:
+    machine_gate: PASS
+    founder_acceptance_scope: bounded
+    claude_content_level_review_separately_performed: false
+    consumed_by_this_task: false
+  evidence_boundary: Accepted review statements are inputs. This task does not turn pending platform or founder judgments
+    into PASS.

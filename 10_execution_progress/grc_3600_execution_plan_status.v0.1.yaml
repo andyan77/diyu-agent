@@ -213,6 +213,34 @@ grc_3600_execution_plan_status:
       P7C_SCALE_PREP: DONE
       P7D: BLOCKED_BY_P7C_SCALE_DECISION
       P8: BLOCKED_BY_P7D
+  route_migration_11:
+    applied_by_task: GKB-P7D-EVERYDAY-NATIVE-PLATFORM-VARIANT-CONTRACT-AND-10-PROBE-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_conditional_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    result: PLATFORM_NATIVE_10_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER_REVIEW
+    result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/founder_40_repair_001/platform_native_5x2_001/platform_native_5x2_result.v0.1.yaml
+    parent_kernel_count: 5
+    expression_variant_count: 10
+    knowledge_count_increment: 0
+    capture_mode: daily_native
+    external_LLM_called: false
+    parent_assets_modified: false
+    claude_code_guardian_review: PENDING
+    founder_platform_review: PENDING
+    founder_40_second_review: PENDING
+    expand_80: false
+    expand_600: false
+    expand_3600: false
+    next_action_if_all_human_thresholds_pass: GKB-P7D-REPAIR-RULE-VALIDATION-BATCH-80-001_BRIEF_ONLY
+    preserved_status_literals:
+      P7C-AB: NEXT
+      P7C_SCALE: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+      P7C_SCALE_PREP: DONE
+      P7D: BLOCKED_BY_P7C_SCALE_DECISION
+      P8: BLOCKED_BY_P7D
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

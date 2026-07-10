@@ -1,0 +1,128 @@
+platform_native_everyday_expression_contract:
+  task_id: GKB-P7D-EVERYDAY-NATIVE-PLATFORM-VARIANT-CONTRACT-AND-10-PROBE-001
+  contract_scope: platform_native_5x2_validation_only
+  canonical_status: scoped_validation_contract
+  writes_to_ontology: false
+  writes_to_CSO_canonical_axis: false
+  writes_to_KE: false
+  creates_new_knowledge_kernel: false
+  compiler_chain:
+  - Content Kernel
+  - Event Spine
+  - Role Voice
+  - Platform Grammar
+  - Daily-native Execution
+  parent_binding_fields:
+  - parent_kernel_id
+  - source_repair_id
+  - capability_group
+  - source_assignment_ref
+  - parent_kernel_digest
+  - fact_boundary_digest
+  - prohibited_claims
+  - core_business_judgment
+  event_spine_fields:
+  - event_type
+  - event_binding_state
+  - workplace_setting
+  - event_trigger
+  - real_role
+  - observable_action
+  - apparel_or_display_object
+  - visible_detail
+  - choice_or_change
+  - situational_judgment
+  - implicit_theme
+  - natural_next_action
+  - non_claimed_result
+  event_binding_states:
+  - source_observed
+  - brand_confirmed
+  - bounded_routine_work_prototype
+  platform_shapes:
+    douyin:
+      payload_shape: short_video_spoken_event
+      required_keys:
+      - in_progress_opening
+      - visible_action_early
+      - one_natural_spoken_hook
+      - short_spoken_body
+      - natural_interaction_or_store_handoff
+    xiaohongshu:
+      payload_shape: note_title_and_body
+      required_keys:
+      - searchable_title
+      - first_person_observation
+      - concrete_detail
+      - save_worthy_judgment
+      - non_advertorial_close
+    wechat_channels:
+      payload_shape: trust_based_work_story
+      required_keys:
+      - trust_based_opening
+      - complete_small_work_event
+      - operator_or_role_judgment
+      - natural_spoken_close
+      - non_clickbait_handoff
+    moments:
+      payload_shape: daily_private_caption
+      required_keys:
+      - short_daily_note
+      - one_event
+      - one_visible_detail
+      - personal_observation
+      - optional_soft_private_followup
+    live:
+      payload_shape: live_talk_card
+      required_keys:
+      - show_object
+      - ask_customer_use_case
+      - compare_touch_or_try
+      - safe_observation
+      - answer_boundary
+      - next_interaction
+  daily_native_constraints:
+    capture_mode: daily_native
+    dedicated_crew_count: 0
+    actor_count: 0
+    phone_count: 1
+    production_time_minutes_max: 20
+    simple_segment_count_max: 5
+    fake_customer: false
+    manufactured_conflict: false
+    special_lighting_required: false
+    scripted_performance_required: false
+  restraint_policy:
+    keep_as:
+    - fact_boundary
+    - claim_safety
+    - not_overclaiming
+    not_default_as:
+    - opening_formula
+    - repeated_catchphrase
+    - universal_brand_voice
+    - universal_closing
+    same_opening_family_max: 2
+    same_closing_family_max: 2
+  slang_policy:
+    required_count: 0
+    recommended_max_per_variant: 2
+    scene_fit_before_popularity: true
+    slang_stacking_forbidden: true
+    fixed_trending_word_dictionary: false
+  scoped_failure_codes:
+  - PNV_LABEL_ONLY
+  - EVT_NO_EVENT_CARRIER
+  - EVT_SCRIPTED_LIFE
+  - VOICE_ANNOUNCER_TONE
+  - VOICE_SLANG_STACKING
+  - CAPTURE_OVERDIRECTED
+  - ROLE_ACTION_IMPLAUSIBLE
+  - CLAIM_UNSUPPORTED
+  - PAIR_NEAR_DUPLICATE
+  - META_BODY_LEAKAGE
+  - KNOWLEDGE_COUNT_INFLATION
+  - PLATFORM_GENERIC
+  - TONE_MONOCULTURE
+  failure_codes_registered_globally: false
+  machine_pass_does_not_confirm_platform_quality: true

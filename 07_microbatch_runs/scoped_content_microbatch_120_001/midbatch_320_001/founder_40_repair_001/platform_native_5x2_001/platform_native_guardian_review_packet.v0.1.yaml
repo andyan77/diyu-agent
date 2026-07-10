@@ -1,0 +1,398 @@
+platform_native_guardian_review_packet:
+  variant_count: 10
+  codex_does_not_fill_guardian_verdict: true
+  review_questions:
+  - 是否像真实服装企业或门店日常
+  - 主题是否由事件显现
+  - 口语是否自然
+  - 是否存在短剧或宣传片感
+  - 平台形态是否真实不同
+  - 一人一手机是否今天可执行
+  entries:
+  - variant_id: PN5X2-P001-WECHAT_CHANNELS
+    parent_kernel_id: SCM120-CAND-008
+    capability_group: P0_01
+    platform_target: wechat_channels
+    account_role: founder
+    event_spine: &id001
+      event_type: sample_revision_decision
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 样衣确认台
+      event_trigger: 风衣门襟已顺但抬手时袖口仍显得偏重
+      real_role: 创始人或产品负责人
+      observable_action: 让版师再抬臂复看并把袖口退回收半寸
+      apparel_or_display_object: 接近定版的风衣
+      visible_detail: 第二颗门襟扣与抬手时的袖口重量
+      choice_or_change: 不按可交付状态直接放行，增加一次小幅修改
+      situational_judgment: 能交付不等于这处不适感值得忽略
+      implicit_theme: 长期选择藏在小而具体的产品决定里
+      natural_next_action: 修改回来后再做一次抬臂确认
+      non_claimed_result: 不声称某真实品牌发生过该事件或因此取得经营结果
+    platform_payload:
+      trust_based_opening: 样衣确认最容易卡在这种小地方。
+      complete_small_work_event: 风衣门襟已经顺了，抬手时袖口还是有点坠。产品同事觉得可以往下交，版师又试了一遍，决定收回半寸再看。
+      operator_or_role_judgment: 做衣服很多时候不是遇到大问题，而是大家都看见那点不舒服后，愿不愿意多走一轮。
+      natural_spoken_close: 能往下走，不代表这半寸不用管。
+      non_clickbait_handoff: 等袖口改回来，再抬一次手，答案就有了。
+    body_text: 样衣确认最容易卡在这种小地方。风衣门襟已经顺了，抬手时袖口还是有点坠。产品同事觉得可以往下交，版师又试了一遍，决定收回半寸再看。做衣服很多时候不是遇到大问题，而是大家都看见那点不舒服后，愿不愿意多走一轮。能往下走，不代表这半寸不用管。等袖口改回来，再抬一次手，答案就有了。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 样衣确认台
+      execution_action: 固定手机，拿起风衣做一次抬臂检查并指向袖口
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P001-MOMENTS
+    parent_kernel_id: SCM120-CAND-008
+    capability_group: P0_01
+    platform_target: moments
+    account_role: founder
+    event_spine: *id001
+    platform_payload:
+      short_daily_note: 样衣快定了，袖口一抬还是有点沉。
+      one_event: 版师把它退回去收半寸。
+      one_visible_detail: 门襟已经顺，问题只剩抬手时那一点重量。
+      personal_observation: 能交和现在就交，中间有时只差这一眼。
+      optional_soft_private_followup: 等改回来再试。
+    body_text: 样衣快定了，袖口一抬还是有点沉。版师把它退回去收半寸。门襟已经顺，问题只剩抬手时那一点重量。能交和现在就交，中间有时只差这一眼。等改回来再试。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 样衣确认台
+      execution_action: 手机放在样衣台边，记录抬袖和指向修改位置两个动作
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P002-DOUYIN
+    parent_kernel_id: SCM120-CAND-034
+    capability_group: P0_02
+    platform_target: douyin
+    account_role: store_manager
+    event_spine: &id002
+      event_type: store_manager_fit_walkthrough
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 门店开店前的试穿区
+      event_trigger: 卡其风衣腰带系紧后只看得见静态轮廓
+      real_role: 店长
+      observable_action: 立起领子、松开腰带并走两步观察下摆
+      apparel_or_display_object: 卡其色双排扣风衣
+      visible_detail: 高领、同料腰带与走动中的下摆
+      choice_or_change: 先让顾客看到走动状态，再决定是否收紧腰带
+      situational_judgment: 风衣要在动作中判断，不能只靠站立时的赞美
+      implicit_theme: 真实岗位用普通动作帮助顾客选择
+      natural_next_action: 邀请顾客分别试松腰和收腰两种状态
+      non_claimed_result: 不虚构顾客反馈，不保证普遍身体效果
+    platform_payload:
+      in_progress_opening: 腰带先松一点，我已经把卡其风衣穿上了。
+      visible_action_early: 领子立住，腰带别系死，往前走两步看下摆。
+      one_natural_spoken_hook: 这件别站着猜，动一下才知道腰要不要收。
+      short_spoken_body: 门店试风衣就做三个动作：立领、松腰带、走两步。
+      natural_interaction_or_store_handoff: 想看另一种状态，到店把腰带系紧再比一次。
+    body_text: 腰带先松一点，我已经把卡其风衣穿上了。领子立住，腰带别系死，往前走两步看下摆。这件别站着猜，动一下才知道腰要不要收。门店试风衣就做三个动作：立领、松腰带、走两步。想看另一种状态，到店把腰带系紧再比一次。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 门店开店前的试穿区
+      execution_action: 店长固定手机后自穿风衣，完成立领、松腰带和两步走动
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P002-WECHAT_CHANNELS
+    parent_kernel_id: SCM120-CAND-034
+    capability_group: P0_02
+    platform_target: wechat_channels
+    account_role: store_manager
+    event_spine: *id002
+    platform_payload:
+      trust_based_opening: 我在店里讲风衣，通常会先让人多走两步。
+      complete_small_work_event: 卡其领子立起来、腰带松开时，下摆会跟着人动；腰带收紧后，整件又利落一点。
+      operator_or_role_judgment: 我不急着替人选，只把两种状态都摆出来。
+      natural_spoken_close: 你平时走动多，就看看腰带松开时顺不顺手。
+      non_clickbait_handoff: 两种状态都看过，再决定会轻松很多。
+    body_text: 我在店里讲风衣，通常会先让人多走两步。卡其领子立起来、腰带松开时，下摆会跟着人动；腰带收紧后，整件又利落一点。我不急着替人选，只把两种状态都摆出来：“你平时走动多，就看看腰带松开时顺不顺手。”两种状态都看过，再决定会轻松很多。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 门店开店前的试穿区
+      execution_action: 店长在试穿区自穿风衣，连续展示松腰和收腰两种状态
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P003-XIAOHONGSHU
+    parent_kernel_id: SCM120-CAND-049
+    capability_group: P0_03
+    platform_target: xiaohongshu
+    account_role: brand_headquarters
+    event_spine: &id003
+      event_type: color_description_light_check
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 商品工作台
+      event_trigger: 姜黄色缎面在不同现场光线下呈现明显差异
+      real_role: 品牌商品编辑
+      observable_action: 把衬衫分别移到冷顶灯、暖桌灯和手机屏幕旁比较
+      apparel_or_display_object: 姜黄色缎面衬衫与炭灰色参照内搭
+      visible_detail: 颜色明暗、冷暖偏移与缎面反光
+      choice_or_change: 颜色描述必须同时写明观察光线
+      situational_judgment: 脱离光线谈绝对颜色会误导，显白也不能由色卡代判
+      implicit_theme: 专业内容的可信度来自可复核的观察条件
+      natural_next_action: 根据顾客常见使用光线继续比较搭配
+      non_claimed_result: 不保证显白、肤色改善或绝对色值
+    platform_payload:
+      searchable_title: 姜黄缎面总看不准？问题可能在现场的光
+      first_person_observation: 做商品颜色记录时，我会先换三处现场光，再决定怎么写。
+      concrete_detail: 顶灯偏冷时布面更亮，桌灯偏暖时往橙里走，手机屏幕靠近后纯度又会被推高；炭灰内搭可以当参照。
+      save_worthy_judgment: 颜色描述要把观察光线一起写上，单独记一个色名不够。
+      non_advertorial_close: 至于显不显白，色卡不能替任何人回答。
+    body_text: 姜黄缎面总看不准？问题可能在现场的光。做商品颜色记录时，我会换三处光再决定怎么写：顶灯偏冷，布面更亮；桌灯偏暖，颜色会往橙里走；手机屏幕靠近后，纯度又容易被推高。旁边放一件炭灰内搭，差异更好辨。值得存下的只有一个方法：描述颜色时，把当时的光一起记下来。至于显不显白，色卡不能替任何人回答。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 商品工作台
+      execution_action: 商品编辑固定手机，把衬衫依次移到顶灯、桌灯和手机屏幕旁
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P003-LIVE
+    parent_kernel_id: SCM120-CAND-049
+    capability_group: P0_03
+    platform_target: live
+    account_role: brand_headquarters
+    event_spine: *id003
+    platform_payload:
+      show_object: 我手上是姜黄色缎面，现在直播灯偏冷，颜色看着会亮一点。
+      ask_customer_use_case: 你平时更多在办公室，还是暖光餐厅？
+      compare_touch_or_try: 我把它挪到暖灯边，再放一件炭灰内搭作参照，两种状态一起看。
+      safe_observation: 这里能说的是当下看到的冷暖和明暗变化。
+      answer_boundary: 显白不显白，要上身后由你自己判断。
+      next_interaction: 告诉我常去的场景，我继续换一组光给你看。
+    body_text: 我手上是姜黄色缎面，现在直播灯偏冷，颜色看着会亮一点。你平时更多在办公室，还是暖光餐厅？我把它挪到暖灯边，再放一件炭灰内搭作参照，两种状态一起看。这里能说的是当下看到的冷暖和明暗变化；显白不显白，要上身后由你自己判断。告诉我常去的场景，我继续换一组光给你看。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 商品工作台
+      execution_action: 商品编辑固定手机，边拿衬衫边切换两处已有灯光并回应场景问题
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P004-DOUYIN
+    parent_kernel_id: SCM120-CAND-077
+    capability_group: P0_04
+    platform_target: douyin
+    account_role: store_manager
+    event_spine: &id004
+      event_type: opening_store_display_walk
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 门店开店前卖场
+      event_trigger: 入口和中岛清楚，但端架同时挤着三件外套
+      real_role: 店长
+      observable_action: 从门口沿顾客路径走到端架并拿掉两件陪衬外套
+      apparel_or_display_object: 入口色块、中岛搭配、端架重点外套与挂通
+      visible_detail: 端架主角被两件邻近外套淹没
+      choice_or_change: 端架只保留一件重点外套
+      situational_judgment: 顾客第一眼找不到主角时应先做减法
+      implicit_theme: 门店判断体现在一次普通巡场和一个减法动作里
+      natural_next_action: 回到入口复看第一眼落点
+      non_claimed_result: 不声称具体门店销量或陈列调整后的经营结果
+    platform_payload:
+      in_progress_opening: 我正从门口往里走。
+      visible_action_early: 入口看整组颜色，中岛看搭配；到了端架，我把旁边两件外套收走。
+      one_natural_spoken_hook: 第一眼没主角，就先拿掉两件。
+      short_spoken_body: 端架只留一件重点外套，挂通再把尺码排清楚。
+      natural_interaction_or_store_handoff: 到店时在门口停一秒，看自己第一眼落在哪件。
+    body_text: 我正从门口往里走。入口看整组颜色，中岛看搭配；到了端架，我把旁边两件外套收走，只留一件。第一眼没主角，就先拿掉两件。挂通再把尺码排清楚，这趟开店前巡场就完成了。到店时你也可以在门口停一秒，看自己第一眼落在哪件。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 门店开店前卖场
+      execution_action: 店长固定手机后沿门口到端架走一遍，真实拿掉两件陪衬外套
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P004-MOMENTS
+    parent_kernel_id: SCM120-CAND-077
+    capability_group: P0_04
+    platform_target: moments
+    account_role: store_manager
+    event_spine: *id004
+    platform_payload:
+      short_daily_note: 开店前巡了一遍。
+      one_event: 端架挤了三件外套，拿掉两件后主角出来了。
+      one_visible_detail: 入口色块顺，中岛搭配清楚，挂通也好找尺码。
+      personal_observation: 陈列有时候不是加，是少说两句。
+      optional_soft_private_followup: 今天先这样开门。
+    body_text: 开店前巡了一遍。端架挤了三件外套，拿掉两件后主角出来了。入口色块顺，中岛搭配清楚，挂通也好找尺码。陈列有时候不是加，是少说两句。今天先这样开门。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 门店开店前卖场
+      execution_action: 店长把手机固定在入口，记录巡场和端架减掉两件外套的过程
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P005-XIAOHONGSHU
+    parent_kernel_id: SCM120-CAND-113
+    capability_group: P0_05
+    platform_target: xiaohongshu
+    account_role: sales_associate
+    event_spine: &id005
+      event_type: overall_fit_adjustment_demo
+      event_binding_state: bounded_routine_work_prototype
+      workplace_setting: 门店开店前试穿区
+      event_trigger: 背带裤腰线和裤脚位置没有落在适合当下搭配的位置
+      real_role: 导购
+      observable_action: 调整肩带一格并比较裤脚放下和翻起的状态
+      apparel_or_display_object: 带金属肩带扣的背带裤、罗纹打底与短开衫
+      visible_detail: 肩带档位、腰线位置、裤脚与鞋面的关系
+      choice_or_change: 先调肩带，再决定裤脚和外层长度
+      situational_judgment: 穿法教育要给可操作动作，不替个体保证显高效果
+      implicit_theme: 商品角色通过帮助完成真实穿着任务而成立
+      natural_next_action: 根据顾客常穿鞋型继续微调裤脚
+      non_claimed_result: 不保证显高、显瘦或适合所有身高
+    platform_payload:
+      searchable_title: 背带裤腰线总不对？问题可能在肩带这两格
+      first_person_observation: 门店做穿法记录时，我会把肩带调两个位置再比较。
+      concrete_detail: 肩带往上，腰线跟着移；裤脚翻两道，鞋面露得更多；罗纹打底和短开衫最后再加。
+      save_worthy_judgment: 顺序是调肩带、看裤脚、再定外层，不要同时乱动三处。
+      non_advertorial_close: 这套方法只帮助比较，显不显高仍由本人试穿判断。
+    body_text: 背带裤腰线总不对？问题可能在肩带这两格。门店做穿法记录时，我会把肩带调两个位置再比较：肩带往上，腰线跟着移；裤脚翻两道，鞋面露得更多；罗纹打底和短开衫最后再加。这个顺序可以存下来：调肩带、看裤脚、再定外层，不要同时乱动三处。它只帮助比较，显不显高仍由本人试穿判断。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 门店开店前试穿区
+      execution_action: 导购固定手机后自穿背带裤，比较两个肩带档位和两种裤脚状态
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
+  - variant_id: PN5X2-P005-LIVE
+    parent_kernel_id: SCM120-CAND-113
+    capability_group: P0_05
+    platform_target: live
+    account_role: sales_associate
+    event_spine: *id005
+    platform_payload:
+      show_object: 这条背带裤先看肩带和裤脚。
+      ask_customer_use_case: 你平时配平底鞋还是短靴？
+      compare_touch_or_try: 我把肩带往上调一格，再把裤脚翻起来，你看腰线和鞋面露出的变化。
+      safe_observation: 这里能演示的是肩带档位、裤脚长度和叠搭顺序。
+      answer_boundary: 显不显高得本人上身后决定。
+      next_interaction: 告诉我常穿什么鞋，我再把裤脚长度对一下。
+    body_text: 这条背带裤先看肩带和裤脚。你平时配平底鞋还是短靴？我把肩带往上调一格，再把裤脚翻起来，你看腰线和鞋面露出的变化。罗纹打底可以留在里面，短开衫最后再加。这里能演示的是怎么调、怎么叠；显不显高得本人上身后决定。告诉我常穿什么鞋，我再把裤脚长度对一下。
+    execution_card:
+      capture_mode: daily_native
+      dedicated_crew_count: 0
+      actor_count: 0
+      phone_count: 1
+      production_time_minutes_max: 20
+      simple_segment_count_max: 5
+      fake_customer: false
+      manufactured_conflict: false
+      special_lighting_required: false
+      scripted_performance_required: false
+      who_records: 岗位本人固定手机完成；确有同事时只顺手协助，不算专职团队
+      workplace: 门店开店前试穿区
+      execution_action: 导购固定手机，边调肩带和裤脚边回应鞋型问题
+      equipment:
+      - 一部手机
+      - 现场稳固台面或已有手机支架
+      - 工作现场已有光线
+    guardian_verdict: PENDING
