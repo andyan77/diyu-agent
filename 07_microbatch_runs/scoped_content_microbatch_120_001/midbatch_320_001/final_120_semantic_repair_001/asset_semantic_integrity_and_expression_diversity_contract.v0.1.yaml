@@ -1,0 +1,68 @@
+asset_semantic_integrity_and_expression_diversity_contract:
+  schema_version: v0.1
+  task_id: GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001
+  scope:
+    primary_asset_count: 120
+    founder_40_count: 40
+    repair_80_count: 80
+    regression_child_count: 10
+    writes_to_ontology: false
+    writes_to_CSO_canonical: false
+    writes_to_KE: false
+    creates_new_knowledge: false
+  composite_gate:
+  - cross_layer_semantic_consistency
+  - batch_expression_diversity
+  event_state_authority:
+    no_evidence_upgrade_allowed: true
+    default_for_unconfirmed_assets: bounded_routine_work_prototype
+  daily_native:
+    content_only_participant_count: 0
+    hired_performer_count: 0
+    dedicated_production_crew_count: 0
+    special_lighting_required: false
+    scripted_performance_required: false
+    manufactured_conflict: false
+    fake_customer: false
+    phone_count_max: 1
+    production_time_minutes_max: 20
+    simple_segment_count_max: 5
+    legacy_required_people_max_authoritative_for_total_visible_people: false
+  claim_boundary_routes:
+    L0_silent_control: low_risk_metadata_guard_only
+    L1_natural_limitation: medium_risk_claim_local_short_limit
+    L2_explicit_disclaimer: high_risk_claim_specific_boundary
+    fact_safety_must_not_be_reduced_for_diversity: true
+  thresholds:
+    full_rhetorical_fingerprint_max_reuse: 2
+    normalized_opening_or_closing_stem_max_reuse: 2
+    opening_or_closing_family_max_share_per_platform: 0.3
+    opening_or_closing_family_max_share_per_cell: 0.3
+    opening_or_closing_family_minimum_absolute_allowance: 2
+    move_sequence_max_share_overall: 0.2
+    move_sequence_max_share_per_platform: 0.25
+    sequential_explainer_max_share_overall: 0.2
+    sequential_explainer_max_share_per_cell: 0.25
+    negation_dominant_max_share_overall: 0.2
+    negation_dominant_max_share_per_cell: 0.25
+    visible_boundary_final_move_max_share_overall: 0.2
+    generic_boundary_close_max_share_overall: 0.1
+    L2_human_blocking_review_share: 0.15
+    kernel_overlap_max: 17
+  scoped_failure_codes:
+  - XSC_ROLE_BINDING_MISSING
+  - XSC_NARRATION_AUTHORITY_MISSING
+  - XSC_FIRST_PERSON_ACTION_MISMATCH
+  - XSC_BODY_ACTION_EXECUTION_MISMATCH
+  - XSC_PARTICIPANT_COUNT_CONTRADICTION
+  - XSC_MODEL_PARTICIPATION_UNDECLARED
+  - XSC_DAILY_NATIVE_STAGING_VIOLATION
+  - XSC_EVENT_DEPICTION_MISMATCH
+  - XSC_EVENT_BODY_UNSUPPORTED
+  - XSC_PLATFORM_PAYLOAD_MISMATCH
+  - XSC_PLATFORM_EXECUTION_MISMATCH
+  - XSC_PARENT_VARIANT_SEMANTIC_DRIFT
+  - XSC_IMPLICIT_SEMANTIC_AMBIGUITY
+  result_ceiling: FINAL_120_REPAIR_EXECUTED_PENDING_CLAUDE_GUARDIAN
+  expand_600: false
+  expand_3600: false

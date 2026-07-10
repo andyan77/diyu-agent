@@ -271,6 +271,37 @@ grc_3600_execution_plan_status:
       P7C_SCALE_PREP: DONE
       P7D: BLOCKED_BY_P7C_SCALE_DECISION
       P8: BLOCKED_BY_P7D
+  route_migration_13:
+    applied_by_task: GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_conditional_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    result: PARTIAL_REPAIR_BLOCKED
+    result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/final_120_semantic_repair_001/final_120_result.v0.1.yaml
+    source_asset_count: 120
+    repair_variant_count: 114
+    resolved_asset_count: 120
+    known_4C_repaired_count: 4
+    remaining_event_depiction_mismatch_count: 3
+    remaining_claim_route_mismatch_count: 4
+    remaining_unsupported_claim_count: 1
+    remaining_formula_blocker_count: 69
+    remaining_kernel_overlap_blocker_count: 6
+    kernel_overlap_max: 19
+    knowledge_count_increment: 0
+    fact_safety_reduced_for_diversity: false
+    claude_code_domain_review: PENDING
+    expand_600: false
+    expand_3600: false
+    next_action: CLAUDE_CODE_GUARDIAN_REVIEW_PARTIAL_120_AND_BLOCKER_CONFIRMATION
+    preserved_status_literals:
+      P7C-AB: NEXT
+      P7C_SCALE: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+      P7C_SCALE_PREP: DONE
+      P7D: BLOCKED_BY_P7C_SCALE_DECISION
+      P8: BLOCKED_BY_P7D
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

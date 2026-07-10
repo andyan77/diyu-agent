@@ -96,3 +96,11 @@
 - Founder 对既有 40 条的完整结构化分级记为 `deferred_by_founder_scale_authority`；任何 600 决策前仍须完成合并 120 条的完整分级。
 - 当前结果为 `REPAIR_VALIDATION_80_EXECUTED_PENDING_CLAUDE_GUARDIAN`，下一动作仅为 Claude Code 对全部 80 条做独立 Guardian Review。
 - `expand_600=false`、`expand_3600=false`；CandidatePack/KE/Serving/RAG/DIFY/production 与全部 readiness 继续关闭。
+
+## P7D Final-120 Semantic Repair
+
+- `GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001` 将不可变 Founder-40 与 Repair-80 唯一绑定为 120 个 Kernel，并在首条 repair 前冻结跨层、claim 与反公式失败集。
+- 冻结 workorder 生成 114 个 additive repair variants 和 6 个 unchanged review overlays；known 4C 已全部创建 full repair variant，知识计数增量为 0。
+- composite machine gate 诚实返回 `PARTIAL_REPAIR_BLOCKED`：仍有 3 条 prototype depiction mismatch、4 条 claim-route mismatch、1 条 unsupported-claim 句、69 条批次公式浓度 blocker，以及独立 checker 发现的 6 条 Kernel overlap 超限（阈值 17，最大 19）。
+- L2 明示边界为 33/120（27.5%），事实安全未因反公式目标被削弱；该比例及全部剩余 blocker 必须交 Claude Code 做 120 条全量 Guardian Review。
+- 本次不改变任何旧 step status；`expand_600=false`、`expand_3600=false`，CandidatePack/KE/Serving/RAG/DIFY/production 与全部 readiness 继续关闭。

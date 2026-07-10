@@ -1,0 +1,41 @@
+accepted_guardian_and_founder_evidence:
+  schema_version: v0.1
+  task_id: GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001
+  evidence_scope: accepted_input_for_scoped_final_120_repair_only
+  claude_code_guardian:
+    verdict: PASS_WITH_CAVEAT
+    reviewed_asset_scope: repair_validation_80
+    A_or_B: 80/80
+    largest_risk: disclaimer_reflex_monoculture
+    source: founder_supplied_execution_brief_accepted_facts
+  latest_founder_review:
+    verdict: CONDITIONAL_PASS_WITH_REQUIRED_REPAIR
+    reviewed_asset_scope: repair_validation_80_not_combined_120
+    A: 54
+    B: 22
+    C: 4
+    D: 0
+    known_C_assets:
+    - RV80-ASSET-017
+    - RV80-ASSET-018
+    - RV80-ASSET-059
+    - RV80-ASSET-060
+    cross_layer_semantic_consistency: FAIL_NEEDS_REPAIR
+    source: founder_supplied_execution_brief_accepted_facts
+  founder_40:
+    prior_review_status: previously_accepted_as_repaired_source_set
+    count: 40
+    not_included_in_latest_A54_B22_C4_distribution: true
+  prompt_pre_review:
+    guardian: Claude Code
+    verdict: CONDITIONAL_PASS
+    safe_to_execute: true
+  permissions:
+    expand_600: false
+    expand_3600: false
+    CandidatePack: false
+    KE: false
+    Serving: false
+    RAG: false
+    DIFY: false
+    production: false

@@ -1,0 +1,1404 @@
+repair_workorder:
+  frozen_failure_set_digest: a102496a22b1700a598c7be87e87015f28bb586c0a0c2f06e90ac3003b114acd
+  workorder_count: 114
+  entries:
+  - source_asset_id: RV80-ASSET-002
+    kernel_id: SCM120-CAND-002
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_01|moments
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: a648c84233ca1abe05bfd36cc31da2df5065b7fe609a7488b51b723b1c12f213
+    fact_boundary_digest: a03ae88ff0e5acb039a764a881019867b76598cd78fdcad242dee799f358510b
+  - source_asset_id: P7D40-REPAIR-006
+    kernel_id: SCM120-CAND-003
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_OVERALL
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - execution_alignment
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: execution_alignment
+    authoritative_kernel_digest: 7a4ace0f8051d3973bc93d31c7392bc5a868f35b83a82f26ed2529b626b0c437
+    fact_boundary_digest: 904b3463d759b8e1dc6161badf4db1470517ff4782f83320305c7464e5004526
+  - source_asset_id: P7D40-REPAIR-012
+    kernel_id: SCM120-CAND-004
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_01|xiaohongshu
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: f3451944bd53844224edeb856b331e6e3aeb3e7d1077551f27859fa7d7641c06
+    fact_boundary_digest: 904b3463d759b8e1dc6161badf4db1470517ff4782f83320305c7464e5004526
+  - source_asset_id: RV80-ASSET-003
+    kernel_id: SCM120-CAND-005
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_01|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 3eb98338fbda0aaa8a8f5baffb08bb0ba9761597a1a41c1739cf210134a21f16
+    fact_boundary_digest: a03ae88ff0e5acb039a764a881019867b76598cd78fdcad242dee799f358510b
+  - source_asset_id: RV80-ASSET-004
+    kernel_id: SCM120-CAND-006
+    repair_reason_codes:
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - prototype_truth_reframe
+    - execution_alignment
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 55004d2fd4f8acf63ffb92380b0c245b670f570530a8b26d59e5eef1bcd2416f
+    fact_boundary_digest: a03ae88ff0e5acb039a764a881019867b76598cd78fdcad242dee799f358510b
+  - source_asset_id: RV80-ASSET-005
+    kernel_id: SCM120-CAND-007
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_OPENING_FAMILY_CELL:P0_01|wechat_channels
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 1b73e9ae1c005a33d18b6c804287b78a14bd6694e02e83ec92b94de279d9f676
+    fact_boundary_digest: a03ae88ff0e5acb039a764a881019867b76598cd78fdcad242dee799f358510b
+  - source_asset_id: RV80-ASSET-006
+    kernel_id: SCM120-CAND-009
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_01|moments
+    - FORMULA_NEGATION_CELL:P0_01|moments
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: cd4678d31f304cc29ce898f9d26e93c9a858025b19f6a56eb0af03dfabc31232
+    fact_boundary_digest: a03ae88ff0e5acb039a764a881019867b76598cd78fdcad242dee799f358510b
+  - source_asset_id: RV80-ASSET-007
+    kernel_id: SCM120-CAND-010
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_01|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_01|wechat_channels
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 4efa108f168948e8eee369f67d5f06169026c29a9015a2a5df23b71779b0fa9d
+    fact_boundary_digest: 277058d6772a50f7305ce85d08d7aa4018ca4b41eb6a8ac820eec41503c40ee9
+  - source_asset_id: RV80-ASSET-008
+    kernel_id: SCM120-CAND-011
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_01|moments
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 98c7c5a9b52efe1fc5500c432c176e1c71f35d0637fa0df2340acb07cb837745
+    fact_boundary_digest: 277058d6772a50f7305ce85d08d7aa4018ca4b41eb6a8ac820eec41503c40ee9
+  - source_asset_id: P7D40-REPAIR-030
+    kernel_id: SCM120-CAND-012
+    repair_reason_codes:
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 3eba4944278a137e2f759a4938280fe09dbe19c3e748dbba001e2099f087c913
+    fact_boundary_digest: 1863a2d7100786eb6ad99976b961a8b5df2f69a2f25370ad8a5931ca6f8c528d
+  - source_asset_id: RV80-ASSET-009
+    kernel_id: SCM120-CAND-013
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 8ee0553f3036813e96afbe79ebb83d9ca8b3aac2d27ca23a190f1c15a00e29cc
+    fact_boundary_digest: 277058d6772a50f7305ce85d08d7aa4018ca4b41eb6a8ac820eec41503c40ee9
+  - source_asset_id: P7D40-REPAIR-040
+    kernel_id: SCM120-CAND-014
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_01|live
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 6b2951edcc70936986d7f2e80a7c157dfa1df4118d3912b26e6b51f175a11030
+    fact_boundary_digest: 1863a2d7100786eb6ad99976b961a8b5df2f69a2f25370ad8a5931ca6f8c528d
+  - source_asset_id: RV80-ASSET-010
+    kernel_id: SCM120-CAND-015
+    repair_reason_codes:
+    - FORMULA_OPENING_FAMILY_CELL:P0_01|moments
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: e64707f7cc16c3e42d94210fcd35b66f70c6e9d150038d062e236c2ec7538b7f
+    fact_boundary_digest: 277058d6772a50f7305ce85d08d7aa4018ca4b41eb6a8ac820eec41503c40ee9
+  - source_asset_id: RV80-ASSET-011
+    kernel_id: SCM120-CAND-016
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_01|wechat_channels
+    - FORMULA_NEGATION_CELL:P0_01|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_01|wechat_channels
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: d6e008d340ab3a42650621444f3098033177f608398de3ad4433e666d1e3bbcc
+    fact_boundary_digest: 277058d6772a50f7305ce85d08d7aa4018ca4b41eb6a8ac820eec41503c40ee9
+  - source_asset_id: P7D40-REPAIR-048
+    kernel_id: SCM120-CAND-017
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_01|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 4f9695ac5ad10813a232409c2d7f1fabc9b6b4593b188b03741a85fc3bdf6dbe
+    fact_boundary_digest: 1863a2d7100786eb6ad99976b961a8b5df2f69a2f25370ad8a5931ca6f8c528d
+  - source_asset_id: RV80-ASSET-012
+    kernel_id: SCM120-CAND-018
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_01|moments
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_SEQUENTIAL_CELL:P0_01|moments
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 598a9d07a7fb97348ffc26840871546ebf549d904176a5fb1ba60de54c94bda3
+    fact_boundary_digest: 277058d6772a50f7305ce85d08d7aa4018ca4b41eb6a8ac820eec41503c40ee9
+  - source_asset_id: RV80-ASSET-013
+    kernel_id: SCM120-CAND-019
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|douyin
+    - FORMULA_NEGATION_OVERALL
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 5f11125e04b91b3a68157c6b8d6a52a2b3f560764801a6ee93548ee5b48452e0
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-014
+    kernel_id: SCM120-CAND-020
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_MOVE_SEQUENCE_PLATFORM
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|wechat_channels
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 455baf1a2d696880a4f7458da75869e52cd3a446ce968488d605186826a830ed
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: P7D40-REPAIR-054
+    kernel_id: SCM120-CAND-021
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_02|moments
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - prototype_truth_reframe
+    - execution_alignment
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 3fce6c7e6436e9f428de8decf7e57f3520fa9e2717b0e6a24d127e26bc67c212
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-015
+    kernel_id: SCM120-CAND-023
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|douyin
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 31d7d892956ce2eb6ebf73354d696dfeec63733df8e97a7d275ea99d7c27949c
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-016
+    kernel_id: SCM120-CAND-024
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 0b6fba656a61551b301bec55c84c6b6861aa92449141e17f9d180de347e806a3
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: P7D40-REPAIR-071
+    kernel_id: SCM120-CAND-025
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: execution_alignment
+    authoritative_kernel_digest: a0fc4b67ea02e3bdce5fd88ab01736e4384559be88d394345b5b4802aea3b13e
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-017
+    kernel_id: SCM120-CAND-026
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_02|douyin
+    - FORMULA_NEGATION_CELL:P0_02|douyin
+    - FORMULA_NEGATION_OVERALL
+    - KNOWN_C_FULL_REPAIR
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - full_repair_variant
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: full_repair_variant
+    authoritative_kernel_digest: bc79c904dbe4943ece864bbd6974b5d4481256c055b969b37d016b5942523365
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-018
+    kernel_id: SCM120-CAND-027
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_CLOSING_FAMILY_CELL:P0_02|wechat_channels
+    - FORMULA_MOVE_SEQUENCE_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_02|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|wechat_channels
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - KNOWN_C_FULL_REPAIR
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - full_repair_variant
+    - prototype_truth_reframe
+    - execution_alignment
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: full_repair_variant
+    authoritative_kernel_digest: c1540d9c8175a0ac9de8b470bad3ea373d37ec451628787bc73de53f8b68bd78
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-019
+    kernel_id: SCM120-CAND-028
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_02|douyin
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|douyin
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: b78ce1cedae46b67bc8faea46d5df6bd4b031cb4a86cab44b062984cbd0ec01f
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: P7D40-REPAIR-077
+    kernel_id: SCM120-CAND-029
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: execution_alignment
+    authoritative_kernel_digest: 65af08e5a215d95f7ad3d92c00edcb19d5db645d1864989f47b62c41f195c9cf
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-020
+    kernel_id: SCM120-CAND-030
+    repair_reason_codes:
+    - FORMULA_MOVE_SEQUENCE_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_02|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 705eb15a7db9b0c371ba5da89d7c90cf75a13e08c6ee8a28cb3033b298c4cfdd
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-021
+    kernel_id: SCM120-CAND-031
+    repair_reason_codes:
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|douyin
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: ffdf0ab3a887aed055b36a48d7a80c34a1e4b7cf8c8c974a96e45f108597b723
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-082
+    kernel_id: SCM120-CAND-032
+    repair_reason_codes:
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 829b608efd5deec4f3d697e521c03a7a2ad1daa14af50bb98cb58e60e50e1676
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-022
+    kernel_id: SCM120-CAND-033
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_02|wechat_channels
+    - FORMULA_NEGATION_CELL:P0_02|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|wechat_channels
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: f3dc65a5e04aa66f6a972d4d1ca67d18fa8158019501e1dc67ac02a3ffb27f9b
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-089
+    kernel_id: SCM120-CAND-034
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|moments
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_SEQUENTIAL_CELL:P0_02|moments
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 35e240bcebd566d06a80b6a8519a0990b71b536c79d96d5d6ee52a5836c000d5
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-023
+    kernel_id: SCM120-CAND-035
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|douyin
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|douyin
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 92bc34b1dc49ef325cd2a75ebf62eec5082b1f3e074318ec1ebcc671e2d98fb8
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-024
+    kernel_id: SCM120-CAND-036
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 3a595b5005e357ce425db8018b4205d52b12c1a8ceb7b33b8b3c9981dd6ba577
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-097
+    kernel_id: SCM120-CAND-037
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_02|live
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: b1d44731ea2110e442ae71c4515859916ce95959f0151e139300493a56133d0e
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-025
+    kernel_id: SCM120-CAND-038
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_02|douyin
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|douyin
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 5fde856b3cb61f5d096af49b6516405c785159b524d3fdd535364c0a732202e7
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-026
+    kernel_id: SCM120-CAND-039
+    repair_reason_codes:
+    - FORMULA_OPENING_FAMILY_CELL:P0_02|wechat_channels
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: b4a8fcba9af3fdf3f9f8974bb7225d178763d6ccb57c839fac350fd702385d6a
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-027
+    kernel_id: SCM120-CAND-041
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_CLOSING_FAMILY_CELL:P0_03|xiaohongshu
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_SEQUENTIAL_CELL:P0_03|xiaohongshu
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 6cfd6ae44ac9d1f1fa2a2c0d5438bbb227b7d564cd68fa877b2a0e6669f9f35d
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-028
+    kernel_id: SCM120-CAND-042
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|live
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|live
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: f509215fa63792bee20cdabf30432607dbedd57cafe9b89772e9033f0e59bde8
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-029
+    kernel_id: SCM120-CAND-043
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 8c44fb86c1c049caaeb1a9776376e81f25e7569fb3503f70453855a9faee87f4
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-030
+    kernel_id: SCM120-CAND-044
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 49f0c530a33a06c2725ef3d80c74a2ed11459d0bd6d0c5a6e9d4ba6547cbe285
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: P7D40-REPAIR-115
+    kernel_id: SCM120-CAND-045
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_03|douyin
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 41d42d9ff9ff5bf554ea64d33e3eafddb6c528e1107a3927915da2713cb3ca5d
+    fact_boundary_digest: fbfa69adf3529dbe57ffba562a1a409ccb8e1d6e018f08498b8f0ad98decabb6
+  - source_asset_id: P7D40-REPAIR-127
+    kernel_id: SCM120-CAND-046
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|wechat_channels
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 739817eafeae4cbeba1485f62dce8c148544f27b610715acc04f5798f45db746
+    fact_boundary_digest: fbfa69adf3529dbe57ffba562a1a409ccb8e1d6e018f08498b8f0ad98decabb6
+  - source_asset_id: RV80-ASSET-031
+    kernel_id: SCM120-CAND-047
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: d8bf9e5554174b6d657c1600fe430d8ee17bbb046f051ea40cd307dbb64b4668
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-032
+    kernel_id: SCM120-CAND-048
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 76b994cabafd66841ca8ff074d70016373ba72bfc344a4f651fddef81b37872a
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: P7D40-REPAIR-129
+    kernel_id: SCM120-CAND-049
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    repair_routes:
+    - claim_boundary_relocation
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: eccf5f955d83ca25f72890075119dbe1d40e5ac1dfb029ba91ee6e665e0f33e4
+    fact_boundary_digest: fbfa69adf3529dbe57ffba562a1a409ccb8e1d6e018f08498b8f0ad98decabb6
+  - source_asset_id: RV80-ASSET-033
+    kernel_id: SCM120-CAND-050
+    repair_reason_codes:
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|xiaohongshu
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 71a9cbc4f679b4bff20523849ac505a357a7a4549e694a2c5084d2666532df06
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-034
+    kernel_id: SCM120-CAND-051
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: d04afeb061755a747ac9605ce66644623c35f34c6cf94837c0bf8410a16b0c62
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-035
+    kernel_id: SCM120-CAND-052
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|xiaohongshu
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - FORMULA_SEQUENTIAL_CELL:P0_03|xiaohongshu
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 2c1715d50b9589ac9909635482434ae19450c8eafea3ce71e33555a141f8346b
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: P7D40-REPAIR-138
+    kernel_id: SCM120-CAND-053
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|douyin
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 72996a992157a5714ff9e408ac0ebd17c8779ca52cfa73c9e5f60c09022b9385
+    fact_boundary_digest: fbfa69adf3529dbe57ffba562a1a409ccb8e1d6e018f08498b8f0ad98decabb6
+  - source_asset_id: RV80-ASSET-036
+    kernel_id: SCM120-CAND-054
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|live
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 37f13cdfc8c034265f102174209bf3e7ba77d3b1d2e68f68295ea3b56fccd5b7
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: P7D40-REPAIR-151
+    kernel_id: SCM120-CAND-055
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_03|moments
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 397b230d9d54ff89fe08a0052951e45446dd6186c6bde292b6669228df4e1bf4
+    fact_boundary_digest: fbfa69adf3529dbe57ffba562a1a409ccb8e1d6e018f08498b8f0ad98decabb6
+  - source_asset_id: RV80-ASSET-037
+    kernel_id: SCM120-CAND-056
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|xiaohongshu
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - FORMULA_SEQUENTIAL_CELL:P0_03|xiaohongshu
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: b36beb64ec7f6ae9b45e4af405df22a30527c6d06a99970590f825dfc9bc0ca8
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-038
+    kernel_id: SCM120-CAND-057
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 960b79d9c90dd576d63baa0b8377e66acd78d42faa05880dbaab362472f1a3a8
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-039
+    kernel_id: SCM120-CAND-058
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: ea13da3b24fa724607924967726785bb94b90733744628ff1b26511172c889b0
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-040
+    kernel_id: SCM120-CAND-060
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: db3b82377e978d875f6eb666e4cce7a520ba2436d0d0914cd6a4b65b152bf795
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-041
+    kernel_id: SCM120-CAND-061
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: f31ec159b5bf86dcf80af56f5762f6aa313bbb827bde9ba961356a2937c0967a
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: P7D40-REPAIR-162
+    kernel_id: SCM120-CAND-062
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|wechat_channels
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 807b5558c1945409cb75f867ba48eeed6d43008b3fb6ada1626aee6c05a708d4
+    fact_boundary_digest: fbfa69adf3529dbe57ffba562a1a409ccb8e1d6e018f08498b8f0ad98decabb6
+  - source_asset_id: RV80-ASSET-042
+    kernel_id: SCM120-CAND-063
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: ee5b34a682051eb5cb08692b39ce0b96f6bea79d510109c68c257b739fe82e8e
+    fact_boundary_digest: 60a05dd24a127619dd0c9db28e271eebc8bf70e26da742bbeb994d2b8d4d436f
+  - source_asset_id: RV80-ASSET-043
+    kernel_id: SCM120-CAND-064
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_CLOSING_FAMILY_CELL:P0_03|xiaohongshu
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: dd349f0ee436441253cc1b5404b69b62e2071ac54f87697718219c0117632778
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-170
+    kernel_id: SCM120-CAND-065
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|xiaohongshu
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: e0053ef50f28475cdc45913f51985f693c0c71906812852e9abbd4d1edb086f7
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-044
+    kernel_id: SCM120-CAND-066
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_CLOSING_FAMILY_CELL:P0_03|live
+    - FORMULA_NEGATION_CELL:P0_03|live
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|live
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 1dd1054211f210304cc90c4f762bbb9c9a165491112978b7b57c89153b1bf135
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-177
+    kernel_id: SCM120-CAND-067
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_03|douyin
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: a748a9af2b4cacce18e747d56b4beea84fdf90a2f2c68fee7afb1af88f233dc2
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-045
+    kernel_id: SCM120-CAND-068
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_03|xiaohongshu
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 96ff9771ceec8e523ee95d9a7a264b71b3328b876e71164f58869237478e1e0f
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-046
+    kernel_id: SCM120-CAND-069
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_03|live
+    - FORMULA_OPENING_FAMILY_CELL:P0_03|live
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 160a84ac7a4a5fb105c68d8ca6c6dd91185a91be89a434578c2afe669528a01c
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-191
+    kernel_id: SCM120-CAND-070
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_04|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: a7c3466077494b5b4d39df6cafe45859c5292256e9702f7d220ee7249098bb48
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-047
+    kernel_id: SCM120-CAND-071
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: ae6d2a46bcd1e6e15c6400f02cd5b3b534cec992f5c7d820a9f30a8991c9eace
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-048
+    kernel_id: SCM120-CAND-072
+    repair_reason_codes:
+    - FORMULA_MOMENTS_TEMPORAL_OPENING
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 812a3794e9c2028f2ae71f61193cc8716e5cb86785510e5af8645e613c4ac05d
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-049
+    kernel_id: SCM120-CAND-073
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - FORMULA_NEGATION_CELL:P0_04|douyin
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 5526cb535ef4300ba19e1451a4866f79093fc6b2c19188327ff32a3b95411524
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-050
+    kernel_id: SCM120-CAND-074
+    repair_reason_codes:
+    - FORMULA_MOMENTS_TEMPORAL_OPENING
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 02a2a553718458045030bba4980456cb6d5a59991832258c5eac61e15cf59a1d
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-195
+    kernel_id: SCM120-CAND-075
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_04|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_SEQUENTIAL_CELL:P0_04|wechat_channels
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 47f486596a7fbf117360fe5f123260661aa9d13008060deec90b63d18b11ae16
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-051
+    kernel_id: SCM120-CAND-076
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: f6160fead48c982c27af7b3873c4d09c06b42d11b8cf95a33f6f176075c763b0
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-202
+    kernel_id: SCM120-CAND-077
+    repair_reason_codes:
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: fd85f01a637c5e4ed58b414302efa03c51175dcf9882b5fe1cf70492a862ed72
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-052
+    kernel_id: SCM120-CAND-078
+    repair_reason_codes:
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: d05a22e5480f85cf18deeb56c7ac3f7de562860c765fdda24d98c1ad584f0533
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-053
+    kernel_id: SCM120-CAND-079
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 83cd977d8c68043ed338722a22e90befb6a441516ed4cd0630c7554ce292ec82
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-054
+    kernel_id: SCM120-CAND-080
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_04|moments
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 8cf6fded009a31e55e1aced8039a327f6c5e34fdab4fe288f050f7b14661c7f2
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-214
+    kernel_id: SCM120-CAND-081
+    repair_reason_codes:
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: d303d8615560882682d52359fa1d96b357969e08a257067e4176df651b9a0436
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-055
+    kernel_id: SCM120-CAND-082
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 2905692bf37f37f966ae861b80acd7c1ab27e7a443ba31a00b11c0374fc078ab
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-224
+    kernel_id: SCM120-CAND-083
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_04|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 24b4fb1c132c0f23679ad8a48eb5d3e8a6d2a39b51b381a49914c9701a1d2f87
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-056
+    kernel_id: SCM120-CAND-084
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_04|moments
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 4850c9dcc954699df64328c4a64144766247919e5c2d0a98fbec284162f32187
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-057
+    kernel_id: SCM120-CAND-085
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - FORMULA_MOVE_SEQUENCE_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_04|douyin
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_04|douyin
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 16d00da75c58b02655e30685e03bfd8c6b0eaa611b030425af6244bcdb323e8b
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-226
+    kernel_id: SCM120-CAND-086
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_04|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 8f17f38666e98fd494158114a4f1e32593eefbc96071346d06b1d024a9bba196
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-058
+    kernel_id: SCM120-CAND-087
+    repair_reason_codes:
+    - FORMULA_MOMENTS_TEMPORAL_OPENING
+    - FORMULA_OPENING_FAMILY_CELL:P0_04|moments
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: b330860c2e777d3a5d7dbf827a837d6df6750fed79d6d182f3fb6ee2bc8e3490
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-059
+    kernel_id: SCM120-CAND-088
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - FORMULA_OPENING_FAMILY_CELL:P0_04|douyin
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - KNOWN_C_FULL_REPAIR
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_IMPLICIT_SEMANTIC_AMBIGUITY
+    - XSC_MODEL_PARTICIPATION_UNDECLARED
+    repair_routes:
+    - full_repair_variant
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: full_repair_variant
+    authoritative_kernel_digest: 94999247332d87cbbcdcb9a27ece87890bb7814c8ebe0d305cc7bb2085cb6fb2
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-234
+    kernel_id: SCM120-CAND-089
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_04|moments
+    - FORMULA_NEGATION_OVERALL
+    - XSC_IMPLICIT_SEMANTIC_AMBIGUITY
+    - XSC_MODEL_PARTICIPATION_UNDECLARED
+    repair_routes:
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: execution_alignment
+    authoritative_kernel_digest: 741b4097e7b1d5adda2ee8d023bfb64c99d5e285940c6d5db9b732263386fc09
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-060
+    kernel_id: SCM120-CAND-090
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_04|moments
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - KNOWN_C_FULL_REPAIR
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_IMPLICIT_SEMANTIC_AMBIGUITY
+    - XSC_MODEL_PARTICIPATION_UNDECLARED
+    repair_routes:
+    - full_repair_variant
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: full_repair_variant
+    authoritative_kernel_digest: 3680033e3240db02e2d03afee89e237f45dfa51d2481e6a347321a38417d8817
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-061
+    kernel_id: SCM120-CAND-091
+    repair_reason_codes:
+    - FORMULA_DOUYIN_FIRST_PERSON_PROGRESSIVE
+    - FORMULA_NEGATION_CELL:P0_04|douyin
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_04|douyin
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 42c8667ea921fdbb14a6d2dd556d7fd163899e873c86de53a491a12a5e85b1ff
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: RV80-ASSET-062
+    kernel_id: SCM120-CAND-092
+    repair_reason_codes:
+    - FORMULA_MOMENTS_TEMPORAL_OPENING
+    - FORMULA_MOVE_SEQUENCE_PLATFORM
+    - FORMULA_OPENING_FAMILY_CELL:P0_04|moments
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_BODY_ACTION_EXECUTION_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - prototype_truth_reframe
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 886d79e2c6a56ad542aa3697c1b7f274027e8a457f187572784ba8e882ddb788
+    fact_boundary_digest: 85c1c1ac11e61a2ebe5aec7f31c213bbafca78a61375161058fc7b79f02d597d
+  - source_asset_id: P7D40-REPAIR-243
+    kernel_id: SCM120-CAND-093
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_04|douyin
+    - FORMULA_NEGATION_OVERALL
+    - XSC_IMPLICIT_SEMANTIC_AMBIGUITY
+    - XSC_MODEL_PARTICIPATION_UNDECLARED
+    - XSC_PARTICIPANT_COUNT_CONTRADICTION
+    repair_routes:
+    - execution_alignment
+    - rhetorical_restructure
+    primary_repair_route: execution_alignment
+    authoritative_kernel_digest: b8dba21b48584dcdb48148adf2d6f4c2aff84fff9d023bcea78eebf548f490de
+    fact_boundary_digest: 0c8a641c6a9c24eb9ff2a56a4e4b238a4123ae4dc84b9fd9b32c4ba14e291545
+  - source_asset_id: RV80-ASSET-063
+    kernel_id: SCM120-CAND-094
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 128227dbc48e06c15b316707b14f45c5c6e051fba4f309f98e8f27504a6f0f84
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-064
+    kernel_id: SCM120-CAND-095
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 09fae92fce170d536d4a14d6a134db84f299e2daf199e5d70e416647c050aa58
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-254
+    kernel_id: SCM120-CAND-096
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_04|live
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 92fcc23588233fdb7dc24d17b0fab3673a901cfc630242e142eec85d93a1b958
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: P7D40-REPAIR-263
+    kernel_id: SCM120-CAND-097
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|douyin
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 3e428dcb75f4291c2e18f53244bc23671c4aa1ee6a16d20fed879ba239b4f7bc
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-065
+    kernel_id: SCM120-CAND-098
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 190df261bdbe6acf20b3f26879c44e609bab3d563d39b5156011075570b726c1
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-067
+    kernel_id: SCM120-CAND-100
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: fb2b7fb9754caeb78d4966596bb818a9ada23f6faf1f5a9f6df729b7f6bc1ad3
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-068
+    kernel_id: SCM120-CAND-101
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|live
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 11877f84c028b7fcbbb0b7602643d8c2cad7837a845e7cbba840ef2952f34a87
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: P7D40-REPAIR-267
+    kernel_id: SCM120-CAND-102
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: beb7acccdb010fe20ca11c00dfa64e7a2279e7479533bd1dad43c2b23e07c7fc
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: P7D40-REPAIR-276
+    kernel_id: SCM120-CAND-103
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 72784e4d03d69b3df8cd2687500557a7d946a6fbe849abd53c61919859d8d593
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-069
+    kernel_id: SCM120-CAND-104
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: cece18f8126b53e7a26fdc10b5ad7dd4ff176ba97682bab277dee63240f1696b
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-070
+    kernel_id: SCM120-CAND-105
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_MOVE_SEQUENCE_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_05|live
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 3e05837671ea6ca7cef1ad873be4ec83c584d80c53393fc272e9beaac880ac4c
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: P7D40-REPAIR-287
+    kernel_id: SCM120-CAND-106
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|moments
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 810cece78b0c3954bf686d49234cfb7dec7a5b221a0b54c5623b4c03fe78bcf8
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-071
+    kernel_id: SCM120-CAND-107
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: d27933e6f517ccdd1c73b55ad41125a45414a0411b646ec2c066e8356baa93e5
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-072
+    kernel_id: SCM120-CAND-108
+    repair_reason_codes:
+    - FORMULA_SEQUENTIAL_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 319403b4d77b177253e45739f12ab19023a56c59d06524e126194a9ab552c9a1
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: P7D40-REPAIR-289
+    kernel_id: SCM120-CAND-109
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_CELL:P0_05|douyin
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 487f40415ff0de63a9ed98d22c4f1b9d2abb1351ca51a963359800f26a5e1303
+    fact_boundary_digest: bc83d257051c5a3d7c35a31ac8413bd12e448e340973d6906d2e9594708fbce0
+  - source_asset_id: RV80-ASSET-073
+    kernel_id: SCM120-CAND-110
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 52b72788d5ee8166293ee44f5f2910154f3651ab67329cce876ad3695ac0f8d8
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-074
+    kernel_id: SCM120-CAND-111
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|live
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_CELL:P0_05|live
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 99a43e97eb6c8b96c6426b9cdf93694dd06d277a4a98414ac039e92225f669da
+    fact_boundary_digest: aac7620817b8681492d49691c335a8afb5276c95e862df6cc9d0d76580f54d4c
+  - source_asset_id: RV80-ASSET-075
+    kernel_id: SCM120-CAND-112
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 75b654c59fa45fcbe850fbc43bc3660fb1a5a2eaa6072996d2a1d54144fcdfc4
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-298
+    kernel_id: SCM120-CAND-113
+    repair_reason_codes:
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: e31b23d29d0bdc2a735b6979bf426b4bd02eacd3c949c2d2912463b79f68107e
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-076
+    kernel_id: SCM120-CAND-114
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - FORMULA_OPENING_FAMILY_CELL:P0_05|live
+    - FORMULA_OPENING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: a5040c3553dfd309fb6af4e51514c500545b1e14aa4944e832b2644a513d1e8f
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-077
+    kernel_id: SCM120-CAND-115
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_05|xiaohongshu
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 6b18bd143485950598c8550d4ddb739f96549a08be5051a99f4c6944dcba8309
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-312
+    kernel_id: SCM120-CAND-116
+    repair_reason_codes:
+    - FORMULA_NEGATION_CELL:P0_05|wechat_channels
+    - FORMULA_NEGATION_OVERALL
+    - FORMULA_SEQUENTIAL_CELL:P0_05|wechat_channels
+    repair_routes:
+    - rhetorical_restructure
+    primary_repair_route: rhetorical_restructure
+    authoritative_kernel_digest: 872cf6a2b55d302905a87a135299fc2ef992ba572ade65894dc13a06736fbe02
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-078
+    kernel_id: SCM120-CAND-117
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_05|live
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: b16168756c6714590cd4a3c77f6bd7e3328c054a998959c8cb692b4873e32a98
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: P7D40-REPAIR-316
+    kernel_id: SCM120-CAND-118
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_NEGATION_OVERALL
+    repair_routes:
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: claim_boundary_relocation
+    authoritative_kernel_digest: 2e32c61b3e6ede52e7c68dcc8f8b4ef39749b7b6ee79ee852566da16a5577e88
+    fact_boundary_digest: 48f3a0db8895b20cea94c210aa4e772d376cbf824a4bd6e03430278e5b3703e2
+  - source_asset_id: RV80-ASSET-079
+    kernel_id: SCM120-CAND-119
+    repair_reason_codes:
+    - FORMULA_CLOSING_FAMILY_CELL:P0_05|xiaohongshu
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - FORMULA_NEGATION_CELL:P0_05|xiaohongshu
+    - FORMULA_NEGATION_OVERALL
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: eadf1916123b87d88e83c1c4bea5e1d9fc155dc03ea836c5e6e6662eba3d1208
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b
+  - source_asset_id: RV80-ASSET-080
+    kernel_id: SCM120-CAND-120
+    repair_reason_codes:
+    - CLAIM_BOUNDARY_ROUTE_MISMATCH
+    - FORMULA_CLOSING_FAMILY_CELL:P0_05|live
+    - FORMULA_CLOSING_FAMILY_PLATFORM
+    - XSC_EVENT_DEPICTION_MISMATCH
+    repair_routes:
+    - prototype_truth_reframe
+    - claim_boundary_relocation
+    - rhetorical_restructure
+    primary_repair_route: prototype_truth_reframe
+    authoritative_kernel_digest: 49ef975793f8a10f603fac587064bad1fa3a3a909ac37a853c995cadee6138d1
+    fact_boundary_digest: b28d60d490b2905b05ea77c601ac76b4d649325fa7e79b7037d69c263213292b

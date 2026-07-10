@@ -1,0 +1,34 @@
+p7d_final_120_semantic_repair_selftest:
+  positive_fixture: honest_partial_final_120_bundle
+  negative_cases:
+    - source_count_mismatch
+    - duplicate_kernel
+    - known_C_missing
+    - contract_digest_drift
+    - failure_set_digest_drift
+    - workorder_count_drift
+    - variant_count_mismatch
+    - resolved_count_mismatch
+    - kernel_truth_drift
+    - fact_binding_drift
+    - event_span_missing
+    - participant_count_conflict
+    - hired_model_daily_native
+    - readiness_true
+    - knowledge_inflation
+    - guardian_prefilled
+    - result_overclaim
+    - machine_gate_false_green
+    - event_failure_hidden
+    - claim_failure_hidden
+    - unsupported_claim_hidden
+    - formula_blockers_hidden
+    - scale_unlocked
+    - downstream_unblocked
+    - body_digest_drift
+    - rhetorical_fingerprint_drift
+    - execution_digest_drift
+    - kernel_overlap_blocker_hidden
+    - accepted_review_scope_drift
+    - receipt_overclaim
+    - malformed_json

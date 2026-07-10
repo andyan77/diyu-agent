@@ -1,0 +1,37 @@
+final_120_result:
+  task_id: GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001
+  result_status: PARTIAL_REPAIR_BLOCKED
+  resolved_asset_count: 120
+  unique_kernel_count: 120
+  repair_variant_count: 114
+  known_4C_repaired:
+  - RV80-ASSET-017
+  - RV80-ASSET-018
+  - RV80-ASSET-059
+  - RV80-ASSET-060
+  machine_composite_gate: FAIL
+  claude_code_domain_review: PENDING
+  knowledge_count_increment: 0
+  original_assets_unchanged: true
+  fact_safety_reduced_for_diversity: false
+  independent_checker_additional_blockers:
+    kernel_overlap:
+      threshold: 17
+      blocker_count: 6
+      max_overlap: 19
+      source_asset_ids:
+      - RV80-ASSET-043
+      - RV80-ASSET-052
+      - RV80-ASSET-056
+      - RV80-ASSET-063
+      - RV80-ASSET-070
+      - RV80-ASSET-075
+  expand_600: false
+  expand_3600: false
+  downstream:
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED

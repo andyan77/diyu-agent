@@ -1,0 +1,30 @@
+{
+  "task_id": "GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001",
+  "baseline_head": "75085490fb387a89a6447994d6535a4a843335f3",
+  "checker_status": "PASS",
+  "execution_result_status": "PARTIAL_REPAIR_BLOCKED",
+  "error_count": 0,
+  "errors": [],
+  "independently_recomputed_metrics": {
+    "source_asset_count": 120,
+    "repair_variant_count": 114,
+    "resolved_asset_count": 120,
+    "remaining_event_depiction_mismatch_count": 3,
+    "remaining_claim_route_mismatch_count": 4,
+    "remaining_unsupported_claim_count": 1,
+    "remaining_formula_blocker_count": 69,
+    "remaining_kernel_overlap_blocker_count": 6,
+    "kernel_overlap_blocker_ids": [
+      "RV80-ASSET-043",
+      "RV80-ASSET-052",
+      "RV80-ASSET-056",
+      "RV80-ASSET-063",
+      "RV80-ASSET-070",
+      "RV80-ASSET-075"
+    ],
+    "kernel_overlap_max": 19,
+    "exact_duplicate_count": 0,
+    "normalized_duplicate_count": 0
+  },
+  "result_scope": "partial_integrity_confirmed_not_content_or_scale_pass"
+}

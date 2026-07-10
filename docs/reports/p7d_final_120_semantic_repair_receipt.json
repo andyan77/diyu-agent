@@ -1,0 +1,64 @@
+{
+  "task_id": "GKB-P7D-FINAL-120-CROSS-LAYER-AND-ANTI-FORMULA-REPAIR-AND-REVIEW-HANDOFF-001",
+  "head_before": "75085490fb387a89a6447994d6535a4a843335f3",
+  "head_after": "recorded_in_git_log_for_this_commit",
+  "result_status": "PARTIAL_REPAIR_BLOCKED",
+  "machine_composite_gate": "FAIL",
+  "source_scope": {
+    "founder_40_count": 40,
+    "repair_80_count": 80,
+    "source_asset_count": 120,
+    "unique_kernel_count": 120
+  },
+  "pre_repair_audit": {
+    "cross_layer_failure_count": 84,
+    "ambiguity_count": 4,
+    "formula_excess_count": 95,
+    "claim_boundary_mismatch_count": 34,
+    "known_C_count": 4
+  },
+  "repairs": {
+    "repair_variant_count": 114,
+    "rhetorical_restructure_count": 18,
+    "execution_alignment_count": 5,
+    "claim_boundary_relocation_count": 12,
+    "prototype_truth_reframe_count": 75,
+    "full_repair_variant_count": 4,
+    "known_4C_repaired": true
+  },
+  "resolved_120": {
+    "resolved_asset_count": 120,
+    "unchanged_count": 6,
+    "repair_variant_count": 114,
+    "knowledge_count_increment": 0
+  },
+  "remaining_blockers": {
+    "event_depiction_mismatch_count": 3,
+    "claim_route_mismatch_count": 4,
+    "unsupported_claim_count": 1,
+    "formula_blocker_asset_count": 69,
+    "kernel_overlap_blocker_count": 6,
+    "kernel_overlap_max": 19,
+    "kernel_overlap_blocker_ids": [
+      "RV80-ASSET-043",
+      "RV80-ASSET-052",
+      "RV80-ASSET-056",
+      "RV80-ASSET-063",
+      "RV80-ASSET-070",
+      "RV80-ASSET-075"
+    ]
+  },
+  "claim_boundary": {
+    "L0_silent_control_count": 67,
+    "L1_natural_limitation_count": 20,
+    "L2_explicit_disclaimer_count": 33,
+    "L2_human_blocking_review_required": true,
+    "fact_safety_reduced_for_diversity": false
+  },
+  "claude_code_domain_review": "PENDING",
+  "external_LLM_called": false,
+  "original_assets_unchanged": true,
+  "readiness_all_false": true,
+  "expand_600": false,
+  "expand_3600": false
+}
