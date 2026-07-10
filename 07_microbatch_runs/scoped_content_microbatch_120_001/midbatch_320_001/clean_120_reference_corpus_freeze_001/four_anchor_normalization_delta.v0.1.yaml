@@ -1,0 +1,385 @@
+four_anchor_normalization_delta:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-FOUR-ANCHOR-NORMALIZATION-AND-REFERENCE-CORPUS-FREEZE-001
+  parent:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_metadata_patch_001/clean_120_semantic_asset_manifest.v0.2.jsonl
+    commit: acfeeaa615a34a974174dd1b7973da96ddebd71e
+    sha256: a783363fd37ea55a5e887549e40118a9de880ec4196dc46c298ef9ded2b425ca
+  frozen_corpus:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+    sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+  changed_asset_count: 4
+  changed_asset_ids:
+  - P7D40-REPAIR-234
+  - RV80-ASSET-015
+  - RV80-ASSET-049
+  - RV80-ASSET-059
+  items:
+  - asset_id: P7D40-REPAIR-234
+    allowed_json_pointers:
+    - /expression_content_kernel_candidate/typed_anchors
+    - /expression_content_kernel_candidate/object_anchor
+    before:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_role: primary_focus
+        anchor_type: space_or_display
+        canonical_label: 橱窗
+        derivation_mode: extractive
+        evidence_spans:
+        - end: 2
+          start: 0
+          text: 橱窗
+        surface_forms:
+        - 橱窗
+      object_anchor:
+        derived_from_anchor_ids:
+        - ANCH-P-001
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗
+    after:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_type: space_or_display
+        anchor_role: primary_focus
+        canonical_label: 橱窗穿搭可见性复核
+        surface_forms:
+        - 橱窗
+        - 穿搭
+        - 复核
+        - 第一眼
+        evidence_spans:
+        - start: 0
+          end: 2
+          text: 橱窗
+        - start: 34
+          end: 44
+          text: 给橱窗人台完成穿搭后
+        - start: 45
+          end: 52
+          text: 退到玻璃外复核
+        - start: 72
+          end: 83
+          text: 主角能不能第一眼被看见
+        derivation_mode: faithful_composite
+        semantic_components:
+        - component: display_context
+          evidence_spans:
+          - start: 0
+            end: 2
+            text: 橱窗
+        - component: completed_styling
+          evidence_spans:
+          - start: 34
+            end: 44
+            text: 给橱窗人台完成穿搭后
+        - component: visibility_review
+          evidence_spans:
+          - start: 45
+            end: 52
+            text: 退到玻璃外复核
+        - component: first_view_visibility
+          evidence_spans:
+          - start: 72
+            end: 83
+            text: 主角能不能第一眼被看见
+      - anchor_id: ANCH-S-001
+        anchor_type: apparel_item
+        anchor_role: secondary_focus
+        canonical_label: 藏青西装外套
+        surface_forms:
+        - 藏青西装外套
+        evidence_spans:
+        - start: 4
+          end: 10
+          text: 藏青西装外套
+        derivation_mode: extractive
+      - anchor_id: ANCH-S-002
+        anchor_type: apparel_item
+        anchor_role: secondary_focus
+        canonical_label: 白色上衣
+        surface_forms:
+        - 白色上衣
+        evidence_spans:
+        - start: 12
+          end: 16
+          text: 白色上衣
+        derivation_mode: extractive
+      - anchor_id: ANCH-S-003
+        anchor_type: apparel_item
+        anchor_role: secondary_focus
+        canonical_label: 直筒牛仔裤
+        surface_forms:
+        - 直筒牛仔裤
+        evidence_spans:
+        - start: 17
+          end: 22
+          text: 直筒牛仔裤
+        derivation_mode: extractive
+      - anchor_id: ANCH-E-001
+        anchor_type: prop
+        anchor_role: execution_prop
+        canonical_label: 橱窗人台
+        surface_forms:
+        - 橱窗人台
+        evidence_spans:
+        - start: 35
+          end: 39
+          text: 橱窗人台
+        derivation_mode: extractive
+      object_anchor:
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗穿搭可见性复核
+        derived_from_anchor_ids:
+        - ANCH-P-001
+    body_sha256: cf670874974c4bf7052b41d6216680ad4ea8c5ab23c62301ca2265e64153c59d
+  - asset_id: RV80-ASSET-015
+    allowed_json_pointers:
+    - /expression_content_kernel_candidate/typed_anchors
+    - /expression_content_kernel_candidate/object_anchor
+    before:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_role: primary_focus
+        anchor_type: space_or_display
+        canonical_label: 橱窗
+        derivation_mode: extractive
+        evidence_spans:
+        - end: 5
+          start: 3
+          text: 橱窗
+        surface_forms:
+        - 橱窗
+      object_anchor:
+        derived_from_anchor_ids:
+        - ANCH-P-001
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗
+    after:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_type: apparel_item
+        anchor_role: primary_focus
+        canonical_label: 大衣
+        surface_forms:
+        - 大衣
+        evidence_spans:
+        - start: 7
+          end: 9
+          text: 大衣
+        derivation_mode: extractive
+      - anchor_id: ANCH-C-001
+        anchor_type: space_or_display
+        anchor_role: scene_context
+        canonical_label: 橱窗
+        surface_forms:
+        - 橱窗
+        evidence_spans:
+        - start: 3
+          end: 5
+          text: 橱窗
+        derivation_mode: extractive
+      object_anchor:
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 大衣
+        derived_from_anchor_ids:
+        - ANCH-P-001
+    body_sha256: 9b57d3611d09b875bbd5c432eed84c83cfe397e94ee11378b651a6fe533eb159
+  - asset_id: RV80-ASSET-049
+    allowed_json_pointers:
+    - /expression_content_kernel_candidate/typed_anchors
+    - /expression_content_kernel_candidate/object_anchor
+    before:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_role: primary_focus
+        anchor_type: space_or_display
+        canonical_label: 橱窗
+        derivation_mode: extractive
+        evidence_spans:
+        - end: 5
+          start: 3
+          text: 橱窗
+        surface_forms:
+        - 橱窗
+      object_anchor:
+        derived_from_anchor_ids:
+        - ANCH-P-001
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗
+    after:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_type: space_or_display
+        anchor_role: primary_focus
+        canonical_label: 橱窗色彩面积与视觉层级
+        surface_forms:
+        - 橱窗
+        - 最大面积
+        - 辅色
+        - 最亮的小配件
+        - 第一眼
+        - 主色
+        evidence_spans:
+        - start: 3
+          end: 5
+          text: 橱窗
+        - start: 16
+          end: 55
+          text: 驼色毛衣裙留在中间占最大面积，辅色只在两侧接住高度，最亮的小配件收在上方一点。
+        - start: 92
+          end: 104
+          text: 看第一眼是否仍回到主色上
+        derivation_mode: faithful_composite
+        semantic_components:
+        - component: display_context
+          evidence_spans:
+          - start: 3
+            end: 5
+            text: 橱窗
+        - component: color_area_relationship
+          evidence_spans:
+          - start: 16
+            end: 55
+            text: 驼色毛衣裙留在中间占最大面积，辅色只在两侧接住高度，最亮的小配件收在上方一点。
+        - component: visual_hierarchy
+          evidence_spans:
+          - start: 92
+            end: 104
+            text: 看第一眼是否仍回到主色上
+      - anchor_id: ANCH-S-001
+        anchor_type: apparel_item
+        anchor_role: secondary_focus
+        canonical_label: 驼色毛衣裙
+        surface_forms:
+        - 驼色毛衣裙
+        evidence_spans:
+        - start: 16
+          end: 21
+          text: 驼色毛衣裙
+        derivation_mode: extractive
+      object_anchor:
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗色彩面积与视觉层级
+        derived_from_anchor_ids:
+        - ANCH-P-001
+    body_sha256: 312aa0575a5b1fbd56ad50eb8c9176286141361312177f20009113a36ba7895f
+  - asset_id: RV80-ASSET-059
+    allowed_json_pointers:
+    - /expression_content_kernel_candidate/typed_anchors
+    - /expression_content_kernel_candidate/object_anchor
+    before:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_role: primary_focus
+        anchor_type: space_or_display
+        canonical_label: 橱窗
+        derivation_mode: extractive
+        evidence_spans:
+        - end: 26
+          start: 24
+          text: 橱窗
+        surface_forms:
+        - 橱窗
+      object_anchor:
+        derived_from_anchor_ids:
+        - ANCH-P-001
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗
+    after:
+      typed_anchors:
+      - anchor_id: ANCH-P-001
+        anchor_type: styling_or_selection_task
+        anchor_role: primary_focus
+        canonical_label: 橱窗人台陈列实施与复核流程
+        surface_forms:
+        - 清单核对
+        - 橱窗人台
+        - 套上
+        - 退到玻璃外
+        - 复核
+        - 完成标志
+        evidence_spans:
+        - start: 6
+          end: 21
+          text: 店长先拿清单核对可用服装与尺码
+        - start: 22
+          end: 38
+          text: 再给橱窗人台套上廓形西装和阔腿裤
+        - start: 45
+          end: 71
+          text: 她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上
+        - start: 88
+          end: 100
+          text: 每一步都有清楚的完成标志
+        derivation_mode: faithful_composite
+        semantic_components:
+        - component: checklist_verification
+          evidence_spans:
+          - start: 6
+            end: 21
+            text: 店长先拿清单核对可用服装与尺码
+        - component: mannequin_dressing
+          evidence_spans:
+          - start: 22
+            end: 38
+            text: 再给橱窗人台套上廓形西装和阔腿裤
+        - component: outside_glass_review
+          evidence_spans:
+          - start: 45
+            end: 71
+            text: 她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上
+        - component: completion_marker
+          evidence_spans:
+          - start: 88
+            end: 100
+            text: 每一步都有清楚的完成标志
+      - anchor_id: ANCH-S-001
+        anchor_type: apparel_item
+        anchor_role: secondary_focus
+        canonical_label: 廓形西装
+        surface_forms:
+        - 廓形西装
+        evidence_spans:
+        - start: 30
+          end: 34
+          text: 廓形西装
+        derivation_mode: extractive
+      - anchor_id: ANCH-S-002
+        anchor_type: apparel_item
+        anchor_role: secondary_focus
+        canonical_label: 阔腿裤
+        surface_forms:
+        - 阔腿裤
+        evidence_spans:
+        - start: 35
+          end: 38
+          text: 阔腿裤
+        derivation_mode: extractive
+      - anchor_id: ANCH-C-001
+        anchor_type: space_or_display
+        anchor_role: scene_context
+        canonical_label: 橱窗
+        surface_forms:
+        - 橱窗
+        evidence_spans:
+        - start: 24
+          end: 26
+          text: 橱窗
+        derivation_mode: extractive
+      object_anchor:
+        status: DERIVED_COMPATIBILITY_PROJECTION
+        value: 橱窗人台陈列实施与复核流程
+        derived_from_anchor_ids:
+        - ANCH-P-001
+    body_sha256: 60c381949b1887eab8de20ec5e85b3c965433ebd6049253ff514f39ec69d449d
+  immutability:
+    unchanged_record_count: 116
+    body_change_count: 0
+    source_kernel_change_count: 0
+    role_semantic_change_count: 0
+    action_binding_change_count: 0
+    headcount_change_count: 0
+    expression_asset_type_change_count: 0
+    other_expression_kernel_change_count: 0
+    knowledge_count_increment: 0

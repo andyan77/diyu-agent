@@ -1,0 +1,29 @@
+selftest_cases:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-FOUR-ANCHOR-NORMALIZATION-AND-REFERENCE-CORPUS-FREEZE-001
+  fixture_strategy: live_positive_bundle_plus_single_invariant_in_memory_mutations
+  result_pass_booleans_trusted_by_checker: false
+  positive_fixture:
+    name: founder_reviewed_clean_120_reference_corpus_v1
+    expected: PASS
+  negative_fixtures:
+    - anchor_015_window_still_primary
+    - anchor_049_missing_garment
+    - anchor_059_only_window
+    - anchor_234_missing_prop
+    - primary_projection_mismatch
+    - anchor_evidence_not_in_body
+    - faithful_composite_adds_theory
+    - fifth_asset_changed
+    - body_changed
+    - source_kernel_changed
+    - role_headcount_changed
+    - expression_asset_type_changed
+    - freeze_manifest_wrong_digest
+    - only_three_of_four_frozen
+    - second_canonical_corpus
+    - generation_or_downstream_unlocked
+  invariant:
+    every_negative_must_fail_closed: true
+    python_optimized_mode_exit: 2
+    partial_freeze_forbidden: true

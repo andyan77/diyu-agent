@@ -1,0 +1,68 @@
+reference_corpus_freeze_manifest:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-FOUR-ANCHOR-NORMALIZATION-AND-REFERENCE-CORPUS-FREEZE-001
+  reference_corpus:
+    corpus_id: FOUNDER-REVIEWED-CLEAN-120-REFERENCE-CORPUS-001
+    freeze_name: Founder-reviewed_Clean_120_reference_corpus
+    version: 1.0.0
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+    asset_count: 120
+    unique_kernel_count: 120
+    corpus_sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    content_copy_count_in_freeze_manifest: 0
+  parent:
+    manifest_version: v0.2
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_metadata_patch_001/clean_120_semantic_asset_manifest.v0.2.jsonl
+    commit: acfeeaa615a34a974174dd1b7973da96ddebd71e
+    manifest_sha256: a783363fd37ea55a5e887549e40118a9de880ec4196dc46c298ef9ded2b425ca
+  acceptance:
+    decision_authority: Founder
+    decision_recorded_by: Codex
+    founder_verdict: FINAL_PASS_AFTER_APPROVED_METADATA_PATCH
+    approved_patch_count: 4
+    applied_patch_count: 4
+    conditions_satisfied: true
+    founder_final_acceptance: PASS
+    reference_corpus_frozen: true
+    guardian_delivery_review: PENDING
+  inherited_record_review_status:
+    status: PRE_FREEZE_HISTORICAL_METADATA
+    authoritative_for_reference_freeze: false
+    mutation_allowed_in_this_task: false
+    freeze_authority: reference_corpus_freeze_manifest.acceptance
+    reason: per_record_freeze_field_drift_is_forbidden
+  allowed_reference_uses:
+  - offline evaluation
+  - gold/reference calibration
+  - generation contract design
+  - prompt and judge calibration
+  - future scale-batch comparison
+  - bounded generation exemplar reference
+  forbidden_interpretations:
+  - ontology truth
+  - CandidatePack acceptance
+  - KE admission
+  - Serving Projection
+  - RAG context
+  - DIFY input
+  - runtime-ready content kernel
+  - production-ready content
+  - 600 or 3600 generation authorization
+  - mechanical replication as a scale template
+  expression_diversity:
+    status: OPEN_SCALE_RISK
+    reference_corpus_freeze_blocked_by_this_risk: false
+    generation_600_blocked_by_this_risk: true
+  scale:
+    scale_contract_design_allowed: true
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+  downstream_and_readiness:
+    CandidatePack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    runtime_content_kernel_ready: false

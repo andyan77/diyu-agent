@@ -1,0 +1,56 @@
+{
+  "task_id": "GKB-P7D-CLEAN-120-FOUR-ANCHOR-NORMALIZATION-AND-REFERENCE-CORPUS-FREEZE-001",
+  "head_before": "acfeeaa615a34a974174dd1b7973da96ddebd71e",
+  "head_after": "recorded_by_git_commit_object",
+  "branch": "master",
+  "patch": {
+    "expected_count": 4,
+    "applied_count": 4,
+    "changed_asset_ids": [
+      "P7D40-REPAIR-234",
+      "RV80-ASSET-015",
+      "RV80-ASSET-049",
+      "RV80-ASSET-059"
+    ],
+    "unauthorized_change_count": 0
+  },
+  "immutability": {
+    "unchanged_record_count": 116,
+    "body_digest_match_count": 120,
+    "source_kernel_digest_match_count": 120,
+    "role_action_headcount_digest_match_count": 120,
+    "expression_asset_type_digest_match_count": 120,
+    "other_semantic_digest_match_count": 120,
+    "knowledge_count_increment": 0
+  },
+  "freeze": {
+    "corpus_id": "FOUNDER-REVIEWED-CLEAN-120-REFERENCE-CORPUS-001",
+    "corpus_version": "1.0.0",
+    "parent_manifest_sha256": "a783363fd37ea55a5e887549e40118a9de880ec4196dc46c298ef9ded2b425ca",
+    "corpus_sha256": "b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91",
+    "founder_decision_authority": "Founder",
+    "founder_conditions_satisfied": true,
+    "founder_final_acceptance": "PASS",
+    "reference_corpus_frozen": true,
+    "guardian_delivery_review": "PENDING"
+  },
+  "checks": {
+    "parent_checker_live": "PASS",
+    "freeze_checker_live": "PASS",
+    "freeze_checker_selftest": "PASS",
+    "negative_fixture_count": 16,
+    "python_O_fail_closed": "exit_2",
+    "ruff": "PASS",
+    "py_compile": "PASS"
+  },
+  "scale": {
+    "scale_contract_design_allowed": true,
+    "generation_600_allowed": false,
+    "expand_600_allowed": false,
+    "expand_3600_allowed": false
+  },
+  "downstream_and_readiness": {
+    "all_false": true
+  },
+  "result_status": "FOUNDER_APPROVED_CLEAN_120_REFERENCE_CORPUS_FREEZE_EXECUTED_PENDING_CLAUDE_DELIVERY_CONFIRMATION"
+}

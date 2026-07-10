@@ -129,3 +129,12 @@
 - `RV80-ASSET-015`、`RV80-ASSET-049`、`RV80-ASSET-059`、`P7D40-REPAIR-234` 的“服装还是陈列空间为 primary”只登记为 Founder follow-up，本任务未扩面裁决。
 - 机器范围仅为 `STRUCTURAL_METADATA_AND_EVIDENCE_ONLY`；结果仍待 Claude Code delta review 与 Founder 最终接受，不冻结 reference corpus，不解锁 600、3600 或下游。
 - `route_migration_16` 只 additive 记录本次补丁；旧 step status、旧 migration、全部 readiness 与扩量锁均保持不变。
+
+## P7D Founder-reviewed Clean-120 Reference Corpus Freeze
+
+- `GKB-P7D-CLEAN-120-FOUR-ANCHOR-NORMALIZATION-AND-REFERENCE-CORPUS-FREEZE-001` 精确执行 Founder 对 `RV80-ASSET-015/049/059` 与 `P7D40-REPAIR-234` 的四条 Anchor 裁决；116 条记录保持 parent canonical JSON 行字节一致。
+- 唯一冻结真源为 `founder_reviewed_clean_120_reference_corpus.v1.0.jsonl`，corpus SHA256 为 `b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91`。
+- Founder 条件式决定已满足并记录为 `FINAL_PASS_AFTER_APPROVED_METADATA_PATCH`；Reference Corpus 状态为 `FROZEN_FOUNDER_REVIEWED`，仍待 Claude Code delivery confirmation。
+- 冻结语料仅可用于离线评测、gold/reference 校准、合同与 judge 设计、未来批次比较及有界 exemplar reference；不得解释为本体真值、下游准入、runtime 或 production readiness。
+- 表达多样性仍为 `OPEN_SCALE_RISK`。只解锁 600 表达多样性与抽样验收合同的设计，不授权生成 600，不解锁 600、3600 或任何下游。
+- `route_migration_17` 只 additive 记录本次冻结；旧 step status、旧 migration 与全部 readiness 字面保持不变。
