@@ -1,0 +1,12 @@
+negative_fixture_manifest:
+  negative_cases:
+  - missing_record
+  - extra_output
+  - control_consumed_kernel
+  - treatment_wrong_kernel
+  - blind_packet_arm_leak
+  - codex_self_review_pass
+  - p7d_status_changed
+  - readiness_true
+  - malformed_jsonl
+  expected_status: FAIL_CLOSED

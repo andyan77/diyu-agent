@@ -1,0 +1,18 @@
+runtime_ab_execution_provenance:
+  schema_version: v0.1
+  task_id: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+  runtime_kind: codex_native_agent_execution
+  created_by: Codex
+  external_LLM_called: false
+  external_network_required: false
+  secret_accessed: false
+  api_cost_recorded: false
+  model_identity: codex_native_agent_execution; external model metadata not applicable
+  methodology_limitations:
+  - both arms authored by Codex, and treatment identity is known to author
+  - control-first freezing plus blind Claude review mitigates but does not eliminate author-awareness bias
+  - result is a codex-native directional signal, not external-runtime or 3600 scalability evidence
+  - founder explicitly authorized continuation after kernel preview risk was reported
+  original_assets_modified: false
+  review_packet_kernel_consumed_for_generation: false
+  generated_at_note: repository local execution; exact wall-clock timestamp intentionally not used as proof of external runtime

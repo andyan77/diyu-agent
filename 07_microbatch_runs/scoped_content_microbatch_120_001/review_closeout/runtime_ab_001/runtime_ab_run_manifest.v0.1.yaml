@@ -1,0 +1,48 @@
+runtime_ab_run_manifest:
+  schema_version: v0.1
+  task_id: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+  task_semantic_revision: codex_native_content_kernel_paired_ab
+  stage: P7C_AB
+  runtime_kind: codex_native_agent_execution
+  external_LLM_API_required: false
+  external_LLM_called: false
+  API_key_required: false
+  secret_accessed: false
+  sample_count: 12
+  arms_per_sample: 2
+  expected_output_count: 24
+  actual_output_count: 24
+  control_count: 12
+  treatment_count: 12
+  execution_order: all_control_records_frozen_before_treatment_records
+  control_generation_sequence_max: 12
+  treatment_generation_sequence_min: 13
+  methodology_caveat:
+    founder_authorized_continuation_after_kernel_preview_risk: true
+    not_unbiased_RCT: true
+    control_first_protocol_retained_in_records: true
+    guardian_review_required: Claude Code
+  evidence_scope:
+    proves:
+    - bounded_codex_native_content_kernel_generation_uplift_signal
+    - paired_quality_difference_for_blind_review
+    - fact_boundary_regression_or_non_regression_signal
+    does_not_prove:
+    - external_API_runtime
+    - DIFY_runtime
+    - automated_generator_stability
+    - execution_scalability_for_3600
+    - CandidatePack_or_KE_eligibility
+  frozen_sample_ids:
+  - SCM120-CAND-002
+  - SCM120-CAND-016
+  - SCM120-CAND-040
+  - SCM120-CAND-070
+  - SCM120-CAND-023
+  - SCM120-CAND-045
+  - SCM120-CAND-080
+  - SCM120-CAND-113
+  - SCM120-CAND-101
+  - SCM120-CAND-059
+  - SCM120-CAND-106
+  - SCM120-CAND-062

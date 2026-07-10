@@ -1,0 +1,55 @@
+runtime_ab_deterministic_metrics:
+  schema_version: v0.1
+  task_id: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+  runtime_kind: codex_native_agent_execution
+  sample_count: 12
+  expected_output_count: 24
+  actual_output_count: 24
+  control_count: 12
+  treatment_count: 12
+  support_bucket_distribution:
+    high_support: 4
+    low_support: 4
+    medium_support: 4
+  generation_mode_coverage:
+  - creative_prototype
+  - display_solution
+  - evidence_bound_candidate
+  - fact_slot_script
+  p0_group_coverage:
+  - P0_01
+  - P0_02
+  - P0_03
+  - P0_04
+  - P0_05
+  claim_risk_sample_count: 6
+  store_display_sample_count: 4
+  output_characters:
+    P7C-AB-SCM120-CAND-002-CONTROL: 288
+    P7C-AB-SCM120-CAND-016-CONTROL: 250
+    P7C-AB-SCM120-CAND-040-CONTROL: 245
+    P7C-AB-SCM120-CAND-070-CONTROL: 252
+    P7C-AB-SCM120-CAND-023-CONTROL: 288
+    P7C-AB-SCM120-CAND-045-CONTROL: 245
+    P7C-AB-SCM120-CAND-080-CONTROL: 252
+    P7C-AB-SCM120-CAND-113-CONTROL: 250
+    P7C-AB-SCM120-CAND-101-CONTROL: 288
+    P7C-AB-SCM120-CAND-059-CONTROL: 245
+    P7C-AB-SCM120-CAND-106-CONTROL: 288
+    P7C-AB-SCM120-CAND-062-CONTROL: 245
+    P7C-AB-SCM120-CAND-002-TREATMENT: 511
+    P7C-AB-SCM120-CAND-016-TREATMENT: 343
+    P7C-AB-SCM120-CAND-040-TREATMENT: 404
+    P7C-AB-SCM120-CAND-070-TREATMENT: 406
+    P7C-AB-SCM120-CAND-023-TREATMENT: 421
+    P7C-AB-SCM120-CAND-045-TREATMENT: 448
+    P7C-AB-SCM120-CAND-080-TREATMENT: 429
+    P7C-AB-SCM120-CAND-113-TREATMENT: 426
+    P7C-AB-SCM120-CAND-101-TREATMENT: 356
+    P7C-AB-SCM120-CAND-059-TREATMENT: 391
+    P7C-AB-SCM120-CAND-106-TREATMENT: 387
+    P7C-AB-SCM120-CAND-062-TREATMENT: 378
+  all_output_digests_unique: false
+  semantic_regeneration_count: 0
+  transport_retry_count: 0
+  codex_quality_score_written: false

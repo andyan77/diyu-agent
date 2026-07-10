@@ -1,0 +1,33 @@
+{
+  "checker": "check_p7c_content_kernel_runtime_ab.py",
+  "task_id": "GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001",
+  "status": "PASS",
+  "error_count": 0,
+  "errors": [],
+  "runtime_kind": "codex_native_agent_execution",
+  "sample_count": 12,
+  "actual_output_count": 24,
+  "control_count": 12,
+  "treatment_count": 12,
+  "support_bucket_distribution": {
+    "high_support": 4,
+    "medium_support": 4,
+    "low_support": 4
+  },
+  "generation_mode_coverage": [
+    "creative_prototype",
+    "display_solution",
+    "evidence_bound_candidate",
+    "fact_slot_script"
+  ],
+  "p0_group_coverage_count": 5,
+  "claim_risk_sample_count": 6,
+  "store_display_sample_count": 4,
+  "result_status": "CODEX_NATIVE_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN",
+  "external_LLM_called": false,
+  "readiness_false": true,
+  "prior_results": {
+    "p7c_review": 0,
+    "p7c_scale_prep": 0
+  }
+}

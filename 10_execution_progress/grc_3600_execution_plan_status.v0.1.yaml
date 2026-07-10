@@ -1,6 +1,42 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
   updated_by_task: GKB-P7C-SCALE-GATE-COMPLETION-AND-RUNTIME-AB-HANDOFF-001
+  route_migration_6:
+    applied_by_task: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+    applied_from: founder_authorized_codex_native_paired_ab_after_guardian_conditional_pass
+    task_semantic_revision: codex_native_content_kernel_paired_ab
+    runtime_kind: codex_native_agent_execution
+    status_recorded: CODEX_NATIVE_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN
+    result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/runtime_ab_001/runtime_ab_result.v0.1.yaml
+    blind_review_packet_path: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/runtime_ab_001/runtime_ab_blind_review_packet.v0.1.jsonl
+    arm_key_path: 07_microbatch_runs/scoped_content_microbatch_120_001/review_closeout/runtime_ab_001/runtime_ab_arm_key.v0.1.yaml
+    route_anchor_statuses_preserved: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    external_LLM_called: false
+    secret_accessed: false
+    expected_output_count: 24
+    actual_output_count: 24
+    control_count: 12
+    treatment_count: 12
+    quality_review_status: PENDING_CLAUDE_CODE_BLIND_REVIEW
+    real_runtime_AB_evidence_status: NOT_YET_CONFIRMED
+    execution_scalability_gate: PENDING
+    final_scale_decision: HOLD
+    expand_to_3600_allowed: false
+    midbatch_300_600_allowed: false
+    methodology_caveat:
+      founder_authorized_continuation_after_kernel_preview_risk: true
+      both_arms_codex_authored: true
+      treatment_identity_known_to_author: true
+      conclusion_scope: codex_native_directional_signal_only
+    preserved_status_literals:
+      P7C-AB: NEXT
+      P7C_SCALE: BLOCKED_BY_RUNTIME_AB_AND_EXECUTION_SCALABILITY
+      P7C_SCALE_PREP: DONE
+      P7D: BLOCKED_BY_P7C_SCALE_DECISION
+      P8: BLOCKED_BY_P7D
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

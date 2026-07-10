@@ -1,0 +1,35 @@
+runtime_ab_result:
+  task_id: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+  task_semantic_revision: codex_native_content_kernel_paired_ab
+  runtime_kind: codex_native_agent_execution
+  result_status: CODEX_NATIVE_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN
+  expected_output_count: 24
+  actual_output_count: 24
+  generation_execution:
+    status: COMPLETE
+    external_LLM_called: false
+    authored_by: Codex
+    secret_accessed: false
+    semantic_regeneration_count: 0
+    transport_retry_count: 0
+  quality_review:
+    status: PENDING_CLAUDE_CODE_BLIND_REVIEW
+    codex_independent_quality_score_written: false
+    blind_packet_created: true
+    arm_key_separate: true
+  real_runtime_AB_evidence:
+    runtime_kind: codex_native_agent_execution
+    status: NOT_YET_CONFIRMED
+  methodology_caveat:
+    founder_authorized_continuation_after_kernel_preview_risk: true
+    not_unbiased_RCT: true
+    guardian_review_required: true
+  execution_scalability_gate: PENDING
+  final_scale_decision: HOLD
+  expand_to_3600_allowed: false
+  midbatch_300_600_allowed: false
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_ready: false

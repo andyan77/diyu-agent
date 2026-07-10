@@ -36,3 +36,11 @@
 - 本任务不重新评分 120 条、不生成、不运行真实 LLM/DIFY、不创建 Serving/RAG/DIFY/KE/CandidatePack。
 - `P7D.status` 保持 `BLOCKED_BY_P7C_SCALE_DECISION` 以兼容已提交 P7C-REVIEW checker；语义上由新增 `P7C_SCALE` 阻塞。
 - 下一步仅为 `P7C-AB` / `GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001` 的单独授权流程；`expand_to_3600_allowed=false`。
+
+## P7C Codex-Native Content Kernel A/B
+
+- `GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001` 已按修订语义执行为 `codex_native_content_kernel_paired_ab`：12 个冻结样本、24 条 paired 输出，`control=12` / `treatment=12`。
+- 本任务不调用外部 LLM、不读取密钥、不产生 API 成本；`runtime_kind=codex_native_agent_execution`。
+- 结果状态只记录为 `CODEX_NATIVE_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN`；需 Claude Code 先盲评 X/Y，再读取 arm key。
+- 方法学 caveat：founder 已授权在 kernel preview 风险被报告后继续执行；该结果只作为 Codex-native 方向性信号，不是无偏 RCT，不证明外部 runtime、不证明 3600 扩量稳定性。
+- `P7C-AB.status` 仍保持 `NEXT`，`P7D.status` 仍保持 `BLOCKED_BY_P7C_SCALE_DECISION`；本次仅通过 `route_migration_6` 记录执行事实，不翻 readiness，不关闭 execution scalability gate。
