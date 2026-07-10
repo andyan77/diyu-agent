@@ -1,0 +1,3480 @@
+review_packet_kernel_matrix:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  kernel_count: 120
+  visibility_status_all: review_only
+  entries:
+  - candidate_id: SCM120-CAND-001
+    generation_assignment_id: SCM120-A001
+    canonical_cluster_id: mkc_007
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-001-RB
+    visibility_status: review_only
+    forbidden_claims: 不走形、耐穿这类硬结论无源时不直接下断言，降级为顾客的顾虑与镜前可观察的回弹、接缝，其余归入供应链/组织/过程证明的待补位置。
+    required_fact_slots: []
+    evidence_boundary: 凡尚不能当场看见的供应链、组织、过程证明，只在叙事里留出位置等它们真站得住再填，绝不假称现场已经成立。
+    downgrade_path: 不走形、耐穿这类硬结论无源时不直接下断言，降级为顾客的顾虑与镜前可观察的回弹、接缝，其余归入供应链/组织/过程证明的待补位置。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-002
+    generation_assignment_id: SCM120-A002
+    canonical_cluster_id: mkc_007
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-002-RB
+    visibility_status: review_only
+    forbidden_claims: 针织回弹与耐久等 performance/硬结论无源 → 降级为企业自守的内部下限标准，并把可核证据挂入显式【供应链与过程证明位：待组织复核记录接入】槽位，明确眼下无过程数据坐实；一次性走红事件不足以支撑叙事
+      → 按 PROP-V1-003 降级为普通当季信息条目。
+    required_fact_slots:
+    - name: supply_process_proof_slot
+      family: 供应链 / 组织 / 过程证明的预留槽位
+      placeholder: 【供应链与过程证明位：待组织复核记录接入】
+    evidence_boundary: 按 creative_prototype 规则不依赖任何品牌真实事实；选款会、买手、走红针织衫均为虚构示例，不指名真实品牌/人物/平台、不声称已发布事实；耐久性能类结论（洗几次不松、多少天不走形）不给具体数字，改声明无过程数据坐实并挂【供应链与过程证明位…】槽位，杜绝编造产品事实。
+    downgrade_path: 针织回弹与耐久等 performance/硬结论无源 → 降级为企业自守的内部下限标准，并把可核证据挂入显式【供应链与过程证明位：待组织复核记录接入】槽位，明确眼下无过程数据坐实；一次性走红事件不足以支撑叙事
+      → 按 PROP-V1-003 降级为普通当季信息条目。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-003
+    generation_assignment_id: SCM120-A003
+    canonical_cluster_id: mkc_007
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-003-RB
+    visibility_status: review_only
+    forbidden_claims: 涉及有多少人在穿、卖得比谁快等规模与增长硬结论时不替市场把话说满，一律降级为可观察做法或留待官方资料补入后再讲。
+    required_fact_slots: []
+    evidence_boundary: 全篇只写能在样衣间与货架上被看到的动作和成衣细节，不写任何具体企业事件、真实人物经历或宣称已发布的事实。
+    downgrade_path: 涉及有多少人在穿、卖得比谁快等规模与增长硬结论时不替市场把话说满，一律降级为可观察做法或留待官方资料补入后再讲。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-004
+    generation_assignment_id: SCM120-A004
+    canonical_cluster_id: mkc_008
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-004-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦一类硬结论无来源时不直接下判断，降级为可观察动作——'搓两下起不起球''抬手袖子吊不吊''坐下腰顶不顶'——把结论交给画面而非口号。
+    required_fact_slots: []
+    evidence_boundary: 全程不指名任何具体品牌、不写真实人物经历、不宣称已上市；羊毛匹次、返工三次、挪半公分等细节只作原型示意，不当作真实产品事实。
+    downgrade_path: 耐穿、显瘦一类硬结论无来源时不直接下判断，降级为可观察动作——'搓两下起不起球''抬手袖子吊不吊''坐下腰顶不顶'——把结论交给画面而非口号。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-005
+    generation_assignment_id: SCM120-A005
+    canonical_cluster_id: mkc_008
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-005-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、卖得好这类无源硬结论一律不写死，降级为可观察的走线、活动量、肩线朝光等画面，或留待证据补入。
+    required_fact_slots: []
+    evidence_boundary: 复核门可以写它一直存在，但某一批到底挑出多少返工属于经营账本上的数，只留白、不写进正文。
+    downgrade_path: 耐穿、显瘦、卖得好这类无源硬结论一律不写死，降级为可观察的走线、活动量、肩线朝光等画面，或留待证据补入。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-006
+    generation_assignment_id: SCM120-A006
+    canonical_cluster_id: mkc_008
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-006-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、高级这类无源硬结论一律降级为镜前可观察的针脚走向、肩线、合身描述，或留作待补证据，等授权材料到齐再补，绝不当既有事实写出。
+    required_fact_slots: []
+    evidence_boundary: 供应商、工厂与检测报告这类要授权才能落笔的实例事实，缺授权时只承认存在这样一道工序节点，名字与出处一律留空等材料补齐，不硬写。
+    downgrade_path: 耐穿、显瘦、高级这类无源硬结论一律降级为镜前可观察的针脚走向、肩线、合身描述，或留作待补证据，等授权材料到齐再补，绝不当既有事实写出。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-007
+    generation_assignment_id: SCM120-A007
+    canonical_cluster_id: mkc_009
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-007-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、卖得更好、地位等硬结论在没有摆得上台面的可核验凭据时，一律降级为镜头可见的可观察描述或留白由观者自行判断，不替观者下结论。
+    required_fact_slots: []
+    evidence_boundary: '"更耐穿""比从前好"这类拿不出凭据的结果宣称一律往回收，改成起绒与平织并排的面料比较画面，把判断交还给看的人。'
+    downgrade_path: 耐穿、显瘦、卖得更好、地位等硬结论在没有摆得上台面的可核验凭据时，一律降级为镜头可见的可观察描述或留白由观者自行判断，不替观者下结论。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-008
+    generation_assignment_id: SCM120-A008
+    canonical_cluster_id: mkc_009
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-008-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿/显瘦/高级等硬结论一旦无源，一律降级为面料肌理、门襟松紧、袖口垂坠等可被看见的观察描述，或先留空挂待补证据，绝不硬下。
+    required_fact_slots: []
+    evidence_boundary: 凡是"撑最久""最耐穿"这类要证据才成立的断言，一律不在无据时下结论，改可观察描述或先空出等着补。
+    downgrade_path: 耐穿/显瘦/高级等硬结论一旦无源，一律降级为面料肌理、门襟松紧、袖口垂坠等可被看见的观察描述，或先留空挂待补证据，绝不硬下。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-009
+    generation_assignment_id: SCM120-A009
+    canonical_cluster_id: mkc_009
+    p0_group: P0_01
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-009-RB
+    visibility_status: review_only
+    forbidden_claims: 无源的情绪硬结论（顾客红眼眶、送自己生日礼物）降级为可上手的面料比较与搭配比例展示，不落任何业绩数字或耐穿宣称；陈列落地这类最终事实改为【货架前实测后再落位】挂槽等填。
+    required_fact_slots:
+    - name: 陈列落位
+      family: display_landing_fact
+      placeholder: 【货架前实测后再落位】
+    evidence_boundary: 碰到'替素未谋面的顾客安一段心里的戏'这条红线就地停手：煽情开头只以被删掉的方式出现，不作为事实断言；明早陈列的最终落位不拍脑袋写死，留成便签上的显式空槽。
+    downgrade_path: 无源的情绪硬结论（顾客红眼眶、送自己生日礼物）降级为可上手的面料比较与搭配比例展示，不落任何业绩数字或耐穿宣称；陈列落地这类最终事实改为【货架前实测后再落位】挂槽等填。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-010
+    generation_assignment_id: SCM120-A010
+    canonical_cluster_id: mkc_010
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-010-RB
+    visibility_status: review_only
+    forbidden_claims: '"棉麻各占多少""算不算本季主推"属需核验的硬结论，未落定时不在正文下断言，降级挂到【品牌事实：面料配比与本季主推系列】命名槽位，并以吊牌留空显式标记待补。'
+    required_fact_slots:
+    - name: 陈列师姓名与到岗时间
+      family: 角色事实
+      placeholder: 【角色事实：陈列师姓名与到岗时间】
+    - name: 面料配比与本季主推系列
+      family: 品牌事实
+      placeholder: 【品牌事实：面料配比与本季主推系列】
+    evidence_boundary: 面料配比与本季主推等尚未落定的品牌事实一律写成显式命名槽位、把吊牌那行留空，绝不替品牌抢先编造；全文无真实顾客反馈、无具体品牌事件、无真实人物经历，店长与顾客均为泛化角色。
+    downgrade_path: '"棉麻各占多少""算不算本季主推"属需核验的硬结论，未落定时不在正文下断言，降级挂到【品牌事实：面料配比与本季主推系列】命名槽位，并以吊牌留空显式标记待补。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-011
+    generation_assignment_id: SCM120-A011
+    canonical_cluster_id: mkc_010
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-011-RB
+    visibility_status: review_only
+    forbidden_claims: '"耐不耐穿、值不值"这类硬结论无源时一律不下判断，降级为先讲看得见的叠装层次，把面料成分与克重、系列定位说明挂成显式【产品事实】槽位待补。'
+    required_fact_slots:
+    - name: 面料成分与克重
+      family: product_anchor
+      placeholder: 【产品事实：面料成分与克重】
+    - name: 系列定位说明
+      family: brand_claim
+      placeholder: 【产品事实：这一系列的定位说明】
+    - name: 搭配师名字与身份
+      family: role_anchor
+      placeholder: 【角色事实：搭配师的名字与身份】
+    evidence_boundary: 只有当衣服上真有走线、拼缝、翻折这类可指认实物时这套锚点才成立；通篇只剩情绪、无实物可怼镜头就先回去补锚点再落笔，不硬套。
+    downgrade_path: '"耐不耐穿、值不值"这类硬结论无源时一律不下判断，降级为先讲看得见的叠装层次，把面料成分与克重、系列定位说明挂成显式【产品事实】槽位待补。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-012
+    generation_assignment_id: SCM120-A012
+    canonical_cluster_id: mkc_010
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-012-RB
+    visibility_status: review_only
+    forbidden_claims: '"销量第一"一类无源硬结论不写进正文，降级为眼睛可观察的实物描述，或挂成【品牌事实：…】命名槽位待核对，绝不替品牌编造填槽。'
+    required_fact_slots:
+    - name: 该款所属系列与上市时段
+      family: product_anchor
+      placeholder: 【品牌事实：该款所属系列与上市时段】
+    - name: 出镜人身份与合作关系
+      family: role_anchor
+      placeholder: 【角色事实：出镜人身份与合作关系】
+    evidence_boundary: 只有情绪形容而无实物依托的稿子不硬套这套锚点，缺细节先补锚点再落笔；凡带具体货号价格库存的描述一律剔除或先标缺来源，绝不混入叙述。
+    downgrade_path: '"销量第一"一类无源硬结论不写进正文，降级为眼睛可观察的实物描述，或挂成【品牌事实：…】命名槽位待核对，绝不替品牌编造填槽。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-013
+    generation_assignment_id: SCM120-A013
+    canonical_cluster_id: mkc_011
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-013-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、拿奖、排名靠前这类硬结论无源时绝不写死：能改的降级为可观察描述，不能改的挂【品牌事实/角色事实】槽位待材料补齐，涉及敏感承诺的转送能拍板的人复核。
+    required_fact_slots:
+    - name: 面料耐用实测
+      family: product_anchor
+      placeholder: 【品牌事实：面料克重与水洗起球测试数据】
+    - name: 奖项事实
+      family: brand_claim
+      placeholder: 【品牌事实：奖项名称与颁发年份】
+    - name: 榜单排名
+      family: brand_claim
+      placeholder: 【品牌事实：榜单名称与排名位次】
+    - name: 认证事实
+      family: brand_claim
+      placeholder: 【品牌事实：认证机构与证书编号】
+    - name: 顾客原话
+      family: role_anchor
+      placeholder: 【角色事实：顾客原话与授权状态】
+    - name: 门店事件
+      family: event_anchor
+      placeholder: 【品牌事实：门店事件时间与在场记录】
+    - name: 员工经历
+      family: role_anchor
+      placeholder: 【角色事实：员工姓名与在职年限】
+    evidence_boundary: 更显瘦、更耐穿这类身体效果与功效表达要么降级成观察语言要么挂起等实测；奖项、排名、认证、门店事件、顾客反馈、员工经历一律留槽不编，敏感承诺送复核。
+    downgrade_path: 耐穿、显瘦、拿奖、排名靠前这类硬结论无源时绝不写死：能改的降级为可观察描述，不能改的挂【品牌事实/角色事实】槽位待材料补齐，涉及敏感承诺的转送能拍板的人复核。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-014
+    generation_assignment_id: SCM120-A014
+    canonical_cluster_id: mkc_011
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-014-RB
+    visibility_status: review_only
+    forbidden_claims: 更显瘦、更耐穿、奖项、排名、认证这类硬结论无源时不自己下笔，要么改写成裤缝走向、双层压胶走线等可观察工艺，要么写成显式品牌事实槽位挂着待补。
+    required_fact_slots:
+    - name: 老员工从业经历
+      family: role_anchor
+      placeholder: 【角色事实：这位老员工的从业年限与真实经历】
+    - name: 可引用顾客原话与授权
+      family: brand_claim
+      placeholder: 【品牌事实：可公开引用的顾客原话与授权凭据】
+    - name: 奖项或认证名称与年份
+      family: brand_claim
+      placeholder: 【品牌事实：可核验的奖项或认证名称与年份】
+    evidence_boundary: 涉及门店事件与带承诺口气的说法不自行改删，交由能拍板的人复核；依赖具体人物或顾客原话的叙述缺授权即挂起不上。
+    downgrade_path: 更显瘦、更耐穿、奖项、排名、认证这类硬结论无源时不自己下笔，要么改写成裤缝走向、双层压胶走线等可观察工艺，要么写成显式品牌事实槽位挂着待补。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-015
+    generation_assignment_id: SCM120-A015
+    canonical_cluster_id: mkc_011
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-015-RB
+    visibility_status: review_only
+    forbidden_claims: '"更显瘦""更耐穿"这类功效硬结论在没有量体数据或耐磨出处时，一律降级为当场可观察的腰线、袖口、手感描述，或留成等厂方准信的命名槽位，绝不当既成事实写。'
+    required_fact_slots:
+    - name: 面料成分与耐磨出处
+      family: product_anchor
+      placeholder: 【品牌事实：该面料的成分配比与耐磨测试出具方】
+    - name: 系列奖项排名与认证
+      family: brand_claim
+      placeholder: 【品牌事实：该系列的获奖名称、榜单排名与面料认证机构】
+    - name: 同事从业经历
+      family: role_anchor
+      placeholder: 【角色事实：这位同事的从业年限与最擅长的版型】
+    - name: 门店活动事实
+      family: event_anchor
+      placeholder: 【门店事实：上周那场活动的日期与到场人数】
+    evidence_boundary: 依赖具体老同事、具体顾客、具体门店事件才成立的叙述，未拿到本人露脸授权前一律不出现，改写成槽位挂起。
+    downgrade_path: '"更显瘦""更耐穿"这类功效硬结论在没有量体数据或耐磨出处时，一律降级为当场可观察的腰线、袖口、手感描述，或留成等厂方准信的命名槽位，绝不当既成事实写。'
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-016
+    generation_assignment_id: SCM120-A016
+    canonical_cluster_id: mkc_012
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-016-RB
+    visibility_status: review_only
+    forbidden_claims: '"不起皱""肩线不塌"只作镜头当场可观察的描述，凡涉及具体面料成分、克重或显瘦等硬结论无源时一律降级挂【品牌事实：…】槽位待补，不当既定事实写死。'
+    required_fact_slots:
+    - name: 本季风衣面料成分与克重
+      family: product_anchor
+      placeholder: 【品牌事实：本季风衣的面料成分与克重】
+    - name: 系列可延展单品清单与主推色
+      family: product_anchor
+      placeholder: 【品牌事实：该系列可延展单品清单与主推色】
+    - name: 出镜模特身份与体型区间
+      family: role_anchor
+      placeholder: 【角色事实：出镜模特身份与体型区间】
+    evidence_boundary: 缺失的产品与角色事实一律写成显式命名槽位，不虚构面料成分、单品清单或模特身份。
+    downgrade_path: '"不起皱""肩线不塌"只作镜头当场可观察的描述，凡涉及具体面料成分、克重或显瘦等硬结论无源时一律降级挂【品牌事实：…】槽位待补，不当既定事实写死。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-017
+    generation_assignment_id: SCM120-A017
+    canonical_cluster_id: mkc_012
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-017-RB
+    visibility_status: review_only
+    forbidden_claims: 面料成分与克重、系列真实名称等无源硬结论不写成既定事实，降级为具名槽位待真源回填；未回填前正文不给出确定值。
+    required_fact_slots:
+    - name: 衬衫面料事实
+      family: 品牌事实
+      placeholder: 【品牌事实：该款衬衫的成分与克重】
+    - name: 系列名称与延展单品
+      family: 品牌事实
+      placeholder: 【品牌事实：可对外引用的系列名称，以及能一并带出的其他单品】
+    - name: 出镜者身份与身形
+      family: 角色事实
+      placeholder: 【角色事实：出镜者身份及其适穿的身形范围】
+    evidence_boundary: 系列真实名称、可延展单品、出镜者身份与适穿身形等硬事实缺失时，一律以具名槽位（品牌事实／角色事实）承载，宁可空着也不虚构填充，不编造品牌事件、门店或顾客事实。
+    downgrade_path: 面料成分与克重、系列真实名称等无源硬结论不写成既定事实，降级为具名槽位待真源回填；未回填前正文不给出确定值。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-018
+    generation_assignment_id: SCM120-A018
+    canonical_cluster_id: mkc_012
+    p0_group: P0_01
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-018-RB
+    visibility_status: review_only
+    forbidden_claims: 因证据要求为仅槽位、无可核来源，凡涉及成交、上新排期、产品线、工艺克重等硬结论均降级为命名槽位（【品牌事实：…】/【角色事实：…】），正文只保留可复述的编排结构与判断顺序，不在正文做实断言。
+    required_fact_slots:
+    - name: 牛仔外套水洗工艺与克重
+      family: brand_fact
+      placeholder: 【品牌事实：这件牛仔外套的水洗工艺与克重】
+    - name: 可成套延展单品与主推配色
+      family: brand_fact
+      placeholder: 【品牌事实：可成套延展的单品与主推配色】
+    - name: 官方上新节奏与系列命名
+      family: brand_fact
+      placeholder: 【品牌事实：官方上新节奏与系列命名】
+    - name: 出镜人身份与常穿尺码
+      family: role_fact
+      placeholder: 【角色事实：出镜的人身份与常穿尺码】
+    evidence_boundary: 所有品牌与角色最终事实（水洗工艺、克重、成套单品、主推配色、上新节奏、出镜人身份与尺码）一律以命名槽位保留，绝不用虚构内容填充；编排序列不被写成任何真实品牌的上新排期或并不存在的产品线/时间线。
+    downgrade_path: 因证据要求为仅槽位、无可核来源，凡涉及成交、上新排期、产品线、工艺克重等硬结论均降级为命名槽位（【品牌事实：…】/【角色事实：…】），正文只保留可复述的编排结构与判断顺序，不在正文做实断言。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-019
+    generation_assignment_id: SCM120-A019
+    canonical_cluster_id: mkc_013
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-019-RB
+    visibility_status: review_only
+    forbidden_claims: 无源的硬结论（显瘦、耐穿、卖得好、地位）不写成看到的事实，降级为搭配师视角"可能""适合谁"的解释词判断，或作为待补理由挂着，不由任何角色打包票。
+    required_fact_slots: []
+    evidence_boundary: 导购视角只留观察词，"显瘦""耐穿"这类承诺一律不由导购拍板，改由搭配师视角以"可能/适合谁"的解释词给出判断理由。
+    downgrade_path: 无源的硬结论（显瘦、耐穿、卖得好、地位）不写成看到的事实，降级为搭配师视角"可能""适合谁"的解释词判断，或作为待补理由挂着，不由任何角色打包票。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-020
+    generation_assignment_id: SCM120-A020
+    canonical_cluster_id: mkc_013
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-020-RB
+    visibility_status: review_only
+    forbidden_claims: 像"耐穿""显瘦""卖得好"这类无据硬结论会被降级为可观察的搭配描述（重心往下压、肩线落位）或挂待补证据槽位；正文里"走起来才稳"只作搭配师视角的主观口吻，不写成对身材或商品的普适定论。
+    required_fact_slots: []
+    evidence_boundary: 凡涉及顾客反应一律降为观察词加"也许"限制语，绝不把猜测写成看到的定论，也不冒充不存在的顾客现身说法。
+    downgrade_path: 像"耐穿""显瘦""卖得好"这类无据硬结论会被降级为可观察的搭配描述（重心往下压、肩线落位）或挂待补证据槽位；正文里"走起来才稳"只作搭配师视角的主观口吻，不写成对身材或商品的普适定论。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-021
+    generation_assignment_id: SCM120-A021
+    canonical_cluster_id: mkc_013
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-021-RB
+    visibility_status: review_only
+    forbidden_claims: '"最耐穿""显瘦十斤"这类无源硬结论一律先划掉，降级成袖口螺纹、下摆长度这种可观察描述，把断言挂成待补，等有据可查再回填。'
+    required_fact_slots: []
+    evidence_boundary: 凡内容里冒出真名、真职务、真门店的引述，一律剔除或先标缺来源、等授权到位再用，绝不借别人的嘴替真人发声，也不为没有叙述者的场景硬造第一人称。
+    downgrade_path: '"最耐穿""显瘦十斤"这类无源硬结论一律先划掉，降级成袖口螺纹、下摆长度这种可观察描述，把断言挂成待补，等有据可查再回填。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-022
+    generation_assignment_id: SCM120-A022
+    canonical_cluster_id: mkc_014
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-022-RB
+    visibility_status: review_only
+    forbidden_claims: '''穿十年不变形''''立马显瘦''这类无源硬结论一律不写成既成事实，降级为第一人称观察化表达（如''我上手这半个月肘部还没起球''）或前置降调与限制语挂待补。'
+    required_fact_slots: []
+    evidence_boundary: 剔除家里几口人、真实原话、具体业绩数字等不可写的真人痕迹，只留懂行上手这层功能化的允许人设表面层。
+    downgrade_path: '''穿十年不变形''''立马显瘦''这类无源硬结论一律不写成既成事实，降级为第一人称观察化表达（如''我上手这半个月肘部还没起球''）或前置降调与限制语挂待补。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-023
+    generation_assignment_id: SCM120-A023
+    canonical_cluster_id: mkc_014
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-023-RB
+    visibility_status: review_only
+    forbidden_claims: 「穿三年不起球」「防泼水绝对不渗」这类耐用与效果的硬结论在无据时降调，改写成「就我上身这阵子的感受」并挂一句「面料具体数据我再去核」，不当定论直出。
+    required_fact_slots: []
+    evidence_boundary: 凡出现能指认真人的具体长相、家庭、原话对白、成交业绩一律划掉；效果耐用安全类说法语气再软也要有据，无据就改成上身感受或留待核。
+    downgrade_path: 「穿三年不起球」「防泼水绝对不渗」这类耐用与效果的硬结论在无据时降调，改写成「就我上身这阵子的感受」并挂一句「面料具体数据我再去核」，不当定论直出。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-024
+    generation_assignment_id: SCM120-A024
+    canonical_cluster_id: mkc_014
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-024-RB
+    visibility_status: review_only
+    forbidden_claims: 耐磨、下水掉色（耐用/效果类）→ 挂【待补：面料色牢度与克重实测报告】证据槽，不直断；显瘦（效果类）→ 降调加'要看各人肩宽''多数情况下'限制语，转个体可观察描述；'穿十年''闭眼入'（绝对化断言）→
+      直接按住不写入正文。
+    required_fact_slots:
+    - name: 面料色牢度与克重实测报告
+      family: pending_evidence
+      placeholder: 【待补：面料色牢度与克重实测报告】
+    evidence_boundary: 全篇不指名任何品牌、门店或真实顾客，'有人追问显不显瘦'为泛化情景非真实引语；耐磨、掉色等无源硬结论一律不直断，改挂【待补：面料色牢度与克重实测报告】；可指认到真人的信息（住址、婚况、店内原话）明示不写，只保留职业手感这一层，水洗牛仔外套为泛化示例单品、不宣称任何已发布产品事实。
+    downgrade_path: 耐磨、下水掉色（耐用/效果类）→ 挂【待补：面料色牢度与克重实测报告】证据槽，不直断；显瘦（效果类）→ 降调加'要看各人肩宽''多数情况下'限制语，转个体可观察描述；'穿十年''闭眼入'（绝对化断言）→
+      直接按住不写入正文。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-025
+    generation_assignment_id: SCM120-A025
+    canonical_cluster_id: mkc_015
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-025-RB
+    visibility_status: review_only
+    forbidden_claims: 正文回避耐穿、显瘦、销量、地位一类无源硬结论，把它们改写成某角色观察接口里可当场看见的描述（如顾客把领口立起来时突然站直的一瞬间）；若需下定论，则留作待补证据的槽位而不硬写。
+    required_fact_slots: []
+    evidence_boundary: 全篇写成典型化的开店日常与第一人称职业口吻，不点名任何真实门店、不叙述某个真人真实经历、不宣称任何已发生的具体品牌事实，场景均为可复述的方法示范而非既成事件。
+    downgrade_path: 正文回避耐穿、显瘦、销量、地位一类无源硬结论，把它们改写成某角色观察接口里可当场看见的描述（如顾客把领口立起来时突然站直的一瞬间）；若需下定论，则留作待补证据的槽位而不硬写。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-026
+    generation_assignment_id: SCM120-A026
+    canonical_cluster_id: mkc_015
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-026-RB
+    visibility_status: review_only
+    forbidden_claims: 正文不下“驼色显瘦/羊毛混纺更耐穿/这季卖得好”这类硬结论，只写看得见的挂位、上身反应与判断顺序；耐穿显瘦销量之类无源硬话一律降级为可观察描述或另挂证据待补。
+    required_fact_slots: []
+    evidence_boundary: 这张网格只用来给内容分视角，不拿来推断或还原真实部门与谁向谁汇报的关系。
+    downgrade_path: 正文不下“驼色显瘦/羊毛混纺更耐穿/这季卖得好”这类硬结论，只写看得见的挂位、上身反应与判断顺序；耐穿显瘦销量之类无源硬话一律降级为可观察描述或另挂证据待补。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-027
+    generation_assignment_id: SCM120-A027
+    canonical_cluster_id: mkc_015
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-027-RB
+    visibility_status: review_only
+    forbidden_claims: 像"这件显高""哪款卖得最好"这类无源硬结论，一律降级为可观察的穿着描述或先挂待补，不当作既定事实写进正文。
+    required_fact_slots: []
+    evidence_boundary: 网格只停在抽象功能角色这一层，正文不写店里到底几个人、谁向谁汇报这类真实部门与汇报关系。
+    downgrade_path: 像"这件显高""哪款卖得最好"这类无源硬结论，一律降级为可观察的穿着描述或先挂待补，不当作既定事实写进正文。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-028
+    generation_assignment_id: SCM120-A028
+    canonical_cluster_id: mkc_016
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-028-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦/百搭/耐穿等无源硬结论未写入正文（叙事中被讲述者收回笔尖），先降级为可验视觉描述（腰头两指宽、斜插口袋、暖光偏红、裤线垂感）；本季主推位与吊牌成分标属最终落地事实，挂【本季主推位与吊牌成分标待补】显式槽，等准信再落进卡片。
+    required_fact_slots:
+    - name: display_landing_fact
+      family: display_landing_and_product_fact
+      placeholder: 【本季主推位与吊牌成分标待补】
+    evidence_boundary: 内部运营信息（返工车线、供货节奏、上新排期）在从后场递到台前的那一处被切断、不外发；无凭据的硬结论降级为客人可见可验的描述；最终落地事实（主推位、吊牌成分标）挂显式【…】待补槽，等准信补齐，不在正文里当作已定事实断言。
+    downgrade_path: 显瘦/百搭/耐穿等无源硬结论未写入正文（叙事中被讲述者收回笔尖），先降级为可验视觉描述（腰头两指宽、斜插口袋、暖光偏红、裤线垂感）；本季主推位与吊牌成分标属最终落地事实，挂【本季主推位与吊牌成分标待补】显式槽，等准信再落进卡片。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-029
+    generation_assignment_id: SCM120-A029
+    canonical_cluster_id: mkc_016
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-029-RB
+    visibility_status: review_only
+    forbidden_claims: “绝对不起球、能穿好些年”属供应商口头未验证的耐穿类硬结论，既不采纳为可用事实、也不直接外发，就地降级为待补槽位【毛衣抗起球与耐穿的实测结论】，实测回来前不得写入公开面。
+    required_fact_slots:
+    - name: 本季首波陈列排期
+      family: 陈列落地最终事实
+      placeholder: 【本季首波陈列排期最终确认】
+    - name: 毛衣抗起球与耐穿实测
+      family: 无源硬结论证据
+      placeholder: 【毛衣抗起球与耐穿的实测结论】
+    evidence_boundary: 两处风险各自兜住：后场运营口径（订量少、还压着几件、走不走得动）在边界分流处做内部运营切断，绝不随视角切换外发；无来源硬结论（绝对不起球、能穿好些年）不因换岗位措辞而升格，降级挂进实测证据槽待补；陈列最终落位这类尚未敲定的事实留槽不写死；全篇不虚构具体品牌事件、真实人物经历、产品既成事实或已发布状态。
+    downgrade_path: “绝对不起球、能穿好些年”属供应商口头未验证的耐穿类硬结论，既不采纳为可用事实、也不直接外发，就地降级为待补槽位【毛衣抗起球与耐穿的实测结论】，实测回来前不得写入公开面。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-030
+    generation_assignment_id: SCM120-A030
+    canonical_cluster_id: mkc_016
+    p0_group: P0_02
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-030-RB
+    visibility_status: review_only
+    forbidden_claims: 买手随手写的'显瘦十斤、久穿不塌'属未经穿验证的硬结论，按住不照抄：优先降级为可观察描述（腰头活褶收得住、垂坠顺腿往里走），无法转成可见描述时挂到【上身久穿实测·待补】待补证据槽等回穿数据再填；不因换视角、换叙述口吻而把它当作可用结论落地。
+    required_fact_slots:
+    - name: 上身久穿实测·待补
+      family: evidence_pending
+      placeholder: 【上身久穿实测·待补】
+    evidence_boundary: 触及内部作业与真实经营口径（返修率、补货天数、供货来源）一律在进入公开面前切断，能改写则改写、改不了则留在群里不外带；public-safe 与 private-ops 两侧不互串，公开安全一头只留展示层可见信息。
+    downgrade_path: 买手随手写的'显瘦十斤、久穿不塌'属未经穿验证的硬结论，按住不照抄：优先降级为可观察描述（腰头活褶收得住、垂坠顺腿往里走），无法转成可见描述时挂到【上身久穿实测·待补】待补证据槽等回穿数据再填；不因换视角、换叙述口吻而把它当作可用结论落地。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-031
+    generation_assignment_id: SCM120-A031
+    canonical_cluster_id: mkc_017
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-031-RB
+    visibility_status: review_only
+    forbidden_claims: 任何产品级硬结论（该阔腿裤实际主推身形、版型定位、出镜者从业背景）不下断言，降级为【品牌事实】【角色事实】命名槽位；「醋酸比常见西裤料更垂」作品类通识的软表述、不绑定具体货品，也不作性能承诺。
+    required_fact_slots:
+    - name: brand_fact_pants_positioning
+      family: 品牌事实
+      placeholder: 【品牌事实：这条阔腿裤当季实际主推的身形与版型定位】
+    - name: role_fact_narrator_experience
+      family: 角色事实
+      placeholder: 【角色事实：出镜的人在裤装搭配上的真实从业经历】
+    evidence_boundary: 只调讲解的深浅与密度粒度；不把顾客真实身份、购买记录、门店事实写进脚本；产品与角色事实一律留成命名槽位，不虚构填充。
+    downgrade_path: 任何产品级硬结论（该阔腿裤实际主推身形、版型定位、出镜者从业背景）不下断言，降级为【品牌事实】【角色事实】命名槽位；「醋酸比常见西裤料更垂」作品类通识的软表述、不绑定具体货品，也不作性能承诺。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-032
+    generation_assignment_id: SCM120-A032
+    canonical_cluster_id: mkc_017
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-032-RB
+    visibility_status: review_only
+    forbidden_claims: 主推定位与出镜资历这类需核验的事实无源不下断言，降级挂【品牌事实】【角色事实】命名槽位。
+    required_fact_slots:
+    - name: 品牌事实
+      family: 品牌事实
+      placeholder: 【品牌事实：这件西装外套本季实际主推人群与价位定位】
+    - name: 角色事实
+      family: 角色事实
+      placeholder: 【角色事实：出镜者在西装品类上的真实从业经验】
+    evidence_boundary: 外套本季主推人群与出镜者资历不替它编，一律写成显式命名槽位留待授权后填。
+    downgrade_path: 主推定位与出镜资历这类需核验的事实无源不下断言，降级挂【品牌事实】【角色事实】命名槽位。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-033
+    generation_assignment_id: SCM120-A033
+    canonical_cluster_id: mkc_017
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-033-RB
+    visibility_status: review_only
+    forbidden_claims: 涉及硬事实与性能的表述一律不现编、改走命名槽：风衣的面料配比与防风表现挂【品牌事实】槽；主播讲外套的资历挂【角色事实】槽；老客既往偏好挂【顾客事实】槽。无来源即降级留槽，回填前不落任何硬结论。
+    required_fact_slots:
+    - name: 老客既往偏好
+      family: 顾客事实
+      placeholder: 【顾客事实：老客既往偏好，须本人确认后才可引用，未核实前留空】
+    - name: 风衣面料与防风表现
+      family: 品牌事实
+      placeholder: 【品牌事实：这件风衣本季实际的面料配比与防风表现】
+    - name: 主播外套从业背景
+      family: 角色事实
+      placeholder: 【角色事实：出镜主播在外套品类上的真实从业背景】
+    evidence_boundary: 深浅轴只调讲解粒度，绝不触碰任何真实用户信息：脚本里一旦出现某人的真名、真实消费记录或穿着偏好，先撤除或挂为待补命名槽，未经本人确认不得引用，杜绝把内容误当真实顾客反馈、也防止污染品牌事实。
+    downgrade_path: 涉及硬事实与性能的表述一律不现编、改走命名槽：风衣的面料配比与防风表现挂【品牌事实】槽；主播讲外套的资历挂【角色事实】槽；老客既往偏好挂【顾客事实】槽。无来源即降级留槽，回填前不落任何硬结论。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-034
+    generation_assignment_id: SCM120-A034
+    canonical_cluster_id: mkc_018
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-034-RB
+    visibility_status: review_only
+    forbidden_claims: 穿十年不塌、上身立刻瘦一圈这类耐穿与显瘦的硬话在无源时属确定性禁区，降级为下摆垂坠、久坐不皱等可观察描述，或标成待补依据、挂命名空位等实测结论补齐再升级为主张。
+    required_fact_slots:
+    - name: 面料成分与克重
+      family: product_anchor
+      placeholder: 【品牌事实：面料成分与克重】
+    - name: 耐洗测试实测结论
+      family: brand_claim
+      placeholder: 【品牌事实：耐洗测试的实测结论】
+    - name: 出镜者与风衣的真实关系
+      family: role_anchor
+      placeholder: 【角色事实：出镜者和这件风衣之间的真实关系】
+    evidence_boundary: 面料克重、耐洗结论这类当场无法坐实的品牌事实一律用命名的空位挂成待补依据，宁可留白也绝不虚构填充。
+    downgrade_path: 穿十年不塌、上身立刻瘦一圈这类耐穿与显瘦的硬话在无源时属确定性禁区，降级为下摆垂坠、久坐不皱等可观察描述，或标成待补依据、挂命名空位等实测结论补齐再升级为主张。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-035
+    generation_assignment_id: SCM120-A035
+    canonical_cluster_id: mkc_018
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-035-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦、零下抗寒、久穿不松这类硬结论无源不发，降级为可观察描述并把凭据挂【品牌事实】待补槽。
+    required_fact_slots:
+    - name: 品牌事实
+      family: 品牌事实
+      placeholder: 【品牌事实：这件开衫的羊毛含量与克重】
+    - name: 品牌事实
+      family: 品牌事实
+      placeholder: 【品牌事实：起球与耐洗的实测结论】
+    - name: 角色事实
+      family: 角色事实
+      placeholder: 【角色事实：镜头前这个人穿这件开衫的真实场合】
+    evidence_boundary: 羊毛含量克重、起球耐洗结论、出镜者穿着场合都写成命名槽位，数据不到位一个字不替它编。
+    downgrade_path: 显瘦、零下抗寒、久穿不松这类硬结论无源不发，降级为可观察描述并把凭据挂【品牌事实】待补槽。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-036
+    generation_assignment_id: SCM120-A036
+    canonical_cluster_id: mkc_018
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-036-RB
+    visibility_status: review_only
+    forbidden_claims: 硬结论按缺口类型分流：有对应实测但数据未到→挂【品牌事实】待补依据槽；主观效果（显瘦/小一号）→交还观众自评不代下结论；横向对比无数据支撑→整句咽回不出口；作者自身经历→留【角色事实】槽不即兴编造。
+    required_fact_slots:
+    - name: 牛仔裤面料配比与克重
+      family: 品牌事实
+      placeholder: 【品牌事实：这条牛仔裤的棉与氨纶配比及克重】
+    - name: 色牢度与耐磨实测数据
+      family: 品牌事实
+      placeholder: 【品牌事实：色牢度与耐磨的实测数据】
+    - name: 主播真实上身穿着时长
+      family: 角色事实
+      placeholder: 【角色事实：主播本人真实的上身穿着时长】
+    evidence_boundary: 耐穿、不掉色、直接小一号这类会被拿去下单的硬结论全部按住，没有实测数据不喊；能被镜头看见的细节（裤腰不勒、面料回弹）照写，不能验证的量化事实退回命名槽，显瘦这种主观感受交还观众自己在镜头里判断。
+    downgrade_path: 硬结论按缺口类型分流：有对应实测但数据未到→挂【品牌事实】待补依据槽；主观效果（显瘦/小一号）→交还观众自评不代下结论；横向对比无数据支撑→整句咽回不出口；作者自身经历→留【角色事实】槽不即兴编造。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-037
+    generation_assignment_id: SCM120-A037
+    canonical_cluster_id: mkc_019
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-037-RB
+    visibility_status: review_only
+    forbidden_claims: 真实履历、业绩、私下言论无授权一律不写，降级为方法层描述并挂【角色事实】【品牌事实】待补槽。
+    required_fact_slots:
+    - name: 角色事实
+      family: 角色事实
+      placeholder: 【角色事实：出镜导购的真实从业年限与经历，须本人授权后填入】
+    - name: 品牌事实
+      family: 品牌事实
+      placeholder: 【品牌事实：这件工装衬衫的成分配比与本季定位】
+    evidence_boundary: 出镜者真实年限经历、衬衫成分定位都写成命名槽位，须本人/品牌授权后才填，不替人贴身份。
+    downgrade_path: 真实履历、业绩、私下言论无授权一律不写，降级为方法层描述并挂【角色事实】【品牌事实】待补槽。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-038
+    generation_assignment_id: SCM120-A038
+    canonical_cluster_id: mkc_019
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-038-RB
+    visibility_status: review_only
+    forbidden_claims: '"显瘦十斤""保暖""耐穿"这类无源硬结论被降级为可观察描述（袖口收窄、羊毛分量压住下摆、手插口袋挡风），成分克重等仍需硬数据的部分挂进命名事实槽位待采购给准数。'
+    required_fact_slots:
+    - name: 大衣面料成分与克重
+      family: product_anchor
+      placeholder: 【品牌事实：大衣面料成分与克重——待补】
+    - name: 顾客真实职业与履历
+      family: role_anchor
+      placeholder: 【角色事实：顾客真实职业与履历——无授权记录，留空】
+    evidence_boundary: 遇到指名道姓的真实履历、私下言论或功能化角色的效果保证一律停手，先摘名去授权化再改写，绝不用虚构事实把留白填满。
+    downgrade_path: '"显瘦十斤""保暖""耐穿"这类无源硬结论被降级为可观察描述（袖口收窄、羊毛分量压住下摆、手插口袋挡风），成分克重等仍需硬数据的部分挂进命名事实槽位待采购给准数。'
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-039
+    generation_assignment_id: SCM120-A039
+    canonical_cluster_id: mkc_019
+    p0_group: P0_02
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-039-RB
+    visibility_status: review_only
+    forbidden_claims: '''三年膝盖不鼓包/耐穿''属硬结论，禁止由打版角色拍胸脯背书；改走两条路——降级成可观察（裤线烫平度、蹲起回弹）当场呈现，剩余不可核部分挂【待补证据：起皱回弹与耐磨实测】，拿到授权数据前一个字不写死。'
+    required_fact_slots:
+    - name: 打版师真实工龄与从业经历
+      family: 角色事实
+      placeholder: 【角色事实：打版师真实工龄与从业经历——授权确认前留空】
+    - name: 阔腿裤面料成分与克重
+      family: 品牌事实
+      placeholder: 【品牌事实：阔腿裤面料成分与克重——待采购补】
+    - name: 起皱回弹与耐磨实测
+      family: 待补证据
+      placeholder: 【待补证据：起皱回弹与耐磨实测，拿到授权数据前不写死】
+    evidence_boundary: 耐穿/三年不鼓包的硬结论不落定，降级为裤线烫平度与蹲起回弹的可观察描述，并挂【待补证据】等实测；打版师真实工龄与经手工厂无授权即去授权化，改写成【角色事实】槽；不点名的'圈里都服他'这类身份暗示同样回收成中性方法语言，不替谁背书。
+    downgrade_path: '''三年膝盖不鼓包/耐穿''属硬结论，禁止由打版角色拍胸脯背书；改走两条路——降级成可观察（裤线烫平度、蹲起回弹）当场呈现，剩余不可核部分挂【待补证据：起皱回弹与耐磨实测】，拿到授权数据前一个字不写死。'
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-040
+    generation_assignment_id: SCM120-A040
+    canonical_cluster_id: mkc_020
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-040-RB
+    visibility_status: review_only
+    forbidden_claims: '"更耐穿""上身显瘦"等无源硬结论被降级为克重、织法、高腰线视觉比例等可观察描述，或挂上【证据待补】槽位等实测数据补齐后再说。'
+    required_fact_slots:
+    - name: 面料成分与克重
+      family: product_anchor
+      placeholder: 【品牌事实：该件面料成分与克重待吊牌数据补入】
+    - name: 面料耐磨结论
+      family: brand_claim
+      placeholder: 【证据待补：该面料耐磨结论需实测数据支撑】
+    evidence_boundary: 品类说明一旦滑向"卖得最好"这类销售话术即触发切断，无实测的硬结论一律退回可观察描述或挂证据槽位。
+    downgrade_path: '"更耐穿""上身显瘦"等无源硬结论被降级为克重、织法、高腰线视觉比例等可观察描述，或挂上【证据待补】槽位等实测数据补齐后再说。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-041
+    generation_assignment_id: SCM120-A041
+    canonical_cluster_id: mkc_020
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-041-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦、耐穿、卖得好这类硬结论无源时不写成可发布事实，改为可观察描述（面料克重偏厚、腰线偏高）或挂进显式证据槽位待补。
+    required_fact_slots:
+    - name: 该单品真实在售数据与上新信息
+      family: product_anchor
+      placeholder: 【品牌事实：该单品的真实在售数据与上新信息】
+    - name: 显瘦耐穿效果的实测或买家凭证
+      family: brand_claim
+      placeholder: 【证据：显瘦/耐穿等效果的实测或买家凭证】
+    evidence_boundary: 缺款号、定价、上新等在售数据时，正文只停在品类、属性、边界三层，绝不替品牌编造具体交易事实或货号。
+    downgrade_path: 显瘦、耐穿、卖得好这类硬结论无源时不写成可发布事实，改为可观察描述（面料克重偏厚、腰线偏高）或挂进显式证据槽位待补。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-042
+    generation_assignment_id: SCM120-A042
+    canonical_cluster_id: mkc_020
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-042-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、高级这类硬结论无源时先按住不发，改成肌理/厚度/垂坠/腰线内收等可观察描述；成分克重与水洗耐磨实测则挂成显式证据槽位，待吊牌和实测数据补齐才回填。
+    required_fact_slots:
+    - name: 外套面料成分与克重
+      family: product_anchor
+      placeholder: 【品牌事实：外套面料成分与克重，待到货吊牌确认】
+    - name: 面料水洗与耐磨实测
+      family: brand_claim
+      placeholder: 【品牌事实：这批面料的水洗与耐磨实测数据，待补】
+    evidence_boundary: 把通用品类骨架写成某品牌正在卖的具体款式即越界，这类话一律删掉或先挂成待补证据的显式口子，隔断品牌事实污染正文。
+    downgrade_path: 耐穿、显瘦、高级这类硬结论无源时先按住不发，改成肌理/厚度/垂坠/腰线内收等可观察描述；成分克重与水洗耐磨实测则挂成显式证据槽位，待吊牌和实测数据补齐才回填。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-043
+    generation_assignment_id: SCM120-A043
+    canonical_cluster_id: mkc_021
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-043-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、保暖、显瘦、更高档这类硬结论在没有克重、实测或长期穿着证据时不落成事实，全部降级为可观察描述或挂到画面角标的【证据待补】位，等证据补齐再说。
+    required_fact_slots:
+    - name: 保暖对比证据
+      family: brand_claim
+      placeholder: 【证据待补：两件大衣的保暖差异需克重与实测数据支撑】
+    - name: 耐穿对比证据
+      family: product_anchor
+      placeholder: 【证据待补：耐磨、起球等耐穿表现需长期穿着或检测结论】
+    evidence_boundary: 凡涉及耐久、保暖、功能强弱或谁更高档这类需检测/长期使用或主观判定的维度，一律不写成直接比较结论，改为可观察描述或标注'未知，待补'。
+    downgrade_path: 耐穿、保暖、显瘦、更高档这类硬结论在没有克重、实测或长期穿着证据时不落成事实，全部降级为可观察描述或挂到画面角标的【证据待补】位，等证据补齐再说。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-044
+    generation_assignment_id: SCM120-A044
+    canonical_cluster_id: mkc_021
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-044-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、保暖、显瘦、高档等无源硬结论一律降级为可观察描述，或挂【证据槽位：第三方检测结果】与【品牌事实：克重成分实测】待补，绝不写成可发布事实。
+    required_fact_slots:
+    - name: 克重与成分实测数据
+      family: product_anchor
+      placeholder: 【品牌事实：克重与成分实测数据待补】
+    - name: 保暖与耐磨第三方检测结果
+      family: brand_claim
+      placeholder: 【证据槽位：保暖与耐磨的第三方检测结果】
+    evidence_boundary: 保暖、耐穿、显瘦、更高档这类需检测或主观判断的结论一律不在镜头前拍板，改成可观察描述或注明未知项。
+    downgrade_path: 耐穿、保暖、显瘦、高档等无源硬结论一律降级为可观察描述，或挂【证据槽位：第三方检测结果】与【品牌事实：克重成分实测】待补，绝不写成可发布事实。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-045
+    generation_assignment_id: SCM120-A045
+    canonical_cluster_id: mkc_021
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-045-RB
+    visibility_status: review_only
+    forbidden_claims: 保暖、耐穿、穿三年不变形这类硬结论在没有实测时降级为不可直接比较的维度，用【证据待补】小字标成未知项，等实测证据补齐才允许下判断。
+    required_fact_slots:
+    - name: 保暖实测对比
+      family: brand_claim
+      placeholder: 【证据待补：保暖实测对比】
+    - name: 多次水洗形变记录
+      family: brand_claim
+      placeholder: 【证据待补：多次水洗后的形变记录】
+    evidence_boundary: 涉及效果与性能的比较全部按住，改成可观察描述或挂待补证据槽位，绝不把无证据优劣并入普通商品讲解。
+    downgrade_path: 保暖、耐穿、穿三年不变形这类硬结论在没有实测时降级为不可直接比较的维度，用【证据待补】小字标成未知项，等实测证据补齐才允许下判断。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-046
+    generation_assignment_id: SCM120-A046
+    canonical_cluster_id: mkc_022
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-046-RB
+    visibility_status: review_only
+    forbidden_claims: 更耐穿、更保暖这类无源硬结论一律降级为可观察描述（梭织偏挺、针织偏弹），或挂【品牌事实：耐磨测试数据来源】待证据补齐后再讲。
+    required_fact_slots:
+    - name: 耐磨测试数据来源
+      family: brand_claim
+      placeholder: 【品牌事实：该款耐磨测试数据来源】
+    evidence_boundary: 手感词只描述镜头能演的挺括与回弹，事实词一旦缺证据就降级为可观察那句或挂证据槽位待补。
+    downgrade_path: 更耐穿、更保暖这类无源硬结论一律降级为可观察描述（梭织偏挺、针织偏弹），或挂【品牌事实：耐磨测试数据来源】待证据补齐后再讲。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-047
+    generation_assignment_id: SCM120-A047
+    canonical_cluster_id: mkc_022
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-047-RB
+    visibility_status: review_only
+    forbidden_claims: 保暖、耐穿等硬结论在无源时降级为可观察描述，并挂到【品牌事实】或【证据】槽位，检测数据补齐前不写成可发布的事实。
+    required_fact_slots:
+    - name: 针织开衫保暖性能检测结论
+      family: brand_claim
+      placeholder: 【品牌事实：该针织开衫保暖性能的检测结论】
+    - name: 梭织衬衫面料耐磨与水洗测试数据
+      family: product_anchor
+      placeholder: 【证据：面料耐磨与水洗测试数据】
+    evidence_boundary: 正文只描述肉眼与指腹能当场验证的表现，凡跨入性能层的话术当场收回或改成条件表达。
+    downgrade_path: 保暖、耐穿等硬结论在无源时降级为可观察描述，并挂到【品牌事实】或【证据】槽位，检测数据补齐前不写成可发布的事实。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-048
+    generation_assignment_id: SCM120-A048
+    canonical_cluster_id: mkc_022
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-048-RB
+    visibility_status: review_only
+    forbidden_claims: '"所以很保暖""显瘦""耐穿"等硬结论在无检测报告支撑时一律按住，降级为厚度、织法等当场可验证的观察，或挂进待补证据槽等来源到位再放出。'
+    required_fact_slots:
+    - name: 保暖性能证据
+      family: brand_claim
+      placeholder: 【证据待补：保暖性能以第三方检测报告为准】
+    - name: 纤维成分含量
+      family: product_anchor
+      placeholder: 【品牌事实：纤维成分含量以水洗标注为准】
+    evidence_boundary: 保暖、成分含量这类具体结论一律不凭手感外推，缺检测或标签来源时降级为可观察描述或转入待补证据。
+    downgrade_path: '"所以很保暖""显瘦""耐穿"等硬结论在无检测报告支撑时一律按住，降级为厚度、织法等当场可验证的观察，或挂进待补证据槽等来源到位再放出。'
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-049
+    generation_assignment_id: SCM120-A049
+    canonical_cluster_id: mkc_023
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-049-RB
+    visibility_status: review_only
+    forbidden_claims: 无源硬结论（显白/显气色/耐晒不褪色/具体成分）按 block_until_evidence 处理：能观察的降级为可观察描述，不能观察的路由到显式【…】证据槽位，绝不先下无源事实。
+    required_fact_slots:
+    - name: 上身效果
+      family: brand_claim_evidence
+      placeholder: 【上身效果：显白、显气色一类结论，须真实试穿记录或用户反馈到位后回填】
+    - name: 材质与色牢度
+      family: product_fact_evidence
+      placeholder: 【材质与色牢度：具体成分、耐晒不褪，以吊牌检测与复晒样本为准】
+    evidence_boundary: 显白、显气色、更贵气、耐晒不褪色等身体与品质承诺不写成事实，一律压回可观察描述或挂到【上身效果】【材质与色牢度】证据槽，待真实试穿记录、用户反馈、吊牌检测与复晒样本到位后回填。
+    downgrade_path: 无源硬结论（显白/显气色/耐晒不褪色/具体成分）按 block_until_evidence 处理：能观察的降级为可观察描述，不能观察的路由到显式【…】证据槽位，绝不先下无源事实。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-050
+    generation_assignment_id: SCM120-A050
+    canonical_cluster_id: mkc_023
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-050-RB
+    visibility_status: review_only
+    forbidden_claims: 耐洗不掉色、更高档这类硬结论在无源时不写成可发布事实，一律降级为可观察描述或收进 brand_claim 证据槽，待检测报告或复洗记录佐证后再补。
+    required_fact_slots:
+    - name: 单品成分与官方色名
+      family: product_anchor
+      placeholder: 【product_anchor：单品成分与官方色名以实物吊牌、打样为准】
+    - name: 颜色牢度硬结论
+      family: brand_claim
+      placeholder: 【brand_claim：颜色牢度需检测报告或复洗记录佐证】
+    evidence_boundary: 氛围联想允许保留，但"显白""显瘦""更高档"等身体与价值结论一旦冒头就当场切断，成分色名与颜色牢度等产品事实无据即挂证据槽而非虚构填充。
+    downgrade_path: 耐洗不掉色、更高档这类硬结论在无源时不写成可发布事实，一律降级为可观察描述或收进 brand_claim 证据槽，待检测报告或复洗记录佐证后再补。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-051
+    generation_assignment_id: SCM120-A051
+    canonical_cluster_id: mkc_023
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-051-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦/显白 → 降级为'偏暖、偏哑、不算中性色'等可观察描述，并挂【上身效果：需真人多体型试穿实拍佐证】；料子比别家高档 → 明确一个字都不外说（效果承诺当场切断）；面料成分与耐磨 → 挂【单品信息：以吊牌及检测为准】，等材料齐了再开口。
+    required_fact_slots:
+    - name: 上身效果
+      family: effect_claim_evidence_slot
+      placeholder: 【上身效果：需真人多体型试穿实拍佐证】
+    - name: 单品信息
+      family: product_fact_evidence_slot
+      placeholder: 【单品信息：面料成分与耐磨表现以吊牌及检测为准】
+    evidence_boundary: 硬性身体/品质结论既不发布也不被悄悄抹掉，而是从口头叙述里撤下、停放在显式【…】证据槽位；最终的上身/搭配落地结果被延后（'等我把试穿那条拍好'），因此不断言任何门店落地或产品既成事实，符合 block_until_evidence。
+    downgrade_path: 显瘦/显白 → 降级为'偏暖、偏哑、不算中性色'等可观察描述，并挂【上身效果：需真人多体型试穿实拍佐证】；料子比别家高档 → 明确一个字都不外说（效果承诺当场切断）；面料成分与耐磨 → 挂【单品信息：以吊牌及检测为准】，等材料齐了再开口。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-052
+    generation_assignment_id: SCM120-A052
+    canonical_cluster_id: mkc_024
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-052-RB
+    visibility_status: review_only
+    forbidden_claims: '"穿上显瘦"这类硬结论无源时降级为"腰线上提后视觉重心更高"的可观察表达，或挂【品牌事实：显瘦效果需真人上身对比素材】证据槽位等待补证，绝不当事实写死。'
+    required_fact_slots:
+    - name: 廓形显瘦效果证据
+      family: brand_claim
+      placeholder: 【品牌事实：该廓形实穿的显瘦效果需以真人上身对比素材为证】
+    evidence_boundary: 任何身材效果承诺不写死，缺真人同角度上身对比素材时退回可观察描述，并挂显式证据槽位待补。
+    downgrade_path: '"穿上显瘦"这类硬结论无源时降级为"腰线上提后视觉重心更高"的可观察表达，或挂【品牌事实：显瘦效果需真人上身对比素材】证据槽位等待补证，绝不当事实写死。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-053
+    generation_assignment_id: SCM120-A053
+    canonical_cluster_id: mkc_024
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-053-RB
+    visibility_status: review_only
+    forbidden_claims: 唯一硬主张（该茧型外套的显瘦观感）无来源证据，按 evidence_bound 规则降级为可观察描述并挂显式证据缺口槽位，不落地为品牌/产品事实；其余均为通用的结构-视觉方法陈述，不含具体品牌、门店、真人或产品事实。
+    required_fact_slots:
+    - name: 显瘦观感证据缺口
+      family: evidence_gap
+      placeholder: 【证据缺口：茧型外套的显瘦观感需同一人同角度换版实拍佐证，来源暂缺】
+    evidence_boundary: 显瘦/身材效果属对身体结果的保证，超出结构能担保的范围；在缺同一人同角度换版上身实拍前，降级为'腰线抬高、视觉重心上移'的可观察描述，并以【证据缺口…来源暂缺】显式槽位挂起，绝不写成可发布的既定事实。
+    downgrade_path: 唯一硬主张（该茧型外套的显瘦观感）无来源证据，按 evidence_bound 规则降级为可观察描述并挂显式证据缺口槽位，不落地为品牌/产品事实；其余均为通用的结构-视觉方法陈述，不含具体品牌、门店、真人或产品事实。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-054
+    generation_assignment_id: SCM120-A054
+    canonical_cluster_id: mkc_024
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-054-RB
+    visibility_status: review_only
+    forbidden_claims: ‘上身立显高挑’这类硬结论被当场删掉，改写为‘接缝上提后视觉起点跟着抬高’的可观察描述；显高承诺部分路由到证据槽【品牌事实：需一组真人同角度上身对比照支撑，目前空缺】，缺证据则不下结论。
+    required_fact_slots:
+    - name: 显高效果证据槽
+      family: brand_fact_evidence
+      placeholder: 【品牌事实：这条裙子的显高说法需一组真人同角度上身对比照支撑，目前空缺】
+    - name: 陈列落地最终事实槽
+      family: display_landing_fact
+      placeholder: 【陈列事实：此人台廓形方案能否落地，待排期确认】
+    evidence_boundary: 显高、显瘦、遮肉一类身材结果一律不写死：无真人同角度对比照即挂显式证据槽 block 到素材补齐；橱窗是否真的采用该人台方案作为最终陈列事实另留槽待排期确认，不写成已落地。
+    downgrade_path: ‘上身立显高挑’这类硬结论被当场删掉，改写为‘接缝上提后视觉起点跟着抬高’的可观察描述；显高承诺部分路由到证据槽【品牌事实：需一组真人同角度上身对比照支撑，目前空缺】，缺证据则不下结论。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-055
+    generation_assignment_id: SCM120-A055
+    canonical_cluster_id: mkc_025
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-055-RB
+    visibility_status: review_only
+    forbidden_claims: '"所以这件特别耐穿"这类硬结论在缺少实测穿着数据时被降级为对针脚密度、包边收口的可观察描述，并把耐用判断挂进【耐用结论：需实测穿着数据，暂缺】待补。'
+    required_fact_slots:
+    - name: 耐用结论
+      family: brand_claim
+      placeholder: 【耐用结论：需实测穿着数据，暂缺】
+    evidence_boundary: 凡涉及耐穿、变形、寿命这类需要实测才能下的结论，一律停在可观察描述，或改挂显式证据槽位，不在镜头里替它拍板。
+    downgrade_path: '"所以这件特别耐穿"这类硬结论在缺少实测穿着数据时被降级为对针脚密度、包边收口的可观察描述，并把耐用判断挂进【耐用结论：需实测穿着数据，暂缺】待补。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-056
+    generation_assignment_id: SCM120-A056
+    canonical_cluster_id: mkc_025
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-056-RB
+    visibility_status: review_only
+    forbidden_claims: '"特别耐穿/更耐用"这类无源硬结论不写成事实，降级为"走线均匀、收口干净"的观察语言，或挂【产品事实：面料克重与耐磨测试结果待补】证据槽，等证据补齐再放行。'
+    required_fact_slots:
+    - name: 耐用结论待补证据
+      family: product_anchor
+      placeholder: 【产品事实：面料克重与耐磨测试结果待补】
+    evidence_boundary: 凡是从单处可见工艺顺势推向整体耐用度或使用寿命的硬结论，一律在讲解里刹住，改成可观察的走线/收口描述，或挂上待补证据槽。
+    downgrade_path: '"特别耐穿/更耐用"这类无源硬结论不写成事实，降级为"走线均匀、收口干净"的观察语言，或挂【产品事实：面料克重与耐磨测试结果待补】证据槽，等证据补齐再放行。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-057
+    generation_assignment_id: SCM120-A057
+    canonical_cluster_id: mkc_025
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-057-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、耐用度、使用寿命这类无源硬结论一律不写成已证事实：要么降级为当场能看见的观察语言，要么挂进【品牌事实：该面料耐磨与洗涤周期实测结论】证据槽位待补后再讲。
+    required_fact_slots:
+    - name: 面料耐磨与洗涤周期实测结论
+      family: brand_claim
+      placeholder: 【品牌事实：该面料耐磨与洗涤周期实测结论】
+    evidence_boundary: 把'所以它特别耐穿'这类由单处可见工艺外推到整体耐用度的说法按住，降级为'针脚规整、包边包得住布边'这类可观察描述，不放大成整衣结论。
+    downgrade_path: 耐穿、耐用度、使用寿命这类无源硬结论一律不写成已证事实：要么降级为当场能看见的观察语言，要么挂进【品牌事实：该面料耐磨与洗涤周期实测结论】证据槽位待补后再讲。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-058
+    generation_assignment_id: SCM120-A058
+    canonical_cluster_id: mkc_026
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-058-RB
+    visibility_status: review_only
+    forbidden_claims: 身体结果类硬结论（显高/显瘦/遮肉）→ 拦截并降级为可见线条与位置关系的描述，不替身体下判决；产品事实类硬主张（面料配比·克重·抗皱·耐磨耐穿）→ 挂 evidence slot，按 block_until_evidence
+      等实测证据补齐后方可发布。
+    required_fact_slots:
+    - name: 风衣面料配比与克重
+      family: brand_fact
+      placeholder: 【品牌事实：这件风衣的面料配比与克重，待证据补充】
+    - name: 抗皱与耐磨实测数据
+      family: evidence_pending
+      placeholder: 【待补证据：抗皱与耐磨实测数据】
+    evidence_boundary: 显高、显瘦、遮肉这类对身体的结果保证一律不顺口接，改成当下可见的竖线走向与位置关系；面料配比、克重、抗皱、耐穿等缺实测支撑的产品事实不写死，降级挂成显式待补证据槽，等证据回来再定。
+    downgrade_path: 身体结果类硬结论（显高/显瘦/遮肉）→ 拦截并降级为可见线条与位置关系的描述，不替身体下判决；产品事实类硬主张（面料配比·克重·抗皱·耐磨耐穿）→ 挂 evidence slot，按 block_until_evidence
+      等实测证据补齐后方可发布。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-059
+    generation_assignment_id: SCM120-A059
+    canonical_cluster_id: mkc_026
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-059-RB
+    visibility_status: review_only
+    forbidden_claims: 穿了腿就细这类身体结果硬结论无据不发，降级为裤线中缝脚踝的可观察描述，试穿观察挂【品牌事实】待补槽。
+    required_fact_slots:
+    - name: 品牌事实
+      family: 品牌事实
+      placeholder: 【品牌事实：这条直筒裤在不同身形上的真实试穿观察，须有据才可引用】
+    evidence_boundary: 只在说穿着呈现时用这套讲法，一旦向具体的人保证身材改善就当场拦下退回可观察描述。
+    downgrade_path: 穿了腿就细这类身体结果硬结论无据不发，降级为裤线中缝脚踝的可观察描述，试穿观察挂【品牌事实】待补槽。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-060
+    generation_assignment_id: SCM120-A060
+    canonical_cluster_id: mkc_026
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-060-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿/显瘦/高级等硬结论无源时不写成事实：耐穿类质量结论挂【待补证据：面料耐磨与起球实测】等数据回填，显瘦类身体结果直接降级为可观察的线条描述。
+    required_fact_slots:
+    - name: 面料耐穿结论
+      family: brand_claim
+      placeholder: 【待补证据：面料耐磨与起球实测】
+    - name: 直筒版型事实
+      family: product_anchor
+      placeholder: 【品牌事实：直筒版型裁剪参数】
+    evidence_boundary: 把"显瘦""耐穿"识别为需证据的结果词，无依据时沿阶梯降为观察或关系表达，越界替某个体承诺身材改善的说法一律拦下改写。
+    downgrade_path: 耐穿/显瘦/高级等硬结论无源时不写成事实：耐穿类质量结论挂【待补证据：面料耐磨与起球实测】等数据回填，显瘦类身体结果直接降级为可观察的线条描述。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-061
+    generation_assignment_id: SCM120-A061
+    canonical_cluster_id: mkc_027
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-061-RB
+    visibility_status: review_only
+    forbidden_claims: 强断言（耐用、耐磨、抗掉色、久穿不变形、三年不松）→ 判为要下结论的硬话，需检测与水洗前后记录这一类硬证据，缺证据即按 block_until_evidence 挂待补槽；弱可观察（双线车缝、布纹、抬手顺、坐下不勒、后领服帖）→
+      直接保留为现场描述，无需证据即可写。
+    required_fact_slots:
+    - name: 耐磨与水洗掉色实测证据
+      family: detection_evidence_slot
+      placeholder: 【实测记录：反复水洗后的褪色与磨损程度待补】
+    evidence_boundary: 把'越洗越好/三年不松/耐磨/不掉色'等无实测支撑的硬结论整句按住，挂【实测记录：反复水洗后的褪色与磨损程度待补】显式证据槽，不发布；线迹、布纹、肘弯褶痕仅作现场可观察描述；不指名真实品牌、不虚构门店事件或顾客反馈，人物与店铺均为示意性设定。
+    downgrade_path: 强断言（耐用、耐磨、抗掉色、久穿不变形、三年不松）→ 判为要下结论的硬话，需检测与水洗前后记录这一类硬证据，缺证据即按 block_until_evidence 挂待补槽；弱可观察（双线车缝、布纹、抬手顺、坐下不勒、后领服帖）→
+      直接保留为现场描述，无需证据即可写。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-062
+    generation_assignment_id: SCM120-A062
+    canonical_cluster_id: mkc_027
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-062-RB
+    visibility_status: review_only
+    forbidden_claims: 透气保暖久穿不塌这类性能硬结论无据不升级，压回可观察说法并挂【证据缺口】槽等检测或标准补齐。
+    required_fact_slots:
+    - name: 证据缺口
+      family: 证据缺口
+      placeholder: 【证据缺口：保暖与耐磨的检测口径或行业标准，待补齐后方可升级为功能主张】
+    evidence_boundary: 保暖耐磨等强断言无检测标准不发，降级为针脚垂坠等可观察描述，缺口用证据缺口槽显式标记待补。
+    downgrade_path: 透气保暖久穿不塌这类性能硬结论无据不升级，压回可观察说法并挂【证据缺口】槽等检测或标准补齐。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-063
+    generation_assignment_id: SCM120-A063
+    canonical_cluster_id: mkc_027
+    p0_group: P0_03
+    generation_mode: evidence_bound_candidate
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-063-RB
+    visibility_status: review_only
+    forbidden_claims: '"越洗越耐磨、久坐一天不走形、上腿显高"整体路由为 block_until_evidence：先按住，改写为镜头可拍的缝制观察与试穿剪影，并挂证据槽等送检结果，不作为可发布事实输出。'
+    required_fact_slots:
+    - name: 耐磨与克重证据
+      family: performance_durability_evidence
+      placeholder: 【耐磨与克重证据：水洗测试结果及面料克重数据待补】
+    evidence_boundary: 耐用、耐磨、显高等硬断言在无检测数据时一律不落笔，降级为可观察描述并挂【…待补】槽；不编造克重、耐洗次数、耐磨等级等产品事实，不引用任何品牌、门店或具体顾客事件，人物与场景均为通用化处理。
+    downgrade_path: '"越洗越耐磨、久坐一天不走形、上腿显高"整体路由为 block_until_evidence：先按住，改写为镜头可拍的缝制观察与试穿剪影，并挂证据槽等送检结果，不作为可发布事实输出。'
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-064
+    generation_assignment_id: SCM120-A064
+    canonical_cluster_id: mkc_028
+    p0_group: P0_03
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-064-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿→按住并降级为'仅此处拼接平整'的局部观察，不推及整件几年；显瘦→改为身侧弧度、下摆走向的可观察版型描述，判断交对镜试穿者；高级羊绒/含毛量/等级/认证→往上抬一档、升级为检测报告与出具方槽位，不凭一摸一看认定。
+    required_fact_slots:
+    - name: 成分与含毛量
+      family: 产品事实
+      placeholder: 【产品事实：成分与含毛量待补】
+    - name: 羊绒等级检测报告与出具方
+      family: 品牌事实
+      placeholder: 【品牌事实：羊绒等级检测报告与出具方待补】
+    evidence_boundary: 不编造纤维成分、含毛量、羊绒等级与检测出具方，全部写成【产品事实：成分与含毛量待补】【品牌事实：羊绒等级检测报告与出具方待补】命名槽位；不把一处收口或肩缝的平整推成整件保证；无价格、货号、折扣、库存等信息；男生与朋友均为叙事人物，不挂靠任何真实品牌事件、门店事实或顾客反馈。
+    downgrade_path: 耐穿→按住并降级为'仅此处拼接平整'的局部观察，不推及整件几年；显瘦→改为身侧弧度、下摆走向的可观察版型描述，判断交对镜试穿者；高级羊绒/含毛量/等级/认证→往上抬一档、升级为检测报告与出具方槽位，不凭一摸一看认定。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-065
+    generation_assignment_id: SCM120-A065
+    canonical_cluster_id: mkc_028
+    p0_group: P0_03
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-065-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿/显瘦/高级等硬结论无源时全部降级为可观察描述或交还试穿者判断，认证与等级凭证挂【品牌事实：…待补】槽位待人补齐，绝不无源硬下结论。
+    required_fact_slots:
+    - name: 面料成分与克重
+      family: product_anchor
+      placeholder: 【产品事实：面料成分与克重待补】
+    - name: 面料认证与等级证明
+      family: brand_claim
+      placeholder: 【品牌事实：面料认证与等级证明待补】
+    evidence_boundary: 缺失的面料成分、克重、认证等级一律写成显式命名槽位待补，不凭手感或印象虚构填充，也不把一处平整写成整件达标。
+    downgrade_path: 耐穿/显瘦/高级等硬结论无源时全部降级为可观察描述或交还试穿者判断，认证与等级凭证挂【品牌事实：…待补】槽位待人补齐，绝不无源硬下结论。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-066
+    generation_assignment_id: SCM120-A066
+    canonical_cluster_id: mkc_028
+    p0_group: P0_03
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-066-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿→按住，需磨损/耐久检测才成立；显腿长/显瘦→降为'裤线直着往下落、脚踝收得干净'的可观察版型描述并交穿着者自判；不掉色/色牢度/原色牛仔/面料认证→route-away 到官方来源与检测报告，缺则挂【品牌事实：色牢度检测机构与报告编号】【品牌事实：面料认证出具方与编号】待补证据。
+    required_fact_slots:
+    - name: 牛仔布面料成分与含棉比例
+      family: brand_fact
+      placeholder: 【品牌事实：牛仔布成分与含棉比例】
+    - name: 色牢度检测数据
+      family: brand_fact
+      placeholder: 【品牌事实：色牢度检测机构与报告编号】
+    - name: 面料认证凭据
+      family: brand_fact
+      placeholder: 【品牌事实：面料认证出具方与编号】
+    evidence_boundary: 不把单点走线整齐或某处拼接平整放大成整件质量保证；认证、色牢度、原色类声称不凭肉眼手感采信；面料成分、检测、认证等缺失事实全部写成显式命名槽位不虚构；不编造任何品牌、检测数据、门店或顾客事实。
+    downgrade_path: 耐穿→按住，需磨损/耐久检测才成立；显腿长/显瘦→降为'裤线直着往下落、脚踝收得干净'的可观察版型描述并交穿着者自判；不掉色/色牢度/原色牛仔/面料认证→route-away 到官方来源与检测报告，缺则挂【品牌事实：色牢度检测机构与报告编号】【品牌事实：面料认证出具方与编号】待补证据。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-067
+    generation_assignment_id: SCM120-A067
+    canonical_cluster_id: mkc_029
+    p0_group: P0_03
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-067-RB
+    visibility_status: review_only
+    forbidden_claims: '"更耐穿""显瘦"这类硬结论在没有来源时不写死，先降级成对针脚是否密实均匀等可观察细节的描述，或挂到证据补齐后再由出镜人亲口确认。'
+    required_fact_slots:
+    - name: 工艺名称与来历
+      family: brand_claim
+      placeholder: 【品牌事实：该工艺的名称与来历】
+    - name: 面料成分与克重
+      family: product_anchor
+      placeholder: 【产品事实：面料成分与克重】
+    - name: 出镜人身份与关系
+      family: role_anchor
+      placeholder: 【角色事实：出镜人身份与关系】
+    evidence_boundary: 不可见的性能不硬当作可拍摄对象来安排镜头，缺失的工艺来历、面料成分、出镜人身份一律留成命名槽位，画面绝不临场编造填槽。
+    downgrade_path: '"更耐穿""显瘦"这类硬结论在没有来源时不写死，先降级成对针脚是否密实均匀等可观察细节的描述，或挂到证据补齐后再由出镜人亲口确认。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-068
+    generation_assignment_id: SCM120-A068
+    canonical_cluster_id: mkc_029
+    p0_group: P0_03
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-068-RB
+    visibility_status: review_only
+    forbidden_claims: 硬性能主张（耐穿、不起球）→ 先降级为可见描述（针脚疏密、罗纹松开又弹回），仍需坐实的挂【品牌事实：纱线支数与含毛量待补】解释槽位，等片尾由出镜者补齐；画面内不预先坐实。
+    required_fact_slots:
+    - name: 纱线支数与含毛量
+      family: 品牌事实
+      placeholder: 【品牌事实：纱线支数与含毛量待补】
+    - name: 出镜者身份与选择动机
+      family: 角色事实
+      placeholder: 【角色事实：出镜者是谁、为何选中这件开衫待补】
+    evidence_boundary: 对耐穿、不起球、不变形等镜头不可见的性能一律不下硬结论，改拍罗纹回弹这类可见动作或降级为描述；缺失的品牌与角色事实全部写成显式命名槽位，绝不用虚构事实填槽。
+    downgrade_path: 硬性能主张（耐穿、不起球）→ 先降级为可见描述（针脚疏密、罗纹松开又弹回），仍需坐实的挂【品牌事实：纱线支数与含毛量待补】解释槽位，等片尾由出镜者补齐；画面内不预先坐实。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-069
+    generation_assignment_id: SCM120-A069
+    canonical_cluster_id: mkc_029
+    p0_group: P0_03
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-069-RB
+    visibility_status: review_only
+    forbidden_claims: 硬结论「暖不暖/会不会起球/能穿几季/显瘦」→ 判为镜头不可见性能，按 PROP-V1-091 认定拍成证据即越界，按住不下定论；旁白按 PROP-V1-092 改写为可观察语言（罗纹回弹、领口贴颈、松开回弹动作），确实改不动的降级为缺来源待补；具体面料成分、工序名称、上镜者身份等事实缺失时不承诺、不虚构，落成命名槽位。
+    required_fact_slots:
+    - name: 纱线成分与支数克重
+      family: 产品事实
+      placeholder: 【产品事实：纱线成分与支数、克重】
+    - name: 收针工序名称与沿用年头
+      family: 品牌事实
+      placeholder: 【品牌事实：这道收针工序的名称与沿用年头】
+    - name: 上镜者身份与首句反应
+      family: 角色事实
+      placeholder: 【角色事实：上镜者是谁、上身后的头一句反应】
+    evidence_boundary: 暖不暖、会不会起球、能穿几季、显瘦这类性能与价值硬结论一律不写死：能改的改成可观察描述（线圈回弹、领口贴不贴颈、罗纹松开那一下的动作），改不动的先空着等来源补齐；缺失的关键事实写成【产品事实】【品牌事实】【角色事实】命名槽位，绝不用编造的数字或卖点填槽。
+    downgrade_path: 硬结论「暖不暖/会不会起球/能穿几季/显瘦」→ 判为镜头不可见性能，按 PROP-V1-091 认定拍成证据即越界，按住不下定论；旁白按 PROP-V1-092 改写为可观察语言（罗纹回弹、领口贴颈、松开回弹动作），确实改不动的降级为缺来源待补；具体面料成分、工序名称、上镜者身份等事实缺失时不承诺、不虚构，落成命名槽位。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-070
+    generation_assignment_id: SCM120-A070
+    canonical_cluster_id: mkc_030
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-070-RB
+    visibility_status: review_only
+    forbidden_claims: 正文不下“更显瘦/更耐穿/卖得更好”这类硬结论，凡需断言效果处一律改写成可观察的轮廓、层次与光线描述，真正的效果判断挂到现场事实与拍摄结果补证后再谈。
+    required_fact_slots:
+    - name: 商品事实
+      family: product_anchor
+      placeholder: 【商品事实：本次主推单品的品类、颜色与版型细节】
+    - name: 门店现场
+      family: event_anchor
+      placeholder: 【门店现场：拍摄门店的空间尺寸、货架布局与可用道具】
+    - name: 镜头事实
+      family: media_anchor
+      placeholder: 【镜头事实：可用机位、光线方向与出片构图清单】
+    evidence_boundary: 通用的观察与空间调度方法写足画面感，但门店空间、主推商品、镜头机位等现场事实全部留成显式槽位，不假装某个具体门店现场已经搭好。
+    downgrade_path: 正文不下“更显瘦/更耐穿/卖得更好”这类硬结论，凡需断言效果处一律改写成可观察的轮廓、层次与光线描述，真正的效果判断挂到现场事实与拍摄结果补证后再谈。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-071
+    generation_assignment_id: SCM120-A071
+    canonical_cluster_id: mkc_030
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-071-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦、身材如何这类硬结论无现场依据时一律不下断言，降级为几何轮廓与搭配位的可观察描述，留待别处另行核证。
+    required_fact_slots:
+    - name: 主推单品名称与材质
+      family: product_anchor
+      placeholder: 【商品事实：主推单品名称与材质待填】
+    - name: 现场空间与光线条件
+      family: event_anchor
+      placeholder: 【门店事实：现场空间与光线条件待填】
+    - name: 机位与景深参数
+      family: media_anchor
+      placeholder: 【镜头事实：机位与景深参数待填】
+    evidence_boundary: 轮廓/层次/搭配位的命名只停在外形几何与肩线腰线脚踝的位置描述，不引申到穿着者的身材结论。
+    downgrade_path: 显瘦、身材如何这类硬结论无现场依据时一律不下断言，降级为几何轮廓与搭配位的可观察描述，留待别处另行核证。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-072
+    generation_assignment_id: SCM120-A072
+    canonical_cluster_id: mkc_030
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-072-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦、耐穿、显高、高级这类硬结论无现场依据时先按住，降级为下摆垂直、腰节横向切分一类可观察说法，或挂成待补证据槽位，绝不无源硬下结论。
+    required_fact_slots:
+    - name: 门店现场
+      family: event_anchor
+      placeholder: 【门店现场：货架段位与顺光/侧光走向待确认】
+    - name: 商品事实
+      family: product_anchor
+      placeholder: 【商品事实：主体单品的实际面料与在架状态待挂来源】
+    - name: 镜头事实
+      family: media_anchor
+      placeholder: 【镜头事实：机位高度与景深参数待补】
+    evidence_boundary: 轮廓、层次、搭配位只停在几何与位置描述，不引申穿着者身材；具体门店实景与在架商品事实一律剔出、挂成待补槽位。
+    downgrade_path: 显瘦、耐穿、显高、高级这类硬结论无现场依据时先按住，降级为下摆垂直、腰节横向切分一类可观察说法，或挂成待补证据槽位，绝不无源硬下结论。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-073
+    generation_assignment_id: SCM120-A073
+    canonical_cluster_id: mkc_031
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-073-RB
+    visibility_status: review_only
+    forbidden_claims: 『够暖』改写为可观察的针脚密度与领口挺括度；『显气色』这类无法当场观察、又无来源的上身/性能结论，降级挂成待补证据槽【证据事实：保暖度与上身气色实测，暂缺来源】，等实测补入后再落。
+    required_fact_slots:
+    - name: 证据事实：保暖度与上身气色实测
+      family: evidence
+      placeholder: 【证据事实：保暖度与上身气色实测，暂缺来源】
+    - name: 场景事实：临街橱窗朝向与采光时段
+      family: scene
+      placeholder: 【场景事实：临街橱窗朝向与采光时段】
+    - name: 商品事实：主色与两件辅色单品的实际材质
+      family: product
+      placeholder: 【商品事实：主色与两件辅色单品的实际材质】
+    - name: 镜头事实：机位高度与是否隔玻璃反光
+      family: shot
+      placeholder: 【镜头事实：机位高度、隔不隔玻璃反光】
+    evidence_boundary: 全篇为通用陈列方法与画面调度，未指认任何具体门店、品牌或真实人物，陈列师仅为泛化角色；情绪断言止于系列感与节奏感的表达边界，不替观者下定论；最终落地的门店朝向、商品材质、镜头机位一律留成【…】槽位，不假装某个具体现场已经站在那里。
+    downgrade_path: 『够暖』改写为可观察的针脚密度与领口挺括度；『显气色』这类无法当场观察、又无来源的上身/性能结论，降级挂成待补证据槽【证据事实：保暖度与上身气色实测，暂缺来源】，等实测补入后再落。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-074
+    generation_assignment_id: SCM120-A074
+    canonical_cluster_id: mkc_031
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-074-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、显高级、卖得好这类无源硬结论一律不写死，降级为可观察的色彩呼应描述，或挂成待补的现场与商品事实槽位。
+    required_fact_slots:
+    - name: 门店事实
+      family: event_anchor
+      placeholder: 【门店事实：本次上身的具体门店与陈列区位置】
+    - name: 商品事实
+      family: product_anchor
+      placeholder: 【商品事实：主色/辅色/点缀色分别对应的实际单品与其面料光泽】
+    - name: 镜头事实
+      family: media_anchor
+      placeholder: 【镜头事实：机位、光线方向与是否带模特走动】
+    evidence_boundary: 把可说范围收在色与色的呼应与轻重，堵住"让人放松/显得体面"这类替观者下情绪与风格定论的越界表达。
+    downgrade_path: 耐穿、显瘦、显高级、卖得好这类无源硬结论一律不写死，降级为可观察的色彩呼应描述，或挂成待补的现场与商品事实槽位。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-075
+    generation_assignment_id: SCM120-A075
+    canonical_cluster_id: mkc_031
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-075-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿/显瘦/高档等硬结论无源时不直接下断言，改写成可观察描述（腰线收在腰节、走动后袖肘回弹痕迹），无法当场观察的部分挂成待补证据槽位等实测再填。
+    required_fact_slots:
+    - name: 门店陈列台场景事实
+      family: media_anchor
+      placeholder: 【场景事实：门店陈列台位置与朝向】
+    - name: 本季主推单品与主色定义
+      family: product_anchor
+      placeholder: 【商品事实：本季主推单品与其主色定义】
+    - name: 可拍摄的材质光线机位
+      family: media_anchor
+      placeholder: 【镜头事实：可拍摄的材质与光线机位】
+    - name: 本次主题词与档期归属
+      family: event_anchor
+      placeholder: 【企划事实：本次主题词与档期归属，先挂缺来源】
+    - name: 耐穿硬结论待补证据
+      family: brand_claim
+      placeholder: 【证据事实：耐穿与回弹实测，先挂缺来源】
+    evidence_boundary: 凡绑定真实品牌活动、档期或主题企划的事实一律抽离，先挂缺来源；正文只保留颜色与结构的关系，避免品牌事实与门店现场事实污染。
+    downgrade_path: 耐穿/显瘦/高档等硬结论无源时不直接下断言，改写成可观察描述（腰线收在腰节、走动后袖肘回弹痕迹），无法当场观察的部分挂成待补证据槽位等实测再填。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-076
+    generation_assignment_id: SCM120-A076
+    canonical_cluster_id: mkc_032
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-076-RB
+    visibility_status: review_only
+    forbidden_claims: 凡主推单品好卖、显瘦、更耐穿一类无现场依据的结论，一律降级为可观察的陈列与镜头描述，或挂成商品事实槽位待补齐再定。
+    required_fact_slots:
+    - name: 门店动线与光源
+      family: event_anchor
+      placeholder: 【门店事实：入口区到端架的实际动线与光源方向】
+    - name: 主推单品款色
+      family: product_anchor
+      placeholder: 【商品事实：本次主推单品的款式与颜色】
+    - name: 出镜角色与近景机位
+      family: media_anchor
+      placeholder: 【拍摄事实：出镜角色与近景机位安排】
+    evidence_boundary: 区位类型只写抽象功能，不写成某家店的真实货架或动线；具体门店走位、主推单品、出镜机位一律留成显式现场槽位待补。
+    downgrade_path: 凡主推单品好卖、显瘦、更耐穿一类无现场依据的结论，一律降级为可观察的陈列与镜头描述，或挂成商品事实槽位待补齐再定。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-077
+    generation_assignment_id: SCM120-A077
+    canonical_cluster_id: mkc_032
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-077-RB
+    visibility_status: review_only
+    forbidden_claims: 凡耐穿、显瘦、卖得好或门店真实动线这类无现场来源的硬结论，一律降级为可观察的画面描述，或挂成现场事实待补槽，不写成既成事实。
+    required_fact_slots:
+    - name: 门店现场事实：入口区动线走向与灯位分布
+      family: event_anchor
+      placeholder: 【门店现场事实：入口区动线走向与灯位分布】
+    - name: 商品事实：中岛成组展示的单品组合
+      family: product_anchor
+      placeholder: 【商品事实：中岛成组展示的单品组合】
+    - name: 出镜事实：端架试穿与取放的执行角色
+      family: role_anchor
+      placeholder: 【出镜事实：端架试穿与取放的执行角色】
+    - name: 镜头事实：近景要拍的面料与走线细节点
+      family: media_anchor
+      placeholder: 【镜头事实：近景要拍的面料与走线细节点】
+    evidence_boundary: 全篇停在通用陈列方法层，凡涉及具体门店动线、灯位、单品组合与出镜动作一律留成显式待补槽位，不假装某家现场已经布好。
+    downgrade_path: 凡耐穿、显瘦、卖得好或门店真实动线这类无现场来源的硬结论，一律降级为可观察的画面描述，或挂成现场事实待补槽，不写成既成事实。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-078
+    generation_assignment_id: SCM120-A078
+    canonical_cluster_id: mkc_032
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-078-RB
+    visibility_status: review_only
+    forbidden_claims: '''显瘦''''耐穿''''高级''等品质硬结论一律先按住，二选一路由：能被镜头看见的→降级为可观察描述（裤缝笔直落脚面、活褶收余量）；缺来源不可观察的→挂【待补证据：版型对身形的修饰效果，需上身对比素材佐证】等佐证补齐，绝不无源直接下结论。'
+    required_fact_slots:
+    - name: 门店现场事实
+      family: store_scene_fact
+      placeholder: 从进门到端架的实际走位与打光角度
+    - name: 商品事实
+      family: product_fact
+      placeholder: 本次并置的单品清单
+    - name: 出镜事实
+      family: cast_shot_fact
+      placeholder: 执行角色与近景机位
+    - name: 待补证据
+      family: pending_evidence
+      placeholder: 版型对身形的修饰效果，需上身对比素材佐证
+    evidence_boundary: 不假装某具体门店现场已存在——门店走位打光、商品成组清单、出镜与机位均留成显式槽位；不编造产品事实、真实人物经历或门店实例；受限审美词仅'高级'出现一次（在被按住的硬结论清单里），未用松弛/自然/温柔/有质感/高档/精致；无价格与货号类信息。
+    downgrade_path: '''显瘦''''耐穿''''高级''等品质硬结论一律先按住，二选一路由：能被镜头看见的→降级为可观察描述（裤缝笔直落脚面、活褶收余量）；缺来源不可观察的→挂【待补证据：版型对身形的修饰效果，需上身对比素材佐证】等佐证补齐，绝不无源直接下结论。'
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-079
+    generation_assignment_id: SCM120-A079
+    canonical_cluster_id: mkc_033
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-079-RB
+    visibility_status: review_only
+    forbidden_claims: 凡涉及某动作更"专业"、某片段"更受欢迎"或某搭配"更好卖"这类无源硬结论，一律降级为可观察的手部动作与画面描述，或挂成现场事实槽位待补，不写成定论。
+    required_fact_slots:
+    - name: 门店与货架位置
+      family: event_anchor
+      placeholder: 【门店事实：具体门店与货架位置】
+    - name: 上镜衣物品类与配色
+      family: product_anchor
+      placeholder: 【商品事实：上镜衣物的品类与配色】
+    - name: 机位与景别
+      family: media_anchor
+      placeholder: 【镜头事实：机位与景别】
+    - name: 开拍光线条件
+      family: event_anchor
+      placeholder: 【现场事实：开拍时的光线条件】
+    evidence_boundary: 通用切片与走位方法可先写足画面，但具体门店、货架位置、上镜衣物品类配色以及机位光线等现场事实不假装已经存在，一律留成显式命名槽位待补。
+    downgrade_path: 凡涉及某动作更"专业"、某片段"更受欢迎"或某搭配"更好卖"这类无源硬结论，一律降级为可观察的手部动作与画面描述，或挂成现场事实槽位待补，不写成定论。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-080
+    generation_assignment_id: SCM120-A080
+    canonical_cluster_id: mkc_033
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-080-RB
+    visibility_status: review_only
+    forbidden_claims: 涉及「哪家店最忙、这样切一定出片」这类硬结论在无现场素材支撑时一律降级为可观察的动作描述，或挂到待补的现场事实槽位，不写成既定结论。
+    required_fact_slots:
+    - name: 门店实拍位置与光线
+      family: event_anchor
+      placeholder: 【门店事实：门店实拍位置与光线条件】
+    - name: 入镜单品品类材质
+      family: product_anchor
+      placeholder: 【商品事实：入镜单品的品类与材质】
+    - name: 机位景别脚本
+      family: media_anchor
+      placeholder: 【镜头事实：机位与景别脚本】
+    - name: 出镜店员站位手部动作
+      family: role_anchor
+      placeholder: 【角色事实：出镜店员站位与手部动作确认】
+    evidence_boundary: 通用切片方法与画面示例先充分写出，最终成片要用到的门店/商品/镜头/角色现场事实全部留成显式槽位，不假装某家具体门店现场已把机器架好。
+    downgrade_path: 涉及「哪家店最忙、这样切一定出片」这类硬结论在无现场素材支撑时一律降级为可观察的动作描述，或挂到待补的现场事实槽位，不写成既定结论。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-081
+    generation_assignment_id: SCM120-A081
+    canonical_cluster_id: mkc_033
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-081-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、卖得好、款款热销这类硬结论在缺少现场证据时不写进画面，改为可观察的材质与肩线描述，或降级挂为待补来源的商品事实槽位。
+    required_fact_slots:
+    - name: 门店场景事实
+      family: event_anchor
+      placeholder: 【门店事实：当日该店层板区位与采光朝向】
+    - name: 入镜商品事实
+      family: product_anchor
+      placeholder: 【商品事实：入镜款式、颜色与材质名】
+    - name: 镜头调度事实
+      family: media_anchor
+      placeholder: 【镜头事实：机位高度与景别顺序】
+    - name: 真实店员边界
+      family: role_anchor
+      placeholder: 【店员事实：可辨认真实店员须先获授权或撤出，否则挂为待补来源】
+    evidence_boundary: 凡触及真实店员的可辨认脸孔、对话或业绩，一律先撤出画面或挂为待补来源，画面里只保留可复用的一般化动作素材。
+    downgrade_path: 耐穿、显瘦、卖得好、款款热销这类硬结论在缺少现场证据时不写进画面，改为可观察的材质与肩线描述，或降级挂为待补来源的商品事实槽位。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-082
+    generation_assignment_id: SCM120-A082
+    canonical_cluster_id: mkc_034
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-082-RB
+    visibility_status: review_only
+    forbidden_claims: '"显得利落""腰线提得起来"这类硬结论无实拍佐证时不作独立事实断言，降级为挂在可见动作上的旁白观察，或留成待补实拍事实的槽位。'
+    required_fact_slots:
+    - name: 上身衬衫单品
+      family: product_anchor
+      placeholder: 【商品事实：待补的衬衫单品】
+    - name: 实拍场地
+      family: event_anchor
+      placeholder: 【门店事实：待补的拍摄场地】
+    - name: 分镜机位与时长
+      family: media_anchor
+      placeholder: 【镜头事实：待补的分镜表】
+    - name: 出镜示范者
+      family: role_anchor
+      placeholder: 【人物事实：待补的出镜人选】
+    evidence_boundary: 通用改型方法与画面调度先充分写出，凡真正落地要用到的衬衫单品、拍摄场地、分镜表、出镜人选一律留成显式槽位，不假装某具体现场已经拍好。
+    downgrade_path: '"显得利落""腰线提得起来"这类硬结论无实拍佐证时不作独立事实断言，降级为挂在可见动作上的旁白观察，或留成待补实拍事实的槽位。'
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-083
+    generation_assignment_id: SCM120-A083
+    canonical_cluster_id: mkc_034
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-083-RB
+    visibility_status: review_only
+    forbidden_claims: 正文不含性能或功效类硬结论；唯一带事实性的商品颜色洗水、门店现场陈设、镜头机位时长均降级为 scene_slot 显式槽位，等品牌与分镜确认后再填，绝不在正文当既成事实断言。
+    required_fact_slots:
+    - name: 商品事实
+      family: product_fact
+      placeholder: 这条裤子的真实颜色与洗水，等品牌确认
+    - name: 现场事实
+      family: scene_fact
+      placeholder: 拍摄的空间、光线与背景陈设，到场再定
+    - name: 镜头事实
+      family: shot_fact
+      placeholder: 跟拍用几个机位、每段掐多长，等分镜落下来
+    evidence_boundary: 通用翻卷方法与画面空间调度先充分写出，但最终落地要用到的真实颜色洗水、拍摄空间光线背景、机位与时长一律留成显式槽位，不假装某具体门店现场已布置好，不编造产品事实。
+    downgrade_path: 正文不含性能或功效类硬结论；唯一带事实性的商品颜色洗水、门店现场陈设、镜头机位时长均降级为 scene_slot 显式槽位，等品牌与分镜确认后再填，绝不在正文当既成事实断言。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-084
+    generation_assignment_id: SCM120-A084
+    canonical_cluster_id: mkc_034
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-084-RB
+    visibility_status: review_only
+    forbidden_claims: 凡"这件风衣更显瘦/更耐穿/卖得好"这类硬结论在无现场与商品事实时不写进正文，降级为"腰带一收出现腰线"这类可观察描述，或挂进【商品事实】槽位待补。
+    required_fact_slots:
+    - name: 商品事实
+      family: product_anchor
+      placeholder: 【商品事实：这件风衣的实际颜色与面料成分】
+    - name: 门店事实
+      family: event_anchor
+      placeholder: 【门店事实：拍摄用的试衣镜位与背景墙陈列】
+    - name: 镜头事实
+      family: media_anchor
+      placeholder: 【镜头事实：跟拍这段动作的机位与运镜节奏】
+    evidence_boundary: 不摆任何编造的在售款、不假装某家店角落已布置停当，门店/商品/镜头事实一律留成显式槽位待真实输入填入。
+    downgrade_path: 凡"这件风衣更显瘦/更耐穿/卖得好"这类硬结论在无现场与商品事实时不写进正文，降级为"腰带一收出现腰线"这类可观察描述，或挂进【商品事实】槽位待补。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-085
+    generation_assignment_id: SCM120-A085
+    canonical_cluster_id: mkc_035
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-085-RB
+    visibility_status: review_only
+    forbidden_claims: '''显瘦''属无法即时证成的硬结论，降级为可见描述（裙腰上提、裙摆微收），标注等有据再补；''这周这条走得快不快''的经营表现与''她试完夸的那句合身''的顾客反馈缺可核实来源，路由为不写入、先当没有；门店/商品/镜头/角色四类落地事实缺输入，路由为显式槽位待补，不假装现场已存在。'
+    required_fact_slots:
+    - name: 门店事实
+      family: store_scene_fact
+      placeholder: 【门店事实：可出镜的镜前位置与当日光线待到场落实】
+    - name: 商品事实
+      family: product_fact
+      placeholder: 【商品事实：本季这件毛衣与百褶裙是否在架待补】
+    - name: 镜头事实
+      family: shot_composition_fact
+      placeholder: 【镜头事实：出镜只留衣物、避开面孔的分镜与范围待核】
+    - name: 角色事实
+      family: role_authorization_fact
+      placeholder: 【角色事实：入镜真人身份与授权待落实，未定前用一般化角色顶替】
+    evidence_boundary: 真实顾客的脸、名字、随口对话等可识别实例事实被排除在隐私与实例事实边界之外，用'一个进店添件过冬衣裳的人'这类一般化角色顶替；对无法核对来源的那句夸赞（顾客反馈）和这周走货快慢（经营表现），一律不写进内容、先当没有，避免替店里贴金；来路没交代、授权不明的素材先搁一边等补齐；'显瘦'硬结论降级为裙腰上提、裙摆微收的可见描述。全篇不出现价格、货号、库存或真实门店与顾客的可核实事实。
+    downgrade_path: '''显瘦''属无法即时证成的硬结论，降级为可见描述（裙腰上提、裙摆微收），标注等有据再补；''这周这条走得快不快''的经营表现与''她试完夸的那句合身''的顾客反馈缺可核实来源，路由为不写入、先当没有；门店/商品/镜头/角色四类落地事实缺输入，路由为显式槽位待补，不假装现场已存在。'
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-086
+    generation_assignment_id: SCM120-A086
+    canonical_cluster_id: mkc_035
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-086-RB
+    visibility_status: review_only
+    forbidden_claims: “卖得多好”“回头客夸得热闹”等经营表现类硬结论在无来源时不写进脚本，先当它不存在并留成待补，不拿来替内容背书。
+    required_fact_slots:
+    - name: 可出镜试衣区与镜前光线
+      family: event_anchor
+      placeholder: 【门店事实：可出镜的试衣区与镜前光线】
+    - name: 本季在架风衣与针织开衫款式
+      family: product_anchor
+      placeholder: 【商品事实：本季在架的风衣与针织开衫具体款式】
+    - name: 只拍衣不拍脸分镜清单
+      family: media_anchor
+      placeholder: 【镜头事实：只拍衣不拍脸的分镜清单】
+    evidence_boundary: 真实顾客的样貌、对话、消费记录一律不入画；无可核来源的经营表现与顾客反馈先留空；最终落地事实以显式槽位声明，不假装现场已经拍好。
+    downgrade_path: “卖得多好”“回头客夸得热闹”等经营表现类硬结论在无来源时不写进脚本，先当它不存在并留成待补，不拿来替内容背书。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-087
+    generation_assignment_id: SCM120-A087
+    canonical_cluster_id: mkc_035
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-087-RB
+    visibility_status: review_only
+    forbidden_claims: 像"这件显瘦""卖得好"这类硬结论在没有现场依据时，降级成"版型收腰、下摆微收"这样的可见描述，或标成待补的现场事实槽位，不当结论直接写进正文。
+    required_fact_slots:
+    - name: 门店现场事实
+      family: event_anchor
+      placeholder: 【门店事实：具体门店、拍摄位与当日陈列需现场确认】
+    - name: 商品事实
+      family: product_anchor
+      placeholder: 【商品事实：这件外套的面料成分与颜色待补】
+    - name: 镜头事实
+      family: media_anchor
+      placeholder: 【镜头事实：试衣镜角度、光线与出镜范围需现场核对】
+    - name: 出镜角色事实
+      family: role_anchor
+      placeholder: 【角色事实：出镜者身份与授权待确认，暂用一般化角色代替】
+    evidence_boundary: 遇到真实客人、未授权素材、经营数字一律停手：客人改写成可保留的一般化角色表达，授权不明的素材搁置等补齐，经营表现与顾客反馈都不进画面。
+    downgrade_path: 像"这件显瘦""卖得好"这类硬结论在没有现场依据时，降级成"版型收腰、下摆微收"这样的可见描述，或标成待补的现场事实槽位，不当结论直接写进正文。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-088
+    generation_assignment_id: SCM120-A088
+    canonical_cluster_id: mkc_036
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-088-RB
+    visibility_status: review_only
+    forbidden_claims: 像"主推款放第一眼就更好卖""这样摆销量一定更高"这类效果与销量硬结论无源，一律降级为"主推款放在第一眼位置"的可观察陈列描述，或挂成待补的现场事实槽位，不写成既定结论。
+    required_fact_slots:
+    - name: 门店与墙面位置
+      family: event_anchor
+      placeholder: 【门店事实：具体门店与墙面位置】
+    - name: 当日上墙服装款式与配色
+      family: product_anchor
+      placeholder: 【商品事实：当日实际上墙的服装款式与配色】
+    - name: 成片机位与光线
+      family: media_anchor
+      placeholder: 【镜头事实：成片要用的机位与光线】
+    evidence_boundary: 通用节点框架与搭配画面可以先充分写出，但落到某一天某一面真实的墙时，门店、商品、镜头这类现场事实一律留成显式槽位，不假装某个具体现场已经存在。
+    downgrade_path: 像"主推款放第一眼就更好卖""这样摆销量一定更高"这类效果与销量硬结论无源，一律降级为"主推款放在第一眼位置"的可观察陈列描述，或挂成待补的现场事实槽位，不写成既定结论。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-089
+    generation_assignment_id: SCM120-A089
+    canonical_cluster_id: mkc_036
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-089-RB
+    visibility_status: review_only
+    forbidden_claims: 全文不下任何硬性效果或性能断言（无转化率、销量、材质耐久等数字或因果承诺）；唯一需要真实证据支撑的最终执行事实——具体门店窗位、真实上窗款式配色尺码、拍摄机位与光线——全部路由为 scene_slot，标注须现场输入后方可落地。
+    required_fact_slots:
+    - name: 门店事实
+      family: scene_slot
+      placeholder: 【门店事实：这家店的橱窗朝向与可用窗台尺寸】
+    - name: 商品事实
+      family: scene_slot
+      placeholder: 【商品事实：本轮真正摆进窗里的款式、配色与尺码】
+    - name: 镜头事实
+      family: scene_slot
+      placeholder: 【镜头事实：隔着玻璃拍成片的机位、时段光线与要不要人入镜】
+    evidence_boundary: 通用搭配方法、造型画面与空间调度充分写出，但不假装某具体门店橱窗已完成布置；最终落地的门店/商品/镜头现场事实一律降级为显式 scene_slot，不硬编、不编造真实门店/产品/顾客事实。
+    downgrade_path: 全文不下任何硬性效果或性能断言（无转化率、销量、材质耐久等数字或因果承诺）；唯一需要真实证据支撑的最终执行事实——具体门店窗位、真实上窗款式配色尺码、拍摄机位与光线——全部路由为 scene_slot，标注须现场输入后方可落地。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-090
+    generation_assignment_id: SCM120-A090
+    canonical_cluster_id: mkc_036
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-090-RB
+    visibility_status: review_only
+    forbidden_claims: 像"这样陈列一定提升连带、更好卖"这类无源硬结论不写死，一律降级成可观察的摆放描述，或挂成待补的现场证据槽。
+    required_fact_slots:
+    - name: 上新货品清单与到货尺码
+      family: event_anchor
+      placeholder: 【门店事实：这次上新的具体货品清单与实际到货尺码】
+    - name: 主推风衣配色与下装款式
+      family: product_anchor
+      placeholder: 【商品事实：主推风衣的颜色与可搭配的下装款式】
+    - name: 出片机位与出镜模特
+      family: media_anchor
+      placeholder: 【镜头事实：出片要拍的机位、光线与出镜模特】
+    evidence_boundary: 真实门店的货品、到货尺码、人员和商品实况不写进正文，一律删掉或挂成缺来源的现场事实槽位。
+    downgrade_path: 像"这样陈列一定提升连带、更好卖"这类无源硬结论不写死，一律降级成可观察的摆放描述，或挂成待补的现场证据槽。
+    owner_route: ExecutionAssetOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-091
+    generation_assignment_id: SCM120-A091
+    canonical_cluster_id: mkc_037
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-091-RB
+    visibility_status: review_only
+    forbidden_claims: 正文不含产品性能或独家类硬结论；'全城独此一家、签约好几年'这类带实例的硬主张被人物动作当场拦下并降级为抽象合作口径；无源授权说法挂起待证；需要现场事实支撑的落地部分改由槽位承接，不落硬事实。
+    required_fact_slots:
+    - name: 门店事实-正挂机位与客流时段
+      family: store_fact
+      placeholder: 【门店事实：这面正挂的实拍机位与客流时段】
+    - name: 商品事实-配色与面料确认
+      family: product_fact
+      placeholder: 【商品事实：这几件的实际配色与面料确认】
+    - name: 镜头事实-出镜角度与打光清单
+      family: lens_fact
+      placeholder: 【镜头事实：出镜角度与层板打光清单】
+    - name: 现场事实-可对外复述的合作口径
+      family: scene_fact
+      placeholder: 【现场事实：可对外复述的合作口径——待补来源】
+    evidence_boundary: 把加盟边界里的实例信息（片区划分、签约年限、拿货来源）识别为不可直写，全部收敛成一句一般化授权表面；对'连来源都拿不准'的授权说法采取搁置待证不硬写；陈列最终落地所需的门店/商品/镜头/现场事实以【…】显式槽位声明，不虚构现场已存在。
+    downgrade_path: 正文不含产品性能或独家类硬结论；'全城独此一家、签约好几年'这类带实例的硬主张被人物动作当场拦下并降级为抽象合作口径；无源授权说法挂起待证；需要现场事实支撑的落地部分改由槽位承接，不落硬事实。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-092
+    generation_assignment_id: SCM120-A092
+    canonical_cluster_id: mkc_037
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-092-RB
+    visibility_status: review_only
+    forbidden_claims: 本稿不作任何硬结论：'能改多少主题、自主改写口径、加盟授权范围'这类需要制度依据的强主张，既不泛化成事实也不凭印象编数，一律路由到'挂起等总部正式说法'并落入品牌事实槽位；门店/镜头的落地强主张同样路由到对应场景槽位，不从方法层直接升格为已发生的门店事实。
+    required_fact_slots:
+    - name: 本店这季主推自主改写口径
+      family: 品牌事实/brand_fact_scene_slot
+      placeholder: 【品牌事实：本店这季主推的自主改写口径，也就是加盟/授权信息的泛化改写条件，等总部说法——待补】
+    - name: 中岛夹克叠位与在架配色
+      family: 门店事实/store_fact_scene_slot
+      placeholder: 【门店事实：中岛这组夹克的叠位与在架配色——待补】
+    - name: 半身模特主镜位与打光
+      family: 镜头事实/camera_fact_scene_slot
+      placeholder: 【镜头事实：半身模特主镜位与肩线打光角度——待补】
+    evidence_boundary: 全程不写任何真实加盟条款原文、区域名或合同细节，对外统一泛化为'我们跟总部有这么个合作、别的不往外倒'；对'总部放多少自主口子'这一缺可核来源的授权事实先挂起、留成待补而非硬写；门店叠位/在架配色、商品、镜头等最终事实全部留成【…】显式槽位，不假装某具体门店现场已经存在，也不编造夹克的真实颜色名或面料成分。
+    downgrade_path: 本稿不作任何硬结论：'能改多少主题、自主改写口径、加盟授权范围'这类需要制度依据的强主张，既不泛化成事实也不凭印象编数，一律路由到'挂起等总部正式说法'并落入品牌事实槽位；门店/镜头的落地强主张同样路由到对应场景槽位，不从方法层直接升格为已发生的门店事实。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-093
+    generation_assignment_id: SCM120-A093
+    canonical_cluster_id: mkc_037
+    p0_group: P0_04
+    generation_mode: display_solution
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-093-RB
+    visibility_status: review_only
+    forbidden_claims: 凡"本店有权改总部主题/可自换主推"这类授权硬结论在缺源时一律降级为待补槽位挂进缺口，等可核材料到位核验后再定，绝不在缺来源时写死进正文。
+    required_fact_slots:
+    - name: 本店自主改写授权范围
+      family: brand_claim
+      placeholder: 【品牌事实：本店当季陈列的自主改写授权范围（加盟/授权信息的泛化改写条件）——待补来源】
+    - name: 橱窗主推单品与镜头位现场
+      family: product_anchor
+      placeholder: 【门店事实：该店橱窗主推单品与镜头位现场——待补】
+    - name: 店长与陈列师签字口径
+      family: role_anchor
+      placeholder: 【角色事实：店长与陈列师的动作权限签字口径——待补】
+    evidence_boundary: 真实加盟返点、授权安排、合同条款一概不写进画面，边界不清的条目转人工裁决而非顺手放行。
+    downgrade_path: 凡"本店有权改总部主题/可自换主推"这类授权硬结论在缺源时一律降级为待补槽位挂进缺口，等可核材料到位核验后再定，绝不在缺来源时写死进正文。
+    owner_route: SourceGapLedger
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-094
+    generation_assignment_id: SCM120-A094
+    canonical_cluster_id: mkc_038
+    p0_group: P0_04
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-094-RB
+    visibility_status: review_only
+    forbidden_claims: 性能/品质型硬主张缺实测证据（'显瘦'、试穿'上腿不勒'）→ 不断言，拎出挂起并以可见观察或角色事实槽替代（证据不足的挂起降级路径，正文全用门店口语，不出现路由原词）。首发/授权型主张（'本店首发'）→
+      不自决，路由为授权事实槽等上级确认（授权不明的上交路径）。到货色系这类落地事实未定 → 留成品牌事实槽待总部核对，不硬填。
+    required_fact_slots:
+    - name: 到货颜色与所属系列
+      family: brand_fact
+      placeholder: 【品牌事实：本店本季到货的这条裙子颜色与所属系列待总部核对】
+    - name: 本店首发授权
+      family: authorization_fact
+      placeholder: 【授权事实：能否标"本店首发"待上级确认】
+    - name: 助理上身反馈
+      family: role_fact
+      placeholder: 【角色事实：助理对该裙的上身反馈待补】
+    evidence_boundary: 不编造任何产品/品牌/门店/角色事实：每一处缺的关键事实都写成显式命名槽（品牌事实=到货颜色与系列、授权事实=能否标本店首发、角色事实=助理上身反馈）；'显瘦'这类无凭据的性能主张不断言，降级成裙摆过膝一寸、走动弧线这类可见可摸的安全替代表达；授权不明的说法一律不自决，经槽上报上级，绝不在牌面上替谁拍板。
+    downgrade_path: 性能/品质型硬主张缺实测证据（'显瘦'、试穿'上腿不勒'）→ 不断言，拎出挂起并以可见观察或角色事实槽替代（证据不足的挂起降级路径，正文全用门店口语，不出现路由原词）。首发/授权型主张（'本店首发'）→
+      不自决，路由为授权事实槽等上级确认（授权不明的上交路径）。到货色系这类落地事实未定 → 留成品牌事实槽待总部核对，不硬填。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-095
+    generation_assignment_id: SCM120-A095
+    canonical_cluster_id: mkc_038
+    p0_group: P0_04
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-095-RB
+    visibility_status: review_only
+    forbidden_claims: 遇"越洗越糯、穿三年不起坨"这类需实测数据支撑的耐用性硬话：手里无凭据即把该句摁住、旁注还差哪样凭证才敢放出，画面改成可观察的安全替代表达（腰头不勒、坐下不顶胯、绒面手感），并把面料成分/含绒克重/可洗缩水挂成命名槽位待补，不替品牌坐实。
+    required_fact_slots:
+    - name: 半裙面料成分与含绒克重
+      family: 品牌事实
+      placeholder: 【品牌事实：这条半裙的面料成分、含绒克重】
+    - name: 灯芯绒可洗方式与缩水幅度
+      family: 品牌事实
+      placeholder: 【品牌事实：灯芯绒的可洗方式与缩水幅度】
+    - name: 改写稿签发授权人
+      family: 角色事实
+      placeholder: 【角色事实：这条改写稿谁能签发】
+    evidence_boundary: 不编造面料成分、含绒克重、可洗方式与缩水幅度；不替品牌把无源硬话坐实；不把某次到货异常或某位顾客说法当作通用事实塞进正文；缺失的关键事实一律写成【品牌事实/角色事实】命名槽位，填不上就空着，绝不虚构填充。
+    downgrade_path: 遇"越洗越糯、穿三年不起坨"这类需实测数据支撑的耐用性硬话：手里无凭据即把该句摁住、旁注还差哪样凭证才敢放出，画面改成可观察的安全替代表达（腰头不勒、坐下不顶胯、绒面手感），并把面料成分/含绒克重/可洗缩水挂成命名槽位待补，不替品牌坐实。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-096
+    generation_assignment_id: SCM120-A096
+    canonical_cluster_id: mkc_038
+    p0_group: P0_04
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-096-RB
+    visibility_status: review_only
+    forbidden_claims: '"穿三年绒都不倒""三年不倒绒""这批绒最厚"属无法当场核实的耐久与最优承诺，全部先摘下挂起、不放进主播口播；换成"蹲个大动作膝盖没绷紧"这类只描述可触画面的安全替代表达；具体成分与克重挂成【品牌事实】槽位待品牌确认后再落。'
+    required_fact_slots:
+    - name: 该款灯芯绒阔腿裤的成分与克重
+      family: 品牌事实
+      placeholder: 【品牌事实:该款灯芯绒阔腿裤的成分与克重】
+    - name: 本场脚本的品牌口径授权人
+      family: 角色事实
+      placeholder: 【角色事实:本场脚本的品牌口径授权人】
+    - name: 这条裤子这场最终定的上身搭配
+      family: 陈列事实
+      placeholder: 【陈列事实:这条裤子这场最终定的上身搭配】
+    evidence_boundary: 无出处的硬承诺不替品牌坐实，降级成只写可触细节的安全替代表达或挂成槽位；真实经营异常的具体数字只作后台记录、不写成谁都能照抄的通用规矩；改动品牌口径须先拿到授权；缺失的成分克重、授权人、最终上身搭配一律留成命名槽位，绝不臆造填充。
+    downgrade_path: '"穿三年绒都不倒""三年不倒绒""这批绒最厚"属无法当场核实的耐久与最优承诺，全部先摘下挂起、不放进主播口播；换成"蹲个大动作膝盖没绷紧"这类只描述可触画面的安全替代表达；具体成分与克重挂成【品牌事实】槽位待品牌确认后再落。'
+    owner_route: SourceGapLedger
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-097
+    generation_assignment_id: SCM120-A097
+    canonical_cluster_id: mkc_039
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-097-RB
+    visibility_status: review_only
+    forbidden_claims: 本稿无硬性能/功效/可核实事实宣称需外部证据。唯一近似功能的表述"替他挡住厨房穿堂风"被降级为场景内叙事角色（解决项的举例），仅作故事情节而非产品功效结论，不主张已验证事实，故无需证据绑定，也无需挂事实槽。
+    required_fact_slots: []
+    evidence_boundary: 按 creative_prototype 规则，全程用通用生活场景与泛化单品，不指名任何真实品牌事件/人物经历/门店/顾客反馈，不写产品性能宣称；'豆绿色针织开衫'等均为泛化描述而非某款真实产品事实；受限审美词（高级/松弛/自然/温柔/有质感/高档/精致）零使用，无价格/货号/SKU/库存/售价。
+    downgrade_path: 本稿无硬性能/功效/可核实事实宣称需外部证据。唯一近似功能的表述"替他挡住厨房穿堂风"被降级为场景内叙事角色（解决项的举例），仅作故事情节而非产品功效结论，不主张已验证事实，故无需证据绑定，也无需挂事实槽。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-098
+    generation_assignment_id: SCM120-A098
+    canonical_cluster_id: mkc_039
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-098-RB
+    visibility_status: review_only
+    forbidden_claims: 正文不下任何耐穿/显瘦/销量类硬结论，斜纹起伏与层次变化只作可观察的画面描述，若要升级为宣称须另接证据再落地。
+    required_fact_slots: []
+    evidence_boundary: 入场框架只在内容里确有能担戏的单品时才启用，没有叙事型对象就不硬派角色，避免产出只有空槽的空壳。
+    downgrade_path: 正文不下任何耐穿/显瘦/销量类硬结论，斜纹起伏与层次变化只作可观察的画面描述，若要升级为宣称须另接证据再落地。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-099
+    generation_assignment_id: SCM120-A099
+    canonical_cluster_id: mkc_039
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-099-RB
+    visibility_status: review_only
+    forbidden_claims: '"更挡风""更显瘦""更耐穿"这类硬结论此处无来源,全部降级为可观察的动作与画面描写(系门襟、收腰线、立领口挡风),待有据再补。'
+    required_fact_slots: []
+    evidence_boundary: 正文只写角色与位置两层方法,凡涉及真实商品信息一律不落具体事实,防止这套入场写法被误用成在售商品的推广模板。
+    downgrade_path: '"更挡风""更显瘦""更耐穿"这类硬结论此处无来源,全部降级为可观察的动作与画面描写(系门襟、收腰线、立领口挡风),待有据再补。'
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-100
+    generation_assignment_id: SCM120-A100
+    canonical_cluster_id: mkc_040
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-100-RB
+    visibility_status: review_only
+    forbidden_claims: 商品效果类硬结论（耐穿、显高、百搭）→ 降级为可被看见的证据或直接压住不认，绝不替单品背书；陈列落地最终事实（具体摆位、联名搭配单品）→ 挂显式槽位【…】待落地补齐；任一硬结论都不写成可直接投放的确凿说法。
+    required_fact_slots:
+    - name: 实际陈列落地位与搭配单品
+      family: 陈列落地最终事实
+      placeholder: 【本季实际陈列位与联名搭配单品，以落地为准】
+    evidence_boundary: 全篇为创意原型场景，不指名品牌、不叙述真实人物经历、不引用任何真实顾客反馈、不宣称已发布的产品事实；耐穿/显高等需证据的硬结论一律降级为压着不说；实际陈列落地位与搭配单品用显式槽位挂起，不在文中写死。
+    downgrade_path: 商品效果类硬结论（耐穿、显高、百搭）→ 降级为可被看见的证据或直接压住不认，绝不替单品背书；陈列落地最终事实（具体摆位、联名搭配单品）→ 挂显式槽位【…】待落地补齐；任一硬结论都不写成可直接投放的确凿说法。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-101
+    generation_assignment_id: SCM120-A101
+    canonical_cluster_id: mkc_040
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-101-RB
+    visibility_status: review_only
+    forbidden_claims: 行动引导不承载未证实的效果承诺，任何效果暗示都不作为事实断言，缺铺垫时不硬催单。
+    required_fact_slots: []
+    evidence_boundary: 收尾不替效果打包票、不暗示穿了就怎样，铺垫不足坚决不硬收；创意原型无需任何品牌真实事实。
+    downgrade_path: 行动引导不承载未证实的效果承诺，任何效果暗示都不作为事实断言，缺铺垫时不硬催单。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-102
+    generation_assignment_id: SCM120-A102
+    canonical_cluster_id: mkc_040
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-102-RB
+    visibility_status: review_only
+    forbidden_claims: PROP-V1-135：邀请不替效果背书——耐穿、显瘦这类需证据的硬结论被店员拒接，降级为可当场查验的构造描述，收尾只留低压动作不承诺结果。PROP-V1-136：门口活动、当季可搭单品属实例信息，不念销售句，挂入
+      slot 待落地（以店里当天为准）。
+    required_fact_slots:
+    - name: 本周到店活动与可搭当季单品
+      family: display_landing_instance_fact
+      placeholder: 【本周到店活动与可搭的当季单品，以店里当天为准】
+    evidence_boundary: 硬结论耐穿、显瘦一律不认、不背书，改成对折边/缲缝/领口折痕等可观察构造；不编造具体品牌事件、真实人物经历、产品事实或已发布事实；具体活动与当季搭配单品挂为留槽（以店里当天为准），全篇无价格/￥/元/折/货号/库存。
+    downgrade_path: PROP-V1-135：邀请不替效果背书——耐穿、显瘦这类需证据的硬结论被店员拒接，降级为可当场查验的构造描述，收尾只留低压动作不承诺结果。PROP-V1-136：门口活动、当季可搭单品属实例信息，不念销售句，挂入
+      slot 待落地（以店里当天为准）。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-103
+    generation_assignment_id: SCM120-A103
+    canonical_cluster_id: mkc_041
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-103-RB
+    visibility_status: review_only
+    forbidden_claims: 凡"更耐穿/更显瘦/卖得好/更有地位"这类硬结论若无来源，一律降级为可观察描述（如"起风时竖领子最有说服力""旧一点反倒耐看"），或留作待补的证据位，不在正文里坐实。
+    required_fact_slots: []
+    evidence_boundary: 全篇只写可被看见的动作、结构件与穿搭场景，不指名任何真实品牌、人物或已发布事实，风衣及其功能件均为通用示例而非某款真实产品。
+    downgrade_path: 凡"更耐穿/更显瘦/卖得好/更有地位"这类硬结论若无来源，一律降级为可观察描述（如"起风时竖领子最有说服力""旧一点反倒耐看"），或留作待补的证据位，不在正文里坐实。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-104
+    generation_assignment_id: SCM120-A104
+    canonical_cluster_id: mkc_041
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-104-RB
+    visibility_status: review_only
+    forbidden_claims: 文中不下"更耐穿/更显瘦/更好卖"一类硬结论，凡碰到优劣或销量都改写成可观察的穿着动作与画面，或直接点明此法不作销售预测。
+    required_fact_slots: []
+    evidence_boundary: 这套窗口只用来判断衣服此刻站在哪一格，不外推成卖得好不好或该怎么排产的经营结论。
+    downgrade_path: 文中不下"更耐穿/更显瘦/更好卖"一类硬结论，凡碰到优劣或销量都改写成可观察的穿着动作与画面，或直接点明此法不作销售预测。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-105
+    generation_assignment_id: SCM120-A105
+    canonical_cluster_id: mkc_041
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-105-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、卖得好这类无源硬结论一律降级为可观察描述（如久坐起皱、抬手不勒），或留作待补来源，绝不当作既成事实写进正文。
+    required_fact_slots: []
+    evidence_boundary: 凡涉及真实上市时间、销量走势、库存这类经营数字，正文一律先空着标为缺来源，不写成画面里的结论。
+    downgrade_path: 耐穿、显瘦、卖得好这类无源硬结论一律降级为可观察描述（如久坐起皱、抬手不勒），或留作待补来源，绝不当作既成事实写进正文。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-106
+    generation_assignment_id: SCM120-A106
+    canonical_cluster_id: mkc_042
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-106-RB
+    visibility_status: review_only
+    forbidden_claims: 不写任何真实货号、入口真实经营数据或真实让利动作，组合只停在可抽象归纳的角色关系层。
+    required_fact_slots: []
+    evidence_boundary: 这套组合关系只在商品间存在可抽象归纳的关系时管用，一旦改写成对某盘真实货品的调度或塞进真实货号经营数据就失效；创意原型无需品牌真实事实。
+    downgrade_path: 不写任何真实货号、入口真实经营数据或真实让利动作，组合只停在可抽象归纳的角色关系层。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-107
+    generation_assignment_id: SCM120-A107
+    canonical_cluster_id: mkc_042
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-107-RB
+    visibility_status: review_only
+    forbidden_claims: 本篇为 creative_prototype 纯方法叙事，不含任何硬性能、品牌或销售宣称，无需证据绑定；fact_binding 为 not_needed，无无源硬结论需降级或挂槽，故无 hard claim
+      需路由，slots 留空。
+    required_fact_slots: []
+    evidence_boundary: 矩阵只在可抽象归纳、可被原样复述的商品组合关系上成立；正文用“被拿去当成某批真货该进该出的派工单就走味了”这一反例明示边界：一旦退化为对真实货盘的进出调度指令即失效。故通篇不写任何具体品牌、门店、SKU、货盘或已发布事实，人物与单品均为泛化虚拟场景，符合
+      PROP-V1-143 的适用边界。
+    downgrade_path: 本篇为 creative_prototype 纯方法叙事，不含任何硬性能、品牌或销售宣称，无需证据绑定；fact_binding 为 not_needed，无无源硬结论需降级或挂槽，故无 hard claim
+      需路由，slots 留空。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-108
+    generation_assignment_id: SCM120-A108
+    canonical_cluster_id: mkc_042
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-108-RB
+    visibility_status: review_only
+    forbidden_claims: 无任何性能或硬宣称；唯一会触及真实货盘的'哪件明早几点上播/档位'被剔出正文，改以显式槽位【本季实际上播单品与档位待定】留白待人工补源，落实 PROP-V1-144 的剔除或挂缺来源处理。
+    required_fact_slots:
+    - name: 本季实际上播单品与档位
+      family: 陈列落地最终事实/真实货盘排期
+      placeholder: 【本季实际上播单品与档位待定】
+    evidence_boundary: 全文停在角色关系这一层：不写品牌事件、真实人物经历、产品硬事实、门店事实或顾客反馈；矩阵被明确限定为'可归纳的组合关系'而非对某真实货盘的调度指令，落实 PROP-V1-143 的适用边界，避免退化为经营安排。
+    downgrade_path: 无任何性能或硬宣称；唯一会触及真实货盘的'哪件明早几点上播/档位'被剔出正文，改以显式槽位【本季实际上播单品与档位待定】留白待人工补源，落实 PROP-V1-144 的剔除或挂缺来源处理。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-109
+    generation_assignment_id: SCM120-A109
+    canonical_cluster_id: mkc_043
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-109-RB
+    visibility_status: review_only
+    forbidden_claims: 凡涉及耐穿、显瘦、销量、地位等硬结论一律不写死，改成可观察的穿着表现（如坐下时前襟是否堆叠、快走时长下摆是否碍事），无据判断挂待补，不当既成事实。
+    required_fact_slots: []
+    evidence_boundary: 不宣称衣服适配一切场景，主动说清不适配条件表达，用场景切换条件划出边界，规避场景过度泛化。
+    downgrade_path: 凡涉及耐穿、显瘦、销量、地位等硬结论一律不写死，改成可观察的穿着表现（如坐下时前襟是否堆叠、快走时长下摆是否碍事），无据判断挂待补，不当既成事实。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-110
+    generation_assignment_id: SCM120-A110
+    canonical_cluster_id: mkc_043
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-110-RB
+    visibility_status: review_only
+    forbidden_claims: 正文不下"更显瘦""更耐穿""卖得好"这类无源硬结论，一律降级为可观察的穿着体验（下摆扫腿、坐下压褶、进门拆着穿），需要背书的判断留待证据补入后再说。
+    required_fact_slots: []
+    evidence_boundary: 显式把不适配的那一面摊开讲，用扫腿、压褶、拆着穿这类可观察的动作限制替代"谁穿都行"的空泛断言。
+    downgrade_path: 正文不下"更显瘦""更耐穿""卖得好"这类无源硬结论，一律降级为可观察的穿着体验（下摆扫腿、坐下压褶、进门拆着穿），需要背书的判断留待证据补入后再说。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-111
+    generation_assignment_id: SCM120-A111
+    canonical_cluster_id: mkc_043
+    p0_group: P0_05
+    generation_mode: creative_prototype
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-111-RB
+    visibility_status: review_only
+    forbidden_claims: 凡涉及显瘦、适用人群、耐穿等效果类硬结论，缺证据时先按下不表或改写为可观察描述，挂为待补来源，不当成既定事实写进正文。
+    required_fact_slots: []
+    evidence_boundary: 显瘦、谁穿都好看这类无源硬话一律不写死，降级成坐下不堆量、走动不乱飘的可观察描述。
+    downgrade_path: 凡涉及显瘦、适用人群、耐穿等效果类硬结论，缺证据时先按下不表或改写为可观察描述，挂为待补来源，不当成既定事实写进正文。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: false
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-112
+    generation_assignment_id: SCM120-A112
+    canonical_cluster_id: mkc_044
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-112-RB
+    visibility_status: review_only
+    forbidden_claims: 显瘦、耐穿这类硬结论在没有来源时被按住，降级为"领口线往下走、袖口收干净、肩背余量少了"的可观察描述，或挂【产品事实：面料克重与版型数据】待补，绝不无源硬下结论。
+    required_fact_slots:
+    - name: 面料克重与版型数据
+      family: product_anchor
+      placeholder: 【产品事实：面料克重与版型数据】
+    - name: 本人常穿尺码
+      family: role_anchor
+      placeholder: 【角色事实：本人常穿尺码】
+    evidence_boundary: 显瘦、耐穿这类硬结论一律不无源下判断，改成镜头里能看到的领口线下移、袖口收干净、余量减少等可观察描述，或标为待补证据槽位。
+    downgrade_path: 显瘦、耐穿这类硬结论在没有来源时被按住，降级为"领口线往下走、袖口收干净、肩背余量少了"的可观察描述，或挂【产品事实：面料克重与版型数据】待补，绝不无源硬下结论。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-113
+    generation_assignment_id: SCM120-A113
+    canonical_cluster_id: mkc_044
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-113-RB
+    visibility_status: review_only
+    forbidden_claims: 「穿上显高」→按住并挂【产品事实：裤长与前裆尺寸】＋身高对照槽位，证据缺失则空置；「耐磨/下水掉色」→不打包票，路由到洗护标签与标签条件由观众自核；「比别家更挺括」→降级为门襟走线更密的可观察差异，不主张更好更有效。
+    required_fact_slots:
+    - name: 裤长与前裆尺寸
+      family: product_fact
+      placeholder: 【产品事实：裤长与前裆尺寸】
+    - name: 出镜者身高与常穿尺码
+      family: role_fact
+      placeholder: 【角色事实：出镜者身高与常穿尺码】
+    evidence_boundary: 三处硬结论一律不无源下判：显高需要【产品事实：裤长与前裆尺寸】与出镜者身高对照才成立，缺失即留空不讲；耐磨与是否掉色不打包票，改成翻到洗护标签按其标签条件核对；更挺括不断言“更好”，只指认门襟走线更密这一可见差异，让观众自己上手验。
+    downgrade_path: 「穿上显高」→按住并挂【产品事实：裤长与前裆尺寸】＋身高对照槽位，证据缺失则空置；「耐磨/下水掉色」→不打包票，路由到洗护标签与标签条件由观众自核；「比别家更挺括」→降级为门襟走线更密的可观察差异，不主张更好更有效。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-114
+    generation_assignment_id: SCM120-A114
+    canonical_cluster_id: mkc_044
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-114-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、更好更有效等硬结论在无证据时降级为可观察的揉压回弹描述，或整体挂为待补证据并与教育性说明隔离，绝不由演示动作替观众得出效果结论。
+    required_fact_slots:
+    - name: 面料成分与洗护标注
+      family: product_anchor
+      placeholder: 【品牌事实：面料成分与洗护标注】
+    - name: 出镜者身材与身份
+      family: role_anchor
+      placeholder: 【角色事实：出镜者身材与身份】
+    evidence_boundary: 洗涤、缩水等注意事项表达一律回到标签条件与命名事实槽，不用主播口头记忆代替吊牌标注去下判断。
+    downgrade_path: 耐穿、显瘦、更好更有效等硬结论在无证据时降级为可观察的揉压回弹描述，或整体挂为待补证据并与教育性说明隔离，绝不由演示动作替观众得出效果结论。
+    owner_route: EvidencePolicyOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-115
+    generation_assignment_id: SCM120-A115
+    canonical_cluster_id: mkc_045
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-115-RB
+    visibility_status: review_only
+    forbidden_claims: 耐穿、显瘦、卖得好、地位象征这类无源硬结论一律不写死，降级为可观察的画面关系描述，或挂成【品牌事实】待补槽位，绝不虚构填槽。
+    required_fact_slots:
+    - name: 本季主推外套系列名
+      family: product_anchor
+      placeholder: 【品牌事实：本季主推的那件外套具体系列名】
+    - name: 出镜搭配身份
+      family: role_anchor
+      placeholder: 【角色事实：出镜搭配的主理人或模特身份】
+    evidence_boundary: 邻接产生的理解影响只写成关系性描述（呼应/对比/张力），不写成确定的转化或销售结论；位置层只写中心/侧位/背景这类抽象权重，不写成具体门店的实拍坐标。
+    downgrade_path: 耐穿、显瘦、卖得好、地位象征这类无源硬结论一律不写死，降级为可观察的画面关系描述，或挂成【品牌事实】待补槽位，绝不虚构填槽。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-116
+    generation_assignment_id: SCM120-A116
+    canonical_cluster_id: mkc_045
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-116-RB
+    visibility_status: review_only
+    forbidden_claims: 邻接带来的影响只写成读者理解层面的关系性描述（延续/对比/有故事），不写成确定的转化或成套售罄结论；主推款式、面料工艺、拍摄地点等硬事实一律留为显式命名槽位待补，绝不虚构填槽。
+    required_fact_slots:
+    - name: 主角单品款式与名称
+      family: product_anchor
+      placeholder: 【品牌事实：本组主角单品的款式与名称】
+    - name: 主角单品面料与工艺
+      family: product_anchor
+      placeholder: 【产品事实：主角单品的面料与工艺】
+    - name: 拍摄地点或门店场景
+      family: event_anchor
+      placeholder: 【场景事实：拍摄地点或门店场景】
+    evidence_boundary: 仅当画面里存在可观察的产品与陈列关系时才启用该关系语法，缺关系时不硬套、不凭空生成侧边位置或邻接槽位。
+    downgrade_path: 邻接带来的影响只写成读者理解层面的关系性描述（延续/对比/有故事），不写成确定的转化或成套售罄结论；主推款式、面料工艺、拍摄地点等硬事实一律留为显式命名槽位待补，绝不虚构填槽。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-117
+    generation_assignment_id: SCM120-A117
+    canonical_cluster_id: mkc_045
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-117-RB
+    visibility_status: review_only
+    forbidden_claims: 凡耐穿、显瘦、卖得好、够体面这类无源硬结论，一律降级为可观察的排布描述或写成显式事实槽位待补，不在正文里当事实下结论。
+    required_fact_slots:
+    - name: 主推单品
+      family: product_anchor
+      placeholder: 【品牌事实：本次要主推的那件单品】
+    - name: 门店货位与实拍图
+      family: media_anchor
+      placeholder: 【门店事实：该组陈列的实际货位与实拍图】
+    evidence_boundary: 真门店货位与实拍照先脱敏，脱不了敏就挂待补，正文只承认可观察的抽象位置与邻接结构，把具体门店实例事实隔离在外。
+    downgrade_path: 凡耐穿、显瘦、卖得好、够体面这类无源硬结论，一律降级为可观察的排布描述或写成显式事实槽位待补，不在正文里当事实下结论。
+    owner_route: GeneralKnowledgeBase
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-118
+    generation_assignment_id: SCM120-A118
+    canonical_cluster_id: mkc_046
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-118-RB
+    visibility_status: review_only
+    forbidden_claims: '''腿长十公分 / 显瘦到亲妈都认不出''属硬效果/性能claim，正文明确拒绝直接断言，改挂【品牌事实：显瘦这类说法能不能核实的凭据】槽位，在可核依据补齐前不作任何承诺；只保留镜头拍得出来的垂坠、裙摆弧度这类可视事实来讲。'
+    required_fact_slots:
+    - name: 这条裙的面料成分与克重
+      family: 产品事实
+      placeholder: 【产品事实：这条裙的面料成分与克重】
+    - name: 出镜主播的人设边界
+      family: 角色事实
+      placeholder: 【角色事实：出镜主播的人设边界】
+    - name: 显瘦这类说法能不能核实的凭据
+      family: 品牌事实
+      placeholder: 【品牌事实：显瘦这类说法能不能核实的凭据】
+    evidence_boundary: 该停手的两处：一是有人要把这套跨域关系钉成照着秒表逐秒逐动作的死本子时停手（那是把对接既有接口误当成新建流程）；二是要凭空补一个面料、人设或显瘦效果的事实来填空时停手。所有填不实的关键事实一律写成命名槽位晾在原处，宁可空着等真凭据，也绝不虚构填充。
+    downgrade_path: '''腿长十公分 / 显瘦到亲妈都认不出''属硬效果/性能claim，正文明确拒绝直接断言，改挂【品牌事实：显瘦这类说法能不能核实的凭据】槽位，在可核依据补齐前不作任何承诺；只保留镜头拍得出来的垂坠、裙摆弧度这类可视事实来讲。'
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-119
+    generation_assignment_id: SCM120-A119
+    canonical_cluster_id: mkc_046
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-119-RB
+    visibility_status: review_only
+    forbidden_claims: '"显瘦、更保暖、瘦十斤"这类无源硬结论一律不留在嘴上，降级成镜头看得见的垂坠与腰线描述，效果说法挂到【品牌事实：可核依据】槽位待补。'
+    required_fact_slots:
+    - name: 显瘦保暖效果可核依据
+      family: brand_claim
+      placeholder: 【品牌事实：显瘦、保暖等效果的可核依据】
+    - name: 品牌旁白语气边界
+      family: brand_voice
+      placeholder: 【品牌事实：品牌旁白的语气与用词边界】
+    - name: 出镜导购人物设定
+      family: role_anchor
+      placeholder: 【角色事实：出镜导购的人物设定】
+    - name: 风衣面料与版型
+      family: product_anchor
+      placeholder: 【产品事实：这件风衣的面料成分与版型】
+    evidence_boundary: 碰到出镜导购人物设定、风衣面料版型这类还没到手的事实，一律留成显式命名槽位等填，不自己编一个顶上去。
+    downgrade_path: '"显瘦、更保暖、瘦十斤"这类无源硬结论一律不留在嘴上，降级成镜头看得见的垂坠与腰线描述，效果说法挂到【品牌事实：可核依据】槽位待补。'
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.
+  - candidate_id: SCM120-CAND-120
+    generation_assignment_id: SCM120-A120
+    canonical_cluster_id: mkc_046
+    p0_group: P0_05
+    generation_mode: fact_slot_script
+    source_rich_body_ref: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml#SCM120-CAND-120-RB
+    visibility_status: review_only
+    forbidden_claims: 凡涉及"这件更耐穿/更显瘦/卖得最好/穿了更有身份"这类无源硬结论，正文一律不写死，要么降级成看得见的动作与画面描述，要么挂成【产品事实】【品牌事实】待核实槽位，绝不替它下定论。
+    required_fact_slots:
+    - name: 本季系列名
+      family: product_anchor
+      placeholder: 【品牌事实：本季这件外套主推的系列名】
+    - name: 外套面料与卖点
+      family: product_anchor
+      placeholder: 【产品事实：外套面料成分与主要卖点】
+    - name: 本店客群与商圈
+      family: role_anchor
+      placeholder: 【角色事实：本店主力客群与所在商圈】
+    evidence_boundary: 跨域只给"这件在这段大概演什么角色"的提示，绝不改写成"第几秒说什么、手往哪指"的死流程图；一旦要固化每步执行动作，就在那一刻停手，把话术交回给各店按自家客群自己接。
+    downgrade_path: 凡涉及"这件更耐穿/更显瘦/卖得最好/穿了更有身份"这类无源硬结论，正文一律不写死，要么降级成看得见的动作与画面描述，要么挂成【产品事实】【品牌事实】待核实槽位，绝不替它下定论。
+    owner_route: GovernanceOutbox
+    release_status:
+      accepted_domain_knowledge: false
+      candidatepack_ready: false
+      KE_ready: false
+      RAG_ready: false
+      DIFY_ready: false
+      production_servable: false
+    fact_slot_preservation_required: true
+    must_not_be_user_visible_as_written: true
+    review_note: Claim/evidence/slot/downgrade information is separated from user-visible kernel to avoid governance or boundary
+      language leaking into generated body.

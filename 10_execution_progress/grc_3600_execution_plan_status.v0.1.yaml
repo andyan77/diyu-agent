@@ -1,12 +1,16 @@
 grc_3600_execution_plan_status:
   ledger_version: v0.1
-  updated_by_task: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
+  updated_by_task: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001
     applied_from: codex_prompt_pre_review_required_note_1_founder_chose_additive_option
     option: additive_route_extension_keep_committed_checker_anchors
-    reason: 'The committed P7B checker (ci/checkers/check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py) hard-reads step_id P7A(status DONE)+classification and step_id P7C(status NEXT, generation_authorized_by_this_task false); the committed P7A checker hard-reads P7A(DONE)/P7(NEXT). Neither checker is in this task''s allowed writes. Per founder decision on Codex note 1, the anchor steps are kept intact and P7C-BRIEF (this task, DONE) + P7C-GEN (next, NEXT) are ADDED; P7D is re-pointed to BLOCKED_BY_P7C_GEN. No committed checker was edited; no readiness flag was flipped.
+    reason: 'The committed P7B checker (ci/checkers/check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py)
+      hard-reads step_id P7A(status DONE)+classification and step_id P7C(status NEXT, generation_authorized_by_this_task false);
+      the committed P7A checker hard-reads P7A(DONE)/P7(NEXT). Neither checker is in this task''s allowed writes. Per founder
+      decision on Codex note 1, the anchor steps are kept intact and P7C-BRIEF (this task, DONE) + P7C-GEN (next, NEXT) are
+      ADDED; P7D is re-pointed to BLOCKED_BY_P7C_GEN. No committed checker was edited; no readiness flag was flipped.
 
       '
     no_old_checker_edited: true
@@ -45,7 +49,11 @@ grc_3600_execution_plan_status:
     applied_by_task: GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001
     applied_from: codex_prompt_pre_review_required_notes_1_and_2
     option: a_backward_compatible_route_extension
-    reason: 'P7A proof-microbatch closeout reclassifies the route into finer generation-mode-aware steps. The committed P7A checker (ci/checkers/check_generator_capability_proof_microbatch.py) hard-reads step_id P7A (status DONE) and step_id P7 (status NEXT / unlock_kind governed_incremental_microbatch / generation_allowed false); that checker is NOT in this task''s allowed writes. Per Codex required note 2 option (a), the P7A/P7 step FIELDS are kept backward-compatible and the P7B/P7C/P7D route is ADDED. No old checker was edited; no readiness flag was flipped.
+    reason: 'P7A proof-microbatch closeout reclassifies the route into finer generation-mode-aware steps. The committed P7A
+      checker (ci/checkers/check_generator_capability_proof_microbatch.py) hard-reads step_id P7A (status DONE) and step_id
+      P7 (status NEXT / unlock_kind governed_incremental_microbatch / generation_allowed false); that checker is NOT in this
+      task''s allowed writes. Per Codex required note 2 option (a), the P7A/P7 step FIELDS are kept backward-compatible and
+      the P7B/P7C/P7D route is ADDED. No old checker was edited; no readiness flag was flipped.
 
       '
     no_old_checker_edited: true
@@ -54,7 +62,8 @@ grc_3600_execution_plan_status:
       P7A:
         legacy_status_field: DONE
         classification: agent_authored_quality_probe_pass
-        note: status field kept DONE for committed-checker back-compat; the quality-probe reclassification is carried by P7A.classification + the closeout files, not by mutating the status field
+        note: status field kept DONE for committed-checker back-compat; the quality-probe reclassification is carried by P7A.classification
+          + the closeout files, not by mutating the status field
       P7_legacy_3600_gen_anchor:
         canonical_new_step: P7D
         status_field_kept: NEXT
@@ -113,7 +122,8 @@ grc_3600_execution_plan_status:
     generation_allowed: false
     generation_3600_executed: false
     go_decision: GO_TO_P7
-    rationale: GO_TO_P7 means ready to prepare/submit the P7 execution brief; it does NOT authorize real 3600 generation. Real 3600 generation needs a separate founder authorization + Codex three-gate.
+    rationale: GO_TO_P7 means ready to prepare/submit the P7 execution brief; it does NOT authorize real 3600 generation.
+      Real 3600 generation needs a separate founder authorization + Codex three-gate.
     applied_from: codex_prompt_pre_review_required_notes_1_and_2_and_3
   grc_legacy_lock_retire_route_note:
     task: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
@@ -150,6 +160,9 @@ grc_3600_execution_plan_status:
     production_ready: false
     generation_allowed: false
     readiness_all_false: true
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
   steps:
   - step_id: P1
     task_id: GKB-GRC-CORPUS-LOCK-AND-NORMALIZATION-001
@@ -182,8 +195,10 @@ grc_3600_execution_plan_status:
     head_before: df2cacacfdd49c232e3b496b1205f3f78a0eca63
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: add evidence_policy_candidate / EvidencePolicyOutbox to contract enums + owner policy; align 15 formal evidence cases as strict judge fixtures; alignment checker
-    standard_validation: check_grc_contract_ontology_alignment.py live+selftest PASS; python -O fail-closed; P1 checker still PASS; contract lock checker still PASS
+    objective: add evidence_policy_candidate / EvidencePolicyOutbox to contract enums + owner policy; align 15 formal evidence
+      cases as strict judge fixtures; alignment checker
+    standard_validation: check_grc_contract_ontology_alignment.py live+selftest PASS; python -O fail-closed; P1 checker still
+      PASS; contract lock checker still PASS
     deliverables:
     - 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
     - 01_generation_contracts/codex_candidate_kind_target_owner_policy.v0.1.yaml
@@ -210,8 +225,10 @@ grc_3600_execution_plan_status:
     head_before: 9e590c287dfbf9f5f6401f6f687bb3c95bd2c1f9
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: land judge calibration registries (positive/anti/borderline/control/failure_code/hard_gate/expert_index/creative/do_not_copy) + judge calibration checker
-    standard_validation: check_judge_calibration_against_grc.py live+selftest PASS; python -O fail-closed; P1+P2+contract-lock checkers still PASS
+    objective: land judge calibration registries (positive/anti/borderline/control/failure_code/hard_gate/expert_index/creative/do_not_copy)
+      + judge calibration checker
+    standard_validation: check_judge_calibration_against_grc.py live+selftest PASS; python -O fail-closed; P1+P2+contract-lock
+      checkers still PASS
     deliverables:
     - 04_judge_calibration/**
     - ci/checkers/check_judge_calibration_against_grc.py
@@ -239,8 +256,11 @@ grc_3600_execution_plan_status:
     head_before: 46927856bc04222a3188aab6120acf823fc59c6c
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: generate exactly 40 controlled canary drafts (one per formal cluster mkc_007..mkc_046) as gpt_generated_structured_draft + run canary gate (schema/judge/owner-layer/route/style-copy/dedupe/readiness) + reports
-    standard_validation: check_canary_40_generation_and_gate.py live+selftest PASS; python -O fail-closed; P1+P2+P3+contract-lock checkers still PASS; 40/40 coverage; owner routing matches gold; readiness all false; no 3600/CandidatePack/KE/RAG/DIFY materialization
+    objective: generate exactly 40 controlled canary drafts (one per formal cluster mkc_007..mkc_046) as gpt_generated_structured_draft
+      + run canary gate (schema/judge/owner-layer/route/style-copy/dedupe/readiness) + reports
+    standard_validation: check_canary_40_generation_and_gate.py live+selftest PASS; python -O fail-closed; P1+P2+P3+contract-lock
+      checkers still PASS; 40/40 coverage; owner routing matches gold; readiness all false; no 3600/CandidatePack/KE/RAG/DIFY
+      materialization
     deliverables:
     - 06_canary_runs/canary_40_001/**
     - ci/checkers/check_canary_40_generation_and_gate.py
@@ -266,8 +286,12 @@ grc_3600_execution_plan_status:
     head_before: 9b8769fae54c71501372e68f8876aa28d8edb24f
     head_after: f71f4425b3f54458f5f65889ce9101d6ff66bb68
     worktree_after: clean
-    objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not formal knowledge.
-    standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact substring of its canary rich body; EPO props not mapped to GKB; readiness all false
+    objective: absorb founder-provided two-expert consensus into a canary quality closeout (no re-review, no re-score) + extract
+      proposition_pack_v1 (3-5 source-traced propositions per cluster) from the 40 canary bodies. Derived review asset, not
+      formal knowledge.
+    standard_validation: check_canary_40_quality_closeout_and_proposition_pack.py live+selftest PASS; python -O fail-closed;
+      P1+P2+P3+P4+contract-lock still PASS; propositions cover mkc_007..mkc_046 (3-5 each); every source_text_span is an exact
+      substring of its canary rich body; EPO props not mapped to GKB; readiness all false
     deliverables:
     - 06_canary_runs/canary_40_001/review_closeout/**
     - 06_canary_runs/canary_40_001/proposition_pack_v1/**
@@ -294,8 +318,13 @@ grc_3600_execution_plan_status:
     head_before: f71f4425b3f54458f5f65889ce9101d6ff66bb68
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: compile proposition_pack_v1 + Creative Content Principle into a 3600 pre-generation briefing (Governance Gate + Creative Gate + creative score rubric + 6 capability requirements + consumption plan + stop conditions) and a go/no-go decision. Does NOT generate 3600.
-    standard_validation: check_3600_microbatch_briefing_go_nogo.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+contract-lock still PASS; creative gate 8 dims; governance gate 10 checks not weakened; 6 capability families briefing_requirement_only (0 ontology objects); go_decision in allowed values; readiness all false; no 3600/07_microbatch_runs/CandidatePack/KE/RAG/DIFY materialization
+    objective: compile proposition_pack_v1 + Creative Content Principle into a 3600 pre-generation briefing (Governance Gate
+      + Creative Gate + creative score rubric + 6 capability requirements + consumption plan + stop conditions) and a go/no-go
+      decision. Does NOT generate 3600.
+    standard_validation: check_3600_microbatch_briefing_go_nogo.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+contract-lock
+      still PASS; creative gate 8 dims; governance gate 10 checks not weakened; 6 capability families briefing_requirement_only
+      (0 ontology objects); go_decision in allowed values; readiness all false; no 3600/07_microbatch_runs/CandidatePack/KE/RAG/DIFY
+      materialization
     deliverables:
     - 07_microbatch_briefing/**
     - ci/checkers/check_3600_microbatch_briefing_go_nogo.py
@@ -328,8 +357,14 @@ grc_3600_execution_plan_status:
     head_before: 0433feb7fb84f4be3bbb6aefc95833cacf58cd52
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: retire the legacy semantic-pilot batch-generation lock's block on the GRC route (additive supersession + inventory; no evidence deletion; no flag flip; central supersession, no 02_generation_brief_pack edits) and establish a governed GRC microbatch unlock scoped to mkc_007..mkc_046; keep direct one-shot 3600 forbidden; hold P0-00; generate and authorize zero drafts. Phase A of the founder-split merged task.
-    standard_validation: check_grc_legacy_lock_retire_and_governed_unlock.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+P6+contract-lock still PASS; unlock scope mkc_007..mkc_046; P0-00 held; direct_3600 forbidden preserved (contract immutable + shared_rules global_forbidden); project-infra unmodified + false-flag count discovered not hardcoded; readiness all false; zero generation; no 07_microbatch_runs/CandidatePack/KE/RAG/DIFY
+    objective: retire the legacy semantic-pilot batch-generation lock's block on the GRC route (additive supersession + inventory;
+      no evidence deletion; no flag flip; central supersession, no 02_generation_brief_pack edits) and establish a governed
+      GRC microbatch unlock scoped to mkc_007..mkc_046; keep direct one-shot 3600 forbidden; hold P0-00; generate and authorize
+      zero drafts. Phase A of the founder-split merged task.
+    standard_validation: check_grc_legacy_lock_retire_and_governed_unlock.py live+selftest PASS; python -O fail-closed; P1+P2+P3+P4+P5+P6+contract-lock
+      still PASS; unlock scope mkc_007..mkc_046; P0-00 held; direct_3600 forbidden preserved (contract immutable + shared_rules
+      global_forbidden); project-infra unmodified + false-flag count discovered not hardcoded; readiness all false; zero generation;
+      no 07_microbatch_runs/CandidatePack/KE/RAG/DIFY
     deliverables:
     - 08_batch_unlock_reconciliation/**
     - ci/checkers/check_grc_legacy_lock_retire_and_governed_unlock.py
@@ -364,7 +399,10 @@ grc_3600_execution_plan_status:
     head_before: f8015a4308cb21529ddd429b991bc36ae5d566db
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: 'AI-author 40 fresh, non-copied, proposition-grounded, dual-gate-passing structured drafts (one per formal cluster mkc_007..046) as an HONEST generator-capability quality PROBE. Founder Option 2 re-scope: proves an execution AI can author gate-passing drafts; does NOT prove automatic/stable generation (no standalone generator harness exists in repo).'
+    objective: 'AI-author 40 fresh, non-copied, proposition-grounded, dual-gate-passing structured drafts (one per formal
+      cluster mkc_007..046) as an HONEST generator-capability quality PROBE. Founder Option 2 re-scope: proves an execution
+      AI can author gate-passing drafts; does NOT prove automatic/stable generation (no standalone generator harness exists
+      in repo).'
     deliverable_kind: agent_authored_quality_probe
     classification: agent_authored_quality_probe_pass
     p7b_reclassified: true
@@ -379,7 +417,10 @@ grc_3600_execution_plan_status:
     counts_toward_3600: false
     three600_generation_executed: false
     accepted_domain_knowledge: false
-    standard_validation: check_generator_capability_proof_microbatch.py live+selftest PASS; python -O fail-closed; P1..P6R+contract-lock live PASS (worktree-isolated at HEAD); 40 drafts mkc_007..046 each 1; anti-copy LCS vs gold<16 vs P4 canary<18 cross-cluster<18; cluster-specific fingerprint; red-line scans (no brand/SKU/price); owner routing; readiness all false; no forbidden materialization
+    standard_validation: check_generator_capability_proof_microbatch.py live+selftest PASS; python -O fail-closed; P1..P6R+contract-lock
+      live PASS (worktree-isolated at HEAD); 40 drafts mkc_007..046 each 1; anti-copy LCS vs gold<16 vs P4 canary<18 cross-cluster<18;
+      cluster-specific fingerprint; red-line scans (no brand/SKU/price); owner routing; readiness all false; no forbidden
+      materialization
     deliverables:
     - 07_microbatch_runs/proof_microbatch_001/**
     - ci/checkers/check_generator_capability_proof_microbatch.py
@@ -416,12 +457,18 @@ grc_3600_execution_plan_status:
     head_before: eadf59a352bd34bb4f5c8d3e36fa5102de75c356
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: Honestly close out P7A proof_microbatch_001 as an agent_authored_quality_probe_pass (NOT an automatic generator-capability proof; does NOT count toward 3600; does NOT unlock direct 3600) and compile the generation_mode / fact_binding / Ontology-x-CSO composition + creative-pattern layer that P7A left uncompiled. Generates zero new drafts.
+    objective: Honestly close out P7A proof_microbatch_001 as an agent_authored_quality_probe_pass (NOT an automatic generator-capability
+      proof; does NOT count toward 3600; does NOT unlock direct 3600) and compile the generation_mode / fact_binding / Ontology-x-CSO
+      composition + creative-pattern layer that P7A left uncompiled. Generates zero new drafts.
     deliverable_kind: closeout_plus_briefing_orchestration_contract
     contract_status: briefing_orchestration_contract
     formal_schema_contract: false
     ontology_truth_source: false
-    standard_validation: check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py live+selftest PASS; python -O fail-closed; P1..P6R + contract-lock + P7A proof checker PASS (2-snapshot prior runner); 4 generation modes; BrandKB slots interface-only; Ontology-x-CSO orthogonal_cross_cutting + compositional_overlay; >=6 creative patterns; P0_00 control-plane not body-gen; P7C brief-only scale 120 (320 needs separate founder auth); P7A original artifacts immutable; readiness all false; zero new draft / 3600 / CandidatePack / KE / RAG / DIFY
+    standard_validation: check_proof_microbatch_closeout_and_generation_mode_cso_alignment.py live+selftest PASS; python -O
+      fail-closed; P1..P6R + contract-lock + P7A proof checker PASS (2-snapshot prior runner); 4 generation modes; BrandKB
+      slots interface-only; Ontology-x-CSO orthogonal_cross_cutting + compositional_overlay; >=6 creative patterns; P0_00
+      control-plane not body-gen; P7C brief-only scale 120 (320 needs separate founder auth); P7A original artifacts immutable;
+      readiness all false; zero new draft / 3600 / CandidatePack / KE / RAG / DIFY
     deliverables:
     - 07_microbatch_runs/proof_microbatch_001/closeout/**
     - 07_microbatch_briefing/generation_mode_cso_alignment/**
@@ -463,7 +510,9 @@ grc_3600_execution_plan_status:
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 structured draft microbatch generation. RE-SCOPED by P6R (legacy-lock retirement + governed GRC unlock) from one-shot 3600 to governed incremental authored microbatch. Real generation requires a separate founder authorization + Codex three-gate; not authorized by P6 or P6R.
+    objective: 3600 structured draft microbatch generation. RE-SCOPED by P6R (legacy-lock retirement + governed GRC unlock)
+      from one-shot 3600 to governed incremental authored microbatch. Real generation requires a separate founder authorization
+      + Codex three-gate; not authorized by P6 or P6R.
     unlock_kind: governed_incremental_microbatch
     re_scoped_by: GKB-GRC-LEGACY-LOCK-RETIRE-AND-GOVERNED-UNLOCK-001
     re_scoped_from: one_shot_3600
@@ -475,7 +524,8 @@ grc_3600_execution_plan_status:
     real_generation_requires_separate_founder_authorization: true
     generation_allowed: false
     generation_3600_executed: false
-    next_real_action: GKB-3600 batch-001 real authored microbatch (~20-40 drafts; separate founder authorization + Codex three-gate; never one-shot)
+    next_real_action: GKB-3600 batch-001 real authored microbatch (~20-40 drafts; separate founder authorization + Codex three-gate;
+      never one-shot)
     standard_validation: to_be_defined_at_P7_batch_001_brief
     deliverables:
     - to_be_defined_at_P7_batch_001_brief
@@ -491,20 +541,26 @@ grc_3600_execution_plan_status:
     phase_alias: P7D
     role: legacy_route_anchor_for_committed_p7a_checker
     canonical_route_node: P7D
-    route_migration_note: 'This step is the legacy 3600-generation anchor. Its status field is kept NEXT and its unlock_kind/generation_allowed fields are kept intact ONLY to satisfy the committed P7A checker, which is not in this task''s allowed writes. The ACTIVE canonical 3600-generation node is now step P7D (status BLOCKED_BY_P7C); the active next step is P7C. See top-level route_migration. This anchor authorizes nothing.
+    route_migration_note: 'This step is the legacy 3600-generation anchor. Its status field is kept NEXT and its unlock_kind/generation_allowed
+      fields are kept intact ONLY to satisfy the committed P7A checker, which is not in this task''s allowed writes. The ACTIVE
+      canonical 3600-generation node is now step P7D (status BLOCKED_BY_P7C); the active next step is P7C. See top-level route_migration.
+      This anchor authorizes nothing.
 
       '
     not_active_route_node: true
     p7a_prerequisite_status: DONE
     p7a_added_readiness: false
-    p7a_note: P7A quality probe is DONE but added NO readiness; real 3600 generation still requires a separate founder authorization + Codex three-gate. Under the P7B route migration, 3600 generation is canonical step P7D (blocked by P7C).
+    p7a_note: P7A quality probe is DONE but added NO readiness; real 3600 generation still requires a separate founder authorization
+      + Codex three-gate. Under the P7B route migration, 3600 generation is canonical step P7D (blocked by P7C).
   - step_id: P7C
     task_id: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001
     status: NEXT
     head_before: null
     head_after: null
     worktree_after: null
-    objective: Scoped content-production microbatch to verify generation_mode + Ontology-x-CSO composition produces stable content-production value (not semantic checklist / courseware). Brief + go/no-go ONLY; this step does NOT authorize real generation.
+    objective: Scoped content-production microbatch to verify generation_mode + Ontology-x-CSO composition produces stable
+      content-production value (not semantic checklist / courseware). Brief + go/no-go ONLY; this step does NOT authorize
+      real generation.
     unlock_kind: scoped_content_production_microbatch
     next_unlocked: P7C_execution_brief_and_go_nogo_only
     generation_authorized_by_this_task: false
@@ -518,7 +574,8 @@ grc_3600_execution_plan_status:
     deliverables:
     - to_be_defined_at_P7C_brief
     blocked_by: []
-    next_real_action: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001 execution brief + go/no-go (separate founder authorization + Codex three-gate)
+    next_real_action: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-001 execution brief + go/no-go (separate founder authorization
+      + Codex three-gate)
     readiness_claims_allowed: []
     readiness_claims_forbidden:
     - generation_3600_unlocked
@@ -531,12 +588,18 @@ grc_3600_execution_plan_status:
     head_before: 651d80fdeaaa1b523c2fe7bf76a2932f36bf6c7b
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: 'Design the scoped 120 content-production microbatch as an executable/checkable/stoppable brief: 120 future assignments across mkc_007..046 (>=3 each) by P0 group / generation_mode / creative_pattern / owner / proposition grounding / fact-binding, every reference real (P5 propositions, goldset cases, P7B patterns/modes); plus a go/no-go for the next (generation) task. Generates ZERO drafts.'
+    objective: 'Design the scoped 120 content-production microbatch as an executable/checkable/stoppable brief: 120 future
+      assignments across mkc_007..046 (>=3 each) by P0 group / generation_mode / creative_pattern / owner / proposition grounding
+      / fact-binding, every reference real (P5 propositions, goldset cases, P7B patterns/modes); plus a go/no-go for the next
+      (generation) task. Generates ZERO drafts.'
     deliverable_kind: scoped_120_brief_and_go_nogo_orchestration_contract
     contract_status: briefing_orchestration_contract
     formal_schema_contract: false
     ontology_truth_source: false
-    standard_validation: check_scoped_content_microbatch_brief_go_nogo.py live+selftest PASS; python -O fail-closed; P1..P6R + P7A + P7B + contract-lock PASS (2-snapshot 10-prior runner); 120 assignments; mkc_007..046 each >=2; 4 modes each >=10; 6 creative patterns each >=10; P0_00/mkc_001..006 not body assignments; all proposition/gold/pattern/mode refs real; BrandKB slots interface-only; CSO not ontology truth; readiness all false; zero new draft/3600/CandidatePack/KE/RAG/DIFY
+    standard_validation: check_scoped_content_microbatch_brief_go_nogo.py live+selftest PASS; python -O fail-closed; P1..P6R
+      + P7A + P7B + contract-lock PASS (2-snapshot 10-prior runner); 120 assignments; mkc_007..046 each >=2; 4 modes each
+      >=10; 6 creative patterns each >=10; P0_00/mkc_001..006 not body assignments; all proposition/gold/pattern/mode refs
+      real; BrandKB slots interface-only; CSO not ontology truth; readiness all false; zero new draft/3600/CandidatePack/KE/RAG/DIFY
     deliverables:
     - 07_microbatch_briefing/scoped_content_microbatch_120/**
     - ci/checkers/check_scoped_content_microbatch_brief_go_nogo.py
@@ -568,7 +631,9 @@ grc_3600_execution_plan_status:
     head_before: f99e9608238e799d6647df2c6aee8945844ad491
     head_after: recorded_in_git_log_for_this_commit
     worktree_after: clean
-    objective: Scoped 120 content-production microbatch GENERATION (up to 120 gpt_generated_structured_drafts per the P7C-BRIEF assignment plan). NOT authorized by P7C-BRIEF; requires a separate founder authorization + Codex three-gate. Max 120 without new authorization; 320 requires a separate founder decision; never one-shot 3600.
+    objective: Scoped 120 content-production microbatch GENERATION (up to 120 gpt_generated_structured_drafts per the P7C-BRIEF
+      assignment plan). NOT authorized by P7C-BRIEF; requires a separate founder authorization + Codex three-gate. Max 120
+      without new authorization; 320 requires a separate founder decision; never one-shot 3600.
     unlock_kind: scoped_content_production_microbatch_generation
     next_unlocked: P7C-REVIEW
     generation_authorized_by_this_task: false
@@ -578,7 +643,8 @@ grc_3600_execution_plan_status:
     direct_3600_allowed: false
     generation_allowed: false
     standard_validation: to_be_defined_at_P7C_GEN_brief
-    deliverables: 07_microbatch_runs/scoped_content_microbatch_120_001/** (120 cards + rich bodies + relations + 9 gate reports + receipt + closeout)
+    deliverables: 07_microbatch_runs/scoped_content_microbatch_120_001/** (120 cards + rich bodies + relations + 9 gate reports
+      + receipt + closeout)
     blocked_by: []
     next_unlocked_step: P7D
     readiness_claims_allowed: []
@@ -594,20 +660,83 @@ grc_3600_execution_plan_status:
     counts_toward_3600: false
     generation_3600_unlocked: false
   - step_id: P7C-REVIEW
-    task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-SCALE-DECISION-001
+    task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+    status: DONE
+    head_before: 022324017c7c761495a4d56e6f51adda8efd72f9
+    head_after: recorded_in_git_log_for_this_commit
+    worktree_after: clean_after_commit
+    objective: Absorb CPSS expert review, close out scoped 120 quality review, extract user_visible_kernel and review_packet_kernel,
+      and build routing queues without generating or rewriting drafts.
+    unlock_kind: quality_review_closeout_and_content_kernel_extraction
+    generation_authorized_by_this_task: false
+    standard_validation: P7C-REVIEW checker live PASS + selftest PASS + python -O fail-closed; original 120 unchanged; readiness
+      false
+    deliverables:
+    - review_closeout/*.v0.1.yaml
+    - content_kernel_extraction/*.v0.1.yaml
+    - P7C-REVIEW checker/report/receipt
+    blocked_by: []
+    next_unlocked: P7C-AB
+    readiness_claims_allowed:
+    - scoped_120_quality_review_closeout_landed
+    - content_kernel_extraction_landed
+    - p7c_ab_plan_unlocked
+    readiness_claims_forbidden:
+    - direct_serving_ready
+    - raw_context_bundle_ready
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+    - generation_3600_unlocked
+    - generation_allowed
+    route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+    runtime_ab_executed_by_this_task: false
+  - step_id: P7C-AB
+    task_id: GKB-CONTENT-KERNEL-RUNTIME-AB-PLAN-OR-SMOKE-001
     status: NEXT
-    head_before: recorded_in_git_log_for_this_commit
+    head_before: recorded_after_P7C_REVIEW_commit
     head_after: null
     worktree_after: null
-    objective: 对 scoped 120 生成结果做质量评审（创意动人质量属人审范畴）+ 规模决策（是否/如何扩到 320/3600）。
-    unlock_kind: quality_review_and_scale_decision
+    objective: Plan or run a controlled runtime A/B smoke using extracted content kernels; no Serving/RAG/DIFY/production
+      write unless separately authorized.
+    unlock_kind: runtime_ab_plan_or_smoke_only
     generation_authorized_by_this_task: false
-    standard_validation: human quality review + scale decision; no generation, no readiness flip
-    deliverables: scoped_120 quality review report + scale decision packet
+    standard_validation: separate founder authorization + Codex/guardian review; runtime boundaries explicit
+    deliverables:
+    - runtime_ab_plan_or_smoke_report
     blocked_by: []
-    next_unlocked: P7D
+    next_unlocked: P7C-SCALE-DECISION
     readiness_claims_allowed:
-    - scoped_120_quality_reviewed
+    - runtime_ab_plan_landed_or_smoke_completed_if_authorized
+    readiness_claims_forbidden:
+    - direct_serving_ready
+    - raw_context_bundle_ready
+    - candidatepack_ready
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+    - generation_3600_unlocked
+    - generation_allowed
+    route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+  - step_id: P7C-SCALE-DECISION
+    task_id: GKB-SCOPED-120-SCALE-DECISION-001
+    status: BLOCKED_BY_P7C_AB
+    head_before: null
+    head_after: null
+    worktree_after: null
+    objective: Decide whether/how to scale beyond scoped 120 after runtime A/B evidence and human quality review.
+    unlock_kind: scale_decision_only
+    generation_authorized_by_this_task: false
+    standard_validation: requires P7C-AB result and separate founder authorization
+    deliverables:
+    - scale_decision_packet
+    blocked_by:
+    - P7C-AB
+    next_unlocked: P7D
+    readiness_claims_allowed: []
     readiness_claims_forbidden:
     - generation_3600_unlocked
     - candidatepack_ready
@@ -618,11 +747,12 @@ grc_3600_execution_plan_status:
     route_authority: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
   - step_id: P7D
     task_id: GKB-3600-STRUCTURED-DRAFT-MICROBATCH-GENERATION-001
-    status: BLOCKED_BY_P7C_REVIEW
+    status: BLOCKED_BY_P7C_SCALE_DECISION
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 structured-draft microbatch generation (canonical route node; same underlying task as the legacy P7 anchor). Blocked by P7C-GEN (scoped 120 must run first); direct 3600 after P7A/P7B/P7C is not allowed. Real generation requires a separate founder authorization + Codex three-gate; never one-shot.
+    objective: 3600 structured-draft microbatch generation (canonical route node) remains blocked until content-kernel runtime
+      A/B and explicit scale decision pass; direct 3600 remains forbidden.
     same_underlying_task_as_legacy_anchor: P7
     unlock_kind: governed_incremental_microbatch
     one_shot_3600_generation_allowed: false
@@ -633,7 +763,7 @@ grc_3600_execution_plan_status:
     deliverables:
     - to_be_defined_at_P7D_brief
     blocked_by:
-    - P7C-REVIEW
+    - P7C-SCALE-DECISION
     next_unlocked: P8
     readiness_claims_allowed: []
     readiness_claims_forbidden:
@@ -648,7 +778,8 @@ grc_3600_execution_plan_status:
     head_before: null
     head_after: null
     worktree_after: null
-    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7D 3600 governed generation, which is itself blocked by P7C; not yet authorized)
+    objective: 3600 quality / dedupe / routing eligibility (planned; executable only after P7D 3600 governed generation, which
+      is itself blocked by P7C; not yet authorized)
     standard_validation: to_be_defined_at_P8_brief
     deliverables:
     - to_be_defined_at_P8_brief
@@ -674,13 +805,20 @@ grc_3600_execution_plan_status:
     generator_capability_proven: false
     ready_for_P7B_3600_generation_brief: false
     counts_toward_3600: false
-    p7b_alias: SUPERSEDED by top-level route_migration (P7B task GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001). 3600 governed generation is now canonical step P7D (blocked by P7C); the legacy step_id P7 is kept only as a back-compat anchor for the committed P7A checker.
+    p7b_alias: SUPERSEDED by top-level route_migration (P7B task GKB-PROOF-MICROBATCH-CLOSEOUT-AND-GENERATION-MODE-CSO-ALIGNMENT-001).
+      3600 governed generation is now canonical step P7D (blocked by P7C); the legacy step_id P7 is kept only as a back-compat
+      anchor for the committed P7A checker.
     generation_unlocked_top_level: false
   route_migration_3:
     applied_by_task: GKB-SCOPED-120-CONTENT-PRODUCTION-MICROBATCH-GENERATION-001
     applied_from: codex_prompt_pre_review_conditional_pass_required_fixes_1_2_6
     option: additive_outcome_extension_keep_committed_checker_anchors
-    reason: 'The committed P7C-BRIEF checker hard-reads P7C-GEN==NEXT / P7D==BLOCKED_BY_P7C_GEN and asserts 07_microbatch_runs=={proof_microbatch_001}; the committed P7A/P7B checkers read P7A==DONE / P7==NEXT / P7C==NEXT and reject unexpected run dirs. None are in this task''s allowed writes. Per Codex fix 1/2 and founder additive precedent, P7A stays DONE with classification=agent_authored_quality_probe_pass; this task only ADDS the generation outcome: P7C-GEN=DONE, P7C-REVIEW=NEXT, P7D->BLOCKED_BY_P7C_REVIEW. The P7C-GEN checker runs P7C-BRIEF/P7A/P7B in a pre-generation snapshot (scoped run dir removed, ledger reset to HEAD). No committed checker was edited; no readiness flag was flipped.'
+    reason: 'The committed P7C-BRIEF checker hard-reads P7C-GEN==NEXT / P7D==BLOCKED_BY_P7C_GEN and asserts 07_microbatch_runs=={proof_microbatch_001};
+      the committed P7A/P7B checkers read P7A==DONE / P7==NEXT / P7C==NEXT and reject unexpected run dirs. None are in this
+      task''s allowed writes. Per Codex fix 1/2 and founder additive precedent, P7A stays DONE with classification=agent_authored_quality_probe_pass;
+      this task only ADDS the generation outcome: P7C-GEN=DONE, P7C-REVIEW=NEXT, P7D->BLOCKED_BY_P7C_REVIEW. The P7C-GEN checker
+      runs P7C-BRIEF/P7A/P7B in a pre-generation snapshot (scoped run dir removed, ledger reset to HEAD). No committed checker
+      was edited; no readiness flag was flipped.'
     no_old_checker_edited: true
     no_readiness_flipped: true
     p7d_now_blocked_by: P7C-REVIEW
@@ -700,3 +838,15 @@ grc_3600_execution_plan_status:
     - P7D
     - P8
     next_real_action: GKB-SCOPED-120-QUALITY-REVIEW-AND-SCALE-DECISION-001 (separate founder authorization + Codex three-gate)
+  route_migration_4:
+    applied_by_task: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+    applied_from: claude_code_prompt_pre_review_conditional_pass_N1_to_N6
+    option: additive_review_outcome_keep_committed_checker_anchors
+    reason: P7C-GEN prior checkers are pinned to pre-task baseline 022324017; this task advances P7C-REVIEW and adds P7C-AB
+      without editing old checkers or flipping readiness.
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    p7a_status_preserved: DONE
+    p7a_classification: agent_authored_quality_probe_pass
+    score_detail_source: summary_only
+    next_real_action: GKB-CONTENT-KERNEL-RUNTIME-AB-PLAN-OR-SMOKE-001

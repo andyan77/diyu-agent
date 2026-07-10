@@ -1,0 +1,24 @@
+fixture_manifest:
+  schema_version: v0.1
+  checker: ci/checkers/check_scoped_120_quality_review_and_content_kernel_extraction.py
+  positive_fixture:
+    mode: in_memory_reduced_surface
+    expected: PASS
+  negative_fixtures:
+    - new_draft_generated_true
+    - original_120_modified_true
+    - direct_serving_ready_true
+    - wrong_cpss_summary
+    - missing_c_grade_queue
+    - invented_clean_a_candidate_ids
+    - user_visible_contains_review_only_claims
+    - review_packet_not_review_only
+    - release_flag_true
+    - missing_user_kernel
+    - runtime_ab_marked_executed_by_task
+    - p7a_status_changed_from_done
+    - p7d_unblocked
+    - readiness_true
+  fail_closed:
+    python_O_expected_exit: 2
+    yaml_required: true

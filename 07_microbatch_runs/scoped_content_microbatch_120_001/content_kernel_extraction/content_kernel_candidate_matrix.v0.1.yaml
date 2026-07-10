@@ -1,0 +1,78 @@
+content_kernel_candidate_matrix:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  score_detail_source: summary_only
+  needs_score_detail_reconciliation: true
+  total_candidates: 120
+  routing_buckets:
+    content_kernel_candidate:
+      count: 100
+      criteria: A grade and not receipt first-review item
+      member_materialization: derived_pool_not_listed_to_avoid_invented_per_item_scores
+      derived_pool_rule: all 120 generated candidates minus B queue, C queue, and A-grade receipt caveat candidates
+      use: candidate for future serving candidate review only; not direct serving
+    content_kernel_candidate_with_review_caveat:
+      count: 5
+      candidate_ids:
+      - SCM120-CAND-032
+      - SCM120-CAND-033
+      - SCM120-CAND-035
+      - SCM120-CAND-037
+      - SCM120-CAND-102
+      criteria: A grade but receipt first-review item
+      use: requires human confirmation before runtime consumption
+    needs_fuel_repair_or_manual_polish:
+      count: 12
+      candidate_ids:
+      - SCM120-CAND-023
+      - SCM120-CAND-030
+      - SCM120-CAND-045
+      - SCM120-CAND-047
+      - SCM120-CAND-062
+      - SCM120-CAND-080
+      - SCM120-CAND-083
+      - SCM120-CAND-103
+      - SCM120-CAND-109
+      - SCM120-CAND-110
+      - SCM120-CAND-111
+      - SCM120-CAND-113
+      criteria: B grade
+      use: repair scene/action/business judgment/spoken line before runtime
+    strategy_rule_candidate_or_rewrite:
+      count: 3
+      candidate_ids:
+      - SCM120-CAND-101
+      - SCM120-CAND-059
+      - SCM120-CAND-106
+      criteria: C grade
+      use: do not use as direct content fuel; rewrite or route as strategy/rule
+    reject:
+      count: 0
+      candidate_ids: []
+  derived_clean_A_pool:
+    count: 100
+    candidate_id_materialization: not_listed_by_design
+    reason: No per-item 120 CPSS detail file exists; clean-A pool is all generated candidates minus explicit B/C/receipt-caveat
+      queues.
+  exception_queue_candidate_ids:
+  - SCM120-CAND-023
+  - SCM120-CAND-030
+  - SCM120-CAND-032
+  - SCM120-CAND-033
+  - SCM120-CAND-035
+  - SCM120-CAND-037
+  - SCM120-CAND-045
+  - SCM120-CAND-047
+  - SCM120-CAND-059
+  - SCM120-CAND-062
+  - SCM120-CAND-080
+  - SCM120-CAND-083
+  - SCM120-CAND-101
+  - SCM120-CAND-102
+  - SCM120-CAND-103
+  - SCM120-CAND-106
+  - SCM120-CAND-109
+  - SCM120-CAND-110
+  - SCM120-CAND-111
+  - SCM120-CAND-113
+  manual_review_required_before_runtime: true

@@ -1,0 +1,33 @@
+runtime_ab_followup_plan:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  next_task_id: GKB-CONTENT-KERNEL-RUNTIME-AB-PLAN-OR-SMOKE-001
+  objective: Plan or run a small controlled smoke/A-B using extracted user_visible_kernel + review_packet_kernel, without
+    writing Serving/RAG/DIFY unless separately authorized.
+  preconditions:
+  - P7C-REVIEW DONE
+  - content kernels extracted
+  - manual review queues known
+  - readiness remains false
+  not_authorized_by_this_task:
+  - Serving Projection
+  - RAG context_bundle
+  - DIFY workflow
+  - CandidatePack
+  - KE truth source
+  - production readiness
+  recommended_sample_policy:
+    high_CPSS_clean_A: 4
+    B_or_manual_polish_queue: 4
+    C_or_rewrite_queue: 3
+    receipt_first_review: 3
+  success_signals:
+  - more visual anchors
+  - more human actions
+  - lower courseware tone
+  - claim boundaries stay in review packet not user body
+  stop_conditions:
+  - hard claim leakage
+  - slot converted into fact
+  - governance text appears in user body
+  - readiness flag true

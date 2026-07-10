@@ -1,0 +1,30 @@
+content_kernel_manifest:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  step_id: P7C-REVIEW
+  run_id: scoped_content_microbatch_120_001
+  source_outputs:
+    candidate_cards: 07_microbatch_runs/scoped_content_microbatch_120_001/knowledge_candidate_cards.yaml
+    rich_body_blocks: 07_microbatch_runs/scoped_content_microbatch_120_001/rich_body_blocks.yaml
+    generation_receipt: 07_microbatch_runs/scoped_content_microbatch_120_001/generation_receipt.json
+  source_integrity:
+    candidate_cards_sha256: 5e9841a6017d9f965b0205143b9922a9350d6848c14ed7fd57ce9696a2c7776a
+    rich_body_blocks_sha256: b8d58302a203dd2f0ec4612789b01080bedbf4fe48b74723f2532bc25d79e92b
+    generation_receipt_sha256: 546f0ed7c0645169b8ee90feb2bc69a5bafb51ef4b9bdd680a5fdc9342fcfcdb
+  extraction_counts:
+    user_visible_kernel_count: 120
+    review_packet_kernel_count: 120
+    source_trace_count: 120
+  routing_counts:
+    content_kernel_candidate: 100
+    content_kernel_candidate_with_review_caveat: 5
+    needs_fuel_repair_or_manual_polish: 12
+    strategy_rule_candidate_or_rewrite: 3
+    reject: 0
+  formal_schema_contract: false
+  ontology_truth_source: false
+  serving_projection: false
+  rag_context_bundle: false
+  dify_workflow: false
+  candidatepack_ready: false
+  readiness_all_false: true

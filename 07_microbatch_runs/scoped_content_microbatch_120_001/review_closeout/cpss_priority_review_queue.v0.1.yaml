@@ -1,0 +1,96 @@
+cpss_priority_review_queue:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  source: expert_review_input_digest + P7C-GEN receipt
+  queue_policy: manual review before runtime consumption; no draft rewrite in this task
+  c_grade_must_review_first:
+  - candidate_id: SCM120-CAND-101
+    CPSS: 71.0
+    p0_group: P0_05
+    mode: creative_prototype
+    issue: 缺场景前提与业务判断，产品角色叙事燃料不足。
+    generation_assignment_id: SCM120-A101
+  - candidate_id: SCM120-CAND-059
+    CPSS: 73.4
+    p0_group: P0_03
+    mode: evidence_bound_candidate
+    issue: 事实边界强，但场景感与可转视频资产不足。
+    generation_assignment_id: SCM120-A059
+  - candidate_id: SCM120-CAND-106
+    CPSS: 73.6
+    p0_group: P0_05
+    mode: creative_prototype
+    issue: 产品组货角色有方法，但缺少足够场景前提与差异化燃料。
+    generation_assignment_id: SCM120-A106
+  b_grade_manual_review_queue:
+  - candidate_id: SCM120-CAND-023
+    generation_assignment_id: SCM120-A023
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-030
+    generation_assignment_id: SCM120-A030
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-045
+    generation_assignment_id: SCM120-A045
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-047
+    generation_assignment_id: SCM120-A047
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-062
+    generation_assignment_id: SCM120-A062
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-080
+    generation_assignment_id: SCM120-A080
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-083
+    generation_assignment_id: SCM120-A083
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-103
+    generation_assignment_id: SCM120-A103
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-109
+    generation_assignment_id: SCM120-A109
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-110
+    generation_assignment_id: SCM120-A110
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-111
+    generation_assignment_id: SCM120-A111
+    action: manual_polish_or_fuel_repair
+  - candidate_id: SCM120-CAND-113
+    generation_assignment_id: SCM120-A113
+    action: manual_polish_or_fuel_repair
+  receipt_review_first:
+  - assignment_id: SCM120-A032
+    candidate_id: SCM120-CAND-032
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A033
+    candidate_id: SCM120-CAND-033
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A035
+    candidate_id: SCM120-CAND-035
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A037
+    candidate_id: SCM120-CAND-037
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A059
+    candidate_id: SCM120-CAND-059
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A062
+    candidate_id: SCM120-CAND-062
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A101
+    candidate_id: SCM120-CAND-101
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A102
+    candidate_id: SCM120-CAND-102
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  - assignment_id: SCM120-A106
+    candidate_id: SCM120-CAND-106
+    reason: verify_pending_or_main_authored_fallback_from_P7C_GEN_receipt
+  highest_priority_overlap:
+  - candidate_id: SCM120-CAND-059
+    reason: CPSS_C_grade_and_receipt_first_review
+  - candidate_id: SCM120-CAND-101
+    reason: CPSS_C_grade_and_receipt_first_review
+  - candidate_id: SCM120-CAND-106
+    reason: CPSS_C_grade_and_receipt_first_review

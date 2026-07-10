@@ -1,0 +1,85 @@
+expert_review_input_digest:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  step_id: P7C-REVIEW
+  review_id: EXPERT-REVIEW-SCOPED-120-CPSS-001
+  review_guardian: Claude Code Prompt Pre-Review (conditional pass)
+  execution_agent: Codex
+  source_files:
+  - path: /tmp/diyu_cpss_runtime_ab_eval/expert_review_opinion_scoped_120_cpss.md
+    sha256: f5c9a638a3610f6cd9e8ae7b01dce6a7abb6c180b585163665437f726f87a92c
+    provenance: external_tmp_read_only_unversioned
+  - path: /tmp/diyu_cpss_runtime_ab_eval/runtime_ab_eval_matrix.json
+    sha256: 8afdfa6bdf29a7515e4ef6bc7dae77b4835d5b00ff61f2904691081404f47b35
+    provenance: external_tmp_read_only_unversioned
+  - path: /tmp/diyu_cpss_runtime_ab_eval/runtime_ab_eval_report.md
+    sha256: 950c39695f8d3687608166c94d27fbb2b52f154fed6b570a60ebf048463c06f4
+    provenance: external_tmp_read_only_unversioned
+  review_scope: P7C-GEN scoped_content_microbatch_120_001
+  repo_head_reviewed: 022324017c7c761495a4d56e6f51adda8efd72f9
+  repo_write_in_review: false
+  external_llm_or_dify_runtime: false
+  evaluated_count: 120
+  CPSS_avg: 92.2
+  CPSS_median: 93.4
+  CPSS_min: 71.0
+  CPSS_max: 99.0
+  grade_distribution:
+    A_85_plus: 105
+    B_75_84: 12
+    C_60_74: 3
+    D_below_60: 0
+  content_kernel_coverage:
+    object_anchor_present: 120/120
+    human_action_present: 120/120
+    human_subject_present: 116/120
+    scene_premise_present: 112/120
+    business_judgment_present: 105/120
+    tradeoff_or_tension_present: 108/120
+    spoken_line_seed_present: 119/120
+  priority_queues:
+    c_grade_must_review_first:
+    - SCM120-CAND-101
+    - SCM120-CAND-059
+    - SCM120-CAND-106
+    b_grade_manual_review_queue:
+    - SCM120-CAND-023
+    - SCM120-CAND-030
+    - SCM120-CAND-045
+    - SCM120-CAND-047
+    - SCM120-CAND-062
+    - SCM120-CAND-080
+    - SCM120-CAND-083
+    - SCM120-CAND-103
+    - SCM120-CAND-109
+    - SCM120-CAND-110
+    - SCM120-CAND-111
+    - SCM120-CAND-113
+    receipt_review_first_assignments:
+    - SCM120-A032
+    - SCM120-A033
+    - SCM120-A035
+    - SCM120-A037
+    - SCM120-A059
+    - SCM120-A062
+    - SCM120-A101
+    - SCM120-A102
+    - SCM120-A106
+    receipt_review_first_candidates:
+    - SCM120-CAND-032
+    - SCM120-CAND-033
+    - SCM120-CAND-035
+    - SCM120-CAND-037
+    - SCM120-CAND-059
+    - SCM120-CAND-062
+    - SCM120-CAND-101
+    - SCM120-CAND-102
+    - SCM120-CAND-106
+    highest_priority_overlap:
+    - SCM120-CAND-059
+    - SCM120-CAND-101
+    - SCM120-CAND-106
+  limitations:
+  - CPSS 92.2 is accepted expert review input/proxy, not a repository machine gate and not a runtime/DIFY validation.
+  - runtime proxy A/B covers 12 samples only; no per-item 120 CPSS detail file exists in /tmp.
+  - score_detail_source=summary_only; do not invent per-item A-grade scores for the 100 derived clean-A pool.

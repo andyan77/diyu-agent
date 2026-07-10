@@ -1,0 +1,58 @@
+runtime_proxy_ab_summary:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  source_file: /tmp/diyu_cpss_runtime_ab_eval/runtime_ab_eval_matrix.json
+  source_provenance: external_tmp_read_only_unversioned
+  method: temporary_runtime_proxy_no_external_llm_no_repo_write
+  repo_head: 022324017c7c761495a4d56e6f51adda8efd72f9
+  sample_count: 12
+  sample_candidate_ids:
+  - SCM120-CAND-002
+  - SCM120-CAND-003
+  - SCM120-CAND-008
+  - SCM120-CAND-016
+  - SCM120-CAND-110
+  - SCM120-CAND-080
+  - SCM120-CAND-111
+  - SCM120-CAND-030
+  - SCM120-CAND-101
+  - SCM120-CAND-106
+  - SCM120-CAND-059
+  - SCM120-CAND-109
+  bands:
+    high_CPSS: 4
+    medium_CPSS: 4
+    low_CPSS: 4
+  average_A:
+    visual_anchor_count: 1
+    human_subject_count: 0
+    human_action_count: 2
+    scene_count: 1
+    spoken_line_quality_proxy: 0
+    courseware_body_count: 1
+    hard_claim_risk_count: 0
+    domain_drift_count: 1
+    score_proxy: 0
+  average_B:
+    visual_anchor_count: 4.17
+    human_subject_count: 2.92
+    human_action_count: 10.58
+    scene_count: 2.08
+    spoken_line_quality_proxy: 2.92
+    courseware_body_count: 0
+    hard_claim_risk_count: 0.25
+    domain_drift_count: 0.08
+    score_proxy: 100
+  average_lift:
+    visual_anchor_count: 3.17
+    human_subject_count: 2.92
+    human_action_count: 8.58
+    scene_count: 1.08
+    spoken_line_quality_proxy: 2.92
+    courseware_body_count: -1
+    hard_claim_risk_count: 0.25
+    domain_drift_count: -0.92
+    score_proxy: 100
+  conclusion: content kernel materially improves proxy runtime consumability in the 12-sample test
+  caveat: This task did not execute DIFY, RAG, Serving Projection, external LLM runtime, or production runtime.
+  runtime_ab_executed_by_this_task: false

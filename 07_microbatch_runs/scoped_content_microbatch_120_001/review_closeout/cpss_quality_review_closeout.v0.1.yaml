@@ -1,0 +1,45 @@
+cpss_quality_review_closeout:
+  schema_version: v0.1
+  task_id: GKB-SCOPED-120-QUALITY-REVIEW-AND-CONTENT-KERNEL-EXTRACTION-001
+  step_id: P7C-REVIEW
+  review_mode: absorb_external_expert_review_and_extract_kernels
+  new_draft_generated: false
+  original_120_modified: false
+  evaluated_count: 120
+  CPSS_avg: 92.2
+  expert_review_verdict: PASS_WITH_REVIEW_QUEUE
+  static_CPSS_review: PASS
+  runtime_proxy_AB: PASS_WITH_CAVEAT
+  ready_for_direct_serving_or_DIFY: false
+  ready_for_raw_context_bundle_ingestion: false
+  runtime_ab_executed_by_this_task: false
+  score_detail_source: summary_only
+  needs_score_detail_reconciliation: true
+  routing_summary:
+    content_kernel_candidate: 100
+    content_kernel_candidate_with_review_caveat: 5
+    needs_fuel_repair_or_manual_polish: 12
+    strategy_rule_candidate_or_rewrite: 3
+    reject: 0
+  must_review_first:
+  - SCM120-CAND-101
+  - SCM120-CAND-059
+  - SCM120-CAND-106
+  receipt_first_review_count: 9
+  artifact_counts:
+    user_visible_kernel_count: 120
+    review_packet_kernel_count: 120
+    content_kernel_candidate_count: 100
+    content_kernel_candidate_with_review_caveat_count: 5
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_servable: false
+    release_ready: false
+    readiness_all_false: true
+  next_real_action_unlocked: GKB-CONTENT-KERNEL-RUNTIME-AB-PLAN-OR-SMOKE-001
