@@ -1,0 +1,47 @@
+{
+  "task_id": "GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001",
+  "checker_status": "PASS",
+  "machine_semantics_scope": "STRUCTURAL_METADATA_AND_EVIDENCE_ONLY",
+  "error_count": 0,
+  "errors": [],
+  "metrics": {
+    "asset_count": 120,
+    "unique_kernel_count": 120,
+    "body_digest_match_count": 120,
+    "source_kernel_digest_match_count": 120,
+    "other_expression_field_unchanged_count": 120,
+    "role_patch_count": 5,
+    "role_patch_ids": [
+      "P7D40-REPAIR-012",
+      "P7D40-REPAIR-071",
+      "P7D40-REPAIR-226",
+      "P7D40-REPAIR-312",
+      "RV80-ASSET-077"
+    ],
+    "dependent_headcount_change_count": 0,
+    "anchor_semantic_patch_count": 8,
+    "anchor_patch_ids": [
+      "P7D40-REPAIR-298",
+      "RV80-ASSET-024",
+      "RV80-ASSET-036",
+      "RV80-ASSET-042",
+      "RV80-ASSET-051",
+      "RV80-ASSET-063",
+      "RV80-ASSET-073",
+      "RV80-ASSET-074"
+    ],
+    "typed_anchor_asset_coverage": 120,
+    "legacy_projection_mismatch_count": 0,
+    "expression_asset_type_count": 120,
+    "expression_asset_type_distribution": {
+      "action_scene_kernel": 57,
+      "evidence_boundary_expression": 44,
+      "platform_execution_expression": 15,
+      "product_role_expression": 3,
+      "strategy_rule_expression": 1
+    },
+    "empty_human_action_exception_count": 6,
+    "knowledge_count_increment": 0
+  },
+  "result_status": "CLEAN_120_METADATA_PRECISION_PATCH_EXECUTED_PENDING_CLAUDE_DELTA_AND_FOUNDER_FINAL_ACCEPTANCE"
+}

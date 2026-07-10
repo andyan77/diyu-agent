@@ -1,0 +1,34 @@
+selftest_cases:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001
+  fixture_strategy: live_positive_bundle_plus_single_invariant_in_memory_mutations
+  authoring_classifier_imported_by_checker: false
+  result_pass_booleans_trusted_by_checker: false
+  positive_fixture:
+    name: live_clean_120_semantic_metadata_patch_bundle
+    expected: PASS
+  negative_fixtures:
+    - role_012_someone_as_audience
+    - role_071_collective_creates_fourth
+    - role_226_aliases_collapsed
+    - role_226_hypothetical_counted_actual
+    - rhetorical_who_enters_human_graph
+    - anchor_036_mannequin_primary
+    - anchor_051_sleeve_primary
+    - anchor_063_window_primary
+    - anchor_073_truncated_pants
+    - anchor_074_only_one_item
+    - legacy_projection_mismatch
+    - anchor_span_not_in_body
+    - action_scene_missing_human
+    - seventh_empty_human_action
+    - invent_person_action_for_empty
+    - body_changed
+    - source_kernel_changed
+    - readiness_true
+    - scale_or_downstream_unlocked
+    - ninth_anchor_semantic_change
+  invariant:
+    every_negative_must_fail_closed: true
+    python_optimized_mode_exit: 2
+    machine_semantics_scope: STRUCTURAL_METADATA_AND_EVIDENCE_ONLY

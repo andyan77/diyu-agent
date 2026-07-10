@@ -1,0 +1,134 @@
+semantic_metadata_patch_contract:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001
+  baseline_head: c20c3a98b1ba0203033c021a9c13d5a527e3adae
+  contract_role: scoped_review_metadata_index_not_ontology_truth
+  formal_schema_contract: false
+  ontology_truth_source: false
+  machine_semantics_scope: STRUCTURAL_METADATA_AND_EVIDENCE_ONLY
+  parent:
+    manifest: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_asset_closeout_001/clean_120_semantic_asset_manifest.v0.1.jsonl
+    expected_asset_count: 120
+    expected_unique_kernel_count: 120
+    immutable: true
+  canonical_machine_source:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_metadata_patch_001/clean_120_semantic_asset_manifest.v0.2.jsonl
+    row_count: 120
+    single_truth_source: true
+    duplicate_role_anchor_type_or_headcount_matrices_forbidden: true
+  scope:
+    body_change_count: 0
+    source_kernel_change_count: 0
+    role_patch_ids:
+    - P7D40-REPAIR-012
+    - P7D40-REPAIR-071
+    - P7D40-REPAIR-226
+    - P7D40-REPAIR-312
+    - RV80-ASSET-077
+    anchor_patch_ids:
+    - P7D40-REPAIR-298
+    - RV80-ASSET-024
+    - RV80-ASSET-036
+    - RV80-ASSET-042
+    - RV80-ASSET-051
+    - RV80-ASSET-063
+    - RV80-ASSET-073
+    - RV80-ASSET-074
+    typed_anchor_asset_coverage: 120
+    expression_asset_type_count: 120
+    knowledge_count_increment: 0
+    content_generation_count: 0
+  typed_anchor_schema:
+    anchor_types:
+    - apparel_item
+    - apparel_detail
+    - material_or_craft
+    - space_or_display
+    - prop
+    - styling_or_selection_task
+    anchor_roles:
+    - primary_focus
+    - secondary_focus
+    - scene_context
+    - detail_evidence
+    - execution_prop
+    derivation_modes:
+    - extractive
+    - minimally_normalized
+    - faithful_composite
+    canonical_truth_path: expression_content_kernel_candidate.typed_anchors
+    compatibility_projection_path: expression_content_kernel_candidate.object_anchor
+    projection_status: DERIVED_COMPATIBILITY_PROJECTION
+    legacy_v0_1_object_anchor_field_evidence:
+      status: HISTORICAL_EXTRACTION_TRACE_NONCANONICAL
+      mutation_allowed: false
+      reason: other_expression_kernel_fields_are_immutable_in_this_patch
+  expression_asset_type_schema:
+    allowed:
+    - action_scene_kernel
+    - strategy_rule_expression
+    - evidence_boundary_expression
+    - product_role_expression
+    - platform_execution_expression
+    single_primary_type_per_asset: true
+    every_type_requires_exact_body_evidence: true
+    empty_human_action_ids:
+    - P7D40-REPAIR-012
+    - P7D40-REPAIR-162
+    - P7D40-REPAIR-276
+    - P7D40-REPAIR-287
+    - P7D40-REPAIR-298
+    - RV80-ASSET-074
+    empty_human_action_ids_are_not_action_scene_kernel: true
+  role_precision_rules:
+    pronoun_shape_does_not_determine_role: true
+    mentioned_is_not_executor: true
+    executor_is_not_necessarily_actual_participant: true
+    rhetorical_object_reference_is_not_human_graph: true
+    hypothetical_roles_excluded_from_actual_headcount: true
+    collective_alias_does_not_create_extra_person: true
+  follow_up_anchor_policy:
+    patched_by_this_task: false
+    founder_final_acceptance_remains_pending: true
+    items:
+    - asset_id: RV80-ASSET-015
+      current_primary_anchor: 橱窗
+      status: LIKELY_APPAREL_PRIMARY_REQUIRES_FOUNDER_RULE
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 我刚把橱窗里的大衣肩部重新理顺。它静静挂着，肩部被衣料的分量压住，下摆落到小腿附近，风口开着也没有乱成一团。旧稿原本借了一个顾客故事，我把它撤掉了。不借谁的私事，这件衣服也有东西可讲。路过时，可以近一点看它怎么垂下来。
+    - asset_id: RV80-ASSET-049
+      current_primary_anchor: 橱窗
+      status: AMBIGUOUS_DISPLAY_METHOD_PRIMARY
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 我正把橱窗上沿那块亮色往旁边挪。驼色毛衣裙留在中间占最大面积，辅色只在两侧接住高度，最亮的小配件收在上方一点。暖不是把所有暖色都堆满，面积和位置也要有分寸。摆完后我会走到街对面停几秒，看第一眼是否仍回到主色上。
+    - asset_id: RV80-ASSET-059
+      current_primary_anchor: 橱窗
+      status: AMBIGUOUS_DISPLAY_PROCESS_PRIMARY
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 陈列上墙前，店长先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤。衣服穿好后，她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上。检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。
+    - asset_id: P7D40-REPAIR-234
+      current_primary_anchor: 橱窗
+      status: AMBIGUOUS_DISPLAY_VISIBILITY_PRIMARY
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 橱窗里的藏青西装外套压住白色上衣，直筒牛仔裤把正式感放松下来。陈列师给橱窗人台完成穿搭后，退到玻璃外复核：肩线有没有被灯压暗，裤脚是否挡住底座，主角能不能第一眼被看见。每次移动，都对应一个能在橱窗里看清的问题。
+  acceptance:
+    success_status: CLEAN_120_METADATA_PRECISION_PATCH_EXECUTED_PENDING_CLAUDE_DELTA_AND_FOUNDER_FINAL_ACCEPTANCE
+    failure_status: METADATA_PRECISION_PATCH_BLOCKED
+    clean_120_final_acceptance: false
+    reference_corpus_frozen: false
+    runtime_content_kernel_ready: false
+    next_if_guardian_delta_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE
+  scale_and_downstream:
+    expand_600: false
+    expand_3600: false
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED
+    readiness_all_false: true

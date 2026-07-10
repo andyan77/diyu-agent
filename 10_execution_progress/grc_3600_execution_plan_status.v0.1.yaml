@@ -369,6 +369,42 @@ grc_3600_execution_plan_status:
       expand_3600: false
     downstream_and_readiness:
       all_false: true
+  route_migration_16:
+    applied_by_task: GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    prior_task:
+      task_id: GKB-P7D-CLEAN-120-SEMANTIC-ASSET-INTEGRITY-CLOSEOUT-001
+      execution_integrity: PASS
+      claude_code_guardian_review: PASS
+      founder_review: CONDITIONAL_ACCEPTANCE
+      clean_120_full_acceptance: false
+    current_task:
+      task_id: GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001
+      result: CLEAN_120_METADATA_PRECISION_PATCH_EXECUTED_PENDING_CLAUDE_DELTA_AND_FOUNDER_FINAL_ACCEPTANCE
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_metadata_patch_001/semantic_metadata_patch_result.v0.1.yaml
+      scope:
+        body_change_count: 0
+        role_semantic_patch_assets: 5
+        expression_anchor_patch_assets: 8
+        expression_asset_type_count: 120
+        source_kernel_change_count: 0
+        knowledge_count_increment: 0
+    next_if_guardian_delta_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE
+    expression_diversity:
+      status: OPEN_SCALE_RISK
+      handled_by_this_task: false
+    unresolved_founder_anchor_policy_follow_up:
+      count: 4
+      patched_by_this_task: false
+    scale:
+      expand_600: false
+      expand_3600: false
+    downstream_and_readiness:
+      all_false: true
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

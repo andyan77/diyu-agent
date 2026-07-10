@@ -1,0 +1,841 @@
+semantic_metadata_delta_review_packet:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001
+  review_kind: delta_only_semantic_metadata_guardian_review
+  canonical_machine_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_semantic_metadata_patch_001/clean_120_semantic_asset_manifest.v0.2.jsonl
+  machine_limit:
+    status: STRUCTURAL_METADATA_AND_EVIDENCE_ONLY
+    does_not_prove:
+    - FULL_NATURAL_LANGUAGE_SEMANTICS
+    - CLEAN_120_FINAL_ACCEPTANCE
+    - REFERENCE_CORPUS_FROZEN
+    - RUNTIME_READINESS
+    - SCALE_READINESS
+  reuse_prior_pass:
+  - 120_body_quality
+  - six_body_cleanup
+  - source_expression_kernel_architecture
+  - claim_and_event_boundary
+  role_patch_items:
+  - asset_id: P7D40-REPAIR-012
+    before_role_subtree_sha256: fbbf6df59f906b2ef0ef6b7037d4f9e57439c7897a69ad3787e4635b1cdaffaf
+    after_role_subtree_sha256: 02ef45aad60b3a32d31e95c79221fbf93d941cc800033d126238f3af780bd37d
+    event_headcount_before: 0
+    event_headcount_after: 0
+    capture_headcount_before: 0
+    capture_headcount_after: 0
+    changed_paths:
+    - role_entities
+    - role_mentions
+    - action_bindings
+    - execution_card
+    body_evidence_spans:
+    - end: 21
+      start: 19
+      text: 我们
+    - end: 74
+      start: 72
+      text: 导购
+    - end: 103
+      start: 101
+      text: 有人
+  - asset_id: P7D40-REPAIR-071
+    before_role_subtree_sha256: 83c0d6950b1d13cf04e9b08f7edcacc3f5c233d832b78170a19fe086a3d1fa83
+    after_role_subtree_sha256: 379d8928492b8df992e958cb71132963c72175292af41aa8fadbeeabb509a384
+    event_headcount_before: 3
+    event_headcount_after: 3
+    capture_headcount_before: 3
+    capture_headcount_after: 3
+    changed_paths:
+    - role_entities
+    - role_mentions
+    - action_bindings
+    - execution_card
+    body_evidence_spans:
+    - end: 11
+      start: 9
+      text: 买手
+    - end: 21
+      start: 19
+      text: 导购
+    - end: 26
+      start: 24
+      text: 顾客
+    - end: 39
+      start: 36
+      text: 陈列师
+    - end: 57
+      start: 56
+      text: 谁
+    - end: 65
+      start: 63
+      text: 别人
+    - end: 79
+      start: 77
+      text: 团队
+    - end: 86
+      start: 83
+      text: 每个人
+  - asset_id: P7D40-REPAIR-226
+    before_role_subtree_sha256: 8f5d26b5538b1c66be9dc10b6931010a43234e0dbcb165bbf5729aec4864b68c
+    after_role_subtree_sha256: 154c2c496ee69eca0eaa6f3bdbd2177185a8f4b9c14b71e935b2d608c253304b
+    event_headcount_before: 1
+    event_headcount_after: 1
+    capture_headcount_before: 1
+    capture_headcount_after: 1
+    changed_paths:
+    - role_entities
+    - role_mentions
+    - action_bindings
+    - execution_card
+    body_evidence_spans:
+    - end: 7
+      start: 5
+      text: 顾客
+    - end: 51
+      start: 49
+      text: 导购
+    - end: 74
+      start: 72
+      text: 顾客
+    - end: 90
+      start: 88
+      text: 有人
+    - end: 94
+      start: 92
+      text: 有人
+  - asset_id: P7D40-REPAIR-312
+    before_role_subtree_sha256: f0e776ca681d39d5340e0f45b1abeaf63b0ca434b396b962cac8bd56b9d3a5ff
+    after_role_subtree_sha256: a79952428de28b91f493d9e1741f5766675057d8a7ec1078c6c3428d78322f2a
+    event_headcount_before: 1
+    event_headcount_after: 1
+    capture_headcount_before: 1
+    capture_headcount_after: 1
+    changed_paths:
+    - role_entities
+    - role_mentions
+    - action_bindings
+    - execution_card
+    - rhetorical_object_references
+    body_evidence_spans:
+    - end: 55
+      start: 53
+      text: 店长
+    - end: 101
+      start: 99
+      text: 顾客
+    - end: 59
+      start: 58
+      text: 谁
+    - end: 108
+      start: 107
+      text: 谁
+  - asset_id: RV80-ASSET-077
+    before_role_subtree_sha256: a5c993578a35c22584570e1044c82b3e8a925b81d63fdc6b18334e7f125ded55
+    after_role_subtree_sha256: 0a93ce3906888ab9192a8f155f162525d699d5b4658404b5d311ebc9d5121853
+    event_headcount_before: 1
+    event_headcount_after: 1
+    capture_headcount_before: 1
+    capture_headcount_after: 1
+    changed_paths:
+    - role_entities
+    - role_mentions
+    - action_bindings
+    - execution_card
+    - rhetorical_object_references
+    body_evidence_spans:
+    - end: 15
+      start: 14
+      text: 我
+    - end: 62
+      start: 61
+      text: 谁
+    - end: 70
+      start: 69
+      text: 谁
+  anchor_patch_items:
+  - asset_id: P7D40-REPAIR-298
+    before_object_anchor: 裤
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 背带裤
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 背带裤
+      surface_forms:
+      - 背带裤
+      evidence_spans:
+      - start: 0
+        end: 3
+        text: 背带裤
+      derivation_mode: extractive
+  - asset_id: RV80-ASSET-024
+    before_object_anchor: 裤
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 深蓝牛仔裤
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 深蓝牛仔裤
+      surface_forms:
+      - 深蓝牛仔裤
+      evidence_spans:
+      - start: 7
+        end: 12
+        text: 深蓝牛仔裤
+      derivation_mode: extractive
+  - asset_id: RV80-ASSET-036
+    before_object_anchor: 人台
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 雾蓝裙
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 雾蓝裙
+      surface_forms:
+      - 雾蓝裙
+      evidence_spans:
+      - start: 5
+        end: 8
+        text: 雾蓝裙
+      derivation_mode: extractive
+    - anchor_id: ANCH-C-001
+      anchor_type: prop
+      anchor_role: scene_context
+      canonical_label: 人台
+      surface_forms:
+      - 人台
+      evidence_spans:
+      - start: 0
+        end: 2
+        text: 人台
+      derivation_mode: extractive
+  - asset_id: RV80-ASSET-042
+    before_object_anchor: 裤
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 牛仔裤
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 牛仔裤
+      surface_forms:
+      - 牛仔裤
+      evidence_spans:
+      - start: 7
+        end: 10
+        text: 牛仔裤
+      derivation_mode: extractive
+  - asset_id: RV80-ASSET-051
+    before_object_anchor: 袖口
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 入口—中岛—端架 / 门店陈列分区
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: space_or_display
+      anchor_role: primary_focus
+      canonical_label: 入口—中岛—端架 / 门店陈列分区
+      surface_forms:
+      - 入口
+      - 中岛
+      - 端架
+      evidence_spans:
+      - start: 19
+        end: 21
+        text: 入口
+      - start: 34
+        end: 36
+        text: 中岛
+      - start: 52
+        end: 54
+        text: 端架
+      derivation_mode: faithful_composite
+  - asset_id: RV80-ASSET-063
+    before_object_anchor: 橱窗
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 酒红半裙
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 酒红半裙
+      surface_forms:
+      - 酒红半裙
+      evidence_spans:
+      - start: 9
+        end: 13
+        text: 酒红半裙
+      derivation_mode: extractive
+    - anchor_id: ANCH-C-001
+      anchor_type: space_or_display
+      anchor_role: scene_context
+      canonical_label: 橱窗
+      surface_forms:
+      - 橱窗
+      evidence_spans:
+      - start: 0
+        end: 2
+        text: 橱窗
+      derivation_mode: extractive
+  - asset_id: RV80-ASSET-073
+    before_object_anchor: 裤
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value: 外搭选择
+      derived_from_anchor_ids:
+      - ANCH-P-001
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: styling_or_selection_task
+      anchor_role: primary_focus
+      canonical_label: 外搭选择
+      surface_forms:
+      - 选外搭
+      - 外搭
+      evidence_spans:
+      - start: 0
+        end: 3
+        text: 选外搭
+      derivation_mode: minimally_normalized
+  - asset_id: RV80-ASSET-074
+    before_object_anchor: 西装
+    after_object_anchor_projection:
+      status: DERIVED_COMPATIBILITY_PROJECTION
+      value:
+      - 直筒西装裤
+      - 针织背心
+      derived_from_anchor_ids:
+      - ANCH-P-001
+      - ANCH-P-002
+    typed_anchors:
+    - anchor_id: ANCH-P-001
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 直筒西装裤
+      surface_forms:
+      - 直筒西装裤
+      evidence_spans:
+      - start: 3
+        end: 8
+        text: 直筒西装裤
+      derivation_mode: extractive
+    - anchor_id: ANCH-P-002
+      anchor_type: apparel_item
+      anchor_role: primary_focus
+      canonical_label: 针织背心
+      surface_forms:
+      - 针织背心
+      evidence_spans:
+      - start: 9
+        end: 13
+        text: 针织背心
+      derivation_mode: extractive
+  identity_anchor_migration_items:
+  - asset_id: RV80-ASSET-001
+    before_primary: 米白外套
+    after_primary: 米白外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-002
+    before_primary: 针织衫
+    after_primary: 针织衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-006
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-012
+    before_primary: 羊毛大衣
+    after_primary: 羊毛大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-003
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-004
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-005
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-021
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-006
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-007
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-008
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-030
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-009
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-040
+    before_primary: 一条高腰直筒牛仔裤
+    after_primary: 一条高腰直筒牛仔裤
+    identity_preserved: true
+  - asset_id: RV80-ASSET-010
+    before_primary: 驼色大衣
+    after_primary: 驼色大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-011
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-048
+    before_primary: 白衬衫
+    after_primary: 白衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-012
+    before_primary: 水洗牛仔外套
+    after_primary: 水洗牛仔外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-013
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-014
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-054
+    before_primary: 针织
+    after_primary: 针织
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-063
+    before_primary: 上衣
+    after_primary: 上衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-015
+    before_primary: 橱窗
+    after_primary: 橱窗
+    identity_preserved: true
+  - asset_id: RV80-ASSET-016
+    before_primary: 水洗牛仔外套
+    after_primary: 水洗牛仔外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-071
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-017
+    before_primary: 驼色大衣
+    after_primary: 驼色大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-018
+    before_primary: 驼色大衣
+    after_primary: 驼色大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-019
+    before_primary: 灯芯绒裤
+    after_primary: 灯芯绒裤
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-077
+    before_primary: 粗针毛衣
+    after_primary: 粗针毛衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-020
+    before_primary: 百褶裙
+    after_primary: 百褶裙
+    identity_preserved: true
+  - asset_id: RV80-ASSET-021
+    before_primary: 阔腿裤
+    after_primary: 阔腿裤
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-082
+    before_primary: 藏青羊毛西装外套
+    after_primary: 藏青羊毛西装外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-022
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-089
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-023
+    before_primary: 开衫
+    after_primary: 开衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-097
+    before_primary: 砂色工装衬衫
+    after_primary: 砂色工装衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-025
+    before_primary: 袖口
+    after_primary: 袖口
+    identity_preserved: true
+  - asset_id: RV80-ASSET-026
+    before_primary: 裤子
+    after_primary: 裤子
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-105
+    before_primary: 上装
+    after_primary: 上装
+    identity_preserved: true
+  - asset_id: RV80-ASSET-027
+    before_primary: 上装
+    after_primary: 上装
+    identity_preserved: true
+  - asset_id: RV80-ASSET-028
+    before_primary: 西装
+    after_primary: 西装
+    identity_preserved: true
+  - asset_id: RV80-ASSET-029
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-030
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-115
+    before_primary: 开衫
+    after_primary: 开衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-127
+    before_primary: 白衬衫
+    after_primary: 白衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-031
+    before_primary: 上衣
+    after_primary: 上衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-032
+    before_primary: 针织
+    after_primary: 针织
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-129
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-033
+    before_primary: 开衫
+    after_primary: 开衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-034
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-035
+    before_primary: 西装
+    after_primary: 西装
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-138
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-151
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-037
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-038
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-039
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-154
+    before_primary: 直筒裤
+    after_primary: 直筒裤
+    identity_preserved: true
+  - asset_id: RV80-ASSET-040
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-041
+    before_primary: 牛仔外套
+    after_primary: 牛仔外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-162
+    before_primary: 羊毛混纺针织衫
+    after_primary: 羊毛混纺针织衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-043
+    before_primary: 毛衣
+    after_primary: 毛衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-170
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-044
+    before_primary: 直筒牛仔裤
+    after_primary: 直筒牛仔裤
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-177
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-045
+    before_primary: 开衫
+    after_primary: 开衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-046
+    before_primary: 开衫
+    after_primary: 开衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-191
+    before_primary: 腰带
+    after_primary: 腰带
+    identity_preserved: true
+  - asset_id: RV80-ASSET-047
+    before_primary: 围巾
+    after_primary: 围巾
+    identity_preserved: true
+  - asset_id: RV80-ASSET-048
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-049
+    before_primary: 橱窗
+    after_primary: 橱窗
+    identity_preserved: true
+  - asset_id: RV80-ASSET-050
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-195
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-202
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-052
+    before_primary: 灯芯绒裤
+    after_primary: 灯芯绒裤
+    identity_preserved: true
+  - asset_id: RV80-ASSET-053
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-054
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-214
+    before_primary: 针织
+    after_primary: 针织
+    identity_preserved: true
+  - asset_id: RV80-ASSET-055
+    before_primary: 白衬衫
+    after_primary: 白衬衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-224
+    before_primary: 阔腿裤
+    after_primary: 阔腿裤
+    identity_preserved: true
+  - asset_id: RV80-ASSET-056
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-057
+    before_primary: 毛衣
+    after_primary: 毛衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-226
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-058
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-059
+    before_primary: 橱窗
+    after_primary: 橱窗
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-234
+    before_primary: 橱窗
+    after_primary: 橱窗
+    identity_preserved: true
+  - asset_id: RV80-ASSET-060
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-061
+    before_primary: 西装
+    after_primary: 西装
+    identity_preserved: true
+  - asset_id: RV80-ASSET-062
+    before_primary: 白衬衫
+    after_primary: 白衬衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-243
+    before_primary: 挂通
+    after_primary: 挂通
+    identity_preserved: true
+  - asset_id: RV80-ASSET-064
+    before_primary: 灯芯绒半裙
+    after_primary: 灯芯绒半裙
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-254
+    before_primary: 焦糖色灯芯绒阔腿裤
+    after_primary: 焦糖色灯芯绒阔腿裤
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-263
+    before_primary: 开衫
+    after_primary: 开衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-065
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-066
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-067
+    before_primary: 灯芯绒裤
+    after_primary: 灯芯绒裤
+    identity_preserved: true
+  - asset_id: RV80-ASSET-068
+    before_primary: 白衬衫
+    after_primary: 白衬衫
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-267
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-276
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-069
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-070
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-287
+    before_primary: 驼色大衣
+    after_primary: 驼色大衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-071
+    before_primary: 粗针毛衣
+    after_primary: 粗针毛衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-072
+    before_primary: 背心
+    after_primary: 背心
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-289
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-075
+    before_primary: 衬衫
+    after_primary: 衬衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-076
+    before_primary: 针织开衫
+    after_primary: 针织开衫
+    identity_preserved: true
+  - asset_id: RV80-ASSET-077
+    before_primary: 大衣
+    after_primary: 大衣
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-312
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  - asset_id: RV80-ASSET-078
+    before_primary: 挂通
+    after_primary: 挂通
+    identity_preserved: true
+  - asset_id: P7D40-REPAIR-316
+    before_primary: 灯芯绒半裙
+    after_primary: 灯芯绒半裙
+    identity_preserved: true
+  - asset_id: RV80-ASSET-079
+    before_primary: 风衣
+    after_primary: 风衣
+    identity_preserved: true
+  - asset_id: RV80-ASSET-080
+    before_primary: 外套
+    after_primary: 外套
+    identity_preserved: true
+  expression_asset_type_distribution:
+    action_scene_kernel: 57
+    evidence_boundary_expression: 44
+    platform_execution_expression: 15
+    product_role_expression: 3
+    strategy_rule_expression: 1
+  empty_human_action_exception_ids:
+  - P7D40-REPAIR-012
+  - P7D40-REPAIR-162
+  - P7D40-REPAIR-276
+  - P7D40-REPAIR-287
+  - P7D40-REPAIR-298
+  - RV80-ASSET-074
+  unresolved_founder_anchor_policy_follow_up:
+  - asset_id: RV80-ASSET-015
+    current_primary_anchor: 橱窗
+    status: LIKELY_APPAREL_PRIMARY_REQUIRES_FOUNDER_RULE
+    patched_by_this_task: false
+    founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+    body_evidence: 我刚把橱窗里的大衣肩部重新理顺。它静静挂着，肩部被衣料的分量压住，下摆落到小腿附近，风口开着也没有乱成一团。旧稿原本借了一个顾客故事，我把它撤掉了。不借谁的私事，这件衣服也有东西可讲。路过时，可以近一点看它怎么垂下来。
+  - asset_id: RV80-ASSET-049
+    current_primary_anchor: 橱窗
+    status: AMBIGUOUS_DISPLAY_METHOD_PRIMARY
+    patched_by_this_task: false
+    founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+    body_evidence: 我正把橱窗上沿那块亮色往旁边挪。驼色毛衣裙留在中间占最大面积，辅色只在两侧接住高度，最亮的小配件收在上方一点。暖不是把所有暖色都堆满，面积和位置也要有分寸。摆完后我会走到街对面停几秒，看第一眼是否仍回到主色上。
+  - asset_id: RV80-ASSET-059
+    current_primary_anchor: 橱窗
+    status: AMBIGUOUS_DISPLAY_PROCESS_PRIMARY
+    patched_by_this_task: false
+    founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+    body_evidence: 陈列上墙前，店长先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤。衣服穿好后，她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上。检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。
+  - asset_id: P7D40-REPAIR-234
+    current_primary_anchor: 橱窗
+    status: AMBIGUOUS_DISPLAY_VISIBILITY_PRIMARY
+    patched_by_this_task: false
+    founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+    body_evidence: 橱窗里的藏青西装外套压住白色上衣，直筒牛仔裤把正式感放松下来。陈列师给橱窗人台完成穿搭后，退到玻璃外复核：肩线有没有被灯压暗，裤脚是否挡住底座，主角能不能第一眼被看见。每次移动，都对应一个能在橱窗里看清的问题。
+  next_if_delta_guardian_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE

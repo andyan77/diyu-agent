@@ -120,3 +120,12 @@
 - 上游 `source_knowledge_kernel_ref` 保持不可变；新增 `expression_content_kernel_candidate` 只摘取最终正文实际表达且带 span 的人、物、动作、场景、判断、claim 与 event surface。
 - 机器结论仅为 `STRUCTURAL_ROLE_EVIDENCE_PASS`，不得解释为完整自然语言语义已证明；当前仍待 Claude Code 全量语义 Guardian Review 与 Founder 最终接受。
 - `route_migration_15` 只 additive 记录本次定向收口；旧 step status、旧 migration、`expand_600=false`、`expand_3600=false`、下游与全部 readiness 均保持不变。
+
+## P7D Clean-120 Metadata Precision Patch
+
+- `GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001` 从不可变 v0.1 派生唯一 v0.2 metadata 真源；120 条正文与 Source Kernel 均不变，知识计数增量为 0。
+- 角色语义只修正 5 个 Founder 指定资产；表达主锚点只修正 8 个指定资产。其余 112 条锚点按原值迁移为 typed-anchor，兼容 `object_anchor` 由 primary anchors 重算。
+- 120 条均获得正文证据支持的 `expression_asset_type`；6 条无人且无动作资产保持精确冻结集合，未为字段完整性虚构人物或动作。
+- `RV80-ASSET-015`、`RV80-ASSET-049`、`RV80-ASSET-059`、`P7D40-REPAIR-234` 的“服装还是陈列空间为 primary”只登记为 Founder follow-up，本任务未扩面裁决。
+- 机器范围仅为 `STRUCTURAL_METADATA_AND_EVIDENCE_ONLY`；结果仍待 Claude Code delta review 与 Founder 最终接受，不冻结 reference corpus，不解锁 600、3600 或下游。
+- `route_migration_16` 只 additive 记录本次补丁；旧 step status、旧 migration、全部 readiness 与扩量锁均保持不变。

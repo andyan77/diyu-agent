@@ -1,0 +1,106 @@
+semantic_metadata_patch_result:
+  schema_version: v0.1
+  task_id: GKB-P7D-CLEAN-120-METADATA-ONLY-SEMANTIC-PRECISION-PATCH-AND-FINAL-ACCEPTANCE-HANDOFF-001
+  result_status: CLEAN_120_METADATA_PRECISION_PATCH_EXECUTED_PENDING_CLAUDE_DELTA_AND_FOUNDER_FINAL_ACCEPTANCE
+  machine_semantics_scope: STRUCTURAL_METADATA_AND_EVIDENCE_ONLY
+  machine_acceptance:
+    asset_count: 120
+    unique_kernel_count: 120
+    knowledge_count_increment: 0
+    body_change_count: 0
+    body_digest_match_count: 120
+    source_kernel_digest_match_count: 120
+    source_kernel_mutation_count: 0
+    role_patch_count: 5
+    role_patch_ids:
+    - P7D40-REPAIR-012
+    - P7D40-REPAIR-071
+    - P7D40-REPAIR-226
+    - P7D40-REPAIR-312
+    - RV80-ASSET-077
+    role_subtree_change_outside_5_count: 0
+    collapsed_distinct_referent_count: 0
+    rhetorical_object_in_human_graph_count: 0
+    nonactual_role_in_actual_headcount_count: 0
+    dependent_headcount_change_count: 0
+    expression_asset_type_count: 120
+    expression_asset_type_distribution:
+      action_scene_kernel: 57
+      evidence_boundary_expression: 44
+      platform_execution_expression: 15
+      product_role_expression: 3
+      strategy_rule_expression: 1
+    invalid_expression_asset_type_count: 0
+    type_evidence_missing_count: 0
+    type_requirement_failure_count: 0
+    empty_human_action_ids:
+    - P7D40-REPAIR-012
+    - P7D40-REPAIR-162
+    - P7D40-REPAIR-276
+    - P7D40-REPAIR-287
+    - P7D40-REPAIR-298
+    - RV80-ASSET-074
+    invented_human_or_action_count: 0
+    typed_anchor_asset_coverage: 120
+    anchor_semantic_patch_count: 8
+    anchor_patch_ids:
+    - P7D40-REPAIR-298
+    - RV80-ASSET-024
+    - RV80-ASSET-036
+    - RV80-ASSET-042
+    - RV80-ASSET-051
+    - RV80-ASSET-063
+    - RV80-ASSET-073
+    - RV80-ASSET-074
+    required_8_anchor_pass_count: 8
+    unauthorized_anchor_semantic_change_count: 0
+    unsupported_anchor_count: 0
+    anchor_evidence_missing_count: 0
+    legacy_projection_mismatch_count: 0
+    other_expression_kernel_field_change_count: 0
+  founder_anchor_policy_follow_up:
+    count: 4
+    patched_by_this_task: false
+    items:
+    - asset_id: RV80-ASSET-015
+      current_primary_anchor: 橱窗
+      status: LIKELY_APPAREL_PRIMARY_REQUIRES_FOUNDER_RULE
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 我刚把橱窗里的大衣肩部重新理顺。它静静挂着，肩部被衣料的分量压住，下摆落到小腿附近，风口开着也没有乱成一团。旧稿原本借了一个顾客故事，我把它撤掉了。不借谁的私事，这件衣服也有东西可讲。路过时，可以近一点看它怎么垂下来。
+    - asset_id: RV80-ASSET-049
+      current_primary_anchor: 橱窗
+      status: AMBIGUOUS_DISPLAY_METHOD_PRIMARY
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 我正把橱窗上沿那块亮色往旁边挪。驼色毛衣裙留在中间占最大面积，辅色只在两侧接住高度，最亮的小配件收在上方一点。暖不是把所有暖色都堆满，面积和位置也要有分寸。摆完后我会走到街对面停几秒，看第一眼是否仍回到主色上。
+    - asset_id: RV80-ASSET-059
+      current_primary_anchor: 橱窗
+      status: AMBIGUOUS_DISPLAY_PROCESS_PRIMARY
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 陈列上墙前，店长先拿清单核对可用服装与尺码，再给橱窗人台套上廓形西装和阔腿裤。衣服穿好后，她退到玻璃外，复核人台肩部与裤长是否落在同一条视线上。检查结束才实施，实施结束再复核；每一步都有清楚的完成标志。
+    - asset_id: P7D40-REPAIR-234
+      current_primary_anchor: 橱窗
+      status: AMBIGUOUS_DISPLAY_VISIBILITY_PRIMARY
+      patched_by_this_task: false
+      founder_rule_needed: display_method_primary_is_apparel_or_space_or_display
+      body_evidence: 橱窗里的藏青西装外套压住白色上衣，直筒牛仔裤把正式感放松下来。陈列师给橱窗人台完成穿搭后，退到玻璃外复核：肩线有没有被灯压暗，裤脚是否挡住底座，主角能不能第一眼被看见。每次移动，都对应一个能在橱窗里看清的问题。
+  guardian_and_founder:
+    claude_code_delta_guardian_review: PENDING
+    founder_final_acceptance: false
+    next_if_guardian_pass: FOUNDER_P7D_CLEAN_120_FINAL_ACCEPTANCE
+  expression_diversity:
+    status: OPEN_SCALE_RISK
+    handled_by_this_task: false
+  scale:
+    expand_600: false
+    expand_3600: false
+  downstream_and_readiness:
+    all_false: true
+    CandidatePack: BLOCKED
+    KE: BLOCKED
+    Serving: BLOCKED
+    RAG: BLOCKED
+    DIFY: BLOCKED
+    production: BLOCKED
