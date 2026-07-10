@@ -1,0 +1,38 @@
+runtime_ab_run_manifest:
+  schema_version: v0.1
+  task_id: GKB-CONTENT-KERNEL-FAIR-RERUN-AB-002
+  supersedes_evidence_status_of: runtime_ab_001_confounded_not_confirmed
+  runtime_kind: codex_native_agent_execution
+  run_id: runtime_ab_002
+  external_LLM_called: false
+  secret_accessed: false
+  sample_count: 12
+  arms_per_sample: 2
+  expected_output_count: 24
+  actual_output_count: 24
+  control_count: 12
+  treatment_count: 12
+  execution_order: all_control_records_frozen_before_treatment_records
+  control_generation_sequence_max: 12
+  treatment_generation_sequence_min: 13
+  fairness_fixes:
+  - treatment_kernel_exact_overlap_lt_18_chars
+  - control_candidate_specific_unique_outputs
+  - checker_enforces_copy_ceiling_and_control_distinctness
+  kernel_copy_ceiling_chars: 17
+  control_outputs_unique: true
+  max_control_pair_lcs_chars_metric: 8
+  result_scope: codex_native_directional_signal_pending_guardian
+  frozen_sample_ids:
+  - SCM120-CAND-002
+  - SCM120-CAND-016
+  - SCM120-CAND-040
+  - SCM120-CAND-070
+  - SCM120-CAND-023
+  - SCM120-CAND-045
+  - SCM120-CAND-080
+  - SCM120-CAND-113
+  - SCM120-CAND-101
+  - SCM120-CAND-059
+  - SCM120-CAND-106
+  - SCM120-CAND-062

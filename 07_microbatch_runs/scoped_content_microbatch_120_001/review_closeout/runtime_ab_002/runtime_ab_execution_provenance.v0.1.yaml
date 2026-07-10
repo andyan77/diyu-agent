@@ -1,0 +1,23 @@
+runtime_ab_execution_provenance:
+  schema_version: v0.1
+  task_id: GKB-CONTENT-KERNEL-FAIR-RERUN-AB-002
+  runtime_kind: codex_native_agent_execution
+  run_id: runtime_ab_002
+  created_by: Codex
+  external_LLM_called: false
+  secret_accessed: false
+  api_cost_recorded: false
+  review_guardian_issue_addressed:
+  - runtime_ab_001 treatment copied kernel business_judgment too closely
+  - runtime_ab_001 control used mode-level templates instead of candidate-specific generation
+  fairness_protocol:
+  - control outputs are unique and candidate-specific
+  - treatment outputs paraphrase corresponding user_visible_kernel
+  - review_packet_kernel not consumed
+  - Codex writes no quality verdict
+  - Claude Code must blind-review before arm-key reveal
+  methodology_limitations:
+  - both arms still authored by Codex
+  - result remains codex-native directional signal pending Guardian review
+  - not external runtime evidence
+  - not scalability evidence

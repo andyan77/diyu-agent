@@ -44,3 +44,11 @@
 - 结果状态只记录为 `CODEX_NATIVE_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN`；需 Claude Code 先盲评 X/Y，再读取 arm key。
 - 方法学 caveat：founder 已授权在 kernel preview 风险被报告后继续执行；该结果只作为 Codex-native 方向性信号，不是无偏 RCT，不证明外部 runtime、不证明 3600 扩量稳定性。
 - `P7C-AB.status` 仍保持 `NEXT`，`P7D.status` 仍保持 `BLOCKED_BY_P7C_SCALE_DECISION`；本次仅通过 `route_migration_6` 记录执行事实，不翻 readiness，不关闭 execution scalability gate。
+
+## P7C Fair A/B Rerun 002
+
+- `GKB-CONTENT-KERNEL-FAIR-RERUN-AB-002` 按 Guardian 建议重跑公平版 A/B：保留 12 个冻结样本，新增 24 条 paired 输出。
+- 本轮修复两个 `runtime_ab_001` 混杂点：treatment 不得整段搬运 kernel，control 必须逐候选生成且互不相同。
+- 新 checker 强制 `treatment` 与对应 user-visible kernel 最长逐字重合 `<18` 字，并强制 control 输出唯一、无模式模板复用。
+- 结果状态仍只写 `CODEX_NATIVE_FAIR_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN`；需 Claude Code 再次盲评 X/Y 后揭盲。
+- `runtime_ab_001` 历史保留为 confounded/not-confirmed，不删除、不翻案；`P7C-AB.status`、`P7D.status`、readiness 与扩量锁均保持不变。

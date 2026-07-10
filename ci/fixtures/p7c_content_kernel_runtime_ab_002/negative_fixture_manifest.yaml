@@ -1,0 +1,12 @@
+negative_fixture_manifest:
+  negative_cases:
+  - treatment_kernel_overlap_ge_18
+  - duplicate_control_output
+  - mode_template_reuse
+  - blind_arm_leak
+  - control_consumed_kernel
+  - codex_self_quality_pass
+  - readiness_true
+  - extra_output
+  - malformed_jsonl
+  expected_status: FAIL_CLOSED

@@ -1,0 +1,33 @@
+runtime_ab_deterministic_metrics:
+  schema_version: v0.1
+  task_id: GKB-CONTENT-KERNEL-FAIR-RERUN-AB-002
+  runtime_kind: codex_native_agent_execution
+  run_id: runtime_ab_002
+  sample_count: 12
+  expected_output_count: 24
+  actual_output_count: 24
+  control_count: 12
+  treatment_count: 12
+  support_bucket_distribution:
+    high_support: 4
+    low_support: 4
+    medium_support: 4
+  generation_mode_coverage:
+  - creative_prototype
+  - display_solution
+  - evidence_bound_candidate
+  - fact_slot_script
+  p0_group_coverage:
+  - P0_01
+  - P0_02
+  - P0_03
+  - P0_04
+  - P0_05
+  claim_risk_sample_count: 6
+  store_display_sample_count: 4
+  control_outputs_unique: true
+  max_treatment_kernel_exact_overlap_chars: 7
+  kernel_copy_ceiling_chars: 17
+  max_control_pair_lcs_chars_metric: 8
+  all_output_digests_unique: true
+  codex_quality_score_written: false

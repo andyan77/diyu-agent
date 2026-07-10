@@ -1,0 +1,23 @@
+{
+  "checker": "check_p7c_content_kernel_runtime_ab_002.py",
+  "task_id": "GKB-CONTENT-KERNEL-FAIR-RERUN-AB-002",
+  "status": "PASS",
+  "error_count": 0,
+  "errors": [],
+  "runtime_kind": "codex_native_agent_execution",
+  "run_id": "runtime_ab_002",
+  "sample_count": 12,
+  "actual_output_count": 24,
+  "control_count": 12,
+  "treatment_count": 12,
+  "max_treatment_kernel_exact_overlap_chars": 7,
+  "max_control_pair_lcs_chars": 8,
+  "result_status": "CODEX_NATIVE_FAIR_AB_EXECUTED_PENDING_CLAUDE_GUARDIAN",
+  "external_LLM_called": false,
+  "readiness_false": true,
+  "prior_results": {
+    "p7c_ab_001": 0,
+    "p7c_review": 0,
+    "p7c_scale_prep": 0
+  }
+}
