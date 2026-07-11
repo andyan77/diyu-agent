@@ -1,0 +1,34 @@
+legacy_profile_migration:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+  source_profiles_version: v0.1
+  target_profiles_version: v0.2
+  mappings:
+    CP_ROLE_WORK_VLOG:
+      canonical_target: CP01
+      mapping: DIRECT
+    CP_STORE_MICRO_DOCUMENTARY:
+      canonical_target: CP02
+      mapping: DIRECT
+    CP_PRODUCT_ITERATION_ARCHIVE:
+      canonical_targets:
+      - CP11
+      - CP12
+      mapping: SPLIT_REQUIRED
+      automatic_target_selection: forbidden
+      routing_rule:
+        design_origin_and_tradeoff: CP11
+        version_change_and_iteration: CP12
+      forbidden_shortcut: legacy_third_profile_must_not_map_to_new_CP03
+  old_pilot_bundles:
+    remain_unchanged: true
+    historical_contract_proof_only: true
+    in_place_migration_allowed: false
+    counts_as_20_profile_fixture_coverage: false
+    becomes_ORCH_plan: false
+    future_use_requires_CP11_or_CP12_reclassification: true
+  old_89_candidates:
+    remain_unchanged: true
+    next_stage_reclassifies_applicable_content_product_type_ids: true
+    mechanical_inheritance_from_3_profile_applicability_allowed: false
+  migration_digest: 6208c15235072d6c8fdfa1f2ed7ccb12fd5f52b5d8cae41f182f9033545e2b4d

@@ -523,6 +523,70 @@ grc_3600_execution_plan_status:
       expand_3600_allowed: false
     downstream_and_readiness:
       all_false: true
+  route_migration_20:
+    applied_by_task: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    S1:
+      task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+      status: DONE_GUARDIAN_PASS
+      head: 538b464042656dec7df0e05acff554a8a4b4528f
+      result_file_sha256: 61a97a8abe3e0b3187b1d547a83832eb645624684b637f8417920dba9f63d265
+      result_internal_digest: baf2616624ea0bb71ef87eb5f5467fd03a2738a7afeec621a3cde77a9681f711
+      profile_count: 3
+      candidate_count: 89
+      candidate_bundle_count: 9
+    S1_5:
+      task_id: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+      status: EXECUTED_PENDING_CLAUDE_GUARDIAN
+      content_product_family_count: 5
+      content_product_profile_count: 20
+      planning_share_sum: 100
+      component_supply_evaluated: false
+      ORCH_eligible_profile_count: 0
+      reviewed_reusable_component_count: 0
+      canonical_composition_plan_count: 0
+      audience_facing_content_count: 0
+      title_count: 0
+      spoken_script_count: 0
+      fixture_gap_count: 20
+      profile_registry_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+      legacy_migration_digest: 6208c15235072d6c8fdfa1f2ed7ccb12fd5f52b5d8cae41f182f9033545e2b4d
+      coverage_digest: e3c8eeaedb8856370cd8f0ed1e9d4dcb5b4aacf509d4127948535532e67ab658
+      result_digest: d3c601d2280886d32cd2671905db86ed6af784d5b54a218295c4f0215fe41bfd
+    generated_artifacts:
+      directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001
+      contract_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_contract.v0.2.yaml
+      profiles_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+      migration_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_legacy_migration.v0.1.yaml
+      coverage_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_coverage_and_gap.v0.1.yaml
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_20_completion_result.v0.1.yaml
+      checker_path: ci/checkers/check_gkb_content_product_profiles_20.py
+    S2:
+      task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-001
+      status: BLOCKED_BY_S1_5_GUARDIAN
+    must_remain_false:
+      - runtime_ingest_ready
+      - generation_600_allowed
+      - expand_600_allowed
+      - expand_3600_allowed
+      - CandidatePack_ready
+      - KE_ready
+      - Serving_ready
+      - RAG_ready
+      - DIFY_ready
+      - production_ready
+    scale:
+      generation_600_allowed: false
+      expand_600_allowed: false
+      expand_3600_allowed: false
+    downstream_and_readiness:
+      all_false: true
+    migration_digest: 585c5477125243ecbfc22bfe7e77722f554e66936bf8007616427ec1219a8010
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

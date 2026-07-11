@@ -1,0 +1,64 @@
+content_product_profile_20_completion_result:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+  verdict: CONTENT_PRODUCT_PROFILE_20_COMPLETION_EXECUTED_PENDING_CLAUDE_GUARDIAN
+  baseline_head_before: 538b464042656dec7df0e05acff554a8a4b4528f
+  counts:
+    content_product_family_count: 5
+    content_product_profile_count: 20
+    planning_share_sum: 100
+    component_supply_evaluated: false
+    ORCH_eligible_profile_count: 0
+    reviewed_reusable_component_count: 0
+    canonical_composition_plan_count: 0
+    audience_facing_content_count: 0
+    title_count: 0
+    spoken_script_count: 0
+    fixture_gap_count: 20
+  s1_immutability:
+    result_file_sha256: 61a97a8abe3e0b3187b1d547a83832eb645624684b637f8417920dba9f63d265
+    result_internal_digest: baf2616624ea0bb71ef87eb5f5467fd03a2738a7afeec621a3cde77a9681f711
+    contract_sha256: 7bf9315ebbb5bf97c3330695de7327af42ae30771b6315d2432c5c78d51d742c
+    profiles_v0_1_sha256: c4e744f3f0505025d780f46eb12b879f1b9920ede63e4c84ffbc3fac9a715a6c
+    source_selection_sha256: 36708420abc159f5a557f48c421ebf0b46a345384afdea9821c6ff0f0089f38c
+    candidates_sha256: 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+    bundles_sha256: 6d294274ea235962c33a8e7cd9f4d4be92d2e6ce5b48860286a1d13f08ce7970
+    pilot_handoff_sha256: 12a369dcf64641a16b73636e95ba1c710fc787efa663608f446f73634a2f6223
+  proof_scope:
+    profiles_20_machine_source_created: true
+    families_and_planning_share_encoded: true
+    legacy_3_profile_migration_defined: true
+    next_stage_can_review_89_candidates_against_20_profiles: true
+  not_proven:
+  - 20_products_have_component_supply
+  - 20_products_are_runtime_eligible
+  - 20_products_content_quality_passed
+  - ORCH_integrated
+  - generation_600_allowed
+  readiness_flags:
+    runtime_ingest_ready: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    CandidatePack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+  generated_file_digests:
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_contract.v0.2.yaml
+    : 005e53ad8e2c11fc7468d7ca15652e14b6dd0be0a3cd6444647385531bb5bf01
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+    : d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_legacy_migration.v0.1.yaml
+    : e80d33d27e89d41f369533ae2e881083ae474fc59c9d347412ab0b511a3a0f21
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profile_coverage_and_gap.v0.1.yaml
+    : 0101c8a6d86ade2bd832fa57a8e246dabd9668de013aa2605050f699b16e12bd
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/run_content_product_profile_20_validator.py
+    : 879cf70730667c7e5522dc21115996a56b77781f40685be51b1707c5dc713fe4
+    ci/checkers/check_gkb_content_product_profiles_20.py: 888ea50c66ca9a2c865f7d5991b00dee4862f206d077f4da709d8df90639c178
+  profile_registry_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+  migration_digest: 6208c15235072d6c8fdfa1f2ed7ccb12fd5f52b5d8cae41f182f9033545e2b4d
+  blocking_items: []
+  result_digest: d3c601d2280886d32cd2671905db86ed6af784d5b54a218295c4f0215fe41bfd

@@ -1,0 +1,147 @@
+content_product_profile_coverage_and_gap:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+  fixture_policy:
+    copy_body_text_allowed: false
+    may_enter_generation_prompt: false
+    may_supply_facts: false
+    fake_fixture_allowed: false
+  existing_reference_pools_considered:
+  - ref_id: CLEAN_120_REFERENCE_CORPUS
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+    sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    assigned_as_product_specific_fixture: false
+    reason: Clean-120 is a frozen reference pool, not a complete per-product fixture suite.
+  - ref_id: S1_HISTORICAL_9_BUNDLES
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/gkb_composition_candidate_bundles.v0.1.jsonl
+    sha256: 6d294274ea235962c33a8e7cd9f4d4be92d2e6ce5b48860286a1d13f08ce7970
+    assigned_as_product_specific_fixture: false
+    reason: Brief forbids using old pilot bundles as 20 Profile coverage evidence.
+  coverage_records:
+  - content_product_type_id: CP01
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP02
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP03
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP04
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP05
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP06
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP07
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP08
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP09
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP10
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP11
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP12
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP13
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP14
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP15
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP16
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP17
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP18
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP19
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  - content_product_type_id: CP20
+    fixture_coverage: missing_explicit
+    positive_refs: []
+    negative_refs: []
+    blocks_content_quality_validation: true
+    gap_reason: No product-specific positive/negative fixture pair was authorized or mapped in this task.
+  summary:
+    profile_count: 20
+    complete_count: 0
+    partial_count: 0
+    missing_explicit_count: 20
+    blocks_content_quality_validation_count: 20
+  coverage_digest: e3c8eeaedb8856370cd8f0ed1e9d4dcb5b4aacf509d4127948535532e67ab658

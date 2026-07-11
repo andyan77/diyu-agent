@@ -1,0 +1,3105 @@
+content_product_profile_registry:
+  schema_version: v0.2
+  task_id: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+  families:
+    F1_PEOPLE_AND_REAL_SCENE:
+      family_id: F1_PEOPLE_AND_REAL_SCENE
+      products:
+      - CP01
+      - CP02
+      - CP03
+      - CP04
+      - CP05
+      planning_share_percent: 30
+      purpose: 活人感、在场感、账号人格
+    F2_PROFESSIONAL_AND_SEARCH:
+      family_id: F2_PROFESSIONAL_AND_SEARCH
+      products:
+      - CP06
+      - CP07
+      - CP08
+      - CP09
+      - CP10
+      planning_share_percent: 25
+      purpose: 搜索资产、收藏、专业信任
+    F3_PRODUCT_RELATION_AND_AESTHETIC:
+      family_id: F3_PRODUCT_RELATION_AND_AESTHETIC
+      products:
+      - CP11
+      - CP12
+      - CP13
+      - CP14
+      planning_share_percent: 20
+      purpose: 产品记忆、审美区别、商业连接
+    F4_STORE_LOCAL_AND_RETAIL:
+      family_id: F4_STORE_LOCAL_AND_RETAIL
+      products:
+      - CP15
+      - CP16
+      - CP17
+      - CP18
+      planning_share_percent: 15
+      purpose: 同城、到店、加盟门店差异
+    F5_ENTERPRISE_LONG_TERM_TRUST:
+      family_id: F5_ENTERPRISE_LONG_TERM_TRUST
+      products:
+      - CP19
+      - CP20
+      planning_share_percent: 10
+      purpose: 品牌信用、组织人格、长期背书
+  allocation_policy:
+    status: PLANNING_POLICY_NOT_EXECUTION_QUOTA
+    sum_percent: 100
+    generation_authority: false
+    may_not_auto_allocate_600: true
+  profile_count: 20
+  profiles:
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP01
+    canonical_slug: role_task_vlog
+    chinese_label: 岗位任务VLOG
+    family_id: F1_PEOPLE_AND_REAL_SCENE
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 活人感、在场感、账号人格
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - professional_role_account
+    target_platforms:
+    - douyin
+    - kuaishou
+    - wechat_channels
+    founder_core_inputs:
+    - 具体人员
+    - 真实岗位
+    - 当天或明确周期任务
+    - 工作对象
+    - 动作链
+    - 判断点
+    - 结果或未完成状态
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp01_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - real_role_or_person_truth
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: &id001
+      - brand_supplied_real_event
+      - brand_fillable_prototype
+      - generic_creative_prototype
+      - collection_task_only
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 时间顺序
+      - 问题—判断—动作
+      - 未完成连续记录
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 岗位口语
+      - 观察纪实
+      - 环境原声
+      - 保留停顿
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: single_task_or_explicit_period
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,kuaishou,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP01_01
+    - AGR_CP01_02
+    - AGR_CP01_03
+    founder_hard_guards:
+    - rule_id: AGR_CP01_01
+      text: 必须围绕真实任务
+    - rule_id: AGR_CP01_02
+      text: 禁止忙碌镜头拼贴
+    - rule_id: AGR_CP01_03
+      text: 禁止企业宣传语塞进员工嘴里
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 038ed1b135b57c7671d75759f43d1ab58c01475ed61c70955e1f29f9ceb23125
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP02
+    canonical_slug: store_time_slice_micro_documentary
+    chinese_label: 门店时段微纪录
+    family_id: F1_PEOPLE_AND_REAL_SCENE
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 活人感、在场感、账号人格
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - store_account
+    target_platforms:
+    - douyin
+    - kuaishou
+    - wechat_channels
+    founder_core_inputs:
+    - 真实门店或授权别名
+    - 明确时段
+    - 实际门店任务或状态
+    - 空间对象
+    - 可用现场素材
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp02_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 时间切片
+      - 固定机位
+      - 空间观察
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 生活流白描
+      - 低旁白
+      - 环境声
+      - 自然节奏
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: bounded_time_slice
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,kuaishou,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP02_01
+    - AGR_CP02_02
+    founder_hard_guards:
+    - rule_id: AGR_CP02_01
+      text: 禁止伪造门店事件
+    - rule_id: AGR_CP02_02
+      text: 允许普通重复和没有高潮
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 18eb9cff38e7611281dad42ac0be56726e7de2c5b0007f6716ee44cece5f4ab2
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP03
+    canonical_slug: single_craft_process
+    chinese_label: 单项手艺全过程
+    family_id: F1_PEOPLE_AND_REAL_SCENE
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 活人感、在场感、账号人格
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - professional_role_account
+    - store_account
+    target_platforms:
+    - douyin
+    - xiaohongshu
+    founder_core_inputs:
+    - 真实任务
+    - 责任岗位
+    - 工作对象
+    - 输入状态
+    - 完整步骤
+    - 判断节点
+    - 结果或未完成状态
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp03_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - real_role_or_person_truth
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 输入—步骤—判断—结果
+      - 局部动作放大
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 手部中心
+      - 操作原声
+      - 低语言密度
+      - 过程美感
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: single_process_trace
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,xiaohongshu
+    anti_pattern_rule_refs:
+    - AGR_CP03_01
+    - AGR_CP03_02
+    founder_hard_guards:
+    - rule_id: AGR_CP03_01
+      text: 禁止省略关键因果动作
+    - rule_id: AGR_CP03_02
+      text: 禁止库存B-roll冒充过程
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 799a3fd163d93cf1c0c1efbea24148f683244e551f50fcd8496134c368302e6c
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP04
+    canonical_slug: multi_role_collaboration_documentary
+    chinese_label: 多岗位协作纪实
+    family_id: F1_PEOPLE_AND_REAL_SCENE
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 活人感、在场感、账号人格
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - brand_account
+    - professional_role_account
+    target_platforms:
+    - wechat_channels
+    - douyin
+    founder_core_inputs:
+    - 真实协作事件
+    - 参与岗位
+    - 共同业务对象
+    - 各岗位动作和权限
+    - 交接或协商结果
+    - 参与者授权
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: transition
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp04_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - participating_roles
+      - role_authority_boundaries
+      - real_role_or_person_truth
+      required_authorization_slots:
+      - publication_scope_authorization
+      - participant_authorizations
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 多声部
+      - 岗位接力
+      - 同一对象多视角
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 克制对话
+      - 保留差异
+      - 不制造对立
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: multi_role_event_thread
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::wechat_channels,douyin
+    anti_pattern_rule_refs:
+    - AGR_CP04_01
+    - AGR_CP04_02
+    - AGR_CP04_03
+    founder_hard_guards:
+    - rule_id: AGR_CP04_01
+      text: 禁止编造争吵
+    - rule_id: AGR_CP04_02
+      text: 禁止角色权限混用
+    - rule_id: AGR_CP04_03
+      text: required_people必须覆盖真实参与者
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: a43ed783b4f91db547455a4eb8c386a274906aea4598b8fb505fa1fcd8031138
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP05
+    canonical_slug: career_growth_and_professional_history
+    chinese_label: 人物成长与职业史
+    family_id: F1_PEOPLE_AND_REAL_SCENE
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 活人感、在场感、账号人格
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - professional_role_account
+    - brand_account
+    target_platforms:
+    - wechat_channels
+    - xiaohongshu
+    - official_account
+    founder_core_inputs:
+    - 真实人物或授权别名
+    - 真实职业经历
+    - 时间节点
+    - 技能形成证据
+    - 失败或变化事实
+    - 人物授权
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp05_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - real_role_or_person_truth
+      - time_state_or_version_marker
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 时间线
+      - 口述史
+      - 阶段回访
+      - 师徒双视角
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 温和纪实
+      - 档案材料
+      - 低煽情
+      - 长期跟踪
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: person_history_timeline
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::wechat_channels,xiaohongshu,official_account
+    anti_pattern_rule_refs:
+    - AGR_CP05_01
+    - AGR_CP05_02
+    - AGR_CP05_03
+    founder_hard_guards:
+    - rule_id: AGR_CP05_01
+      text: 禁止卖惨竞赛
+    - rule_id: AGR_CP05_02
+      text: 禁止编造经历
+    - rule_id: AGR_CP05_03
+      text: 禁止把加班等同成长
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: ac4b7aa6dd4cc11f68a85523be15c06e886025a33101a5469d82fc48e6149591
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP06
+    canonical_slug: professional_judgment_slice
+    chinese_label: 专业判断切片
+    family_id: F2_PROFESSIONAL_AND_SEARCH
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 搜索资产、收藏、专业信任
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - professional_role_account
+    target_platforms:
+    - xiaohongshu
+    - douyin
+    founder_core_inputs:
+    - 真实岗位权威
+    - 具体业务对象
+    - 可观察信号
+    - 判断条件
+    - 适用限制
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp06_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - real_role_or_person_truth
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 观察—判断—依据—限制
+      - 局部细节—整体影响
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 岗位口语
+      - 精确
+      - 低说教
+      - 专业词附人话解释
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: single_judgment_slice
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu,douyin
+    anti_pattern_rule_refs:
+    - AGR_CP06_01
+    - AGR_CP06_02
+    founder_hard_guards:
+    - rule_id: AGR_CP06_01
+      text: 判断不得超过岗位权限
+    - rule_id: AGR_CP06_02
+      text: 禁止万能结论
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: f6291acbb0b4387f799c3a5b20bc906ae2dd4804c1b270533cefb53b72536c19
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP07
+    canonical_slug: user_question_diagnostic_room
+    chinese_label: 用户问题诊断室
+    family_id: F2_PROFESSIONAL_AND_SEARCH
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 搜索资产、收藏、专业信任
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - professional_role_account
+    - store_account
+    target_platforms:
+    - xiaohongshu
+    founder_core_inputs:
+    - 真实搜索词或用户问题
+    - 问题来源
+    - 条件信息
+    - 可用判断依据
+    - 适用边界
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: closing
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp07_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 问题分类
+      - 条件判断
+      - 决策树
+      - 排除法
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 耐心
+      - 直接
+      - 非推销
+      - 面向具体任务
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: question_case_with_conditions
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu
+    anti_pattern_rule_refs:
+    - AGR_CP07_01
+    - AGR_CP07_02
+    founder_hard_guards:
+    - rule_id: AGR_CP07_01
+      text: 禁止虚构用户提问
+    - rule_id: AGR_CP07_02
+      text: 禁止固定三招模板
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 54c6591bdb810d0df8fea646c938033e9eb8a15fe8aa5b312849c8b54dcaa88b
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP08
+    canonical_slug: craft_material_fit_deconstruction
+    chinese_label: 工艺／面料／版型解构
+    family_id: F2_PROFESSIONAL_AND_SEARCH
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 搜索资产、收藏、专业信任
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - professional_account
+    - brand_account
+    target_platforms:
+    - xiaohongshu
+    - wechat_channels
+    founder_core_inputs:
+    - 真实对象
+    - 部件或结构
+    - 材料或工序
+    - 可观察依据
+    - 允许公开范围
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp08_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 拆解
+      - 微观—结构—使用结果
+      - 标准对照
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 冷静实证
+      - 微距
+      - 结构图
+      - 操作同步
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: object_structure_case
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP08_01
+    - AGR_CP08_02
+    founder_hard_guards:
+    - rule_id: AGR_CP08_01
+      text: 禁止触感推导全部性能
+    - rule_id: AGR_CP08_02
+      text: 禁止局部工艺为整件产品背书
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: ba934a09d5b76aa89f9762d8b30ac2c21d61ae35c066986f4399c1fbc5cf5199
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP09
+    canonical_slug: suitability_boundary_and_anti_selection
+    chinese_label: 适用边界与反选指南
+    family_id: F2_PROFESSIONAL_AND_SEARCH
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 搜索资产、收藏、专业信任
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - product_account
+    - sales_associate_account
+    - professional_account
+    target_platforms:
+    - xiaohongshu
+    founder_core_inputs:
+    - 真实产品或设计条件
+    - 适用任务
+    - 不适用条件
+    - 替代选择
+    - Claim边界
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: closing
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp09_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 条件—适用—不适用—替代
+      - 反向决策
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 坦白
+      - 克制
+      - 不制造焦虑
+      - 不羞辱身体
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: bounded_selection_case
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu
+    anti_pattern_rule_refs:
+    - AGR_CP09_01
+    - AGR_CP09_02
+    founder_hard_guards:
+    - rule_id: AGR_CP09_01
+      text: 禁止身体羞辱
+    - rule_id: AGR_CP09_02
+      text: 禁止绝对适配结论
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: fafcc63d34f22b82491d719086d284f38e9021c97ab903fd4f3d7fda94838af7
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP10
+    canonical_slug: evidence_and_long_term_validation_archive
+    chinese_label: 证据与长期验证档案
+    family_id: F2_PROFESSIONAL_AND_SEARCH
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 搜索资产、收藏、专业信任
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - brand_account
+    - professional_account
+    target_platforms:
+    - xiaohongshu
+    - official_account
+    - wechat_channels
+    founder_core_inputs:
+    - 测试或使用记录
+    - 条件
+    - 时间节点
+    - 结果
+    - 局限
+    - 允许公开证据
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp10_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - time_state_or_version_marker
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 假设—条件—记录—结果—局限
+      - 定期回访
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 工程日志
+      - 谨慎结论
+      - 时间标记
+      - 低营销浓度
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: evidence_time_series
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu,official_account,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP10_01
+    - AGR_CP10_02
+    founder_hard_guards:
+    - rule_id: AGR_CP10_01
+      text: 单次体验不得替代普遍规律
+    - rule_id: AGR_CP10_02
+      text: 无记录不得生成长期结论
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: b4b2d5f040045adcc597ddc04e002a1c89e97f2915f432e1a8a21b9e468ac849
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP11
+    canonical_slug: product_birth_and_design_tradeoff_archive
+    chinese_label: 产品诞生与设计取舍档案
+    family_id: F3_PRODUCT_RELATION_AND_AESTHETIC
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 产品记忆、审美区别、商业连接
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - brand_account
+    - designer_account
+    target_platforms:
+    - wechat_channels
+    - xiaohongshu
+    founder_core_inputs:
+    - 真实需求或企划
+    - 设计选项
+    - 最终选择
+    - 放弃方案
+    - 材料或成本约束
+    - 公开授权
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp11_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 问题—选项—选择—放弃—代价
+      - 档案展开
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 克制档案
+      - 设计随笔
+      - 过程材料
+      - 避免灵感神话
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: design_origin_archive
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::wechat_channels,xiaohongshu
+    anti_pattern_rule_refs:
+    - AGR_CP11_01
+    - AGR_CP11_02
+    founder_hard_guards:
+    - rule_id: AGR_CP11_01
+      text: 禁止编造灵感故事
+    - rule_id: AGR_CP11_02
+      text: 禁止隐藏关键取舍条件
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 1e5f661c0dfaf0f931859eecda0b2479b541c9e729c4dc065cf255c9c56a8211
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP12
+    canonical_slug: product_iteration_and_version_log
+    chinese_label: 产品迭代与版本日志
+    family_id: F3_PRODUCT_RELATION_AND_AESTHETIC
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 产品记忆、审美区别、商业连接
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - product_account
+    - brand_account
+    target_platforms:
+    - xiaohongshu
+    - official_account
+    founder_core_inputs:
+    - 产品或项目引用
+    - 真实版本号或阶段
+    - 变更点
+    - 触发原因
+    - 结果或待验证事项
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp12_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - time_state_or_version_marker
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 版本—变更—原因—待验证
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 工程日志
+      - 时间连续
+      - 理性透明
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: product_version_timeline
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu,official_account
+    anti_pattern_rule_refs:
+    - AGR_CP12_01
+    - AGR_CP12_02
+    founder_hard_guards:
+    - rule_id: AGR_CP12_01
+      text: 禁止不存在的版本历史
+    - rule_id: AGR_CP12_02
+      text: 禁止把待验证写成已证明
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: fdccd3251571b971b6efdf1074e76caefb4f1072c0eced29dd5e7c4773f97482
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP13
+    canonical_slug: product_life_and_wardrobe_role
+    chinese_label: 产品的生活与衣橱角色
+    family_id: F3_PRODUCT_RELATION_AND_AESTHETIC
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 产品记忆、审美区别、商业连接
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - product_account
+    - user_style_account
+    target_platforms:
+    - douyin
+    - xiaohongshu
+    - wechat_channels
+    founder_core_inputs:
+    - 真实产品或类型
+    - 生活任务
+    - 搭配关系
+    - 季节位置
+    - 使用条件
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: transition
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp13_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 一件产品多场景
+      - 衣橱关系
+      - 身体—空间—时间关系
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 生活观察
+      - 轻叙事
+      - 低销售压力
+      - 克制情感
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: product_life_role_case
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,xiaohongshu,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP13_01
+    - AGR_CP13_02
+    founder_hard_guards:
+    - rule_id: AGR_CP13_01
+      text: 禁止虚构具体生活经历
+    - rule_id: AGR_CP13_02
+      text: 场景演绎不得冒充已发生事实
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 9171350add5a7657fd8531242203ce4d6452473d25147bdedbc6304dad0fcee0
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP14
+    canonical_slug: materiality_visual_and_sensory_short
+    chinese_label: 物性影像与感官短片
+    family_id: F3_PRODUCT_RELATION_AND_AESTHETIC
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 产品记忆、审美区别、商业连接
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - brand_account
+    - product_account
+    target_platforms:
+    - douyin
+    - xiaohongshu
+    - wechat_channels
+    founder_core_inputs:
+    - 真实材料或产品
+    - 真实光线
+    - 真实动作
+    - 真实声音
+    - 可用拍摄素材
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp14_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 非语言叙事
+      - 细节组合
+      - 单一物性母题
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 微距
+      - 环境声
+      - 静默
+      - 慢节奏
+      - 少旁白
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: single_materiality_motif
+      runtime_thread_required: false
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,xiaohongshu,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP14_01
+    - AGR_CP14_02
+    - AGR_CP14_03
+    - AGR_CP14_04
+    - AGR_CP14_05
+    founder_hard_guards:
+    - rule_id: AGR_CP14_01
+      text: 禁止高级感空镜
+    - rule_id: AGR_CP14_02
+      text: 禁止过度调色
+    - rule_id: AGR_CP14_03
+      text: 禁止假慢镜
+    - rule_id: AGR_CP14_04
+      text: 禁止通用治愈音乐
+    - rule_id: AGR_CP14_05
+      text: spoken_line和CTA不得设为必需组件
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 2d2424337c378a37f1dbc6fe8f0bac6c783005701a0ac4d481f16fd59e58fa86
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP15
+    canonical_slug: product_arrival_lifecycle
+    chinese_label: 商品到店生命周期
+    family_id: F4_STORE_LOCAL_AND_RETAIL
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 同城、到店、加盟门店差异
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - store_account
+    - product_account
+    target_platforms:
+    - douyin
+    - wechat_channels
+    founder_core_inputs:
+    - 真实商品或批次
+    - 到货时间
+    - 真实岗位接力
+    - 验收、整烫、上架、补货或退场状态
+    - 允许公开范围
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: transition
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp15_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 商品旅程
+      - 时间轴
+      - 多岗位接力
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 运营纪实
+      - 信息清晰
+      - 低促销浓度
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: store_product_lifecycle
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP15_01
+    founder_hard_guards:
+    - rule_id: AGR_CP15_01
+      text: 禁止虚构库存、售罄或调拨事实
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 68d327d911571333aa486523aea4c8576134417361568bf9ab57ae5c37e6941c
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP16
+    canonical_slug: real_service_review
+    chinese_label: 真实服务复盘
+    family_id: F4_STORE_LOCAL_AND_RETAIL
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 同城、到店、加盟门店差异
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - store_account
+    - sales_associate_account
+    target_platforms:
+    - xiaohongshu
+    - wechat_channels
+    founder_core_inputs:
+    - 真实用户任务
+    - 需求识别
+    - 方案调整
+    - 结果或未完成状态
+    - 匿名化与授权
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp16_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - customer_task_truth
+      - service_feedback_or_unfinished_state
+      required_authorization_slots:
+      - publication_scope_authorization
+      - customer_privacy_consent
+      - anonymization_approval
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 需求—判断—方案—反馈
+      - 服务者复盘
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 平等
+      - 尊重
+      - 匿名化
+      - 避免导购英雄化
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: anonymized_service_case
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::xiaohongshu,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP16_01
+    - AGR_CP16_02
+    - AGR_CP16_03
+    founder_hard_guards:
+    - rule_id: AGR_CP16_01
+      text: 禁止假顾客
+    - rule_id: AGR_CP16_02
+      text: 禁止暴露隐私
+    - rule_id: AGR_CP16_03
+      text: 禁止导购英雄化
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: aa13d816ed977106dd22840144e668657385b25b27ad87148ae89d8df73a217d
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP17
+    canonical_slug: display_change_and_space_experiment
+    chinese_label: 陈列换陈与空间实验
+    family_id: F4_STORE_LOCAL_AND_RETAIL
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 同城、到店、加盟门店差异
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - store_account
+    - visual_merchandiser_account
+    target_platforms:
+    - douyin
+    - xiaohongshu
+    founder_core_inputs:
+    - 真实陈列区域
+    - 陈列目标
+    - 原状态
+    - 调整动作
+    - 视觉复核
+    - 用户行为观察边界
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp17_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 假设—调整—前后—复核
+      - 空间导览
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 整洁秩序
+      - 固定视点
+      - 动作实录
+      - 谨慎解释
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: display_before_after_review
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,xiaohongshu
+    anti_pattern_rule_refs:
+    - AGR_CP17_01
+    - AGR_CP17_02
+    founder_hard_guards:
+    - rule_id: AGR_CP17_01
+      text: 禁止假前后对照
+    - rule_id: AGR_CP17_02
+      text: 禁止把观察相关性写成因果
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 66069cee10299526042c49212535cd12f4e31a9c923eed38d604f63b184df276
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP18
+    canonical_slug: city_store_life_chronicle
+    chinese_label: 城市门店生活志
+    family_id: F4_STORE_LOCAL_AND_RETAIL
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 同城、到店、加盟门店差异
+    cadence_policy: standard_frequency
+    target_account_roles:
+    - local_store_account
+    target_platforms:
+    - douyin
+    - kuaishou
+    - wechat_channels
+    founder_core_inputs:
+    - 真实城市与门店
+    - 地方气候或节令
+    - 街区与职业人群
+    - 门店生活事件
+    - 地域语言或声景素材
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      - local_language_or_soundscape_materials
+      required_fact_slots:
+      - cp18_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - real_city_and_store
+      - local_climate_or_season
+      - neighborhood_or_professional_crowd
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 地方观察
+      - 季节编年
+      - 门店与社区关系
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 地域口语
+      - 生活纪录
+      - 街区声景
+      - 低营销
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: local_store_chronicle
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::douyin,kuaishou,wechat_channels
+    anti_pattern_rule_refs:
+    - AGR_CP18_01
+    - AGR_CP18_02
+    founder_hard_guards:
+    - rule_id: AGR_CP18_01
+      text: 禁止总部脚本加地理标签冒充本地生活
+    - rule_id: AGR_CP18_02
+      text: 禁止编造地方习惯和常客关系
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 7ffcc3b60c6c74f5313079108ae0f77830cb6a38639f8d62cad9e054020a6159
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP19
+    canonical_slug: business_tradeoff_and_decision_review
+    chinese_label: 经营取舍与决策复盘
+    family_id: F5_ENTERPRISE_LONG_TERM_TRUST
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 品牌信用、组织人格、长期背书
+    cadence_policy: low_frequency
+    target_account_roles:
+    - brand_account
+    - founder_account
+    target_platforms:
+    - wechat_channels
+    - official_account
+    founder_core_inputs:
+    - 真实经营背景
+    - 实际选项
+    - 最终选择
+    - 放弃事项
+    - 成本或代价
+    - 结果或未完成事项
+    - 企业发言授权
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: closing
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp19_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      required_authorization_slots:
+      - publication_scope_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 背景—选项—选择—放弃—代价—结果
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 创始人随笔
+      - 组织复盘
+      - 坦白但不自我感动
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: business_decision_review_thread
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::wechat_channels,official_account
+    anti_pattern_rule_refs:
+    - AGR_CP19_01
+    - AGR_CP19_02
+    founder_hard_guards:
+    - rule_id: AGR_CP19_01
+      text: 无真实放弃和代价不得成立
+    - rule_id: AGR_CP19_02
+      text: 禁止自我表彰和空喊长期主义
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 0ff959def84cc8e08f8f468b93b720e2749d5e9cf13e7b56f5e46683c85cc7bd
+  - schema_version: v0.2
+    profile_version: v0.2
+    content_product_type_id: CP20
+    canonical_slug: commitment_and_fulfillment_tracking
+    chinese_label: 承诺—兑现追踪
+    family_id: F5_ENTERPRISE_LONG_TERM_TRUST
+    lifecycle: PROFILE_DEFINED_PENDING_COMPONENT_SUPPLY
+    owner: GKB
+    runtime_plan_owner: ORCH
+    business_purpose: 品牌信用、组织人格、长期背书
+    cadence_policy: low_frequency
+    target_account_roles:
+    - brand_primary_account
+    target_platforms:
+    - wechat_channels
+    - official_account
+    - xiaohongshu
+    founder_core_inputs:
+    - 真实公开承诺
+    - 承诺主体
+    - 时间节点
+    - 执行证据
+    - 结果或偏差
+    - 修正动作
+    - 下一复核时间
+    - 企业公开授权
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles:
+    - role: opening
+      min_count: 0
+      max_count: 1
+    - role: closing
+      min_count: 0
+      max_count: 1
+    input_requirements:
+      required_source_slots:
+      - usable_source_materials
+      - product_or_scene_reference
+      required_fact_slots:
+      - cp20_core_input_signature
+      - real_event_or_object_truth
+      - claim_boundary
+      - public_commitment
+      - commitment_actor
+      - execution_evidence
+      - result_or_deviation
+      - next_review_time
+      - time_state_or_version_marker
+      required_authorization_slots:
+      - publication_scope_authorization
+      - enterprise_public_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    narrative_constraints:
+      allowed_narrative_operator_families:
+      - 承诺—节点—证据—结果—下一步
+      required_tension_source_types:
+      - real_task_condition
+      - observable_constraint
+      - authorized_time_state
+      fabricated_conflict_allowed: false
+    style_constraints:
+      preferred_style_vector_ranges:
+        marketing_density: low_to_medium
+        fact_specificity: high
+        emotional_intensity: low_to_moderate
+      founder_style_terms:
+      - 庄重
+      - 简洁
+      - 证据优先
+      - 禁止情绪包装
+      forbidden_style_patterns:
+      - one_size_fits_all_template
+      - 先看—再看—免责声明—CTA
+      - empty_brand_slogan
+    continuity_policy:
+      model: commitment_evidence_review_schedule
+      runtime_thread_required: true
+      continuity_state_owner: ORCH
+    visual_audio_requirement_refs:
+    - REAL_MATERIAL_OR_SCENE_SOURCE_REQUIRED
+    - NO_STOCK_BROLL_AS_EVENT_PROOF
+    platform_expression_requirement_refs:
+    - PLATFORM_SET::wechat_channels,official_account,xiaohongshu
+    anti_pattern_rule_refs:
+    - AGR_CP20_01
+    - AGR_CP20_02
+    - AGR_CP20_03
+    founder_hard_guards:
+    - rule_id: AGR_CP20_01
+      text: 无承诺或证据不得成立
+    - rule_id: AGR_CP20_02
+      text: 未做到必须允许如实记录
+    - rule_id: AGR_CP20_03
+      text: 禁止情绪替代证据
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: required_source_missing
+      missing_slot_classes:
+      - source
+      allowed_outputs:
+      - material_capture_plan
+      - slot_based_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_fact_missing
+      missing_slot_classes:
+      - fact
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: required_authorization_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs:
+    - QR_INPUT_SUFFICIENCY_V0_2
+    - QR_FOUNDER_PRODUCT_DEFINITION_FIDELITY_V0_2
+    - QR_NO_AUDIENCE_BODY_WITHOUT_REAL_INPUT_V0_2
+    fixture_refs:
+      positive: []
+      negative: []
+      fixture_coverage: missing_explicit
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    component_supply_state:
+      reviewed_reusable_component_count: 0
+      required_role_coverage: NOT_EVALUATED
+      ORCH_profile_eligible: false
+    profile_digest: 1ead83031b7483ed24d1c40e8252e57a5345f60614f80b6635d443103f82daed
+  registry_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b

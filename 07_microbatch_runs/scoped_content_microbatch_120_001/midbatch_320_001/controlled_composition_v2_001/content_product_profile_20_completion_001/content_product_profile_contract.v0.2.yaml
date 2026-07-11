@@ -1,0 +1,46 @@
+content_product_profile_contract_v0_2:
+  schema_version: v0.2
+  task_id: GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001
+  baseline_head: 538b464042656dec7df0e05acff554a8a4b4528f
+  purpose: canonical 20 content product profile registry contract
+  s1_immutability:
+    result_file_sha256: 61a97a8abe3e0b3187b1d547a83832eb645624684b637f8417920dba9f63d265
+    result_internal_digest: baf2616624ea0bb71ef87eb5f5467fd03a2738a7afeec621a3cde77a9681f711
+    contract_sha256: 7bf9315ebbb5bf97c3330695de7327af42ae30771b6315d2432c5c78d51d742c
+    profiles_v0_1_sha256: c4e744f3f0505025d780f46eb12b879f1b9920ede63e4c84ffbc3fac9a715a6c
+    source_selection_sha256: 36708420abc159f5a557f48c421ebf0b46a345384afdea9821c6ff0f0089f38c
+    candidates_sha256: 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+    bundles_sha256: 6d294274ea235962c33a8e7cd9f4d4be92d2e6ce5b48860286a1d13f08ce7970
+    pilot_handoff_sha256: 12a369dcf64641a16b73636e95ba1c710fc787efa663608f446f73634a2f6223
+  allocation_policy:
+    status: PLANNING_POLICY_NOT_EXECUTION_QUOTA
+    family_planning_shares:
+      F1_PEOPLE_AND_REAL_SCENE: 30
+      F2_PROFESSIONAL_AND_SEARCH: 25
+      F3_PRODUCT_RELATION_AND_AESTHETIC: 20
+      F4_STORE_LOCAL_AND_RETAIL: 15
+      F5_ENTERPRISE_LONG_TERM_TRUST: 10
+    sum_percent: 100
+    generation_authority: false
+    may_not_auto_allocate_600: true
+  profile_hard_rules:
+  - Profile is input sufficiency and output eligibility contract, not content body.
+  - No forbidden_event_truth_modes second source of truth.
+  - Unlisted event truth modes default-deny.
+  - Missing input behavior only lives in input_sufficiency_routes.
+  - Fixtures are evaluation-only and cannot enter generation prompts.
+  - Fixture gaps must be explicit and cannot be filled with fake fixtures.
+  - Planning share is not generation authorization.
+  - Profile cannot prove fact truth, content quality, or runtime readiness.
+  - No profile inheritance system, rule DSL, or graph database.
+  component_supply_default:
+    reviewed_reusable_component_count: 0
+    required_role_coverage: NOT_EVALUATED
+    ORCH_profile_eligible: false
+  forbidden_outputs_this_task:
+    audience_body: false
+    title: false
+    spoken_script: false
+    new_component: false
+    new_bundle: false
+    canonical_composition_plan: false
