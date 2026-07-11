@@ -1,0 +1,93 @@
+component_review_20cp_and_handoff_result:
+  schema_version: v0.2
+  task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-002
+  verdict: S2_V002_TRUE_SEMANTIC_REVIEW_EXECUTED_PENDING_CLAUDE_GUARDIAN
+  handoff_status: IMMUTABLE_CANDIDATE_SNAPSHOT_PENDING_GUARDIAN
+  authoritative_handoff_frozen: false
+  CI_REMOTE_execution_allowed: false
+  baseline_head_before: 84faff476c248d9277d8882f2c9e4aa402a96b22
+  counts:
+    reviewed_candidate_count: 89
+    reviewed_reusable_component_count: 55
+    promoted_as_new_count: 55
+    merged_candidate_count: 12
+    source_specific_reference_only_count: 0
+    needs_repair_count: 22
+    rejected_count: 0
+    component_contract_complete_profile_count: 6
+    component_contract_partial_profile_count: 14
+    component_contract_none_profile_count: 0
+    fixture_gap_count: 20
+    runtime_generation_eligible_profile_count: 0
+    canonical_composition_plan_count: 0
+    audience_facing_content_count: 0
+  decision_distribution:
+    MERGE_INTO_REUSABLE: 12
+    NEEDS_REPAIR: 22
+    PROMOTE_AS_NEW: 55
+  composition_asset_class_distribution:
+    role_perspective_voice: 13
+    scene_action_kernel: 38
+    visual_audio_grammar: 4
+  component_contract_eligible_profile_ids:
+  - CP01
+  - CP03
+  - CP12
+  - CP16
+  - CP17
+  - CP18
+  component_contract_ineligible_profile_ids:
+  - CP02
+  - CP04
+  - CP05
+  - CP06
+  - CP07
+  - CP08
+  - CP09
+  - CP10
+  - CP11
+  - CP13
+  - CP14
+  - CP15
+  - CP19
+  - CP20
+  max_verbatim_overlap_chars: 9
+  readiness_flags:
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    CandidatePack_ready: false
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+  generated_file_digests:
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/component_domain_review_policy.v0.2.yaml
+    : 080b8a4c7fe4489b9cba0cae86ca8e1f02202a49c6346de8317ea463a19e8bc2
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/component_domain_review_decisions.v0.2.jsonl
+    : d233b8e1c4e1b773ed23174f702fd3f6b0881481b0e9d0442feef33c91a46f65
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/reviewed_reusable_component_registry.v0.2.jsonl
+    : 6daf3f043ad22d021e0b7719da30a25d9bf13d8c969d41cf6fec793881f9d14b
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/content_product_component_coverage.v0.2.yaml
+    : 5f520a1b462b823f6719bd63b97886eb560a34ffde28825bf666af880aa12d22
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/gkb_orch_reviewed_component_handoff.v0.2.yaml
+    : a81322e034618a78164771b1d7389825623b042fb6d710e0c9c37146b77d61ca
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/run_component_review_20cp_v002_freezer.py
+    : 3c8e7ffdb002b9d1ceae7ea38a16e3733b1775da58ac0681420f560ec9f770cd
+    ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py: d8c1dca79cd0ad7fa0f5736ef4974b2d8e6c475e5b80b61bb59173047b750c95
+  handoff_digest: 7fb08cc3dcbd516590362749b2fd877c413eb10439fa5ff3d845ecb06b74167c
+  blocker_ids: []
+  not_proven:
+  - guardian_domain_review_pass
+  - handoff_authoritative_freeze
+  - all_20_profiles_component_complete
+  - fixture_gap_closed
+  - ORCH_integrated
+  - generation_600_or_3600_allowed
+  result_digest: c49fc0664231561f2ad2c5e6c2637fb12443e968525baaf7be7a415ecb35507c

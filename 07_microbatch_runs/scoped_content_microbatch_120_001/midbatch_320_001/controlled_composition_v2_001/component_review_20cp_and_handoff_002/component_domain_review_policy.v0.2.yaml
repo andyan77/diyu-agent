@@ -1,0 +1,65 @@
+component_domain_review_policy:
+  schema_version: v0.2
+  task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-002
+  supersedes_failed_task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-001
+  founder_decision: TRUE_CANDIDATE_BY_CANDIDATE_SEMANTIC_REVIEW
+  review_method:
+    domain_decisions_source: component_domain_review_decisions.v0.2.jsonl
+    domain_decisions_are_hand_authored_by_codex: true
+    deterministic_tools_may_only_validate_and_materialize: true
+    decision_engine_allowed: false
+    role_p0_order_grouping_allowed: false
+    forced_distribution_allowed: false
+  promotion_policy:
+    promotion_rate_target_allowed: false
+    ambiguous_default: NEEDS_REPAIR_OR_SOURCE_SPECIFIC_REFERENCE_ONLY
+    machine_pass_is_domain_pass: false
+    guardian_domain_review_required_before_authoritative_freeze: true
+  merge_policy:
+    merge_requires_same_role: true
+    merge_requires_same_composition_asset_class: true
+    merge_requires_same_actual_mechanism: true
+    merge_requires_same_required_input_slots: true
+    merge_requires_same_authority_and_claim_boundary: true
+    merge_by_candidate_order_allowed: false
+    merge_by_role_p0_bucket_allowed: false
+  degenerate_candidate_policy:
+    observable_action_meta_or_value_judgment_must_not_promote_as_action: true
+    visual_beat_bare_product_or_body_part_noun_must_not_promote: true
+    professional_judgment_without_scope_basis_or_claim_boundary_must_not_promote: true
+    tension_without_real_constraint_must_not_promote: true
+    spoken_line_copy_or_person_inference_must_not_promote: true
+  abstraction_requirements:
+    runtime_payload_must_be_mechanism_not_sentence: true
+    parent_surface_verbatim_allowed: false
+    source_sentence_template_allowed: false
+    hard_overlap_ceiling_chars: 17
+  forbidden_outputs:
+    audience_facing_body_count: 0
+    canonical_composition_plan_count: 0
+    assignment_count: 0
+    generation_record_count: 0
+    remote_or_push_side_effect_count: 0
+  handoff_policy:
+    handoff_version: v0.2
+    freeze_status: IMMUTABLE_CANDIDATE_SNAPSHOT_PENDING_GUARDIAN
+    authoritative_after_guardian_pass_only: true
+    runtime_ingest_ready: false
+    runtime_generation_eligible_profile_count: 0
+    handoff_is_composition_plan: false
+    v001_handoff_is_not_parent: true
+  readiness_flags_must_remain_false:
+    - runtime_ingest_ready
+    - generation_eligible
+    - generation_allowed
+    - generation_600_allowed
+    - expand_600_allowed
+    - expand_3600_allowed
+    - CandidatePack_ready
+    - candidatepack_ready
+    - KE_ready
+    - Serving_ready
+    - RAG_ready
+    - DIFY_ready
+    - production_ready
+    - release_ready

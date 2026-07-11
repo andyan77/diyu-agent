@@ -691,6 +691,117 @@ grc_3600_execution_plan_status:
     downstream_and_readiness:
       all_false: true
     migration_digest: cf21b3910030cc7e9d83ec60b545306755c26fa222fb73a59ee404eb37526db8
+  route_migration_22:
+    applied_by_task: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-002
+    applied_from: founder_authorized_after_guardian_domain_review_fail_of_v001_and_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    route_migration_21_guardian_verdict:
+      verdict: FAIL
+      handoff_freeze_status: NOT_FROZEN
+      accepted_reusable_component_count: 0
+      blocker_ids:
+        - B1_HARDCODED_REVIEW_VERDICTS
+        - B2_FORCED_ZERO_REJECT
+        - B3_ITERATION_ORDER_PROMOTE_MERGE
+        - B4_ILLEGITIMATE_MERGE_DIFFERENT_MEANINGS
+      v001_may_not_be_used_as_authoritative_handoff: true
+    S2_v002:
+      task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-002
+      status: S2_V002_TRUE_SEMANTIC_REVIEW_EXECUTED_PENDING_CLAUDE_GUARDIAN
+      handoff_status: IMMUTABLE_CANDIDATE_SNAPSHOT_PENDING_GUARDIAN
+      authoritative_handoff_frozen: false
+      reviewed_candidate_count: 89
+      reviewed_reusable_component_count: 55
+      promoted_as_new_count: 55
+      merged_candidate_count: 12
+      source_specific_reference_only_count: 0
+      needs_repair_count: 22
+      rejected_count: 0
+      composition_asset_class_distribution:
+        role_perspective_voice: 13
+        scene_action_kernel: 38
+        visual_audio_grammar: 4
+      component_contract_complete_profile_count: 6
+      component_contract_partial_profile_count: 14
+      component_contract_none_profile_count: 0
+      component_contract_eligible_profile_ids:
+        - CP01
+        - CP03
+        - CP12
+        - CP16
+        - CP17
+        - CP18
+      component_contract_ineligible_profile_ids:
+        - CP02
+        - CP04
+        - CP05
+        - CP06
+        - CP07
+        - CP08
+        - CP09
+        - CP10
+        - CP11
+        - CP13
+        - CP14
+        - CP15
+        - CP19
+        - CP20
+      fixture_gap_count: 20
+      runtime_generation_eligible_profile_count: 0
+      canonical_composition_plan_count: 0
+      audience_facing_content_count: 0
+      max_verbatim_overlap_chars: 9
+      review_decisions_sha256: d233b8e1c4e1b773ed23174f702fd3f6b0881481b0e9d0442feef33c91a46f65
+      reviewed_registry_sha256: 6daf3f043ad22d021e0b7719da30a25d9bf13d8c969d41cf6fec793881f9d14b
+      coverage_sha256: 5f520a1b462b823f6719bd63b97886eb560a34ffde28825bf666af880aa12d22
+      handoff_sha256: a81322e034618a78164771b1d7389825623b042fb6d710e0c9c37146b77d61ca
+      result_sha256: f67f1ae76399fbad369f85636a014618bde406bcad568f52823e22df83dbd0b7
+      result_digest: c49fc0664231561f2ad2c5e6c2637fb12443e968525baaf7be7a415ecb35507c
+    generated_artifacts:
+      directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002
+      policy_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/component_domain_review_policy.v0.2.yaml
+      decisions_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/component_domain_review_decisions.v0.2.jsonl
+      registry_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/reviewed_reusable_component_registry.v0.2.jsonl
+      coverage_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/content_product_component_coverage.v0.2.yaml
+      handoff_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/gkb_orch_reviewed_component_handoff.v0.2.yaml
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/component_review_20cp_and_handoff_result.v0.2.yaml
+      freezer_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/run_component_review_20cp_v002_freezer.py
+      checker_path: ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py
+    CI_REMOTE:
+      prompt_version: v2
+      execution_allowed: false
+      expected_head: TO_BE_REFRESHED_AFTER_GUARDIAN_PASS
+      may_use_84faff4_as_baseline: false
+      next_task_after_guardian_pass: CI_REMOTE_001
+    must_remain_false:
+      - runtime_ingest_ready
+      - generation_eligible
+      - generation_allowed
+      - generation_600_allowed
+      - expand_600_allowed
+      - expand_3600_allowed
+      - CandidatePack_ready
+      - candidatepack_ready
+      - KE_ready
+      - Serving_ready
+      - RAG_ready
+      - DIFY_ready
+      - production_ready
+      - release_ready
+    downstream_and_readiness:
+      all_false: true
+    recommended_next_route:
+      if_guardian_passes:
+        task_id: CI_REMOTE_001
+        action: refresh_expected_head_to_v002_commit_then_execute_ci_remote_v2
+      if_guardian_fails:
+        task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-REPAIR-003
+        action: repair_guardian_findings_before_any_ci_remote_execution
+    migration_digest: 52de7433b8ed9dd4cb14aa2c7821bbd7446ee7dcad1b46b79a007caa3f6100f3
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

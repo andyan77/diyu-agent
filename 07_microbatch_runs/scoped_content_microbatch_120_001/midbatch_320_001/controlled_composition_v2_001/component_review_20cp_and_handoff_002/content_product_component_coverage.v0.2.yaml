@@ -1,0 +1,2596 @@
+content_product_component_coverage:
+  schema_version: v0.2
+  task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-002
+  coverage_records:
+  - content_product_type_id: CP01
+    required_component_roles:
+    - scene
+    - observable_action
+    - professional_judgment
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - professional_judgment
+    - scene
+    missing_required_roles: []
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      component_digest: e63f75153d75cc08992346d353f2fd67986dd96eca5f47620627e8ecd633916d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-15-TABLE-REARRANGE
+      component_digest: 3d0183222d87902bb91213ef0199e10ad54375f91e7b98df1d4aba76913a795d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      component_digest: adeb0365fe6e4ddf1acb56acd0f8316e8eec5043a63ac43734bc245b6e49a8fd
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      component_digest: 3bd1346231d30225bfc12ee6a067e08ee5ce4d3ee3faa3d109763849ef2de977
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      component_digest: 6f95b794e6a61989d452b3dfe03887b34ff667a5df20916ce6afe4df00e54fae
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      component_digest: 2ff075e995080150078b3dfdd51c64f33ea28d494302880ee47b75f75ad9ab7e
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      component_digest: c1c29dcf3b5a593e23641adcfea557c16b47b77944d78feadc66a55275d51e28
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      component_digest: b6131a987d27c869942f634bcd8b6bf440725db795870211cda5845d7f4b6728
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: COMPLETE
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: true
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP02
+    required_component_roles:
+    - scene
+    - visual_beat
+    - observable_action
+    - capture_instruction
+    covered_required_roles:
+    - observable_action
+    - scene
+    - visual_beat
+    missing_required_roles:
+    - capture_instruction
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      component_digest: cbd611366dad9e41b2d6749d00e6680f587a2be98d123b865c298876e5587f0b
+      source_component_role: visual_beat
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP03
+    required_component_roles:
+    - scene
+    - observable_action
+    - trigger
+    - visual_beat
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - scene
+    - trigger
+    - visual_beat
+    missing_required_roles: []
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      component_digest: a4836f06dc3842845c4801a82cd943ab23ee2779a1b55f1dcc7c1e1981f83e08
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      component_digest: 2a80f510adf30b5f86f40ccb1aad3b12dabb95c599865db3bb400719f7bb1943
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      component_digest: 54c7fa7b905ab978fa4dbdf2b49376a09187aeab3ac18d696bb1997f34389ace
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      component_digest: cbd611366dad9e41b2d6749d00e6680f587a2be98d123b865c298876e5587f0b
+      source_component_role: visual_beat
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: COMPLETE
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: true
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP04
+    required_component_roles:
+    - scene
+    - observable_action
+    - transition
+    - professional_judgment
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - professional_judgment
+    - scene
+    missing_required_roles:
+    - transition
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      component_digest: e63f75153d75cc08992346d353f2fd67986dd96eca5f47620627e8ecd633916d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      component_digest: adeb0365fe6e4ddf1acb56acd0f8316e8eec5043a63ac43734bc245b6e49a8fd
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      component_digest: 3bd1346231d30225bfc12ee6a067e08ee5ce4d3ee3faa3d109763849ef2de977
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      component_digest: 6f95b794e6a61989d452b3dfe03887b34ff667a5df20916ce6afe4df00e54fae
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP05
+    required_component_roles:
+    - scene
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - professional_judgment
+    - scene
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      component_digest: adeb0365fe6e4ddf1acb56acd0f8316e8eec5043a63ac43734bc245b6e49a8fd
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      component_digest: 3bd1346231d30225bfc12ee6a067e08ee5ce4d3ee3faa3d109763849ef2de977
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      component_digest: 6f95b794e6a61989d452b3dfe03887b34ff667a5df20916ce6afe4df00e54fae
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      component_digest: 3de7d2f5b53909aece434b2569ae693241f84c2801d62367ecfe13ea0be9990a
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      component_digest: be51e6852cb09800607a42fbc053e7c6f4d29f84d66680a09de5bbe9c98d5c49
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      component_digest: a0478a022df1d36a584f802338b4e68759774decb50498fca23c07f2e6cb6687
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP06
+    required_component_roles:
+    - scene
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - visual_beat
+    covered_required_roles:
+    - professional_judgment
+    - scene
+    - visual_beat
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      component_digest: cbd611366dad9e41b2d6749d00e6680f587a2be98d123b865c298876e5587f0b
+      source_component_role: visual_beat
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP07
+    required_component_roles:
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - closing
+    covered_required_roles:
+    - professional_judgment
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    - closing
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      component_digest: a4836f06dc3842845c4801a82cd943ab23ee2779a1b55f1dcc7c1e1981f83e08
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      component_digest: 2a80f510adf30b5f86f40ccb1aad3b12dabb95c599865db3bb400719f7bb1943
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      component_digest: 54c7fa7b905ab978fa4dbdf2b49376a09187aeab3ac18d696bb1997f34389ace
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP08
+    required_component_roles:
+    - scene
+    - visual_beat
+    - professional_judgment
+    - audience_facing_reasoning_move
+    covered_required_roles:
+    - professional_judgment
+    - scene
+    missing_required_roles:
+    - visual_beat
+    - audience_facing_reasoning_move
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      component_digest: 2ff075e995080150078b3dfdd51c64f33ea28d494302880ee47b75f75ad9ab7e
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      component_digest: c1c29dcf3b5a593e23641adcfea557c16b47b77944d78feadc66a55275d51e28
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      component_digest: b6131a987d27c869942f634bcd8b6bf440725db795870211cda5845d7f4b6728
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP09
+    required_component_roles:
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - closing
+    covered_required_roles:
+    - professional_judgment
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    - closing
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP10
+    required_component_roles:
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - professional_judgment
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      component_digest: 3de7d2f5b53909aece434b2569ae693241f84c2801d62367ecfe13ea0be9990a
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      component_digest: be51e6852cb09800607a42fbc053e7c6f4d29f84d66680a09de5bbe9c98d5c49
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      component_digest: a0478a022df1d36a584f802338b4e68759774decb50498fca23c07f2e6cb6687
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP11
+    required_component_roles:
+    - scene
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - professional_judgment
+    - scene
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      component_digest: adeb0365fe6e4ddf1acb56acd0f8316e8eec5043a63ac43734bc245b6e49a8fd
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      component_digest: 3bd1346231d30225bfc12ee6a067e08ee5ce4d3ee3faa3d109763849ef2de977
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      component_digest: 6f95b794e6a61989d452b3dfe03887b34ff667a5df20916ce6afe4df00e54fae
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      component_digest: 2ff075e995080150078b3dfdd51c64f33ea28d494302880ee47b75f75ad9ab7e
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      component_digest: c1c29dcf3b5a593e23641adcfea557c16b47b77944d78feadc66a55275d51e28
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      component_digest: b6131a987d27c869942f634bcd8b6bf440725db795870211cda5845d7f4b6728
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      component_digest: 3de7d2f5b53909aece434b2569ae693241f84c2801d62367ecfe13ea0be9990a
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      component_digest: be51e6852cb09800607a42fbc053e7c6f4d29f84d66680a09de5bbe9c98d5c49
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      component_digest: a0478a022df1d36a584f802338b4e68759774decb50498fca23c07f2e6cb6687
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP12
+    required_component_roles:
+    - trigger
+    - observable_action
+    - professional_judgment
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - professional_judgment
+    - trigger
+    missing_required_roles: []
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-15-TABLE-REARRANGE
+      component_digest: 3d0183222d87902bb91213ef0199e10ad54375f91e7b98df1d4aba76913a795d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: COMPLETE
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: true
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP13
+    required_component_roles:
+    - scene
+    - visual_beat
+    - audience_facing_reasoning_move
+    - transition
+    covered_required_roles:
+    - scene
+    - visual_beat
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    - transition
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      component_digest: 2ff075e995080150078b3dfdd51c64f33ea28d494302880ee47b75f75ad9ab7e
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      component_digest: c1c29dcf3b5a593e23641adcfea557c16b47b77944d78feadc66a55275d51e28
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      component_digest: b6131a987d27c869942f634bcd8b6bf440725db795870211cda5845d7f4b6728
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      component_digest: cbd611366dad9e41b2d6749d00e6680f587a2be98d123b865c298876e5587f0b
+      source_component_role: visual_beat
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP14
+    required_component_roles:
+    - scene
+    - visual_beat
+    - observable_action
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - scene
+    missing_required_roles:
+    - visual_beat
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-15-TABLE-REARRANGE
+      component_digest: 3d0183222d87902bb91213ef0199e10ad54375f91e7b98df1d4aba76913a795d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      component_digest: 2ff075e995080150078b3dfdd51c64f33ea28d494302880ee47b75f75ad9ab7e
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      component_digest: c1c29dcf3b5a593e23641adcfea557c16b47b77944d78feadc66a55275d51e28
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      component_digest: b6131a987d27c869942f634bcd8b6bf440725db795870211cda5845d7f4b6728
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP15
+    required_component_roles:
+    - scene
+    - observable_action
+    - transition
+    - capture_instruction
+    covered_required_roles:
+    - observable_action
+    - scene
+    missing_required_roles:
+    - transition
+    - capture_instruction
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-15-TABLE-REARRANGE
+      component_digest: 3d0183222d87902bb91213ef0199e10ad54375f91e7b98df1d4aba76913a795d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      component_digest: 2ff075e995080150078b3dfdd51c64f33ea28d494302880ee47b75f75ad9ab7e
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      component_digest: c1c29dcf3b5a593e23641adcfea557c16b47b77944d78feadc66a55275d51e28
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      component_digest: b6131a987d27c869942f634bcd8b6bf440725db795870211cda5845d7f4b6728
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP16
+    required_component_roles:
+    - trigger
+    - observable_action
+    - professional_judgment
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - professional_judgment
+    - trigger
+    missing_required_roles: []
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-15-TABLE-REARRANGE
+      component_digest: 3d0183222d87902bb91213ef0199e10ad54375f91e7b98df1d4aba76913a795d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      component_digest: a4836f06dc3842845c4801a82cd943ab23ee2779a1b55f1dcc7c1e1981f83e08
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      component_digest: 2a80f510adf30b5f86f40ccb1aad3b12dabb95c599865db3bb400719f7bb1943
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      component_digest: 54c7fa7b905ab978fa4dbdf2b49376a09187aeab3ac18d696bb1997f34389ace
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: COMPLETE
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: true
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP17
+    required_component_roles:
+    - scene
+    - trigger
+    - observable_action
+    - visual_beat
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - scene
+    - trigger
+    - visual_beat
+    missing_required_roles: []
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      component_digest: 79026055638bd6ace0ffd5187962082408eae8b0a02efa59344015944f96bf29
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      component_digest: 55eebe6f0399f5352c187d85455babbeaa7d04f0da0eef1031b1df4a6d15f118
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      component_digest: 2c62e80f199638f0d454f6fa1dc6fe1ea5dd65d5c69692e7b6c326426a1c73f3
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      component_digest: 149937d992fa13b4f4994610fccc4631324d22d908b634cebdd0199198719d60
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      component_digest: e17fbccd26bea1b38ef5456ec120c7e46802d30218775c60711e97cf0f315410
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      component_digest: a4836f06dc3842845c4801a82cd943ab23ee2779a1b55f1dcc7c1e1981f83e08
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      component_digest: 2a80f510adf30b5f86f40ccb1aad3b12dabb95c599865db3bb400719f7bb1943
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      component_digest: 54c7fa7b905ab978fa4dbdf2b49376a09187aeab3ac18d696bb1997f34389ace
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      component_digest: cbd611366dad9e41b2d6749d00e6680f587a2be98d123b865c298876e5587f0b
+      source_component_role: visual_beat
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: COMPLETE
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: true
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP18
+    required_component_roles:
+    - scene
+    - visual_beat
+    - observable_action
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - observable_action
+    - scene
+    - visual_beat
+    missing_required_roles: []
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      component_digest: e63f75153d75cc08992346d353f2fd67986dd96eca5f47620627e8ecd633916d
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      component_digest: 9b9db8a80c34e27b25aa152c830da1423e43b2eea8eb4c0b2f543fff26dcab78
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-05-DRAFT-CLEANUP
+      component_digest: 1837303c8bd88bfc4212b382af476d003e0a7316d7dcff73928a7d2ca957b4be
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      component_digest: b61d1a3e3c411ac0230b93b29240920ae2a25768d073c6ee449c67d9adc7ddfd
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      component_digest: 59778ed498cae4526078ca4d04013f48c993635f0b8a5b6ce1e9eb6ad221aa39
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      component_digest: c883bb3c7ba692f9c30e231590402b9784ddfa3ecd767d326a21d85d5804d714
+      source_component_role: observable_action
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      component_digest: adeb0365fe6e4ddf1acb56acd0f8316e8eec5043a63ac43734bc245b6e49a8fd
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      component_digest: 3bd1346231d30225bfc12ee6a067e08ee5ce4d3ee3faa3d109763849ef2de977
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      component_digest: 6f95b794e6a61989d452b3dfe03887b34ff667a5df20916ce6afe4df00e54fae
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      component_digest: 9d64ebad4d73ce59bf8687e0142b6f96dac9f378543987702f466aa871b05219
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      component_digest: ce0e80f8b22de1df8d2df2de061620de0d2da29e6f6758f4a0a729ce0f5c9482
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      component_digest: 7021d9648d6cb4e673f8a684a90c895398367246209c5c2e4039e21aa12215ec
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      component_digest: 07ad3a1f780ff8a7601d2e117a63b0c111d3443c72fcadd8c7370c7f3d4769b6
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      component_digest: 705d49dbbc10ee9ecd1b01abc2c37145db2d2e25fadb9085b0b6003054bfcca4
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      component_digest: bbf44c30ee80f6895776037bed2fddf3aae5148c887cb46486bd56e16c7afc9f
+      source_component_role: scene
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      component_digest: cbd611366dad9e41b2d6749d00e6680f587a2be98d123b865c298876e5587f0b
+      source_component_role: visual_beat
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_04
+    component_contract_coverage:
+      status: COMPLETE
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: true
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP19
+    required_component_roles:
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - closing
+    covered_required_roles:
+    - professional_judgment
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    - closing
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      component_digest: 81c82edadc143bf2a6c5659d85218fe20638de010023695290bf214f1f2e0123
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      component_digest: 8c593d02abcd7fcdc5d48b2eff6f7de9e10c3faaa73d12cf8d53f393d60ab1d3
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      component_digest: 5c397e5a795d77f8bc33ebc98a39b9c88d94b1ee51f349d9cfea773a3e040420
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_02
+    - component_id: RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      component_digest: b58e757588f2f3dd34ba7d1c3ad7a9a5fae7ae97cf268fa7b377e3539c40934e
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      component_digest: f04bb47e8f8636ed6dfbd8eb176773ced492e1ed5981ff6e3ecbbf83dcc53ae1
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      component_digest: 6ab68c8e9ce29ca717cf3b0f0ebcb33fa4874f721346ea7f3bfd77d672f19e82
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_03
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      component_digest: 3de7d2f5b53909aece434b2569ae693241f84c2801d62367ecfe13ea0be9990a
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      component_digest: be51e6852cb09800607a42fbc053e7c6f4d29f84d66680a09de5bbe9c98d5c49
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      component_digest: a0478a022df1d36a584f802338b4e68759774decb50498fca23c07f2e6cb6687
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      component_digest: ce124698ff6785e7fa04bf0e9b66136f903535ae5c687abbda65787d92805ab4
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      component_digest: 190df019589f39da6c1b539d5312ae8f3fb3af70a66672112aa1166524025235
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-06-DISPLAY-RESET
+      component_digest: 263733f2f65ab90ee68017608e8dbe8c21b6b2ed38eba12fd6e192fcab584812
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_02
+    - component_id: RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      component_digest: fa64e21aa7b60f7a700c26eb44b583529fd2e634d7d718015a3d4ddca63c4d78
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      component_digest: b28e0a6ee0bd95d2b0e6c9f50120ac14ad438d2bbad184fe2243100e7ba92e02
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      component_digest: 37af5d7cc968a9a9a41e108ebab08ae01f74ca1f2265fc51c7ebd190a4c505a9
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_03
+    - component_id: RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      component_digest: a4836f06dc3842845c4801a82cd943ab23ee2779a1b55f1dcc7c1e1981f83e08
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      component_digest: 2a80f510adf30b5f86f40ccb1aad3b12dabb95c599865db3bb400719f7bb1943
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      component_digest: 54c7fa7b905ab978fa4dbdf2b49376a09187aeab3ac18d696bb1997f34389ace
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  - content_product_type_id: CP20
+    required_component_roles:
+    - trigger
+    - professional_judgment
+    - audience_facing_reasoning_move
+    - capture_instruction
+    covered_required_roles:
+    - capture_instruction
+    - professional_judgment
+    - trigger
+    missing_required_roles:
+    - audience_facing_reasoning_move
+    reviewed_reusable_component_refs:
+    - component_id: RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      component_digest: 00095b8e1664667a58019bec4f1927a97174f1d4a3cd81396d754037e7b6646b
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+      component_digest: 23ac12456aeffca6b8ea94f977688e8032f5468f2dd4802c8f22f0bf626e4ac6
+      source_component_role: capture_instruction
+      composition_asset_class: visual_audio_grammar
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      component_digest: 791080c831197222f5a5a9ee2ebaf617a5667b12775fa921a9363070c4f3a7ee
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      component_digest: ccf51a310b38583a0c737d82eb21b51b0f8e6459abb834c0316b283b3877e2be
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_01
+    - component_id: RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      component_digest: 50e8d90c6e59acc068fd8a0b768f4cd3c392d7364044f0ac129bc6616c727f99
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      component_digest: 058b64fcac409b87496a139b25f134db017a35963e9a4a9d93141bc085ffdd30
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      component_digest: 9ec2cf741b51ff6f41ff508d97053d5b09f2564456cf19fd083bbd8755fa6634
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_04
+    - component_id: RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      component_digest: de714f1801b7f1faaff140f136bb0083934786ed40dd056224dc79db4d7517de
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      component_digest: 5bddfb110ad6291b76d1922d43d659eda90f2dce7f5e09aca87009c6a779f269
+      source_component_role: professional_judgment
+      composition_asset_class: role_perspective_voice
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      component_digest: 3de7d2f5b53909aece434b2569ae693241f84c2801d62367ecfe13ea0be9990a
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      component_digest: be51e6852cb09800607a42fbc053e7c6f4d29f84d66680a09de5bbe9c98d5c49
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      component_digest: a0478a022df1d36a584f802338b4e68759774decb50498fca23c07f2e6cb6687
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_01
+    - component_id: RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      component_digest: a4836f06dc3842845c4801a82cd943ab23ee2779a1b55f1dcc7c1e1981f83e08
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      component_digest: 2a80f510adf30b5f86f40ccb1aad3b12dabb95c599865db3bb400719f7bb1943
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      component_digest: 54c7fa7b905ab978fa4dbdf2b49376a09187aeab3ac18d696bb1997f34389ace
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_04
+    - component_id: RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      component_digest: 1afba00fcbe6cc8a3fdb823fc1811d53e69b41728601fafd539d475d7efd4366
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      component_digest: dc5b314ede5fc1293c7610a4354a2a9ffc56c5962b9c338bce1bbbf67b51e40e
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    - component_id: RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      component_digest: d9bb808f736c6d2584cdf1f00beccd684965c3def2ba868bf67cdba916c55c44
+      source_component_role: trigger
+      composition_asset_class: scene_action_kernel
+      source_P0_group: P0_05
+    component_contract_coverage:
+      status: PARTIAL
+    fixture_calibration_coverage:
+      status: MISSING_EXPLICIT
+    ORCH_contract_design_eligibility:
+      true_only_when_required_component_roles_complete: false
+      authoritative_after_guardian_pass_only: true
+    runtime_content_generation_eligibility: false
+  component_supply_gaps:
+  - composition_asset_class: style_vector
+    status: NO_SUFFICIENT_89_CANDIDATE_EVIDENCE
+    may_auto_create_from_profile_description: false
+  - composition_asset_class: platform_expression
+    status: NO_SUFFICIENT_89_CANDIDATE_EVIDENCE
+    may_auto_create_from_profile_description: false
+  - composition_asset_class: continuity_pattern
+    status: NO_SUFFICIENT_89_CANDIDATE_EVIDENCE
+    may_auto_create_from_profile_description: false
+  - composition_asset_class: anti_pattern_control
+    status: NO_SUFFICIENT_89_CANDIDATE_EVIDENCE
+    may_auto_create_from_profile_description: false
+  summary:
+    complete_count: 6
+    partial_count: 14
+    none_count: 0
+    eligible_profile_ids:
+    - CP01
+    - CP03
+    - CP12
+    - CP16
+    - CP17
+    - CP18
+    ineligible_profile_ids:
+    - CP02
+    - CP04
+    - CP05
+    - CP06
+    - CP07
+    - CP08
+    - CP09
+    - CP10
+    - CP11
+    - CP13
+    - CP14
+    - CP15
+    - CP19
+    - CP20
+    fixture_gap_count: 20
+    runtime_generation_eligible_profile_count: 0
+  coverage_digest: 61836fe8c846c106f69de75074f6bd11379ec5d888fc840bbfbe29f596fc3afd

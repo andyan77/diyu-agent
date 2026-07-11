@@ -1,0 +1,78 @@
+gkb_orch_reviewed_component_handoff:
+  handoff_kind: GKB_REVIEWED_COMPONENT_HANDOFF_SNAPSHOT
+  handoff_version: v0.2
+  freeze_status: IMMUTABLE_CANDIDATE_SNAPSHOT_PENDING_GUARDIAN
+  authoritative_after_guardian_pass_only: true
+  producer: GKB
+  intended_consumer: ORCH
+  supersedes_failed_v001_as_authoritative_source: false
+  v001_handoff_parent: null
+  pinned_inputs:
+    baseline_head_before: 84faff476c248d9277d8882f2c9e4aa402a96b22
+    clean_120_sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    source_candidates_sha256: 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+    profiles_v0_2_sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+    review_decisions_sha256: d233b8e1c4e1b773ed23174f702fd3f6b0881481b0e9d0442feef33c91a46f65
+    reviewed_registry_sha256: 6daf3f043ad22d021e0b7719da30a25d9bf13d8c969d41cf6fec793881f9d14b
+    coverage_digest: 61836fe8c846c106f69de75074f6bd11379ec5d888fc840bbfbe29f596fc3afd
+  component_contract_eligible_profile_ids:
+  - CP01
+  - CP03
+  - CP12
+  - CP16
+  - CP17
+  - CP18
+  component_contract_ineligible_profile_ids:
+  - CP02
+  - CP04
+  - CP05
+  - CP06
+  - CP07
+  - CP08
+  - CP09
+  - CP10
+  - CP11
+  - CP13
+  - CP14
+  - CP15
+  - CP19
+  - CP20
+  runtime_excluded:
+  - Clean_120_body_text
+  - candidate_exact_payload
+  - derivation_spans
+  - domain_review_notes
+  - positive_fixture_body
+  - negative_fixture_body
+  - nine_GKB_pilot_bundles
+  ownership:
+    GKB_owns_profiles_and_component_versions: true
+    GKB_may_create_canonical_CompositionPlan: false
+    ORCH_owns_runtime_component_selection: true
+    ORCH_owns_runtime_continuity_thread: true
+    ORCH_owns_canonical_CompositionPlan: true
+    DIFY_direct_GKB_consumption_allowed: false
+  state:
+    handoff_integrity_frozen: false
+    runtime_ingest_ready: false
+    ORCH_integration_complete: false
+    canonical_composition_plan_count: 0
+    generation_invocation_count: 0
+    audience_facing_content_count: 0
+  reviewed_reusable_component_count: 55
+  readiness_flags:
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    CandidatePack_ready: false
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+  handoff_digest: 7fb08cc3dcbd516590362749b2fd877c413eb10439fa5ff3d845ecb06b74167c
