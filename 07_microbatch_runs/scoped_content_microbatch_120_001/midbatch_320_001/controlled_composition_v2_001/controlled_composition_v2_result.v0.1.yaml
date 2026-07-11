@@ -1,0 +1,72 @@
+controlled_composition_v2_result:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+  verdict: CONTROLLED_COMPOSITION_V2_MINIMUM_COMPOSABILITY_PROOF_PASS
+  status: EXECUTED_PENDING_GUARDIAN
+  implementation_kind: codex_native_controlled_composition_pilot_harness
+  baseline_head_before: 30a972a32749f4bb1048546ceedd39c652c7162a
+  immutable_input_digests:
+    clean_120: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    scale_600_contract: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+  counts:
+    profile_count: 3
+    selected_source_count: 15
+    component_candidate_count: 89
+    candidate_bundle_count: 9
+    reviewed_reusable_component_count: 0
+    canonical_composition_plan_count: 0
+    audience_facing_body_count: 0
+    title_count: 0
+    spoken_draft_count: 0
+  generation_authorization:
+    audience_facing_content_generation_allowed: false
+    generation_600_allowed: false
+    generation_3600_allowed: false
+    external_LLM_or_API_called: false
+    secret_accessed: false
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    Serving_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+  proof_scope:
+    proves_profile_input_sufficiency_routing: true
+    proves_component_multi_product_applicability_runs: true
+    proves_bundle_single_primary_product: true
+    proves_missing_brand_facts_degrade_to_collection_outputs: true
+    proves_GKB_ORCH_single_writer_boundary: true
+    proves_15_read_only_extractions_and_9_bundles_auditable: true
+  not_proven:
+  - real_content_quality_improved
+  - multi_account_differentiation_established
+  - continuity_memory_runtime_ready
+  - ORCH_integrated
+  - generation_600_or_3600_allowed
+  - KE_RAG_DIFY_or_production_ready
+  generated_file_digests:
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/controlled_composition_v2_contract.v0.1.yaml
+    : 7bf9315ebbb5bf97c3330695de7327af42ae30771b6315d2432c5c78d51d742c
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profiles.v0.1.yaml
+    : c4e744f3f0505025d780f46eb12b879f1b9920ede63e4c84ffbc3fac9a715a6c
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/pilot_source_selection.v0.1.yaml
+    : 36708420abc159f5a557f48c421ebf0b46a345384afdea9821c6ff0f0089f38c
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_candidate_manifest.v0.1.jsonl
+    : 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/gkb_composition_candidate_bundles.v0.1.jsonl
+    : 6d294274ea235962c33a8e7cd9f4d4be92d2e6ce5b48860286a1d13f08ce7970
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/gkb_orch_pilot_handoff.v0.1.yaml
+    : 12a369dcf64641a16b73636e95ba1c710fc787efa663608f446f73634a2f6223
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/run_controlled_composition_v2_pilot.py
+    : 08aaa92b32c99439d92d0b51d02b0a235023f9d47e9906966e3a347ea342549a
+    ci/checkers/check_gkb_controlled_composition_v2.py: 0b04fb756660598ba2b1272c4758c3a520f0fa671e9b092a4cc83a4714639966
+  blocking_items: []
+  recommended_next_task:
+    task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-AND-HANDOFF-FREEZE-001
+    separate_founder_authorization_required: true
+  result_digest: baf2616624ea0bb71ef87eb5f5467fd03a2738a7afeec621a3cde77a9681f711

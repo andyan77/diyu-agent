@@ -1,0 +1,136 @@
+gkb_orch_pilot_handoff:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+  handoff_kind: PILOT_CONTRACT_PROOF
+  profile_snapshot_refs:
+  - id: CP_ROLE_WORK_VLOG
+    version: v0.1
+    digest: ae28338d39b7128a14859db08bfb0eb5358b961b1a46845d5e6c8075ebd5af0e
+  - id: CP_STORE_MICRO_DOCUMENTARY
+    version: v0.1
+    digest: a01ddba0005bb235d94a9b3344bf4b04179a14c92d9d6d02d4e29a5ab3c748fa
+  - id: CP_PRODUCT_ITERATION_ARCHIVE
+    version: v0.1
+    digest: 7337309af0833c923199837256062e5fedfdb8c54784c74ae26bb21cabda4420
+  candidate_component_snapshot_refs:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_candidate_manifest.v0.1.jsonl
+    component_count: 89
+    candidate_component_manifest_sha256: 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+    component_ids:
+    - CCV2-CAND-01-SCENE
+    - CCV2-CAND-01-TRIGGER
+    - CCV2-CAND-01-ACTION
+    - CCV2-CAND-01-JUDGE
+    - CCV2-CAND-01-VISUAL
+    - CCV2-CAND-01-CAPTURE
+    - CCV2-CAND-02-SCENE
+    - CCV2-CAND-02-TRIGGER
+    - CCV2-CAND-02-ACTION
+    - CCV2-CAND-02-JUDGE
+    - CCV2-CAND-02-VISUAL
+    - CCV2-CAND-02-CAPTURE
+    - CCV2-CAND-03-SCENE
+    - CCV2-CAND-03-TRIGGER
+    - CCV2-CAND-03-ACTION
+    - CCV2-CAND-03-JUDGE
+    - CCV2-CAND-03-VISUAL
+    - CCV2-CAND-03-CAPTURE
+    - CCV2-CAND-04-SCENE
+    - CCV2-CAND-04-TRIGGER
+    - CCV2-CAND-04-ACTION
+    - CCV2-CAND-04-JUDGE
+    - CCV2-CAND-04-VISUAL
+    - CCV2-CAND-04-CAPTURE
+    - CCV2-CAND-05-SCENE
+    - CCV2-CAND-05-TRIGGER
+    - CCV2-CAND-05-ACTION
+    - CCV2-CAND-05-JUDGE
+    - CCV2-CAND-05-VISUAL
+    - CCV2-CAND-05-CAPTURE
+    - CCV2-CAND-06-SCENE
+    - CCV2-CAND-06-TRIGGER
+    - CCV2-CAND-06-ACTION
+    - CCV2-CAND-06-JUDGE
+    - CCV2-CAND-06-VISUAL
+    - CCV2-CAND-06-CAPTURE
+    - CCV2-CAND-07-SCENE
+    - CCV2-CAND-07-TRIGGER
+    - CCV2-CAND-07-ACTION
+    - CCV2-CAND-07-JUDGE
+    - CCV2-CAND-07-VISUAL
+    - CCV2-CAND-07-CAPTURE
+    - CCV2-CAND-08-SCENE
+    - CCV2-CAND-08-TRIGGER
+    - CCV2-CAND-08-ACTION
+    - CCV2-CAND-08-JUDGE
+    - CCV2-CAND-08-VISUAL
+    - CCV2-CAND-08-CAPTURE
+    - CCV2-CAND-09-SCENE
+    - CCV2-CAND-09-TRIGGER
+    - CCV2-CAND-09-JUDGE
+    - CCV2-CAND-09-VISUAL
+    - CCV2-CAND-09-CAPTURE
+    - CCV2-CAND-10-SCENE
+    - CCV2-CAND-10-TRIGGER
+    - CCV2-CAND-10-ACTION
+    - CCV2-CAND-10-JUDGE
+    - CCV2-CAND-10-VISUAL
+    - CCV2-CAND-10-CAPTURE
+    - CCV2-CAND-11-SCENE
+    - CCV2-CAND-11-TRIGGER
+    - CCV2-CAND-11-ACTION
+    - CCV2-CAND-11-JUDGE
+    - CCV2-CAND-11-VISUAL
+    - CCV2-CAND-11-CAPTURE
+    - CCV2-CAND-12-SCENE
+    - CCV2-CAND-12-TRIGGER
+    - CCV2-CAND-12-ACTION
+    - CCV2-CAND-12-JUDGE
+    - CCV2-CAND-12-VISUAL
+    - CCV2-CAND-12-CAPTURE
+    - CCV2-CAND-13-SCENE
+    - CCV2-CAND-13-TRIGGER
+    - CCV2-CAND-13-ACTION
+    - CCV2-CAND-13-JUDGE
+    - CCV2-CAND-13-VISUAL
+    - CCV2-CAND-13-CAPTURE
+    - CCV2-CAND-14-SCENE
+    - CCV2-CAND-14-TRIGGER
+    - CCV2-CAND-14-ACTION
+    - CCV2-CAND-14-JUDGE
+    - CCV2-CAND-14-VISUAL
+    - CCV2-CAND-14-CAPTURE
+    - CCV2-CAND-15-SCENE
+    - CCV2-CAND-15-TRIGGER
+    - CCV2-CAND-15-ACTION
+    - CCV2-CAND-15-JUDGE
+    - CCV2-CAND-15-VISUAL
+    - CCV2-CAND-15-CAPTURE
+  composition_proof_bundle_snapshot_ref:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/gkb_composition_candidate_bundles.v0.1.jsonl
+    bundle_count: 9
+    bundle_manifest_sha256: 6d294274ea235962c33a8e7cd9f4d4be92d2e6ce5b48860286a1d13f08ce7970
+  compatibility_rule_snapshot_ref:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/controlled_composition_v2_contract.v0.1.yaml
+    contract_sha256: 7bf9315ebbb5bf97c3330695de7327af42ae30771b6315d2432c5c78d51d742c
+  snapshot_digests:
+  - 7bf9315ebbb5bf97c3330695de7327af42ae30771b6315d2432c5c78d51d742c
+  - c4e744f3f0505025d780f46eb12b879f1b9920ede63e4c84ffbc3fac9a715a6c
+  - 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+  - 6d294274ea235962c33a8e7cd9f4d4be92d2e6ce5b48860286a1d13f08ce7970
+  reviewed_reusable_component_count: 0
+  runtime_ingest_ready: false
+  canonical_composition_plan_count: 0
+  producer: GKB
+  consumer: ORCH
+  ORCH_behavior:
+    consumes_digest_pinned_handoff: true
+    selects_runtime_components: true
+    binds_brand_facts_and_authorizations: true
+    owns_canonical_composition_plan: true
+    may_mutate_GKB_assets: false
+  GKB_behavior:
+    owns_profile_and_component_versions: true
+    may_create_runtime_composition_plan: false
+  DIFY_direct_GKB_consumption_allowed: false
+  handoff_digest: e99f98db6bc25fb364f7b22182f517a76b804209c63e724c77bea56c27f5e0e0

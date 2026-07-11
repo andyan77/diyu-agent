@@ -470,6 +470,59 @@ grc_3600_execution_plan_status:
       expand_3600_allowed: false
     downstream_and_readiness:
       all_false: true
+  route_migration_19:
+    applied_by_task: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: true
+    no_readiness_flipped: true
+    scale_hold_preserved: true
+    note: >-
+      This step is a control-plane schema and pilot proof line only; it does not change
+      the route_migration_18 scale HOLD state and does not open any scale generation gate.
+    clean_120:
+      status: FROZEN
+      digest: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    scale_600_contract:
+      status: DESIGN_COMPLETE_PARKED
+      digest: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+      generation_600_allowed: false
+    prior_probe_15:
+      status: SUPERSEDED_UNEXECUTED
+      task_id: GKB-P7D-SINGLE-CLUSTER-DUAL-VOICE-DIVERSITY-PROBE-15-001
+      generated_count: 0
+      materialized_count: 0
+    controlled_v2_progress:
+      active_step: S1
+      task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+      implementation_kind: codex_native_controlled_composition_pilot_harness
+      status: EXECUTED_PENDING_GUARDIAN
+      profile_count: 3
+      selected_source_count: 15
+      component_candidate_count: 89
+      candidate_bundle_count: 9
+      reviewed_reusable_component_count: 0
+      canonical_composition_plan_count: 0
+      audience_facing_body_count: 0
+      title_count: 0
+      spoken_draft_count: 0
+      runtime_ingest_ready: false
+      DIFY_direct_GKB_consumption_allowed: false
+    generated_artifacts:
+      directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/controlled_composition_v2_result.v0.1.yaml
+      checker_path: ci/checkers/check_gkb_controlled_composition_v2.py
+    recommended_next_task:
+      task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-AND-HANDOFF-FREEZE-001
+      separate_founder_authorization_required: true
+    scale:
+      generation_600_allowed: false
+      expand_600_allowed: false
+      expand_3600_allowed: false
+    downstream_and_readiness:
+      all_false: true
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

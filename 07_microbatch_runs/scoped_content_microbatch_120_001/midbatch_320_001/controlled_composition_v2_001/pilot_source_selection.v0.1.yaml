@@ -1,0 +1,177 @@
+pilot_source_selection:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+  source_corpus:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+    sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    record_count: 120
+  selection_algorithm:
+    group_by: p0_group
+    hash_input: sha256(clean_120_digest + ':' + asset_id)
+    sort: hash_ascending_within_each_p0
+    take_per_p0: 3
+    forbidden_inputs:
+    - CPSS
+    - human_grade
+    - output_quality
+    - extraction_difficulty
+  selected_source_count: 15
+  group_counts:
+    P0_01: 3
+    P0_02: 3
+    P0_03: 3
+    P0_04: 3
+    P0_05: 3
+  frozen_source_ids:
+  - RV80-ASSET-002
+  - P7D40-REPAIR-040
+  - P7D40-REPAIR-048
+  - RV80-ASSET-023
+  - RV80-ASSET-025
+  - RV80-ASSET-015
+  - RV80-ASSET-038
+  - P7D40-REPAIR-129
+  - P7D40-REPAIR-162
+  - RV80-ASSET-057
+  - P7D40-REPAIR-191
+  - RV80-ASSET-049
+  - P7D40-REPAIR-316
+  - P7D40-REPAIR-312
+  - RV80-ASSET-071
+  selected_sources:
+  - selection_index: 1
+    p0_group: P0_01
+    rank_in_p0_group: 1
+    asset_id: RV80-ASSET-002
+    kernel_id: SCM120-CAND-002
+    selection_hash: 1418c2873a38c35b1ef594c49c5f2cbc82a815d832acc00b56b6ed3bce10b7dd
+    source_record_digest: 9619e0da82287523b30756b8d76ecfcf932dba12d47a3833272314cfef89a3d2
+    body_sha256: 74b6a426c2258829ef7cdace386d3e117af0bd64e26c543a49c3e5ffdbcc5c9f
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 2
+    p0_group: P0_01
+    rank_in_p0_group: 2
+    asset_id: P7D40-REPAIR-040
+    kernel_id: SCM120-CAND-014
+    selection_hash: 1659300ad5c24b91e0780edaa7e0fa5ecb8664e4acd31a30e69d86a2372b3b01
+    source_record_digest: fc3f7f9383dd23be589731a6318ccf8c12aed347697801aecd288c7cf81e7219
+    body_sha256: dbabbeb3a1c18736d639dc4a143b2e6bd3a5ad5a9893baff15fec0111b6ca41f
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 3
+    p0_group: P0_01
+    rank_in_p0_group: 3
+    asset_id: P7D40-REPAIR-048
+    kernel_id: SCM120-CAND-017
+    selection_hash: 4a016e9b5f082208483ff10d4355c46ea9a898340b9401576bd795a13ad4a8b8
+    source_record_digest: e114266fad6beec937b04afb8f2793337e9ef3a1ca581c812139980ac0d243b9
+    body_sha256: 6eb284243eb85b5a45e0606fedbffec17f603e0b39d8f6ae532759c725b7d819
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 4
+    p0_group: P0_02
+    rank_in_p0_group: 1
+    asset_id: RV80-ASSET-023
+    kernel_id: SCM120-CAND-035
+    selection_hash: 010d974515fa7a6f9cbdbd388bc716b5944581facaa35790a4d7b0d678eab554
+    source_record_digest: 9bf341ff977662a4d2c57d9f0492b593fcb28ddad63d83417a735fd8f4963dcf
+    body_sha256: d347f89d9999a9fd2f67b1470d50c8184f7c70f9862853d336ba4fd48e91f355
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 5
+    p0_group: P0_02
+    rank_in_p0_group: 2
+    asset_id: RV80-ASSET-025
+    kernel_id: SCM120-CAND-038
+    selection_hash: 02b5817ca55ff867a43f4ba2d48e43ce4a0be4e4c6337bdcda5712389b44e069
+    source_record_digest: 2f14448d7aa9c665a3777f0f3f8bc676cca2f12fa570b1bb66084753c205430a
+    body_sha256: 91cd48a7f0bde774745b8a55aec344fbf8cbddc35ec601289ce7a05e27933775
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 6
+    p0_group: P0_02
+    rank_in_p0_group: 3
+    asset_id: RV80-ASSET-015
+    kernel_id: SCM120-CAND-023
+    selection_hash: 045b13935eedc6143d34b1e0d9abda3a51f058b384085c375a9383046a63e0e3
+    source_record_digest: ba74582058e8359d60a61f8b370e22ac0d2f1804dbe1d02b476ba4efa8262b59
+    body_sha256: 9b57d3611d09b875bbd5c432eed84c83cfe397e94ee11378b651a6fe533eb159
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 7
+    p0_group: P0_03
+    rank_in_p0_group: 1
+    asset_id: RV80-ASSET-038
+    kernel_id: SCM120-CAND-057
+    selection_hash: 0720f942b2d10293ab687b467c11199e07dd6c2fbd26eccc2cc8d44b95725204
+    source_record_digest: f83954eeb6d889b87437f269bfa83bb4e9dd25206bf453e062ba0d16b858996e
+    body_sha256: 2c8cc3968495c3ae2a09505fdd176e06002e670024d5bb7c6b70e117fa31e566
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 8
+    p0_group: P0_03
+    rank_in_p0_group: 2
+    asset_id: P7D40-REPAIR-129
+    kernel_id: SCM120-CAND-049
+    selection_hash: 1a1c7317eb56bd9a7ab9f44601b706a60be6152736e67c0d4954f9c6fcf54fb9
+    source_record_digest: 2146ab4d2ae248b78254a90036e5c054204acfe225f50b337b4df9aa31921bd8
+    body_sha256: 8130cba4e73b3e432319f2e414eb7ad4228cbd9f1acca735d4c327ffbee75baa
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 9
+    p0_group: P0_03
+    rank_in_p0_group: 3
+    asset_id: P7D40-REPAIR-162
+    kernel_id: SCM120-CAND-062
+    selection_hash: 2b600cca84d07887c5d761e13b3d5c6aebce102d657a18d9dbc8df13b267feed
+    source_record_digest: 1e1da77ed7c27d738b751f5bc6eb61095dacdc05f1425903bd25627ed303629a
+    body_sha256: 2ef615eab3bb7eba8f7b751e88d81677bf4613151d3525c688a99ee016880b8a
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 10
+    p0_group: P0_04
+    rank_in_p0_group: 1
+    asset_id: RV80-ASSET-057
+    kernel_id: SCM120-CAND-085
+    selection_hash: 106e7d6e581c643173f4c29bfc7816a47a22d2062ef7f74f2e3594b0d49c1101
+    source_record_digest: ac81b276fd30deb6b64851a8e277e60bc64e0c6bfc2f2ff7d0f3e5206551cd6c
+    body_sha256: aa4f882535c49e70ddb46a9b112c7cfcd95b4f2c8341d7d8993c13cc3285a237
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 11
+    p0_group: P0_04
+    rank_in_p0_group: 2
+    asset_id: P7D40-REPAIR-191
+    kernel_id: SCM120-CAND-070
+    selection_hash: 14f181c467e5d05fbc3dc8979a9360d47bed00aa546ed5b4996f21a7a46a4708
+    source_record_digest: f4e3bf9ea14d285c565baa1d6888449c42b76008e140a811d849aedb9faf3e07
+    body_sha256: 68c6b46f315188e44315566e318cd34a099a35aa44d79e83c089acd684e31dbb
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 12
+    p0_group: P0_04
+    rank_in_p0_group: 3
+    asset_id: RV80-ASSET-049
+    kernel_id: SCM120-CAND-073
+    selection_hash: 1aa1de0430123281324d8d1180602899bf90dc98dfa388eadb4823d37e1c4f6c
+    source_record_digest: c279a7c11384e5f29422a4c1b005ac50895bf6e87c31a9c4d830d560edb64142
+    body_sha256: 312aa0575a5b1fbd56ad50eb8c9176286141361312177f20009113a36ba7895f
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 13
+    p0_group: P0_05
+    rank_in_p0_group: 1
+    asset_id: P7D40-REPAIR-316
+    kernel_id: SCM120-CAND-118
+    selection_hash: 14ba9291a6c334b2ce3a31f3537eca016e7b17e9c4d1ed3e2c1b301b0e5999d7
+    source_record_digest: 86dfda06f00534ab0e56f139bb74d63fd3580e5cdbbd41c536d7648de6769b51
+    body_sha256: e6f513ea9b95ae5c6f561e6f6afaf8bb52943a91ea507db998bc6d38d589ac4f
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 14
+    p0_group: P0_05
+    rank_in_p0_group: 2
+    asset_id: P7D40-REPAIR-312
+    kernel_id: SCM120-CAND-116
+    selection_hash: 19423f75d266c0a344b352882afbb776b9d4c1d5185c560c5187c73e348a913e
+    source_record_digest: 3d76760a7140241b84a26235ab0f48c019b65f82b2472511acccb78eaed35ec7
+    body_sha256: 1341c71e62f6fe13604ae8c26036f6c1282da61b182dc0d4ffd8c3f0256cdcee
+    event_surface_mode: brand_fillable_prototype
+  - selection_index: 15
+    p0_group: P0_05
+    rank_in_p0_group: 3
+    asset_id: RV80-ASSET-071
+    kernel_id: SCM120-CAND-107
+    selection_hash: 19a944594fba62c4a80ea1937cdd8ba04ffd976f3a63423ed17ee41002c3a587
+    source_record_digest: e78850e5e8f89b490e0a53931603596437a6b3c7de31ba279bd6d3f5c3b52561
+    body_sha256: 96d0adebb64ae0078a42242a381946f2e37dec8d9fe830dda7d9a0236aece40a
+    event_surface_mode: brand_fillable_prototype
+  selection_digest: eb0cc0fe4eddf106a016c34f9aff581b32df52e7b100ad0657723c773f68ad1d

@@ -1,0 +1,147 @@
+controlled_composition_v2_contract:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+  implementation_kind: codex_native_controlled_composition_pilot_harness
+  baseline_head: 30a972a32749f4bb1048546ceedd39c652c7162a
+  accepted_immutable_facts:
+    clean_120:
+      status: FROZEN
+      digest: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+      mutation_allowed: false
+    scale_600_contract:
+      status: DESIGN_COMPLETE_PARKED
+      digest: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+      generation_allowed: false
+    prior_probe_15:
+      task_id: GKB-P7D-SINGLE-CLUSTER-DUAL-VOICE-DIVERSITY-PROBE-15-001
+      status: SUPERSEDED_UNEXECUTED
+      materialized_count: 0
+    generator_v1:
+      status: FROZEN_LEGACY_REFERENCE
+      in_place_modification_allowed: false
+  ownership:
+    GKB_owns:
+    - ContentProductProfile
+    - ComponentAsset
+    - CompatibilityRule
+    - reviewed_reusable_component_registry
+    - immutable_GKB_handoff_snapshot
+    - composition_proof_bundle
+    ORCH_owns:
+    - runtime_request_intake
+    - runtime_component_selection
+    - brand_fact_and_authorization_binding
+    - runtime_continuity_instance
+    - canonical_CompositionPlan
+    - generation_invocation
+    DIFY_consumes:
+    - ORCH_owned_typed_generation_context_bundle
+    hard_boundaries:
+      GKB_may_create_formal_CompositionPlan: false
+      ORCH_may_mutate_GKB_Profile_or_Component: false
+      DIFY_may_directly_select_GKB_components: false
+      GKB_pilot_bundle_runtime_ingest_allowed: false
+      ORCH_formal_plan_must_pin_GKB_handoff_profile_component_id_version_digest: true
+  component_asset_contract:
+    component_role_enum:
+    - opening
+    - scene
+    - trigger
+    - tension
+    - observable_action
+    - audience_facing_reasoning_move
+    - professional_judgment
+    - transition
+    - closing
+    - CTA
+    - visual_beat
+    - spoken_line_intent
+    - capture_instruction
+    primary_content_product_type_id_allowed: false
+    applicable_content_product_type_ids_min_count: 1
+    role_count_per_component_v0_1: 1
+    full_role_set_required_per_parent_asset: false
+    empty_roles_allowed:
+    - CTA
+    - opening
+    - closing
+    - visual_beat
+    body_text_as_default_rewrite_input_allowed: false
+    reviewed_reusable_promotion_allowed_by_codex: false
+    opening_closing_CTA_spoken_line_policy:
+      storage: family_function_intent_rhythm_only
+      direct_copy_sentence_template_library_allowed: false
+    truth_boundary_defaults:
+      ontology_truth: false
+      factual_authority: false
+      real_event_evidence: false
+      brand_fact_source: false
+  event_truth_modes:
+    allowlist:
+    - brand_supplied_real_event
+    - brand_fillable_prototype
+    - generic_creative_prototype
+    - collection_task_only
+    default_deny_unlisted: true
+    brand_supplied_real_event:
+      requires_profile_event_fact_authorization_slots: true
+    brand_fillable_prototype:
+      verified_past_event_surface_allowed: false
+      audience_facing_body_allowed_before_fill: false
+    generic_creative_prototype:
+      real_brand_history_surface_allowed: false
+      real_person_experience_surface_allowed: false
+    collection_task_only:
+      audience_facing_body_allowed: false
+  missing_input_router:
+    single_source_of_truth: ContentProductProfile.input_sufficiency_routes
+    model_runtime_discretion_allowed: false
+  compatibility_rules:
+    rule_shape: rule_id + requires + excludes + compatible_if
+    full_pairwise_component_matrix_allowed: false
+    minimum_rule_coverage:
+    - CP_REQUIRED_COMPONENT_ROLES
+    - COMPONENT_APPLICABLE_PRODUCT
+    - ROLE_AUTHORITY_PROFESSIONAL_JUDGMENT
+    - EVENT_TRUTH_MODE_EVENT_SURFACE
+    - REQUIRED_PEOPLE_VISIBLE_PARTICIPANTS
+    - DAILY_NATIVE_CAMPAIGN_SCREENPLAY
+    - PLATFORM_EXPRESSION_CAPTURE_INSTRUCTION
+    - CLAIM_BOUNDARY_REQUIRED_FACT_SLOTS
+    - CONTINUITY_PATTERN_RUNTIME_HISTORY
+    - CONTENT_REFERENCE_BRAND_FACT
+    - GKB_BUNDLE_ORCH_PLAN_AUTHORITY
+    fail_closed_rules:
+    - FC_ROLE_JUDGMENT
+    - FC_FOUNDER_EXPERIENCE
+    - FC_EVENT_TRUTH
+    - FC_HEADCOUNT
+    - FC_CLAIM_SUPPORT
+    - FC_FAKE_CUSTOMER
+    - FC_CAPTURE_MODE
+    - FC_REFERENCE_AS_FACT
+    - FC_COMPONENT_PRODUCT_MISMATCH
+    - FC_GKB_BUNDLE_AS_ORCH_PLAN
+  audience_facing_content_generation:
+    allowed_by_this_task: false
+    audience_facing_body_count: 0
+    title_count: 0
+    spoken_draft_count: 0
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    Serving_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+  downstream_writes:
+    CandidatePack: false
+    KE: false
+    ServingProjection: false
+    RAG: false
+    DIFY: false
+    production_runtime: false

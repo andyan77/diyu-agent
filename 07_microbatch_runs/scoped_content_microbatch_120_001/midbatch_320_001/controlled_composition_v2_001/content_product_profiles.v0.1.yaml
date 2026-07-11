@@ -1,0 +1,325 @@
+content_product_profiles:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-COMPOSITION-V2-PROFILE-SCHEMA-AND-PILOT-HANDOFF-001
+  profile_count: 3
+  profiles:
+  - schema_version: v0.1
+    profile_version: v0.1
+    content_product_type_id: CP_ROLE_WORK_VLOG
+    content_product_label: 岗位工作VLOG
+    lifecycle: pilot
+    owner: GKB
+    runtime_plan_owner: ORCH
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles: []
+    input_requirements:
+      required_source_slots:
+      - usable_materials
+      required_fact_slots:
+      - real_person_or_authorized_alias
+      - real_job_role
+      - actual_work_event
+      - business_object
+      - observable_action_chain
+      - decision_authority
+      required_authorization_slots:
+      - person_and_account_authorization
+    event_truth_policy:
+      allowed_event_truth_modes: &id001
+      - brand_supplied_real_event
+      - brand_fillable_prototype
+      - generic_creative_prototype
+      - collection_task_only
+      default_deny_unlisted: true
+    continuity_policy_ref: ORCH_RUNTIME_CONTINUITY_REQUIRED_FOR_HISTORY_CLAIMS
+    visual_audio_requirement_refs:
+    - V0_1_VISIBLE_SOURCE_OR_MATERIAL_SLOT_REQUIRED_FOR_CAPTURE
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      condition: all_profile_source_fact_authorization_slots_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: optional_inputs_missing_only
+      condition: required_slots_present_optional_slots_missing
+      missing_slot_classes:
+      - optional
+      allowed_outputs:
+      - slot_based_outline
+      - shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: real_event_missing
+      condition: one_or_more_required_real_event_or_fact_slots_missing
+      missing_slot_classes:
+      - source
+      - fact
+      - authorization
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      - material_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: person_authorization_missing
+      condition: person_or_account_authorization_slot_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: product_fact_or_claim_support_missing
+      condition: product_fact_or_claim_support_slot_missing
+      missing_slot_classes:
+      - fact
+      - authorization
+      allowed_outputs:
+      - evidence_collection_task
+      - non_claim_shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs: []
+    fixture_refs:
+      positive: []
+      negative: []
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    completion_criteria:
+    - required_slots_can_be_classified_as_present_or_missing
+    - missing_required_slots_route_to_degraded_non_audience_outputs
+    - runtime_plan_authority_remains_ORCH
+    profile_digest: ae28338d39b7128a14859db08bfb0eb5358b961b1a46845d5e6c8075ebd5af0e
+  - schema_version: v0.1
+    profile_version: v0.1
+    content_product_type_id: CP_STORE_MICRO_DOCUMENTARY
+    content_product_label: 门店微纪录
+    lifecycle: pilot
+    owner: GKB
+    runtime_plan_owner: ORCH
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles: []
+    input_requirements:
+      required_source_slots:
+      - usable_visual_audio_materials
+      required_fact_slots:
+      - real_store_or_authorized_alias
+      - actual_store_task_or_event
+      - participating_roles
+      - store_object_or_display_area
+      - before_state
+      - observable_action_chain
+      - after_or_open_state
+      required_authorization_slots:
+      - relevant_authorizations
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    continuity_policy_ref: ORCH_RUNTIME_CONTINUITY_REQUIRED_FOR_HISTORY_CLAIMS
+    visual_audio_requirement_refs:
+    - V0_1_VISIBLE_SOURCE_OR_MATERIAL_SLOT_REQUIRED_FOR_CAPTURE
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      condition: all_profile_source_fact_authorization_slots_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: optional_inputs_missing_only
+      condition: required_slots_present_optional_slots_missing
+      missing_slot_classes:
+      - optional
+      allowed_outputs:
+      - slot_based_outline
+      - shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: real_event_missing
+      condition: one_or_more_required_real_event_or_fact_slots_missing
+      missing_slot_classes:
+      - source
+      - fact
+      - authorization
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      - material_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: person_authorization_missing
+      condition: person_or_account_authorization_slot_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: product_fact_or_claim_support_missing
+      condition: product_fact_or_claim_support_slot_missing
+      missing_slot_classes:
+      - fact
+      - authorization
+      allowed_outputs:
+      - evidence_collection_task
+      - non_claim_shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs: []
+    fixture_refs:
+      positive: []
+      negative: []
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    completion_criteria:
+    - required_slots_can_be_classified_as_present_or_missing
+    - missing_required_slots_route_to_degraded_non_audience_outputs
+    - runtime_plan_authority_remains_ORCH
+    profile_digest: a01ddba0005bb235d94a9b3344bf4b04179a14c92d9d6d02d4e29a5ab3c748fa
+  - schema_version: v0.1
+    profile_version: v0.1
+    content_product_type_id: CP_PRODUCT_ITERATION_ARCHIVE
+    content_product_label: 产品诞生或迭代档案
+    lifecycle: pilot
+    owner: GKB
+    runtime_plan_owner: ORCH
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    optional_component_roles: []
+    input_requirements:
+      required_source_slots:
+      - before_after_material
+      required_fact_slots:
+      - authorized_product_or_project_ref
+      - actual_version_or_stage
+      - actual_problem_or_change_request
+      - changed_part
+      - responsible_role
+      - decision_reason
+      required_authorization_slots:
+      - permitted_public_scope
+    event_truth_policy:
+      allowed_event_truth_modes: *id001
+      default_deny_unlisted: true
+    continuity_policy_ref: ORCH_RUNTIME_CONTINUITY_REQUIRED_FOR_HISTORY_CLAIMS
+    visual_audio_requirement_refs:
+    - V0_1_VISIBLE_SOURCE_OR_MATERIAL_SLOT_REQUIRED_FOR_CAPTURE
+    input_sufficiency_routes:
+    - route_id: all_required_inputs_present
+      condition: all_profile_source_fact_authorization_slots_present
+      missing_slot_classes: []
+      allowed_outputs:
+      - content_candidate
+      - shooting_plan
+      audience_facing_body_allowed: true
+      first_person_experience_allowed: true
+      product_claim_allowed: true
+    - route_id: optional_inputs_missing_only
+      condition: required_slots_present_optional_slots_missing
+      missing_slot_classes:
+      - optional
+      allowed_outputs:
+      - slot_based_outline
+      - shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: real_event_missing
+      condition: one_or_more_required_real_event_or_fact_slots_missing
+      missing_slot_classes:
+      - source
+      - fact
+      - authorization
+      allowed_outputs:
+      - fact_collection_task
+      - interview_outline
+      - material_capture_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: person_authorization_missing
+      condition: person_or_account_authorization_slot_missing
+      missing_slot_classes:
+      - authorization
+      allowed_outputs:
+      - authorization_collection_task
+      - anonymous_shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    - route_id: product_fact_or_claim_support_missing
+      condition: product_fact_or_claim_support_slot_missing
+      missing_slot_classes:
+      - fact
+      - authorization
+      allowed_outputs:
+      - evidence_collection_task
+      - non_claim_shooting_plan
+      audience_facing_body_allowed: false
+      first_person_experience_allowed: false
+      product_claim_allowed: false
+    quality_rubric_refs: []
+    fixture_refs:
+      positive: []
+      negative: []
+      usage: evaluation_and_guardian_calibration_only
+      may_enter_generation_prompt: false
+      may_supply_facts: false
+    completion_criteria:
+    - required_slots_can_be_classified_as_present_or_missing
+    - missing_required_slots_route_to_degraded_non_audience_outputs
+    - runtime_plan_authority_remains_ORCH
+    profile_digest: 7337309af0833c923199837256062e5fedfdb8c54784c74ae26bb21cabda4420
