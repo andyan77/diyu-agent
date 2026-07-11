@@ -1,0 +1,79 @@
+name: Governance CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+      - ci/ci-remote-001-v2
+
+permissions:
+  contents: read
+
+jobs:
+  checker-compatibility:
+    name: checker-compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+      - name: Run governance checkers
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          set -euo pipefail
+          python3 ci/checkers/check_gkb_controlled_composition_v2.py
+          python3 ci/checkers/check_gkb_controlled_composition_v2.py --selftest
+          python3 ci/checkers/check_gkb_content_product_profiles_20.py
+          python3 ci/checkers/check_gkb_content_product_profiles_20.py --selftest
+          python3 ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --no-git
+          python3 ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --selftest
+          python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/run_component_review_20cp_v002_freezer.py --check
+      - name: Verify fail-closed optimized mode
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          set -euo pipefail
+          for args in \
+            "ci/checkers/check_gkb_controlled_composition_v2.py" \
+            "ci/checkers/check_gkb_controlled_composition_v2.py --selftest" \
+            "ci/checkers/check_gkb_content_product_profiles_20.py" \
+            "ci/checkers/check_gkb_content_product_profiles_20.py --selftest" \
+            "ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py" \
+            "ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --selftest"
+          do
+            set +e
+            python3 -O $args
+            code=$?
+            set -e
+            test "$code" -eq 2
+          done
+
+  secret-scan:
+    name: secret-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          set -euo pipefail
+          version="8.30.0"
+          base="https://github.com/gitleaks/gitleaks/releases/download/v${version}"
+          archive="gitleaks_${version}_linux_x64.tar.gz"
+          curl -fsSLO "${base}/${archive}"
+          curl -fsSLO "${base}/gitleaks_${version}_checksums.txt"
+          grep " ${archive}$" "gitleaks_${version}_checksums.txt" | sha256sum -c -
+          tar -xzf "${archive}" gitleaks
+          chmod +x gitleaks
+          sudo mv gitleaks /usr/local/bin/gitleaks
+      - name: Run gitleaks
+        run: |
+          set -euo pipefail
+          gitleaks detect --source . --config .gitleaks.toml --redact --no-banner
