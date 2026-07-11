@@ -1,0 +1,48 @@
+component_domain_review_policy:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-001
+  candidate_scope: 89
+  review_method: bounded_codex_native_domain_review
+  promotion_policy:
+    promotion_rate_target_allowed: false
+    ambiguous_default: candidate_only_or_needs_repair
+    machine_pass_is_domain_pass: false
+    clean_120_score_auto_promotion_allowed: false
+    unselected_clean_120_sources_allowed: false
+  decision_enum:
+  - PROMOTE_AS_NEW
+  - MERGE_INTO_REUSABLE
+  - SOURCE_SPECIFIC_REFERENCE_ONLY
+  - NEEDS_REPAIR
+  - REJECT
+  applicability_change_enum:
+  - PRESERVE
+  - NARROW
+  - EVIDENCE_BACKED_EXPAND
+  - CLEAR_ALL_AND_RETAIN_REFERENCE_ONLY
+  abstraction_requirements:
+    runtime_payload_must_be_mechanism_not_sentence: true
+    parent_surface_verbatim_allowed: false
+    source_sentence_template_allowed: false
+    hard_overlap_ceiling_chars: 17
+    guardian_semantic_review_required: true
+  forbidden_surface_field_names:
+  - body_text
+  - title_text
+  - spoken_script
+  - source_sentence
+  - template_sentence
+  - literal_quote
+  - surface_script
+  - publishable_copy
+  component_supply_gap_policy:
+    do_not_auto_create_from_profile_description: true
+    gap_classes_without_candidate_evidence:
+    - style_vector
+    - platform_expression
+    - continuity_pattern
+    - anti_pattern_control
+  handoff_policy:
+    handoff_is_composition_plan: false
+    runtime_ingest_ready: false
+    runtime_generation_eligible_profile_count: 0

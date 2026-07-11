@@ -1,0 +1,66 @@
+gkb_orch_reviewed_component_handoff:
+  handoff_kind: GKB_REVIEWED_COMPONENT_HANDOFF_SNAPSHOT
+  handoff_version: v0.1
+  freeze_status: IMMUTABLE_DELIVERY_PENDING_GUARDIAN
+  producer: GKB
+  intended_consumer: ORCH
+  pinned_inputs:
+    clean_120_digest: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    controlled_v2_contract_digest: 7bf9315ebbb5bf97c3330695de7327af42ae30771b6315d2432c5c78d51d742c
+    profiles_v0_2_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+    P0_CP_mapping_digest: fcc79faacbca47396e738f24cf017277afdb49da3535cdb9f163c7b2bcea7096
+    composition_asset_class_contract_digest: 8ace4926c79d08b6bf833eec5dd048ebf27b0f41a7636b0194963d145d137b56
+    source_candidates_digest: 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+    review_decisions_digest: b23441e8968f41b3531635371994c0705cfe5be52ba016b13b8d97ec18fed3e8
+    reviewed_registry_digest: aa0436abd3d4b8333d959445f07a46dbbf209176b445071358d6344c0379b83f
+    profile_coverage_digest: 191d57141839fa7f3f5128539cef8306050f94097d33255596db85480fb24c44
+  component_contract_eligible_profile_ids:
+  - CP01
+  - CP02
+  - CP03
+  - CP12
+  - CP14
+  - CP16
+  - CP17
+  - CP18
+  component_contract_ineligible_profile_ids:
+  - CP04
+  - CP05
+  - CP06
+  - CP07
+  - CP08
+  - CP09
+  - CP10
+  - CP11
+  - CP13
+  - CP15
+  - CP19
+  - CP20
+  fixture_calibration_ready_profile_ids: []
+  runtime_generation_eligible_profile_ids: []
+  runtime_excluded:
+  - Clean_120_body_text
+  - candidate_exact_payload
+  - derivation_spans
+  - domain_review_notes
+  - positive_fixture_body
+  - negative_fixture_body
+  - nine_GKB_pilot_bundles
+  ownership:
+    GKB_owns_profiles_and_component_versions: true
+    GKB_may_create_canonical_CompositionPlan: false
+    ORCH_selects_runtime_components: true
+    ORCH_binds_brand_facts_and_authorizations: true
+    ORCH_owns_runtime_continuity_thread: true
+    ORCH_owns_canonical_CompositionPlan: true
+    ORCH_may_mutate_GKB_assets: false
+    DIFY_direct_GKB_consumption_allowed: false
+  state:
+    handoff_integrity_frozen: true
+    runtime_ingest_ready: false
+    ORCH_integration_complete: false
+    canonical_composition_plan_count: 0
+    generation_invocation_count: 0
+    audience_facing_content_count: 0
+  reviewed_reusable_component_count: 30
+  handoff_digest: 72bc484949d7a0d3ab4d051e9721ee8a2f5380705b9775e5feedabd2a066559a

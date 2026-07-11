@@ -1,0 +1,218 @@
+capability_product_composition_mapping:
+  schema_version: v0.1
+  task_id: GKB-CONTROLLED-V2-COMPONENT-DOMAIN-REVIEW-20CP-RECLASSIFICATION-AND-HANDOFF-FREEZE-001
+  layer_1_capability_groups:
+    purpose:
+    - provide business capability
+    - provide judgment source
+    - provide role and scene source
+    values:
+      P0_01:
+        role: 企业与组织叙事能力
+      P0_02:
+        role:
+        - 横切角色视角能力
+        - 独立人物内容能力
+        controls:
+        - 谁观察
+        - 谁判断
+        - 谁表达
+        - 权威来源
+        - 角色声音
+        may_be:
+        - primary_capability
+        - cross_cutting_perspective_overlay
+        cross_cutting_perspective_overlay: true
+        independent_people_content_capability: true
+      P0_03:
+        role: 工艺、面料、版型和专业判断能力
+      P0_04:
+        role: 门店事件、零售动作和空间执行能力
+      P0_05:
+        role: 产品关系、商品角色和产品叙事能力
+  layer_2_content_products:
+    values:
+    - CP01
+    - CP02
+    - CP03
+    - CP04
+    - CP05
+    - CP06
+    - CP07
+    - CP08
+    - CP09
+    - CP10
+    - CP11
+    - CP12
+    - CP13
+    - CP14
+    - CP15
+    - CP16
+    - CP17
+    - CP18
+    - CP19
+    - CP20
+  layer_3_composition_assets:
+    values:
+    - scene_action_kernel
+    - narrative_operator
+    - role_perspective_voice
+    - style_vector
+    - visual_audio_grammar
+    - platform_expression
+    - continuity_pattern
+    - anti_pattern_control
+  ownership_correction:
+    GKB_owns:
+    - continuity_pattern
+    ORCH_owns:
+    - continuity_thread_instance
+    GKB_may_create_runtime_thread: false
+  P0_CP_mapping:
+    CP01:
+      primary_capabilities:
+      - P0_02
+      auxiliary_capabilities:
+      - P0_03
+      - P0_04
+      - P0_01
+      - P0_05
+    CP02:
+      primary_capabilities:
+      - P0_04
+      auxiliary_capabilities:
+      - P0_02
+    CP03:
+      primary_capability_options:
+      - P0_03
+      - P0_04
+      primary_selection_rule: 按真实手艺任务所属业务域选择恰好一个
+      auxiliary_capabilities:
+      - P0_02
+    CP04:
+      primary_capabilities:
+      - P0_02
+      auxiliary_capabilities:
+      - P0_01
+      - P0_03
+      - P0_04
+    CP05:
+      primary_capabilities:
+      - P0_02
+      auxiliary_capabilities:
+      - P0_01
+    CP06:
+      primary_capabilities:
+      - P0_03
+      auxiliary_capabilities:
+      - P0_02
+      - P0_04
+    CP07:
+      primary_capability_options:
+      - P0_03
+      - P0_04
+      primary_selection_rule: 按问题属于专业判断还是门店服务选择恰好一个
+      auxiliary_capabilities:
+      - P0_02
+      - P0_05
+    CP08:
+      primary_capabilities:
+      - P0_03
+      auxiliary_capabilities:
+      - P0_05
+    CP09:
+      primary_capabilities:
+      - P0_03
+      auxiliary_capabilities:
+      - P0_05
+      - P0_02
+    CP10:
+      primary_capabilities:
+      - P0_03
+      auxiliary_capabilities:
+      - P0_05
+      - P0_01
+    CP11:
+      primary_capabilities:
+      - P0_05
+      auxiliary_capabilities:
+      - P0_03
+      - P0_01
+      - P0_02
+    CP12:
+      primary_capabilities:
+      - P0_05
+      auxiliary_capabilities:
+      - P0_03
+    CP13:
+      primary_capabilities:
+      - P0_05
+      auxiliary_capabilities:
+      - P0_03
+      - P0_04
+    CP14:
+      primary_capabilities:
+      - P0_05
+      auxiliary_capabilities:
+      - P0_03
+    CP15:
+      primary_capabilities:
+      - P0_04
+      auxiliary_capabilities:
+      - P0_05
+      - P0_02
+    CP16:
+      primary_capabilities:
+      - P0_04
+      auxiliary_capabilities:
+      - P0_02
+      - P0_05
+      - P0_03
+    CP17:
+      primary_capabilities:
+      - P0_04
+      auxiliary_capabilities:
+      - P0_03
+      - P0_02
+    CP18:
+      primary_capabilities:
+      - P0_04
+      auxiliary_capabilities:
+      - P0_02
+      - P0_01
+    CP19:
+      primary_capabilities:
+      - P0_01
+      auxiliary_capabilities:
+      - P0_02
+      - P0_03
+      - P0_04
+      - P0_05
+    CP20:
+      primary_capabilities:
+      - P0_01
+      auxiliary_capabilities:
+      - P0_05
+      - P0_04
+  role_to_default_composition_asset_class:
+    scene: scene_action_kernel
+    trigger: scene_action_kernel
+    tension: scene_action_kernel
+    observable_action: scene_action_kernel
+    audience_facing_reasoning_move: narrative_operator
+    opening: narrative_operator
+    transition: narrative_operator
+    closing: narrative_operator
+    CTA: narrative_operator
+    professional_judgment: role_perspective_voice
+    spoken_line_intent: role_perspective_voice
+    visual_beat: visual_audio_grammar
+    capture_instruction: visual_audio_grammar
+  asset_supply_gaps_expected_without_evidence:
+  - style_vector
+  - platform_expression
+  - continuity_pattern
+  - anti_pattern_control
+  P0_CP_mapping_digest: fcc79faacbca47396e738f24cf017277afdb49da3535cdb9f163c7b2bcea7096
+  composition_asset_class_contract_digest: 8ace4926c79d08b6bf833eec5dd048ebf27b0f41a7636b0194963d145d137b56
+  mapping_digest: 38784673a86d24a85d091b3f9aa1168da4f9738161de61867f24654f32313b6a
