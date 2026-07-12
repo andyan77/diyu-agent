@@ -41,16 +41,16 @@ component_supply_closeout_result:
     ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_closeout_contract.v0.1.yaml
     : f454cfc7f06b24e75424948f823a94570a088b5bc3afb428db0d242da4db094b
     ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_review_decisions.v0.3.jsonl
-    : beb79a08e92883a7bd580c819c7d4a375764390f8a63854d84a13a5b46d7e897
+    : 7f91efeda448d1d66efc40c545671cb8f4e848274eeab1267a5548262fff2fe8
     ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/reviewed_reusable_component_registry.v0.3.jsonl
-    : b2c04aebf47bcdab77a16390681a0f8e6632c5fd0d5576513beaee39a77bec7e
+    : e5a3f31a9017a39e51ad409531e26b1e910e8e2effb34a4a24dab5fd11105bb1
     ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/content_product_component_coverage.v0.3.yaml
     : 374cb796018d8d5e316e234db747218a0bb61a3574d1b71dcd5151e53bbe6b81
     ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_guardian_review_packet.v0.1.yaml
     : efb920a6d4ff8df3faf350209cc4711f29c3c17777da587d0d8323d5f54db9d6
     ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py
     : d03d64c0ef6c50f50f36a4d1e7f2185a7f971cfa731b4eee788b563cc47616df
-    ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py: 9754177857d717eabe06a8b18025306d6b171d842e7372e7ef42c31bbd972db1
+    ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py: 42c28f8f7cac7ead2788fd59c42cffe8504828cf0bcad2add8ad29fe58455e5a
   blocker_ids: []
   not_proven:
   - guardian_domain_review_pass
@@ -58,4 +58,4 @@ component_supply_closeout_result:
   - fact_fixture_ready
   - ORCH_integrated
   - generation_600_or_3600_allowed
-  result_digest: 22bc1ed932ff0abdc3e0f670ed15134247374afd3ef63f0efff77540012c7934
+  result_digest: d8b7d77ce57b26b08cc5515f715452f6f35148e80d176fc673e20fdb48800807

@@ -186,6 +186,16 @@ def recursive_true_flags(value: Any, path: str = "") -> list[str]:
     return hits
 
 
+def profile_role_sets(root: Path, freezer: Any) -> dict[str, set[str]]:
+    profiles = load_yaml(root / freezer.PROFILES_PATH)["content_product_profile_registry"]["profiles"]
+    role_sets: dict[str, set[str]] = {}
+    for profile in profiles:
+        roles = {item["role"] for item in profile.get("required_component_roles", [])}
+        roles.update(item["role"] for item in profile.get("optional_component_roles", []))
+        role_sets[profile["content_product_type_id"]] = roles
+    return role_sets
+
+
 def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bool) -> None:
     if not enforce_git:
         return
@@ -246,6 +256,7 @@ def validate_decisions(
     if distribution != EXPECTED_DECISION_DISTRIBUTION:
         add_error(errors, "E_DECISION_DISTRIBUTION", "decisions", str(distribution))
     clean = freezer.clean_assets(root)
+    role_sets = profile_role_sets(root, freezer)
     for row in decisions:
         if row.get("task_id") != TASK_ID:
             add_error(errors, "E_DECISION_TASK", row.get("candidate_id", "?"), str(row.get("task_id")))
@@ -272,6 +283,24 @@ def validate_decisions(
                 add_error(errors, "E_ACCEPTED_NO_TARGET", row["candidate_id"], decision)
             if not row.get("applicable_content_product_type_ids"):
                 add_error(errors, "E_ACCEPTED_NO_CP_EDGE", row["candidate_id"], decision)
+            edge_ids = [
+                edge.get("content_product_type_id")
+                for edge in row.get("per_CP_applicability_assessments", [])
+            ]
+            if sorted(edge_ids) != sorted(row.get("applicable_content_product_type_ids", [])):
+                add_error(errors, "E_CP_EDGE_SET", row["candidate_id"], str(edge_ids))
+            for edge in row.get("per_CP_applicability_assessments", []):
+                cp_id = edge.get("content_product_type_id")
+                edge_role = edge.get("required_component_role")
+                if edge_role != row.get("component_role"):
+                    add_error(errors, "E_CP_EDGE_ROLE", row["candidate_id"], f"{cp_id}:{edge_role}")
+                if row.get("component_role") not in role_sets.get(cp_id, set()):
+                    add_error(
+                        errors,
+                        "E_CP_APPLICABILITY_ROLE_MISMATCH",
+                        row["candidate_id"],
+                        f"{cp_id} lacks role {row.get('component_role')}",
+                    )
         if decision == "REJECT" and row["component_role"] == "visual_beat":
             if row.get("applicable_content_product_type_ids"):
                 add_error(errors, "E_REJECTED_HAS_COVERAGE", row["candidate_id"], "visual reject covers CP")
@@ -306,6 +335,7 @@ def validate_merge_equivalence(decisions: list[dict[str, Any]], errors: list[dic
 
 def validate_registry(root: Path, freezer: Any, registry: list[dict[str, Any]], errors: list[dict[str, str]]) -> None:
     old = load_jsonl(root / freezer.V002_REGISTRY_PATH)
+    role_sets = profile_role_sets(root, freezer)
     if len(old) != EXPECTED_OLD_COMPONENT_COUNT:
         add_error(errors, "E_OLD_REGISTRY_COUNT", "registry", str(len(old)))
     if registry[: len(old)] != old:
@@ -328,6 +358,23 @@ def validate_registry(root: Path, freezer: Any, registry: list[dict[str, Any]], 
             add_error(errors, "E_FORBIDDEN_FIELD", row["component_id"], str(recursive_forbidden_fields(row)))
         if recursive_true_flags(row):
             add_error(errors, "E_READY_TRUE", row["component_id"], str(recursive_true_flags(row)))
+    for row in registry:
+        role = row.get("component_role") or row.get("source_component_role")
+        for cp_id in row.get("applicable_content_product_type_ids", []):
+            if role not in role_sets.get(cp_id, set()):
+                add_error(
+                    errors,
+                    "E_COMPONENT_CP_ROLE_MISMATCH",
+                    row["component_id"],
+                    f"{cp_id} lacks role {role}",
+                )
+        if row.get("component_version") == "v0.3":
+            edge_ids = [
+                edge.get("content_product_type_id")
+                for edge in row.get("per_CP_applicability_evidence", [])
+            ]
+            if sorted(edge_ids) != sorted(row.get("applicable_content_product_type_ids", [])):
+                add_error(errors, "E_COMPONENT_CP_EDGE_SET", row["component_id"], str(edge_ids))
 
 
 def validate_materialization(root: Path, freezer: Any, errors: list[dict[str, str]]) -> None:
@@ -490,6 +537,25 @@ def selftest() -> int:
     bad_span[1]["evidence_spans"][0]["text"] = "not in parent"
     tests.append(("evidence_span_tamper_rejected", any(e["code"] == "E_EVIDENCE_SPAN" for e in decision_errors(bad_span))))
 
+    false_cp_edge = copy.deepcopy(decisions)
+    for row in false_cp_edge:
+        if row["candidate_id"] == "CCV2-CAND-14-ACTION":
+            row["applicable_content_product_type_ids"].append("CP17")
+            row["per_CP_applicability_assessments"].append(
+                {
+                    "content_product_type_id": "CP17",
+                    "required_component_role": "transition",
+                    "fit_basis": ["synthetic false edge for selftest"],
+                }
+            )
+            break
+    tests.append(
+        (
+            "false_cp17_transition_edge_rejected",
+            any(e["code"] == "E_CP_APPLICABILITY_ROLE_MISMATCH" for e in decision_errors(false_cp_edge)),
+        )
+    )
+
     registry_errors: list[dict[str, str]] = []
     bad_registry = copy.deepcopy(registry)
     bad_registry[0]["component_id"] = "tampered"
@@ -501,6 +567,20 @@ def selftest() -> int:
     bad_new[-1]["runtime_ready"] = True
     validate_registry(root, freezer, bad_new, ready_errors)
     tests.append(("runtime_ready_true_rejected", any(e["code"] == "E_COMPONENT_READY" for e in ready_errors)))
+
+    registry_false_edge_errors: list[dict[str, str]] = []
+    registry_false_edge = copy.deepcopy(registry)
+    for row in registry_false_edge:
+        if row["component_id"] == "RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE":
+            row["applicable_content_product_type_ids"].append("CP17")
+            break
+    validate_registry(root, freezer, registry_false_edge, registry_false_edge_errors)
+    tests.append(
+        (
+            "registry_false_cp17_transition_edge_rejected",
+            any(e["code"] == "E_COMPONENT_CP_ROLE_MISMATCH" for e in registry_false_edge_errors),
+        )
+    )
 
     partial_registry = copy.deepcopy(registry)
     partial_registry = [row for row in partial_registry if row["component_id"] != "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]
