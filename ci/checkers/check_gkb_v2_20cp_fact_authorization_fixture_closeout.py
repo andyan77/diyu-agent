@@ -85,6 +85,23 @@ EXPECTED_FIXTURE_KINDS = {
     "MISSING_REQUIRED_INPUT",
     "NEGATIVE_HARD_GUARD",
 }
+MANDATORY_HEADLINE_NEGATIVE_GUARDS = {
+    "CP04": {
+        "guard_id": "AGR_CP04_01",
+        "negative_error_code": "E_AGR_CP04_01_GUARD",
+        "guard_text": "禁止编造争吵",
+    },
+    "CP10": {
+        "guard_id": "AGR_CP10_01",
+        "negative_error_code": "E_AGR_CP10_01_GUARD",
+        "guard_text": "单次体验不得替代普遍规律",
+    },
+    "CP19": {
+        "guard_id": "AGR_CP19_02",
+        "negative_error_code": "E_AGR_CP19_02_GUARD",
+        "guard_text": "禁止自我表彰和空喊长期主义",
+    },
+}
 READY_TRUE_KEYS = {
     "runtime_ingest_ready",
     "generation_eligible",
@@ -365,6 +382,23 @@ def validate_requirements(
             add_error(errors, "E_HARD_GUARD_COVERAGE", cp_id, str(row_guard_ids))
         if row["selected_negative_guard"]["guard_id"] not in profile_guard_ids:
             add_error(errors, "E_SELECTED_NEGATIVE_GUARD", cp_id, str(row["selected_negative_guard"]))
+        mandatory_negative = MANDATORY_HEADLINE_NEGATIVE_GUARDS.get(cp_id)
+        if mandatory_negative:
+            matching_guards = [
+                guard
+                for guard in row["hard_guard_contracts"]
+                if guard["guard_id"] == mandatory_negative["guard_id"]
+                and guard["negative_error_code"] == mandatory_negative["negative_error_code"]
+                and guard["guard_text"] == mandatory_negative["guard_text"]
+            ]
+            if not matching_guards:
+                add_error(errors, "E_HEADLINE_GUARD_CONTRACT", cp_id, str(mandatory_negative))
+            selected = row["selected_negative_guard"]
+            if (
+                selected.get("guard_id") != mandatory_negative["guard_id"]
+                or selected.get("expected_error_code") != mandatory_negative["negative_error_code"]
+            ):
+                add_error(errors, "E_HEADLINE_NEGATIVE_GUARD", cp_id, str(selected))
         for contract in row["fact_slot_contracts"]:
             required = {
                 "slot_id",
@@ -465,6 +499,12 @@ def validate_fixtures(
                 add_error(errors, "E_NEGATIVE_GUARD_REF", fixture["fixture_id"], str(fixture.get("mutated_guard_ref")))
             if selected["expected_error_code"] not in fixture["expected_error_codes"]:
                 add_error(errors, "E_NEGATIVE_ERROR_CODE", fixture["fixture_id"], str(fixture["expected_error_codes"]))
+            mandatory_negative = MANDATORY_HEADLINE_NEGATIVE_GUARDS.get(fixture["content_product_type_id"])
+            if mandatory_negative and (
+                fixture.get("mutated_guard_ref") != mandatory_negative["guard_id"]
+                or mandatory_negative["negative_error_code"] not in fixture["expected_error_codes"]
+            ):
+                add_error(errors, "E_HEADLINE_NEGATIVE_FIXTURE", fixture["fixture_id"], str(fixture))
             if fixture["expected_route"] != "STOP_NO_OUTPUT":
                 add_error(errors, "E_NEGATIVE_ROUTE", fixture["fixture_id"], fixture["expected_route"])
         else:
@@ -814,6 +854,35 @@ def selftest() -> int:
     digest_tamper = copy.deepcopy(requirements)
     digest_tamper[0]["requirement_digest"] = "0" * 64
     tests.append(("digest_tamper_rejected", any(e["code"] == "E_REQUIREMENT_DIGEST" for e in requirement_errors(digest_tamper))))
+
+    headline_guard_weakened = copy.deepcopy(requirements)
+    for row in headline_guard_weakened:
+        if row["content_product_type_id"] == "CP04":
+            row["selected_negative_guard"] = {
+                "guard_id": "AGR_CP04_03",
+                "expected_error_code": "E_CP04_PARTICIPANT_AUTHORIZATION_GAP",
+                "mutation": "multi_role_event_with_single_person_authorized",
+            }
+            break
+    tests.append(
+        (
+            "headline_negative_guard_weakened_rejected",
+            any(e["code"] == "E_HEADLINE_NEGATIVE_GUARD" for e in requirement_errors(headline_guard_weakened)),
+        )
+    )
+
+    headline_fixture_weakened = copy.deepcopy(fixtures)
+    for row in headline_fixture_weakened:
+        if row["fixture_id"] == "FAF-CP04-NEGATIVE-001":
+            row["mutated_guard_ref"] = "AGR_CP04_03"
+            row["expected_error_codes"] = ["E_CP04_PARTICIPANT_AUTHORIZATION_GAP"]
+            break
+    tests.append(
+        (
+            "headline_negative_fixture_weakened_rejected",
+            any(e["code"] == "E_HEADLINE_NEGATIVE_FIXTURE" for e in fixture_errors(headline_fixture_weakened)),
+        )
+    )
 
     failed = [name for name, ok in tests if not ok]
     if failed:
