@@ -1,0 +1,357 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP09-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "06055fa7f8894013494eedeb9407dac261fcf7efeac693cd48ed2e83650e0096",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP09-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "雨天骑行，这只托特包先不选",
+    "body_blocks": [
+      "这是一只虚构演示用的硬挺窄肩托特包。把任务卡放下：骑行，加雨天通勤。",
+      "雨天暴露先看包口，这只样品无封口；骑行移动再看携带结构，这只样品是托特结构；长时单肩负重还要看肩带，它是窄肩带。三处都与这张任务卡相碰，所以这次不推荐。",
+      "判断只落在任务和结构上：不评价使用者身体，不把任何包款外推成适合所有会议或通勤场景，也不替它补写耐候承诺。",
+      "要继续选，就顺着可观察的结构换方向：带封口、更宽肩带，或斜挎稳定结构。停在这里，再按具体任务逐项对照。"
+    ],
+    "spoken_lines": [
+      "卡片一落桌，先别急着把通勤当成万能答案。",
+      "今天的条件是雨天加骑行，视线就落到包口、肩带和携带方式上。",
+      "不合这张任务卡，就换一个结构方向。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "镜头先给标注“虚构演示样品”的硬挺窄肩托特包，写有“骑行＋雨天通勤”的任务卡落在一旁。",
+      "俯拍包口，手指沿开口走一遍，画面停在无封口的结构上。",
+      "任务卡的“雨天”一行贴近包口，二者同框。",
+      "镜头从任务卡的“骑行”一行移向托特携带结构，画面旁只留“移动稳定”提示卡。",
+      "窄肩带特写与“长时单肩负重”条件卡并排，随后退回完整包体。",
+      "样品移出画面中心，三张方向卡依次落下：“带封口”“更宽肩带”“斜挎稳定结构”。"
+    ],
+    "capture_instructions": [
+      "使用中性桌面和自然光，先拍任务卡落桌，再让标注“虚构演示样品”的包体进入完整画面。",
+      "结构特写只拍包口闭合方式、托特携带结构和肩带宽度，保持同一机位与比例。",
+      "三张条件卡逐项入画对应结构，不拍身体，不做淋水或耐候演示。",
+      "结尾让三张替代方向卡占据画面中心，停留后直接结束。"
+    ],
+    "audio_grammar": "以卡片落桌声起句，随后保留安静环境声；展示无封口时短暂停顿，三个结构冲突各用一次轻触卡片声分隔，替代方向出现后自然收声，不加号召音效。",
+    "editing_grammar": "按“任务卡→包口→托特携带结构→窄肩带→三张替代方向卡”的顺序直切；前三次冲突保持等长节拍，最后一次转向稍作停留，并停在封口、宽肩带、斜挎稳定结构三项选择上。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "雨天骑行，这只托特包先不选",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一只虚构演示用的硬挺窄肩托特包。把任务卡放下：骑行，加雨天通勤。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "雨天暴露先看包口，这只样品无封口；骑行移动再看携带结构，这只样品是托特结构；长时单肩负重还要看肩带，它是窄肩带。三处都与这张任务卡相碰，所以这次不推荐。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "判断只落在任务和结构上：不评价使用者身体，不把任何包款外推成适合所有会议或通勤场景，也不替它补写耐候承诺。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-BOUNDARY"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "要继续选，就顺着可观察的结构换方向：带封口、更宽肩带，或斜挎稳定结构。停在这里，再按具体任务逐项对照。",
+      "source_atom_refs": [
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "卡片一落桌，先别急着把通勤当成万能答案。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-BOUNDARY",
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "今天的条件是雨天加骑行，视线就落到包口、肩带和携带方式上。",
+      "source_atom_refs": [
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[2]",
+      "text": "不合这张任务卡，就换一个结构方向。",
+      "source_atom_refs": [
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "镜头先给标注“虚构演示样品”的硬挺窄肩托特包，写有“骑行＋雨天通勤”的任务卡落在一旁。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "俯拍包口，手指沿开口走一遍，画面停在无封口的结构上。",
+      "source_atom_refs": [
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "任务卡的“雨天”一行贴近包口，二者同框。",
+      "source_atom_refs": [
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "镜头从任务卡的“骑行”一行移向托特携带结构，画面旁只留“移动稳定”提示卡。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-2",
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "窄肩带特写与“长时单肩负重”条件卡并排，随后退回完整包体。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "样品移出画面中心，三张方向卡依次落下：“带封口”“更宽肩带”“斜挎稳定结构”。",
+      "source_atom_refs": [
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "使用中性桌面和自然光，先拍任务卡落桌，再让标注“虚构演示样品”的包体进入完整画面。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "结构特写只拍包口闭合方式、托特携带结构和肩带宽度，保持同一机位与比例。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "三张条件卡逐项入画对应结构，不拍身体，不做淋水或耐候演示。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-BOUNDARY",
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "结尾让三张替代方向卡占据画面中心，停留后直接结束。",
+      "source_atom_refs": [
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "以卡片落桌声起句，随后保留安静环境声；展示无封口时短暂停顿，三个结构冲突各用一次轻触卡片声分隔，替代方向出现后自然收声，不加号召音效。",
+      "source_atom_refs": [
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按“任务卡→包口→托特携带结构→窄肩带→三张替代方向卡”的顺序直切；前三次冲突保持等长节拍，最后一次转向稍作停留，并停在封口、宽肩带、斜挎稳定结构三项选择上。",
+      "source_atom_refs": [
+        "EPC-CP09-SHARED-OBJECT",
+        "EPC-CP09-B-1",
+        "EPC-CP09-B-2",
+        "EPC-CP09-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.title",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.spoken_lines[0]",
+        "surfaces.spoken_lines[1]",
+        "surfaces.spoken_lines[2]"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[4]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[4]",
+        "surfaces.visual_beats[5]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP09-PI-01",
+      "actual_surface_refs": [
+        "surfaces.title",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP09-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[5]"
+      ]
+    },
+    {
+      "obligation_id": "CP09-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.capture_instructions[2]"
+      ]
+    },
+    {
+      "obligation_id": "CP09-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "obligation_id": "CP09-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[4]"
+      ]
+    },
+    {
+      "obligation_id": "CP09-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[5]",
+        "surfaces.capture_instructions[3]"
+      ]
+    }
+  ]
+}

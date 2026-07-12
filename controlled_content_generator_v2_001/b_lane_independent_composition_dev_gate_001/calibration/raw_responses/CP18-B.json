@@ -1,0 +1,344 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP18-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "7912ee3f262f319a05ddf0d3ae5f1946b8bd0052dae0d0f9c3f233facf93266c",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP18-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "架空鹿汀城的雾天早班记录",
+    "body_blocks": [
+      "这是一则虚构演示素材：架空鹿汀城的门铃声，正好与虚构街角报时钟的两短一长一同进入记录。",
+      "虚构门店里的便签写着：本周晨雾重，试穿前先确认围裙下摆是否返潮。",
+      "架空鹿汀城早班围裙挂杆只完成了临时调整；眼下能记下的是挂杆位置变化，不是返潮已经解决。",
+      "这份虚构早班记录先停在这里：下摆是否返潮，留到架空鹿汀城下一个雾天早班复看。"
+    ],
+    "spoken_lines": [
+      "虚构门店门铃一响，虚构街角报时钟也在短、短、长。",
+      "作为虚构城市门店生活素材记录员，我只记临时调整，把答案留给下一个雾天早班。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "黑场先收虚构门店门铃与虚构街角报时钟同时出现的两短一长。",
+      "同期切到架空鹿汀城早班围裙挂杆，声源与物件保持在同一时刻。",
+      "近景停在虚构门店便签，完整呈现返潮检查任务。",
+      "便签与围裙下摆同框，只展示可见物件和文字。",
+      "挂杆临时调整后保持固定景别，不添加返潮已解决的提示。",
+      "以“架空鹿汀城下一个雾天早班复看”的收尾字幕停住。"
+    ],
+    "capture_instructions": [
+      "先收虚构门店门铃与虚构街角报时钟同时进入记录的同期声，完整保留两短一长。",
+      "同一时刻拍架空鹿汀城早班围裙挂杆，再转向虚构门店便签。",
+      "拍清便签文字和围裙下摆，画面不加入返潮已解决的判断。",
+      "固定记录挂杆临时调整后的状态，以“下一个雾天早班复看”结束。"
+    ],
+    "audio_grammar": "虚构门店门铃和虚构街角报时钟的两短一长同步开场；两短一长后留一次空白，再让现场同期声承接，不用口播复述正文。",
+    "editing_grammar": "按同一时刻的声源、虚构门店便签、架空鹿汀城早班围裙挂杆与围裙下摆排序；临时调整后不做效果确认，停在下一个雾天早班复看。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "架空鹿汀城的雾天早班记录",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一则虚构演示素材：架空鹿汀城的门铃声，正好与虚构街角报时钟的两短一长一同进入记录。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "虚构门店里的便签写着：本周晨雾重，试穿前先确认围裙下摆是否返潮。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "架空鹿汀城早班围裙挂杆只完成了临时调整；眼下能记下的是挂杆位置变化，不是返潮已经解决。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-OBJECT",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "这份虚构早班记录先停在这里：下摆是否返潮，留到架空鹿汀城下一个雾天早班复看。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "虚构门店门铃一响，虚构街角报时钟也在短、短、长。",
+      "source_atom_refs": [
+        "EPC-CP18-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "作为虚构城市门店生活素材记录员，我只记临时调整，把答案留给下一个雾天早班。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-ROLE",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "黑场先收虚构门店门铃与虚构街角报时钟同时出现的两短一长。",
+      "source_atom_refs": [
+        "EPC-CP18-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "同期切到架空鹿汀城早班围裙挂杆，声源与物件保持在同一时刻。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-OBJECT",
+        "EPC-CP18-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "近景停在虚构门店便签，完整呈现返潮检查任务。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "便签与围裙下摆同框，只展示可见物件和文字。",
+      "source_atom_refs": [
+        "EPC-CP18-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "挂杆临时调整后保持固定景别，不添加返潮已解决的提示。",
+      "source_atom_refs": [
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "以“架空鹿汀城下一个雾天早班复看”的收尾字幕停住。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "先收虚构门店门铃与虚构街角报时钟同时进入记录的同期声，完整保留两短一长。",
+      "source_atom_refs": [
+        "EPC-CP18-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "同一时刻拍架空鹿汀城早班围裙挂杆，再转向虚构门店便签。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-OBJECT",
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-1",
+        "EPC-CP18-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "拍清便签文字和围裙下摆，画面不加入返潮已解决的判断。",
+      "source_atom_refs": [
+        "EPC-CP18-B-2",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "固定记录挂杆临时调整后的状态，以“下一个雾天早班复看”结束。",
+      "source_atom_refs": [
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "虚构门店门铃和虚构街角报时钟的两短一长同步开场；两短一长后留一次空白，再让现场同期声承接，不用口播复述正文。",
+      "source_atom_refs": [
+        "EPC-CP18-B-1"
+      ],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按同一时刻的声源、虚构门店便签、架空鹿汀城早班围裙挂杆与围裙下摆排序；临时调整后不做效果确认，停在下一个雾天早班复看。",
+      "source_atom_refs": [
+        "EPC-CP18-SHARED-OBJECT",
+        "EPC-CP18-SHARED-BOUNDARY",
+        "EPC-CP18-B-1",
+        "EPC-CP18-B-2",
+        "EPC-CP18-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.spoken_lines[0]",
+        "surfaces.spoken_lines[1]",
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.spoken_lines[0]",
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.capture_instructions[1]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.spoken_lines[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.capture_instructions[0]",
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP18-PI-01",
+      "actual_surface_refs": [
+        "surfaces.title",
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.spoken_lines[1]"
+      ]
+    },
+    {
+      "obligation_id": "CP18-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.capture_instructions[0]"
+      ]
+    },
+    {
+      "obligation_id": "CP18-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[4]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "obligation_id": "CP18-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "obligation_id": "CP18-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[2]"
+      ]
+    },
+    {
+      "obligation_id": "CP18-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    }
+  ]
+}

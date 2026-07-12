@@ -1,0 +1,213 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP01-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "d40e595cfd166abbf23de5337797f700db3530da88126fc4e113fa6b28b46ca2",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP01-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "两件白衬衫，都还在等处理",
+    "body_blocks": [
+      "检查台前先摆着两个等待位置：一件白衬衫进入清洁待确认状态，另一件进入纽扣加固队列。它们都没有被匆匆挂回前场。",
+      "沿午班退货检查单往回看，检查单原先未签字；领口粉底印把一件留在清洁待确认处，纽扣松动线头把另一件留在纽扣加固队列。处理时，单上勾选了“不可直接回架”，并留下这两个可处理原因。",
+      "我能做的是把当班看到的状态分清、把记录交代清楚，再将两项可处理原因留给值班店员。回不回架，不能越过改衣助理对回架条件的观察与分流边界。",
+      "前场仍缺这个尺码，缺口却不能催着衣物回去：两件都继续等待，不能为了补齐尺码直接挂回前场。虚构演示素材，仅呈现当班观察与分流，不构成质量、服务或企业承诺。"
+    ],
+    "spoken_lines": [
+      "一个位置等清洁确认，另一个位置等纽扣加固，这会儿都先别往前场送。",
+      "尺码还空着，但我手里的记录和交接，得照着眼前的待处理状态留清楚。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "固定画面先收进检查台上的两个等待位置，清洁待确认与纽扣加固同时可辨。",
+      "镜头移向午班退货检查单，停在原先未签字、处理时勾选“不可直接回架”的记录线索。",
+      "回到两件白衬衫和待处理位置，让清洁待确认与纽扣加固各自停留一拍。",
+      "画面仍在检查台，字幕只写“这个尺码仍缺”，两件白衬衫不发生回架移动。",
+      "末镜停在已更新的检查单与两个等待位置，不出现回架完成画面。"
+    ],
+    "capture_instructions": [
+      "在同一检查台连续拍摄，先完整交代两个等待位置，再移动到检查单，避免用忙碌碎片代替任务过程。",
+      "拍检查单时呈现原先未签字的记录线索、“不可直接回架”勾选和两个可处理原因；拍衣物时让两个队列清楚可辨。",
+      "不补拍顾客、品牌制度或回架完成画面；结尾保留尺码短缺与两项等待状态。"
+    ],
+    "audio_grammar": "以房间底噪为底，篮筐落定一次、纸笔轻响一次；两个等待状态之间留短暂停顿，不用忙碌节拍。",
+    "editing_grammar": "同一空间内按“两个等待位置—检查单线索—尺码仍缺—回到等待位置”顺序连续剪接；每个状态独立停留，不插入顺拍操作清单，末镜自然停住。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "/surfaces/title",
+      "text": "两件白衬衫，都还在等处理",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-01"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/0",
+      "text": "检查台前先摆着两个等待位置：一件白衬衫进入清洁待确认状态，另一件进入纽扣加固队列。它们都没有被匆匆挂回前场。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-01", "EPC-CP01-B-02"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/1",
+      "text": "沿午班退货检查单往回看，检查单原先未签字；领口粉底印把一件留在清洁待确认处，纽扣松动线头把另一件留在纽扣加固队列。处理时，单上勾选了“不可直接回架”，并留下这两个可处理原因。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-01", "EPC-CP01-B-03"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/2",
+      "text": "我能做的是把当班看到的状态分清、把记录交代清楚，再将两项可处理原因留给值班店员。回不回架，不能越过改衣助理对回架条件的观察与分流边界。",
+      "source_atom_refs": ["EPC-CP01-SHARED-ROLE", "EPC-CP01-SHARED-BOUNDARY", "EPC-CP01-B-03"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/3",
+      "text": "前场仍缺这个尺码，缺口却不能催着衣物回去：两件都继续等待，不能为了补齐尺码直接挂回前场。虚构演示素材，仅呈现当班观察与分流，不构成质量、服务或企业承诺。",
+      "source_atom_refs": ["EPC-CP01-SHARED-BOUNDARY", "EPC-CP01-B-01", "EPC-CP01-B-02"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/spoken_lines/0",
+      "text": "一个位置等清洁确认，另一个位置等纽扣加固，这会儿都先别往前场送。",
+      "source_atom_refs": ["EPC-CP01-B-01", "EPC-CP01-B-02"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/spoken_lines/1",
+      "text": "尺码还空着，但我手里的记录和交接，得照着眼前的待处理状态留清楚。",
+      "source_atom_refs": ["EPC-CP01-SHARED-ROLE", "EPC-CP01-B-02", "EPC-CP01-B-03"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/0",
+      "text": "固定画面先收进检查台上的两个等待位置，清洁待确认与纽扣加固同时可辨。",
+      "source_atom_refs": ["EPC-CP01-B-01"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/1",
+      "text": "镜头移向午班退货检查单，停在原先未签字、处理时勾选“不可直接回架”的记录线索。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-03"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/2",
+      "text": "回到两件白衬衫和待处理位置，让清洁待确认与纽扣加固各自停留一拍。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-01"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/3",
+      "text": "画面仍在检查台，字幕只写“这个尺码仍缺”，两件白衬衫不发生回架移动。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-02"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/4",
+      "text": "末镜停在已更新的检查单与两个等待位置，不出现回架完成画面。",
+      "source_atom_refs": ["EPC-CP01-B-01", "EPC-CP01-B-03"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/capture_instructions/0",
+      "text": "在同一检查台连续拍摄，先完整交代两个等待位置，再移动到检查单，避免用忙碌碎片代替任务过程。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-01", "EPC-CP01-B-03"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/capture_instructions/1",
+      "text": "拍检查单时呈现原先未签字的记录线索、“不可直接回架”勾选和两个可处理原因；拍衣物时让两个队列清楚可辨。",
+      "source_atom_refs": ["EPC-CP01-B-01", "EPC-CP01-B-03"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/capture_instructions/2",
+      "text": "不补拍顾客、品牌制度或回架完成画面；结尾保留尺码短缺与两项等待状态。",
+      "source_atom_refs": ["EPC-CP01-SHARED-BOUNDARY", "EPC-CP01-B-01", "EPC-CP01-B-02"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/audio_grammar",
+      "text": "以房间底噪为底，篮筐落定一次、纸笔轻响一次；两个等待状态之间留短暂停顿，不用忙碌节拍。",
+      "source_atom_refs": ["EPC-CP01-B-01"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/editing_grammar",
+      "text": "同一空间内按“两个等待位置—检查单线索—尺码仍缺—回到等待位置”顺序连续剪接；每个状态独立停留，不插入顺拍操作清单，末镜自然停住。",
+      "source_atom_refs": ["EPC-CP01-SHARED-OBJECT", "EPC-CP01-B-01", "EPC-CP01-B-02", "EPC-CP01-B-03"],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": ["/surfaces/CTA"]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": ["/surfaces/body_blocks/3", "/surfaces/visual_beats/4", "/surfaces/editing_grammar"]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": ["/surfaces/body_blocks/0", "/surfaces/body_blocks/1", "/surfaces/body_blocks/3", "/surfaces/editing_grammar"]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": ["/surfaces/body_blocks/0", "/surfaces/spoken_lines/0"]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": ["/surfaces/body_blocks/2", "/surfaces/spoken_lines/1"]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": ["/surfaces/body_blocks/0", "/surfaces/body_blocks/1", "/surfaces/audio_grammar"]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": ["/surfaces/visual_beats/0", "/surfaces/visual_beats/1", "/surfaces/visual_beats/3", "/surfaces/visual_beats/4", "/surfaces/editing_grammar"]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": ["/surfaces/audio_grammar"]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": ["/surfaces/visual_beats/0", "/surfaces/visual_beats/1", "/surfaces/visual_beats/4"]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP01-PI-01",
+      "actual_surface_refs": ["/surfaces/body_blocks/0", "/surfaces/body_blocks/1", "/surfaces/body_blocks/2", "/surfaces/capture_instructions/0", "/surfaces/editing_grammar"]
+    },
+    {
+      "obligation_id": "CP01-PI-02",
+      "actual_surface_refs": ["/surfaces/body_blocks/1", "/surfaces/body_blocks/2", "/surfaces/capture_instructions/1"]
+    },
+    {
+      "obligation_id": "CP01-PI-03",
+      "actual_surface_refs": ["/surfaces/body_blocks/3", "/surfaces/visual_beats/3", "/surfaces/capture_instructions/2"]
+    },
+    {
+      "obligation_id": "CP01-B-LO-01",
+      "actual_surface_refs": ["/surfaces/title", "/surfaces/body_blocks/0", "/surfaces/visual_beats/0"]
+    },
+    {
+      "obligation_id": "CP01-B-LO-02",
+      "actual_surface_refs": ["/surfaces/body_blocks/3", "/surfaces/spoken_lines/1", "/surfaces/visual_beats/3"]
+    },
+    {
+      "obligation_id": "CP01-B-LO-03",
+      "actual_surface_refs": ["/surfaces/body_blocks/1", "/surfaces/visual_beats/1", "/surfaces/capture_instructions/1"]
+    }
+  ]
+}

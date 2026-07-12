@@ -1,0 +1,68 @@
+execution_result:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_B_LANE_INDEPENDENT_COMPOSITION_DEV_GATE_001
+  verdict: STOPPED_PAIR_CALIBRATION_FAILED
+  checkpoint_0:
+    PR9_original_head_sha: 8d708ba2502480ca4a60b38c9f3d6cf6e0d0cbb6
+    checker_closeout_commit_sha: 5800d6ba701c21604ba47297a2177642beb85bd5
+    guardian_verdict: PASS
+    PR9_merge_commit_sha: 7054acb40a1c6b99a3b4749e80805efd25419231
+    master_CI_green: true
+  frozen_architecture:
+    creative_author_digest_unchanged: true
+    route_gate_digest_unchanged: true
+    materializer_boundary_unchanged: true
+    new_pair_core_frozen: false
+  pair_calibration:
+    pair_count: 13
+    independent_pair_pass_count: 13
+    raw_quality_pass_count: 9
+    invalid_reference_count: 0
+    unsupported_fact_count: 9
+    calibration_pass: false
+    stopped_before_new_dev_gate: true
+  new_dev_gate:
+    status: NOT_CREATED_DUE_TO_CALIBRATION_FAILURE
+    material_pack_count: 0
+    assignment_count: 0
+    candidate_count: 0
+    lane_A_count: 0
+    lane_B_count: 0
+    reroll_count: 0
+    replacement_count: 0
+    first_acceptance_count: null
+    lane_A_first_acceptance_count: null
+    lane_B_first_acceptance_count: null
+    independent_pair_pass_count: null
+    development_gate_status: NOT_STARTED
+  remote:
+    branch: generator/v2-b-lane-independent-composition-dev-gate-001
+    draft_PR_url: PENDING_REMOTE_CREATION
+    required_checks: PENDING_REMOTE_CREATION
+    merged: false
+  boundaries:
+    hidden_created_count: 0
+    accepted_baseline_count: 120
+    accepted_baseline_increment_count: 0
+    generator_qualified: false
+    external_provider_API_call_count: 0
+    runtime_provider_adapter_qualified: false
+    runtime_ingest_ready: false
+    readiness_all_false: true
+  digests:
+    review_report_digest: 68fb96ef32562712d908c688e0d2bfcb8d8b854569fd965000c55027ad9fc788
+    founder_decision_file_sha256: f29d6c1de0075e982c84f5958c9f2b1a7b850fd060da3a68260585911f7b07ab
+    PR9_checker_closeout_file_sha256: 6692f82f5bc5e417548fb978220b796895f0b46ac7fd37e11abf7da7e8ea2647
+    dual_affordance_gate_sha256: 3bd93fa5f3cbdc79ec5742fd7823af7ea9f6666c2d3276fecd61247292af8020
+    pair_planner_sha256: 5a374d2cff7af5da9470e2e56c23d92de792037a4482723f9b24a1e67c935b72
+    pair_calibration_file_sha256: 853a542d1a9d306a89c0bfb4d90d5406abaafb9e6b6b82acbd7d8448f68ec25e
+    pair_calibration_review_sha256: ea0efb3c2e4a13b3448b84858697b48b28d79ade88e9813d320ce8a32edbc82a
+    new_dev_candidates_digest: null
+    route_migration_31_digest: abccae349977e8aa0890043535f52ecc79d801a6f8e76c747c5b8679237252bf
+  recommended_next_task:
+    exactly_one_task_id: CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_002
+    automatic_repair_forbidden: true
+  blocking_items:
+  - B_PAIR_CALIBRATION_RAW_QUALITY_BELOW_13
+  - B_PAIR_CALIBRATION_UNSUPPORTED_FACT_COUNT_9
+  result_digest: bd6dbdcbeeee5650b5075726171601ed38f5c98a8f9e98c10bc61d60a5d6f1bf

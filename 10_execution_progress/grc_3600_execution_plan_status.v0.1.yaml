@@ -2453,3 +2453,77 @@ grc_3600_execution_plan_status:
       action: External Guardian Checkpoint A full read and independent route/core recomputation; hidden remains blocked.
       on_guardian_fail_task_id: CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_001
     migration_digest: c3a9082f3db5f174106dd9e2f32b14dc3b77e17ad8c6e673c201253e2f4b3c91
+  route_migration_31:
+    applied_by_task: CONTROLLED_V2_B_LANE_INDEPENDENT_COMPOSITION_DEV_GATE_001
+    applied_from: founder_authorized_after_external_guardian_checkpoint_0_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_readiness_flipped: true
+    phase_0_pr9_checker_closeout_and_merge:
+      guardian_checkpoint_0_verdict: PASS
+      reviewed_head_sha: 5800d6ba701c21604ba47297a2177642beb85bd5
+      merge_commit_sha: 7054acb40a1c6b99a3b4749e80805efd25419231
+      merge_commit_tree: a94236644c096cc5866c2b072bf490c0abc3f667
+      merge_method: merge_commit
+      admin_bypass_used: false
+      source_branch_deleted: false
+      master_required_checks_green: true
+    inherited_decision_split:
+      authoring_architecture: ACCEPTED
+      route_gate: ACCEPTED
+      prior_development_gate: FAILED
+      prior_pair_independence: FAILED
+      content_acceptance_implied_by_PR9_merge: false
+    dual_narrative_affordance_and_lane_plan_calibration:
+      status: STOPPED_PAIR_CALIBRATION_FAILED
+      dual_narrative_affordance_gate_built: true
+      B_lane_independent_CompositionPlan_calibrated: true
+      pair_count: 13
+      new_authoring_invocation_count: 13
+      raw_quality_A_or_B_count: 9
+      required_raw_quality_A_or_B_count: 13
+      pair_independence_pass_count: 13
+      required_pair_independence_pass_count: 12
+      mere_paraphrase_count: 0
+      non_evidence_exact_line_overlap_count: 0
+      invalid_reference_count: 0
+      unsupported_fact_count: 9
+      failed_profile_ids:
+      - CP01
+      - CP03
+      - CP06
+      - CP15
+      reroll_count: 0
+      replacement_count: 0
+      per_candidate_manual_patch_count: 0
+      calibration_core_frozen: false
+    new_open_development_gate:
+      status: NOT_CREATED_DUE_TO_CALIBRATION_FAILURE
+      material_pack_count: 0
+      assignment_count: 0
+      candidate_count: 0
+      hidden_created_count: 0
+    fixed_boundaries:
+      external_provider_API_call_count: 0
+      runtime_provider_adapter_qualified: false
+      generator_qualified: false
+      founder_final_qualification: PENDING
+      accepted_baseline_increment_count: 0
+      accepted_baseline_count: 120
+      hidden_created_count: 0
+      sealed_hidden_attempt_count: 0
+      runtime_generation_eligible_profile_count: 0
+      runtime_ingest_ready: false
+      canonical_runtime_plan_count: 0
+      published_content_count: 0
+      generation_600_allowed: false
+      expand_3600_allowed: false
+      KE_change_count: 0
+      RAG_change_count: 0
+      DIFY_change_count: 0
+      Serving_change_count: 0
+    recommended_next_route:
+      task_id: CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_002
+      action: Founder architecture decision; no automatic B-lane repair or hidden qualification.
+    migration_digest: abccae349977e8aa0890043535f52ecc79d801a6f8e76c747c5b8679237252bf

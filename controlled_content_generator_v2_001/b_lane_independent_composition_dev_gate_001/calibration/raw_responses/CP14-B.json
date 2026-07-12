@@ -1,0 +1,205 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP14-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "9134d2a8789c7974ed248613f05cd8f2620fccde95ca890482f6595f85ef6589",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP14-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "桌边两次接触的原声",
+    "body_blocks": [
+      "这是一段虚构演示素材。桌边不设口播的物性记录，从未开调色的相机监看画面和原声电平表开始。",
+      "袋口边缘轻微摩擦桌面，摩擦声顺着可见接触延续；镜头保持正常速度，不用慢镜。",
+      "拉绳扣随后碰到台面，一记短促声落在另一个可见接触点；不加通用音乐，也不以调色改变面料观感。",
+      "画面回到可用素材清单：自然侧光、真实手部动作、原始摩擦声和扣件碰撞声齐全。这里只记录镜头中可见、可听的反应，不把它解释为耐用、防水、高级或治愈。"
+    ],
+    "spoken_lines": [],
+    "CTA": "",
+    "visual_beats": [
+      "未开调色的相机监看画面与原声电平表同框，电平表处于可见位置。",
+      "自然侧光下，压褶尼龙收纳袋的袋口边缘进入桌边普通近观。",
+      "正常速度记录袋口边缘轻微摩擦桌面的完整接触，镜头保留接触点。",
+      "沿桌面位置连续带到拉绳扣，正常速度记录它碰到台面的瞬间。",
+      "保留拉绳扣与台面的接触点，让短促碰撞声与动作同步。",
+      "落到可用素材清单，清单确认自然侧光、真实手部动作、原始摩擦声和扣件碰撞声齐全。"
+    ],
+    "capture_instructions": [
+      "使用未开调色的相机监看画面；保持自然侧光与正常速度，不用慢镜，也不以调色改变材质观感。",
+      "现场收录袋口摩擦桌面和拉绳扣碰到台面的原声，保留原声电平表，不铺通用音乐。",
+      "分别让摩擦声和短促碰撞声对准各自可见接触点，镜头按桌面空间连续连接两个位置。"
+    ],
+    "audio_grammar": "不设口播，不铺通用音乐；先以原声电平表建立来源，再保留袋口摩擦的长音与拉绳扣碰撞的短促原声，两种声音分别和可见接触同步。",
+    "editing_grammar": "按“未调色监看与电平表—袋口摩擦点—拉绳扣碰撞点—可用素材清单”顺序连接；保持正常速度与两个接触位置的空间连续，不以慢镜、调色或音乐制造图像和声音。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "桌边两次接触的原声",
+      "source_atom_refs": ["EPC-CP14-B-1"],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一段虚构演示素材。桌边不设口播的物性记录，从未开调色的相机监看画面和原声电平表开始。",
+      "source_atom_refs": ["EPC-CP14-SHARED-ROLE", "EPC-CP14-B-2", "EPC-CP14-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "袋口边缘轻微摩擦桌面，摩擦声顺着可见接触延续；镜头保持正常速度，不用慢镜。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "拉绳扣随后碰到台面，一记短促声落在另一个可见接触点；不加通用音乐，也不以调色改变面料观感。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "画面回到可用素材清单：自然侧光、真实手部动作、原始摩擦声和扣件碰撞声齐全。这里只记录镜头中可见、可听的反应，不把它解释为耐用、防水、高级或治愈。",
+      "source_atom_refs": ["EPC-CP14-B-3", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": ["EPC-CP14-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "未开调色的相机监看画面与原声电平表同框，电平表处于可见位置。",
+      "source_atom_refs": ["EPC-CP14-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "自然侧光下，压褶尼龙收纳袋的袋口边缘进入桌边普通近观。",
+      "source_atom_refs": ["EPC-CP14-SHARED-OBJECT", "EPC-CP14-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "正常速度记录袋口边缘轻微摩擦桌面的完整接触，镜头保留接触点。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "沿桌面位置连续带到拉绳扣，正常速度记录它碰到台面的瞬间。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "保留拉绳扣与台面的接触点，让短促碰撞声与动作同步。",
+      "source_atom_refs": ["EPC-CP14-B-1"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "落到可用素材清单，清单确认自然侧光、真实手部动作、原始摩擦声和扣件碰撞声齐全。",
+      "source_atom_refs": ["EPC-CP14-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "使用未开调色的相机监看画面；保持自然侧光与正常速度，不用慢镜，也不以调色改变材质观感。",
+      "source_atom_refs": ["EPC-CP14-B-2", "EPC-CP14-B-3", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "现场收录袋口摩擦桌面和拉绳扣碰到台面的原声，保留原声电平表，不铺通用音乐。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-B-2", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "分别让摩擦声和短促碰撞声对准各自可见接触点，镜头按桌面空间连续连接两个位置。",
+      "source_atom_refs": ["EPC-CP14-B-1"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "不设口播，不铺通用音乐；先以原声电平表建立来源，再保留袋口摩擦的长音与拉绳扣碰撞的短促原声，两种声音分别和可见接触同步。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-B-2", "EPC-CP14-B-3", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按“未调色监看与电平表—袋口摩擦点—拉绳扣碰撞点—可用素材清单”顺序连接；保持正常速度与两个接触位置的空间连续，不以慢镜、调色或音乐制造图像和声音。",
+      "source_atom_refs": ["EPC-CP14-B-1", "EPC-CP14-B-2", "EPC-CP14-B-3", "EPC-CP14-SHARED-BOUNDARY"],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": ["surfaces.CTA"]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": ["surfaces.body_blocks[3]", "surfaces.visual_beats[5]"]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": ["surfaces.editing_grammar", "surfaces.visual_beats[0]", "surfaces.visual_beats[2]", "surfaces.visual_beats[4]"]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.audio_grammar"]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": ["surfaces.visual_beats[1]"]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.audio_grammar"]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": ["surfaces.visual_beats[2]", "surfaces.visual_beats[3]", "surfaces.visual_beats[4]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.audio_grammar"]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[2]", "surfaces.visual_beats[4]"]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP14-PI-01",
+      "actual_surface_refs": ["surfaces.body_blocks[3]", "surfaces.visual_beats[2]", "surfaces.visual_beats[3]", "surfaces.capture_instructions[0]"]
+    },
+    {
+      "obligation_id": "CP14-PI-02",
+      "actual_surface_refs": ["surfaces.capture_instructions[0]", "surfaces.capture_instructions[1]", "surfaces.editing_grammar"]
+    },
+    {
+      "obligation_id": "CP14-PI-03",
+      "actual_surface_refs": ["surfaces.body_blocks[3]"]
+    },
+    {
+      "obligation_id": "CP14-B-LO-01",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.visual_beats[0]"]
+    },
+    {
+      "obligation_id": "CP14-B-LO-02",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.visual_beats[2]", "surfaces.visual_beats[4]", "surfaces.audio_grammar"]
+    },
+    {
+      "obligation_id": "CP14-B-LO-03",
+      "actual_surface_refs": ["surfaces.audio_grammar", "surfaces.CTA", "surfaces.editing_grammar"]
+    }
+  ]
+}

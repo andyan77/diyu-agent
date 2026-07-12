@@ -1,0 +1,227 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP06-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "61ffeaa968127904f6163cb77f5ee9d8bee776d2c00c6036e089c177a6363bfa",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP06-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "修改单旁，先留两处空白",
+    "body_blocks": [
+      "这是一件虚构演示样衣。作为只负责局部版型建议的版师，我先看夹板上的硬条件：不可增加整片耗料；眼下的判断只针对同一尺码样衣和给定的模拟动作。",
+      "在这条耗料线内，修改单只确认两项：腰省终点上移，右侧缝臀高处放松半厘米。它们分别回到腰省位置和侧缝垂直度这些可见信号，不另加整片用料。",
+      "另外两项不抢着下结论：前摆保留模拟试穿复核，后片摆差暂不改。它们继续对照基础模拟动作里的局部牵拉和可见摆差，也不预先增加整片用料。",
+      "等二样回来再验证。到这里，纸面只记录当前样衣的局部版型建议，不外推所有体型，也不替面料长期表现或销售适配作保证；内容仅作虚构演示，不对应真实品牌或企业授权。"
+    ],
+    "spoken_lines": [
+      "边界先摆在前面，今天只写有把握的两处。",
+      "没动的地方先不催，下一轮再接着看。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "镜头落在夹板上，“不可增加整片耗料”一行完整入画。",
+      "修改单与夹板并排，笔尖从耗料约束移向已写栏。",
+      "镜头从“腰省终点上移”移到“右侧缝臀高处放松半厘米”，两处各停一拍。",
+      "镜头移到前摆栏，“保留模拟试穿复核”的状态完整可见。",
+      "笔尖停在后片摆差栏外，不补写修改，保留“暂不改”的状态。",
+      "收在修改单与“二样待验证”标记同框，结论保持开放。"
+    ],
+    "capture_instructions": [
+      "固定俯拍夹板与修改单，画面不带真实品牌标识，保证约束文字完整可读。",
+      "确认两项时只做纸面横移，每个条目停一拍，不切到人台动作。",
+      "到前摆与后片栏位时放慢移动，保留笔尖停住和未继续书写的过程。",
+      "末镜保持“二样待验证”标记与修改单同框，停稳后结束。"
+    ],
+    "audio_grammar": "以翻板声开场，确认两项时只留纸面摩擦声；笔尖停住后空一拍，末尾以安静的环境底声收住。",
+    "editing_grammar": "按“夹板硬条件—两项已写—前摆待复核—后摆暂不改—二样待验证”的顺序直切；确认两项用短拍，两个留白各多停一拍，不串联动作测试。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "修改单旁，先留两处空白",
+      "source_atom_refs": ["EPC-CP06-B-2", "EPC-CP06-B-3"],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一件虚构演示样衣。作为只负责局部版型建议的版师，我先看夹板上的硬条件：不可增加整片耗料；眼下的判断只针对同一尺码样衣和给定的模拟动作。",
+      "source_atom_refs": ["EPC-CP06-SHARED-ROLE", "EPC-CP06-SHARED-OBJECT", "EPC-CP06-SHARED-BOUNDARY", "EPC-CP06-B-1"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "在这条耗料线内，修改单只确认两项：腰省终点上移，右侧缝臀高处放松半厘米。它们分别回到腰省位置和侧缝垂直度这些可见信号，不另加整片用料。",
+      "source_atom_refs": ["EPC-CP06-B-1", "EPC-CP06-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "另外两项不抢着下结论：前摆保留模拟试穿复核，后片摆差暂不改。它们继续对照基础模拟动作里的局部牵拉和可见摆差，也不预先增加整片用料。",
+      "source_atom_refs": ["EPC-CP06-SHARED-BOUNDARY", "EPC-CP06-B-1", "EPC-CP06-B-2"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "等二样回来再验证。到这里，纸面只记录当前样衣的局部版型建议，不外推所有体型，也不替面料长期表现或销售适配作保证；内容仅作虚构演示，不对应真实品牌或企业授权。",
+      "source_atom_refs": ["EPC-CP06-SHARED-ROLE", "EPC-CP06-SHARED-BOUNDARY", "EPC-CP06-B-2"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "边界先摆在前面，今天只写有把握的两处。",
+      "source_atom_refs": ["EPC-CP06-B-1", "EPC-CP06-B-3"],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "没动的地方先不催，下一轮再接着看。",
+      "source_atom_refs": ["EPC-CP06-B-2"],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "镜头落在夹板上，“不可增加整片耗料”一行完整入画。",
+      "source_atom_refs": ["EPC-CP06-B-1"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "修改单与夹板并排，笔尖从耗料约束移向已写栏。",
+      "source_atom_refs": ["EPC-CP06-B-1", "EPC-CP06-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "镜头从“腰省终点上移”移到“右侧缝臀高处放松半厘米”，两处各停一拍。",
+      "source_atom_refs": ["EPC-CP06-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "镜头移到前摆栏，“保留模拟试穿复核”的状态完整可见。",
+      "source_atom_refs": ["EPC-CP06-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "笔尖停在后片摆差栏外，不补写修改，保留“暂不改”的状态。",
+      "source_atom_refs": ["EPC-CP06-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "收在修改单与“二样待验证”标记同框，结论保持开放。",
+      "source_atom_refs": ["EPC-CP06-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "固定俯拍夹板与修改单，画面不带真实品牌标识，保证约束文字完整可读。",
+      "source_atom_refs": ["EPC-CP06-SHARED-BOUNDARY", "EPC-CP06-B-1"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "确认两项时只做纸面横移，每个条目停一拍，不切到人台动作。",
+      "source_atom_refs": ["EPC-CP06-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "到前摆与后片栏位时放慢移动，保留笔尖停住和未继续书写的过程。",
+      "source_atom_refs": ["EPC-CP06-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "末镜保持“二样待验证”标记与修改单同框，停稳后结束。",
+      "source_atom_refs": ["EPC-CP06-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "以翻板声开场，确认两项时只留纸面摩擦声；笔尖停住后空一拍，末尾以安静的环境底声收住。",
+      "source_atom_refs": ["EPC-CP06-B-2", "EPC-CP06-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按“夹板硬条件—两项已写—前摆待复核—后摆暂不改—二样待验证”的顺序直切；确认两项用短拍，两个留白各多停一拍，不串联动作测试。",
+      "source_atom_refs": ["EPC-CP06-B-1", "EPC-CP06-B-2", "EPC-CP06-B-3"],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": ["surfaces.CTA"]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": ["surfaces.body_blocks[3]", "surfaces.visual_beats[5]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": ["surfaces.body_blocks[2]", "surfaces.visual_beats[3]", "surfaces.visual_beats[4]"]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": ["surfaces.title", "surfaces.body_blocks[0]", "surfaces.spoken_lines[0]"]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.spoken_lines[1]"]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[1]", "surfaces.visual_beats[2]", "surfaces.visual_beats[3]", "surfaces.visual_beats[4]", "surfaces.visual_beats[5]"]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": ["surfaces.audio_grammar"]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[3]", "surfaces.visual_beats[4]"]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP06-PI-01",
+      "actual_surface_refs": ["surfaces.body_blocks[0]"]
+    },
+    {
+      "obligation_id": "CP06-PI-02",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]"]
+    },
+    {
+      "obligation_id": "CP06-PI-03",
+      "actual_surface_refs": ["surfaces.body_blocks[3]"]
+    },
+    {
+      "obligation_id": "CP06-B-LO-01",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.visual_beats[0]"]
+    },
+    {
+      "obligation_id": "CP06-B-LO-02",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.visual_beats[3]", "surfaces.visual_beats[4]"]
+    },
+    {
+      "obligation_id": "CP06-B-LO-03",
+      "actual_surface_refs": ["surfaces.body_blocks[3]", "surfaces.visual_beats[5]", "surfaces.editing_grammar"]
+    }
+  ]
+}

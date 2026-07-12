@@ -1,0 +1,322 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP05-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "ac14ab25080254d1781c6f9b2b285fc81cef10300968276e79a2e70917f307fa",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP05-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "红笔旁边的两页",
+    "body_blocks": [
+      "红笔落在被退回重做的扣位标记单上。林岚沿着标记复量扣位间距，尺端先停在测量起点。",
+      "同一张桌面摊开第二次失败记录和10月复核页：两页的测量起点不同，备注方式也不同。变化不靠情绪说明，落在这两处可以回看的差异里。",
+      "画面中的“林岚”、经历、练习夹、签名栏、岗位与记录均为虚构演示素材，不用于发布；这里只呈现基础技能形成的页面证据。",
+      "截至10月，她可以独立完成基础扣位复核。复杂改版仍须主管签字，权限线停在签名栏前。"
+    ],
+    "spoken_lines": [
+      "这里先不讲辛苦，看看红笔让我重新量了哪一段。",
+      "两张记录一并排，尺从哪儿起、话怎么记，差别就露出来了。",
+      "基础扣位可以自己复核，复杂改版还要等主管签字。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "镜头贴近退回重做的扣位标记单，红笔痕迹与尺具同时入画。",
+      "林岚的手沿红笔标记复量扣位间距，镜头停在尺端与测量起点。",
+      "镜头拉到桌面，第二次失败记录与10月复核页左右并排。",
+      "在两页之间往返：先对准各自的测量起点，再落到不同的备注方式。",
+      "最后停在主管签名栏；基础扣位复核页留在同一画面，复杂改版的边界由此收住。"
+    ],
+    "capture_instructions": [
+      "俯拍固定同一张桌面，两页始终保持并排，镜头只做左右短移。",
+      "近景跟随手和尺具，拍清红笔标记、尺端落点与两处测量起点，不补拍人物情绪。",
+      "收尾把焦点从10月复核页移到主管签名栏，停住后结束。"
+    ],
+    "audio_grammar": "保留尺具接触桌面、纸页轻响和短暂停顿；不用煽情音乐替代页面证据。",
+    "editing_grammar": "以红笔痕迹开场；复量后切到双页同框，仅在测量起点与备注之间作左右往返，最后直切签名栏，不插入月份编年蒙太奇。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "红笔旁边的两页",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-OBJECT",
+        "EPC-CP05-B-1",
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "红笔落在被退回重做的扣位标记单上。林岚沿着标记复量扣位间距，尺端先停在测量起点。",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-ROLE",
+        "EPC-CP05-SHARED-OBJECT",
+        "EPC-CP05-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "同一张桌面摊开第二次失败记录和10月复核页：两页的测量起点不同，备注方式也不同。变化不靠情绪说明，落在这两处可以回看的差异里。",
+      "source_atom_refs": [
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "画面中的“林岚”、经历、练习夹、签名栏、岗位与记录均为虚构演示素材，不用于发布；这里只呈现基础技能形成的页面证据。",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-ROLE",
+        "EPC-CP05-SHARED-OBJECT",
+        "EPC-CP05-SHARED-BOUNDARY"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "截至10月，她可以独立完成基础扣位复核。复杂改版仍须主管签字，权限线停在签名栏前。",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-BOUNDARY",
+        "EPC-CP05-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "这里先不讲辛苦，看看红笔让我重新量了哪一段。",
+      "source_atom_refs": [
+        "EPC-CP05-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "两张记录一并排，尺从哪儿起、话怎么记，差别就露出来了。",
+      "source_atom_refs": [
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[2]",
+      "text": "基础扣位可以自己复核，复杂改版还要等主管签字。",
+      "source_atom_refs": [
+        "EPC-CP05-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "镜头贴近退回重做的扣位标记单，红笔痕迹与尺具同时入画。",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-OBJECT",
+        "EPC-CP05-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "林岚的手沿红笔标记复量扣位间距，镜头停在尺端与测量起点。",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-ROLE",
+        "EPC-CP05-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "镜头拉到桌面，第二次失败记录与10月复核页左右并排。",
+      "source_atom_refs": [
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "在两页之间往返：先对准各自的测量起点，再落到不同的备注方式。",
+      "source_atom_refs": [
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "最后停在主管签名栏；基础扣位复核页留在同一画面，复杂改版的边界由此收住。",
+      "source_atom_refs": [
+        "EPC-CP05-SHARED-BOUNDARY",
+        "EPC-CP05-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "俯拍固定同一张桌面，两页始终保持并排，镜头只做左右短移。",
+      "source_atom_refs": [
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "近景跟随手和尺具，拍清红笔标记、尺端落点与两处测量起点，不补拍人物情绪。",
+      "source_atom_refs": [
+        "EPC-CP05-B-1",
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "收尾把焦点从10月复核页移到主管签名栏，停住后结束。",
+      "source_atom_refs": [
+        "EPC-CP05-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "保留尺具接触桌面、纸页轻响和短暂停顿；不用煽情音乐替代页面证据。",
+      "source_atom_refs": [
+        "EPC-CP05-B-1",
+        "EPC-CP05-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "以红笔痕迹开场；复量后切到双页同框，仅在测量起点与备注之间作左右往返，最后直切签名栏，不插入月份编年蒙太奇。",
+      "source_atom_refs": [
+        "EPC-CP05-B-1",
+        "EPC-CP05-B-2",
+        "EPC-CP05-B-3"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.spoken_lines[2]",
+        "surfaces.visual_beats[4]"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[2]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.spoken_lines[1]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[1]",
+        "surfaces.capture_instructions[1]"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.spoken_lines[1]"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.capture_instructions[0]"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[3]",
+        "surfaces.capture_instructions[1]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP05-PI-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP05-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "obligation_id": "CP05-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.spoken_lines[2]",
+        "surfaces.visual_beats[4]"
+      ]
+    },
+    {
+      "obligation_id": "CP05-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]"
+      ]
+    },
+    {
+      "obligation_id": "CP05-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.capture_instructions[0]"
+      ]
+    },
+    {
+      "obligation_id": "CP05-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[4]",
+        "surfaces.editing_grammar"
+      ]
+    }
+  ]
+}

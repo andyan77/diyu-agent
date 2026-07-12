@@ -1,0 +1,327 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP04-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "6a9adb9e5c370f0065950f0963e4b47456e5d4ba558dbba5be2c925bf2a560da",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP04-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "虚构演示素材里的补位交班",
+    "body_blocks": [
+      "这段内容取自虚构演示素材：浅色童袜补满两个空格，深色款仍留在周转架。",
+      "活动台补位已经完成，混色箱余量还在等待晚班重新归位。完成项和待办项，并排留在同一次交班里。",
+      "陈列专员负责前场陈列判断，仓位管理员负责箱内取放，值班主管确认通道与活动台规则。三方各守各的权限，不能由一人顺手替代。",
+      "眼前能确认的只有本次童袜补位：浅色已补，深色留架；混色箱余量仍是晚班待办。"
+    ],
+    "spoken_lines": [
+      "台面这边已经补齐，架上的深色款先保持原位。",
+      "箱里余下的部分，还要留给晚班处理归位。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "同一画面并置活动台与周转架：浅色童袜已补满两个空格，深色款保持留架。",
+      "近看补满的浅色格位，台面保持安静，不增加人物表演。",
+      "切到周转架上的深色款，保持留架状态，不拍成继续补位。",
+      "混色箱余量占据前景，已完成补位的活动台留在后景。",
+      "三分画面同屏呈现：陈列专员对应前场陈列，仓位管理员对应箱内取放，值班主管对应通道与活动台规则。",
+      "最后回到混色箱余量和晚班交接记录，画面停在“待归位”的未完成状态。"
+    ],
+    "capture_instructions": [
+      "用固定机位把补满的浅色格位和留架的深色款收进同一画面，先呈现分裂结果。",
+      "混色箱使用低位近景，让余量成为前景；活动台只作为已完成状态的背景参照。",
+      "三方岗位只做同一时点的分屏对应，不按角色动作顺序剪成接力。",
+      "交接记录只标示晚班待归位，并与混色箱余量同框；不要补拍归位完成。"
+    ],
+    "audio_grammar": "活动台画面以安静环境声为主，转到混色箱时保留箱体余响；结尾让余响自然停下，不使用完成提示音。",
+    "editing_grammar": "先并置浅色已补与深色留架，再追到混色箱余量和三方权限，最后停在晚班待办；两次并置后留一个开放停顿。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "虚构演示素材里的补位交班",
+      "source_atom_refs": [
+        "EPC-CP04-B-1",
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这段内容取自虚构演示素材：浅色童袜补满两个空格，深色款仍留在周转架。",
+      "source_atom_refs": [
+        "EPC-CP04-SHARED-BOUNDARY",
+        "EPC-CP04-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "活动台补位已经完成，混色箱余量还在等待晚班重新归位。完成项和待办项，并排留在同一次交班里。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "陈列专员负责前场陈列判断，仓位管理员负责箱内取放，值班主管确认通道与活动台规则。三方各守各的权限，不能由一人顺手替代。",
+      "source_atom_refs": [
+        "EPC-CP04-SHARED-ROLE",
+        "EPC-CP04-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "眼前能确认的只有本次童袜补位：浅色已补，深色留架；混色箱余量仍是晚班待办。",
+      "source_atom_refs": [
+        "EPC-CP04-SHARED-BOUNDARY",
+        "EPC-CP04-B-1",
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "台面这边已经补齐，架上的深色款先保持原位。",
+      "source_atom_refs": [
+        "EPC-CP04-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "箱里余下的部分，还要留给晚班处理归位。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "同一画面并置活动台与周转架：浅色童袜已补满两个空格，深色款保持留架。",
+      "source_atom_refs": [
+        "EPC-CP04-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "近看补满的浅色格位，台面保持安静，不增加人物表演。",
+      "source_atom_refs": [
+        "EPC-CP04-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "切到周转架上的深色款，保持留架状态，不拍成继续补位。",
+      "source_atom_refs": [
+        "EPC-CP04-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "混色箱余量占据前景，已完成补位的活动台留在后景。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "三分画面同屏呈现：陈列专员对应前场陈列，仓位管理员对应箱内取放，值班主管对应通道与活动台规则。",
+      "source_atom_refs": [
+        "EPC-CP04-SHARED-ROLE",
+        "EPC-CP04-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "最后回到混色箱余量和晚班交接记录，画面停在“待归位”的未完成状态。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "用固定机位把补满的浅色格位和留架的深色款收进同一画面，先呈现分裂结果。",
+      "source_atom_refs": [
+        "EPC-CP04-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "混色箱使用低位近景，让余量成为前景；活动台只作为已完成状态的背景参照。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "三方岗位只做同一时点的分屏对应，不按角色动作顺序剪成接力。",
+      "source_atom_refs": [
+        "EPC-CP04-SHARED-ROLE",
+        "EPC-CP04-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "交接记录只标示晚班待归位，并与混色箱余量同框；不要补拍归位完成。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "活动台画面以安静环境声为主，转到混色箱时保留箱体余响；结尾让余响自然停下，不使用完成提示音。",
+      "source_atom_refs": [
+        "EPC-CP04-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "先并置浅色已补与深色留架，再追到混色箱余量和三方权限，最后停在晚班待办；两次并置后留一个开放停顿。",
+      "source_atom_refs": [
+        "EPC-CP04-B-1",
+        "EPC-CP04-B-2",
+        "EPC-CP04-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.title",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.spoken_lines[0]",
+        "surfaces.spoken_lines[1]"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[4]",
+        "surfaces.capture_instructions[2]"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[1]",
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP04-PI-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[4]"
+      ]
+    },
+    {
+      "obligation_id": "CP04-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.capture_instructions[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP04-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP04-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]"
+      ]
+    },
+    {
+      "obligation_id": "CP04-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP04-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[4]"
+      ]
+    }
+  ]
+}

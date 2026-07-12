@@ -61,6 +61,9 @@ SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
 SUCCESSOR_CONVERGENCE_DIR = Path(
     "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
 )
+SUCCESSOR_B_LANE_DIR = Path(
+    "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001"
+)
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -246,6 +249,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
         and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
         and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
+        and not path.is_relative_to(SUCCESSOR_B_LANE_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", f"unexpected changed paths: {unexpected}")
@@ -501,42 +505,10 @@ def validate_ledger(root: Path, errors: list[dict[str, str]], enforce_git: bool)
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             current_extra = sorted(set(data) - set(old_data))
-            if current_extra not in (
-                [
-                    "route_migration_23",
-                    "route_migration_24",
-                    "route_migration_25",
-                    "route_migration_26",
-                    "route_migration_27",
-                ],
-                [
-                    "route_migration_23",
-                    "route_migration_24",
-                    "route_migration_25",
-                    "route_migration_26",
-                    "route_migration_27",
-                    "route_migration_28",
-                ],
-                [
-                    "route_migration_23",
-                    "route_migration_24",
-                    "route_migration_25",
-                    "route_migration_26",
-                    "route_migration_27",
-                    "route_migration_28",
-                    "route_migration_29",
-                ],
-                [
-                    "route_migration_23",
-                    "route_migration_24",
-                    "route_migration_25",
-                    "route_migration_26",
-                    "route_migration_27",
-                    "route_migration_28",
-                    "route_migration_29",
-                    "route_migration_30",
-                ],
-            ):
+            expected_extra = [
+                f"route_migration_{index}" for index in range(23, 23 + len(current_extra))
+            ]
+            if current_extra != expected_extra:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(current_extra))
             for key, value in old_data.items():
                 if data.get(key) != value:
