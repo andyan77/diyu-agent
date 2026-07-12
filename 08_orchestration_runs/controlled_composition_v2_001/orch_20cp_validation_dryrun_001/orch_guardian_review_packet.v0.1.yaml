@@ -1,0 +1,51 @@
+orch_guardian_review_packet:
+  schema_version: v0.1
+  task_id: ORCH_V2_CANONICAL_COMPOSITION_PLAN_20CP_DRYRUN_001
+  review_scope: ORCH validation-only canonical plan dry-run over 20CP synthetic fixtures
+  profile_ids:
+  - CP01
+  - CP02
+  - CP03
+  - CP04
+  - CP05
+  - CP06
+  - CP07
+  - CP08
+  - CP09
+  - CP10
+  - CP11
+  - CP12
+  - CP13
+  - CP14
+  - CP15
+  - CP16
+  - CP17
+  - CP18
+  - CP19
+  - CP20
+  fixture_count: 60
+  validation_plan_count: 20
+  selection_audit_count: 85
+  coverage_summary:
+    request_count: 60
+    decision_count: 60
+    positive_validation_plan_count: 20
+    missing_degraded_count: 20
+    negative_rejected_count: 20
+    unexpected_route_count: 0
+    orch_validation_dryrun_pass_profile_count: 20
+    canonical_validation_composition_plan_count: 20
+    canonical_composition_plan_count: 0
+    canonical_runtime_composition_plan_count: 0
+    canonical_production_composition_plan_count: 0
+    runtime_generation_eligible_profile_count: 0
+    audience_facing_content_count: 0
+  guardian_focus:
+  - ORCH is the only validation plan writer
+  - validation namespace stays separate from runtime and production CompositionPlan
+  - positive fixtures create structure-only validation plans
+  - missing fixtures degrade without plan or audience output
+  - negative fixtures fail closed with expected CP-specific error codes
+  - component selection is hash-deterministic after contract filtering
+  - synthetic fixture references are not upgraded into real brand facts
+  packet_digest: 77670c97d57a61e6c7f56020896f6191beec3b32d8d12b41056d313592999a4c

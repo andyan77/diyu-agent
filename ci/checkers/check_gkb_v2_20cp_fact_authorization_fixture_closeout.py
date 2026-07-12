@@ -39,6 +39,7 @@ PACKET_PATH = TASK_DIR / "fact_authorization_fixture_guardian_packet.v0.1.yaml"
 FREEZER_PATH = TASK_DIR / "run_fact_authorization_fixture_freezer.py"
 CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
 COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
+ORCH_VALIDATION_DRYRUN_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
 
@@ -54,6 +55,9 @@ SCALE_600_CONTRACT_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
     "scale_contract_600_001/p7d_600_expression_diversity_and_sampled_acceptance_contract.v0.1.yaml"
 )
+SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR = Path(
+    "08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001"
+)
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -67,6 +71,7 @@ ALLOWED_CHANGED_PATHS = {
     FREEZER_PATH,
     CHECKER_PATH,
     COMPONENT_SUPPLY_CHECKER_PATH,
+    ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
     COMPONENT_RESULT_PATH,
     LEDGER_PATH,
     CI_PATH,
@@ -298,7 +303,11 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         add_error(errors, "E_HEAD", "git", "cannot resolve HEAD")
     elif head != BASELINE_HEAD and not git_ok(root, ["merge-base", "--is-ancestor", BASELINE_HEAD, head]):
         add_error(errors, "E_BASELINE", "git", "baseline is not ancestor of HEAD")
-    unexpected = sorted(path.as_posix() for path in changed_paths(root) - ALLOWED_CHANGED_PATHS)
+    unexpected = sorted(
+        path.as_posix()
+        for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
+        if not path.is_relative_to(SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR)
+    )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
 
@@ -657,7 +666,7 @@ def validate_ledger(root: Path, freezer: Any, errors: list[dict[str, str]], enfo
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_24"]:
+            if extra != ["route_migration_24", "route_migration_25"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key == "route_migration_23":
@@ -839,6 +848,15 @@ def selftest() -> int:
     if recursive_forbidden_fields(bad_requirement):
         add_error(plan_errors, "E_FORBIDDEN_FIELD", "requirements", "CompositionPlan")
     tests.append(("composition_plan_created_rejected", any(e["code"] == "E_FORBIDDEN_FIELD" for e in plan_errors)))
+
+    tests.append(
+        (
+            "orch_successor_write_surface_declared",
+            (SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR / "orch_20cp_dryrun_result.v0.1.yaml").is_relative_to(
+                SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR
+            ),
+        )
+    )
 
     ke_errors: list[dict[str, str]] = []
     bad_result = load_yaml(root / RESULT_PATH)["fact_authorization_fixture_closeout_result"]
