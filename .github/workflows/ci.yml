@@ -33,6 +33,9 @@ jobs:
           python3 ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --no-git
           python3 ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --selftest
           python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/run_component_review_20cp_v002_freezer.py --check
+          python3 ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py
+          python3 ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py --selftest
+          python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py --check
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -44,7 +47,9 @@ jobs:
             "ci/checkers/check_gkb_content_product_profiles_20.py" \
             "ci/checkers/check_gkb_content_product_profiles_20.py --selftest" \
             "ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py" \
-            "ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --selftest"
+            "ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --selftest" \
+            "ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py" \
+            "ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py --selftest"
           do
             set +e
             python3 -O $args
