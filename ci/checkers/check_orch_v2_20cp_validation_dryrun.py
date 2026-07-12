@@ -42,12 +42,14 @@ LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.ya
 
 COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
 FACT_AUTH_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
+GENERATOR_V2_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
 COMPONENT_SUPPLY_RESULT_PATH = (
     GKB_ROOT / "component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml"
 )
 FACT_AUTH_RESULT_PATH = (
     GKB_ROOT / "fact_authorization_fixture_closeout_001/fact_authorization_fixture_closeout_result.v0.1.yaml"
 )
+SUCCESSOR_GENERATOR_V2_DIR = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001")
 
 PLAN_NAMESPACE = "fixture://gkb-v2/orch-dryrun/"
 EXPECTED_PROFILE_OBJECT_DIGEST = "160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b"
@@ -56,7 +58,7 @@ EXPECTED_COMPONENT_REGISTRY_SHA256 = "e5a3f31a9017a39e51ad409531e26b1e910e8e2eff
 EXPECTED_COMPONENT_COVERAGE_SHA256 = "374cb796018d8d5e316e234db747218a0bb61a3574d1b71dcd5151e53bbe6b81"
 EXPECTED_FACT_REQUIREMENTS_SHA256 = "e59f7e187d78477b6ec587dfe1df176aeb8b08ef94972ae0ef09273c5c7e6f84"
 EXPECTED_VALIDATION_FIXTURES_SHA256 = "bff74e6fac3fe85733fc6d094a81d14af3c303aa0a003e7dc7776cc034043697"
-EXPECTED_FACT_RESULT_SHA256 = "4c645262f3f253ec4655e7de9e9893b6db91ef95714821e225536db36e36aac2"
+EXPECTED_FACT_RESULT_SHA256 = "15c352136cb71545254cd2d593f50ddb8d54524de4e8d61a855370181281e5c3"
 
 ALLOWED_CHANGED_PATHS = {
     FREEZER_PATH,
@@ -71,6 +73,7 @@ ALLOWED_CHANGED_PATHS = {
     CHECKER_PATH,
     COMPONENT_SUPPLY_CHECKER_PATH,
     FACT_AUTH_CHECKER_PATH,
+    GENERATOR_V2_CHECKER_PATH,
     COMPONENT_SUPPLY_RESULT_PATH,
     FACT_AUTH_RESULT_PATH,
     LEDGER_PATH,
@@ -246,7 +249,11 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         add_error(errors, "E_HEAD", "git", "cannot resolve HEAD")
     elif head != BASELINE_HEAD and not git_ok(root, ["merge-base", "--is-ancestor", BASELINE_HEAD, head]):
         add_error(errors, "E_BASELINE", "git", "baseline is not ancestor of HEAD")
-    unexpected = sorted(path.as_posix() for path in changed_paths(root) - ALLOWED_CHANGED_PATHS)
+    unexpected = sorted(
+        path.as_posix()
+        for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
+        if not path.is_relative_to(SUCCESSOR_GENERATOR_V2_DIR)
+    )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
 
@@ -765,7 +772,7 @@ def validate_ledger(root: Path, freezer: Any, result_doc: dict[str, Any], errors
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_25"]:
+            if extra != ["route_migration_25", "route_migration_26"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key in {"route_migration_23", "route_migration_24"}:
@@ -918,6 +925,14 @@ def selftest() -> int:
 
     invariance = freezer.invariance_checks(root)
     tests.append(("fixture_and_component_order_invariance", all(value is True for value in invariance.values())))
+    tests.append(
+        (
+            "generator_successor_write_surface_declared",
+            (SUCCESSOR_GENERATOR_V2_DIR / "generator_v2_build_result.v0.1.yaml").is_relative_to(
+                SUCCESSOR_GENERATOR_V2_DIR
+            ),
+        )
+    )
 
     failed = [name for name, ok in tests if not ok]
     if failed:

@@ -42,6 +42,9 @@ jobs:
           python3 ci/checkers/check_orch_v2_20cp_validation_dryrun.py
           python3 ci/checkers/check_orch_v2_20cp_validation_dryrun.py --selftest
           python3 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/run_orch_20cp_validation_dryrun_freezer.py --check
+          python3 ci/checkers/check_controlled_content_generator_v2_build.py
+          python3 ci/checkers/check_controlled_content_generator_v2_build.py --selftest
+          python3 controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py --check
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -59,7 +62,9 @@ jobs:
             "ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py" \
             "ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py --selftest" \
             "ci/checkers/check_orch_v2_20cp_validation_dryrun.py" \
-            "ci/checkers/check_orch_v2_20cp_validation_dryrun.py --selftest"
+            "ci/checkers/check_orch_v2_20cp_validation_dryrun.py --selftest" \
+            "ci/checkers/check_controlled_content_generator_v2_build.py" \
+            "ci/checkers/check_controlled_content_generator_v2_build.py --selftest"
           do
             set +e
             python3 -O $args
