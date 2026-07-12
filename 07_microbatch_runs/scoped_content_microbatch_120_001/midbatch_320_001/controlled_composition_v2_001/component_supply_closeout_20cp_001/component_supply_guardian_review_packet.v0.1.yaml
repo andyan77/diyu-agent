@@ -1,0 +1,154 @@
+component_supply_guardian_review_packet:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_COMPONENT_SUPPLY_CLOSEOUT_001
+  review_scope: GKB component supply closeout candidate snapshot; not runtime-ready
+  source_audit:
+    inspection_order: stable_asset_id
+    inspected_asset_ids:
+    - P7D40-REPAIR-006
+    - P7D40-REPAIR-012
+    - P7D40-REPAIR-021
+    - P7D40-REPAIR-030
+    - P7D40-REPAIR-040
+    - P7D40-REPAIR-048
+    - P7D40-REPAIR-054
+    - P7D40-REPAIR-063
+    - P7D40-REPAIR-071
+    - P7D40-REPAIR-077
+    - P7D40-REPAIR-082
+    - P7D40-REPAIR-089
+    - P7D40-REPAIR-097
+    - P7D40-REPAIR-105
+    - P7D40-REPAIR-115
+    - P7D40-REPAIR-127
+    - P7D40-REPAIR-129
+    - P7D40-REPAIR-138
+    - P7D40-REPAIR-151
+    - P7D40-REPAIR-154
+    - P7D40-REPAIR-162
+    - P7D40-REPAIR-170
+    - P7D40-REPAIR-177
+    - P7D40-REPAIR-191
+    - P7D40-REPAIR-195
+    - P7D40-REPAIR-202
+    - P7D40-REPAIR-214
+    - P7D40-REPAIR-224
+    - P7D40-REPAIR-226
+    - P7D40-REPAIR-234
+    - P7D40-REPAIR-243
+    - P7D40-REPAIR-254
+    - P7D40-REPAIR-263
+    - P7D40-REPAIR-267
+    - P7D40-REPAIR-276
+    - P7D40-REPAIR-287
+    - P7D40-REPAIR-289
+    - P7D40-REPAIR-298
+    - P7D40-REPAIR-312
+    - P7D40-REPAIR-316
+    - RV80-ASSET-001
+    - RV80-ASSET-002
+    - RV80-ASSET-003
+    - RV80-ASSET-038
+    extracted_candidate_asset_ids:
+    - P7D40-REPAIR-054
+    - P7D40-REPAIR-129
+    - P7D40-REPAIR-151
+    - P7D40-REPAIR-226
+    already_represented_asset_ids:
+    - P7D40-REPAIR-006
+    - P7D40-REPAIR-012
+    - P7D40-REPAIR-021
+    - P7D40-REPAIR-030
+    - P7D40-REPAIR-063
+    - P7D40-REPAIR-071
+    - P7D40-REPAIR-077
+    - P7D40-REPAIR-082
+    - P7D40-REPAIR-089
+    - P7D40-REPAIR-097
+    - P7D40-REPAIR-105
+    - P7D40-REPAIR-115
+    - P7D40-REPAIR-127
+    - P7D40-REPAIR-138
+    - P7D40-REPAIR-154
+    - P7D40-REPAIR-162
+    - P7D40-REPAIR-170
+    - P7D40-REPAIR-177
+    - P7D40-REPAIR-195
+    - P7D40-REPAIR-202
+    - P7D40-REPAIR-214
+    - P7D40-REPAIR-224
+    - P7D40-REPAIR-234
+    - P7D40-REPAIR-243
+    - P7D40-REPAIR-254
+    - P7D40-REPAIR-263
+    - P7D40-REPAIR-267
+    - P7D40-REPAIR-276
+    - P7D40-REPAIR-287
+    - P7D40-REPAIR-289
+    - P7D40-REPAIR-298
+    - RV80-ASSET-001
+    - RV80-ASSET-003
+    no_candidate_reason_by_asset:
+      RV80-ASSET-002: S2_v002_action_already_promoted; held_visual_was_bare_noun
+      RV80-ASSET-038: S2_v002_claim_boundary_reclassified_as_closing; held_visual_was_bare_noun
+      P7D40-REPAIR-040: S2_v002_reasoning_repaired_from_held_candidate
+      P7D40-REPAIR-048: S2_v002_transition_repaired_from_held_candidate
+      P7D40-REPAIR-191: S2_v002_reasoning_repaired_from_held_candidate
+      P7D40-REPAIR-312: S2_v002_display_transition_repaired_from_held_candidate
+      P7D40-REPAIR-316: S2_v002_transition_merge_repaired_from_held_candidate
+  decision_distribution:
+    MERGE_INTO_REUSABLE: 3
+    PROMOTE_AS_NEW: 9
+    REJECT: 14
+  new_component_ids:
+  - RCV2-003-CAPTURE-SERVICE-ROLE-BOUNDARY
+  - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+  - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+  - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+  - RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE
+  - RCV2-003-TRANSITION-ROLE-SPECIFIC-HANDOFF
+  - RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+  - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+  - RCV2-003-VISUAL-LIGHT-COLOR-CONTEXT
+  profile_coverage_summary:
+    component_supply_complete_count: 20
+    component_supply_incomplete_count: 0
+    complete_profile_ids:
+    - CP01
+    - CP02
+    - CP03
+    - CP04
+    - CP05
+    - CP06
+    - CP07
+    - CP08
+    - CP09
+    - CP10
+    - CP11
+    - CP12
+    - CP13
+    - CP14
+    - CP15
+    - CP16
+    - CP17
+    - CP18
+    - CP19
+    - CP20
+    incomplete_profile_ids: []
+    unresolved_required_role_gaps: []
+  guardian_focus:
+  - all 22 S2 v002 NEEDS_REPAIR decisions
+  - all clean-120 supplemental extraction decisions
+  - merge equivalence and CP applicability edges
+  - old 55 component immutability
+  - readiness and ownership boundaries
+  fixed_false_status:
+    fixture_gap_count: 20
+    fact_fixture_ready_profile_count: 0
+    runtime_generation_eligible_profile_count: 0
+    runtime_ingest_ready: false
+    orch_ready: false
+    generator_qualified: false
+    generation_600_allowed: false
+    expand_3600_allowed: false
+  packet_digest: 90524480370f42efa8751c8500a5a74cd66b094207a1b10f0323d7ba09b5c5da

@@ -1,0 +1,1153 @@
+content_product_component_coverage:
+  schema_version: v0.3
+  task_id: GKB_V2_20CP_COMPONENT_SUPPLY_CLOSEOUT_001
+  profile_component_coverage:
+  - content_product_type_id: CP01
+    required_component_roles:
+    - &id001
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id002
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id003
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id004
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id001
+    - *id002
+    - *id003
+    - *id004
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      observable_action:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP02
+    required_component_roles:
+    - &id005
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id006
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id007
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id008
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      visual_beat:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      observable_action:
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      capture_instruction:
+      - RCV2-003-CAPTURE-SERVICE-ROLE-BOUNDARY
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP03
+    required_component_roles:
+    - &id009
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id010
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id011
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id012
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id013
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      observable_action:
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      trigger:
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      visual_beat:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      capture_instruction:
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP04
+    required_component_roles:
+    - &id014
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id015
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id016
+      role: transition
+      min_count: 1
+      max_count: 3
+    - &id017
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id018
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      observable_action:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      transition:
+      - RCV2-003-TRANSITION-ROLE-SPECIFIC-HANDOFF
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP05
+    required_component_roles:
+    - &id019
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id020
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id021
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id022
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id023
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      trigger:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      - RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP06
+    required_component_roles:
+    - &id024
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id025
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id026
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id027
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      professional_judgment:
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+      visual_beat:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP07
+    required_component_roles:
+    - &id028
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id029
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id030
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id031
+      role: closing
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id028
+    - *id029
+    - *id030
+    - *id031
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      professional_judgment:
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      closing:
+      - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP08
+    required_component_roles:
+    - &id032
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id033
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id034
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id035
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id032
+    - *id033
+    - *id034
+    - *id035
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      visual_beat:
+      - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      - RCV2-003-VISUAL-LIGHT-COLOR-CONTEXT
+      professional_judgment:
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP09
+    required_component_roles:
+    - &id036
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id037
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id038
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id039
+      role: closing
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id036
+    - *id037
+    - *id038
+    - *id039
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      professional_judgment:
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      closing:
+      - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP10
+    required_component_roles:
+    - &id040
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id041
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id042
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id043
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id040
+    - *id041
+    - *id042
+    - *id043
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      - RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP11
+    required_component_roles:
+    - &id044
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id045
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id046
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id047
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id048
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id044
+    - *id045
+    - *id046
+    - *id047
+    - *id048
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      trigger:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      - RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP12
+    required_component_roles:
+    - &id049
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id050
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id051
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id052
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id049
+    - *id050
+    - *id051
+    - *id052
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      observable_action:
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      professional_judgment:
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      capture_instruction:
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP13
+    required_component_roles:
+    - &id053
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id054
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id055
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id056
+      role: transition
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id053
+    - *id054
+    - *id055
+    - *id056
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      visual_beat:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+      transition:
+      - RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE
+      - RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP14
+    required_component_roles:
+    - &id057
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id058
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id059
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id060
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id057
+    - *id058
+    - *id059
+    - *id060
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      visual_beat:
+      - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      - RCV2-003-VISUAL-LIGHT-COLOR-CONTEXT
+      observable_action:
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      capture_instruction:
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP15
+    required_component_roles:
+    - &id061
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id062
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id063
+      role: transition
+      min_count: 1
+      max_count: 3
+    - &id064
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id061
+    - *id062
+    - *id063
+    - *id064
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      observable_action:
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      transition:
+      - RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE
+      - RCV2-003-TRANSITION-ROLE-SPECIFIC-HANDOFF
+      - RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+      capture_instruction:
+      - RCV2-003-CAPTURE-SERVICE-ROLE-BOUNDARY
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP16
+    required_component_roles:
+    - &id065
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id066
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id067
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id068
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id065
+    - *id066
+    - *id067
+    - *id068
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      observable_action:
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      professional_judgment:
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      capture_instruction:
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP17
+    required_component_roles:
+    - &id069
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id070
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id071
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id072
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id073
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id069
+    - *id070
+    - *id071
+    - *id072
+    - *id073
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      trigger:
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      observable_action:
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      visual_beat:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      capture_instruction:
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP18
+    required_component_roles:
+    - &id074
+      role: scene
+      min_count: 1
+      max_count: 3
+    - &id075
+      role: visual_beat
+      min_count: 1
+      max_count: 3
+    - &id076
+      role: observable_action
+      min_count: 1
+      max_count: 3
+    - &id077
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id074
+    - *id075
+    - *id076
+    - *id077
+    uncovered_required_roles: []
+    covering_component_ids:
+      scene:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+      - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      visual_beat:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      observable_action:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP19
+    required_component_roles:
+    - &id078
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id079
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id080
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id081
+      role: closing
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id078
+    - *id079
+    - *id080
+    - *id081
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      - RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      - RCV2-002-TRIGGER-06-DISPLAY-RESET
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      closing:
+      - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  - content_product_type_id: CP20
+    required_component_roles:
+    - &id082
+      role: trigger
+      min_count: 1
+      max_count: 3
+    - &id083
+      role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - &id084
+      role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - &id085
+      role: capture_instruction
+      min_count: 1
+      max_count: 3
+    covered_required_roles:
+    - *id082
+    - *id083
+    - *id084
+    - *id085
+    uncovered_required_roles: []
+    covering_component_ids:
+      trigger:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      - RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+      professional_judgment:
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+      - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      audience_facing_reasoning_move:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      capture_instruction:
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+    compatibility_pass: true
+    hard_guard_pass: true
+    component_supply_complete: true
+  summary:
+    component_supply_complete_count: 20
+    component_supply_incomplete_count: 0
+    complete_profile_ids:
+    - CP01
+    - CP02
+    - CP03
+    - CP04
+    - CP05
+    - CP06
+    - CP07
+    - CP08
+    - CP09
+    - CP10
+    - CP11
+    - CP12
+    - CP13
+    - CP14
+    - CP15
+    - CP16
+    - CP17
+    - CP18
+    - CP19
+    - CP20
+    incomplete_profile_ids: []
+    unresolved_required_role_gaps: []
+  coverage_digest: 0df0ca6f7ec5e2ac0ca03b9a0f815ab5d0a549a1ada792fc58eb6755274f549a

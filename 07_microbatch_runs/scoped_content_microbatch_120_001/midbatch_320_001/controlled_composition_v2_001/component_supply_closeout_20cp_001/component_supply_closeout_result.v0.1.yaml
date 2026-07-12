@@ -1,0 +1,61 @@
+component_supply_closeout_result:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_COMPONENT_SUPPLY_CLOSEOUT_001
+  execution_integrity: PASS
+  component_supply_status: STRUCTURAL_20CP_SUPPLY_COMPLETE_PENDING_GUARDIAN
+  verdict: EXECUTED_PENDING_GUARDIAN
+  counts:
+    reviewed_decision_count: 26
+    repaired_22_reviewed_count: 22
+    decision_distribution:
+      MERGE_INTO_REUSABLE: 3
+      PROMOTE_AS_NEW: 9
+      REJECT: 14
+    inherited_reusable_component_count: 55
+    accepted_reusable_component_count: 9
+    registry_total_count: 64
+    component_supply_complete_profile_count: 20
+    fixture_gap_count: 20
+    fact_fixture_ready_profile_count: 0
+    runtime_generation_eligible_profile_count: 0
+    canonical_composition_plan_count: 0
+    audience_facing_content_count: 0
+    knowledge_count_increment: 0
+    ontology_truth_change_count: 0
+  readiness_flags:
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    CandidatePack_ready: false
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+  generated_file_digests:
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_closeout_contract.v0.1.yaml
+    : f454cfc7f06b24e75424948f823a94570a088b5bc3afb428db0d242da4db094b
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_review_decisions.v0.3.jsonl
+    : 7f91efeda448d1d66efc40c545671cb8f4e848274eeab1267a5548262fff2fe8
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/reviewed_reusable_component_registry.v0.3.jsonl
+    : e5a3f31a9017a39e51ad409531e26b1e910e8e2effb34a4a24dab5fd11105bb1
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/content_product_component_coverage.v0.3.yaml
+    : 374cb796018d8d5e316e234db747218a0bb61a3574d1b71dcd5151e53bbe6b81
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_guardian_review_packet.v0.1.yaml
+    : efb920a6d4ff8df3faf350209cc4711f29c3c17777da587d0d8323d5f54db9d6
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py
+    : d03d64c0ef6c50f50f36a4d1e7f2185a7f971cfa731b4eee788b563cc47616df
+    ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py: 42c28f8f7cac7ead2788fd59c42cffe8504828cf0bcad2add8ad29fe58455e5a
+  blocker_ids: []
+  not_proven:
+  - guardian_domain_review_pass
+  - runtime_ingest_ready
+  - fact_fixture_ready
+  - ORCH_integrated
+  - generation_600_or_3600_allowed
+  result_digest: d8b7d77ce57b26b08cc5515f715452f6f35148e80d176fc673e20fdb48800807

@@ -1,0 +1,134 @@
+component_supply_closeout_contract:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_COMPONENT_SUPPLY_CLOSEOUT_001
+  task_layer: GKB_CONTENT_ASSET_LAYER
+  execution_mode: EVIDENCE_GROUNDED_COMPONENT_REPAIR_AND_SUPPLY_REVIEW
+  baseline:
+    expected_head: c7c1a0a277af1ae70db2dc6700f74ea1bc2c7464
+    clean_120_sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    content_product_profile_registry_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+    scale_600_contract_sha256: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+    s2_v002_decisions_sha256: d233b8e1c4e1b773ed23174f702fd3f6b0881481b0e9d0442feef33c91a46f65
+    s2_v002_registry_sha256: 6daf3f043ad22d021e0b7719da30a25d9bf13d8c969d41cf6fec793881f9d14b
+    s2_v002_coverage_sha256: 5f520a1b462b823f6719bd63b97886eb560a34ffde28825bf666af880aa12d22
+    s2_v002_handoff_sha256: a81322e034618a78164771b1d7389825623b042fb6d710e0c9c37146b77d61ca
+  ownership_boundaries:
+    GKB_component_asset_layer: true
+    KE_truth_source_write: false
+    ontology_truth_change_count: 0
+    canonical_composition_plan_count: 0
+    audience_facing_content_count: 0
+  decision_policy:
+    reviewed_needs_repair_candidate_count: 22
+    allowed_decisions:
+      - PROMOTE_AS_NEW
+      - MERGE_INTO_REUSABLE
+      - REFERENCE_ONLY
+      - NEEDS_REPAIR
+      - REJECT
+    no_promotion_quota: true
+    no_20cp_forced_green: true
+    scripts_may_not_generate_semantic_decisions: true
+  source_audit:
+    inspection_order: stable_asset_id
+    inspected_asset_ids:
+      - P7D40-REPAIR-006
+      - P7D40-REPAIR-012
+      - P7D40-REPAIR-021
+      - P7D40-REPAIR-030
+      - P7D40-REPAIR-040
+      - P7D40-REPAIR-048
+      - P7D40-REPAIR-054
+      - P7D40-REPAIR-063
+      - P7D40-REPAIR-071
+      - P7D40-REPAIR-077
+      - P7D40-REPAIR-082
+      - P7D40-REPAIR-089
+      - P7D40-REPAIR-097
+      - P7D40-REPAIR-105
+      - P7D40-REPAIR-115
+      - P7D40-REPAIR-127
+      - P7D40-REPAIR-129
+      - P7D40-REPAIR-138
+      - P7D40-REPAIR-151
+      - P7D40-REPAIR-154
+      - P7D40-REPAIR-162
+      - P7D40-REPAIR-170
+      - P7D40-REPAIR-177
+      - P7D40-REPAIR-191
+      - P7D40-REPAIR-195
+      - P7D40-REPAIR-202
+      - P7D40-REPAIR-214
+      - P7D40-REPAIR-224
+      - P7D40-REPAIR-226
+      - P7D40-REPAIR-234
+      - P7D40-REPAIR-243
+      - P7D40-REPAIR-254
+      - P7D40-REPAIR-263
+      - P7D40-REPAIR-267
+      - P7D40-REPAIR-276
+      - P7D40-REPAIR-287
+      - P7D40-REPAIR-289
+      - P7D40-REPAIR-298
+      - P7D40-REPAIR-312
+      - P7D40-REPAIR-316
+      - RV80-ASSET-001
+      - RV80-ASSET-002
+      - RV80-ASSET-003
+      - RV80-ASSET-038
+    extracted_candidate_asset_ids:
+      - P7D40-REPAIR-054
+      - P7D40-REPAIR-129
+      - P7D40-REPAIR-151
+      - P7D40-REPAIR-226
+    already_represented_asset_ids:
+      - P7D40-REPAIR-006
+      - P7D40-REPAIR-012
+      - P7D40-REPAIR-021
+      - P7D40-REPAIR-030
+      - P7D40-REPAIR-063
+      - P7D40-REPAIR-071
+      - P7D40-REPAIR-077
+      - P7D40-REPAIR-082
+      - P7D40-REPAIR-089
+      - P7D40-REPAIR-097
+      - P7D40-REPAIR-105
+      - P7D40-REPAIR-115
+      - P7D40-REPAIR-127
+      - P7D40-REPAIR-138
+      - P7D40-REPAIR-154
+      - P7D40-REPAIR-162
+      - P7D40-REPAIR-170
+      - P7D40-REPAIR-177
+      - P7D40-REPAIR-195
+      - P7D40-REPAIR-202
+      - P7D40-REPAIR-214
+      - P7D40-REPAIR-224
+      - P7D40-REPAIR-234
+      - P7D40-REPAIR-243
+      - P7D40-REPAIR-254
+      - P7D40-REPAIR-263
+      - P7D40-REPAIR-267
+      - P7D40-REPAIR-276
+      - P7D40-REPAIR-287
+      - P7D40-REPAIR-289
+      - P7D40-REPAIR-298
+      - RV80-ASSET-001
+      - RV80-ASSET-003
+    no_candidate_reason_by_asset:
+      RV80-ASSET-002: S2_v002_action_already_promoted; held_visual_was_bare_noun
+      RV80-ASSET-038: S2_v002_claim_boundary_reclassified_as_closing; held_visual_was_bare_noun
+      P7D40-REPAIR-040: S2_v002_reasoning_repaired_from_held_candidate
+      P7D40-REPAIR-048: S2_v002_transition_repaired_from_held_candidate
+      P7D40-REPAIR-191: S2_v002_reasoning_repaired_from_held_candidate
+      P7D40-REPAIR-312: S2_v002_display_transition_repaired_from_held_candidate
+      P7D40-REPAIR-316: S2_v002_transition_merge_repaired_from_held_candidate
+  fixed_false_status:
+    fixture_gap_count: 20
+    fact_fixture_ready_profile_count: 0
+    runtime_generation_eligible_profile_count: 0
+    runtime_ingest_ready: false
+    orch_ready: false
+    generator_qualified: false
+    generation_600_allowed: false
+    expand_3600_allowed: false
