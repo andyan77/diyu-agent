@@ -1,0 +1,15 @@
+structural_isolation_registry:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_B_LANE_INDEPENDENT_COMPOSITION_DEV_GATE_001
+  record_count: 1
+  records:
+  - candidate_id: DEV-OPEN-CAND-CP14-B-001
+    candidate_digest: e335323a4f8d0f358fd3457cb56f6220b19f70571c87cbc4a5e3d27830c771cf
+    validation_errors:
+    - E_OBLIGATION_BAD_REFS:CP14-B-OBL-06
+    machine_structural_eligible: false
+    lifecycle: QUARANTINED_DEVELOPMENT_EVIDENCE
+    development_gate_pass: false
+    hidden_created: false
+    may_be_deleted_or_replaced: false
+    source_machine_result_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/machine_structural_results.v0.1.jsonl

@@ -1,0 +1,38 @@
+guardian_checkpoint_0_packet:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_B_LANE_INDEPENDENT_COMPOSITION_DEV_GATE_001
+  PR_number: 9
+  original_head_sha: 8d708ba2502480ca4a60b38c9f3d6cf6e0d0cbb6
+  checker_closeout_commit_sha_source: PR_HEAD_AFTER_SINGLE_CLOSEOUT_COMMIT
+  expected_new_commit_count: 1
+  live_checker_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py
+  receipt_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/checker_closeout_receipt.v0.1.yaml
+  guardian_A_verdict_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/guardian_inputs/guardian_checkpoint_A_verdict.v0.1.yaml
+  founder_decision_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/guardian_inputs/founder_architecture_decision.v0.1.yaml
+  external_review_binding_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/guardian_inputs/external_review_binding.v0.1.yaml
+  structural_isolation_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/structural_isolation_registry.v0.1.yaml
+  required_guardian_tamper_rechecks:
+  - expected_score_value_leak_must_fail
+  - review_envelope_value_leak_must_fail
+  - sibling_candidate_value_leak_must_fail
+  - paired_output_value_leak_must_fail
+  - expected_verdict_value_leak_must_fail
+  - development_PASS_lie_must_fail
+  - missing_failure_blockers_must_fail
+  - hidden_after_failure_must_fail
+  - generator_qualified_flip_must_fail
+  - readiness_flip_must_fail
+  - baseline_increase_must_fail
+  - structural_ineligible_claimed_eligible_must_fail
+  expected_honest_failure_behavior:
+    artifact_integrity_pass: true
+    development_gate_pass: false
+    pair_overlap_present: true
+    CP14_B_quarantined: true
+    governance_checker_pass: true
+  guardian_checkpoint_0_status: PENDING_EXTERNAL_GUARDIAN
+  eligible_to_merge_PR9_as_failure_evidence: false
+  eligible_to_enter_B_lane_task: false
+  hidden_created_count: 0
+  accepted_baseline_count: 120
+  generator_qualified: false

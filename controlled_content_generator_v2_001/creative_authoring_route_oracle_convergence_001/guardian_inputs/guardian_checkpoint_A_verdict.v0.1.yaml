@@ -1,0 +1,66 @@
+guardian_checkpoint_A_verdict:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_B_LANE_INDEPENDENT_COMPOSITION_DEV_GATE_001
+  authority: EXTERNAL_GUARDIAN_FACTS_ACCEPTED_BY_FOUNDER
+  artifact_integrity_pass: true
+  authoring_architecture_pass: true
+  route_gate_pass: true
+  development_gate_pass: false
+  development_semantic_gate_pass: false
+  pair_overlap_present: true
+  structural_failure_present: true
+  hidden_created: false
+  generator_qualified: false
+  accepted_baseline_count: 120
+  eligible_to_open_sealed_hidden: false
+  eligible_to_merge_before_checkpoint_0: false
+  metrics:
+    candidate_count: 40
+    raw_grade_A_count: 21
+    raw_grade_B_count: 19
+    zero_edit_first_acceptance_count: 20
+    lane_A_first_acceptance_count: 15
+    lane_B_first_acceptance_count: 5
+    independent_pair_pass_count: 7
+    semantic_near_duplicate_pair_count: 13
+    machine_structural_failure_count: 1
+  blocking_items:
+  - B_DEVELOPMENT_GATE_THRESHOLD_NOT_MET
+  - B_PAIR_INDEPENDENCE_FAILED
+  - B_CP14_B_INVALID_OBLIGATION_REF
+  review_binding_ref: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/guardian_inputs/external_review_binding.v0.1.yaml
+  frozen_artifacts:
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/constraint_compiler.py
+    sha256: 838e61c23d5865b5de835e1f0a2f13f79348f979c3104f84644c2726df1efdb0
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/response_validator.py
+    sha256: 58280c8037825f6d0cbc9822618a2855075d64793ec4a9988c1a8842fc2d75f8
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/controlled_v2_route_gate.py
+    sha256: e741811540938f7eb2d35a2dd10e65074b365f86740d19284483ef2865c055e3
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/creative_author_instruction.v0.1.yaml
+    sha256: a48d5a27c3309b2a19e9a749a389475abfa5c67c5ba6534d813cb85157b6df13
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/creative_author_protocol.v0.1.yaml
+    sha256: b264c1f02e4c4a8f4fdb14948dcf13dac1942af892bcdf0e9358f240e730e3a0
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/run_convergence_materializer.py
+    sha256: e8b614080e1752a3295bc948ff2decdf9af1b92fcf4833172c9fff2279d56de0
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/material_packs.v0.1.jsonl
+    sha256: d41996cd08fa6e60a62e7a81f41281b3e18a6518eea7f312f0d3b8ac0b088c6e
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/composition_plans.v0.1.jsonl
+    sha256: 42421f6578af2c0d16e616496d51127ee34f7bf7210bc7d15013b0bf29e3eeee
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/authoring_requests.v0.1.jsonl
+    sha256: fb8965bef7cb343413d3e15bf123a5ff6d4393b06a92a243d187d0808bb39d5b
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/raw_authoring_responses.v0.1.jsonl
+    sha256: a57c32ca514cfc155ba0f3079c12b6f140bb1aa7c78ed1cf8f3ea7951d10e131
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/candidates.v0.1.jsonl
+    sha256: 2d400b8ac55b9c990b1b25ebe7e5055b56aa4a48244974d3f98eec43e6a02a09
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/machine_structural_results.v0.1.jsonl
+    sha256: f240471d5fb1f1d09bce81ec3a3230a798646d4525516fd6e637225e18353f4e
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/pair_independence_machine_results.v0.1.jsonl
+    sha256: ce1d8239c1d91c41df666c60568bfe26b17877e7802596af44ebaa3de51e1a2d
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/route_inputs.v0.1.jsonl
+    sha256: 68bc65bff904652f1e565097117c7e8dfccdcc6ef00d2e3a0e93a082a4d72f12
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/sealed_route_expectations.v0.1.jsonl
+    sha256: 980ff2647d5008f714127ad4e13abc569f56d67f6902f7e34dd798d6c05644f0
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/route_actuals.v0.1.jsonl
+    sha256: bb7d68686761b7be092f191a0f46cb7493a3947f98959703c3ccaa69a86de3ad
+  - path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/dev_open_gate_001/reviewer_inputs/development_review_summary.v0.1.yaml
+    sha256: 145d65ea3283031c7c890065ea761264890070c7a8d3f6e41b0b40debcd8d9d4

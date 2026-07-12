@@ -57,8 +57,8 @@ jobs:
           python3 ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py --selftest
           python3 controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/run_qualification_calibration_repair_002_materializer.py --phase calibration --check
           python3 controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/run_qualification_calibration_repair_002_materializer.py --phase hidden --check
-          python3 ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py
-          python3 ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py --selftest
+          python3 controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py
+          python3 controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py --selftest
           python3 controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/run_convergence_materializer.py --check
       - name: Verify fail-closed optimized mode
         env:
@@ -86,8 +86,8 @@ jobs:
             "ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py --selftest" \
             "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py" \
             "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py --selftest" \
-            "ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py" \
-            "ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py --selftest"
+            "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py" \
+            "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py --selftest"
           do
             set +e
             python3 -O $args
