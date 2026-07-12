@@ -1,0 +1,88 @@
+fact_authorization_input_contract:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
+  contract_scope: GKB content product input sufficiency and synthetic validation fixtures only
+  baseline:
+    expected_branch: master
+    expected_head: 6db51ad67d747f56815316c5ff88edf16a7d44bc
+    clean_120_sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    scale_600_contract_sha256: 966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9
+    content_product_profile_registry_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+    content_product_profiles_file_sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+    reviewed_reusable_component_registry_sha256: e5a3f31a9017a39e51ad409531e26b1e910e8e2effb34a4a24dab5fd11105bb1
+    component_coverage_digest: 0df0ca6f7ec5e2ac0ca03b9a0f815ab5d0a549a1ada792fc58eb6755274f549a
+    component_supply_result_digest: 54786c74af8056f0e5313e342fc779f5d4df7d01f695370584878edb7e84d5bf
+    reviewed_reusable_component_count: 64
+    component_supply_complete_profile_count: 20
+    false_CP_applicability_edge_count: 0
+  fixture_layer_separation:
+    contract_validation_fixture:
+      may_be_synthetic: true
+      may_enter_runtime: false
+      may_be_used_as_brand_fact: false
+      may_generate_audience_content: false
+    verified_brand_runtime_input:
+      created_in_this_task: false
+      verified_brand_fact_bundle_count: 0
+      verified_runtime_authorization_count: 0
+      runtime_brand_fact_gap_profile_count: 20
+  founder_authorized_verified_brand_input_allowlist: []
+  real_brand_fact_binding_count: 0
+  real_event_binding_count: 0
+  real_authorization_grant_count: 0
+  allowed_source_kinds:
+  - authorized_staff_statement
+  - brand_provided_record
+  - product_specification
+  - process_or_production_record
+  - test_or_measurement_record
+  - observed_capture_record
+  - customer_authorized_input
+  - official_commitment_record
+  authorization_statuses:
+  - GRANTED_VERIFIED
+  - SIMULATED_GRANTED_FOR_CONTRACT_TEST
+  - NOT_REQUIRED_WITH_REASON
+  - MISSING
+  - DENIED
+  - EXPIRED
+  - REVOKED
+  privacy_classes:
+  - public
+  - internal
+  - personal
+  - sensitive
+  - confidential
+  event_truth_policy:
+    allowed_modes_source: profile.event_truth_policy.allowed_event_truth_modes
+    forbidden_modes_source: profile.event_truth_policy.default_deny_unlisted complement
+    forbidden_mode_representation:
+    - policy: DEFAULT_DENY_UNLISTED
+      mode_selector: any mode not listed in allowed_event_truth_modes
+      source: profile.event_truth_policy.default_deny_unlisted
+    prototype_may_look_like_happened_event: false
+  degraded_output_contract:
+    non_publishable: true
+    audience_facing: false
+    title_count: 0
+    body_count: 0
+    spoken_line_count: 0
+    contains_asserted_missing_value: false
+    runtime_ingest_ready: false
+  component_role_read_compatibility:
+    precedence:
+    - component_role
+    - source_component_role
+    data_rewrite_in_this_task: false
+  reasoning_component_constraint:
+    component_id: RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+    profile_specific_fact_binding_required: true
+    generic_fit_basis_may_replace_profile_fact_binding: false
+    component_revision_in_this_task: false
+  status_line:
+    explicit_contract_fixture_gap_count_after: 0
+    orch_validation_dryrun_eligible_profile_count: 20
+    verified_brand_fact_bundle_count: 0
+    runtime_generation_eligible_profile_count: 0
+    runtime_ingest_ready: false
+  contract_digest: 2d2201c8398c6c2f77689b40a2a0c2a8de5d1245c787c1b4f23d5e794c578cd2

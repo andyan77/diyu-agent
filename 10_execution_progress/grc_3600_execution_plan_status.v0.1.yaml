@@ -861,7 +861,7 @@ grc_3600_execution_plan_status:
       generator_qualified: false
       generation_600_allowed: false
       expand_3600_allowed: false
-      result_digest: d8b7d77ce57b26b08cc5515f715452f6f35148e80d176fc673e20fdb48800807
+      result_digest: 54786c74af8056f0e5313e342fc779f5d4df7d01f695370584878edb7e84d5bf
     generated_artifacts:
       directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001
       contract_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_closeout_contract.v0.1.yaml
@@ -898,7 +898,93 @@ grc_3600_execution_plan_status:
       if_guardian_fails:
         task_id: GKB_V2_20CP_COMPONENT_SUPPLY_CLOSEOUT_REPAIR_002
         action: repair guardian findings before any fixture or ORCH work
-    migration_digest: 2d9a674232d47e878860388283383d693a040bdd5f77b61cc7e9e1069abefe39
+    migration_digest: a645c0c096f2b29448b582d4ef1a0b8e24a1355e223e0a54162a90b198846d0c
+  route_migration_24:
+    applied_by_task: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: false
+    old_checker_edit_scope: successor_write_surface_compatibility_only
+    no_readiness_flipped: true
+    fact_authorization_fixture_closeout:
+      task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
+      status: EXECUTED_PENDING_GUARDIAN
+      execution_integrity: PASS
+      contract_validation_status: FACT_AUTHORIZATION_CONTRACT_AND_VALIDATION_FIXTURES_COMPLETE_PENDING_GUARDIAN
+      profile_contract_count: 20
+      validation_fixture_profile_count: 20
+      validation_fixture_case_count: 60
+      positive_fixture_count: 20
+      missing_input_fixture_count: 20
+      negative_fixture_count: 20
+      explicit_contract_fixture_gap_count: 0
+      orch_validation_dryrun_eligible_profile_count: 20
+      verified_brand_fact_bundle_count: 0
+      verified_runtime_authorization_count: 0
+      runtime_brand_fact_gap_profile_count: 20
+      runtime_generation_eligible_profile_count: 0
+      canonical_composition_plan_count: 0
+      audience_facing_content_count: 0
+      knowledge_count_increment: 0
+      KE_truth_change_count: 0
+      professional_fact_adjudication_count: 0
+      runtime_ingest_ready: false
+      orch_ready: false
+      generator_qualified: false
+      generation_600_allowed: false
+      expand_3600_allowed: false
+      result_digest: 5e86de492d3fac674592bbdc588f6a1ac07048a354fddea94e6ff1e61316eae1
+    generated_artifacts:
+      directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001
+      contract_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_input_contract.v0.1.yaml
+      requirements_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/content_product_fact_authorization_requirements.v0.1.jsonl
+      fixtures_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/content_product_validation_fixtures.v0.1.jsonl
+      run_results_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/validation_fixture_run_results.v0.1.jsonl
+      coverage_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/validation_fixture_coverage.v0.1.yaml
+      handoff_candidate_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/gkb_orch_validation_fixture_handoff_candidate.v0.1.yaml
+      result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_fixture_closeout_result.v0.1.yaml
+      guardian_packet_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_fixture_guardian_packet.v0.1.yaml
+      freezer_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/run_fact_authorization_fixture_freezer.py
+      checker_path: ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py
+    successor_checker_compatibility_update:
+      reason: component_supply_closeout_checker_was_over_strict_against_legal_successor_write_surface
+      touched_existing_checker_path: ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py
+      touched_component_supply_result_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml
+      component_registry_rewritten: false
+      component_coverage_rewritten: false
+      domain_semantics_changed: false
+      successor_paths_allowed_only:
+        - 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001
+        - ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py
+    must_remain_false:
+      - runtime_ingest_ready
+      - generation_eligible
+      - generation_allowed
+      - generation_600_allowed
+      - expand_600_allowed
+      - expand_3600_allowed
+      - CandidatePack_ready
+      - candidatepack_ready
+      - KE_ready
+      - Serving_ready
+      - RAG_ready
+      - DIFY_ready
+      - production_ready
+      - release_ready
+      - orch_ready
+      - generator_qualified
+    downstream_and_readiness:
+      all_false: true
+    recommended_next_route:
+      if_guardian_passes:
+        task_id: GKB_V2_20CP_FACT_AUTHORIZATION_FIXTURE_PR_READY_AND_MERGE_001
+        action: merge fact/authorization validation fixture PR before any ORCH dry-run
+      if_guardian_fails:
+        task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_REPAIR_001
+        action: repair contract or fixture findings before merge
+    migration_digest: d44917050b4717db059195550ad84387e451f5f07548680be2690017c2b7a828
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

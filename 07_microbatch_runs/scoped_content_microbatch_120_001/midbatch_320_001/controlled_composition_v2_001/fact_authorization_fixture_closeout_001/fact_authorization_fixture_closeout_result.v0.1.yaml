@@ -1,0 +1,71 @@
+fact_authorization_fixture_closeout_result:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
+  execution_integrity: PASS
+  contract_validation:
+    profile_contract_count: 20
+    validation_fixture_profile_count: 20
+    validation_fixture_case_count: 60
+    positive_fixture_count: 20
+    missing_input_fixture_count: 20
+    negative_fixture_count: 20
+    explicit_contract_fixture_gap_count: 0
+    orch_validation_dryrun_eligible_profile_count: 20
+  runtime_truth:
+    verified_brand_fact_bundle_count: 0
+    verified_runtime_authorization_count: 0
+    runtime_brand_fact_gap_profile_count: 20
+    runtime_generation_eligible_profile_count: 0
+  boundaries:
+    runtime_ingest_ready: false
+    canonical_composition_plan_count: 0
+    audience_facing_content_count: 0
+    KE_truth_change_count: 0
+    knowledge_count_increment: 0
+    professional_fact_adjudication_count: 0
+    generator_qualified: false
+    generation_600_allowed: false
+    downstream_readiness_all_false: true
+  readiness_flags:
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    CandidatePack_ready: false
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+    orch_ready: false
+    generator_qualified: false
+  verdict: FACT_AUTHORIZATION_CONTRACT_AND_VALIDATION_FIXTURES_COMPLETE_PENDING_GUARDIAN
+  blocker_ids: []
+  not_proven:
+  - FACTS_VERIFIED
+  - BRAND_INPUT_READY
+  - RUNTIME_READY
+  - GENERATOR_QUALIFIED
+  generated_file_digests:
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_input_contract.v0.1.yaml
+    : 30e2f571fa0dbcf63419e15dbca1ded5cb9fba94f11c12fae8ec4393c2e9453a
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/content_product_fact_authorization_requirements.v0.1.jsonl
+    : e59f7e187d78477b6ec587dfe1df176aeb8b08ef94972ae0ef09273c5c7e6f84
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/content_product_validation_fixtures.v0.1.jsonl
+    : bff74e6fac3fe85733fc6d094a81d14af3c303aa0a003e7dc7776cc034043697
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/validation_fixture_run_results.v0.1.jsonl
+    : 32059492fe23e5c8ae0a0a3ea145642fd487fb6c01afb9939552231b4f9d4b90
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/validation_fixture_coverage.v0.1.yaml
+    : d4b7f5823fc8894014bed2286213142fc5c3bd2ff2aecc40448dd8e22d460903
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/gkb_orch_validation_fixture_handoff_candidate.v0.1.yaml
+    : 99de1dcd8b1f42d4de89bb23c01632f94c821bf44d2e97256d59571323d4059b
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_fixture_guardian_packet.v0.1.yaml
+    : f7933087ebea0ea3d5aa4e6db1805e2d7b3d97608378d38dee8fec1bcda660b9
+    ? 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/run_fact_authorization_fixture_freezer.py
+    : c0c0bb06e1507d6a245dcfbcf393695f6145a60e279e1e15d0e21a0c788d6a1b
+    ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py: 6fddb3c98cc3af9fc549f873af1b2f0e2284810b77e5639efad26782df794363
+  result_digest: 5e86de492d3fac674592bbdc588f6a1ac07048a354fddea94e6ff1e61316eae1
