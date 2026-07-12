@@ -1,0 +1,62 @@
+qualification_rerun_result:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_QUALIFICATION_PROBE_40_TARGETED_REPAIR_001
+  verdict: SEALED_HIDDEN_QUALIFICATION_RERUN_EXECUTED_PENDING_GUARDIAN
+  phase_0:
+    probe_PR_6_merged: true
+    merge_commit_sha: 531fe864b0b338a8708449ae29e739e2dce8e119
+    merge_tree_sha: 63eba39bf2ed4f31d0906d8339fe169adf9a79a4
+    reviewed_head_sha: aaeda5a280b2790c00157e47f89370f6535ee230
+  calibration:
+    calibration_freeze_commit_sha: 6131fa4fdd1221a1b7ef80c6e785ba1335e0b0fd
+    generator_core_frozen: true
+    material_sufficiency_gate_built: true
+    style_vector_control_built: true
+    route_case_count: 60
+    development_regression_count: 40
+  hidden:
+    planned_count: 40
+    generated_count: 40
+    replacement_count: 0
+    semantic_reroll_count: 0
+    generator_core_changed_after_freeze: false
+  qualification:
+    machine_qualified: false
+    generator_qualified: false
+    founder_final_qualification: PENDING
+  counting:
+    accepted_baseline_before: 120
+    old_probe_40_increment: 0
+    development_regression_40_increment: 0
+    hidden_holdout_40_increment: 0
+    baseline_increment_count: 0
+    accepted_baseline_after: 120
+    target_baseline: 300
+  runtime:
+    external_provider_API_call_count: 0
+    runtime_provider_adapter_qualified: false
+    runtime_generation_eligible_profile_count: 0
+    readiness_all_false: true
+  readiness:
+    generator_qualified: false
+    runtime_provider_adapter_qualified: false
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    Serving_ready: false
+    production_ready: false
+    release_ready: false
+    downstream_readiness_all_false: true
+  machine_results:
+    hidden_machine_result_count: 40
+    structural_pass_count: 40
+    full_free_text_quality_proven_by_machine: false
+    full_free_text_fabrication_detection_proven: false
+    Guardian_full_surface_review_required: true
+  result_digest: 5a3fee86650cdb6cbd68d14352d485034b875cf5169a4204311ddd5bca976299

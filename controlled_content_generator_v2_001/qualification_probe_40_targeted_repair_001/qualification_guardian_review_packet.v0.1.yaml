@@ -1,0 +1,20 @@
+qualification_guardian_review_packet:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_QUALIFICATION_PROBE_40_TARGETED_REPAIR_001
+  review_scope: sealed hidden 40 full-surface review
+  calibration_freeze_commit_sha: 6131fa4fdd1221a1b7ef80c6e785ba1335e0b0fd
+  hidden_candidate_count: 40
+  surfaces_to_read:
+  - title
+  - body
+  - spoken_lines
+  - CTA
+  - visual_beats
+  - capture_instructions
+  - audio_grammar
+  - editing_grammar
+  - surface_units
+  guardian_must_not_trust_machine_quality: true
+  generator_qualified: false
+  baseline_increment_count: 0
+  packet_digest: 58d6fa2a697293967525462b6e4c504224ed84178310fccc44724045f1730cc7
