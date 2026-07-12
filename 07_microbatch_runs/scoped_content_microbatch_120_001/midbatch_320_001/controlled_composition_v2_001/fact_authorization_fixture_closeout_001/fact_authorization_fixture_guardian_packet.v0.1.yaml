@@ -1,0 +1,66 @@
+fact_authorization_fixture_guardian_packet:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
+  review_scope: 20CP fact/source/authorization contracts and synthetic validation fixtures; not runtime-ready
+  profile_ids:
+  - CP01
+  - CP02
+  - CP03
+  - CP04
+  - CP05
+  - CP06
+  - CP07
+  - CP08
+  - CP09
+  - CP10
+  - CP11
+  - CP12
+  - CP13
+  - CP14
+  - CP15
+  - CP16
+  - CP17
+  - CP18
+  - CP19
+  - CP20
+  fixture_count: 60
+  coverage_summary:
+    profile_contract_count: 20
+    validation_fixture_profile_count: 20
+    validation_fixture_case_count: 60
+    positive_fixture_count: 20
+    missing_input_fixture_count: 20
+    negative_fixture_count: 20
+    explicit_contract_fixture_gap_count: 0
+    orch_validation_dryrun_eligible_profile_count: 20
+    runtime_brand_fact_gap_profile_count: 20
+    runtime_generation_eligible_profile_count: 0
+    complete_profile_ids:
+    - CP01
+    - CP02
+    - CP03
+    - CP04
+    - CP05
+    - CP06
+    - CP07
+    - CP08
+    - CP09
+    - CP10
+    - CP11
+    - CP12
+    - CP13
+    - CP14
+    - CP15
+    - CP16
+    - CP17
+    - CP18
+    - CP19
+    - CP20
+    incomplete_profile_ids: []
+  guardian_focus:
+  - 20 contract signatures are semantically distinct, not CP-ID clones
+  - 60 fixtures preserve synthetic/runtime separation
+  - missing routes produce no audience output
+  - negative fixtures hit profile-specific hard guards
+  - runtime/KE/ORCH readiness remains false
+  packet_digest: c7b2a7731e1a9667c2a2e674cc1ff1b30c02da360e4e000773f2466f1a6a0c53

@@ -35,8 +35,10 @@ COVERAGE_PATH = TASK_DIR / "content_product_component_coverage.v0.3.yaml"
 RESULT_PATH = TASK_DIR / "component_supply_closeout_result.v0.1.yaml"
 PACKET_PATH = TASK_DIR / "component_supply_guardian_review_packet.v0.1.yaml"
 CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
+FACT_AUTH_FIXTURE_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
+SUCCESSOR_FACT_AUTH_FIXTURE_DIR = ROOT / "fact_authorization_fixture_closeout_001"
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -47,6 +49,7 @@ ALLOWED_CHANGED_PATHS = {
     PACKET_PATH,
     FREEZER_PATH,
     CHECKER_PATH,
+    FACT_AUTH_FIXTURE_CHECKER_PATH,
     LEDGER_PATH,
     CI_PATH,
 }
@@ -205,7 +208,11 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
     elif git(root, ["merge-base", "--is-ancestor", BASELINE_HEAD, head]) is None:
         add_error(errors, "E_BASELINE", "git", "baseline is not ancestor of current HEAD")
     changed = changed_paths(root)
-    unexpected = sorted(path.as_posix() for path in changed - ALLOWED_CHANGED_PATHS)
+    unexpected = sorted(
+        path.as_posix()
+        for path in changed - ALLOWED_CHANGED_PATHS
+        if not path.is_relative_to(SUCCESSOR_FACT_AUTH_FIXTURE_DIR)
+    )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", f"unexpected changed paths: {unexpected}")
 
@@ -458,7 +465,7 @@ def validate_ledger(root: Path, errors: list[dict[str, str]], enforce_git: bool)
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             current_extra = sorted(set(data) - set(old_data))
-            if current_extra != ["route_migration_23"]:
+            if current_extra != ["route_migration_23", "route_migration_24"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(current_extra))
             for key, value in old_data.items():
                 if data.get(key) != value:

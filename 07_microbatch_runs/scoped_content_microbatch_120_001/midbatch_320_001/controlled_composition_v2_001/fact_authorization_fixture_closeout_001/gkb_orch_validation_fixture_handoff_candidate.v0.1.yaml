@@ -1,0 +1,22 @@
+gkb_orch_validation_fixture_handoff_candidate:
+  schema_version: v0.1
+  task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
+  handoff_kind: GKB_TO_ORCH_VALIDATION_FIXTURE_CANDIDATE_ONLY
+  runtime_ingest_ready: false
+  runtime_consumable: false
+  canonical_composition_plan: false
+  verified_brand_fact_bundle_count: 0
+  verified_runtime_authorization_count: 0
+  orch_validation_dryrun_eligible_profile_count: 20
+  runtime_brand_fact_gap_profile_count: 20
+  component_role_read_compatibility:
+    precedence:
+    - component_role
+    - source_component_role
+    data_rewrite_in_this_task: false
+  reasoning_component_constraint:
+    component_id: RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+    profile_specific_fact_binding_required: true
+    generic_fit_basis_may_replace_profile_fact_binding: false
+    component_revision_in_this_task: false
+  handoff_digest: 282965b6f9d00b224fa403235bcd0476e1e6f1937012cfc483c5c7c03ae0751b
