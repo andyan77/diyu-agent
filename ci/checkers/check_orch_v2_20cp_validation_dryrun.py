@@ -48,6 +48,9 @@ TARGETED_REPAIR_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualificati
 CALIBRATION_REPAIR_002_CHECKER_PATH = Path(
     "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py"
 )
+CONVERGENCE_CHECKER_PATH = Path(
+    "ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py"
+)
 COMPONENT_SUPPLY_RESULT_PATH = (
     GKB_ROOT / "component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml"
 )
@@ -65,6 +68,9 @@ SUCCESSOR_QUALIFICATION_PROBE_DIR = Path("controlled_content_generator_v2_001/qu
 SUCCESSOR_TARGETED_REPAIR_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001")
 SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
     "controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002"
+)
+SUCCESSOR_CONVERGENCE_DIR = Path(
+    "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
 )
 
 PLAN_NAMESPACE = "fixture://gkb-v2/orch-dryrun/"
@@ -93,6 +99,7 @@ ALLOWED_CHANGED_PATHS = {
     QUALIFICATION_PROBE_CHECKER_PATH,
     TARGETED_REPAIR_CHECKER_PATH,
     CALIBRATION_REPAIR_002_CHECKER_PATH,
+    CONVERGENCE_CHECKER_PATH,
     COMPONENT_SUPPLY_RESULT_PATH,
     COMPONENT_SUPPLY_FREEZER_PATH,
     FACT_AUTH_RESULT_PATH,
@@ -277,6 +284,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         and not path.is_relative_to(SUCCESSOR_QUALIFICATION_PROBE_DIR)
         and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
         and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
+        and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -807,6 +815,14 @@ def validate_ledger(root: Path, freezer: Any, result_doc: dict[str, Any], errors
                     "route_migration_27",
                     "route_migration_28",
                     "route_migration_29",
+                ],
+                [
+                    "route_migration_25",
+                    "route_migration_26",
+                    "route_migration_27",
+                    "route_migration_28",
+                    "route_migration_29",
+                    "route_migration_30",
                 ],
             ):
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))

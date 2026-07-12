@@ -1,0 +1,25 @@
+active_authoring_registry:
+  schema_version: v0.3
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  authoritative_registry: true
+  supersedes_registry: controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/active_authoring/active_authoring_registry.v0.2.yaml
+  active_entry_count: 1
+  entries:
+  - entry_id: AUTHORING-R002-HISTORICAL
+    path: controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/active_authoring/controlled_v2_authoring_successor.py
+    status: historical_non_active
+    may_be_invoked_by_current_pipeline: false
+    reason: PR8 failed qualification evidence; deterministic surface writer retained byte-for-byte as history
+  - entry_id: AUTHORING-CONTROLLED-AGENT-V001-ACTIVE
+    protocol_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/creative_author_protocol.v0.1.yaml
+    instruction_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/creative_author_instruction.v0.1.yaml
+    backend_class: CONTROLLED_EXECUTION_AGENT
+    status: active
+    may_be_invoked_by_current_pipeline: true
+    one_request_one_response: true
+    qualification_only: true
+    runtime_equivalence_claim: false
+    runtime_provider_adapter_qualified: false
+  deterministic_surface_writer_active_count: 0
+  active_route_gate_count: 1
+  active_route_gate_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/controlled_v2_route_gate.py

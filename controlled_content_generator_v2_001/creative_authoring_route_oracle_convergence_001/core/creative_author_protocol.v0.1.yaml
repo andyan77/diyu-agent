@@ -1,0 +1,36 @@
+creative_author_protocol:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  backend_class: CONTROLLED_EXECUTION_AGENT
+  qualification_only: true
+  one_request_one_response: true
+  reroll_allowed: false
+  sibling_candidate_visibility: false
+  review_envelope_visibility: false
+  expected_score_visibility: false
+  chain_of_thought_storage: FORBIDDEN
+  external_provider_API_call_count: 0
+  author_visible_inputs:
+  - one compiled AuthoringRequest
+  - this protocol
+  author_forbidden_inputs:
+  - sibling candidate
+  - paired lane output
+  - sealed route expectation
+  - review envelope
+  - expected score
+  - historical candidate body
+  duties:
+  - form all audience and execution surfaces from the supplied evidence, authorization, role, product obligations, and style plan
+  - bind every emitted surface unit to source atoms or an explicit creative license
+  - keep factual meaning inside supplied atoms
+  - realize the assigned voice independently
+  prohibited:
+  - invent brand facts, events, people, experiences, quotes, product parameters, test results, or numbers
+  - exceed role authority
+  - expose internal product labels or qualification metadata
+  - rewrite or paraphrase a paired candidate
+  - emit analysis or chain of thought
+  response_contract: creative_author_response.schema.json
+  runtime_equivalence_claim: false
+  runtime_provider_adapter_qualified: false

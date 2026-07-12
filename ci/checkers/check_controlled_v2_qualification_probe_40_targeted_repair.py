@@ -39,6 +39,12 @@ SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
 SUCCESSOR_CALIBRATION_REPAIR_002_CHECKER_PATH = Path(
     "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py"
 )
+SUCCESSOR_CONVERGENCE_DIR = Path(
+    "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
+)
+SUCCESSOR_CONVERGENCE_CHECKER_PATH = Path(
+    "ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py"
+)
 V1_GENERATOR_ENTRY_PATH = V1_DIR / "run_qualification_probe_40_generator_acceptance.py"
 GENERATOR_BUILD_FREEZER_PATH = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py")
 ORCH_FREEZER_PATH = Path(
@@ -332,6 +338,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
     allowed.update({
         Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py"),
         SUCCESSOR_CALIBRATION_REPAIR_002_CHECKER_PATH,
+        SUCCESSOR_CONVERGENCE_CHECKER_PATH,
         Path("ci/checkers/check_controlled_content_generator_v2_build.py"),
         Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py"),
         Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py"),
@@ -347,6 +354,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         for path in changed_paths(root)
         if not path.is_relative_to(TASK_DIR)
         and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
+        and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
         and path not in allowed
     )
     if unexpected:

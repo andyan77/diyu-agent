@@ -1,0 +1,44 @@
+phase_0_pr8_merge_binding:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  repository: andyan77/diyu-agent
+  pull_request: 8
+  reviewed_base_sha: 829ab218bd371b4e8cd4197fbc4c6ce295771f40
+  reviewed_head_sha: d3136d34f9fb0671c186dd170892689eabc668ce
+  reviewed_head_tree_sha: 1aca76e427e9e9773104999919800f188d3fbc2a
+  reviewed_full_diff_digest: 5ca75360e6eff899ae77c89d891fab831128439c1b7212539d19fee2f5709f48
+  reviewed_commits:
+  - 692381441f977f0dbc6d6a72646d58f90ca33773
+  - d3136d34f9fb0671c186dd170892689eabc668ce
+  merge_method: merge_commit
+  exact_head_lock_used: true
+  admin_bypass_used: false
+  merge_commit_sha: edca984941a824172f83e543446067ecc5ea90d2
+  merge_parents:
+  - 829ab218bd371b4e8cd4197fbc4c6ce295771f40
+  - d3136d34f9fb0671c186dd170892689eabc668ce
+  merge_tree_sha: 1aca76e427e9e9773104999919800f188d3fbc2a
+  merge_tree_equals_reviewed_head_tree: true
+  master_ci_run_id: 29201893820
+  master_required_checks:
+    checker-compatibility: SUCCESS
+    secret-scan: SUCCESS
+  branch_protection_after_merge:
+    strict: true
+    required_contexts:
+    - checker-compatibility
+    - secret-scan
+    enforce_admins: true
+    allow_force_pushes: false
+    allow_deletions: false
+    required_conversation_resolution: true
+  tag_count: 0
+  release_count: 0
+  deployment_count: 0
+  permanent_lifecycle: FAILED_QUALIFICATION_DEVELOPMENT_EVIDENCE
+  qualification_accepted: false
+  generator_qualified: false
+  accepted_baseline_increment_count: 0
+  accepted_baseline_count: 120
+  publishable: false
+  runtime_eligible: false

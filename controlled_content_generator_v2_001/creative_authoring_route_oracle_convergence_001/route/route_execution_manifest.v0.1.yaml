@@ -1,0 +1,18 @@
+route_execution_manifest:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  route_gate_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/controlled_v2_route_gate.py
+  route_gate_digest: e741811540938f7eb2d35a2dd10e65074b365f86740d19284483ef2865c055e3
+  route_input_count: 60
+  actual_count: 60
+  action_distribution_recomputed:
+    BLOCK: 27
+    DEGRADE: 20
+    REQUEST_INPUT: 13
+  distribution_quota_used: false
+  expectation_file_visible_to_gate: false
+  case_id_visible_to_gate: false
+  degraded_artifact_count: 20
+  audience_content_created_count: 0
+  runtime_plan_created_count: 0
+  manifest_digest: 26b7a8e62ea606f55c02e1382aad464784397b65faaf2b2fdffb718fcb868827
