@@ -1,0 +1,88 @@
+qualification_probe_result:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_20CP_QUALIFICATION_PROBE_40_001
+  verdict: QUALIFICATION_PROBE_40_EXECUTED_PENDING_GUARDIAN_AND_FOUNDER
+  phase_0:
+    generator_PR_5_merged: true
+    merge_method: merge_commit
+    merge_commit_sha: 25ce4ff092befe39106783d8b7f2cf31e77f0e82
+    merge_tree_sha: d961d44c977cbeecd762827218b75008108f8414
+    reviewed_base_parent_present: true
+    reviewed_head_parent_present: true
+    merge_tree_equals_reviewed_head_tree: true
+    master_required_checks_green: true
+    local_remote_master_match: true
+    review_binding:
+      reviewed_base_sha: 0ed9fd40203a6423d4deb9e6342c441ac3c129c1
+      reviewed_head_sha: 7b7f87db532ad89271d471bb0020d749324af917
+      reviewed_head_tree_sha: d961d44c977cbeecd762827218b75008108f8414
+      reviewed_full_diff_digest: e40bb98a0af50d7a8351c3038b53edde6d46d0157f9ca4780cd74a8539c5be3e
+      guardian_verdict: PASS
+  probe:
+    planned_count: 40
+    generated_candidate_count: 40
+    machine_structural_pass_count: 40
+    machine_hold_or_reject_count: 0
+  truth:
+    synthetic_qualification_pack_count: 20
+    verified_brand_fact_bundle_count: 0
+    verified_runtime_authorization_count: 0
+  generation:
+    authoring_mode: CONTROLLED_EXECUTION_AGENT_QUALIFICATION
+    execution_AI_authored_count: 40
+    external_provider_request_count: 0
+    external_provider_API_call_count: 0
+    credential_read_count: 0
+  qualification:
+    generator_qualified: false
+    runtime_provider_adapter_qualified: false
+    founder_final_qualification: PENDING
+  counting:
+    accepted_baseline_before: 120
+    baseline_increment_count: 0
+    accepted_baseline_after: 120
+    target_baseline: 300
+    guardian_accepted_count: 0
+    founder_accepted_count: 0
+  readiness:
+    generator_qualified: false
+    runtime_provider_adapter_qualified: false
+    founder_final_qualification: PENDING
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    Serving_ready: false
+    production_ready: false
+    release_ready: false
+    downstream_readiness_all_false: true
+  integrity:
+    qualification_material_pack_count: 20
+    qualification_assignment_count: 40
+    canonical_qualification_composition_plan_count: 40
+    canonical_validation_composition_plan_count: 20
+    canonical_runtime_composition_plan_count: 0
+    canonical_production_composition_plan_count: 0
+    assignment_replacement_count: 0
+    alternative_candidate_generation_count: 0
+    semantic_reroll_count: 0
+    candidate_overflow_count: 0
+    full_free_text_fabrication_detection_proven: false
+    Guardian_full_text_semantic_review_required: true
+  generated_file_digests:
+    controlled_content_generator_v2_001/qualification_probe_40_001/qualification_material_packs.v0.1.jsonl: 5afb091e3ca5d0063aee7f0683230885da3d8a8d1d300db18fa392f4fc69ea19
+    controlled_content_generator_v2_001/qualification_probe_40_001/qualification_probe_assignments.v0.1.jsonl: a631ae7c9695ea33724efd45db8a3d9ac51cf45d3f78e9a203b17a5132a10d3f
+    controlled_content_generator_v2_001/qualification_probe_40_001/canonical_qualification_composition_plans.v0.1.jsonl: f9676f62d31925fa20a6fd523485cc7131c611d984bc1197a9c31a4d90cf1f4b
+    controlled_content_generator_v2_001/qualification_probe_40_001/qualification_generation_instructions.v0.1.jsonl: 22afc28d346316d01491a5d92611657b44fbb0db1b447b7ba08d18eb0fd51dd6
+    controlled_content_generator_v2_001/qualification_probe_40_001/qualification_probe_candidates.v0.1.jsonl: 248af14e0a30870207a3fc78846406839a72d242108bc9a69535f591202a5c3e
+    controlled_content_generator_v2_001/qualification_probe_40_001/qualification_machine_acceptance_results.v0.1.jsonl: c09c237c0dabb9503136fa31b3917babbf1ddcd56dfb9efef8115a6287aa8021
+    controlled_content_generator_v2_001/qualification_probe_40_001/qualification_guardian_review_packet.v0.1.yaml: 7d4ff12edaf22ba61fa456d6f727b594970eebab6b3b418300f549fe0ce4bd1a
+    controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_orch_materializer.py: 1ec4d5a8badf906575b8e88b26bb778c3a631c03de2ab3866ed5b51892257da5
+    controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_generator_acceptance.py: e0dba4df84e3860bb9c62efb929c16ae56b846b5ca25c0f983b0a38d3a5d217d
+    ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py: ad46ac2233b3de0940fd5a741e19653d161ac4df1757dd3f4ed27de701cc0afb
+  result_digest: a33bbb5035f680eef2f1a5e6121acd92b0908795a63133362e9fe34600c54635

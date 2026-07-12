@@ -1199,6 +1199,119 @@ grc_3600_execution_plan_status:
         task_id: CONTROLLED_CONTENT_GENERATOR_V2_BUILD_AND_ACCEPTANCE_HARNESS_REPAIR_001
         action: repair build harness findings before any generator qualification probe
     migration_digest: cb3494ec68212a58e7ec88ee086cc6eb4f2c16ed8e0b824a61c35061641bae9b
+  route_migration_27:
+    applied_by_task: CONTROLLED_V2_20CP_QUALIFICATION_PROBE_40_001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: false
+    old_checker_edit_scope: successor_write_surface_compatibility_and_historical_checker_identity_only
+    no_readiness_flipped: true
+    phase_0_generator_merge:
+      merge_commit_sha: 25ce4ff092befe39106783d8b7f2cf31e77f0e82
+      merge_method: merge_commit
+      reviewed_base_sha: 0ed9fd40203a6423d4deb9e6342c441ac3c129c1
+      reviewed_head_sha: 7b7f87db532ad89271d471bb0020d749324af917
+      reviewed_head_tree_sha: d961d44c977cbeecd762827218b75008108f8414
+      reviewed_full_diff_digest: e40bb98a0af50d7a8351c3038b53edde6d46d0157f9ca4780cd74a8539c5be3e
+      master_required_checks_green: true
+    qualification_probe_40:
+      task_id: CONTROLLED_V2_20CP_QUALIFICATION_PROBE_40_001
+      status: EXECUTED_PENDING_GUARDIAN_AND_FOUNDER
+      execution_integrity: PASS
+      planned_count: 40
+      generated_candidate_count: 40
+      machine_structural_pass_count: 40
+      machine_hold_or_reject_count: 0
+      synthetic_qualification_pack_count: 20
+      canonical_qualification_composition_plan_count: 40
+      external_provider_request_count: 0
+      external_provider_API_call_count: 0
+      credential_read_count: 0
+      generator_qualified: false
+      runtime_provider_adapter_qualified: false
+      founder_final_qualification: PENDING
+      accepted_baseline_before: 120
+      baseline_increment_count: 0
+      accepted_baseline_after: 120
+      target_baseline: 300
+      guardian_accepted_count: 0
+      founder_accepted_count: 0
+      full_free_text_fabrication_detection_proven: false
+      Guardian_full_text_semantic_review_required: true
+      result_digest: a33bbb5035f680eef2f1a5e6121acd92b0908795a63133362e9fe34600c54635
+    generated_artifacts:
+      directory: controlled_content_generator_v2_001/qualification_probe_40_001
+      material_packs_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_material_packs.v0.1.jsonl
+      assignments_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_probe_assignments.v0.1.jsonl
+      qualification_plans_path: controlled_content_generator_v2_001/qualification_probe_40_001/canonical_qualification_composition_plans.v0.1.jsonl
+      instructions_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_generation_instructions.v0.1.jsonl
+      candidates_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_probe_candidates.v0.1.jsonl
+      machine_acceptance_results_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_machine_acceptance_results.v0.1.jsonl
+      result_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_probe_result.v0.1.yaml
+      guardian_packet_path: controlled_content_generator_v2_001/qualification_probe_40_001/qualification_guardian_review_packet.v0.1.yaml
+      orch_materializer_path: controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_orch_materializer.py
+      generator_acceptance_path: controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_generator_acceptance.py
+      checker_path: ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py
+    digest_cascade_terminated:
+      frozen_prior_business_asset_mutation_count: 0
+      prior_route_mutation_count: 0
+      historical_checker_identity_reinterpreted: true
+      touched_prior_result_metadata_count: 0
+      business_asset_digest_rewrite_count: 0
+    successor_checker_compatibility_update:
+      reason: predecessor_checkers_were_over_strict_against_legal_qualification_probe_successor_write_surface
+      touched_existing_checker_paths:
+        - ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py
+        - ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py
+        - ci/checkers/check_orch_v2_20cp_validation_dryrun.py
+        - ci/checkers/check_controlled_content_generator_v2_build.py
+      touched_historical_freezer_paths:
+        - 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py
+        - 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/run_fact_authorization_fixture_freezer.py
+        - 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/run_orch_20cp_validation_dryrun_freezer.py
+        - controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py
+      touched_result_metadata_paths: []
+      domain_semantics_changed: false
+      frozen_assets_rewritten: false
+      successor_paths_allowed_only:
+        - controlled_content_generator_v2_001/qualification_probe_40_001
+        - ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py
+        - 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+        - .github/workflows/ci.yml
+      frozen_asset_tamper_still_rejected: true
+      runtime_plan_still_rejected: true
+      audience_payload_untracked_surface_still_rejected: true
+    must_remain_false:
+      - runtime_ingest_ready
+      - generation_eligible
+      - generation_allowed
+      - generation_600_allowed
+      - expand_600_allowed
+      - expand_3600_allowed
+      - CandidatePack_ready
+      - candidatepack_ready
+      - KE_ready
+      - Serving_ready
+      - RAG_ready
+      - DIFY_ready
+      - production_ready
+      - release_ready
+      - generator_qualified
+      - runtime_provider_adapter_qualified
+      - qualification_probe_40_accepted
+      - baseline_increment_allowed
+    downstream_and_readiness:
+      all_false: true
+    recommended_next_route:
+      if_guardian_passes:
+        task_id: CONTROLLED_V2_20CP_QUALIFICATION_PROBE_40_GUARDIAN_REVIEW_AND_FOUNDER_DECISION_001
+        action: Guardian full-surface 40/40 human review before Founder qualification decision
+      if_guardian_fails:
+        task_id: CONTROLLED_V2_20CP_QUALIFICATION_PROBE_40_REPAIR_001
+        action: repair qualification probe findings before any generator qualification or baseline count
+    migration_digest: f59da690ced0868cebfd992b857c9ead34850208a9f056486bb5a31898805e16
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

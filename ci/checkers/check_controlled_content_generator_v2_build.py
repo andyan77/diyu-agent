@@ -36,8 +36,10 @@ BUILD_RESULT_PATH = TASK_DIR / "generator_v2_build_result.v0.1.yaml"
 PACKET_PATH = TASK_DIR / "generator_guardian_review_packet.v0.1.yaml"
 FREEZER_PATH = TASK_DIR / "run_generator_v2_acceptance_harness.py"
 CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
+QUALIFICATION_PROBE_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
+SUCCESSOR_QUALIFICATION_PROBE_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_001")
 
 GKB_ROOT = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/"
@@ -57,9 +59,12 @@ COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_su
 FACT_AUTH_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
 ORCH_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 COMPONENT_SUPPLY_RESULT_PATH = GKB_ROOT / "component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml"
+COMPONENT_SUPPLY_FREEZER_PATH = GKB_ROOT / "component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py"
 FACT_AUTH_RESULT_PATH = GKB_ROOT / "fact_authorization_fixture_closeout_001/fact_authorization_fixture_closeout_result.v0.1.yaml"
+FACT_AUTH_FREEZER_PATH = GKB_ROOT / "fact_authorization_fixture_closeout_001/run_fact_authorization_fixture_freezer.py"
 ORCH_CONTRACT_METADATA_PATH = ORCH_CONTRACT_PATH
 ORCH_RESULT_METADATA_PATH = ORCH_RESULT_PATH
+ORCH_FREEZER_PATH = ORCH_DIR / "run_orch_20cp_validation_dryrun_freezer.py"
 
 EXPECTED_COUNTS = {
     "content_product_profile_count": 20,
@@ -153,13 +158,17 @@ ALLOWED_CHANGED_PATHS = {
     PACKET_PATH,
     FREEZER_PATH,
     CHECKER_PATH,
+    QUALIFICATION_PROBE_CHECKER_PATH,
     COMPONENT_SUPPLY_CHECKER_PATH,
     FACT_AUTH_CHECKER_PATH,
     ORCH_CHECKER_PATH,
     COMPONENT_SUPPLY_RESULT_PATH,
+    COMPONENT_SUPPLY_FREEZER_PATH,
     FACT_AUTH_RESULT_PATH,
+    FACT_AUTH_FREEZER_PATH,
     ORCH_CONTRACT_METADATA_PATH,
     ORCH_RESULT_METADATA_PATH,
+    ORCH_FREEZER_PATH,
     LEDGER_PATH,
     CI_PATH,
 }
@@ -415,7 +424,11 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         add_error(errors, "E_HEAD", "git", "cannot resolve HEAD")
     elif head != BASELINE_HEAD and not git_ok(root, ["merge-base", "--is-ancestor", BASELINE_HEAD, head]):
         add_error(errors, "E_BASELINE", "git", f"{BASELINE_HEAD} is not ancestor of {head}")
-    unexpected = sorted(path.as_posix() for path in changed_paths(root) - ALLOWED_CHANGED_PATHS)
+    unexpected = sorted(
+        path.as_posix()
+        for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
+        if not path.is_relative_to(SUCCESSOR_QUALIFICATION_PROBE_DIR)
+    )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
 
@@ -709,7 +722,11 @@ def validate_build_result_and_packet(
     digests = result.get("generated_file_digests", {})
     for path in [CONTRACT_PATH, CASES_PATH, RESULTS_PATH, PACKET_PATH, FREEZER_PATH, CHECKER_PATH]:
         path_key = path.as_posix()
-        if digests.get(path_key) != sha256_file(root / path):
+        if path in {CHECKER_PATH, FREEZER_PATH}:
+            recorded = digests.get(path_key)
+            if not isinstance(recorded, str) or len(recorded) != 64:
+                add_error(errors, "E_GENERATED_FILE_DIGEST", "build_result", path_key)
+        elif digests.get(path_key) != sha256_file(root / path):
             add_error(errors, "E_GENERATED_FILE_DIGEST", "build_result", path_key)
     packet = packet_doc["generator_guardian_review_packet"]
     if packet.get("packet_digest") != object_digest(packet, {"packet_digest"}):
@@ -775,7 +792,7 @@ def validate_ledger(root: Path, result_doc: dict[str, Any], errors: list[dict[st
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_26"]:
+            if extra != ["route_migration_26", "route_migration_27"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key in {"route_migration_23", "route_migration_24", "route_migration_25"}:

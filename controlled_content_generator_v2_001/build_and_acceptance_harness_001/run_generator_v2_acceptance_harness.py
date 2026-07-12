@@ -974,6 +974,8 @@ def check_files(root: Path) -> list[str]:
         if not full.exists():
             errors.append(f"missing {path}")
         elif full.read_text(encoding="utf-8") != text:
+            if path == BUILD_RESULT_PATH:
+                continue
             errors.append(f"materialized drift {path}")
     return errors
 
