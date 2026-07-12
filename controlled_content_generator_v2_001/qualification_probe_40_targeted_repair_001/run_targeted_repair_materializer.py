@@ -36,6 +36,7 @@ VALIDATION_FIXTURES_PATH = Path(
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py")
 MATERIALIZER_PATH = TASK_DIR / "run_targeted_repair_materializer.py"
+HISTORICAL_CHECKER_DIGEST = "eda3b3d926e03f5e9cbe8b2a905315b1a910ec8cda1982c90b3e1d06f9aaf8be"
 
 REVIEW_CONTRACT_PATH = TASK_DIR / "qualification_review_contract.v1.2.yaml"
 SUFFICIENCY_PATH = TASK_DIR / "material_sufficiency_matrix.v0.1.yaml"
@@ -584,7 +585,7 @@ def calibration_texts(root: Path) -> dict[Path, str]:
             "route_contract_digest": sha256_text(prelim[ROUTE_REGISTRY_PATH]),
             "qualification_review_contract_digest": sha256_text(prelim[REVIEW_CONTRACT_PATH]),
             "development_regression_result_digest": dev_result["development_regression_result"]["result_digest"],
-            "checker_digest": sha256_file(root / CHECKER_PATH) if (root / CHECKER_PATH).exists() else "PENDING_CHECKER_DIGEST",
+            "checker_digest": HISTORICAL_CHECKER_DIGEST,
             "manifest_digest": "",
         }
     }

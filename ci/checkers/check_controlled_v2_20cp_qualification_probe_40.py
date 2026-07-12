@@ -43,6 +43,9 @@ GENERATOR_ENTRY_PATH = TASK_DIR / "run_qualification_probe_40_generator_acceptan
 
 CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
 TARGETED_REPAIR_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py")
+CALIBRATION_REPAIR_002_CHECKER_PATH = Path(
+    "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py"
+)
 GENERATOR_BUILD_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
 COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
 FACT_AUTH_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
@@ -50,6 +53,9 @@ ORCH_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 CI_PATH = Path(".github/workflows/ci.yml")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 SUCCESSOR_TARGETED_REPAIR_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001")
+SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
+    "controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002"
+)
 
 GKB_ROOT = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/"
@@ -107,6 +113,7 @@ EXPECTED_GENERATED_DIGEST_PATHS = {
 ALLOWED_CHANGED_PATHS = {
     CHECKER_PATH,
     TARGETED_REPAIR_CHECKER_PATH,
+    CALIBRATION_REPAIR_002_CHECKER_PATH,
     GENERATOR_BUILD_CHECKER_PATH,
     COMPONENT_SUPPLY_CHECKER_PATH,
     FACT_AUTH_CHECKER_PATH,
@@ -319,6 +326,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
         if not path.is_relative_to(TASK_DIR)
         and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
+        and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -901,7 +909,11 @@ def validate_ledger(root: Path, result: dict[str, Any], errors: list[dict[str, s
                 if data.get(key) != old_value:
                     add_error(errors, "E_LEDGER_PRIOR_MUTATION", "ledger", key)
             extra = sorted(set(data) - set(old_data))
-            if extra not in (["route_migration_27"], ["route_migration_27", "route_migration_28"]):
+            if extra not in (
+                ["route_migration_27"],
+                ["route_migration_27", "route_migration_28"],
+                ["route_migration_27", "route_migration_28", "route_migration_29"],
+            ):
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
 
 

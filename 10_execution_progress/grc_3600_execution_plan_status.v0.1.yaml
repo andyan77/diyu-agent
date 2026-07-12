@@ -2290,3 +2290,60 @@ grc_3600_execution_plan_status:
       task_id: CONTROLLED_V2_QUALIFICATION_SEALED_HIDDEN_GUARDIAN_REVIEW_001
       action: Guardian full-surface hidden 40 review before Founder qualification decision
     migration_digest: 305160aca626367231cdeb2da670de5dc55b6fac1ae4e1d6834f7d9a096371eb
+  route_migration_29:
+    applied_by_task: CONTROLLED_V2_QUALIFICATION_CALIBRATION_TARGETED_REPAIR_002
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_readiness_flipped: true
+    phase_0_probe7_merge:
+      merge_commit_sha: 829ab218bd371b4e8cd4197fbc4c6ce295771f40
+      reviewed_base_sha: 531fe864b0b338a8708449ae29e739e2dce8e119
+      reviewed_head_sha: 89db1d72b5db3372f280e2d851ddfaf20635bde6
+      reviewed_full_diff_digest: 6dd7d686083d8c2dda2cde871d05c6e5278c439359170ad3b9b9892520375223
+    historical_digest_disclosure:
+      route_migration_28_runner_change_disclosed: true
+      path: controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_generator_acceptance.py
+      before_PR7_digest: e0dba4df84e3860bb9c62efb929c16ae56b846b5ca25c0f983b0a38d3a5d217d
+      after_PR7_digest: 01d9ac25135612df9f33ab34b005228683c5f05dcd8068f7c5c9ec267988cd67
+      business_artifact_rewrite_count: 0
+      current_task_rewrites_route28_assets: false
+    qualification_calibration_repair_002:
+      status: EXECUTED_PENDING_GUARDIAN
+      calibration_freeze_commit_sha: 692381441f977f0dbc6d6a72646d58f90ca33773
+      hidden_r002_generated_count: 40
+      devreg_first_acceptance_count: 40
+      route_case_count: 60
+      DEGRADE_case_count: 20
+      generator_qualified: false
+      baseline_increment_count: 0
+      accepted_baseline_after: 120
+      external_provider_API_call_count: 0
+      result_digest: 00a9590c4d6f43c8a36d5818d589986da7f9291d9aa795c920596a9786568762
+    generated_artifacts:
+      directory: controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002
+      checker_path: ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py
+      materializer_path: controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/run_qualification_calibration_repair_002_materializer.py
+      active_authoring_path: controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/active_authoring/controlled_v2_authoring_successor.py
+    must_remain_false:
+    - generator_qualified
+    - runtime_provider_adapter_qualified
+    - runtime_ingest_ready
+    - generation_eligible
+    - generation_allowed
+    - generation_600_allowed
+    - expand_600_allowed
+    - expand_3600_allowed
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - Serving_ready
+    - production_ready
+    - release_ready
+    - hidden_r002_accepted
+    - generator_qualified
+    recommended_next_route:
+      task_id: CONTROLLED_V2_QUALIFICATION_HIDDEN_R002_GUARDIAN_REVIEW_001
+      action: Guardian full-surface HIDDEN-R002 review before Founder qualification decision
+    migration_digest: 48a14b2a9ba7579099918cd22d6692de4ef77523c451f5908e167df8b995fba0

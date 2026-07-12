@@ -1,0 +1,1288 @@
+material_slot_evidence_matrix:
+  schema_version: v0.2
+  task_id: CONTROLLED_V2_QUALIFICATION_CALIBRATION_TARGETED_REPAIR_002
+  profile_count: 20
+  all_profiles_have_CP_specific_material: true
+  single_fact_atom_sufficient_anywhere: false
+  rows:
+  - content_product_type_id: CP01
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 整理台当班同事
+      object: 三摞待归位针织衫
+      scene: 闭店前二十分钟，整理台上还剩三摞针织衫、两张补标卡和一只空周转箱。
+      action: 先把颜色混放的一摞拆开，再按尺码把补标卡夹在领口内侧。
+      judgment: 先处理会影响明早找码的混放件，暂缓只需要熨平的两件。
+      result: 周转箱最后只留下两件待蒸汽处理的衣服，明早交接单能直接照着拿。
+      constraint: 这只是岗位任务记录，不推断销售、顾客反馈或真实门店效率。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP01/material-card
+      authorization_ref: simulated://repair002/CP01/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP01/material-card
+      authorization_ref: simulated://repair002/CP01/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP01/material-card
+      authorization_ref: simulated://repair002/CP01/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP01/material-card
+      authorization_ref: simulated://repair002/CP01/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP02
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 午后时段记录员
+      object: 14:10到14:35的试衣区门帘
+      scene: 14:10门帘半开、凳子上有两只购物袋；14:25门帘全拉上，门口只剩一双短靴。
+      action: 镜头从门帘缝、凳子、短靴三个位置扫过，不拍人脸。
+      judgment: 这个时段更像试穿间隙，而不是高峰排队。
+      result: 记录只说明空间状态变化，不替顾客动作补故事。
+      constraint: 不写真实顾客、不写成交、不写客流统计。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP02/material-card
+      authorization_ref: simulated://repair002/CP02/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP02/material-card
+      authorization_ref: simulated://repair002/CP02/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP02/material-card
+      authorization_ref: simulated://repair002/CP02/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP02/material-card
+      authorization_ref: simulated://repair002/CP02/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP03
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 熨烫同事
+      object: 羊毛围巾卷边
+      scene: 围巾边缘有一段卷起，蒸汽喷头、压布和木夹都放在左侧。
+      action: 先隔布压住卷边，再用低温蒸汽从中段推到尾端，最后用木夹定住两分钟。
+      judgment: 不用高温硬压，是为了让边缘回平但不把毛面压亮。
+      result: 尾端仍留一点自然弧度，交接时标为可上架但需避开强灯直照。
+      constraint: 不声称永久定型或材质效果。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP03/material-card
+      authorization_ref: simulated://repair002/CP03/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP03/material-card
+      authorization_ref: simulated://repair002/CP03/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP03/material-card
+      authorization_ref: simulated://repair002/CP03/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP03/material-card
+      authorization_ref: simulated://repair002/CP03/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP03/material-card
+      authorization_ref: simulated://repair002/CP03/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP04
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: transition
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 陈列与仓位交接记录员
+      object: 门口短夹克换位单
+      scene: 陈列同事标出门口缺轻外套，仓位同事在周转架上找到三件同色短夹克。
+      action: 两人先核尺码牌，再把原来的厚外套退到中岛台后侧。
+      judgment: 换位依据是温度和门口厚重感，不是临时争位置。
+      result: 门口少了一层拥挤，仓位单上留下退回件的位置。
+      constraint: 不编争吵、不编谁说服谁。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP04/material-card
+      authorization_ref: simulated://repair002/CP04/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP04/material-card
+      authorization_ref: simulated://repair002/CP04/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: transition
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP04/material-card
+      authorization_ref: simulated://repair002/CP04/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP04/material-card
+      authorization_ref: simulated://repair002/CP04/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP04/material-card
+      authorization_ref: simulated://repair002/CP04/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP05
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 培训记录整理员
+      object: 三张学徒改针记录卡
+      scene: 三张记录卡分别写着三月练直线、五月改袖口、六月独立补领口。
+      action: 把三张卡按月份铺开，旁边放第一次歪线和最近一次平线的对照布。
+      judgment: 成长证据来自同一动作反复变稳，不来自一句努力。
+      result: 下一张卡预留给八月的复杂面料练习。
+      constraint: 不把加班写成成长，也不编个人经历。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP05/material-card
+      authorization_ref: simulated://repair002/CP05/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP05/material-card
+      authorization_ref: simulated://repair002/CP05/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP05/material-card
+      authorization_ref: simulated://repair002/CP05/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP05/material-card
+      authorization_ref: simulated://repair002/CP05/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP05/material-card
+      authorization_ref: simulated://repair002/CP05/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP06
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 版型判断同事
+      object: 肩线略外移的西装样衣
+      scene: 样衣挂在半身台上，肩线比台肩外出半指，袖山没有塌。
+      action: 先看肩线，再看袖山和前片是否被拉斜。
+      judgment: 外移半指可以留下松量；如果前片斜了，才需要回改肩宽。
+      result: 这件先保留肩宽，下一轮只复看前片垂直线。
+      constraint: 不把个人审美写成绝对标准。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP06/material-card
+      authorization_ref: simulated://repair002/CP06/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP06/material-card
+      authorization_ref: simulated://repair002/CP06/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP06/material-card
+      authorization_ref: simulated://repair002/CP06/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP06/material-card
+      authorization_ref: simulated://repair002/CP06/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP07
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: closing
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 问题诊断同事
+      object: 短外套压肩问题卡
+      scene: 问题卡写着肩部被压、袖长合适、内搭是厚毛衣。
+      action: 先分出两个条件：换薄内搭仍压肩，或只在厚毛衣下压肩。
+      judgment: 前者看肩宽，后者看搭配层厚，不把两个问题混成尺码错误。
+      result: 建议分别试大一码和换薄内搭，不直接下结论。
+      constraint: 不冒充真实顾问诊断。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP07/material-card
+      authorization_ref: simulated://repair002/CP07/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP07/material-card
+      authorization_ref: simulated://repair002/CP07/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP07/material-card
+      authorization_ref: simulated://repair002/CP07/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: closing
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP07/material-card
+      authorization_ref: simulated://repair002/CP07/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP08
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 结构解构同事
+      object: 罗纹袖口和袖身拼接
+      scene: 袖口罗纹比袖身厚，拼接线被藏在内侧一圈压线后面。
+      action: 先翻出拼接线，再用手指按压罗纹回弹和袖身垂感。
+      judgment: 厚罗纹负责收口，袖身负责垂下去，两者不是同一种弹性。
+      result: 镜头最后停在内侧压线，说明结构如何把厚薄接住。
+      constraint: 不把结构说成黑科技。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP08/material-card
+      authorization_ref: simulated://repair002/CP08/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP08/material-card
+      authorization_ref: simulated://repair002/CP08/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP08/material-card
+      authorization_ref: simulated://repair002/CP08/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP08/material-card
+      authorization_ref: simulated://repair002/CP08/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP09
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: closing
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 反选说明同事
+      object: 厚底短靴
+      scene: 短靴鞋底厚、鞋口硬，旁边放着长走路清单和短距离通勤清单。
+      action: 先踩压鞋口，再把两张清单放到鞋旁边对照。
+      judgment: 适合短距离撑造型，不适合第一次就穿去长时间站立。
+      result: 替代方案是先选软鞋口低跟靴。
+      constraint: 不把边界写成劝退全部人。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP09/material-card
+      authorization_ref: simulated://repair002/CP09/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP09/material-card
+      authorization_ref: simulated://repair002/CP09/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP09/material-card
+      authorization_ref: simulated://repair002/CP09/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: closing
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP09/material-card
+      authorization_ref: simulated://repair002/CP09/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP10
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 长期验证记录员
+      object: 棉衬衫三次洗后袖长记录
+      scene: 同一件衬衫在第1、3、5次洗后分别量袖长，尺子起点都压在肩缝。
+      action: 每次只量右袖同一位置，并记录晾干方式。
+      judgment: 指标统一后，才能讨论袖长是否真的变化。
+      result: 第五次比第一次短0.3厘米，但记录仍标为继续观察。
+      constraint: 不把单件测试推广到全部产品。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP10/material-card
+      authorization_ref: simulated://repair002/CP10/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP10/material-card
+      authorization_ref: simulated://repair002/CP10/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP10/material-card
+      authorization_ref: simulated://repair002/CP10/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP10/material-card
+      authorization_ref: simulated://repair002/CP10/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP11
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 设计取舍记录员
+      object: 风衣下摆开衩方案
+      scene: 设计板上有直下摆、短开衩、长开衩三个方案，旁边贴着骑车动作照片。
+      action: 先把三张纸样叠在一起，再抽出短开衩方案。
+      judgment: 短开衩保留行走余量，也少放弃下摆重量感。
+      result: 放弃长开衩的代价是骑车余量更小，后续需再试一次。
+      constraint: 不把取舍写成唯一正确。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP11/material-card
+      authorization_ref: simulated://repair002/CP11/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP11/material-card
+      authorization_ref: simulated://repair002/CP11/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP11/material-card
+      authorization_ref: simulated://repair002/CP11/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP11/material-card
+      authorization_ref: simulated://repair002/CP11/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP11/material-card
+      authorization_ref: simulated://repair002/CP11/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP12
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 版本日志记录员
+      object: 裤脚反折宽度从2.0到2.8厘米
+      scene: 旧样反折2.0厘米会露出内侧线，新样反折2.8厘米刚好压住线迹。
+      action: 把旧样和新样并排，尺子分别贴住反折边。
+      judgment: 改宽不是为了显眼，而是为遮住内侧线迹。
+      result: 待验证项是坐下后反折边会不会顶到脚踝。
+      constraint: 允许版本数字，但不写真实上市版本。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP12/material-card
+      authorization_ref: simulated://repair002/CP12/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP12/material-card
+      authorization_ref: simulated://repair002/CP12/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP12/material-card
+      authorization_ref: simulated://repair002/CP12/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP12/material-card
+      authorization_ref: simulated://repair002/CP12/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP13
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: transition
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 衣橱角色记录员
+      object: 灰色针织开衫
+      scene: 开衫分别和白衬衫、黑裙、薄风衣放在同一衣架旁。
+      action: 先拍三组搭配，再把开衫单独挂回中间。
+      judgment: 它的角色是连接冷暖和正式度，不是抢主角。
+      result: 边界是厚外套里会鼓，适合单层或薄外搭之间过渡。
+      constraint: 不写成人人必备。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP13/material-card
+      authorization_ref: simulated://repair002/CP13/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP13/material-card
+      authorization_ref: simulated://repair002/CP13/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP13/material-card
+      authorization_ref: simulated://repair002/CP13/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: transition
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP13/material-card
+      authorization_ref: simulated://repair002/CP13/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP14
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 物性影像记录员
+      object: 砂洗棉裙摆
+      scene: 裙摆被手指轻轻拨开，边缘回落时有一小段滞后。
+      action: 只拍布面起伏、指尖停顿和光从褶里滑过去。
+      judgment: 重点是慢回落的质感，不需要口播解释。
+      result: 声音只保留布料摩擦和衣架轻响。
+      constraint: 不强制CTA、不强制spoken。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP14/material-card
+      authorization_ref: simulated://repair002/CP14/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP14/material-card
+      authorization_ref: simulated://repair002/CP14/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP14/material-card
+      authorization_ref: simulated://repair002/CP14/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP14/material-card
+      authorization_ref: simulated://repair002/CP14/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP15
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: transition
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 到店生命周期记录员
+      object: 新到针织背心箱
+      scene: 纸箱刚拆开，三件背心先放在待检台，旁边是蒸汽机和挂签。
+      action: 先核箱单，再蒸汽整理肩线，最后挂到待检区而不是直接上墙。
+      judgment: 生命周期还没到陈列，只到待检完成前一步。
+      result: 下一节点是明早复核肩线是否回弹。
+      constraint: 不声称真实到货量或库存。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP15/material-card
+      authorization_ref: simulated://repair002/CP15/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP15/material-card
+      authorization_ref: simulated://repair002/CP15/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: transition
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP15/material-card
+      authorization_ref: simulated://repair002/CP15/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP15/material-card
+      authorization_ref: simulated://repair002/CP15/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP16
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 匿名服务复盘员
+      object: 遮风需求卡
+      scene: 需求卡只写怕风、袖口松、试过短围巾，姓名和联系方式被遮住。
+      action: 先把袖口松量和围巾遮挡范围画在纸上，再记录调整动作。
+      judgment: 服务判断是先解决风从袖口进的问题，不追问私人经历。
+      result: 结果证据是袖口收紧后风口位置被遮住，仍需下一次试穿确认。
+      constraint: 保护隐私，不冒充真实顾客故事。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP16/material-card
+      authorization_ref: simulated://repair002/CP16/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP16/material-card
+      authorization_ref: simulated://repair002/CP16/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP16/material-card
+      authorization_ref: simulated://repair002/CP16/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP16/material-card
+      authorization_ref: simulated://repair002/CP16/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP17
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 空间实验记录员
+      object: 中岛台围巾架
+      scene: 围巾原来正面叠放，过道显得厚；侧向悬挂后中间露出一掌空隙。
+      action: 先拍调整前后同一角度，再记录过道空隙和视线停留点。
+      judgment: 实验目标是让入口更轻，不验证销售变化。
+      result: 周三只复看围巾是否被频繁翻乱。
+      constraint: 不写客流提升。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP17/material-card
+      authorization_ref: simulated://repair002/CP17/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP17/material-card
+      authorization_ref: simulated://repair002/CP17/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP17/material-card
+      authorization_ref: simulated://repair002/CP17/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP17/material-card
+      authorization_ref: simulated://repair002/CP17/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP17/material-card
+      authorization_ref: simulated://repair002/CP17/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP18
+    required_component_roles:
+    - role: scene
+      min_count: 1
+      max_count: 3
+    - role: visual_beat
+      min_count: 1
+      max_count: 3
+    - role: observable_action
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 街区生活记录员
+      object: 架空槐影巷窗边薄风衣
+      scene: 架空槐影巷午后潮气重，窗边地垫有水印，薄风衣挂在离门半步的位置。
+      action: 先拍门垫水印，再拍风衣下摆离地和窗边反光。
+      judgment: 这条生活志讲衣服和架空街区气候的关系，不冒充真实城市档案。
+      result: 画面留下门口潮气和薄风衣轻摆的关系。
+      constraint: 不写真实地理标签。
+    slot_evidence_bindings:
+    - required_role: scene
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP18/material-card
+      authorization_ref: simulated://repair002/CP18/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: visual_beat
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP18/material-card
+      authorization_ref: simulated://repair002/CP18/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: observable_action
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP18/material-card
+      authorization_ref: simulated://repair002/CP18/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP18/material-card
+      authorization_ref: simulated://repair002/CP18/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP19
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: closing
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 经营取舍记录员
+      object: 周末橱窗位决策板
+      scene: 决策板写着保留雨衣展示、放弃新包上墙、周二复看三个栏目。
+      action: 先把两张方案卡放到橱窗位，再抽走新包卡留出雨衣卡。
+      judgment: 选择雨衣是因为周末天气预报和门口动线更匹配，代价是新包少一次曝光。
+      result: 后果只记录为周二复看橱窗完整度，不写价值观口号。
+      constraint: 不做自夸。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP19/material-card
+      authorization_ref: simulated://repair002/CP19/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP19/material-card
+      authorization_ref: simulated://repair002/CP19/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP19/material-card
+      authorization_ref: simulated://repair002/CP19/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: closing
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP19/material-card
+      authorization_ref: simulated://repair002/CP19/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  - content_product_type_id: CP20
+    required_component_roles:
+    - role: trigger
+      min_count: 1
+      max_count: 3
+    - role: professional_judgment
+      min_count: 1
+      max_count: 3
+    - role: audience_facing_reasoning_move
+      min_count: 1
+      max_count: 3
+    - role: capture_instruction
+      min_count: 1
+      max_count: 3
+    material_atoms:
+      role: 承诺追踪记录员
+      object: 纽扣复核承诺表
+      scene: 承诺表写着周一补拍扣距、周三复核、未完成则标出偏差。
+      action: 先拍周一扣距照片，再拍周三复核格和偏差栏。
+      judgment: 兑现证据是同一位置被复拍，不是写了一个计划。
+      result: 如果周三没拍到，就在偏差栏写原因和下一复核时间。
+      constraint: 不让承诺替代完成。
+    slot_evidence_bindings:
+    - required_role: trigger
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP20/material-card
+      authorization_ref: simulated://repair002/CP20/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: professional_judgment
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP20/material-card
+      authorization_ref: simulated://repair002/CP20/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: audience_facing_reasoning_move
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP20/material-card
+      authorization_ref: simulated://repair002/CP20/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    - required_role: capture_instruction
+      material_atom_refs:
+      - scene
+      - action
+      - judgment
+      - result
+      source_ref: fixture://repair002/dev/CP20/material-card
+      authorization_ref: simulated://repair002/CP20/qualification-only
+      evidence_sufficient_for_qualification_devreg: true
+    single_fact_atom_sufficient: false
+    material_sufficiency_pass: true
+  matrix_digest: 086adeaabac96acac6eecc4f9c844864613a6e59ba4b5c978724cca3618f42c2
