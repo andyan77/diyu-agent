@@ -2347,3 +2347,109 @@ grc_3600_execution_plan_status:
       task_id: CONTROLLED_V2_QUALIFICATION_HIDDEN_R002_GUARDIAN_REVIEW_001
       action: Guardian full-surface HIDDEN-R002 review before Founder qualification decision
     migration_digest: 48a14b2a9ba7579099918cd22d6692de4ef77523c451f5908e167df8b995fba0
+  route_migration_30:
+    applied_by_task: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_readiness_flipped: true
+    phase_0_pr8_failure_evidence_merge:
+      merge_commit_sha: edca984941a824172f83e543446067ecc5ea90d2
+      reviewed_base_sha: 829ab218bd371b4e8cd4197fbc4c6ce295771f40
+      reviewed_head_sha: d3136d34f9fb0671c186dd170892689eabc668ce
+      reviewed_head_tree: 1aca76e427e9e9773104999919800f188d3fbc2a
+      reviewed_full_diff_digest: 5ca75360e6eff899ae77c89d891fab831128439c1b7212539d19fee2f5709f48
+      merge_meaning: FAILED_QUALIFICATION_DEVELOPMENT_EVIDENCE_ONLY
+      content_acceptance_implied: false
+    historical_review_discrepancy:
+      guardian_strict_zero_edit_first_acceptance_count: 0
+      content_expert_first_acceptance_count: 19
+      review_v3_first_acceptance_count: 26
+      numbers_averaged_or_selected: false
+      qualification_state: FAIL
+    authoring_architecture_convergence:
+      core_freeze_commit_sha: 7e82f6d527cc1c20c302325ae4246760fb1e4baf
+      core_digest: c585e661f053bb3661a2861a326f31a2f68f8c649f04765e576d6e48d7602e7d
+      old_python_surface_writer_lifecycle: HISTORICAL_NON_ACTIVE
+      active_authoring_entrypoint_count: 1
+      active_authoring_backend: CONTROLLED_EXECUTION_AGENT
+      python_or_materializer_writes_audience_surface: false
+      route_gate_count: 1
+      route_gate_reads_sealed_expectations: false
+      real_route_case_count: 60
+      real_route_case_match_count: 60
+      route_distribution:
+        ALLOW: 0
+        BLOCK: 27
+        DEGRADE: 20
+        REQUEST_INPUT: 13
+    open_development_gate:
+      status: THRESHOLDS_NOT_MET_PENDING_EXTERNAL_GUARDIAN
+      material_pack_count: 20
+      assignment_count: 40
+      authoring_request_count: 40
+      fresh_isolated_author_session_count: 40
+      candidate_count: 40
+      candidate_reroll_count: 0
+      candidate_replacement_count: 0
+      validator_failure_count: 1
+      primary_and_adversarial_full_review_count_each: 40
+      adjudicated_first_acceptance_count: 20
+      adjudicated_lane_A_first_acceptance_count: 15
+      adjudicated_lane_B_first_acceptance_count: 5
+      adjudicated_hard_gate_failure_count: 13
+      independent_A_B_pair_pass_count: 7
+      CP_with_zero_acceptable_output_ids:
+      - CP06
+      - CP07
+      - CP19
+      near_duplicate_rate: 0.65
+      external_guardian_checkpoint_A: PENDING
+      eligible_to_open_sealed_hidden: false
+    frozen_checker_discrepancy_disclosure:
+      visibility_suffix_false_positive_request_count: 40
+      visibility_suffix_false_positive_finding_count: 120
+      all_surface_exact_overlap_profiles:
+      - CP01
+      - CP13
+      evidence_normalized_non_evidence_exact_overlap_profiles:
+      - CP13
+      live_checker_exit: 1
+      live_checker_visibility_suffix_finding_count: 120
+      live_checker_pair_exact_finding_count: 1
+      live_checker_other_finding_count: 0
+      machine_structural_failure_count: 1
+      machine_structural_failure_not_emitted_as_live_error: true
+      frozen_core_rewritten: false
+      checker_bypass_performed: false
+      required_checks_green: false
+    historical_digest_disclosure:
+      pr8_frozen_materializer_allowed_tool_compat_change_disclosed: true
+      path: controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001/run_targeted_repair_materializer.py
+      before_PR8_digest: e17f90b1d0a44f8e2dda76293460d31bb3dc58a2df25780698fe4f34147a5318
+      after_PR8_digest: 1dc1883ee75ca53f447df51dce19ffb68ef8607c925c17f904f95fee09449f75
+      change_summary: live_checker_digest_replaced_by_pinned_HISTORICAL_CHECKER_DIGEST_for_allowed_tool_compat
+      current_task_rewrites_route29_or_PR8_assets: false
+    fixed_boundaries:
+      external_provider_API_call_count: 0
+      runtime_provider_adapter_qualified: false
+      generator_qualified: false
+      founder_final_qualification: PENDING
+      accepted_baseline_increment_count: 0
+      accepted_baseline_count: 120
+      formal_300_generation_started: false
+      generation_600_allowed: false
+      expand_3600_allowed: false
+      runtime_generation_eligible_profile_count: 0
+      runtime_ingest_ready: false
+      canonical_runtime_plan_count: 0
+      published_content_count: 0
+      KE_change_count: 0
+      RAG_change_count: 0
+      DIFY_change_count: 0
+      Serving_change_count: 0
+    recommended_next_route:
+      action: External Guardian Checkpoint A full read and independent route/core recomputation; hidden remains blocked.
+      on_guardian_fail_task_id: CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_001
+    migration_digest: c3a9082f3db5f174106dd9e2f32b14dc3b77e17ad8c6e673c201253e2f4b3c91

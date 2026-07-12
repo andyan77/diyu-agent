@@ -1,0 +1,45 @@
+development_review_summary:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  namespace: DEV-OPEN-GATE-001
+  status: THRESHOLDS_NOT_MET_PENDING_EXTERNAL_GUARDIAN
+  candidate_count: 40
+  reviewed_candidate_count: 40
+  reviewed_pair_count: 20
+  primary_blind_correct_count: 40
+  adversarial_blind_correct_count: 40
+  blind_view_1_CP_identification_rate: 1.0
+  first_acceptance_count: 20
+  lane_A_first_acceptance_count: 15
+  lane_B_first_acceptance_count: 5
+  hard_gate_failure_count: 13
+  independent_A_B_pair_pass_count: 7
+  CP_with_zero_acceptable_output_count: 3
+  CP_with_zero_acceptable_output_ids:
+  - CP06
+  - CP07
+  - CP19
+  near_duplicate_pair_count: 13
+  near_duplicate_rate: 0.65
+  unresolved_formulaic_finding_count: 13
+  thresholds:
+    hard_gate_failure_count_max: 0
+    first_acceptance_count_min: 36
+    lane_A_first_acceptance_count_min: 18
+    lane_B_first_acceptance_count_min: 18
+    independent_A_B_pair_pass_count_min: 18
+    CP_with_zero_acceptable_output_count_max: 0
+    blind_view_1_CP_identification_rate_min: 0.85
+    near_duplicate_rate_max: 0.1
+    unresolved_formulaic_finding_count_max: 0
+  internal_thresholds_met: false
+  content_quality_pass_claimed: false
+  external_guardian_verdict: PENDING
+  eligible_to_open_sealed_hidden: false
+  generator_qualified: false
+  accepted_baseline_increment_count: 0
+  accepted_baseline_count: 120
+  runtime_ingest_ready: false
+  published_content_count: 0
+  machine_structural_failure_count: 1
+  summary_digest: 5cb827234bce525815c8f8d039535855de003d5df1b801375acd5852db7a7f59

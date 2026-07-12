@@ -1,0 +1,46 @@
+machine_gate_recomputation:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  frozen_core_commit_sha: 7e82f6d527cc1c20c302325ae4246760fb1e4baf
+  frozen_core_modified: false
+  request_count: 40
+  frozen_checker_visibility_suffix_false_positive_request_count: 40
+  frozen_checker_visibility_suffix_false_positive_finding_count: 120
+  false_positive_reason: The checker scans serialized substrings expected_score, review_envelope, and sibling_candidate while the frozen compiler
+    requires the negative visibility keys with those substrings.
+  materializer_all_surface_exact_overlap_profiles:
+  - CP01
+  - CP13
+  evidence_normalized_non_evidence_exact_overlap_count: 1
+  evidence_normalized_non_evidence_exact_overlaps:
+  - profile_id: CP13
+    text: 一件短马甲，三次换位
+    left_binding:
+      semantic_license: STRUCTURAL_LANGUAGE
+      source_atom_refs: []
+      surface_path: surfaces.title
+      text: 一件短马甲，三次换位
+    right_binding:
+      semantic_license: EVIDENCE_BOUND_EXPRESSION
+      source_atom_refs:
+      - DEV-OPEN-CP13-OBJECT
+      - DEV-OPEN-CP13-ACTION
+      surface_path: surfaces.title
+      text: 一件短马甲，三次换位
+  max_normalized_8gram_overlap_ratio: 0.09462915601023018
+  normalized_8gram_threshold_failure_count: 0
+  candidate_or_core_rewrite_performed: false
+  checker_bypass_performed: false
+  required_check_expected_green: false
+  external_guardian_required: true
+  machine_structural_failure_count: 1
+  machine_structural_failure_candidate_ids:
+  - DEV-OPEN-CAND-CP14-B-001
+  machine_structural_failure_codes:
+  - E_OBLIGATION_BAD_REFS:CP14-B-OBL-06
+  frozen_live_checker_exit: 1
+  frozen_live_checker_visibility_suffix_finding_count: 120
+  frozen_live_checker_pair_exact_finding_count: 1
+  frozen_live_checker_other_finding_count: 0
+  frozen_live_checker_emits_machine_structural_ineligibility_as_failure: false
+  recomputation_digest: e3dbf77c298d113c98499da6decac94c12c0aad8f6aaaf73a43ccf6f70c9df86
