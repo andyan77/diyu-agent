@@ -1,0 +1,38 @@
+authoring_envelope_contract:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_QUALIFICATION_CALIBRATION_TARGETED_REPAIR_002
+  authoring_projection_fields:
+  - candidate_id
+  - content_product_type_id
+  - voice_lane
+  - material_pack_ref
+  - material_atoms
+  - style_realization_plan
+  - component_refs
+  review_envelope_fields:
+  - review_case_id
+  - canary_token
+  - qualification_only
+  - nonpublishable
+  - runtime_consumable
+  - production_consumable
+  - guardian_review_required
+  canary_policy:
+    review_envelope_canary_must_not_reach_authoring_surface: true
+    forbidden_audience_meta_snippets:
+    - 内部审查
+    - 材料允许
+    - 合成资格
+    - 资格样本
+    - 不进入发布
+    - 专业声道
+    - 普通人声道
+    - 先别急
+    - 没有被说满
+    - 不替观众决定
+    - 复审
+    - 版本比较
+    - hidden
+    - qualification
+    checker_independently_scans_all_surfaces: true
+  contract_digest: 177c9dc71bd4386ab2c387509dd9eab4aee738bb7f67dad21c205bc17392e804

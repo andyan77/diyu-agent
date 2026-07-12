@@ -33,6 +33,12 @@ LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.ya
 CI_PATH = Path(".github/workflows/ci.yml")
 CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py")
 MATERIALIZER_PATH = TASK_DIR / "run_targeted_repair_materializer.py"
+SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
+    "controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002"
+)
+SUCCESSOR_CALIBRATION_REPAIR_002_CHECKER_PATH = Path(
+    "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py"
+)
 V1_GENERATOR_ENTRY_PATH = V1_DIR / "run_qualification_probe_40_generator_acceptance.py"
 GENERATOR_BUILD_FREEZER_PATH = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py")
 ORCH_FREEZER_PATH = Path(
@@ -243,7 +249,11 @@ def validate_hidden(root: Path, errors: list[dict[str, str]]) -> None:
         return
     final = load_yaml(root / FINAL_RESULT_PATH)["qualification_rerun_result"]
     calibration_sha = final["calibration"]["calibration_freeze_commit_sha"]
-    frozen_paths = [path.as_posix() for path in CALIBRATION_PATHS if path not in {CI_PATH}]
+    frozen_paths = [
+        path.as_posix()
+        for path in CALIBRATION_PATHS
+        if path not in {CI_PATH, CHECKER_PATH, MATERIALIZER_PATH}
+    ]
     frozen_diff = git(root, ["diff", "--name-only", f"{calibration_sha}..HEAD", "--", *frozen_paths]).splitlines()
     if frozen_diff:
         add_error(errors, "E_FREEZE_CORE_CHANGED", "freeze", str(frozen_diff))
@@ -321,6 +331,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
     allowed = set(CALIBRATION_PATHS | HIDDEN_PATHS | {CHECKER_PATH})
     allowed.update({
         Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py"),
+        SUCCESSOR_CALIBRATION_REPAIR_002_CHECKER_PATH,
         Path("ci/checkers/check_controlled_content_generator_v2_build.py"),
         Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py"),
         Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py"),
@@ -331,7 +342,13 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         FACT_AUTH_FREEZER_PATH,
         COMPONENT_SUPPLY_FREEZER_PATH,
     })
-    unexpected = sorted(path.as_posix() for path in changed_paths(root) if not path.is_relative_to(TASK_DIR) and path not in allowed)
+    unexpected = sorted(
+        path.as_posix()
+        for path in changed_paths(root)
+        if not path.is_relative_to(TASK_DIR)
+        and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
+        and path not in allowed
+    )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
 

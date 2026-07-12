@@ -1,0 +1,21 @@
+active_authoring_registry:
+  schema_version: v0.2
+  task_id: CONTROLLED_V2_QUALIFICATION_CALIBRATION_TARGETED_REPAIR_002
+  active_entry_count: 1
+  entries:
+  - entry_id: AUTHORING-R001-HISTORICAL
+    path: controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_generator_acceptance.py
+    status: historical_non_active
+    may_be_invoked_by_current_pipeline: false
+    historical_after_digest: 01d9ac25135612df9f33ab34b005228683c5f05dcd8068f7c5c9ec267988cd67
+    reason: kept as failed development evidence from route_migration_28
+  - entry_id: AUTHORING-R002-ACTIVE
+    path: controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/active_authoring/controlled_v2_authoring_successor.py
+    status: active
+    authoring_version: controlled-v2-authoring-successor-r002
+    may_be_invoked_by_current_pipeline: true
+    module_sha256: a0bd3d196a6761a6323008fc19f1edd2907ecf2397ea81a72269cdd10ff36cce
+    entrypoint: compose_candidate(authoring_projection)
+    input_contract: authoring_projection_only
+    review_envelope_visible_to_authoring: false
+  registry_digest: ba2d21310f220660a5e95bd02252e8b3af6c3e59468e779b23e1e1d87710bc15

@@ -45,6 +45,9 @@ FACT_AUTH_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_
 GENERATOR_V2_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
 QUALIFICATION_PROBE_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
 TARGETED_REPAIR_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py")
+CALIBRATION_REPAIR_002_CHECKER_PATH = Path(
+    "ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py"
+)
 COMPONENT_SUPPLY_RESULT_PATH = (
     GKB_ROOT / "component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml"
 )
@@ -60,6 +63,9 @@ FACT_AUTH_FREEZER_PATH = (
 SUCCESSOR_GENERATOR_V2_DIR = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001")
 SUCCESSOR_QUALIFICATION_PROBE_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_001")
 SUCCESSOR_TARGETED_REPAIR_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001")
+SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
+    "controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002"
+)
 
 PLAN_NAMESPACE = "fixture://gkb-v2/orch-dryrun/"
 EXPECTED_PROFILE_OBJECT_DIGEST = "160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b"
@@ -86,6 +92,7 @@ ALLOWED_CHANGED_PATHS = {
     GENERATOR_V2_CHECKER_PATH,
     QUALIFICATION_PROBE_CHECKER_PATH,
     TARGETED_REPAIR_CHECKER_PATH,
+    CALIBRATION_REPAIR_002_CHECKER_PATH,
     COMPONENT_SUPPLY_RESULT_PATH,
     COMPONENT_SUPPLY_FREEZER_PATH,
     FACT_AUTH_RESULT_PATH,
@@ -269,6 +276,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         if not path.is_relative_to(SUCCESSOR_GENERATOR_V2_DIR)
         and not path.is_relative_to(SUCCESSOR_QUALIFICATION_PROBE_DIR)
         and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
+        and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -793,6 +801,13 @@ def validate_ledger(root: Path, freezer: Any, result_doc: dict[str, Any], errors
             if extra not in (
                 ["route_migration_25", "route_migration_26", "route_migration_27"],
                 ["route_migration_25", "route_migration_26", "route_migration_27", "route_migration_28"],
+                [
+                    "route_migration_25",
+                    "route_migration_26",
+                    "route_migration_27",
+                    "route_migration_28",
+                    "route_migration_29",
+                ],
             ):
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
