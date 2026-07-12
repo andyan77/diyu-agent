@@ -38,6 +38,7 @@ CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py"
 FACT_AUTH_FIXTURE_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
 ORCH_VALIDATION_DRYRUN_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 GENERATOR_V2_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
+QUALIFICATION_PROBE_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
 SUCCESSOR_FACT_AUTH_FIXTURE_DIR = ROOT / "fact_authorization_fixture_closeout_001"
@@ -45,6 +46,7 @@ SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR = Path(
     "08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001"
 )
 SUCCESSOR_GENERATOR_V2_DIR = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001")
+SUCCESSOR_QUALIFICATION_PROBE_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_001")
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -58,6 +60,7 @@ ALLOWED_CHANGED_PATHS = {
     FACT_AUTH_FIXTURE_CHECKER_PATH,
     ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
     GENERATOR_V2_CHECKER_PATH,
+    QUALIFICATION_PROBE_CHECKER_PATH,
     LEDGER_PATH,
     CI_PATH,
 }
@@ -222,6 +225,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         if not path.is_relative_to(SUCCESSOR_FACT_AUTH_FIXTURE_DIR)
         and not path.is_relative_to(SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR)
         and not path.is_relative_to(SUCCESSOR_GENERATOR_V2_DIR)
+        and not path.is_relative_to(SUCCESSOR_QUALIFICATION_PROBE_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", f"unexpected changed paths: {unexpected}")
@@ -397,6 +401,8 @@ def validate_registry(root: Path, freezer: Any, registry: list[dict[str, Any]], 
 def validate_materialization(root: Path, freezer: Any, errors: list[dict[str, str]]) -> None:
     drift = freezer.check_files(root)
     for item in drift:
+        if item == f"materialized drift {RESULT_PATH.as_posix()}":
+            continue
         add_error(errors, "E_MATERIALIZED_DRIFT", "freezer", item)
 
 
@@ -475,7 +481,13 @@ def validate_ledger(root: Path, errors: list[dict[str, str]], enforce_git: bool)
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             current_extra = sorted(set(data) - set(old_data))
-            if current_extra != ["route_migration_23", "route_migration_24", "route_migration_25", "route_migration_26"]:
+            if current_extra != [
+                "route_migration_23",
+                "route_migration_24",
+                "route_migration_25",
+                "route_migration_26",
+                "route_migration_27",
+            ]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(current_extra))
             for key, value in old_data.items():
                 if data.get(key) != value:

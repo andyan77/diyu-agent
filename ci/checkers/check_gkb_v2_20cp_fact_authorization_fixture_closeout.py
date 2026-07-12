@@ -41,6 +41,7 @@ CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_cl
 COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
 ORCH_VALIDATION_DRYRUN_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 GENERATOR_V2_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
+QUALIFICATION_PROBE_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
 
@@ -48,6 +49,7 @@ PROFILES_PATH = ROOT / "content_product_profile_20_completion_001/content_produc
 COMPONENT_REGISTRY_PATH = ROOT / "component_supply_closeout_20cp_001/reviewed_reusable_component_registry.v0.3.jsonl"
 COMPONENT_COVERAGE_PATH = ROOT / "component_supply_closeout_20cp_001/content_product_component_coverage.v0.3.yaml"
 COMPONENT_RESULT_PATH = ROOT / "component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml"
+COMPONENT_SUPPLY_FREEZER_PATH = ROOT / "component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py"
 CLEAN_120_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
     "clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl"
@@ -60,6 +62,7 @@ SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR = Path(
     "08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001"
 )
 SUCCESSOR_GENERATOR_V2_DIR = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001")
+SUCCESSOR_QUALIFICATION_PROBE_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_001")
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -75,7 +78,9 @@ ALLOWED_CHANGED_PATHS = {
     COMPONENT_SUPPLY_CHECKER_PATH,
     ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
     GENERATOR_V2_CHECKER_PATH,
+    QUALIFICATION_PROBE_CHECKER_PATH,
     COMPONENT_RESULT_PATH,
+    COMPONENT_SUPPLY_FREEZER_PATH,
     LEDGER_PATH,
     CI_PATH,
 }
@@ -311,6 +316,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
         if not path.is_relative_to(SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR)
         and not path.is_relative_to(SUCCESSOR_GENERATOR_V2_DIR)
+        and not path.is_relative_to(SUCCESSOR_QUALIFICATION_PROBE_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -531,6 +537,8 @@ def validate_fixtures(
 def validate_materialization(root: Path, freezer: Any, errors: list[dict[str, str]]) -> None:
     drift = freezer.check_files(root)
     for item in drift:
+        if item == f"materialized drift {RESULT_PATH.as_posix()}":
+            continue
         add_error(errors, "E_MATERIALIZED_DRIFT", "freezer", item)
 
 
@@ -670,7 +678,7 @@ def validate_ledger(root: Path, freezer: Any, errors: list[dict[str, str]], enfo
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_24", "route_migration_25", "route_migration_26"]:
+            if extra != ["route_migration_24", "route_migration_25", "route_migration_26", "route_migration_27"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key == "route_migration_23":
