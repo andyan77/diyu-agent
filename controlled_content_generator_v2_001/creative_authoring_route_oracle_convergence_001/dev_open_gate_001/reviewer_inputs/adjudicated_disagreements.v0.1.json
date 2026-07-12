@@ -1,0 +1,69 @@
+{
+  "candidate_adjudications": [
+    {
+      "candidate_id": "DEV-OPEN-CAND-CP01-B-001",
+      "candidate_digest": "14a45ccbcadb2efffb973607ae8f87e23978202390fcbb7479b6ee1f00041341",
+      "final_grade": "D",
+      "first_acceptance": false,
+      "hard_gate_failures": [
+        "A_B_independence_failure"
+      ],
+      "evidence_boundary_pass": true,
+      "role_authority_pass": true,
+      "style_realization_pass": false,
+      "rationale": "The expression is evidence-bound and role-bounded, but lane B exactly reuses lane A's non-evidence title and retains the same action-led information sequence, worktable observation focus, visual subjects, operational sound bed, CTA policy, and unresolved ending. Sparse role speech and modest register/rhythm variation do not realize four independent axes. Under the frozen zero-edit standard, this is an A/B independence hard failure rather than a repairable first-acceptance result."
+    },
+    {
+      "candidate_id": "DEV-OPEN-CAND-CP14-B-001",
+      "candidate_digest": "e335323a4f8d0f358fd3457cb56f6220b19f70571c87cbc4a5e3d27830c771cf",
+      "final_grade": "D",
+      "first_acceptance": false,
+      "hard_gate_failures": [
+        "A_B_independence_failure"
+      ],
+      "evidence_boundary_pass": true,
+      "role_authority_pass": true,
+      "style_realization_pass": false,
+      "rationale": "All factual audience surfaces are supported by cited atoms and stay within the material-capture role. The whole-array spoken_lines obligation pointer is invalid structural metadata, but it does not create an unsupported factual surface and metadata correction is not a content edit under the rubric. The candidate nevertheless fails the agreed A/B independence hard gate because its side light, single press-release action, rebound focus, friction-and-impact sound subjects, normal-speed treatment, silence, and stable ending do not establish four independent realized axes."
+    },
+    {
+      "candidate_id": "DEV-OPEN-CAND-CP16-B-001",
+      "candidate_digest": "a9ebca9eed27e21c62b22974d37180aabb135140dc7b978fd9e44902ea8f78b6",
+      "final_grade": "A",
+      "first_acceptance": true,
+      "hard_gate_failures": [],
+      "evidence_boundary_pass": true,
+      "role_authority_pass": true,
+      "style_realization_pass": true,
+      "rationale": "The complete expression is supported, anonymous, role-bounded, and needs no content edit. Relative to lane A, lane B moves the bounded diagnosis ahead of the physical adjustment, uses a plain narrative service-recap operator and register, focuses the body on the morning retrieval friction and small route-map metaphor, and changes the prose rhythm from compact field reporting to a five-step narrated account. Those realized differences clear the four-axis minimum without changing the identity, core action, or unresolved water-bottle boundary."
+    }
+  ],
+  "pair_adjudications": [
+    {
+      "profile_id": "CP01",
+      "independence_pass": false,
+      "mere_paraphrase": true,
+      "realized_axis_differences": [
+        "language_register",
+        "sound_subject",
+        "rhythm"
+      ],
+      "exact_overlap_assessment": "The lanes exactly share the non-evidence creative title '午班检查台：两件白衬衫的去向'. Their normalized non-evidence eight-gram overlap is 0.052304, below the near-duplicate numeric threshold, but the duplicated title plus the same action sequence, visual subjects, operational sound mechanism, CTA policy, and ending leaves fewer than four realized axis differences.",
+      "rationale": "The shared evidence and obligations are allowed, but the exact creative title is not immutable evidence. Lane B mainly recasts the same inspection script with sparse speech and lighter wording; it does not independently realize the required minimum of four axes, so the pair fails the frozen independence gate."
+    },
+    {
+      "profile_id": "CP16",
+      "independence_pass": true,
+      "mere_paraphrase": false,
+      "realized_axis_differences": [
+        "information_order",
+        "narrative_operator",
+        "language_register",
+        "observation_focus",
+        "rhythm"
+      ],
+      "exact_overlap_assessment": "There is no exact non-evidence line overlap, and the normalized non-evidence eight-gram overlap is 0.006485. Shared task fields, object order, and completed/pending facts are immutable evidence rather than copied creative expression.",
+      "rationale": "Lane A proceeds as a compact field-and-status record. Lane B enters through the morning retrieval friction, places the limited diagnosis before the physical adjustment, uses a plain narrative recap with a route-map image, and expands the cadence into five narrated stages. These are at least four substantive axis differences while identity, core action, anonymity, and the unresolved water-bottle state remain intact."
+    }
+  ]
+}

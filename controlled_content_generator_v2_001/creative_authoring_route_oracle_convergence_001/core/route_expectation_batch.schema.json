@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["expectations"],
+  "properties": {
+    "expectations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "expected_action", "expected_reason_basis", "expected_rule_refs", "curator_id", "reviewer_id"],
+        "properties": {
+          "case_id": {"type": "string"},
+          "expected_action": {"enum": ["ALLOW", "REQUEST_INPUT", "DEGRADE", "BLOCK"]},
+          "expected_reason_basis": {"type": "string"},
+          "expected_rule_refs": {"type": "array", "items": {"type": "string"}},
+          "curator_id": {"type": "string"},
+          "reviewer_id": {"type": "string"}
+        }
+      }
+    }
+  }
+}

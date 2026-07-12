@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["fixtures"],
+  "properties": {
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "profile_id",
+          "input_summary",
+          "actual_input_payload",
+          "missing_points",
+          "conflict_points",
+          "risk_points",
+          "rule_version",
+          "fixture_designer",
+          "independent_fixture_reviewer",
+          "hidden_acceptance_case",
+          "source_fixture_path",
+          "source_fixture_digest",
+          "source_span_refs"
+        ],
+        "properties": {
+          "case_id": {"type": "string"},
+          "profile_id": {"type": "string"},
+          "input_summary": {"type": "string"},
+          "actual_input_payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "profile_id",
+              "present_source_slots",
+              "present_fact_slots",
+              "present_authorization_slots",
+              "hard_guard_hits",
+              "risk_points",
+              "partial_safe",
+              "requested_degraded_output",
+              "partial_artifact_payload"
+            ],
+            "properties": {
+              "profile_id": {"type": "string"},
+              "present_source_slots": {"type": "array", "items": {"type": "string"}},
+              "present_fact_slots": {"type": "array", "items": {"type": "string"}},
+              "present_authorization_slots": {"type": "array", "items": {"type": "string"}},
+              "hard_guard_hits": {"type": "array", "items": {"type": "string"}},
+              "risk_points": {"type": "array", "items": {"type": "string"}},
+              "partial_safe": {"type": "boolean"},
+              "requested_degraded_output": {"type": "string"},
+              "partial_artifact_payload": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["artifact_purpose", "items"],
+                "properties": {
+                  "artifact_purpose": {"type": "string"},
+                  "items": {"type": "array", "items": {"type": "string"}}
+                }
+              }
+            }
+          },
+          "missing_points": {"type": "array", "items": {"type": "string"}},
+          "conflict_points": {"type": "array", "items": {"type": "string"}},
+          "risk_points": {"type": "array", "items": {"type": "string"}},
+          "rule_version": {"type": "string"},
+          "fixture_designer": {"type": "string"},
+          "independent_fixture_reviewer": {"type": "string"},
+          "hidden_acceptance_case": {"type": "boolean"},
+          "source_fixture_path": {"type": "string"},
+          "source_fixture_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "source_span_refs": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

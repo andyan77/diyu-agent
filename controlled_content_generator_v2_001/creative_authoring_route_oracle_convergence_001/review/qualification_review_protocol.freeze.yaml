@@ -1,0 +1,41 @@
+qualification_review_protocol:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  lifecycle: FROZEN_WITH_CORE_COMMIT
+  rubric_file: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/review/qualification_rubric.v2.0.yaml
+  rubric_version: v2.0
+  rubric_digest: 34137bc0bff27cba5124654962f514c9c7f7f3132f820eacd9b31d6ef07b50f3
+  candidate_surface_scope:
+  - title
+  - body
+  - spoken
+  - CTA
+  - visual
+  - capture
+  - audio
+  - editing
+  - surface_bindings
+  hard_gate_definitions_ref: qualification_rubric.v2.0.yaml#hard_gate_definitions
+  first_acceptance_definition_ref: qualification_rubric.v2.0.yaml#first_acceptance_definition
+  grade_definition_ref: qualification_rubric.v2.0.yaml#grade_definition
+  formulaic_finding_definition_ref: qualification_rubric.v2.0.yaml#formulaic_finding_definition
+  near_duplicate_definition_ref: qualification_rubric.v2.0.yaml#near_duplicate_definition
+  A_B_independence_definition_ref: qualification_rubric.v2.0.yaml#A_B_independence_definition
+  blind_test_protocol_ref: qualification_rubric.v2.0.yaml#blind_test_protocol
+  reviewer_roles:
+    primary_reviewer:
+      full_40_required: true
+      author_or_producer_forbidden: true
+    independent_adversarial_reviewer:
+      full_40_required: true
+      author_or_producer_forbidden: true
+    adjudicator:
+      reads_only_disagreements: true
+      author_or_producer_forbidden: true
+  disagreement_adjudication:
+    only_adjudicated_result_may_set_first_acceptance: true
+    unresolved_disagreement_is_not_accepted: true
+    candidate_digest_binding_required: true
+  batch_pass_thresholds_ref: qualification_rubric.v2.0.yaml#batch_pass_thresholds
+  external_guardian_checkpoint_required: true
+  generator_qualified: false

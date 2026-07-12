@@ -36,6 +36,12 @@ CI_PATH = Path(".github/workflows/ci.yml")
 CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py")
 MATERIALIZER_PATH = TASK_DIR / "run_qualification_calibration_repair_002_materializer.py"
 OLD_TASK_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001")
+SUCCESSOR_CONVERGENCE_DIR = Path(
+    "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
+)
+SUCCESSOR_CONVERGENCE_CHECKER_PATH = Path(
+    "ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py"
+)
 
 REPORT_BINDING_PATH = TASK_DIR / "guardian_inputs/hidden_qualification_review_report_v2_0_binding.v0.1.yaml"
 FAILURE_TRACE_PATH = TASK_DIR / "creative_authoring_failure_trace.v0.1.yaml"
@@ -210,6 +216,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
             Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py"),
             Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py"),
             Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py"),
+            SUCCESSOR_CONVERGENCE_CHECKER_PATH,
             Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001/run_targeted_repair_materializer.py"),
             Path("controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_generator_acceptance.py"),
             Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py"),
@@ -229,7 +236,13 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
             ),
         }
     )
-    unexpected = sorted(path.as_posix() for path in changed_paths(root) if not path.is_relative_to(TASK_DIR) and path not in allowed)
+    unexpected = sorted(
+        path.as_posix()
+        for path in changed_paths(root)
+        if not path.is_relative_to(TASK_DIR)
+        and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
+        and path not in allowed
+    )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
 

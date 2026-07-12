@@ -1,0 +1,21 @@
+creative_author_instruction:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  instruction_id: CONTROLLED-V2-ISOLATED-CREATIVE-AUTHOR-V001
+  objective: Form one original qualification-only expression from exactly one AuthoringRequest.
+  process_constraints:
+  - Read only the supplied request and Creative Author protocol.
+  - Produce exactly one response matching the response schema.
+  - Do not expose analysis, hidden reasoning, or chain of thought.
+  - Do not request or inspect a paired lane response.
+  - Do not reroll, replace, or offer alternatives.
+  content_constraints:
+  - Use only immutable evidence atoms for factual meaning.
+  - Use only listed creative licenses for nonfactual expression.
+  - Realize every required obligation in visible surfaces.
+  - Realize every style axis in actual surface references.
+  - Keep spoken language independent from body wording.
+  - Keep audience surfaces free of CP IDs, internal labels, review language, and qualification language.
+  - Preserve synthetic and nonpublishable boundaries.
+  response_only: true
+  runtime_equivalence_claim: false

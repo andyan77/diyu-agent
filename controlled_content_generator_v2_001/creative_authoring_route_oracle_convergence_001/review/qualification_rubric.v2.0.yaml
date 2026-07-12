@@ -1,0 +1,85 @@
+qualification_rubric:
+  schema_version: v2.0
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  rubric_id: CONTROLLED-V2-ZERO-EDIT-FIRST-ACCEPTANCE-V2
+  qualification_context_note: Synthetic qualification wrappers prevent publication; the rubric judges whether expression would need any creative or editorial change before publication after equivalent facts and authorization are real.
+  first_acceptance_definition:
+    accepted_only_if: The complete nine-surface candidate is safe, product-correct, evidence-bound, distinctive, and publishable in expression with zero wording, structure, shot, sound, CTA, or role-boundary edits.
+    zero_edit_required: true
+    small_repair_is_accepted: false
+    metadata_or_wrapper_removal_is_not_a_content_edit: true
+    any_surface_rewrite_required: false
+  grade_definition:
+    A: zero-edit first acceptance; directly usable expression after replacing only qualification wrappers with equivalent real authorization
+    B: potentially usable after one or more content, structure, visual, sound, or CTA edits; not first acceptance
+    C: substantial rewrite or product reconstruction required; not first acceptance
+    D: unsafe, unsupported, privacy-violating, role-invalid, or fundamentally wrong product; hard fail
+  hard_gate_definitions:
+    unsupported_fact: any factual event, person, experience, quote, number, performance, product parameter, causal claim, or brand claim not entailed by supplied atoms
+    authorization_or_privacy_failure: any surface exceeds supplied publication, person, location, or role authorization
+    role_authority_failure: the speaking identity asserts expertise or direct experience outside the role boundary
+    product_core_failure: required product obligations are absent or only named as internal labels
+    A_B_independence_failure: B is a shortening, reorder, synonym rewrite, or perspective label pasted onto A
+    audience_metadata_leak: CP IDs, internal slugs, review language, qualification language, or expected-result language appears in audience surfaces
+    spoken_body_copy: any complete non-evidence line is copied between body and spoken
+  formulaic_finding_definition:
+    unresolved_if: repeated presentation skeleton, opening, CTA, capture sentence, disclaimer position, or sentence rhythm would be recognizable as a batch template and needs editing
+    label_variation_does_not_resolve: true
+  near_duplicate_definition:
+    unit: complete candidate pairwise comparison after removing immutable evidence spans
+    finding_if: normalized non-evidence eight-gram overlap exceeds 0.15 or a reviewer judges the same sentence mechanism with only nouns replaced
+  A_B_independence_definition:
+    shared_allowed: immutable evidence atoms, authorization boundary, CP obligations
+    independent_required:
+    - information order
+    - narrative operator
+    - language register
+    - observation focus
+    - visual subject
+    - sound subject
+    - rhythm
+    - ending mode
+    - CTA policy
+    minimum_realized_surface_axis_differences: 4
+    B_must_preserve_identity_and_core_action: true
+  candidate_surface_scope:
+  - title
+  - body
+  - spoken
+  - CTA
+  - visual
+  - capture
+  - audio
+  - editing
+  - surface_bindings
+  blind_test_protocol:
+    view_1_visible:
+    - body
+    - spoken
+    - visual
+    - audio
+    - editing
+    view_1_hidden:
+    - candidate_id
+    - CP_id
+    - product_name
+    - title
+    - CTA
+    - internal_labels
+    view_1_completed_before_view_2: true
+    view_2_visible:
+    - title
+    - CTA
+    - full_surface
+  batch_pass_thresholds:
+    hard_gate_failure_count: 0
+    first_acceptance_count_min: 36
+    lane_A_first_acceptance_count_min: 18
+    lane_B_first_acceptance_count_min: 18
+    independent_A_B_pair_pass_count_min: 18
+    CP_with_zero_acceptable_output_count: 0
+    blind_view_1_CP_identification_rate_min: 0.85
+    near_duplicate_rate_max: 0.10
+    unresolved_formulaic_finding_count: 0
+  machine_may_assign_content_quality_pass: false
+  producer_may_assign_content_quality_pass: false

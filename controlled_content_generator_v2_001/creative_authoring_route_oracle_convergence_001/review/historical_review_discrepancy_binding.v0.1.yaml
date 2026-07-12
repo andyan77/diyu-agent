@@ -1,0 +1,37 @@
+historical_review_discrepancy_binding:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  review_inputs:
+  - review_id: A_GUARDIAN_STRICT
+    review_type: guardian_strict_review
+    reported_first_acceptance_count: 0
+    candidate_count: 40
+  - review_id: B_CONTENT_EXPERT
+    review_type: latest_content_expert_review
+    reported_first_acceptance_count: 19
+    candidate_count: 40
+    lane_A_first_acceptance_count: 19
+    lane_B_first_acceptance_count: 0
+  - review_id: C_HUMAN_REVIEW_V3
+    review_type: human_review_report
+    filename: 笛语_资格修复002隐藏集40条_人审报告_v3.0.md
+    sha256: c53f69066c5391af68080d21a308e575c189dfaf38317c3657b2a07088aabc5e
+    reported_first_acceptance_count: 26
+    candidate_count: 40
+  discrepancy_policy:
+    historical_reports_modified: false
+    favorable_number_selected: false
+    average_computed: false
+    current_qualification_state: FAIL
+    successor_uses_single_frozen_rubric: true
+  structural_blocker_union:
+  - lane_B_not_independent
+  - non_evidence_A_B_surface_reuse
+  - style_labels_without_surface_realization
+  - hidden_input_baked_into_active_core
+  - product_self_label_blind_test_pollution
+  - route_actual_expected_same_source
+  - hardcoded_route_pass
+  - invalid_or_missing_DEGRADE_artifact
+  - machine_structure_pass_misrepresented_as_content_quality_pass
+  - first_acceptance_below_36_of_40

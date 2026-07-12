@@ -1,0 +1,22 @@
+authoring_backend_manifest:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  backend_class: CONTROLLED_EXECUTION_AGENT
+  available_backend_identifier: codex_exec_ephemeral_isolated_session
+  instruction_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/creative_author_instruction.v0.1.yaml
+  instruction_digest: a48d5a27c3309b2a19e9a749a389475abfa5c67c5ba6534d813cb85157b6df13
+  constraint_compiler_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/constraint_compiler.py
+  constraint_compiler_digest: 838e61c23d5865b5de835e1f0a2f13f79348f979c3104f84644c2726df1efdb0
+  isolation_policy:
+    fresh_ephemeral_session_per_request: true
+    working_directory_contains_only_request_protocol_and_schema: true
+    sibling_candidate_visibility: false
+    paired_output_visibility: false
+    review_envelope_visibility: false
+    expected_score_visibility: false
+    chain_of_thought_storage: forbidden
+    output_capture: final_structured_response_only
+  qualification_scope: DEV_OPEN_GATE_AND_CONDITIONALLY_SEALED_HIDDEN_ONLY
+  external_provider_API_call_count: 0
+  runtime_equivalence_claim: false
+  runtime_provider_adapter_qualified: false

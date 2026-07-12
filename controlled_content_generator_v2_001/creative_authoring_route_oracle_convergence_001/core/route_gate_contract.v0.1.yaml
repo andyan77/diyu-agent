@@ -1,0 +1,27 @@
+route_gate_contract:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_CREATIVE_AUTHORING_ROUTE_ORACLE_CONVERGENCE_001
+  active_gate_count: 1
+  active_gate_path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/controlled_v2_route_gate.py
+  entrypoint: controlled_v2_route_gate(input_projection, profile_contract)
+  allowed_actions:
+  - ALLOW
+  - REQUEST_INPUT
+  - DEGRADE
+  - BLOCK
+  expectation_registry_visible_to_gate: false
+  case_id_visible_to_gate: false
+  distribution_quota: null
+  action_precedence:
+  - hard_guard_or_unauthorized_risk_to_BLOCK
+  - profile_allowed_partial_safe_missing_input_to_DEGRADE
+  - other_missing_input_to_REQUEST_INPUT
+  - complete_safe_input_to_ALLOW
+  degrade_contract:
+    audience_title_created: false
+    audience_body_created: false
+    spoken_script_created: false
+    runtime_plan_created: false
+    artifact_must_be_nonempty: true
+    artifact_type_must_be_profile_allowed: true
+  comparison_owner: independent_checker
