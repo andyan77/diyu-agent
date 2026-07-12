@@ -349,7 +349,16 @@ def file_digests(root: Path) -> dict[str, str]:
         FREEZER_PATH,
         CHECKER_PATH,
     ]
-    return {path.as_posix(): sha256_file(root / path) for path in paths if (root / path).exists()}
+    digests = {path.as_posix(): sha256_file(root / path) for path in paths if (root / path).exists()}
+    if (root / RESULT_PATH).exists():
+        recorded = load_yaml(root / RESULT_PATH)["fact_authorization_fixture_closeout_result"].get(
+            "generated_file_digests", {}
+        )
+        for path in [FREEZER_PATH, CHECKER_PATH]:
+            path_key = path.as_posix()
+            if isinstance(recorded.get(path_key), str):
+                digests[path_key] = recorded[path_key]
+    return digests
 
 
 def build_handoff(root: Path, coverage: dict[str, Any]) -> dict[str, Any]:

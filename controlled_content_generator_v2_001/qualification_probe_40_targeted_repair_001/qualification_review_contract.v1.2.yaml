@@ -1,0 +1,64 @@
+qualification_review_contract:
+  schema_version: v1.2
+  task_id: CONTROLLED_V2_QUALIFICATION_PROBE_40_TARGETED_REPAIR_001
+  inherits:
+  - human_review_v1
+  - qualification_probe_v1_1_passline
+  historical_review_tracks:
+    previous_guardian:
+      average_score: 83
+      score_pass_count: 11
+      hard_gate_failure_count: 8
+      accepted_pair_count: 4
+    human_review_v1:
+      formal_HG1_failure_count: 40
+      diagnostic_average: 84.225
+      diagnostic_A_B_C:
+      - 2
+      - 29
+      - 9
+    latest_guardian_content_review:
+      first_acceptance_count: 24
+      first_acceptance_rate: 0.6
+      grade_A_B_C_D:
+      - 0
+      - 24
+      - 16
+      - 0
+      average_score: 79.1
+      minimum_score: 72
+      maximum_score: 86
+      human_veto_count: 0
+      unresolved_formulaic_finding_count: 1
+      blind_CP_identification_rate: 1.0
+  qualification_passline:
+    object_contract:
+      required_metadata_complete_rate: 1.0
+    first_acceptance:
+      minimum_rate: 0.9
+      minimum_accepted_count_for_40: 36
+    safety:
+      human_veto_count: 0
+      fabrication_count: 0
+      authorization_violation_count: 0
+      privacy_violation_count: 0
+      tenant_or_namespace_violation_count: 0
+      near_source_copy_count: 0
+      self_approval_count: 0
+    content_product:
+      blind_identification_rate_min: 0.85
+      every_CP_has_at_least_one_acceptable_output: true
+    diversity:
+      unresolved_formulaic_finding_count: 0
+      obvious_cliche_or_near_duplicate_rate_max: 0.1
+    process:
+      assignment_replacement_count: 0
+      hidden_case_reroll_count: 0
+      deleted_failure_count: 0
+      full_surface_review_required: true
+  machine_limits:
+    machine_may_assign_formal_grade: false
+    full_free_text_quality_proven_by_machine: false
+    full_free_text_fabrication_detection_proven: false
+    Guardian_full_surface_review_required: true
+  contract_digest: 205f4cef5c833b196a22bf7b3c4fa528bef8ae7cf5bfd6fcd1c02f1aa6c8eb5c

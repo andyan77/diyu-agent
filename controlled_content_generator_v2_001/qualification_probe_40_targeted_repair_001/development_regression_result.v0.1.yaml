@@ -1,0 +1,29 @@
+development_regression_result:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_QUALIFICATION_PROBE_40_TARGETED_REPAIR_001
+  status: CALIBRATION_DEVELOPMENT_REGRESSION_COMPLETE_NOT_QUALIFICATION
+  old_probe_40_role: DEVELOPMENT_CALIBRATION_EVIDENCE_ONLY
+  development_regression_count: 40
+  new_logical_ID_count: 0
+  replacement_ID_count: 0
+  baseline_increment_count: 0
+  route_case_count: 60
+  route_pass_count: 60
+  generator_qualified: false
+  readiness:
+    generator_qualified: false
+    runtime_provider_adapter_qualified: false
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    Serving_ready: false
+    production_ready: false
+    release_ready: false
+    downstream_readiness_all_false: true
+  result_digest: c767fccd21363a8f0842dc820e6381e7a8a608545f7a4894a2c4d8ffc8a71d87

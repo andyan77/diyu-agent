@@ -2243,3 +2243,50 @@ grc_3600_execution_plan_status:
     execution_scalability_gate_passed: false
     final_scale_decision: HOLD
     next_real_action: GKB-CONTENT-KERNEL-REAL-RUNTIME-AB-001
+  route_migration_28:
+    applied_by_task: CONTROLLED_V2_QUALIFICATION_PROBE_40_TARGETED_REPAIR_001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_readiness_flipped: true
+    phase_0_probe_merge:
+      merge_commit_sha: 531fe864b0b338a8708449ae29e739e2dce8e119
+      reviewed_base_sha: 25ce4ff092befe39106783d8b7f2cf31e77f0e82
+      reviewed_head_sha: aaeda5a280b2790c00157e47f89370f6535ee230
+      reviewed_full_diff_digest: 5305d3de6760e9410965325bc998a3036697440e662b595d37c2b4e7c8632df6
+    qualification_targeted_repair:
+      status: SEALED_HIDDEN_QUALIFICATION_RERUN_EXECUTED_PENDING_GUARDIAN
+      calibration_freeze_commit_sha: 6131fa4fdd1221a1b7ef80c6e785ba1335e0b0fd
+      hidden_generated_count: 40
+      route_case_count: 60
+      generator_qualified: false
+      baseline_increment_count: 0
+      accepted_baseline_after: 120
+      external_provider_API_call_count: 0
+      result_digest: 5a3fee86650cdb6cbd68d14352d485034b875cf5169a4204311ddd5bca976299
+    generated_artifacts:
+      directory: controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001
+      checker_path: ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py
+      materializer_path: controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001/run_targeted_repair_materializer.py
+    must_remain_false:
+    - generator_qualified
+    - runtime_provider_adapter_qualified
+    - runtime_ingest_ready
+    - generation_eligible
+    - generation_allowed
+    - generation_600_allowed
+    - expand_600_allowed
+    - expand_3600_allowed
+    - KE_ready
+    - RAG_ready
+    - DIFY_ready
+    - Serving_ready
+    - production_ready
+    - release_ready
+    - hidden_holdout_accepted
+    - generator_qualified
+    recommended_next_route:
+      task_id: CONTROLLED_V2_QUALIFICATION_SEALED_HIDDEN_GUARDIAN_REVIEW_001
+      action: Guardian full-surface hidden 40 review before Founder qualification decision
+    migration_digest: 305160aca626367231cdeb2da670de5dc55b6fac1ae4e1d6834f7d9a096371eb
