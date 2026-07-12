@@ -1,0 +1,39 @@
+orch_validation_plan_contract:
+  schema_version: v0.1
+  task_id: ORCH_V2_CANONICAL_COMPOSITION_PLAN_20CP_DRYRUN_001
+  baseline:
+    expected_head: 6253e3d1661cd46945a3443de54ac55df5b7d746
+    content_product_profile_registry_object_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+    content_product_profile_file_sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+    component_registry_sha256: e5a3f31a9017a39e51ad409531e26b1e910e8e2effb34a4a24dab5fd11105bb1
+    component_coverage_sha256: 374cb796018d8d5e316e234db747218a0bb61a3574d1b71dcd5151e53bbe6b81
+    fact_authorization_requirements_sha256: e59f7e187d78477b6ec587dfe1df176aeb8b08ef94972ae0ef09273c5c7e6f84
+    validation_fixtures_sha256: bff74e6fac3fe85733fc6d094a81d14af3c303aa0a003e7dc7776cc034043697
+    fact_authorization_result_sha256: 4c645262f3f253ec4655e7de9e9893b6db91ef95714821e225536db36e36aac2
+    gkb_orch_handoff_sha256: 99de1dcd8b1f42d4de89bb23c01632f94c821bf44d2e97256d59571323d4059b
+  ownership:
+    ORCH_owns_validation_plan: true
+    GKB_may_create_ORCH_plan: false
+    KE_touched_in_this_task: false
+    DIFY_invocation_count: 0
+  namespace_policy:
+    plan_type: ORCHValidationCompositionPlan
+    plan_mode: VALIDATION_SYNTHETIC
+    namespace: fixture://gkb-v2/orch-dryrun/
+    canonicality_scope: CASE_LOCAL_VALIDATION
+    canonical_composition_plan_count: 0
+    canonical_validation_composition_plan_count: 20
+    canonical_runtime_composition_plan_count: 0
+    canonical_production_composition_plan_count: 0
+  route_equivalence_policy:
+    CONTRACT_SATISFIED_VALIDATION_ONLY: VALIDATION_COMPOSITION_PLAN_CREATED
+    STOP_NO_OUTPUT: HARD_GUARD_REJECTED
+    missing_routes: fixture.expected_route_exact
+  synthetic_policy:
+    source_ref_prefix: fixture://gkb-v2/orch-dryrun/
+    authorization_status: SIMULATED_GRANTED_FOR_CONTRACT_TEST
+    verified_brand_fact_bundle_count: 0
+    verified_runtime_authorization_count: 0
+    runtime_generation_eligible_profile_count: 0
+  fact_authorization_result_digest: edff4e99ff2b1f828213ec51ba879a1d65ed19ad7b300495beafa02f980c78da
+  contract_digest: f4db94f58cb2ff1aebab076492a6c70a29bd1a5ac87391c295bc120b62f2dde9

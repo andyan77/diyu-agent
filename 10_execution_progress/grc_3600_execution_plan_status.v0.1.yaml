@@ -861,7 +861,7 @@ grc_3600_execution_plan_status:
       generator_qualified: false
       generation_600_allowed: false
       expand_3600_allowed: false
-      result_digest: 54786c74af8056f0e5313e342fc779f5d4df7d01f695370584878edb7e84d5bf
+      result_digest: 1e085767d9a495fe6f1cfeeed1a364f7262c1dd496a20c03f148eb3c7f7362f7
     generated_artifacts:
       directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001
       contract_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_closeout_contract.v0.1.yaml
@@ -898,7 +898,7 @@ grc_3600_execution_plan_status:
       if_guardian_fails:
         task_id: GKB_V2_20CP_COMPONENT_SUPPLY_CLOSEOUT_REPAIR_002
         action: repair guardian findings before any fixture or ORCH work
-    migration_digest: a645c0c096f2b29448b582d4ef1a0b8e24a1355e223e0a54162a90b198846d0c
+    migration_digest: 2e7eb354615709e24e114990a3184ac21ecc67f9dd866e7269ccbd4d4feae198
   route_migration_24:
     applied_by_task: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_CLOSEOUT_001
     applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
@@ -935,7 +935,7 @@ grc_3600_execution_plan_status:
       generator_qualified: false
       generation_600_allowed: false
       expand_3600_allowed: false
-      result_digest: 5e86de492d3fac674592bbdc588f6a1ac07048a354fddea94e6ff1e61316eae1
+      result_digest: edff4e99ff2b1f828213ec51ba879a1d65ed19ad7b300495beafa02f980c78da
     generated_artifacts:
       directory: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001
       contract_path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_input_contract.v0.1.yaml
@@ -984,7 +984,104 @@ grc_3600_execution_plan_status:
       if_guardian_fails:
         task_id: GKB_V2_20CP_FACT_AUTHORIZATION_AND_FIXTURE_REPAIR_001
         action: repair contract or fixture findings before merge
-    migration_digest: d44917050b4717db059195550ad84387e451f5f07548680be2690017c2b7a828
+    migration_digest: e103404c9c551566a2aeb7e7af93a68e818ef6e16166bb7cf5950a480aa10acf
+  route_migration_25:
+    applied_by_task: ORCH_V2_CANONICAL_COMPOSITION_PLAN_20CP_DRYRUN_001
+    applied_from: founder_authorized_after_claude_code_prompt_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_old_checker_edited: false
+    old_checker_edit_scope: successor_write_surface_compatibility_only
+    no_readiness_flipped: true
+    ORCH_validation_dryrun:
+      task_id: ORCH_V2_CANONICAL_COMPOSITION_PLAN_20CP_DRYRUN_001
+      status: EXECUTED_PENDING_GUARDIAN
+      execution_integrity: PASS
+      validation_plan_status: ORCH_20CP_SYNTHETIC_VALIDATION_DRYRUN_COMPLETE_PENDING_GUARDIAN
+      validation_namespace: fixture://gkb-v2/orch-dryrun/
+      request_count: 60
+      decision_count: 60
+      positive_validation_plan_count: 20
+      missing_degraded_count: 20
+      negative_rejected_count: 20
+      unexpected_route_count: 0
+      selection_audit_count: 85
+      canonical_validation_composition_plan_count: 20
+      canonical_composition_plan_count: 0
+      canonical_runtime_composition_plan_count: 0
+      canonical_production_composition_plan_count: 0
+      verified_brand_fact_bundle_count: 0
+      verified_runtime_authorization_count: 0
+      runtime_brand_fact_gap_profile_count: 20
+      runtime_generation_eligible_profile_count: 0
+      audience_facing_content_count: 0
+      plan_execution_count: 0
+      KE_truth_change_count: 0
+      DIFY_payload_count: 0
+      RAG_context_bundle_count: 0
+      Serving_projection_write_count: 0
+      runtime_ingest_ready: false
+      orch_ready: false
+      generator_qualified: false
+      generation_600_allowed: false
+      expand_3600_allowed: false
+      result_digest: 52ea24a5bf23bae2fa7ec5869f7c7566b312909cd922646f4a90388824f2999c
+    generated_artifacts:
+      directory: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001
+      contract_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_validation_plan_contract.v0.1.yaml
+      requests_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_validation_requests.v0.1.jsonl
+      decisions_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_dryrun_decisions.v0.1.jsonl
+      plans_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_validation_canonical_plans.v0.1.jsonl
+      selection_audit_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_component_selection_audit.v0.1.jsonl
+      coverage_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_20cp_dryrun_coverage.v0.1.yaml
+      result_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_20cp_dryrun_result.v0.1.yaml
+      guardian_packet_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/orch_guardian_review_packet.v0.1.yaml
+      freezer_path: 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/run_orch_20cp_validation_dryrun_freezer.py
+      checker_path: ci/checkers/check_orch_v2_20cp_validation_dryrun.py
+    successor_checker_compatibility_update:
+      reason: predecessor_checkers_were_over_strict_against_legal_ORCH_successor_write_surface
+      touched_existing_checker_paths:
+        - ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py
+        - ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py
+      touched_result_metadata_paths:
+        - 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/component_supply_closeout_result.v0.1.yaml
+        - 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/fact_authorization_fixture_closeout_result.v0.1.yaml
+      component_registry_rewritten: false
+      component_coverage_rewritten: false
+      fact_requirements_rewritten: false
+      validation_fixtures_rewritten: false
+      domain_semantics_changed: false
+      successor_paths_allowed_only:
+        - 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001
+        - ci/checkers/check_orch_v2_20cp_validation_dryrun.py
+    must_remain_false:
+      - runtime_ingest_ready
+      - generation_eligible
+      - generation_allowed
+      - generation_600_allowed
+      - expand_600_allowed
+      - expand_3600_allowed
+      - CandidatePack_ready
+      - candidatepack_ready
+      - KE_ready
+      - Serving_ready
+      - RAG_ready
+      - DIFY_ready
+      - production_ready
+      - release_ready
+      - orch_ready
+      - generator_qualified
+    downstream_and_readiness:
+      all_false: true
+    recommended_next_route:
+      if_guardian_passes:
+        task_id: CONTROLLED_CONTENT_GENERATOR_V2_BUILD_AND_ACCEPTANCE_HARNESS_001
+        action: separate founder authorization and pre-review required before any generator build
+      if_guardian_fails:
+        task_id: ORCH_V2_CANONICAL_COMPOSITION_PLAN_20CP_DRYRUN_REPAIR_001
+        action: repair ORCH validation dry-run findings before generator work
+    migration_digest: 97a22657bef377759491aba9e366578072d5d9b02b03b0ea13198c1294d2e9ad
   roadmap_authority: founder_approved_2026-07-08
   route_migration_2:
     applied_by_task: GKB-SCOPED-CONTENT-PRODUCTION-MICROBATCH-BRIEF-AND-GO-NOGO-001

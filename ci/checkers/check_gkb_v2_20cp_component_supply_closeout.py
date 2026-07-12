@@ -36,9 +36,13 @@ RESULT_PATH = TASK_DIR / "component_supply_closeout_result.v0.1.yaml"
 PACKET_PATH = TASK_DIR / "component_supply_guardian_review_packet.v0.1.yaml"
 CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
 FACT_AUTH_FIXTURE_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
+ORCH_VALIDATION_DRYRUN_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
 SUCCESSOR_FACT_AUTH_FIXTURE_DIR = ROOT / "fact_authorization_fixture_closeout_001"
+SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR = Path(
+    "08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001"
+)
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -50,6 +54,7 @@ ALLOWED_CHANGED_PATHS = {
     FREEZER_PATH,
     CHECKER_PATH,
     FACT_AUTH_FIXTURE_CHECKER_PATH,
+    ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
     LEDGER_PATH,
     CI_PATH,
 }
@@ -212,6 +217,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         path.as_posix()
         for path in changed - ALLOWED_CHANGED_PATHS
         if not path.is_relative_to(SUCCESSOR_FACT_AUTH_FIXTURE_DIR)
+        and not path.is_relative_to(SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", f"unexpected changed paths: {unexpected}")
@@ -465,7 +471,7 @@ def validate_ledger(root: Path, errors: list[dict[str, str]], enforce_git: bool)
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             current_extra = sorted(set(data) - set(old_data))
-            if current_extra != ["route_migration_23", "route_migration_24"]:
+            if current_extra != ["route_migration_23", "route_migration_24", "route_migration_25"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(current_extra))
             for key, value in old_data.items():
                 if data.get(key) != value:
@@ -484,6 +490,7 @@ def collect_errors(root: Path, enforce_git: bool = True) -> list[dict[str, str]]
         PACKET_PATH,
         FREEZER_PATH,
         CHECKER_PATH,
+        ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
         LEDGER_PATH,
         CI_PATH,
     ]
@@ -593,6 +600,19 @@ def selftest() -> int:
     partial_registry = [row for row in partial_registry if row["component_id"] != "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]
     partial_coverage = freezer.build_coverage(root, partial_registry)["content_product_component_coverage"]
     tests.append(("partial_coverage_structural_positive", partial_coverage["summary"]["component_supply_complete_count"] < 20))
+
+    hidden_plan = copy.deepcopy(decisions)
+    hidden_plan[0]["CompositionPlan"] = {"runtime": True}
+    tests.append(("runtime_plan_field_rejected", any(e["code"] == "E_FORBIDDEN_FIELD" for e in decision_errors(hidden_plan))))
+
+    tests.append(
+        (
+            "orch_successor_write_surface_declared",
+            (SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR / "orch_20cp_dryrun_result.v0.1.yaml").is_relative_to(
+                SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR
+            ),
+        )
+    )
 
     failed = [name for name, ok in tests if not ok]
     if failed:
