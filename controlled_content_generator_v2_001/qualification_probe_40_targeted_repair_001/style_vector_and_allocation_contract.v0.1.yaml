@@ -1,0 +1,221 @@
+style_vector_and_allocation_contract:
+  schema_version: v0.1
+  task_id: CONTROLLED_V2_QUALIFICATION_PROBE_40_TARGETED_REPAIR_001
+  global_restrained_documentary_voice_default_removed: true
+  forbidden_global_default_combo:
+  - 低旁白
+  - 真实原声
+  - 留白慢切
+  - 把大词收小
+  - 统一内部CTA
+  - 两句spoken
+  - 三个visual beats
+  style_vectors:
+  - id: SV01
+    narrative_distance: role_close
+    reality_mode: procedural
+    emotional_temperature: cool
+    judgment_strength: bounded
+    professional_density: high
+    language_register: workbench_plain
+    rhythm: stepwise
+    imperfection_tolerance: show_unfinished
+    visual_subject: hands_object
+    sound_subject: tool_and_fabric
+    ending_mode: next_verification
+  - id: SV02
+    narrative_distance: observer_near
+    reality_mode: scene_observation
+    emotional_temperature: warm_low
+    judgment_strength: soft
+    professional_density: medium
+    language_register: ordinary_precise
+    rhythm: two_turn
+    imperfection_tolerance: leave_question
+    visual_subject: space_object
+    sound_subject: ambient
+    ending_mode: open_boundary
+  - id: SV03
+    narrative_distance: record_card
+    reality_mode: evidence_log
+    emotional_temperature: neutral
+    judgment_strength: explicit
+    professional_density: high
+    language_register: record_language
+    rhythm: timestamped
+    imperfection_tolerance: name_limitation
+    visual_subject: card_and_mark
+    sound_subject: quiet_note
+    ending_mode: review_timepoint
+  - id: SV04
+    narrative_distance: object_first
+    reality_mode: sensory_macro
+    emotional_temperature: minimal
+    judgment_strength: low
+    professional_density: low
+    language_register: image_caption
+    rhythm: slow_cut
+    imperfection_tolerance: show_texture
+    visual_subject: material_surface
+    sound_subject: near_silence
+    ending_mode: visual_stop
+  - id: SV05
+    narrative_distance: diagnostic
+    reality_mode: question_split
+    emotional_temperature: steady
+    judgment_strength: conditional
+    professional_density: high
+    language_register: diagnostic_plain
+    rhythm: problem_branch
+    imperfection_tolerance: request_missing_input
+    visual_subject: question_card
+    sound_subject: short_voice
+    ending_mode: input_request
+  - id: SV06
+    narrative_distance: collaboration_boundary
+    reality_mode: role_exchange
+    emotional_temperature: calm
+    judgment_strength: bounded
+    professional_density: medium
+    language_register: two_role_plain
+    rhythm: alternating
+    imperfection_tolerance: no_drama
+    visual_subject: two_hands
+    sound_subject: separate_lines
+    ending_mode: boundary_named
+  - id: SV07
+    narrative_distance: decision_board
+    reality_mode: tradeoff_record
+    emotional_temperature: dry
+    judgment_strength: explicit
+    professional_density: high
+    language_register: decision_note
+    rhythm: option_cost_review
+    imperfection_tolerance: show_abandoned_option
+    visual_subject: board_marks
+    sound_subject: marker_sound
+    ending_mode: scheduled_review
+  - id: SV08
+    narrative_distance: wardrobe_life
+    reality_mode: bounded_use_scene
+    emotional_temperature: warm_medium
+    judgment_strength: light
+    professional_density: medium
+    language_register: life_detail
+    rhythm: three_scene
+    imperfection_tolerance: avoid_universal_claim
+    visual_subject: wear_context
+    sound_subject: soft_room
+    ending_mode: fit_boundary
+  - id: SV09
+    narrative_distance: version_log
+    reality_mode: before_after_marker
+    emotional_temperature: neutral
+    judgment_strength: evidence_first
+    professional_density: high
+    language_register: version_note
+    rhythm: change_then_unknown
+    imperfection_tolerance: unresolved_effect
+    visual_subject: labels_measure
+    sound_subject: paper_movement
+    ending_mode: pending_test
+  - id: SV10
+    narrative_distance: locality_diary
+    reality_mode: sealed_synthetic_locality
+    emotional_temperature: warm_low
+    judgment_strength: descriptive
+    professional_density: medium
+    language_register: local_scene_disclosed
+    rhythm: weather_path_object
+    imperfection_tolerance: disclose_synthetic
+    visual_subject: window_street_object
+    sound_subject: weather_ambience
+    ending_mode: synthetic_boundary
+  allocations:
+  - content_product_type_id: CP01
+    lane_A_style_vector_ref: SV01
+    lane_B_style_vector_ref: SV06
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP02
+    lane_A_style_vector_ref: SV02
+    lane_B_style_vector_ref: SV07
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP03
+    lane_A_style_vector_ref: SV03
+    lane_B_style_vector_ref: SV08
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP04
+    lane_A_style_vector_ref: SV04
+    lane_B_style_vector_ref: SV09
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP05
+    lane_A_style_vector_ref: SV05
+    lane_B_style_vector_ref: SV10
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP06
+    lane_A_style_vector_ref: SV06
+    lane_B_style_vector_ref: SV01
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP07
+    lane_A_style_vector_ref: SV07
+    lane_B_style_vector_ref: SV02
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP08
+    lane_A_style_vector_ref: SV08
+    lane_B_style_vector_ref: SV03
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP09
+    lane_A_style_vector_ref: SV09
+    lane_B_style_vector_ref: SV04
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP10
+    lane_A_style_vector_ref: SV10
+    lane_B_style_vector_ref: SV05
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP11
+    lane_A_style_vector_ref: SV01
+    lane_B_style_vector_ref: SV06
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP12
+    lane_A_style_vector_ref: SV02
+    lane_B_style_vector_ref: SV07
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP13
+    lane_A_style_vector_ref: SV03
+    lane_B_style_vector_ref: SV08
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP14
+    lane_A_style_vector_ref: SV04
+    lane_B_style_vector_ref: SV09
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP15
+    lane_A_style_vector_ref: SV05
+    lane_B_style_vector_ref: SV10
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP16
+    lane_A_style_vector_ref: SV06
+    lane_B_style_vector_ref: SV01
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP17
+    lane_A_style_vector_ref: SV07
+    lane_B_style_vector_ref: SV02
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP18
+    lane_A_style_vector_ref: SV08
+    lane_B_style_vector_ref: SV03
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP19
+    lane_A_style_vector_ref: SV09
+    lane_B_style_vector_ref: SV04
+    same_CP_axis_difference_min: 4
+  - content_product_type_id: CP20
+    lane_A_style_vector_ref: SV10
+    lane_B_style_vector_ref: SV05
+    same_CP_axis_difference_min: 4
+  unique_complete_style_vector_count_min: 8
+  max_same_complete_style_vector_count: 8
+  max_same_complete_presentation_skeleton_count: 16
+  global_fixed_CTA_count: 0
+  global_fixed_spoken_line_count_pattern: false
+  global_fixed_visual_beat_count_pattern: false
+  contract_digest: c27fee53a73a037ef0bb374fd5fa9a137b009505898b664ac041edec23892c17

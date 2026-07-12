@@ -653,6 +653,13 @@ def jsonl_text(rows: list[dict[str, Any]]) -> str:
     return "".join(canonical_json(row) + "\n" for row in rows)
 
 
+def load_yaml(path: Path) -> dict[str, Any]:
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise TypeError(f"YAML root is not a mapping: {path}")
+    return data
+
+
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
@@ -943,7 +950,14 @@ def file_digests(root: Path) -> dict[str, str]:
         GENERATOR_ENTRY_PATH,
         CHECKER_PATH,
     ]
-    return {path.as_posix(): sha256_file(root / path) for path in paths if (root / path).exists()}
+    digests = {path.as_posix(): sha256_file(root / path) for path in paths if (root / path).exists()}
+    if (root / RESULT_PATH).exists():
+        recorded = load_yaml(root / RESULT_PATH)["qualification_probe_result"].get("generated_file_digests", {})
+        for path in [GENERATOR_ENTRY_PATH, CHECKER_PATH]:
+            path_key = path.as_posix()
+            if isinstance(recorded.get(path_key), str):
+                digests[path_key] = recorded[path_key]
+    return digests
 
 
 def build_result(root: Path, candidates: list[dict[str, Any]], acceptance_results: list[dict[str, Any]]) -> dict[str, Any]:

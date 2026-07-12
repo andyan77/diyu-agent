@@ -27,6 +27,7 @@ REVIEWED_BASE_SHA = "0ed9fd40203a6423d4deb9e6342c441ac3c129c1"
 REVIEWED_HEAD_SHA = "7b7f87db532ad89271d471bb0020d749324af917"
 REVIEWED_HEAD_TREE_SHA = "d961d44c977cbeecd762827218b75008108f8414"
 REVIEWED_FULL_DIFF_DIGEST = "e40bb98a0af50d7a8351c3038b53edde6d46d0157f9ca4780cd74a8539c5be3e"
+QUALIFICATION_PROBE_AS_BUILT_HEAD_SHA = "aaeda5a280b2790c00157e47f89370f6535ee230"
 
 TASK_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_001")
 PACKS_PATH = TASK_DIR / "qualification_material_packs.v0.1.jsonl"
@@ -41,12 +42,14 @@ ORCH_MATERIALIZER_PATH = TASK_DIR / "run_qualification_probe_40_orch_materialize
 GENERATOR_ENTRY_PATH = TASK_DIR / "run_qualification_probe_40_generator_acceptance.py"
 
 CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
+TARGETED_REPAIR_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py")
 GENERATOR_BUILD_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
 COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
 FACT_AUTH_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
 ORCH_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 CI_PATH = Path(".github/workflows/ci.yml")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
+SUCCESSOR_TARGETED_REPAIR_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001")
 
 GKB_ROOT = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/"
@@ -103,6 +106,7 @@ EXPECTED_GENERATED_DIGEST_PATHS = {
 }
 ALLOWED_CHANGED_PATHS = {
     CHECKER_PATH,
+    TARGETED_REPAIR_CHECKER_PATH,
     GENERATOR_BUILD_CHECKER_PATH,
     COMPONENT_SUPPLY_CHECKER_PATH,
     FACT_AUTH_CHECKER_PATH,
@@ -314,6 +318,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         path.as_posix()
         for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
         if not path.is_relative_to(TASK_DIR)
+        and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -682,7 +687,7 @@ def validate_candidates(
             add_error(errors, "E_CANDIDATE_NONZERO", asset_id, str(recursive_nonzero_counts(candidate)))
 
 
-def validate_acceptance_and_result(snapshot: dict[str, Any], errors: list[dict[str, str]]) -> None:
+def validate_acceptance_and_result(root: Path, snapshot: dict[str, Any], errors: list[dict[str, str]]) -> None:
     candidates = snapshot["candidates"]
     acceptance = snapshot["acceptance"]
     result = snapshot["result"]
@@ -782,6 +787,11 @@ def validate_acceptance_and_result(snapshot: dict[str, Any], errors: list[dict[s
         add_error(errors, "E_RESULT_DIGEST_PATHS", "result", str(sorted(set(digests) ^ expected_digest_paths)))
     for path_text, digest in digests.items():
         path = Path(path_text)
+        if path in {CHECKER_PATH, GENERATOR_ENTRY_PATH}:
+            historical_text = git(root, ["show", f"{QUALIFICATION_PROBE_AS_BUILT_HEAD_SHA}:{path.as_posix()}"])
+            if not historical_text or sha256_text(historical_text) != digest:
+                add_error(errors, "E_RESULT_FILE_DIGEST", "result", f"historical {path_text}")
+            continue
         if path.exists() and sha256_file(path) != digest:
             add_error(errors, "E_RESULT_FILE_DIGEST", "result", path_text)
     if packet.get("packet_digest") != object_digest(packet, {"packet_digest"}):
@@ -818,7 +828,7 @@ def validate_artifacts(snapshot: dict[str, Any], errors: list[dict[str, str]]) -
     validate_instructions(instructions, assignments_by_id, plans_by_id, packs_by_id, errors)
     instructions_by_id = {row["instruction_id"]: row for row in instructions}
     validate_candidates(candidates, assignments_by_id, plans_by_id, instructions_by_id, packs_by_id, errors)
-    validate_acceptance_and_result(snapshot, errors)
+    validate_acceptance_and_result(Path.cwd(), snapshot, errors)
 
 
 def validate_ci(root: Path, errors: list[dict[str, str]]) -> None:
@@ -891,7 +901,7 @@ def validate_ledger(root: Path, result: dict[str, Any], errors: list[dict[str, s
                 if data.get(key) != old_value:
                     add_error(errors, "E_LEDGER_PRIOR_MUTATION", "ledger", key)
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_27"]:
+            if extra not in (["route_migration_27"], ["route_migration_27", "route_migration_28"]):
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
 
 

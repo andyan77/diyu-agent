@@ -42,6 +42,7 @@ COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_su
 ORCH_VALIDATION_DRYRUN_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
 GENERATOR_V2_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
 QUALIFICATION_PROBE_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py")
+TARGETED_REPAIR_CHECKER_PATH = Path("ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
 
@@ -63,6 +64,7 @@ SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR = Path(
 )
 SUCCESSOR_GENERATOR_V2_DIR = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001")
 SUCCESSOR_QUALIFICATION_PROBE_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_001")
+SUCCESSOR_TARGETED_REPAIR_DIR = Path("controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001")
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -79,6 +81,7 @@ ALLOWED_CHANGED_PATHS = {
     ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
     GENERATOR_V2_CHECKER_PATH,
     QUALIFICATION_PROBE_CHECKER_PATH,
+    TARGETED_REPAIR_CHECKER_PATH,
     COMPONENT_RESULT_PATH,
     COMPONENT_SUPPLY_FREEZER_PATH,
     LEDGER_PATH,
@@ -317,6 +320,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         if not path.is_relative_to(SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR)
         and not path.is_relative_to(SUCCESSOR_GENERATOR_V2_DIR)
         and not path.is_relative_to(SUCCESSOR_QUALIFICATION_PROBE_DIR)
+        and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -678,7 +682,21 @@ def validate_ledger(root: Path, freezer: Any, errors: list[dict[str, str]], enfo
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_24", "route_migration_25", "route_migration_26", "route_migration_27"]:
+            if extra not in (
+                [
+                    "route_migration_24",
+                    "route_migration_25",
+                    "route_migration_26",
+                    "route_migration_27",
+                ],
+                [
+                    "route_migration_24",
+                    "route_migration_25",
+                    "route_migration_26",
+                    "route_migration_27",
+                    "route_migration_28",
+                ],
+            ):
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key == "route_migration_23":
