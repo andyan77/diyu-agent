@@ -1,0 +1,87 @@
+generator_v2_build_result:
+  schema_version: v0.1
+  task_id: CONTROLLED_CONTENT_GENERATOR_V2_BUILD_AND_ACCEPTANCE_HARNESS_001
+  verdict: GENERATOR_V2_CONTROL_PLANE_AND_ACCEPTANCE_HARNESS_BUILT_PENDING_GUARDIAN
+  phase_0:
+    ORCH_PR_4_merged: true
+    merge_commit_sha: 0ed9fd40203a6423d4deb9e6342c441ac3c129c1
+    merge_method: merge_commit
+    expected_base_parent_present: true
+    reviewed_head_parent_present: true
+    merge_tree_equals_reviewed_head_tree: true
+    master_required_checks_green: true
+    local_remote_master_match: true
+    worktree_clean: true
+  architecture:
+    generator_v2_candidate_built: true
+    acceptance_harness_built: true
+    final_generator_entrypoint_count: 1
+    parallel_generator_created_count: 0
+    ORCH_only_plan_owner_pass: true
+    generator_component_selection_count: 0
+    generator_plan_write_count: 0
+  input_gate:
+    validation_plan_evaluated_count: 20
+    validation_plan_rejected_count: 20
+    validation_plan_accepted_count: 0
+  provider:
+    provider_port_interface_count: 1
+    real_provider_adapter_enabled: false
+    credential_read_count: 0
+    provider_request_count: 0
+    provider_call_count: 0
+    provider_response_count: 0
+  harness:
+    validation_plan_evaluated_count: 20
+    validation_plan_rejected_count: 20
+    validation_plan_accepted_count: 0
+    synthetic_surface_fixture_count: 16
+    accepted_creative_fixture_count: 8
+    rejected_fabrication_fixture_count: 8
+    mutation_fail_closed_count: 10
+    hold_for_semantic_review_count: 1
+    hold_counted_as_accept_or_reject: false
+    false_accept_count: 0
+    false_reject_count: 0
+  content:
+    real_generated_content_count: 0
+    generated_draft_count: 0
+    title_count: 0
+    body_count: 0
+    spoken_script_count: 0
+    CTA_count: 0
+    accepted_content_count: 0
+    accepted_baseline_count: 120
+    target_baseline_count: 300
+  runtime:
+    canonical_runtime_composition_plan_count: 0
+    canonical_production_composition_plan_count: 0
+    verified_brand_fact_bundle_count: 0
+    verified_runtime_authorization_count: 0
+    runtime_generation_eligible_profile_count: 0
+    audience_facing_content_count: 0
+  readiness:
+    generator_qualified: false
+    qualification_probe_40_generation_allowed: false
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+    ready_for_founder_probe_authorization: true
+  generated_file_digests:
+    controlled_content_generator_v2_001/build_and_acceptance_harness_001/controlled_content_generator_v2_contract.v0.1.yaml: f2ed9d5d9d83df3d571866800966ace06ff6fabf7b55d4be40ad42bab8acea0c
+    controlled_content_generator_v2_001/build_and_acceptance_harness_001/generator_acceptance_harness_cases.v0.1.jsonl: c9ddfb6a5f1601bee77135d3605aeae5bab70d48efb894f7911ee14509e9be1f
+    controlled_content_generator_v2_001/build_and_acceptance_harness_001/generator_acceptance_harness_results.v0.1.jsonl: 26c37d64f0af4946b8d71f79ca688131eaa6fae9bca363129bb9c75f212fdf3f
+    controlled_content_generator_v2_001/build_and_acceptance_harness_001/generator_guardian_review_packet.v0.1.yaml: b99faf43a11d4700104f0fcf8b698eb787847af44c3fc92afe098c8f152c8919
+    controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py: 3e08b37ce83d03483159b8e2f97f3520f0bf1487aa1ee6cced96db41abd5791a
+    ci/checkers/check_controlled_content_generator_v2_build.py: 397b2be4904d7456f240385acbc67801ee8b8d2b84269a942d574473832733d3
+  result_digest: 88827a7b3ad89cb2d0277ec88982f20563d591f614066853e5aa898db97e3bba

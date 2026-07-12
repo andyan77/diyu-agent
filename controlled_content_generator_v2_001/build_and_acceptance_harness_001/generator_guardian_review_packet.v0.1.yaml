@@ -1,0 +1,28 @@
+generator_guardian_review_packet:
+  schema_version: v0.1
+  task_id: CONTROLLED_CONTENT_GENERATOR_V2_BUILD_AND_ACCEPTANCE_HARNESS_001
+  review_scope: Controlled Content Generator V2 build-only acceptance harness
+  phase_0_merge_commit_sha: 0ed9fd40203a6423d4deb9e6342c441ac3c129c1
+  input_counts:
+    content_product_profile_count: 20
+    reviewed_reusable_component_count: 64
+    validation_fixture_count: 60
+    ORCH_validation_request_count: 60
+    ORCH_validation_decision_count: 60
+    canonical_validation_composition_plan_count: 20
+  generator_entrypoint_count: 1
+  validation_plan_rejected_count: 20
+  synthetic_surface_fixture_count: 16
+  mutation_fail_closed_count: 10
+  provider_call_count: 0
+  generated_draft_count: 0
+  generator_qualified: false
+  guardian_focus:
+  - Phase 0 merge identity and master CI
+  - single generator control-plane entrypoint
+  - 20 ORCH validation plans rejected by input gate
+  - fixture-only creative/fabrication boundary cases
+  - HOLD_FOR_SEMANTIC_REVIEW remains a third state
+  - provider request/call/response counts remain zero
+  - readiness and downstream flags remain false
+  packet_digest: 812e047e54ed29220f7853183c32b1747ac273cf67230d7a365fb90be7e68c84

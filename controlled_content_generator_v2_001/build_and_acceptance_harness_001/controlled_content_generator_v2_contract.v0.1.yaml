@@ -1,0 +1,150 @@
+controlled_content_generator_v2_contract:
+  schema_version: v0.1
+  task_id: CONTROLLED_CONTENT_GENERATOR_V2_BUILD_AND_ACCEPTANCE_HARNESS_001
+  phase_0:
+    ORCH_PR_4_merged: true
+    merge_method: merge_commit
+    merge_commit_sha: 0ed9fd40203a6423d4deb9e6342c441ac3c129c1
+    expected_base_parent_present: true
+    reviewed_head_parent_present: true
+    merge_tree_equals_reviewed_head_tree: true
+    master_required_checks_green: true
+    local_remote_master_match: true
+    review_binding:
+      reviewed_base_sha: 6253e3d1661cd46945a3443de54ac55df5b7d746
+      reviewed_head_sha: 8ee1cfe874011b3e94ce63061b573b67617fb197
+      reviewed_head_tree_sha: 39cf72e29dba7da8e9071919813f1001dcfe9afb
+      reviewed_full_diff_digest: 2707a1ba75482ca40c95f06945e818d51525dc5f0b25c5e2b547f26432a6064f
+      guardian_verdict: PASS
+  baseline:
+    parent_sha: 0ed9fd40203a6423d4deb9e6342c441ac3c129c1
+    parent_tree_sha: 39cf72e29dba7da8e9071919813f1001dcfe9afb
+    input_counts:
+      content_product_profile_count: 20
+      reviewed_reusable_component_count: 64
+      validation_fixture_count: 60
+      ORCH_validation_request_count: 60
+      ORCH_validation_decision_count: 60
+      canonical_validation_composition_plan_count: 20
+    input_digests:
+      content_product_profile_registry_object_digest: 160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b
+      content_product_profile_file_sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+      reviewed_reusable_component_registry_sha256: e5a3f31a9017a39e51ad409531e26b1e910e8e2effb34a4a24dab5fd11105bb1
+      validation_fixture_sha256: bff74e6fac3fe85733fc6d094a81d14af3c303aa0a003e7dc7776cc034043697
+      ORCH_validation_requests_sha256: 0ddf7884b872a2bc733e31e69f375caef6b5caebfe9e305694b200969e347283
+      ORCH_validation_decisions_sha256: c1ed3481e89580db8927d8c83eb28b17303322f52afcfe9cb749deab5fb2f4e2
+      ORCH_validation_plans_sha256: 3fb85451adb4d156d621efc47d2edaeda13d25dddba6aba947f5af864e36f230
+      ORCH_dryrun_result_sha256: afa2503408826e4e4451bbb6b3ab57ed71bf5b2e2af600f64dcfb53c1ec1d922
+      ORCH_dryrun_result_digest: d84b4a38a6ae151390d59572aab7b7c19447215f507ac6bab0f33751da501c05
+  generator_baseline_inventory:
+    discovered_entrypoints:
+    - path: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+      kind: generation_output_contract_schema
+      digest: 9a2ae5e4b6f00dbda5146afd0ce012c128dcd15187687888dc5ebf6c78ba8647
+    - path: ci/checkers/check_generator_capability_proof_microbatch.py
+      kind: historical_generator_capability_gate_checker
+      digest: b22f202f2f58c80d411ff9d38c6bbeeead9c0e33bf20c27defbd011770db5a35
+    - path: ci/runners/run_p7d_midbatch_320.py
+      kind: historical_authorized_batch_runner_not_provider_engine
+      digest: 097263092bf921e691c4f9e65fb804e65ae34c960f26b38223d80c7e72eb88e6
+    selected_canonical_extension_target: 01_generation_contracts/codex_generation_output_contract.v0.1.schema.json
+    selected_target_digest: 9a2ae5e4b6f00dbda5146afd0ce012c128dcd15187687888dc5ebf6c78ba8647
+    selection_reason: Repository has generation contracts and gated historical runners, but no reusable provider engine; Controlled
+      V2 is a build-only control-plane extension anchored to the existing generation output contract.
+    final_generator_entrypoint_count: 1
+    parallel_generator_created_count: 0
+  ownership:
+    GKB_may_create_CompositionPlan: false
+    ORCH_sole_plan_owner: true
+    GENERATOR_may_select_components: false
+    GENERATOR_may_repair_or_modify_plan: false
+    GENERATOR_may_fill_missing_facts: false
+    GENERATOR_may_create_CompositionPlan: false
+    GENERATOR_may_mark_content_final_accepted: false
+  generator_structure:
+    GeneratorInputGate: build_only_validation_plan_rejection_gate
+    ProviderRequestCompiler: schema_only_disabled
+    ControlledOutputEnvelope: schema_only_no_instances
+    GeneratorAcceptanceGate: synthetic_fixture_harness_only
+  provider_port:
+    interface_count: 1
+    real_adapter_enabled: false
+    credential_read_count: 0
+    external_network_call_count: 0
+    provider_request_count: 0
+    provider_call_count: 0
+    provider_response_count: 0
+  controlled_output_envelope_schema:
+    content_product_profile_ref: required_ref_only
+    content_product_profile_digest: required
+    plan_ref: required_ref_only
+    plan_digest: required
+    surface_units: []
+    execution_units: []
+    claim_inventory: []
+    creative_expression_inventory: []
+    component_realization_trace: []
+    acceptance_state: STRUCTURAL_AND_EVIDENCE_PASS_PENDING_SEMANTIC_REVIEW
+    rendered_output_must_equal_exact_join_of_surface_units: true
+    untracked_surface_text_count: 0
+    unclassified_surface_unit_count: 0
+  semantic_license_policy:
+    supported_licenses:
+    - AUTHORIZED_ROLE_JUDGMENT
+    - CAPTURE_BOUND_PERFORMATIVE
+    - EVIDENCE_BOUND_ASSERTION
+    - HYPOTHETICAL_OR_DISCLOSED_SCENE
+    - NONFACTUAL_CREATIVE_EXPRESSION
+    - PUBLISHER_OWNED_SUBJECTIVE_EXPRESSION
+    - STRUCTURAL_LANGUAGE
+    ambiguous_route: HOLD_FOR_SEMANTIC_REVIEW
+    machine_max_state: STRUCTURAL_AND_EVIDENCE_PASS_PENDING_SEMANTIC_REVIEW
+    forbidden_machine_states:
+    - FINAL_ACCEPTED
+    - GENERATOR_QUALIFIED
+    - PRODUCTION_READY
+    - AUTO_GO
+  fabrication_mode_coverage:
+    specific_brand_fact:
+    - CCGV2-ACCEPT-006-EXACT-FACT
+    real_event:
+    - CCGV2-REJECT-002-CUSTOMER-REAL-EVENT
+    - MUT-004-REMOVE-EVENT-REF
+    personal_experience_or_biography:
+    - CCGV2-REJECT-001-FAKE-BIO-SKU-DATE
+    customer_story_or_testimonial:
+    - CCGV2-REJECT-002-CUSTOMER-REAL-EVENT
+    - MUT-009-INJECT-CUSTOMER-STORY
+    enterprise_decision_commitment_history:
+    - CCGV2-REJECT-003-COMPANY-HISTORY-AS-REAL
+    sku_parameter_inventory_date_version_number:
+    - CCGV2-REJECT-001-FAKE-BIO-SKU-DATE
+    - CCGV2-REJECT-006-NUMBER-ALTERED
+    - MUT-002-MUTATE-NUMBER
+    performance_body_effect_causal_claim:
+    - CCGV2-REJECT-004-BODY-CLAIM
+    - CCGV2-REJECT-008-INNER-STATE-CAUSAL
+    direct_quote:
+    - CCGV2-ACCEPT-008-QUOTE-AUTH
+    - CCGV2-REJECT-007-UNAUTHORIZED-QUOTE
+    - MUT-003-MUTATE-QUOTE
+    third_party_inner_state:
+    - CCGV2-REJECT-008-INNER-STATE-CAUSAL
+  readiness:
+    generator_qualified: false
+    qualification_probe_40_generation_allowed: false
+    runtime_ingest_ready: false
+    generation_eligible: false
+    generation_allowed: false
+    generation_600_allowed: false
+    expand_600_allowed: false
+    expand_3600_allowed: false
+    candidatepack_ready: false
+    KE_ready: false
+    Serving_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_ready: false
+    release_ready: false
+    ready_for_founder_probe_authorization: true
+  contract_digest: db15dce1af5202c4121704949951b05a2567e1da96ea285cceabbbbc3f1e0d4b

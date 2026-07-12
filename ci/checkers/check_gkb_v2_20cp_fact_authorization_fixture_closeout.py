@@ -40,6 +40,7 @@ FREEZER_PATH = TASK_DIR / "run_fact_authorization_fixture_freezer.py"
 CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py")
 COMPONENT_SUPPLY_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py")
 ORCH_VALIDATION_DRYRUN_CHECKER_PATH = Path("ci/checkers/check_orch_v2_20cp_validation_dryrun.py")
+GENERATOR_V2_CHECKER_PATH = Path("ci/checkers/check_controlled_content_generator_v2_build.py")
 LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml")
 CI_PATH = Path(".github/workflows/ci.yml")
 
@@ -58,6 +59,7 @@ SCALE_600_CONTRACT_PATH = Path(
 SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR = Path(
     "08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001"
 )
+SUCCESSOR_GENERATOR_V2_DIR = Path("controlled_content_generator_v2_001/build_and_acceptance_harness_001")
 
 ALLOWED_CHANGED_PATHS = {
     CONTRACT_PATH,
@@ -72,6 +74,7 @@ ALLOWED_CHANGED_PATHS = {
     CHECKER_PATH,
     COMPONENT_SUPPLY_CHECKER_PATH,
     ORCH_VALIDATION_DRYRUN_CHECKER_PATH,
+    GENERATOR_V2_CHECKER_PATH,
     COMPONENT_RESULT_PATH,
     LEDGER_PATH,
     CI_PATH,
@@ -307,6 +310,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         path.as_posix()
         for path in changed_paths(root) - ALLOWED_CHANGED_PATHS
         if not path.is_relative_to(SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR)
+        and not path.is_relative_to(SUCCESSOR_GENERATOR_V2_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -666,7 +670,7 @@ def validate_ledger(root: Path, freezer: Any, errors: list[dict[str, str]], enfo
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
             extra = sorted(set(data) - set(old_data))
-            if extra != ["route_migration_24", "route_migration_25"]:
+            if extra != ["route_migration_24", "route_migration_25", "route_migration_26"]:
                 add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key == "route_migration_23":
@@ -854,6 +858,14 @@ def selftest() -> int:
             "orch_successor_write_surface_declared",
             (SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR / "orch_20cp_dryrun_result.v0.1.yaml").is_relative_to(
                 SUCCESSOR_ORCH_VALIDATION_DRYRUN_DIR
+            ),
+        )
+    )
+    tests.append(
+        (
+            "generator_successor_write_surface_declared",
+            (SUCCESSOR_GENERATOR_V2_DIR / "generator_v2_build_result.v0.1.yaml").is_relative_to(
+                SUCCESSOR_GENERATOR_V2_DIR
             ),
         )
     )
