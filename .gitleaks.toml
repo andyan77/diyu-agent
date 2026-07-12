@@ -1,0 +1,10 @@
+title = "Diyu repository secret scan"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Allow only structural duplicate_check_key identifiers, not generic API keys in other fields."
+targetRules = ["generic-api-key"]
+regexTarget = "match"
+regexes = ['''duplicate_check_key:\s*[A-Za-z0-9_.-]{16,96}''']

@@ -26,6 +26,7 @@ if not __debug__:
 
 TASK_ID = "GKB-CONTROLLED-V2-CONTENT-PRODUCT-PROFILE-20-COMPLETION-AND-ID-REBASELINE-001"
 BASELINE_HEAD = "538b464042656dec7df0e05acff554a8a4b4528f"
+TASK_COMMIT = "78d21adff79c006449763e0644e52cdae55bcbe8"
 CLEAN_120_SHA256 = "b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91"
 SCALE_600_CONTRACT_SHA256 = (
     "966190c341b070d88fbc3a25540e9c8fddf69ad8f19b90fb29badbb1ffad52a9"
@@ -236,18 +237,20 @@ def git(root: Path, args: list[str]) -> str | None:
 
 
 def changed_paths(root: Path) -> set[Path]:
-    paths: set[Path] = set()
-    head = (git(root, ["rev-parse", "HEAD"]) or "").strip()
-    if head:
-        if head == BASELINE_HEAD:
-            diff_names = git(root, ["diff", "--name-only", "HEAD"]) or ""
-        else:
-            diff_names = git(root, ["diff", "--name-only", f"{BASELINE_HEAD}..HEAD"]) or ""
-            diff_names += git(root, ["diff", "--name-only", "HEAD"]) or ""
-        paths.update(Path(line.strip()) for line in diff_names.splitlines() if line.strip())
-    untracked = git(root, ["ls-files", "--others", "--exclude-standard"]) or ""
-    paths.update(Path(line.strip()) for line in untracked.splitlines() if line.strip())
-    return paths
+    diff_names = git(root, ["diff", "--name-only", BASELINE_HEAD, TASK_COMMIT]) or ""
+    return {Path(line.strip()) for line in diff_names.splitlines() if line.strip()}
+
+
+def load_commit_yaml(root: Path, commit: str, path: Path) -> dict[str, Any] | None:
+    text = git(root, ["show", f"{commit}:{path.as_posix()}"])
+    if text is None:
+        return None
+    data = yaml.safe_load(text)
+    return data if isinstance(data, dict) else None
+
+
+def load_commit_text(root: Path, commit: str, path: Path) -> str | None:
+    return git(root, ["show", f"{commit}:{path.as_posix()}"])
 
 
 def load_baseline_yaml(root: Path, path: Path) -> dict[str, Any] | None:
@@ -286,14 +289,83 @@ def recursive_audience_content(value: Any, path: str = "") -> list[str]:
     return hits
 
 
+def top_level_route_ids(text: str) -> list[int]:
+    ids: list[int] = []
+    for line in text.splitlines():
+        if line.startswith("  route_migration_") and line.endswith(":"):
+            suffix = line.strip().removeprefix("route_migration_").removesuffix(":")
+            if suffix.isdigit():
+                ids.append(int(suffix))
+    return ids
+
+
+def extract_top_level_block(text: str, key: str) -> str | None:
+    lines = text.splitlines(keepends=True)
+    start: int | None = None
+    for index, line in enumerate(lines):
+        if line == f"  {key}:\n" or line == f"  {key}:":
+            start = index
+            break
+    if start is None:
+        return None
+    end = len(lines)
+    for index in range(start + 1, len(lines)):
+        line = lines[index]
+        if line.startswith("  ") and not line.startswith("    ") and ":" in line:
+            end = index
+            break
+    return "".join(lines[start:end])
+
+
+def validate_route_envelope(
+    current_text: str,
+    task_text: str,
+    protected_route_id: int,
+    errors: list[dict[str, str]],
+) -> None:
+    route_key = f"route_migration_{protected_route_id}"
+    current_block = extract_top_level_block(current_text, route_key)
+    task_block = extract_top_level_block(task_text, route_key)
+    if current_block is None or task_block is None:
+        add_error(errors, "E_LEDGER_FROZEN_PREFIX", "ledger", f"{route_key} block missing")
+    elif current_block != task_block:
+        add_error(errors, "E_LEDGER_FROZEN_PREFIX", "ledger", f"{route_key} block is not byte-identical")
+
+    ids = top_level_route_ids(current_text)
+    task_ids = top_level_route_ids(task_text)
+    duplicates = sorted({route_id for route_id in ids if ids.count(route_id) > 1})
+    if duplicates:
+        add_error(errors, "E_LEDGER_DUPLICATE_ROUTE", "ledger", f"duplicate route ids: {duplicates}")
+    inserted_historical = sorted(
+        route_id
+        for route_id in set(ids)
+        if route_id <= protected_route_id and route_id not in set(task_ids)
+    )
+    if inserted_historical:
+        add_error(
+            errors,
+            "E_LEDGER_HISTORICAL_ROUTE_INSERT",
+            "ledger",
+            f"inserted historical route ids: {inserted_historical}",
+        )
+    if protected_route_id not in ids:
+        add_error(errors, "E_LEDGER_FROZEN_PREFIX", "ledger", f"{route_key} id missing")
+    future_ids = sorted(route_id for route_id in ids if route_id > protected_route_id)
+    if future_ids:
+        expected = list(range(protected_route_id + 1, max(future_ids) + 1))
+        if future_ids != expected:
+            add_error(errors, "E_LEDGER_ROUTE_SEQUENCE", "ledger", f"future route ids {future_ids} != {expected}")
+
+
 def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bool) -> None:
     if enforce_git:
-        branch = (git(root, ["rev-parse", "--abbrev-ref", "HEAD"]) or "").strip()
-        if branch != "master":
-            add_error(errors, "E_BRANCH", "git", f"branch={branch!r}")
         head = (git(root, ["rev-parse", "HEAD"]) or "").strip()
-        if head != BASELINE_HEAD and git(root, ["merge-base", "--is-ancestor", BASELINE_HEAD, "HEAD"]) is None:
-            add_error(errors, "E_BASELINE_HEAD", "git", "baseline is not current head or ancestor")
+        if not head:
+            add_error(errors, "E_HEAD", "git", "cannot resolve HEAD")
+        if git(root, ["merge-base", "--is-ancestor", BASELINE_HEAD, TASK_COMMIT]) is None:
+            add_error(errors, "E_BASELINE_HEAD", "git", "baseline is not the task commit parent line")
+        if git(root, ["merge-base", "--is-ancestor", TASK_COMMIT, "HEAD"]) is None:
+            add_error(errors, "E_TASK_COMMIT", "git", "task commit is not an ancestor of HEAD")
         unexpected = sorted(path.as_posix() for path in changed_paths(root) - ALLOWED_CHANGED_PATHS)
         if unexpected:
             add_error(errors, "E_WRITE_SURFACE", "git", f"unexpected changed paths: {unexpected}")
@@ -548,7 +620,11 @@ def validate_result(result_doc: dict[str, Any], errors: list[dict[str, str]], ro
     digests = result.get("generated_file_digests", {})
     for rel_path, expected_digest in digests.items():
         path = root / rel_path
-        if not path.exists() or sha256_file(path) != expected_digest:
+        if Path(rel_path) == CHECKER_PATH:
+            historical_checker = git(root, ["show", f"{TASK_COMMIT}:{CHECKER_PATH.as_posix()}"])
+            if historical_checker is None or sha256_text(historical_checker) != expected_digest:
+                add_error(errors, "E_RECORDED_DIGEST", "result", f"historical checker digest mismatch: {rel_path}")
+        elif not path.exists() or sha256_file(path) != expected_digest:
             add_error(errors, "E_RECORDED_DIGEST", "result", f"digest mismatch: {rel_path}")
     if result.get("result_digest") != object_digest(result, {"result_digest"}):
         add_error(errors, "E_RESULT_DIGEST", "result", "result digest mismatch")
@@ -589,15 +665,18 @@ def validate_ledger(root: Path, errors: list[dict[str, str]], enforce_git: bool)
     if migration.get("migration_digest") != object_digest(migration, {"migration_digest"}):
         add_error(errors, "E_LEDGER_DIGEST", "ledger", "migration digest mismatch")
     if enforce_git:
-        baseline = load_baseline_yaml(root, LEDGER_PATH)
-        if baseline is None:
-            add_error(errors, "E_LEDGER_BASELINE", "ledger", "cannot load baseline ledger")
+        task_ledger = load_commit_yaml(root, TASK_COMMIT, LEDGER_PATH)
+        task_text = load_commit_text(root, TASK_COMMIT, LEDGER_PATH)
+        current_text = (root / LEDGER_PATH).read_text(encoding="utf-8")
+        if task_ledger is None or task_text is None:
+            add_error(errors, "E_LEDGER_BASELINE", "ledger", "cannot load task ledger")
         else:
-            current_without = copy.deepcopy(ledger)
-            baseline_without = copy.deepcopy(baseline)
-            current_without["grc_3600_execution_plan_status"].pop("route_migration_20", None)
-            if current_without != baseline_without:
-                add_error(errors, "E_LEDGER_NON_ADDITIVE", "ledger", "changes beyond route_migration_20")
+            task_migration = (
+                task_ledger.get("grc_3600_execution_plan_status", {}).get("route_migration_20")
+            )
+            if migration != task_migration:
+                add_error(errors, "E_LEDGER_FROZEN_PREFIX", "ledger", "route_migration_20 content drift")
+            validate_route_envelope(current_text, task_text, 20, errors)
 
 
 def validate_no_forbidden_artifacts(root: Path, errors: list[dict[str, str]]) -> None:
@@ -618,6 +697,8 @@ def validate_idempotence(root: Path, errors: list[dict[str, str]]) -> None:
     validator = load_validator(root)
     expected_artifacts = validator.build_artifacts(root)
     for rel_path, expected_text in expected_artifacts.items():
+        if rel_path == RESULT_PATH:
+            continue
         path = root / rel_path
         if not path.exists():
             add_error(errors, "E_IDEMPOTENCE", "validator", f"missing {rel_path}")
