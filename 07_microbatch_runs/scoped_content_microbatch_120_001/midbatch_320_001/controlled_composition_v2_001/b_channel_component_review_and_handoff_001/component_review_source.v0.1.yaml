@@ -1,0 +1,911 @@
+component_review_source:
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  reviewer_identity: CODEX_CANDIDATE_SPECIFIC_DOMAIN_REVIEWER
+  review_timestamp: '2026-07-13T02:13:28Z'
+  provenance:
+    provenance_type: FOUNDER_AUTHORIZED_DESIGN_COMPONENT_CANDIDATE
+    definition_source_task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+    definition_source_digest: a329e7efbee3350d4ae1765b70746edec22c1f8ac09e51879d16ac0f1f27ab50
+    extracted_from_clean_120: false
+    source_text_span_required: false
+    parent_asset_ids: []
+    source_text_spans: []
+    not_domain_fact: true
+    not_real_event: true
+    not_brand_fact: true
+    not_person_experience: true
+    not_product_claim: true
+    not_runtime_authorization: true
+  candidates:
+  - proposal_id: BNO-01
+    label: 结果到原因的倒序复盘
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: audience_facing_reasoning_move
+    canonical_component_id: RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+    mechanism_definition: 从已提供的结果状态回读已提供的原因或决策轨迹，使每个解释都能回指输入证据，而不是依据结果猜测原因。
+    output_function: 将结果、已授权轨迹和边界组织为可回溯的逆向推理路径。
+    claim_boundary: 只允许回读输入中明确存在的原因或决策轨迹，不产生新的原因、动机或因果关系。
+    input_slots: [observed_result, authorized_cause_or_decision_trace, trace_order, claim_boundary]
+    required_observable_evidence: [result_state_evidence, cause_or_decision_trace_evidence]
+    required_authorization_slots: [authorized_reasoning_role]
+    role_authority_boundary: 仅由对结果和轨迹均有观察或记录权限的角色使用，不取得决策所有权。
+    truth_boundary: &truth_boundary
+      brand_fact_source: false
+      factual_authority: false
+      ontology_truth: false
+      person_experience_source: false
+      real_event_evidence: false
+    proposed_cp_upper_bound: [CP10, CP12, CP19, CP20]
+    compatibility_requirements: [结果和轨迹分别有据, 回读顺序不改变事实集合, 未知原因保持未知]
+    anti_pattern_rules: [禁止结果倒推原因, 禁止补造决策动机, 禁止把相关性改写为因果]
+    forbidden_inference: [unsupported_cause, inferred_motive, retrospective_success_story]
+    accepted_cp_edges:
+      CP10: {fit_basis: CP10要求证据先于长期结论；逆向回读只在结果与验证轨迹同时存在时成立，并保留记录局限。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP19: {fit_basis: CP19具备选择、放弃、代价和结果字段；该机制可从结果回到真实取舍轨迹而不制造价值观。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP19_01, AGR_CP19_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20的结果或偏差可回读至承诺节点和执行证据；机制要求两端均有据并禁止情绪替代证据。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP12: {fit_basis: CP12没有audience_facing_reasoning_move角色；将整体逆向推理映射为observable_action会改变该候选的资产语义。, profile_role_basis: no_lossless_role_match, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 候选不是倒叙修辞，而是要求结果与原因轨迹双端有据的逆向证据组织机制。
+      asset_class_schema_fit: 可无损映射为narrative_operator下的audience_facing_reasoning_move，但只适用于具备该角色的Profile。
+      atomicity_assessment: 单一功能是逆向回读证据轨迹，不同时承担镜头、角色或收束功能。
+      truth_boundary_assessment: 明确禁止由结果补造原因、动机或成功叙事，事实权威保持为false。
+      duplicate_equivalence_assessment: 现有EVIDENCE_BEFORE_CONCLUSION规定先证后结论，不提供结果到既有轨迹的逆向组织，核心顺序和输入槽不同。
+      hard_guard_assessment: 保留CP10长期证据、CP19真实代价和CP20承诺证据边界；CP12因角色不匹配被删除。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 机制具备独立的逆向证据路径、闭合输入和清晰权限边界，且与现有先证后结论组件不等价。
+      reason_codes: [DISTINCT_EVIDENCE_ORDER, CLOSED_DUAL_ENDPOINT_INPUT, CP_EDGES_NARROWED]
+
+  - proposal_id: BNO-02
+    label: 同一物件的状态证据路径
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: null
+    canonical_component_id: null
+    mechanism_definition: 保持同一物件身份，沿已提供的状态及顺序组织观察路径，不增加中间状态或变化原因。
+    output_function: 将稳定物件身份与授权状态序列组织为连续证据路径。
+    claim_boundary: 不补造状态、变化步骤、时间或变化原因。
+    input_slots: [stable_object_identity, authorized_state_sequence, state_order, observation_boundary]
+    required_observable_evidence: [object_identity_evidence, state_sequence_evidence]
+    required_authorization_slots: [authorized_object_observer]
+    role_authority_boundary: 使用者只能组织已观察状态，不能解释未授权的变化原因。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP03, CP08, CP12, CP14, CP17]
+    compatibility_requirements: [物件身份稳定, 每个状态分别有据, 顺序来自输入]
+    anti_pattern_rules: [禁止补中间状态, 禁止把状态路径写成操作流程, 禁止推断变化因果]
+    forbidden_inference: [invented_state, invented_transition, unsupported_change_cause]
+    accepted_cp_edges: {}
+    rejected_cp_edges:
+      CP03: {fit_basis: CP03可接observable_action或visual_beat，但当前narrative_operator枚举没有能无损承载整条物件状态路径的Profile角色。, profile_role_basis: no_lossless_role_match, hard_guard_refs: [AGR_CP03_01, AGR_CP03_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP08: {fit_basis: CP08的visual_beat适合局部结构展示，但把整体状态序列降为视觉节点会丢失叙事路径语义。, profile_role_basis: no_lossless_role_match, hard_guard_refs: [AGR_CP08_01, AGR_CP08_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12需要版本、动作和判断角色；当前候选未明确应落为trigger、observable_action或closing，不能猜测映射。, profile_role_basis: no_lossless_role_match, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP14: {fit_basis: CP14支持非语言视觉路径，但候选被指定为narrative_operator且没有对应的visual_beat子角色，强行映射会产生平行枚举。, profile_role_basis: no_lossless_role_match, hard_guard_refs: [AGR_CP14_01, AGR_CP14_02, AGR_CP14_03, AGR_CP14_04, AGR_CP14_05], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17具备状态与调整动作，但候选未区分trigger、observable_action和visual_beat功能，无法满足原子角色闭合。, profile_role_basis: no_lossless_role_match, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 候选试图用同一物件串联多个已知状态，但当前定义停留在整体叙事骨架，尚未落到canonical组件角色。
+      asset_class_schema_fit: narrative_operator类存在，但现有Profile只接受transition、reasoning或closing等具体角色；本候选无法无损选择其中之一。
+      atomicity_assessment: 物件身份、状态转移和观察顺序被捆在整体路径中，需先裁定具体子功能才能成为原子组件。
+      truth_boundary_assessment: 防补造状态的边界正确，但schema角色缺口使其无法进入Registry。
+      duplicate_equivalence_assessment: 与SAME_OBJECT_OBSERVATION_ENTRY不同，后者切换任务入口；本候选追踪状态序列，不能合法合并。
+      hard_guard_assessment: 五条拟议边均存在角色表达缺口，保留会造成虚假适用边，因此全部拒绝。
+      decision: NEEDS_REPAIR
+      decision_rationale: 机制方向成立，但必须拆定为明确的transition或visual/action子功能后再审；本轮不新造平行角色。
+      reason_codes: [SCHEMA_ROLE_GAP, ATOMIC_SUBFUNCTION_UNRESOLVED, ZERO_VALID_CP_EDGE]
+
+  - proposal_id: BNO-03
+    label: 固定锚点时间切片
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: transition
+    canonical_component_id: RCV2-004-TRANSITION-SOURCE-BOUND-TIME-SLICE
+    mechanism_definition: 在稳定观察对象上，依次连接输入中明确提供的时间锚和对应状态，不生成时间、时长或频次。
+    output_function: 以来源约束的时间锚完成状态段之间的叙事过渡。
+    claim_boundary: 时间锚及每段状态必须来自输入，普通重复和未完成状态可以原样保留。
+    input_slots: [source_bound_time_anchors, stable_observation_subject, state_at_each_anchor, unfinished_state]
+    required_observable_evidence: [time_anchor_evidence, state_at_anchor_evidence]
+    required_authorization_slots: [authorized_time_state_observer]
+    role_authority_boundary: 仅连接被授权记录的时间状态，不推断锚点之间发生的事件。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP02, CP10, CP15, CP18, CP20]
+    compatibility_requirements: [时间锚有来源, 对象保持可比, 锚点之间不补事件]
+    anti_pattern_rules: [禁止自造时间, 禁止用跳切制造事件, 禁止把未完成状态闭合]
+    forbidden_inference: [invented_timestamp, invented_interval_event, fabricated_completion]
+    accepted_cp_edges:
+      CP15: {fit_basis: CP15要求商品旅程和多岗位接力，并具备transition角色；来源时间锚可连接真实生命周期状态而不补库存事实。, profile_role_basis: transition, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP02: {fit_basis: CP02允许时间切片但Profile没有transition角色；其固定机位需求应由视听组件承担，不能借本候选绕过角色合同。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP02_01, AGR_CP02_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10的时间节点由trigger、reasoning和capture承载，没有transition角色；保留该边会造成角色错配。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18的地域时间状态需真实声景和事件素材，但Profile没有transition角色，不能仅凭地方编年扩大边。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20以trigger、reasoning和capture记录节点，没有transition角色；时间节点相似性不足以建立组件适用。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 该候选的核心是以真实时间锚完成段落过渡，而非一般时间线模板。
+      asset_class_schema_fit: 可映射为transition，但拟议Profile中只有CP15具备该角色。
+      atomicity_assessment: 单一负责时间状态之间的连接，不承担拍摄对照或结论判断。
+      truth_boundary_assessment: 时间、状态和间隔事件全部fail-closed，避免用剪辑补造过程。
+      duplicate_equivalence_assessment: 现有transition组件处理岗位、展示层级或任务入口，不处理来源约束的时间锚。
+      hard_guard_assessment: CP15库存事实禁令被保留；其余四边因角色不匹配被收窄。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 时间锚过渡是独立且可闭合的narrative_operator，但合法适用集仅为CP15。
+      reason_codes: [DISTINCT_TIME_TRANSITION, SOURCE_BOUND_ANCHORS, CP_EDGES_STRONGLY_NARROWED]
+
+  - proposal_id: BNO-04
+    label: 完成、待办、阻塞并列状态地图
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: transition
+    canonical_component_id: RCV2-004-TRANSITION-PARALLEL-WORK-STATE
+    mechanism_definition: 将输入中分别有据的完成、待办和阻塞状态并列，并在状态之间移动注意力而不改变任何状态归属。
+    output_function: 以并列状态关系完成工作状态之间的叙事过渡。
+    claim_boundary: 每个状态必须单独有据，进行中、待办和阻塞不得被转换成完成。
+    input_slots: [completed_items, pending_items, blocked_items, state_evidence_refs]
+    required_observable_evidence: [evidence_for_each_state, state_ownership_evidence]
+    required_authorization_slots: [authorized_status_recorder]
+    role_authority_boundary: 记录者只能移动叙事注意力，不能修改状态或替其他岗位关闭事项。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP01, CP04, CP15, CP17, CP20]
+    compatibility_requirements: [状态逐项有据, 状态类别互不替换, 阻塞原因未知时不解释]
+    anti_pattern_rules: [禁止把待办写成完成, 禁止虚构阻塞原因, 禁止抹去未完成项]
+    forbidden_inference: [status_upgrade, invented_blocker, false_resolution]
+    accepted_cp_edges:
+      CP04: {fit_basis: CP04具备transition角色和真实岗位权限；并列状态可连接各岗位已完成与待交接部分而不编协作冲突。, profile_role_basis: transition, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15具备transition角色与生命周期状态；完成、待办和阻塞可按真实岗位接力并列且不虚构库存状态。, profile_role_basis: transition, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP01: {fit_basis: CP01虽有结果或未完成状态，但没有transition角色；其状态收束可由closing处理，不能错配本组件。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17具备状态观察但无transition角色，状态地图更适合作为capture或visual机制而非本叙事过渡。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20的偏差和下一步由reasoning与capture承载，没有transition角色，不能仅因存在状态字段保留边。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 候选以平行状态关系组织注意力，关键价值是保留未完成项而非制作运营看板。
+      asset_class_schema_fit: 可无损映射为transition，并限于具备该角色的CP04和CP15。
+      atomicity_assessment: 只承担状态间过渡，不承担视觉地图拍摄或最终交接收束。
+      truth_boundary_assessment: 状态逐项绑定证据，禁止状态升级和虚构阻塞原因。
+      duplicate_equivalence_assessment: 现有角色交接transition移动岗位观察，本候选移动的是状态类别，输入槽和输出功能不同。
+      hard_guard_assessment: 保留CP04权限边界与CP15库存真实性；三条无角色边已删除。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 平行工作状态过渡具有独立反假完成价值，且可在两个Profile中闭合表达。
+      reason_codes: [DISTINCT_STATE_TRANSITION, STATUS_PRESERVATION, CP_EDGES_NARROWED]
+
+  - proposal_id: BNO-05
+    label: 单一冲突、单一变量实验
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: audience_facing_reasoning_move
+    canonical_component_id: RCV2-004-REASONING-SOURCE-BOUND-SINGLE-VARIABLE
+    mechanism_definition: 仅在冲突、可调整变量和观察边界均由输入提供时，围绕一个变量组织比较，不创建实验、冲突或因果结论。
+    output_function: 将来源约束的冲突和变量组织为有限比较推理。
+    claim_boundary: 观察差异不自动证明因果，也不扩展为普遍结果。
+    input_slots: [source_bound_conflict, authorized_variable, comparison_states, observation_boundary]
+    required_observable_evidence: [conflict_evidence, variable_state_evidence, comparison_observation]
+    required_authorization_slots: [authorized_comparison_role]
+    role_authority_boundary: 仅由获准比较该对象和变量的角色使用，不取得实验设计或普遍结论权。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP06, CP09, CP13, CP14, CP17]
+    compatibility_requirements: [冲突来自输入, 变量预先给定, 比较条件可追溯]
+    anti_pattern_rules: [禁止制造冲突, 禁止增加变量, 禁止观察即因果]
+    forbidden_inference: [fabricated_conflict, invented_experiment, causal_overreach]
+    accepted_cp_edges:
+      CP06: {fit_basis: CP06要求观察、判断、依据和限制；单变量比较可作为reasoning move，但判断必须停在岗位权限内。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP06_01, AGR_CP06_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP09: {fit_basis: CP09的真实适用与不适用条件可围绕已给变量比较，并明确禁止绝对适配和身体结论。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP09_01, AGR_CP09_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP13: {fit_basis: CP13可对已授权搭配关系中的单一条件作有限演绎，前提是场景和冲突不得冒充经历。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP13_01, AGR_CP13_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP14: {fit_basis: CP14没有audience_facing_reasoning_move角色，且非语言物性短片不应被强制加入比较推理。, profile_role_basis: no_reasoning_role, hard_guard_refs: [AGR_CP14_01, AGR_CP14_02, AGR_CP14_03, AGR_CP14_04, AGR_CP14_05], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17没有audience_facing_reasoning_move角色；其前后复核应由动作和视觉证据承担，不能用本组件替代。, profile_role_basis: no_reasoning_role, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 该机制不是制造戏剧冲突，而是对已给冲突中的一个已授权变量做有限比较。
+      asset_class_schema_fit: 可映射为audience_facing_reasoning_move，CP14和CP17因角色缺失被剔除。
+      atomicity_assessment: 单一功能是受限变量比较，镜头执行和结果收束均不在组件内。
+      truth_boundary_assessment: 冲突、变量和观察三者均要求输入证据，并显式切断因果外推。
+      duplicate_equivalence_assessment: 现有判断组件限制claim强度，但没有单变量比较的输入闭合和冲突来源门。
+      hard_guard_assessment: CP06权限、CP09身体边界和CP13场景披露均可守住；无reasoning角色的边已删除。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 在严格来源门下，单变量比较提供独立的reasoning机制并直接修复虚构冲突风险。
+      reason_codes: [SOURCE_BOUND_CONFLICT, SINGLE_VARIABLE_ATOMICITY, CAUSAL_BOUNDARY]
+
+  - proposal_id: BNO-06
+    label: 文档字段驱动的证据叙事
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: audience_facing_reasoning_move
+    canonical_component_id: RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+    mechanism_definition: 只沿输入中真实且获准公开的文档字段组织推理，字段空缺保持空缺，字段并列不被解释为因果。
+    output_function: 将授权字段及其含义组织为可核验的证据推理路径。
+    claim_boundary: 字段名、字段值和字段关系均不得超出来源及授权范围。
+    input_slots: [authorized_document_fields, field_order, field_meaning, unresolved_fields]
+    required_observable_evidence: [document_field_evidence, authorization_scope_evidence]
+    required_authorization_slots: [authorized_record_reader, field_publication_scope]
+    role_authority_boundary: 读取者只能解释获准字段的明示含义，不能补写空白或推断组织动机。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP05, CP06, CP10, CP11, CP12, CP19, CP20]
+    compatibility_requirements: [字段真实存在, 字段公开范围明确, 空白字段不补写]
+    anti_pattern_rules: [禁止字段名推导事实, 禁止并列字段推因果, 禁止隐藏不利字段]
+    forbidden_inference: [field_name_inference, ledger_causality, omitted_adverse_field]
+    accepted_cp_edges:
+      CP05: {fit_basis: CP05需要时间节点和技能形成证据；授权档案字段可承载reasoning，同时禁止编造经历和卖惨。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP05_01, AGR_CP05_02, AGR_CP05_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP06: {fit_basis: CP06的判断条件和可观察信号可由授权字段核验，但字段解释必须停在岗位权限和有限结论。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP06_01, AGR_CP06_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10以测试记录、条件和局限为核心；字段路径可保留缺项并阻止单次记录外推长期规律。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP11: {fit_basis: CP11的选项、选择、放弃和约束字段可逐项核验，机制禁止由档案空白补造灵感故事。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP11_01, AGR_CP11_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP19: {fit_basis: CP19需要真实背景、放弃和代价；字段驱动路径可确保不隐藏成本，也不把记录升华为价值观。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP19_01, AGR_CP19_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20的承诺、节点、证据、偏差和复核字段必须逐项可读；该机制保持证据优先并禁止情绪代替。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP12: {fit_basis: CP12没有audience_facing_reasoning_move角色；版本字段应由trigger、action、judgment或capture承担，不能错配整体字段推理。, profile_role_basis: no_reasoning_role, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 机制以授权字段为推理骨架，价值在于保留空白和不利字段，而不是把文档变成旁白模板。
+      asset_class_schema_fit: 可无损映射为reasoning move，并从拟议范围中删除无该角色的CP12。
+      atomicity_assessment: 仅组织字段证据，不负责拍摄字段、生成文案或决定公开授权。
+      truth_boundary_assessment: 字段存在、值、关系和授权分别设门，阻断字段名推事实与并列推因果。
+      duplicate_equivalence_assessment: 现有evidence-before-conclusion不要求字段级授权、空白保留或不利字段完整性，输入合同不同。
+      hard_guard_assessment: 六个接受边均有专属记录字段和hard guard支撑；CP12角色不匹配被剔除。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 字段级证据组织具备独立机制和显著反假绿价值，适用边可逐项成立。
+      reason_codes: [AUTHORIZED_FIELD_TRACE, EMPTY_FIELD_PRESERVATION, CP_EDGE_NARROWED]
+
+  - proposal_id: BNO-07
+    label: 条件排除与替代方向
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: audience_facing_reasoning_move
+    canonical_component_id: RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+    mechanism_definition: 根据输入中明确存在的任务条件排除不适配方向，并仅呈现已有依据支持的替代方向。
+    output_function: 组织条件、排除依据和替代方向之间的有限决策推理。
+    claim_boundary: 排除理由和替代方向都必须有据，不形成普遍推荐或身体评价。
+    input_slots: [task_conditions, supported_exclusion_conditions, supported_alternatives, decision_boundary]
+    required_observable_evidence: [condition_evidence, exclusion_basis_evidence, alternative_basis_evidence]
+    required_authorization_slots: [authorized_advisory_role]
+    role_authority_boundary: 仅在角色被授权解释条件和选项时使用，不替用户作最终决定。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP07, CP09, CP11, CP13]
+    compatibility_requirements: [条件完整, 排除依据可追溯, 替代方向已有来源]
+    anti_pattern_rules: [禁止固定招数模板, 禁止制造反选焦虑, 禁止无依据替代]
+    forbidden_inference: [generic_advice_template, anxiety_induction, unsupported_alternative]
+    accepted_cp_edges:
+      CP07: {fit_basis: CP07明确允许条件判断、决策树和排除法；机制要求真实问题来源并禁止固定三招。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP07_01, AGR_CP07_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP09: {fit_basis: CP09原生要求适用、不适用和替代选择；机制保留任务边界并禁止身体羞辱和绝对适配。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP09_01, AGR_CP09_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP11: {fit_basis: CP11的设计选项、放弃方案和约束可形成条件排除，但替代方向必须来自真实企划材料。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP11_01, AGR_CP11_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP13: {fit_basis: CP13可基于真实生活任务和搭配条件解释替代关系，且不得把演绎冒充具体经历。, profile_role_basis: audience_facing_reasoning_move, hard_guard_refs: [AGR_CP13_01, AGR_CP13_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该候选把排除与替代都绑定到任务条件，避免只说不适合或给出通用答案。
+      asset_class_schema_fit: 四个拟议Profile均具备audience_facing_reasoning_move角色，映射闭合。
+      atomicity_assessment: 单一承担条件决策推理，不承担用户提问生成、拍摄或CTA。
+      truth_boundary_assessment: 问题、排除条件和替代方向分别要求来源，禁止普遍推荐。
+      duplicate_equivalence_assessment: 现有claim边界判断不提供条件排除与替代方向的闭合三段输入。
+      hard_guard_assessment: 四条边分别满足问题真实性、身体边界、取舍条件和场景披露要求。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 条件排除和替代方向构成独立、可复用且非模板化的推理机制。
+      reason_codes: [CLOSED_EXCLUSION_PATH, SUPPORTED_ALTERNATIVES, ALL_PROPOSED_EDGES_VALID]
+
+  - proposal_id: BNO-08
+    label: 结果先行的多岗位权限回读
+    candidate_family: B_CHANNEL_NARRATIVE_OPERATOR
+    composition_asset_class: narrative_operator
+    component_role: transition
+    canonical_component_id: RCV2-004-TRANSITION-RESULT-FIRST-ROLE-READBACK
+    mechanism_definition: 从已观察结果进入，依次回读各授权岗位的可见动作和权限边界，不补造协作、对话或跨岗判断。
+    output_function: 在结果状态与角色专属证据之间建立受限叙事过渡。
+    claim_boundary: 岗位、动作、权限和结果关系均须明确提供，结果不得证明未记录的互动。
+    input_slots: [observed_result_state, authorized_roles, role_specific_actions, authority_boundaries, unresolved_handoff]
+    required_observable_evidence: [result_evidence, role_action_evidence, authority_boundary_evidence]
+    required_authorization_slots: [authorized_multi_role_recording_scope]
+    role_authority_boundary: 每个岗位只解释自身被授权动作，记录者不得替角色补对白或判断。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP04, CP15, CP16]
+    compatibility_requirements: [结果有据, 角色动作分别有据, 权限边界明示]
+    anti_pattern_rules: [禁止编协作, 禁止虚构对话, 禁止跨岗判断]
+    forbidden_inference: [invented_collaboration, scripted_consensus, cross_role_authority]
+    accepted_cp_edges:
+      CP04: {fit_basis: CP04具备transition角色、真实参与岗位和权限字段；结果先行回读可保留多声部且不制造争吵。, profile_role_basis: transition, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15具备多岗位接力和transition角色；回读必须绑定真实生命周期动作并禁止虚构库存或调拨。, profile_role_basis: transition, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP16: {fit_basis: CP16没有transition角色，且服务复盘中的隐私和授权不能由多岗位回读机制替代。, profile_role_basis: no_transition_role, hard_guard_refs: [AGR_CP16_01, AGR_CP16_02, AGR_CP16_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 该候选从结果向角色证据回读，区别于按岗位接力顺序推进。
+      asset_class_schema_fit: 可映射为transition，合法边为CP04和CP15；CP16因无该角色被剔除。
+      atomicity_assessment: 只连接结果与角色证据，不负责结果判断或并列画面执行。
+      truth_boundary_assessment: 角色、动作、权限和结果全部要求来源，明确禁止虚构互动。
+      duplicate_equivalence_assessment: 现有ROLE_SPECIFIC_HANDOFF按角色观察向前交接；本候选从结果逆向回读，输入增加结果状态且顺序功能独立。
+      hard_guard_assessment: CP04权限与参与者、CP15库存真实性均有硬门；CP16隐私风险边被删除。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 结果先行的角色回读具备独立信息顺序和边界价值，不等同现有顺序交接组件。
+      reason_codes: [DISTINCT_RESULT_FIRST_ORDER, ROLE_AUTHORITY_PRESERVED, CP_EDGE_NARROWED]
+
+  - proposal_id: BRV-01
+    label: 有限普通参与者视角
+    candidate_family: B_CHANNEL_ROLE_PERSPECTIVE
+    composition_asset_class: role_perspective_voice
+    component_role: professional_judgment
+    canonical_component_id: RCV2-004-JUDGMENT-BOUNDED-ORDINARY-PARTICIPANT
+    mechanism_definition: 保留输入中的真实岗位身份，从该角色手边可见、可做和可判断的范围组织表达，不增加专业权威。
+    output_function: 将专业判断约束为岗位内的普通参与者观察距离。
+    claim_boundary: 普通在场感不扩大角色权限，也不把个人感受升级为事实或规则。
+    input_slots: [authorized_role_identity, immediate_task_surface, ordinary_observation_scope, role_authority_boundary]
+    required_observable_evidence: [role_identity_evidence, task_surface_evidence, authorized_judgment_evidence]
+    required_authorization_slots: [authorized_participant_role]
+    role_authority_boundary: 角色只能表达自身可见任务和已授权判断，不代表组织、顾客或其他岗位。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: null
+    reviewed_minimal_cp_set: [CP01, CP04, CP05, CP16]
+    compatibility_requirements: [岗位身份真实, 观察范围有限, 专业判断另有依据]
+    anti_pattern_rules: [禁止普通视角冒充额外权威, 禁止企业代言, 禁止虚构个人经历]
+    forbidden_inference: [authority_upgrade, organization_voice, invented_experience]
+    accepted_cp_edges:
+      CP01: {fit_basis: CP01要求具体人员、真实岗位和岗位判断；普通参与视角可保持在任务台面内并禁止宣传语进入员工口中。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP04: {fit_basis: CP04的每个岗位可从自身动作观察共同对象，但不得越权或编造对话；该组件正向限制判断范围。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP05: {fit_basis: CP05可由真实人物以有限岗位视角回看技能证据，经历和成长事实仍必须来自授权材料。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP05_01, AGR_CP05_02, AGR_CP05_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP16: {fit_basis: CP16的服务者可从手边任务说明有限判断，同时禁止假顾客、隐私暴露和英雄化。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP16_01, AGR_CP16_02, AGR_CP16_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件不是把专业内容降智，而是限制叙事距离和权威范围，让角色只说自己可证的部分。
+      asset_class_schema_fit: 可映射为role_perspective_voice下的professional_judgment，并采用最小四边集合。
+      atomicity_assessment: 单一约束角色视角，不规定故事结构、镜头或语言模板。
+      truth_boundary_assessment: 身份、任务和判断分别有据，普通感不能成为事实来源。
+      duplicate_equivalence_assessment: 现有专业判断组件约束具体claim类型，没有通用的参与者叙事距离与权威降界机制。
+      hard_guard_assessment: 四边均存在真实角色和判断位，且各自的宣传、权限、经历和隐私禁令得到保留。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 受限普通参与者视角是独立角色机制，并以最小Profile集避免横扫二十类产品。
+      reason_codes: [BOUNDED_NARRATIVE_DISTANCE, NO_AUTHORITY_UPGRADE, MINIMAL_CP_SET]
+
+  - proposal_id: BRV-02
+    label: 记录者非决策所有者
+    candidate_family: B_CHANNEL_ROLE_PERSPECTIVE
+    composition_asset_class: role_perspective_voice
+    component_role: professional_judgment
+    canonical_component_id: RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+    mechanism_definition: 将看到、记录、有限判断和最终决定分成不同权限槽，记录者不得取得决策所有权。
+    output_function: 约束记录角色的判断语气和权限声明。
+    claim_boundary: 记录存在不等于记录者作出决定，字段状态不等于组织结论。
+    input_slots: [authorized_recorder_role, observed_fields, recordable_state, judgment_owner, decision_owner]
+    required_observable_evidence: [recorder_authority_evidence, decision_owner_evidence, recorded_state_evidence]
+    required_authorization_slots: [authorized_recording_scope]
+    role_authority_boundary: 记录者只能陈述记录和获准的有限判断，最终决定必须归属输入指定角色。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: null
+    reviewed_minimal_cp_set: [CP04, CP05, CP10, CP12, CP16, CP19, CP20]
+    compatibility_requirements: [记录者身份明确, 判断所有者明确, 决策所有者明确]
+    anti_pattern_rules: [禁止记录者越权拍板, 禁止把记录当因果, 禁止组织结论冒名]
+    forbidden_inference: [decision_ownership_transfer, record_as_cause, organization_claim]
+    accepted_cp_edges:
+      CP04: {fit_basis: CP04明确区分参与岗位动作和权限；记录角色不能替岗位作判断或制造一致意见。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP05: {fit_basis: CP05的档案记录者可说明时间节点和证据，但职业判断与经历归属必须保持在真实人物和授权角色。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP05_01, AGR_CP05_02, AGR_CP05_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10需要记录条件、结果和局限；记录者可登记状态，但长期结论必须留给有证据和权限的判断者。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12的版本记录与变更决定可分属不同角色；组件阻止记录者补造版本原因或宣布待验证项已成立。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP16: {fit_basis: CP16服务复盘可由匿名记录者描述任务状态，但不能替服务对象或决策岗位下结论。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP16_01, AGR_CP16_02, AGR_CP16_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP19: {fit_basis: CP19的记录者可核对选择和代价，企业决策与发言权必须保持在授权主体而非记录者。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP19_01, AGR_CP19_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20记录者可追踪承诺和偏差，但不能替承诺主体宣告兑现或承诺未来结果。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 机制把记录权、判断权和决定权拆开，直接防止记录者在叙事中获得不存在的组织权威。
+      asset_class_schema_fit: 与role_perspective_voice和professional_judgment角色一致，七条最小边均具备记录与决策分离需求。
+      atomicity_assessment: 只处理权限分槽，不规定字段顺序、内容结论或拍摄方式。
+      truth_boundary_assessment: 记录状态不是新事实来源，决策权必须由输入明确提供。
+      duplicate_equivalence_assessment: 现有角色边界多针对服务或具体claim，本组件专门区分记录、判断和决定三个权限层。
+      hard_guard_assessment: 各边分别守住岗位权限、经历、长期证据、版本历史、隐私、企业发言和承诺证据。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 权限分槽机制闭合、可复用且直接对应当前B通道越权风险。
+      reason_codes: [AUTHORITY_SLOT_SEPARATION, RECORDER_BOUNDARY, MINIMAL_CP_SET]
+
+  - proposal_id: BRV-03
+    label: 证据台账阅读者
+    candidate_family: B_CHANNEL_ROLE_PERSPECTIVE
+    composition_asset_class: role_perspective_voice
+    component_role: professional_judgment
+    canonical_component_id: RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+    mechanism_definition: 从被授权读取的字段、页面或台账位置陈述明示状态，不把字段并列、先后或空白解释成因果。
+    output_function: 将专业判断约束为证据台账的明示含义和空白边界。
+    claim_boundary: 台账只支持字段明示内容，不能自动证明原因、动机、长期效果或组织价值。
+    input_slots: [authorized_record_fields, field_order, field_meaning, causal_inference_boundary]
+    required_observable_evidence: [record_field_evidence, field_scope_evidence]
+    required_authorization_slots: [authorized_ledger_reader, publication_scope]
+    role_authority_boundary: 阅读者可以解释字段定义，不得修改记录或替记录主体作因果判断。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: null
+    reviewed_minimal_cp_set: [CP05, CP06, CP10, CP11, CP12, CP19, CP20]
+    compatibility_requirements: [记录真实, 字段含义明确, 因果边界显式]
+    anti_pattern_rules: [禁止台账造因果, 禁止空白补写, 禁止记录升华]
+    forbidden_inference: [ledger_causality, blank_field_completion, value_narrative]
+    accepted_cp_edges:
+      CP05: {fit_basis: CP05档案字段可证明时间与技能节点，但不得从记录密度推导成长原因或苦难价值。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP05_01, AGR_CP05_02, AGR_CP05_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP06: {fit_basis: CP06可从记录字段识别可观察信号和判断条件，但结论必须停在岗位权限及字段含义。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP06_01, AGR_CP06_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10测试台账可呈现条件、节点和局限；字段先后不等于长期因果。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP11: {fit_basis: CP11设计档案可读取选项和代价，但空白不能补成灵感故事或隐藏约束。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP11_01, AGR_CP11_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12版本日志可读取变更状态，但字段顺序不能创造版本原因或证明待验证结果。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP19: {fit_basis: CP19决策台账可核对选择、放弃和代价，不能由字段排列生成自我表彰。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP19_01, AGR_CP19_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20承诺记录可核对节点、证据与偏差，台账阅读者不得替主体承诺复核结果。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件定义一种证据贴近的阅读者视角，重点是字段明示与因果边界。
+      asset_class_schema_fit: 与professional_judgment角色闭合，七个Profile均有真实记录或档案输入。
+      atomicity_assessment: 只约束阅读者视角，不承担字段叙事顺序或镜头交叉绑定。
+      truth_boundary_assessment: 明确阻断字段并列、先后和空白产生新事实。
+      duplicate_equivalence_assessment: 与BNO-06的字段叙事顺序不同，本组件约束角色视角和判断权限，资产类与输出功能均不同。
+      hard_guard_assessment: 七条边逐项对应经历、权限、长期规律、灵感、版本、代价和承诺禁令。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 台账阅读者是独立角色机制，与字段叙事算子互补而不重复。
+      reason_codes: [LEDGER_READER_PERSPECTIVE, NO_FIELD_CAUSALITY, MINIMAL_CP_SET]
+
+  - proposal_id: BRV-04
+    label: 任务摩擦观察者
+    candidate_family: B_CHANNEL_ROLE_PERSPECTIVE
+    composition_asset_class: role_perspective_voice
+    component_role: professional_judgment
+    canonical_component_id: RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+    mechanism_definition: 从输入中已经存在的小范围任务摩擦进入，只描述其对当前任务的可观察影响，不新增顾客、事故、冲突或问题事件。
+    output_function: 将岗位判断约束为来源支持的任务摩擦观察。
+    claim_boundary: 摩擦不是新事件入口，也不自动证明原因、责任或普遍问题。
+    input_slots: [source_bound_friction, affected_task, observable_consequence, non_event_boundary]
+    required_observable_evidence: [friction_evidence, task_effect_evidence]
+    required_authorization_slots: [authorized_task_observer]
+    role_authority_boundary: 观察者只能描述自己被授权任务中的摩擦和有限判断，不替顾客或组织发言。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: null
+    reviewed_minimal_cp_set: [CP01, CP07, CP16]
+    compatibility_requirements: [摩擦来自source atom, 任务影响可见, 责任未知时不归因]
+    anti_pattern_rules: [禁止新增顾客, 禁止制造事故冲突, 禁止摩擦升格普遍问题]
+    forbidden_inference: [invented_customer, fabricated_incident, generalized_problem]
+    accepted_cp_edges:
+      CP01: {fit_basis: CP01真实任务中的可观察约束可作为摩擦入口，但必须围绕岗位动作并禁止忙碌拼贴。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP07: {fit_basis: CP07真实用户问题或搜索词可提供任务摩擦，但组件不能生成提问或把个案变成固定诊断模板。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP07_01, AGR_CP07_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP16: {fit_basis: CP16真实服务任务中的摩擦可以匿名复盘，但不得补假顾客、暴露隐私或塑造服务英雄。, profile_role_basis: professional_judgment, hard_guard_refs: [AGR_CP16_01, AGR_CP16_02, AGR_CP16_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 候选把普通人在场感建立在已有任务摩擦上，而不是靠编造事件制造故事性。
+      asset_class_schema_fit: 可作为professional_judgment的观察入口，并仅建立三条高证据边。
+      atomicity_assessment: 只约束观察焦点与判断边界，不决定叙事顺序或解决方案。
+      truth_boundary_assessment: 明确要求source atom中的摩擦和可观察影响，禁止新增主体与事件。
+      duplicate_equivalence_assessment: 现有trigger组件可从问题启动流程，但不约束普通观察者如何避免把摩擦扩写成事件。
+      hard_guard_assessment: 三条边分别保留真实任务、真实问题来源和隐私授权门。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 来源约束的任务摩擦视角直接回应B通道事件补造风险，且最小适用集可证。
+      reason_codes: [SOURCE_BOUND_FRICTION, NO_EVENT_CREATION, MINIMAL_CP_SET]
+
+  - proposal_id: VGA-01
+    label: 同机位跨时间状态对照
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+    mechanism_definition: 固定机位和比较主体，只在输入明确提供的时间锚之间展示状态差异，使变化可见但不替变化补原因。
+    output_function: 生成同构画面条件下的跨时间状态比较指令。
+    claim_boundary: 画面只证明各时间锚的可见状态，不能单凭前后对照证明原因、趋势或长期效果。
+    input_slots: [stable_camera_position, source_bound_time_anchors, state_at_each_anchor, comparison_subject]
+    required_observable_evidence: [time_anchor_evidence, state_evidence_at_each_anchor]
+    required_authorization_slots: [capture_location_authorization, comparison_subject_authorization]
+    role_authority_boundary: 拍摄者可固定比较条件，不得改造状态或解释未提供的变化原因。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP02, CP10, CP12, CP17, CP18]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [机位可复现, 时间锚有来源, 比较主体一致]
+    anti_pattern_rules: [禁止伪造前后状态, 禁止前后即因果, 禁止跨周期外推]
+    forbidden_inference: [fabricated_before_after, visual_causality, long_term_projection]
+    accepted_cp_edges:
+      CP02: {fit_basis: CP02可把真实时间记录下的阶段状态放在同一机位比较，未记录时段不得补写。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP02_01, AGR_CP02_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10可对照测试节点的可见状态，但对照不承担长期规律或单例普遍化结论。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12可在同一动作条件下呈现两个有据版本状态，不能虚构版本历史或宣称待验证项已完成。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17可在真实空间改动前后固定机位，且仍须保留环境边界和未解决状态。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18可对照本地授权记录中的两个时间状态，地理标签不能替代真实在地证据。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件通过固定机位控制比较变量，视觉上显示跨时间状态而不生成变化原因。
+      asset_class_schema_fit: 五个目标Profile都有capture_instruction角色，并各自存在可由运行时提供的状态锚。
+      atomicity_assessment: 仅负责同机位时间对照，不承担版本匹配动作、旁白或结论。
+      truth_boundary_assessment: 时间锚和各时点状态必须分别有据，画面差异不产生因果。
+      duplicate_equivalence_assessment: 现有visual_beat组件组织单场状态，本组件新增跨时间同构比较约束。
+      hard_guard_assessment: 五条边分别守住连续性、测试外推、版本历史、空间环境和本地真实性。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 跨时间同机位是独立可复用视听机制，适用边均有角色和事实入口支撑。
+      reason_codes: [MATCHED_FRAME_COMPARE, TIME_ANCHOR_BOUND, NO_VISUAL_CAUSALITY]
+
+  - proposal_id: VGA-02
+    label: 连续动作证据镜头
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-CONTINUOUS-ACTION-PROOF
+    mechanism_definition: 用不中断的镜头覆盖输入已授权动作链的起点、过程和停止状态，防止剪辑把不相连动作拼成事件或结果。
+    output_function: 生成动作连续性可核查的拍摄约束。
+    claim_boundary: 连续镜头只证明所摄动作确实发生及可见停止状态，不证明动作之外的效果。
+    input_slots: [authorized_action_chain, continuous_capture_window, visible_start_state, visible_stop_state]
+    required_observable_evidence: [authorized_action_evidence, start_and_stop_state_evidence]
+    required_authorization_slots: [actor_capture_authorization, action_capture_scope]
+    role_authority_boundary: 拍摄者只能记录授权动作链，不得指挥新增动作或用剪辑补成完整事件。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP01, CP03, CP04, CP15, CP17, CP18]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [动作链已授权, 起止状态可见, 连续窗口可执行]
+    anti_pattern_rules: [禁止跨镜拼动作, 禁止新增操作步骤, 禁止动作即效果]
+    forbidden_inference: [stitched_action_event, invented_action_step, action_effect_claim]
+    accepted_cp_edges:
+      CP01: {fit_basis: CP01真实岗位任务可由连续镜头证明动作链，不能以快剪忙碌拼贴替代任务证据。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP03: {fit_basis: CP03物件检查或使用动作可连续记录，镜头不得补身体效果或无来源性能结论。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP03_01, AGR_CP03_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP04: {fit_basis: CP04协作中的一个授权动作链可连续记录，但不能用剪辑制造互动或争吵。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15多岗位流程中每段真实动作可独立连续拍摄，不把并列岗位剪成虚假因果。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17空间调整动作可连续留证，起止状态之外的环境变化保持未知。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18本地实际动作可连续留证，拍摄地点和执行者仍须真实授权。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 组件用拍摄连续性证明动作未被拼接，重点是动作证据完整而不是镜头好看。
+      asset_class_schema_fit: 六个Profile均有capture_instruction及真实动作输入；授权槽阻断导演式补动作。
+      atomicity_assessment: 只约束一条动作链的连续捕捉，不组织多状态地图或跨时间比较。
+      truth_boundary_assessment: 起点、动作和停止状态均需运行时输入，连续性不扩张效果主张。
+      duplicate_equivalence_assessment: 现有observable_action组件定义动作机制，本组件定义如何不失真地拍下该动作。
+      hard_guard_assessment: 各边保留岗位、性能、互动、流程、空间与本地真实性禁令。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 动作层与拍摄层分账清楚，连续证据镜头可补足B通道视听独立性。
+      reason_codes: [CONTINUOUS_ACTION_EVIDENCE, NO_EDITED_EVENT, CAPTURE_LAYER_ONLY]
+
+  - proposal_id: VGA-03
+    label: 状态地图全景到局部
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-STATUS-MAP-OVERVIEW-DETAIL
+    mechanism_definition: 先展示输入已定义的整体状态分区，再沿明确映射进入局部证据，保证局部镜头可回到全景位置。
+    output_function: 生成全景状态地图到局部证据的可回溯拍摄路径。
+    claim_boundary: 局部状态不能代表未拍区域，画面位置关系不能补造任务关系或因果。
+    input_slots: [authorized_overview_state, mapped_local_states, mapping_relation, shot_path]
+    required_observable_evidence: [overview_state_evidence, local_state_evidence, mapping_evidence]
+    required_authorization_slots: [space_capture_authorization]
+    role_authority_boundary: 拍摄者可沿既有映射移动镜头，不得为叙事重新定义区域状态。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP01, CP04, CP15, CP17, CP20]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [全景状态有据, 局部状态有据, 映射关系明确]
+    anti_pattern_rules: [禁止局部代整体, 禁止空间关系造流程, 禁止遗漏状态冒充完成]
+    forbidden_inference: [local_to_global_claim, spatial_causality, hidden_state_completion]
+    accepted_cp_edges:
+      CP01: {fit_basis: CP01可从岗位任务全景进入一个有据局部动作，避免忙碌碎片脱离任务上下文。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP04: {fit_basis: CP04可展示协作状态地图后进入各岗位局部证据，但空间邻接不等于真实互动。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15可由流程全景进入各岗位状态，必须保留并列关系而不编制跨岗因果。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17真实空间状态适合全景到局部映射，未拍区域和未解决项不得被隐去。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20可把承诺台账总览映射到某项证据局部，局部进展不能替代整体复核。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 这是空间化的状态索引镜头，要求每个局部都能追溯到全景位置和输入状态。
+      asset_class_schema_fit: 五个Profile均有capture_instruction，且状态全景与局部证据可由事实槽供给。
+      atomicity_assessment: 只控制全景到局部映射，不规定状态分类法或内容结论。
+      truth_boundary_assessment: 全景、局部及映射分别取证，未显示区域保持未知。
+      duplicate_equivalence_assessment: 与BNO-04状态地图算子不同，本组件只实现镜头导航，不定义完成待办阻塞语义。
+      hard_guard_assessment: 逐边防忙碌拼贴、假互动、跨岗因果、空间遗漏和局部冒充整体。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 视听实现与叙事算子职责分离，且五条适用边均可闭合。
+      reason_codes: [OVERVIEW_DETAIL_MAPPING, NO_LOCAL_GLOBAL_LEAP, VISUAL_IMPLEMENTATION_ONLY]
+
+  - proposal_id: VGA-04
+    label: 文档字段与物件动作交叉绑定
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+    mechanism_definition: 在已授权文档字段和对应物件动作之间建立可核对的镜头往返，只有输入明确给出对应关系时才允许交叉。
+    output_function: 生成字段证据与物件动作互相指认的拍摄结构。
+    claim_boundary: 文档字段和物件动作同时出现不自动证明二者因果；对应关系必须来自输入。
+    input_slots: [authorized_document_field, corresponding_object_action, cross_reference_relation, capture_authorization]
+    required_observable_evidence: [document_field_evidence, object_action_evidence, relation_evidence]
+    required_authorization_slots: [document_capture_authorization, object_action_capture_authorization]
+    role_authority_boundary: 拍摄者只能呈现已提供的字段动作关系，不得由画面相邻推导流程或决定。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP05, CP06, CP10, CP11, CP12, CP19, CP20]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [字段可拍, 动作可拍, 交叉关系有据]
+    anti_pattern_rules: [禁止相邻即对应, 禁止字段造动作, 禁止动作反填记录]
+    forbidden_inference: [cooccurrence_relation, record_to_action_invention, action_backfill]
+    accepted_cp_edges:
+      CP05: {fit_basis: CP05档案字段可与有据经历节点或任务动作交叉，但不得把记录补成励志经历。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP05_01, AGR_CP05_02, AGR_CP05_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10测试字段可与对应测试动作交叉，关系仅限输入记录且不得外推长期规律。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP11: {fit_basis: CP11设计字段可与有据取舍动作交叉，不能从镜头顺序补灵感或隐藏原因。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP11_01, AGR_CP11_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12版本字段可与已记录的变更动作交叉，不得虚构版本历史或将待验证写成完成。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20承诺字段可与当前证据动作交叉，必须保留复核时间和偏差状态。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges:
+      CP06: {fit_basis: CP06没有capture_instruction角色，字段判断属于professional_judgment或reasoning，不能以视听便利扩大角色。, profile_role_basis: no_matching_profile_role, hard_guard_refs: [AGR_CP06_01, AGR_CP06_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP19: {fit_basis: CP19没有capture_instruction角色，决策代价应由判断与推理呈现，不能强塞文档物件镜头。, profile_role_basis: no_matching_profile_role, hard_guard_refs: [AGR_CP19_01, AGR_CP19_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    review:
+      semantic_readback: 组件要求文档字段和物件动作各自有证据，并用显式关系做交叉镜头。
+      asset_class_schema_fit: 五条边有capture_instruction角色；CP06和CP19缺该角色，已明确拒边。
+      atomicity_assessment: 只实现字段动作交叉拍摄，不定义字段叙事或角色判断。
+      truth_boundary_assessment: 三项证据独立输入，禁止共现、剪辑或成稿反向生成关系。
+      duplicate_equivalence_assessment: 与BNO-06字段叙事及BRV-03台账视角分属视听、叙事、角色三轴。
+      hard_guard_assessment: 五条接受边守档案、测试、设计、版本、承诺禁令；两条拒边阻止角色越界。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 机制本身有效，但真实复审把Founder上界从七条收窄到五条，避免假适用边。
+      reason_codes: [DOCUMENT_OBJECT_CROSS_BIND, ROLE_EDGE_NARROWED, NO_COOCCURRENCE_CAUSALITY]
+
+  - proposal_id: VGA-05
+    label: 两版本同动作匹配比较
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-VERSION-MATCHED-ACTION
+    mechanism_definition: 对两个有据版本执行同一已授权动作并匹配拍摄条件，只呈现可见差异和不可比边界。
+    output_function: 生成版本间同动作、同条件的比较镜头约束。
+    claim_boundary: 匹配动作只支持当前可见比较，不证明历史原因、总体优劣或长期效果。
+    input_slots: [authorized_version_refs, shared_comparison_action, matched_capture_conditions, version_difference_boundary]
+    required_observable_evidence: [version_identity_evidence, shared_action_evidence, visible_difference_evidence]
+    required_authorization_slots: [version_comparison_authorization]
+    role_authority_boundary: 拍摄者可以复现输入动作与条件，不得补版本历史或决定优劣结论。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP10, CP12]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [版本有据, 动作一致, 条件匹配]
+    anti_pattern_rules: [禁止不同动作硬比较, 禁止版本历史补造, 禁止单次比较定优劣]
+    forbidden_inference: [unmatched_comparison, invented_version_history, universal_superiority]
+    accepted_cp_edges:
+      CP10: {fit_basis: CP10可用匹配动作比较两个测试对象，当前结果不能普遍化或写成长效结论。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12可用同动作呈现版本变更的可见差异，版本身份与变更历史必须来自记录。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件将版本比较的变量控制落到动作和拍摄条件上，并保留不可比边界。
+      asset_class_schema_fit: CP10与CP12均有capture_instruction角色及版本或测试对象输入。
+      atomicity_assessment: 只处理两版本同动作比较，不负责解释原因或选择胜者。
+      truth_boundary_assessment: 版本、动作、条件和差异均需分别有据，禁止外推。
+      duplicate_equivalence_assessment: VGA-01比较跨时间状态，本组件比较两个版本的匹配动作，比较对象和槽位不同。
+      hard_guard_assessment: 两条边分别阻止单例普遍化与版本历史伪造。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 变量匹配机制原子化且适用范围窄，能形成真实B通道视觉差异。
+      reason_codes: [MATCHED_ACTION_VERSION_COMPARE, VARIABLE_CONTROL, NO_SUPERIORITY_CLAIM]
+
+  - proposal_id: VGA-06
+    label: 可见接触与原声严格同步
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-CONTACT-SOURCE-SOUND-SYNC
+    mechanism_definition: 只在可见接触动作发生的同一时间窗使用现场原声，并将声音主张限制为该次可捕捉事件。
+    output_function: 生成画面接触点与来源声音同步的拍摄录音约束。
+    claim_boundary: 同步原声只证明当次接触产生了被记录的声音，不证明材质、性能、身体效果或稳定规律。
+    input_slots: [visible_contact_action, capturable_source_sound, synchronization_point, sound_claim_boundary]
+    required_observable_evidence: [contact_action_evidence, source_sound_evidence]
+    required_authorization_slots: [action_capture_authorization, location_audio_authorization]
+    role_authority_boundary: 录制者可同步现场声，不得添加拟音冒充原声或用声音评价未授权性能。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP03, CP14, CP18]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [接触可见, 原声可录, 同步点明确]
+    anti_pattern_rules: [禁止拟音冒充, 禁止声音证明性能, 禁止脱画面声源]
+    forbidden_inference: [foley_as_source, sound_performance_claim, offscreen_source_invention]
+    accepted_cp_edges:
+      CP03: {fit_basis: CP03物件接触动作可配同窗原声，但声音不能补身体效果或未经证实的材质性能。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP03_01, AGR_CP03_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP14: {fit_basis: CP14可用可见细节接触与原声形成克制观察，且不得强加口播或CTA。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP14_01, AGR_CP14_02, AGR_CP14_03, AGR_CP14_04, AGR_CP14_05], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18在地环境中的真实操作声可同步记录，但地点与事件授权不能由声音氛围替代。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 组件把声音严格绑到可见接触瞬间，阻止后期声音成为新的事实来源。
+      asset_class_schema_fit: 三个Profile均有capture_instruction且适合从实物或环境原声取证。
+      atomicity_assessment: 只约束接触和原声同步，不组织无旁白节奏或时间锚。
+      truth_boundary_assessment: 声画各有证据且同步，拟音和性能推断明确禁止。
+      duplicate_equivalence_assessment: 现有visual beat未定义声音来源同步，VGA-08则组织无旁白节奏，功能不同。
+      hard_guard_assessment: 三条边分别守住性能、细节非强推与在地真实性。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 声音主体独立化所需的核心原子机制，范围窄且授权边界明确。
+      reason_codes: [CONTACT_SOUND_SYNC, SOURCE_AUDIO_ONLY, NO_AUDIO_CLAIM_EXPANSION]
+
+  - proposal_id: VGA-07
+    label: 门铃、报时、操作声作为时间锚
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+    mechanism_definition: 使用输入已确认来源的现场声音标记时间或流程节点，让声音承担定位而非气氛或事件补写。
+    output_function: 生成来源声音作为时间锚的声画组织约束。
+    claim_boundary: 声音只标记已授权时间关系和当下节点，不证明未见主体、事件原因或流程结果。
+    input_slots: [source_bound_sound_event, authorized_time_relation, scene_state, capture_authorization]
+    required_observable_evidence: [sound_source_evidence, time_relation_evidence, scene_state_evidence]
+    required_authorization_slots: [location_audio_authorization]
+    role_authority_boundary: 录制者可使用真实声音定位时间，不得由声音猜测来人、地点活动或后续结果。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP02, CP15, CP18, CP20]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [声源明确, 时间关系有据, 环境录音获准]
+    anti_pattern_rules: [禁止声源猜主体, 禁止报时补事件, 禁止声音制造紧迫叙事]
+    forbidden_inference: [sound_to_actor, time_to_event, urgency_fabrication]
+    accepted_cp_edges:
+      CP02: {fit_basis: CP02可用真实报时或操作声标记连续观察节点，不能由声音补未记录时段。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP02_01, AGR_CP02_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15可用各岗位真实操作声标记流程节点，但声源不生成岗位互动或因果。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18可用获准的本地现场声定位时空，声音氛围不能冒充本地事实或真实事件。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20可用有据时间提示标记复核节点，声音本身不证明承诺已兑现。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件让真实声音承担时间定位功能，并明确切断声音到事件或主体的推断。
+      asset_class_schema_fit: 四个Profile有capture_instruction，且时间或流程节点可由事实输入提供。
+      atomicity_assessment: 只定义来源声音时间锚，不处理接触同步或整段节奏。
+      truth_boundary_assessment: 声源、时间关系和场景状态三项分别取证，不由音效补事件。
+      duplicate_equivalence_assessment: VGA-06绑定声音与接触动作，本组件绑定声音与时间节点。
+      hard_guard_assessment: 各边守住连续记录、跨岗互动、在地真实性和承诺证据。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 提供区别于旁白的声音主体机制，且不会把环境声洗成事实。
+      reason_codes: [SOURCE_SOUND_TIME_ANCHOR, NO_SOUND_EVENT_INFERENCE, AUDIO_SUBJECT_DIVERSITY]
+
+  - proposal_id: VGA-08
+    label: 无旁白物件接触节奏
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: visual_beat
+    canonical_component_id: RCV2-004-VISUAL-SILENT-OBJECT-CONTACT-RHYTHM
+    mechanism_definition: 以输入已授权的物件接触顺序和现场声组织视觉节奏，不增加旁白、口播或促进行动。
+    output_function: 生成由物件接触与停顿构成的无旁白视觉节拍。
+    claim_boundary: 节奏只组织已有动作与声音，不赋予物件人格、情绪、性能或结果。
+    input_slots: [authorized_object_contacts, contact_sequence, capturable_source_sounds, silence_policy]
+    required_observable_evidence: [object_contact_evidence, source_sound_evidence]
+    required_authorization_slots: [object_capture_authorization, location_audio_authorization]
+    role_authority_boundary: 编排者只能排序已授权接触动作，不得为了节奏新增动作或写替代旁白的字幕结论。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP03, CP08, CP14]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [接触动作有据, 原声可用, 允许保持沉默]
+    anti_pattern_rules: [禁止物件拟人, 禁止字幕替旁白, 禁止节奏补结果]
+    forbidden_inference: [object_personification, captioned_claim, rhythmic_result_claim]
+    accepted_cp_edges:
+      CP03: {fit_basis: CP03可通过真实物件接触序列展示观察过程，但不得从手感镜头补身体或性能结论。, profile_role_basis: visual_beat, hard_guard_refs: [AGR_CP03_01, AGR_CP03_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP08: {fit_basis: CP08可用物件和证据接触节奏承载知识点，知识边界与来源仍须明确。, profile_role_basis: visual_beat, hard_guard_refs: [AGR_CP08_01, AGR_CP08_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP14: {fit_basis: CP14明确允许不设spoken和CTA，无旁白接触节奏可保留细节观察而不强推。, profile_role_basis: visual_beat, hard_guard_refs: [AGR_CP14_01, AGR_CP14_02, AGR_CP14_03, AGR_CP14_04, AGR_CP14_05], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 组件以物件接触和停顿构成视觉节奏，沉默是结构选择而不是信息缺失补洞。
+      asset_class_schema_fit: 三个Profile均有visual_beat角色，CP14的非必需口播约束尤其匹配。
+      atomicity_assessment: 只组织视觉节拍，不控制声音同步细节或叙事结论。
+      truth_boundary_assessment: 所有接触与声音需有来源，节奏不产生人格、性能或结果。
+      duplicate_equivalence_assessment: 现有visual beat多为物件或空间状态，本组件新增无旁白接触序列和沉默政策。
+      hard_guard_assessment: 三条边分别守住性能、知识来源和CP14非强制口播CTA。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 可显著拉开B通道声音与节奏，且不依赖新增事实或受众模板。
+      reason_codes: [SILENT_CONTACT_RHYTHM, NO_FORCED_SPOKEN_CTA, VISUAL_BEAT_ATOMIC]
+
+  - proposal_id: VGA-09
+    label: 未解决状态的固定停留镜头
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-UNRESOLVED-STATE-HOLD
+    mechanism_definition: 对输入明确标记为未解决的状态保持固定镜头，使缺口可见，而不通过剪辑、字幕或结尾把它伪装为完成。
+    output_function: 生成未解决状态的固定停留与退出边界。
+    claim_boundary: 镜头只证明当前缺口可见，不预测解决时间、责任主体或最终结果。
+    input_slots: [explicit_unresolved_state, visible_evidence, fixed_hold_subject, closure_boundary]
+    required_observable_evidence: [unresolved_state_evidence, visible_gap_evidence]
+    required_authorization_slots: [gap_capture_authorization]
+    role_authority_boundary: 拍摄者可以保留缺口，不得导演修复、指定责任或在镜头外补完成状态。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP01, CP02, CP10, CP15, CP17, CP18, CP20]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [未解决状态显式, 缺口可见, 结尾边界明确]
+    anti_pattern_rules: [禁止假完成, 禁止补责任, 禁止承诺解决时间]
+    forbidden_inference: [false_resolution, assigned_blame, invented_resolution_date]
+    accepted_cp_edges:
+      CP01: {fit_basis: CP01任务未完成项可保持可见，不能用忙碌画面或口号掩盖状态。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP02: {fit_basis: CP02连续观察中的未解决状态可停留记录，不允许补缺失时段或承诺后续结果。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP02_01, AGR_CP02_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10测试未定项可固定呈现，单次状态不能被剪成普遍结论。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15流程阻塞点可由固定镜头诚实保留，不能编制岗位责任或虚假协作结果。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17空间未解决状态可持续可见，不能用构图隐藏环境边界。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18本地待处理状态可留证，地点和事件仍依赖真实授权输入。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20承诺偏差或待复核状态可固定展示，镜头不得替代证据或兑现结论。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件把未解决作为可拍状态，不用剪辑制造完成感，是视觉上的诚实停留。
+      asset_class_schema_fit: 七个Profile都有capture_instruction并允许运行时提供未解决状态证据。
+      atomicity_assessment: 只规定固定停留与结尾边界，不负责状态分类或后续交接。
+      truth_boundary_assessment: 未解决状态和可见缺口必须有据，责任与解决时间保持未知。
+      duplicate_equivalence_assessment: BCL组件处理语言收束，VGA-09处理视觉停留，两者层级不同。
+      hard_guard_assessment: 七条边分别保护任务、连续记录、测试、跨岗、空间、本地和承诺真实性。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 未解决状态需要独立视听机制，否则B通道容易被结尾模板洗成假完成。
+      reason_codes: [UNRESOLVED_VISUAL_HOLD, NO_FALSE_RESOLUTION, VISUAL_CLOSURE_BOUNDARY]
+
+  - proposal_id: VGA-10
+    label: 多岗位并列画面，不编互动
+    candidate_family: B_CHANNEL_VISUAL_AUDIO_GRAMMAR
+    composition_asset_class: visual_audio_grammar
+    component_role: capture_instruction
+    canonical_component_id: RCV2-004-CAPTURE-MULTI-ROLE-PARALLEL-FRAME
+    mechanism_definition: 将多个已授权岗位及各自真实动作并列呈现，只表达同时或同阶段存在，不通过剪辑制造对话、因果或协作事件。
+    output_function: 生成多岗位并列但互动中立的画面结构。
+    claim_boundary: 并列画面不证明岗位之间发生互动、达成共识或具有因果关系。
+    input_slots: [authorized_roles, role_specific_visible_actions, parallel_frame_relation, interaction_boundary]
+    required_observable_evidence: [role_identity_evidence, per_role_action_evidence]
+    required_authorization_slots: [per_role_capture_authorization, multi_role_publication_scope]
+    role_authority_boundary: 编排者只能并列授权角色及动作，不得写对话、冲突、协作结果或组织立场。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP04, CP15, CP16]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [角色真实授权, 各自动作有据, 互动边界显式]
+    anti_pattern_rules: [禁止假互动, 禁止跨岗因果, 禁止角色代组织发言]
+    forbidden_inference: [fabricated_interaction, cross_role_causality, corporate_spokesperson_claim]
+    accepted_cp_edges:
+      CP04: {fit_basis: CP04可并列真实协作岗位和各自动作，但画面不得制造争吵、对话或剧本式冲突。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15可并列流程中的多岗位状态，必须保留各自权限并禁止剪辑生成跨岗因果。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP16: {fit_basis: CP16可并列匿名服务角色的真实动作，不能补顾客互动、泄露隐私或塑造服务英雄。, profile_role_basis: capture_instruction, hard_guard_refs: [AGR_CP16_01, AGR_CP16_02, AGR_CP16_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 组件用并列画面拉开视觉结构，同时把互动解释权严格留在事实输入之外。
+      asset_class_schema_fit: 三个Profile都有capture_instruction且具有多岗位或服务角色场景。
+      atomicity_assessment: 只定义多角色并列，不定义角色视角、任务顺序或合作结论。
+      truth_boundary_assessment: 每个角色和动作独立取证，并列关系不自动成为互动。
+      duplicate_equivalence_assessment: 现有role voice组件定义谁能说，VGA-10定义多个角色如何同屏而不产生新事件。
+      hard_guard_assessment: 三条边分别阻止假争吵、跨岗因果和假顾客隐私问题。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 是B通道多主体视觉差异的必要原子，且明确消除并列剪辑的事件编造风险。
+      reason_codes: [MULTI_ROLE_PARALLEL_FRAME, NO_FABRICATED_INTERACTION, PER_ROLE_AUTHORIZATION]
+
+  - proposal_id: BCL-01
+    label: 完成项与待办项并列交接
+    candidate_family: B_CHANNEL_CLOSURE
+    composition_asset_class: narrative_operator
+    component_role: closing
+    canonical_component_id: RCV2-004-CLOSING-COMPLETED-PENDING-HANDOFF
+    mechanism_definition: 在收束时分别列出有证据的完成项和仍待处理的项目，再把下一步交给有权限的主体，不把待办写成承诺。
+    output_function: 生成完成与待办分账的交接式收束。
+    claim_boundary: 完成只限证据支持范围，待办不等于未来承诺，交接主体不自动承担结果保证。
+    input_slots: [completed_items, pending_items, evidence_for_each_state, handoff_owner]
+    required_observable_evidence: [completion_evidence, pending_state_evidence]
+    required_authorization_slots: [authorized_handoff_owner, closure_scope]
+    role_authority_boundary: 收束者可陈述状态并指向授权交接主体，不得替其承诺时间或结果。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP01, CP02, CP04, CP15, CP16, CP17]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [完成与待办分槽, 每项状态有据, 交接主体获授权]
+    anti_pattern_rules: [禁止待办写完成, 禁止交接写承诺, 禁止省略阻塞项]
+    forbidden_inference: [pending_as_complete, handoff_as_promise, hidden_blocker]
+    accepted_cp_edges:
+      CP01: {fit_basis: CP01可在真实任务结尾分列完成和待办，避免以忙碌或口号冒充结果。, profile_role_basis: closing, hard_guard_refs: [AGR_CP01_01, AGR_CP01_02, AGR_CP01_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP02: {fit_basis: CP02连续观察可按当前节点交接完成与未完成项，不补缺失时段或后续结果。, profile_role_basis: closing, hard_guard_refs: [AGR_CP02_01, AGR_CP02_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP04: {fit_basis: CP04可按岗位并列交接状态，不能把待办变成剧本式协作或冲突结局。, profile_role_basis: closing, hard_guard_refs: [AGR_CP04_01, AGR_CP04_02, AGR_CP04_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP15: {fit_basis: CP15流程结尾可分账跨岗位完成与阻塞，交接不生成岗位间因果或承诺。, profile_role_basis: closing, hard_guard_refs: [AGR_CP15_01], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP16: {fit_basis: CP16服务复盘可匿名交接未完成任务，但不能补顾客故事、隐私或英雄式结果。, profile_role_basis: closing, hard_guard_refs: [AGR_CP16_01, AGR_CP16_02, AGR_CP16_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP17: {fit_basis: CP17空间任务可收束为已完成与待处理状态，未解决环境边界必须保留。, profile_role_basis: closing, hard_guard_refs: [AGR_CP17_01, AGR_CP17_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 该组件在结尾把完成和待办分账，并将下一步交给有权限主体而非生成承诺。
+      asset_class_schema_fit: closing为所有Profile可选角色，六条Founder边均有明确状态或任务输入可支撑。
+      atomicity_assessment: 只负责状态交接收束，不定义状态地图、画面或执行计划。
+      truth_boundary_assessment: 完成和待办分别取证，交接不产生未来事实。
+      duplicate_equivalence_assessment: 现有closing组件聚焦长期证据延后，本组件聚焦完成待办双账和责任交接。
+      hard_guard_assessment: 六条边守住任务真实性、连续性、协作、流程、服务隐私和空间边界。
+      decision: PROMOTE_AS_NEW
+      decision_rationale: 与既有结尾机制功能及槽位均不同，能避免B通道统一CTA式收束。
+      reason_codes: [COMPLETED_PENDING_LEDGER, AUTHORIZED_HANDOFF, NO_FUTURE_PROMISE]
+
+  - proposal_id: BCL-02
+    label: 当前证据止步，下一复核不作承诺
+    candidate_family: B_CHANNEL_CLOSURE
+    composition_asset_class: narrative_operator
+    component_role: closing
+    canonical_component_id: null
+    mechanism_definition: 以当前可见证据为结论上限，明确尚未被证明的长期主张，并只指向获准的下一观察或记录路径。
+    output_function: 将当前证据与未来复核分离，结束说明而不承诺结果。
+    claim_boundary: 当前证据不能证明长期结果，下一复核路径不是结果承诺或行动号召。
+    input_slots: [current_visible_evidence, unsupported_long_term_claim, allowed_next_observation_or_record_path]
+    required_observable_evidence: [current_visible_evidence, record_availability_evidence]
+    required_authorization_slots: [authorized_service_or_content_operator]
+    role_authority_boundary: 操作者只能陈述当前证据和允许的复核路径，不得保证未来表现。
+    truth_boundary: *truth_boundary
+    proposed_cp_upper_bound: [CP05, CP06, CP08, CP10, CP12, CP18, CP20]
+    reviewed_minimal_cp_set: null
+    compatibility_requirements: [当前证据有据, 未证主张显式, 下一路径获准]
+    anti_pattern_rules: [禁止长期保证, 禁止未证变促购, 禁止复核路径写承诺]
+    forbidden_inference: [long_term_guarantee, unresolved_to_purchase_push, review_path_as_promise]
+    accepted_cp_edges:
+      CP05: {fit_basis: CP05经历档案只能止于当前记录，下一核验不能补苦难、成长或结果承诺。, profile_role_basis: closing, hard_guard_refs: [AGR_CP05_01, AGR_CP05_02, AGR_CP05_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP06: {fit_basis: CP06观察信号只能支持当前判断边界，后续验证路径不构成规律承诺。, profile_role_basis: closing, hard_guard_refs: [AGR_CP06_01, AGR_CP06_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP08: {fit_basis: CP08知识解释可止于现有来源，下一查证路径不能被写成确定结论。, profile_role_basis: closing, hard_guard_refs: [AGR_CP08_01, AGR_CP08_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP10: {fit_basis: CP10单次测试可止于当前证据，长期规律必须留待后续记录。, profile_role_basis: closing, hard_guard_refs: [AGR_CP10_01, AGR_CP10_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP12: {fit_basis: CP12版本状态可止于当前变更证据，待验证项不能提前承诺完成。, profile_role_basis: closing, hard_guard_refs: [AGR_CP12_01, AGR_CP12_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP18: {fit_basis: CP18在地证据只能支持已授权当前观察，下一复核不能把合成或总部素材洗成本地事实。, profile_role_basis: closing, hard_guard_refs: [AGR_CP18_01, AGR_CP18_02], truth_mode_compatible: true, founder_upper_bound_respected: true}
+      CP20: {fit_basis: CP20当前证据与承诺偏差可止步呈现，下一复核时间不能替代兑现结果。, profile_role_basis: closing, hard_guard_refs: [AGR_CP20_01, AGR_CP20_02, AGR_CP20_03], truth_mode_compatible: true, founder_upper_bound_respected: true}
+    rejected_cp_edges: {}
+    review:
+      semantic_readback: 候选以当前证据为结论上限，把长期证明和下一记录路径留在未来。
+      asset_class_schema_fit: closing角色与七条边均兼容，但机制和槽位已被现有可复用组件完整覆盖。
+      atomicity_assessment: 机制本身原子化，只承担证据止步和复核路径收束。
+      truth_boundary_assessment: 明确当前证据、未证长期主张和获准路径三槽，不新增事实或承诺。
+      duplicate_equivalence_assessment: 与RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER在机制、输出、输入槽、授权边界、claim边界、资产类和角色上等价。
+      hard_guard_assessment: 七条适用边均保留各Profile事实、来源、版本、本地和承诺禁令。
+      decision: MERGE_INTO_REUSABLE
+      decision_rationale: 新建组件只会制造语义重复；应将候选作为设计来源合并关系记录，不改写既有64条组件。
+      reason_codes: [EXACT_MECHANISM_EQUIVALENCE, EXISTING_COMPONENT_REUSE, NO_DUPLICATE_PROMOTION]
+      merge_target_component_id: RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+      merge_equivalence_proof:
+        same_mechanism: 当前证据止步并把长期证明延后到允许的观察或记录路径。
+        same_output_function: 都用于以证据边界收束说明，而非生成CTA或结果承诺。
+        same_input_slots: [current_visible_evidence, unsupported_long_term_claim, allowed_next_observation_or_record_path]
+        same_authorization_boundary: 都要求authorized_service_or_content_operator且不得保证未来表现。
+        same_claim_boundary: 当前可见证据不证明长期结果，后续路径不是当前主张。
+        same_asset_class: narrative_operator
+        same_component_role: closing
+        order_independent_equivalence: 等价判断基于字段语义，不依赖候选或注册表遍历顺序。
