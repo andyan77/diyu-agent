@@ -1,0 +1,139 @@
+{
+  "authorized_replay": {
+    "batch_replay_count": 1,
+    "candidate_count": 40,
+    "candidate_materialization_attempt_count": 40,
+    "candidate_schema_failure_count": 0,
+    "content_evaluable_attempt_count": 40,
+    "content_reroll_count": 0,
+    "persisted_raw_response_count": 40,
+    "physical_author_invocation_total": 80,
+    "replacement_count": 0,
+    "request_replay_count": 40,
+    "selective_retry_count": 0,
+    "third_attempt_allowed": false
+  },
+  "blocking_items": [
+    "INDEPENDENT_REVIEW_EXECUTION_FAILED",
+    "INVENTED_ACTION",
+    "INVENTED_CAUSALITY",
+    "INVENTED_NUMBER",
+    "AUTHORIAL_EXACT_LINE_OVERLAP"
+  ],
+  "boundaries": {
+    "DIFY_change_count": 0,
+    "KE_truth_change_count": 0,
+    "RAG_change_count": 0,
+    "Serving_change_count": 0,
+    "accepted_baseline_count": 120,
+    "baseline_increment_count": 0,
+    "expand_3600_allowed": false,
+    "external_provider_API_call_count": 0,
+    "generation_600_allowed": false,
+    "generator_qualified": false,
+    "hidden_count": 0,
+    "production_candidate_count": 0,
+    "published_content_count": 0,
+    "readiness_all_false": true,
+    "runtime_generation_eligible_profile_count": 0,
+    "runtime_ingest_ready": false,
+    "runtime_provider_adapter_qualified": false
+  },
+  "claim_closure": {
+    "component_as_fact_source_count": 0,
+    "invalid_source_span_count": 0,
+    "invented_action_count": 9,
+    "invented_causality_count": 3,
+    "invented_entity_count": 0,
+    "invented_number_count": 15,
+    "invented_result_count": 0,
+    "machine_final_quality_claim": false,
+    "machine_final_semantic_claim": false,
+    "post_author_source_change_count": 0,
+    "reviewed_surface_unit_count": 594,
+    "undeclared_assertion_count": 0,
+    "unsupported_fact_count": 0
+  },
+  "dev_gate_pass": false,
+  "dev_gate_pass_candidate": false,
+  "development_gate": {
+    "authorial_exact_line_overlap_pair_count": 1,
+    "cp_with_zero_acceptable_output_count": null,
+    "cross_lane_fact_leak_count": 0,
+    "dev_gate_pass": false,
+    "first_acceptance_A": null,
+    "first_acceptance_B": null,
+    "first_acceptance_total": null,
+    "fully_accepted_pair_count": null,
+    "meta_scaffold_leak_count": 0,
+    "near_duplicate_rate": null,
+    "pair_with_at_least_four_real_axes_count": 20,
+    "quality_evaluation_completed": false,
+    "semantically_independent_pair_count": null,
+    "structural_failure_count": 1,
+    "unresolved_formulaic_finding_count": null
+  },
+  "independent_review": {
+    "candidate_edit_count": 0,
+    "completed_fact_candidate_review_count": 0,
+    "completed_pair_review_count": 0,
+    "completed_primary_candidate_review_count": 0,
+    "content_reroll_count": 0,
+    "error_code": "E_REVIEW_EXECUTION_TIMEOUTEXPIRED",
+    "execution_status": "INDEPENDENT_REVIEW_EXECUTION_FAILED",
+    "quality_evaluation_completed": false
+  },
+  "ledger": {
+    "new_horizon": 34,
+    "previous_horizon": 33,
+    "route_migration_34_appended": true,
+    "route_migration_35_allowed": false
+  },
+  "phase_0": {
+    "branch_protection_unchanged": true,
+    "expected_parents_pass": true,
+    "master_ci_green": true,
+    "pr_12_merge_commit_sha": "f5e458730aca52e63748f597e007352b72d7bb63",
+    "pr_12_reviewed_head_sha": "e0f004e403a1947691178d42c0a33e32f0ecd767",
+    "tree_identity_pass": true
+  },
+  "prior_failure": {
+    "initial_author_invocation_count": 40,
+    "initial_candidate_count": 0,
+    "initial_persisted_raw_response_count": 0,
+    "initial_semantic_review_count": 0,
+    "initial_transport_valid_response_count": 0
+  },
+  "recommended_next_task": {
+    "exactly_one_task_id": "CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_004",
+    "merge_current_PR_as_phase_0": false
+  },
+  "result_digest": "58fa1e613ef7f39a239ba2ca370b8c4108d7fe54667cf4b62696393f596b50d6",
+  "schema_version": "v0.1",
+  "structural_regression": {
+    "accepted_new_component_loaded_count": 22,
+    "at_least_four_real_plan_axis_pair_count": 20,
+    "component_binding_removal_fail_closed_count": 22,
+    "component_conformance_positive_pass_count": 22,
+    "component_ineligible_negative_pass_count": 22,
+    "fake_degrade_count": 0,
+    "identical_fact_set_pair_count": 20,
+    "orch_plan_count": 40,
+    "registry_total_count": 86,
+    "route_case_count": 60,
+    "route_recomputation_mismatch_count": 0
+  },
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001",
+  "task_status": "STOPPED_BEFORE_HIDDEN_CONTENT_GATE_FAILED",
+  "transport_fix": {
+    "T0_negative_pass": true,
+    "T0_positive_pass": true,
+    "identity_authority": "DISPATCHER",
+    "material_plan_source_unchanged": true,
+    "new_transport_digest": "0dc7a007dd563f5b2e17a61e3de5b4e503e0b9611e5a23ebc65c2fd5515c08c8",
+    "old_transport_digest": "623b5f27a496cda360110acec5a66a9183a205fa3007aae8db278fb3f5b2846b",
+    "root_cause": "AUTHOR_PAYLOAD_ECHO_USED_AS_AUTHORITATIVE_TRANSPORT_IDENTITY",
+    "semantic_author_instruction_unchanged": true
+  },
+  "verdict": "STOPPED_BEFORE_HIDDEN"
+}

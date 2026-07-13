@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import copy
 import hashlib
+import importlib.util
 import json
 import re
 import shutil
@@ -53,8 +54,29 @@ HORIZON_PATH = Path(
     "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
     "phase_0/current_ledger_horizon.v0.1.yaml"
 )
+CURRENT_LEDGER_OWNER_PATH = Path(
+    "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
+    "phase_0/check_current_ledger_owner.py"
+)
 CURRENT_B_CHANNEL_CHECKER = Path("ci/checkers/check_gkb_v2_b_channel_24_component_review.py")
 REGISTRY_SHA256 = "de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601"
+HISTORICAL_ROUTE_DIGESTS_19_33 = {
+    19: "a10f1a8477b7b36435ce16f806d21eec505b7d0eee39084666edbc7b9e67f76a",
+    20: "ca76d27c8a84ee4a5888c17a0d88249b651de05314fc81a553d031981db4a5a3",
+    21: "ba3f824ba4699c821a34416641a55f480451afdc371131916bcf30bb031b8195",
+    22: "5ade29110d186c98c05fe17ed07b62a11bd590aafb38a5cec5fa10973e89fc1b",
+    23: "0b7568944bdf073c5b6842263a954e59dc016709518fa57ece86b0ba2b365045",
+    24: "5a64c5130872905521bfa536e2d64e17f66a2c589dbd80b3c45183a78fcfb862",
+    25: "1fef7a924fe2abb7e28c5ba5a06e86a8e2421084043d02d35502ce8b1aa7da38",
+    26: "6383578d17aba2642b1e1299f6227954c5846ea7a83203949303d43e233c8e3d",
+    27: "58c4768bcc91ce69ffda835a85f257a1ac99116fd4276c5d1aaf7b0367a6eb1a",
+    28: "35491c51661a0f39d44410d4aa08753c10e6edb9e958304802a294a00f54c880",
+    29: "bc7c526085bba2e4c0b7f0cd439f9218bce81bd2e393e2f15aec6d3cce7ce456",
+    30: "143ee83792fefa5f48e577350d3aa0d4ae84d79dd9f4d2866fe363620c3d6f51",
+    31: "b2d7ea6f24df0db18acfb40ea6e2d50249d41320302473068dff0b688b952e48",
+    32: "098b9070582e52e8d03f4bd884d317b97b650ffae7ec6c3035f1ec9993dc0e33",
+    33: "c24cf07ba96cb58083a33e95dd3972527e9d93d0b1e34f631dc354b8e382bff7",
+}
 ROUTE_LINE = re.compile(r"^  route_migration_([^:]+):$")
 TOP_LEVEL_LINE = re.compile(r"^  [A-Za-z0-9_]+:$")
 READY_KEYS = frozenset(
@@ -645,38 +667,30 @@ def _check_failure_result(root: Path, errors: list[dict[str, str]]) -> None:
 
 def _check_ledger(root: Path, errors: list[dict[str, str]]) -> None:
     ledger_doc = load_yaml(root / LEDGER_PATH)["grc_3600_execution_plan_status"]
-    horizon = load_yaml(root / HORIZON_PATH)["ledger_horizon"]
-    if horizon.get("horizon_digest") != object_digest(horizon, "horizon_digest"):
-        add_error(errors, "E_HORIZON_DIGEST", "current horizon")
-    expected = {
-        "previous_terminal_route_id": 32,
-        "authorized_new_route_ids": [33],
-        "authorized_terminal_route_id": 33,
-        "authorization_task_id": TASK_ID,
-        "unknown_future_successor_allowed": False,
-        "derivation_source": "FOUNDER_AUTHORIZED_HORIZON_FILE",
-    }
-    for key, value in expected.items():
-        if horizon.get(key) != value:
-            add_error(errors, "E_HORIZON_POLICY", f"{key}={horizon.get(key)}")
     text = (root / LEDGER_PATH).read_text(encoding="utf-8")
     blocks, order, shadows = route_blocks(text)
-    if shadows or [route_id for route_id in order if route_id >= 19] != list(range(19, 34)):
-        add_error(errors, "E_LEDGER_SEQUENCE", str(order))
-    frozen = horizon.get("frozen_route_sha256", {})
-    if set(frozen) != {str(route_id) for route_id in range(19, 34)}:
-        add_error(errors, "E_LEDGER_FROZEN_KEYS", str(sorted(frozen)))
-    for route_id in range(19, 34):
+    historical_order = [route_id for route_id in order if 19 <= route_id <= 33]
+    if shadows or historical_order != list(range(19, 34)):
+        add_error(errors, "E_HISTORICAL_LEDGER_SEQUENCE", str(historical_order))
+    for route_id, expected_digest in HISTORICAL_ROUTE_DIGESTS_19_33.items():
         digest = hashlib.sha256(blocks.get(route_id, "").encode("utf-8")).hexdigest()
-        if frozen.get(str(route_id)) != digest:
-            add_error(errors, "E_LEDGER_FROZEN_DIGEST", f"route_migration_{route_id}")
+        if expected_digest != digest:
+            add_error(errors, "E_HISTORICAL_ROUTE_DIGEST", f"route_migration_{route_id}")
     route33 = ledger_doc.get("route_migration_33")
     if not isinstance(route33, Mapping) or route33.get("applied_by_task") != TASK_ID:
         add_error(errors, "E_ROUTE33", "task binding")
     elif route33.get("migration_digest") != object_digest(route33, "migration_digest"):
         add_error(errors, "E_ROUTE33_DIGEST", "migration digest")
-    if "route_migration_34" in ledger_doc:
-        add_error(errors, "E_ROUTE34", "unauthorized successor")
+
+    owner_path = root / CURRENT_LEDGER_OWNER_PATH
+    spec = importlib.util.spec_from_file_location("current_ledger_owner", owner_path)
+    if spec is None or spec.loader is None:
+        add_error(errors, "E_CURRENT_LEDGER_OWNER", "unable to load owner")
+        return
+    owner = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(owner)
+    for owner_error in owner.validate(root):
+        add_error(errors, str(owner_error["code"]), f"current owner: {owner_error['detail']}")
 
 
 def _check_compatibility_repair(root: Path, errors: list[dict[str, str]]) -> None:
@@ -687,7 +701,7 @@ def _check_compatibility_repair(root: Path, errors: list[dict[str, str]]) -> Non
         add_error(errors, "E_COMPAT_RECEIPT_DIGEST", "repair receipt")
     if receipt.get("before_sha256") != "fa2b5a94a75b302b13e81e5b0349d22b0e9b9dc8e8a0753d8dd03c94d81d04b2":
         add_error(errors, "E_COMPAT_BEFORE", str(receipt.get("before_sha256")))
-    if receipt.get("after_sha256") != sha256_file(root / CURRENT_B_CHANNEL_CHECKER):
+    if receipt.get("after_sha256") != "ff4060e02f387e92b9ec1613df31b5b855cbd04a1155d92f5ca03dacf3191394":
         add_error(errors, "E_COMPAT_AFTER", str(receipt.get("after_sha256")))
     if receipt.get("sealed_checker_modified_count") != 0 or receipt.get(
         "current_live_checker_modified_count"
@@ -710,6 +724,7 @@ def required_paths() -> tuple[Path, ...]:
         AUTHOR_CORE_DIR / "creative_author_response.schema.json",
         LEDGER_PATH,
         HORIZON_PATH,
+        CURRENT_LEDGER_OWNER_PATH,
         CURRENT_B_CHANNEL_CHECKER,
         TASK_DIR / "freeze/commit_1_freeze_manifest.v0.1.json",
         TASK_DIR / "component/component_resolution_map.v0.1.json",
@@ -778,6 +793,15 @@ def mutate_yaml(path: Path, mutator: Callable[[dict[str, Any]], None]) -> None:
     value = load_yaml(path)
     mutator(value)
     path.write_text(yaml.safe_dump(value, allow_unicode=True, sort_keys=False), encoding="utf-8")
+
+
+def mutate_route_block(path: Path, route_id: int, old: str, new: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    blocks, _, _ = route_blocks(text)
+    block = blocks[route_id]
+    if old not in block:
+        raise ValueError(f"route mutation token absent: route={route_id} token={old}")
+    path.write_text(text.replace(block, block.replace(old, new, 1), 1), encoding="utf-8")
 
 
 def _positive_classifier_examples_pass() -> bool:
@@ -945,12 +969,22 @@ def selftest(root: Path) -> int:
         ),
     )
     add(
-        "route_34",
-        "E_LEDGER_SEQUENCE",
+        "route_35",
+        "E_ROUTE_SEQUENCE",
         lambda temp: (temp / LEDGER_PATH).write_text(
             (temp / LEDGER_PATH).read_text(encoding="utf-8")
-            + "  route_migration_34:\n    applied_by_task: UNAUTHORIZED\n",
+            + "  route_migration_35:\n    applied_by_task: UNAUTHORIZED\n",
             encoding="utf-8",
+        ),
+    )
+    add(
+        "historical_route_33_tamper",
+        "E_HISTORICAL_ROUTE_DIGEST",
+        lambda temp: mutate_route_block(
+            temp / LEDGER_PATH,
+            33,
+            "      author_invocation_count: 40",
+            "      author_invocation_count: 41",
         ),
     )
     add(

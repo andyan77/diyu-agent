@@ -1,0 +1,27 @@
+{
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001",
+  "repair_reason": "route34 is a Founder-authorized successor and the new task directory is an authorized write surface",
+  "current_live_checker_modified_count": 2,
+  "sealed_checker_modified_count": 0,
+  "historical_result_digest_cascade_count": 0,
+  "repairs": [
+    {
+      "path": "ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py",
+      "before_sha256": "95fcf3e6716e86f01a210c64dbe4685705962583ff9b2c560182389ba66df71c",
+      "after_sha256": "195960c42039dbd2cd219215eb6d9728cfea207a619c1ee097c2f7b2496bab97",
+      "historical_snapshot_route_start": 19,
+      "historical_snapshot_route_terminal": 33,
+      "moving_terminal_delegated_to_current_ledger_owner": true,
+      "historical_route_tamper_still_rejected": true
+    },
+    {
+      "path": "ci/checkers/check_gkb_v2_b_channel_24_component_review.py",
+      "before_sha256": "ff4060e02f387e92b9ec1613df31b5b855cbd04a1155d92f5ca03dacf3191394",
+      "after_sha256": "11495bdaeda77654d41f2ca76aa28528fa16443f308fe18ccb9b6015936f77a9",
+      "change_scope": "authorize the current replay task directory without removing the prior successor directory",
+      "historical_component_and_route_guards_unchanged": true
+    }
+  ],
+  "repair_digest": "34508250d3ec8b1d4d55691ee33a9b43cfeb387d2bd54159b2fcc44c0b9498eb"
+}

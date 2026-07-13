@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["review_role", "candidate_reviews", "pair_reviews"],
+  "properties": {
+    "review_role": {
+      "type": "string",
+      "const": "BLIND_SURFACE_PRIMARY_REVIEWER"
+    },
+    "candidate_reviews": {
+      "type": "array",
+      "minItems": 40,
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_id",
+          "all_surfaces_read",
+          "zero_edit_acceptable",
+          "formulaic_finding_count",
+          "meta_scaffold_leak_count",
+          "incoherent_execution_count",
+          "unresolved_formulaic_finding",
+          "reason_codes",
+          "rationale"
+        ],
+        "properties": {
+          "candidate_id": {"type": "string"},
+          "all_surfaces_read": {"type": "boolean"},
+          "zero_edit_acceptable": {"type": "boolean"},
+          "formulaic_finding_count": {"type": "integer", "minimum": 0},
+          "meta_scaffold_leak_count": {"type": "integer", "minimum": 0},
+          "incoherent_execution_count": {"type": "integer", "minimum": 0},
+          "unresolved_formulaic_finding": {"type": "boolean"},
+          "reason_codes": {"type": "array", "items": {"type": "string"}},
+          "rationale": {"type": "string"}
+        }
+      }
+    },
+    "pair_reviews": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "profile_id",
+          "both_surfaces_read",
+          "semantically_independent",
+          "actual_difference_axis_count",
+          "exact_or_near_duplicate",
+          "formulaic_sibling_structure",
+          "rationale"
+        ],
+        "properties": {
+          "profile_id": {"type": "string"},
+          "both_surfaces_read": {"type": "boolean"},
+          "semantically_independent": {"type": "boolean"},
+          "actual_difference_axis_count": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "exact_or_near_duplicate": {"type": "boolean"},
+          "formulaic_sibling_structure": {"type": "boolean"},
+          "rationale": {"type": "string"}
+        }
+      }
+    }
+  }
+}

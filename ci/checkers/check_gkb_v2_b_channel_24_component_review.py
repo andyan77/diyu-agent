@@ -60,9 +60,15 @@ HORIZON_PATH = Path(
     "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
     "phase_0/current_ledger_horizon.v0.1.yaml"
 )
-SUCCESSOR_TASK_DIR = Path(
-    "controlled_content_generator_v2_001/"
-    "b_channel_component_consumption_and_claim_closure_dev_gate_001"
+SUCCESSOR_TASK_DIRS = (
+    Path(
+        "controlled_content_generator_v2_001/"
+        "b_channel_component_consumption_and_claim_closure_dev_gate_001"
+    ),
+    Path(
+        "controlled_content_generator_v2_001/"
+        "b_channel_claim_closure_dev_gate_authorized_transport_replay_001"
+    ),
 )
 HISTORICAL_ROUTE_DIGESTS_19_32 = {
     19: "a10f1a8477b7b36435ce16f806d21eec505b7d0eee39084666edbc7b9e67f76a",
@@ -146,6 +152,10 @@ CURRENT_ALLOWED_EXACT_PATHS = frozenset(
         Path(
             "ci/checkers/"
             "check_orch_generator_v2_b_channel_component_consumption_dev_gate.py"
+        ),
+        Path(
+            "ci/checkers/"
+            "check_orch_generator_v2_b_channel_claim_closure_transport_replay.py"
         ),
         HORIZON_PATH,
         Path(
@@ -249,7 +259,7 @@ def validate_current_write_surface(root: Path, errors: list[dict[str, str]]) -> 
         for path in paths
         if path not in CURRENT_ALLOWED_EXACT_PATHS
         and not path.is_relative_to(TASK_DIR)
-        and not path.is_relative_to(SUCCESSOR_TASK_DIR)
+        and not any(path.is_relative_to(task_dir) for task_dir in SUCCESSOR_TASK_DIRS)
     )
     if unexpected:
         add_error(errors, "E_CURRENT_WRITE_SURFACE", str(unexpected))
