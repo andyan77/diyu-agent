@@ -24,11 +24,16 @@ if not __debug__:
 
 ROOT = Path(__file__).resolve().parents[2]
 TASK_ID = "GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001"
+P1B_TASK_ID = "GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001"
 BASELINE_COMMIT = "473a8664bdab37246db1b75785f765e62c80ed86"
 V1_REPAIR_BASELINE_COMMIT = "69235a23d62d6c92683fadf572f7b8c291771dd6"
 TASK_ROOT = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/"
     "p1a_standard_baseline_review_packet_and_governance_preflight_001"
+)
+P1B_TASK_ROOT = Path(
+    "controlled_content_generator_v2_001/gate1_v1_1_001/"
+    "p1b_signed_review_closeout_and_baseline_freeze_001"
 )
 CURRENT_OWNER_PATH = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/current_gate1_owner.v0.1.yaml"
@@ -55,6 +60,42 @@ COMPAT_RECEIPT_PATH = (
 )
 RESULT_PATH = TASK_ROOT / "result/p1a_standard_baseline_preflight_result.v0.1.yaml"
 MATERIALIZER_PATH = TASK_ROOT / "run_p1a_standard_baseline_review_packet_freezer.py"
+P1B_MATERIALIZER_PATH = P1B_TASK_ROOT / "run_p1b_signed_review_closeout_freezer.py"
+P1B_IMPORT_MANIFEST_PATH = (
+    P1B_TASK_ROOT / "imports/signed_review_import_manifest.v0.1.yaml"
+)
+P1B_CONTRACT_PATH = (
+    P1B_TASK_ROOT / "contract/p1b_signed_review_closeout_contract.v0.1.yaml"
+)
+P1B_NORMALIZED_PATH = P1B_TASK_ROOT / "normalized/signed_review_records.v0.1.jsonl"
+P1B_CONTENT_PATH = P1B_TASK_ROOT / "content/reference_120_final_dispositions.v0.1.jsonl"
+P1B_CONTENT_GAPS_PATH = (
+    P1B_TASK_ROOT / "content/reference_120_content_product_gap_matrix.v0.1.yaml"
+)
+P1B_ROUTE_GOLD_PATH = P1B_TASK_ROOT / "route/route_60_gold_answers.v0.1.jsonl"
+P1B_ROUTE_FREEZE_PATH = P1B_TASK_ROOT / "route/route_60_gold_freeze_manifest.v0.1.yaml"
+P1B_ROUTE_COMPARISON_PATH = (
+    P1B_TASK_ROOT / "route/route_60_current_actual_comparison.v0.1.jsonl"
+)
+P1B_COMPONENT_PATH = (
+    P1B_TASK_ROOT / "component/component_86_final_dispositions.v0.1.jsonl"
+)
+P1B_ACTIVE_COMPONENTS_PATH = (
+    P1B_TASK_ROOT / "component/active_gate1_development_components.v0.1.jsonl"
+)
+P1B_ACTIVE_EDGES_PATH = (
+    P1B_TASK_ROOT / "component/active_gate1_development_edges.v0.1.jsonl"
+)
+P1B_COMPONENT_GAPS_PATH = (
+    P1B_TASK_ROOT / "component/component_supply_gap_matrix.v0.1.yaml"
+)
+P1B_TEST_INPUTS_PATH = (
+    P1B_TASK_ROOT / "test_inputs/gate1_development_test_input_manifest.v0.1.yaml"
+)
+P1B_COMPAT_RECEIPT_PATH = (
+    P1B_TASK_ROOT / "compatibility/p1b_historical_identity_repair_receipt.v0.1.yaml"
+)
+P1B_RESULT_PATH = P1B_TASK_ROOT / "result/p1b_signed_review_closeout_result.v0.1.yaml"
 
 CLEAN_120_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
@@ -74,6 +115,11 @@ COMPONENT_SOURCE_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
     "controlled_composition_v2_001/b_channel_component_review_and_handoff_001/"
     "reviewed_reusable_component_registry.v0.4.jsonl"
+)
+PROFILE_PATH = Path(
+    "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
+    "controlled_composition_v2_001/content_product_profile_20_completion_001/"
+    "content_product_profiles.v0.2.yaml"
 )
 B24_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_b_channel_24_component_review.py")
 SUCCESSOR_CHECKER_PATH = Path(
@@ -100,6 +146,27 @@ SUCCESSOR_CHECKER_BEFORE_SHA256 = (
 CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256 = (
     "679343b9187ad12c3af077ab4041a3c706bcef56b915c6ef0234af54319ee716"
 )
+P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256 = (
+    "29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806"
+)
+P1B_BASELINE_COMMIT = "01da326e4195b47e9b769b025bdf962936f10419"
+P1B_IMPORT_HASHES = {
+    "independent_reviews/review_job.v0.yaml": "511e203a464b7e57fdf2661abc7254f168c0da59c1631f618a861f3cf8f9192a",
+    "independent_reviews/review_job_blindness_amendment.v0.yaml": "fa10da85ac4b380d426fc3ac896d56e832b2ff877001ff0d6767793f1f1861c1",
+    "independent_reviews/review_session_invalidations.v0.yaml": "5cb3c049ef8c99a4f89400a1c76b4383ae407f78d0d918603fff04d187583fcb",
+    "independent_reviews/adjudication_assignment.v0.yaml": "1cf4c1987af6a803baa741877bb51462e789b46341c9550040e8936e13a9a98b",
+    "independent_reviews/primary/records.jsonl": "fdaaff1355e3365fa51ecc26cac8d342f2c736b69cd2022ecf921ce339778a51",
+    "independent_reviews/primary/report.md": "149bab88fdfca4203781ddb8aaee76897364bdca9ccd72ce2789f32ad3b7fe5c",
+    "independent_reviews/primary/run_manifest.yaml": "801916ecf79b01023c2eec8b2d5e969565be6afe3f7c29e77dd61a7e5660a4c9",
+    "independent_reviews/secondary/records.jsonl": "61586c7fce34baa59db1c179eeeae7214b6afebb3daa2282221e68e91f7e6b61",
+    "independent_reviews/secondary/report.md": "38ce8105b9e747eb0f26ceca15e8173da56143e99078a485414dcebd64f7a76c",
+    "independent_reviews/secondary/run_manifest.yaml": "07283675742cf0fd9900d6a5edc7b664071e4f4b603cb0a54786bd6ddf107bcb",
+    "independent_reviews/adjudication/records.jsonl": "47b88fd579f7fce70ed20f4a9ad43000f013019b5cbcf7e1338c04137e7c973c",
+    "independent_reviews/adjudication/report.md": "940742b85805a8abe6cf495cb34a2095081507e863bd4bc8abe165b91084959a",
+    "independent_reviews/adjudication/run_manifest.yaml": "c52eb752b9fd0ab38732e2504142c895da3e1c20b830d20f7650e1f8fb543d0b",
+    "independent_reviews/coordinator_review_checkpoint_closeout.v0.md": "5d68c5e2510e633bd25a6c076352727cdcd169bd2c1f452ae0acbd80454c72e2",
+    "coordinator_expert_review.v1.md": "6f1485cbbef84c52c546f171e7b1a49c5b87e2163d51a35e4a359e5b804bf6aa",
+}
 
 ALLOWED_EXACT_PATHS = frozenset(
     {
@@ -264,6 +331,8 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
 def unexpected_write_paths(paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
+        if path.is_relative_to(P1B_TASK_ROOT):
+            continue
         if path.is_relative_to(TASK_ROOT):
             if path not in TASK_MANAGED_PATHS:
                 unexpected.append(path.as_posix())
@@ -922,12 +991,22 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
     if not isinstance(owner, dict):
         add_error(errors, "E_OWNER_POLICY", "root missing")
         return
-    expected = {
-        "task_id": TASK_ID,
-        "baseline_commit": BASELINE_COMMIT,
-        "current_task_root": TASK_ROOT.as_posix(),
-        "current_checker": "ci/checkers/check_gate1_v1_1_current.py",
-    }
+    p1b_owner = owner.get("task_id") == P1B_TASK_ID
+    expected = (
+        {
+            "task_id": P1B_TASK_ID,
+            "baseline_commit": P1B_BASELINE_COMMIT,
+            "current_task_root": P1B_TASK_ROOT.as_posix(),
+            "current_checker": "ci/checkers/check_gate1_v1_1_current.py",
+        }
+        if p1b_owner
+        else {
+            "task_id": TASK_ID,
+            "baseline_commit": BASELINE_COMMIT,
+            "current_task_root": TASK_ROOT.as_posix(),
+            "current_checker": "ci/checkers/check_gate1_v1_1_current.py",
+        }
+    )
     if any(owner.get(key) != value for key, value in expected.items()):
         add_error(errors, "E_OWNER_POLICY", "task binding")
     protected_inputs = owner.get("protected_inputs")
@@ -941,6 +1020,22 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
         protected_inputs.get(key) != value for key, value in expected_inputs.items()
     ):
         add_error(errors, "E_OWNER_POLICY", "protected inputs")
+    if p1b_owner:
+        p1a_protection = owner.get("p1a_as_built_protection")
+        closeout = owner.get("p1b_closeout")
+        if (
+            not isinstance(p1a_protection, dict)
+            or p1a_protection.get("p1a_current_checker_as_built_sha256")
+            != P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
+            or p1a_protection.get("p1a_generated_outputs_must_remain_byte_identical")
+            is not True
+            or not isinstance(closeout, dict)
+            or closeout.get("result_state") != "STOPPED_COMPONENT_SUPPLY_GAP"
+            or closeout.get("counted_positive_parent_count") != 29
+            or closeout.get("active_component_count") != 0
+            or closeout.get("p2_allowed_by_p1b") is not False
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p1b closeout binding")
     authority = owner.get("current_ledger_authority")
     if (
         not isinstance(authority, dict)
@@ -999,8 +1094,7 @@ def validate_compatibility_receipt(root: Path, errors: list[dict[str, str]]) -> 
     if (
         not isinstance(current, dict)
         or current.get("path") != "ci/checkers/check_gate1_v1_1_current.py"
-        or current.get("sha256")
-        != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
+        or current.get("sha256") != P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
     ):
         add_error(errors, "E_COMPAT_RECEIPT", "new checker")
     v1_repair = receipt.get("v1_current_checker_repair")
@@ -1017,8 +1111,7 @@ def validate_compatibility_receipt(root: Path, errors: list[dict[str, str]]) -> 
         not isinstance(v1_repair, dict)
         or v1_repair.get("path") != "ci/checkers/check_gate1_v1_1_current.py"
         or v1_repair.get("sha256_before") != CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256
-        or v1_repair.get("sha256_after")
-        != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
+        or v1_repair.get("sha256_after") != P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
         or v1_repair.get("negative_injection_proof") != expected_v1_repair_proof
     ):
         add_error(errors, "E_COMPAT_RECEIPT", "v1 current checker repair")
@@ -1082,6 +1175,310 @@ def validate_report(root: Path, errors: list[dict[str, str]]) -> None:
         add_error(errors, "E_REPORT_POLICY", "obsolete process metric retained")
 
 
+def p1b_document(
+    root: Path, relative_path: Path, key: str, errors: list[dict[str, str]]
+) -> dict[str, Any] | None:
+    try:
+        value = load_yaml(root / relative_path).get(key)
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
+        add_error(errors, "E_P1B_SCHEMA", f"{relative_path}:{exc}")
+        return None
+    if not isinstance(value, dict):
+        add_error(errors, "E_P1B_SCHEMA", relative_path.as_posix())
+        return None
+    return value
+
+
+def validate_p1b(
+    root: Path, source: dict[str, Any] | None, errors: list[dict[str, str]]
+) -> None:
+    """Independently verify P1B's externally signed inputs and mechanical closeout."""
+
+    required = (
+        P1B_MATERIALIZER_PATH,
+        P1B_IMPORT_MANIFEST_PATH,
+        P1B_CONTRACT_PATH,
+        P1B_NORMALIZED_PATH,
+        P1B_CONTENT_PATH,
+        P1B_CONTENT_GAPS_PATH,
+        P1B_ROUTE_GOLD_PATH,
+        P1B_ROUTE_FREEZE_PATH,
+        P1B_ROUTE_COMPARISON_PATH,
+        P1B_COMPONENT_PATH,
+        P1B_ACTIVE_COMPONENTS_PATH,
+        P1B_ACTIVE_EDGES_PATH,
+        P1B_COMPONENT_GAPS_PATH,
+        P1B_TEST_INPUTS_PATH,
+        P1B_COMPAT_RECEIPT_PATH,
+        P1B_RESULT_PATH,
+    )
+    for relative_path in required:
+        if not (root / relative_path).exists():
+            add_error(errors, "E_P1B_REQUIRED_FILE", relative_path.as_posix())
+    if any(error["code"] == "E_P1B_REQUIRED_FILE" for error in errors):
+        return
+
+    for import_path, expected_hash in P1B_IMPORT_HASHES.items():
+        path = root / P1B_TASK_ROOT / "imports" / import_path
+        if not path.exists() or sha256_file(path) != expected_hash:
+            add_error(errors, "E_P1B_IMPORT_HASH", import_path)
+
+    import_manifest = p1b_document(
+        root, P1B_IMPORT_MANIFEST_PATH, "signed_review_import_manifest", errors
+    )
+    contract = p1b_document(
+        root, P1B_CONTRACT_PATH, "p1b_signed_review_closeout_contract", errors
+    )
+    content_gaps = p1b_document(
+        root, P1B_CONTENT_GAPS_PATH, "reference_120_content_product_gap_matrix", errors
+    )
+    route_freeze = p1b_document(
+        root, P1B_ROUTE_FREEZE_PATH, "route_60_gold_freeze_manifest", errors
+    )
+    component_gaps = p1b_document(
+        root, P1B_COMPONENT_GAPS_PATH, "component_supply_gap_matrix", errors
+    )
+    test_inputs = p1b_document(
+        root, P1B_TEST_INPUTS_PATH, "gate1_development_test_input_manifest", errors
+    )
+    compatibility = p1b_document(
+        root, P1B_COMPAT_RECEIPT_PATH, "p1b_historical_identity_repair_receipt", errors
+    )
+    result = p1b_document(
+        root, P1B_RESULT_PATH, "p1b_signed_review_closeout_result", errors
+    )
+    documents = (
+        (import_manifest, "manifest_digest"),
+        (contract, "contract_digest"),
+        (content_gaps, "matrix_digest"),
+        (route_freeze, "freeze_manifest_digest"),
+        (component_gaps, "matrix_digest"),
+        (test_inputs, "manifest_digest"),
+        (compatibility, "receipt_digest"),
+        (result, "result_digest"),
+    )
+    for document, digest_key in documents:
+        if document is not None and document.get(digest_key) != object_digest(
+            document, digest_key
+        ):
+            add_error(errors, "E_P1B_DOCUMENT_DIGEST", digest_key)
+    if any(value is None for value, _ in documents):
+        return
+    if any(
+        value is None
+        for value in (
+            import_manifest,
+            contract,
+            content_gaps,
+            route_freeze,
+            component_gaps,
+            test_inputs,
+            compatibility,
+            result,
+        )
+    ):
+        return
+
+    entries = import_manifest.get("entries")
+    if (
+        import_manifest.get("task_id") != P1B_TASK_ID
+        or import_manifest.get("external_review_count") != len(P1B_IMPORT_HASHES)
+        or not isinstance(entries, list)
+        or {
+            entry.get("import_path"): entry.get("sha256")
+            for entry in entries
+            if isinstance(entry, dict)
+        }
+        != {f"imports/{path}": digest for path, digest in P1B_IMPORT_HASHES.items()}
+    ):
+        add_error(errors, "E_P1B_IMPORT_MANIFEST", "signed input set")
+    if (
+        contract.get("task_id") != P1B_TASK_ID
+        or contract.get("fourth_review_forbidden") is not True
+        or contract.get("input_model") != "THREE_SIGNED_REVIEW_STRUCTURES_ONLY"
+        or recursively_find_true(contract.get("readiness"), READY_KEYS)
+    ):
+        add_error(errors, "E_P1B_CONTRACT", "closeout boundary")
+
+    try:
+        normalized_rows = read_jsonl(root / P1B_NORMALIZED_PATH)
+        content_rows = read_jsonl(root / P1B_CONTENT_PATH)
+        gold_rows = read_jsonl(root / P1B_ROUTE_GOLD_PATH)
+        comparison_rows = read_jsonl(root / P1B_ROUTE_COMPARISON_PATH)
+        component_rows = read_jsonl(root / P1B_COMPONENT_PATH)
+        active_components = read_jsonl(root / P1B_ACTIVE_COMPONENTS_PATH)
+        active_edges = read_jsonl(root / P1B_ACTIVE_EDGES_PATH)
+    except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        add_error(errors, "E_P1B_PARSE", str(exc))
+        return
+    normalized = [row for row, _ in normalized_rows]
+    content = [row for row, _ in content_rows]
+    gold = [row for row, _ in gold_rows]
+    comparison = [row for row, _ in comparison_rows]
+    components = [row for row, _ in component_rows]
+    if (
+        len(normalized) != 503
+        or len({row.get("normalized_record_id") for row in normalized}) != 503
+        or any(
+            row.get("source_generation_lane_or_pair_ref") is not None
+            or row.get("optional_lane_applicability") is not None
+            for row in normalized
+        )
+    ):
+        add_error(
+            errors, "E_P1B_REVIEW_NORMALIZATION", "count, identity, or lane evidence"
+        )
+    if source is not None:
+        content_ids = {row.get("asset_id") for row in content}
+        counted_content = [
+            row
+            for row in content
+            if row.get("final_disposition") == "COUNT_TOWARD_FINAL_300_POSITIVE"
+        ]
+        if (
+            len(content) != 120
+            or content_ids != set(source["clean_by_id"])
+            or any(
+                row.get("source_record_sha256")
+                != source["clean_by_id"].get(row.get("asset_id"))
+                for row in content
+            )
+            or len(counted_content) != 29
+        ):
+            add_error(errors, "E_P1B_CONTENT_CLOSEOUT", "120 disposition derivation")
+        actual_rows = {
+            row.get("case_id"): row
+            for row, _ in read_jsonl(root / ROUTE_ACTUAL_PATH)
+            if isinstance(row.get("case_id"), str)
+        }
+        if (
+            len(gold) != 60
+            or len({row.get("case_id") for row in gold}) != 60
+            or len(comparison) != 60
+            or len({row.get("case_id") for row in comparison}) != 60
+            or set(row.get("case_id") for row in gold)
+            != set(source["route_input_by_id"])
+            or any(
+                row.get("current_actual_record_sha256")
+                != source["route_actual_by_id"].get(row.get("case_id"))
+                for row in comparison
+            )
+            or any(
+                not isinstance(actual_rows.get(row.get("case_id")), dict)
+                or row.get("current_primary_action")
+                != actual_rows[row["case_id"]]
+                .get("actual_decision", {})
+                .get("actual_primary_action")
+                or row.get("current_primary_reason_code")
+                != actual_rows[row["case_id"]]
+                .get("actual_decision", {})
+                .get("actual_primary_reason_code")
+                or row.get("primary_action_matches_gold")
+                != (row.get("gold_primary_action") == row.get("current_primary_action"))
+                or row.get("primary_reason_matches_gold")
+                != (
+                    row.get("gold_reason_code")
+                    == row.get("current_primary_reason_code")
+                )
+                for row in comparison
+            )
+        ):
+            add_error(errors, "E_P1B_ROUTE_COMPARISON", "60 signed gold answers")
+        if (
+            len(components) != 86
+            or {row.get("component_id") for row in components}
+            != set(source["component_by_id"])
+            or any(
+                row.get("source_record_sha256")
+                != source["component_by_id"].get(row.get("component_id"))
+                for row in components
+            )
+            or any(
+                row.get("final_disposition") == "KEEP_ACTIVE_FOR_GATE1_DEVELOPMENT_TEST"
+                for row in components
+            )
+            or active_components
+            or active_edges
+        ):
+            add_error(errors, "E_P1B_COMPONENT_CLOSEOUT", "86 candidate disposition")
+    golden_text = (root / P1B_ROUTE_GOLD_PATH).read_text(encoding="utf-8")
+    freeze_text = (root / P1B_ROUTE_FREEZE_PATH).read_text(encoding="utf-8")
+    if (
+        ROUTE_ACTUAL_PATH.as_posix() in golden_text
+        or ROUTE_ACTUAL_SHA256 in golden_text
+        or ROUTE_ACTUAL_PATH.as_posix() in freeze_text
+        or ROUTE_ACTUAL_SHA256 in freeze_text
+        or route_freeze.get("gold_answers_sha256")
+        != sha256_file(root / P1B_ROUTE_GOLD_PATH)
+    ):
+        add_error(
+            errors, "E_P1B_ROUTE_BLINDNESS", "actual implementation leaked into gold"
+        )
+    if (
+        content_gaps.get("counted_positive_parent_count") != 29
+        or content_gaps.get("legacy_inventory_count") != 120
+        or not isinstance(content_gaps.get("entries"), list)
+        or len(content_gaps["entries"]) != 20
+        or component_gaps.get("active_component_count") != 0
+        or component_gaps.get("active_edge_count") != 0
+        or component_gaps.get("complete_profile_count") != 0
+        or component_gaps.get("incomplete_profile_count") != 20
+        or not isinstance(component_gaps.get("entries"), list)
+        or len(component_gaps["entries"]) != 20
+    ):
+        add_error(errors, "E_P1B_GAP_MATRIX", "content or component gap")
+    if (
+        test_inputs.get("component_count") != 0
+        or test_inputs.get("edge_count") != 0
+        or test_inputs.get("p2_input_eligible") is not False
+        or recursively_find_true(test_inputs, READY_KEYS)
+    ):
+        add_error(errors, "E_P1B_TEST_INPUTS", "supply must remain unavailable")
+    current_successor = compatibility.get("current_gate1_checker_successor")
+    p1a_protection = compatibility.get("p1a_materializer_reference_safe_change")
+    if (
+        compatibility.get("modified_live_checker_count") != 1
+        or compatibility.get("historical_assets_rewritten") is not False
+        or not isinstance(current_successor, dict)
+        or current_successor.get("sha256_after")
+        != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
+        or not isinstance(p1a_protection, dict)
+        or p1a_protection.get("historical_current_checker_sha256")
+        != P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
+        or p1a_protection.get("p1a_generated_output_bytes_changed") is not False
+    ):
+        add_error(errors, "E_P1B_COMPATIBILITY", "historical identity protection")
+    impact = result.get("core_number_impact")
+    if (
+        result.get("task_id") != P1B_TASK_ID
+        or result.get("result_state") != "STOPPED_COMPONENT_SUPPLY_GAP"
+        or result.get("p2_allowed") is not False
+        or not isinstance(impact, dict)
+        or impact.get("target_total") != 300
+        or impact.get("legacy_reference_inventory") != 120
+        or impact.get("counted_positive_parent_count") != 29
+        or impact.get("component_candidate_inventory") != 86
+        or impact.get("active_component_count") != 0
+        or result.get("component_supply_incomplete_profile_count") != 20
+        or recursively_find_true(result.get("readiness"), READY_KEYS)
+    ):
+        add_error(errors, "E_P1B_RESULT", "honest stop state")
+
+    if root == ROOT:
+        materializer = subprocess.run(
+            [sys.executable, str(root / P1B_MATERIALIZER_PATH), "--check"],
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if materializer.returncode != 0:
+            add_error(
+                errors, "E_P1B_MATERIALIZER", materializer.stderr or materializer.stdout
+            )
+
+
 def validate(root: Path) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
     required = (
@@ -1118,6 +1515,8 @@ def validate(root: Path) -> list[dict[str, str]]:
     validate_owner(root, errors)
     validate_compatibility_receipt(root, errors)
     validate_repair_shape(root, errors)
+    if (root / P1B_TASK_ROOT).exists():
+        validate_p1b(root, source, errors)
     return errors
 
 
@@ -1129,6 +1528,7 @@ def copy_fixture(root: Path, target: Path) -> None:
         ROUTE_INPUT_PATH,
         ROUTE_ACTUAL_PATH,
         COMPONENT_SOURCE_PATH,
+        PROFILE_PATH,
         B24_CHECKER_PATH,
         SUCCESSOR_CHECKER_PATH,
         Path("ci/checkers/check_gate1_v1_1_current.py"),
@@ -1138,6 +1538,8 @@ def copy_fixture(root: Path, target: Path) -> None:
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(root / relative_path, destination)
     shutil.copytree(root / TASK_ROOT, target / TASK_ROOT)
+    if (root / P1B_TASK_ROOT).exists():
+        shutil.copytree(root / P1B_TASK_ROOT, target / P1B_TASK_ROOT)
 
 
 def mutate_yaml(path: Path, mutate: Callable[[dict[str, Any]], None]) -> None:
@@ -1299,6 +1701,23 @@ def selftest(root: Path) -> int:
         failures.append(
             {"case": "unauthorized_path", "expected": "E_WRITE_SURFACE", "actual": []}
         )
+    if (root / P1B_MATERIALIZER_PATH).exists():
+        p1b_selftest = subprocess.run(
+            [sys.executable, str(root / P1B_MATERIALIZER_PATH), "--selftest"],
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if p1b_selftest.returncode != 0:
+            failures.append(
+                {
+                    "case": "p1b_negative_tamper_suite",
+                    "expected": "exit 0",
+                    "actual": p1b_selftest.stderr or p1b_selftest.stdout,
+                }
+            )
     if failures:
         print(
             json.dumps(
@@ -1317,6 +1736,9 @@ def selftest(root: Path) -> int:
                 "route_actual_leakage_rejected": True,
                 "same_reviewer_identity_rejected": True,
                 "missing_scoring_contract_rejected": True,
+                "p1b_negative_tamper_suite_passed": (
+                    root / P1B_MATERIALIZER_PATH
+                ).exists(),
             },
             ensure_ascii=False,
         )
@@ -1338,7 +1760,14 @@ def main() -> int:
         json.dumps(
             {
                 "status": "PASS",
-                "task_id": TASK_ID,
+                "task_id": (
+                    P1B_TASK_ID
+                    if load_yaml(ROOT / CURRENT_OWNER_PATH)
+                    .get("current_gate1_owner", {})
+                    .get("task_id")
+                    == P1B_TASK_ID
+                    else TASK_ID
+                ),
                 "review_decisions_created": False,
                 "shared_horizon_modified": False,
             },

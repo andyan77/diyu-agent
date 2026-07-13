@@ -104,6 +104,9 @@ SUCCESSOR_CHECKER_BEFORE_SHA256 = (
 CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256 = (
     "679343b9187ad12c3af077ab4041a3c706bcef56b915c6ef0234af54319ee716"
 )
+P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256 = (
+    "29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806"
+)
 
 
 def canonical_json(value: Any) -> str:
@@ -701,7 +704,10 @@ def compatibility_receipt(source: dict[str, Any]) -> dict[str, Any]:
             ],
             "new_current_checker": {
                 "path": CURRENT_GATE1_CHECKER_PATH.as_posix(),
-                "sha256": sha256_file(paths["current_gate1_checker"]),
+                # This receipt documents P1A's as-built checker, rather than a
+                # later current-owner successor. Keeping the historical identity
+                # fixed lets P1A remain deterministically rebuildable.
+                "sha256": P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256,
                 "negative_injection_proof": {
                     "command": "python3 ci/checkers/check_gate1_v1_1_current.py --selftest",
                     "must_reject": [
@@ -717,7 +723,7 @@ def compatibility_receipt(source: dict[str, Any]) -> dict[str, Any]:
             "v1_current_checker_repair": {
                 "path": CURRENT_GATE1_CHECKER_PATH.as_posix(),
                 "sha256_before": CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256,
-                "sha256_after": sha256_file(paths["current_gate1_checker"]),
+                "sha256_after": P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256,
                 "negative_injection_proof": {
                     "command": "python3 ci/checkers/check_gate1_v1_1_current.py --selftest",
                     "must_reject": [

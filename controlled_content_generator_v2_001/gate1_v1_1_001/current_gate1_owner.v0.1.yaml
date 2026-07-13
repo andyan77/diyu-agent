@@ -1,16 +1,27 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P1A_CURRENT_OWNER
-  task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
-  baseline_commit: 473a8664bdab37246db1b75785f765e62c80ed86
-  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001
+  owner_id: GATE1_V11_P1B_CURRENT_OWNER
+  task_id: GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001
+  baseline_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
+  p1a_as_built_protection:
+    p1a_task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
+    p1a_materializer_path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/run_p1a_standard_baseline_review_packet_freezer.py
+    p1a_current_checker_as_built_sha256: 29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806
+    p1a_generated_outputs_must_remain_byte_identical: true
   protected_inputs:
-    standard_source: /mnt/c/Users/Administrator/Documents/笛语agent/planning/笛语内容编排生成器与人审评价标准体系_v1.1.md
+    standard_source: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
     clean_120_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
     route_input_source: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/route_inputs.v0.1.jsonl
     route_actual_source: controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/route/route_regression_actuals.v0.1.jsonl
     component_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+    profile_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+  p1b_closeout:
+    result_state: STOPPED_COMPONENT_SUPPLY_GAP
+    counted_positive_parent_count: 29
+    active_component_count: 0
+    p2_allowed_by_p1b: false
   current_ledger_authority:
     checker_path: controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py
     shared_horizon_modified: false
@@ -19,3 +30,5 @@ current_gate1_owner:
     changed: false
     generation_allowed: false
     generator_qualified: false
+    runtime_ingest_ready: false
+    production_ready: false

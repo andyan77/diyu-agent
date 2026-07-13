@@ -1,0 +1,35 @@
+p1b_signed_review_closeout_contract:
+  schema_version: v0.1
+  task_id: GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001
+  p1a_baseline_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  freezer_identity_id: P1B_DETERMINISTIC_SIGNED_REVIEW_FREEZER_V1
+  input_model: THREE_SIGNED_REVIEW_STRUCTURES_ONLY
+  import_mode: BYTE_IDENTICAL_READ_ONLY_IMPORT
+  fourth_review_forbidden: true
+  content_rules:
+    approved_primary_plus_no_secondary_block: COUNT_TOWARD_FINAL_300_POSITIVE
+    merge: MERGE_NOT_SEPARATELY_COUNTED
+    minor_revision_or_secondary_rework: HOLD_FOR_REPAIR
+    veto: REJECT
+  route_rules:
+    gold_before_actual_comparison: true
+    actual_may_not_define_or_modify_gold: true
+  component_rules:
+    historical_edges_remain_non_active: true
+    secondary_not_approved_lifecycle_blocks_activation: true
+    control_rules_not_content_components: true
+  creative_channel_boundary:
+    source_lane_or_pair_requires_source_evidence: true
+    historical_b_channel_path_is_not_lane_evidence: true
+    optional_lane_applicability_is_nonblocking: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+  contract_digest: 823453e021a8499121d26e47132aa7b0c0b57274d938cdbf232b1286956f9fd9

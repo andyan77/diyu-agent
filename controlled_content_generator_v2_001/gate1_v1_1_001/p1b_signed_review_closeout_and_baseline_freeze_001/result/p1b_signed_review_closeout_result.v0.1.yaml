@@ -1,0 +1,32 @@
+p1b_signed_review_closeout_result:
+  schema_version: v0.1
+  task_id: GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001
+  result_state: STOPPED_COMPONENT_SUPPLY_GAP
+  p1b_evidence_closeout_complete: true
+  p2_allowed: false
+  core_number_impact:
+    target_total: 300
+    legacy_reference_inventory: 120
+    counted_positive_parent_count: 29
+    component_candidate_inventory: 86
+    active_component_count: 0
+    route_case_count: 60
+    route_current_comparison_count: 60
+  content_closeout_complete: true
+  route_gold_frozen_before_actual_comparison: true
+  component_supply_complete_profile_count: 0
+  component_supply_incomplete_profile_count: 20
+  canonical_composition_plan_count: 0
+  runtime_generation_eligible_profile_count: 0
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+  result_digest: c6bdedde42a1274a9a3df0ca5a20e374facd60e07f125cceed831607b29c9f84
