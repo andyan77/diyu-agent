@@ -1,0 +1,93 @@
+{
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_COMPONENT_CONSUMPTION_AND_CLAIM_CLOSURE_DEV_GATE_001",
+  "verdict": "STOPPED_BEFORE_HIDDEN",
+  "task_status": "STOPPED_BEFORE_CANDIDATE_MATERIALIZATION",
+  "dev_gate_pass": false,
+  "dev_gate_pass_candidate": false,
+  "blocking_items": [
+    "AUTHOR_RESPONSE_REQUEST_ID_MISMATCH"
+  ],
+  "phase_0": {
+    "pr_11_merge_commit_sha": "76b057d811cbafecf5b2aaa0b5e0fda03ae4033d",
+    "expected_parents_pass": true,
+    "tree_identity_pass": true,
+    "master_ci_green": true,
+    "branch_protection_unchanged": true
+  },
+  "component_consumption": {
+    "registry_total_count": 86,
+    "accepted_new_component_loaded_count": 22,
+    "merged_alias_resolved_count": 1,
+    "needs_repair_rejected_count": 1,
+    "component_conformance_positive_pass_count": 22,
+    "component_ineligible_negative_pass_count": 22,
+    "component_binding_removal_fail_closed_count": 22,
+    "invalid_component_selection_count": 0,
+    "forced_component_selection_count": 0
+  },
+  "orch": {
+    "plan_count": 40,
+    "identical_fact_set_pair_count": 20,
+    "at_least_four_real_axes_pair_count": 20,
+    "generator_component_selection_count": 0,
+    "generator_plan_write_count": 0
+  },
+  "authoring": {
+    "author_invocation_count": 40,
+    "persisted_raw_response_count": 0,
+    "candidate_count": 0,
+    "protocol_failure_count": 1,
+    "reroll_count": 0,
+    "replacement_count": 0
+  },
+  "claim_closure": {
+    "execution_status": "NOT_RUN_DUE_TO_AUTHOR_PROTOCOL_FAILURE",
+    "reviewed_surface_unit_count": 0,
+    "zero_counts_are_not_pass_claims": true,
+    "machine_final_semantic_claim": false,
+    "machine_final_quality_claim": false
+  },
+  "development_gate": {
+    "material_pack_count": 20,
+    "assignment_count": 40,
+    "candidate_count": 0,
+    "first_acceptance_total": 0,
+    "first_acceptance_A": 0,
+    "first_acceptance_B": 0,
+    "fully_accepted_pair_count": 0,
+    "semantically_independent_pair_count": 0,
+    "quality_evaluation_completed": false,
+    "dev_gate_pass": false
+  },
+  "boundaries": {
+    "accepted_baseline_count": 120,
+    "baseline_increment_count": 0,
+    "hidden_count": 0,
+    "generator_qualified": false,
+    "runtime_provider_adapter_qualified": false,
+    "runtime_generation_eligible_profile_count": 0,
+    "runtime_ingest_ready": false,
+    "published_content_count": 0,
+    "production_candidate_count": 0,
+    "generation_600_allowed": false,
+    "expand_3600_allowed": false,
+    "readiness_all_false": true,
+    "external_provider_API_call_count": 0,
+    "KE_truth_change_count": 0,
+    "RAG_change_count": 0,
+    "DIFY_change_count": 0,
+    "Serving_change_count": 0
+  },
+  "ledger": {
+    "previous_horizon": 32,
+    "new_horizon": 33,
+    "route_migration_33_appended": true,
+    "route_migration_34_allowed": false
+  },
+  "recommended_next_task": {
+    "exactly_one_task_id": "CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_003",
+    "merge_current_PR_as_phase_0": false
+  },
+  "result_digest": "4b72f2d5e5fd6ee2d7077a0b506e6ab1b4215ba62ad4a51fe1ea1caef3212265"
+}
