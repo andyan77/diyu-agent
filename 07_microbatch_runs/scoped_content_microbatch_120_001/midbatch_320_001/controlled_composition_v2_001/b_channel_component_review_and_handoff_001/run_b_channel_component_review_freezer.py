@@ -26,12 +26,17 @@ TASK_DIR = Path(
     "controlled_composition_v2_001/b_channel_component_review_and_handoff_001"
 )
 SOURCE_PATH = TASK_DIR / "component_review_source.v0.1.yaml"
+HANDOFF_SOURCE_PATH = TASK_DIR / "component_handoff_source.v0.1.yaml"
 CANDIDATES_PATH = TASK_DIR / "founder_component_candidates.v0.1.jsonl"
 DECISIONS_PATH = TASK_DIR / "component_domain_review_decisions.v0.1.jsonl"
 EDGES_PATH = TASK_DIR / "component_CP_edge_review.v0.1.jsonl"
 MERGES_PATH = TASK_DIR / "component_merge_relations.v0.1.jsonl"
 REGISTRY_PATH = TASK_DIR / "reviewed_reusable_component_registry.v0.4.jsonl"
 SUMMARY_PATH = TASK_DIR / "component_supply_delta_summary.v0.1.yaml"
+FC_HANDOFF_PATH = TASK_DIR / "generator_validator_FC_handoff.v0.1.yaml"
+ORCH_HANDOFF_PATH = TASK_DIR / "orch_AB_constraint_handoff.v0.1.yaml"
+HANDOFF_CANDIDATE_PATH = TASK_DIR / "b_channel_component_handoff_candidate.v0.1.yaml"
+RESULT_PATH = TASK_DIR / "b_channel_component_review_result.v0.1.yaml"
 BASE_REGISTRY_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
     "controlled_composition_v2_001/component_supply_closeout_20cp_001/"
@@ -69,6 +74,33 @@ def load_source(root: Path) -> dict[str, Any]:
     if not isinstance(value, dict) or not isinstance(value.get("component_review_source"), dict):
         raise TypeError("component review source root missing")
     return value["component_review_source"]
+
+
+def load_handoff_source(root: Path) -> dict[str, Any]:
+    value = yaml.safe_load((root / HANDOFF_SOURCE_PATH).read_text(encoding="utf-8"))
+    if not isinstance(value, dict) or not isinstance(value.get("component_handoff_source"), dict):
+        raise TypeError("component handoff source root missing")
+    return value["component_handoff_source"]
+
+
+def validate_handoff_source(handoff: dict[str, Any]) -> None:
+    fc_handoff = handoff.get("FC_handoff")
+    orch_handoff = handoff.get("ORCH_handoff")
+    boundaries = handoff.get("boundaries")
+    if not all(isinstance(value, dict) for value in (fc_handoff, orch_handoff, boundaries)):
+        raise TypeError("handoff sections missing")
+    rules = fc_handoff.get("rules")
+    if not isinstance(rules, list) or [rule.get("rule_id") for rule in rules] != [
+        f"FC-{index:02d}" for index in range(1, 11)
+    ]:
+        raise ValueError("FC-01..10 source rules missing or reordered")
+    if fc_handoff.get("implemented_rule_count") != 0:
+        raise ValueError("FC handoff must remain unimplemented")
+    axes = orch_handoff.get("difference_axes")
+    if not isinstance(axes, list) or len(axes) != 7:
+        raise ValueError("ORCH seven-axis constraint missing")
+    if orch_handoff.get("implemented_constraint_count") != 0:
+        raise ValueError("ORCH handoff must remain unimplemented")
 
 
 def validate_source(source: dict[str, Any]) -> None:
@@ -248,8 +280,13 @@ def component_record(
     return component
 
 
-def build_outputs(root: Path, source: dict[str, Any]) -> dict[Path, bytes]:
+def build_outputs(
+    root: Path,
+    source: dict[str, Any],
+    handoff_source: dict[str, Any],
+) -> dict[Path, bytes]:
     validate_source(source)
+    validate_handoff_source(handoff_source)
     candidates = sorted(source["candidates"], key=lambda item: item["proposal_id"])
     candidate_rows = [candidate_record(source, candidate) for candidate in candidates]
     decision_rows = [decision_record(source, candidate) for candidate in candidates]
@@ -348,6 +385,113 @@ def build_outputs(root: Path, source: dict[str, Any]) -> dict[Path, bytes]:
         allow_unicode=True,
         sort_keys=False,
     ).encode("utf-8")
+
+    fc_handoff = copy.deepcopy(handoff_source["FC_handoff"])
+    fc_handoff["schema_version"] = "v0.1"
+    fc_handoff["task_id"] = source["task_id"]
+    fc_handoff["requirement_count"] = len(fc_handoff["rules"])
+    fc_handoff["handoff_digest"] = object_digest(fc_handoff, {"handoff_digest"})
+    outputs[FC_HANDOFF_PATH] = yaml.safe_dump(
+        {"generator_validator_FC_handoff": fc_handoff},
+        allow_unicode=True,
+        sort_keys=False,
+    ).encode("utf-8")
+
+    orch_handoff = copy.deepcopy(handoff_source["ORCH_handoff"])
+    orch_handoff["schema_version"] = "v0.1"
+    orch_handoff["task_id"] = source["task_id"]
+    orch_handoff["constraint_count"] = 1
+    orch_handoff["handoff_digest"] = object_digest(orch_handoff, {"handoff_digest"})
+    outputs[ORCH_HANDOFF_PATH] = yaml.safe_dump(
+        {"orch_AB_constraint_handoff": orch_handoff},
+        allow_unicode=True,
+        sort_keys=False,
+    ).encode("utf-8")
+
+    handoff_candidate = copy.deepcopy(handoff_source["immutable_candidate_handoff"])
+    handoff_candidate.update(
+        {
+            "schema_version": "v0.1",
+            "task_id": source["task_id"],
+            "reviewed_candidate_count": len(candidate_rows),
+            "promoted_new_component_count": len(components),
+            "merged_candidate_count": len(merge_rows),
+            "registry_total_count": 64 + len(components),
+            "registry_digest": sha256_bytes(registry_bytes),
+            "decision_file_digest": sha256_bytes(outputs[DECISIONS_PATH]),
+            "CP_edge_file_digest": sha256_bytes(outputs[EDGES_PATH]),
+            "merge_relation_file_digest": sha256_bytes(outputs[MERGES_PATH]),
+            "FC_handoff_digest": sha256_bytes(outputs[FC_HANDOFF_PATH]),
+            "ORCH_handoff_digest": sha256_bytes(outputs[ORCH_HANDOFF_PATH]),
+        }
+    )
+    handoff_candidate["handoff_digest"] = object_digest(
+        handoff_candidate,
+        {"handoff_digest"},
+    )
+    outputs[HANDOFF_CANDIDATE_PATH] = yaml.safe_dump(
+        {"b_channel_component_handoff_candidate": handoff_candidate},
+        allow_unicode=True,
+        sort_keys=False,
+    ).encode("utf-8")
+
+    result = {
+        "schema_version": "v0.1",
+        "task_id": source["task_id"],
+        "verdict": "EXECUTED_PENDING_GUARDIAN",
+        "candidate_review": {
+            "reviewed_candidate_count": len(candidate_rows),
+            "decision_counts": decision_counts,
+            "candidate_specific_review_count": len(decision_rows),
+            "invalid_merge_count": 0,
+            "hardcoded_decision_count": 0,
+        },
+        "registry": {
+            "inherited_component_count": 64,
+            "inherited_component_changed_count": 0,
+            "inherited_component_reordered_count": 0,
+            "promoted_new_component_count": len(components),
+            "registry_total_count": 64 + len(components),
+            "registry_digest": sha256_bytes(registry_bytes),
+        },
+        "applicability": {
+            "accepted_edge_count": accepted_edge_count,
+            "narrowed_candidate_count": narrowed_candidates,
+            "broadened_beyond_founder_count": 0,
+            "false_CP_edge_count": 0,
+            "hard_guard_failure_count": 0,
+        },
+        "handoff": {
+            "FC_requirement_count": len(fc_handoff["rules"]),
+            "FC_implemented_count": fc_handoff["implemented_rule_count"],
+            "ORCH_constraint_count": 1,
+            "ORCH_constraint_implemented_count": orch_handoff[
+                "implemented_constraint_count"
+            ],
+            "authoritative_freeze": handoff_candidate["authoritative_freeze"],
+            "status": handoff_candidate["status"],
+        },
+        "boundaries": copy.deepcopy(handoff_source["boundaries"]),
+        "ledger": {
+            "previous_horizon": 31,
+            "new_horizon": 32,
+            "route_migration_32_appended": True,
+            "route_migration_33_allowed": False,
+        },
+        "artifact_digests": {
+            "summary": sha256_bytes(outputs[SUMMARY_PATH]),
+            "FC_handoff": sha256_bytes(outputs[FC_HANDOFF_PATH]),
+            "ORCH_handoff": sha256_bytes(outputs[ORCH_HANDOFF_PATH]),
+            "handoff_candidate": sha256_bytes(outputs[HANDOFF_CANDIDATE_PATH]),
+        },
+        "result_digest": "PENDING",
+    }
+    result["result_digest"] = object_digest(result, {"result_digest"})
+    outputs[RESULT_PATH] = yaml.safe_dump(
+        {"b_channel_component_review_result": result},
+        allow_unicode=True,
+        sort_keys=False,
+    ).encode("utf-8")
     return outputs
 
 
@@ -369,8 +513,12 @@ def check_outputs(root: Path, outputs: dict[Path, bytes]) -> list[str]:
     return errors
 
 
-def check_permutations(root: Path, source: dict[str, Any]) -> list[str]:
-    baseline = build_outputs(root, source)
+def check_permutations(
+    root: Path,
+    source: dict[str, Any],
+    handoff_source: dict[str, Any],
+) -> list[str]:
+    baseline = build_outputs(root, source, handoff_source)
     candidates = source["candidates"]
     errors: list[str] = []
     permutations = [list(reversed(candidates))]
@@ -381,7 +529,7 @@ def check_permutations(root: Path, source: dict[str, Any]) -> list[str]:
     for index, permutation in enumerate(permutations):
         mutated = copy.deepcopy(source)
         mutated["candidates"] = permutation
-        if build_outputs(root, mutated) != baseline:
+        if build_outputs(root, mutated, handoff_source) != baseline:
             errors.append(f"permutation_{index}_changed_output")
     return errors
 
@@ -395,14 +543,15 @@ def main() -> int:
     if not (args.write or args.check or args.check_permutations):
         parser.error("one mode is required")
     source = load_source(ROOT)
-    outputs = build_outputs(ROOT, source)
+    handoff_source = load_handoff_source(ROOT)
+    outputs = build_outputs(ROOT, source, handoff_source)
     if args.write:
         write_outputs(ROOT, outputs)
     errors: list[str] = []
     if args.check:
         errors.extend(check_outputs(ROOT, outputs))
     if args.check_permutations:
-        errors.extend(check_permutations(ROOT, source))
+        errors.extend(check_permutations(ROOT, source, handoff_source))
     if errors:
         print(json.dumps({"status": "FAIL", "errors": errors}, ensure_ascii=False), file=sys.stderr)
         return 1

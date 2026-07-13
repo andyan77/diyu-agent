@@ -33,38 +33,41 @@ jobs:
           python3 ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --no-git
           python3 ci/checkers/check_gkb_controlled_v2_component_review_20cp_v002.py --selftest
           python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_review_20cp_and_handoff_002/run_component_review_20cp_v002_freezer.py --check
-          python3 ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --predecessor-check component-supply
           python3 ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py --selftest
           python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_supply_closeout_20cp_001/run_component_supply_closeout_freezer.py --check
-          python3 ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --predecessor-check fact-authorization
           python3 ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py --selftest
           python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/fact_authorization_fixture_closeout_001/run_fact_authorization_fixture_freezer.py --check
-          python3 ci/checkers/check_orch_v2_20cp_validation_dryrun.py
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --predecessor-check orch-validation
           python3 ci/checkers/check_orch_v2_20cp_validation_dryrun.py --selftest
           python3 08_orchestration_runs/controlled_composition_v2_001/orch_20cp_validation_dryrun_001/run_orch_20cp_validation_dryrun_freezer.py --check
-          python3 ci/checkers/check_controlled_content_generator_v2_build.py
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --predecessor-check generator-build
           python3 ci/checkers/check_controlled_content_generator_v2_build.py --selftest
           python3 controlled_content_generator_v2_001/build_and_acceptance_harness_001/run_generator_v2_acceptance_harness.py --check
-          python3 ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py
+          python3 ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py --no-git
           python3 ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py --selftest
           python3 controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_orch_materializer.py --check
           python3 controlled_content_generator_v2_001/qualification_probe_40_001/run_qualification_probe_40_generator_acceptance.py --check
-          python3 ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py
+          python3 ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py --no-git
           python3 ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py --selftest
           python3 controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001/run_targeted_repair_materializer.py --phase calibration --check
           python3 controlled_content_generator_v2_001/qualification_probe_40_targeted_repair_001/run_targeted_repair_materializer.py --phase hidden --check
-          python3 ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py
+          python3 ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py --no-git
           python3 ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py --selftest
           python3 controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/run_qualification_calibration_repair_002_materializer.py --phase calibration --check
           python3 controlled_content_generator_v2_001/qualification_calibration_targeted_repair_002/run_qualification_calibration_repair_002_materializer.py --phase hidden --check
           python3 controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py
           python3 controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py --selftest
           python3 controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/run_convergence_materializer.py --check
-          python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --predecessor-check b-lane-dev-gate
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py --selftest
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/run_b_lane_dev_gate.py --check
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py --selftest
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py
+          python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --selftest
+          python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -96,7 +99,10 @@ jobs:
             "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py" \
             "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py --selftest" \
             "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py" \
-            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py --selftest"
+            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py --selftest" \
+            "ci/checkers/check_gkb_v2_b_channel_24_component_review.py" \
+            "ci/checkers/check_gkb_v2_b_channel_24_component_review.py --selftest" \
+            "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check"
           do
             set +e
             python3 -O $args

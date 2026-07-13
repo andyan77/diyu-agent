@@ -1,0 +1,19 @@
+orch_AB_constraint_handoff:
+  owner: ORCH
+  status: HANDOFF_ONLY_NOT_IMPLEMENTED
+  implemented_constraint_count: 0
+  constraint_id: ORCH-AB-FACT-EQUIVALENCE-AND-DIVERGENCE-01
+  fact_set_rule: A_AND_B_FACT_SET_MUST_BE_IDENTICAL
+  minimum_real_difference_axis_count: 4
+  difference_axes:
+  - primary_question
+  - narrative_operator
+  - information_order
+  - visual_subject
+  - sound_subject
+  - rhythm
+  - ending
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  constraint_count: 1
+  handoff_digest: 9e6e25fe0a379215917475062cb768ceb21802d81427b7512b8f9ff5431d3ed2

@@ -274,13 +274,15 @@ def selftest(root: Path) -> int:
         )
         return 1
     ledger_text = (root / LEDGER_PATH).read_text(encoding="utf-8")
+    horizon = load_yaml_unique(root / HORIZON_PATH)["ledger_horizon"]
+    unauthorized_successor = horizon["authorized_terminal_route_id"] + 1
     blocks, _, _ = route_blocks(ledger_text)
     tests: list[tuple[str, str, str]] = [
         (
-            "append_route_migration_32",
+            f"append_route_migration_{unauthorized_successor}",
             "E_ROUTE_SEQUENCE",
             ledger_text
-            + "  route_migration_32:\n"
+            + f"  route_migration_{unauthorized_successor}:\n"
             + "    applied_by_task: UNAUTHORIZED\n"
             + "    additive_only: true\n"
             + "    no_readiness_flipped: true\n"
