@@ -80,6 +80,29 @@ def _validate_response(request: Mapping[str, Any], response: Mapping[str, Any]) 
         raise ValueError("author response surface schema mismatch")
 
 
+def _transport_schema_projection(value: Any) -> Any:
+    """Add transport-required types without changing the frozen contract semantics."""
+
+    if isinstance(value, list):
+        return [_transport_schema_projection(item) for item in value]
+    if not isinstance(value, dict):
+        return value
+    projected = {key: _transport_schema_projection(item) for key, item in value.items()}
+    if "const" in projected and "type" not in projected:
+        constant = projected["const"]
+        if isinstance(constant, bool):
+            projected["type"] = "boolean"
+        elif isinstance(constant, str):
+            projected["type"] = "string"
+        elif isinstance(constant, int):
+            projected["type"] = "integer"
+        elif constant is None:
+            projected["type"] = "null"
+        else:
+            raise ValueError("unsupported const type in frozen response schema")
+    return projected
+
+
 def _author_prompt() -> str:
     return """You are the isolated Creative Author for exactly one development request.
 
@@ -111,7 +134,12 @@ def _run_one(request: Mapping[str, Any], root_temp: Path) -> tuple[dict[str, Any
         encoding="utf-8",
     )
     shutil.copyfile(AUTHOR_PROTOCOL_PATH, session_dir / "creative_author_protocol.yaml")
-    shutil.copyfile(RESPONSE_SCHEMA_PATH, session_dir / "creative_author_response.schema.json")
+    frozen_schema = json.loads(RESPONSE_SCHEMA_PATH.read_text(encoding="utf-8"))
+    transport_schema = _transport_schema_projection(frozen_schema)
+    (session_dir / "creative_author_response.schema.json").write_text(
+        json.dumps(transport_schema, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+        encoding="utf-8",
+    )
     response_path = session_dir / "final_response.json"
     command = [
         CODEX_PATH,
@@ -162,6 +190,9 @@ def _run_one(request: Mapping[str, Any], root_temp: Path) -> tuple[dict[str, Any
         "expected_score_visible": False,
         "external_provider_API_call_count": 0,
         "reroll_count": 0,
+        "frozen_response_schema_digest": digest_object(frozen_schema),
+        "transport_schema_projection_digest": digest_object(transport_schema),
+        "transport_projection_semantic_change_count": 0,
         "response_digest": digest_object(response),
     }
     audit["session_audit_digest"] = digest_object(audit)
@@ -214,6 +245,8 @@ def main() -> int:
         "replacement_count": 0,
         "external_provider_API_call_count": 0,
         "sealed_hidden_case_count": 0,
+        "pre_generation_transport_schema_rejection_batch_count": 1,
+        "authored_response_created_before_transport_fix_count": 0,
         "session_audits": audits,
     }
     manifest["manifest_digest"] = digest_object(manifest)
