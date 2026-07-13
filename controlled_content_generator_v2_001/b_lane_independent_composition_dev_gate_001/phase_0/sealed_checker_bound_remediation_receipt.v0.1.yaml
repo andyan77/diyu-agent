@@ -1,0 +1,85 @@
+sealed_checker_bound_remediation_receipt:
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  phase: PR10_LEDGER_BOUND_REMEDIATION
+  recorded_at_utc: '2026-07-13T01:19:20Z'
+  status: REMEDIATED_PENDING_EXTERNAL_GUARDIAN_CHECKPOINT_0
+  PR10_binding:
+    pull_request_number: 10
+    base_sha: 7054acb40a1c6b99a3b4749e80805efd25419231
+    original_head_sha: 4cbfc3245be320e0bc77956071ebc6ed48091985
+    original_head_tree_sha: 139f8c38ea057cca9c942a7f3dd776ae99409640
+    original_full_diff_digest: e36be37fffb1b7e564ff96488a2a9733f1f6eb6c4eb4532ee4f1d4ef250bd324
+    original_commit_count: 1
+    original_commit_sha: 4cbfc3245be320e0bc77956071ebc6ed48091985
+    branch: generator/v2-b-lane-independent-composition-dev-gate-001
+  repaired_checker_count: 5
+  repaired_checkers:
+  - path: ci/checkers/check_gkb_v2_20cp_component_supply_closeout.py
+    owned_route_id: 23
+    frozen_sequence_start_route_id: 19
+    original_authorized_terminal_route_id: 30
+    baseline_digest: 1b71e7de327a179fca22e111b62258f4a39df6d7853d58be0db67421a44fbc79
+    weakened_digest: 9cd0582f575765350b5272857a6c34887b34f34463a0726aa59a6aa2e78de551
+    repaired_digest: 08c94440734af62e095b8c384b34d4fd780ae3459c6debf21f0cd91669c4acb0
+    repaired_authority: FROZEN_PREFIX_ONLY
+  - path: ci/checkers/check_gkb_v2_20cp_fact_authorization_fixture_closeout.py
+    owned_route_id: 24
+    frozen_sequence_start_route_id: 19
+    original_authorized_terminal_route_id: 30
+    baseline_digest: 35f0a7ae5063a6cb6e39095cb53eaf9d792f482bdc0ef9a25a9379b0339f6814
+    weakened_digest: 366a40d14568b9fb53a9c7ecb69789b543a9509c2a6dd2b5d8bab0e7b4edbacf
+    repaired_digest: 1982adaa4a381ebc2957d8ca47fe576150cdc66737da360e4ea3aeac826ae31d
+    repaired_authority: FROZEN_PREFIX_ONLY
+  - path: ci/checkers/check_orch_v2_20cp_validation_dryrun.py
+    owned_route_id: 25
+    frozen_sequence_start_route_id: 19
+    original_authorized_terminal_route_id: 30
+    baseline_digest: 98a5bd659df28d42a94a1e3eeab7e06b3f57062e55b3da719a4cb6d50777f5d0
+    weakened_digest: 60246f8b35a13bb7f1c5df6fac028543fca13b2bbdb72b076a479d7d7f8f0d7e
+    repaired_digest: 677f53c0b9a4c3619341ef7443f2c6c0be3adc0b1d21a635901aaf62dd7c85d0
+    repaired_authority: FROZEN_PREFIX_ONLY
+  - path: ci/checkers/check_controlled_content_generator_v2_build.py
+    owned_route_id: 26
+    frozen_sequence_start_route_id: 19
+    original_authorized_terminal_route_id: 30
+    baseline_digest: ec5262ae46df8ae0e84fa9d6adead4ce13044ec91c0bc4f79121f077c06f2bd8
+    weakened_digest: 2ea20fe2780945f9bb0dbaa372ced12eb3635ff584c7e1092e0a01986da6610b
+    repaired_digest: 3cc54881488d229327f1f6aa0bd1aaaffcedabf02c13d00e78fefdb0650ae0fa
+    repaired_authority: FROZEN_PREFIX_ONLY
+  - path: ci/checkers/check_controlled_v2_20cp_qualification_probe_40.py
+    owned_route_id: 27
+    frozen_sequence_start_route_id: 19
+    original_authorized_terminal_route_id: 30
+    baseline_digest: 8aaba2ffe1b5b3a4fe266bb8c59812ae69f34064ac4654d7983d1fa4a55ab67a
+    weakened_digest: db3b10cbfb6465f2bc5f13e93373590909d2ecd45dddb1d96093ad1fc55af59b
+    repaired_digest: d97e20fb35ab6c84e811be03834195228228201afea2f7080068d8668e9a5383
+    repaired_authority: FROZEN_PREFIX_ONLY
+  untouched_path_compatibility_checkers:
+  - path: ci/checkers/check_controlled_v2_qualification_probe_40_targeted_repair.py
+    sha256: baa0da709778d52776fa0d118527ead2e04f3ca8e673aaef6b3d46319d2ae7e1
+  - path: ci/checkers/check_controlled_v2_qualification_calibration_targeted_repair_002.py
+    sha256: bd4d98ff143e9a2c89d99df38eca119f567914e13be7735dc2f400d573f639b8
+  current_ledger_owner:
+    owner_path: controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py
+    horizon_path: controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/current_ledger_horizon.v0.1.yaml
+    authorization_mode: EXPLICIT_BOUNDED
+    authorized_terminal_route_id: 31
+    unknown_future_successor_allowed: false
+    route_migration_32_without_horizon_update: FAIL
+  unchanged_counts:
+    PR10_business_candidate_change_count: 0
+    pair_result_change_count: 0
+    route_gate_change_count: 0
+    frozen_core_change_count: 0
+    route_migration_31_change_count: 0
+  local_validation:
+    five_checker_live_pass_count: 5
+    five_checker_selftest_pass_count: 5
+    current_ledger_owner_live_pass: true
+    current_ledger_owner_selftest_case_count: 9
+    current_ledger_owner_selftest_pass: true
+    python_optimized_mode_exit_2: true
+    full_predecessor_sequence_pass: true
+    gitleaks_pass: true
+  receipt_digest: b6151f6cbeb19232677c03b40b5a90d6142b50f30d75216fd6aef2b695f6af63

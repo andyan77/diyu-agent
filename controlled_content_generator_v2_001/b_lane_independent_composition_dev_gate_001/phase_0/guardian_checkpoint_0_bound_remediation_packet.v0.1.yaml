@@ -1,0 +1,46 @@
+guardian_checkpoint_0_bound_remediation_packet:
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  checkpoint: GUARDIAN_CHECKPOINT_0
+  review_status: PENDING_EXTERNAL_GUARDIAN
+  PR10:
+    pull_request_number: 10
+    url: https://github.com/andyan77/diyu-agent/pull/10
+    base_sha: 7054acb40a1c6b99a3b4749e80805efd25419231
+    original_head_sha: 4cbfc3245be320e0bc77956071ebc6ed48091985
+    original_head_tree_sha: 139f8c38ea057cca9c942a7f3dd776ae99409640
+    original_full_diff_digest: e36be37fffb1b7e564ff96488a2a9733f1f6eb6c4eb4532ee4f1d4ef250bd324
+    branch: generator/v2-b-lane-independent-composition-dev-gate-001
+    state_after_push: DRAFT
+    bound_repair_commit_sha: RESOLVE_FROM_PR_HEAD_AFTER_PUSH
+  scope:
+    repaired_sealed_checker_count: 5
+    untouched_path_only_checker_count: 2
+    current_ledger_owner_created: true
+    explicit_horizon_created: true
+    business_asset_change_count: 0
+    route_migration_31_change_count: 0
+  required_guardian_assertions:
+    exactly_five_sealed_checkers_repaired: true
+    sealed_checkers_are_prefix_only: true
+    current_ledger_owner_is_phase_0_authority: true
+    authorized_terminal_route_id: 31
+    route_migration_32_without_horizon_update_fails: true
+    frozen_assets_unchanged: true
+    no_force_green: true
+    optimized_mode_exit_2: true
+    required_checks_green_after_push: PENDING_REMOTE
+  boundaries:
+    pair_independence_mechanism: PROVEN_IN_EXPOSED_CALIBRATION
+    pair_calibration_quality: FAILED
+    component_registry_change_count: 0
+    accepted_baseline_count: 120
+    accepted_baseline_increment_count: 0
+    generator_qualified: false
+    hidden_created_count: 0
+    runtime_ingest_ready: false
+  next_action:
+    required_guardian_verdict: PASS
+    eligible_to_merge_PR10_before_guardian_pass: false
+    component_review_may_start_before_guardian_pass: false
+  packet_digest: 8e9ae6b740feb15a30a5057930a388d7fcea77f5e6dd912531b152a63571deb7

@@ -63,6 +63,8 @@ jobs:
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py --selftest
           python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/run_b_lane_dev_gate.py --check
+          python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py
+          python3 controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py --selftest
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -92,7 +94,9 @@ jobs:
             "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py" \
             "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/checkpoint_0/check_controlled_v2_creative_authoring_route_convergence_lifecycle.py --selftest" \
             "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py" \
-            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py --selftest"
+            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/check_controlled_v2_b_lane_independent_composition_dev_gate.py --selftest" \
+            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py" \
+            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py --selftest"
           do
             set +e
             python3 -O $args

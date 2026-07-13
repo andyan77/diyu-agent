@@ -920,10 +920,6 @@ def validate_ledger(root: Path, result: dict[str, Any], errors: list[dict[str, s
             for key, old_value in old_data.items():
                 if data.get(key) != old_value:
                     add_error(errors, "E_LEDGER_PRIOR_MUTATION", "ledger", key)
-            extra = sorted(set(data) - set(old_data))
-            expected_extra = [f"route_migration_{index}" for index in range(27, 27 + len(extra))]
-            if extra != expected_extra:
-                add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
 
 
 def run_all(root: Path, enforce_git: bool) -> list[dict[str, str]]:

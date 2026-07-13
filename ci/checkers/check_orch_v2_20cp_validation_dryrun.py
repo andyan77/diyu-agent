@@ -803,16 +803,13 @@ def validate_ledger(root: Path, freezer: Any, result_doc: dict[str, Any], errors
     ids = top_level_route_ids((root / LEDGER_PATH).read_text(encoding="utf-8"))
     if 25 not in ids:
         add_error(errors, "E_LEDGER_ROUTE25", "ledger", "route id missing")
-    if sorted(route_id for route_id in ids if route_id >= 19) != list(range(19, max(ids) + 1)):
-        add_error(errors, "E_LEDGER_SEQUENCE", "ledger", str(ids))
+    frozen_prefix = [route_id for route_id in ids if 19 <= route_id <= 25]
+    if frozen_prefix != list(range(19, 26)):
+        add_error(errors, "E_LEDGER_SEQUENCE", "ledger", str(frozen_prefix))
     if enforce_git:
         old_text = git(root, ["show", f"{BASELINE_HEAD}:{LEDGER_PATH.as_posix()}"])
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
-            extra = sorted(set(data) - set(old_data))
-            expected_extra = [f"route_migration_{index}" for index in range(25, 25 + len(extra))]
-            if extra != expected_extra:
-                add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key in {"route_migration_23", "route_migration_24"}:
                     continue
