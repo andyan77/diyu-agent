@@ -25,6 +25,7 @@ if not __debug__:
 ROOT = Path(__file__).resolve().parents[2]
 TASK_ID = "GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001"
 P1B_TASK_ID = "GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001"
+P2_TASK_ID = "GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001"
 BASELINE_COMMIT = "473a8664bdab37246db1b75785f765e62c80ed86"
 V1_REPAIR_BASELINE_COMMIT = "69235a23d62d6c92683fadf572f7b8c291771dd6"
 TASK_ROOT = Path(
@@ -35,9 +36,15 @@ P1B_TASK_ROOT = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/"
     "p1b_signed_review_closeout_and_baseline_freeze_001"
 )
+P2_TASK_ROOT = Path(
+    "controlled_content_generator_v2_001/gate1_v1_1_001/"
+    "p2_component_supply_and_generator_core_repair_001"
+)
+P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/current_gate1_owner.v0.1.yaml"
 )
+CURRENT_CHECKER_PATH = Path("ci/checkers/check_gate1_v1_1_current.py")
 REPORT_PATH = Path(
     "docs/reports/gate1_v1_1_generator_gkb_retrospective_and_recovery_plan_20260713.md"
 )
@@ -96,6 +103,30 @@ P1B_COMPAT_RECEIPT_PATH = (
     P1B_TASK_ROOT / "compatibility/p1b_historical_identity_repair_receipt.v0.1.yaml"
 )
 P1B_RESULT_PATH = P1B_TASK_ROOT / "result/p1b_signed_review_closeout_result.v0.1.yaml"
+P2_MATERIALIZER_PATH = (
+    P2_TASK_ROOT / "run_p2_component_supply_and_generator_core_repair.py"
+)
+P2_MODEL_PATH = P2_TASK_ROOT / "p2_component_model.py"
+P2_DOCUMENTS_PATH = P2_TASK_ROOT / "p2_checkpoint_documents.py"
+P2_SUCCESSOR_PATH = (
+    P2_TASK_ROOT / "component/historical_86_successor_dispositions.v0.1.jsonl"
+)
+P2_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/successor_component_candidates.v0.1.jsonl"
+)
+P2_RULES_PATH = P2_TASK_ROOT / "component/control_rule_candidates.v0.1.jsonl"
+P2_EDGES_PATH = P2_TASK_ROOT / "component/proposed_component_cp_edges.v0.1.jsonl"
+P2_SUPPLY_PATH = P2_TASK_ROOT / "component/candidate_supply_matrix.v0.1.yaml"
+P2_ADDITION_PATH = P2_TASK_ROOT / "component/necessary_addition_assessment.v0.1.yaml"
+P2_AB_PATH = P2_TASK_ROOT / "ab/ab_structural_path_candidates.v0.1.jsonl"
+P2_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/independent_component_review_packet.v0.1.jsonl"
+)
+P2_REVIEW_JOB_PATH = P2_TASK_ROOT / "review/independent_component_review_job.v0.1.yaml"
+P2_COMPAT_PATH = (
+    P2_TASK_ROOT / "compatibility/p1b_successor_compatibility_receipt.v0.1.yaml"
+)
+P2_RESULT_PATH = P2_TASK_ROOT / "result/p2_component_review_checkpoint_result.v0.1.yaml"
 
 CLEAN_120_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
@@ -116,10 +147,19 @@ COMPONENT_SOURCE_PATH = Path(
     "controlled_composition_v2_001/b_channel_component_review_and_handoff_001/"
     "reviewed_reusable_component_registry.v0.4.jsonl"
 )
+CANDIDATE_SOURCE_PATH = Path(
+    "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
+    "controlled_composition_v2_001/component_candidate_manifest.v0.1.jsonl"
+)
 PROFILE_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
     "controlled_composition_v2_001/content_product_profile_20_completion_001/"
     "content_product_profiles.v0.2.yaml"
+)
+AB_CONTRACT_PATH = Path(
+    "controlled_content_generator_v2_001/"
+    "b_channel_component_consumption_and_claim_closure_dev_gate_001/"
+    "contracts/orch_ab_divergence_contract.v0.1.json"
 )
 B24_CHECKER_PATH = Path("ci/checkers/check_gkb_v2_b_channel_24_component_review.py")
 SUCCESSOR_CHECKER_PATH = Path(
@@ -134,6 +174,24 @@ ROUTE_ACTUAL_SHA256 = "bb7d68686761b7be092f191a0f46cb7493a3947f98959703c3ccaa69a
 COMPONENT_SOURCE_SHA256 = (
     "de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601"
 )
+CANDIDATE_SOURCE_SHA256 = (
+    "70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d"
+)
+PROFILE_SHA256 = "d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056"
+AB_CONTRACT_SHA256 = "6862166cffb84dfb45ad8d98c82d5ae1faed18739df5e502d43a5d21d384a221"
+P2_FROZEN_HASHES = {
+    STANDARD_SNAPSHOT_PATH: STANDARD_SHA256,
+    P1B_RESULT_PATH: "d4738a12b846d4c7fa5ca231de6d9e884e32733c01b9add6e81fad8d56601f72",
+    P1B_CONTENT_PATH: "d4798e9847f9e4800676f002c46bb431e03d2e4763b07c91685f7962f7525ed0",
+    P1B_ROUTE_GOLD_PATH: "f87d984d1780423e7ace0d78c54ba40e97ab5b48c39950f691c7ffca6652e054",
+    P1B_ROUTE_FREEZE_PATH: "59490dc0260d9b05e28891136906744a2f383a15dc6f90d1e4754f353f769f3e",
+    P1B_COMPONENT_PATH: "554f97ff23c913bc85722305f6002a91876bbd3848cc399e1fb6dd46001fc4e0",
+    P1B_COMPONENT_GAPS_PATH: "a5cf34ec23b95649bc23f8e400268c432cb8f2e017fc56d2ea3120a5730f666e",
+    COMPONENT_SOURCE_PATH: COMPONENT_SOURCE_SHA256,
+    CANDIDATE_SOURCE_PATH: CANDIDATE_SOURCE_SHA256,
+    PROFILE_PATH: PROFILE_SHA256,
+    AB_CONTRACT_PATH: AB_CONTRACT_SHA256,
+}
 REPORT_AFTER_POLICY_SHA256 = (
     "b89dd9f29bc084c9df69595efc6e3145372ade05210c0ecfe7df76f5aba6f02d"
 )
@@ -148,6 +206,9 @@ CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256 = (
 )
 P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256 = (
     "29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806"
+)
+P1B_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256 = (
+    "6474966c8ea5d0fdb2c5d40cc5888969f5fc8ebb63f8006d61504a4aaae8e231"
 )
 P1B_BASELINE_COMMIT = "01da326e4195b47e9b769b025bdf962936f10419"
 P1B_IMPORT_HASHES = {
@@ -331,12 +392,13 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
 def unexpected_write_paths(paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
-        if path.is_relative_to(P1B_TASK_ROOT):
+        if path.is_relative_to(P2_TASK_ROOT):
             continue
-        if path.is_relative_to(TASK_ROOT):
-            if path not in TASK_MANAGED_PATHS:
-                unexpected.append(path.as_posix())
-        elif path not in ALLOWED_EXACT_PATHS:
+        if path not in {
+            CURRENT_OWNER_PATH,
+            CURRENT_CHECKER_PATH,
+            P1B_MATERIALIZER_PATH,
+        }:
             unexpected.append(path.as_posix())
     return sorted(unexpected)
 
@@ -344,13 +406,11 @@ def unexpected_write_paths(paths: set[Path]) -> list[str]:
 def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
     if not (root / ".git").exists():
         return
-    ancestor = git(
-        root, ["merge-base", "--is-ancestor", V1_REPAIR_BASELINE_COMMIT, "HEAD"]
-    )
+    ancestor = git(root, ["merge-base", "--is-ancestor", P2_BASELINE_COMMIT, "HEAD"])
     if ancestor.returncode != 0:
         add_error(errors, "E_BASELINE", "baseline commit is not an ancestor of HEAD")
         return
-    changed = git(root, ["diff", "--name-only", f"{V1_REPAIR_BASELINE_COMMIT}..HEAD"])
+    changed = git(root, ["diff", "--name-only", f"{P2_BASELINE_COMMIT}..HEAD"])
     unstaged = git(root, ["diff", "--name-only", "HEAD"])
     untracked = git(root, ["ls-files", "--others", "--exclude-standard"])
     if any(result.returncode != 0 for result in (changed, unstaged, untracked)):
@@ -991,6 +1051,57 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
     if not isinstance(owner, dict):
         add_error(errors, "E_OWNER_POLICY", "root missing")
         return
+    if owner.get("task_id") == P2_TASK_ID:
+        expected = {
+            "owner_id": "GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER",
+            "baseline_commit": P2_BASELINE_COMMIT,
+            "current_task_root": P2_TASK_ROOT.as_posix(),
+            "current_checker": CURRENT_CHECKER_PATH.as_posix(),
+        }
+        if any(owner.get(key) != value for key, value in expected.items()):
+            add_error(errors, "E_OWNER_POLICY", "p2 task binding")
+        predecessor = owner.get("predecessor")
+        if (
+            not isinstance(predecessor, dict)
+            or predecessor.get("task_id") != P1B_TASK_ID
+            or predecessor.get("result_state") != "STOPPED_COMPONENT_SUPPLY_GAP"
+            or predecessor.get("p2_allowed_by_p1b") is not False
+            or predecessor.get("historical_owner_sha256")
+            != "541443a9c5c34047fb5c9a4652412cc019218abd60d29528b57dbc1d771d637a"
+            or predecessor.get("historical_checker_sha256")
+            != "6474966c8ea5d0fdb2c5d40cc5888969f5fc8ebb63f8006d61504a4aaae8e231"
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p1b predecessor binding")
+        checkpoint = owner.get("checkpoint")
+        if (
+            not isinstance(checkpoint, dict)
+            or checkpoint.get("state") != "PENDING_INDEPENDENT_COMPONENT_REVIEW"
+            or checkpoint.get("p2_final_complete") is not False
+            or checkpoint.get("proposed_component_count") != 54
+            or checkpoint.get("proposed_edge_count") != 162
+            or checkpoint.get("active_component_count") != 0
+            or checkpoint.get("active_edge_count") != 0
+            or checkpoint.get("self_approval_count") != 0
+            or checkpoint.get("p3_allowed") is not False
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p2 checkpoint")
+        numbers = owner.get("core_numbers")
+        if numbers != {
+            "target_total": 300,
+            "reference_inventory": 120,
+            "historical_component_inventory": 86,
+        }:
+            add_error(errors, "E_OWNER_POLICY", "p2 core numbers")
+        authority = owner.get("current_ledger_authority")
+        if (
+            not isinstance(authority, dict)
+            or authority.get("shared_horizon_modified") is not False
+            or authority.get("terminal_derivation") != "delegated_to_existing_owner"
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p2 ledger authority")
+        if recursively_find_true(owner.get("readiness"), READY_KEYS):
+            add_error(errors, "E_READINESS", "p2 owner")
+        return
     p1b_owner = owner.get("task_id") == P1B_TASK_ID
     expected = (
         {
@@ -1441,7 +1552,7 @@ def validate_p1b(
         or compatibility.get("historical_assets_rewritten") is not False
         or not isinstance(current_successor, dict)
         or current_successor.get("sha256_after")
-        != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
+        != P1B_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
         or not isinstance(p1a_protection, dict)
         or p1a_protection.get("historical_current_checker_sha256")
         != P1A_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
@@ -1479,6 +1590,594 @@ def validate_p1b(
             )
 
 
+def p2_yaml_document(
+    root: Path,
+    relative_path: Path,
+    key: str,
+    errors: list[dict[str, str]],
+) -> dict[str, Any] | None:
+    try:
+        value = load_yaml(root / relative_path).get(key)
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
+        add_error(errors, "E_P2_SCHEMA", f"{relative_path}:{exc}")
+        return None
+    if not isinstance(value, dict):
+        add_error(errors, "E_P2_SCHEMA", relative_path.as_posix())
+        return None
+    return value
+
+
+def expected_p2_mechanism(source: dict[str, Any]) -> dict[str, Any]:
+    abstract = source.get("abstract_payload")
+    if isinstance(abstract, dict):
+        return abstract
+    return {
+        "function": source.get("function"),
+        "reusable_mechanism": source.get("reusable_mechanism"),
+        "abstraction_invariants": source.get("abstraction_invariants", []),
+        "surface_policy": {
+            "generate_new_surface": True,
+            "parent_verbatim_allowed": False,
+            "source_sentence_template_allowed": False,
+        },
+    }
+
+
+def expected_p2_provenance(
+    source: dict[str, Any],
+    candidate_by_id: dict[Any, dict[str, Any]],
+) -> dict[str, Any] | None:
+    component_id = str(source.get("component_id", ""))
+    if component_id.startswith("RCV2-004-"):
+        design_basis = source.get("provenance")
+        if not isinstance(design_basis, dict):
+            return None
+        return {
+            "source_type": "FOUNDER_AUTHORIZED_DESIGN_COMPONENT",
+            "design_basis": design_basis,
+            "source_text_span_required": False,
+            "evidence_boundary": "DESIGN_MECHANISM_ONLY_NO_FACT_AUTHORITY",
+        }
+    if component_id.startswith("RCV2-003-"):
+        parent_ids = source.get("parent_asset_ids")
+        parent_digests = source.get("parent_digests")
+        evidence_spans = source.get("evidence_spans")
+        if (
+            not isinstance(parent_ids, list)
+            or not parent_ids
+            or not isinstance(parent_digests, dict)
+            or not isinstance(evidence_spans, list)
+            or not evidence_spans
+            or any(parent_id not in parent_digests for parent_id in parent_ids)
+        ):
+            return None
+        return {
+            "source_type": "SOURCE_DERIVED",
+            "parent_assets": [
+                {
+                    "parent_asset_id": parent_id,
+                    "parent_digest": parent_digests[parent_id],
+                }
+                for parent_id in parent_ids
+            ],
+            "evidence_spans": evidence_spans,
+            "evidence_boundary": "ABSTRACTED_MECHANISM_NOT_PARENT_SURFACE",
+        }
+    lineage = source.get("lineage")
+    source_refs = (
+        lineage.get("source_candidate_refs") if isinstance(lineage, dict) else None
+    )
+    if not isinstance(source_refs, list) or not source_refs:
+        return None
+    parent_assets: list[dict[str, Any]] = []
+    for source_ref in source_refs:
+        candidate_id = (
+            source_ref.get("candidate_id") if isinstance(source_ref, dict) else None
+        )
+        candidate = candidate_by_id.get(candidate_id)
+        parent_refs = (
+            candidate.get("parent_refs") if isinstance(candidate, dict) else None
+        )
+        if not isinstance(parent_refs, list) or not parent_refs:
+            return None
+        for parent_ref in parent_refs:
+            if not isinstance(parent_ref, dict):
+                return None
+            parent_assets.append({"source_candidate_id": candidate_id, **parent_ref})
+    return {
+        "source_type": "SOURCE_DERIVED",
+        "parent_assets": parent_assets,
+        "evidence_boundary": "ABSTRACTED_MECHANISM_NOT_PARENT_SURFACE",
+    }
+
+
+def validate_p2(root: Path, errors: list[dict[str, str]]) -> None:
+    """Validate the P2 review checkpoint without treating candidates as approved."""
+
+    for relative_path, expected_hash in P2_FROZEN_HASHES.items():
+        path = root / relative_path
+        if not path.is_file() or sha256_file(path) != expected_hash:
+            add_error(errors, "E_P2_FROZEN_INPUT", relative_path.as_posix())
+    try:
+        successors = [row for row, _ in read_jsonl(root / P2_SUCCESSOR_PATH)]
+        components = [row for row, _ in read_jsonl(root / P2_COMPONENTS_PATH)]
+        rules = [row for row, _ in read_jsonl(root / P2_RULES_PATH)]
+        edges = [row for row, _ in read_jsonl(root / P2_EDGES_PATH)]
+        ab_paths = [row for row, _ in read_jsonl(root / P2_AB_PATH)]
+        packet = [row for row, _ in read_jsonl(root / P2_REVIEW_PACKET_PATH)]
+        source_component_records = read_jsonl(root / COMPONENT_SOURCE_PATH)
+        source_components = [row for row, _ in source_component_records]
+        candidate_rows = [row for row, _ in read_jsonl(root / CANDIDATE_SOURCE_PATH)]
+        p1b_dispositions = [row for row, _ in read_jsonl(root / P1B_COMPONENT_PATH)]
+        profiles_root = load_yaml(root / PROFILE_PATH).get(
+            "content_product_profile_registry"
+        )
+    except (
+        OSError,
+        TypeError,
+        ValueError,
+        json.JSONDecodeError,
+        yaml.YAMLError,
+    ) as exc:
+        add_error(errors, "E_P2_PARSE", str(exc))
+        return
+    if not isinstance(profiles_root, dict) or not isinstance(
+        profiles_root.get("profiles"), list
+    ):
+        add_error(errors, "E_P2_PROFILE", "profile registry")
+        return
+    profiles = profiles_root["profiles"]
+    source_by_id = {row.get("component_id"): row for row in source_components}
+    source_record_hash_by_id = {
+        row.get("component_id"): sha256_bytes(raw.encode("utf-8"))
+        for row, raw in source_component_records
+    }
+    candidate_by_id = {row.get("component_id"): row for row in candidate_rows}
+    p1b_by_id = {row.get("component_id"): row for row in p1b_dispositions}
+    if (
+        len(successors) != 86
+        or len(p1b_by_id) != 86
+        or len({row.get("historical_component_id") for row in successors}) != 86
+        or set(row.get("historical_component_id") for row in successors)
+        != set(source_by_id)
+        or any(
+            row.get("historical_component_digest")
+            != source_by_id.get(row.get("historical_component_id"), {}).get(
+                "component_digest"
+            )
+            or row.get("p1b_final_disposition")
+            != p1b_by_id.get(row.get("historical_component_id"), {}).get(
+                "final_disposition"
+            )
+            or row.get("historical_inventory_counted_once") is not True
+            or row.get("historical_source_unchanged") is not True
+            or row.get("active") is not False
+            or row.get("independent_review_state") != "PENDING_TWO_REVIEWS"
+            or row.get("mapping_digest") != object_digest(row, "mapping_digest")
+            for row in successors
+        )
+    ):
+        add_error(errors, "E_P2_SUCCESSOR_MAP", "86 historical successors")
+
+    component_by_id = {row.get("component_id"): row for row in components}
+    if len(components) != 78 or len(component_by_id) != 78:
+        add_error(errors, "E_P2_COMPONENT_COUNT", str(len(components)))
+    for component in components:
+        component_id = component.get("component_id")
+        provenance = component.get("provenance")
+        source = source_by_id.get(component_id)
+        disposition = p1b_by_id.get(component_id)
+        expected_provenance = (
+            expected_p2_provenance(source, candidate_by_id)
+            if isinstance(source, dict)
+            else None
+        )
+        if (
+            component.get("component_digest")
+            != object_digest(component, "component_digest")
+            or component.get("new_generator_consumable") is not False
+            or component.get("independent_review_state") != "PENDING_TWO_REVIEWS"
+            or recursively_find_true(component.get("readiness"), READY_KEYS)
+            or not isinstance(provenance, dict)
+        ):
+            add_error(errors, "E_P2_COMPONENT_SCHEMA", str(component_id))
+        if (
+            not isinstance(source, dict)
+            or not isinstance(disposition, dict)
+            or expected_provenance is None
+            or canonical_json(provenance) != canonical_json(expected_provenance)
+            or component.get("supersedes_component_digest")
+            != source.get("component_digest")
+            or component.get("historical_source_sha256")
+            != source_record_hash_by_id.get(component_id)
+            or component.get("historical_source_sha256")
+            != disposition.get("source_record_sha256")
+            or component.get("component_role")
+            != (source.get("source_component_role") or source.get("component_role"))
+            or component.get("composition_asset_class")
+            != source.get("composition_asset_class")
+            or canonical_json(component.get("mechanism"))
+            != canonical_json(expected_p2_mechanism(source))
+            or component.get("required_input_slots")
+            != (
+                source.get("required_input_slots")
+                or source.get("input_slot_contract", {}).get("required", [])
+            )
+            or component.get("required_fact_slots")
+            != source.get("required_fact_slots", [])
+            or component.get("required_authorization_slots")
+            != source.get("required_authorization_slots", [])
+            or component.get("truth_boundary") != source.get("truth_boundary", {})
+            or component.get("historical_applicability_only")
+            != source.get("applicable_content_product_type_ids", [])
+        ):
+            add_error(errors, "E_P2_COMPONENT_PROVENANCE", str(component_id))
+
+    control_source_ids = {
+        row.get("supersedes_misclassified_component_id") for row in rules
+    }
+    rule_by_source = {
+        row.get("supersedes_misclassified_component_id"): row for row in rules
+    }
+    if (
+        len(rules) != 8
+        or len(control_source_ids) != 8
+        or any(
+            row.get("control_rule_digest") != object_digest(row, "control_rule_digest")
+            or row.get("supersedes_component_digest")
+            != source_by_id.get(
+                row.get("supersedes_misclassified_component_id"), {}
+            ).get("component_digest")
+            or row.get("applicability_boundary")
+            != source_by_id.get(
+                row.get("supersedes_misclassified_component_id"), {}
+            ).get("applicable_content_product_type_ids", [])
+            or canonical_json(row.get("source_mechanism"))
+            != canonical_json(
+                expected_p2_mechanism(
+                    source_by_id.get(
+                        row.get("supersedes_misclassified_component_id"), {}
+                    )
+                )
+            )
+            or row.get("contributes_component_supply") is not False
+            or row.get("may_write_audience_surface") is not False
+            or row.get("active") is not False
+            or row.get("independent_review_state") != "PENDING_TWO_REVIEWS"
+            for row in rules
+        )
+    ):
+        add_error(errors, "E_P2_CONTROL_RULES", "8 separate control rules")
+
+    selected_ids = {
+        row.get("component_id")
+        for row in components
+        if str(row.get("activation_proposal", "")).startswith("PROPOSED")
+    }
+    for successor in successors:
+        source_id = successor.get("historical_component_id")
+        rule = rule_by_source.get(source_id)
+        component = component_by_id.get(source_id)
+        if rule is not None:
+            expected_id = rule.get("control_rule_id")
+            expected_digest = rule.get("control_rule_digest")
+            expected_disposition = "RECLASSIFIED_AS_CONTROL_RULE_CANDIDATE"
+        elif component is not None:
+            expected_id = source_id
+            expected_digest = component.get("component_digest")
+            expected_disposition = (
+                "REVISED_COMPONENT_PROPOSED_FOR_ACTIVATION"
+                if source_id in selected_ids
+                else "REVISED_COMPONENT_DEFERRED_NOT_REQUIRED_FOR_P2"
+            )
+        else:
+            expected_id = None
+            expected_digest = None
+            expected_disposition = None
+        if (
+            successor.get("successor_id") != expected_id
+            or successor.get("successor_digest") != expected_digest
+            or successor.get("p2_successor_disposition") != expected_disposition
+        ):
+            add_error(errors, "E_P2_SUCCESSOR_MAP", str(source_id))
+    profile_by_id = {row.get("content_product_type_id"): row for row in profiles}
+    demand_cells = {
+        (row.get("content_product_type_id"), requirement.get("role"))
+        for row in profiles
+        for requirement in row.get("required_component_roles", [])
+    }
+    edge_cells: Counter[tuple[Any, Any]] = Counter()
+    edge_ranks: dict[tuple[Any, Any], set[str]] = {}
+    edge_by_id: dict[Any, dict[str, Any]] = {}
+    for edge in edges:
+        edge_id = edge.get("edge_id")
+        component = component_by_id.get(edge.get("component_id"))
+        profile = profile_by_id.get(edge.get("content_product_type_id"))
+        cell = (
+            edge.get("content_product_type_id"),
+            edge.get("required_component_role"),
+        )
+        rank = str(edge_id).rsplit("-", 1)[-1]
+        edge_by_id[edge_id] = edge
+        edge_cells[cell] += 1
+        edge_ranks.setdefault(cell, set()).add(rank)
+        mechanism = component.get("mechanism") if isinstance(component, dict) else {}
+        function = (
+            mechanism.get("function") or mechanism.get("reusable_mechanism")
+            if isinstance(mechanism, dict)
+            else None
+        )
+        input_requirements = (
+            profile.get("input_requirements", {}) if isinstance(profile, dict) else {}
+        )
+        expected_fit_basis = {
+            "profile_requires_exact_role": cell[1],
+            "component_mechanism": function,
+            "business_purpose": (
+                profile.get("business_purpose") if isinstance(profile, dict) else None
+            ),
+            "profile_specific_hard_guards": (
+                profile.get("founder_hard_guards", [])
+                if isinstance(profile, dict)
+                else []
+            ),
+            "fact_set_must_be_runtime_supplied": True,
+        }
+        expected_bindings = {
+            "profile": {
+                "source": list(input_requirements.get("required_source_slots", [])),
+                "fact": list(input_requirements.get("required_fact_slots", [])),
+                "authorization": list(
+                    input_requirements.get("required_authorization_slots", [])
+                ),
+            },
+            "component_input_slots": (
+                component.get("required_input_slots", [])
+                if isinstance(component, dict)
+                else []
+            ),
+            "component_fact_slots": (
+                component.get("required_fact_slots", [])
+                if isinstance(component, dict)
+                else []
+            ),
+            "component_authorization_slots": (
+                component.get("required_authorization_slots", [])
+                if isinstance(component, dict)
+                else []
+            ),
+        }
+        if (
+            edge.get("edge_digest") != object_digest(edge, "edge_digest")
+            or edge_id != f"P2-EDGE-{cell[0]}-{cell[1]}-{rank}"
+            or rank not in {"01", "02"}
+            or edge.get("selection_purpose")
+            != ("MINIMUM_SUPPLY" if rank == "01" else "AB_STRUCTURAL_ALTERNATIVE")
+            or edge.get("active") is not False
+            or edge.get("historical_edge_reactivated") is not False
+            or edge.get("proposed_new_edge") is not True
+            or edge.get("independent_review_state") != "PENDING_TWO_REVIEWS"
+            or component is None
+            or edge.get("component_id") not in selected_ids
+            or edge.get("component_digest") != component.get("component_digest")
+            or component.get("component_role") != cell[1]
+            or cell not in demand_cells
+            or profile is None
+            or canonical_json(edge.get("fit_basis"))
+            != canonical_json(expected_fit_basis)
+            or canonical_json(edge.get("required_bindings"))
+            != canonical_json(expected_bindings)
+            or edge.get("forbidden_combinations")
+            != component.get("forbidden_combinations")
+            or edge.get("missing_input_behavior")
+            != component.get("missing_input_behavior")
+        ):
+            add_error(errors, "E_P2_EDGE", str(edge_id))
+    if (
+        len(edges) != 162
+        or len(edge_by_id) != 162
+        or set(edge_cells) != demand_cells
+        or any(count < 1 or count > 2 for count in edge_cells.values())
+        or any(
+            ranks != ({"01"} if edge_cells[cell] == 1 else {"01", "02"})
+            for cell, ranks in edge_ranks.items()
+        )
+        or len(selected_ids) != 54
+    ):
+        add_error(errors, "E_P2_EDGE_COVERAGE", "need-driven 20CP role coverage")
+
+    supply = p2_yaml_document(root, P2_SUPPLY_PATH, "candidate_supply_matrix", errors)
+    addition = p2_yaml_document(
+        root, P2_ADDITION_PATH, "necessary_addition_assessment", errors
+    )
+    if supply is not None and (
+        supply.get("matrix_digest") != object_digest(supply, "matrix_digest")
+        or supply.get("candidate_complete_profile_count") != 20
+        or supply.get("approved_complete_profile_count") != 0
+        or supply.get("components_active") is not False
+        or not isinstance(supply.get("entries"), list)
+        or len(supply["entries"]) != 20
+        or any(
+            row.get("candidate_supply_complete") is not True
+            or row.get("approved_supply_complete") is not False
+            or any(
+                role.get("candidate_count", 0) < role.get("minimum", 1)
+                or role.get("approved_count") != 0
+                for role in row.get("required_roles", [])
+            )
+            for row in supply["entries"]
+        )
+    ):
+        add_error(errors, "E_P2_SUPPLY", "candidate is not approved supply")
+    if addition is not None and (
+        addition.get("assessment_digest")
+        != object_digest(addition, "assessment_digest")
+        or addition.get("historical_starting_inventory") != 86
+        or addition.get("necessary_addition_count") != 0
+        or addition.get("necessary_additions") != []
+        or addition.get("number_target_used") is not False
+        or addition.get("future_addition_policy")
+        != "ALLOW_ONLY_AFTER_INDEPENDENT_REVIEW_CONFIRMS_A_REAL_ROLE_OR_AB_GAP"
+    ):
+        add_error(errors, "E_P2_ADDITION_POLICY", "number-driven or unsupported")
+
+    ab_by_cp = {row.get("content_product_type_id"): row for row in ab_paths}
+    if len(ab_paths) != 20 or set(ab_by_cp) != set(profile_by_id):
+        add_error(errors, "E_P2_AB_PATH", "20CP coverage")
+    for cp_id, path in ab_by_cp.items():
+        lane_a = path.get("lane_a")
+        lane_b = path.get("lane_b")
+        axes = path.get("observable_difference_axes")
+        differing_axes = (
+            [axis for axis in axes if lane_a.get(axis) != lane_b.get(axis)]
+            if isinstance(lane_a, dict)
+            and isinstance(lane_b, dict)
+            and isinstance(axes, list)
+            else []
+        )
+        if (
+            path.get("path_digest") != object_digest(path, "path_digest")
+            or path.get("same_fact_source_authorization_and_boundary_required")
+            is not True
+            or not isinstance(axes, list)
+            or len(axes) != len(set(axes))
+            or len(differing_axes) != len(axes)
+            or path.get("observable_difference_axis_count") != len(differing_axes)
+            or len(differing_axes) < 4
+            or path.get("content_quality_proven") is not False
+            or path.get("structural_candidate_only") is not True
+            or path.get("independent_review_state") != "PENDING_TWO_REVIEWS"
+            or path.get("active") is not False
+            or not isinstance(lane_a, dict)
+            or not isinstance(lane_b, dict)
+            or lane_a.get("session_policy") == lane_b.get("session_policy")
+            or not set(lane_a.get("component_ids", [])).issubset(selected_ids)
+            or not set(lane_b.get("component_ids", [])).issubset(selected_ids)
+        ):
+            add_error(errors, "E_P2_AB_PATH", str(cp_id))
+
+    object_counts = Counter(row.get("object_type") for row in packet)
+    packet_subjects = {
+        f"P2-COMPONENT-{row['component_id']}": row
+        for row in components
+        if row.get("component_id") in selected_ids
+    }
+    packet_subjects.update(
+        {f"P2-CONTROL-{row['control_rule_id']}": row for row in rules}
+    )
+    packet_subjects.update({f"P2-{row['edge_id']}": row for row in edges})
+    packet_subjects.update(
+        {f"P2-AB-{row['content_product_type_id']}": row for row in ab_paths}
+    )
+    if (
+        len(packet) != len(packet_subjects)
+        or object_counts
+        != Counter(
+            {
+                "PROPOSED_ACTIVE_COMPONENT": 54,
+                "CONTROL_RULE_SEPARATION": 8,
+                "PROPOSED_COMPONENT_CP_EDGE": 162,
+                "AB_STRUCTURAL_PATH_CAPABILITY": 20,
+            }
+        )
+        or any(
+            row.get("prefilled_score") is not None
+            or row.get("prefilled_decision") is not None
+            or canonical_json(row.get("review_subject"))
+            != canonical_json(packet_subjects.get(row.get("packet_item_id")))
+            for row in packet
+        )
+    ):
+        add_error(errors, "E_P2_REVIEW_PACKET", "self-contained blank review packet")
+
+    review_job = p2_yaml_document(
+        root, P2_REVIEW_JOB_PATH, "independent_component_review_job", errors
+    )
+    if review_job is not None:
+        identity = review_job.get("review_identity_policy")
+        if (
+            review_job.get("review_job_digest")
+            != object_digest(review_job, "review_job_digest")
+            or review_job.get("review_packet_sha256")
+            != sha256_file(root / P2_REVIEW_PACKET_PATH)
+            or review_job.get("self_approval_allowed") is not False
+            or review_job.get("component_activation_allowed_before_closeout")
+            is not False
+            or not isinstance(identity, dict)
+            or identity.get("reviewer_count") != 2
+            or identity.get("reviewers_must_be_different_instances_or_sessions")
+            is not True
+            or identity.get(
+                "reviewers_must_differ_from_component_author_and_p2_executor"
+            )
+            is not True
+            or identity.get("reviewers_must_differ_from_final_activator") is not True
+        ):
+            add_error(errors, "E_P2_REVIEW_JOB", "identity or packet binding")
+
+    compatibility = p2_yaml_document(
+        root, P2_COMPAT_PATH, "p1b_successor_compatibility_receipt", errors
+    )
+    if compatibility is not None:
+        p1b_materializer = compatibility.get("p1b_materializer")
+        current_checker = compatibility.get("current_checker")
+        if (
+            compatibility.get("receipt_digest")
+            != object_digest(compatibility, "receipt_digest")
+            or not isinstance(p1b_materializer, dict)
+            or p1b_materializer.get("sha256_before")
+            != "b82cfcedd747f8ac43748f57405c5760f5637e604403a8f5ed8893e504fba11f"
+            or p1b_materializer.get("sha256_after")
+            != sha256_file(root / P1B_MATERIALIZER_PATH)
+            or p1b_materializer.get("historical_task_outputs_changed") is not False
+            or p1b_materializer.get("global_owner_managed_by_p1b_after_successor")
+            is not False
+            or not isinstance(current_checker, dict)
+            or current_checker.get("sha256_before")
+            != P1B_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
+            or current_checker.get("sha256_after")
+            != sha256_file(root / CURRENT_CHECKER_PATH)
+            or current_checker.get("recursive_checker_chain") is not False
+            or compatibility.get("shared_ledger_modified") is not False
+            or compatibility.get("readiness_changed") is not False
+        ):
+            add_error(errors, "E_P2_COMPATIBILITY", "reference-safe successor")
+    materializer_text = (root / P1B_MATERIALIZER_PATH).read_text(encoding="utf-8")
+    if (
+        P1B_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256 not in materializer_text
+        or "541443a9c5c34047fb5c9a4652412cc019218abd60d29528b57dbc1d771d637a"
+        not in materializer_text
+        or "CURRENT_OWNER_PATH: yaml_bytes(owner)" in materializer_text
+    ):
+        add_error(
+            errors, "E_P2_P1B_PIN", "P1B can overwrite or forget as-built identity"
+        )
+
+    result = p2_yaml_document(
+        root, P2_RESULT_PATH, "p2_component_review_checkpoint_result", errors
+    )
+    if result is not None and (
+        result.get("result_digest") != object_digest(result, "result_digest")
+        or result.get("checkpoint_state") != "PENDING_INDEPENDENT_COMPONENT_REVIEW"
+        or result.get("p2_final_complete") is not False
+        or result.get("components_active") is not False
+        or result.get("active_component_count") != 0
+        or result.get("active_edge_count") != 0
+        or result.get("self_approval_count") != 0
+        or result.get("approved_supply_complete_profile_count") != 0
+        or result.get("p3_allowed") is not False
+        or result.get("core_number_impact")
+        != {
+            "target_total": 300,
+            "reference_inventory": 120,
+            "historical_component_inventory": 86,
+            "all_unchanged": True,
+        }
+        or recursively_find_true(result.get("readiness"), READY_KEYS)
+    ):
+        add_error(errors, "E_P2_RESULT", "checkpoint must remain closed")
+
+
 def validate(root: Path) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
     required = (
@@ -1495,6 +2194,20 @@ def validate(root: Path) -> list[dict[str, str]]:
         RESULT_PATH,
         B24_CHECKER_PATH,
         SUCCESSOR_CHECKER_PATH,
+        P2_MATERIALIZER_PATH,
+        P2_MODEL_PATH,
+        P2_DOCUMENTS_PATH,
+        P2_SUCCESSOR_PATH,
+        P2_COMPONENTS_PATH,
+        P2_RULES_PATH,
+        P2_EDGES_PATH,
+        P2_SUPPLY_PATH,
+        P2_ADDITION_PATH,
+        P2_AB_PATH,
+        P2_REVIEW_PACKET_PATH,
+        P2_REVIEW_JOB_PATH,
+        P2_COMPAT_PATH,
+        P2_RESULT_PATH,
     )
     for relative_path in required:
         if not (root / relative_path).exists():
@@ -1517,6 +2230,8 @@ def validate(root: Path) -> list[dict[str, str]]:
     validate_repair_shape(root, errors)
     if (root / P1B_TASK_ROOT).exists():
         validate_p1b(root, source, errors)
+    if (root / P2_TASK_ROOT).exists():
+        validate_p2(root, errors)
     return errors
 
 
@@ -1528,7 +2243,9 @@ def copy_fixture(root: Path, target: Path) -> None:
         ROUTE_INPUT_PATH,
         ROUTE_ACTUAL_PATH,
         COMPONENT_SOURCE_PATH,
+        CANDIDATE_SOURCE_PATH,
         PROFILE_PATH,
+        AB_CONTRACT_PATH,
         B24_CHECKER_PATH,
         SUCCESSOR_CHECKER_PATH,
         Path("ci/checkers/check_gate1_v1_1_current.py"),
@@ -1540,6 +2257,8 @@ def copy_fixture(root: Path, target: Path) -> None:
     shutil.copytree(root / TASK_ROOT, target / TASK_ROOT)
     if (root / P1B_TASK_ROOT).exists():
         shutil.copytree(root / P1B_TASK_ROOT, target / P1B_TASK_ROOT)
+    if (root / P2_TASK_ROOT).exists():
+        shutil.copytree(root / P2_TASK_ROOT, target / P2_TASK_ROOT)
 
 
 def mutate_yaml(path: Path, mutate: Callable[[dict[str, Any]], None]) -> None:
@@ -1552,6 +2271,27 @@ def mutate_jsonl(path: Path, mutate: Callable[[list[dict[str, Any]]], None]) -> 
     rows = [row for row, _ in read_jsonl(path)]
     mutate(rows)
     write_jsonl(path, rows)
+
+
+def tamper_p2_parent_digest(rows: list[dict[str, Any]]) -> None:
+    rows[0]["provenance"]["parent_assets"][0]["parent_digest"] = "0" * 64
+    rows[0]["component_digest"] = object_digest(rows[0], "component_digest")
+
+
+def tamper_p2_successor_link(rows: list[dict[str, Any]]) -> None:
+    rows[0]["successor_digest"] = "0" * 64
+    rows[0]["mapping_digest"] = object_digest(rows[0], "mapping_digest")
+
+
+def tamper_p2_edge_fit(rows: list[dict[str, Any]]) -> None:
+    rows[0]["fit_basis"]["business_purpose"] = "forged purpose"
+    rows[0]["edge_digest"] = object_digest(rows[0], "edge_digest")
+
+
+def tamper_p2_ab_axis(rows: list[dict[str, Any]]) -> None:
+    axis = rows[0]["observable_difference_axes"][0]
+    rows[0]["lane_b"][axis] = rows[0]["lane_a"][axis]
+    rows[0]["path_digest"] = object_digest(rows[0], "path_digest")
 
 
 def selftest(root: Path) -> int:
@@ -1654,6 +2394,82 @@ def selftest(root: Path) -> int:
                 lambda value: value["governance_compatibility_repair_receipt"][
                     "modified_live_checkers"
                 ][0].update({"sha256_before": "0" * 64}),
+            ),
+        ),
+        (
+            "p2_component_activated_before_review",
+            "E_P2_SUCCESSOR_MAP",
+            lambda temp: mutate_jsonl(
+                temp / P2_SUCCESSOR_PATH,
+                lambda rows: rows[0].update({"active": True}),
+            ),
+        ),
+        (
+            "p2_control_rule_counts_as_supply",
+            "E_P2_CONTROL_RULES",
+            lambda temp: mutate_jsonl(
+                temp / P2_RULES_PATH,
+                lambda rows: rows[0].update({"contributes_component_supply": True}),
+            ),
+        ),
+        (
+            "p2_source_provenance_removed",
+            "E_P2_COMPONENT_PROVENANCE",
+            lambda temp: mutate_jsonl(
+                temp / P2_COMPONENTS_PATH,
+                lambda rows: rows[0]["provenance"].update({"parent_assets": []}),
+            ),
+        ),
+        (
+            "p2_parent_digest_forged_with_fresh_object_digest",
+            "E_P2_COMPONENT_PROVENANCE",
+            lambda temp: mutate_jsonl(
+                temp / P2_COMPONENTS_PATH, tamper_p2_parent_digest
+            ),
+        ),
+        (
+            "p2_successor_retargeted_with_fresh_mapping_digest",
+            "E_P2_SUCCESSOR_MAP",
+            lambda temp: mutate_jsonl(
+                temp / P2_SUCCESSOR_PATH, tamper_p2_successor_link
+            ),
+        ),
+        (
+            "p2_edge_fit_forged_with_fresh_edge_digest",
+            "E_P2_EDGE",
+            lambda temp: mutate_jsonl(temp / P2_EDGES_PATH, tamper_p2_edge_fit),
+        ),
+        (
+            "p2_review_prefilled",
+            "E_P2_REVIEW_PACKET",
+            lambda temp: mutate_jsonl(
+                temp / P2_REVIEW_PACKET_PATH,
+                lambda rows: rows[0].update({"prefilled_decision": "APPROVE"}),
+            ),
+        ),
+        (
+            "p2_ab_session_reused",
+            "E_P2_AB_PATH",
+            lambda temp: mutate_jsonl(
+                temp / P2_AB_PATH,
+                lambda rows: rows[0]["lane_b"].update(
+                    {"session_policy": rows[0]["lane_a"]["session_policy"]}
+                ),
+            ),
+        ),
+        (
+            "p2_ab_declared_axis_not_observably_different",
+            "E_P2_AB_PATH",
+            lambda temp: mutate_jsonl(temp / P2_AB_PATH, tamper_p2_ab_axis),
+        ),
+        (
+            "p2_p3_unlock",
+            "E_P2_RESULT",
+            lambda temp: mutate_yaml(
+                temp / P2_RESULT_PATH,
+                lambda value: value["p2_component_review_checkpoint_result"].update(
+                    {"p3_allowed": True}
+                ),
             ),
         ),
     ]
@@ -1760,14 +2576,9 @@ def main() -> int:
         json.dumps(
             {
                 "status": "PASS",
-                "task_id": (
-                    P1B_TASK_ID
-                    if load_yaml(ROOT / CURRENT_OWNER_PATH)
-                    .get("current_gate1_owner", {})
-                    .get("task_id")
-                    == P1B_TASK_ID
-                    else TASK_ID
-                ),
+                "task_id": load_yaml(ROOT / CURRENT_OWNER_PATH)
+                .get("current_gate1_owner", {})
+                .get("task_id"),
                 "review_decisions_created": False,
                 "shared_horizon_modified": False,
             },

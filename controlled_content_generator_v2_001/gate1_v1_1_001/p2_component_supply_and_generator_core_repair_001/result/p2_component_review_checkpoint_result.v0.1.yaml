@@ -1,0 +1,32 @@
+p2_component_review_checkpoint_result:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  checkpoint_state: PENDING_INDEPENDENT_COMPONENT_REVIEW
+  p2_final_complete: false
+  components_active: false
+  active_component_count: 0
+  active_edge_count: 0
+  historical_86_successor_disposition_complete: true
+  content_successor_candidate_count: 78
+  control_rule_candidate_count: 8
+  proposed_activation_component_count: 54
+  proposed_edge_count: 162
+  candidate_supply_complete_profile_count: 20
+  approved_supply_complete_profile_count: 0
+  ab_path_candidate_profile_count: 20
+  necessary_addition_count: 0
+  review_packet_sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+  self_approval_count: 0
+  generator_core_stage: BLOCKED_UNTIL_MATCHING_INDEPENDENT_COMPONENT_REVIEWS
+  p3_allowed: false
+  core_number_impact:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness:
+    generator_qualified: false
+    generation_allowed: false
+    runtime_ingest_ready: false
+    production_ready: false
+  result_digest: 14bdb0c1147cd0e11f84c92882d546a8f86b6485bf1bdbb08e40b06c62b80229

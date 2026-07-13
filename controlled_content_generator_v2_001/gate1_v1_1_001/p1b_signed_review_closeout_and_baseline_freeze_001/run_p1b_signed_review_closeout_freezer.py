@@ -100,6 +100,12 @@ COMPONENT_SOURCE_SHA256 = (
 P1A_CURRENT_CHECKER_AS_BUILT_SHA256 = (
     "29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806"
 )
+P1B_CURRENT_CHECKER_AS_BUILT_SHA256 = (
+    "6474966c8ea5d0fdb2c5d40cc5888969f5fc8ebb63f8006d61504a4aaae8e231"
+)
+P1B_CURRENT_OWNER_AS_BUILT_SHA256 = (
+    "541443a9c5c34047fb5c9a4652412cc019218abd60d29528b57dbc1d771d637a"
+)
 P1A_MATERIALIZER_BEFORE_SHA256 = (
     "88468847d945db07eb00bad9cb70485af52ae10db5f08009920fa1a98ef5566d"
 )
@@ -1561,7 +1567,7 @@ def compatibility_receipt(root: Path) -> dict[str, Any]:
             "current_gate1_checker_successor": {
                 "path": CURRENT_CHECKER_PATH.as_posix(),
                 "sha256_before": P1A_CURRENT_CHECKER_AS_BUILT_SHA256,
-                "sha256_after": sha256_file(root / CURRENT_CHECKER_PATH),
+                "sha256_after": P1B_CURRENT_CHECKER_AS_BUILT_SHA256,
                 "must_reject": [
                     "filled_record_fake_lane_or_pair",
                     "historical_b_channel_path_inference",
@@ -1660,12 +1666,6 @@ def output_bytes(root: Path) -> dict[Path, bytes]:
     result = closeout_result(
         content_rows, gold_rows, comparison_rows, component_rows, supply
     )
-    result_document = result["p1b_signed_review_closeout_result"]
-    owner = owner_document(
-        result_document["result_state"],
-        result_document["core_number_impact"]["counted_positive_parent_count"],
-        result_document["core_number_impact"]["active_component_count"],
-    )
     return {
         IMPORT_MANIFEST_PATH: yaml_bytes(import_manifest()),
         CONTRACT_PATH: yaml_bytes(closeout_contract()),
@@ -1682,7 +1682,6 @@ def output_bytes(root: Path) -> dict[Path, bytes]:
         TEST_INPUT_MANIFEST_PATH: yaml_bytes(test_inputs),
         COMPAT_RECEIPT_PATH: yaml_bytes(compatibility_receipt(root)),
         RESULT_PATH: yaml_bytes(result),
-        CURRENT_OWNER_PATH: yaml_bytes(owner),
     }
 
 
@@ -1718,7 +1717,7 @@ def check_outputs(root: Path) -> list[str]:
 
 
 def allowed_write_path(path: Path) -> bool:
-    return path == CURRENT_OWNER_PATH or path.is_relative_to(TASK_ROOT)
+    return path.is_relative_to(TASK_ROOT)
 
 
 def copy_fixture(root: Path, target: Path) -> None:
