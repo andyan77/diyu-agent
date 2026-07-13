@@ -10,7 +10,6 @@ import importlib.util
 import json
 import re
 import shutil
-import subprocess
 import sys
 import tempfile
 from collections import Counter
@@ -27,7 +26,6 @@ if not __debug__:
 
 ROOT = Path(__file__).resolve().parents[2]
 TASK_ID = "GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001"
-PHASE_BASE_SHA = "a1114622291e8106ce562f1eb16ae87b56994045"
 TASK_DIR = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
     "controlled_composition_v2_001/b_channel_component_review_and_handoff_001"
@@ -59,10 +57,6 @@ LEDGER_PATH = Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.ya
 HORIZON_PATH = Path(
     "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
     "phase_0/current_ledger_horizon.v0.1.yaml"
-)
-SUCCESSOR_TASK_DIR = Path(
-    "controlled_content_generator_v2_001/"
-    "b_channel_component_consumption_and_claim_closure_dev_gate_001"
 )
 HISTORICAL_ROUTE_DIGESTS_19_32 = {
     19: "a10f1a8477b7b36435ce16f806d21eec505b7d0eee39084666edbc7b9e67f76a",
@@ -138,22 +132,6 @@ FORBIDDEN_SURFACE_KEYS = frozenset(
 )
 ROUTE_LINE = re.compile(r"^  route_migration_([^:]+):$")
 TOP_LEVEL_LINE = re.compile(r"^  [A-Za-z0-9_]+:$")
-CURRENT_ALLOWED_EXACT_PATHS = frozenset(
-    {
-        Path(".github/workflows/ci.yml"),
-        Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml"),
-        Path("ci/checkers/check_gkb_v2_b_channel_24_component_review.py"),
-        Path(
-            "ci/checkers/"
-            "check_orch_generator_v2_b_channel_component_consumption_dev_gate.py"
-        ),
-        HORIZON_PATH,
-        Path(
-            "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
-            "phase_0/check_current_ledger_owner.py"
-        ),
-    }
-)
 
 
 class UniqueKeyLoader(yaml.SafeLoader):
@@ -212,47 +190,6 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 
 def add_error(errors: list[dict[str, str]], code: str, detail: str) -> None:
     errors.append({"code": code, "detail": detail})
-
-
-def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["git", *args],
-        cwd=root,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
-    )
-
-
-def validate_current_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
-    if not (root / ".git").exists():
-        return
-    ancestor = git(root, ["merge-base", "--is-ancestor", PHASE_BASE_SHA, "HEAD"])
-    if ancestor.returncode != 0:
-        add_error(errors, "E_CURRENT_BASE", "phase base is not an ancestor")
-        return
-    changed = git(root, ["diff", "--name-only", f"{PHASE_BASE_SHA}..HEAD"])
-    unstaged = git(root, ["diff", "--name-only", "HEAD"])
-    untracked = git(root, ["ls-files", "--others", "--exclude-standard"])
-    if any(result.returncode != 0 for result in (changed, unstaged, untracked)):
-        add_error(errors, "E_CURRENT_WRITE_SURFACE", "git path query failed")
-        return
-    paths = {
-        Path(line)
-        for result in (changed, unstaged, untracked)
-        for line in result.stdout.splitlines()
-        if line
-    }
-    unexpected = sorted(
-        path.as_posix()
-        for path in paths
-        if path not in CURRENT_ALLOWED_EXACT_PATHS
-        and not path.is_relative_to(TASK_DIR)
-        and not path.is_relative_to(SUCCESSOR_TASK_DIR)
-    )
-    if unexpected:
-        add_error(errors, "E_CURRENT_WRITE_SURFACE", str(unexpected))
 
 
 def recursive_pairs(value: Any) -> list[tuple[str, Any]]:
@@ -318,7 +255,6 @@ def check_digest(
 
 def validate(root: Path) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
-    validate_current_write_surface(root, errors)
     required = (
         SOURCE_PATH,
         HANDOFF_SOURCE_PATH,

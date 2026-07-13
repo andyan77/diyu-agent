@@ -1,0 +1,49 @@
+independent_review_contract:
+  schema_version: v0.1
+  task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
+  packet_builder_identity_id: P1A_DETERMINISTIC_PACKET_MATERIALIZER
+  p1b_freezer_identity_id: P1B_UNASSIGNED_FREEZER_IDENTITY
+  reviewer_identity_policy:
+    reviewer_may_be_ai_or_human: true
+    distinct_reviewer_identity_id_required: true
+    isolated_instance_or_session_required: true
+    independent_run_and_signature_record_required: true
+    blind_to_other_review_before_own_conclusion: true
+    may_not_equal_content_author: true
+    may_not_equal_p1a_packet_builder: true
+    may_not_equal_p1b_freezer: true
+    required_record_fields:
+    - reviewer_identity_id
+    - reviewer_instance_or_session_id
+    - input_digest
+    - instruction_digest
+    - model_or_instance_configuration_digest
+    - append_only_signature_or_attestation
+  roles:
+    PRIMARY_CONTENT_VALUE:
+      scope:
+      - content_quality
+      - user_value
+      - content_product_match
+      coverage: APPLICABLE_POSITIVE_FIRST_OUTPUTS_100_PERCENT
+    SECONDARY_FACT_AUTHORIZATION:
+      scope:
+      - fact_support
+      - authorization
+      - boundary
+      - route_safety
+      minimum_review_count: 48
+      minimum_per_content_product: 2
+      must_cover:
+      - high_risk
+      - disagreement
+    INDEPENDENT_ADJUDICATION:
+      required_when: PRIMARY_AND_SECONDARY_CONCLUSIONS_CONFLICT
+      may_not_be_p1a_builder_or_p1b_freezer: true
+  p1a_prohibitions:
+    review_records_created: false
+    review_decisions_created: false
+    count_n_frozen: false
+    component_dispositions_frozen: false
+    route_gold_answers_frozen: false
+  contract_digest: 835404e64699f4610ae871687b7ef31fe01fb934c14f7f0eb2e5486dc6ae3fdf
