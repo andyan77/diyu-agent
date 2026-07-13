@@ -1,0 +1,342 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP08-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "5bc4857e88a273e6a364a58a3a66d79a805cff3df405ccaa0da7d7df19ff553f",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP08-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "素材清单旁的范围核对",
+    "body_blocks": [
+      "先看洗唛旁的便签：这是一件虚构演示样衣，只说明可公开的局部结构，不对应真实品牌、真实供应链或整件产品背书。",
+      "素材清单的“保留”栏只放画面能核对的四项：暗扣间距、挡片覆盖位置、拉链止口压线、气眼边缘处理；它们记录可见依据，不解释性能。",
+      "“移除”栏中的供应商编号和内部针距参数已经删除；画外也不补回这些信息。",
+      "这些局部未证明防风、防水、耐洗或整件质量。测试证据仍有空缺，四个问题都不作答。"
+    ],
+    "spoken_lines": [
+      "先让洗唛旁的便签划出镜头边界，再看哪些内容能留下。",
+      "纸上勾的是眼前所见；至于风、雨、洗涤和整件表现，这一页还没有答案。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "洗唛旁的便签占据画面，公开范围文字清楚可读；画面角落显示“虚构演示样衣”。",
+      "镜头从便签切到素材清单，“保留”与“移除”两栏同时入画。",
+      "“保留”栏旁同时并列四个局部画面：暗扣间距、挡片覆盖位置、拉链止口压线、气眼边缘处理，不建立部位先后顺序。",
+      "切回“移除”栏，“供应商编号”“内部针距参数”只显示删除标记，不出现任何值。",
+      "局部画面与问题清单并置：“防风？”“防水？”“耐洗？”“整件质量？”全部保持空白。",
+      "最后停在空白问题清单，局部结构退到画外，不给出性能解释。"
+    ],
+    "capture_instructions": [
+      "先固定拍清洗唛旁便签，确保公开边界与虚构演示披露可辨认，再移动到素材清单。",
+      "用同一画幅并列记录四个可见局部，不逐项推动镜头；仅呈现间距、覆盖位置、止口压线和边缘处理。",
+      "拍摄“移除”栏时遮去编号与参数值，只保留字段名和删除状态。",
+      "结尾锁定问题清单，保留静止空白，不补拍任何性能演示。"
+    ],
+    "audio_grammar": "纸面勾选声与静音留白交替：“保留”栏落笔，“移除”栏静音，问题清单继续静音。",
+    "editing_grammar": "按“便签→保留与移除并置→未回答问题”组织；保留与移除交替切换，局部结构同屏并列，结尾停在空白问题清单。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "素材清单旁的范围核对",
+      "source_atom_refs": [
+        "EPC-CP08-B-1",
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "先看洗唛旁的便签：这是一件虚构演示样衣，只说明可公开的局部结构，不对应真实品牌、真实供应链或整件产品背书。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-ROLE",
+        "EPC-CP08-SHARED-OBJECT",
+        "EPC-CP08-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "素材清单的“保留”栏只放画面能核对的四项：暗扣间距、挡片覆盖位置、拉链止口压线、气眼边缘处理；它们记录可见依据，不解释性能。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-BOUNDARY",
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "“移除”栏中的供应商编号和内部针距参数已经删除；画外也不补回这些信息。",
+      "source_atom_refs": [
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "这些局部未证明防风、防水、耐洗或整件质量。测试证据仍有空缺，四个问题都不作答。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-BOUNDARY",
+        "EPC-CP08-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "先让洗唛旁的便签划出镜头边界，再看哪些内容能留下。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-BOUNDARY",
+        "EPC-CP08-B-1"
+      ],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "纸上勾的是眼前所见；至于风、雨、洗涤和整件表现，这一页还没有答案。",
+      "source_atom_refs": [
+        "EPC-CP08-B-2",
+        "EPC-CP08-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "洗唛旁的便签占据画面，公开范围文字清楚可读；画面角落显示“虚构演示样衣”。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-OBJECT",
+        "EPC-CP08-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "镜头从便签切到素材清单，“保留”与“移除”两栏同时入画。",
+      "source_atom_refs": [
+        "EPC-CP08-B-1",
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "“保留”栏旁同时并列四个局部画面：暗扣间距、挡片覆盖位置、拉链止口压线、气眼边缘处理，不建立部位先后顺序。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-BOUNDARY",
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "切回“移除”栏，“供应商编号”“内部针距参数”只显示删除标记，不出现任何值。",
+      "source_atom_refs": [
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "局部画面与问题清单并置：“防风？”“防水？”“耐洗？”“整件质量？”全部保持空白。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-BOUNDARY",
+        "EPC-CP08-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "最后停在空白问题清单，局部结构退到画外，不给出性能解释。",
+      "source_atom_refs": [
+        "EPC-CP08-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "先固定拍清洗唛旁便签，确保公开边界与虚构演示披露可辨认，再移动到素材清单。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-OBJECT",
+        "EPC-CP08-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "用同一画幅并列记录四个可见局部，不逐项推动镜头；仅呈现间距、覆盖位置、止口压线和边缘处理。",
+      "source_atom_refs": [
+        "EPC-CP08-SHARED-BOUNDARY",
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "拍摄“移除”栏时遮去编号与参数值，只保留字段名和删除状态。",
+      "source_atom_refs": [
+        "EPC-CP08-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "结尾锁定问题清单，保留静止空白，不补拍任何性能演示。",
+      "source_atom_refs": [
+        "EPC-CP08-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "纸面勾选声与静音留白交替：“保留”栏落笔，“移除”栏静音，问题清单继续静音。",
+      "source_atom_refs": [],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按“便签→保留与移除并置→未回答问题”组织；保留与移除交替切换，局部结构同屏并列，结尾停在空白问题清单。",
+      "source_atom_refs": [
+        "EPC-CP08-B-1",
+        "EPC-CP08-B-2",
+        "EPC-CP08-B-3"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[4]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.body_blocks[3]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[2]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.title",
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[1]"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[3]",
+        "surfaces.capture_instructions[0]",
+        "surfaces.capture_instructions[2]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP08-PI-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[2]"
+      ]
+    },
+    {
+      "obligation_id": "CP08-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[3]",
+        "surfaces.spoken_lines[1]"
+      ]
+    },
+    {
+      "obligation_id": "CP08-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP08-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.capture_instructions[0]"
+      ]
+    },
+    {
+      "obligation_id": "CP08-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP08-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.visual_beats[4]",
+        "surfaces.visual_beats[5]"
+      ]
+    }
+  ]
+}

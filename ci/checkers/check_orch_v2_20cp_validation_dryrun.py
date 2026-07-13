@@ -72,6 +72,9 @@ SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
 SUCCESSOR_CONVERGENCE_DIR = Path(
     "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
 )
+SUCCESSOR_B_LANE_DIR = Path(
+    "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001"
+)
 
 PLAN_NAMESPACE = "fixture://gkb-v2/orch-dryrun/"
 EXPECTED_PROFILE_OBJECT_DIGEST = "160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b"
@@ -285,6 +288,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
         and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
         and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
+        and not path.is_relative_to(SUCCESSOR_B_LANE_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -799,33 +803,13 @@ def validate_ledger(root: Path, freezer: Any, result_doc: dict[str, Any], errors
     ids = top_level_route_ids((root / LEDGER_PATH).read_text(encoding="utf-8"))
     if 25 not in ids:
         add_error(errors, "E_LEDGER_ROUTE25", "ledger", "route id missing")
-    if sorted(route_id for route_id in ids if route_id >= 19) != list(range(19, max(ids) + 1)):
-        add_error(errors, "E_LEDGER_SEQUENCE", "ledger", str(ids))
+    frozen_prefix = [route_id for route_id in ids if 19 <= route_id <= 25]
+    if frozen_prefix != list(range(19, 26)):
+        add_error(errors, "E_LEDGER_SEQUENCE", "ledger", str(frozen_prefix))
     if enforce_git:
         old_text = git(root, ["show", f"{BASELINE_HEAD}:{LEDGER_PATH.as_posix()}"])
         if old_text:
             old_data = yaml.safe_load(old_text)["grc_3600_execution_plan_status"]
-            extra = sorted(set(data) - set(old_data))
-            if extra not in (
-                ["route_migration_25", "route_migration_26", "route_migration_27"],
-                ["route_migration_25", "route_migration_26", "route_migration_27", "route_migration_28"],
-                [
-                    "route_migration_25",
-                    "route_migration_26",
-                    "route_migration_27",
-                    "route_migration_28",
-                    "route_migration_29",
-                ],
-                [
-                    "route_migration_25",
-                    "route_migration_26",
-                    "route_migration_27",
-                    "route_migration_28",
-                    "route_migration_29",
-                    "route_migration_30",
-                ],
-            ):
-                add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
             for key, value in old_data.items():
                 if key in {"route_migration_23", "route_migration_24"}:
                     continue

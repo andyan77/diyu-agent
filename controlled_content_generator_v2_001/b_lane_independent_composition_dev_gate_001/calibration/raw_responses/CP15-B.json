@@ -1,0 +1,227 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP15-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "444a383ce5615514b1a17aefbb4f386a35cb3b991b2b9e0ed75a42642f6f8ea7",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP15-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "后场三处，同一批的现在",
+    "body_blocks": [
+      "这是一段虚构的门店流程演示记录：我只记到店后的岗位交接，以及同一时点看见的当前状态。",
+      "先停在周转盘：这批到店记录的总数是6条棉质窄围巾，数量核对已经完成。",
+      "再看待验收格：同批里2条还在等待验收，状态停在“待验收”。",
+      "转到整烫挂杆：同批里1条等待整烫，状态停在“待整烫”。",
+      "三处放在同一时点看，数量已核不等于流程已完；要等验收和整烫完成，才决定是否上架。此刻没有补货或退场判断。"
+    ],
+    "spoken_lines": [
+      "眼前这三处，是同一批物件此刻停留的位置。",
+      "总数已经对过，还有两种等待中的状态，先不替它们写结局。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "开场定镜：后场周转盘、待验收格、整烫挂杆同框，画面角落标注“虚构流程演示”。",
+      "镜头停在周转盘，画面同时保留同批6条棉质窄围巾的到店记录与“数量已核”状态。",
+      "平移到待验收格，用单一近景看清同批2条与“待验收”状态。",
+      "继续平移到整烫挂杆，用单一近景看清同批1条与“待整烫”状态。",
+      "拉回三处同框，分别停留，让“数量已核”“待验收”“待整烫”并列出现。",
+      "结尾留在三处全景与演示记录上，只保留“是否上架未决定；无补货或退场判断”。"
+    ],
+    "capture_instructions": [
+      "固定同一时点拍摄，不插入前后流程画面；按周转盘、待验收格、整烫挂杆依次移动机位。",
+      "数字只拍演示记录中可见的6、2、1，三处都保留能辨认同批关系的环境参照。",
+      "末镜不拍上架、补货或退场动作，以三处当前状态和未决定字样收束。"
+    ],
+    "audio_grammar": "保留后场环境底噪；三处切换只用轻微脚步与机位移动声，不添加售卖、补货或上架提示音。",
+    "editing_grammar": "固定为同一时点的三站巡看：周转盘停一拍、待验收格停一拍、整烫挂杆停一拍，末尾回到三处全景；不插叙岗位动作或补写后续流程。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "后场三处，同一批的现在",
+      "source_atom_refs": ["EPC-CP15-B-3"],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一段虚构的门店流程演示记录：我只记到店后的岗位交接，以及同一时点看见的当前状态。",
+      "source_atom_refs": ["EPC-CP15-SHARED-ROLE", "EPC-CP15-SHARED-BOUNDARY", "EPC-CP15-B-1"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "先停在周转盘：这批到店记录的总数是6条棉质窄围巾，数量核对已经完成。",
+      "source_atom_refs": ["EPC-CP15-SHARED-OBJECT", "EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "再看待验收格：同批里2条还在等待验收，状态停在“待验收”。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "转到整烫挂杆：同批里1条等待整烫，状态停在“待整烫”。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[4]",
+      "text": "三处放在同一时点看，数量已核不等于流程已完；要等验收和整烫完成，才决定是否上架。此刻没有补货或退场判断。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-2", "EPC-CP15-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "眼前这三处，是同一批物件此刻停留的位置。",
+      "source_atom_refs": ["EPC-CP15-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "总数已经对过，还有两种等待中的状态，先不替它们写结局。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-2"],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "开场定镜：后场周转盘、待验收格、整烫挂杆同框，画面角落标注“虚构流程演示”。",
+      "source_atom_refs": ["EPC-CP15-SHARED-BOUNDARY", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "镜头停在周转盘，画面同时保留同批6条棉质窄围巾的到店记录与“数量已核”状态。",
+      "source_atom_refs": ["EPC-CP15-SHARED-OBJECT", "EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "平移到待验收格，用单一近景看清同批2条与“待验收”状态。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "继续平移到整烫挂杆，用单一近景看清同批1条与“待整烫”状态。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "拉回三处同框，分别停留，让“数量已核”“待验收”“待整烫”并列出现。",
+      "source_atom_refs": ["EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "结尾留在三处全景与演示记录上，只保留“是否上架未决定；无补货或退场判断”。",
+      "source_atom_refs": ["EPC-CP15-B-2", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "固定同一时点拍摄，不插入前后流程画面；按周转盘、待验收格、整烫挂杆依次移动机位。",
+      "source_atom_refs": ["EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "数字只拍演示记录中可见的6、2、1，三处都保留能辨认同批关系的环境参照。",
+      "source_atom_refs": ["EPC-CP15-SHARED-OBJECT", "EPC-CP15-B-1", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "末镜不拍上架、补货或退场动作，以三处当前状态和未决定字样收束。",
+      "source_atom_refs": ["EPC-CP15-SHARED-BOUNDARY", "EPC-CP15-B-2", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "保留后场环境底噪；三处切换只用轻微脚步与机位移动声，不添加售卖、补货或上架提示音。",
+      "source_atom_refs": ["EPC-CP15-SHARED-BOUNDARY", "EPC-CP15-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "固定为同一时点的三站巡看：周转盘停一拍、待验收格停一拍、整烫挂杆停一拍，末尾回到三处全景；不插叙岗位动作或补写后续流程。",
+      "source_atom_refs": ["EPC-CP15-B-3"],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": ["surfaces.CTA"]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": ["surfaces.body_blocks[4]", "surfaces.visual_beats[5]"]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.body_blocks[3]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.body_blocks[3]", "surfaces.body_blocks[4]"]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.spoken_lines[0]"]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.body_blocks[3]"]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[2]", "surfaces.visual_beats[3]", "surfaces.visual_beats[4]"]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": ["surfaces.audio_grammar"]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[1]", "surfaces.visual_beats[2]", "surfaces.visual_beats[3]"]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP15-PI-01",
+      "actual_surface_refs": ["surfaces.body_blocks[0]"]
+    },
+    {
+      "obligation_id": "CP15-PI-02",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.body_blocks[3]"]
+    },
+    {
+      "obligation_id": "CP15-PI-03",
+      "actual_surface_refs": ["surfaces.body_blocks[4]", "surfaces.capture_instructions[2]"]
+    },
+    {
+      "obligation_id": "CP15-B-LO-01",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.editing_grammar"]
+    },
+    {
+      "obligation_id": "CP15-B-LO-02",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.body_blocks[2]", "surfaces.body_blocks[3]", "surfaces.visual_beats[4]"]
+    },
+    {
+      "obligation_id": "CP15-B-LO-03",
+      "actual_surface_refs": ["surfaces.body_blocks[4]", "surfaces.visual_beats[5]"]
+    }
+  ]
+}

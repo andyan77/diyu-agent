@@ -1,0 +1,28 @@
+ledger_horizon:
+  schema_version: v0.1
+  owner: CURRENT_LEDGER_OWNER
+  authorization_mode: EXPLICIT_BOUNDED
+  derivation_source: FOUNDER_AUTHORIZED_HORIZON_FILE
+  ledger_path: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
+  frozen_route_start_id: 19
+  previous_terminal_route_id: 30
+  authorized_new_route_ids:
+  - 31
+  authorized_terminal_route_id: 31
+  authorization_task_id: CONTROLLED_V2_B_LANE_INDEPENDENT_COMPOSITION_DEV_GATE_001
+  unknown_future_successor_allowed: false
+  frozen_route_sha256:
+    '19': a10f1a8477b7b36435ce16f806d21eec505b7d0eee39084666edbc7b9e67f76a
+    '20': ca76d27c8a84ee4a5888c17a0d88249b651de05314fc81a553d031981db4a5a3
+    '21': ba3f824ba4699c821a34416641a55f480451afdc371131916bcf30bb031b8195
+    '22': 5ade29110d186c98c05fe17ed07b62a11bd590aafb38a5cec5fa10973e89fc1b
+    '23': 0b7568944bdf073c5b6842263a954e59dc016709518fa57ece86b0ba2b365045
+    '24': 5a64c5130872905521bfa536e2d64e17f66a2c589dbd80b3c45183a78fcfb862
+    '25': 1fef7a924fe2abb7e28c5ba5a06e86a8e2421084043d02d35502ce8b1aa7da38
+    '26': 6383578d17aba2642b1e1299f6227954c5846ea7a83203949303d43e233c8e3d
+    '27': 58c4768bcc91ce69ffda835a85f257a1ac99116fd4276c5d1aaf7b0367a6eb1a
+    '28': 35491c51661a0f39d44410d4aa08753c10e6edb9e958304802a294a00f54c880
+    '29': bc7c526085bba2e4c0b7f0cd439f9218bce81bd2e393e2f15aec6d3cce7ce456
+    '30': 143ee83792fefa5f48e577350d3aa0d4ae84d79dd9f4d2866fe363620c3d6f51
+    '31': b2d7ea6f24df0db18acfb40ea6e2d50249d41320302473068dff0b688b952e48
+  horizon_digest: 8d3edcdc08a383fdf0417324fd1e767283d8312e66413b72b29d0c64cb4e2201

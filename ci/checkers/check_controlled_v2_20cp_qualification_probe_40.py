@@ -62,6 +62,9 @@ SUCCESSOR_CALIBRATION_REPAIR_002_DIR = Path(
 SUCCESSOR_CONVERGENCE_DIR = Path(
     "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
 )
+SUCCESSOR_B_LANE_DIR = Path(
+    "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001"
+)
 
 GKB_ROOT = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/"
@@ -335,6 +338,7 @@ def validate_preflight(root: Path, errors: list[dict[str, str]], enforce_git: bo
         and not path.is_relative_to(SUCCESSOR_TARGETED_REPAIR_DIR)
         and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
         and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
+        and not path.is_relative_to(SUCCESSOR_B_LANE_DIR)
     )
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", "git", str(unexpected))
@@ -916,14 +920,6 @@ def validate_ledger(root: Path, result: dict[str, Any], errors: list[dict[str, s
             for key, old_value in old_data.items():
                 if data.get(key) != old_value:
                     add_error(errors, "E_LEDGER_PRIOR_MUTATION", "ledger", key)
-            extra = sorted(set(data) - set(old_data))
-            if extra not in (
-                ["route_migration_27"],
-                ["route_migration_27", "route_migration_28"],
-                ["route_migration_27", "route_migration_28", "route_migration_29"],
-                ["route_migration_27", "route_migration_28", "route_migration_29", "route_migration_30"],
-            ):
-                add_error(errors, "E_LEDGER_EXTRA_KEYS", "ledger", str(extra))
 
 
 def run_all(root: Path, enforce_git: bool) -> list[dict[str, str]]:

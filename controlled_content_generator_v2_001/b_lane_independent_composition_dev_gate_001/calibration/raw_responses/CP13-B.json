@@ -1,0 +1,346 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP13-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "5feca8ec57cb4ea7d146a9e02ae4bfa693f2b27592ccdbe81b0e8f3e2c040f7f",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP13-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "厚针织先停一下",
+    "body_blocks": [
+      "这段使用虚构演示素材，不是真实生活记录。手边先试轻薄绗缝短马甲和厚针织，组合一落下就卡住了。",
+      "我先看肩线覆盖的内搭厚度，再看下摆和裙腰的重叠；这两个关系没有留出轻快的叠穿位置，于是撤下厚针织，换成更薄内搭。",
+      "在这次设定的季节位置里，内搭厚度和搭配关系都确认后，角色才落定：配更薄内搭时，它只作为温差层或轻量叠穿层。",
+      "这里不延伸到全季适用，也不提供保暖数值；这次虚构演绎只说明眼前这些搭配关系。"
+    ],
+    "spoken_lines": [
+      "我是这段虚构搭配演绎的场景策划，只在镜头里安排衣物关系。",
+      "厚的先放一边，肩上和腰间都要重新看。",
+      "薄下来以后，这件马甲只留在有温差的轻量叠穿里。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "俯拍桌面：轻薄绗缝短马甲落在厚针织上，衣架在画面边缘停住。",
+      "近景停在肩线，手指沿马甲边缘标出其覆盖内搭厚度的位置。",
+      "镜头下移到下摆与裙腰重叠处，保持两者同时清楚可见。",
+      "手把厚针织移出画面，换入更薄内搭，马甲保持原位。",
+      "温差提示卡被翻到正面，与更薄内搭和马甲同框。",
+      "收尾定格在马甲、薄内搭与提示卡，画面文字标注“虚构搭配演绎”。"
+    ],
+    "capture_instructions": [
+      "用同一机位连续拍摄厚针织组合与替换动作，避免拆成多套造型的目录式展示。",
+      "肩线特写保留马甲边缘和内搭厚度，焦点不离开两者的覆盖关系。",
+      "下摆特写同时收进裙腰，换薄动作在同一画面完成。",
+      "最后让温差提示卡、马甲与更薄内搭同框，字幕明确“虚构搭配演绎，非真实生活记录”。"
+    ],
+    "audio_grammar": "保留衣料叠放的摩擦声和衣架停顿的轻响；换薄时短暂留白，提示卡翻动后恢复环境声，口播只落在观察句。",
+    "editing_grammar": "从厚针织不适配的全景直接切肩线、下摆两处近景，再以同机位替换更薄内搭；提示卡同框后短停收尾，不横向罗列多组造型。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "厚针织先停一下",
+      "source_atom_refs": [
+        "EPC-CP13-B-1"
+      ],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这段使用虚构演示素材，不是真实生活记录。手边先试轻薄绗缝短马甲和厚针织，组合一落下就卡住了。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-OBJECT",
+        "EPC-CP13-SHARED-BOUNDARY",
+        "EPC-CP13-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "我先看肩线覆盖的内搭厚度，再看下摆和裙腰的重叠；这两个关系没有留出轻快的叠穿位置，于是撤下厚针织，换成更薄内搭。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "在这次设定的季节位置里，内搭厚度和搭配关系都确认后，角色才落定：配更薄内搭时，它只作为温差层或轻量叠穿层。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-BOUNDARY",
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2",
+        "EPC-CP13-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "这里不延伸到全季适用，也不提供保暖数值；这次虚构演绎只说明眼前这些搭配关系。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-BOUNDARY",
+        "EPC-CP13-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "我是这段虚构搭配演绎的场景策划，只在镜头里安排衣物关系。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-ROLE",
+        "EPC-CP13-SHARED-BOUNDARY"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "厚的先放一边，肩上和腰间都要重新看。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[2]",
+      "text": "薄下来以后，这件马甲只留在有温差的轻量叠穿里。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "俯拍桌面：轻薄绗缝短马甲落在厚针织上，衣架在画面边缘停住。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-OBJECT",
+        "EPC-CP13-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "近景停在肩线，手指沿马甲边缘标出其覆盖内搭厚度的位置。",
+      "source_atom_refs": [
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "镜头下移到下摆与裙腰重叠处，保持两者同时清楚可见。",
+      "source_atom_refs": [
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "手把厚针织移出画面，换入更薄内搭，马甲保持原位。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "温差提示卡被翻到正面，与更薄内搭和马甲同框。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "收尾定格在马甲、薄内搭与提示卡，画面文字标注“虚构搭配演绎”。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-BOUNDARY",
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2",
+        "EPC-CP13-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "用同一机位连续拍摄厚针织组合与替换动作，避免拆成多套造型的目录式展示。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "肩线特写保留马甲边缘和内搭厚度，焦点不离开两者的覆盖关系。",
+      "source_atom_refs": [
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "下摆特写同时收进裙腰，换薄动作在同一画面完成。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "最后让温差提示卡、马甲与更薄内搭同框，字幕明确“虚构搭配演绎，非真实生活记录”。",
+      "source_atom_refs": [
+        "EPC-CP13-SHARED-BOUNDARY",
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2",
+        "EPC-CP13-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "保留衣料叠放的摩擦声和衣架停顿的轻响；换薄时短暂留白，提示卡翻动后恢复环境声，口播只落在观察句。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "从厚针织不适配的全景直接切肩线、下摆两处近景，再以同机位替换更薄内搭；提示卡同框后短停收尾，不横向罗列多组造型。",
+      "source_atom_refs": [
+        "EPC-CP13-B-1",
+        "EPC-CP13-B-2",
+        "EPC-CP13-B-3"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.spoken_lines[2]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.spoken_lines[1]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[3]"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[3]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP13-PI-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.spoken_lines[0]",
+        "surfaces.capture_instructions[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP13-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]"
+      ]
+    },
+    {
+      "obligation_id": "CP13-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP13-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "obligation_id": "CP13-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]"
+      ]
+    },
+    {
+      "obligation_id": "CP13-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.spoken_lines[2]",
+        "surfaces.visual_beats[5]"
+      ]
+    }
+  ]
+}

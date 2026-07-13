@@ -1,0 +1,234 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP17-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "45b35fade04f905935b0b67ac7498f7d218c7e75ebe9dc0194630bb3a694eed9",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP17-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "袜套盘暂放后场之后",
+    "body_blocks": [
+      "这是一段虚构门店演示记录，不用于实际发布。袜套盘暂放后场，先留下一个没答案的问题：下一营业时段的补充拿取会不会受影响。",
+      "回到试衣区等候凳旁的配件窄架，前后画面都用同一处等候凳边和窄架边缘核对，不换区域。",
+      "现在能确认的只有两点：通道留出了稳定的侧身距离，腰带盒仍可见。",
+      "把它们放在一起，这次取舍只是让等待区视觉负担轻一点、通行动线更顺，同时守住配件可见度。",
+      "停留、触摸或绕行不能被写成购买动机，也不能接成销售因果。记录先停在这里，袜套盘是否影响补充拿取，待下一演示营业时段观察。"
+    ],
+    "spoken_lines": [
+      "这次我先惦记一件事：需要补袜套时，后场这一趟顺不顺手。",
+      "侧身的位置够了，腰带盒也没有从视线里消失；拿取那件事，下一段再记。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "后场近景：袜套盘单独入画，画面字幕标注“虚构门店演示素材”。",
+      "镜头从后场转回试衣区等候凳旁配件窄架，对齐同一区域的原状态留存画面。",
+      "固定等候凳边与窄架边缘，复核通道中稳定的侧身距离。",
+      "保持机位不变，让腰带盒继续可见。",
+      "留一拍等待区与通道，不加入顾客行为演示。",
+      "结尾回到后场袜套盘，以字幕“拿取影响待下一演示时段观察”收住。"
+    ],
+    "capture_instructions": [
+      "前后画面使用同一焦段、同一机位高度，并同时保留等候凳边和窄架边缘作为参照。",
+      "先拍后场袜套盘，再转回原区域；不复演配件移动过程。",
+      "通道段不安排顾客表演，只用静态画面确认侧身距离与腰带盒可见。",
+      "所有字幕采用观察语气，不写购买动机、销售变化或未观察时段的结论。"
+    ],
+    "audio_grammar": "后场段保留远处拿取环境声，回到等待区后以现场安静为主；口播低声、短句，不加成交提示音。",
+    "editing_grammar": "按“后场袜套盘—同一区域参照—侧身距离—腰带盒可见—回到袜套盘”的顺序直切；疑问一拍、两项确认各一拍，最后停在待观察字幕。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "袜套盘暂放后场之后",
+      "source_atom_refs": ["EPC-CP17-B-2"],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一段虚构门店演示记录，不用于实际发布。袜套盘暂放后场，先留下一个没答案的问题：下一营业时段的补充拿取会不会受影响。",
+      "source_atom_refs": ["EPC-CP17-SHARED-BOUNDARY", "EPC-CP17-B-2"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "回到试衣区等候凳旁的配件窄架，前后画面都用同一处等候凳边和窄架边缘核对，不换区域。",
+      "source_atom_refs": ["EPC-CP17-SHARED-OBJECT", "EPC-CP17-SHARED-BOUNDARY"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "现在能确认的只有两点：通道留出了稳定的侧身距离，腰带盒仍可见。",
+      "source_atom_refs": ["EPC-CP17-B-1"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "把它们放在一起，这次取舍只是让等待区视觉负担轻一点、通行动线更顺，同时守住配件可见度。",
+      "source_atom_refs": ["EPC-CP17-B-1", "EPC-CP17-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[4]",
+      "text": "停留、触摸或绕行不能被写成购买动机，也不能接成销售因果。记录先停在这里，袜套盘是否影响补充拿取，待下一演示营业时段观察。",
+      "source_atom_refs": ["EPC-CP17-B-2", "EPC-CP17-B-3"],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "这次我先惦记一件事：需要补袜套时，后场这一趟顺不顺手。",
+      "source_atom_refs": ["EPC-CP17-SHARED-ROLE", "EPC-CP17-B-2"],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "侧身的位置够了，腰带盒也没有从视线里消失；拿取那件事，下一段再记。",
+      "source_atom_refs": ["EPC-CP17-SHARED-ROLE", "EPC-CP17-B-1", "EPC-CP17-B-2"],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "后场近景：袜套盘单独入画，画面字幕标注“虚构门店演示素材”。",
+      "source_atom_refs": ["EPC-CP17-SHARED-BOUNDARY", "EPC-CP17-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "镜头从后场转回试衣区等候凳旁配件窄架，对齐同一区域的原状态留存画面。",
+      "source_atom_refs": ["EPC-CP17-SHARED-OBJECT", "EPC-CP17-SHARED-BOUNDARY", "EPC-CP17-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "固定等候凳边与窄架边缘，复核通道中稳定的侧身距离。",
+      "source_atom_refs": ["EPC-CP17-SHARED-OBJECT", "EPC-CP17-B-1"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "保持机位不变，让腰带盒继续可见。",
+      "source_atom_refs": ["EPC-CP17-B-1"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "留一拍等待区与通道，不加入顾客行为演示。",
+      "source_atom_refs": ["EPC-CP17-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "结尾回到后场袜套盘，以字幕“拿取影响待下一演示时段观察”收住。",
+      "source_atom_refs": ["EPC-CP17-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "前后画面使用同一焦段、同一机位高度，并同时保留等候凳边和窄架边缘作为参照。",
+      "source_atom_refs": ["EPC-CP17-SHARED-OBJECT", "EPC-CP17-SHARED-BOUNDARY"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "先拍后场袜套盘，再转回原区域；不复演配件移动过程。",
+      "source_atom_refs": ["EPC-CP17-SHARED-OBJECT", "EPC-CP17-B-2"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "通道段不安排顾客表演，只用静态画面确认侧身距离与腰带盒可见。",
+      "source_atom_refs": ["EPC-CP17-B-1", "EPC-CP17-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[3]",
+      "text": "所有字幕采用观察语气，不写购买动机、销售变化或未观察时段的结论。",
+      "source_atom_refs": ["EPC-CP17-SHARED-BOUNDARY", "EPC-CP17-B-2", "EPC-CP17-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "后场段保留远处拿取环境声，回到等待区后以现场安静为主；口播低声、短句，不加成交提示音。",
+      "source_atom_refs": ["EPC-CP17-B-2", "EPC-CP17-B-3"],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按“后场袜套盘—同一区域参照—侧身距离—腰带盒可见—回到袜套盘”的顺序直切；疑问一拍、两项确认各一拍，最后停在待观察字幕。",
+      "source_atom_refs": ["EPC-CP17-SHARED-OBJECT", "EPC-CP17-B-1", "EPC-CP17-B-2"],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": ["surfaces.CTA"]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": ["surfaces.body_blocks[4]", "surfaces.visual_beats[5]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.body_blocks[2]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": ["surfaces.body_blocks[2]", "surfaces.body_blocks[3]", "surfaces.body_blocks[4]"]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": ["surfaces.spoken_lines[0]", "surfaces.spoken_lines[1]"]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.body_blocks[2]", "surfaces.editing_grammar"]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[1]", "surfaces.visual_beats[5]"]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": ["surfaces.audio_grammar"]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": ["surfaces.visual_beats[0]", "surfaces.visual_beats[2]"]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP17-PI-01",
+      "actual_surface_refs": ["surfaces.body_blocks[1]", "surfaces.visual_beats[1]", "surfaces.capture_instructions[0]"]
+    },
+    {
+      "obligation_id": "CP17-PI-02",
+      "actual_surface_refs": ["surfaces.body_blocks[2]", "surfaces.body_blocks[3]"]
+    },
+    {
+      "obligation_id": "CP17-PI-03",
+      "actual_surface_refs": ["surfaces.body_blocks[4]", "surfaces.capture_instructions[3]"]
+    },
+    {
+      "obligation_id": "CP17-B-LO-01",
+      "actual_surface_refs": ["surfaces.body_blocks[0]", "surfaces.visual_beats[0]"]
+    },
+    {
+      "obligation_id": "CP17-B-LO-02",
+      "actual_surface_refs": ["surfaces.body_blocks[2]", "surfaces.visual_beats[2]", "surfaces.visual_beats[3]"]
+    },
+    {
+      "obligation_id": "CP17-B-LO-03",
+      "actual_surface_refs": ["surfaces.body_blocks[4]", "surfaces.capture_instructions[1]", "surfaces.visual_beats[5]"]
+    }
+  ]
+}

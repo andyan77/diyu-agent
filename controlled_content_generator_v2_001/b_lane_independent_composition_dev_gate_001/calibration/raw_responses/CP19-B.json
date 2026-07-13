@@ -1,0 +1,340 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP19-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "d4c7fc7902cae6a737e82c5e9273cd353cb60396dc0105ce45f43c2366a415a8",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP19-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "没做完的橱窗之后",
+    "body_blocks": [
+      "这是一段虚构演示素材，我只是负责复盘的记录员。先看到的是灯片延后留下的未完成新橱窗，以及供应窗口关闭后不再追单的节庆手套。",
+      "我从结果栏倒着读成本栏。第一笔：展示层次减少。第二笔：节庆搭配减少。第三笔：采购折扣失效。三行都留着，没有因为选择落定而消失。",
+      "再往回，白板没有把备选抹成一个答案：补齐高频基础需求、完成新橱窗方案、追节庆手套。最终选择是补齐高频基础需求；新橱窗仍未完成，节庆手套不再追单，放弃项照样可见。",
+      "最后才读到约束：预算和仓位都有限，所以优先补齐高频基础需求。这只是一项有限判断，不是自我表彰，也不证明利润改善、品牌价值或长期战略。",
+      "读到最后，最终选择和三笔代价仍一起留在白板上：展示层次减少、节庆搭配减少、采购折扣失效。决定有了，空缺仍在，白板不替它们写成成果。"
+    ],
+    "spoken_lines": [
+      "先看留下的缺口：橱窗没完成，手套补货也不再追。",
+      "条件有限，基础需求被放在前面，三项成本也继续留在板上。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "镜头贴近月末补货取舍白板的结果栏：“新橱窗方案未完成”；同屏小字标注“虚构演示素材”。",
+      "画面移到“节庆手套供应窗口已关闭，不再追单”，保持静止。",
+      "成本栏第一项独立入画：“展示层次减少”。",
+      "成本栏第二项独立入画：“节庆搭配减少”。",
+      "成本栏第三项独立入画：“采购折扣失效”。",
+      "镜头从成本栏反向移到“有限预算和仓位、优先补齐高频基础需求”，再回到仍保留三项代价的白板全景。"
+    ],
+    "capture_instructions": [
+      "使用同一块月末补货取舍白板，镜头从结果栏移向成本栏，最后才到约束和优先级。",
+      "成本栏三项各给一个独立静止画面，不重演备选项的选择顺序。",
+      "记录员只用画外音；收尾画面同时保留优先项、未完成事项、放弃事项和三项代价。"
+    ],
+    "audio_grammar": "静场为底，翻单声只作一次转场；三笔代价之间留出短暂停笔声，不使用胜利感音乐。",
+    "editing_grammar": "按结果栏、成本栏、备选与放弃、约束与优先级的次序反向推进；三笔代价逐项切分，最后回到成本栏，不追加结论式号召。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "surfaces.title",
+      "text": "没做完的橱窗之后",
+      "source_atom_refs": [
+        "EPC-CP19-B-1"
+      ],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[0]",
+      "text": "这是一段虚构演示素材，我只是负责复盘的记录员。先看到的是灯片延后留下的未完成新橱窗，以及供应窗口关闭后不再追单的节庆手套。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-ROLE",
+        "EPC-CP19-SHARED-BOUNDARY",
+        "EPC-CP19-B-1"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[1]",
+      "text": "我从结果栏倒着读成本栏。第一笔：展示层次减少。第二笔：节庆搭配减少。第三笔：采购折扣失效。三行都留着，没有因为选择落定而消失。",
+      "source_atom_refs": [
+        "EPC-CP19-B-2"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[2]",
+      "text": "再往回，白板没有把备选抹成一个答案：补齐高频基础需求、完成新橱窗方案、追节庆手套。最终选择是补齐高频基础需求；新橱窗仍未完成，节庆手套不再追单，放弃项照样可见。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-OBJECT",
+        "EPC-CP19-B-1",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[3]",
+      "text": "最后才读到约束：预算和仓位都有限，所以优先补齐高频基础需求。这只是一项有限判断，不是自我表彰，也不证明利润改善、品牌价值或长期战略。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-BOUNDARY",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "surfaces.body_blocks[4]",
+      "text": "读到最后，最终选择和三笔代价仍一起留在白板上：展示层次减少、节庆搭配减少、采购折扣失效。决定有了，空缺仍在，白板不替它们写成成果。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-OBJECT",
+        "EPC-CP19-B-2",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_METAPHOR"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[0]",
+      "text": "先看留下的缺口：橱窗没完成，手套补货也不再追。",
+      "source_atom_refs": [
+        "EPC-CP19-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.spoken_lines[1]",
+      "text": "条件有限，基础需求被放在前面，三项成本也继续留在板上。",
+      "source_atom_refs": [
+        "EPC-CP19-B-2",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[0]",
+      "text": "镜头贴近月末补货取舍白板的结果栏：“新橱窗方案未完成”；同屏小字标注“虚构演示素材”。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-OBJECT",
+        "EPC-CP19-SHARED-BOUNDARY",
+        "EPC-CP19-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[1]",
+      "text": "画面移到“节庆手套供应窗口已关闭，不再追单”，保持静止。",
+      "source_atom_refs": [
+        "EPC-CP19-B-1"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[2]",
+      "text": "成本栏第一项独立入画：“展示层次减少”。",
+      "source_atom_refs": [
+        "EPC-CP19-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[3]",
+      "text": "成本栏第二项独立入画：“节庆搭配减少”。",
+      "source_atom_refs": [
+        "EPC-CP19-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[4]",
+      "text": "成本栏第三项独立入画：“采购折扣失效”。",
+      "source_atom_refs": [
+        "EPC-CP19-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.visual_beats[5]",
+      "text": "镜头从成本栏反向移到“有限预算和仓位、优先补齐高频基础需求”，再回到仍保留三项代价的白板全景。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-OBJECT",
+        "EPC-CP19-B-2",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[0]",
+      "text": "使用同一块月末补货取舍白板，镜头从结果栏移向成本栏，最后才到约束和优先级。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-OBJECT",
+        "EPC-CP19-B-1",
+        "EPC-CP19-B-2",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[1]",
+      "text": "成本栏三项各给一个独立静止画面，不重演备选项的选择顺序。",
+      "source_atom_refs": [
+        "EPC-CP19-B-2"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.capture_instructions[2]",
+      "text": "记录员只用画外音；收尾画面同时保留优先项、未完成事项、放弃事项和三项代价。",
+      "source_atom_refs": [
+        "EPC-CP19-SHARED-ROLE",
+        "EPC-CP19-B-1",
+        "EPC-CP19-B-2",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "surfaces.audio_grammar",
+      "text": "静场为底，翻单声只作一次转场；三笔代价之间留出短暂停笔声，不使用胜利感音乐。",
+      "source_atom_refs": [],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "surfaces.editing_grammar",
+      "text": "按结果栏、成本栏、备选与放弃、约束与优先级的次序反向推进；三笔代价逐项切分，最后回到成本栏，不追加结论式号召。",
+      "source_atom_refs": [
+        "EPC-CP19-B-1",
+        "EPC-CP19-B-2",
+        "EPC-CP19-B-3"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "surfaces.CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[4]",
+        "surfaces.visual_beats[5]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.capture_instructions[0]",
+        "surfaces.editing_grammar"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.spoken_lines[0]"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[4]",
+        "surfaces.visual_beats[5]"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "surfaces.audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[4]"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP19-PI-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.body_blocks[1]",
+        "surfaces.body_blocks[2]",
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP19-PI-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[2]",
+        "surfaces.body_blocks[4]"
+      ]
+    },
+    {
+      "obligation_id": "CP19-PI-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]"
+      ]
+    },
+    {
+      "obligation_id": "CP19-B-LO-01",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[0]",
+        "surfaces.visual_beats[0]",
+        "surfaces.visual_beats[1]"
+      ]
+    },
+    {
+      "obligation_id": "CP19-B-LO-02",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[1]",
+        "surfaces.visual_beats[2]",
+        "surfaces.visual_beats[3]",
+        "surfaces.visual_beats[4]"
+      ]
+    },
+    {
+      "obligation_id": "CP19-B-LO-03",
+      "actual_surface_refs": [
+        "surfaces.body_blocks[3]",
+        "surfaces.capture_instructions[0]",
+        "surfaces.editing_grammar"
+      ]
+    }
+  ]
+}

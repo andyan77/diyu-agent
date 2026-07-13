@@ -42,6 +42,9 @@ SUCCESSOR_CALIBRATION_REPAIR_002_CHECKER_PATH = Path(
 SUCCESSOR_CONVERGENCE_DIR = Path(
     "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001"
 )
+SUCCESSOR_B_LANE_DIR = Path(
+    "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001"
+)
 SUCCESSOR_CONVERGENCE_CHECKER_PATH = Path(
     "ci/checkers/check_controlled_v2_creative_authoring_route_convergence.py"
 )
@@ -355,6 +358,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         if not path.is_relative_to(TASK_DIR)
         and not path.is_relative_to(SUCCESSOR_CALIBRATION_REPAIR_002_DIR)
         and not path.is_relative_to(SUCCESSOR_CONVERGENCE_DIR)
+        and not path.is_relative_to(SUCCESSOR_B_LANE_DIR)
         and path not in allowed
     )
     if unexpected:

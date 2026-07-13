@@ -1,0 +1,320 @@
+{
+  "request_id": "EXPOSED_PAIR_CALIBRATION_001-CP03-B-001-ASSIGN-AUTHORING-REQUEST",
+  "request_digest": "c341454cc39bd2d862e6df490ccb06e60b523477610ef7c353f5a59e9623a7f0",
+  "response_id": "EXPOSED-PAIR-CAL-CAND-CP03-B-001",
+  "backend_class": "CONTROLLED_EXECUTION_AGENT",
+  "one_request_one_response": true,
+  "paired_output_visible": false,
+  "review_envelope_visible": false,
+  "expected_score_visible": false,
+  "chain_of_thought_stored": false,
+  "surfaces": {
+    "title": "改过的，留下的",
+    "body_blocks": [
+      "以下为虚构演示素材，不作为商品信息发布；样衣、岗位、维护单与记录均属虚构。画面先翻到备注栏：同一条样衣风衣腰带的扣面细划痕标作未处理。",
+      "回看这条腰带：输入是歪斜的金属日字扣。软尺用于量距，拆线刀与压脚夹用于复位，维护单记下处理边界；全过程只对应这一件，不替换五金，也不借别件画面。",
+      "复位与划痕分开交代：日字扣回到可穿扣的位置；细划痕不影响穿扣，也不在本任务可更换的范围内。局部处置不延伸成整件质量、耐用性或售后结论。",
+      "已处理的是歪斜，未处理的是扣面细划痕。它保持原状，最后仍落在维护单备注栏。"
+    ],
+    "spoken_lines": [
+      "扣位复正，这道细痕照实留单。",
+      "这道痕不妨碍腰带穿过扣位，换件却不在我手里的权限里。"
+    ],
+    "CTA": "",
+    "visual_beats": [
+      "开场近拍维护单备注栏，“五金划痕：未处理”与同一条腰带同框。",
+      "镜头从备注栏移向金属日字扣表面，在细划痕处短暂停留。",
+      "同一机位稍稍拉开，软尺、拆线刀、压脚夹依次入画，腰带始终留在画面内。",
+      "不逐项复演完整工序，只连续保留拆线后重新穿回并固定的因果片段，交代歪斜如何被复位。",
+      "结尾把已复位的日字扣与维护单上的未处理备注并置，笔尖停在备注栏。"
+    ],
+    "capture_instructions": [
+      "全程只使用同一条腰带，固定腰带与维护单的相对位置来维持连续性，不插入库存空镜或别件素材。",
+      "先拍备注栏，再在扣面与工具之间往返；复位段保持拆线、重新穿回、固定三个动作连续，不剪成步骤串。",
+      "拍到软尺对应量距、拆线刀与压脚夹对应复位、笔尖对应未处理划痕的记录，不安排更换五金的镜头。"
+    ],
+    "audio_grammar": "以翻单、笔尖书写和扣面轻触的近场原声为主；复位片段只留轻微工具声，不组织连续拆线声链，口播落在原声间隙。",
+    "editing_grammar": "从备注栏开场，在备注与扣面之间往返；关键因果片段连续呈现，但不剪成完整步骤串，结尾停在已复位与未处理的同框记录。"
+  },
+  "surface_bindings": [
+    {
+      "surface_path": "/surfaces/title",
+      "text": "改过的，留下的",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/0",
+      "text": "以下为虚构演示素材，不作为商品信息发布；样衣、岗位、维护单与记录均属虚构。画面先翻到备注栏：同一条样衣风衣腰带的扣面细划痕标作未处理。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-BOUNDARY",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/1",
+      "text": "回看这条腰带：输入是歪斜的金属日字扣。软尺用于量距，拆线刀与压脚夹用于复位，维护单记下处理边界；全过程只对应这一件，不替换五金，也不借别件画面。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-01",
+        "EPC-CP03-B-03"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/2",
+      "text": "复位与划痕分开交代：日字扣回到可穿扣的位置；细划痕不影响穿扣，也不在本任务可更换的范围内。局部处置不延伸成整件质量、耐用性或售后结论。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-SHARED-BOUNDARY",
+        "EPC-CP03-B-01"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/body_blocks/3",
+      "text": "已处理的是歪斜，未处理的是扣面细划痕。它保持原状，最后仍落在维护单备注栏。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/spoken_lines/0",
+      "text": "扣位复正，这道细痕照实留单。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/spoken_lines/1",
+      "text": "这道痕不妨碍腰带穿过扣位，换件却不在我手里的权限里。",
+      "source_atom_refs": [
+        "EPC-CP03-B-01"
+      ],
+      "semantic_license": "EVIDENCE_BOUND_EXPRESSION"
+    },
+    {
+      "surface_path": "/surfaces/CTA",
+      "text": "",
+      "source_atom_refs": [],
+      "semantic_license": "STRUCTURAL_LANGUAGE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/0",
+      "text": "开场近拍维护单备注栏，“五金划痕：未处理”与同一条腰带同框。",
+      "source_atom_refs": [
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/1",
+      "text": "镜头从备注栏移向金属日字扣表面，在细划痕处短暂停留。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-01",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/2",
+      "text": "同一机位稍稍拉开，软尺、拆线刀、压脚夹依次入画，腰带始终留在画面内。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-03"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/3",
+      "text": "不逐项复演完整工序，只连续保留拆线后重新穿回并固定的因果片段，交代歪斜如何被复位。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-03"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/visual_beats/4",
+      "text": "结尾把已复位的日字扣与维护单上的未处理备注并置，笔尖停在备注栏。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/capture_instructions/0",
+      "text": "全程只使用同一条腰带，固定腰带与维护单的相对位置来维持连续性，不插入库存空镜或别件素材。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/capture_instructions/1",
+      "text": "先拍备注栏，再在扣面与工具之间往返；复位段保持拆线、重新穿回、固定三个动作连续，不剪成步骤串。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-02",
+        "EPC-CP03-B-03"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/capture_instructions/2",
+      "text": "拍到软尺对应量距、拆线刀与压脚夹对应复位、笔尖对应未处理划痕的记录，不安排更换五金的镜头。",
+      "source_atom_refs": [
+        "EPC-CP03-B-01",
+        "EPC-CP03-B-02",
+        "EPC-CP03-B-03"
+      ],
+      "semantic_license": "CAPTURE_BOUND_PERFORMATIVE"
+    },
+    {
+      "surface_path": "/surfaces/audio_grammar",
+      "text": "以翻单、笔尖书写和扣面轻触的近场原声为主；复位片段只留轻微工具声，不组织连续拆线声链，口播落在原声间隙。",
+      "source_atom_refs": [
+        "EPC-CP03-B-02",
+        "EPC-CP03-B-03"
+      ],
+      "semantic_license": "NONFACTUAL_RHYTHM"
+    },
+    {
+      "surface_path": "/surfaces/editing_grammar",
+      "text": "从备注栏开场，在备注与扣面之间往返；关键因果片段连续呈现，但不剪成完整步骤串，结尾停在已复位与未处理的同框记录。",
+      "source_atom_refs": [
+        "EPC-CP03-SHARED-OBJECT",
+        "EPC-CP03-B-01",
+        "EPC-CP03-B-02"
+      ],
+      "semantic_license": "NONFACTUAL_INFORMATION_ORDER"
+    }
+  ],
+  "style_realization_evidence": [
+    {
+      "axis": "CTA_policy",
+      "actual_surface_refs": [
+        "/surfaces/CTA"
+      ]
+    },
+    {
+      "axis": "ending_mode",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/3",
+        "/surfaces/visual_beats/4",
+        "/surfaces/editing_grammar"
+      ]
+    },
+    {
+      "axis": "information_order",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/0",
+        "/surfaces/capture_instructions/1",
+        "/surfaces/editing_grammar"
+      ]
+    },
+    {
+      "axis": "language_register",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/2",
+        "/surfaces/body_blocks/3",
+        "/surfaces/spoken_lines/0"
+      ]
+    },
+    {
+      "axis": "narrative_distance",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/0",
+        "/surfaces/visual_beats/1",
+        "/surfaces/spoken_lines/1"
+      ]
+    },
+    {
+      "axis": "sentence_rhythm",
+      "actual_surface_refs": [
+        "/surfaces/title",
+        "/surfaces/body_blocks/3",
+        "/surfaces/spoken_lines/0"
+      ]
+    },
+    {
+      "axis": "shot_continuity",
+      "actual_surface_refs": [
+        "/surfaces/visual_beats/0",
+        "/surfaces/visual_beats/4",
+        "/surfaces/capture_instructions/0"
+      ]
+    },
+    {
+      "axis": "sound_subject",
+      "actual_surface_refs": [
+        "/surfaces/audio_grammar"
+      ]
+    },
+    {
+      "axis": "visual_subject",
+      "actual_surface_refs": [
+        "/surfaces/visual_beats/0",
+        "/surfaces/visual_beats/1",
+        "/surfaces/visual_beats/2"
+      ]
+    }
+  ],
+  "required_obligation_evidence": [
+    {
+      "obligation_id": "CP03-PI-01",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/1",
+        "/surfaces/body_blocks/2",
+        "/surfaces/capture_instructions/0"
+      ]
+    },
+    {
+      "obligation_id": "CP03-PI-02",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/2",
+        "/surfaces/body_blocks/3",
+        "/surfaces/visual_beats/4"
+      ]
+    },
+    {
+      "obligation_id": "CP03-PI-03",
+      "actual_surface_refs": [
+        "/surfaces/visual_beats/3",
+        "/surfaces/capture_instructions/0",
+        "/surfaces/capture_instructions/1"
+      ]
+    },
+    {
+      "obligation_id": "CP03-B-LO-01",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/0",
+        "/surfaces/visual_beats/0",
+        "/surfaces/editing_grammar"
+      ]
+    },
+    {
+      "obligation_id": "CP03-B-LO-02",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/2",
+        "/surfaces/spoken_lines/1"
+      ]
+    },
+    {
+      "obligation_id": "CP03-B-LO-03",
+      "actual_surface_refs": [
+        "/surfaces/body_blocks/1",
+        "/surfaces/capture_instructions/2",
+        "/surfaces/audio_grammar"
+      ]
+    }
+  ]
+}

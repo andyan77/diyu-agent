@@ -1,0 +1,19 @@
+guardian_checkpoint_0:
+  schema_version: v0.1
+  source: external_guardian_read_only_review
+  verdict: PASS
+  checker_false_positive_fixed: true
+  structural_false_negative_fixed: true
+  no_force_green: true
+  frozen_core_unchanged: true
+  candidates_unchanged: true
+  eligible_to_merge_PR9_as_failure_evidence: true
+  blocking_items: []
+  reviewed_head_sha: 5800d6ba701c21604ba47297a2177642beb85bd5
+  meaning:
+    governance_integrity_passed: true
+    content_development_gate_passed: false
+    pair_independence_passed: false
+    generator_qualified: false
+    accepted_baseline_count: 120
+    hidden_created_count: 0
