@@ -1,0 +1,32 @@
+{
+  "controlled_surfaces": [
+    "title",
+    "body",
+    "spoken_script",
+    "CTA",
+    "caption",
+    "on_screen_text",
+    "visual_direction",
+    "shot_instruction",
+    "audio_direction",
+    "sound_instruction"
+  ],
+  "guardian_full_surface_review_required": true,
+  "machine_final_quality_claim": false,
+  "machine_final_semantic_claim": false,
+  "rules": {
+    "FC-01": "all factual surface units require a source atom binding",
+    "FC-02": "no number outside the source",
+    "FC-03": "no action outside the source",
+    "FC-04": "no causal relation outside the source",
+    "FC-05": "no result-state upgrade",
+    "FC-06": "no entity outside the source",
+    "FC-07": "smallest exact source span and digest required",
+    "FC-08": "missing or unauthorized slots stop or safely degrade",
+    "FC-09": "components organize form and never supply facts",
+    "FC-10": "post-author source mutation is forbidden"
+  },
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_COMPONENT_CONSUMPTION_AND_CLAIM_CLOSURE_DEV_GATE_001",
+  "unknown_surface_field_policy": "FAIL_CLOSED"
+}

@@ -1,0 +1,388 @@
+{
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_COMPONENT_CONSUMPTION_AND_CLAIM_CLOSURE_DEV_GATE_001",
+  "development_only": true,
+  "synthetic_not_runtime_fact": true,
+  "packs": [
+    {
+      "profile_id": "CP01",
+      "scenario_name": "待确认衣架任务",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP01-CONTEXT", "text": "一组待确认样衣放在工作台旁，衣架和挂签都在画面内。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP01-ROLE", "text": "店务记录员只负责核对挂签和登记当前状态，不负责决定样衣是否上架。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP01-ACTION", "text": "记录员逐件核对挂签，并把核对过的衣架移到待确认架。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP01-STATE", "text": "挂签核对已经完成，上架决定仍然待确认。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP01-RECORD", "text": "任务表分别保留已核对和待确认两个字段。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP01-SOUND", "text": "移动衣架时可以收录衣架碰到挂杆的现场声。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP01-BOUNDARY", "text": "这些记录只能说明当下任务状态，不能说明后续上架结果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "role_recording_scope": "recorded_task_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only the recorded tag-check task and pending shelf decision may be stated.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "这项岗位任务从哪里开始，又停在什么状态？", "narrative_operator": "task_sequence_with_open_handoff", "information_order": ["work_surface", "authorized_action", "current_state", "boundary"], "visual_subject": "recorders_hands_and_hangers", "sound_subject": "brief_role_voice_with_hanger_sound", "rhythm": "continuous_then_pause", "ending": "pending_decision_handoff", "preferred_component_aliases": ["RCV2-002-SCENE-01-ARRIVAL-INSPECTION", "RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK", "BRV-01", "VGA-02"]},
+        "B": {"primary_question": "一张任务表怎样把完成与待确认分开？", "narrative_operator": "evidence_map_from_record_to_object", "information_order": ["record_fields", "hanger_groups", "task_friction", "open_state"], "visual_subject": "task_record_and_two_hanger_states", "sound_subject": "source_sound_with_sparse_observation", "rhythm": "short_observations_with_fixed_holds", "ending": "completed_pending_split", "preferred_component_aliases": ["RCV2-002-SCENE-04-COPY-CLAIM-PAUSE", "RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE", "BRV-04", "VGA-03"]}
+      }
+    },
+    {
+      "profile_id": "CP02",
+      "scenario_name": "陈列台时段观察",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP02-CONTEXT", "text": "同一陈列台在开门前和营业间歇都保持固定观察位置。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP02-ROLE", "text": "空间记录员只记录陈列台状态，不解释客流或销售。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP02-ACTION", "text": "开门前记录员铺平台布，营业间歇只核对台布边缘。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP02-STATE", "text": "开门前台布边缘平直，营业间歇边缘出现轻微折起，原因没有记录。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP02-RECORD", "text": "观察卡把两个时段和各自可见状态分开登记。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP02-SOUND", "text": "开门前可收录卷帘升起的现场声，营业间歇保持环境底声。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP02-BOUNDARY", "text": "两个时段的差异只是观察记录，不能推导发生原因。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "space_capture_scope": "fixed_display_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only the two recorded display states and their source sounds may be stated.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "固定位置里的两个时段有什么可见差异？", "narrative_operator": "matched_frame_time_slice", "information_order": ["first_time_anchor", "first_state", "second_time_anchor", "second_state"], "visual_subject": "same_display_table_from_fixed_position", "sound_subject": "time_anchor_source_sound", "rhythm": "two_even_observation_blocks", "ending": "difference_without_cause", "preferred_component_aliases": ["RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "RCV2-002-ACTION-06-COAT-SHOULDER-RESET", "VGA-01"]},
+        "B": {"primary_question": "如果只听现场声，什么时候该把注意力放回台布？", "narrative_operator": "sound_anchor_to_unresolved_state", "information_order": ["source_sound", "fixed_subject", "visible_change", "unrecorded_cause"], "visual_subject": "folded_edge_held_in_frame", "sound_subject": "roller_and_room_tone", "rhythm": "sound_entry_then_long_hold", "ending": "unresolved_state_hold", "preferred_component_aliases": ["RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "RCV2-002-ACTION-05-DRAFT-CLEANUP", "VGA-07"]}
+      }
+    },
+    {
+      "profile_id": "CP03",
+      "scenario_name": "里侧缝边检查",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP03-CONTEXT", "text": "一块样布的里侧缝边放在素色工作垫上，外观和里侧都可见。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP03-ROLE", "text": "工艺记录员只展示这次检查动作，不评价耐久或穿着效果。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP03-ACTION", "text": "记录员翻开缝边、沿边压平，再把样布恢复到检查前的位置。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP03-STATE", "text": "缝边在压平后可以完整看见，其他性能没有验证。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP03-RECORD", "text": "检查卡只登记外观、里侧和动作停止位置。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP03-SOUND", "text": "翻开和压平样布时的摩擦声可以同步收录。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP03-BOUNDARY", "text": "可见缝边和摩擦声不能证明寿命、舒适度或身体效果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "object_capture_scope": "sample_cloth_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "The candidate may show the exact inspection sequence but no performance outcome.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "这次缝边检查的完整动作链是什么？", "narrative_operator": "input_action_stop_state", "information_order": ["outer_view", "turn_inside", "press_edge", "stop_state"], "visual_subject": "hands_and_seam_edge", "sound_subject": "brief_process_voice", "rhythm": "continuous_action_window", "ending": "visible_state_only", "preferred_component_aliases": ["RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION", "RCV2-002-ACTION-08-COLOR-COMPARISON-PROP", "RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "VGA-02"]},
+        "B": {"primary_question": "不靠旁白，接触声和停顿能留下哪些证据？", "narrative_operator": "silent_object_contact_sequence", "information_order": ["contact", "source_sound", "inside_detail", "restored_position"], "visual_subject": "cloth_contact_points", "sound_subject": "synchronized_cloth_friction", "rhythm": "contact_pause_contact", "ending": "silence_after_restoration", "preferred_component_aliases": ["RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION", "RCV2-002-ACTION-08-COLOR-COMPARISON-PROP", "RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK", "VGA-08", "VGA-06"]}
+      }
+    },
+    {
+      "profile_id": "CP04",
+      "scenario_name": "两岗位陈列交接",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP04-CONTEXT", "text": "同一陈列架旁放着陈列记录表和库存状态卡。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP04-ROLE", "text": "陈列记录员负责架面位置，库存记录员负责状态卡；双方都不能替对方作决定。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP04-ACTION", "text": "陈列记录员核对架面位置，库存记录员核对状态卡，两个动作分别留有记录。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP04-STATE", "text": "架面核对已经完成，状态卡仍有一项待确认，交接尚未关闭。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP04-RECORD", "text": "记录表分别列出完成项、待确认项和各自负责人。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP04-SOUND", "text": "画面只保留纸张翻动和衣架轻碰的现场声，不需要编写对话。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP04-BOUNDARY", "text": "记录中没有争吵、共识或跨岗位判断。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "multi_role_scope": "separate_recorded_actions", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Each role may speak only to its recorded action and authority boundary.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "两项工作怎样在不混淆权限的情况下完成交接？", "narrative_operator": "parallel_work_state_handoff", "information_order": ["role_boundaries", "parallel_actions", "completed_item", "pending_item"], "visual_subject": "two_roles_in_parallel_frames", "sound_subject": "separate_role_lines", "rhythm": "alternating_equal_blocks", "ending": "unclosed_handoff", "preferred_component_aliases": ["RCV2-002-SCENE-01-ARRIVAL-INSPECTION", "RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK", "BNO-04", "BRV-01", "VGA-10"]},
+        "B": {"primary_question": "从未关闭的交接状态往回看，各岗位留下了什么证据？", "narrative_operator": "result_first_role_readback", "information_order": ["observed_result_state", "display_record", "inventory_record", "authority_boundaries"], "visual_subject": "record_fields_then_role_actions", "sound_subject": "paper_and_hanger_source_sound", "rhythm": "result_hold_then_two_readbacks", "ending": "responsibility_stays_separate", "preferred_component_aliases": ["RCV2-002-SCENE-04-COPY-CLAIM-PAUSE", "RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE", "BNO-08", "BRV-02", "RCV2-002-CAPTURE-DUO-STATIC-PHONE"]}
+      }
+    },
+    {
+      "profile_id": "CP05",
+      "scenario_name": "职业记录字段回读",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP05-CONTEXT", "text": "资料台上有一张早期工作卡和一张后续回访卡。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP05-ROLE", "text": "资料记录员只负责读出卡片字段，经历解释权仍属于被记录者。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP05-ACTION", "text": "记录员把两张卡按时间标记并列，逐项核对任务名称和未填写字段。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP05-STATE", "text": "后续卡新增了任务记录，但成长原因和个人感受没有填写。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP05-RECORD", "text": "可公开字段只有任务名称、时间标记和空白项。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP05-SOUND", "text": "纸卡放到台面上的声音可以保留，人物口述没有提供。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP05-BOUNDARY", "text": "不得把任务增加写成成长，也不得补写个人经历或加班故事。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "record_field_scope": "listed_fields_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only explicit record fields may be narrated; blank experience fields stay blank.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "两张工作卡实际记录了哪些变化？", "narrative_operator": "field_ordered_timeline", "information_order": ["early_card", "later_card", "added_field", "blank_fields"], "visual_subject": "two_record_cards", "sound_subject": "measured_record_reader", "rhythm": "field_by_field", "ending": "blank_fields_preserved", "preferred_component_aliases": ["RCV2-002-SCENE-01-ARRIVAL-INSPECTION", "RCV2-002-TRIGGER-01-ARRIVAL-CHECK", "BRV-03", "BNO-06", "VGA-04"]},
+        "B": {"primary_question": "一个记录者能说到哪里，必须在哪里停下？", "narrative_operator": "recorder_authority_boundary", "information_order": ["recorder_role", "visible_fields", "unfilled_experience", "owner_of_interpretation"], "visual_subject": "blank_fields_and_recording_hand", "sound_subject": "paper_contact_without_personal_voice", "rhythm": "short_fact_then_long_pause", "ending": "interpretation_returned_to_subject", "preferred_component_aliases": ["RCV2-002-SCENE-04-COPY-CLAIM-PAUSE", "RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE", "BRV-02", "BNO-06", "RCV2-002-CAPTURE-SOLO-STATIC-PHONE"]}
+      }
+    },
+    {
+      "profile_id": "CP06",
+      "scenario_name": "折向单变量观察",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP06-CONTEXT", "text": "同一块布在同一光线下以两种折向并列放置。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP06-ROLE", "text": "观察员只描述可见轮廓，不评价身体效果或普遍性能。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP06-ACTION", "text": "观察员保持光线不变，只改变布面的折向。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP06-STATE", "text": "两种折向在画面中呈现不同的明暗边界，其他条件没有验证。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP06-RECORD", "text": "观察表把光线、折向和可见边界分别登记。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP06-SOUND", "text": "这组观察不需要用声音证明差异。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP06-BOUNDARY", "text": "可见明暗差异不能推出材质性能、因果或适用结论。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "comparison_scope": "visible_fold_direction_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "The comparison is limited to visible boundaries under the supplied light condition.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "只改变折向后，画面里能确认什么？", "narrative_operator": "single_variable_observation", "information_order": ["fixed_condition", "first_fold", "second_fold", "observation_boundary"], "visual_subject": "two_fold_directions", "sound_subject": "low_voice_explanation", "rhythm": "balanced_comparison", "ending": "no_general_conclusion", "preferred_component_aliases": ["RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION", "RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM", "BNO-05", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY"]},
+        "B": {"primary_question": "观察表怎样阻止一个局部差异被说成万能结论？", "narrative_operator": "authorized_field_trace", "information_order": ["record_fields", "field_meaning", "visible_difference", "unverified_scope"], "visual_subject": "record_fields_beside_folded_cloth", "sound_subject": "record_reader_with_silence", "rhythm": "ledger_steps", "ending": "unverified_fields_open", "preferred_component_aliases": ["RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY", "BRV-03", "BNO-06", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY"]}
+      }
+    },
+    {
+      "profile_id": "CP07",
+      "scenario_name": "条件反选卡",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP07-CONTEXT", "text": "一张条件卡列出需要快速取放和需要稳定展示两种任务。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP07-ROLE", "text": "任务顾问只能依据卡片条件说明取舍，不能替受众作绝对选择。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP07-ACTION", "text": "顾问逐项核对任务条件，并把不匹配项保留在卡片上。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP07-STATE", "text": "快速取放和稳定展示对应不同安排，没有一个安排同时满足两种任务。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP07-RECORD", "text": "条件卡提供匹配条件、排除条件和可替代方向。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP07-SOUND", "text": "声音只用于读出条件，不模拟用户提问。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP07-BOUNDARY", "text": "材料中没有真实用户故事，也没有固定答案。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "advisory_scope": "listed_task_conditions", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Advice must remain conditional and may not invent a user question.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "你的任务更接近快速取放，还是稳定展示？", "narrative_operator": "condition_exclusion_alternative", "information_order": ["task_condition", "matched_arrangement", "excluded_arrangement", "alternative"], "visual_subject": "condition_card_and_two_arrangements", "sound_subject": "direct_conditional_voice", "rhythm": "question_then_branches", "ending": "audience_keeps_choice", "preferred_component_aliases": ["RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH", "RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER", "BNO-07", "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]},
+        "B": {"primary_question": "记录任务摩擦，能不能比直接给答案更有用？", "narrative_operator": "ordinary_observer_friction_entry", "information_order": ["observable_friction", "affected_task", "condition_card", "open_alternative"], "visual_subject": "hands_returning_to_condition_card", "sound_subject": "sparse_observer_voice", "rhythm": "friction_pause_option", "ending": "request_missing_condition", "preferred_component_aliases": ["RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE", "BRV-04", "BNO-07", "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]}
+      }
+    },
+    {
+      "profile_id": "CP08",
+      "scenario_name": "里外细节与光线",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP08-CONTEXT", "text": "同一块布的外侧和里侧在侧光下并列可见。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP08-ROLE", "text": "细节观察员只说明可见结构，不把局部细节当成整件性能。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP08-ACTION", "text": "观察员翻开布边，让外侧纹路和里侧收边依次进入画面。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP08-STATE", "text": "外侧纹路与里侧收边都能看见，触感和使用结果没有记录。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP08-RECORD", "text": "观察卡只登记光线、外侧纹路和里侧收边。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP08-SOUND", "text": "翻开布边时的轻微摩擦声可以保留。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP08-BOUNDARY", "text": "局部可见结构不能证明整件寿命、舒适度或身体效果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "detail_capture_scope": "visible_cloth_structure", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Visible local structure is the only supported claim surface.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "从外侧走到里侧，哪些结构真正可见？", "narrative_operator": "outer_to_inner_detail_path", "information_order": ["outer_texture", "edge_turn", "inner_finish", "unsupported_properties"], "visual_subject": "outer_and_inner_structure", "sound_subject": "quiet_detail_voice", "rhythm": "slow_detail_path", "ending": "local_evidence_boundary", "preferred_component_aliases": ["RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION", "RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE", "RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN", "RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION"]},
+        "B": {"primary_question": "如果撤掉解释，只留接触、光线和停顿，还能看清什么？", "narrative_operator": "silent_object_contact_rhythm", "information_order": ["side_light", "contact", "outer_detail", "inner_detail"], "visual_subject": "cloth_edge_contact", "sound_subject": "cloth_friction_only", "rhythm": "touch_hold_turn_hold", "ending": "no_spoken_claim", "preferred_component_aliases": ["RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION", "VGA-08", "RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM", "RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION"]}
+      }
+    },
+    {
+      "profile_id": "CP09",
+      "scenario_name": "任务边界反选",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP09-CONTEXT", "text": "两种摆放方式分别服务快速取用和保持展示面稳定。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP09-ROLE", "text": "建议记录员只依据任务条件说明适用边界，不评价身体或个人。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP09-ACTION", "text": "记录员按同一对象演示两种摆放方式，并分别停止在可见状态。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP09-STATE", "text": "快速取用方式保留开放入口，稳定展示方式保留完整展示面。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP09-RECORD", "text": "任务卡分别列出适用条件、不适用条件和替代方向。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP09-SOUND", "text": "演示不需要用音效暗示优劣。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP09-BOUNDARY", "text": "两种方式没有绝对优劣，材料也不支持身体适配结论。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "advisory_scope": "task_condition_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Recommendations must stay tied to the two listed tasks.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "什么任务适合开放入口，什么任务不适合？", "narrative_operator": "condition_to_exclusion", "information_order": ["task_one", "supported_form", "task_two", "alternative_form"], "visual_subject": "same_object_two_arrangements", "sound_subject": "conditional_explanation", "rhythm": "paired_branches", "ending": "no_universal_choice", "preferred_component_aliases": ["RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH", "RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER", "BNO-07", "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]},
+        "B": {"primary_question": "只改一个摆放条件，观察到的边界会怎样变化？", "narrative_operator": "single_variable_boundary_test", "information_order": ["shared_object", "changed_arrangement", "visible_state", "decision_boundary"], "visual_subject": "entry_and_display_surface", "sound_subject": "minimal_observation_voice", "rhythm": "change_observe_pause", "ending": "alternative_remains_open", "preferred_component_aliases": ["RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE", "RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM", "BNO-05", "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]}
+      }
+    },
+    {
+      "profile_id": "CP10",
+      "scenario_name": "同位观察记录",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP10-CONTEXT", "text": "同一物件在初始记录和后续记录中都放在固定位置。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP10-ROLE", "text": "档案记录员只读记录字段，不把单次观察解释成长期规律。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP10-ACTION", "text": "两次记录都使用同一翻边动作和同一观察位置。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP10-STATE", "text": "后续记录里的边缘状态与初始记录不同，变化原因没有验证。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP10-RECORD", "text": "档案字段包含时间标记、观察位置、动作和可见状态。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP10-SOUND", "text": "两次观察都不使用额外音效。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP10-BOUNDARY", "text": "单次差异不能替代长期记录，也不能证明变化原因。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "record_scope": "two_observation_entries", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "The observed difference may be stated; cause and long-term pattern may not.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "两次同位记录到底出现了什么差异？", "narrative_operator": "matched_frame_evidence_log", "information_order": ["initial_record", "later_record", "visible_difference", "record_limit"], "visual_subject": "same_object_same_frame", "sound_subject": "record_reader", "rhythm": "matched_blocks", "ending": "no_long_term_claim", "preferred_component_aliases": ["RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD", "BRV-03", "BNO-06", "VGA-01"]},
+        "B": {"primary_question": "从可见差异往回读，哪些轨迹有记录，哪些没有？", "narrative_operator": "result_to_authorized_trace", "information_order": ["observed_result", "shared_action", "time_markers", "unverified_cause"], "visual_subject": "difference_then_record_fields", "sound_subject": "short_trace_voice_with_silence", "rhythm": "result_first_then_retrace", "ending": "cause_left_unresolved", "preferred_component_aliases": ["RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK", "BRV-02", "BNO-01", "VGA-05"]}
+      }
+    },
+    {
+      "profile_id": "CP11",
+      "scenario_name": "收边方案取舍卡",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP11-CONTEXT", "text": "设计记录中并列了外露收边和包覆收边两个方案。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP11-ROLE", "text": "设计记录员可以说明已登记取舍，不能补写灵感故事。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP11-ACTION", "text": "记录员把两个样片放在同一工作垫上，并指向各自收边位置。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP11-STATE", "text": "记录选择包覆收边，同时保留外露细节减少这一代价。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP11-RECORD", "text": "取舍卡明确列出两个方案、选择项、放弃项和可见代价。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP11-SOUND", "text": "样片放到工作垫上的声音可以保留。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP11-BOUNDARY", "text": "材料没有个人灵感、市场反馈或性能结果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "design_record_scope": "listed_tradeoff_fields", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only the recorded alternatives, selection, sacrifice, and visible cost are supported.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "这次取舍选了什么，又明确放弃了什么？", "narrative_operator": "option_choice_sacrifice", "information_order": ["problem", "two_options", "selected_option", "visible_cost"], "visual_subject": "two_edge_samples", "sound_subject": "design_record_voice", "rhythm": "option_pause_choice", "ending": "cost_kept_visible", "preferred_component_aliases": ["RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION", "RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK", "RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN", "BNO-07", "VGA-04"]},
+        "B": {"primary_question": "如果只沿取舍卡字段走，哪些故事根本不该出现？", "narrative_operator": "authorized_field_trace", "information_order": ["record_fields", "selected_field", "sacrifice_field", "absent_story_fields"], "visual_subject": "tradeoff_card_cross_bound_to_samples", "sound_subject": "field_reader_without_inspiration_story", "rhythm": "ledger_like_steps", "ending": "blank_story_space", "preferred_component_aliases": ["RCV2-002-SCENE-04-COPY-CLAIM-PAUSE", "RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE", "RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT", "BNO-06", "VGA-04"]}
+      }
+    },
+    {
+      "profile_id": "CP12",
+      "scenario_name": "样片变更记录",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP12-CONTEXT", "text": "初始样片和后续样片并列放在同一观察位置。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP12-ROLE", "text": "版本记录员只说明已登记变化，不把待验证项写成已证明。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP12-ACTION", "text": "两块样片都执行同一翻边动作，镜头条件保持一致。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP12-STATE", "text": "后续样片的收边位置发生变化，耐用结果仍待验证。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP12-RECORD", "text": "记录字段包含样片标记、变更位置、共同动作和待验证项。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP12-SOUND", "text": "比较不依靠额外音效。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP12-BOUNDARY", "text": "可见变更不能证明耐用结果，也不能补造不存在的历史。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "version_record_scope": "two_supplied_samples", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "The visible design change is supported; performance remains pending.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "两块样片在同一动作下，哪一处真正发生变化？", "narrative_operator": "version_matched_action_compare", "information_order": ["initial_sample", "later_sample", "shared_action", "visible_change"], "visual_subject": "matched_sample_frames", "sound_subject": "minimal_change_log_voice", "rhythm": "paired_match_cuts", "ending": "pending_verification", "preferred_component_aliases": ["RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK", "RCV2-002-ACTION-08-COLOR-COMPARISON-PROP", "BRV-03", "VGA-05"]},
+        "B": {"primary_question": "记录者如何把可见变化和待验证结果分账？", "narrative_operator": "recorder_not_decision_owner", "information_order": ["recorded_change", "recording_role", "unverified_result", "authority_boundary"], "visual_subject": "change_field_and_sample_edge", "sound_subject": "record_reader_with_open_end", "rhythm": "change_then_boundary", "ending": "verification_not_closed", "preferred_component_aliases": ["RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD", "RCV2-002-ACTION-08-COLOR-COMPARISON-PROP", "BRV-02", "VGA-04"]}
+      }
+    },
+    {
+      "profile_id": "CP13",
+      "scenario_name": "同一物件两种任务角色",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP13-CONTEXT", "text": "同一件轻外套分别出现在随手取用区和整齐收纳区。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP13-ROLE", "text": "搭配记录员只解释物件在任务中的角色，不评价身体或个人生活。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP13-ACTION", "text": "记录员先把外套挂在开放挂钩，再折好放入收纳格。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP13-STATE", "text": "开放挂钩便于看见和取用，收纳格保留整齐表面。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP13-RECORD", "text": "任务卡列出随手取用和整齐收纳两个条件。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP13-SOUND", "text": "画面不需要用音乐替物件添加情绪。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP13-BOUNDARY", "text": "两个任务场景是公开演绎，不代表任何人的真实生活经历。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "scenario_scope": "disclosed_task_demonstration", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "The same object may be framed for two supplied tasks without inventing lived experience.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "同一件外套在两种任务里分别承担什么角色？", "narrative_operator": "same_object_context_role_shift", "information_order": ["object_identity", "quick_access_role", "storage_role", "task_boundary"], "visual_subject": "same_coat_across_two_spaces", "sound_subject": "role_explanation", "rhythm": "context_switch_with_match", "ending": "roles_not_body_judgment", "preferred_component_aliases": ["RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT", "RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY"]},
+        "B": {"primary_question": "只改变任务条件，物件的适用边界会怎样移动？", "narrative_operator": "condition_exclusion_single_variable", "information_order": ["shared_object", "task_condition", "excluded_arrangement", "alternative_arrangement"], "visual_subject": "hook_and_storage_compartments", "sound_subject": "no_personal_story_voice", "rhythm": "condition_compare_pause", "ending": "disclosed_scenario_limit", "preferred_component_aliases": ["RCV2-002-SCENE-10-STYLING-DEMO-WALK", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "BNO-05", "RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE"]}
+      }
+    },
+    {
+      "profile_id": "CP14",
+      "scenario_name": "布边光声短片",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP14-CONTEXT", "text": "一段布边在自然侧光下放在无纹理台面上。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP14-ROLE", "text": "拍摄者只记录可见布边和接触声，不添加质感等级或身体感受。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP14-ACTION", "text": "手指轻触布边后离开，布边回到静止状态。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP14-STATE", "text": "侧光下能看见布边轮廓和静止状态。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP14-RECORD", "text": "拍摄卡只要求侧光、接触点和静止停留。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP14-SOUND", "text": "手指接触布边时的轻响可以与画面同步收录。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP14-BOUNDARY", "text": "画面和声音不证明高级感、性能、舒适度或身体效果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "object_audio_scope": "visible_contact_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only visible contour, contact, rest state, and synchronized source sound are supported.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "一段布边在接触前后留下哪些可见状态？", "narrative_operator": "contact_to_rest_visual_motif", "information_order": ["rest_state", "contact", "contour", "restored_stillness"], "visual_subject": "cloth_edge_contour", "sound_subject": "single_contact_sound", "rhythm": "still_contact_still", "ending": "silent_hold", "preferred_component_aliases": ["RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION", "RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE", "RCV2-002-ACTION-08-COLOR-COMPARISON-PROP", "VGA-06"]},
+        "B": {"primary_question": "撤掉口播和行动号召后，物件接触本身够不够成为节奏？", "narrative_operator": "silent_object_contact_rhythm", "information_order": ["side_light", "touch", "source_sound", "long_hold"], "visual_subject": "contact_point_and_empty_frame", "sound_subject": "source_sound_then_silence", "rhythm": "isolated_contact_with_long_pause", "ending": "no_CTA", "preferred_component_aliases": ["RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY", "VGA-08", "RCV2-002-ACTION-08-COLOR-COMPARISON-PROP", "RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE"]}
+      }
+    },
+    {
+      "profile_id": "CP15",
+      "scenario_name": "到架流程状态图",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP15-CONTEXT", "text": "一组到达物件从接收台进入检查区，陈列区仍留有待办位置。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP15-ROLE", "text": "接收记录员负责到达状态，陈列记录员负责待办位置，双方权限分开。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP15-ACTION", "text": "接收记录员登记到达，陈列记录员核对待办位置，未发生上架动作。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP15-STATE", "text": "到达登记已经完成，检查仍在进行，上架保持待办。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP15-RECORD", "text": "状态图分别标注已完成、进行中和待办，并保留各自岗位。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP15-SOUND", "text": "接收台放置物件的现场声可以作为到达时间锚。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP15-BOUNDARY", "text": "材料不支持库存数量、售罄、调拨或已经上架。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "multi_role_scope": "arrival_and_display_records", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Arrival, in-progress inspection, and pending display must remain separate.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "一个到达物件现在处于哪几个流程状态？", "narrative_operator": "parallel_lifecycle_state_map", "information_order": ["arrival", "inspection", "pending_display", "role_owners"], "visual_subject": "overview_state_map_to_local_objects", "sound_subject": "arrival_source_sound", "rhythm": "state_by_state", "ending": "pending_display_open", "preferred_component_aliases": ["RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE", "RCV2-002-ACTION-15-TABLE-REARRANGE", "BNO-04", "VGA-03"]},
+        "B": {"primary_question": "从尚未上架这个结果往回看，两个岗位各留下了什么？", "narrative_operator": "result_first_multi_role_readback", "information_order": ["observed_result_state", "arrival_record", "display_record", "unresolved_handoff"], "visual_subject": "pending_position_then_role_actions", "sound_subject": "separate_source_sounds", "rhythm": "result_hold_then_time_slices", "ending": "handoff_not_closed", "preferred_component_aliases": ["RCV2-002-SCENE-04-COPY-CLAIM-PAUSE", "RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE", "BNO-08", "VGA-10"]}
+      }
+    },
+    {
+      "profile_id": "CP16",
+      "scenario_name": "匿名服务记录复盘",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP16-CONTEXT", "text": "一份已匿名的服务记录只保留任务卡、服务动作和未完成状态。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP16-ROLE", "text": "服务记录员可以说明自己的核对动作，不能替匿名来访者表达感受。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP16-ACTION", "text": "记录员核对任务卡，并把无法当场确认的项目标为待补充。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP16-STATE", "text": "任务卡核对已经完成，反馈项目仍未填写，服务没有被标记为解决。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP16-RECORD", "text": "公开范围只有任务卡字段、核对动作和待补充状态。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP16-SOUND", "text": "复盘只使用记录员旁白，不模拟来访者声音。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP16-BOUNDARY", "text": "不得补写来访者身份、对话、体验、反馈或满意结果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "privacy_scope": "anonymous_record_fields_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only the recorder's task and the unfilled feedback state may be narrated.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "这次服务记录真正完成了什么，又缺了什么？", "narrative_operator": "service_task_status_recap", "information_order": ["task_card", "recorder_action", "completed_check", "missing_feedback"], "visual_subject": "task_card_and_recording_hand", "sound_subject": "recorder_voice_only", "rhythm": "fact_gap_fact", "ending": "request_feedback_without_claim", "preferred_component_aliases": ["RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE", "RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE", "BRV-01", "VGA-10"]},
+        "B": {"primary_question": "站在记录者位置，怎样不替另一个人说话？", "narrative_operator": "recorder_authority_boundary", "information_order": ["recording_role", "authorized_fields", "unfilled_feedback", "privacy_boundary"], "visual_subject": "anonymous_fields_without_person", "sound_subject": "single_role_voice", "rhythm": "short_fields_long_boundaries", "ending": "unfinished_state_preserved", "preferred_component_aliases": ["RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD", "RCV2-002-ACTION-05-DRAFT-CLEANUP", "BRV-02", "RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE"]}
+      }
+    },
+    {
+      "profile_id": "CP17",
+      "scenario_name": "陈列面前后观察",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP17-CONTEXT", "text": "同一陈列面在调整前后都从固定位置拍摄。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP17-ROLE", "text": "空间记录员只记录物件位置和可见空隙，不解释观看或销售结果。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP17-ACTION", "text": "记录员把中心物件移到侧位，并保持其他物件不动。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP17-STATE", "text": "调整后中心位置留出空隙，观看结果和后续效果都未验证。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP17-RECORD", "text": "空间图标出调整前位置、调整后位置和未验证项。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP17-SOUND", "text": "移动物件的现场声可以保留，不添加效果音。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP17-BOUNDARY", "text": "可见位置变化不能证明观看、停留或销售因果。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "space_capture_scope": "fixed_display_surface", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Only the authorized movement and visible before/after positions are supported.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "固定机位里，调整前后真正变化的是哪一处？", "narrative_operator": "matched_frame_space_compare", "information_order": ["before_frame", "authorized_move", "after_frame", "unverified_effect"], "visual_subject": "center_and_side_positions", "sound_subject": "brief_space_observation", "rhythm": "before_move_after", "ending": "effect_unverified", "preferred_component_aliases": ["RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION", "RCV2-002-TRIGGER-08-LIGHT-CONDITION", "RCV2-002-ACTION-12-WINDOW-COLOR-MOVE", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "VGA-01"]},
+        "B": {"primary_question": "一张空间状态图怎样把空隙和未解决项同时留下？", "narrative_operator": "overview_to_local_status_map", "information_order": ["overview_map", "moved_object", "visible_gap", "unverified_outcome"], "visual_subject": "map_then_empty_center", "sound_subject": "movement_source_sound_then_hold", "rhythm": "overview_detail_long_hold", "ending": "unresolved_state_in_frame", "preferred_component_aliases": ["RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET", "RCV2-002-TRIGGER-06-DISPLAY-RESET", "RCV2-002-ACTION-12-WINDOW-COLOR-MOVE", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "VGA-03"]}
+      }
+    },
+    {
+      "profile_id": "CP18",
+      "scenario_name": "假设街巷门店时段",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP18-CONTEXT", "text": "以下场景明确是假设：青砾巷并非真实地点，巷口小店也不对应真实门店。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP18-ROLE", "text": "场景记录员只能讲述这个假设空间，不能把它说成真实城市生活。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP18-ACTION", "text": "假设场景里，记录员在门口收起潮湿脚垫，并把它放到通风架。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP18-STATE", "text": "脚垫表面潮湿，通风架处于空置状态，后续干燥结果未知。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP18-RECORD", "text": "场景卡只给出假设地名、潮湿天气、门口脚垫和通风架。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP18-SOUND", "text": "门口雨声和脚垫接触地面的声音属于这个假设场景。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP18-BOUNDARY", "text": "不得把青砾巷、天气、门店或人物关系冒充真实地方事实。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "hypothetical_scope": "explicitly_fictional_place", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Every local detail must remain explicitly hypothetical and non-runtime.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "在明确假设的潮湿街巷场景里，门口任务如何发生？", "narrative_operator": "disclosed_local_time_slice", "information_order": ["hypothetical_disclosure", "weather_state", "authorized_action", "unknown_result"], "visual_subject": "doorway_mat_and_ventilating_rack", "sound_subject": "hypothetical_rain_and_contact_sound", "rhythm": "weather_entry_action_hold", "ending": "result_unknown", "preferred_component_aliases": ["RCV2-002-SCENE-01-ARRIVAL-INSPECTION", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK", "VGA-06"]},
+        "B": {"primary_question": "怎样让地名退后，只把一个可见任务留在画面里？", "narrative_operator": "object_task_over_geographic_label", "information_order": ["hypothetical_disclosure", "wet_mat", "source_sound", "unverified_drying"], "visual_subject": "mat_contact_and_empty_rack", "sound_subject": "rain_anchor_then_contact", "rhythm": "sound_first_object_follow", "ending": "no_local_truth_claim", "preferred_component_aliases": ["RCV2-002-SCENE-04-COPY-CLAIM-PAUSE", "RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY", "RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE", "VGA-07"]}
+      }
+    },
+    {
+      "profile_id": "CP19",
+      "scenario_name": "陈列桌取舍复盘",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP19-CONTEXT", "text": "经营记录比较保留两张陈列桌和撤去一张陈列桌两个方案。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP19-ROLE", "text": "经营记录员只回读已登记的选择和代价，不做价值观自夸。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP19-ACTION", "text": "记录中选择撤去一张陈列桌，并保留空出的通道。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP19-STATE", "text": "通道在记录画面中已经空出，同时可用陈列台面减少。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP19-RECORD", "text": "决策卡列出两个方案、实际选择、放弃项、代价和可见结果。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP19-SOUND", "text": "复盘不需要用情绪音乐评价这次选择。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP19-BOUNDARY", "text": "材料没有长期价值判断、经营效果或正确性证明。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "decision_record_scope": "listed_tradeoff_only", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "The recorded choice, sacrifice, cost, and visible result may be stated without self-praise.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "这次选择到底换来了什么，又失去了什么？", "narrative_operator": "choice_sacrifice_cost_result", "information_order": ["two_options", "selection", "sacrifice", "visible_result"], "visual_subject": "two_table_plan_and_open_passage", "sound_subject": "decision_record_voice", "rhythm": "option_choice_cost", "ending": "no_value_claim", "preferred_component_aliases": ["RCV2-002-TRIGGER-01-ARRIVAL-CHECK", "BRV-03", "BNO-06", "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]},
+        "B": {"primary_question": "从已经空出的通道往回看，哪条决策轨迹真正有据？", "narrative_operator": "result_to_authorized_trace", "information_order": ["observed_result", "recorded_choice", "recorded_cost", "unsupported_judgment"], "visual_subject": "open_passage_then_decision_card", "sound_subject": "sparse_recorder_readback", "rhythm": "result_hold_retrace", "ending": "judgment_withheld", "preferred_component_aliases": ["RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD", "BRV-02", "BNO-01", "RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER"]}
+      }
+    },
+    {
+      "profile_id": "CP20",
+      "scenario_name": "公开承诺状态牌",
+      "source_atoms": [
+        {"atom_id": "DEV33-CP20-CONTEXT", "text": "一块公开状态牌写明承诺、执行证据、偏差和下一次复核节点。", "evidence_classes": ["core", "scene"]},
+        {"atom_id": "DEV33-CP20-ROLE", "text": "状态记录员只维护牌面字段，承诺主体仍对承诺负责。", "evidence_classes": ["role", "authorization"]},
+        {"atom_id": "DEV33-CP20-ACTION", "text": "记录员核对执行证据，并把未兑现部分留在偏差栏。", "evidence_classes": ["action", "scene"]},
+        {"atom_id": "DEV33-CP20-STATE", "text": "已提供的执行证据完成核对，偏差仍未关闭，下一次复核节点已经登记。", "evidence_classes": ["state", "time"]},
+        {"atom_id": "DEV33-CP20-RECORD", "text": "牌面字段依次为公开承诺、承诺主体、执行证据、结果偏差和下一次复核。", "evidence_classes": ["record", "condition"]},
+        {"atom_id": "DEV33-CP20-SOUND", "text": "翻动状态牌的声音可以作为复核动作的现场声。", "evidence_classes": ["sound"]},
+        {"atom_id": "DEV33-CP20-BOUNDARY", "text": "未兑现部分必须保留，情绪和态度不能替代证据。", "evidence_classes": ["boundary", "condition"]}
+      ],
+      "authorization": {"development_fixture_use": true, "commitment_record_scope": "listed_public_fields", "publication_scope": "nonpublishable_development"},
+      "claim_boundary": "Commitment, evidence, deviation, and review node must remain distinct and source-bound.",
+      "lane_plan_intents": {
+        "A": {"primary_question": "这项公开承诺现在走到哪一个证据节点？", "narrative_operator": "commitment_evidence_deviation_review", "information_order": ["commitment", "execution_evidence", "deviation", "next_review"], "visual_subject": "status_board_fields", "sound_subject": "field_reader_and_board_sound", "rhythm": "four_field_trace", "ending": "next_review_without_promise", "preferred_component_aliases": ["RCV2-002-TRIGGER-01-ARRIVAL-CHECK", "BRV-03", "BNO-06", "VGA-04"]},
+        "B": {"primary_question": "从尚未关闭的偏差往回看，哪些承诺证据仍站得住？", "narrative_operator": "result_to_commitment_trace", "information_order": ["unresolved_deviation", "execution_evidence", "commitment_actor", "review_node"], "visual_subject": "deviation_field_then_evidence", "sound_subject": "board_turn_as_time_anchor", "rhythm": "deviation_hold_then_retrace", "ending": "unresolved_next_review", "preferred_component_aliases": ["RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH", "BRV-02", "BNO-01", "VGA-07"]}
+      }
+    }
+  ]
+}
