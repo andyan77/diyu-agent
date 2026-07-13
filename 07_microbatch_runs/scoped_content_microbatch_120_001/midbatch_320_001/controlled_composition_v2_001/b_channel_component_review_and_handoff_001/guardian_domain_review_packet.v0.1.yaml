@@ -1,0 +1,70 @@
+guardian_domain_review_packet:
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  status: PENDING_EXTERNAL_GUARDIAN_DOMAIN_REVIEW
+  review_scope: FULL_24_OF_24_NOT_SAMPLED
+  phase_0_binding:
+    PR_number: 10
+    reviewed_base_sha: 7054acb40a1c6b99a3b4749e80805efd25419231
+    reviewed_head_sha: 994f9c2dda5419abe2c591fb5f4fd72c3a9f1201
+    reviewed_head_tree_sha: 6aa8a39c5bc9f5d936017f2ea2f5fb52219dfdc4
+    reviewed_diff_digest: 4bac51972315d3f368d6fe67387870d44b8ecffde247e375ea3292e3442f8562
+    merge_commit_sha: a1114622291e8106ce562f1eb16ae87b56994045
+    merge_commit_parents:
+    - 7054acb40a1c6b99a3b4749e80805efd25419231
+    - 994f9c2dda5419abe2c591fb5f4fd72c3a9f1201
+    merge_tree_identity_pass: true
+    admin_bypass_used: false
+    master_required_checks_green: true
+  review_inventory:
+    founder_candidate_count: 24
+    promoted_as_new_count: 22
+    merged_into_reusable_count: 1
+    needs_repair_count: 1
+    rejected_count: 0
+    inherited_component_count: 64
+    inherited_component_changed_count: 0
+    inherited_component_reordered_count: 0
+    registry_total_count: 86
+    accepted_CP_edge_count: 98
+    rejected_CP_edge_count: 19
+    narrowed_candidate_count: 8
+  review_files:
+    component_review_source:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/component_review_source.v0.1.yaml
+      sha256: bd431fc2912bf2eadab57ceaa30f19af0c395d002c2a589ab8c763e16e8f1b44
+    founder_candidates:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/founder_component_candidates.v0.1.jsonl
+      sha256: bbdf58523b65265afe9409878c7cdb808a78fd3d04dc3552e599eb4c80c45a33
+    domain_decisions:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/component_domain_review_decisions.v0.1.jsonl
+      sha256: 1a086b8c1e09b09ecca6e49d40905c6bff1840d9a67947ed77ddc7096e1ee508
+    CP_edges:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/component_CP_edge_review.v0.1.jsonl
+      sha256: 1a2664e228775be2c2e98839cac7a12b2371fe259dd2a6f50bd6a9a26d18a514
+    merge_relations:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/component_merge_relations.v0.1.jsonl
+      sha256: 6a52f20d4f440952d70deddb7bd123640ce406301c2b79c88714ed985ea34911
+    candidate_registry:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+      sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+    handoff_candidate:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/b_channel_component_handoff_candidate.v0.1.yaml
+      sha256: 95e092fc190e7d95dd93924098809abfe2683d2a81aff5e41859e86c99e02d0c
+    execution_result:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/b_channel_component_review_result.v0.1.yaml
+      sha256: d20a0cee5e32c4d45c5857948766e2963b6ba4fc7a15347e4765330c4c0c76a6
+  mandatory_independent_review:
+  - 逐条读取24个Founder候选的机制、槽位、权限、事实边界和候选专属审查回读。
+  - 独立判断每个PROMOTE、MERGE、NEEDS_REPAIR或REJECT是否成立，不采信机器计数作为语义证据。
+  - 独立核验全部117条CP边及Profile角色、hard guard和Founder上界。
+  - 验证v0.4前64条与v0.3原始JSONL行及顺序逐字节一致。
+  - 验证BCL-02合并关系为真实七同等价且未改写目标组件。
+  - 验证组件未夹带品牌事实、事件、范文、正文、数字实例或运行时授权。
+  - 验证FC-01..10与ORCH A/B约束仅为未实现handoff，未污染GKB registry。
+  - 重算registry和所有artifact digest，并对checker执行篡改注入。
+  - 验证route_migration_32和horizon32有界，route33及开放式未来后继被拒。
+  - 验证baseline、hidden、generator、Plan、provider和全部readiness边界仍关闭。
+  machine_gate_is_necessary_not_sufficient: true
+  authoritative_freeze: false
+  runtime_consumable: false

@@ -1,0 +1,29 @@
+generator_validator_FC_handoff:
+  owner: GENERATOR_VALIDATOR
+  status: HANDOFF_ONLY_NOT_IMPLEMENTED
+  implemented_rule_count: 0
+  rules:
+  - rule_id: FC-01
+    requirement: 标题、正文、口播、CTA、镜头和声音全部绑定 source atom。
+  - rule_id: FC-02
+    requirement: 禁止新增 source atom 未提供的数字、日期、比例和次数。
+  - rule_id: FC-03
+    requirement: 禁止把概括状态扩写成具体操作步骤。
+  - rule_id: FC-04
+    requirement: 禁止由事实并存推导因果。
+  - rule_id: FC-05
+    requirement: 禁止把待验证或部分完成写成已解决。
+  - rule_id: FC-06
+    requirement: 禁止补人物、顾客、地点、货号和岗位身份。
+  - rule_id: FC-07
+    requirement: 每个 source ref 只能支持其实际蕴含的内容。
+  - rule_id: FC-08
+    requirement: 缺事实槽时 STOP 或 DEGRADE，不得创作补洞。
+  - rule_id: FC-09
+    requirement: 组件只组织输入槽，不提供事实或范文。
+  - rule_id: FC-10
+    requirement: 作者完成后禁止根据成稿反向回填 source atoms。
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  requirement_count: 10
+  handoff_digest: b060e4c3b0efd3a25276e95aa242a942ced0aa081ffcd210b1aea08d21e8ec41

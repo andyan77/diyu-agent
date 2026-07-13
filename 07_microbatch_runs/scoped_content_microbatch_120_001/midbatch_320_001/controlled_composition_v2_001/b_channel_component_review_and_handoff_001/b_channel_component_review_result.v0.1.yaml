@@ -1,0 +1,68 @@
+b_channel_component_review_result:
+  schema_version: v0.1
+  task_id: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+  verdict: EXECUTED_PENDING_GUARDIAN
+  candidate_review:
+    reviewed_candidate_count: 24
+    decision_counts:
+      MERGE_INTO_REUSABLE: 1
+      NEEDS_REPAIR: 1
+      PROMOTE_AS_NEW: 22
+      REJECT: 0
+    candidate_specific_review_count: 24
+    invalid_merge_count: 0
+    hardcoded_decision_count: 0
+  registry:
+    inherited_component_count: 64
+    inherited_component_changed_count: 0
+    inherited_component_reordered_count: 0
+    promoted_new_component_count: 22
+    registry_total_count: 86
+    registry_digest: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+  applicability:
+    accepted_edge_count: 98
+    narrowed_candidate_count: 8
+    broadened_beyond_founder_count: 0
+    false_CP_edge_count: 0
+    hard_guard_failure_count: 0
+  handoff:
+    FC_requirement_count: 10
+    FC_implemented_count: 0
+    ORCH_constraint_count: 1
+    ORCH_constraint_implemented_count: 0
+    authoritative_freeze: false
+    status: IMMUTABLE_CANDIDATE_SNAPSHOT_PENDING_GUARDIAN
+  boundaries:
+    accepted_baseline_count: 120
+    baseline_increment_count: 0
+    hidden_qualification_case_count: 0
+    generated_candidate_count: 0
+    audience_facing_content_count: 0
+    verified_brand_fact_bundle_count: 0
+    verified_runtime_authorization_count: 0
+    canonical_composition_plan_count: 0
+    runtime_composition_plan_count: 0
+    production_composition_plan_count: 0
+    generator_qualified: false
+    runtime_provider_adapter_qualified: false
+    runtime_generation_eligible_profile_count: 0
+    runtime_ingest_ready: false
+    generation_600_allowed: false
+    expand_3600_allowed: false
+    downstream_readiness_all_false: true
+    KE_truth_change_count: 0
+    RAG_change_count: 0
+    DIFY_change_count: 0
+    Serving_change_count: 0
+    external_provider_API_call_count: 0
+  ledger:
+    previous_horizon: 31
+    new_horizon: 32
+    route_migration_32_appended: true
+    route_migration_33_allowed: false
+  artifact_digests:
+    summary: 672d86273b8e4893a0b81eac992e87d874dd12de77bf5fff77f474a026229380
+    FC_handoff: b7dcd8da0c8be20dd639b3febf3ab5bfe5175adf841e1d58d43d3b1556a20a7d
+    ORCH_handoff: aa068614314595629034c502184692003633db1f2293b7e29300aea8ec5e310c
+    handoff_candidate: 95e092fc190e7d95dd93924098809abfe2683d2a81aff5e41859e86c99e02d0c
+  result_digest: 4d1a0ca806afb0f1df72d83120365600eacc97f9ed9ce108e6ae05c6c99a2ab0

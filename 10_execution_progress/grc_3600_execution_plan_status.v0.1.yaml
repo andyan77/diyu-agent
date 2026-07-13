@@ -2527,3 +2527,74 @@ grc_3600_execution_plan_status:
       task_id: CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_002
       action: Founder architecture decision; no automatic B-lane repair or hidden qualification.
     migration_digest: abccae349977e8aa0890043535f52ecc79d801a6f8e76c747c5b8679237252bf
+  route_migration_32:
+    applied_by_task: GKB_V2_B_CHANNEL_24_COMPONENT_REVIEW_AND_HANDOFF_001
+    applied_from: founder_authorized_final_prompt_after_guardian_checkpoint_0_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_readiness_flipped: true
+    phase_0_pr10_failure_evidence_merge:
+      reviewed_head_sha: 994f9c2dda5419abe2c591fb5f4fd72c3a9f1201
+      merge_commit_sha: a1114622291e8106ce562f1eb16ae87b56994045
+      merge_commit_tree: 6aa8a39c5bc9f5d936017f2ea2f5fb52219dfdc4
+      expected_parent_count: 2
+      tree_identity_pass: true
+      merge_method: merge_commit
+      admin_bypass_used: false
+      source_branch_deleted: false
+      master_required_checks_green: true
+      pair_independence_proven: true
+      pair_calibration_quality_passed: false
+      failed_development_evidence_accepted_into_history: true
+    B_channel_component_domain_review:
+      status: EXECUTED_PENDING_GUARDIAN
+      founder_authorized_candidate_count: 24
+      reviewed_candidate_count: 24
+      promoted_as_new_count: 22
+      merged_into_reusable_count: 1
+      needs_repair_count: 1
+      rejected_count: 0
+      accepted_CP_edge_count: 98
+      rejected_CP_edge_count: 19
+      inherited_component_count: 64
+      inherited_component_changed_count: 0
+      inherited_component_reordered_count: 0
+      registry_total_count: 86
+      registry_digest: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+      authoritative_freeze: false
+      guardian_domain_review_required: true
+    handoff_state:
+      FC_requirement_count: 10
+      FC_implemented_count: 0
+      ORCH_constraint_count: 1
+      ORCH_constraint_implemented_count: 0
+      status: IMMUTABLE_CANDIDATE_SNAPSHOT_PENDING_GUARDIAN
+      runtime_consumable: false
+    fixed_boundaries:
+      external_provider_API_call_count: 0
+      runtime_provider_adapter_qualified: false
+      generator_qualified: false
+      accepted_baseline_increment_count: 0
+      accepted_baseline_count: 120
+      hidden_created_count: 0
+      generated_candidate_count: 0
+      audience_facing_content_count: 0
+      verified_brand_fact_bundle_count: 0
+      verified_runtime_authorization_count: 0
+      runtime_generation_eligible_profile_count: 0
+      runtime_ingest_ready: false
+      canonical_composition_plan_count: 0
+      runtime_composition_plan_count: 0
+      production_composition_plan_count: 0
+      published_content_count: 0
+      generation_600_allowed: false
+      expand_3600_allowed: false
+      KE_change_count: 0
+      RAG_change_count: 0
+      DIFY_change_count: 0
+      Serving_change_count: 0
+    recommended_next_route:
+      action: External Guardian Domain Review of all 24 candidates, all CP edges, handoff boundaries, and bounded ledger successor.
+      on_guardian_pass: Founder may authorize a separate downstream integration task; this task grants no runtime authority.
+    migration_digest: c16d4505be6b2d244447d9c09c9e70f7f5d89598e1c034148d6c79bb53324095
