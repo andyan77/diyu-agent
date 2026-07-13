@@ -3,22 +3,89 @@ independent_review_contract:
   task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
   packet_builder_identity_id: P1A_DETERMINISTIC_PACKET_MATERIALIZER
   p1b_freezer_identity_id: P1B_UNASSIGNED_FREEZER_IDENTITY
+  repository_standard_binding:
+    snapshot_path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+    snapshot_sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+    positive_content_scoring: 70_PLUS_30_EQUALS_100
+    component_scoring: 80_PLUS_20_EQUALS_100
+    route_scoring: HARD_PRIMARY_ACTION_AND_REASON_CODE_NO_PER_RECORD_PERCENTAGE
   reviewer_identity_policy:
     reviewer_may_be_ai_or_human: true
     distinct_reviewer_identity_id_required: true
     isolated_instance_or_session_required: true
     independent_run_and_signature_record_required: true
     blind_to_other_review_before_own_conclusion: true
+    primary_and_secondary_pairwise_distinct_required: true
+    adjudicator_pairwise_distinct_from_primary_and_secondary_when_triggered: true
+    pairwise_distinct_record_fields:
+    - reviewer_identity_id
+    - reviewer_instance_or_session_id
+    - review_run_id
+    - append_only_signature_or_attestation
     may_not_equal_content_author: true
     may_not_equal_p1a_packet_builder: true
     may_not_equal_p1b_freezer: true
     required_record_fields:
     - reviewer_identity_id
     - reviewer_instance_or_session_id
+    - review_run_id
     - input_digest
     - instruction_digest
     - model_or_instance_configuration_digest
     - append_only_signature_or_attestation
+  route_blind_review_sequence:
+    blind_packet_may_not_contain_current_implementation_locator_or_digest: true
+    first_submission_required_before_actual_comparison: true
+    required_signed_determination_fields:
+    - primary_action
+    - reason_code
+    - evidence_refs
+    - append_only_record_digest
+    current_actual_source:
+      path: controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/route/route_regression_actuals.v0.1.jsonl
+      sha256: bb7d68686761b7be092f191a0f46cb7493a3947f98959703c3ccaa69a86de3ad
+      p1b_only_after_signed_determination: true
+  scoring_and_decision_contract:
+    positive_content:
+      formula: 70_PLUS_30_EQUALS_100
+      must_use_repository_standard: true
+    component_candidate:
+      formula: 80_PLUS_20_EQUALS_100
+      must_use_repository_standard: true
+    route_case:
+      formula: HARD_PRIMARY_ACTION_AND_REASON_CODE
+      per_record_percentage_forbidden: true
+    review_delivery_summary:
+      independent_coordinator_score_out_of: 100
+      is_not_a_substitute_for_object_level_decision: true
+    separation_required:
+    - total_score
+    - hard_gate
+    - veto
+    - grade
+    - disposition
+    - lifecycle_status
+    high_score_may_not_override_hard_veto: true
+  disagreement_policy:
+    original_conclusions_and_evidence_append_only: true
+    independent_adjudication_required_on_conflict: true
+    silent_intersection_forbidden: true
+    average_forbidden: true
+    overwrite_forbidden: true
+  creative_channel_boundary:
+    review_roles:
+    - PRIMARY_CONTENT_VALUE
+    - SECONDARY_FACT_AUTHORIZATION
+    - INDEPENDENT_ADJUDICATION
+    review_role_may_not_be_mapped_to_generation_lane: true
+    historical_b_channel_is_not_generation_lane_evidence: true
+    source_generation_lane_or_pair_ref_only_if_source_carries_it: true
+    source_generation_lane_or_pair_ref_fabrication_forbidden: true
+    optional_lane_applicability_nonblocking: true
+    optional_lane_applicability_not_approval_evidence: true
+    default_lane_applicability_without_source_evidence: NOT_APPLICABLE
+    p1a_may_not_assert_dual_channel_qualified: true
+    p2_to_p6_must_preserve_dual_channel_requirement: true
   roles:
     PRIMARY_CONTENT_VALUE:
       scope:
@@ -46,4 +113,4 @@ independent_review_contract:
     count_n_frozen: false
     component_dispositions_frozen: false
     route_gold_answers_frozen: false
-  contract_digest: 835404e64699f4610ae871687b7ef31fe01fb934c14f7f0eb2e5486dc6ae3fdf
+  contract_digest: 60a6c25eff4c5dbb9ab1515d63c340ff9e8f99666bb50425702cd85736b810b6

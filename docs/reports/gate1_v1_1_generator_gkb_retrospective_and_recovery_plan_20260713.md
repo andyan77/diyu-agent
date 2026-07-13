@@ -34,14 +34,14 @@
 
 ## 证据罗列
 
-- **已实测**：标准 digest、master/PR SHA、Clean-120 数量、60 路线分布、86 组件、历史声明的 543 条 CP 边、PR #13 的 25/40 machine pass 与 0/40 人审完成。
+- **已实测**：标准 digest、master/PR SHA、Clean-120、路线候选、86 组件、全部旧关系和 PR #13 的失败证据均仍可重算。
 - **基于静态仓库判断**：lexical validator 存在假阳性/假阴性；slot resolver 非类型安全；realization audit 构造性恒真；Profile 语义在 author request 中丢失。
 - **待补证**：Clean-120 的真实 `N`、86 组件批准数 `M`、60 路线的人类黄金答案、当前核心的 v1.1 内容首次可接受率。
 - **工作树状态**：报告分支仅新增本报告，业务资产和 readiness 未修改。
 
 ## 是否建议继续推进
 
-- **建议**：停止沿当前开发门继续追加补丁，转入“六个工作包、七份执行 Prompt 合同”的 Gate 1 证据闭环。
+- **建议**：停止沿当前开发门继续追加补丁，转入“六个工作包、八份实际执行指令”的 Gate 1 证据闭环。
 - **前提**：Founder 批准路线；Guardian 先审每个 Execution Brief；独立人审角色真实就位。
 - **不建议**：现在合并 PR #13、宣称 `N=120`、强制 86/86 组件晋升、解锁 runtime/production。
 
@@ -49,7 +49,7 @@
 
 - 路线已收敛为六个工作包；第一包必须由 1A 建包与 1B 消费身份隔离、可追溯的审查记录并冻结 `N` 两份合同组成。
 - v1.1 必须在 1A Phase 0 以字节快照、摘要和机器合同入库；外部 Windows 路径不再是执行时唯一真源。
-- 86/86 必须有最终裁决，但批准数 `M` 可小于 86；旧 543 条关系仅作历史证据，未复核关系不得留在 active 使用面。
+- 86/86 必须有最终裁决，但批准数 `M` 可小于 86；全部旧关系仅作历史证据，未复核关系不得留在 active 使用面。
 - PR #13 的处置仍须独立 Guardian 绑定；本报告不授权合并。
 
 ## 1. 总结论
@@ -77,20 +77,19 @@ repair_proposal_verdict:
   verdict: PASS_FOR_GUARDIAN_AND_FOUNDER_REVIEW
   recommended_direction: RETURN_TO_GATE_1_AND_CLOSE_EVIDENCE_CHAIN
   execution_package_count: 6
-  execution_prompt_contract_count: 7
+  actual_execution_instruction_count: 8
   package_1_split_contracts: [P1A_BUILD_REVIEW_PACKETS, P1B_CONSUME_SIGNED_REVIEWS]
   scale_execution_prompt_count: 1
-  expected_internal_scale_batch_count: 3_to_6_before_top_up
   assumptions:
     N: v1_1审定后冻结120中可计入正向240的真实数量, 0_to_120
     H: 新隐藏资格探针中可依法计入基线的正向条数, 0_to_20
   component_gold_case_count: DERIVED_AFTER_RETAINED_COMPONENT_AND_EDGE_REVIEW
-  legacy_claimed_component_edge_count: 543
+  legacy_component_relationships: ALL_HISTORICAL_NON_ACTIVE_UNTIL_REVIEWED
   unreviewed_legacy_edges_active: false
   force_all_86_components_to_pass: false
 ```
 
-推荐以 **六个工作包、七份执行 Prompt 合同** 收口。第一包分为 1A 和 1B，中间设置不可绕过的身份隔离审查 Checkpoint；第五包只维护一份可恢复执行 Prompt，内部预计运行 3 至 6 个密封批次，若存在未批准候选则按真实缺口追加 top-up 批次，不为每批新建合同、checker、schema 或账本项。
+推荐以 **六个工作包、八份实际执行指令** 收口。第一包分为 1A 和 1B，中间设置不可绕过的身份隔离审查 Checkpoint；本次 P1A 定向修复如实计为第八份指令。第五包只维护一份可恢复执行 Prompt，按真实缺口追加密封运行实例，不为每批新建合同、checker、schema 或账本项。
 
 ## 2. v1.1 对当前阶段的真实要求
 
@@ -115,13 +114,13 @@ v1.1 明确规定当前生效的是第一门“生成器与 300 条基线”，�
 |---|---:|---|
 | 冻结 Clean-120 | 120 条 | 历史只读参考集，不等于 v1.1 已批准 120 条 |
 | Clean-120 的 v1.1 合格数 | `N_PENDING` | 需要 20CP 映射、去重、来源核验和 v1.1 人审后冻结 |
-| 现有路线回归 | 60 条：BLOCK 27 / DEGRADE 20 / REQUEST_INPUT 13 | 已有很好的机器候选集，但尚缺 v1.1 标准答案复核和黄金冻结 |
-| 组件 Registry | 86 个候选 | 64 个继承候选 + 22 个 Founder 设计候选，不等于 86 个黄金批准组件 |
-| 历史组件 CP 适用边 | 543 条 | 仅作历史声明证据；未经独立复核的关系全部撤出 active，不得被生成器消费 |
-| v1.1 组件评分字段 | 0/86 | 当前没有按 80+20、关键项最低线形成黄金评分记录 |
-| 新增 22 组件父级证据 | 22/22 无父资产和源文本区间 | 可作为设计假设进入测试，不可冒充内容派生组件 |
-| PR #13 开发批次 | 40 条，25 machine pass / 15 machine fail | 质量人审因超时未完成，不能把 25/40 或 15/40当最终内容真值 |
-| PR #13 人审 | 0/40 完成 | `E_REVIEW_EXECUTION_TIMEOUTEXPIRED`，当前内容质量结论未闭合 |
+| 现有路线回归 | 60 条候选 | 已有机器候选集，但尚缺 v1.1 标准答案复核和黄金冻结 |
+| 组件 Registry | 86 个候选 | 同时含继承候选和 Founder 设计候选，不等于 86 个黄金批准组件 |
+| 历史组件 CP 适用关系 | 全部旧关系 | 仅作历史声明证据；未经独立复核的关系全部撤出 active，不得被生成器消费 |
+| v1.1 组件评分字段 | 未建立 | 当前没有按 80+20、关键项最低线形成黄金评分记录 |
+| 设计型组件父级证据 | 未建立 | 可作为设计假设进入测试，不可冒充内容派生组件 |
+| PR #13 开发批次 | 失败证据已保留 | 质量人审未闭合，机器状态不能当作最终内容真值 |
+| PR #13 人审 | 未完成 | `E_REVIEW_EXECUTION_TIMEOUTEXPIRED`，当前内容质量结论未闭合 |
 | 生成器资格 | false | 与证据一致，应保持 false |
 | 正式生产/发布/readiness | 全关 | 应继续保持全关 |
 
@@ -129,7 +128,7 @@ v1.1 明确规定当前生效的是第一门“生成器与 300 条基线”，�
 
 1. **失败诚实入账**：治理 CI 允许“诚实记录失败”通过，没有把内容失败洗成内容通过。
 2. **隔离边界清晰**：synthetic、development、runtime、production、publishable 分账总体守住。
-3. **无 reroll 挑绿**：PR #13 记录了 80 次物理派发、40 个评价对象、0 reroll、0 replacement。
+3. **无 reroll 挑绿**：PR #13 保留了派发身份与失败记录，没有用替换样本洗高通过率。
 4. **职责边界已有基础**：GKB 不写事实，Generator 不应选组件，ORCH/规划层和表达层已经分离。
 5. **路线候选集有价值**：60 条当前行为全部落在 BLOCK、REQUEST_INPUT、DEGRADE，且没有 audience/runtime 输出。
 6. **20CP Profile 本身较丰富**：产品价值、角色、平台、风格、事实槽和硬门已有较完整定义。
@@ -153,13 +152,13 @@ v1.1 明确规定当前生效的是第一门“生成器与 300 条基线”，�
 
 3. **[LAYER]** (HIGH) 组件槽位绑定依赖字符串猜测和首项匹配
    - 位置: `controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/core/orch_component_planner_successor.py:85`
-   - 问题描述: `_slot_class()` 以字段名子串猜类型，`_bind_component_slots()` 选择字典序第一条原子；当前 654 个槽位中有 68 个 authorization-like 槽位未绑定真实授权对象。
+   - 问题描述: `_slot_class()` 以字段名子串猜类型，`_bind_component_slots()` 选择字典序第一条原子；授权类槽位没有稳定绑定到真实授权对象。
    - 建议操作: 分离 `FactAtom`、`AuthorizationGrant`、`EditorialAffordance`、`ClaimBoundary` 和 `ComponentFormOperator`，让槽位声明对象类型、基数和约束。
    - 参考: v1.1 第 7.3、7.5、9、23 章；本报告 P1B、P2。
 
 4. **[EVIDENCE]** (HIGH) 组件 realization audit 是构造性恒真证明
    - 位置: `controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/run_component_consumption_dev_gate.py:706`
-   - 问题描述: 脚本把候选全部非空 surface refs 原样挂给每一个组件，40/40 候选中同一候选的所有组件因此拥有相同证据，`metadata_only_consumption_count` 按构造恒为 0。
+   - 问题描述: 脚本把候选全部非空 surface refs 原样挂给每一个组件，同一候选的所有组件因此拥有相同证据，`metadata_only_consumption_count` 按构造恒为 0。
    - 建议操作: 按组件记录真实 surface span、机制实现、toggle 对照和独立语义裁决；无可观察贡献时标为 `METADATA_ONLY` 或 `HOLD`。
    - 参考: v1.1 第 14、16、23 章；本报告 P1B、P2。
 
@@ -177,13 +176,13 @@ v1.1 明确规定当前生效的是第一门“生成器与 300 条基线”，�
 
 7. **[GOV]** (HIGH) 人审执行粒度过大且 Schema 未对齐 v1.1
    - 位置: `PR#13@d2a9225:controlled_content_generator_v2_001/b_channel_claim_closure_dev_gate_authorized_transport_replay_001/run_independent_content_reviews.py:79`
-   - 问题描述: PRIMARY 一次审 40 候选加 20 Pair，FACT 一次审 40 候选，两个角色全完成后才持久化；当前已因 1800 秒超时得到 0/40，人审 Schema 也缺 70+30、关键项最低线、等级、缺陷、第二复审和裁决。
+   - 问题描述: PRIMARY 与 FACT 审查任务过大，两个角色全完成后才持久化；审查已因超时未形成可用记录，人审 Schema 也缺 70+30、关键项最低线、等级、缺陷、第二复审和裁决。
    - 建议操作: 按 5 至 10 条分片，逐条 append-only 持久化并支持恢复；主审、第二专家和裁决使用 v1.1 完整 review record。
    - 参考: v1.1 第 10-13、19、20、22 章；本报告 P1A、P1B、P2、P3-P5。
 
 8. **[GOV]** (MEDIUM) 检查器累积正在替代单一当前合同
    - 位置: `ci/checkers/`；`.github/workflows/ci.yml:1`
-   - 问题描述: 当前约 57 个 Python checker、约 4.6 万行，required CI 直接调用与 `python -O` 循环合计约 82 次；历史 checker 多次硬编码账本终点并触发兼容修复。PR #14 对本报告路径实测触发 `E_CURRENT_WRITE_SURFACE`，进一步证明 current-live 写面和历史快照边界尚未收口。
+   - 问题描述: 历史 checker 多次硬编码账本终点并触发兼容修复；required CI 同时承担历史归档回归和当前快速门。PR #14 对本报告路径实测触发 `E_CURRENT_WRITE_SURFACE`，进一步证明 current-live 写面和历史快照边界尚未收口。
    - 建议操作: 建立一个版本化 Gate 1 manifest 和当前 live checker；历史 checker 转为归档完整回归，required fast path 不再嵌套重跑全部历史门；账本移动终点统一委托 Current Ledger Owner 从显式 horizon 派生。
    - 参考: v1.1 第 5.4、17、18.4 章；本报告 P1A、P6。
 
@@ -290,11 +289,11 @@ component_realization_record:
 
 “86 个组件黄金基线”表示 86/86 均有来源身份、用途、边界、v1.1 评分和最终 disposition。每个候选得到 `RETAIN / REPAIR / MERGE / HOLD / REJECT / RECLASSIFY_CONTROL_RULE` 之一，最终保留数记为 `M`，允许 `M < 86`。
 
-旧 Registry 声称的 543 条 CP 关系只保留为历史证据。新 active Registry 从空 active edge set 开始，只恢复经过独立审查、被最终保留组件真实需要的关系；任何未复核关系均标为 historical/non-active，生成器不得消费。
+旧 Registry 声称的全部 CP 关系只保留为历史证据。新 active Registry 从空 active edge set 开始，只恢复经过独立审查、被最终保留组件真实需要的关系；任何未复核关系均标为 historical/non-active，生成器不得消费。
 
 ### 8.2 测试规模按保留结果派生
 
-不再预设 887 个案例。黄金测试规模在 1B 得到 `M` 和 active edge set 后派生：
+黄金测试规模在 1B 得到 `M` 和 active edge set 后派生：
 
 ```text
 A = 独立复核后恢复的 active CP edge 数
@@ -302,7 +301,7 @@ R = 最终保留组件数 M
 G = A 的正向实现案例 + 每个保留组件适用的关键负向边界案例
 ```
 
-关键负向边界至少覆盖缺输入/授权、错 CP 或角色、禁配/hard guard、组件冒充事实源或伪造 realization。654 次槽位填写和其中 68 次授权类错绑继续保留为历史诊断证据，不再作为未来规划配额。
+关键负向边界至少覆盖缺输入/授权、错 CP 或角色、禁配/hard guard、组件冒充事实源或伪造 realization。历史槽位与授权错绑诊断保留在机器证据中，不作为项目发起人的规划配额。
 
 ### 8.3 组件黄金通过线
 
@@ -322,19 +321,21 @@ H = 隐藏资格测试中可依法计入正向基线的批准数量，0 <= H <= 
 
 `240-N-H` 只是初始最低生成量，不是保证达到 240 条批准内容的最终数量。任何未批准候选永久保留并继续计入首次可接受率分母；为补齐批准数量可以新增后续密封 top-up 案例，但不得用新样本替换旧失败。
 
-第五包只使用一份参数化、可恢复的执行 Prompt，内部每批最多 40 条，预计先运行 3 至 6 个批次；真实批次数由 `N`、`H`、最终批准率和逐 CP 缺口决定，不再换算成新的 Prompt 数。
+第五包只使用一份参数化、可恢复的执行 Prompt，内部每批最多 40 条；真实运行次数由 `N`、`H`、最终批准率和逐 CP 缺口决定，不再换算成新的 Prompt 数。
 
-## 10. 六个工作包与七份执行 Prompt 合同
+## 10. 六个工作包与八份实际执行指令
 
 ### P1A `GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001`
 
-**目标范围与意图**：完成第一包的确定性建包阶段。把 v1.1 标准字节快照、摘要和机器合同纳入仓库；只读盘点 120/60/86；建立 120 映射包、Route-60 审查包、86 组件审查包和旧 543 关系撤活计划。Phase 0 同时修复当前合法报告/后继路径被任务级全局写面误阻的问题。
+**目标范围与意图**：完成第一包的确定性建包阶段。把 v1.1 标准字节快照、摘要和机器合同纳入仓库；只读盘点 120/60/86；建立 120 映射包、Route-60 盲审包、86 组件审查包和全部旧关系撤活计划。Phase 0 同时修复当前合法报告/后继路径被任务级全局写面误阻的问题。
 
-**落盘交付**：仓库内 v1.1 标准快照与 schema；基线计数合同；120/60/86 review packets；内容/用户价值主审与事实/授权第二专家的差异化 role charter；旧 543 edge historical manifest；PR #13 失败证据绑定；current Gate 1 checker/CI 的 reference-safe 兼容修复及 before/after digest。
+**落盘交付**：仓库内 v1.1 标准快照与 schema；基线计数合同；120/60/86 review packets；一个统一空白审查记录模板；内容/用户价值主审与事实/授权第二专家的差异化 role charter；全部旧关系的 historical manifest；PR #13 失败证据绑定；current Gate 1 checker 的 reference-safe 兼容修复及 before/after digest。
 
-**验收标准**：外部 v1.1 与仓库快照 digest 一致；120/60/86 数量和来源重算一致；不得产生 `N`、`M` 或领域批准决定；review expected 不从实现反算；合法报告和后继新增通过，历史资产任一字节篡改仍失败。
+**验收标准**：外部 v1.1 与仓库快照 digest 一致；120/60/86 数量和来源重算一致；不得产生 `N`、`M` 或领域批准决定；路线答案在签署独立结论前不得看到当前实现；合法报告和后继新增通过，历史资产任一字节篡改仍失败。
 
 **强制规范**：compat 只修 current-live 路径并恢复 b24 live 完整性覆盖；移动账本终点委托 `check_current_ledger_owner.py` 的 horizon 模式，禁止再硬编码 terminal；不改业务资产和 readiness。
+
+**双通道承接边界**：甲／乙是后续创作与资格测试的质量要求，不是两份审查职责。P1A 只保留“同一事实、来源、授权和主张边界下的独立创作”这一后续硬要求；P2 至 P6 必须继续承接，不声明双通道已经合格，不规定配对数量，也不改变 300、120、86。历史路径中的 `b_channel` 仅表示来源或任务命名，不能推断为乙通道成品或第二审身份。
 
 ### P1B `GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001`
 
@@ -400,9 +401,9 @@ H = 隐藏资格测试中可依法计入正向基线的批准数量，0 <= H <= 
 
 ```text
 工作包数量：6
-执行 Prompt 合同：7（第一包 = P1A + 身份隔离审查 Checkpoint + P1B）
+实际执行指令：8（第一包 = P1A + 本次 P1A 定向修复 + 身份隔离审查 Checkpoint + P1B）
 第五包执行 Prompt：1
-第五包内部初始密封批次：预计3..6，必要时追加top-up
+第五包内部运行实例：由真实缺口决定，必要时追加 top-up
 ```
 
 ```text
@@ -422,9 +423,9 @@ P1A 与 P1B 的分离是防自证边界，不得合并。P2 内部可以使用�
 | 事实/权限 | 编造、越权、跨租户、泄密、自行批准均为 0 |
 | 多样性 | 明显套话/近重复 <=10%；CP 盲测达到标准线 |
 | 组件候选 | 86/86 有 gold decision，不强制全批准 |
-| 历史组件边 | 543 条全部标 historical/non-active；未复核 active 边为 0 |
+| 历史组件边 | 全部旧关系标 historical/non-active；未复核 active 边为 0 |
 | 当前组件边 | 仅恢复被保留组件经独立审查通过的 `A` 条 active 边，逐边有身份留痕结论 |
-| 组件测试 | 覆盖全部保留组件 `M` 和全部 active 边 `A`；案例数由通过边与风险负例派生，不设固定 887 指标 |
+| 组件测试 | 覆盖全部保留组件 `M` 和全部 active 边 `A`；案例数由通过边与风险负例派生 |
 | 可复现 | generator/rule/schema/model/input/output/review 全有版本与 digest |
 | 状态 | Gate 1 通过仍不等于正式 DB、CompositionPlan、runtime 或 production ready |
 
@@ -432,11 +433,11 @@ P1A 与 P1B 的分离是防自证边界，不得合并。P2 内部可以使用�
 
 ### 方案 A：回到 Gate 1 闭环，推荐
 
-执行本报告 P1A-P6 六个工作包、七份执行 Prompt 合同。保留现有 ORCH/Generator 产物为开发与失败证据，停止继续为当前开发门叠加新 checker 和新 route。
+执行本报告 P1A-P6 六个工作包、八份实际执行指令。保留现有 ORCH/Generator 产物为开发与失败证据，停止继续为当前开发门叠加新 checker 和新 route。
 
 **优点**：最符合 v1.1；先建立可相信的内容、组件和评价基线；后续正式 ORCH 有稳定输入。
 
-**代价**：短期看似“后退一层”，需要真实人审资源；工程合同收敛为 7 份，P5 内部按最多 40 条一批连续运行。
+**代价**：短期看似“后退一层”，需要身份隔离的审查资源；工程合同收敛为八份实际执行指令，P5 内部按最多 40 条一批连续运行。
 
 ### 方案 B：继续修 PR #13 当前链路，不推荐
 
@@ -454,8 +455,8 @@ P1A 与 P1B 的分离是防自证边界，不得合并。P2 内部可以使用�
 2. 是否确认 P1A 只建映射/审查包，P1B 只能消费合同之外、身份隔离且可追溯的审查记录来冻结 `N`，两份 Prompt 永不合并。
 3. 是否同意把历史 120 改称 `legacy_reference_count`，在 P1B 前不再声称 `N=120`。
 4. 是否同意“86 个黄金基线”定义为 86/86 有测试和裁决，而不是 86/86 必须批准；组件缺口不得靠强留组件补齐。
-5. 是否同意旧 543 条关系全部撤出 active，仅恢复独立复核通过的 `A` 条关系，并按 `M`、`A` 和风险派生测试而不固定 887。
-6. 是否批准六个工作包、七份 Prompt 合同，以及 P5 在同一合同内按最多 40 条一批连续运行。
+5. 是否同意全部旧关系撤出 active，仅恢复独立复核通过的 `A` 条关系，并按 `M`、`A` 和风险派生测试。
+6. 是否批准六个工作包、八份实际执行指令，以及 P5 在同一合同内按最多 40 条一批连续运行。
 7. 是否维持 PR #13 为未合并失败证据，直到有单独的失败归档/合并 Brief 再处理。
 8. 是否承诺配置身份隔离的主审、第二专家和裁决角色；AI 审查可以计入正式审查但不得自评；Guardian 不替代 240 条全量内容主审。
 
@@ -475,8 +476,8 @@ P1A 与 P1B 的分离是防自证边界，不得合并。P2 内部可以使用�
 ### 标准
 
 - v1.1 第一门与 300 条：第 114-247 行。
-- 正向内容 70+30 与 20CP 专项：第 458-568 行。
-- 组件 80+20 与最低线：第 654-694 行。
+- 正向内容 70+30 与 20CP 专项：内容评分章节。
+- 组件 80+20 与最低线：组件评分章节。
 - 路线 60 标准：第 698-727 行。
 - 批次整体通过线：第 810-826 行。
 - 人审角色与覆盖：第 859-890 行。
@@ -509,14 +510,13 @@ system_retrospective:
 recovery_plan:
   verdict: PASS_FOR_REVIEW
   execution_packages: 6
-  execution_prompt_contracts: 7
+  actual_execution_instructions: 8
   prompt_1_split_boundary: P1A_EXTERNAL_REVIEW_CHECKPOINT_P1B
   scale_prompt_contracts: 1
-  expected_initial_scale_batches: 3_to_6
   positive_target: 240
   route_target: 60
   component_candidates_covered: 86
-  legacy_claimed_component_edges: 543
+  legacy_component_relationships: ALL_HISTORICAL_NON_ACTIVE_UNTIL_REVIEWED
   unreviewed_legacy_edges_active: false
   active_component_edges: DERIVED_AFTER_SIGNED_REVIEW
   component_gold_cases: DERIVED_FROM_RETAINED_COMPONENTS_ACTIVE_EDGES_AND_RISK

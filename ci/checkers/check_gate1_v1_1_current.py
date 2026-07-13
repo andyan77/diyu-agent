@@ -25,19 +25,34 @@ if not __debug__:
 ROOT = Path(__file__).resolve().parents[2]
 TASK_ID = "GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001"
 BASELINE_COMMIT = "473a8664bdab37246db1b75785f765e62c80ed86"
+V1_REPAIR_BASELINE_COMMIT = "69235a23d62d6c92683fadf572f7b8c291771dd6"
 TASK_ROOT = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/"
     "p1a_standard_baseline_review_packet_and_governance_preflight_001"
 )
-CURRENT_OWNER_PATH = Path("controlled_content_generator_v2_001/gate1_v1_1_001/current_gate1_owner.v0.1.yaml")
-REPORT_PATH = Path("docs/reports/gate1_v1_1_generator_gkb_retrospective_and_recovery_plan_20260713.md")
-STANDARD_SNAPSHOT_PATH = TASK_ROOT / "standard/diyu_content_composition_standard.v1.1.md"
+CURRENT_OWNER_PATH = Path(
+    "controlled_content_generator_v2_001/gate1_v1_1_001/current_gate1_owner.v0.1.yaml"
+)
+REPORT_PATH = Path(
+    "docs/reports/gate1_v1_1_generator_gkb_retrospective_and_recovery_plan_20260713.md"
+)
+STANDARD_SNAPSHOT_PATH = (
+    TASK_ROOT / "standard/diyu_content_composition_standard.v1.1.md"
+)
 STANDARD_CONTRACT_PATH = TASK_ROOT / "standard/v1_1_standard_contract.v0.1.yaml"
 BASELINE_MANIFEST_PATH = TASK_ROOT / "baseline/gate1_input_baseline_manifest.v0.1.yaml"
 REVIEW_PACKET_PATH = TASK_ROOT / "review/unified_gate1_review_packet.v0.1.jsonl"
 REVIEW_CONTRACT_PATH = TASK_ROOT / "review/independent_review_contract.v0.1.yaml"
-LEGACY_EDGE_MANIFEST_PATH = TASK_ROOT / "component/legacy_component_applicability_historical_manifest.v0.1.jsonl"
-COMPAT_RECEIPT_PATH = TASK_ROOT / "compatibility/governance_compatibility_repair_receipt.v0.1.yaml"
+REVIEW_RECORD_TEMPLATE_PATH = (
+    TASK_ROOT / "review/unified_independent_review_record_template.v0.1.yaml"
+)
+LEGACY_EDGE_MANIFEST_PATH = (
+    TASK_ROOT
+    / "component/legacy_component_applicability_historical_manifest.v0.1.jsonl"
+)
+COMPAT_RECEIPT_PATH = (
+    TASK_ROOT / "compatibility/governance_compatibility_repair_receipt.v0.1.yaml"
+)
 RESULT_PATH = TASK_ROOT / "result/p1a_standard_baseline_preflight_result.v0.1.yaml"
 MATERIALIZER_PATH = TASK_ROOT / "run_p1a_standard_baseline_review_packet_freezer.py"
 
@@ -70,19 +85,27 @@ STANDARD_SHA256 = "022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494
 CLEAN_120_SHA256 = "b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91"
 ROUTE_INPUT_SHA256 = "68bc65bff904652f1e565097117c7e8dfccdcc6ef00d2e3a0e93a082a4d72f12"
 ROUTE_ACTUAL_SHA256 = "bb7d68686761b7be092f191a0f46cb7493a3947f98959703c3ccaa69a86de3ad"
-COMPONENT_SOURCE_SHA256 = "de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601"
-REPORT_AFTER_POLICY_SHA256 = "1f69e0941509ee3e309fd418fcccd0f7bf276e1b92c88cc4728945c0c97adde0"
-B24_CHECKER_BEFORE_SHA256 = "ff4060e02f387e92b9ec1613df31b5b855cbd04a1155d92f5ca03dacf3191394"
-SUCCESSOR_CHECKER_BEFORE_SHA256 = "95fcf3e6716e86f01a210c64dbe4685705962583ff9b2c560182389ba66df71c"
+COMPONENT_SOURCE_SHA256 = (
+    "de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601"
+)
+REPORT_AFTER_POLICY_SHA256 = (
+    "b89dd9f29bc084c9df69595efc6e3145372ade05210c0ecfe7df76f5aba6f02d"
+)
+B24_CHECKER_BEFORE_SHA256 = (
+    "ff4060e02f387e92b9ec1613df31b5b855cbd04a1155d92f5ca03dacf3191394"
+)
+SUCCESSOR_CHECKER_BEFORE_SHA256 = (
+    "95fcf3e6716e86f01a210c64dbe4685705962583ff9b2c560182389ba66df71c"
+)
+CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256 = (
+    "679343b9187ad12c3af077ab4041a3c706bcef56b915c6ef0234af54319ee716"
+)
 
 ALLOWED_EXACT_PATHS = frozenset(
     {
         CURRENT_OWNER_PATH,
         REPORT_PATH,
-        B24_CHECKER_PATH,
-        SUCCESSOR_CHECKER_PATH,
         Path("ci/checkers/check_gate1_v1_1_current.py"),
-        CI_WORKFLOW_PATH,
     }
 )
 TASK_MANAGED_PATHS = frozenset(
@@ -92,6 +115,7 @@ TASK_MANAGED_PATHS = frozenset(
         BASELINE_MANIFEST_PATH,
         REVIEW_PACKET_PATH,
         REVIEW_CONTRACT_PATH,
+        REVIEW_RECORD_TEMPLATE_PATH,
         LEGACY_EDGE_MANIFEST_PATH,
         COMPAT_RECEIPT_PATH,
         RESULT_PATH,
@@ -178,7 +202,9 @@ def write_yaml(path: Path, value: dict[str, Any]) -> None:
 
 def read_jsonl(path: Path) -> list[tuple[dict[str, Any], str]]:
     rows: list[tuple[dict[str, Any], str]] = []
-    for line_number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+    for line_number, raw_line in enumerate(
+        path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
         if not raw_line:
             continue
         value = json.loads(raw_line)
@@ -208,6 +234,22 @@ def recursively_find_true(value: Any, keys: frozenset[str]) -> list[str]:
     return found
 
 
+def recursively_find_strings(value: Any) -> list[str]:
+    """Return all mapping keys and scalar strings for narrow leakage checks."""
+
+    found: list[str] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            found.append(str(key))
+            found.extend(recursively_find_strings(child))
+    elif isinstance(value, list):
+        for child in value:
+            found.extend(recursively_find_strings(child))
+    elif isinstance(value, str):
+        found.append(value)
+    return found
+
+
 def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         ["git", *args],
@@ -233,11 +275,13 @@ def unexpected_write_paths(paths: set[Path]) -> list[str]:
 def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
     if not (root / ".git").exists():
         return
-    ancestor = git(root, ["merge-base", "--is-ancestor", BASELINE_COMMIT, "HEAD"])
+    ancestor = git(
+        root, ["merge-base", "--is-ancestor", V1_REPAIR_BASELINE_COMMIT, "HEAD"]
+    )
     if ancestor.returncode != 0:
         add_error(errors, "E_BASELINE", "baseline commit is not an ancestor of HEAD")
         return
-    changed = git(root, ["diff", "--name-only", f"{BASELINE_COMMIT}..HEAD"])
+    changed = git(root, ["diff", "--name-only", f"{V1_REPAIR_BASELINE_COMMIT}..HEAD"])
     unstaged = git(root, ["diff", "--name-only", "HEAD"])
     untracked = git(root, ["ls-files", "--others", "--exclude-standard"])
     if any(result.returncode != 0 for result in (changed, unstaged, untracked)):
@@ -275,12 +319,18 @@ def source_maps(root: Path, errors: list[dict[str, str]]) -> dict[str, Any] | No
     except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
         add_error(errors, "E_SOURCE_PARSE", str(exc))
         return None
-    if len(clean_rows) != 120 or len(route_input_rows) != 60 or len(route_actual_rows) != 60:
+    if (
+        len(clean_rows) != 120
+        or len(route_input_rows) != 60
+        or len(route_actual_rows) != 60
+    ):
         add_error(errors, "E_SOURCE_COUNT", "expected 120/60/60")
     if len(component_rows) != 86:
         add_error(errors, "E_SOURCE_COUNT", "expected 86 components")
 
-    def as_map(rows: list[tuple[dict[str, Any], str]], key: str, label: str) -> dict[str, str]:
+    def as_map(
+        rows: list[tuple[dict[str, Any], str]], key: str, label: str
+    ) -> dict[str, str]:
         output: dict[str, str] = {}
         for row, raw_line in rows:
             value = row.get(key)
@@ -354,24 +404,37 @@ def validate_standard(root: Path, errors: list[dict[str, str]]) -> None:
 
 def validate_baseline_manifest(root: Path, errors: list[dict[str, str]]) -> None:
     try:
-        manifest = load_yaml(root / BASELINE_MANIFEST_PATH).get("gate1_input_baseline_manifest")
+        manifest = load_yaml(root / BASELINE_MANIFEST_PATH).get(
+            "gate1_input_baseline_manifest"
+        )
     except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         add_error(errors, "E_BASELINE_MANIFEST", str(exc))
         return
     if not isinstance(manifest, dict):
         add_error(errors, "E_BASELINE_MANIFEST", "root missing")
         return
-    if manifest.get("task_id") != TASK_ID or manifest.get("baseline_commit") != BASELINE_COMMIT:
+    if (
+        manifest.get("task_id") != TASK_ID
+        or manifest.get("baseline_commit") != BASELINE_COMMIT
+    ):
         add_error(errors, "E_BASELINE_MANIFEST", "task or commit mismatch")
     anchor = manifest.get("anchor_report")
-    if not isinstance(anchor, dict) or anchor.get("after_p1a_policy_correction_sha256") != REPORT_AFTER_POLICY_SHA256:
+    if (
+        not isinstance(anchor, dict)
+        or anchor.get("after_p1a_policy_correction_sha256")
+        != REPORT_AFTER_POLICY_SHA256
+    ):
         add_error(errors, "E_BASELINE_REPORT", str(anchor))
     inputs = manifest.get("review_inputs")
     expected = {
         "legacy_reference_content": (CLEAN_120_PATH.as_posix(), CLEAN_120_SHA256, 120),
         "route_input_cases": (ROUTE_INPUT_PATH.as_posix(), ROUTE_INPUT_SHA256, 60),
         "route_actual_records": (ROUTE_ACTUAL_PATH.as_posix(), ROUTE_ACTUAL_SHA256, 60),
-        "component_candidates": (COMPONENT_SOURCE_PATH.as_posix(), COMPONENT_SOURCE_SHA256, 86),
+        "component_candidates": (
+            COMPONENT_SOURCE_PATH.as_posix(),
+            COMPONENT_SOURCE_SHA256,
+            86,
+        ),
     }
     if not isinstance(inputs, dict):
         add_error(errors, "E_BASELINE_INPUTS", "missing")
@@ -379,9 +442,23 @@ def validate_baseline_manifest(root: Path, errors: list[dict[str, str]]) -> None
         for key, (path, digest, count) in expected.items():
             item = inputs.get(key)
             if not isinstance(item, dict) or (
-                item.get("path"), item.get("sha256"), item.get("count")
+                item.get("path"),
+                item.get("sha256"),
+                item.get("count"),
             ) != (path, digest, count):
                 add_error(errors, "E_BASELINE_INPUTS", key)
+        route_actual = inputs.get("route_actual_records")
+        if (
+            not isinstance(route_actual, dict)
+            or route_actual.get("excluded_from_blind_review_packet") is not True
+            or route_actual.get(
+                "comparison_allowed_only_after_signed_independent_determination"
+            )
+            is not True
+        ):
+            add_error(
+                errors, "E_ROUTE_BLINDNESS", "baseline route actual release policy"
+            )
     boundary = manifest.get("p1a_boundary")
     if not isinstance(boundary, dict) or any(
         boundary.get(key) not in (False, "NOT_FROZEN")
@@ -397,7 +474,9 @@ def validate_baseline_manifest(root: Path, errors: list[dict[str, str]]) -> None
         add_error(errors, "E_BASELINE_MANIFEST_DIGEST", "mismatch")
 
 
-def validate_review_packet(root: Path, source: dict[str, Any], errors: list[dict[str, str]]) -> None:
+def validate_review_packet(
+    root: Path, source: dict[str, Any], errors: list[dict[str, str]]
+) -> None:
     try:
         rows = [row for row, _ in read_jsonl(root / REVIEW_PACKET_PATH)]
     except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
@@ -407,7 +486,9 @@ def validate_review_packet(root: Path, source: dict[str, Any], errors: list[dict
         add_error(errors, "E_REVIEW_PACKET_COUNT", str(len(rows)))
         return
     packet_ids = [row.get("packet_item_id") for row in rows]
-    if len(set(packet_ids)) != 266 or any(not isinstance(item, str) for item in packet_ids):
+    if len(set(packet_ids)) != 266 or any(
+        not isinstance(item, str) for item in packet_ids
+    ):
         add_error(errors, "E_REVIEW_PACKET_IDS", "duplicate or missing")
     by_type = Counter(row.get("object_type") for row in rows)
     if by_type != Counter(
@@ -422,6 +503,17 @@ def validate_review_packet(root: Path, source: dict[str, Any], errors: list[dict
     route_seen: set[str] = set()
     component_seen: set[str] = set()
     for row in rows:
+        packet_strings = recursively_find_strings(row)
+        forbidden_route_leakage = {
+            "observed_implementation_record",
+            "current_implementation_record",
+            "actual_decision",
+            "implementation_result",
+            ROUTE_ACTUAL_PATH.as_posix(),
+            ROUTE_ACTUAL_SHA256,
+        }
+        if forbidden_route_leakage.intersection(packet_strings):
+            add_error(errors, "E_ROUTE_BLINDNESS", str(row.get("packet_item_id")))
         review_state = row.get("review_state")
         if review_state != "PENDING_INDEPENDENT_REVIEW":
             add_error(errors, "E_REVIEW_DECISION", str(row.get("packet_item_id")))
@@ -444,18 +536,12 @@ def validate_review_packet(root: Path, source: dict[str, Any], errors: list[dict
             clean_seen.add(object_id)
         elif object_type == "ROUTE_CASE":
             input_record = row.get("input_source")
-            actual_record = row.get("observed_implementation_record")
             if (
                 not isinstance(input_record, dict)
                 or input_record.get("path") != ROUTE_INPUT_PATH.as_posix()
                 or input_record.get("locator") != f"{ROUTE_INPUT_PATH}#{object_id}"
-                or input_record.get("record_sha256") != source["route_input_by_id"].get(object_id)
-                or not isinstance(actual_record, dict)
-                or actual_record.get("path") != ROUTE_ACTUAL_PATH.as_posix()
-                or actual_record.get("locator") != f"{ROUTE_ACTUAL_PATH}#{object_id}"
-                or actual_record.get("record_sha256") != source["route_actual_by_id"].get(object_id)
-                or actual_record.get("may_not_define_gold_answer") is not True
-                or "actual_decision" in row
+                or input_record.get("record_sha256")
+                != source["route_input_by_id"].get(object_id)
             ):
                 add_error(errors, "E_REVIEW_PACKET_ROUTE", object_id)
             route_seen.add(object_id)
@@ -465,7 +551,8 @@ def validate_review_packet(root: Path, source: dict[str, Any], errors: list[dict
                 not isinstance(record, dict)
                 or record.get("path") != COMPONENT_SOURCE_PATH.as_posix()
                 or record.get("locator") != f"{COMPONENT_SOURCE_PATH}#{object_id}"
-                or record.get("record_sha256") != source["component_by_id"].get(object_id)
+                or record.get("record_sha256")
+                != source["component_by_id"].get(object_id)
                 or row.get("may_be_consumed_by_new_generator") is not False
             ):
                 add_error(errors, "E_REVIEW_PACKET_SOURCE", object_id)
@@ -478,9 +565,93 @@ def validate_review_packet(root: Path, source: dict[str, Any], errors: list[dict
         add_error(errors, "E_REVIEW_PACKET_COVERAGE", "components")
 
 
+def validate_review_identity_set(
+    reviewer_records: dict[str, dict[str, Any]],
+    errors: list[dict[str, str]],
+) -> None:
+    """Validate the identity separation P1B must apply to a review record set."""
+
+    primary = reviewer_records.get("PRIMARY_CONTENT_VALUE")
+    secondary = reviewer_records.get("SECONDARY_FACT_AUTHORIZATION")
+    if not isinstance(primary, dict) or not isinstance(secondary, dict):
+        add_error(
+            errors, "E_REVIEWER_IDENTITY_COLLISION", "primary or secondary missing"
+        )
+        return
+    distinct_fields = (
+        "reviewer_identity_id",
+        "reviewer_instance_or_session_id",
+        "review_run_id",
+        "append_only_signature_or_attestation",
+    )
+    for field in distinct_fields:
+        primary_value = primary.get(field)
+        secondary_value = secondary.get(field)
+        if (
+            not isinstance(primary_value, str)
+            or not isinstance(secondary_value, str)
+            or primary_value == secondary_value
+        ):
+            add_error(
+                errors, "E_REVIEWER_IDENTITY_COLLISION", f"primary/secondary:{field}"
+            )
+    adjudicator = reviewer_records.get("INDEPENDENT_ADJUDICATION")
+    if adjudicator is not None:
+        if not isinstance(adjudicator, dict):
+            add_error(errors, "E_REVIEWER_IDENTITY_COLLISION", "adjudicator schema")
+            return
+        for field in distinct_fields:
+            adjudicator_value = adjudicator.get(field)
+            if not isinstance(adjudicator_value, str) or adjudicator_value in {
+                primary.get(field),
+                secondary.get(field),
+            }:
+                add_error(
+                    errors, "E_REVIEWER_IDENTITY_COLLISION", f"adjudicator:{field}"
+                )
+
+
+def validate_scoring_contract_binding(value: Any, errors: list[dict[str, str]]) -> None:
+    if not isinstance(value, dict):
+        add_error(errors, "E_SCORING_CONTRACT", "missing")
+        return
+    expected = {
+        "positive_content": ("formula", "70_PLUS_30_EQUALS_100"),
+        "component_candidate": ("formula", "80_PLUS_20_EQUALS_100"),
+        "route_case": ("formula", "HARD_PRIMARY_ACTION_AND_REASON_CODE"),
+    }
+    for key, (field, expected_value) in expected.items():
+        item = value.get(key)
+        if not isinstance(item, dict) or item.get(field) != expected_value:
+            add_error(errors, "E_SCORING_CONTRACT", key)
+    route = value.get("route_case")
+    summary = value.get("review_delivery_summary")
+    if (
+        not isinstance(route, dict)
+        or route.get("per_record_percentage_forbidden") is not True
+        or not isinstance(summary, dict)
+        or summary.get("independent_coordinator_score_out_of") != 100
+        or summary.get("is_not_a_substitute_for_object_level_decision") is not True
+        or value.get("high_score_may_not_override_hard_veto") is not True
+        or not isinstance(value.get("separation_required"), list)
+        or set(value["separation_required"])
+        != {
+            "total_score",
+            "hard_gate",
+            "veto",
+            "grade",
+            "disposition",
+            "lifecycle_status",
+        }
+    ):
+        add_error(errors, "E_SCORING_CONTRACT", "decision separation")
+
+
 def validate_review_contract(root: Path, errors: list[dict[str, str]]) -> None:
     try:
-        contract = load_yaml(root / REVIEW_CONTRACT_PATH).get("independent_review_contract")
+        contract = load_yaml(root / REVIEW_CONTRACT_PATH).get(
+            "independent_review_contract"
+        )
     except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         add_error(errors, "E_REVIEW_CONTRACT", str(exc))
         return
@@ -494,32 +665,178 @@ def validate_review_contract(root: Path, errors: list[dict[str, str]]) -> None:
         "isolated_instance_or_session_required": True,
         "independent_run_and_signature_record_required": True,
         "blind_to_other_review_before_own_conclusion": True,
+        "primary_and_secondary_pairwise_distinct_required": True,
+        "adjudicator_pairwise_distinct_from_primary_and_secondary_when_triggered": True,
         "may_not_equal_content_author": True,
         "may_not_equal_p1a_packet_builder": True,
         "may_not_equal_p1b_freezer": True,
     }
-    if not isinstance(policy, dict) or any(policy.get(key) != value for key, value in required_policy.items()):
+    if not isinstance(policy, dict) or any(
+        policy.get(key) != value for key, value in required_policy.items()
+    ):
         add_error(errors, "E_REVIEW_IDENTITY_POLICY", str(policy))
+    if not isinstance(policy, dict) or policy.get(
+        "pairwise_distinct_record_fields"
+    ) != [
+        "reviewer_identity_id",
+        "reviewer_instance_or_session_id",
+        "review_run_id",
+        "append_only_signature_or_attestation",
+    ]:
+        add_error(errors, "E_REVIEW_IDENTITY_POLICY", "pairwise record fields")
     roles = contract.get("roles")
     if not isinstance(roles, dict):
         add_error(errors, "E_REVIEW_ROLES", "missing")
     else:
         primary = roles.get("PRIMARY_CONTENT_VALUE")
-        if not isinstance(primary, dict) or primary.get("coverage") != "APPLICABLE_POSITIVE_FIRST_OUTPUTS_100_PERCENT":
+        if (
+            not isinstance(primary, dict)
+            or primary.get("coverage")
+            != "APPLICABLE_POSITIVE_FIRST_OUTPUTS_100_PERCENT"
+        ):
             add_error(errors, "E_REVIEW_COVERAGE", str(primary))
         secondary = roles.get("SECONDARY_FACT_AUTHORIZATION")
-        if not isinstance(secondary, dict) or secondary.get("minimum_review_count") != 48 or secondary.get(
-            "minimum_per_content_product"
-        ) != 2:
+        if (
+            not isinstance(secondary, dict)
+            or secondary.get("minimum_review_count") != 48
+            or secondary.get("minimum_per_content_product") != 2
+        ):
             add_error(errors, "E_REVIEW_COVERAGE", str(secondary))
+        adjudicator = roles.get("INDEPENDENT_ADJUDICATION")
+        if (
+            not isinstance(adjudicator, dict)
+            or adjudicator.get("required_when")
+            != "PRIMARY_AND_SECONDARY_CONCLUSIONS_CONFLICT"
+            or adjudicator.get("may_not_be_p1a_builder_or_p1b_freezer") is not True
+        ):
+            add_error(errors, "E_REVIEW_ROLES", str(adjudicator))
+    standard_binding = contract.get("repository_standard_binding")
+    if not isinstance(standard_binding, dict) or standard_binding != {
+        "snapshot_path": STANDARD_SNAPSHOT_PATH.as_posix(),
+        "snapshot_sha256": STANDARD_SHA256,
+        "positive_content_scoring": "70_PLUS_30_EQUALS_100",
+        "component_scoring": "80_PLUS_20_EQUALS_100",
+        "route_scoring": "HARD_PRIMARY_ACTION_AND_REASON_CODE_NO_PER_RECORD_PERCENTAGE",
+    }:
+        add_error(errors, "E_SCORING_CONTRACT", "repository standard binding")
+    validate_scoring_contract_binding(
+        contract.get("scoring_and_decision_contract"), errors
+    )
+    route_sequence = contract.get("route_blind_review_sequence")
+    expected_route_actual = {
+        "path": ROUTE_ACTUAL_PATH.as_posix(),
+        "sha256": ROUTE_ACTUAL_SHA256,
+        "p1b_only_after_signed_determination": True,
+    }
+    if (
+        not isinstance(route_sequence, dict)
+        or route_sequence.get(
+            "blind_packet_may_not_contain_current_implementation_locator_or_digest"
+        )
+        is not True
+        or route_sequence.get("first_submission_required_before_actual_comparison")
+        is not True
+        or route_sequence.get("current_actual_source") != expected_route_actual
+        or route_sequence.get("required_signed_determination_fields")
+        != [
+            "primary_action",
+            "reason_code",
+            "evidence_refs",
+            "append_only_record_digest",
+        ]
+    ):
+        add_error(errors, "E_ROUTE_BLINDNESS", str(route_sequence))
+    disagreement = contract.get("disagreement_policy")
+    expected_disagreement = {
+        "original_conclusions_and_evidence_append_only": True,
+        "independent_adjudication_required_on_conflict": True,
+        "silent_intersection_forbidden": True,
+        "average_forbidden": True,
+        "overwrite_forbidden": True,
+    }
+    if disagreement != expected_disagreement:
+        add_error(errors, "E_DISAGREEMENT_POLICY", str(disagreement))
+    channel_boundary = contract.get("creative_channel_boundary")
+    expected_channel_boundary = {
+        "review_roles": [
+            "PRIMARY_CONTENT_VALUE",
+            "SECONDARY_FACT_AUTHORIZATION",
+            "INDEPENDENT_ADJUDICATION",
+        ],
+        "review_role_may_not_be_mapped_to_generation_lane": True,
+        "historical_b_channel_is_not_generation_lane_evidence": True,
+        "source_generation_lane_or_pair_ref_only_if_source_carries_it": True,
+        "source_generation_lane_or_pair_ref_fabrication_forbidden": True,
+        "optional_lane_applicability_nonblocking": True,
+        "optional_lane_applicability_not_approval_evidence": True,
+        "default_lane_applicability_without_source_evidence": "NOT_APPLICABLE",
+        "p1a_may_not_assert_dual_channel_qualified": True,
+        "p2_to_p6_must_preserve_dual_channel_requirement": True,
+    }
+    if channel_boundary != expected_channel_boundary:
+        add_error(errors, "E_LANE_BOUNDARY", str(channel_boundary))
     prohibitions = contract.get("p1a_prohibitions")
-    if not isinstance(prohibitions, dict) or any(value is not False for value in prohibitions.values()):
+    if not isinstance(prohibitions, dict) or any(
+        value is not False for value in prohibitions.values()
+    ):
         add_error(errors, "E_REVIEW_DECISION", "contract p1a boundary")
     if contract.get("contract_digest") != object_digest(contract, "contract_digest"):
         add_error(errors, "E_REVIEW_CONTRACT_DIGEST", "mismatch")
 
 
-def validate_legacy_edges(root: Path, source: dict[str, Any], errors: list[dict[str, str]]) -> None:
+def validate_review_record_template(root: Path, errors: list[dict[str, str]]) -> None:
+    try:
+        template = load_yaml(root / REVIEW_RECORD_TEMPLATE_PATH).get(
+            "unified_independent_review_record_template"
+        )
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
+        add_error(errors, "E_REVIEW_TEMPLATE", str(exc))
+        return
+    if not isinstance(template, dict):
+        add_error(errors, "E_REVIEW_TEMPLATE", "root missing")
+        return
+    standard = template.get("standard_binding")
+    if not isinstance(standard, dict) or standard != {
+        "snapshot_path": STANDARD_SNAPSHOT_PATH.as_posix(),
+        "snapshot_sha256": STANDARD_SHA256,
+        "content_formula": "70_PLUS_30_EQUALS_100",
+        "component_formula": "80_PLUS_20_EQUALS_100",
+        "route_formula": "HARD_PRIMARY_ACTION_AND_REASON_CODE_NO_PER_RECORD_PERCENTAGE",
+    }:
+        add_error(errors, "E_SCORING_CONTRACT", "template standard binding")
+    object_record = template.get("object")
+    reviewer = template.get("reviewer")
+    evaluation = template.get("evidence_and_evaluation")
+    disagreement = template.get("disagreement")
+    required_top_level = {
+        "schema_version": "v0.1",
+        "template_status": "BLANK_TEMPLATE_NO_REVIEW_DECISION",
+        "task_id": TASK_ID,
+        "contract_path": REVIEW_CONTRACT_PATH.as_posix(),
+    }
+    if any(template.get(key) != value for key, value in required_top_level.items()):
+        add_error(errors, "E_REVIEW_TEMPLATE", "top level")
+    if (
+        not isinstance(object_record, dict)
+        or object_record.get("source_generation_lane_or_pair_ref") is not None
+        or object_record.get("optional_lane_applicability") is not None
+        or not isinstance(reviewer, dict)
+        or any(value is not None for value in reviewer.values())
+        or not isinstance(evaluation, dict)
+        or evaluation.get("conclusion") is not None
+        or evaluation.get("disposition") is not None
+        or not isinstance(disagreement, dict)
+        or disagreement.get("adjudication_conclusion") is not None
+        or disagreement.get("final_disposition") is not None
+    ):
+        add_error(errors, "E_REVIEW_TEMPLATE", "must remain blank")
+    if template.get("template_digest") != object_digest(template, "template_digest"):
+        add_error(errors, "E_REVIEW_TEMPLATE_DIGEST", "mismatch")
+
+
+def validate_legacy_edges(
+    root: Path, source: dict[str, Any], errors: list[dict[str, str]]
+) -> None:
     try:
         rows = [row for row, _ in read_jsonl(root / LEGACY_EDGE_MANIFEST_PATH)]
     except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
@@ -533,7 +850,11 @@ def validate_legacy_edges(root: Path, source: dict[str, Any], errors: list[dict[
         component_id = row.get("component_id")
         cp_id = row.get("content_product_type_id")
         edge = (component_id, cp_id)
-        if not isinstance(component_id, str) or not isinstance(cp_id, str) or edge in seen:
+        if (
+            not isinstance(component_id, str)
+            or not isinstance(cp_id, str)
+            or edge in seen
+        ):
             add_error(errors, "E_LEGACY_EDGE_SCHEMA", str(edge))
             continue
         seen.add(edge)
@@ -549,7 +870,8 @@ def validate_legacy_edges(root: Path, source: dict[str, Any], errors: list[dict[
             not isinstance(record, dict)
             or record.get("path") != COMPONENT_SOURCE_PATH.as_posix()
             or record.get("locator") != f"{COMPONENT_SOURCE_PATH}#{component_id}"
-            or record.get("record_sha256") != source["component_by_id"].get(component_id)
+            or record.get("record_sha256")
+            != source["component_by_id"].get(component_id)
         ):
             add_error(errors, "E_LEGACY_EDGE_SOURCE", str(edge))
     if seen != source["edge_set"]:
@@ -558,7 +880,9 @@ def validate_legacy_edges(root: Path, source: dict[str, Any], errors: list[dict[
 
 def validate_result(root: Path, errors: list[dict[str, str]]) -> None:
     try:
-        result = load_yaml(root / RESULT_PATH).get("p1a_standard_baseline_preflight_result")
+        result = load_yaml(root / RESULT_PATH).get(
+            "p1a_standard_baseline_preflight_result"
+        )
     except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         add_error(errors, "E_RESULT", str(exc))
         return
@@ -568,9 +892,11 @@ def validate_result(root: Path, errors: list[dict[str, str]]) -> None:
     if result.get("execution_status") != "PASS_PENDING_INDEPENDENT_REVIEWS":
         add_error(errors, "E_RESULT", str(result.get("execution_status")))
     boundary = result.get("review_decision_boundary")
-    if not isinstance(boundary, dict) or boundary.get("review_decisions_created") is not False or boundary.get(
-        "counted_positive_parent_count"
-    ) != "NOT_FROZEN":
+    if (
+        not isinstance(boundary, dict)
+        or boundary.get("review_decisions_created") is not False
+        or boundary.get("counted_positive_parent_count") != "NOT_FROZEN"
+    ):
         add_error(errors, "E_REVIEW_DECISION", "result boundary")
     readiness = result.get("readiness")
     if not isinstance(readiness, dict) or recursively_find_true(readiness, READY_KEYS):
@@ -616,9 +942,11 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
     ):
         add_error(errors, "E_OWNER_POLICY", "protected inputs")
     authority = owner.get("current_ledger_authority")
-    if not isinstance(authority, dict) or authority.get("shared_horizon_modified") is not False or authority.get(
-        "terminal_derivation"
-    ) != "delegated_to_existing_owner":
+    if (
+        not isinstance(authority, dict)
+        or authority.get("shared_horizon_modified") is not False
+        or authority.get("terminal_derivation") != "delegated_to_existing_owner"
+    ):
         add_error(errors, "E_OWNER_POLICY", "ledger authority")
     if recursively_find_true(owner.get("readiness"), READY_KEYS):
         add_error(errors, "E_READINESS", "owner")
@@ -626,7 +954,9 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
 
 def validate_compatibility_receipt(root: Path, errors: list[dict[str, str]]) -> None:
     try:
-        receipt = load_yaml(root / COMPAT_RECEIPT_PATH).get("governance_compatibility_repair_receipt")
+        receipt = load_yaml(root / COMPAT_RECEIPT_PATH).get(
+            "governance_compatibility_repair_receipt"
+        )
     except (OSError, TypeError, ValueError, yaml.YAMLError) as exc:
         add_error(errors, "E_COMPAT_RECEIPT", str(exc))
         return
@@ -638,7 +968,11 @@ def validate_compatibility_receipt(root: Path, errors: list[dict[str, str]]) -> 
         B24_CHECKER_PATH.as_posix(): B24_CHECKER_BEFORE_SHA256,
         SUCCESSOR_CHECKER_PATH.as_posix(): SUCCESSOR_CHECKER_BEFORE_SHA256,
     }
-    if receipt.get("modified_live_checker_count") != 2 or not isinstance(checkers, list) or len(checkers) != 2:
+    if (
+        receipt.get("modified_live_checker_count") != 2
+        or not isinstance(checkers, list)
+        or len(checkers) != 2
+    ):
         add_error(errors, "E_COMPAT_RECEIPT", "modified checker count")
     else:
         seen: set[str] = set()
@@ -665,12 +999,33 @@ def validate_compatibility_receipt(root: Path, errors: list[dict[str, str]]) -> 
     if (
         not isinstance(current, dict)
         or current.get("path") != "ci/checkers/check_gate1_v1_1_current.py"
-        or current.get("sha256") != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
+        or current.get("sha256")
+        != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
     ):
         add_error(errors, "E_COMPAT_RECEIPT", "new checker")
-    if receipt.get("shared_ledger_or_horizon_modified") is not False or receipt.get(
-        "historical_allowlist_expanded"
-    ) is not False:
+    v1_repair = receipt.get("v1_current_checker_repair")
+    expected_v1_repair_proof = {
+        "command": "python3 ci/checkers/check_gate1_v1_1_current.py --selftest",
+        "must_reject": [
+            "route actual leakage into blind packet",
+            "same reviewer identity or session/run/signature",
+            "missing scoring contract",
+            "review role mapped to generation lane",
+        ],
+    }
+    if (
+        not isinstance(v1_repair, dict)
+        or v1_repair.get("path") != "ci/checkers/check_gate1_v1_1_current.py"
+        or v1_repair.get("sha256_before") != CURRENT_GATE1_CHECKER_V1_BEFORE_SHA256
+        or v1_repair.get("sha256_after")
+        != sha256_file(root / Path("ci/checkers/check_gate1_v1_1_current.py"))
+        or v1_repair.get("negative_injection_proof") != expected_v1_repair_proof
+    ):
+        add_error(errors, "E_COMPAT_RECEIPT", "v1 current checker repair")
+    if (
+        receipt.get("shared_ledger_or_horizon_modified") is not False
+        or receipt.get("historical_allowlist_expanded") is not False
+    ):
         add_error(errors, "E_COMPAT_RECEIPT", "shared authority boundary")
     if receipt.get("receipt_digest") != object_digest(receipt, "receipt_digest"):
         add_error(errors, "E_COMPAT_RECEIPT_DIGEST", "mismatch")
@@ -679,11 +1034,20 @@ def validate_compatibility_receipt(root: Path, errors: list[dict[str, str]]) -> 
 def validate_repair_shape(root: Path, errors: list[dict[str, str]]) -> None:
     b24_text = (root / B24_CHECKER_PATH).read_text(encoding="utf-8")
     successor_text = (root / SUCCESSOR_CHECKER_PATH).read_text(encoding="utf-8")
-    if "validate_current_write_surface" in b24_text or "CURRENT_ALLOWED_EXACT_PATHS" in b24_text:
+    if (
+        "validate_current_write_surface" in b24_text
+        or "CURRENT_ALLOWED_EXACT_PATHS" in b24_text
+    ):
         add_error(errors, "E_REPAIR_SCOPE", "B24 still owns current write surface")
-    if "CURRENT_LEDGER_OWNER_CHECKER" not in successor_text or "CURRENT_B_CHANNEL_CHECKER" in successor_text:
+    if (
+        "CURRENT_LEDGER_OWNER_CHECKER" not in successor_text
+        or "CURRENT_B_CHANNEL_CHECKER" in successor_text
+    ):
         add_error(errors, "E_REPAIR_SCOPE", "successor has not delegated current owner")
-    if "HISTORICAL_ROUTE_DIGESTS_19_33" not in successor_text or '"E_ROUTE34"' in successor_text:
+    if (
+        "HISTORICAL_ROUTE_DIGESTS_19_33" not in successor_text
+        or '"E_ROUTE34"' in successor_text
+    ):
         add_error(errors, "E_REPAIR_SCOPE", "successor historical scope missing")
 
 
@@ -697,11 +1061,25 @@ def validate_report(root: Path, errors: list[dict[str, str]]) -> None:
         "AI 审查可以计入正式审查",
         "身份隔离审查",
         "第二专家至少 48 条且每个 CP 至少 2 条",
-        "543 条全部标 historical/non-active",
-        "不设固定 887 指标",
+        "八份实际执行指令",
+        "全部旧关系标 historical/non-active",
+        "甲／乙是后续创作与资格测试的质量要求，不是两份审查职责",
+        "P2 至 P6 必须继续承接",
     )
     if any(phrase not in report for phrase in required_phrases):
         add_error(errors, "E_REPORT_POLICY", "required policy phrase missing")
+    forbidden_phrases = (
+        "543 条",
+        "654 个槽位",
+        "68 个 authorization-like",
+        "887 个案例",
+        "七份执行 Prompt",
+        "3_to_6",
+        "3 至 6",
+        "预计3..6",
+    )
+    if any(phrase in report for phrase in forbidden_phrases):
+        add_error(errors, "E_REPORT_POLICY", "obsolete process metric retained")
 
 
 def validate(root: Path) -> list[dict[str, str]]:
@@ -714,6 +1092,7 @@ def validate(root: Path) -> list[dict[str, str]]:
         BASELINE_MANIFEST_PATH,
         REVIEW_PACKET_PATH,
         REVIEW_CONTRACT_PATH,
+        REVIEW_RECORD_TEMPLATE_PATH,
         LEGACY_EDGE_MANIFEST_PATH,
         COMPAT_RECEIPT_PATH,
         RESULT_PATH,
@@ -734,6 +1113,7 @@ def validate(root: Path) -> list[dict[str, str]]:
         validate_review_packet(root, source, errors)
         validate_legacy_edges(root, source, errors)
     validate_review_contract(root, errors)
+    validate_review_record_template(root, errors)
     validate_result(root, errors)
     validate_owner(root, errors)
     validate_compatibility_receipt(root, errors)
@@ -798,13 +1178,60 @@ def selftest(root: Path) -> int:
             ),
         ),
         (
+            "route_actual_leakage",
+            "E_ROUTE_BLINDNESS",
+            lambda temp: mutate_jsonl(
+                temp / REVIEW_PACKET_PATH,
+                lambda rows: rows[120].update(
+                    {
+                        "observed_implementation_record": {
+                            "path": ROUTE_ACTUAL_PATH.as_posix(),
+                            "record_sha256": ROUTE_ACTUAL_SHA256,
+                        }
+                    }
+                ),
+            ),
+        ),
+        (
+            "missing_scoring_contract",
+            "E_SCORING_CONTRACT",
+            lambda temp: mutate_yaml(
+                temp / REVIEW_CONTRACT_PATH,
+                lambda value: value["independent_review_contract"].pop(
+                    "scoring_and_decision_contract"
+                ),
+            ),
+        ),
+        (
+            "review_role_mapped_to_lane",
+            "E_LANE_BOUNDARY",
+            lambda temp: mutate_yaml(
+                temp / REVIEW_CONTRACT_PATH,
+                lambda value: value["independent_review_contract"][
+                    "creative_channel_boundary"
+                ].update({"review_role_may_not_be_mapped_to_generation_lane": False}),
+            ),
+        ),
+        (
+            "historical_b_channel_auto_inference",
+            "E_LANE_BOUNDARY",
+            lambda temp: mutate_yaml(
+                temp / REVIEW_CONTRACT_PATH,
+                lambda value: value["independent_review_contract"][
+                    "creative_channel_boundary"
+                ].update(
+                    {"historical_b_channel_is_not_generation_lane_evidence": False}
+                ),
+            ),
+        ),
+        (
             "readiness_flip",
             "E_READINESS",
             lambda temp: mutate_yaml(
                 temp / RESULT_PATH,
-                lambda value: value["p1a_standard_baseline_preflight_result"]["readiness"].update(
-                    {"generation_allowed": True}
-                ),
+                lambda value: value["p1a_standard_baseline_preflight_result"][
+                    "readiness"
+                ].update({"generation_allowed": True}),
             ),
         ),
         (
@@ -812,9 +1239,9 @@ def selftest(root: Path) -> int:
             "E_OWNER_POLICY",
             lambda temp: mutate_yaml(
                 temp / CURRENT_OWNER_PATH,
-                lambda value: value["current_gate1_owner"]["current_ledger_authority"].update(
-                    {"shared_horizon_modified": True}
-                ),
+                lambda value: value["current_gate1_owner"][
+                    "current_ledger_authority"
+                ].update({"shared_horizon_modified": True}),
             ),
         ),
         (
@@ -822,9 +1249,9 @@ def selftest(root: Path) -> int:
             "E_COMPAT_RECEIPT",
             lambda temp: mutate_yaml(
                 temp / COMPAT_RECEIPT_PATH,
-                lambda value: value["governance_compatibility_repair_receipt"]["modified_live_checkers"][0].update(
-                    {"sha256_before": "0" * 64}
-                ),
+                lambda value: value["governance_compatibility_repair_receipt"][
+                    "modified_live_checkers"
+                ][0].update({"sha256_before": "0" * 64}),
             ),
         ),
     ]
@@ -837,11 +1264,47 @@ def selftest(root: Path) -> int:
             mutate(case_root)
             codes = {error["code"] for error in validate(case_root)}
             if expected_code not in codes:
-                failures.append({"case": name, "expected": expected_code, "actual": sorted(codes)})
+                failures.append(
+                    {"case": name, "expected": expected_code, "actual": sorted(codes)}
+                )
+    identity_errors: list[dict[str, str]] = []
+    validate_review_identity_set(
+        {
+            "PRIMARY_CONTENT_VALUE": {
+                "reviewer_identity_id": "same-agent",
+                "reviewer_instance_or_session_id": "same-session",
+                "review_run_id": "same-run",
+                "append_only_signature_or_attestation": "same-signature",
+            },
+            "SECONDARY_FACT_AUTHORIZATION": {
+                "reviewer_identity_id": "same-agent",
+                "reviewer_instance_or_session_id": "same-session",
+                "review_run_id": "same-run",
+                "append_only_signature_or_attestation": "same-signature",
+            },
+        },
+        identity_errors,
+    )
+    if "E_REVIEWER_IDENTITY_COLLISION" not in {
+        error["code"] for error in identity_errors
+    }:
+        failures.append(
+            {
+                "case": "same_reviewer_identity",
+                "expected": "E_REVIEWER_IDENTITY_COLLISION",
+                "actual": sorted({error["code"] for error in identity_errors}),
+            }
+        )
     if not unexpected_write_paths({Path("outside_p1a/unapproved.txt")}):
-        failures.append({"case": "unauthorized_path", "expected": "E_WRITE_SURFACE", "actual": []})
+        failures.append(
+            {"case": "unauthorized_path", "expected": "E_WRITE_SURFACE", "actual": []}
+        )
     if failures:
-        print(json.dumps({"status": "SELFTEST_FAIL", "failures": failures}, ensure_ascii=False))
+        print(
+            json.dumps(
+                {"status": "SELFTEST_FAIL", "failures": failures}, ensure_ascii=False
+            )
+        )
         return 1
     print(
         json.dumps(
@@ -851,6 +1314,9 @@ def selftest(root: Path) -> int:
                 "unauthorized_write_surface_rejected": True,
                 "review_decision_creation_rejected": True,
                 "readiness_flip_rejected": True,
+                "route_actual_leakage_rejected": True,
+                "same_reviewer_identity_rejected": True,
+                "missing_scoring_contract_rejected": True,
             },
             ensure_ascii=False,
         )

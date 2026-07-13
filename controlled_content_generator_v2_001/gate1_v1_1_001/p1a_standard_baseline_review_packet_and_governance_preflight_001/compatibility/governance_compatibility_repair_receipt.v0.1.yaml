@@ -21,13 +21,27 @@ governance_compatibility_repair_receipt:
       - unauthorized route 34
   new_current_checker:
     path: ci/checkers/check_gate1_v1_1_current.py
-    sha256: 679343b9187ad12c3af077ab4041a3c706bcef56b915c6ef0234af54319ee716
+    sha256: 29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806
     negative_injection_proof:
       command: python3 ci/checkers/check_gate1_v1_1_current.py --selftest
       must_reject:
       - readiness flip
       - unauthorized path
       - active legacy edge
+      - route actual leakage into blind packet
+      - same reviewer identity
+      - missing scoring contract
+  v1_current_checker_repair:
+    path: ci/checkers/check_gate1_v1_1_current.py
+    sha256_before: 679343b9187ad12c3af077ab4041a3c706bcef56b915c6ef0234af54319ee716
+    sha256_after: 29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806
+    negative_injection_proof:
+      command: python3 ci/checkers/check_gate1_v1_1_current.py --selftest
+      must_reject:
+      - route actual leakage into blind packet
+      - same reviewer identity or session/run/signature
+      - missing scoring contract
+      - review role mapped to generation lane
   shared_ledger_or_horizon_modified: false
   historical_allowlist_expanded: false
-  receipt_digest: 8d1e39ebb90da9c1ade59d19287ed90e650efd232b78a15fdeb5f3d48e717087
+  receipt_digest: e5aff46ec5f3469274571b8e7e97633c9290d167391ed8bcf195a6986516b0fb
