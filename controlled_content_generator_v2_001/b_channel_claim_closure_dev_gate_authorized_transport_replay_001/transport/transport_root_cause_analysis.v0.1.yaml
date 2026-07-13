@@ -1,0 +1,40 @@
+transport_root_cause_analysis:
+  schema_version: v0.1
+  task_id: ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001
+  transport_root_cause_confirmed: true
+  root_cause_class: AUTHOR_PAYLOAD_ECHO_USED_AS_AUTHORITATIVE_TRANSPORT_IDENTITY
+  request_id_generation_owner_before: generator_plan_consumer.build_author_request
+    generated request_id once
+  dispatch_manifest_path_before: controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/requests/author_requests.v0.1.jsonl
+  author_session_binding_before: ThreadPool future captured one request and wrote
+    it into a unique temporary session directory
+  response_return_path_before: one final_response.json inside that request-scoped
+    temporary directory
+  pairing_mechanism_before: request object was passed directly to _run_one; traversal,
+    filename, and completion order did not assign identity
+  author_payload_identity_authority_before: true
+  schema_required_author_echo_fields_before:
+  - request_id
+  - request_digest
+  - response_id
+  mismatch_observation: old _validate_response rejected at least one author payload
+    whose request_id did not equal the captured request
+  mismatch_stage: AUTHOR_PAYLOAD_ECHO_BEFORE_PERSISTENCE
+  adapter_projection_fault_found: false
+  persistence_envelope_fault_found: false
+  traversal_order_pairing_found: false
+  filename_order_pairing_found: false
+  completion_order_pairing_found: false
+  duplicate_frozen_request_id_count: 0
+  a_b_request_content_crossing_found: false
+  stale_response_possible_in_old_temp_layout: false
+  why_all_responses_were_unpersisted: writes occurred only after all futures succeeded;
+    one exception unwound the temporary batch before either output file was written
+  initial_persisted_raw_response_count: 0
+  initial_candidate_count: 0
+  initial_semantic_review_count: 0
+  initial_quality_feedback_count: 0
+  scope_confirmed_identity_only: true
+  material_plan_component_fc_or_author_semantic_error_found: false
+  repair_decision: author emits content payload only; dispatcher writes request/session/assignment/response
+    identity envelope

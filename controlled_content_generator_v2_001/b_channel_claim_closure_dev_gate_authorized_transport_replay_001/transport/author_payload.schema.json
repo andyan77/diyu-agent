@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "backend_class": {
+      "const": "CONTROLLED_EXECUTION_AGENT",
+      "type": "string"
+    },
+    "chain_of_thought_stored": {
+      "const": false,
+      "type": "boolean"
+    },
+    "expected_score_visible": {
+      "const": false,
+      "type": "boolean"
+    },
+    "one_request_one_response": {
+      "const": true,
+      "type": "boolean"
+    },
+    "paired_output_visible": {
+      "const": false,
+      "type": "boolean"
+    },
+    "required_obligation_evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_surface_refs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "obligation_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "obligation_id",
+          "actual_surface_refs"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "review_envelope_visible": {
+      "const": false,
+      "type": "boolean"
+    },
+    "style_realization_evidence": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_surface_refs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "axis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "axis",
+          "actual_surface_refs"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "surface_bindings": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "semantic_license": {
+            "type": "string"
+          },
+          "source_atom_refs": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "surface_path": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "surface_path",
+          "text",
+          "source_atom_refs",
+          "semantic_license"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "surfaces": {
+      "additionalProperties": false,
+      "properties": {
+        "CTA": {
+          "type": "string"
+        },
+        "audio_grammar": {
+          "type": "string"
+        },
+        "body_blocks": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "capture_instructions": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "editing_grammar": {
+          "type": "string"
+        },
+        "spoken_lines": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        },
+        "visual_beats": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "body_blocks",
+        "spoken_lines",
+        "CTA",
+        "visual_beats",
+        "capture_instructions",
+        "audio_grammar",
+        "editing_grammar"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "backend_class",
+    "one_request_one_response",
+    "paired_output_visible",
+    "review_envelope_visible",
+    "expected_score_visible",
+    "chain_of_thought_stored",
+    "surfaces",
+    "surface_bindings",
+    "style_realization_evidence",
+    "required_obligation_evidence"
+  ],
+  "type": "object"
+}

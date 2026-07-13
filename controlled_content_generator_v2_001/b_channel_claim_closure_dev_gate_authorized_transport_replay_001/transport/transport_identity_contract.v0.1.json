@@ -1,0 +1,42 @@
+{
+  "atomic_batch_persistence": true,
+  "author_identity_write_allowed": false,
+  "authority": "DISPATCHER_OWNED_IDENTITY",
+  "binding_key": "parent_request_id",
+  "content_failure_is_transport_failure": false,
+  "contract_digest": "fe0088c6debf39e04a670d5bbfc633d2501f946a008975c3eebeb011f3e1c958",
+  "diagnostic_echo_policy": "ABSENT_BY_CLOSED_SCHEMA",
+  "dispatch_identity_required_fields": [
+    "run_id",
+    "assignment_id",
+    "lane_id",
+    "plan_id",
+    "plan_digest",
+    "request_id",
+    "session_id",
+    "dispatch_manifest_digest"
+  ],
+  "forbidden_binding_sources": [
+    "author_payload_identity",
+    "traversal_order",
+    "filename_order",
+    "completion_order",
+    "array_index"
+  ],
+  "one_request_one_response": true,
+  "one_response_one_request": true,
+  "response_identity_required_fields": [
+    "response_id",
+    "parent_run_id",
+    "parent_assignment_id",
+    "parent_lane_id",
+    "parent_request_id",
+    "parent_session_id",
+    "payload_digest",
+    "received_at_sequence",
+    "transport_binding_digest"
+  ],
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001",
+  "third_attempt_allowed": false
+}
