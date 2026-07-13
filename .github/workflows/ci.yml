@@ -69,6 +69,9 @@ jobs:
           python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --selftest
           python3 ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py
           python3 ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py --selftest
+          python3 ci/checkers/check_orch_generator_v2_b_channel_claim_closure_transport_replay.py
+          python3 ci/checkers/check_orch_generator_v2_b_channel_claim_closure_transport_replay.py --selftest
+          python3 controlled_content_generator_v2_001/b_channel_claim_closure_dev_gate_authorized_transport_replay_001/run_authorized_replay_closeout.py --check
           python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check
       - name: Verify fail-closed optimized mode
         env:
@@ -106,6 +109,9 @@ jobs:
             "ci/checkers/check_gkb_v2_b_channel_24_component_review.py --selftest" \
             "ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py" \
             "ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py --selftest" \
+            "ci/checkers/check_orch_generator_v2_b_channel_claim_closure_transport_replay.py" \
+            "ci/checkers/check_orch_generator_v2_b_channel_claim_closure_transport_replay.py --selftest" \
+            "controlled_content_generator_v2_001/b_channel_claim_closure_dev_gate_authorized_transport_replay_001/run_authorized_replay_closeout.py --check" \
             "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check"
           do
             set +e

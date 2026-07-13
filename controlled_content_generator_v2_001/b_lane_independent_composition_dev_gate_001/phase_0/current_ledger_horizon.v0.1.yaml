@@ -5,11 +5,11 @@ ledger_horizon:
   derivation_source: FOUNDER_AUTHORIZED_HORIZON_FILE
   ledger_path: 10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml
   frozen_route_start_id: 19
-  previous_terminal_route_id: 32
+  previous_terminal_route_id: 33
   authorized_new_route_ids:
-  - 33
-  authorized_terminal_route_id: 33
-  authorization_task_id: ORCH_GENERATOR_V2_B_CHANNEL_COMPONENT_CONSUMPTION_AND_CLAIM_CLOSURE_DEV_GATE_001
+  - 34
+  authorized_terminal_route_id: 34
+  authorization_task_id: ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001
   unknown_future_successor_allowed: false
   frozen_route_sha256:
     '19': a10f1a8477b7b36435ce16f806d21eec505b7d0eee39084666edbc7b9e67f76a
@@ -27,4 +27,5 @@ ledger_horizon:
     '31': b2d7ea6f24df0db18acfb40ea6e2d50249d41320302473068dff0b688b952e48
     '32': 098b9070582e52e8d03f4bd884d317b97b650ffae7ec6c3035f1ec9993dc0e33
     '33': c24cf07ba96cb58083a33e95dd3972527e9d93d0b1e34f631dc354b8e382bff7
-  horizon_digest: 36c8d54d6b4384585b17505f9bc4477e90444524ae26f929917a6f670940f00f
+    '34': 895ff91e1be6956ade9cf499fedacccdd62538c6e8b5f780d044047f7404faa3
+  horizon_digest: 2e26ec0d4c48a9eaf29f6aeb4a54eda3b8e68d9a4f890524c822c8e88410cd12

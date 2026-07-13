@@ -1,0 +1,25 @@
+{
+  "active_transport_entry_count": 1,
+  "entries": [
+    {
+      "entry_id": "AUTHOR-TRANSPORT-DEV33-HISTORICAL",
+      "may_be_invoked_by_current_replay": false,
+      "path": "controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/run_isolated_author_sessions.py",
+      "status": "historical_non_active"
+    },
+    {
+      "entry_id": "AUTHOR-TRANSPORT-REPLAY34-ACTIVE",
+      "identity_authority": "DISPATCHER",
+      "may_be_invoked_by_current_replay": true,
+      "path": "controlled_content_generator_v2_001/b_channel_claim_closure_dev_gate_authorized_transport_replay_001/transport/dispatcher_owned_identity_adapter.py",
+      "runner_path": "controlled_content_generator_v2_001/b_channel_claim_closure_dev_gate_authorized_transport_replay_001/run_authorized_transport_replay.py",
+      "semantic_author_instruction_changed": false,
+      "status": "active"
+    }
+  ],
+  "parallel_dispatcher_created_count": 0,
+  "pointer_digest": "9fe051f79d8c178a9111fd140ec0fdc3d8712c40d3bebfcf9e57f6df898d7726",
+  "runtime_equivalence_claim": false,
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001"
+}

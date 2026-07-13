@@ -2669,3 +2669,88 @@ grc_3600_execution_plan_status:
       action: Founder architecture decision after Guardian verifies the atomic author response protocol failure; no reroll, replacement, repair, or hidden qualification.
       merge_current_PR_as_phase_0: false
     migration_digest: 2b4e9aaf138fd441684ae2d6c2b2cf628edb43b05d6a34e563a30215b6469f05
+  route_migration_34:
+    applied_by_task: ORCH_GENERATOR_V2_B_CHANNEL_CLAIM_CLOSURE_DEV_GATE_AUTHORIZED_TRANSPORT_REPLAY_001
+    applied_from: founder_one_time_authorized_transport_replay_after_guardian_pre_review_pass
+    operational_state_only: true
+    additive_only: true
+    no_existing_step_status_changed: true
+    no_readiness_flipped: true
+    prior_route_33_transport_stop:
+      status: STOPPED_BEFORE_CANDIDATE_MATERIALIZATION
+      initial_physical_author_invocation_count: 40
+      initial_transport_valid_response_count: 0
+      initial_persisted_raw_response_count: 0
+      initial_candidate_count: 0
+      initial_semantic_review_count: 0
+      blocking_error_code: AUTHOR_RESPONSE_REQUEST_ID_MISMATCH
+      prior_failure_evidence_unchanged: true
+    founder_transport_replay_authorization:
+      authorization_scope: THIS_BATCH_ONLY_NON_PRECEDENT
+      authorized_full_batch_replay_count: 1
+      authorized_request_replay_count: 40
+      content_reroll_authorized: false
+      replacement_authorized: false
+      selective_retry_authorized: false
+      third_attempt_authorized: false
+    transport_identity_repair:
+      root_cause: AUTHOR_PAYLOAD_ECHO_USED_AS_AUTHORITATIVE_TRANSPORT_IDENTITY
+      identity_authority_before: AUTHOR_PAYLOAD_ECHO
+      identity_authority_after: DISPATCHER
+      old_transport_runner_sha256: 623b5f27a496cda360110acec5a66a9183a205fa3007aae8db278fb3f5b2846b
+      new_transport_adapter_sha256: 0dc7a007dd563f5b2e17a61e3de5b4e503e0b9611e5a23ebc65c2fd5515c08c8
+      semantic_author_instruction_unchanged: true
+      material_plan_source_unchanged: true
+      T0_positive_pass: true
+      T0_negative_pass: true
+    authorized_transport_replay:
+      status: AUTHORIZED_TRANSPORT_REPLAY_PERSISTED
+      replay_physical_author_invocation_count: 40
+      physical_author_invocation_total: 80
+      content_evaluable_response_count: 40
+      persisted_raw_response_count: 40
+      development_candidate_count: 40
+      content_reroll_count: 0
+      replacement_count: 0
+      selective_retry_count: 0
+      third_attempt_allowed: false
+      atomic_batch_persistence: true
+    development_content_gate:
+      status: STOPPED_BEFORE_HIDDEN_CONTENT_GATE_FAILED
+      dev_gate_pass: false
+      candidate_schema_failure_count: 0
+      invented_number_count: 15
+      invented_action_count: 9
+      invented_causality_count: 3
+      authorial_exact_line_overlap_pair_count: 1
+      independent_review_execution_status: INDEPENDENT_REVIEW_EXECUTION_FAILED
+      independent_review_error_code: E_REVIEW_EXECUTION_TIMEOUTEXPIRED
+      completed_primary_candidate_review_count: 0
+      completed_fact_candidate_review_count: 0
+      completed_pair_review_count: 0
+      quality_evaluation_completed: false
+      failed_candidates_preserved_as_development_evidence: true
+      eligible_to_open_sealed_hidden: false
+    fixed_boundaries:
+      external_provider_API_call_count: 0
+      runtime_provider_adapter_qualified: false
+      generator_qualified: false
+      accepted_baseline_increment_count: 0
+      accepted_baseline_count: 120
+      hidden_created_count: 0
+      sealed_hidden_case_count: 0
+      runtime_generation_eligible_profile_count: 0
+      runtime_ingest_ready: false
+      canonical_runtime_plan_count: 0
+      published_content_count: 0
+      generation_600_allowed: false
+      expand_3600_allowed: false
+      KE_change_count: 0
+      RAG_change_count: 0
+      DIFY_change_count: 0
+      Serving_change_count: 0
+    recommended_next_route:
+      task_id: CONTROLLED_V2_GENERATOR_ARCHITECTURE_STOP_AND_DECISION_004
+      action: Founder architecture stop and decision after Guardian reads all preserved replay candidates and verifies the transport/counting evidence; no hidden qualification or automatic repair.
+      merge_current_PR_as_phase_0: false
+    migration_digest: 97121f87a807a22725ca97b95b2bb4f1fa02047d164a26fd83b8378c90314450

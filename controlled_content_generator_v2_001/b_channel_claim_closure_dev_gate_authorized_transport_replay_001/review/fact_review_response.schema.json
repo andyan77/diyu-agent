@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["review_role", "candidate_reviews"],
+  "properties": {
+    "review_role": {
+      "type": "string",
+      "const": "FACT_AUTHORIZATION_ADVERSARIAL_REVIEWER"
+    },
+    "candidate_reviews": {
+      "type": "array",
+      "minItems": 40,
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_id",
+          "all_surfaces_read",
+          "source_atoms_read",
+          "fact_authorization_pass",
+          "undeclared_assertion_count",
+          "unsupported_fact_count",
+          "invented_number_count",
+          "invented_action_count",
+          "invented_causality_count",
+          "invented_result_count",
+          "invented_entity_count",
+          "invalid_source_ref_count",
+          "hard_guard_violation_count",
+          "role_authority_violation_count",
+          "findings",
+          "rationale"
+        ],
+        "properties": {
+          "candidate_id": {"type": "string"},
+          "all_surfaces_read": {"type": "boolean"},
+          "source_atoms_read": {"type": "boolean"},
+          "fact_authorization_pass": {"type": "boolean"},
+          "undeclared_assertion_count": {"type": "integer", "minimum": 0},
+          "unsupported_fact_count": {"type": "integer", "minimum": 0},
+          "invented_number_count": {"type": "integer", "minimum": 0},
+          "invented_action_count": {"type": "integer", "minimum": 0},
+          "invented_causality_count": {"type": "integer", "minimum": 0},
+          "invented_result_count": {"type": "integer", "minimum": 0},
+          "invented_entity_count": {"type": "integer", "minimum": 0},
+          "invalid_source_ref_count": {"type": "integer", "minimum": 0},
+          "hard_guard_violation_count": {"type": "integer", "minimum": 0},
+          "role_authority_violation_count": {"type": "integer", "minimum": 0},
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["surface_path", "issue_code", "explanation"],
+              "properties": {
+                "surface_path": {"type": "string"},
+                "issue_code": {"type": "string"},
+                "explanation": {"type": "string"}
+              }
+            }
+          },
+          "rationale": {"type": "string"}
+        }
+      }
+    }
+  }
+}
