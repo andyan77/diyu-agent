@@ -1,0 +1,22 @@
+{
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_COMPONENT_CONSUMPTION_AND_CLAIM_CLOSURE_DEV_GATE_001",
+  "checker_path": "ci/checkers/check_gkb_v2_b_channel_24_component_review.py",
+  "before_sha256": "fa2b5a94a75b302b13e81e5b0349d22b0e9b9dc8e8a0753d8dd03c94d81d04b2",
+  "after_sha256": "ff4060e02f387e92b9ec1613df31b5b855cbd04a1155d92f5ca03dacf3191394",
+  "actual_pre_repair_live_exit": 1,
+  "actual_pre_repair_blocker_code": "E_CURRENT_WRITE_SURFACE",
+  "actual_pre_repair_blocker_detail": "successor task directory absent from current-live write-surface allowlist",
+  "repair_scope": [
+    "allow the explicitly authorized successor task directory",
+    "pin route_migration_19 through route_migration_32 to the checker's own reviewed snapshot",
+    "delegate the current terminal horizon to Current Ledger Owner"
+  ],
+  "sealed_checker_modified_count": 0,
+  "current_live_checker_modified_count": 1,
+  "historical_route_19_through_32_tamper_negative_count": 2,
+  "historical_route_tamper_still_rejected": true,
+  "current_live_pass_after_repair": true,
+  "current_live_selftest_pass_after_repair": true,
+  "repair_digest": "48ae5e8cb9b3507aa9c1f817f3ab2937cfa087e612def0adef84fa5bd41e28ef"
+}

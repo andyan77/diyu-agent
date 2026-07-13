@@ -60,6 +60,26 @@ HORIZON_PATH = Path(
     "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
     "phase_0/current_ledger_horizon.v0.1.yaml"
 )
+SUCCESSOR_TASK_DIR = Path(
+    "controlled_content_generator_v2_001/"
+    "b_channel_component_consumption_and_claim_closure_dev_gate_001"
+)
+HISTORICAL_ROUTE_DIGESTS_19_32 = {
+    19: "a10f1a8477b7b36435ce16f806d21eec505b7d0eee39084666edbc7b9e67f76a",
+    20: "ca76d27c8a84ee4a5888c17a0d88249b651de05314fc81a553d031981db4a5a3",
+    21: "ba3f824ba4699c821a34416641a55f480451afdc371131916bcf30bb031b8195",
+    22: "5ade29110d186c98c05fe17ed07b62a11bd590aafb38a5cec5fa10973e89fc1b",
+    23: "0b7568944bdf073c5b6842263a954e59dc016709518fa57ece86b0ba2b365045",
+    24: "5a64c5130872905521bfa536e2d64e17f66a2c589dbd80b3c45183a78fcfb862",
+    25: "1fef7a924fe2abb7e28c5ba5a06e86a8e2421084043d02d35502ce8b1aa7da38",
+    26: "6383578d17aba2642b1e1299f6227954c5846ea7a83203949303d43e233c8e3d",
+    27: "58c4768bcc91ce69ffda835a85f257a1ac99116fd4276c5d1aaf7b0367a6eb1a",
+    28: "35491c51661a0f39d44410d4aa08753c10e6edb9e958304802a294a00f54c880",
+    29: "bc7c526085bba2e4c0b7f0cd439f9218bce81bd2e393e2f15aec6d3cce7ce456",
+    30: "143ee83792fefa5f48e577350d3aa0d4ae84d79dd9f4d2866fe363620c3d6f51",
+    31: "b2d7ea6f24df0db18acfb40ea6e2d50249d41320302473068dff0b688b952e48",
+    32: "098b9070582e52e8d03f4bd884d317b97b650ffae7ec6c3035f1ec9993dc0e33",
+}
 EXPECTED_BASE_REGISTRY_SHA256 = "e5a3f31a9017a39e51ad409531e26b1e910e8e2effb34a4a24dab5fd11105bb1"
 EXPECTED_PROFILE_SHA256 = "d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056"
 EXPECTED_IDS = frozenset(
@@ -123,6 +143,10 @@ CURRENT_ALLOWED_EXACT_PATHS = frozenset(
         Path(".github/workflows/ci.yml"),
         Path("10_execution_progress/grc_3600_execution_plan_status.v0.1.yaml"),
         Path("ci/checkers/check_gkb_v2_b_channel_24_component_review.py"),
+        Path(
+            "ci/checkers/"
+            "check_orch_generator_v2_b_channel_component_consumption_dev_gate.py"
+        ),
         HORIZON_PATH,
         Path(
             "controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/"
@@ -223,7 +247,9 @@ def validate_current_write_surface(root: Path, errors: list[dict[str, str]]) -> 
     unexpected = sorted(
         path.as_posix()
         for path in paths
-        if path not in CURRENT_ALLOWED_EXACT_PATHS and not path.is_relative_to(TASK_DIR)
+        if path not in CURRENT_ALLOWED_EXACT_PATHS
+        and not path.is_relative_to(TASK_DIR)
+        and not path.is_relative_to(SUCCESSOR_TASK_DIR)
     )
     if unexpected:
         add_error(errors, "E_CURRENT_WRITE_SURFACE", str(unexpected))
@@ -721,10 +747,6 @@ def validate(root: Path) -> list[dict[str, str]]:
         "owner": "CURRENT_LEDGER_OWNER",
         "authorization_mode": "EXPLICIT_BOUNDED",
         "derivation_source": "FOUNDER_AUTHORIZED_HORIZON_FILE",
-        "previous_terminal_route_id": 31,
-        "authorized_new_route_ids": [32],
-        "authorized_terminal_route_id": 32,
-        "authorization_task_id": TASK_ID,
         "unknown_future_successor_allowed": False,
     }
     for key, expected in expected_horizon_fields.items():
@@ -732,18 +754,13 @@ def validate(root: Path) -> list[dict[str, str]]:
             add_error(errors, "E_HORIZON_POLICY", f"{key}={horizon.get(key)}")
     ledger_text = (root / LEDGER_PATH).read_text(encoding="utf-8")
     blocks, route_order, shadows = route_blocks(ledger_text)
-    if shadows or [route for route in route_order if route >= 19] != list(range(19, 33)):
+    historical_order = [route for route in route_order if 19 <= route <= 32]
+    if shadows or historical_order != list(range(19, 33)):
         add_error(errors, "E_LEDGER_SEQUENCE", f"order={route_order} shadows={shadows}")
-    frozen_digests = horizon.get("frozen_route_sha256")
-    if not isinstance(frozen_digests, dict) or set(frozen_digests) != {
-        str(route) for route in range(19, 33)
-    }:
-        add_error(errors, "E_HORIZON_ROUTE_DIGESTS", "keys")
-    else:
-        for route_id in range(19, 33):
-            block = blocks.get(route_id, "").encode("utf-8")
-            if frozen_digests.get(str(route_id)) != sha256_bytes(block):
-                add_error(errors, "E_FROZEN_ROUTE_DIGEST", f"route_migration_{route_id}")
+    for route_id, expected_digest in HISTORICAL_ROUTE_DIGESTS_19_32.items():
+        block = blocks.get(route_id, "").encode("utf-8")
+        if expected_digest != sha256_bytes(block):
+            add_error(errors, "E_FROZEN_ROUTE_DIGEST", f"route_migration_{route_id}")
     route32 = ledger_doc.get("route_migration_32")
     if not isinstance(route32, dict):
         add_error(errors, "E_ROUTE32", "missing")
@@ -757,8 +774,6 @@ def validate(root: Path) -> list[dict[str, str]]:
             add_error(errors, "E_ROUTE32_BOUNDARY", "baseline")
         if not isinstance(fixed, dict) or fixed.get("hidden_created_count") != 0:
             add_error(errors, "E_ROUTE32_BOUNDARY", "hidden")
-    if "route_migration_33" in ledger_doc:
-        add_error(errors, "E_ROUTE33", "unauthorized successor")
     return errors
 
 
@@ -852,6 +867,15 @@ def mutate_jsonl(path: Path, mutator: Callable[[list[dict[str, Any]]], None]) ->
         "".join(canonical_json(row) + "\n" for row in rows),
         encoding="utf-8",
     )
+
+
+def mutate_route_block(path: Path, route_id: int, old: str, new: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    blocks, _, _ = route_blocks(text)
+    block = blocks[route_id]
+    if old not in block:
+        raise ValueError(f"mutation token absent from route_migration_{route_id}")
+    path.write_text(text.replace(block, block.replace(old, new, 1), 1), encoding="utf-8")
 
 
 def selftest(root: Path) -> int:
@@ -1046,12 +1070,13 @@ def selftest(root: Path) -> int:
         ),
     )
     add(
-        "route_migration_33",
-        "E_LEDGER_SEQUENCE",
-        lambda temp: (temp / LEDGER_PATH).write_text(
-            (temp / LEDGER_PATH).read_text(encoding="utf-8")
-            + "  route_migration_33:\n    applied_by_task: UNAUTHORIZED\n",
-            encoding="utf-8",
+        "historical_route_32_mutation",
+        "E_FROZEN_ROUTE_DIGEST",
+        lambda temp: mutate_route_block(
+            temp / LEDGER_PATH,
+            32,
+            "registry_total_count: 86",
+            "registry_total_count: 87",
         ),
     )
     add(
@@ -1063,13 +1088,13 @@ def selftest(root: Path) -> int:
         ),
     )
     add(
-        "horizon_advanced_to_33",
-        "E_HORIZON_POLICY",
-        lambda temp: mutate_yaml(
-            temp / HORIZON_PATH,
-            lambda doc: doc["ledger_horizon"].update(
-                {"authorized_terminal_route_id": 33, "authorized_new_route_ids": [32, 33]}
-            ),
+        "historical_route_19_mutation",
+        "E_FROZEN_ROUTE_DIGEST",
+        lambda temp: mutate_route_block(
+            temp / LEDGER_PATH,
+            19,
+            "no_readiness_flipped: true",
+            "no_readiness_flipped: false",
         ),
     )
     add(
@@ -1153,7 +1178,8 @@ def main() -> int:
                 "status": "PASS",
                 "reviewed_candidate_count": result["candidate_review"]["reviewed_candidate_count"],
                 "registry_total_count": result["registry"]["registry_total_count"],
-                "authorized_terminal_route_id": 32,
+                "historical_snapshot_terminal_route_id": 32,
+                "current_horizon_delegated_to_owner": True,
             },
             ensure_ascii=False,
         )

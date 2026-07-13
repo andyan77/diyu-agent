@@ -1,0 +1,27 @@
+{
+  "active_fc_validator": {
+    "entrypoint": "core/fc_claim_closure_validator.py::validate_candidate",
+    "final_semantic_oracle": false,
+    "trusts_author_classification": false
+  },
+  "active_fc_validator_count": 1,
+  "active_generator_consumer": {
+    "entrypoint": "core/generator_plan_consumer.py::build_author_request",
+    "reads_registry": false,
+    "selects_components": false,
+    "writes_composition_plan": false
+  },
+  "active_generator_consumer_count": 1,
+  "active_orch_planner": {
+    "entrypoint": "core/orch_component_planner_successor.py::build_pair_plans",
+    "owner": "ORCH",
+    "reads_registry": true,
+    "writes_composition_plan": true
+  },
+  "active_orch_planner_count": 1,
+  "creative_author_entrypoint_ref": "controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/core/active_authoring_registry.v0.3.yaml",
+  "parallel_registry_created": false,
+  "parallel_route_gate_created": false,
+  "schema_version": "v0.1",
+  "task_id": "ORCH_GENERATOR_V2_B_CHANNEL_COMPONENT_CONSUMPTION_AND_CLAIM_CLOSURE_DEV_GATE_001"
+}
