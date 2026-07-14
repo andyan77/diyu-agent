@@ -1,0 +1,38 @@
+schema_version: gate1-v1.1-production-quality-gate-stop-v1.0
+task_id: GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001
+result_state: STOPPED_PRODUCTION_FIRST_ACCEPTANCE_GATE_FAILED_NONBLOCKING
+blocking_quality_gate: SEALED_BATCH_FIRST_ACCEPTANCE_RATE_GTE_0_90
+first_output_count: 211
+first_acceptable_count_after_fact_adjudication: 184
+observed_first_acceptance_rate: 0.872038
+approved_reference_count: 29
+approved_initial_a_count: 156
+light_revision_eligible_count: 28
+fresh_topup_required_count: 27
+minimum_topup_candidate_count_if_all_light_revisions_pass: 27
+maximum_first_acceptable_count_without_rate_gaming: 211
+minimum_final_sealed_candidate_denominator: 238
+maximum_possible_first_acceptance_rate_without_rate_gaming: 0.886555
+required_first_acceptance_rate: 0.9
+minimum_superfluous_success_only_candidates_needed_to_reach_threshold: 32
+superfluous_candidate_generation_allowed: false
+failed_first_candidates_retained: true
+light_revisions_executed_count: 0
+topup_candidates_generated_count: 0
+candidate_300_manifest_created: false
+independent_final_review_started: false
+generator_qualified: false
+legacy_p5_allowed: false
+baseline_300_frozen: false
+quality_line_blocks_other_system_work: false
+external_content_provider_call_count: 0
+core_numbers:
+  target_total: 300
+  reference_inventory: 120
+  historical_component_inventory: 86
+  all_unchanged: true
+readiness_changed: false
+triage_sha256: a0fba185500c7c2eef2840b8112a5f233ea2c581f2754a0f6fb4b9ad2f68b56c
+triage_result_sha256: eff4822d7b2ef68fb8c23822ec9ae634313335f1e683b52d234307a08435061e
+review_successor_manifest_sha256: db6340db1d3f633ed42734285e5898e8bc2654e0527b8ab4099e2f88514cbd9a
+result_digest: 46a9d4487a74df3aeb5399a6522282bcd4f6c5938c7bc41a20f5e0dc7c313f9b
