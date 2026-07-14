@@ -1,32 +1,31 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P4_RESEALED_STOPPED_OWNER
-  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
-  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001
+  owner_id: GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER
+  task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
+  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
-  result_state: STOPPED_RETURN_TO_P3
+  result_state: OPEN_RECOVERY_COMPLETE
   p3_complete: true
-  p4_resealed_allowed: false
-  p4_resealed_technical_gate_pass: false
-  first_failure_code: E_P4_SURFACE_FIELDS
-  hidden_created: true
-  hidden_exposed: true
-  same_hidden_batch_may_be_reused: false
-  coordinator_decision_required: false
-  recovery_requires_new_authorization: true
-  recovery_requires_third_fresh_hidden_set: true
+  prior_p4_failure_honestly_closed: true
+  tool_freeze_complete: false
+  third_hidden_created: false
+  third_hidden_exposed: false
+  H_admitted_count: 0
+  generator_qualified: false
+  p5_allowed: false
   current_generator:
-    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/run_p3_route_recovery.py
+    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/author_contract.py
     route_contract: controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/route_contract.py
     active_component_count: 68
     active_edge_count: 85
     active_control_rule_count: 8
     generator_core_changed: false
-    author_instruction_or_model_changed: false
+    content_authoring_semantics_changed: false
+    output_contract_section_changed: true
   predecessor:
-    owner_id: GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER
-    owner_digest: d63daca011eb2eb12ff585a1ccf5081b54d69781548000cdf265adbc40e2fd8a
-    task_id: GATE1_V11_OPEN_PROBE40_001
+    owner_id: GATE1_V11_P4_RESEALED_STOPPED_OWNER
+    task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+    result_state: STOPPED_RETURN_TO_P3
   core_numbers:
     target_total: 300
     reference_inventory: 120
@@ -44,4 +43,4 @@ current_gate1_owner:
     production_ready: false
     generator_qualified: false
     runtime_ingest_ready: false
-  owner_digest: 52eb98b392fa4791f3fe7bdd2f4bf3284bdede42207070884f00670fa536a5bb
+  owner_digest: c6c92a5befe6d0fcea62c03ce8d030a09c4ceec0c34fbab7754e9274c3aacc20
