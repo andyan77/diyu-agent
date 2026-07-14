@@ -101,6 +101,17 @@ ROUTE_RESULT = TASK_ROOT / "route/route_result.v1.0.yaml"
 
 PROFILE_RE = re.compile(r"^CP(?:0[1-9]|1\d|20)$")
 SCENARIO_ID_RE = re.compile(r"^P5-CUR-CP(?:0[1-9]|1\d|20)-\d{3}$")
+AUDIENCE_INTERNAL_ID_RE = re.compile(
+    r"(?:G1V11-P5|P5-CUR|(?:^|[^A-Za-z])(?:FACT|AUTH|SRC)-[A-Za-z0-9-]+)"
+)
+AUDIENCE_GOVERNANCE_PHRASES = (
+    "仅限本请求",
+    "不得发布",
+    "不可发布",
+    "仅供资格测试",
+    "本资格测试",
+    "内部事件编号",
+)
 PROFILE_IDS = tuple(f"CP{number:02d}" for number in range(1, 21))
 MODEL_CAPABILITY = "gpt-5.6-sol"
 REASONING_EFFORT = "high"
@@ -562,12 +573,21 @@ def _request_from_scenario(
                 ],
                 "claim_boundary": scenario["claim_boundary"],
             },
+            # Object-truth and boundary facts constrain claims but are not audience
+            # copy requirements. The failed third P4 forced those governance facts
+            # onto the audience surface; this successor keeps only product content
+            # and an applicable human-role fact in the author-visible core.
             "product_core_requirements": [
                 {
                     "requirement_id": f"{prefix}-CORE-{index:02d}",
                     "fact_ids": [fact["fact_id"]],
                 }
                 for index, fact in enumerate(facts, 1)
+                if fact["slot_id"]
+                in {
+                    f"{profile_id.lower()}_core_input_signature",
+                    "real_role_or_person_truth",
+                }
             ],
             "user_goal": scenario["user_goal"],
             "synthetic_qualification_only": True,
@@ -708,6 +728,25 @@ def serialize_author_outputs() -> None:
         run_id = str(raw.get("run_id"))
         require(run_id not in seen_run_ids, "E_RAW_RUN_ID_DUPLICATE", run_id)
         output = author_contract.serialize(raw, request_by_id[request_id])
+        audience_texts = [
+            str(output["title"]),
+            *map(str, output["body"]),
+            *map(str, output["spoken_lines"]),
+            str(output["cta"]),
+            *map(str, output["visual_execution"]),
+            *map(str, output["audio_execution"]),
+        ]
+        for text in audience_texts:
+            require(
+                AUDIENCE_INTERNAL_ID_RE.search(text) is None,
+                "E_AUDIENCE_INTERNAL_ID",
+                request_id,
+            )
+            require(
+                not any(phrase in text for phrase in AUDIENCE_GOVERNANCE_PHRASES),
+                "E_AUDIENCE_GOVERNANCE_PROSE",
+                request_id,
+            )
         strict.validate_positive_output(output, request_by_id[request_id])
         outputs.append(output)
         seen_request_ids.add(request_id)
