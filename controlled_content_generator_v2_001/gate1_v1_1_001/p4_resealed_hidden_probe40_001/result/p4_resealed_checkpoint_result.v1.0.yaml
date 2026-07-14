@@ -1,0 +1,87 @@
+p4_resealed_checkpoint_result:
+  schema_version: gate1-p4r-checkpoint-result-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  prompt_revision: r0
+  result_state: STOPPED_RETURN_TO_P3
+  p4_execution_complete: true
+  technical_gate_pass: false
+  first_failure:
+    code: E_P4_SURFACE_FIELDS
+    phase: frozen_author_output_contract_validation
+    evidence_path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/audit/author_output_contract_failure.v1.0.yaml
+    evidence_digest: 77249b224498643172df6eb73e229e50586b0fafac4a44158d8c17314123f392
+  positive_run:
+    request_count: 20
+    captured_first_output_count: 20
+    second_candidate_or_replacement_count: 0
+    output_sha256: b1a9a608d7cce325fe886ff88cdf23d5769a441439f58e3ced8a69c16ebff25b
+    strict_output_contract_pass: false
+  anomaly_route:
+    first_actual_count: 20
+    action_match_count: 20
+    reason_match_count: 20
+    audience_content_leak_count: 0
+    actions:
+      BLOCK: 7
+      REQUEST_INPUT: 7
+      DEGRADE: 6
+    reasons:
+      input_conflict: 7
+      fact_missing: 8
+      authorization_missing: 5
+    comparison_sha256: 2d7a72680b3ef8161046bc349e0e06e7463079ba2ee83cf7c06dfbbbead90a25
+  independent_reviews:
+    status: NOT_RUN_TECHNICAL_GATE_STOP
+    reviewer_one_score: null
+    reviewer_two_score: null
+    reviewer_one_first_accepted: null
+    reviewer_two_first_accepted: null
+    reviewer_one_blind_correct: null
+    reviewer_two_blind_correct: null
+    substantive_disagreements: []
+  verification_summary:
+    p3_new_route_20_of_20: PASS
+    p3_legacy_route_20_of_20: PASS
+    p3_reference_safe_successor_guard: PASS
+    p4_new_route_action_and_reason_20_of_20: PASS
+    p4_tool_selftest: PASS
+    p4_guard_tamper_selftest: PASS
+    frozen_author_output_contract: FAIL_E_P4_SURFACE_FIELDS
+    human_review: NOT_RUN_AFTER_TECHNICAL_GATE_FAILURE
+    python_optimized_mode_fail_closed_exit_2: PASS
+    working_tree_secret_scan: PASS
+    frozen_success_only_guard_live_state: EXPECTED_FAIL_MISSING_REVIEWS
+    current_gate_live_state: EXPECTED_FAIL_LEGAL_STOP_NOT_IMPLEMENTED_IN_FROZEN_GUARD
+  secondary_governance_observation:
+    code: P4R_FROZEN_GUARD_HAS_NO_TECHNICAL_STOP_BRANCH
+    root_cause_of_author_output_failure: false
+    post_freeze_guard_change_permitted: false
+    implication: remote_checker_compatibility_must_remain_red_for_this_stopped_evidence_commit
+  qualification:
+    coordinator_decision_required: false
+    qualification_verdict: null
+    qualification_decision_digest: null
+    coordinator_score: null
+    hard_veto: null
+    approved_new_hidden_positive_ids: []
+    H_admitted_count: 0
+    generator_qualified: false
+    p5_allowed: false
+  external_api_or_network_call_count: 0
+  credential_read_count: 0
+  hidden_created: true
+  hidden_exposed: true
+  same_hidden_batch_may_be_reused: false
+  recovery_requires_new_authorization: true
+  recovery_requires_third_fresh_hidden_set: true
+  core_numbers:
+    '300': UNCHANGED
+    '120': UNCHANGED
+    '86': UNCHANGED
+  readiness_true_keys: []
+  old_p4_failure_bytes_changed: false
+  old_p4_tree: 404a77ec7f59e0ce639daddbcd3c8d658d9bed5b
+  frozen_generator_core_changed: false
+  components_rules_edges_changed: false
+  author_instruction_or_model_changed: false
+  result_digest: 302f048e13ea35754e8552cdc42211b927a06e3bafa9709eb9f7a2b2d4249272
