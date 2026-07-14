@@ -94,6 +94,43 @@
   "raw_schema_version": "gate1-p4-author-semantic-output-v1.0",
   "normalized_schema_version": "gate1-p4-author-output-contract-recovery-v1.0",
   "run_id_unique_across_batch": true,
+  "raw_type_contract": {
+    "audio_execution": "nonempty_string_array_allow_empty",
+    "author_attestation": "exact_false_boolean_object",
+    "body": "nonempty_string_array_min_1",
+    "cta": "string_allow_empty",
+    "request_id": "nonempty_string",
+    "run_id": "nonempty_string_unique_across_batch",
+    "schema_version": "nonempty_string",
+    "semantic_claims": "semantic_claim_array_min_1",
+    "semantic_component_usage": "semantic_component_usage_array",
+    "semantic_surfaces": "semantic_surface_array_exact_join",
+    "spoken_lines": "nonempty_string_array_allow_empty",
+    "synthetic_disclosure": "nonempty_string",
+    "title": "nonempty_string",
+    "visual_execution": "nonempty_string_array_min_1"
+  },
+  "nested_type_contract": {
+    "semantic_claim": {
+      "authorization_ids": "unique_nonempty_string_array_min_1",
+      "claim_boundary": "nonempty_string_exact_material_boundary",
+      "claim_text": "nonempty_string_verbatim_on_surface",
+      "fact_ids": "unique_nonempty_string_array_min_1",
+      "source_ids": "unique_nonempty_string_array_min_1"
+    },
+    "semantic_component_usage": {
+      "component_id": "nonempty_string_unique",
+      "implementation_note": "nonempty_string",
+      "surface_ordinals": "unique_positive_integer_array_min_1"
+    },
+    "semantic_surface": {
+      "authorization_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+      "fact_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+      "source_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+      "surface_kind": "enum_nonempty_string",
+      "text": "nonempty_string"
+    }
+  },
   "output_contract_section_changed": true,
   "content_authoring_semantics_changed": false
 }

@@ -13,11 +13,13 @@ from typing import Any
 from author_contract import (
     EXPECTED_ATTESTATION,
     MODEL_CAPABILITY,
+    NESTED_TYPE_CONTRACT,
     RAW_CLAIM_FIELDS,
     RAW_COMPONENT_FIELDS,
     RAW_FIELDS,
     RAW_SCHEMA,
     RAW_SURFACE_FIELDS,
+    RAW_TYPE_CONTRACT,
     REASONING_EFFORT,
     ROLE_ALLOWED_SURFACE_KINDS,
     ROOT,
@@ -77,6 +79,8 @@ def exact_contract() -> dict[str, Any]:
         "role_allowed_surface_kinds": ROLE_ALLOWED_SURFACE_KINDS,
         "serializer_semantic_mutation_allowed": False,
         "run_id_unique_across_batch": True,
+        "raw_type_contract": RAW_TYPE_CONTRACT,
+        "nested_type_contract": NESTED_TYPE_CONTRACT,
     }
 
 

@@ -112,6 +112,43 @@ ROLE_ALLOWED_SURFACE_KINDS = {
     ],
     "ending_operator": ["body", "cta", "spoken_line", "visual_execution"],
 }
+RAW_TYPE_CONTRACT = {
+    "schema_version": "nonempty_string",
+    "request_id": "nonempty_string",
+    "run_id": "nonempty_string_unique_across_batch",
+    "title": "nonempty_string",
+    "body": "nonempty_string_array_min_1",
+    "spoken_lines": "nonempty_string_array_allow_empty",
+    "cta": "string_allow_empty",
+    "visual_execution": "nonempty_string_array_min_1",
+    "audio_execution": "nonempty_string_array_allow_empty",
+    "synthetic_disclosure": "nonempty_string",
+    "semantic_surfaces": "semantic_surface_array_exact_join",
+    "semantic_claims": "semantic_claim_array_min_1",
+    "semantic_component_usage": "semantic_component_usage_array",
+    "author_attestation": "exact_false_boolean_object",
+}
+NESTED_TYPE_CONTRACT = {
+    "semantic_surface": {
+        "surface_kind": "enum_nonempty_string",
+        "text": "nonempty_string",
+        "fact_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+        "source_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+        "authorization_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+    },
+    "semantic_claim": {
+        "claim_text": "nonempty_string_verbatim_on_surface",
+        "fact_ids": "unique_nonempty_string_array_min_1",
+        "source_ids": "unique_nonempty_string_array_min_1",
+        "authorization_ids": "unique_nonempty_string_array_min_1",
+        "claim_boundary": "nonempty_string_exact_material_boundary",
+    },
+    "semantic_component_usage": {
+        "component_id": "nonempty_string_unique",
+        "implementation_note": "nonempty_string",
+        "surface_ordinals": "unique_positive_integer_array_min_1",
+    },
+}
 
 
 class AuthorContractError(ValueError):
@@ -272,6 +309,11 @@ def validate_request(request: Mapping[str, Any]) -> None:
         "E_ROLE_SURFACE_CONTRACT",
     )
     require(contract.get("run_id_unique_across_batch") is True, "E_RUN_ID_CONTRACT")
+    require(contract.get("raw_type_contract") == RAW_TYPE_CONTRACT, "E_RAW_TYPE_CONTRACT")
+    require(
+        contract.get("nested_type_contract") == NESTED_TYPE_CONTRACT,
+        "E_NESTED_TYPE_CONTRACT",
+    )
     output_contract = _mapping(
         request.get("author_output_contract"), "E_OUTPUT_CONTRACT"
     )
