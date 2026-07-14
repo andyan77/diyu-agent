@@ -4,12 +4,12 @@ current_gate1_owner:
   task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
   current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
-  result_state: HIDDEN_INPUTS_FROZEN
+  result_state: STOPPED_RETURN_TO_P3
   p3_complete: true
   prior_p4_failure_honestly_closed: true
   tool_freeze_complete: true
   third_hidden_created: true
-  third_hidden_exposed: false
+  third_hidden_exposed: true
   same_hidden_batch_may_be_reused: false
   H_admitted_count: 0
   generator_qualified: false
@@ -51,4 +51,4 @@ current_gate1_owner:
     production_ready: false
     generator_qualified: false
     runtime_ingest_ready: false
-  owner_digest: d0760c9e1457262989317506ac9881c6bbb34f1fb8dcff8973547cbaa21c56f6
+  owner_digest: dbb543de244df7e382b19db6ff6c6f4574bd9dec5549528b6d6f71c9bbfb1796
