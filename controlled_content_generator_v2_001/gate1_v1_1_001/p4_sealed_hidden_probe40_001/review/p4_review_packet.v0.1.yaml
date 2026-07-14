@@ -1,0 +1,42 @@
+p4_review_packet:
+  schema_version: gate1-p4-review-packet-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  review_contract_path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/p4_independent_review_contract.v0.1.yaml
+  review_contract_digest: e8c33f3c847a1bdbc61a8df15331c52bc0e4d63584d3cc5a30bf5170ea34a59f
+  stage_order:
+  - EACH_REVIEWER_READS_ONLY_FIXED_CHOICE_CATALOG_AND_BLIND_PACKET
+  - EACH_REVIEWER_WRITES_AND_SIGNS_OWN_TWENTY_PREDICTION_STAGE
+  - REVEAL_SEPARATE_LABEL_MAPPING_ONLY_AFTER_BOTH_STAGE_FILES_VALIDATE
+  - EACH_REVIEWER_READS_FULL_POSITIVE_ROUTE_AND_MACHINE_EVIDENCE
+  - EACH_REVIEWER_WRITES_OWN_SIGNED_FINAL_REPORT
+  - TARGETED_ADJUDICATION_ONLY_IF_RAW_REPORTS_SUBSTANTIVELY_DISAGREE
+  artifacts:
+    blind_positive_visible_stage_1:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/blind_positive_20.v0.1.jsonl
+      sha256: c9aad0ebcea70e25c997caf7d171e0716b1407a431d858cca4b5d852f7bc2a7a
+    fixed_choice_catalog_visible_stage_1:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/content_product_choice_catalog.v0.1.jsonl
+      sha256: 68160deab93cbeb8672a90c2dca67e7e4af2c1dab1f3c1030ef0104b1571fbe4
+    label_mapping_reveal_after_both_stage_1_signatures:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/blind_label_mapping.v0.1.jsonl
+      sha256: 191ea1a02bbbb58a56ac0a4c09169e9d8002f34fcf5f8fadf3fe42d03a5e1f70
+    positive_first_outputs:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/positive_20_first_outputs.v0.1.jsonl
+      sha256: 17c7da686a52252897e57313707b6947283585b26595d6df00be21b6bc611a65
+    route_comparisons:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/anomaly_20_comparisons.v0.1.jsonl
+      sha256: 05c1e75160bde3abe6aab85a53542224388f5aa87e92eeb1c9fee7c84acbd058
+    machine_report:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/machine_acceptance_report.v0.1.yaml
+      sha256: ab16535119c2618ee5d8954cb3bbe534584bb6602e4721061a52760aba43c1fe
+    route_actual_freeze:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/anomaly_actual_freeze.v0.1.yaml
+      sha256: f49518df0b9a95fb43be0c886225d95595d70fcd89e6fba4729e157c8b562c2c
+    review_contract:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/p4_independent_review_contract.v0.1.yaml
+      sha256: df4a4fcca99cf65741d1512f7e66d6f641cc28c8b40b94bb20214f6aa3cc8026
+  positive_count: 20
+  route_count: 20
+  counts_toward_300: 0
+  founder_qualification_decision_requested: false
+  packet_digest: 208a8cae17ce3bce3455411eb203cb9092af92b90b9205f18aaba84f5224b9fe

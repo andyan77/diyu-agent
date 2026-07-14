@@ -1,0 +1,35 @@
+p4_current_guard_compatibility_receipt:
+  schema_version: gate1-p4-current-guard-compatibility-receipt-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  result_state: STOPPED_RETURN_TO_P3
+  frozen_guard:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/p4_guard.py
+    sha256_before: 5c1f11a1aba529c8fd97dc8031ce48ab59b7082fc0306943fdb3dd0dc98d1262
+    sha256_after: 5c1f11a1aba529c8fd97dc8031ce48ab59b7082fc0306943fdb3dd0dc98d1262
+    byte_unchanged: true
+  current_checker:
+    path: ci/checkers/check_gate1_v1_1_current.py
+    sha256_before: f57f676ca9b6792c867e57cf8f312705e757c6ec3a755a7038d42be077cd9320
+    sha256_after: a3e2f087d199bbde514e65e1a83066d40eda9bd217fa6986d48077303aa3d2f4
+    change: two_imports_redirected_to_current_successor
+  current_successor:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/p4_guard_current.py
+    sha256: 2b3e36e3d40c011d7f9225542cc3958725135639e48e61ba360d3841029be3cf
+  proven_false_positives:
+  - code: E_P4_OUTPUT_ID_SET
+    frozen_expression: Counter_request_mapping_values_instead_of_request_id_keys
+    independent_release_condition: exact_20_id_multiset_and_full_p4_actual_validation_pass
+  - code: E_P4_QUALIFICATION_BEFORE_DECISION
+    frozen_expression: only_pending_external_decision_packet_was_accepted
+    independent_release_condition: exact_stopped_checkpoint_lifecycle_and_not_eligible_packet_all_false
+  negative_tests:
+    duplicate_output_id_rejected: true
+    route_gold_leak_rejected: true
+    early_qualification_rejected: true
+    current_checker_tamper_rejected: true
+    stopped_decision_tamper_rejected: true
+    python_optimized_mode_exit_2: true
+  business_input_output_gold_or_review_bytes_changed_by_compatibility_fix: false
+  generator_qualified: false
+  p5_allowed: false
+  receipt_digest: 5029ccd75684af9450b74abbcd418a6e240930d1a3983c4bb213c739f9f88edd

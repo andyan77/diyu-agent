@@ -653,7 +653,7 @@ def validate_p4_successor(root: Path, errors: list[dict[str, str]]) -> None:
     if str(module_root) not in sys.path:
         sys.path.insert(0, str(module_root))
     try:
-        from p4_guard import validate_p4_current
+        from p4_guard_current import validate_p4_current
 
         errors.extend(validate_p4_current(root))
     except (ImportError, OSError, TypeError, ValueError) as exc:
@@ -6126,7 +6126,7 @@ def selftest(root: Path) -> int:
         if str(module_root) not in sys.path:
             sys.path.insert(0, str(module_root))
         try:
-            from p4_guard import selftest as p4_guard_selftest
+            from p4_guard_current import selftest as p4_guard_selftest
 
             if p4_guard_selftest(root) != 0:
                 failures.append(

@@ -1,0 +1,29 @@
+p4_machine_acceptance_report:
+  schema_version: gate1-p4-machine-acceptance-report-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  positive_first_output_count: 20
+  anomaly_first_actual_count: 20
+  positive_contract_validation_pass: true
+  route_actual_frozen_before_gold_compare: true
+  route_gold_compared: false
+  second_candidate_count: 0
+  case_replacement_count: 0
+  external_exit_counts_derived_from_events:
+    event_count: 4
+    request_count: 80
+    response_count: 80
+    external_provider_request_count: 0
+    external_provider_response_count: 0
+    external_api_call_count: 0
+    credential_read_count: 0
+    network_dispatch_count: 0
+    derived_from_event_log: true
+  machine_does_not_decide_free_text_quality: true
+  machine_does_not_qualify_generator: true
+  generator_qualified: false
+  p5_allowed: false
+  core_numbers:
+    '300': UNCHANGED
+    '120': UNCHANGED
+    '86': UNCHANGED
+  report_digest: 39648e9eb8d5a02882474aa7835d0c8cddcd9065c0d8becf1410f4ed21c04577

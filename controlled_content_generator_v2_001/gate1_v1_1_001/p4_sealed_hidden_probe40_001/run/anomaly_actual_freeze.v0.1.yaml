@@ -1,0 +1,16 @@
+route_actual_freeze_receipt:
+  schema_version: gate1-p4-route-actual-freeze-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  actual_engine_module: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+  actual_engine_function: evaluate_route
+  actual_engine_sha256: e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+  actual_engine_inputs: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/freeze/anomaly_route_inputs_20.v0.1.jsonl
+  actual_engine_input_sha256: 9b21b78b5592cb6265007c628a18abc148eb0e48caeb4cf213e8396255d5c001
+  actual_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/anomaly_20_first_actuals.v0.1.jsonl
+  actual_result_sha256: 4d411774a61feddb9e2e46e58ca2bde1d382f5677f209ba35e87b57009bee5b2
+  actual_result_count: 20
+  actual_result_frozen_before_independent_comparison: true
+  freeze_path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/anomaly_actual_freeze.v0.1.yaml
+  gold_answer_loaded_by_actual_engine: false
+  gold_answer_compared_after_actual_freeze_only: true
+  actual_freeze_digest: 71cfa2d0e18791bb28e467614066360fba2280bd8fedb635e0a2749e5da70dae

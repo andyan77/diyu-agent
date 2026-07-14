@@ -1,14 +1,17 @@
 p4_lifecycle:
   schema_version: gate1-p4-lifecycle-v0.1
   task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
-  state: HIDDEN_FROZEN
+  state: STOPPED_RETURN_TO_P3
   generator_qualified: false
   p5_allowed: false
   hidden_created: true
-  hidden_exposed: false
+  hidden_exposed: true
   core_numbers_unchanged: true
   all_non_generator_readiness_false: true
-  lifecycle_digest: 576595bf5dd39706ee6b9fc8af69436d1d235609f43344e5cc193f81c7f3a5a2
+  lifecycle_digest: 7148b0fe2951769fbcad400a6f9cd9ceb3cd75b60de3c10c7058dae19a74d9c1
   tool_freeze_commit: 89958a381c90ce2b3432a31be0c49de433dba3d9
   author_platform_agent_id: 019f5fd7-3128-78a1-a4fd-989ab355f59f
   hidden_input_freeze_commit: e3806b7d5525caf12a320b78ec3575030b72031c
+  all_cases_marked_exposed_after_run: true
+  positive_first_output_count: 20
+  anomaly_first_actual_count: 20
