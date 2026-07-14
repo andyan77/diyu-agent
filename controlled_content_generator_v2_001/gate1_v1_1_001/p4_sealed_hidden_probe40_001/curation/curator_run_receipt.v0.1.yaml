@@ -1,0 +1,70 @@
+p4_curator_run_receipt:
+  schema_version: gate1-p4-curator-run-receipt-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  curator_identity_id: P4-ISOLATED-CURATOR-003
+  curator_platform_agent_id: 019f5fdb-0160-72e2-b5f9-728484fe7e37
+  curator_session_id: P4-CURATOR-SESSION-003
+  curator_run_id: P4-CURATOR-RUN-003
+  allowed_input_sha256: b0cc33bc9d9c55cc5300feee88c5abd7de2bc7a08c851d69875f9816be065acd
+  allowed_input_object_digest: 7a91ac6ce328f629513d919da35ce3e0d4c95074532f302ac9a1c0e53bd95a7d
+  forbidden_material_access_count: 0
+  external_provider_requests: 0
+  outputs:
+    curated_positive:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curated_positive_20.v0.1.jsonl
+      record_count: 20
+      sha256: 172b96dd0bc07246becb76fa8f2788e5b42754d2a6f7cf7f8280fe71ddbe1d22
+    curated_anomaly:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curated_anomaly_20.v0.1.jsonl
+      record_count: 20
+      sha256: 2f58199de8c7a21f724380964355e07ae2183e63b7e428ff4a7e1224229d8b04
+  validation:
+    positive_schema_and_required_fields: true
+    anomaly_schema_and_required_fields: true
+    profile_and_run_order_distribution: true
+    variant_distribution_A1_A2_B1_B2: 5/5/5/5
+    lane_distribution_A_B: 10/10
+    anomaly_action_distribution_BLOCK_REQUEST_INPUT_DEGRADE: 7/7/6
+    source_authorization_fact_closure: true
+    product_core_fact_binding_closure: true
+    required_fact_kinds_present_in_each_positive: true
+    fact_material_case_digests_valid: true
+    anomaly_gold_absent_from_actual_input_payload: true
+    no_content_quality_self_score_performed: true
+  access_attestations:
+    allowed_reads_only: true
+    allowed_read_paths:
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/baseline/curator_allowed_input.v0.1.json
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curation_contract.v0.1.yaml
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/p4_independent_review_contract.v0.1.yaml
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/p4_common.py
+    p4_common_usage_limited_to_deterministic_digest_helpers: true
+    repository_search_performed: false
+    p1b_or_p3_material_accessed: false
+    historical_hidden_sealed_or_probe_material_accessed: false
+    invalidated_attempt_accessed: false
+    prior_p4_draft_or_receipt_accessed: false
+    author_context_accessed: false
+    review_scores_or_external_gold_accessed: false
+    external_service_accessed: false
+  digest_only_corrections:
+  - correction_id: P4-PREFREEZE-DIGEST-CORRECTION-001
+    change_class: DIGEST_ONLY
+    scope: positive fact_value_digest values and dependent material, case, file, and receipt digests
+    previous_fact_value_algorithm: sha256(canonical_json(fact_value).encode_utf8)
+    corrected_fact_value_algorithm: sha256(fact_value.encode_utf8)
+    semantic_material_projection_unchanged: true
+    anomaly_content_and_row_digests_byte_identical: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    runtime_ingest_ready: false
+    release_ready: false
+    production_ready: false
+  receipt_digest: 1cd2cb522d1b00003038386e5fbdd4a1d4d0ba76f958ae68a22400eff2ed79e9

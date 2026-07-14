@@ -1,0 +1,29 @@
+p4_hidden_input_freeze:
+  schema_version: gate1-p4-hidden-input-freeze-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  prompt_revision: r0
+  tool_freeze_commit: 89958a381c90ce2b3432a31be0c49de433dba3d9
+  author_platform_agent_id: 019f5fd7-3128-78a1-a4fd-989ab355f59f
+  curator_identity:
+    curator_identity_id: P4-ISOLATED-CURATOR-003
+    curator_platform_agent_id: 019f5fdb-0160-72e2-b5f9-728484fe7e37
+    curator_session_id: P4-CURATOR-SESSION-003
+    curator_run_id: P4-CURATOR-RUN-003
+  frozen_file_hashes:
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curated_positive_20.v0.1.jsonl: 172b96dd0bc07246becb76fa8f2788e5b42754d2a6f7cf7f8280fe71ddbe1d22
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curated_anomaly_20.v0.1.jsonl: 2f58199de8c7a21f724380964355e07ae2183e63b7e428ff4a7e1224229d8b04
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl
+    : 82ecdbdaebd90b6cdfe24a0bf9e3b882244dfdab2a1d72941a20ea4c8d4f4749
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/freeze/anomaly_route_inputs_20.v0.1.jsonl: 9b21b78b5592cb6265007c628a18abc148eb0e48caeb4cf213e8396255d5c001
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/freeze/anomaly_route_gold_20.v0.1.jsonl: 8196532d4969326a5f261f5fced828a22a6a8fbdf9b5ecdd14240c382d9a7e85
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/freeze/sealed_run_order_40.v0.1.jsonl: e510f5ddabb20134b083c3f8400e7f86437db0d98b11646dc0930cb83f2ce10c
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curator_run_receipt.v0.1.yaml: faecd0be0967b514b40154e38a91a2e7928f297984d817fe5d50ba74ce3fd63a
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/pre_freeze_validation.v0.1.yaml: 4cda76d2cb0eb19457ef9dae40336317b001d54c8b648e8e1599dc7143e5e0a0
+  positive_count: 20
+  anomaly_count: 20
+  gold_physically_separate_from_route_input: true
+  author_projection_excludes_gold_feedback_and_reviews: true
+  case_replacement_allowed: false
+  second_candidate_allowed: false
+  all_cases_hidden_until_first_run: true
+  freeze_digest: bf4472a5efc27a7a5d57ae38a651dee37aaa810855bd170b7430eb6fc94a1efa
