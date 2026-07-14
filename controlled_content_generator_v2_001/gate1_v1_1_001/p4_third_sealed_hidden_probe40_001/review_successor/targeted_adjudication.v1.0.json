@@ -1,0 +1,348 @@
+{
+  "schema_version": "gate1-p4t3-targeted-adjudication-v1.0",
+  "task_id": "GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001",
+  "adjudicator_identity": "P4T3-SUCCESSOR-TARGETED-ADJUDICATOR",
+  "adjudicator_platform_agent_id": "019f61c7-a9b1-7a23-8cc4-af8c6c617620",
+  "adjudicator_session_logical_id": "P4T3-SUCCESSOR-TARGETED-ADJUDICATOR-SESSION-019f61c7-a9b1-7a23-8cc4-af8c6c617620",
+  "model_capability_id": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "blank_context": true,
+  "role_separation": {
+    "is_author": false,
+    "is_content_value_reviewer": false,
+    "is_fact_authorization_reviewer": false,
+    "is_qualification_coordinator": false,
+    "statement": "本裁决者不是作者、不是两位原审查者、不是资格统筹方，仅裁决两审存在实质分歧的20条原始首次输出。"
+  },
+  "input_sha256": {
+    "signed_content_value_review.v1.0.json": "8416b38a7f6eb84efeda4adaa1620487e438b7e0c5e9fe9b9e9b2601bb5b8327",
+    "signed_fact_authorization_review.v1.0.json": "296d11668fea226fbde80b4efd2ef7fe1f1c1f256c0bd35305bc40cc86679598",
+    "neutral_blind_packet.v1.0.jsonl": "a2917dcb7300deeec78905b95ad0ae7b90119ca7b61a25f034ca3343b8bee1cf",
+    "neutral_blind_mapping.v1.0.jsonl": "dafac96bda21bb8d5318229ffd1c1b6cbffa92eda59f83decb59f4d7cdda32c6",
+    "diyu_content_composition_standard.v1.1.md": "022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542"
+  },
+  "items": [
+    {
+      "blind_item_id": "P4T3-NEUTRAL-01-17b24e6324a7",
+      "profile_id": "CP09",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 84, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 95, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": true},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "S-521的适用、不适用和替代条件本身准确，但零修改稿把内部P4T3事件证明和‘仅依据／不得’约束直接放入受众正文。专用synthetic_disclosure已经承担测试身份披露，正文中的治理元语言违反受控作者指令，不能以事实正确抵消。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP09-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP09-521由S-521结构卡、室内坐席演示图和R-206替代项索引组成，均为全新合成资格测试事实。", "finding": "内部事件标识及资格测试证明进入受众正文。"},
+        {"surface_id": "P4T3-POS-CP09-SURFACE-05", "surface_kind": "body", "original_text": "仅依据合成罩衫S-521的开合、覆盖范围和两项已记录任务条件作反选说明；不得给出绝对适配、身体评价或天气性能保证。", "finding": "事实边界被逐字输出为治理指令，而非仅约束表达。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-02-1fe818aa49ef",
+      "profile_id": "CP13",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "C", "total_score": 76, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 89, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "三个任务状态与18摄氏度条件忠实于输入，但正文把P4T3事件来源说明和不得冒充经历的控制语句当成内容段落。稿件还停留在任务演示，且沿用全批次的核心事实、内部证明、否定边界顺序，不能零修改批准。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP13-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP13-619由同一W-619对象、三个任务牌和固定机位素材构成，是全新合成演绎事实而非现实用户经历。", "finding": "内部事件编号和测试事实证明进入正文。"},
+        {"surface_id": "P4T3-POS-CP13-SURFACE-05", "surface_kind": "body", "original_text": "仅呈现合成短外套W-619在三个预设任务演示中的物件关系与可见状态；场景演绎不得冒充已发生经历或身体效果。", "finding": "受众面直接承载‘仅／不得’治理规则。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-03-2bdf3ae9836b",
+      "profile_id": "CP15",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 80, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 92, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "12件核签、11件已核和1件留置均有输入支持，但受众正文额外回读密封测试的证据构成，并以‘仅陈述／不得外推’收尾。该写法是作者指令明确禁止复制到业务表面的治理元语言，因此原稿不可直接批准。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP15-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP15-552由合成到货单、12个对象编号、验收台俯拍和留置签构成，仅在本密封测试内成立。", "finding": "内部事件及密封测试成立性说明泄漏到正文。"},
+        {"surface_id": "P4T3-POS-CP15-SURFACE-05", "surface_kind": "body", "original_text": "仅陈述合成批次B-552在授权到店节点的岗位动作、件数与状态；不得外推库存、售罄、调拨或销售结果。", "finding": "授权和禁止外推指令被当作受众文案。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-04-31271e2e8243",
+      "profile_id": "CP12",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 86, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 96, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "v0.7到v0.8的尺寸、夹具条件和待复测状态闭合且克制；问题在于正文公开了P4T3内部事件证明，并逐字输出禁止把单次结果写成耐久证明的控制规则。事实授权合格不等于受众面可零修改使用。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP12-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP12-812包含两版纸样、变更单和一次匹配夹具记录，均为新建合成资格事实。", "finding": "内部事件和资格事实标识进入正文。"},
+        {"surface_id": "P4T3-POS-CP12-SURFACE-06", "surface_kind": "body", "original_text": "仅比较合成版本H-812-v0.7与v0.8在一次匹配动作中的可见状态；不得把单次结果写成耐久证明或普遍改进。", "finding": "边界规则被序列化为受众指令。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-05-396f7dc3f152",
+      "profile_id": "CP04",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 83, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 96, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "两岗位的动作和权限没有事实越界，但输出把P4T3事件编号、‘仅用于本密封测试’角色限定以及不得编造争执等控制语句连续放入正文。专用披露表面已经存在，这些段落使原稿成为审计卡回读而非可直接批准的内容。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP04-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP04-418是全新合成协作事实；合成样衣R-418及蓝色状态签在本案例登记表中一一对应。", "finding": "内部事件证明进入受众正文。"},
+        {"surface_id": "P4T3-POS-CP04-SURFACE-08", "surface_kind": "body", "original_text": "仅陈述合成协作事件P4T3-EVT-CP04-418中已授权岗位的动作、证据与交接状态；不得编造争执、共识、责任归因或越权判断。", "finding": "事实授权和禁止外推指令直接外显。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-06-3dbda60b4d25",
+      "profile_id": "CP03",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 81, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 96, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "工序和末端12毫米未锁边状态忠实于原请求，但正文公开P4T3资格批次事件，并把局部针迹不得外推整件质量的控制条款逐字输出。另有判断点‘是否越过8毫米线’未明确给出判定，不过治理泄漏本身已足以否决零修改稿。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP03-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP03-519及试片B-204均为本资格批次新建的合成事实，过程由一段连续俯拍和一张结束状态图支持。", "finding": "内部资格事件和证据说明进入正文。"},
+        {"surface_id": "P4T3-POS-CP03-SURFACE-06", "surface_kind": "body", "original_text": "仅描述合成试片B-204在本次授权手工步骤中的输入、动作、判断点和可见状态；不得把局部针迹推导为整件质量或使用寿命。", "finding": "授权边界及禁止推导指令直接面向受众。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-07-41b6de9a9125",
+      "profile_id": "CP02",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "C", "total_score": 76, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 89, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "18:42与18:56的可见状态对照没有硬事实错误，但正文把P4T3事件代号和‘不得推断顾客反应、经营趋势或变化原因’作为对外段落。该控制信息应限制写作而非成为写作结果，且整体仍是全批次统一的事实证明加禁止事项骨架。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP02-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP02-284记录：18:42时N-44挂杆有三个衣架朝向不一，18:56时六个衣架均朝左且间距按桌面标尺复核；这是全新合成场景事实。", "finding": "内部事件标识和合成事实证明进入正文。"},
+        {"surface_id": "P4T3-POS-CP02-SURFACE-05", "surface_kind": "body", "original_text": "仅比较合成场景P4T3-EVT-CP02-284在两个授权时间锚的可见状态；不得据此推断顾客反应、经营趋势或变化原因。", "finding": "授权时间锚和禁止推断指令外显。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-08-48564f5f70c5",
+      "profile_id": "CP01",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "C", "total_score": 76, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 92, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "K-731动作链和4毫米翘起状态准确，但正文明确写出‘本密封资格测试’、P4T3事件代号和不得外推性能的控制句。画面还要求连续跟拍12分钟静置而未提供短视频压缩处理；即使忽略执行问题，治理泄漏也使首稿不可直接批准。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP01-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP01-731是本密封资格测试内新建的合成任务事实；对象为合成样片K-731，仅在本测试世界中视为已核验存在。", "finding": "内部事件和密封资格状态进入正文。"},
+        {"surface_id": "P4T3-POS-CP01-SURFACE-06", "surface_kind": "body", "original_text": "仅陈述合成任务 P4T3-EVT-CP01-731 中可见动作、时间节点与停止状态；不得外推材料寿命、品牌性能或普遍效果。", "finding": "边界指令被逐字输出到受众面。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-09-762194b4af70",
+      "profile_id": "CP07",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 85, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 94, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": true},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "条件判断、替代项和雨测待补形成有效诊断树，但正文仍把P4T3问题记录的内部闭合证明及不得虚构经历、防水性能的治理限制直接展示。两审都已识别该项与CP09共享近似条件树，第三裁决确认其全批统一收尾不是产品必要语法。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP07-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP07-709是全新合成问题记录，问题来源、条件表、口袋尺卡和替代小袋登记项均在本案例内闭合。", "finding": "内部事件与案例闭合证明进入正文。"},
+        {"surface_id": "P4T3-POS-CP07-SURFACE-05", "surface_kind": "body", "original_text": "仅依据合成问题记录中的任务条件、口袋尺寸记录和闭合方式作条件判断；不得虚构用户经历、身体效果或未有证据的防水性能。", "finding": "控制边界被直接写成受众段落。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-10-7c9a9d09f5ba",
+      "profile_id": "CP18",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 86, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 93, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "地点、雨夹雪时段、岗位动作和声景均受输入支持，但受众正文公开P4T3内部事件并声明所有城市、门店和角色是密封测试世界事实。合成身份应由专用披露表面承担，不能再次以治理段落侵入正文。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP18-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP18-803、岚川市、雨栈试验店和全部角色均是全新合成资格事实，不对应现实城市、门店或品牌。", "finding": "内部事件和资格事实声明进入正文。"},
+        {"surface_id": "P4T3-POS-CP18-SURFACE-08", "surface_kind": "body", "original_text": "所有城市、门店、气候、人群和声景均为本密封测试内的合成世界事实；仅陈述授权时段的可见动作与声音，不冒充现实地方生活。", "finding": "密封测试身份和授权边界在受众面重复披露。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-11-8a8e62a54bf2",
+      "profile_id": "CP20",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 82, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 97, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "承诺、18件完成、2件待回执和下一复核时间均准确，但正文暴露P4T3内部事件、`PARTIAL_WITH_DEVIATION`内部状态枚举及‘不得’治理语句，画面也重复该枚举。核心问题A明确覆盖执行payload，因此这不是只需忽略的元数据，而是零修改硬错。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP20-SURFACE-10", "surface_kind": "body", "original_text": "台账版本COM-520-L2，状态时间为2034-05-18 15:30，当前节点标记为PARTIAL_WITH_DEVIATION。", "finding": "内部状态枚举进入受众正文。"},
+        {"surface_id": "P4T3-POS-CP20-SURFACE-11", "surface_kind": "body", "original_text": "仅回读合成公开承诺COM-520、授权执行台账和当前偏差；不得用情绪替代证据，也不得把未完成写成兑现。", "finding": "事实授权与禁止事项直接成为正文。"},
+        {"surface_id": "P4T3-POS-CP20-SURFACE-14", "surface_kind": "visual_execution", "original_text": "沿台账字段呈现第2节点偏差、向承运记录员补取回执、2034-05-20 16:00下一复核与COM-520-L2的PARTIAL_WITH_DEVIATION标记。", "finding": "内部状态枚举进入执行payload。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-12-8cc201376b56",
+      "profile_id": "CP19",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 80, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 92, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "选择B、放弃A及600个纸套和4日延后代价均准确，但受众正文回读P4T3决策证据构成，并把不得自我表彰、不得推断动机等控制语句原样呈现。其决策台账结构又与CP11高度同构，无法零修改作为独立产品基线。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP19-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP19-719由合成决策单、A/B成本表、600个纸套计数单和48件检验状态表构成，均为新建合成事实。", "finding": "内部事件和证据名录进入正文。"},
+        {"surface_id": "P4T3-POS-CP19-SURFACE-05", "surface_kind": "body", "original_text": "仅陈述合成决策单BIZ-719中的背景、选项、选择、放弃、代价和当前状态；不得自我表彰、推断组织动机或宣称长期价值。", "finding": "治理限制成为统一收尾段。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-13-a3bd7cb2d750",
+      "profile_id": "CP14",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 89, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 97, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "非语言视听方案本身完成度高，光线、灰卡、一次刷动和0.8秒原声也都准确；但正文仍插入P4T3事件资格证明与‘仅描述／不得推断’治理句。即使分数接近甲级，硬错不能由视听质量抵消。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP14-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP14-247、织片C-247、灰卡与原始音轨均为本批次新建合成事实，无现实产品映射。", "finding": "内部测试事件与事实性质进入正文。"},
+        {"surface_id": "P4T3-POS-CP14-SURFACE-05", "surface_kind": "body", "original_text": "仅描述合成织片C-247在两种已记录光线和一次授权动作中的可见色面与原始声音；不得作恒定颜色、触感性能或情绪价值推断。", "finding": "授权动作和禁止推断规则外显。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-14-c3ae72bbc71f",
+      "profile_id": "CP05",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 80, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 91, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "三个职业节点、误归档纠正和当前岗位权限有据，但稿件按档案字段机械回读，并把P4T3事件来源及禁止补写私人经历、情绪动机的控制规则放在正文。该表达需要实质重编排，不能被视为零修改基线。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP05-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP05-305由三份全新合成档案构成：排班条目、误归档纠正单和30张色卡复核表。", "finding": "内部事件和证据清单进入正文。"},
+        {"surface_id": "P4T3-POS-CP05-SURFACE-07", "surface_kind": "body", "original_text": "仅回读合成角色“澄页”的授权阶段记录、时间节点与可核验技能状态；不得补写私人经历、情绪动机或英雄化叙事。", "finding": "授权范围和禁止叙事指令外显。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-15-c73ebe4abcaf",
+      "profile_id": "CP06",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 84, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 96, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "3毫米偏移、同平面同尺卡和公差缺失都准确，且没有越权判定合格；然而正文公开P4T3事件并直接宣告岗位不可决定返工、合格和材料性能，随后再次输出‘仅允许／不得’规则。事实纪律良好仍不能使治理化正文零修改合格。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP06-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP06-662与Q-662均为本批次新建合成事实，支持材料是一张垂直俯拍图和一条尺卡校零记录。", "finding": "内部事件和证据来源说明进入正文。"},
+        {"surface_id": "P4T3-POS-CP06-SURFACE-06", "surface_kind": "body", "original_text": "仅允许报告合成样片Q-662的可观察端点偏移及所用网格尺依据；不得判定耐久性、成因、责任或最终合格状态。", "finding": "权限与禁止判定指令成为受众段落。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-16-cc5f56aa937d",
+      "profile_id": "CP16",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 88, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 97, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "匿名任务、两种方案、三次抬腕与未解决停止状态均准确，隐私范围也未被突破；但P4T3资格事实、‘原始身份字段从未创建’及不得出现身份线索的治理说明均进入正文。它们应约束输出，而不是成为对受众的内容。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP16-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP16-416及SVC-416均为全新合成资格事实，原始身份字段从未创建，素材只含手腕以下裁切画面与任务卡。", "finding": "内部资格事件和隐私实现元数据进入正文。"},
+        {"surface_id": "P4T3-POS-CP16-SURFACE-07", "surface_kind": "body", "original_text": "仅使用匿名化后的合成任务、服务动作和反馈状态；不得出现身份、身体评价、私人经历或导购英雄化叙述。", "finding": "匿名化和禁止事项指令被直接输出。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-17-d32ea9240f3f",
+      "profile_id": "CP08",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "C", "total_score": 78, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 96, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "双层材料、12毫米包边和三枚标记片均来自输入，但实际分隔结果仍停留在‘分隔状态’标签，用户价值偏薄；同时正文直接说明P4T3资格批次及未包含哪些性能记录，并逐字输出不得外推整件性能的规则。原稿不能零修改批准。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP08-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP08-908及M-908材料登记均为本资格批次新建合成事实，未包含耐磨、透气、承重或长期使用记录。", "finding": "内部事件、资格批次和缺项元数据进入正文。"},
+        {"surface_id": "P4T3-POS-CP08-SURFACE-05", "surface_kind": "body", "original_text": "仅陈述合成样片M-908登记的层次、包边连接和本次放置小物的可见结果；不得由触感或局部结构外推整件性能。", "finding": "边界规则被当作受众内容。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-18-d4f028315c59",
+      "profile_id": "CP17",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "D", "total_score": 67, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE", "UNRESOLVED_INPUT_CONFLICT"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 92, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE", "UNRESOLVED_INPUT_CONFLICT"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "除共同治理泄漏外，冻结输入自身未闭合：10:05已有右下一块浅色板，又把两块‘备用’浅色板移至左中和右中，若无移除动作应得到三块；输出却直接断言10:32中轴两侧各一块，且画面没有交代原右下板去向。面对输入冲突应停止或请求澄清，不能选择性覆盖。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP17-SURFACE-03", "surface_kind": "body", "original_text": "合成橱窗D-14的目标是让浅色标记板在中轴两侧各出现一次；10:05原状态为五块深色板集中左侧、一块浅色板在右下；调整动作是把两块备用浅色板移至左中和右中；10:32复核图显示中轴两侧各一块浅色板，用户行为未观察。", "finding": "一块既有板加两块备用板与最终仅两块的状态不相容，且没有移除动作。"},
+        {"surface_id": "P4T3-POS-CP17-SURFACE-07", "surface_kind": "visual_execution", "original_text": "固定D-14机位与授权光线：10:05显示五块深色板集中左侧、一块浅色板在右下；连续记录两块备用浅色板移至左中和右中；10:32显示中轴两侧各一块浅色板。", "finding": "执行payload重复冲突，仍未说明右下原板去向。"},
+        {"surface_id": "P4T3-POS-CP17-SURFACE-05", "surface_kind": "body", "original_text": "仅比较合成橱窗D-14在匹配机位和授权光线下的可见布局；不得把前后差异解释为客流、偏好或销售因果。", "finding": "治理边界直接进入正文。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-19-dd74e24265dd",
+      "profile_id": "CP10",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "B", "total_score": 86, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 96, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "七日、每日30次、6毫米浅痕和仍可闭合的状态均准确，也没有升级成长周期结论；但正文公开P4T3内部台账事件，并把‘七日记录不得替代长期规律’作为治理性末段。版本事实可以服务内容，内部资格证明与写作禁令不能直接成为受众正文。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP10-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP10-307及七页台账Z-307-L7均为本批次新建合成事实，没有现实产品或品牌对应。", "finding": "内部事件与合成事实证明进入正文。"},
+        {"surface_id": "P4T3-POS-CP10-SURFACE-06", "surface_kind": "body", "original_text": "仅回读合成台账Z-307-L7的日期、条件、次数与可见状态；七日记录不得替代长期规律，也不得把观察写成正式检测结论。", "finding": "禁止扩张结论的写作指令外显。"}
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-20-e370033d849d",
+      "profile_id": "CP11",
+      "content_review_position": {"verdict": "REJECT_ORIGINAL_FIRST_OUTPUT", "grade": "C", "total_score": 78, "first_acceptable": false, "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"], "formulaic_or_near_duplicate": true},
+      "fact_review_position": {"verdict": "APPROVE_ORIGINAL_FIRST_OUTPUT", "grade": "A", "total_score": 91, "first_acceptable": true, "hard_error_codes": [], "formulaic_or_near_duplicate": false},
+      "adjudication_verdict": "REJECT_ORIGINAL_FIRST_OUTPUT",
+      "approved_original_first_output": false,
+      "hard_error_codes": ["PROMPT_GOVERNANCE_LEAKAGE"],
+      "formulaic_or_near_duplicate": true,
+      "rationale": "A/B方案、B两次起拱和选择A的擦拭代价均忠实，但输出没有明确复核A是否实现24页平放目标，且与CP19共享决策表骨架。更直接的硬错是正文公开P4T3事件证据名录并逐字输出不得补写动机和品牌价值的治理规则。",
+      "evidence": [
+        {"surface_id": "P4T3-POS-CP11-SURFACE-04", "surface_kind": "body", "original_text": "P4T3-EVT-CP11-611由需求单、A/B试样编号、三次压痕记录和选择签字栏构成，全部是本密封批次新建合成事实。", "finding": "内部事件、证据名录和密封批次身份进入正文。"},
+        {"surface_id": "P4T3-POS-CP11-SURFACE-05", "surface_kind": "body", "original_text": "仅陈述合成项目D-611记录中的问题、备选、选择、放弃与成本约束；不得补写设计动机、品牌价值或未记录效果。", "finding": "写作边界直接成为受众段落。"}
+      ]
+    }
+  ],
+  "summary": {
+    "approved_count": 0,
+    "rejected_count": 20,
+    "hard_error_item_count": 20,
+    "formulaic_count": 20,
+    "CP17_conflict_conclusion": "存在未闭合输入冲突：原有右下一块浅色板加两块备用浅色板的移动应留下三块，原请求和原输出均未说明移除或替换动作，却断言10:32中轴两侧各一块。CP17原始首次输出因此另触发UNRESOLVED_INPUT_CONFLICT。",
+    "overall_verdict": "REJECT_ALL_ORIGINAL_FIRST_OUTPUTS_ZERO_MODIFICATION"
+  },
+  "readiness_flags": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "review_digest": "a766a64a6662c215dad4f60ba274e4877f2fa1ca631892676e785f8398a3215f"
+}

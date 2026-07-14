@@ -1,0 +1,638 @@
+{
+  "schema_version": "gate1-p4t3-successor-independent-review-v1.0",
+  "task_id": "GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001",
+  "reviewer_identity": "P4T3-SUCCESSOR-FACT-AUTHORIZATION-REVIEWER",
+  "reviewer_platform_agent_id": "019f61b0-ee1e-7073-969a-bc7871616ffb",
+  "reviewer_session_logical_id": "P4T3-SUCCESSOR-FACT-SESSION-019f61b0-ee1e",
+  "model_capability_id": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "blank_context": true,
+  "other_review_unavailable": true,
+  "blind_choices_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/review_successor/fact_authorization_blind_choices.v1.0.json",
+  "blind_choices_sha256": "ee65aaf6e0b49416eb5cd21c927bd40f5940094430b37703c397eeabb940c53c",
+  "blind_stage_frozen_commit": "6a00fe9",
+  "mapping_revealed_after_blind_freeze": true,
+  "review_track": "FACT_AUTHORIZATION",
+  "judgments": [
+    {
+      "blind_item_id": "P4T3-NEUTRAL-01-17b24e6324a7",
+      "chosen_profile_id": "CP09",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 10,
+        "platform_execution": 9,
+        "anti_formula": 7
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 95,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-09-762194b4af70"
+      ],
+      "rationale": "S-521的结构、适用任务、不适用条件、替代项和待核雨测边界均被完整保留，没有身体评价或天气性能扩张，CP09指纹明确。",
+      "evidence": [
+        "P4T3-FACT-CP09-01至03分别由CLAIM-01至03完整覆盖，标题、正文、口播和画面均绑定SRC-CP09-01/02与AUTH-CP09-01。",
+        "SURFACE-02至07始终区分室内覆盖任务、户外密闭挡雨反选和R-206雨测待核；输出保持synthetic_qualification_only=true、publishable=false。"
+      ],
+      "defects": [
+        "观察：与CP07共享条件、排除、替代的组件骨架，形成轻度公式化配对，但问题诊断与产品反选的核心目的仍清楚可辨。"
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-02-1fe818aa49ef",
+      "chosen_profile_id": "CP13",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 8,
+        "continuity": 4
+      },
+      "total_score": 89,
+      "grade": "B",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "W-619在三个任务中的物件关系、固定主体和18摄氏度条件均准确，未冒充现实经历；但生活与衣橱角色的表达仍偏任务演示。",
+      "evidence": [
+        "P4T3-FACT-CP13-01至03由全部三项声明逐字覆盖，SURFACE-02至07均绑定AUTH-CP13-01及两项来源。",
+        "画面始终回到同一W-619，并明确三个预设任务及非现实经历边界，没有气候适用或身体效果外推。"
+      ],
+      "defects": [
+        "轻微：三个段落更像道具状态测试，服装与生活任务的角色关系可在现有事实内前置强化。",
+        "轻微：口播将三个动作和温控边界压在一个长句中，需拆分节拍后复审。"
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-03-2bdf3ae9836b",
+      "chosen_profile_id": "CP15",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 92,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "到货时间、验收台三区、12件核签以及11件已核和1件留置状态准确构成商品到店节点，未外推库存或销售。",
+      "evidence": [
+        "P4T3-FACT-CP15-01至03由CLAIM-01至03完整覆盖，所有非披露表面均绑定SRC-CP15-01/02和AUTH-CP15-01。",
+        "SURFACE-07按到货单、三区、逐件核签和最终状态推进，数量与吊牌不一致原因均与输入一致。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-04-31271e2e8243",
+      "chosen_profile_id": "CP12",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 10,
+        "platform_execution": 9,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 96,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "版本序列、尺寸变更、2毫米触发信号、匹配条件、单次结果和重复测试待排期均准确，未将一次观察升级为耐久证明。",
+      "evidence": [
+        "P4T3-FACT-CP12-01至04全部形成独立声明并出现在正文，来源和AUTH-CP12-01绑定完整。",
+        "口播及左右匹配画面保留1.2千克、3分钟、同一夹具和待验证状态，没有补造版本历史。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-05-396f7dc3f152",
+      "chosen_profile_id": "CP04",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 10,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 96,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "两名合成角色、共同样衣、岗位动作、禁止权限和蓝签交接状态均逐项呈现，未制造争执、共识或责任归因。",
+      "evidence": [
+        "P4T3-FACT-CP04-01至06均由对应声明覆盖，全部业务表面同时绑定publication_scope和participant_authorizations。",
+        "SURFACE-10按青弦复测挂签、迟墨签收拆线、待二次复测推进，动作严格落在FACT-CP04-05权限内。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-06-3dbda60b4d25",
+      "chosen_profile_id": "CP03",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 10,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 96,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "B-204的输入、五步工序、8毫米判断点、责任角色和末端12毫米未锁边状态完整，连续俯拍没有跳过关键动作。",
+      "evidence": [
+        "P4T3-FACT-CP03-01至04全部进入声明和绑定表面，AUTH-CP03-01及两项来源覆盖完整。",
+        "SURFACE-08按量取、折边、疏缝、锁边、尺卡复核排序，并保留未完成结尾和材料性能禁区。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-07-41b6de9a9125",
+      "chosen_profile_id": "CP02",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 89,
+      "grade": "B",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "门店别名、时段、N-44空间锚和两个状态均准确，固定机位也符合微纪录要求；成品感仍略接近验收对照。",
+      "evidence": [
+        "P4T3-FACT-CP02-01至03由三项声明完整覆盖，SURFACE-02至07均绑定AUTH-CP02-01和SRC-CP02-01/02。",
+        "口播和画面只比较18:42与18:56，不解释变化原因，也未引入顾客或经营推断。"
+      ],
+      "defects": [
+        "轻微：内容重心偏两张状态对照，门店时段的节奏和在场感较薄，可用现有时间牌与停顿重新分配节拍。",
+        "轻微：口播基本复述正文结果，需做小幅平台化压缩后复审。"
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-08-48564f5f70c5",
+      "chosen_profile_id": "CP01",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 10,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 92,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "鹭序的岗位、时段、K-731对象、连续动作、判断点和待次日复核状态齐全，且材料寿命和品牌性能边界明确。",
+      "evidence": [
+        "P4T3-FACT-CP01-01至04均有逐字声明，业务表面绑定SRC-CP01-01/02和AUTH-CP01-01。",
+        "连续跟拍与口播只承载已授权动作和4毫米翘起状态；缺少明确声源时按合同省略音频。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-09-762194b4af70",
+      "chosen_profile_id": "CP07",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 10,
+        "platform_execution": 9,
+        "anti_formula": 7
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 94,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-01-17b24e6324a7"
+      ],
+      "rationale": "问题来源、骑行和单手取用条件、口袋依据、10厘米验证阈值、替代项及缺失雨测均形成清楚的诊断树。",
+      "evidence": [
+        "P4T3-FACT-CP07-01至03分别由CLAIM-01至03覆盖，SURFACE-02至07的来源和AUTH-CP07-01绑定完整。",
+        "正文、口播和分支板均将防雨需求留在待取材料状态，没有虚构经历或防水性能。"
+      ],
+      "defects": [
+        "观察：与CP09共享条件、排除、替代的组件和表面骨架，存在轻度公式化；真实问题来源和尺寸验证分支仍保持CP07差异。"
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-10-7c9a9d09f5ba",
+      "chosen_profile_id": "CP18",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 7,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 10,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 93,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "合成城市、门店、地点、气候、职业人群、门店动作和限定声景全部进入输出，地方性来自具体记录而非虚构习俗。",
+      "evidence": [
+        "P4T3-FACT-CP18-01至06均有独立声明，三个来源槽和AUTH-CP18-01覆盖所有业务表面。",
+        "SURFACE-09和10严格使用给定地点、时段、三名岗位人员及门铃、刮水器、滴水声，没有身份、关系或消费推断。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-11-8a8e62a54bf2",
+      "chosen_profile_id": "CP20",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 10,
+        "user_value": 10,
+        "platform_execution": 9,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 97,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "承诺、主体、节点、执行证据、两件偏差、修正动作、下一复核和台账版本全部准确，未把部分完成写成兑现。",
+      "evidence": [
+        "P4T3-FACT-CP20-01至09全部逐项进入CLAIM-01至09，所有业务表面同时绑定publication_scope和enterprise_public_authorization。",
+        "两段视觉执行覆盖承诺页、20件表、T-07/T-14、补取回执、下一节点和PARTIAL_WITH_DEVIATION，事实链完整。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-12-8cc201376b56",
+      "chosen_profile_id": "CP19",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 7,
+        "role_and_brand_consistency": 10,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 92,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "A/B经营选项、选择与放弃、600个纸套和4日延后代价、48件当前状态及接受度未知均被如实呈现。",
+      "evidence": [
+        "P4T3-FACT-CP19-01至03由三项声明完整覆盖，所有表面绑定AUTH-CP19-01和SRC-CP19-01/02。",
+        "标题、口播及决策台账画面不推断动机、不自我表彰，也未把未发运或未验证结果写成成功。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-13-a3bd7cb2d750",
+      "chosen_profile_id": "CP14",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 9,
+        "platform_execution": 10,
+        "anti_formula": 10
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 97,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "C-247、4200K漫射灯、遮光窗边、灰卡、一次刷动、0.8秒摩擦声和无配乐要求形成完整的物性影像语法。",
+      "evidence": [
+        "P4T3-FACT-CP14-01至03由全部声明覆盖，视觉和音频表面均绑定两项来源及AUTH-CP14-01。",
+        "无口播和CTA符合非语言产品合同；SURFACE-06/07保持原速、一次动作和原始声，不作触感、恒色或情绪价值推断。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-14-c3ae72bbc71f",
+      "chosen_profile_id": "CP05",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 10,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 91,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "澄页的授权别名、三个职业节点、误归档纠正和盲检技能证据均有档案支撑，未补写私人动机或英雄化经历。",
+      "evidence": [
+        "P4T3-FACT-CP05-01至05均由对应声明覆盖，所有业务表面绑定AUTH-CP05-01及两项来源。",
+        "SURFACE-09按三份档案和三个日期推进，当前权限停在色卡档案员，没有扩张人物身份。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-15-c73ebe4abcaf",
+      "chosen_profile_id": "CP06",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 10,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 96,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "3毫米端点差异、同平面同尺卡条件、缺失公差和砚南的有限记录权限共同构成证据优先的专业判断切片。",
+      "evidence": [
+        "P4T3-FACT-CP06-01至04全部进入声明，标题、正文、口播和画面均绑定AUTH-CP06-01及两项来源。",
+        "画面只推进到可见端点和待确认标记，没有判定返工、合格、成因、责任或耐久性。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-16-cc5f56aa937d",
+      "chosen_profile_id": "CP16",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 10,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 97,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "匿名任务、两种方案、三次抬腕、第三次仍触桌和停止服务的未完成结果均准确，隐私与匿名化边界完整。",
+      "evidence": [
+        "P4T3-FACT-CP16-01至05全部形成声明，所有业务表面绑定publication_scope、customer_privacy_consent和anonymization_approval。",
+        "SURFACE-09始终限定手腕以下和任务卡；正文排除职业、年龄、住址、体型及购买信息，没有导购英雄化。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-17-d32ea9240f3f",
+      "chosen_profile_id": "CP08",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 9,
+        "platform_execution": 9,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 96,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "M-908的两层材料、12毫米包边、剖面尺卡和三枚标记片分隔状态均清楚，结构观察没有被扩大为整件性能。",
+      "evidence": [
+        "P4T3-FACT-CP08-01至03由三项声明覆盖，SURFACE-02至07均绑定AUTH-CP08-01和两项来源。",
+        "视觉路径从P-31到G-08再到包边和当次分隔，正文明确缺少耐磨、透气、承重及长期记录。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-18-d4f028315c59",
+      "chosen_profile_id": "CP17",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 9,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 92,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "D-14的目标、原状态、两块备用板移动和10:32复核完整，固定机位与授权光线支持空间实验且未声称用户行为因果。",
+      "evidence": [
+        "P4T3-FACT-CP17-01至03由全部声明覆盖，标题、正文、口播和画面均绑定AUTH-CP17-01及两项来源。",
+        "SURFACE-07连续呈现原状态、移动和复核，用户行为未观察及客流、偏好、销售禁区均被保留。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-19-dd74e24265dd",
+      "chosen_profile_id": "CP10",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 10,
+        "platform_execution": 9,
+        "anti_formula": 9
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 5
+      },
+      "total_score": 96,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "七日日期、同一夹具、每日30次、前六日状态、第七日浅痕、仍可闭合及三项局限全部准确，长期结论被明确阻断。",
+      "evidence": [
+        "P4T3-FACT-CP10-01至04全部进入声明，所有业务表面绑定AUTH-CP10-01和SRC-CP10-01/02。",
+        "SURFACE-08按日期推进并落在版本和截止时间；没有把单样本七日观察写成正式检测或长期规律。"
+      ],
+      "defects": []
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-20-e370033d849d",
+      "chosen_profile_id": "CP11",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 9,
+        "user_value": 9,
+        "platform_execution": 8,
+        "anti_formula": 8
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5
+      },
+      "total_score": 91,
+      "grade": "A",
+      "first_acceptable": true,
+      "hard_error_codes": [],
+      "formulaic_or_near_duplicate": false,
+      "related_blind_item_ids": [],
+      "rationale": "D-611的需求、两种纸板、三次试样、选择与放弃、压痕刀约束和擦拭效果代价构成完整设计取舍档案。",
+      "evidence": [
+        "P4T3-FACT-CP11-01至03由三项声明完整覆盖，所有业务表面绑定AUTH-CP11-01和两项来源。",
+        "口播和决策表画面同时呈现A/B、两次起拱与选择A的代价，没有补写灵感、品牌价值或未记录效果。"
+      ],
+      "defects": []
+    }
+  ],
+  "route_gate": {
+    "action_match_count": 20,
+    "reason_match_count": 20,
+    "audience_leak_count": 0,
+    "pass": true
+  },
+  "overall_verdict": "PASS_WITH_MINOR_REPAIRS_REQUIRED",
+  "summary": {
+    "blind_mapping_match_count": 20,
+    "blind_mapping_total": 20,
+    "grade_counts": {
+      "A": 18,
+      "B": 2,
+      "C": 0,
+      "D": 0
+    },
+    "average_score": 93.85,
+    "first_acceptable_count": 20,
+    "first_acceptable_rate": 1.0,
+    "hard_error_item_count": 0,
+    "formulaic_or_near_duplicate_item_count": 2,
+    "formulaic_or_near_duplicate_rate": 0.1,
+    "fact_authorization_conclusion": "20项核心事实均被声明覆盖；所有非披露受众表面均有来源、事实和授权绑定。未发现无支持数字、动作、因果、结果或实体，未发现身份、隐私、岗位权限、合成模式、生命周期或提示治理泄漏硬错误。",
+    "approval_condition": "CP02与CP13为B级，需完成所列平台节拍和产品表达小修并复审后再进入最终基线批准；CP07与CP09的公式化配对需在扩量批次继续监测。路线门20/20动作与原因匹配，受众泄漏为0。"
+  },
+  "review_digest": "02c588c875c2e95719b69dfcf153a45094d7b64cfcd8b57ffb264e182f4f9ba5"
+}

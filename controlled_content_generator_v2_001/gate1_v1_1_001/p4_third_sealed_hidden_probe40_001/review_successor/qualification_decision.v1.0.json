@@ -1,0 +1,38 @@
+{
+  "schema_version": "gate1-p4t3-successor-qualification-decision-v1.0",
+  "task_id": "GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001",
+  "decision_authority": "EXTERNAL_INDEPENDENT_QUALIFICATION_COORDINATOR",
+  "coordinator_identity": "P4T3-SUCCESSOR-QUALIFICATION-COORDINATOR",
+  "coordinator_session_logical_id": "P4T3-SUCCESSOR-QUALIFICATION-COORDINATOR-SESSION-019f61cf-9cea-79f1-939b-4f65362ac9dd",
+  "coordinator_platform_agent_id": "019f61cf-9cea-79f1-939b-4f65362ac9dd",
+  "model_capability_id": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "blank_context": true,
+  "role_separation": {
+    "is_author": false,
+    "is_planner": false,
+    "is_executor": false,
+    "is_freezer": false,
+    "is_content_value_reviewer": false,
+    "is_fact_authorization_reviewer": false,
+    "is_targeted_adjudicator": false,
+    "statement": "本统筹方仅读取已冻结证据并签署资格决定，不兼任作者、策划者、执行者、冻结者、内容审查者、事实审查者或第三裁决者。"
+  },
+  "review_metrics_digest": "b23804e8e7eec6a4eaa18d42ef20ddea8f0eb3d3ba1a9d349398f0ffd91f8718",
+  "qualification_score": 20,
+  "hard_veto": true,
+  "qualification_verdict": "REJECT",
+  "approved_first_output_request_ids": [],
+  "decision_reason_codes": [
+    "CONTENT_FIRST_ACCEPTABLE_0_BELOW_18",
+    "ADJUDICATED_APPROVED_0_BELOW_18",
+    "HARD_ERROR_UNION_20_EXCEEDS_0",
+    "FORMULAIC_OR_NEAR_DUPLICATE_UNION_20_EXCEEDS_2",
+    "PROMPT_GOVERNANCE_LEAKAGE_ACROSS_ALL_20",
+    "UNRESOLVED_INPUT_CONFLICT_CP17",
+    "NO_PACKET_ELIGIBLE_REQUEST_IDS",
+    "NONBLOCKING_300_QUALITY_BASELINE_NOT_P4_QUALIFICATION"
+  ],
+  "rationale": "评分按资格维度计为：事实授权准确性20/20，内容零修改可接受性0/40，定向裁决中的原始首次输出批准0/30，硬错与去公式化合规0/10，合计20/100。事实审查虽认定20/20事实绑定可接受，但内容审查认定0/20原始首次输出可零修改接受；20项实质分歧经定向裁决全部拒绝，20项均含硬错误且均呈公式化，CP17另有未闭合输入冲突。packet的eligible_request_ids为空，故H候选数为0。后续小修可能性及300质量线非阻塞继续授权均不构成第三套P4原始首次输出批准依据。",
+  "decision_digest": "869779f02750b8e1d9dd7d2c5f94d7219827f636543d714d9f790a9b5dfffd3e"
+}

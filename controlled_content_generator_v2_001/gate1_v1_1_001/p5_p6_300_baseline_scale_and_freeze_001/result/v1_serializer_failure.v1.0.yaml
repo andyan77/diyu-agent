@@ -1,0 +1,14 @@
+schema_version: gate1-v1.1-v1-serializer-failure-v1.0
+task_id: GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001
+frozen_v1_runner_sha256: fda4a5231f71d381d997c0b5f7cef68b199e24dc30d86c52294f0ca7219beb38
+observed_v1_command: serialize-author
+observed_v1_exit_code: 1
+observed_v1_error_code: E_P4_COMPONENT_USAGE_COVERAGE
+initial_first_output_count: 211
+machine_failure_count: 2
+machine_failure_request_ids:
+- G1V11-P5-POS-CP19-002
+- G1V11-P5-POS-CP20-004
+failure_retained_and_not_replaced: true
+author_semantics_mutated_by_recovery: false
+result_digest: 194fcb9abba3216096e3d563121eb6c698730b64b105e63fd6e6bfc4e6a8e269
