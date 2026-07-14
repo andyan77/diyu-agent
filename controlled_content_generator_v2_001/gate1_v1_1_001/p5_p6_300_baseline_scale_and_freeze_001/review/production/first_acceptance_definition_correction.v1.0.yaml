@@ -1,0 +1,42 @@
+schema_version: gate1-v1.1-review-instruction-correction-v1.0
+task_id: GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001
+correction_reason: >-
+  The execution instruction initially told reviewers to mark grade B as not first
+  acceptable. The frozen v1.1 standard defines first acceptance as an initial
+  grade A or B output with no hard-gate failure. Grade B remains ineligible for
+  approved_as_is and requires one light revision plus re-review.
+authoritative_standard_path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+authoritative_standard_lines: 232-239
+fields_allowed_to_change:
+  - first_acceptable
+  - review_digest
+fields_required_unchanged:
+  - blind_profile_choice
+  - score
+  - grade
+  - approved_as_is
+  - hard_error_codes
+  - formulaic_or_near_duplicate
+  - rationale
+  - evidence
+group_corrections:
+  - group_id: GROUP-01
+    before_sha256: 644fe027f82111caa03206d061ce8e5feaa6926ed45cc4b65ee268b4dfdd17aa
+    after_sha256: 8d1799656db2ebe71005191e9cb35d22ea26cb60886cb95f135fe912d1d785a8
+    corrected_row_count: 12
+  - group_id: GROUP-02
+    before_sha256: 777263f64a5e3635d90e02b6440b1576d0992afb475e4ea2e8083bd1deb7a397
+    after_sha256: 89c347b5a876719d31e8fd019037cdb5f3557993ece7e06c23b7f22f6739a2df
+    corrected_row_count: 13
+  - group_id: GROUP-03
+    before_sha256: 85a8ac690cabf803bb49d3315ee82807b909f8a4411dd9aa0d57445b4840b61d
+    after_sha256: 6892324e100006d8756687d525f268f74ec1819ef08c9224a5586b1457d2a55e
+    corrected_row_count: 8
+  - group_id: GROUP-04
+    before_sha256: cd2c5b590c2619c95e649bf69f58c4c9df7f86bbaf969f74993991bae8eaae2a
+    after_sha256: 35d9f0e1983a9009c6a9cc1bb162824cc667146ad7e7b91f16c39ad9f146552d
+    corrected_row_count: 9
+blind_choice_files_changed: false
+grade_or_score_changed: false
+approval_decision_changed: false
+readiness_changed: false
