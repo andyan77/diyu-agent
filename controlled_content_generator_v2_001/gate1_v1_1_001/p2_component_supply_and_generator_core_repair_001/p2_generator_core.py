@@ -23,6 +23,14 @@ AXIS_OPERATOR_ROLE_BY_AXIS = {
     "rhythm": "rhythm_operator",
     "ending": "ending_operator",
 }
+AXIS_OUTPUT_KIND_BY_AXIS = {
+    "narrative_mechanism": "NARRATIVE_SEGMENT_GRAPH",
+    "information_order": "INFORMATION_NODE_SEQUENCE",
+    "visual_subject": "VISUAL_FOCUS_MAP",
+    "sound_subject": "SOUND_CUE_MAP",
+    "rhythm": "STRUCTURAL_BEAT_MAP",
+    "ending": "BOUNDARY_CLOSURE_MAP",
+}
 
 AUTHORIZATION_BLOCKING_RISKS = frozenset(
     {
@@ -56,6 +64,207 @@ def object_digest(value: Mapping[str, Any], digest_key: str) -> str:
     return digest_object(
         {key: child for key, child in value.items() if key != digest_key}
     )
+
+
+def shared_material_binding(material: Mapping[str, Any]) -> dict[str, Any]:
+    """Bind an axis operator to the actual typed material, not a label fact."""
+
+    facts = [
+        {
+            "fact_id": str(row["fact_id"]),
+            "slot_id": str(row["slot_id"]),
+            "fact_value_digest": str(row["fact_value_digest"]),
+            "claim_boundary": str(row["claim_boundary"]),
+        }
+        for row in material.get("facts", [])
+    ]
+    authorizations = [
+        {
+            "authorization_id": str(row["authorization_id"]),
+            "slot_id": str(row["slot_id"]),
+            "subject_id": str(row["subject_id"]),
+            "purpose": str(row["purpose"]),
+            "scope": row["scope"],
+            "validity_condition": str(row["validity_condition"]),
+        }
+        for row in material.get("authorizations", [])
+    ]
+    document = {
+        "material_id": str(material.get("material_id")),
+        "material_digest": str(material.get("material_digest")),
+        "fact_object_ids": [row["fact_id"] for row in facts],
+        "fact_set_digest": digest_object(facts),
+        "authorization_object_ids": [
+            row["authorization_id"] for row in authorizations
+        ],
+        "authorization_set_digest": digest_object(authorizations),
+        "claim_boundary_digest": digest_object(material.get("claim_boundary")),
+    }
+    document["binding_digest"] = digest_object(document)
+    return document
+
+
+def _rotated_rows(rows: list[dict[str, str]], value: str) -> list[dict[str, str]]:
+    require(rows, "E_AXIS_FACT_SET_EMPTY")
+    seed = int(hashlib.sha256(value.encode("utf-8")).hexdigest()[:8], 16)
+    offset = seed % len(rows)
+    rotated = rows[offset:] + rows[:offset]
+    if seed & 1:
+        rotated = list(reversed(rotated))
+    return rotated
+
+
+def _value_operation(axis: str, value: str) -> str:
+    tokens = set(value.split("_"))
+    if axis in {"narrative_mechanism", "information_order"}:
+        if value.startswith(
+            (
+                "result_",
+                "conclusion_",
+                "abandoned_",
+                "disqualifier_",
+                "deviation_",
+                "cost_",
+                "current_to_",
+            )
+        ) or "reverse" in tokens:
+            return "REVERSE_EVIDENCE_TRAVERSAL"
+        if tokens.intersection({"parallel", "map", "tree", "fit", "condition"}):
+            return "GROUPED_BRANCH_TRAVERSAL"
+        return "BOUNDED_SEQUENCE_TRAVERSAL"
+    if axis == "visual_subject":
+        return "AUTHORIZED_OBJECT_FOCUS_MAP"
+    if axis == "sound_subject":
+        if tokens.intersection({"time", "dated", "anchor", "interval"}):
+            return "TIME_ANCHOR_CUE_MAP"
+        if tokens.intersection({"voice", "dialogue", "explanation"}):
+            return "AUTHORIZED_ROLE_VOICE_MAP"
+        if tokens.intersection({"operation", "contact", "sound", "soundscape"}):
+            return "AUTHORIZED_SOURCE_SOUND_MAP"
+        if tokens.intersection({"record", "evidence", "field", "document"}):
+            return "RECORD_EVIDENCE_CUE_MAP"
+        return "AUTHORIZED_CUE_FOCUS_MAP"
+    if axis == "rhythm":
+        return "REVERSED_BEAT_GROUPS" if "reverse" in tokens else "BOUNDED_BEAT_GROUPS"
+    if axis == "ending":
+        if tokens.intersection(
+            {"open", "pending", "next", "request", "unverified", "unfinished"}
+        ):
+            return "OPEN_BOUNDARY_NODE"
+        if tokens.intersection(
+            {"unproven", "evidence", "authority", "sensory", "visible", "limited"}
+        ):
+            return "EVIDENCE_LIMIT_BOUNDARY_NODE"
+        if "bounded" in tokens:
+            return "BOUNDED_ASSERTION_NODE"
+        return "CURRENT_BOUNDARY_NODE"
+    raise Gate1ValidationError(f"E_AXIS_UNKNOWN:{axis}")
+
+
+def build_axis_structural_output(
+    axis: str,
+    value: str,
+    material: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Execute one reviewed axis value into a non-audience structural object."""
+
+    require(axis in AXIS_OUTPUT_KIND_BY_AXIS, "E_AXIS_UNKNOWN", axis)
+    facts = [
+        {"object_id": str(row["fact_id"]), "slot_id": str(row["slot_id"])}
+        for row in material.get("facts", [])
+    ]
+    ordered = _rotated_rows(facts, value)
+    operation = _value_operation(axis, value)
+    if operation == "REVERSE_EVIDENCE_TRAVERSAL":
+        ordered = list(reversed(ordered))
+    document: dict[str, Any] = {
+        "output_kind": AXIS_OUTPUT_KIND_BY_AXIS[axis],
+        "axis": axis,
+        "reviewed_parameter_value": value,
+        "operation": operation,
+        "shared_material_binding": shared_material_binding(material),
+    }
+    if axis == "narrative_mechanism":
+        document["segments"] = [
+            {
+                "segment_index": index,
+                "fact_object_id": row["object_id"],
+                "fact_slot_id": row["slot_id"],
+                "relation_to_next": (
+                    "BRANCH_OR_PARALLEL"
+                    if operation == "GROUPED_BRANCH_TRAVERSAL"
+                    else "ORDERED_TRANSITION"
+                ),
+            }
+            for index, row in enumerate(ordered)
+        ]
+    elif axis == "information_order":
+        document["ordered_nodes"] = [
+            {
+                "position": index,
+                "fact_object_id": row["object_id"],
+                "fact_slot_id": row["slot_id"],
+            }
+            for index, row in enumerate(ordered)
+        ]
+    elif axis == "visual_subject":
+        document["visual_focus"] = {
+            "lead_fact_object_id": ordered[0]["object_id"],
+            "lead_fact_slot_id": ordered[0]["slot_id"],
+            "supporting_fact_object_ids": [row["object_id"] for row in ordered[1:]],
+            "all_facts_remain_available": True,
+        }
+    elif axis == "sound_subject":
+        document["sound_cues"] = [
+            {
+                "cue_index": index,
+                "fact_object_id": row["object_id"],
+                "fact_slot_id": row["slot_id"],
+                "source_policy": "AUTHORIZED_SOURCE_OR_SILENCE_ONLY",
+            }
+            for index, row in enumerate(ordered[: max(1, min(3, len(ordered)))])
+        ]
+    elif axis == "rhythm":
+        group_size = 1 if any(token in value for token in ("pulse", "step")) else 2
+        document["beat_groups"] = [
+            {
+                "beat_index": index // group_size,
+                "fact_object_ids": [
+                    row["object_id"] for row in ordered[index : index + group_size]
+                ],
+            }
+            for index in range(0, len(ordered), group_size)
+        ]
+    else:
+        boundary_rows = [
+            row
+            for row in ordered
+            if any(
+                token in row["slot_id"]
+                for token in (
+                    "boundary",
+                    "state",
+                    "result",
+                    "condition",
+                    "unfinished",
+                    "pending",
+                )
+            )
+        ] or ordered[:1]
+        document["closure"] = {
+            "boundary_fact_object_ids": [row["object_id"] for row in boundary_rows],
+            "claims_resolved": False,
+            "may_add_commitment": False,
+        }
+    document["structural_effect_digest"] = digest_object(
+        {
+            key: child
+            for key, child in document.items()
+            if key != "reviewed_parameter_value"
+        }
+    )
+    document["structural_output_digest"] = digest_object(document)
+    return document
 
 
 def require(condition: bool, code: str, detail: str = "") -> None:
@@ -460,6 +669,7 @@ def validate_author_request(
         == material.get("profile_id"),
         "E_REQUEST_PROFILE_BINDING",
     )
+    validate_typed_material(material, profile_contract)
     inputs_by_id = {
         str(row["input_id"]): row for row in material.get("component_inputs", [])
     }
@@ -481,6 +691,16 @@ def validate_author_request(
         require(
             binding.get("component_role") == component.get("component_role"),
             "E_COMPONENT_ROLE",
+        )
+        require(
+            list(map(str, binding.get("required_input_slots", [])))
+            == list(map(str, component.get("required_input_slots", [])))
+            and list(map(str, binding.get("required_fact_slots", [])))
+            == list(map(str, component.get("required_fact_slots", [])))
+            and list(map(str, binding.get("required_authorization_slots", [])))
+            == list(map(str, component.get("required_authorization_slots", []))),
+            "E_COMPONENT_SLOT_CONTRACT",
+            str(binding["component_id"]),
         )
         bound_sets = {
             "input": (
@@ -530,6 +750,7 @@ def validate_author_request(
     }
     operator_parameters = lane.get("axis_operator_parameters")
     require(isinstance(operator_parameters, Mapping), "E_REQUEST_AXIS_PARAMETERS")
+    expected_material_binding = shared_material_binding(material)
     for contract in contracts:
         require(isinstance(contract, Mapping), "E_REQUEST_AXIS_CONTRACT")
         axis = str(contract.get("axis"))
@@ -547,6 +768,18 @@ def validate_author_request(
         require(
             operator.get("component_role") == AXIS_OPERATOR_ROLE_BY_AXIS.get(axis),
             "E_REQUEST_AXIS_OPERATOR_ROLE",
+            axis,
+        )
+        parameter_schema = operator.get("mechanism", {}).get("parameter_schema")
+        require(
+            isinstance(parameter_schema, Mapping)
+            and parameter_schema.get("axis") == axis
+            and parameter_schema.get("value_type") == "PROFILE_REVIEWED_ENUM"
+            and parameter_schema.get("unknown_value_behavior") == "REJECT"
+            and parameter_schema.get("output_kind")
+            == AXIS_OUTPUT_KIND_BY_AXIS.get(axis)
+            and axes[axis] in set(map(str, parameter_schema.get("allowed_values", []))),
+            "E_REQUEST_AXIS_PARAMETER_NOT_REVIEWED",
             axis,
         )
         require(
@@ -612,6 +845,28 @@ def validate_author_request(
             "E_REQUEST_AXIS_DIVERGENCE_CONTRACT",
             axis,
         )
+        require(
+            canonical_json(contract.get("shared_material_binding"))
+            == canonical_json(expected_material_binding),
+            "E_REQUEST_AXIS_MATERIAL_BINDING",
+            axis,
+        )
+        expected_output_key = (
+            "lane_a_structural_output"
+            if lane.get("lane_id") == "A"
+            else "lane_b_structural_output"
+        )
+        expected_output = build_axis_structural_output(
+            axis,
+            str(axes[axis]),
+            material,
+        )
+        require(
+            canonical_json(contract.get(expected_output_key))
+            == canonical_json(expected_output),
+            "E_REQUEST_AXIS_EXECUTION_CONTRACT",
+            axis,
+        )
 
 
 def realize_request(
@@ -663,8 +918,15 @@ def realize_request(
     pointers = [row["implementation_pointer"] for row in contributions]
     require(len(pointers) == len(set(pointers)), "E_IMPLEMENTATION_POINTER_REUSE")
     axis_realizations: list[dict[str, Any]] = []
+    structural_axes: dict[str, dict[str, Any]] = {}
     for contract in lane["axis_realization_contracts"]:
         axis = str(contract["axis"])
+        structural_output = build_axis_structural_output(
+            axis,
+            str(lane["axes"][axis]),
+            request["typed_material"],
+        )
+        structural_axes[axis] = structural_output
         axis_realizations.append(
             {
                 "axis": axis,
@@ -677,6 +939,9 @@ def realize_request(
                 "operator_binding_digest": contract[
                     "operator_component_binding"
                 ]["binding_digest"],
+                "structural_output_digest": structural_output[
+                    "structural_output_digest"
+                ],
                 "implementation_pointer": contract["realization_target"].format(
                     lane_id=lane["lane_id"]
                 ),
@@ -702,6 +967,9 @@ def realize_request(
         "lane_id": lane["lane_id"],
         "component_contributions": contributions,
         "lane_axis_realizations": axis_realizations,
+        "structural_realization": {
+            f"lane_{lane['lane_id']}": {"axes": structural_axes}
+        },
         "selected_component_count": len(request["component_bindings"]),
         "realized_component_count": len(contributions),
         "unrealized_component_count": len(request["component_bindings"])

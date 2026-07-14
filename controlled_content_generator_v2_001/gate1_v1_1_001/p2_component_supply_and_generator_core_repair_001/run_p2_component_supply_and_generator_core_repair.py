@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import copy
+import json
 import sys
 from pathlib import Path
 
@@ -21,8 +23,13 @@ from p2_component_model import (
     SUCCESSOR_PATH,
     TASK_ROOT,
     canonical_json,
+    load_jsonl,
+    object_digest,
     require,
+    source_state,
 )
+from p2_final_documents import build_generator_evidence
+from p2_generator_core import Gate1ValidationError, realize_request
 from p2_final_materializer import (
     FINAL_IMPORT_SENTINEL,
     FINAL_RESULT_PATH,
@@ -40,6 +47,15 @@ from p2_targeted_repair_r2 import (
     TARGETED_RESULT_R2_PATH,
     build_targeted_repair_r2_documents,
     validate_targeted_repair_r2_documents,
+)
+from p2_targeted_repair_r3 import (
+    ADDITION_CANDIDATES_R3_PATH,
+    REVISED_AB_R3_PATH,
+    REVISED_COMPONENTS_R3_PATH,
+    REVISED_RULES_R3_PATH,
+    TARGETED_RESULT_R3_PATH,
+    build_targeted_repair_r3_documents,
+    validate_targeted_repair_r3_documents,
 )
 
 
@@ -60,6 +76,10 @@ def selected_documents(root: Path, phase: str) -> dict[Path, bytes]:
     if phase == "targeted-repair-r2":
         documents = build_targeted_repair_r2_documents(root)
         validate_targeted_repair_r2_documents(documents)
+        return documents
+    if phase == "targeted-repair-r3":
+        documents = build_targeted_repair_r3_documents(root)
+        validate_targeted_repair_r3_documents(documents)
         return documents
     documents = build_documents(root)
     validate_documents(documents)
@@ -332,6 +352,184 @@ def targeted_repair_r2_selftest(root: Path) -> int:
     return 0 if not failures else 1
 
 
+def targeted_repair_r3_selftest(root: Path) -> int:
+    first = build_targeted_repair_r3_documents(root)
+    second = build_targeted_repair_r3_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_targeted_repair_r3_documents(first)
+    except ValueError as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "early_p3",
+            TARGETED_RESULT_R3_PATH,
+            "p3_allowed: false",
+            "p3_allowed: true",
+        ),
+        (
+            "unreviewed_axis_value",
+            ADDITION_CANDIDATES_R3_PATH,
+            '"unknown_value_behavior":"REJECT"',
+            '"unknown_value_behavior":"ALLOW"',
+        ),
+        (
+            "unresolved_axis_pointer",
+            REVISED_AB_R3_PATH,
+            '"/structural_realization/lane_{lane_id}/axes/',
+            '"/lane/{lane_id}/axes/',
+        ),
+        (
+            "label_only_structural_output",
+            REVISED_AB_R3_PATH,
+            '"structural_effect_digest":"',
+            '"removed_structural_effect_digest":"',
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_REPAIR_R3_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_targeted_repair_r3_documents(mutated)
+        except (KeyError, TypeError, ValueError):
+            continue
+        failures.append(name)
+
+    def document_rows(path: Path) -> list[dict[str, object]]:
+        return [
+            json.loads(line)
+            for line in first[path].decode("utf-8").splitlines()
+            if line
+        ]
+
+    try:
+        state = source_state(root)
+        component_by_id = {
+            str(row["component_id"]): row
+            for row in load_jsonl(root / COMPONENT_CANDIDATES_PATH)
+        }
+        for row in document_rows(REVISED_COMPONENTS_R3_PATH) + document_rows(
+            ADDITION_CANDIDATES_R3_PATH
+        ):
+            component_by_id[str(row["component_id"])] = row
+        components = list(component_by_id.values())
+        evidence = build_generator_evidence(
+            state["profiles"],
+            components,
+            document_rows(REVISED_RULES_R3_PATH),
+            document_rows(REVISED_AB_R3_PATH),
+        )
+        if (
+            len(evidence["requests"]) != 40
+            or len(evidence["realizations"]) != 40
+            or len(evidence["pair_results"]) != 20
+            or not all(
+                row["implementation_changed"] for row in evidence["ablations"]
+            )
+            or not all(row["tamper_rejected"] for row in evidence["digest_tampers"])
+        ):
+            failures.append("generator_evidence_counts_or_tamper")
+
+        realization_by_request = {
+            str(row["request_id"]): row for row in evidence["realizations"]
+        }
+        for request in evidence["requests"]:
+            realization = realization_by_request[str(request["request_id"])]
+            for axis_row in realization["lane_axis_realizations"]:
+                pointer = str(axis_row["implementation_pointer"])
+                node: object = realization
+                for token in pointer.removeprefix("/").split("/"):
+                    if not isinstance(node, dict) or token not in node:
+                        failures.append("axis_pointer_not_resolvable")
+                        break
+                    node = node[token]
+                else:
+                    if not isinstance(node, dict) or node.get(
+                        "structural_output_digest"
+                    ) != axis_row["structural_output_digest"]:
+                        failures.append("axis_pointer_wrong_output")
+
+        base_request = copy.deepcopy(evidence["requests"][0])
+        axis = sorted(base_request["lane"]["axes"])[0]
+        unknown_axis = copy.deepcopy(base_request)
+        unknown_axis["lane"]["axes"][axis] = "UNREVIEWED_AXIS_VALUE"
+        unknown_axis["lane"]["axis_operator_parameters"][axis][
+            "parameter_value"
+        ] = "UNREVIEWED_AXIS_VALUE"
+        unknown_axis["request_digest"] = object_digest(
+            unknown_axis, "request_digest"
+        )
+        try:
+            realize_request(unknown_axis, component_by_id)
+        except Gate1ValidationError:
+            pass
+        else:
+            failures.append("unknown_axis_value_accepted")
+
+        truth_tamper = copy.deepcopy(base_request)
+        truth_tamper["typed_material"]["facts"][0]["fact_value_digest"] = "f" * 64
+        truth_tamper["typed_material"]["material_digest"] = object_digest(
+            truth_tamper["typed_material"], "material_digest"
+        )
+        truth_tamper["request_digest"] = object_digest(
+            truth_tamper, "request_digest"
+        )
+        try:
+            realize_request(truth_tamper, component_by_id)
+        except Gate1ValidationError:
+            pass
+        else:
+            failures.append("truth_tampered_material_accepted")
+
+        stripped_binding = copy.deepcopy(base_request)
+        non_axis_binding = next(
+            row
+            for row in stripped_binding["component_bindings"]
+            if row["component_role"]
+            not in {
+                "narrative_mechanism_operator",
+                "information_order_operator",
+                "visual_subject_operator",
+                "sound_subject_operator",
+                "rhythm_operator",
+                "ending_operator",
+            }
+            and (row["required_fact_slots"] or row["required_authorization_slots"])
+        )
+        non_axis_binding["required_fact_slots"] = []
+        non_axis_binding["fact_object_ids"] = []
+        non_axis_binding["required_authorization_slots"] = []
+        non_axis_binding["authorization_object_ids"] = []
+        stripped_binding["request_digest"] = object_digest(
+            stripped_binding, "request_digest"
+        )
+        try:
+            realize_request(stripped_binding, component_by_id)
+        except Gate1ValidationError:
+            pass
+        else:
+            failures.append("stripped_nonaxis_binding_accepted")
+    except (KeyError, StopIteration, TypeError, ValueError) as exc:
+        failures.append(f"generator_evidence_fixture:{exc}")
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "targeted-repair-r3",
+                "negative_case_count": len(mutations) + 3,
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -343,6 +541,7 @@ def main() -> int:
             "checkpoint",
             "targeted-repair",
             "targeted-repair-r2",
+            "targeted-repair-r3",
             "final",
         ),
         default="auto",
@@ -353,7 +552,11 @@ def main() -> int:
         if (ROOT / FINAL_IMPORT_SENTINEL).is_file():
             phase = "final"
         elif (ROOT / TARGETED_RESULT_R2_PATH).is_file():
-            phase = "targeted-repair-r2"
+            phase = (
+                "targeted-repair-r3"
+                if (ROOT / TARGETED_RESULT_R3_PATH).is_file()
+                else "targeted-repair-r2"
+            )
         else:
             phase = "checkpoint"
     if args.selftest:
@@ -363,6 +566,8 @@ def main() -> int:
             return targeted_repair_selftest(ROOT)
         if phase == "targeted-repair-r2":
             return targeted_repair_r2_selftest(ROOT)
+        if phase == "targeted-repair-r3":
+            return targeted_repair_r3_selftest(ROOT)
         return checkpoint_selftest(ROOT)
     if args.check:
         mismatches = check_outputs(ROOT, phase)
