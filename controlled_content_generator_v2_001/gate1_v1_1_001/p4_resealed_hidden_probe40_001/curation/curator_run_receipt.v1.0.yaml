@@ -1,0 +1,21 @@
+p4_resealed_curator_receipt:
+  schema_version: gate1-p4r-curator-receipt-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  curator_platform_agent_id: 019f6081-5025-7832-b63c-2885c94735a1
+  curator_identity_id: P4R-ISOLATED-HIDDEN-MATERIAL-CURATOR-001
+  curator_session_id: P4R-CURATOR-SESSION-001
+  curator_run_id: P4R-CURATOR-RUN-001
+  model_capability_id: gpt-5.6-sol
+  reasoning_effort: high
+  service_tier: priority
+  allowed_inputs:
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/contract/curator_allowed_input.v1.0.json
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/contract/curation_contract.v1.0.yaml
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/contract/canonical_route_input_contract.v1.0.yaml
+  allowed_input_sha256: 127d1513e0877c6201abf97919ebcdeb610ed11d959d66832d17ff9437530cf1
+  forbidden_material_access_count: 0
+  external_provider_requests: 0
+  positive_count: 20
+  anomaly_count: 20
+  receipt_digest: 381f844929117f04c0c74fabd6c3ae1223f413b7bfbffb0b05caccdcd28b7623
