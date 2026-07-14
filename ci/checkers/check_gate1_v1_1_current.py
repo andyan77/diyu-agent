@@ -657,18 +657,29 @@ def validate_p3_successor(root: Path, errors: list[dict[str, str]]) -> None:
         legacy_errors = validate_p3_current(root)
         recovery_valid = False
         if (root / P3_RECOVERY_TASK_ROOT).exists():
-            recovery_root = root / P3_RECOVERY_TASK_ROOT
-            if str(recovery_root) not in sys.path:
-                sys.path.insert(0, str(recovery_root))
-            from p3_recovery_guard import validate_p3_recovery
+            if (root / P4_RESEALED_TASK_ROOT).exists():
+                successor_root = root / P4_RESEALED_TASK_ROOT
+                if str(successor_root) not in sys.path:
+                    sys.path.insert(0, str(successor_root))
+                from p3_recovery_guard_current import validate_p3_recovery_current
 
-            recovery_valid = not validate_p3_recovery(root)
+                recovery_valid = not validate_p3_recovery_current(root)
+            else:
+                recovery_root = root / P3_RECOVERY_TASK_ROOT
+                if str(recovery_root) not in sys.path:
+                    sys.path.insert(0, str(recovery_root))
+                from p3_recovery_guard import validate_p3_recovery
+
+                recovery_valid = not validate_p3_recovery(root)
         for item in legacy_errors:
             if (
                 recovery_valid
                 and item.get("code") == "E_P3_OWNER"
                 and item.get("detail")
-                == "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER"
+                in {
+                    "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER",
+                    "GATE1_V11_P4_RESEALED_PENDING_OWNER",
+                }
             ):
                 continue
             errors.append(item)
@@ -686,19 +697,35 @@ def validate_p4_successor(root: Path, errors: list[dict[str, str]]) -> None:
         import p4_guard_current
 
         if (root / P3_RECOVERY_TASK_ROOT).exists():
-            recovery_root = root / P3_RECOVERY_TASK_ROOT
-            if str(recovery_root) not in sys.path:
-                sys.path.insert(0, str(recovery_root))
-            from p3_recovery_guard import validate_p3_recovery
+            if (root / P4_RESEALED_TASK_ROOT).exists():
+                successor_root = root / P4_RESEALED_TASK_ROOT
+                if str(successor_root) not in sys.path:
+                    sys.path.insert(0, str(successor_root))
+                from p3_recovery_guard_current import validate_p3_recovery_current
 
-            recovery_errors = validate_p3_recovery(root)
+                recovery_errors = validate_p3_recovery_current(root)
+                freeze = load_yaml(
+                    successor_root / "freeze/p4_resealed_tool_freeze.v1.0.yaml"
+                ).get("p4_resealed_tool_freeze")
+                expected_checker_sha = (
+                    freeze.get("tool_files", {}).get(CURRENT_CHECKER_PATH.as_posix())
+                    if isinstance(freeze, dict)
+                    else None
+                )
+            else:
+                recovery_root = root / P3_RECOVERY_TASK_ROOT
+                if str(recovery_root) not in sys.path:
+                    sys.path.insert(0, str(recovery_root))
+                from p3_recovery_guard import validate_p3_recovery
+
+                recovery_errors = validate_p3_recovery(root)
+                freeze = load_yaml(
+                    recovery_root / "freeze/p3_route_compiler_recovery_freeze.v1.0.yaml"
+                )
+                expected_checker_sha = freeze.get("current_checker_sha256")
             if recovery_errors:
                 errors.extend(recovery_errors)
                 return
-            freeze = load_yaml(
-                recovery_root / "freeze/p3_route_compiler_recovery_freeze.v1.0.yaml"
-            )
-            expected_checker_sha = freeze.get("current_checker_sha256")
             if (
                 not isinstance(expected_checker_sha, str)
                 or sha256_file(root / CURRENT_CHECKER_PATH) != expected_checker_sha
@@ -712,7 +739,10 @@ def validate_p4_successor(root: Path, errors: list[dict[str, str]]) -> None:
                 (root / P3_RECOVERY_TASK_ROOT).exists()
                 and item.get("code") == "E_P4_OWNER_EARLY_ADVANCE"
                 and item.get("detail")
-                == "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER"
+                in {
+                    "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER",
+                    "GATE1_V11_P4_RESEALED_PENDING_OWNER",
+                }
             ):
                 continue
             errors.append(item)
@@ -1407,6 +1437,55 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
         return
     if not isinstance(owner, dict):
         add_error(errors, "E_OWNER_POLICY", "root missing")
+        return
+    if (
+        owner.get("task_id") == P3_RECOVERY_TASK_ID
+        and owner.get("owner_id") == "GATE1_V11_P4_RESEALED_PENDING_OWNER"
+    ):
+        if (
+            owner.get("current_task_root") != P4_RESEALED_TASK_ROOT.as_posix()
+            or owner.get("current_checker") != CURRENT_CHECKER_PATH.as_posix()
+            or owner.get("result_state")
+            != "PASS_PENDING_FOUNDER_QUALIFICATION_DECISION"
+            or owner.get("p3_complete") is not True
+            or owner.get("p4_resealed_technical_gate_pass") is not True
+            or owner.get("coordinator_decision_required") is not True
+            or owner.get("generator_qualified") is not False
+            or owner.get("p5_allowed") is not False
+            or owner.get("owner_digest") != object_digest(owner, "owner_digest")
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p4 resealed pending binding")
+        predecessor = owner.get("predecessor")
+        if (
+            not isinstance(predecessor, dict)
+            or predecessor.get("owner_id")
+            != "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER"
+            or predecessor.get("task_id") != P3_RECOVERY_TASK_ID
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p4 resealed predecessor")
+        generator = owner.get("current_generator")
+        if (
+            not isinstance(generator, dict)
+            or generator.get("entrypoint")
+            != (P4_RESEALED_TASK_ROOT / "p4_resealed.py").as_posix()
+            or generator.get("route_contract")
+            != (P3_RECOVERY_TASK_ROOT / "route_contract.py").as_posix()
+            or generator.get("active_component_count") != 68
+            or generator.get("active_edge_count") != 85
+            or generator.get("active_control_rule_count") != 8
+            or generator.get("generator_core_changed") is not False
+            or generator.get("author_instruction_or_model_changed") is not False
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p4 resealed generator")
+        if owner.get("core_numbers") != {
+            "target_total": 300,
+            "reference_inventory": 120,
+            "historical_component_inventory": 86,
+            "all_unchanged": True,
+        }:
+            add_error(errors, "E_OWNER_POLICY", "p4 resealed core numbers")
+        if recursively_find_true(owner.get("readiness"), READY_KEYS):
+            add_error(errors, "E_READINESS", "p4 resealed owner")
         return
     if owner.get("task_id") == P3_RECOVERY_TASK_ID:
         if (
@@ -5492,15 +5571,28 @@ def validate(root: Path) -> list[dict[str, str]]:
     if (root / P4_TASK_ROOT).exists():
         validate_p4_successor(root, errors)
     if (root / P3_RECOVERY_TASK_ROOT).exists():
-        module_root = root / P3_RECOVERY_TASK_ROOT
-        if str(module_root) not in sys.path:
-            sys.path.insert(0, str(module_root))
-        try:
-            from p3_recovery_guard import validate_p3_recovery
+        if (root / P4_RESEALED_TASK_ROOT).exists():
+            module_root = root / P4_RESEALED_TASK_ROOT
+            if str(module_root) not in sys.path:
+                sys.path.insert(0, str(module_root))
+            try:
+                from p3_recovery_guard_current import validate_p3_recovery_current
+                from p4_resealed_guard import validate_p4_resealed
 
-            errors.extend(validate_p3_recovery(root))
-        except (ImportError, OSError, TypeError, ValueError) as exc:
-            add_error(errors, "E_P3R_GUARD_IMPORT", str(exc))
+                errors.extend(validate_p3_recovery_current(root))
+                errors.extend(validate_p4_resealed(root))
+            except (ImportError, OSError, TypeError, ValueError) as exc:
+                add_error(errors, "E_P4R_GUARD_IMPORT", str(exc))
+        else:
+            module_root = root / P3_RECOVERY_TASK_ROOT
+            if str(module_root) not in sys.path:
+                sys.path.insert(0, str(module_root))
+            try:
+                from p3_recovery_guard import validate_p3_recovery
+
+                errors.extend(validate_p3_recovery(root))
+            except (ImportError, OSError, TypeError, ValueError) as exc:
+                add_error(errors, "E_P3R_GUARD_IMPORT", str(exc))
     return errors
 
 
@@ -6246,12 +6338,26 @@ def selftest(root: Path) -> int:
             import p4_guard_current
 
             if (root / P3_RECOVERY_TASK_ROOT).exists():
-                freeze = load_yaml(
-                    root
-                    / P3_RECOVERY_TASK_ROOT
-                    / "freeze/p3_route_compiler_recovery_freeze.v1.0.yaml"
-                )
-                expected_checker_sha = freeze.get("current_checker_sha256")
+                if (root / P4_RESEALED_TASK_ROOT).exists():
+                    freeze = load_yaml(
+                        root
+                        / P4_RESEALED_TASK_ROOT
+                        / "freeze/p4_resealed_tool_freeze.v1.0.yaml"
+                    ).get("p4_resealed_tool_freeze")
+                    expected_checker_sha = (
+                        freeze.get("tool_files", {}).get(
+                            CURRENT_CHECKER_PATH.as_posix()
+                        )
+                        if isinstance(freeze, dict)
+                        else None
+                    )
+                else:
+                    freeze = load_yaml(
+                        root
+                        / P3_RECOVERY_TASK_ROOT
+                        / "freeze/p3_route_compiler_recovery_freeze.v1.0.yaml"
+                    )
+                    expected_checker_sha = freeze.get("current_checker_sha256")
                 if expected_checker_sha != sha256_file(root / CURRENT_CHECKER_PATH):
                     raise ValueError("E_P3R_CURRENT_CHECKER_BINDING")
                 p4_guard_current.CURRENT_CHECKER_COMPAT_SHA256 = expected_checker_sha
@@ -6266,7 +6372,10 @@ def selftest(root: Path) -> int:
                         if not (
                             item.get("code") == "E_P4_OWNER_EARLY_ADVANCE"
                             and item.get("detail")
-                            == "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER"
+                            in {
+                                "GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER",
+                                "GATE1_V11_P4_RESEALED_PENDING_OWNER",
+                            }
                         )
                     ]
 
@@ -6313,6 +6422,29 @@ def selftest(root: Path) -> int:
                     "actual": str(exc),
                 }
             )
+    if (root / P4_RESEALED_TASK_ROOT).exists():
+        successor_root = root / P4_RESEALED_TASK_ROOT
+        if str(successor_root) not in sys.path:
+            sys.path.insert(0, str(successor_root))
+        try:
+            from p4_resealed_guard import selftest as p4_resealed_selftest
+
+            if p4_resealed_selftest(root) != 0:
+                failures.append(
+                    {
+                        "case": "p4_resealed_negative_tamper_suite",
+                        "expected": "return 0",
+                        "actual": "nonzero",
+                    }
+                )
+        except (ImportError, OSError, TypeError, ValueError) as exc:
+            failures.append(
+                {
+                    "case": "p4_resealed_negative_tamper_suite",
+                    "expected": "import and return 0",
+                    "actual": str(exc),
+                }
+            )
     if failures:
         print(
             json.dumps(
@@ -6337,6 +6469,9 @@ def selftest(root: Path) -> int:
                 "p4_negative_tamper_suite_passed": (root / P4_TASK_ROOT).exists(),
                 "p3_recovery_negative_tamper_suite_passed": (
                     root / P3_RECOVERY_TASK_ROOT
+                ).exists(),
+                "p4_resealed_negative_tamper_suite_passed": (
+                    root / P4_RESEALED_TASK_ROOT
                 ).exists(),
             },
             ensure_ascii=False,

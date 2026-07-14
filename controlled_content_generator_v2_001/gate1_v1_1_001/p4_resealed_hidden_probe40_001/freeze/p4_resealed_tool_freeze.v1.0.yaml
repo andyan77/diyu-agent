@@ -1,0 +1,38 @@
+p4_resealed_tool_freeze:
+  schema_version: gate1-p4r-tool-freeze-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  prompt_revision: r0
+  p3_recovery_commit: 21fdd1f4a866368651703904e0a7cf1a3fcfdffd
+  p3_recovery_root_sha256: dbb0b7f20ce238b969291d36042d450dce31a1a526d960f0a471a4bbf91d8432
+  old_p4_tree: 404a77ec7f59e0ce639daddbcd3c8d658d9bed5b
+  tool_files:
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/p4_resealed.py: 0ee9c1e4d7f8d08a40a77cd83fc225fe8e0ff3f9b592a5543faaed53ebc85cdf
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/p4_resealed_guard.py: 94bf684140d72e6befdfe167ff136f3830065fc1bf8df3df6ea6ce768f6b8cbf
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/p3_recovery_guard_current.py: f567a21595eb5d365358b1c14e0c57d9f9fd9a5c4c4d9b7643a76a513cb3ebc7
+    ci/checkers/check_gate1_v1_1_current.py: b99d83cb8c232f7f95a59bcb015fff90f72beafacd757483155e08c49ea50a21
+  contract_files:
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/contract/curator_allowed_input.v1.0.json: 127d1513e0877c6201abf97919ebcdeb610ed11d959d66832d17ff9437530cf1
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/contract/curation_contract.v1.0.yaml: 8039f4b68547f06688378543d10275a441ed6121c2a7fac4851c14977569d37d
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/contract/review_contract.v1.0.yaml: 41a574eefebfdb748f2061e09f7d18b67a3b11d9f49976b540a8029207a60280
+  frozen_business_files:
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+    : 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+    : 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+    : de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+    : 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    : e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/controlled_author_instruction.v0.2.md
+    : 5962400130fd59ed8b94611cb4c2d46a9f10b3672041369325e3acf417b5a98e
+    controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/author_model_and_session.v0.2.yaml: 516bc60467bfe30991ea9228ff34b3c753d96410f74424ca5dbffc74d91283d3
+  hidden_material_absent: true
+  generator_qualified: false
+  p5_allowed: false
+  core_numbers:
+    '300': UNCHANGED
+    '120': UNCHANGED
+    '86': UNCHANGED
+  freeze_digest: d581669b8a25a1a7cb673fd086ec0bb5614116b15fc921f16dd0e6c0d8f9c990

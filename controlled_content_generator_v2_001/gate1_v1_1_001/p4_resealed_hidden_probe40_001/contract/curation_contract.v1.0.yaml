@@ -1,0 +1,35 @@
+p4_resealed_curation_contract:
+  schema_version: gate1-p4r-curation-contract-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  positive_count: 20
+  anomaly_count: 20
+  one_positive_and_anomaly_per_profile: true
+  variant_counts:
+    A1: 5
+    A2: 5
+    B1: 5
+    B2: 5
+  positive_schema: gate1-p4r-curated-positive-v1.0
+  route_input_schema: gate1-canonical-route-input-v1.0
+  route_gold_schema: gate1-p4r-anomaly-route-gold-v1.0
+  namespace: P4R_SYNTHETIC_HIDDEN_QUALIFICATION
+  positive_required_semantic_kinds:
+  - setting
+  - actor
+  - object
+  - observation
+  - action
+  - result
+  - visual
+  - sound
+  - boundary
+  newness:
+    new_case_ids_and_scenarios: true
+    new_fact_values_and_key_combinations: true
+    historical_case_or_gold_rewrite_forbidden: true
+    normalized_near_duplicate_threshold: 0.82
+  forbidden_curator_inputs:
+  - P3 case text, gold, output, or review
+  - old P4 case text, gold, output, or review
+  - compiler implementation or actual route results
+  contract_digest: 83367ff797fb6da58b66d8403cf5ae1b203ecf57a9688208492370079321229f
