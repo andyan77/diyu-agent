@@ -1,0 +1,109 @@
+schema_version: v0.1
+manifest_kind: P2_SECONDARY_INDEPENDENT_TARGETED_REVIEW_RUN
+task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+prompt_revision: r4
+review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+review_run_id: P2-SECONDARY-R4-RUN-20260713-87D3CA8
+repository: /home/diyu/笛语领域通用数据库
+reviewed_commit: 87d3ca89ba9cbb743ee82af105cf831bbd8e2dab
+packet:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r4.jsonl
+  sha256: 95c2a44e8d473844ada77d242ede0299a6b4db63b2699dfc633af0704d2c7e72
+  expected_item_count: 27
+  actual_item_count: 27
+  packet_order_preserved: true
+  all_review_subjects_read_and_traced: true
+frozen_standard:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+  sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+committed_runtime_inputs:
+  generator_core:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r4.py
+    sha256: b0a1a4f8fe77f688db500b4ca7b60f74a08b22d900c75087709bd27d128b0100
+  axis_semantics:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_axis_semantics_r4.py
+    sha256: 146d98dff4141d4c6a27868e33bf283ad4da74066ae0325c7f4d355b49f69291
+  evidence_harness:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_documents_r4.py
+    sha256: 97f5ff3f6a4a7ae808d81123205c7acad35436123af8dd1aacc3a3e7893077c0
+review_counts:
+  records: 27
+  decisions:
+    APPROVE: 6
+    REPAIR: 21
+    REJECT: 0
+  defect_severity:
+    NONE: 6
+    OBSERVATION: 0
+    MINOR: 0
+    MAJOR: 21
+    FATAL: 0
+  hard_veto_count: 0
+execution_evidence:
+  positive_lane_realizations: 40
+  path_axis_contracts: 120
+  known_wrong_lane_enum_attacks_rejected: 240
+  exact_component_bindings_traced: 205
+  lane_component_bindings_traced: 410
+  typed_objects_traced: 829
+  component_digest_attacks_rejected: 410
+  required_fact_binding_attacks_rejected: 410
+  required_authorization_binding_attacks_rejected: 410
+  profile_body_or_guard_attacks_accepted_blocking: 80
+  path_profile_identity_attacks_accepted_blocking: 40
+  session_or_visibility_attacks_accepted_blocking: 120
+  control_hard_guard_audience_contract_attacks_accepted_blocking: 120
+  legacy_r3_authoring_calls_observed: 0
+  external_provider_calls: 0
+outputs:
+  records_jsonl:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r4/secondary/records.jsonl
+    sha256: 7facaed22e59ddc0c62c894de4ee8b7b6451c2ffc8f388e1264298aeb6ef5baa
+    record_count: 27
+    line_count: 27
+  report_md:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r4/secondary/report.md
+    sha256: 4e2680f218a9b9c1cfb62c0d779c9a7c74defedbe5be32d627d1773814d43c65
+  run_manifest_yaml:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r4/secondary/run_manifest.yaml
+    sha256_scope: SHA-256 of canonical JSON for the parsed manifest excluding outputs.run_manifest_yaml.sha256
+    sha256: b1bb5331b1220b22ddd188d9640d92b678e678a0b0d009c7001998b78e439096
+  output_file_count: 3
+repository_write_audit:
+  commit_object_read_mode: git show <reviewed_commit>:<path>
+  initial_head: 87d3ca89ba9cbb743ee82af105cf831bbd8e2dab
+  final_head: 87d3ca89ba9cbb743ee82af105cf831bbd8e2dab
+  reviewer_repository_write_count: 0
+  reviewer_repository_paths_written: []
+  output_root_is_outside_repository: true
+  initial_worktree_status_sha256: 66b4596049ef115fb194eb5b4b550d96b3fd73eccbe08f88d4f6e0d80c96af4f
+  final_worktree_status_sha256: 53baba30dbcf407a6306790e8220c49aac14156726febb99949bd2f1ce1cfdd1
+  initial_preexisting_modified_paths:
+  - ci/checkers/check_gate1_v1_1_current.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_documents_r4.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+  final_preexisting_modified_paths:
+  - ci/checkers/check_gate1_v1_1_current.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+  concurrent_or_preexisting_worktree_change_observed: true
+  worktree_change_attribution: NOT_REVIEWER; p2_final_documents_r4.py returned to committed bytes during the review
+  exact_commit_review_unaffected: true
+review_isolation:
+  primary_review_output_content_read: false
+  sibling_review_output_content_read: false
+  sibling_review_content_visibility: NONE
+  decisions_copied_from_other_reviewer: false
+  component_author_or_executor_identity_reused: false
+activation_and_authority:
+  activation_performed: false
+  readiness_transition_performed: false
+  audience_content_generated: false
+  real_brand_fact_introduced: false
+  provider_authority_introduced: false
+  count_300_incremented: false
+signed_attestation: SIGNED_ATTESTATION|P2-SECONDARY-PROVENANCE-REVIEWER-B|019f5dce-9436-7e03-be80-220461f6107d|P2-SECONDARY-R4-RUN-20260713-87D3CA8|I
+  independently read and traced all 27 committed r4 packet subjects; I used no sibling review output, made no repository write,
+  made no activation or readiness transition, and recorded the verdicts without a target approval count.
+signed_attestation_sha256: da45a5fcc27288f7321581767a476d373fc4a8cd5f8241a6fac3eb0e3f265eba

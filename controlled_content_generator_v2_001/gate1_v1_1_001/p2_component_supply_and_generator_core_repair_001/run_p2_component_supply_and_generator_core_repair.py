@@ -30,6 +30,7 @@ from p2_component_model import (
 )
 from p2_final_documents import build_generator_evidence
 from p2_final_documents_r4 import build_generator_evidence_r4
+from p2_final_documents_r5 import build_generator_evidence_r5
 from p2_generator_core import Gate1ValidationError, realize_request
 from p2_final_materializer import (
     FINAL_IMPORT_SENTINEL,
@@ -67,6 +68,15 @@ from p2_targeted_repair_r4 import (
     build_targeted_repair_r4_documents,
     validate_targeted_repair_r4_documents,
 )
+from p2_targeted_repair_r5 import (
+    ADDITION_CANDIDATES_R5_PATH,
+    REVISED_AB_R5_PATH,
+    REVISED_COMPONENTS_R5_PATH,
+    REVISED_RULES_R5_PATH,
+    TARGETED_RESULT_R5_PATH,
+    build_targeted_repair_r5_documents,
+    validate_targeted_repair_r5_documents,
+)
 from p2_generator_core_r4 import (
     Gate1ValidationError as Gate1ValidationErrorR4,
     realize_request as realize_request_r4,
@@ -98,6 +108,10 @@ def selected_documents(root: Path, phase: str) -> dict[Path, bytes]:
     if phase == "targeted-repair-r4":
         documents = build_targeted_repair_r4_documents(root)
         validate_targeted_repair_r4_documents(documents)
+        return documents
+    if phase == "targeted-repair-r5":
+        documents = build_targeted_repair_r5_documents(root)
+        validate_targeted_repair_r5_documents(documents)
         return documents
     documents = build_documents(root)
     validate_documents(documents)
@@ -677,6 +691,129 @@ def targeted_repair_r4_selftest(root: Path) -> int:
     return 0 if not failures else 1
 
 
+def targeted_repair_r5_selftest(root: Path) -> int:
+    first = build_targeted_repair_r5_documents(root)
+    second = build_targeted_repair_r5_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_targeted_repair_r5_documents(first)
+    except ValueError as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "early_p3",
+            TARGETED_RESULT_R5_PATH,
+            "p3_allowed: false",
+            "p3_allowed: true",
+        ),
+        (
+            "operator_owns_profile_payload",
+            ADDITION_CANDIDATES_R5_PATH,
+            '"profile_or_lane_payload_in_component_allowed":false',
+            '"profile_or_lane_payload_in_component_allowed":true',
+        ),
+        (
+            "trusted_profile_stale_digest",
+            REVISED_AB_R5_PATH,
+            '"founder_hard_guards":[',
+            '"founder_hard_guards_tampered":[',
+        ),
+        (
+            "component_output_contract_removed",
+            REVISED_AB_R5_PATH,
+            '"component_realization_contracts":[',
+            '"component_realization_contracts_removed":[',
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_REPAIR_R5_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_targeted_repair_r5_documents(mutated)
+        except (KeyError, TypeError, ValueError):
+            continue
+        failures.append(name)
+
+    def document_rows(path: Path) -> list[dict[str, object]]:
+        return [
+            json.loads(line)
+            for line in first[path].decode("utf-8").splitlines()
+            if line
+        ]
+
+    try:
+        state = source_state(root)
+        component_by_id = {
+            str(row["component_id"]): row
+            for row in load_jsonl(root / COMPONENT_CANDIDATES_PATH)
+        }
+        for row in document_rows(REVISED_COMPONENTS_R5_PATH) + document_rows(
+            ADDITION_CANDIDATES_R5_PATH
+        ):
+            component_by_id[str(row["component_id"])] = row
+        evidence = build_generator_evidence_r5(
+            state["profiles"],
+            list(component_by_id.values()),
+            document_rows(REVISED_RULES_R5_PATH),
+            document_rows(REVISED_AB_R5_PATH),
+        )
+        if (
+            len(evidence["requests"]) != 40
+            or len(evidence["realizations"]) != 40
+            or len(evidence["pair_results"]) != 20
+            or len(evidence["axis_body_pairs"]) != 120
+            or len(evidence["pointer_cases"]) != 410
+            or len(evidence["ablations"]) != 410
+            or len(evidence["path_program_tampers"]) != 120
+            or len(evidence["trust_contract_tampers"]) != 180
+            or not all(
+                row["pointer_resolved"] and row["digest_matches"]
+                for row in evidence["pointer_cases"]
+            )
+            or not all(
+                row["required_output_dependency_preserved"]
+                for row in evidence["ablations"]
+            )
+            or not all(
+                row["direct_effect_changed"] and row["approved_request_rejected"]
+                for row in evidence["observable_effect_tampers"]
+            )
+            or not all(
+                row["substitution_rejected"]
+                for row in evidence["path_program_tampers"]
+            )
+            or not all(
+                row["tamper_rejected"]
+                for row in evidence["trust_contract_tampers"]
+            )
+            or not all(
+                row["all_six_structural_bodies_differ"]
+                and row["ending_action_topology_differs"]
+                for row in evidence["pair_results"]
+            )
+        ):
+            failures.append("generator_evidence_counts_or_semantics")
+    except (KeyError, StopIteration, TypeError, ValueError) as exc:
+        failures.append(f"generator_evidence_fixture:{exc}")
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "targeted-repair-r5",
+                "negative_case_count": len(mutations) + 710,
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -690,6 +827,7 @@ def main() -> int:
             "targeted-repair-r2",
             "targeted-repair-r3",
             "targeted-repair-r4",
+            "targeted-repair-r5",
             "final",
         ),
         default="auto",
@@ -700,7 +838,9 @@ def main() -> int:
         if (ROOT / FINAL_IMPORT_SENTINEL).is_file():
             phase = "final"
         elif (ROOT / TARGETED_RESULT_R2_PATH).is_file():
-            if (ROOT / TARGETED_RESULT_R4_PATH).is_file():
+            if (ROOT / TARGETED_RESULT_R5_PATH).is_file():
+                phase = "targeted-repair-r5"
+            elif (ROOT / TARGETED_RESULT_R4_PATH).is_file():
                 phase = "targeted-repair-r4"
             elif (ROOT / TARGETED_RESULT_R3_PATH).is_file():
                 phase = "targeted-repair-r3"
@@ -719,6 +859,8 @@ def main() -> int:
             return targeted_repair_r3_selftest(ROOT)
         if phase == "targeted-repair-r4":
             return targeted_repair_r4_selftest(ROOT)
+        if phase == "targeted-repair-r5":
+            return targeted_repair_r5_selftest(ROOT)
         return checkpoint_selftest(ROOT)
     if args.check:
         mismatches = check_outputs(ROOT, phase)
