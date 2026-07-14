@@ -23,6 +23,17 @@ from p2_component_model import (
     canonical_json,
     require,
 )
+from p2_final_materializer import (
+    FINAL_RESULT_PATH,
+    PRIMARY_IMPORT_DIR,
+    build_final_documents,
+    validate_final_documents,
+)
+from p2_targeted_repair import (
+    TARGETED_RESULT_PATH,
+    build_targeted_repair_documents,
+    validate_targeted_repair_documents,
+)
 
 
 if not __debug__:
@@ -30,9 +41,22 @@ if not __debug__:
     raise SystemExit(2)
 
 
-def write_outputs(root: Path) -> list[str]:
+def selected_documents(root: Path, phase: str) -> dict[Path, bytes]:
+    if phase == "final":
+        documents = build_final_documents(root)
+        validate_final_documents(documents)
+        return documents
+    if phase == "targeted-repair":
+        documents = build_targeted_repair_documents(root)
+        validate_targeted_repair_documents(documents)
+        return documents
     documents = build_documents(root)
     validate_documents(documents)
+    return documents
+
+
+def write_outputs(root: Path, phase: str) -> list[str]:
+    documents = selected_documents(root, phase)
     written: list[str] = []
     for relative_path, content in documents.items():
         require(
@@ -49,9 +73,8 @@ def write_outputs(root: Path) -> list[str]:
     return written
 
 
-def check_outputs(root: Path) -> list[str]:
-    documents = build_documents(root)
-    validate_documents(documents)
+def check_outputs(root: Path, phase: str) -> list[str]:
+    documents = selected_documents(root, phase)
     return [
         path.as_posix()
         for path, content in documents.items()
@@ -59,7 +82,7 @@ def check_outputs(root: Path) -> list[str]:
     ]
 
 
-def selftest(root: Path) -> int:
+def checkpoint_selftest(root: Path) -> int:
     first = build_documents(root)
     second = build_documents(root)
     failures: list[str] = []
@@ -139,28 +162,146 @@ def selftest(root: Path) -> int:
     return 0 if not failures else 1
 
 
+def final_selftest(root: Path) -> int:
+    first = build_final_documents(root)
+    second = build_final_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_final_documents(first)
+    except ValueError as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "result_readiness",
+            FINAL_RESULT_PATH,
+            "generator_qualified: false",
+            "generator_qualified: true",
+        ),
+        (
+            "result_p3_without_completion",
+            FINAL_RESULT_PATH,
+            "p2_complete: true",
+            "p2_complete: false",
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_FINAL_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_final_documents(mutated)
+        except (ValueError, KeyError, TypeError):
+            continue
+        failures.append(name)
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "final",
+                "negative_case_count": len(mutations),
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
+def targeted_repair_selftest(root: Path) -> int:
+    first = build_targeted_repair_documents(root)
+    second = build_targeted_repair_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_targeted_repair_documents(first)
+    except ValueError as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "early_p3",
+            TARGETED_RESULT_PATH,
+            "p3_allowed: false",
+            "p3_allowed: true",
+        ),
+        (
+            "number_target",
+            TARGETED_RESULT_PATH,
+            "historical_component_inventory: 86",
+            "historical_component_inventory: 87",
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_REPAIR_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_targeted_repair_documents(mutated)
+        except (ValueError, KeyError, TypeError):
+            continue
+        failures.append(name)
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "targeted-repair",
+                "negative_case_count": len(mutations),
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--selftest", action="store_true")
+    parser.add_argument(
+        "--phase",
+        choices=("auto", "checkpoint", "targeted-repair", "final"),
+        default="auto",
+    )
     args = parser.parse_args()
+    phase = args.phase
+    if phase == "auto":
+        phase = "final" if (ROOT / PRIMARY_IMPORT_DIR).is_dir() else "checkpoint"
     if args.selftest:
-        return selftest(ROOT)
+        if phase == "final":
+            return final_selftest(ROOT)
+        if phase == "targeted-repair":
+            return targeted_repair_selftest(ROOT)
+        return checkpoint_selftest(ROOT)
     if args.check:
-        mismatches = check_outputs(ROOT)
+        mismatches = check_outputs(ROOT, phase)
         sys.stdout.write(
             canonical_json(
                 {
                     "status": "PASS" if not mismatches else "FAIL",
+                    "phase": phase,
                     "mismatches": mismatches,
                 }
             )
             + "\n"
         )
         return 0 if not mismatches else 1
-    written = write_outputs(ROOT)
+    written = write_outputs(ROOT, phase)
     sys.stdout.write(
-        canonical_json({"status": "MATERIALIZED", "written": written}) + "\n"
+        canonical_json(
+            {
+                "status": "MATERIALIZED",
+                "phase": phase,
+                "written": written,
+            }
+        )
+        + "\n"
     )
     return 0
 

@@ -1,0 +1,19 @@
+targeted_repair_review_job:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  checkpoint_state: PENDING_TARGETED_TWO_REVIEW
+  review_packet_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r1.jsonl
+  review_packet_sha256: 5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50
+  packet_item_count: 141
+  packet_item_counts:
+    REVISED_OR_NECESSARY_COMPONENT: 28
+    REVISED_CONTROL_RULE_SEPARATION: 8
+    REVISED_COMPONENT_CP_EDGE: 85
+    REVISED_AB_STRUCTURAL_PATH_CAPABILITY: 20
+  reviewer_policy:
+    reuse_original_identity_isolated_primary_and_secondary_reviewers: true
+    review_each_revised_object_from_actual_payload: true
+    changed_components_edges_supply_and_paths_reviewed_together: true
+    self_approval_allowed: false
+  activation_before_matching_approvals_allowed: false
+  review_job_digest: 85b50f4e09cb8d1a53359c3beabba99d502653b93357f12d5828b59ad4fda254
