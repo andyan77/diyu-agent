@@ -123,7 +123,10 @@ def validate_record_score(record: dict[str, Any]) -> None:
         require(total >= 90, "E_APPROVAL_GRADE", item_id)
         require(severity in {"NONE", "OBSERVATION"}, "E_APPROVAL_DEFECT", item_id)
         require(not vetoes, "E_APPROVAL_VETO", item_id)
-        if record.get("object_type") == "PROPOSED_ACTIVE_COMPONENT":
+        if record.get("object_type") in {
+            "PROPOSED_ACTIVE_COMPONENT",
+            "REVISED_OR_NECESSARY_COMPONENT",
+        }:
             require(
                 breakdown["semantic_atomicity_15"] >= 13,
                 "E_COMPONENT_ATOMICITY",
@@ -148,8 +151,12 @@ def validate_review_records(
     records: list[dict[str, Any]],
     packet: list[dict[str, Any]],
     role: str,
+    *,
+    reviewed_commit: str = REVIEWED_COMMIT,
+    packet_sha256: str = PACKET_SHA256,
+    prompt_revision: str = "r0",
 ) -> dict[str, Any]:
-    require(len(records) == len(packet) == 244, "E_REVIEW_COUNT", role)
+    require(len(records) == len(packet), "E_REVIEW_COUNT", role)
     identity_values: set[str] = set()
     session_values: set[str] = set()
     run_values: set[str] = set()
@@ -158,13 +165,19 @@ def validate_review_records(
         item_id = str(packet_item.get("packet_item_id"))
         require(record.get("schema_version") == "v0.1", "E_REVIEW_SCHEMA", item_id)
         require(record.get("task_id") == TASK_ID, "E_REVIEW_TASK", item_id)
-        require(record.get("prompt_revision") == "r0", "E_REVIEW_REVISION", item_id)
+        require(
+            record.get("prompt_revision") == prompt_revision,
+            "E_REVIEW_REVISION",
+            item_id,
+        )
         require(record.get("review_role") == role, "E_REVIEW_ROLE", item_id)
         require(
-            record.get("reviewed_commit") == REVIEWED_COMMIT, "E_REVIEW_COMMIT", item_id
+            record.get("reviewed_commit") == reviewed_commit,
+            "E_REVIEW_COMMIT",
+            item_id,
         )
         require(
-            record.get("review_packet_sha256") == PACKET_SHA256,
+            record.get("review_packet_sha256") == packet_sha256,
             "E_REVIEW_PACKET_HASH",
             item_id,
         )
@@ -203,6 +216,10 @@ def load_review_directory(
     review_dir: Path,
     packet: list[dict[str, Any]],
     role: str,
+    *,
+    reviewed_commit: str = REVIEWED_COMMIT,
+    packet_sha256: str = PACKET_SHA256,
+    prompt_revision: str = "r0",
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     records_path = review_dir / "records.jsonl"
     report_path = review_dir / "report.md"
@@ -210,7 +227,14 @@ def load_review_directory(
     for path in (records_path, report_path, manifest_path):
         require(path.is_file(), "E_REVIEW_FILE_MISSING", str(path))
     records = read_jsonl(records_path)
-    summary = validate_review_records(records, packet, role)
+    summary = validate_review_records(
+        records,
+        packet,
+        role,
+        reviewed_commit=reviewed_commit,
+        packet_sha256=packet_sha256,
+        prompt_revision=prompt_revision,
+    )
     manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
     require(isinstance(manifest, dict), "E_REVIEW_MANIFEST", role)
     manifest_text = canonical_json(manifest)
@@ -218,8 +242,8 @@ def load_review_directory(
         summary["reviewer_identity_id"],
         summary["reviewer_instance_or_session_id"],
         summary["review_run_id"],
-        REVIEWED_COMMIT,
-        PACKET_SHA256,
+        reviewed_commit,
+        packet_sha256,
     ):
         require(expected in manifest_text, "E_REVIEW_MANIFEST_BINDING", str(expected))
     report_text = report_path.read_text(encoding="utf-8")

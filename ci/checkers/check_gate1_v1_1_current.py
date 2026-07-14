@@ -127,6 +127,80 @@ P2_COMPAT_PATH = (
     P2_TASK_ROOT / "compatibility/p1b_successor_compatibility_receipt.v0.1.yaml"
 )
 P2_RESULT_PATH = P2_TASK_ROOT / "result/p2_component_review_checkpoint_result.v0.1.yaml"
+P2_TARGET_REVISED_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/revised_component_candidates.r1.jsonl"
+)
+P2_TARGET_ADDITIONS_PATH = (
+    P2_TASK_ROOT / "component/necessary_addition_candidates.r1.jsonl"
+)
+P2_TARGET_RULES_PATH = P2_TASK_ROOT / "component/revised_control_rules.r1.jsonl"
+P2_TARGET_EDGES_PATH = P2_TASK_ROOT / "component/final_edge_candidates.r1.jsonl"
+P2_TARGET_AB_PATH = P2_TASK_ROOT / "ab/revised_ab_path_candidates.r1.jsonl"
+P2_TARGET_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/targeted_repair_review_packet.r1.jsonl"
+)
+P2_INITIAL_PRIMARY_DIR = P2_TASK_ROOT / "imports/initial_review/primary"
+P2_INITIAL_SECONDARY_DIR = P2_TASK_ROOT / "imports/initial_review/secondary"
+P2_INITIAL_ADJUDICATION_DIR = P2_TASK_ROOT / "imports/initial_review/adjudication"
+P2_TARGET_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r1/primary"
+P2_TARGET_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r1/secondary"
+P2_IMPORT_MANIFEST_PATH = (
+    P2_TASK_ROOT / "imports/independent_review_import_manifest.v0.1.yaml"
+)
+P2_INITIAL_COMBINED_PATH = P2_TASK_ROOT / "review/combined_review_records.v0.1.jsonl"
+P2_TARGET_COMBINED_PATH = (
+    P2_TASK_ROOT / "review/targeted_r1_combined_review_records.v0.1.jsonl"
+)
+P2_REVIEW_CLOSEOUT_PATH = (
+    P2_TASK_ROOT / "review/independent_component_review_closeout.v0.1.yaml"
+)
+P2_ACTIVE_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/active_gate1_components.v0.1.jsonl"
+)
+P2_ACTIVE_RULES_PATH = P2_TASK_ROOT / "component/active_control_rules.v0.1.jsonl"
+P2_ACTIVE_EDGES_PATH = P2_TASK_ROOT / "component/active_gate1_edges.v0.1.jsonl"
+P2_APPROVED_SUPPLY_PATH = (
+    P2_TASK_ROOT / "component/approved_component_supply_matrix.v0.1.yaml"
+)
+P2_ACTIVE_AB_PATH = P2_TASK_ROOT / "ab/active_ab_structural_paths.v0.1.jsonl"
+P2_GENERATOR_CONTRACT_PATH = (
+    P2_TASK_ROOT / "generator/gate1_generator_contract.v0.1.yaml"
+)
+P2_GENERATOR_REGISTRY_PATH = (
+    P2_TASK_ROOT / "generator/active_gate1_generator_registry.v0.1.yaml"
+)
+P2_AUTHOR_REQUESTS_PATH = P2_TASK_ROOT / "generator/typed_author_requests.v0.1.jsonl"
+P2_REALIZATIONS_PATH = (
+    P2_TASK_ROOT / "generator/component_realization_results.v0.1.jsonl"
+)
+P2_PAIR_RESULTS_PATH = P2_TASK_ROOT / "generator/ab_pair_results.v0.1.jsonl"
+P2_ABLATION_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/component_ablation_results.v0.1.jsonl"
+)
+P2_TAMPER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/component_digest_tamper_results.v0.1.jsonl"
+)
+P2_ROUTE_ACTUALS_PATH = P2_TASK_ROOT / "generator/route_actuals.v0.1.jsonl"
+P2_ROUTE_COMPARISONS_PATH = (
+    P2_TASK_ROOT / "generator/route_comparisons.v0.1.jsonl"
+)
+P2_PROVIDER_AUDIT_PATH = (
+    P2_TASK_ROOT / "generator/external_provider_exit_audit.v0.1.yaml"
+)
+P2_FINAL_COMPAT_PATH = (
+    P2_TASK_ROOT / "compatibility/p2_final_current_checker_receipt.v0.1.yaml"
+)
+P2_FINAL_RESULT_PATH = P2_TASK_ROOT / "result/p2_final_result.v0.1.yaml"
+P2_TARGET_REVIEWED_COMMIT = "6d7aa877a12867ee9a73e50a8e292ef4a631d7a9"
+P2_INITIAL_REVIEW_PACKET_SHA256 = (
+    "67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095"
+)
+P2_TARGET_REVIEW_PACKET_SHA256 = (
+    "5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50"
+)
+P2_CHECKPOINT_CURRENT_CHECKER_SHA256 = (
+    "2aec6f38dd6d64118506ad998c504e950eeaae34fc97b718ab285e49edc035bd"
+)
 
 CLEAN_120_PATH = Path(
     "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/"
@@ -1052,6 +1126,47 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
         add_error(errors, "E_OWNER_POLICY", "root missing")
         return
     if owner.get("task_id") == P2_TASK_ID:
+        if owner.get("owner_id") == "GATE1_V11_P2_FINAL_OWNER":
+            if (
+                owner.get("current_task_root") != P2_TASK_ROOT.as_posix()
+                or owner.get("current_checker") != CURRENT_CHECKER_PATH.as_posix()
+                or owner.get("result_state") != "PASS_TO_P3_OPEN_PROBE"
+                or owner.get("p2_complete") is not True
+                or owner.get("p3_allowed") is not True
+                or owner.get("owner_digest") != object_digest(owner, "owner_digest")
+            ):
+                add_error(errors, "E_OWNER_POLICY", "p2 final task binding")
+            predecessor = owner.get("predecessor")
+            if (
+                not isinstance(predecessor, dict)
+                or predecessor.get("owner_id")
+                != "GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER"
+                or predecessor.get("reviewed_checkpoint_commit")
+                != "c37a894930025aac99db18a055d5a79294fa89dc"
+                or predecessor.get("review_packet_sha256")
+                != P2_INITIAL_REVIEW_PACKET_SHA256
+            ):
+                add_error(errors, "E_OWNER_POLICY", "p2 final predecessor")
+            generator = owner.get("current_generator")
+            if (
+                not isinstance(generator, dict)
+                or generator.get("entrypoint") != P2_MATERIALIZER_PATH.as_posix()
+                or generator.get("active_component_count") != 49
+                or generator.get("active_edge_count") != 85
+                or generator.get("active_control_rule_count") != 8
+                or generator.get("historical_generator_entrypoints_consumed") != []
+            ):
+                add_error(errors, "E_OWNER_POLICY", "p2 final generator")
+            if owner.get("core_numbers") != {
+                "target_total": 300,
+                "reference_inventory": 120,
+                "historical_component_inventory": 86,
+                "all_unchanged": True,
+            }:
+                add_error(errors, "E_OWNER_POLICY", "p2 final core numbers")
+            if recursively_find_true(owner.get("readiness"), READY_KEYS):
+                add_error(errors, "E_READINESS", "p2 final owner")
+            return
         expected = {
             "owner_id": "GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER",
             "baseline_commit": P2_BASELINE_COMMIT,
@@ -2136,7 +2251,7 @@ def validate_p2(root: Path, errors: list[dict[str, str]]) -> None:
             or current_checker.get("sha256_before")
             != P1B_CURRENT_GATE1_CHECKER_AS_BUILT_SHA256
             or current_checker.get("sha256_after")
-            != sha256_file(root / CURRENT_CHECKER_PATH)
+            != P2_CHECKPOINT_CURRENT_CHECKER_SHA256
             or current_checker.get("recursive_checker_chain") is not False
             or compatibility.get("shared_ledger_modified") is not False
             or compatibility.get("readiness_changed") is not False
@@ -2178,9 +2293,875 @@ def validate_p2(root: Path, errors: list[dict[str, str]]) -> None:
         add_error(errors, "E_P2_RESULT", "checkpoint must remain closed")
 
 
+def p2_signed_review(
+    root: Path,
+    review_dir: Path,
+    packet: list[dict[str, Any]],
+    role: str,
+    reviewed_commit: str,
+    packet_sha256: str,
+    prompt_revision: str,
+    errors: list[dict[str, str]],
+) -> tuple[list[dict[str, Any]], dict[str, str]]:
+    records_path = review_dir / "records.jsonl"
+    report_path = review_dir / "report.md"
+    manifest_path = review_dir / "run_manifest.yaml"
+    try:
+        records = [row for row, _ in read_jsonl(root / records_path)]
+        report = (root / report_path).read_text(encoding="utf-8")
+        manifest = load_yaml(root / manifest_path)
+    except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        add_error(errors, "E_P2_SIGNED_REVIEW", f"{review_dir}:{exc}")
+        return [], {}
+    identities: set[str] = set()
+    sessions: set[str] = set()
+    runs: set[str] = set()
+    score_maxima = {
+        "source_parent_evidence_15": 15,
+        "semantic_atomicity_15": 15,
+        "parameterization_composability_20": 20,
+        "applicability_compatibility_missing_boundary_15": 15,
+        "cross_product_reuse_5": 5,
+        "nonduplicate_information_gain_10": 10,
+        "type_specific_quality_20": 20,
+    }
+    if len(records) != len(packet):
+        add_error(errors, "E_P2_SIGNED_REVIEW_COUNT", review_dir.as_posix())
+    for record, packet_item in zip(records, packet, strict=False):
+        item_id = str(packet_item.get("packet_item_id"))
+        breakdown = record.get("score_breakdown")
+        score_valid = isinstance(breakdown, dict) and all(
+            isinstance(breakdown.get(key), int)
+            and 0 <= breakdown[key] <= maximum
+            for key, maximum in score_maxima.items()
+        )
+        total = (
+            sum(int(breakdown[key]) for key in score_maxima) if score_valid else -1
+        )
+        common = (
+            sum(
+                int(breakdown[key])
+                for key in score_maxima
+                if key != "type_specific_quality_20"
+            )
+            if score_valid
+            else -1
+        )
+        type_score = int(breakdown["type_specific_quality_20"]) if score_valid else -1
+        grade = "A" if total >= 90 else "B" if total >= 80 else "C" if total >= 70 else "D"
+        decision = record.get("decision")
+        vetoes = record.get("hard_veto_ids")
+        severity = record.get("defect_severity")
+        decision_valid = (
+            decision in {"APPROVE", "REPAIR", "REJECT"}
+            and isinstance(vetoes, list)
+            and severity in {"NONE", "OBSERVATION", "MINOR", "MAJOR", "FATAL"}
+            and (not vetoes or decision == "REJECT")
+            and (severity not in {"MAJOR", "FATAL"} or decision != "APPROVE")
+            and (decision != "APPROVE" or total >= 90)
+            and (grade != "B" or decision == "REPAIR")
+        )
+        if decision == "APPROVE" and record.get("object_type") in {
+            "PROPOSED_ACTIVE_COMPONENT",
+            "REVISED_OR_NECESSARY_COMPONENT",
+        }:
+            decision_valid &= (
+                breakdown["semantic_atomicity_15"] >= 13
+                and breakdown["parameterization_composability_20"] >= 17
+                and breakdown["applicability_compatibility_missing_boundary_15"]
+                >= 13
+                and type_score >= 17
+            )
+        if (
+            record.get("schema_version") != "v0.1"
+            or record.get("task_id") != P2_TASK_ID
+            or record.get("prompt_revision") != prompt_revision
+            or record.get("review_role") != role
+            or record.get("reviewed_commit") != reviewed_commit
+            or record.get("review_packet_sha256") != packet_sha256
+            or record.get("packet_item_id") != item_id
+            or record.get("object_type") != packet_item.get("object_type")
+            or record.get("record_digest") != object_digest(record, "record_digest")
+            or not score_valid
+            or record.get("common_score_80") != common
+            or record.get("type_score_20") != type_score
+            or record.get("total_score_100") != total
+            or record.get("grade") != grade
+            or not decision_valid
+            or not isinstance(record.get("findings"), list)
+            or not isinstance(record.get("rationale"), str)
+        ):
+            add_error(errors, "E_P2_SIGNED_REVIEW_RECORD", item_id)
+        identities.add(str(record.get("reviewer_identity_id")))
+        sessions.add(str(record.get("reviewer_instance_or_session_id")))
+        runs.add(str(record.get("review_run_id")))
+    if len(identities) != 1 or len(sessions) != 1 or len(runs) != 1:
+        add_error(errors, "E_P2_SIGNED_REVIEW_IDENTITY", review_dir.as_posix())
+        return records, {}
+    identity = next(iter(identities))
+    session = next(iter(sessions))
+    run = next(iter(runs))
+    manifest_text = canonical_json(manifest)
+    if not report.strip() or any(
+        value not in manifest_text
+        for value in (identity, session, run, reviewed_commit, packet_sha256)
+    ):
+        add_error(errors, "E_P2_SIGNED_REVIEW_ARTIFACT", review_dir.as_posix())
+    return records, {
+        "identity": identity,
+        "session": session,
+        "run": run,
+        "records_sha256": sha256_file(root / records_path),
+        "report_sha256": sha256_file(root / report_path),
+        "manifest_sha256": sha256_file(root / manifest_path),
+    }
+
+
+def p2_independent_route(
+    route_input: dict[str, Any], profile: dict[str, Any]
+) -> tuple[str, str]:
+    payload = route_input.get("actual_input_payload")
+    if not isinstance(payload, dict):
+        raise ValueError("route payload missing")
+    requirements = profile.get("input_requirements")
+    if not isinstance(requirements, dict):
+        raise ValueError("profile requirements missing")
+    present = {
+        "source": set(map(str, payload.get("present_source_slots", []))),
+        "fact": set(map(str, payload.get("present_fact_slots", []))),
+        "authorization": set(
+            map(str, payload.get("present_authorization_slots", []))
+        ),
+    }
+    missing = {
+        key: set(map(str, requirements.get(f"required_{key}_slots", [])))
+        .difference(present[key])
+        for key in ("source", "fact", "authorization")
+    }
+    risks = set(map(str, payload.get("risk_points", [])))
+    guards = set(map(str, payload.get("hard_guard_hits", [])))
+    if guards or any(value.startswith("AGR_") or value.startswith("hard_guard:AGR_") for value in risks):
+        return "BLOCK", "输入冲突"
+    if risks.intersection(
+        {"PRIVACY_AUTHORIZATION_FAILURE", "ROLE_AUTHORITY_EXPANSION", "UNAUTHORIZED_BRAND_CLAIM"}
+    ):
+        return "BLOCK", "授权缺失"
+    if risks.intersection(
+        {"FABRICATED_EVENT", "FABRICATED_PERSON_EXPERIENCE", "UNSUPPORTED_NUMERIC_OR_PERFORMANCE_CLAIM"}
+    ):
+        return "BLOCK", "事实缺失"
+    missing_classes = [
+        key for key in ("authorization", "fact", "source") if missing[key]
+    ]
+    if not missing_classes:
+        raise ValueError("unexpected route allow")
+    slot_class = missing_classes[0]
+    category = "授权缺失" if slot_class == "authorization" else "事实缺失"
+    route_id = f"required_{slot_class}_missing"
+    routes = {
+        row.get("route_id"): row
+        for row in profile.get("input_sufficiency_routes", [])
+        if isinstance(row, dict)
+    }
+    route = routes.get(route_id)
+    if not isinstance(route, dict):
+        raise ValueError(f"missing route {route_id}")
+    partial = payload.get("partial_artifact_payload")
+    requested = str(payload.get("requested_degraded_output", ""))
+    if (
+        payload.get("partial_safe") is True
+        and route.get("audience_facing_body_allowed") is False
+        and requested in set(map(str, route.get("allowed_outputs", [])))
+        and isinstance(partial, dict)
+        and bool(partial)
+    ):
+        return "DEGRADE", category
+    return "REQUEST_INPUT", category
+
+
+def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
+    """Independently validate signed P2 activation and generator evidence."""
+
+    try:
+        initial_packet = [row for row, _ in read_jsonl(root / P2_REVIEW_PACKET_PATH)]
+        targeted_packet = [
+            row for row, _ in read_jsonl(root / P2_TARGET_REVIEW_PACKET_PATH)
+        ]
+    except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        add_error(errors, "E_P2_FINAL_PACKET", str(exc))
+        return
+    if sha256_file(root / P2_REVIEW_PACKET_PATH) != P2_INITIAL_REVIEW_PACKET_SHA256:
+        add_error(errors, "E_P2_FINAL_PACKET", "initial packet drift")
+    if sha256_file(root / P2_TARGET_REVIEW_PACKET_PATH) != P2_TARGET_REVIEW_PACKET_SHA256:
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted packet drift")
+    initial_primary, initial_primary_meta = p2_signed_review(
+        root,
+        P2_INITIAL_PRIMARY_DIR,
+        initial_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        "c37a894930025aac99db18a055d5a79294fa89dc",
+        P2_INITIAL_REVIEW_PACKET_SHA256,
+        "r0",
+        errors,
+    )
+    initial_secondary, initial_secondary_meta = p2_signed_review(
+        root,
+        P2_INITIAL_SECONDARY_DIR,
+        initial_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        "c37a894930025aac99db18a055d5a79294fa89dc",
+        P2_INITIAL_REVIEW_PACKET_SHA256,
+        "r0",
+        errors,
+    )
+    targeted_primary, targeted_primary_meta = p2_signed_review(
+        root,
+        P2_TARGET_PRIMARY_DIR,
+        targeted_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        P2_TARGET_REVIEWED_COMMIT,
+        P2_TARGET_REVIEW_PACKET_SHA256,
+        "r1",
+        errors,
+    )
+    targeted_secondary, targeted_secondary_meta = p2_signed_review(
+        root,
+        P2_TARGET_SECONDARY_DIR,
+        targeted_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        P2_TARGET_REVIEWED_COMMIT,
+        P2_TARGET_REVIEW_PACKET_SHA256,
+        "r1",
+        errors,
+    )
+    if any(
+        not meta
+        for meta in (
+            initial_primary_meta,
+            initial_secondary_meta,
+            targeted_primary_meta,
+            targeted_secondary_meta,
+        )
+    ):
+        return
+    if (
+        initial_primary_meta["identity"] == initial_secondary_meta["identity"]
+        or initial_primary_meta["session"] == initial_secondary_meta["session"]
+        or initial_primary_meta["run"] == initial_secondary_meta["run"]
+        or targeted_primary_meta["identity"] == targeted_secondary_meta["identity"]
+        or targeted_primary_meta["session"] == targeted_secondary_meta["session"]
+        or targeted_primary_meta["run"] == targeted_secondary_meta["run"]
+    ):
+        add_error(errors, "E_P2_FINAL_REVIEW_IDENTITY", "primary/secondary collision")
+
+    initial_disagreements: list[tuple[dict[str, Any], dict[str, Any], dict[str, Any]]] = []
+    expected_initial: dict[str, dict[str, Any]] = {}
+    for packet_item, primary, secondary in zip(
+        initial_packet, initial_primary, initial_secondary, strict=False
+    ):
+        item_id = str(packet_item["packet_item_id"])
+        if primary["decision"] == secondary["decision"]:
+            final_disposition = primary["decision"]
+        else:
+            final_disposition = "PENDING_ADJUDICATION"
+            initial_disagreements.append((packet_item, primary, secondary))
+        expected_initial[item_id] = {
+            "primary": primary,
+            "secondary": secondary,
+            "final_disposition": final_disposition,
+        }
+    try:
+        adjudication_records = [
+            row
+            for row, _ in read_jsonl(
+                root / P2_INITIAL_ADJUDICATION_DIR / "records.jsonl"
+            )
+        ]
+        adjudication_report = (
+            root / P2_INITIAL_ADJUDICATION_DIR / "report.md"
+        ).read_text(encoding="utf-8")
+        adjudication_manifest = load_yaml(
+            root / P2_INITIAL_ADJUDICATION_DIR / "run_manifest.yaml"
+        )
+    except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
+        add_error(errors, "E_P2_FINAL_ADJUDICATION", str(exc))
+        return
+    adjudicator_identities: set[str] = set()
+    adjudicator_sessions: set[str] = set()
+    adjudicator_runs: set[str] = set()
+    if len(initial_disagreements) != len(adjudication_records) or len(adjudication_records) != 92:
+        add_error(errors, "E_P2_FINAL_ADJUDICATION_COUNT", str(len(adjudication_records)))
+    for record, (packet_item, primary, secondary) in zip(
+        adjudication_records, initial_disagreements, strict=False
+    ):
+        item_id = str(packet_item["packet_item_id"])
+        if (
+            record.get("schema_version") != "v0.1"
+            or record.get("task_id") != P2_TASK_ID
+            or record.get("prompt_revision") != "r0"
+            or record.get("review_role") != "TARGETED_THIRD_ADJUDICATION"
+            or record.get("reviewed_commit")
+            != "c37a894930025aac99db18a055d5a79294fa89dc"
+            or record.get("review_packet_sha256")
+            != P2_INITIAL_REVIEW_PACKET_SHA256
+            or record.get("packet_item_id") != item_id
+            or record.get("object_type") != packet_item.get("object_type")
+            or record.get("primary_record_digest") != primary.get("record_digest")
+            or record.get("secondary_record_digest")
+            != secondary.get("record_digest")
+            or record.get("primary_decision") != primary.get("decision")
+            or record.get("secondary_decision") != secondary.get("decision")
+            or record.get("adjudicated_decision")
+            not in {"APPROVE", "REPAIR", "REJECT"}
+            or record.get("record_digest") != object_digest(record, "record_digest")
+        ):
+            add_error(errors, "E_P2_FINAL_ADJUDICATION_RECORD", item_id)
+        expected_initial[item_id]["final_disposition"] = record.get(
+            "adjudicated_decision"
+        )
+        expected_initial[item_id]["adjudication_digest"] = record.get(
+            "record_digest"
+        )
+        adjudicator_identities.add(str(record.get("reviewer_identity_id")))
+        adjudicator_sessions.add(str(record.get("reviewer_instance_or_session_id")))
+        adjudicator_runs.add(str(record.get("review_run_id")))
+    if (
+        len(adjudicator_identities) != 1
+        or len(adjudicator_sessions) != 1
+        or len(adjudicator_runs) != 1
+        or next(iter(adjudicator_identities), "")
+        in {initial_primary_meta["identity"], initial_secondary_meta["identity"]}
+    ):
+        add_error(errors, "E_P2_FINAL_ADJUDICATION_IDENTITY", "collision")
+    adjudication_manifest_text = canonical_json(adjudication_manifest)
+    if not adjudication_report.strip() or any(
+        value not in adjudication_manifest_text
+        for value in (
+            next(iter(adjudicator_identities), ""),
+            next(iter(adjudicator_sessions), ""),
+            next(iter(adjudicator_runs), ""),
+            P2_INITIAL_REVIEW_PACKET_SHA256,
+        )
+    ):
+        add_error(errors, "E_P2_FINAL_ADJUDICATION_ARTIFACT", "binding")
+
+    target_decisions = {
+        str(packet_item["packet_item_id"]): (
+            primary["decision"],
+            secondary["decision"],
+        )
+        for packet_item, primary, secondary in zip(
+            targeted_packet, targeted_primary, targeted_secondary, strict=False
+        )
+    }
+    if len(target_decisions) != 141 or any(
+        decisions != ("APPROVE", "APPROVE")
+        for decisions in target_decisions.values()
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_REVIEW", "not 141 matching approvals")
+
+    try:
+        initial_combined = [
+            row for row, _ in read_jsonl(root / P2_INITIAL_COMBINED_PATH)
+        ]
+        targeted_combined = [
+            row for row, _ in read_jsonl(root / P2_TARGET_COMBINED_PATH)
+        ]
+        active_components = [
+            row for row, _ in read_jsonl(root / P2_ACTIVE_COMPONENTS_PATH)
+        ]
+        active_rules = [row for row, _ in read_jsonl(root / P2_ACTIVE_RULES_PATH)]
+        active_edges = [row for row, _ in read_jsonl(root / P2_ACTIVE_EDGES_PATH)]
+        active_paths = [row for row, _ in read_jsonl(root / P2_ACTIVE_AB_PATH)]
+        requests = [row for row, _ in read_jsonl(root / P2_AUTHOR_REQUESTS_PATH)]
+        realizations = [row for row, _ in read_jsonl(root / P2_REALIZATIONS_PATH)]
+        pair_results = [row for row, _ in read_jsonl(root / P2_PAIR_RESULTS_PATH)]
+        ablations = [row for row, _ in read_jsonl(root / P2_ABLATION_RESULTS_PATH)]
+        tampers = [row for row, _ in read_jsonl(root / P2_TAMPER_RESULTS_PATH)]
+        route_actuals = [row for row, _ in read_jsonl(root / P2_ROUTE_ACTUALS_PATH)]
+        route_comparisons = [
+            row for row, _ in read_jsonl(root / P2_ROUTE_COMPARISONS_PATH)
+        ]
+        profiles_root = load_yaml(root / PROFILE_PATH)["content_product_profile_registry"]
+        approved_supply = load_yaml(root / P2_APPROVED_SUPPLY_PATH)[
+            "approved_component_supply_matrix"
+        ]
+        import_manifest = load_yaml(root / P2_IMPORT_MANIFEST_PATH)[
+            "independent_review_import_manifest"
+        ]
+        review_closeout = load_yaml(root / P2_REVIEW_CLOSEOUT_PATH)[
+            "independent_component_review_closeout"
+        ]
+        generator_contract = load_yaml(root / P2_GENERATOR_CONTRACT_PATH)[
+            "gate1_generator_contract"
+        ]
+        generator_registry = load_yaml(root / P2_GENERATOR_REGISTRY_PATH)[
+            "active_gate1_generator_registry"
+        ]
+        provider_audit = load_yaml(root / P2_PROVIDER_AUDIT_PATH)[
+            "external_provider_exit_audit"
+        ]
+        final_compat = load_yaml(root / P2_FINAL_COMPAT_PATH)[
+            "p2_final_current_checker_compatibility_receipt"
+        ]
+        final_result = load_yaml(root / P2_FINAL_RESULT_PATH)["p2_final_result"]
+    except (
+        OSError,
+        KeyError,
+        TypeError,
+        ValueError,
+        json.JSONDecodeError,
+        yaml.YAMLError,
+    ) as exc:
+        add_error(errors, "E_P2_FINAL_PARSE", str(exc))
+        return
+
+    if len(initial_combined) != 244:
+        add_error(errors, "E_P2_FINAL_COMBINED", "initial count")
+    for row in initial_combined:
+        item_id = str(row.get("packet_item_id"))
+        expected = expected_initial.get(item_id)
+        if (
+            expected is None
+            or row.get("primary_record_digest")
+            != expected["primary"].get("record_digest")
+            or row.get("secondary_record_digest")
+            != expected["secondary"].get("record_digest")
+            or row.get("final_disposition") != expected["final_disposition"]
+            or row.get("adjudication_record_digest")
+            != expected.get("adjudication_digest")
+            or row.get("combined_digest") != object_digest(row, "combined_digest")
+        ):
+            add_error(errors, "E_P2_FINAL_COMBINED", item_id)
+    if len(targeted_combined) != 141 or any(
+        row.get("combined_disposition") != "APPROVE"
+        or row.get("requires_targeted_adjudication") is not False
+        or row.get("combined_digest") != object_digest(row, "combined_digest")
+        for row in targeted_combined
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_COMBINED", "targeted closeout")
+
+    manifest_files = import_manifest.get("files")
+    if (
+        import_manifest.get("manifest_digest")
+        != object_digest(import_manifest, "manifest_digest")
+        or import_manifest.get("imported_file_count") != 15
+        or not isinstance(manifest_files, list)
+        or len(manifest_files) != 15
+        or any(
+            not isinstance(row, dict)
+            or row.get("byte_imported_without_rewrite") is not True
+            or not (root / str(row.get("path"))).is_file()
+            or row.get("sha256") != sha256_file(root / str(row.get("path")))
+            for row in (manifest_files or [])
+        )
+    ):
+        add_error(errors, "E_P2_FINAL_IMPORT_MANIFEST", "raw import mismatch")
+    if (
+        review_closeout.get("review_closeout_digest")
+        != object_digest(review_closeout, "review_closeout_digest")
+        or review_closeout.get("initial_real_disagreement_count") != 92
+        or review_closeout.get("initial_adjudication_record_count") != 92
+        or review_closeout.get("targeted_matching_approval_count") != 141
+        or review_closeout.get("targeted_unresolved_disagreement_count") != 0
+        or review_closeout.get("executor_self_approval_count") != 0
+    ):
+        add_error(errors, "E_P2_FINAL_REVIEW_CLOSEOUT", "counts or digest")
+
+    original_components = {
+        row.get("component_id"): row
+        for row, _ in read_jsonl(root / P2_COMPONENTS_PATH)
+    }
+    revised_components = {
+        row.get("component_id"): row
+        for row, _ in read_jsonl(root / P2_TARGET_REVISED_COMPONENTS_PATH)
+    }
+    additions = {
+        row.get("component_id"): row
+        for row, _ in read_jsonl(root / P2_TARGET_ADDITIONS_PATH)
+    }
+    candidate_pool = {**original_components, **revised_components, **additions}
+    active_by_id = {row.get("component_id"): row for row in active_components}
+    initial_final_approved = {
+        item_id
+        for item_id, value in expected_initial.items()
+        if value["final_disposition"] == "APPROVE"
+    }
+    if len(active_components) != len(active_by_id) or len(active_components) != 49:
+        add_error(errors, "E_P2_FINAL_COMPONENT_COUNT", str(len(active_components)))
+    for component_id, row in active_by_id.items():
+        candidate = candidate_pool.get(component_id)
+        target_item_id = f"P2R1-COMPONENT-{component_id}"
+        initial_item_id = f"P2-COMPONENT-{component_id}"
+        approved = (
+            target_decisions.get(target_item_id) == ("APPROVE", "APPROVE")
+            if target_item_id in target_decisions
+            else initial_item_id in initial_final_approved
+        )
+        if (
+            not isinstance(candidate, dict)
+            or row.get("reviewed_candidate_component_digest")
+            != candidate.get("component_digest")
+            or row.get("component_digest") != object_digest(row, "component_digest")
+            or row.get("active") is not True
+            or row.get("new_generator_consumable") is not True
+            or row.get("independent_review_state") != "APPROVED_BY_TWO_REVIEWS"
+            or recursively_find_true(row.get("readiness"), READY_KEYS)
+            or not approved
+        ):
+            add_error(errors, "E_P2_FINAL_COMPONENT", str(component_id))
+
+    target_rule_candidates = {
+        row.get("control_rule_id"): row
+        for row, _ in read_jsonl(root / P2_TARGET_RULES_PATH)
+    }
+    if len(active_rules) != 8:
+        add_error(errors, "E_P2_FINAL_RULE_COUNT", str(len(active_rules)))
+    for row in active_rules:
+        rule_id = row.get("control_rule_id")
+        candidate = target_rule_candidates.get(rule_id)
+        if (
+            not isinstance(candidate, dict)
+            or target_decisions.get(f"P2R1-CONTROL-{rule_id}")
+            != ("APPROVE", "APPROVE")
+            or row.get("reviewed_candidate_control_rule_digest")
+            != candidate.get("control_rule_digest")
+            or row.get("control_rule_digest")
+            != object_digest(row, "control_rule_digest")
+            or row.get("active") is not True
+            or row.get("contributes_component_supply") is not False
+            or row.get("may_write_audience_surface") is not False
+        ):
+            add_error(errors, "E_P2_FINAL_RULE", str(rule_id))
+
+    target_edge_candidates = {
+        row.get("edge_id"): row
+        for row, _ in read_jsonl(root / P2_TARGET_EDGES_PATH)
+    }
+    active_edge_by_id = {row.get("edge_id"): row for row in active_edges}
+    if len(active_edges) != len(active_edge_by_id) or len(active_edges) != 85:
+        add_error(errors, "E_P2_FINAL_EDGE_COUNT", str(len(active_edges)))
+    for edge_id, row in active_edge_by_id.items():
+        candidate = target_edge_candidates.get(edge_id)
+        component = active_by_id.get(row.get("component_id"))
+        if (
+            not isinstance(candidate, dict)
+            or not isinstance(component, dict)
+            or target_decisions.get(f"P2R1-{edge_id}")
+            != ("APPROVE", "APPROVE")
+            or row.get("reviewed_candidate_edge_digest") != candidate.get("edge_digest")
+            or row.get("component_digest") != component.get("component_digest")
+            or row.get("edge_digest") != object_digest(row, "edge_digest")
+            or row.get("active") is not True
+        ):
+            add_error(errors, "E_P2_FINAL_EDGE", str(edge_id))
+
+    profiles = profiles_root.get("profiles")
+    if not isinstance(profiles, list) or len(profiles) != 20:
+        add_error(errors, "E_P2_FINAL_PROFILE", "20 profiles required")
+        return
+    profile_by_id = {row.get("content_product_type_id"): row for row in profiles}
+    complete_profiles = 0
+    for profile_id, profile in profile_by_id.items():
+        complete = True
+        for requirement in profile.get("required_component_roles", []):
+            count = sum(
+                edge.get("content_product_type_id") == profile_id
+                and edge.get("required_component_role") == requirement.get("role")
+                for edge in active_edges
+            )
+            complete &= count >= requirement.get("min_count", 1)
+        complete_profiles += complete
+    if (
+        complete_profiles != 20
+        or approved_supply.get("approved_complete_profile_count") != 20
+        or approved_supply.get("matrix_digest")
+        != object_digest(approved_supply, "matrix_digest")
+    ):
+        add_error(errors, "E_P2_FINAL_SUPPLY", str(complete_profiles))
+
+    target_path_candidates = {
+        row.get("content_product_type_id"): row
+        for row, _ in read_jsonl(root / P2_TARGET_AB_PATH)
+    }
+    if len(active_paths) != 20:
+        add_error(errors, "E_P2_FINAL_AB_COUNT", str(len(active_paths)))
+    for row in active_paths:
+        profile_id = row.get("content_product_type_id")
+        candidate = target_path_candidates.get(profile_id)
+        lanes = [row.get("lane_a"), row.get("lane_b")]
+        axes = row.get("observable_difference_axes")
+        if (
+            not isinstance(candidate, dict)
+            or target_decisions.get(f"P2R1-AB-{profile_id}")
+            != ("APPROVE", "APPROVE")
+            or row.get("reviewed_candidate_path_digest") != candidate.get("path_digest")
+            or row.get("path_digest") != object_digest(row, "path_digest")
+            or row.get("active") is not True
+            or row.get("content_quality_proven") is not False
+            or not isinstance(axes, list)
+            or len(axes) < 4
+            or any(
+                not isinstance(lane, dict)
+                or not set(lane.get("component_ids", [])).issubset(active_by_id)
+                for lane in lanes
+            )
+            or lanes[0].get("session_policy") == lanes[1].get("session_policy")
+        ):
+            add_error(errors, "E_P2_FINAL_AB_PATH", str(profile_id))
+
+    component_realization_ids: set[str] = set()
+    request_by_id = {row.get("request_id"): row for row in requests}
+    realization_by_request = {row.get("request_id"): row for row in realizations}
+    if len(requests) != 40 or len(realization_by_request) != 40:
+        add_error(errors, "E_P2_FINAL_GENERATOR_COUNT", "40 requests/realizations")
+    for request_id, request in request_by_id.items():
+        profile = profile_by_id.get(request.get("content_product_type_id"))
+        realization = realization_by_request.get(request_id)
+        material = request.get("typed_material")
+        bindings = request.get("component_bindings")
+        if (
+            not isinstance(profile, dict)
+            or canonical_json(request.get("profile_contract")) != canonical_json(profile)
+            or request.get("request_digest") != object_digest(request, "request_digest")
+            or request.get("external_provider_allowed") is not False
+            or request.get("publishable") is not False
+            or request.get("runtime_consumable") is not False
+            or request.get("may_enter_300") is not False
+            or not isinstance(material, dict)
+            or material.get("synthetic_test_only") is not True
+            or material.get("publishable") is not False
+            or material.get("runtime_consumable") is not False
+            or material.get("may_enter_300") is not False
+            or not isinstance(bindings, list)
+            or not bindings
+            or not isinstance(realization, dict)
+        ):
+            add_error(errors, "E_P2_FINAL_REQUEST", str(request_id))
+            continue
+        input_by_id = {
+            row.get("input_id"): row for row in material.get("component_inputs", [])
+        }
+        fact_by_id = {row.get("fact_id"): row for row in material.get("facts", [])}
+        auth_by_id = {
+            row.get("authorization_id"): row
+            for row in material.get("authorizations", [])
+        }
+        for binding in bindings:
+            component = active_by_id.get(binding.get("component_id"))
+            expected_sets = (
+                ("required_input_slots", "input_object_ids", input_by_id),
+                ("required_fact_slots", "fact_object_ids", fact_by_id),
+                (
+                    "required_authorization_slots",
+                    "authorization_object_ids",
+                    auth_by_id,
+                ),
+            )
+            if (
+                not isinstance(component, dict)
+                or binding.get("component_digest") != component.get("component_digest")
+                or binding.get("component_role") != component.get("component_role")
+            ):
+                add_error(errors, "E_P2_FINAL_REQUEST_COMPONENT", str(request_id))
+                continue
+            for slot_key, id_key, object_by_id in expected_sets:
+                slots = list(map(str, binding.get(slot_key, [])))
+                object_ids = list(map(str, binding.get(id_key, [])))
+                actual_slots = [
+                    str(object_by_id.get(object_id, {}).get("slot_id"))
+                    for object_id in object_ids
+                ]
+                if not slots or actual_slots != slots:
+                    add_error(
+                        errors,
+                        "E_P2_FINAL_TYPED_BINDING",
+                        f"{request_id}:{binding.get('component_id')}:{slot_key}",
+                    )
+        contributions = realization.get("component_contributions")
+        if (
+            realization.get("realization_digest")
+            != object_digest(realization, "realization_digest")
+            or realization.get("unrealized_component_count") != 0
+            or realization.get("selected_component_count")
+            != realization.get("realized_component_count")
+            or not isinstance(contributions, list)
+            or len({row.get("implementation_pointer") for row in contributions})
+            != len(contributions)
+            or realization.get("audience_title") != ""
+            or realization.get("audience_body") != []
+            or realization.get("spoken_script") != []
+        ):
+            add_error(errors, "E_P2_FINAL_REALIZATION", str(request_id))
+        component_realization_ids.update(
+            str(row.get("component_id")) for row in (contributions or [])
+        )
+    if component_realization_ids != set(map(str, active_by_id)):
+        add_error(errors, "E_P2_FINAL_COMPONENT_USE", "selected but unrealized")
+    if len(pair_results) != 20 or any(
+        row.get("same_material_digest") is not True
+        or row.get("same_source_fact_authorization_boundary") is not True
+        or row.get("independent_session_ids") is not True
+        or row.get("minimum_four_axes_pass") is not True
+        or row.get("observable_difference_axis_count", 0) < 4
+        or row.get("lane_a_axis_realization_digest")
+        == row.get("lane_b_axis_realization_digest")
+        or row.get("content_quality_proven") is not False
+        for row in pair_results
+    ):
+        add_error(errors, "E_P2_FINAL_AB_PAIR", "20 structural pairs")
+    if not ablations or any(
+        row.get("implementation_changed") is not True for row in ablations
+    ):
+        add_error(errors, "E_P2_FINAL_ABLATION", "component removal had no effect")
+    if len(tampers) != len(active_components) or any(
+        row.get("tamper_rejected") is not True for row in tampers
+    ):
+        add_error(errors, "E_P2_FINAL_COMPONENT_TAMPER", "digest tamper accepted")
+
+    route_inputs = {
+        row.get("case_id"): row for row, _ in read_jsonl(root / ROUTE_INPUT_PATH)
+    }
+    route_gold = {
+        row.get("case_id"): row for row, _ in read_jsonl(root / P1B_ROUTE_GOLD_PATH)
+    }
+    actual_by_case = {row.get("case_id"): row for row in route_actuals}
+    comparison_by_case = {row.get("case_id"): row for row in route_comparisons}
+    if not (
+        len(route_inputs)
+        == len(route_gold)
+        == len(actual_by_case)
+        == len(comparison_by_case)
+        == 60
+    ):
+        add_error(errors, "E_P2_FINAL_ROUTE_COUNT", "expected 60")
+    for case_id, route_input in route_inputs.items():
+        profile = profile_by_id.get(route_input.get("profile_id"))
+        actual = actual_by_case.get(case_id)
+        comparison = comparison_by_case.get(case_id)
+        gold = route_gold.get(case_id)
+        try:
+            expected_action, expected_reason = p2_independent_route(route_input, profile)
+        except (TypeError, ValueError) as exc:
+            add_error(errors, "E_P2_FINAL_ROUTE_RECOMPUTE", f"{case_id}:{exc}")
+            continue
+        if (
+            not isinstance(actual, dict)
+            or not isinstance(comparison, dict)
+            or not isinstance(gold, dict)
+            or actual.get("route_result_digest")
+            != object_digest(actual, "route_result_digest")
+            or actual.get("actual_primary_action") != expected_action
+            or actual.get("actual_primary_reason_category") != expected_reason
+            or expected_action != gold.get("gold_primary_action")
+            or expected_reason != gold.get("gold_reason_code")
+            or comparison.get("actual_route_result_digest")
+            != actual.get("route_result_digest")
+            or comparison.get("gold_answer_digest") != gold.get("gold_answer_digest")
+            or comparison.get("primary_action_matches_gold") is not True
+            or comparison.get("primary_reason_matches_gold") is not True
+            or comparison.get("comparison_digest")
+            != object_digest(comparison, "comparison_digest")
+        ):
+            add_error(errors, "E_P2_FINAL_ROUTE", str(case_id))
+
+    events = provider_audit.get("events")
+    completed_calls = sum(
+        isinstance(row, dict)
+        and row.get("network_dispatch_started") is True
+        and row.get("provider_response_received") is True
+        for row in (events if isinstance(events, list) else [])
+    )
+    responses = sum(
+        isinstance(row, dict) and row.get("provider_response_received") is True
+        for row in (events if isinstance(events, list) else [])
+    )
+    if (
+        provider_audit.get("audit_digest")
+        != object_digest(provider_audit, "audit_digest")
+        or provider_audit.get("derived_from_event_log") is not True
+        or provider_audit.get("external_provider_request_count") != completed_calls
+        or provider_audit.get("external_provider_response_count") != responses
+        or completed_calls != 0
+        or responses != 0
+        or provider_audit.get("negative_dispatch_test", {}).get(
+            "blocked_before_network_dispatch"
+        )
+        is not True
+    ):
+        add_error(errors, "E_P2_FINAL_PROVIDER", "audit not derived or nonzero")
+
+    if (
+        generator_contract.get("contract_digest")
+        != object_digest(generator_contract, "contract_digest")
+        or generator_contract.get("external_provider_allowed") is not False
+        or generator_contract.get("audience_content_generation_allowed_in_p2")
+        is not False
+        or generator_contract.get("generator_may_write_composition_plan") is not False
+        or recursively_find_true(generator_contract.get("readiness"), READY_KEYS)
+    ):
+        add_error(errors, "E_P2_FINAL_GENERATOR_CONTRACT", "boundary")
+    if (
+        generator_registry.get("registry_digest")
+        != object_digest(generator_registry, "registry_digest")
+        or generator_registry.get("current_generator_entrypoint_count") != 1
+        or generator_registry.get("historical_generator_entrypoints_consumed") != []
+        or generator_registry.get("generator_qualified") is not False
+        or generator_registry.get("runtime_ready") is not False
+        or generator_registry.get("production_ready") is not False
+    ):
+        add_error(errors, "E_P2_FINAL_GENERATOR_REGISTRY", "current entry")
+    if (
+        final_compat.get("receipt_digest")
+        != object_digest(final_compat, "receipt_digest")
+        or final_compat.get("current_checker", {}).get(
+            "sha256_before_final_closeout"
+        )
+        != P2_CHECKPOINT_CURRENT_CHECKER_SHA256
+        or final_compat.get("current_checker", {}).get(
+            "sha256_after_final_closeout"
+        )
+        != sha256_file(root / CURRENT_CHECKER_PATH)
+        or final_compat.get("current_checker", {}).get("recursive_checker_chain")
+        is not False
+        or final_compat.get("p1a_p1b_task_roots_modified") is not False
+        or final_compat.get("checkpoint_assets_rewritten") is not False
+    ):
+        add_error(errors, "E_P2_FINAL_COMPAT", "checker receipt")
+    if (
+        final_result.get("result_digest")
+        != object_digest(final_result, "result_digest")
+        or final_result.get("result_state") != "PASS_TO_P3_OPEN_PROBE"
+        or final_result.get("p2_complete") is not True
+        or final_result.get("p3_allowed") is not True
+        or final_result.get("self_approval_count") != 0
+        or final_result.get("active_component_count") != 49
+        or final_result.get("revised_historical_component_count") != 19
+        or final_result.get("necessary_addition_count") != 9
+        or final_result.get("active_control_rule_count") != 8
+        or final_result.get("active_edge_count") != 85
+        or final_result.get("approved_supply_complete_profile_count") != 20
+        or final_result.get("route_primary_action_match_count") != 60
+        or final_result.get("route_primary_reason_match_count") != 60
+        or final_result.get("external_provider_request_count") != 0
+        or final_result.get("external_provider_response_count") != 0
+        or final_result.get("audience_content_created_count") != 0
+        or final_result.get("composition_plan_created_count") != 0
+        or recursively_find_true(final_result.get("readiness"), READY_KEYS)
+        or final_result.get("core_number_impact")
+        != {
+            "target_total": 300,
+            "reference_inventory": 120,
+            "historical_component_inventory": 86,
+            "all_unchanged": True,
+        }
+    ):
+        add_error(errors, "E_P2_FINAL_RESULT", "state or counts")
+
+
 def validate(root: Path) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
-    required = (
+    required: tuple[Path, ...] = (
         CURRENT_OWNER_PATH,
         REPORT_PATH,
         STANDARD_SNAPSHOT_PATH,
@@ -2209,6 +3190,47 @@ def validate(root: Path) -> list[dict[str, str]]:
         P2_COMPAT_PATH,
         P2_RESULT_PATH,
     )
+    try:
+        owner_id = load_yaml(root / CURRENT_OWNER_PATH).get(
+            "current_gate1_owner", {}
+        ).get("owner_id")
+    except (OSError, TypeError, ValueError, yaml.YAMLError):
+        owner_id = None
+    if owner_id == "GATE1_V11_P2_FINAL_OWNER":
+        required += (
+            P2_TARGET_REVISED_COMPONENTS_PATH,
+            P2_TARGET_ADDITIONS_PATH,
+            P2_TARGET_RULES_PATH,
+            P2_TARGET_EDGES_PATH,
+            P2_TARGET_AB_PATH,
+            P2_TARGET_REVIEW_PACKET_PATH,
+            P2_IMPORT_MANIFEST_PATH,
+            P2_INITIAL_COMBINED_PATH,
+            P2_TARGET_COMBINED_PATH,
+            P2_REVIEW_CLOSEOUT_PATH,
+            P2_ACTIVE_COMPONENTS_PATH,
+            P2_ACTIVE_RULES_PATH,
+            P2_ACTIVE_EDGES_PATH,
+            P2_APPROVED_SUPPLY_PATH,
+            P2_ACTIVE_AB_PATH,
+            P2_GENERATOR_CONTRACT_PATH,
+            P2_GENERATOR_REGISTRY_PATH,
+            P2_AUTHOR_REQUESTS_PATH,
+            P2_REALIZATIONS_PATH,
+            P2_PAIR_RESULTS_PATH,
+            P2_ABLATION_RESULTS_PATH,
+            P2_TAMPER_RESULTS_PATH,
+            P2_ROUTE_ACTUALS_PATH,
+            P2_ROUTE_COMPARISONS_PATH,
+            P2_PROVIDER_AUDIT_PATH,
+            P2_FINAL_COMPAT_PATH,
+            P2_FINAL_RESULT_PATH,
+            *(P2_INITIAL_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_INITIAL_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_INITIAL_ADJUDICATION_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+        )
     for relative_path in required:
         if not (root / relative_path).exists():
             add_error(errors, "E_REQUIRED_FILE", relative_path.as_posix())
@@ -2232,6 +3254,8 @@ def validate(root: Path) -> list[dict[str, str]]:
         validate_p1b(root, source, errors)
     if (root / P2_TASK_ROOT).exists():
         validate_p2(root, errors)
+    if owner_id == "GATE1_V11_P2_FINAL_OWNER":
+        validate_p2_final(root, errors)
     return errors
 
 
@@ -2579,7 +3603,10 @@ def main() -> int:
                 "task_id": load_yaml(ROOT / CURRENT_OWNER_PATH)
                 .get("current_gate1_owner", {})
                 .get("task_id"),
-                "review_decisions_created": False,
+                "p2_final_validated": load_yaml(ROOT / CURRENT_OWNER_PATH)
+                .get("current_gate1_owner", {})
+                .get("owner_id")
+                == "GATE1_V11_P2_FINAL_OWNER",
                 "shared_horizon_modified": False,
             },
             ensure_ascii=False,

@@ -1,0 +1,86 @@
+schema_version: v0.1
+task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+prompt_revision: r1
+review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+review_run_id: P2-SECONDARY-R1-RUN-20260713-6D7AA87
+repository: /home/diyu/笛语领域通用数据库
+reviewed_commit: 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+branch: agent/gate1-v1-1-retrospective-recovery-plan
+review_packet:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r1.jsonl
+  sha256: 5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50
+  expected_item_count: 141
+  actual_item_count: 141
+  object_type_counts:
+    REVISED_OR_NECESSARY_COMPONENT: 28
+    REVISED_CONTROL_RULE_SEPARATION: 8
+    REVISED_COMPONENT_CP_EDGE: 85
+    REVISED_AB_STRUCTURAL_PATH_CAPABILITY: 20
+review_outcome:
+  overall_verdict: REPAIR
+  decision_counts:
+    APPROVE: 107
+    REPAIR: 34
+    REJECT: 0
+  grade_counts:
+    A: 107
+    B: 10
+    C: 24
+    D: 0
+  hard_veto_record_count: 0
+outputs:
+  records.jsonl:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r1/secondary/records.jsonl
+    sha256: 182e2f3310afa3503ca2faab3d5513c3b2241016a20280328d4296e9ec570264
+    byte_count: 291764
+    record_count: 141
+  report.md:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r1/secondary/report.md
+    sha256: cc0ff1e04745d9279b996afbc50a44ebc556d03f581f6f5fcd79601d7babcea3
+    byte_count: 10076
+    line_count: 101
+  run_manifest.yaml:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r1/secondary/run_manifest.yaml
+    document_count: 1
+    sha256_scope: SHA-256 of canonical JSON for this manifest after removing outputs.run_manifest.yaml.sha256; this avoids
+      self-reference
+    sha256: af83436423c6377c5cc921eab89a8735d8031eb6c934f38a7ae5bf9dfacca425
+execution_boundaries:
+  repository_writes_by_reviewer: 0
+  no_repo_writes: true
+  sibling_review_outputs_visible: false
+  other_reviewer_outputs_read: false
+  activation_performed: false
+  readiness_transition_performed: false
+  external_model_or_paid_provider_calls: 0
+  output_directory_only: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r1/secondary
+snapshot_integrity:
+  head_at_start: 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+  worktree_at_start: CLEAN
+  head_at_manifest_seal: 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+  worktree_at_manifest_seal: DIRTY_CONCURRENT_EXTERNAL_CHANGES_PRESENT
+  dirty_entry_count_at_manifest_seal: 8
+  review_snapshot_mode: EXACT_COMMITTED_GIT_OBJECTS_AFTER_CONCURRENT_WORKTREE_DRIFT
+  concurrent_change_handling: No concurrent file was modified, reverted, or used as review truth; remaining code checks used
+    git show against reviewed_commit.
+  branch_status_lines:
+  - '# branch.oid 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9'
+  - '# branch.head agent/gate1-v1-1-retrospective-recovery-plan'
+  - '# branch.upstream origin/agent/gate1-v1-1-retrospective-recovery-plan'
+  - '# branch.ab +0 -0'
+readiness_attestation:
+  components_active: false
+  edges_active: false
+  p2_complete: false
+  p3_allowed: false
+  generation_eligible: false
+  generation_allowed: false
+  generator_qualified: false
+  runtime_ready: false
+  production_ready: false
+signed_attestation: P2-SECONDARY-PROVENANCE-REVIEWER-B attests for review run P2-SECONDARY-R1-RUN-20260713-6D7AA87 that every
+  one of the 141 packet items was independently read, traced, and scored against commit 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+  and packet 5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50; no sibling review output was visible or read,
+  no repository write or activation was performed, and no readiness state was advanced.

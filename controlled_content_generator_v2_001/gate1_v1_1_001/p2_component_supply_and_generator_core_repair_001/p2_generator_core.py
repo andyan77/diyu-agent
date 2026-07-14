@@ -15,6 +15,15 @@ GENERATOR_VERSION = "gate1-v1.1-p2-successor-v0.1"
 REQUEST_SCHEMA_VERSION = "gate1-typed-author-request-v0.1"
 ROUTE_ENGINE_VERSION = "gate1-v1.1-route-successor-v0.1"
 
+AXIS_OPERATOR_ROLE_BY_AXIS = {
+    "narrative_mechanism": "narrative_mechanism_operator",
+    "information_order": "information_order_operator",
+    "visual_subject": "visual_subject_operator",
+    "sound_subject": "sound_subject_operator",
+    "rhythm": "rhythm_operator",
+    "ending": "ending_operator",
+}
+
 AUTHORIZATION_BLOCKING_RISKS = frozenset(
     {
         "PRIVACY_AUTHORIZATION_FAILURE",
@@ -81,11 +90,50 @@ def profile_required_slots(profile: Mapping[str, Any]) -> dict[str, list[str]]:
     }
 
 
-def build_local_typed_material(profile: Mapping[str, Any]) -> dict[str, Any]:
+def build_local_typed_material(
+    profile: Mapping[str, Any],
+    components: list[Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
     """Build a nonpublishable typed fixture without supplying real brand facts."""
 
     profile_id = str(profile["content_product_type_id"])
     slots = profile_required_slots(profile)
+    include_component_bindings = components is not None
+    components = components or []
+    component_input_slots = sorted(
+        {
+            str(slot_id)
+            for component in components
+            for slot_id in component.get("required_input_slots", [])
+        }
+    )
+    component_fact_slots = sorted(
+        {
+            str(slot_id)
+            for component in components
+            for slot_id in component.get("required_fact_slots", [])
+        }
+    )
+    component_authorization_slots = sorted(
+        {
+            str(slot_id)
+            for component in components
+            for slot_id in component.get("required_authorization_slots", [])
+        }
+    )
+    inputs = [
+        {
+            "object_type": "COMPONENT_INPUT_OBJECT",
+            "input_id": f"LOCAL-INPUT-{profile_id}-{index:02d}",
+            "slot_id": slot_id,
+            "value_digest": digest_object(
+                {"profile_id": profile_id, "slot_id": slot_id, "kind": "input"}
+            ),
+            "synthetic_test_only": True,
+            "may_supply_fact_or_authorization": False,
+        }
+        for index, slot_id in enumerate(component_input_slots, 1)
+    ]
     sources = [
         {
             "object_type": "SOURCE_OBJECT",
@@ -100,6 +148,11 @@ def build_local_typed_material(profile: Mapping[str, Any]) -> dict[str, Any]:
         }
         for index, slot_id in enumerate(slots["source"], 1)
     ]
+    authorization_slots = (
+        sorted(set(slots["authorization"]).union(component_authorization_slots))
+        if include_component_bindings
+        else slots["authorization"]
+    )
     authorizations = [
         {
             "object_type": "AUTHORIZATION_OBJECT",
@@ -115,10 +168,15 @@ def build_local_typed_material(profile: Mapping[str, Any]) -> dict[str, Any]:
             "validity_condition": "SYNTHETIC_TEST_WINDOW_ONLY",
             "synthetic_test_only": True,
         }
-        for index, slot_id in enumerate(slots["authorization"], 1)
+        for index, slot_id in enumerate(authorization_slots, 1)
     ]
     source_ids = [row["source_id"] for row in sources]
     authorization_ids = [row["authorization_id"] for row in authorizations]
+    fact_slots = (
+        sorted(set(slots["fact"]).union(component_fact_slots))
+        if include_component_bindings
+        else slots["fact"]
+    )
     facts = [
         {
             "object_type": "FACT_OBJECT",
@@ -133,7 +191,7 @@ def build_local_typed_material(profile: Mapping[str, Any]) -> dict[str, Any]:
             "synthetic_test_only": True,
             "may_be_treated_as_brand_truth": False,
         }
-        for index, slot_id in enumerate(slots["fact"], 1)
+        for index, slot_id in enumerate(fact_slots, 1)
     ]
     material: dict[str, Any] = {
         "schema_version": "v0.1",
@@ -148,6 +206,8 @@ def build_local_typed_material(profile: Mapping[str, Any]) -> dict[str, Any]:
         "runtime_consumable": False,
         "may_enter_300": False,
     }
+    if include_component_bindings:
+        material["component_inputs"] = inputs
     material["material_digest"] = object_digest(material, "material_digest")
     return material
 
@@ -166,6 +226,9 @@ def validate_typed_material(
     require(material.get("runtime_consumable") is False, "E_MATERIAL_RUNTIME")
     require(material.get("may_enter_300") is False, "E_MATERIAL_BASELINE")
     sources = _typed_rows(material.get("sources"), "SOURCE_OBJECT", "source_id")
+    inputs = _typed_rows(
+        material.get("component_inputs", []), "COMPONENT_INPUT_OBJECT", "input_id"
+    )
     facts = _typed_rows(material.get("facts"), "FACT_OBJECT", "fact_id")
     authorizations = _typed_rows(
         material.get("authorizations"),
@@ -179,7 +242,20 @@ def validate_typed_material(
         "authorization": sorted(str(row.get("slot_id")) for row in authorizations),
     }
     for slot_class, slots in expected.items():
-        require(actual[slot_class] == sorted(slots), "E_SLOT_BINDING", slot_class)
+        require(
+            set(slots).issubset(actual[slot_class]),
+            "E_SLOT_BINDING",
+            slot_class,
+        )
+    for input_object in inputs:
+        require(
+            input_object.get("synthetic_test_only") is True,
+            "E_INPUT_NAMESPACE",
+        )
+        require(
+            input_object.get("may_supply_fact_or_authorization") is False,
+            "E_INPUT_AUTHORITY",
+        )
     source_ids = {str(row["source_id"]) for row in sources}
     authorization_ids = {str(row["authorization_id"]) for row in authorizations}
     for source in sources:
@@ -211,29 +287,9 @@ def validate_typed_material(
 
 
 def _profile_projection(profile: Mapping[str, Any]) -> dict[str, Any]:
-    return {
-        "content_product_type_id": profile.get("content_product_type_id"),
-        "business_purpose": profile.get("business_purpose"),
-        "target_account_roles": profile.get("target_account_roles", []),
-        "target_platforms": profile.get("target_platforms", []),
-        "founder_core_inputs": profile.get("founder_core_inputs", []),
-        "required_component_roles": profile.get("required_component_roles", []),
-        "input_requirements": profile.get("input_requirements"),
-        "event_truth_policy": profile.get("event_truth_policy"),
-        "narrative_constraints": profile.get("narrative_constraints"),
-        "style_constraints": profile.get("style_constraints"),
-        "continuity_policy": profile.get("continuity_policy"),
-        "visual_audio_requirement_refs": profile.get(
-            "visual_audio_requirement_refs", []
-        ),
-        "platform_expression_requirement_refs": profile.get(
-            "platform_expression_requirement_refs", []
-        ),
-        "anti_pattern_rule_refs": profile.get("anti_pattern_rule_refs", []),
-        "founder_hard_guards": profile.get("founder_hard_guards", []),
-        "input_sufficiency_routes": profile.get("input_sufficiency_routes", []),
-        "profile_digest": profile.get("profile_digest"),
-    }
+    """Preserve the complete frozen product contract in every author request."""
+
+    return dict(profile)
 
 
 def build_author_request(
@@ -249,25 +305,81 @@ def build_author_request(
     validate_typed_material(material, profile)
     require(lane_id in {"A", "B"}, "E_LANE_ID")
     profile_id = str(profile["content_product_type_id"])
+    input_ids_by_slot = {
+        str(row["slot_id"]): str(row["input_id"])
+        for row in material.get("component_inputs", [])
+    }
+    fact_ids_by_slot = {
+        str(row["slot_id"]): str(row["fact_id"])
+        for row in material.get("facts", [])
+    }
+    authorization_ids_by_slot = {
+        str(row["slot_id"]): str(row["authorization_id"])
+        for row in material.get("authorizations", [])
+    }
     component_bindings: list[dict[str, Any]] = []
     for component_id in lane_path.get("component_ids", []):
         component = component_by_id.get(str(component_id))
         require(component is not None, "E_COMPONENT_NOT_APPROVED", str(component_id))
+        required_input_slots = list(map(str, component.get("required_input_slots", [])))
+        required_fact_slots = list(map(str, component.get("required_fact_slots", [])))
+        required_authorization_slots = list(
+            map(str, component.get("required_authorization_slots", []))
+        )
+        require(
+            set(required_input_slots).issubset(input_ids_by_slot),
+            "E_COMPONENT_INPUT_BINDING_MISSING",
+            str(component_id),
+        )
+        require(
+            set(required_fact_slots).issubset(fact_ids_by_slot),
+            "E_COMPONENT_FACT_BINDING_MISSING",
+            str(component_id),
+        )
+        require(
+            set(required_authorization_slots).issubset(authorization_ids_by_slot),
+            "E_COMPONENT_AUTHORIZATION_BINDING_MISSING",
+            str(component_id),
+        )
         component_bindings.append(
             {
                 "object_type": "COMPONENT_BINDING",
                 "component_id": component_id,
                 "component_digest": component.get("component_digest"),
                 "component_role": component.get("component_role"),
-                "required_input_slots": component.get("required_input_slots", []),
-                "required_fact_slots": component.get("required_fact_slots", []),
-                "required_authorization_slots": component.get(
-                    "required_authorization_slots", []
-                ),
+                "required_input_slots": required_input_slots,
+                "required_fact_slots": required_fact_slots,
+                "required_authorization_slots": required_authorization_slots,
+                "input_object_ids": [
+                    input_ids_by_slot[slot_id] for slot_id in required_input_slots
+                ],
+                "fact_object_ids": [
+                    fact_ids_by_slot[slot_id] for slot_id in required_fact_slots
+                ],
+                "authorization_object_ids": [
+                    authorization_ids_by_slot[slot_id]
+                    for slot_id in required_authorization_slots
+                ],
                 "claim_boundary": component.get("claim_boundary"),
             }
         )
     require(component_bindings, "E_COMPONENT_BINDING_EMPTY", profile_id)
+    lane_axes = {
+        key: value
+        for key, value in lane_path.items()
+        if key
+        not in {
+            "component_ids",
+            "lane_id",
+            "session_policy",
+            "other_lane_visible",
+            "axis_realization_contracts",
+            "axis_operator_parameters",
+        }
+    }
+    require(len(lane_axes) >= 4, "E_LANE_AXIS_COUNT", profile_id)
+    axis_contracts = lane_path.get("axis_realization_contracts", [])
+    require(isinstance(axis_contracts, list), "E_LANE_AXIS_CONTRACTS", profile_id)
     request: dict[str, Any] = {
         "schema_version": REQUEST_SCHEMA_VERSION,
         "task_id": TASK_ID,
@@ -286,12 +398,12 @@ def build_author_request(
             "lane_id": lane_id,
             "session_id": f"P2-INDEPENDENT-AUTHOR-SESSION-{profile_id}-{lane_id}",
             "other_lane_visible": False,
-            "narrative_mechanism": lane_path.get("narrative_mechanism"),
-            "information_order": lane_path.get("information_order"),
-            "visual_subject": lane_path.get("visual_subject"),
-            "sound_subject": lane_path.get("sound_subject"),
-            "rhythm": lane_path.get("rhythm"),
-            "ending": lane_path.get("ending"),
+            "session_policy": lane_path.get("session_policy"),
+            "axes": lane_axes,
+            "axis_operator_parameters": dict(
+                lane_path.get("axis_operator_parameters", {})
+            ),
+            "axis_realization_contracts": axis_contracts,
         },
         "component_bindings": component_bindings,
         "control_rule_bindings": [
@@ -348,6 +460,14 @@ def validate_author_request(
         == material.get("profile_id"),
         "E_REQUEST_PROFILE_BINDING",
     )
+    inputs_by_id = {
+        str(row["input_id"]): row for row in material.get("component_inputs", [])
+    }
+    facts_by_id = {str(row["fact_id"]): row for row in material.get("facts", [])}
+    authorizations_by_id = {
+        str(row["authorization_id"]): row
+        for row in material.get("authorizations", [])
+    }
     bindings = _typed_rows(
         request.get("component_bindings"), "COMPONENT_BINDING", "component_id"
     )
@@ -361,6 +481,136 @@ def validate_author_request(
         require(
             binding.get("component_role") == component.get("component_role"),
             "E_COMPONENT_ROLE",
+        )
+        bound_sets = {
+            "input": (
+                list(map(str, binding.get("required_input_slots", []))),
+                list(map(str, binding.get("input_object_ids", []))),
+                inputs_by_id,
+            ),
+            "fact": (
+                list(map(str, binding.get("required_fact_slots", []))),
+                list(map(str, binding.get("fact_object_ids", []))),
+                facts_by_id,
+            ),
+            "authorization": (
+                list(map(str, binding.get("required_authorization_slots", []))),
+                list(map(str, binding.get("authorization_object_ids", []))),
+                authorizations_by_id,
+            ),
+        }
+        for slot_class, (expected_slots, object_ids, object_by_id) in bound_sets.items():
+            require(
+                len(expected_slots) == len(object_ids),
+                "E_COMPONENT_TYPED_BINDING_COUNT",
+                f"{binding['component_id']}:{slot_class}",
+            )
+            require(
+                all(object_id in object_by_id for object_id in object_ids),
+                "E_COMPONENT_TYPED_BINDING_OBJECT",
+                f"{binding['component_id']}:{slot_class}",
+            )
+            actual_slots = [
+                str(object_by_id[object_id]["slot_id"]) for object_id in object_ids
+            ]
+            require(
+                actual_slots == expected_slots,
+                "E_COMPONENT_TYPED_BINDING_SLOT",
+                f"{binding['component_id']}:{slot_class}",
+            )
+    lane = request.get("lane")
+    require(isinstance(lane, Mapping), "E_REQUEST_LANE")
+    axes = lane.get("axes")
+    contracts = lane.get("axis_realization_contracts")
+    require(isinstance(axes, Mapping) and len(axes) >= 4, "E_REQUEST_LANE_AXES")
+    require(isinstance(contracts, list), "E_REQUEST_AXIS_CONTRACTS")
+    bound_component_ids = {str(row["component_id"]) for row in bindings}
+    binding_by_component_id = {
+        str(row["component_id"]): row for row in bindings
+    }
+    operator_parameters = lane.get("axis_operator_parameters")
+    require(isinstance(operator_parameters, Mapping), "E_REQUEST_AXIS_PARAMETERS")
+    for contract in contracts:
+        require(isinstance(contract, Mapping), "E_REQUEST_AXIS_CONTRACT")
+        axis = str(contract.get("axis"))
+        require(axis in axes, "E_REQUEST_AXIS_VALUE", axis)
+        support = set(map(str, contract.get("supporting_component_ids", [])))
+        require(support and support.issubset(bound_component_ids), "E_REQUEST_AXIS_SUPPORT", axis)
+        operator_id = str(contract.get("operator_component_id"))
+        require(
+            support == {operator_id},
+            "E_REQUEST_AXIS_OPERATOR_SUPPORT",
+            axis,
+        )
+        operator = component_by_id.get(operator_id)
+        require(operator is not None, "E_REQUEST_AXIS_OPERATOR", axis)
+        require(
+            operator.get("component_role") == AXIS_OPERATOR_ROLE_BY_AXIS.get(axis),
+            "E_REQUEST_AXIS_OPERATOR_ROLE",
+            axis,
+        )
+        require(
+            contract.get("operator_mechanism_digest")
+            == digest_object(operator.get("mechanism", {})),
+            "E_REQUEST_AXIS_OPERATOR_MECHANISM",
+            axis,
+        )
+        operator_contract_binding = contract.get("operator_component_binding")
+        require(
+            isinstance(operator_contract_binding, Mapping),
+            "E_REQUEST_AXIS_OPERATOR_BINDING",
+            axis,
+        )
+        actual_operator_binding = binding_by_component_id[operator_id]
+        require(
+            operator_contract_binding.get("component_id") == operator_id
+            and operator_contract_binding.get("component_digest")
+            == actual_operator_binding.get("component_digest")
+            and operator_contract_binding.get("component_role")
+            == actual_operator_binding.get("component_role"),
+            "E_REQUEST_AXIS_OPERATOR_BINDING_IDENTITY",
+            axis,
+        )
+        exact_bindings = operator_contract_binding.get(
+            "exact_typed_object_bindings"
+        )
+        require(
+            isinstance(exact_bindings, Mapping),
+            "E_REQUEST_AXIS_OPERATOR_EXACT_BINDING",
+            axis,
+        )
+        for kind, slot_key, object_key in (
+            ("input", "required_input_slots", "input_object_ids"),
+            ("fact", "required_fact_slots", "fact_object_ids"),
+            (
+                "authorization",
+                "required_authorization_slots",
+                "authorization_object_ids",
+            ),
+        ):
+            pairs = exact_bindings.get(kind)
+            require(
+                isinstance(pairs, list)
+                and [str(row.get("slot_id")) for row in pairs]
+                == actual_operator_binding[slot_key]
+                and [str(row.get("object_id")) for row in pairs]
+                == actual_operator_binding[object_key],
+                "E_REQUEST_AXIS_OPERATOR_EXACT_BINDING",
+                f"{axis}:{kind}",
+            )
+        parameter = operator_parameters.get(axis)
+        require(isinstance(parameter, Mapping), "E_REQUEST_AXIS_PARAMETER", axis)
+        require(
+            parameter.get("operator_component_id") == operator_id
+            and parameter.get("parameter_value") == axes[axis],
+            "E_REQUEST_AXIS_PARAMETER_VALUE",
+            axis,
+        )
+        require(
+            contract.get("lane_a_value") != contract.get("lane_b_value")
+            and contract.get("same_fact_set_must_be_preserved") is True,
+            "E_REQUEST_AXIS_DIVERGENCE_CONTRACT",
+            axis,
         )
 
 
@@ -387,13 +637,61 @@ def realize_request(
                 "observable_structural_effect": {
                     "component_role": binding["component_role"],
                     "mechanism_digest": digest_object(mechanism),
-                    "lane_operator": lane.get("narrative_mechanism"),
-                    "information_order": lane.get("information_order"),
+                    "typed_binding_digest": digest_object(
+                        {
+                            "input_object_ids": binding["input_object_ids"],
+                            "fact_object_ids": binding["fact_object_ids"],
+                            "authorization_object_ids": binding[
+                                "authorization_object_ids"
+                            ],
+                        }
+                    ),
+                    "axis_effect": next(
+                        (
+                            {
+                                "axis": axis,
+                                "parameter_value": lane["axes"][axis],
+                            }
+                            for axis, role in AXIS_OPERATOR_ROLE_BY_AXIS.items()
+                            if role == binding["component_role"]
+                        ),
+                        None,
+                    ),
                 },
             }
         )
     pointers = [row["implementation_pointer"] for row in contributions]
     require(len(pointers) == len(set(pointers)), "E_IMPLEMENTATION_POINTER_REUSE")
+    axis_realizations: list[dict[str, Any]] = []
+    for contract in lane["axis_realization_contracts"]:
+        axis = str(contract["axis"])
+        axis_realizations.append(
+            {
+                "axis": axis,
+                "axis_value": lane["axes"][axis],
+                "supporting_component_ids": contract["supporting_component_ids"],
+                "operator_component_id": contract["operator_component_id"],
+                "operator_mechanism_digest": contract[
+                    "operator_mechanism_digest"
+                ],
+                "operator_binding_digest": contract[
+                    "operator_component_binding"
+                ]["binding_digest"],
+                "implementation_pointer": contract["realization_target"].format(
+                    lane_id=lane["lane_id"]
+                ),
+            }
+        )
+    require(
+        len(axis_realizations) >= 4
+        and len({row["axis"] for row in axis_realizations}) == len(axis_realizations),
+        "E_AXIS_REALIZATION",
+    )
+    require(
+        len({row["implementation_pointer"] for row in axis_realizations})
+        == len(axis_realizations),
+        "E_AXIS_POINTER_REUSE",
+    )
     realization: dict[str, Any] = {
         "schema_version": "v0.1",
         "task_id": TASK_ID,
@@ -403,6 +701,7 @@ def realize_request(
         "profile_id": request["content_product_type_id"],
         "lane_id": lane["lane_id"],
         "component_contributions": contributions,
+        "lane_axis_realizations": axis_realizations,
         "selected_component_count": len(request["component_bindings"]),
         "realized_component_count": len(contributions),
         "unrealized_component_count": len(request["component_bindings"])

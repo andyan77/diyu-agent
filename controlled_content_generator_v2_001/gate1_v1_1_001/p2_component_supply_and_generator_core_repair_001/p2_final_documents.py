@@ -15,6 +15,7 @@ from p2_generator_core import (
     Gate1ValidationError,
     build_author_request,
     build_local_typed_material,
+    digest_object,
     evaluate_route,
     realize_request,
 )
@@ -25,6 +26,30 @@ def approved_packet_ids(combined: list[dict[str, Any]]) -> set[str]:
         str(row["packet_item_id"])
         for row in combined
         if row.get("combined_disposition") == "APPROVE"
+    }
+
+
+def _typed_material_catalog(material: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
+    return {
+        "source": [
+            {"slot_id": str(row["slot_id"]), "object_id": str(row["source_id"])}
+            for row in material["sources"]
+        ],
+        "input": [
+            {"slot_id": str(row["slot_id"]), "object_id": str(row["input_id"])}
+            for row in material["component_inputs"]
+        ],
+        "fact": [
+            {"slot_id": str(row["slot_id"]), "object_id": str(row["fact_id"])}
+            for row in material["facts"]
+        ],
+        "authorization": [
+            {
+                "slot_id": str(row["slot_id"]),
+                "object_id": str(row["authorization_id"]),
+            }
+            for row in material["authorizations"]
+        ],
     }
 
 
@@ -304,14 +329,35 @@ def build_generator_evidence(
     for profile in profiles:
         cp_id = str(profile["content_product_type_id"])
         path = path_by_cp[cp_id]
-        material = build_local_typed_material(profile)
+        path_component_ids = set(path["lane_a"]["component_ids"]).union(
+            path["lane_b"]["component_ids"]
+        )
+        material = build_local_typed_material(
+            profile,
+            [component_by_id[component_id] for component_id in path_component_ids],
+        )
+        material_contract = path["shared_typed_material_contract"]
+        material_catalog = _typed_material_catalog(material)
+        if (
+            material_contract["material_id"] != material["material_id"]
+            or material_contract["material_digest"] != material["material_digest"]
+            or material_contract["typed_object_catalog"] != material_catalog
+            or material_contract["typed_object_catalog_digest"]
+            != digest_object(material_catalog)
+        ):
+            raise Gate1ValidationError(f"E_PATH_MATERIAL_CONTRACT:{cp_id}")
         lane_requests: dict[str, dict[str, Any]] = {}
+        lane_realizations: dict[str, dict[str, Any]] = {}
         for lane_id, lane_key in (("A", "lane_a"), ("B", "lane_b")):
+            lane_path = copy.deepcopy(path[lane_key])
+            lane_path["axis_realization_contracts"] = path[
+                "axis_realization_contracts"
+            ]
             request = build_author_request(
                 profile,
                 material,
                 lane_id,
-                path[lane_key],
+                lane_path,
                 component_by_id,
                 control_rule_ids,
             )
@@ -319,6 +365,7 @@ def build_generator_evidence(
             requests.append(request)
             realizations.append(realization)
             lane_requests[lane_id] = request
+            lane_realizations[lane_id] = realization
             for binding in request["component_bindings"]:
                 first_request_by_component.setdefault(binding["component_id"], request)
                 reduced = copy.deepcopy(request)
@@ -328,29 +375,47 @@ def build_generator_evidence(
                     if row["component_id"] != binding["component_id"]
                 ]
                 reduced["request_digest"] = object_digest(reduced, "request_digest")
-                reduced_realization = realize_request(reduced, component_by_id)
+                ablation_rejected = False
+                ablation_error_code = ""
+                try:
+                    reduced_realization = realize_request(reduced, component_by_id)
+                    reduced_digest = reduced_realization["realization_digest"]
+                except Gate1ValidationError as exc:
+                    ablation_rejected = True
+                    ablation_error_code = str(exc).split(":", 1)[0]
+                    reduced_digest = "REJECTED_BEFORE_REALIZATION"
                 ablation: dict[str, Any] = {
                     "case_id": f"ABLATE-{request['request_id']}-{binding['component_id']}",
                     "request_id": request["request_id"],
                     "component_id": binding["component_id"],
                     "baseline_realization_digest": realization["realization_digest"],
-                    "ablated_realization_digest": reduced_realization[
-                        "realization_digest"
-                    ],
+                    "ablated_realization_digest": reduced_digest,
+                    "ablation_rejected": ablation_rejected,
+                    "ablation_error_code": ablation_error_code,
                     "implementation_changed": (
                         realization["realization_digest"]
-                        != reduced_realization["realization_digest"]
+                        != reduced_digest
                     ),
                 }
                 ablation["case_digest"] = object_digest(ablation, "case_digest")
                 ablations.append(ablation)
         lane_a = lane_requests["A"]
         lane_b = lane_requests["B"]
+        lane_a_realization = lane_realizations["A"]
+        lane_b_realization = lane_realizations["B"]
+        lane_a_axis_values = {
+            row["axis"]: row["axis_value"]
+            for row in lane_a_realization["lane_axis_realizations"]
+        }
+        lane_b_axis_values = {
+            row["axis"]: row["axis_value"]
+            for row in lane_b_realization["lane_axis_realizations"]
+        }
         axes = path["observable_difference_axes"]
         differing = [
             axis
             for axis in axes
-            if lane_a["lane"].get(axis) != lane_b["lane"].get(axis)
+            if lane_a_axis_values.get(axis) != lane_b_axis_values.get(axis)
         ]
         pair: dict[str, Any] = {
             "pair_id": f"P2-PAIR-{cp_id}",
@@ -371,6 +436,12 @@ def build_generator_evidence(
             "observable_difference_axes": differing,
             "observable_difference_axis_count": len(differing),
             "minimum_four_axes_pass": len(differing) >= 4,
+            "lane_a_axis_realization_digest": digest_object(
+                lane_a_realization["lane_axis_realizations"]
+            ),
+            "lane_b_axis_realization_digest": digest_object(
+                lane_b_realization["lane_axis_realizations"]
+            ),
             "content_quality_proven": False,
         }
         pair["pair_digest"] = object_digest(pair, "pair_digest")

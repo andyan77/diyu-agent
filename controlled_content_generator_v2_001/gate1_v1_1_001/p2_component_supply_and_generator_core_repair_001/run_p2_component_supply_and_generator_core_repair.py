@@ -24,8 +24,8 @@ from p2_component_model import (
     require,
 )
 from p2_final_materializer import (
+    FINAL_IMPORT_SENTINEL,
     FINAL_RESULT_PATH,
-    PRIMARY_IMPORT_DIR,
     build_final_documents,
     validate_final_documents,
 )
@@ -33,6 +33,13 @@ from p2_targeted_repair import (
     TARGETED_RESULT_PATH,
     build_targeted_repair_documents,
     validate_targeted_repair_documents,
+)
+from p2_targeted_repair_r2 import (
+    FINAL_EDGE_CANDIDATES_R2_PATH,
+    REVISED_AB_R2_PATH,
+    TARGETED_RESULT_R2_PATH,
+    build_targeted_repair_r2_documents,
+    validate_targeted_repair_r2_documents,
 )
 
 
@@ -49,6 +56,10 @@ def selected_documents(root: Path, phase: str) -> dict[Path, bytes]:
     if phase == "targeted-repair":
         documents = build_targeted_repair_documents(root)
         validate_targeted_repair_documents(documents)
+        return documents
+    if phase == "targeted-repair-r2":
+        documents = build_targeted_repair_r2_documents(root)
+        validate_targeted_repair_r2_documents(documents)
         return documents
     documents = build_documents(root)
     validate_documents(documents)
@@ -260,24 +271,98 @@ def targeted_repair_selftest(root: Path) -> int:
     return 0 if not failures else 1
 
 
+def targeted_repair_r2_selftest(root: Path) -> int:
+    first = build_targeted_repair_r2_documents(root)
+    second = build_targeted_repair_r2_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_targeted_repair_r2_documents(first)
+    except ValueError as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "early_p3",
+            TARGETED_RESULT_R2_PATH,
+            "p3_allowed: false",
+            "p3_allowed: true",
+        ),
+        (
+            "number_target",
+            TARGETED_RESULT_R2_PATH,
+            "historical_component_inventory: 86",
+            "historical_component_inventory: 87",
+        ),
+        (
+            "typed_object_binding",
+            FINAL_EDGE_CANDIDATES_R2_PATH,
+            '"object_id":"LOCAL-',
+            '"object_id":"TAMPERED-',
+        ),
+        (
+            "axis_operator",
+            REVISED_AB_R2_PATH,
+            '"operator_component_id":"G1V11-P2-AXIS-',
+            '"operator_component_id":"UNKNOWN-AXIS-',
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_REPAIR_R2_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_targeted_repair_r2_documents(mutated)
+        except (ValueError, KeyError, StopIteration, TypeError):
+            continue
+        failures.append(name)
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "targeted-repair-r2",
+                "negative_case_count": len(mutations),
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--selftest", action="store_true")
     parser.add_argument(
         "--phase",
-        choices=("auto", "checkpoint", "targeted-repair", "final"),
+        choices=(
+            "auto",
+            "checkpoint",
+            "targeted-repair",
+            "targeted-repair-r2",
+            "final",
+        ),
         default="auto",
     )
     args = parser.parse_args()
     phase = args.phase
     if phase == "auto":
-        phase = "final" if (ROOT / PRIMARY_IMPORT_DIR).is_dir() else "checkpoint"
+        if (ROOT / FINAL_IMPORT_SENTINEL).is_file():
+            phase = "final"
+        elif (ROOT / TARGETED_RESULT_R2_PATH).is_file():
+            phase = "targeted-repair-r2"
+        else:
+            phase = "checkpoint"
     if args.selftest:
         if phase == "final":
             return final_selftest(ROOT)
         if phase == "targeted-repair":
             return targeted_repair_selftest(ROOT)
+        if phase == "targeted-repair-r2":
+            return targeted_repair_r2_selftest(ROOT)
         return checkpoint_selftest(ROOT)
     if args.check:
         mismatches = check_outputs(ROOT, phase)
