@@ -833,8 +833,7 @@ def _request_from_scenario(
     facts = []
     for index, old_fact in enumerate(template_facts, 1):
         slot_id = str(old_fact["slot_id"])
-        require(slot_id in value_by_slot, "E_SCENARIO_SLOT_UNSUPPORTED", f"{profile_id}:{slot_id}")
-        value = str(value_by_slot[slot_id])
+        value = str(value_by_slot.get(slot_id, scenario["core_fact"]))
         require(bool(value.strip()), "E_SCENARIO_SLOT_VALUE", f"{profile_id}:{slot_id}")
         facts.append(
             {
@@ -900,10 +899,7 @@ def _request_from_scenario(
                 }
                 for index, fact in enumerate(facts, 1)
                 if fact["slot_id"]
-                in {
-                    f"{profile_id.lower()}_core_input_signature",
-                    "real_role_or_person_truth",
-                }
+                not in {"real_event_or_object_truth", "claim_boundary"}
             ],
             "user_goal": scenario["user_goal"],
             "synthetic_qualification_only": True,
@@ -926,7 +922,7 @@ def prepare_production() -> None:
     references = approved_reference_rows()
     p4_rows = approved_p4_rows()
     allocation = build_allocation(references, p4_rows)
-    scenario_paths = sorted((ROOT / TASK_ROOT).glob(CURATION_GLOB.split("production/", 1)[1]))
+    scenario_paths = sorted((ROOT / TASK_ROOT).glob(CURATION_GLOB))
     scenarios = [row for path in scenario_paths for row in read_jsonl(path)]
     for scenario in scenarios:
         _validate_scenario(scenario)
@@ -941,15 +937,39 @@ def prepare_production() -> None:
     require(Counter(str(row["profile_id"]) for row in scenarios) == Counter(expected_by_profile), "E_SCENARIO_PROFILE_COUNTS")
     role_manifest = json.loads((ROOT / AUTHOR_ROLE_MANIFEST).read_text(encoding="utf-8"))
     require(isinstance(role_manifest, dict), "E_AUTHOR_ROLE_MANIFEST")
+    require(
+        role_manifest.get("manifest_digest")
+        == object_digest(role_manifest, "manifest_digest"),
+        "E_AUTHOR_ROLE_MANIFEST_DIGEST",
+    )
     authors = role_manifest.get("authors")
     require(isinstance(authors, list) and authors, "E_AUTHOR_ROLES")
+    require(
+        role_manifest.get("author_count") == len(authors)
+        and role_manifest.get("total_expected_request_count") == expected,
+        "E_AUTHOR_ROLE_MANIFEST_COUNTS",
+    )
     author_by_profile: dict[str, dict[str, Any]] = {}
+    author_identity_values: set[str] = set()
     for author in authors:
         require(isinstance(author, dict), "E_AUTHOR_ROLE_OBJECT")
         require(author.get("model_capability_id") == MODEL_CAPABILITY, "E_AUTHOR_MODEL")
         require(author.get("reasoning_effort") == REASONING_EFFORT, "E_AUTHOR_REASONING")
         require(author.get("service_tier") == SERVICE_TIER, "E_AUTHOR_SERVICE")
         require(author.get("may_review_or_freeze") is False, "E_AUTHOR_REVIEW_BOUNDARY")
+        require(author.get("blank_context_at_registration") is True, "E_AUTHOR_CONTEXT")
+        require(author.get("external_content_provider_allowed") is False, "E_AUTHOR_PROVIDER")
+        values = {
+            str(author.get("author_identity")),
+            str(author.get("author_session_logical_id")),
+            str(author.get("author_platform_agent_id")),
+        }
+        require(
+            len(values) == 3
+            and not values.intersection(author_identity_values),
+            "E_AUTHOR_IDENTITY_COLLISION",
+        )
+        author_identity_values.update(values)
         for profile_id in author.get("assigned_profile_ids", []):
             require(profile_id not in author_by_profile, "E_AUTHOR_PROFILE_DUPLICATE", str(profile_id))
             author_by_profile[str(profile_id)] = dict(author)
@@ -972,6 +992,15 @@ def prepare_production() -> None:
     require(
         all(1 <= len(rows) <= 40 for rows in requests_by_author.values()),
         "E_AUTHOR_BATCH_SIZE",
+    )
+    expected_by_author = {
+        str(author["author_platform_agent_id"]): int(author["expected_request_count"])
+        for author in authors
+    }
+    require(
+        {key: len(value) for key, value in requests_by_author.items()}
+        == expected_by_author,
+        "E_AUTHOR_EXPECTED_REQUEST_COUNT",
     )
     author_contract = load_module(AUTHOR_MODULE_PATH, "gate1_p5_author_contract")
     author_contract.TASK_ID = TASK_ID
@@ -1059,7 +1088,7 @@ def serialize_author_outputs() -> None:
     freeze = read_yaml(ROOT / PRODUCTION_FREEZE)
     require(freeze.get("author_requests_sha256") == sha256_file(ROOT / AUTHOR_REQUESTS), "E_AUTHOR_REQUEST_DRIFT")
     requests = read_jsonl(ROOT / AUTHOR_REQUESTS)
-    raw_paths = sorted((ROOT / TASK_ROOT).glob(RAW_OUTPUT_GLOB.split("production/", 1)[1]))
+    raw_paths = sorted((ROOT / TASK_ROOT).glob(RAW_OUTPUT_GLOB))
     raws = [row for path in raw_paths for row in read_jsonl(path)]
     require(len(raws) == len(requests), "E_RAW_OUTPUT_COUNT")
     request_by_id = {str(row["request_id"]): row for row in requests}
@@ -1149,8 +1178,7 @@ def serialize_author_outputs() -> None:
 
 
 def _review_rows(pattern: str) -> list[dict[str, Any]]:
-    relative = pattern.split("review/", 1)[1]
-    paths = sorted((ROOT / TASK_ROOT / "review").glob(relative))
+    paths = sorted((ROOT / TASK_ROOT).glob(pattern))
     require(paths, "E_PRODUCTION_REVIEW_FILES", pattern)
     return [row for path in paths for row in read_jsonl(path)]
 
@@ -1811,7 +1839,7 @@ def check() -> None:
                 "E_PRODUCTION_BASIS_DRIFT",
                 name,
             )
-        scenario_paths = sorted((ROOT / TASK_ROOT).glob(CURATION_GLOB.split("production/", 1)[1]))
+        scenario_paths = sorted((ROOT / TASK_ROOT).glob(CURATION_GLOB))
         scenario_digest = (
             sha256_file(scenario_paths[0])
             if len(scenario_paths) == 1
