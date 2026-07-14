@@ -1,11 +1,12 @@
 third_p4_lifecycle:
   schema_version: gate1-third-p4-lifecycle-v1.0
   task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
-  lifecycle_state: TOOLS_FROZEN_PENDING_HIDDEN_CURATION
-  previous_lifecycle_digest: f02c0a1f8d52a3bac1b875e73e77078f0a7257474da894245bf4c682014ca681
+  lifecycle_state: HIDDEN_INPUTS_FROZEN
+  previous_lifecycle_digest: fc0feaaac76d7369246d1162ae03ac8e0979e3175260707907af374495f9bcb6
   evidence_digests:
     tool_freeze: 48c83cd89ee5f50f173e1e7c9738ad0acf59526f43565872fea08a688293a879
-  hidden_frozen: false
+    hidden_freeze: 37b0dbb04c26a1be0f20df606207844dd6a29884252c2930df272a454c90aeec
+  hidden_frozen: true
   hidden_exposed: false
   hidden_reusable: false
   technical_gate_pass: false
@@ -34,4 +35,4 @@ third_p4_lifecycle:
     generation_allowed: false
     release_ready: false
     production_ready: false
-  lifecycle_digest: fc0feaaac76d7369246d1162ae03ac8e0979e3175260707907af374495f9bcb6
+  lifecycle_digest: 4b3ed4a0d9ba9a93896b23682f781cc784731fd7a14a62c1464dd5b5c368ed1f
