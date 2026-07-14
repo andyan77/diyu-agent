@@ -1,20 +1,31 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P4_THIRD_SEALED_OWNER
-  task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
-  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001
+  owner_id: GATE1_V11_300_BASELINE_NONBLOCKING_FAILURE_OWNER
+  task_id: GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001
+  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
-  result_state: STOPPED_RETURN_TO_P3
+  result_state: STOPPED_PRODUCTION_FIRST_ACCEPTANCE_GATE_FAILED_NONBLOCKING
   p3_complete: true
   prior_p4_failure_honestly_closed: true
-  tool_freeze_complete: true
-  third_hidden_created: true
-  third_hidden_exposed: true
-  same_hidden_batch_may_be_reused: false
+  p4_third_machine_gate_pass: true
+  p4_qualification_verdict: REJECT
   H_admitted_count: 0
   generator_qualified: false
   p5_allowed: false
-  p5_executed: false
+  p5_executed: true
+  baseline_300_frozen: false
+  nonblocking_quality_line: true
+  quality_line_blocks_other_system_work: false
+  quality_line:
+    first_output_count: 211
+    first_acceptable_count: 184
+    observed_first_acceptance_rate: 0.872038
+    maximum_possible_rate_without_gaming: 0.886555
+    required_rate: 0.9
+    approved_reference_count: 29
+    route_gold_count: 60
+    candidate_300_manifest_created: false
+    independent_final_review_started: false
   current_generator:
     entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/third_p4.py
     author_contract: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/author_contract.py
@@ -27,10 +38,11 @@ current_gate1_owner:
     active_control_rule_count: 8
     generator_core_changed: false
     content_authoring_semantics_changed: false
-    output_contract_section_changed: true
   predecessor:
-    owner_id: GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER
-    result_state: OPEN_RECOVERY_COMPLETE
+    owner_id: GATE1_V11_P4_THIRD_SEALED_OWNER
+    task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
+    result_state: STOPPED_RETURN_TO_P3
+    owner_digest: dbb543de244df7e382b19db6ff6c6f4574bd9dec5549528b6d6f71c9bbfb1796
   core_numbers:
     target_total: 300
     positive_target: 240
@@ -38,6 +50,9 @@ current_gate1_owner:
     reference_inventory: 120
     counted_positive_parent_count: 29
     historical_component_inventory: 86
+    active_component_count: 68
+    active_control_rule_count: 8
+    active_edge_count: 85
     all_unchanged: true
   readiness:
     candidatepack_ready: false
@@ -51,4 +66,4 @@ current_gate1_owner:
     production_ready: false
     generator_qualified: false
     runtime_ingest_ready: false
-  owner_digest: dbb543de244df7e382b19db6ff6c6f4574bd9dec5549528b6d6f71c9bbfb1796
+  owner_digest: 4d746f2f92281f7d2f228fc59c11932096b4cd089d6ce8eb520ad65a8aa11b2a
