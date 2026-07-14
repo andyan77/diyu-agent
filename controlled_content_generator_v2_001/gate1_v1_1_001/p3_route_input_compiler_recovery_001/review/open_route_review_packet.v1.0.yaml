@@ -1,0 +1,41 @@
+schema_version: gate1-open-route-review-packet-v1.0
+task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+review_stage: PRE_IMPLEMENTATION_GOLD_REVIEW
+input_count: 20
+gold_count: 20
+profile_coverage:
+- CP01
+- CP02
+- CP03
+- CP04
+- CP05
+- CP06
+- CP07
+- CP08
+- CP09
+- CP10
+- CP11
+- CP12
+- CP13
+- CP14
+- CP15
+- CP16
+- CP17
+- CP18
+- CP19
+- CP20
+allowed_actions:
+- BLOCK
+- REQUEST_INPUT
+- DEGRADE
+allowed_reasons:
+- 输入冲突
+- 事实缺失
+- 授权缺失
+reviewers_must_not_read:
+- route_contract.py
+- compiler_actuals
+- other_reviewer_report
+input_sha256: fa581050e2c07deebddb19b43a2a6f1d70da13a09a7e310d3524f3335fd9b6f0
+proposed_gold_sha256: 4b7728ef9e413b8c426d1af49b8bac375b5079ae83accf3aafe1691ef0004ce2
+packet_digest: 202bb0920f7e4ee72c1604acba9de030f6aead010d13541cefeacc9f5f900033

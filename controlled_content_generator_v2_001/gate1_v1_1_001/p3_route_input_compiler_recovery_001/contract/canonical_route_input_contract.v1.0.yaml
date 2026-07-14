@@ -1,0 +1,13 @@
+schema_version: gate1-canonical-route-input-v1.0
+task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+one_contract: true
+one_compiler_entrypoint: route_contract.compile_route_input
+slot_classes:
+- source
+- fact
+- authorization
+explicit_state_required: true
+unknown_fields_fail_closed: true
+gold_or_expected_fields_forbidden: true
+audience_content_allowed: false
+contract_digest: 2bf40bb9ca48af24d1d1319baf4d33a70f9915d898d3d490aaa9ffbcb8e20e52
