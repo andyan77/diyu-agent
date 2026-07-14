@@ -29,6 +29,7 @@ from p2_component_model import (
     source_state,
 )
 from p2_final_documents import build_generator_evidence
+from p2_final_documents_r4 import build_generator_evidence_r4
 from p2_generator_core import Gate1ValidationError, realize_request
 from p2_final_materializer import (
     FINAL_IMPORT_SENTINEL,
@@ -57,6 +58,19 @@ from p2_targeted_repair_r3 import (
     build_targeted_repair_r3_documents,
     validate_targeted_repair_r3_documents,
 )
+from p2_targeted_repair_r4 import (
+    ADDITION_CANDIDATES_R4_PATH,
+    REVISED_AB_R4_PATH,
+    REVISED_COMPONENTS_R4_PATH,
+    REVISED_RULES_R4_PATH,
+    TARGETED_RESULT_R4_PATH,
+    build_targeted_repair_r4_documents,
+    validate_targeted_repair_r4_documents,
+)
+from p2_generator_core_r4 import (
+    Gate1ValidationError as Gate1ValidationErrorR4,
+    realize_request as realize_request_r4,
+)
 
 
 if not __debug__:
@@ -80,6 +94,10 @@ def selected_documents(root: Path, phase: str) -> dict[Path, bytes]:
     if phase == "targeted-repair-r3":
         documents = build_targeted_repair_r3_documents(root)
         validate_targeted_repair_r3_documents(documents)
+        return documents
+    if phase == "targeted-repair-r4":
+        documents = build_targeted_repair_r4_documents(root)
+        validate_targeted_repair_r4_documents(documents)
         return documents
     documents = build_documents(root)
     validate_documents(documents)
@@ -530,6 +548,135 @@ def targeted_repair_r3_selftest(root: Path) -> int:
     return 0 if not failures else 1
 
 
+def targeted_repair_r4_selftest(root: Path) -> int:
+    first = build_targeted_repair_r4_documents(root)
+    second = build_targeted_repair_r4_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_targeted_repair_r4_documents(first)
+    except ValueError as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "early_p3",
+            TARGETED_RESULT_R4_PATH,
+            "p3_allowed: false",
+            "p3_allowed: true",
+        ),
+        (
+            "wrong_lane_allowed",
+            ADDITION_CANDIDATES_R4_PATH,
+            '"known_but_wrong_lane_value_behavior":"REJECT"',
+            '"known_but_wrong_lane_value_behavior":"ALLOW"',
+        ),
+        (
+            "token_inference_enabled",
+            ADDITION_CANDIDATES_R4_PATH,
+            '"selection_by_hash_or_token_inference_allowed":false',
+            '"selection_by_hash_or_token_inference_allowed":true',
+        ),
+        (
+            "body_effect_source_changed",
+            REVISED_AB_R4_PATH,
+            '"structural_bodies_must_differ":true',
+            '"structural_bodies_must_differ":false',
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_REPAIR_R4_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_targeted_repair_r4_documents(mutated)
+        except (KeyError, TypeError, ValueError):
+            continue
+        failures.append(name)
+
+    def document_rows(path: Path) -> list[dict[str, object]]:
+        return [
+            json.loads(line)
+            for line in first[path].decode("utf-8").splitlines()
+            if line
+        ]
+
+    try:
+        state = source_state(root)
+        component_by_id = {
+            str(row["component_id"]): row
+            for row in load_jsonl(root / COMPONENT_CANDIDATES_PATH)
+        }
+        for row in document_rows(REVISED_COMPONENTS_R4_PATH) + document_rows(
+            ADDITION_CANDIDATES_R4_PATH
+        ):
+            component_by_id[str(row["component_id"])] = row
+        components = list(component_by_id.values())
+        paths = document_rows(REVISED_AB_R4_PATH)
+        path_by_cp = {str(row["content_product_type_id"]): row for row in paths}
+        evidence = build_generator_evidence_r4(
+            state["profiles"],
+            components,
+            document_rows(REVISED_RULES_R4_PATH),
+            paths,
+        )
+        if (
+            len(evidence["requests"]) != 40
+            or len(evidence["realizations"]) != 40
+            or len(evidence["pair_results"]) != 20
+            or len(evidence["axis_body_pairs"]) != 120
+            or len(evidence["lane_binding_tampers"]) != 120
+            or len(evidence["contract_tampers"]) != 240
+            or not all(row["body_level_difference"] for row in evidence["axis_body_pairs"])
+            or not all(
+                row["substitution_rejected"]
+                for row in evidence["lane_binding_tampers"]
+            )
+            or not all(
+                row["tamper_rejected"] for row in evidence["contract_tampers"]
+            )
+            or not all(row["implementation_changed"] for row in evidence["ablations"])
+            or not all(row["tamper_rejected"] for row in evidence["digest_tampers"])
+        ):
+            failures.append("generator_evidence_counts_or_semantics")
+        base_request = copy.deepcopy(evidence["requests"][0])
+        axis = sorted(base_request["lane"]["axes"])[0]
+        contract = next(
+            row
+            for row in base_request["lane"]["axis_realization_contracts"]
+            if row["axis"] == axis
+        )
+        base_request["lane"]["axes"][axis] = contract["lane_b_value"]
+        base_request["lane"]["axis_operator_parameters"][axis][
+            "parameter_value"
+        ] = contract["lane_b_value"]
+        base_request["request_digest"] = object_digest(
+            base_request, "request_digest"
+        )
+        try:
+            realize_request_r4(base_request, component_by_id, path_by_cp)
+        except Gate1ValidationErrorR4:
+            pass
+        else:
+            failures.append("known_enum_lane_substitution_accepted")
+    except (KeyError, StopIteration, TypeError, ValueError) as exc:
+        failures.append(f"generator_evidence_fixture:{exc}")
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "targeted-repair-r4",
+                "negative_case_count": len(mutations) + 1,
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -542,6 +689,7 @@ def main() -> int:
             "targeted-repair",
             "targeted-repair-r2",
             "targeted-repair-r3",
+            "targeted-repair-r4",
             "final",
         ),
         default="auto",
@@ -552,11 +700,12 @@ def main() -> int:
         if (ROOT / FINAL_IMPORT_SENTINEL).is_file():
             phase = "final"
         elif (ROOT / TARGETED_RESULT_R2_PATH).is_file():
-            phase = (
-                "targeted-repair-r3"
-                if (ROOT / TARGETED_RESULT_R3_PATH).is_file()
-                else "targeted-repair-r2"
-            )
+            if (ROOT / TARGETED_RESULT_R4_PATH).is_file():
+                phase = "targeted-repair-r4"
+            elif (ROOT / TARGETED_RESULT_R3_PATH).is_file():
+                phase = "targeted-repair-r3"
+            else:
+                phase = "targeted-repair-r2"
         else:
             phase = "checkpoint"
     if args.selftest:
@@ -568,6 +717,8 @@ def main() -> int:
             return targeted_repair_r2_selftest(ROOT)
         if phase == "targeted-repair-r3":
             return targeted_repair_r3_selftest(ROOT)
+        if phase == "targeted-repair-r4":
+            return targeted_repair_r4_selftest(ROOT)
         return checkpoint_selftest(ROOT)
     if args.check:
         mismatches = check_outputs(ROOT, phase)
