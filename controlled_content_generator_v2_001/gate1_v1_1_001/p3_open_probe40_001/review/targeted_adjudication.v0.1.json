@@ -1,0 +1,298 @@
+{
+  "schema_version": "gate1-p3-targeted-adjudication-v0.1",
+  "task_id": "GATE1_V11_OPEN_PROBE40_001",
+  "adjudication_id": "P3-TARGETED-ADJUDICATION-001",
+  "adjudicator_identity": "P3-ADJUDICATOR-TARGETED-001",
+  "adjudicator_platform_agent_id": "019f5f38-fc2f-7623-81f4-c957fd884a5e",
+  "adjudicator_session_id": "P3-ADJUDICATION-SESSION-001",
+  "independence_attestation": {
+    "not_author": true,
+    "not_executor_builder_or_finalizer": true,
+    "not_either_signed_reviewer": true
+  },
+  "source_review_records": [
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json",
+      "signed_record_digest": "38cfc618a9a4ef15832334fc2e761c455bc337f9a22fb04a5090baebfe023041",
+      "overall_verdict": "FAIL"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_fact_authorization_review.v0.1.json",
+      "signed_record_digest": "586486dd5fd933db206a1bf07e322b7066eac1936bcc6fe625587a8d85f64488",
+      "overall_verdict": "FAIL"
+    }
+  ],
+  "targeted_items": [
+    {
+      "profile_id": "CP01",
+      "reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT"
+      ]
+    },
+    {
+      "profile_id": "CP02",
+      "reasons": [
+        "HARD_VETO_DISAGREEMENT"
+      ]
+    },
+    {
+      "profile_id": "CP07",
+      "reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT"
+      ]
+    },
+    {
+      "profile_id": "CP14",
+      "reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT",
+        "HARD_VETO_DISAGREEMENT"
+      ]
+    },
+    {
+      "profile_id": "CP15",
+      "reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT",
+        "HARD_VETO_DISAGREEMENT"
+      ]
+    },
+    {
+      "profile_id": "CP18",
+      "reasons": [
+        "HARD_VETO_DISAGREEMENT"
+      ]
+    },
+    {
+      "profile_id": "CP19",
+      "reasons": [
+        "HARD_VETO_DISAGREEMENT"
+      ]
+    }
+  ],
+  "full_batch_rereviewed": false,
+  "scores_modified": false,
+  "signed_review_verdicts_modified": false,
+  "resolutions": [
+    {
+      "profile_id": "CP01",
+      "disagreement_reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT"
+      ],
+      "ruling": {
+        "first_acceptable": true
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json",
+          "locator": "positive_scores[profile_id=CP01]",
+          "observation": "first_acceptable=false; the stated blocker is anti-formula restraint below the B minimum."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_fact_authorization_review.v0.1.json",
+          "locator": "positive_scores[profile_id=CP01]",
+          "observation": "first_acceptable=true with no hard veto."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP01; output_digest=cf2c6c2d5943c0ac8e4c98b4451b9be90deb6e571123b28ae50e864aaffdd126",
+          "observation": "The output identifies the authorized role and test garments, shows the concrete sequence '核对任务卡，逐件移开，恢复领口朝向', and preserves the distinct left-complete/right-pending stop state."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl",
+          "locator": "profile_id=CP01; request_digest=cda97d991e376535c5c2cf604e3ed47ba8f54636e5177531616aad1056793127",
+          "observation": "The frozen scenario requires exactly that task-card/action/stop-state chain and a no-efficiency/no-false-completion boundary."
+        }
+      ],
+      "rationale": "The boundary sentence is formulaic, but it does not dominate the output: the role, object, ordered work, and asymmetric completion state remain concrete and useful. On the disputed acceptance issue, the first output clears the minimum acceptable line without altering either reviewer's score."
+    },
+    {
+      "profile_id": "CP02",
+      "disagreement_reasons": [
+        "HARD_VETO_DISAGREEMENT"
+      ],
+      "ruling": {
+        "hard_veto_established": false,
+        "hard_veto_codes": []
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_fact_authorization_review.v0.1.json",
+          "locator": "positive_scores[profile_id=CP02]",
+          "observation": "The proposed PRODUCT_MANDATORY_INPUT_OR_GUARD_VIOLATION is based on the component label suggesting a shoulder-reset action."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_0/structure_80.v0.1.jsonl",
+          "locator": "record_id=P3-STRUCTURE-CP02-A2-ATTEMPT-0; component=RCV2-002-ACTION-06-COAT-SHOULDER-RESET; record_digest=8b20e044dfa5cd9c3f071630d3f87bdc370e04e44543d9504ed8d6901be071f3",
+          "observation": "The frozen effective mechanism is SEQUENCE_BOUND_ACTION over actor_task_identity, handled_object, observed_action_chain, and visible_result_or_unfinished_state; it does not require an unbound literal shoulder-reset act."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP02; output_digest=3bd5e9eb5a0e89998d45ee1a48462a8beec96466c329713791a3aefe09153f08",
+          "observation": "The visible surfaces implement the frozen action/state chain: fixed-camera recording, state marking, three time slices, and the evening pending-return label."
+        }
+      ],
+      "rationale": "The adjudication follows the frozen structure's executable mechanism and bound facts, not an out-of-context reading of the reusable component ID. The required mechanism is visibly realized, so the hard veto is not established."
+    },
+    {
+      "profile_id": "CP07",
+      "disagreement_reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT"
+      ],
+      "ruling": {
+        "first_acceptable": false
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json",
+          "locator": "positive_scores[profile_id=CP07]",
+          "observation": "first_acceptable=false because core product value remains below the B minimum and the diagnosis stays at a material-request workflow."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl",
+          "locator": "profile_id=CP07; request_digest=081774e3f04259789d77bbc4abf84dd3646090620d3ecb6315c560ef39b76fc9",
+          "observation": "The frozen scenario requires conditions, excluded directions, alternatives, and missing information through the required judgment/reasoning/closing components."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP07; output_digest=cb97cf89c364af7f8f0e199bcf7bb59f882acb1a0805e5fb82e47c1127cb6337",
+          "observation": "The output says only '排除不满足条件的方向' and asks for fabric/care information; it names no concrete excluded direction or alternative direction."
+        }
+      ],
+      "rationale": "The response is safe and methodical, but its user-facing diagnostic result is still a placeholder for later analysis. That is insufficient for first acceptance of the frozen product intent."
+    },
+    {
+      "profile_id": "CP14",
+      "disagreement_reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT",
+        "HARD_VETO_DISAGREEMENT"
+      ],
+      "ruling": {
+        "first_acceptable": true,
+        "hard_veto_established": false,
+        "hard_veto_codes": []
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_0/structure_80.v0.1.jsonl",
+          "locator": "record_id=P3-STRUCTURE-CP14-A2-ATTEMPT-0; component=RCV2-002-ACTION-08-COLOR-COMPARISON-PROP; record_digest=181f16c6696b4e3d27684bb778b9bd5f33b608220809e6b7f1decd8f724b02b6",
+          "observation": "The frozen effective mechanism is SEQUENCE_BOUND_ACTION bound to CP14's actor, material, observed action chain, and visible stop state."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl",
+          "locator": "profile_id=CP14; request_digest=122649d824f45d50989ed9c65564c480d065af8960ab8bcd859f9376fc9358bb",
+          "observation": "The bound action chain is '平放、轻推一次、停手、保持镜头观察'; the scenario does not supply or require a comparison prop as an audience fact."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP14; output_digest=0be6882acc3ee8448154c7f8c77a46f59b40e6104df5c36703eaff6c0bca16fa",
+          "observation": "Body and visual execution explicitly realize the full bound sequence at normal speed and preserve the visible stop state with synchronized source sound."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json",
+          "locator": "positive_scores[profile_id=CP14]",
+          "observation": "first_acceptable=true with no hard veto; the fact-authorization review's false result is solely downstream of the disputed component-label veto."
+        }
+      ],
+      "rationale": "The frozen, fact-bound action mechanism is implemented. Requiring an additional comparison prop from the component ID alone would contradict the frozen request. With that veto rejected, the otherwise accepted first output remains first_acceptable."
+    },
+    {
+      "profile_id": "CP15",
+      "disagreement_reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT",
+        "HARD_VETO_DISAGREEMENT"
+      ],
+      "ruling": {
+        "first_acceptable": true,
+        "hard_veto_established": false,
+        "hard_veto_codes": []
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_0/structure_80.v0.1.jsonl",
+          "locator": "record_id=P3-STRUCTURE-CP15-B1-ATTEMPT-0; component=RCV2-002-ACTION-15-TABLE-REARRANGE; record_digest=03fd6cd5452daf471d664857770f10f390aa72e97e0711db3c29113ca3edc6d9",
+          "observation": "The frozen effective mechanism is SEQUENCE_BOUND_ACTION over the CP15 actor, sample garments, action chain, and completed/pending states."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl",
+          "locator": "profile_id=CP15; request_digest=48ac457a8737739a2f7ebeb122b28f262d7707a2a61a141e1a64d2cf84eab588",
+          "observation": "The bound actions are receiving check, status marking, pressing, and pre-display verification; no separate tabletop regrouping fact is supplied."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP15; output_digest=a1beb83cc7023a727dbbf49bac06d8ed0201fc26884abdf34d4eb278005bef72",
+          "observation": "The output states the full four-step role chain and ends with the specific two-ready/one-label-review-pending state across back room, pressing table, and display area."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json",
+          "locator": "positive_scores[profile_id=CP15]",
+          "observation": "first_acceptable=true with no hard veto; the fact-authorization review's false result is solely downstream of the disputed component-label veto."
+        }
+      ],
+      "rationale": "The mandatory frozen mechanism is the bound status-transition action sequence, and it is present on the audience surface. A literal table-rearrangement requirement cannot be added from the reusable component ID when the frozen facts define another authorized sequence."
+    },
+    {
+      "profile_id": "CP18",
+      "disagreement_reasons": [
+        "HARD_VETO_DISAGREEMENT"
+      ],
+      "ruling": {
+        "hard_veto_established": true,
+        "hard_veto_codes": [
+          "PRODUCT_MANDATORY_INPUT_OR_GUARD_VIOLATION"
+        ]
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_0/structure_80.v0.1.jsonl",
+          "locator": "record_id=P3-STRUCTURE-CP18-A2-ATTEMPT-0; component=G1V11-P2-ACTION-AUTHORIZED-LOCAL-ROUTINE; record_digest=c482d5ceb9ac466622d3e0dbe27ac7a242b888044a5db787d991950af1e3634a",
+          "observation": "The required observable-action mechanism is SEQUENCE_BOUND_ACTION over local actor, objects, climate/season, and observed local action state."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl",
+          "locator": "profile_id=CP18; request_digest=06b8c5e2fa0d8d667c8373bf8d67675d86c2c58f681ccf55d16e42f430c0f5d9",
+          "observation": "The frozen local routine is explicit: read the synthetic weather task card, move the moisture mat, and reposition the return rack."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP18; output_digest=7954ddca411debda170c74eb483c0a141f273f1fff691df8964f5fd5589b4ed3",
+          "observation": "The surface says only that a local adjustment was completed and displays the mat, return rack, rain-gear point, and task card; it never presents the required read/move/reposition sequence."
+        }
+      ],
+      "rationale": "Unlike CP02/14/15, the output omits the actual fact-bound SEQUENCE_BOUND_ACTION. Naming the objects and asserting a completed adjustment does not realize the mandatory observable-action mechanism, so the hard veto is established."
+    },
+    {
+      "profile_id": "CP19",
+      "disagreement_reasons": [
+        "HARD_VETO_DISAGREEMENT"
+      ],
+      "ruling": {
+        "hard_veto_established": true,
+        "hard_veto_codes": [
+          "PRODUCT_MANDATORY_INPUT_OR_GUARD_VIOLATION"
+        ]
+      },
+      "evidence": [
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_0/structure_80.v0.1.jsonl",
+          "locator": "record_id=P3-STRUCTURE-CP19-B1-ATTEMPT-0; component=G1V11-P2-CLOSING-TRADEOFF-COST-BOUNDARY; record_digest=5404d8c1c83eede484feaa38fc830812cc97a596c506ad0f3ed70b82c9c71fd6",
+          "observation": "The required CLOSE_AT_BOUND_EVIDENCE mechanism binds abandoned_option, constraint_or_cost, current_result_or_open_state, and unresolved_consequence."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl",
+          "locator": "profile_id=CP19; request_digest=f44a32987184946d553b9657ecd063ff54bccffb3ee597326f9b88d9a760f0d6",
+          "observation": "The frozen facts provide concrete tradeoffs: option A requires two extra display changes, option B cannot show the focus, and option C retains one review."
+        },
+        {
+          "artifact_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/positive_20_first_outputs.v0.1.jsonl",
+          "locator": "profile_id=CP19; output_digest=b373d61ebcf8cbd17226f26bfd9c55f72aa720d27142457aeece691bf82c70ad; component_usage=G1V11-P2-CLOSING-TRADEOFF-COST-BOUNDARY",
+          "observation": "The component is mapped only to the final sentence '不自我表彰，不空喊长期主义，不宣称未发生的经营结果', which cites none of the four required closing facts and states no concrete abandoned option or cost."
+        }
+      ],
+      "rationale": "A generic non-self-congratulation boundary is not the frozen cost/tradeoff closure. Because the mandatory closing mechanism is only declared and not surfaced, the hard veto is established."
+    }
+  ],
+  "all_substantive_disagreements_closed": true,
+  "overall_effect": "ATTEMPT_0_REMAINS_FAILED",
+  "readiness_transition_authorized": false,
+  "readiness_flags_unchanged": true,
+  "adjudication_digest": "c1ece9143019f1aee9c490b7e59f66f1349d660fc823b34baabcd6be54d5bd45"
+}

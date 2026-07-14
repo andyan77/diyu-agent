@@ -1,0 +1,73 @@
+p3_open_probe40_result:
+  schema_version: gate1-p3-open-result-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  prompt_revision: r0
+  result_state: STOPPED_OPEN_QUALIFICATION_FAILED
+  p3_complete: false
+  p4_allowed: false
+  generator_qualified: false
+  generation_allowed: false
+  runtime_ingest_ready: false
+  production_ready: false
+  counts_toward_300: 0
+  baseline_commit: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  freeze_commit: bb598b0
+  structure_attempt_0_preserved: true
+  final_structure_record_count: 80
+  targeted_component_window_used: false
+  component_addition_count: 0
+  positive_first_output_count: 20
+  positive_first_output_profile_count: 20
+  route_case_count: 20
+  route_action_match_count: 20
+  route_reason_match_count: 20
+  route_audience_content_count: 0
+  review_one_score: 80.95
+  review_two_score: 87.8
+  review_one_first_acceptance_rate: 0.45
+  review_two_first_acceptance_rate: 0.45
+  review_one_blind_top1_accuracy: 0.0
+  review_two_blind_top1_accuracy: 0.05
+  substantive_disagreement_count: 7
+  adjudication_used: true
+  machine_exact_duplicate_pair_count: 0
+  machine_similarity_review_queue_count: 0
+  hard_error_profile_ids:
+  - CP02
+  - CP14
+  - CP15
+  - CP18
+  - CP19
+  external_exit_audit:
+    event_count: 2
+    controlled_execution_agent_run_count: 1
+    external_provider_request_count: 0
+    external_api_call_count: 0
+    credential_read_count: 0
+    network_dispatch_count: 0
+  historical_integrity:
+    manifest_record_count: 212
+    unauthorized_mutation_count: 0
+    authorized_compatibility_mutation_count: 0
+    authorized_compatibility_mutations: []
+  open_core_repair_window_used: false
+  open_probe_rerun_count: 0
+  p4_hidden_material_access_count: 0
+  core_number_impact:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  result_digest: 91abd810f68ef7ff8efb28ceeea03d9813ba09179dcb34128134eea9b79c3e76

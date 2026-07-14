@@ -1,0 +1,37 @@
+p3_delivery_receipt:
+  schema_version: gate1-p3-delivery-receipt-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  repository_before: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  freeze_commit: bb598b0
+  repository_after: RECORDED_IN_GIT_COMMIT_AND_DELIVERY_RESPONSE
+  branch: agent/gate1-v1-1-retrospective-recovery-plan
+  merge_request_14_must_remain_draft: true
+  p1a_p1b_p2_historical_integrity:
+    manifest_record_count: 212
+    unauthorized_mutation_count: 0
+    authorized_compatibility_mutation_count: 0
+    authorized_compatibility_mutations: []
+  p2_compatibility_pin_used: false
+  structure_attempt_0_preserved: true
+  targeted_component_window_used: false
+  final_structure_80_result: true
+  positive_20_first_output_result: false
+  route_20_action_and_reason_result: true
+  independent_review_reports:
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json
+    score: 80.95
+    verdict: FAIL
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_fact_authorization_review.v0.1.json
+    score: 87.8
+    verdict: FAIL
+  author_run_receipt_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_0/author_run_receipt.v0.1.yaml
+  result_state: STOPPED_OPEN_QUALIFICATION_FAILED
+  p4_allowed: false
+  counts_toward_300: 0
+  core_number_impact:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness_all_remain_false: true
+  receipt_digest: dbffcb2fad6f6143ae4554d0a8bc3465715c5152bbccd4221994991540f27fa9
