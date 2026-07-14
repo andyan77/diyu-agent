@@ -1,21 +1,27 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER
+  owner_id: GATE1_V11_P4_THIRD_SEALED_OWNER
   task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
-  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001
+  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
-  result_state: OPEN_RECOVERY_COMPLETE
+  result_state: TOOLS_FROZEN_PENDING_HIDDEN_CURATION
   p3_complete: true
   prior_p4_failure_honestly_closed: true
-  tool_freeze_complete: false
+  tool_freeze_complete: true
   third_hidden_created: false
   third_hidden_exposed: false
+  same_hidden_batch_may_be_reused: false
   H_admitted_count: 0
   generator_qualified: false
   p5_allowed: false
+  p5_executed: false
   current_generator:
-    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/author_contract.py
+    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/third_p4.py
+    author_contract: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/author_contract.py
     route_contract: controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/route_contract.py
+    model_capability_id: gpt-5.6-sol
+    reasoning_effort: high
+    service_tier: priority
     active_component_count: 68
     active_edge_count: 85
     active_control_rule_count: 8
@@ -23,12 +29,14 @@ current_gate1_owner:
     content_authoring_semantics_changed: false
     output_contract_section_changed: true
   predecessor:
-    owner_id: GATE1_V11_P4_RESEALED_STOPPED_OWNER
-    task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
-    result_state: STOPPED_RETURN_TO_P3
+    owner_id: GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER
+    result_state: OPEN_RECOVERY_COMPLETE
   core_numbers:
     target_total: 300
+    positive_target: 240
+    route_target: 60
     reference_inventory: 120
+    counted_positive_parent_count: 29
     historical_component_inventory: 86
     all_unchanged: true
   readiness:
@@ -43,4 +51,4 @@ current_gate1_owner:
     production_ready: false
     generator_qualified: false
     runtime_ingest_ready: false
-  owner_digest: c6c92a5befe6d0fcea62c03ce8d030a09c4ceec0c34fbab7754e9274c3aacc20
+  owner_digest: ecd2604a304c0d4fcb358fedcf9c214bf39dfd649b0f152ce5f6536c43309472

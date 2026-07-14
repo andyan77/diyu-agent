@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gate1-third-p4-curation-bundle-v1.0",
+  "title": "Third P4 curator submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["positive_rows", "anomaly_rows", "gold_rows", "role_manifest"],
+  "properties": {
+    "positive_rows": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {"$ref": "#/$defs/positive"}
+    },
+    "anomaly_rows": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {"$ref": "#/$defs/anomaly"}
+    },
+    "gold_rows": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {"$ref": "#/$defs/gold"}
+    },
+    "role_manifest": {"$ref": "#/$defs/role_manifest"}
+  },
+  "$defs": {
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "new_case_id", "new_text", "new_fact_values",
+        "new_scenario_combination", "new_answer_pairing",
+        "no_historical_case_access", "synthetic_only"
+      ],
+      "properties": {
+        "new_case_id": {"const": true},
+        "new_text": {"const": true},
+        "new_fact_values": {"const": true},
+        "new_scenario_combination": {"const": true},
+        "new_answer_pairing": {"const": true},
+        "no_historical_case_access": {"const": true},
+        "synthetic_only": {"const": true}
+      }
+    },
+    "positive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "task_id", "curation_item_id", "profile_id",
+        "assigned_variant", "request", "curator_identity",
+        "curator_session_logical_id", "curator_platform_agent_id",
+        "freshness_attestation", "novelty_signature", "curation_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "gate1-third-p4-positive-curation-v1.0"},
+        "task_id": {"const": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001"},
+        "curation_item_id": {"type": "string", "pattern": "^P4T3-CURATION-POS-CP[0-9]{2}$"},
+        "profile_id": {"type": "string", "pattern": "^CP[0-9]{2}$"},
+        "assigned_variant": {"enum": ["A1", "A2", "B1", "B2"]},
+        "request": {"type": "object"},
+        "curator_identity": {"type": "string", "minLength": 1},
+        "curator_session_logical_id": {"type": "string", "minLength": 1},
+        "curator_platform_agent_id": {"type": "string", "minLength": 1},
+        "freshness_attestation": {"$ref": "#/$defs/freshness"},
+        "novelty_signature": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "curation_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "anomaly": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "task_id", "curation_item_id", "case_id",
+        "profile_id", "route_input", "curator_identity",
+        "curator_session_logical_id", "curator_platform_agent_id",
+        "freshness_attestation", "novelty_signature", "curation_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "gate1-third-p4-anomaly-curation-v1.0"},
+        "task_id": {"const": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001"},
+        "curation_item_id": {"type": "string", "pattern": "^P4T3-CURATION-ROUTE-CP[0-9]{2}$"},
+        "case_id": {"type": "string", "pattern": "^P4T3-ROUTE-CP[0-9]{2}$"},
+        "profile_id": {"type": "string", "pattern": "^CP[0-9]{2}$"},
+        "route_input": {"type": "object"},
+        "curator_identity": {"type": "string", "minLength": 1},
+        "curator_session_logical_id": {"type": "string", "minLength": 1},
+        "curator_platform_agent_id": {"type": "string", "minLength": 1},
+        "freshness_attestation": {"$ref": "#/$defs/freshness"},
+        "novelty_signature": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "curation_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "gold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "task_id", "gold_item_id", "case_id", "profile_id",
+        "expected_primary_action", "expected_primary_reason_category",
+        "gold_rationale_code", "curator_identity", "curator_session_logical_id",
+        "curator_platform_agent_id", "gold_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "gate1-third-p4-route-gold-v1.0"},
+        "task_id": {"const": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001"},
+        "gold_item_id": {"type": "string", "pattern": "^P4T3-GOLD-CP[0-9]{2}$"},
+        "case_id": {"type": "string", "pattern": "^P4T3-ROUTE-CP[0-9]{2}$"},
+        "profile_id": {"type": "string", "pattern": "^CP[0-9]{2}$"},
+        "expected_primary_action": {"enum": ["BLOCK", "DEGRADE", "REQUEST_INPUT"]},
+        "expected_primary_reason_category": {"enum": ["事实缺失", "授权缺失", "输入冲突"]},
+        "gold_rationale_code": {"type": "string", "minLength": 1},
+        "curator_identity": {"type": "string", "minLength": 1},
+        "curator_session_logical_id": {"type": "string", "minLength": 1},
+        "curator_platform_agent_id": {"type": "string", "minLength": 1},
+        "gold_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "role": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "identity", "session_logical_id", "platform_agent_id", "blank_context"],
+      "properties": {
+        "role": {"type": "string"},
+        "identity": {"type": "string", "minLength": 1},
+        "session_logical_id": {"type": "string", "minLength": 1},
+        "platform_agent_id": {"type": "string", "minLength": 1},
+        "blank_context": {"const": true}
+      }
+    },
+    "role_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "task_id", "curator", "author", "content_value_reviewer",
+        "fact_authorization_reviewer", "targeted_adjudicator",
+        "qualification_coordinator", "all_identities_and_sessions_distinct",
+        "role_manifest_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "gate1-third-p4-role-isolation-v1.0"},
+        "task_id": {"const": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001"},
+        "curator": {"$ref": "#/$defs/role"},
+        "author": {"$ref": "#/$defs/role"},
+        "content_value_reviewer": {"$ref": "#/$defs/role"},
+        "fact_authorization_reviewer": {"$ref": "#/$defs/role"},
+        "targeted_adjudicator": {"$ref": "#/$defs/role"},
+        "qualification_coordinator": {"$ref": "#/$defs/role"},
+        "all_identities_and_sessions_distinct": {"const": true},
+        "role_manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

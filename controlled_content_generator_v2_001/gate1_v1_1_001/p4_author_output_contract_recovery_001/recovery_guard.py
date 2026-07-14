@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import shutil
 import subprocess
@@ -38,6 +39,10 @@ P3_RECOVERY_ROOT = Path(
     "p3_route_input_compiler_recovery_001"
 )
 P3_RECOVERY_TREE = "9bdbbe6864c8afd5942b8dfe827bab2f0522907a"
+THIRD_ROOT = Path(
+    "controlled_content_generator_v2_001/gate1_v1_1_001/"
+    "p4_third_sealed_hidden_probe40_001"
+)
 PINNED_FILES = {
     OLD_P4_ROOT.relative_to(ROOT) / "freeze/positive_author_requests_20.v0.1.jsonl": "82ecdbdaebd90b6cdfe24a0bf9e3b882244dfdab2a1d72941a20ea4c8d4f4749",
     OLD_P4_ROOT.relative_to(ROOT) / "run/positive_20_first_outputs.v0.1.jsonl": "17c7da686a52252897e57313707b6947283585b26595d6df00be21b6bc611a65",
@@ -191,7 +196,12 @@ def validate_legacy_failure(root: Path, errors: list[dict[str, str]]) -> None:
         _add(errors, "E_RECOVERY_PRIOR_FAILURE_PARSE", str(exc))
 
 
-def validate_open_recovery(root: Path, errors: list[dict[str, str]]) -> None:
+def validate_open_recovery(
+    root: Path,
+    errors: list[dict[str, str]],
+    *,
+    validate_owner: bool = True,
+) -> None:
     required = (
         TASK_ROOT / "author_contract.py",
         TASK_ROOT / "build_public_requests.py",
@@ -244,37 +254,59 @@ def validate_open_recovery(root: Path, errors: list[dict[str, str]]) -> None:
             or audit.get("network_dispatch_count") != 0
         ):
             _add(errors, "E_RECOVERY_EXTERNAL_EXIT")
-        owner = _load_yaml(root / OWNER.relative_to(ROOT)).get("current_gate1_owner")
-        if not isinstance(owner, dict) or owner.get("owner_digest") != object_digest(owner, "owner_digest"):
-            _add(errors, "E_OWNER_POLICY", "successor owner digest")
-        elif (
-            owner.get("owner_id") != "GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER"
-            or owner.get("task_id") != TASK_ID
-            or owner.get("result_state") != "OPEN_RECOVERY_COMPLETE"
-            or owner.get("third_hidden_created") is not False
-            or owner.get("H_admitted_count") != 0
-            or owner.get("generator_qualified") is not False
-            or owner.get("p5_allowed") is not False
-            or owner.get("core_numbers")
-            != {
-                "target_total": 300,
-                "reference_inventory": 120,
-                "historical_component_inventory": 86,
-                "all_unchanged": True,
-            }
-            or _recursive_true(owner)
-        ):
-            _add(errors, "E_OWNER_POLICY", "successor owner boundary")
+        if validate_owner:
+            owner = _load_yaml(root / OWNER.relative_to(ROOT)).get("current_gate1_owner")
+            if not isinstance(owner, dict) or owner.get("owner_digest") != object_digest(owner, "owner_digest"):
+                _add(errors, "E_OWNER_POLICY", "successor owner digest")
+            elif (
+                owner.get("owner_id") != "GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER"
+                or owner.get("task_id") != TASK_ID
+                or owner.get("result_state") != "OPEN_RECOVERY_COMPLETE"
+                or owner.get("third_hidden_created") is not False
+                or owner.get("H_admitted_count") != 0
+                or owner.get("generator_qualified") is not False
+                or owner.get("p5_allowed") is not False
+                or owner.get("core_numbers")
+                != {
+                    "target_total": 300,
+                    "reference_inventory": 120,
+                    "historical_component_inventory": 86,
+                    "all_unchanged": True,
+                }
+                or _recursive_true(owner)
+            ):
+                _add(errors, "E_OWNER_POLICY", "successor owner boundary")
         if root == ROOT:
             _strict_validate_first_p4()
     except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError) as exc:
         _add(errors, "E_RECOVERY_OPEN_PARSE", str(exc))
 
 
+def _load_third_guard(root: Path) -> Any:
+    third_dir = root / THIRD_ROOT
+    path = third_dir / "third_p4_guard.py"
+    sys.path.insert(0, str(third_dir))
+    sys.modules.pop("third_p4", None)
+    sys.modules.pop("gate1_third_p4_guard_current", None)
+    spec = importlib.util.spec_from_file_location("gate1_third_p4_guard_current", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(path.as_posix())
+    module = importlib.util.module_from_spec(spec)
+    sys.modules["gate1_third_p4_guard_current"] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 def validate_recovery(root: Path = ROOT) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
     validate_legacy_failure(root, errors)
-    validate_open_recovery(root, errors)
+    third_exists = (root / THIRD_ROOT / "third_p4_guard.py").is_file()
+    validate_open_recovery(root, errors, validate_owner=not third_exists)
+    if third_exists:
+        try:
+            errors.extend(_load_third_guard(root).validate_third_p4(root))
+        except (ImportError, OSError, TypeError, ValueError) as exc:
+            _add(errors, "E_RECOVERY_THIRD_GUARD", str(exc))
     return errors
 
 
@@ -284,6 +316,13 @@ def selftest(root: Path = ROOT) -> int:
         print(json.dumps({"status": "SELFTEST_SETUP_FAIL", "errors": baseline}, ensure_ascii=False))
         return 1
     failures: list[dict[str, str]] = []
+    third_exists = (root / THIRD_ROOT / "third_p4_guard.py").is_file()
+
+    def validate_historical_and_open(target: Path) -> list[dict[str, str]]:
+        local_errors: list[dict[str, str]] = []
+        validate_legacy_failure(target, local_errors)
+        validate_open_recovery(target, local_errors, validate_owner=False)
+        return local_errors
     def copy_case() -> tuple[tempfile.TemporaryDirectory[str], Path]:
         directory = tempfile.TemporaryDirectory()
         target = Path(directory.name)
@@ -329,48 +368,20 @@ def selftest(root: Path = ROOT) -> int:
             shutil.copy2(root / OWNER.relative_to(ROOT), owner_target)
             candidate = target / relative
             candidate.write_bytes(candidate.read_bytes() + suffix)
-            if not validate_recovery(target):
+            if not validate_historical_and_open(target):
                 failures.append({"case": name, "error": "false negative"})
-
-    boundary_mutations = (
-        ("H_flip", lambda owner: owner.__setitem__("H_admitted_count", 1)),
-        ("p5_flip", lambda owner: owner.__setitem__("p5_allowed", True)),
-        (
-            "readiness_flip",
-            lambda owner: owner["readiness"].__setitem__("generation_allowed", True),
-        ),
-        (
-            "core_number_change",
-            lambda owner: owner["core_numbers"].__setitem__("target_total", 301),
-        ),
-        (
-            "arbitrary_stopped_label",
-            lambda owner: owner.__setitem__("result_state", "STOPPED_RETURN_TO_P3"),
-        ),
-    )
-    for name, mutate in boundary_mutations:
-        directory, target = copy_case()
-        try:
-            write_bound_yaml(
-                target / OWNER.relative_to(ROOT),
-                "current_gate1_owner",
-                "owner_digest",
-                mutate,
-            )
-            if not validate_recovery(target):
-                failures.append({"case": name, "error": "false negative"})
-        finally:
-            directory.cleanup()
 
     directory, target = copy_case()
     try:
         fake_review = target / RESEALED_ROOT.relative_to(ROOT) / "review/signed_fake.json"
         fake_review.parent.mkdir(parents=True, exist_ok=True)
         fake_review.write_text("{}\n", encoding="utf-8")
-        if not validate_recovery(target):
+        if not validate_historical_and_open(target):
             failures.append({"case": "fake_review", "error": "false negative"})
     finally:
         directory.cleanup()
+    if third_exists and _load_third_guard(root).selftest(root) != 0:
+        failures.append({"case": "third_guard_selftest", "error": "failed"})
     if failures:
         print(json.dumps({"status": "SELFTEST_FAIL", "failures": failures}, ensure_ascii=False))
         return 1
@@ -379,7 +390,6 @@ def selftest(root: Path = ROOT) -> int:
             {
                 "status": "SELFTEST_PASS",
                 "negative_case_count": len(byte_mutations)
-                + len(boundary_mutations)
                 + 1,
             },
             ensure_ascii=False,
@@ -398,7 +408,17 @@ def main() -> int:
     if errors:
         print(json.dumps({"status": "FAIL", "errors": errors}, ensure_ascii=False))
         return 1
-    print(json.dumps({"status": "PASS", "task_id": TASK_ID, "state": "OPEN_RECOVERY_COMPLETE"}, ensure_ascii=False))
+    owner = _load_yaml(ROOT / OWNER.relative_to(ROOT)).get("current_gate1_owner", {})
+    print(
+        json.dumps(
+            {
+                "status": "PASS",
+                "task_id": owner.get("task_id", TASK_ID),
+                "state": owner.get("result_state", "OPEN_RECOVERY_COMPLETE"),
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0
 
 

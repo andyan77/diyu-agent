@@ -6578,11 +6578,17 @@ def main() -> int:
                 "status": "PASS",
                 "task_id": owner.get("task_id"),
                 "p3_final_validated": owner_id
-                == "GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER",
+                in {
+                    "GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER",
+                    "GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER",
+                    "GATE1_V11_P4_THIRD_SEALED_OWNER",
+                },
                 "p2_historical_integrity_validated": owner_id
                 in {
                     "GATE1_V11_P2_FINAL_OWNER",
                     "GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER",
+                    "GATE1_V11_P4_AUTHOR_OUTPUT_RECOVERY_OPEN_OWNER",
+                    "GATE1_V11_P4_THIRD_SEALED_OWNER",
                 },
                 "shared_horizon_modified": False,
             },

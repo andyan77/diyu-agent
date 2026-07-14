@@ -1,0 +1,165 @@
+{
+  "schema_version": "gate1-third-p4-contract-v1.0",
+  "task_id": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001",
+  "curation": {
+    "positive_count": 20,
+    "anomaly_count": 20,
+    "gold_count": 20,
+    "profile_ids": [
+      "CP01", "CP02", "CP03", "CP04", "CP05",
+      "CP06", "CP07", "CP08", "CP09", "CP10",
+      "CP11", "CP12", "CP13", "CP14", "CP15",
+      "CP16", "CP17", "CP18", "CP19", "CP20"
+    ],
+    "variant_counts": {"A1": 5, "A2": 5, "B1": 5, "B2": 5},
+    "route_actions": ["BLOCK", "DEGRADE", "REQUEST_INPUT"],
+    "route_reasons": ["事实缺失", "授权缺失", "输入冲突"],
+    "minimum_count_per_route_action": 1,
+    "minimum_count_per_route_reason": 1,
+    "freshness_required": [
+      "new_case_id",
+      "new_text",
+      "new_fact_values",
+      "new_scenario_combination",
+      "new_answer_pairing",
+      "no_historical_case_access"
+    ],
+    "allowed_reuse": [
+      "frozen_product_definition",
+      "frozen_slot_vocabulary",
+      "frozen_route_action_reason_vocabulary",
+      "frozen_component_contract"
+    ],
+    "forbidden_reuse": [
+      "historical_case_id",
+      "historical_case_text",
+      "historical_fact_value",
+      "historical_scenario_combination",
+      "historical_gold_pairing",
+      "historical_output"
+    ]
+  },
+  "roles": {
+    "required": [
+      "CURATOR",
+      "AUTHOR",
+      "CONTENT_VALUE_REVIEWER",
+      "FACT_AUTHORIZATION_REVIEWER",
+      "QUALIFICATION_COORDINATOR"
+    ],
+    "conditional": ["TARGETED_ADJUDICATOR"],
+    "all_identities_and_sessions_distinct": true,
+    "blank_context_required": true,
+    "author_may_review": false,
+    "curator_may_author_or_review": false,
+    "reviewers_may_read_other_review": false,
+    "qualification_coordinator_may_author_or_review": false
+  },
+  "execution": {
+    "author_semantic_output_count": 20,
+    "normalized_output_count": 20,
+    "author_attempts_per_request": 1,
+    "route_attempts_per_case": 1,
+    "second_candidate_count": 0,
+    "replacement_count": 0,
+    "route_actuals_must_freeze_before_gold_read": true,
+    "serializer_may_change_semantics": false
+  },
+  "review": {
+    "reviewer_count": 2,
+    "judgments_per_reviewer": 20,
+    "minimum_first_acceptable_per_reviewer": 18,
+    "minimum_blind_profile_correct_per_reviewer": 17,
+    "maximum_formulaic_or_near_duplicate_union": 2,
+    "maximum_hard_error_union": 0,
+    "route_action_match_required": 20,
+    "route_reason_match_required": 20,
+    "route_audience_leak_maximum": 0,
+    "targeted_adjudication_only_for_substantive_disagreement": true
+  },
+  "lifecycle_states": {
+    "TOOLS_FROZEN_PENDING_HIDDEN_CURATION": {
+      "hidden_frozen": false,
+      "hidden_exposed": false,
+      "technical_gate_pass": false,
+      "reviews_pass": false,
+      "decision_present": false,
+      "generator_qualified": false,
+      "p5_allowed": false,
+      "h_count": 0
+    },
+    "HIDDEN_INPUTS_FROZEN": {
+      "hidden_frozen": true,
+      "hidden_exposed": false,
+      "technical_gate_pass": false,
+      "reviews_pass": false,
+      "decision_present": false,
+      "generator_qualified": false,
+      "p5_allowed": false,
+      "h_count": 0
+    },
+    "STOPPED_RETURN_TO_P3": {
+      "hidden_frozen": true,
+      "hidden_exposed": true,
+      "technical_gate_pass": false,
+      "reviews_pass": false,
+      "decision_present": false,
+      "generator_qualified": false,
+      "p5_allowed": false,
+      "h_count": 0
+    },
+    "PASS_PENDING_FOUNDER_QUALIFICATION_DECISION": {
+      "hidden_frozen": true,
+      "hidden_exposed": true,
+      "technical_gate_pass": true,
+      "reviews_pass": true,
+      "decision_present": false,
+      "generator_qualified": false,
+      "p5_allowed": false,
+      "h_count": 0
+    },
+    "STOPPED_QUALIFICATION_REJECTED": {
+      "hidden_frozen": true,
+      "hidden_exposed": true,
+      "technical_gate_pass": true,
+      "reviews_pass": true,
+      "decision_present": true,
+      "generator_qualified": false,
+      "p5_allowed": false,
+      "h_count": 0
+    },
+    "PASS_TO_P5_POSITIVE_SCALE": {
+      "hidden_frozen": true,
+      "hidden_exposed": true,
+      "technical_gate_pass": true,
+      "reviews_pass": true,
+      "decision_present": true,
+      "generator_qualified": true,
+      "p5_allowed": true,
+      "h_count": "APPROVED_FIRST_OUTPUT_COUNT"
+    }
+  },
+  "p5_boundary": {
+    "target_baseline_count": 300,
+    "positive_target_count": 240,
+    "route_target_count": 60,
+    "legacy_reference_inventory_count": 120,
+    "counted_positive_parent_count": 29,
+    "historical_component_inventory_count": 86,
+    "active_component_count": 68,
+    "p5_execution_in_this_task": false,
+    "external_provider_request_count": 0,
+    "production_publish_count": 0,
+    "readiness_flags_must_remain_false": [
+      "candidatepack_ready",
+      "KE_ready",
+      "RAG_ready",
+      "DIFY_ready",
+      "production_servable",
+      "generation_eligible",
+      "generation_allowed",
+      "release_ready",
+      "production_ready"
+    ]
+  }
+}

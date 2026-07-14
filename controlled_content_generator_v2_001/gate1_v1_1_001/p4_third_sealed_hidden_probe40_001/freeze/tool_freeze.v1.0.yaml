@@ -1,0 +1,60 @@
+third_p4_tool_freeze:
+  schema_version: gate1-third-p4-tool-freeze-v1.0
+  task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
+  tool_file_sha256:
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/third_p4.py: 88baf1aaacb4f0da534aca0992dcdc5cb5901b948efc80da379417fc642b6ce4
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/third_p4_guard.py: 730190fe6bebf66e88d69bc2c49a8880fc9da4f7e9f636ab1f6042b8f6b635d1
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/build_curator_allowed_input.py: cf55e028da9f6e401265d3b048899cece02e28a3839f693fd7411d4bd9e9978b
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/third_p4_contract.v1.0.json: 50e3383e5c24c2c18ce315a815412b7feb1be1961326001c8639a5946576bbb5
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/curation_bundle.schema.json: 8b0c981833a411ff0e957ac80a286d61df8dc4decc14c09f805526dc913cc438
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/blind_review_stage.schema.json
+    : f7c86ded864ceec3a51d204986e5c810a426eee1de0d02f4cd4d9b52155eb72d
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/independent_review.schema.json
+    : cd980c81e30a67ffd70c186c3f59731951adbf5e6baf6a2df7c26905ed73ed7c
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/qualification_decision.schema.json
+    : 0406f72c0a03f43be20a1c749a149a799bcb7491212e1331ab7b0d8ed0348149
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/targeted_adjudication.schema.json
+    : 65bc49dba5fb7e59c3b67671253ed677f48f6ae172f96255dc5817b4428ee080
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/contract/lifecycle_record.schema.json
+    : b139245be21bd97adcecec773cd7bb2104f3e4fefcc6a42069122e1b64e85600
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/author_contract.py: c809c9d96b5041da9a9c14e1d415622802b87ed85444361ceb916f4f5471dceb
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/build_public_requests.py: 5777a96a047bf014710a0f54d3b398bcf72c42a088b143675769faeee59143dd
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/contract/controlled_author_instruction.v1.0.md
+    : 8ff9ca749cdb6dd94c0812975012abd66642896e41e8e2f101178183ace66923
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/contract/author_semantic_output_contract.v1.0.json
+    : b938188912e9259162940eb8869423dda95b1079a3c4a4559d8e0a2e230ad78d
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/recovery_guard.py: a89eb3c2a15ebca23267ed3d92ad2a18372d54f183564fb4bb394c2bb016a73e
+    controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/route_contract.py: e0cbe5f1c01c21b827cf8b0392876555788571f3efddbcb79a158afcb01d4e71
+    ci/checkers/check_gate1_v1_1_current.py: 1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8
+  curator_allowed_input_sha256: b32f8b5c40372b5369b6fe4c3811edafcbc0cbe97b4cf83010707aa18321666f
+  frozen_business_sha256:
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+    : 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+    : de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+    : 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    : e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/result/p1b_signed_review_closeout_result.v0.1.yaml
+    : d4738a12b846d4c7fa5ca231de6d9e884e32733c01b9add6e81fad8d56601f72
+  historical_tree_objects:
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001: 404a77ec7f59e0ce639daddbcd3c8d658d9bed5b
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001: 0d51df3fbd122173f3848d8e87ccc3a7253e963f
+    controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001: 9bdbbe6864c8afd5942b8dfe827bab2f0522907a
+  model_config:
+    model_capability_id: gpt-5.6-sol
+    reasoning_effort: high
+    service_tier: priority
+  hidden_material_absent: true
+  six_lifecycle_states_predeclared: true
+  generator_qualified: false
+  p5_allowed: false
+  core_numbers_unchanged:
+    '300': true
+    '240': true
+    '60': true
+    '120': true
+    N: 29
+    '86': true
+  tool_freeze_digest: 48c83cd89ee5f50f173e1e7c9738ad0acf59526f43565872fea08a688293a879

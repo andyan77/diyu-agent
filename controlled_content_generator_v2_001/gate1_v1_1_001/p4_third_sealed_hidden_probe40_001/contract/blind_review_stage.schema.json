@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gate1-third-p4-blind-review-stage-v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "task_id", "review_track", "reviewer_identity",
+    "reviewer_session_logical_id", "reviewer_platform_agent_id", "blank_context",
+    "other_review_unavailable", "recorded_before_label_reveal",
+    "label_mapping_accessed", "packet_digest", "catalog_digest",
+    "blind_judgments", "blind_stage_digest"
+  ],
+  "properties": {
+    "schema_version": {"const": "gate1-third-p4-blind-review-stage-v1.0"},
+    "task_id": {"const": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001"},
+    "review_track": {"enum": ["CONTENT_VALUE", "FACT_AUTHORIZATION"]},
+    "reviewer_identity": {"type": "string", "minLength": 1},
+    "reviewer_session_logical_id": {"type": "string", "minLength": 1},
+    "reviewer_platform_agent_id": {"type": "string", "minLength": 1},
+    "blank_context": {"const": true},
+    "other_review_unavailable": {"const": true},
+    "recorded_before_label_reveal": {"const": true},
+    "label_mapping_accessed": {"const": false},
+    "packet_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "catalog_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "blind_judgments": {
+      "type": "array", "minItems": 20, "maxItems": 20,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["blind_item_id", "chosen_profile_id", "reason"],
+        "properties": {
+          "blind_item_id": {"type": "string", "pattern": "^P4T3-BLIND-[0-9]{2}-[0-9a-f]{12}$"},
+          "chosen_profile_id": {"type": "string", "pattern": "^CP[0-9]{2}$"},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "blind_stage_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
