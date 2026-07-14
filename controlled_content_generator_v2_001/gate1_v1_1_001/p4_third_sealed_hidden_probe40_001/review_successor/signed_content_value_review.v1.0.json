@@ -1,0 +1,1100 @@
+{
+  "schema_version": "gate1-p4t3-successor-independent-review-v1.0",
+  "task_id": "GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001",
+  "reviewer_identity": "P4T3-SUCCESSOR-CONTENT-VALUE-REVIEWER",
+  "reviewer_platform_agent_id": "019f61b0-cda0-7aa0-9164-fa0f9b747620",
+  "reviewer_session_logical_id": "P4T3-SUCCESSOR-CONTENT-SESSION-019f61b0-cda0",
+  "model_capability_id": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "blank_context": true,
+  "other_review_unavailable": true,
+  "blind_choices_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p4_third_sealed_hidden_probe40_001/review_successor/content_value_blind_choices.v1.0.json",
+  "blind_choices_sha256": "6ddecd6bee6c55be0318fff2b0509811f8d7cce2c2de451ae3df96fe664d4534",
+  "blind_stage_frozen_commit": "6a00fe9",
+  "mapping_revealed_after_blind_freeze": true,
+  "review_track": "CONTENT_VALUE",
+  "judgments": [
+    {
+      "blind_item_id": "P4T3-NEUTRAL-01-17b24e6324a7",
+      "chosen_profile_id": "CP09",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 9,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 57
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 8,
+        "continuity": 4,
+        "subtotal": 27
+      },
+      "total_score": 84,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-09-762194b4af70",
+        "P4T3-NEUTRAL-17-d32ea9240f3f"
+      ],
+      "rationale": "盲判与映射一致。S-521的结构、适用/不适用任务、替代项和待核雨测形成明确反选规则，产品核心强；但正文把内部事件编号和'仅...不得...'边界指令当成用户正文，且结构与CP07等相似，不能作为首稿直接用。",
+      "evidence": [
+        "P4T3-POS-CP09-SURFACE-03完整给出S-521结构、适用与不适用任务及R-206替代项。",
+        "P4T3-POS-CP09-SURFACE-07用同一对象完成任务条件对照和替代证据待核收束。",
+        "P4T3-POS-CP09-SURFACE-04/05把P4T3内部事件标识和“仅依据／不得”治理指令写入正文。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试标识和主张边界指令出现在受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "沿用全批次“核心事实－合成来源说明－禁止事项”骨架，与CP07等条件判断内容高度同构。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-02-1fe818aa49ef",
+      "chosen_profile_id": "CP13",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 6,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 54
+      },
+      "product_quality": {
+        "product_core_fidelity": 12,
+        "product_specific_narrative_av": 6,
+        "continuity": 4,
+        "subtotal": 22
+      },
+      "total_score": 76,
+      "grade": "C",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-13-a3bd7cb2d750",
+        "P4T3-NEUTRAL-01-17b24e6324a7"
+      ],
+      "rationale": "三种任务、固定主体和温控条件使CP13可辨，但内容更像任务牌驱动的产品演示，缺少真实衣橱关系、搭配关系和生活观察，产品价值不足以支撑可用首稿。",
+      "evidence": [
+        "P4T3-POS-CP13-SURFACE-03列出三项任务和18摄氏度限定条件。",
+        "P4T3-POS-CP13-SURFACE-07以固定机位重复三个任务动作，但没有衣橱或搭配关系。",
+        "P4T3-POS-CP13-SURFACE-04/05暴露内部事件标识并直接输出治理边界。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试事实说明和边界指令进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "PRODUCT_CORE_THIN",
+          "detail": "三个预设任务没有形成衣橱关系或长期生活角色，接近普通功能演示。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "正文仍采用全批次相同的事实块、合成说明和禁止事项结构。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-03-2bdf3ae9836b",
+      "chosen_profile_id": "CP15",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 9,
+        "user_value": 7,
+        "platform_execution": 8,
+        "anti_formula": 3,
+        "subtotal": 54
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 8,
+        "continuity": 4,
+        "subtotal": 26
+      },
+      "total_score": 80,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-05-396f7dc3f152",
+        "P4T3-NEUTRAL-07-41b6de9a9125"
+      ],
+      "rationale": "到货时间、验收台分区、逐件核签和留置状态构成清楚的到店节点，数量边界也克制；但生命周期只覆盖单一收货岗位，且用户正文夹带测试治理信息。",
+      "evidence": [
+        "P4T3-POS-CP15-SURFACE-03记录08:35到货、12件核签及11件已核、1件留置。",
+        "P4T3-POS-CP15-SURFACE-07给出从到货单到三区验收台的可执行镜头链。",
+        "P4T3-POS-CP15-SURFACE-04/05写入内部事件编号和禁止外推指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部资格测试标识和约束指令位于受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "LIFECYCLE_DEPTH_LIMITED",
+          "detail": "仅呈现收货验收单节点，尚未形成岗位接力或后续上架连续线。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "采用批次共用的台账事实、合成证明和边界收尾模板。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-04-31271e2e8243",
+      "chosen_profile_id": "CP12",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 3,
+        "subtotal": 57
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5,
+        "subtotal": 29
+      },
+      "total_score": 86,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-19-dd74e24265dd",
+        "P4T3-NEUTRAL-20-e370033d849d"
+      ],
+      "rationale": "版本号、尺寸变更、触发原因、匹配条件、单次结果和待排期复测均完整，版本链很强；扣分主要来自用户正文中的内部标识、治理口吻和全批次统一骨架。",
+      "evidence": [
+        "P4T3-POS-CP12-SURFACE-03完整绑定v0.7至v0.8的尺寸变化、2毫米偏移及匹配条件。",
+        "P4T3-POS-CP12-SURFACE-05/08保留单次观察完成和重复测试待排期。",
+        "P4T3-POS-CP12-SURFACE-04/06直接呈现资格测试事实和“不得”约束。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试事件和主张限制被序列化到受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP10等采用相同的记录、版本状态和边界声明骨架。"
+        },
+        {
+          "severity": "minor",
+          "code": "PLATFORM_PROSE_TOO_CONTRACTUAL",
+          "detail": "正文更像验证合同回读，尚未转化为自然的公众号版本日志。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-05-396f7dc3f152",
+      "chosen_profile_id": "CP04",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 10,
+        "user_value": 7,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 55
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 8,
+        "continuity": 5,
+        "subtotal": 28
+      },
+      "total_score": 83,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-03-2bdf3ae9836b",
+        "P4T3-NEUTRAL-06-3dbda60b4d25"
+      ],
+      "rationale": "共同对象、两岗位权限、动作顺序和待二次复测交接都十分清楚，没有制造争执；但权限条款和内部事件证明被直接当作正文，平台表达仍像审计卡片。",
+      "evidence": [
+        "P4T3-POS-CP04-SURFACE-03/06准确区分青弦与迟墨的动作和权限。",
+        "P4T3-POS-CP04-SURFACE-10以R-418和蓝签完成可拍的岗位接力。",
+        "P4T3-POS-CP04-SURFACE-04/08泄露内部事件标识和治理指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部事件编号和禁止事项进入受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "COMPLIANCE_CARD_TONE",
+          "detail": "岗位权限被正面并列展示，较像合规说明而非自然多声部纪实。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与其他流程型样本共享事实块、证明块和边界块。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-06-3dbda60b4d25",
+      "chosen_profile_id": "CP03",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 7,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 55
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 8,
+        "continuity": 4,
+        "subtotal": 26
+      },
+      "total_score": 81,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-08-48564f5f70c5",
+        "P4T3-NEUTRAL-15-c73ebe4abcaf"
+      ],
+      "rationale": "输入状态、五步工序、尺卡复核和未完成针迹均具体可拍；但“是否越过8毫米线”的判断结果没有明确回收，且治理文本破坏了手艺过程的自然表达。",
+      "evidence": [
+        "P4T3-POS-CP03-SURFACE-03完整列出量取、折边、疏缝、锁边和复核。",
+        "P4T3-POS-CP03-SURFACE-08保持连续俯拍和末端12毫米未锁边状态。",
+        "P4T3-POS-CP03-SURFACE-04/06呈现内部事件证明及禁止外推指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试标识和边界指令进入用户正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "JUDGMENT_LOOP_NOT_CLOSED",
+          "detail": "提出折边是否越过8毫米线，却只报告未锁边长度，没有明确复核判定。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "手艺内容仍被统一的合成证明和治理收尾包裹。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-07-41b6de9a9125",
+      "chosen_profile_id": "CP02",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 8,
+        "user_value": 6,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 51
+      },
+      "product_quality": {
+        "product_core_fidelity": 13,
+        "product_specific_narrative_av": 8,
+        "continuity": 4,
+        "subtotal": 25
+      },
+      "total_score": 76,
+      "grade": "C",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-18-d4f028315c59",
+        "P4T3-NEUTRAL-03-2bdf3ae9836b"
+      ],
+      "rationale": "固定时段、门店别名、空间对象和两个时间锚满足CP02基本指纹；但主体几乎只是陈列前后对照，缺少门店节奏与人员在场感，和CP17的形态距离过近。",
+      "evidence": [
+        "P4T3-POS-CP02-SURFACE-03/04给出18:42与18:56的N-44状态。",
+        "P4T3-POS-CP02-SURFACE-07以固定机位完成前后比较。",
+        "P4T3-POS-CP02-SURFACE-05直接输出治理边界，SURFACE-04同时带内部事件编号。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部事件标识和不可推断事项进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "PRODUCT_DIFFERENTIATION_WEAK",
+          "detail": "更接近陈列换陈的前后对照，门店时段的生活节奏和人员状态不足。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP17及批次其他样本共享固定锚点、证明句和边界句结构。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-08-48564f5f70c5",
+      "chosen_profile_id": "CP01",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 6,
+        "platform_execution": 5,
+        "anti_formula": 3,
+        "subtotal": 51
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 7,
+        "continuity": 4,
+        "subtotal": 25
+      },
+      "total_score": 76,
+      "grade": "C",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-06-3dbda60b4d25",
+        "P4T3-NEUTRAL-15-c73ebe4abcaf"
+      ],
+      "rationale": "岗位、对象、动作链、判断点和待复核状态完整，CP01识别稳定；但抖音执行写成连续跟拍含12分钟静置，没有压缩方案，正文也不是自然岗位口语。",
+      "evidence": [
+        "P4T3-POS-CP01-SURFACE-03给出09:10至09:24完整任务链和4毫米翘起结果。",
+        "P4T3-POS-CP01-SURFACE-08要求连续跟拍并覆盖12分钟平放。",
+        "P4T3-POS-CP01-SURFACE-04/06暴露内部事件编号和治理约束。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "资格测试事件及边界指令位于受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "PLATFORM_EXECUTION_GAP",
+          "detail": "连续镜头覆盖12分钟静置不适合短视频，未说明延时、跳时或时间牌处理。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP03、CP06共享岗位任务事实块和限制性结尾。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-09-762194b4af70",
+      "chosen_profile_id": "CP07",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 9,
+        "platform_execution": 8,
+        "anti_formula": 3,
+        "subtotal": 57
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 4,
+        "subtotal": 28
+      },
+      "total_score": 85,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-01-17b24e6324a7",
+        "P4T3-NEUTRAL-16-cc5f56aa937d"
+      ],
+      "rationale": "问题来源、骑行任务、尺寸依据、条件分支、替代项和防雨证据缺口构成实用判断树；但10厘米阈值没有面向用户解释缘由，内部治理文本也进入正文。",
+      "evidence": [
+        "P4T3-POS-CP07-SURFACE-03给出11厘米口袋、10厘米阈值、替代小袋和缺失雨测。",
+        "P4T3-POS-CP07-SURFACE-07形成可收藏的条件分支板。",
+        "P4T3-POS-CP07-SURFACE-04/05包含内部事件编号和禁止事项。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试记录和边界指令出现在受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "THRESHOLD_EXPLANATION_MISSING",
+          "detail": "给出10厘米验证阈值，却没有解释其相对11厘米净宽所保留的操作余量。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP09共享条件、替代、证据待补和治理收尾骨架。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-10-7c9a9d09f5ba",
+      "chosen_profile_id": "CP18",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 7,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 9,
+        "anti_formula": 4,
+        "subtotal": 57
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5,
+        "subtotal": 29
+      },
+      "total_score": 86,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-07-41b6de9a9125",
+        "P4T3-NEUTRAL-03-2bdf3ae9836b"
+      ],
+      "rationale": "城市、街段、雨夹雪时段、职业人群、门店动作和限定声景均具体，视听区分度较强；但正文退化为地点与气象台账，并把内部资格事实和边界规则对外呈现。",
+      "evidence": [
+        "P4T3-POS-CP18-SURFACE-03及05至07绑定地点、气象、人群和门店动作。",
+        "P4T3-POS-CP18-SURFACE-09/10给出隐私克制的固定入口画面和三类现场声。",
+        "P4T3-POS-CP18-SURFACE-04/08暴露资格测试内部事实和治理边界。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部合成世界资格说明与禁止冒充指令进入受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "LEDGER_OVER_LIFE_WRITING",
+          "detail": "正文以记录号和气象字段为主，地方生活叙事仍显台账化。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "虽有独特声景，正文仍沿用全批次的事实、证明和限制三段式。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-11-8a8e62a54bf2",
+      "chosen_profile_id": "CP20",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 7,
+        "role_and_brand_consistency": 10,
+        "user_value": 8,
+        "platform_execution": 6,
+        "anti_formula": 3,
+        "subtotal": 54
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 8,
+        "continuity": 5,
+        "subtotal": 28
+      },
+      "total_score": 82,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-12-8cc201376b56",
+        "P4T3-NEUTRAL-19-dd74e24265dd"
+      ],
+      "rationale": "承诺、主体、节点、证据、偏差、修正和下一复核全部闭合，证据纪律优秀；但九段正文重复承诺与结果，并直接露出内部事件编号、治理规则和状态枚举，不是可直接使用的公众号内容。",
+      "evidence": [
+        "P4T3-POS-CP20-SURFACE-03及07至10完整记录承诺节点、T-07/T-14偏差、复核时间和状态。",
+        "P4T3-POS-CP20-SURFACE-13/14给出承诺页、编号表和台账字段的视觉交叉核对。",
+        "P4T3-POS-CP20-SURFACE-04/10/11暴露P4T3内部事件、PARTIAL_WITH_DEVIATION枚举和治理指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部事件标识、状态枚举和边界指令位于受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "PLATFORM_DENSITY_AND_REDUNDANCY",
+          "detail": "承诺、18/2结果和边界多次复述，公众号正文仍是字段回读而非编辑完成的内容。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP10、CP19共享证据台账、状态字段和限制性结尾模板。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-12-8cc201376b56",
+      "chosen_profile_id": "CP19",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 6,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 52
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 8,
+        "continuity": 5,
+        "subtotal": 28
+      },
+      "total_score": 80,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-20-e370033d849d",
+        "P4T3-NEUTRAL-11-8a8e62a54bf2"
+      ],
+      "rationale": "A/B选项、最终取舍、600个纸套代价、四日延迟和未决接受度都被坦白保留，经营复盘核心成立；但行业连接偏弱，表达与CP11的选择表高度同构，且含内部治理文本。",
+      "evidence": [
+        "P4T3-POS-CP19-SURFACE-03完整呈现选择B、放弃A、成本和未完成状态。",
+        "P4T3-POS-CP19-SURFACE-07把选择与代价组织为决策台账。",
+        "P4T3-POS-CP19-SURFACE-04/05写入内部事件标识和禁止自我表彰等治理指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部决策事件和作者约束直接出现在受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "APPAREL_CONTEXT_THIN",
+          "detail": "主体是包装与发运决策，和服装商品或门店经营的连接较弱。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "A/B、选择、放弃、代价的表格化表达与CP11近重复。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-13-a3bd7cb2d750",
+      "chosen_profile_id": "CP14",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 9,
+        "anti_formula": 5,
+        "subtotal": 60
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 10,
+        "continuity": 4,
+        "subtotal": 29
+      },
+      "total_score": 89,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-02-1fe818aa49ef",
+        "P4T3-NEUTRAL-17-d32ea9240f3f"
+      ],
+      "rationale": "无口播、无CTA、双光线、灰卡、原速刷动和同步原声高度符合CP14，是本批视听完成度最高的样本；但用户正文仍附带内部事件证明和治理指令，因此不能首稿接受。",
+      "evidence": [
+        "P4T3-POS-CP14-SURFACE-03绑定4200K漫射灯、遮光窗边、灰卡、一次刷动和0.8秒原声。",
+        "P4T3-POS-CP14-SURFACE-06/07实现非语言、原速、无配乐的专属视听语法。",
+        "P4T3-POS-CP14-SURFACE-04/05暴露内部测试事件和禁止推断事项。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部资格事实与主张限制进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "视听层面有区分，但正文仍使用全批次相同的合成证明和边界收尾。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-14-c3ae72bbc71f",
+      "chosen_profile_id": "CP05",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 8,
+        "role_and_brand_consistency": 10,
+        "user_value": 7,
+        "platform_execution": 6,
+        "anti_formula": 3,
+        "subtotal": 53
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 8,
+        "continuity": 5,
+        "subtotal": 27
+      },
+      "total_score": 80,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-11-8a8e62a54bf2",
+        "P4T3-NEUTRAL-19-dd74e24265dd"
+      ],
+      "rationale": "三阶段时间证据、一次错误及纠正、技能盲检和当前岗位构成克制的职业史；但内容只是档案字段顺序回读，缺少人物声纹与回访质感，并夹带内部治理信息。",
+      "evidence": [
+        "P4T3-POS-CP05-SURFACE-03/06建立2032-09、2033-04、2034-02三个阶段和当前权限。",
+        "P4T3-POS-CP05-SURFACE-09用三份档案支持成长线而不英雄化。",
+        "P4T3-POS-CP05-SURFACE-04/07写入内部事件标识和禁止补写指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部事件说明和作者边界进入受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "PERSON_VOICE_ABSENT",
+          "detail": "具备档案证据但没有口述、回访或角色语言，人物在场感有限。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "采用与其他档案型样本相同的事实清单、证明句和限制句。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-15-c73ebe4abcaf",
+      "chosen_profile_id": "CP06",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 10,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 3,
+        "subtotal": 58
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 8,
+        "continuity": 4,
+        "subtotal": 26
+      },
+      "total_score": 84,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-08-48564f5f70c5",
+        "P4T3-NEUTRAL-06-3dbda60b4d25",
+        "P4T3-NEUTRAL-17-d32ea9240f3f"
+      ],
+      "rationale": "3毫米可观察信号、同平面同尺卡条件、公差缺失和岗位权限边界构成可靠的专业判断切片；但正文仍是事实合同与禁止事项的机械回读。",
+      "evidence": [
+        "P4T3-POS-CP06-SURFACE-03/05清楚区分可记录偏移与不可作出的合格、返工判断。",
+        "P4T3-POS-CP06-SURFACE-08以校零尺卡和垂直俯拍完成观察证据。",
+        "P4T3-POS-CP06-SURFACE-04/06暴露内部事件标识和治理边界。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部资格事实和专业权限指令位于受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP01、CP03共享观察对象、岗位权限、待确认和禁止外推骨架。"
+        },
+        {
+          "severity": "minor",
+          "code": "AUDIENCE_TRANSLATION_LIMITED",
+          "detail": "专业边界准确，但没有把“3毫米但无公差”进一步转化为更自然的用户理解。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-16-cc5f56aa937d",
+      "chosen_profile_id": "CP16",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 10,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 4,
+        "subtotal": 59
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5,
+        "subtotal": 29
+      },
+      "total_score": 88,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-09-762194b4af70",
+        "P4T3-NEUTRAL-05-396f7dc3f152"
+      ],
+      "rationale": "需求、两种方案、缩小测试范围、三次抬腕反馈和未解决停止状态均真实克制，匿名裁切也尊重对象；但隐私规则和内部事件证明被直接写入正文，结果又多次重复。",
+      "evidence": [
+        "P4T3-POS-CP16-SURFACE-03/06完整呈现需求、调整、第三次仍触桌和停止服务。",
+        "P4T3-POS-CP16-SURFACE-05/09限定公开任务并保持手腕以下裁切。",
+        "P4T3-POS-CP16-SURFACE-04/07包含内部事件标识和治理指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部资格说明和隐私治理指令进入受众正文。"
+        },
+        {
+          "severity": "minor",
+          "code": "RESULT_REDUNDANCY",
+          "detail": "第三次仍触桌和未完成状态在正文、口播及视觉说明中重复密集。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "仍采用全批次相同的事实、证明、授权边界和状态收尾结构。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-17-d32ea9240f3f",
+      "chosen_profile_id": "CP08",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 10,
+        "role_and_brand_consistency": 9,
+        "user_value": 7,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 55
+      },
+      "product_quality": {
+        "product_core_fidelity": 13,
+        "product_specific_narrative_av": 7,
+        "continuity": 3,
+        "subtotal": 23
+      },
+      "total_score": 78,
+      "grade": "C",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-15-c73ebe4abcaf",
+        "P4T3-NEUTRAL-13-a3bd7cb2d750"
+      ],
+      "rationale": "双层材料、编号、12毫米包边和剖面尺卡足以识别CP08；但“放入三枚标记片后的分隔状态”没有说清实际分隔结果，结构与使用关系仍停留在列举层面。",
+      "evidence": [
+        "P4T3-POS-CP08-SURFACE-03列出P-31、G-08、12毫米包边和剖面依据。",
+        "P4T3-POS-CP08-SURFACE-07展示层次与放入标记片动作，但没有具体描述分隔结果。",
+        "P4T3-POS-CP08-SURFACE-04/05暴露内部事件标识和治理边界。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试证明和边界指令进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "STRUCTURE_USE_RELATION_UNDERDEVELOPED",
+          "detail": "列出结构与动作，却未说明三枚标记片形成了怎样的可观察分隔。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与其他对象解构样本共享事实块、证据缺口和禁止外推收尾。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-18-d4f028315c59",
+      "chosen_profile_id": "CP17",
+      "public_quality": {
+        "truth_and_boundary": 14,
+        "apparel_specificity": 7,
+        "role_and_brand_consistency": 8,
+        "user_value": 6,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 45
+      },
+      "product_quality": {
+        "product_core_fidelity": 11,
+        "product_specific_narrative_av": 7,
+        "continuity": 4,
+        "subtotal": 22
+      },
+      "total_score": 67,
+      "grade": "D",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE",
+        "UNRESOLVED_INPUT_CONFLICT"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-07-41b6de9a9125",
+        "P4T3-NEUTRAL-03-2bdf3ae9836b"
+      ],
+      "rationale": "目标、前态、移动动作和匹配机位具备CP17表面结构，但数量状态无法闭合：原有右下浅色板仍在，又新增右中浅色板，却断言中轴两侧各一块。输出没有请求澄清或说明移除动作。",
+      "evidence": [
+        "P4T3-POS-CP17-SURFACE-03先称右下已有一块浅色板，又称把两块备用板移至左中和右中，随后断言两侧各一块。",
+        "P4T3-POS-CP17-SURFACE-07重复该移动链，仍未呈现原右下浅色板的移除或去向。",
+        "P4T3-POS-CP17-SURFACE-04/05另含内部事件标识和治理指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "UNRESOLVED_INPUT_CONFLICT",
+          "detail": "原状态、移动数量和最终浅色板数量互相冲突，最终状态缺少支持动作。"
+        },
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部测试事件和禁止因果推断指令进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP02共享固定机位、时间前后对照和治理收尾，产品区分度有限。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-19-dd74e24265dd",
+      "chosen_profile_id": "CP10",
+      "public_quality": {
+        "truth_and_boundary": 20,
+        "apparel_specificity": 9,
+        "role_and_brand_consistency": 9,
+        "user_value": 8,
+        "platform_execution": 8,
+        "anti_formula": 3,
+        "subtotal": 57
+      },
+      "product_quality": {
+        "product_core_fidelity": 15,
+        "product_specific_narrative_av": 9,
+        "continuity": 5,
+        "subtotal": 29
+      },
+      "total_score": 86,
+      "grade": "B",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-04-31271e2e8243",
+        "P4T3-NEUTRAL-11-8a8e62a54bf2"
+      ],
+      "rationale": "七日、同夹具、每日30次、浅痕、仍可闭合、单样本局限和截止版本全部清楚，长期验证档案核心扎实；但内部台账标识和边界指令不应作为用户正文。",
+      "evidence": [
+        "P4T3-POS-CP10-SURFACE-03完整报告测试条件、七日变化、功能状态和局限。",
+        "P4T3-POS-CP10-SURFACE-05/08保留版本、截止时间和下一次记录未发生。",
+        "P4T3-POS-CP10-SURFACE-04/06暴露内部事件标识和治理限制。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部资格事件和测试结论边界进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "与CP12、CP20共享台账、状态标记和限制性结尾骨架。"
+        },
+        {
+          "severity": "minor",
+          "code": "DAILY_EVIDENCE_COMPRESSED",
+          "detail": "七日过程主要被概括为前六日一致，日级差异和可积累记录感有限。"
+        }
+      ]
+    },
+    {
+      "blind_item_id": "P4T3-NEUTRAL-20-e370033d849d",
+      "chosen_profile_id": "CP11",
+      "public_quality": {
+        "truth_and_boundary": 19,
+        "apparel_specificity": 7,
+        "role_and_brand_consistency": 9,
+        "user_value": 7,
+        "platform_execution": 7,
+        "anti_formula": 3,
+        "subtotal": 52
+      },
+      "product_quality": {
+        "product_core_fidelity": 14,
+        "product_specific_narrative_av": 8,
+        "continuity": 4,
+        "subtotal": 26
+      },
+      "total_score": 78,
+      "grade": "C",
+      "first_acceptable": false,
+      "hard_error_codes": [
+        "PROMPT_GOVERNANCE_LEAKAGE"
+      ],
+      "formulaic_or_near_duplicate": true,
+      "related_blind_item_ids": [
+        "P4T3-NEUTRAL-12-8cc201376b56",
+        "P4T3-NEUTRAL-04-31271e2e8243"
+      ],
+      "rationale": "需求、A/B材料、选择、放弃、压痕约束和擦拭代价都齐全；但没有明确展示A确实实现24页平放目标，且表达与CP19的经营取舍表高度相似。",
+      "evidence": [
+        "P4T3-POS-CP11-SURFACE-03给出24页目标、两种纸板、B两次起拱和选择A的代价。",
+        "P4T3-POS-CP11-SURFACE-07形成决策表，但未呈现A达到平放目标的复核结果。",
+        "P4T3-POS-CP11-SURFACE-04/05包含内部事件标识和治理指令。"
+      ],
+      "defects": [
+        {
+          "severity": "fatal",
+          "code": "PROMPT_GOVERNANCE_LEAKAGE",
+          "detail": "内部资格事实和作者限制进入受众正文。"
+        },
+        {
+          "severity": "major",
+          "code": "CHOSEN_OPTION_RESULT_UNPROVEN",
+          "detail": "说明B失败和A被选，却未明确给出A满足平放翻阅目标的观察结果。"
+        },
+        {
+          "severity": "major",
+          "code": "FORMULAIC_SHARED_SCAFFOLD",
+          "detail": "A/B、选择、放弃、代价的表达与CP19近重复，并沿用统一治理结尾。"
+        }
+      ]
+    }
+  ],
+  "route_gate": {
+    "action_match_count": 20,
+    "reason_match_count": 20,
+    "audience_leak_count": 0,
+    "pass": true
+  },
+  "overall_verdict": "CONTENT_VALUE_FAIL",
+  "summary": {
+    "blind_choice_match_count": 20,
+    "blind_choice_total": 20,
+    "grade_distribution": {
+      "A": 0,
+      "B": 14,
+      "C": 5,
+      "D": 1
+    },
+    "average_total_score": 81.25,
+    "first_acceptable_count": 0,
+    "hard_error_item_count": 20,
+    "formulaic_or_near_duplicate_item_count": 20,
+    "formulaic_or_near_duplicate_rate": 1.0,
+    "key_findings": [
+      "20项盲判全部与揭示映射一致，内容产品动作识别率为20/20。",
+      "路线比较的主动作和主原因均为20/20，路线受众泄漏为0，路线门单独通过。",
+      "全部正向输出都把核心事实后接内部事件或资格证明，再以“仅／不得”治理指令收尾；该治理元数据位于audience-facing body，构成全批次硬错误和100%公式化模式。",
+      "CP17另有未解决的浅色板数量冲突：原右下板未被移除却新增右中板，最终“两侧各一块”缺少事实支持。",
+      "原始分数中虽有14项达到B，但因硬错误均不满足first_acceptable；当前批次不能作为最终基线批准。"
+    ]
+  },
+  "review_digest": "f9004b0a2595e079e6ca44c11cd339b0fbf98b4f7c6f8803c07b5154f409df37"
+}
