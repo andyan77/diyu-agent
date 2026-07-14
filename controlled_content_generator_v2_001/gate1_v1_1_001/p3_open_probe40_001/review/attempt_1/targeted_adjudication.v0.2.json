@@ -1,0 +1,87 @@
+{
+  "schema_version": "gate1-p3-targeted-adjudication-v0.2",
+  "task_id": "GATE1_V11_OPEN_PROBE40_001",
+  "adjudication_id": "P3-R1-TARGETED-ADJUDICATION-001",
+  "adjudicator_identity": "P3-R1-ADJUDICATOR-TARGETED-001",
+  "adjudicator_platform_agent_id": "019f5f64-a7b6-72c2-bcf8-77e5cebaad9c",
+  "adjudicator_session_id": "P3-R1-ADJUDICATION-SESSION-001",
+  "adjudication_run_id": "P3-R1-ADJUDICATION-RUN-001",
+  "model_capability_id": "gpt-5.6-sol",
+  "reasoning_effort": "high",
+  "targeted_items": [
+    {
+      "profile_id": "CP07",
+      "reasons": [
+        "FIRST_ACCEPTANCE_DISAGREEMENT"
+      ]
+    }
+  ],
+  "full_batch_rereviewed": false,
+  "source_reports_preserved": true,
+  "reviewed_profile_ids": [
+    "CP07"
+  ],
+  "evidence_read": [
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/signed_content_value_review.v0.2.json",
+      "scope": "CP07 FIRST_ACCEPTANCE_DISAGREEMENT and report-level gate consequence",
+      "evidence": "内容审将CP07的core_product_value评为12、critical_minimum_pass评为true、first_acceptable评为true，同时已明确记录排除项与替代方向仍为抽象流程且没有具体被排除方向。"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/signed_fact_authorization_review.v0.2.json",
+      "scope": "CP07 FIRST_ACCEPTANCE_DISAGREEMENT and report-level gate consequence",
+      "evidence": "事实审将CP07的core_product_value评为11、critical_minimum_pass评为false、first_acceptable评为false；理由是核心诊断停在通用取数路径，未具体命名排除方向及可执行替代。"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/independent_review_contract.v0.2.yaml",
+      "scope": "grade bands, critical minimums, hard vetoes, and P3 pass lines",
+      "evidence": "B档内容产品核心价值最低线为12/15且不可由其他分数补偿；P3首次可接受数最低线为18。"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_1/positive_20_first_outputs.v0.2.jsonl",
+      "scope": "CP07 row only",
+      "evidence": "首稿具体呈现长时间坐姿、可接受手工整理以及补充具体面料记录与护理信息，但仅声称将排除不满足条件的方向并得到排除项和待补信息，没有表面化任何具体非适配方向、排除依据或有据替代方向。"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/positive_author_requests_20.v0.2.jsonl",
+      "scope": "CP07 row only",
+      "evidence": "CP07要求一个concrete synthetic qualification output，核心表面要求均标记generic_summary_not_sufficient=true；组件要求还明确field_binding_alone_is_not_surface_realization=true，并要求区分fit、non-fit、missing-condition与evidence-supported alternative。"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/structure_80.v0.2.jsonl",
+      "scope": "CP07 A1, A2, B1, and B2 rows only",
+      "evidence": "分配给首稿的B1结构使用not_fit_reason_alternative信息顺序和EXCLUSION_THEN_SUPPORTED_ALTERNATIVE机制，顺序要求为nonfit_conditions、exclusion_basis_evidence、supported_alternative、missing_condition_request；首稿只实现了最后的缺项请求。"
+    },
+    {
+      "path": "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml",
+      "scope": "CP07 profile only",
+      "evidence": "CP07定义要求回答真实具体问题并按条件给出判断，风格要求高事实具体性、直接、非推销且面向具体任务，允许问题分类、条件判断、决策树与排除法。"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md",
+      "scope": "sections 10, 11 CP07, 12.1, 12.2, and applicable hard-veto distinction",
+      "evidence": "v1.1把CP07核心价值定义为是否回答真实具体问题并按条件给出判断；B档核心产品价值最低线为12/15，关键项不达线不得补偿，首次可接受还要求达到甲级或乙级且无硬门失败。"
+    }
+  ],
+  "resolution": {
+    "profile_id": "CP07",
+    "final_first_acceptable": false,
+    "adjudicated_core_product_value": 11,
+    "grade_by_total_score": "B",
+    "critical_minimum_pass": false,
+    "hard_veto": false,
+    "hard_veto_reasons": [],
+    "reason": "采用事实审结论。CP07首稿安全、克制且给出了明确缺项请求，但v1.1的核心产品价值检查不是只看是否拒绝无证据承诺，而是看是否对具体问题按条件完成判断。CP07产品定义要求高事实具体性和面向具体任务，冻结B1结构进一步要求按非适配条件、排除依据、有据替代、缺项请求展开。实际首稿把“排除不满足条件的方向”“得到适用条件、排除项和待补信息”作为元描述重复出来，没有命名任何具体被排除方向、相应依据或替代方向；因此核心诊断未达到B档12/15最低线，其他分数不得补偿。该缺陷是产品核心价值不足，不构成编造、越权或其他硬否决。",
+    "p3_overall_gate_impact": {
+      "resolved_first_acceptable_count": 19,
+      "resolved_first_acceptance_rate": 0.95,
+      "contract_minimum_count": 18,
+      "first_acceptance_pass_line_met": true,
+      "hard_error_added": false,
+      "overall_gate_changed": false,
+      "conclusion": "CP07不计首次可接受，但19/20仍高于合同18/20最低线；在保留其余冻结结果且不作全量复审的前提下，本项裁决不推翻P3总体通过门。"
+    }
+  },
+  "all_substantive_disagreements_closed": true,
+  "adjudication_digest": "2e579d49d69e885297102d55b08c84fde7cc102c4624df0a89c3f0ea1312c9a5"
+}

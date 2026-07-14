@@ -1,31 +1,41 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P2_FINAL_OWNER
-  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
-  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001
+  owner_id: GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
-  result_state: PASS_TO_P3_OPEN_PROBE
-  p2_complete: true
-  p3_allowed: true
+  result_state: PASS_TO_P4_SEALED_HIDDEN_PROBE
+  p3_complete: true
+  p4_allowed: true
   current_generator:
-    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/run_p2_component_supply_and_generator_core_repair.py
+    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/run_p3_open_probe_r1.py
+    author_instruction: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/controlled_author_instruction.v0.2.md
+    author_model_config: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/author_model_and_session.v0.2.yaml
     active_component_count: 68
     active_edge_count: 85
     active_control_rule_count: 8
+    p3_component_addition_count: 0
     historical_generator_entrypoints_consumed: []
   predecessor:
-    owner_id: GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER
-    final_targeted_review:
-      reviewed_checkpoint_commit: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
-      review_packet_sha256: 2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8
+    owner_id: GATE1_V11_P2_FINAL_OWNER
+    owner_digest: ac4fe6c1ccdf8af787eb51d04f085883c27660690ccee6dfb996a90d89d4f7a7
+    p2_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/result/p2_final_result.v0.1.yaml
+    p2_result_sha256: 076bd9eb6c8ab67c0023bb454f6a82f16acecb284e896dc9029ef97582db5c3b
   core_numbers:
     target_total: 300
     reference_inventory: 120
     historical_component_inventory: 86
     all_unchanged: true
   readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
     generation_allowed: false
+    release_ready: false
+    production_ready: false
     generator_qualified: false
     runtime_ingest_ready: false
-    production_ready: false
-  owner_digest: ac4fe6c1ccdf8af787eb51d04f085883c27660690ccee6dfb996a90d89d4f7a7
+  owner_digest: d63daca011eb2eb12ff585a1ccf5081b54d69781548000cdf265adbc40e2fd8a

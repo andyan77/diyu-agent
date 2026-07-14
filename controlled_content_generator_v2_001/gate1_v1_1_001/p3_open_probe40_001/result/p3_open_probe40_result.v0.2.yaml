@@ -1,0 +1,74 @@
+p3_open_probe40_result:
+  schema_version: gate1-p3-open-result-v0.2
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  prompt_revision: r0
+  result_state: PASS_TO_P4_SEALED_HIDDEN_PROBE
+  p3_complete: true
+  p4_allowed: true
+  generator_qualified: false
+  generation_allowed: false
+  runtime_ingest_ready: false
+  production_ready: false
+  counts_toward_300: 0
+  baseline_commit: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  attempt_0_failure_commit: 80501c4c502fd28fcad53d0e8a07144875b73036
+  repair_freeze_commit: 817d35105be95f027465951e524496728f9bcaa5
+  attempt_0_failure_evidence_preserved: true
+  final_structure_record_count: 80
+  targeted_component_window_used: false
+  component_addition_count: 0
+  open_core_repair_window_used: true
+  open_core_repair_window_remaining: 0
+  open_probe_full_run_count: 2
+  positive_first_output_count: 20
+  positive_first_output_profile_count: 20
+  route_case_count: 20
+  route_action_match_count: 20
+  route_reason_match_count: 20
+  route_audience_content_count: 0
+  review_one_score: 90.2
+  review_two_score: 93.6
+  review_one_first_acceptance_rate: 1.0
+  review_two_first_acceptance_rate: 0.95
+  review_one_blind_top1_accuracy: 1.0
+  review_two_blind_top1_accuracy: 1.0
+  substantive_disagreement_count: 1
+  adjudication_used: true
+  all_substantive_disagreements_closed: true
+  human_formula_profile_ids_union:
+  - CP11
+  - CP19
+  hard_error_profile_ids: []
+  machine_exact_duplicate_pair_count: 0
+  machine_similarity_is_not_human_verdict: true
+  external_exit_audit:
+    event_count: 2
+    controlled_execution_agent_run_count: 1
+    external_provider_request_count: 0
+    external_api_call_count: 0
+    credential_read_count: 0
+    network_dispatch_count: 0
+  historical_integrity:
+    manifest_record_count: 212
+    unauthorized_mutation_count: 0
+    authorized_compatibility_mutation_count: 0
+    authorized_compatibility_mutations: []
+  p4_hidden_material_access_count: 0
+  core_number_impact:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  result_digest: 0197e65d43e7866cb041f71a6cdb9b9224198ab23c962c5e80bf518c1a5e28dc

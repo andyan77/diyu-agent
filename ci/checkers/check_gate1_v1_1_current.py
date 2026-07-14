@@ -27,6 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TASK_ID = "GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001"
 P1B_TASK_ID = "GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001"
 P2_TASK_ID = "GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001"
+P3_TASK_ID = "GATE1_V11_OPEN_PROBE40_001"
 BASELINE_COMMIT = "473a8664bdab37246db1b75785f765e62c80ed86"
 V1_REPAIR_BASELINE_COMMIT = "69235a23d62d6c92683fadf572f7b8c291771dd6"
 TASK_ROOT = Path(
@@ -40,6 +41,10 @@ P1B_TASK_ROOT = Path(
 P2_TASK_ROOT = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/"
     "p2_component_supply_and_generator_core_repair_001"
+)
+P3_TASK_ROOT = Path(
+    "controlled_content_generator_v2_001/gate1_v1_1_001/"
+    "p3_open_probe40_001"
 )
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
@@ -600,7 +605,7 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
 def unexpected_write_paths(paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
-        if path.is_relative_to(P2_TASK_ROOT):
+        if path.is_relative_to(P2_TASK_ROOT) or path.is_relative_to(P3_TASK_ROOT):
             continue
         if path not in {
             CURRENT_OWNER_PATH,
@@ -609,6 +614,20 @@ def unexpected_write_paths(paths: set[Path]) -> list[str]:
         }:
             unexpected.append(path.as_posix())
     return sorted(unexpected)
+
+
+def validate_p3_successor(root: Path, errors: list[dict[str, str]]) -> None:
+    """Load the P3 guard as a library, never as a nested checker process."""
+
+    module_root = ROOT / P3_TASK_ROOT
+    if str(module_root) not in sys.path:
+        sys.path.insert(0, str(module_root))
+    try:
+        from p3_current_guard import validate_p3_current
+
+        errors.extend(validate_p3_current(root))
+    except (ImportError, OSError, TypeError, ValueError) as exc:
+        add_error(errors, "E_P3_GUARD_IMPORT", str(exc))
 
 
 def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
@@ -1258,6 +1277,49 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
         return
     if not isinstance(owner, dict):
         add_error(errors, "E_OWNER_POLICY", "root missing")
+        return
+    if owner.get("task_id") == P3_TASK_ID:
+        if (
+            owner.get("owner_id") != "GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER"
+            or owner.get("current_task_root") != P3_TASK_ROOT.as_posix()
+            or owner.get("current_checker") != CURRENT_CHECKER_PATH.as_posix()
+            or owner.get("result_state") != "PASS_TO_P4_SEALED_HIDDEN_PROBE"
+            or owner.get("p3_complete") is not True
+            or owner.get("p4_allowed") is not True
+            or owner.get("owner_digest") != object_digest(owner, "owner_digest")
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p3 task binding")
+        predecessor = owner.get("predecessor")
+        if (
+            not isinstance(predecessor, dict)
+            or predecessor.get("owner_id") != "GATE1_V11_P2_FINAL_OWNER"
+            or predecessor.get("owner_digest")
+            != "ac4fe6c1ccdf8af787eb51d04f085883c27660690ccee6dfb996a90d89d4f7a7"
+            or predecessor.get("p2_result_sha256")
+            != "076bd9eb6c8ab67c0023bb454f6a82f16acecb284e896dc9029ef97582db5c3b"
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p3 predecessor")
+        generator = owner.get("current_generator")
+        if (
+            not isinstance(generator, dict)
+            or generator.get("entrypoint")
+            != (P3_TASK_ROOT / "run_p3_open_probe_r1.py").as_posix()
+            or generator.get("active_component_count") != 68
+            or generator.get("active_edge_count") != 85
+            or generator.get("active_control_rule_count") != 8
+            or generator.get("p3_component_addition_count") != 0
+            or generator.get("historical_generator_entrypoints_consumed") != []
+        ):
+            add_error(errors, "E_OWNER_POLICY", "p3 generator")
+        if owner.get("core_numbers") != {
+            "target_total": 300,
+            "reference_inventory": 120,
+            "historical_component_inventory": 86,
+            "all_unchanged": True,
+        }:
+            add_error(errors, "E_OWNER_POLICY", "p3 core numbers")
+        if recursively_find_true(owner.get("readiness"), READY_KEYS):
+            add_error(errors, "E_READINESS", "p3 owner")
         return
     if owner.get("task_id") == P2_TASK_ID:
         if owner.get("owner_id") == "GATE1_V11_P2_FINAL_OWNER":
@@ -5250,6 +5312,8 @@ def validate(root: Path) -> list[dict[str, str]]:
         validate_p2(root, errors)
     if owner_id == "GATE1_V11_P2_FINAL_OWNER":
         validate_p2_final(root, errors)
+    if (root / P3_TASK_ROOT).exists():
+        validate_p3_successor(root, errors)
     return errors
 
 
@@ -5277,12 +5341,22 @@ def copy_fixture(root: Path, target: Path) -> None:
         shutil.copytree(root / P1B_TASK_ROOT, target / P1B_TASK_ROOT)
     if (root / P2_TASK_ROOT).exists():
         shutil.copytree(root / P2_TASK_ROOT, target / P2_TASK_ROOT)
+    if (root / P3_TASK_ROOT).exists():
+        shutil.copytree(root / P3_TASK_ROOT, target / P3_TASK_ROOT)
 
 
 def mutate_yaml(path: Path, mutate: Callable[[dict[str, Any]], None]) -> None:
     value = load_yaml(path)
     mutate(value)
     write_yaml(path, value)
+
+
+def mutate_json(path: Path, mutate: Callable[[dict[str, Any]], None]) -> None:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise TypeError(f"JSON root is not a mapping: {path}")
+    mutate(value)
+    path.write_text(canonical_json(value) + "\n", encoding="utf-8")
 
 
 def mutate_jsonl(path: Path, mutate: Callable[[list[dict[str, Any]]], None]) -> None:
@@ -5398,9 +5472,97 @@ def tamper_current_owner_lineage(value: dict[str, Any]) -> None:
     if isinstance(authority, dict):
         authority["shared_horizon_modified"] = True
         return
-    owner["predecessor"]["final_targeted_review"][
-        "reviewed_checkpoint_commit"
-    ] = "0" * 40
+    predecessor = owner["predecessor"]
+    if "final_targeted_review" in predecessor:
+        predecessor["final_targeted_review"]["reviewed_checkpoint_commit"] = "0" * 40
+        return
+    predecessor["owner_digest"] = "0" * 64
+
+
+def tamper_p3_structure_clone(rows: list[dict[str, Any]]) -> None:
+    source = rows[0]
+    target = next(
+        row
+        for row in rows
+        if row["profile_id"] == source["profile_id"] and row["variant"] != source["variant"]
+    )
+    target["axis_values"] = copy.deepcopy(source["axis_values"])
+    target["addressable_outputs"] = copy.deepcopy(source["addressable_outputs"])
+    target["addressable_output_digest"] = source["addressable_output_digest"]
+    target["record_digest"] = object_digest(target, "record_digest")
+
+
+def tamper_p3_unapproved_component(rows: list[dict[str, Any]]) -> None:
+    rows[0]["selected_component_ids"].append("G1V11-P2-FC-01-FULL-SURFACE-FACT-COVERAGE")
+    rows[0]["record_digest"] = object_digest(rows[0], "record_digest")
+
+
+def tamper_p3_structure_audience_content(rows: list[dict[str, Any]]) -> None:
+    rows[0]["audience_content"] = True
+    rows[0]["audience_title"] = "forbidden"
+    rows[0]["record_digest"] = object_digest(rows[0], "record_digest")
+
+
+def tamper_p3_component_metadata_use(rows: list[dict[str, Any]]) -> None:
+    rows[0]["component_usage"][0]["implementation_surface_unit_ids"] = [
+        "NONEXISTENT-SURFACE"
+    ]
+    rows[0]["output_digest"] = object_digest(rows[0], "output_digest")
+
+
+def tamper_p3_unbound_fact(rows: list[dict[str, Any]]) -> None:
+    rows[0]["surface_units"][1]["fact_ids"] = ["FORGED-FACT"]
+    rows[0]["output_digest"] = object_digest(rows[0], "output_digest")
+
+
+def tamper_p3_all_block(rows: list[dict[str, Any]]) -> None:
+    for row in rows:
+        row["actual_primary_action"] = "BLOCK"
+        row["route_result_digest"] = object_digest(row, "route_result_digest")
+
+
+def tamper_p3_route_gold_leak(rows: list[dict[str, Any]]) -> None:
+    rows[0]["gold_primary_action"] = "BLOCK"
+
+
+def tamper_p3_reviewer_collision(value: dict[str, Any]) -> None:
+    value["reviewer_identity"] = "P3-CONTROLLED-AUTHOR-GPT56SOL-001"
+    value["signed_record_digest"] = object_digest(value, "signed_record_digest")
+
+
+def tamper_p3_review_verdict(value: dict[str, Any]) -> None:
+    value["overall_verdict"] = "FAIL" if value["overall_verdict"] == "PASS" else "PASS"
+    value["signed_record_digest"] = object_digest(value, "signed_record_digest")
+
+
+def tamper_p3_freeze_window(value: dict[str, Any]) -> None:
+    freeze = value["p3_open_repair_freeze"]
+    freeze["open_core_repair_window_remaining"] = 1
+    freeze["freeze_manifest_digest"] = object_digest(freeze, "freeze_manifest_digest")
+
+
+def tamper_p3_result_count(value: dict[str, Any]) -> None:
+    result = value["p3_open_probe40_result"]
+    result["counts_toward_300"] = 20
+    result["result_digest"] = object_digest(result, "result_digest")
+
+
+def tamper_p3_result_readiness(value: dict[str, Any]) -> None:
+    result = value["p3_open_probe40_result"]
+    result["readiness"]["generation_allowed"] = True
+    result["result_digest"] = object_digest(result, "result_digest")
+
+
+def tamper_p3_handoff_authorization(value: dict[str, Any]) -> None:
+    handoff = value["p4_sealed_probe_handoff"]
+    handoff["p4_execution_authorized"] = True
+    handoff["handoff_digest"] = object_digest(handoff, "handoff_digest")
+
+
+def create_p3_hidden_material(root: Path) -> None:
+    path = root / P3_TASK_ROOT / "hidden/forbidden_case.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("{}\n", encoding="utf-8")
 
 
 def selftest(root: Path) -> int:
@@ -5710,6 +5872,122 @@ def selftest(root: Path) -> int:
                 ),
             ]
         )
+    if (root / P3_TASK_ROOT).exists():
+        p3_structure = P3_TASK_ROOT / "structure/attempt_1/structure_80.v0.2.jsonl"
+        p3_outputs = P3_TASK_ROOT / "open_probe/attempt_1/positive_20_first_outputs.v0.2.jsonl"
+        p3_route_actuals = P3_TASK_ROOT / "open_probe/attempt_1/route_20_actuals.v0.2.jsonl"
+        p3_route_inputs = P3_TASK_ROOT / "freeze/attempt_1/route_inputs_20.v0.2.jsonl"
+        p3_freeze = P3_TASK_ROOT / "freeze/attempt_1/p3_open_repair_freeze.v0.2.yaml"
+        p3_result = P3_TASK_ROOT / "result/p3_open_probe40_result.v0.2.yaml"
+        p3_handoff = P3_TASK_ROOT / "result/p4_sealed_probe_handoff.v0.2.yaml"
+        p3_review_one = P3_TASK_ROOT / "review/attempt_1/signed_content_value_review.v0.2.json"
+        p3_attempt0_result = P3_TASK_ROOT / "result/p3_open_probe40_result.v0.1.yaml"
+        p3_instruction = P3_TASK_ROOT / "freeze/attempt_1/controlled_author_instruction.v0.2.md"
+        tests.extend(
+            [
+                (
+                    "p3_structure_template_clone",
+                    "E_P3_STRUCTURE_CLONE",
+                    lambda temp: mutate_jsonl(temp / p3_structure, tamper_p3_structure_clone),
+                ),
+                (
+                    "p3_component_metadata_only_use",
+                    "E_P3_COMPONENT_USE",
+                    lambda temp: mutate_jsonl(temp / p3_outputs, tamper_p3_component_metadata_use),
+                ),
+                (
+                    "p3_control_rule_used_as_component",
+                    "E_P3_STRUCTURE_COMPONENT",
+                    lambda temp: mutate_jsonl(temp / p3_structure, tamper_p3_unapproved_component),
+                ),
+                (
+                    "p3_post_review_structure_mutation",
+                    "E_P3_REVIEW_PACKET",
+                    lambda temp: mutate_jsonl(temp / p3_structure, tamper_p3_structure_audience_content),
+                ),
+                (
+                    "p3_second_repair_window",
+                    "E_P3_REPAIR_WINDOW",
+                    lambda temp: mutate_yaml(temp / p3_freeze, tamper_p3_freeze_window),
+                ),
+                (
+                    "p3_attempt0_failure_mutation",
+                    "E_P3_ATTEMPT0_INTEGRITY",
+                    lambda temp: (temp / p3_attempt0_result).write_bytes(
+                        (temp / p3_attempt0_result).read_bytes() + b"\nmutation\n"
+                    ),
+                ),
+                (
+                    "p3_structure_audience_content",
+                    "E_P3_STRUCTURE_BOUNDARY",
+                    lambda temp: mutate_jsonl(temp / p3_structure, tamper_p3_structure_audience_content),
+                ),
+                (
+                    "p3_all_routes_blocked",
+                    "E_P3_ROUTE_DISTRIBUTION",
+                    lambda temp: mutate_jsonl(temp / p3_route_actuals, tamper_p3_all_block),
+                ),
+                (
+                    "p3_route_gold_leaked_into_input",
+                    "E_P3_ROUTE_GOLD_LEAK",
+                    lambda temp: mutate_jsonl(temp / p3_route_inputs, tamper_p3_route_gold_leak),
+                ),
+                (
+                    "p3_unbound_fact",
+                    "E_P3_UNBOUND_FACT",
+                    lambda temp: mutate_jsonl(temp / p3_outputs, tamper_p3_unbound_fact),
+                ),
+                (
+                    "p3_reviewer_author_collision",
+                    "E_P3_REVIEW_IDENTITY",
+                    lambda temp: mutate_json(temp / p3_review_one, tamper_p3_reviewer_collision),
+                ),
+                (
+                    "p3_review_verdict_forged",
+                    "E_P3_REVIEW_VERDICT",
+                    lambda temp: mutate_json(temp / p3_review_one, tamper_p3_review_verdict),
+                ),
+                (
+                    "p3_frozen_instruction_mutation",
+                    "E_P3_FREEZE",
+                    lambda temp: (temp / p3_instruction).write_bytes(
+                        (temp / p3_instruction).read_bytes() + b"\nmutation\n"
+                    ),
+                ),
+                (
+                    "p3_open_samples_counted_toward_300",
+                    "E_P3_CORE_NUMBERS",
+                    lambda temp: mutate_yaml(temp / p3_result, tamper_p3_result_count),
+                ),
+                (
+                    "p3_readiness_flipped",
+                    "E_P3_READINESS",
+                    lambda temp: mutate_yaml(temp / p3_result, tamper_p3_result_readiness),
+                ),
+                (
+                    "p3_hidden_material_created",
+                    "E_P3_HIDDEN_MATERIAL",
+                    create_p3_hidden_material,
+                ),
+                (
+                    "p3_p2_component_history_mutated",
+                    "E_P3_P2_FROZEN",
+                    lambda temp: (temp / P2_ACTIVE_COMPONENTS_PATH).write_bytes(
+                        (temp / P2_ACTIVE_COMPONENTS_PATH).read_bytes() + b"\n"
+                    ),
+                ),
+                (
+                    "p3_positive_denominator_deleted",
+                    "E_P3_OUTPUT_COUNT",
+                    lambda temp: mutate_jsonl(temp / p3_outputs, lambda rows: rows.pop()),
+                ),
+                (
+                    "p3_p4_execution_self_authorized",
+                    "E_P3_HANDOFF",
+                    lambda temp: mutate_yaml(temp / p3_handoff, tamper_p3_handoff_authorization),
+                ),
+            ]
+        )
     failures: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="gate1-p1a-checker-selftest-") as temporary:
         base = Path(temporary)
@@ -5809,17 +6087,20 @@ def main() -> int:
     if errors:
         print(json.dumps({"status": "FAIL", "errors": errors}, ensure_ascii=False))
         return 1
+    owner = load_yaml(ROOT / CURRENT_OWNER_PATH).get("current_gate1_owner", {})
+    owner_id = owner.get("owner_id")
     print(
         json.dumps(
             {
                 "status": "PASS",
-                "task_id": load_yaml(ROOT / CURRENT_OWNER_PATH)
-                .get("current_gate1_owner", {})
-                .get("task_id"),
-                "p2_final_validated": load_yaml(ROOT / CURRENT_OWNER_PATH)
-                .get("current_gate1_owner", {})
-                .get("owner_id")
-                == "GATE1_V11_P2_FINAL_OWNER",
+                "task_id": owner.get("task_id"),
+                "p3_final_validated": owner_id
+                == "GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER",
+                "p2_historical_integrity_validated": owner_id
+                in {
+                    "GATE1_V11_P2_FINAL_OWNER",
+                    "GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER",
+                },
                 "shared_horizon_modified": False,
             },
             ensure_ascii=False,

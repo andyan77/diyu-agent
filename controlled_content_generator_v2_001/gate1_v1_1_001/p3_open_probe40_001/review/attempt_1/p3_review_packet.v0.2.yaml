@@ -1,0 +1,63 @@
+p3_review_packet:
+  schema_version: gate1-p3-review-packet-v0.2
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  attempt: 1
+  review_contract_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/independent_review_contract.v0.2.yaml
+  review_contract_digest: 0a74a0d691afba9618d2c6e513201083c410568193178cd63f8a8746d4c8cedc
+  stage_order:
+  - READ_FIXED_CHOICE_CATALOG_AND_BLIND_PACKET_ONLY
+  - RECORD_AND_SIGN_TWENTY_TOP1_PREDICTIONS
+  - REVEAL_LABEL_MAPPING_AFTER_SIGNED_STAGE_FILE_EXISTS
+  - READ_ALL_EIGHTY_STRUCTURES_TWENTY_POSITIVES_TWENTY_ROUTES_AND_FAILURE_EVIDENCE
+  - SCORE_ALL_TWENTY_POSITIVES_AND_SIGN_FINAL_REPORT
+  artifacts:
+    blind_positive:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/blind_positive_20.v0.2.jsonl
+      sha256: 3e5e1c04a1ad01e5b2e8ca9e46a39d7deb322b13b31ead10571a9672c5b6bd73
+    blind_labels_reveal_after_stage_1:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/blind_label_mapping.v0.2.jsonl
+      sha256: 951431a1192f55c7bace3f80550f24b1b838e7df1703f1877770e35e26f89cc3
+    fixed_choice_catalog_visible_at_stage_1:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/content_product_choice_catalog.v0.2.jsonl
+      sha256: af68bed4f82159fc47034dd970c3fc53b1530278b7148feb570c1dd97c0bbc69
+    structure_80:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/structure_80.v0.2.jsonl
+      sha256: 838bdd5add508dadd09ed998175ad31602b587dca35b23c40c6432d4aa3a7a3a
+    structure_difference_80:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/difference_80.v0.2.jsonl
+      sha256: 20d40fc8b716d7a750337c4cdf0a4d46cd0a731fdf976a3b0f7b99310aee5902
+    axis_removal_480:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/axis_removal_480.v0.2.jsonl
+      sha256: 82d0293e047113d74ce0adabe78e2a37a96075b6b4b3e9c7046746f9a549e4ff
+    positive_20:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_1/positive_20_first_outputs.v0.2.jsonl
+      sha256: 39f02c91e98fe3e9f65b91ce2df9a30127c62c13a802028615a7e3b5f2f93273
+    route_actual_20:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_1/route_20_actuals.v0.2.jsonl
+      sha256: 475de6c28c0241d97bc157485c6ffdbd522b9fba03b1c67e61af15289fd9e0eb
+    route_comparison_20:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_1/route_20_comparisons.v0.2.jsonl
+      sha256: bc7e030ebad136aad56d8b427b3c4adb750fa35d1081fd767dc17a2d2e7e2ff8
+    machine_report:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_1/machine_acceptance_report.v0.2.yaml
+      sha256: 76c4c28b4ef14a25e7e213425bd5e07e35bb9379a75e3caf2d2624f48bc94155
+    repair_freeze:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/p3_open_repair_freeze.v0.2.yaml
+      sha256: 7e1497e6e862be41fb9968f0bd9a20e82942f2907ef4599e3b7986f2599558db
+    repair_basis:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/repair/attempt_1/repair_basis.v0.1.yaml
+      sha256: 538580ff4fb6bfff7602466b05dce9d21cf63d1140dfe154551e1346e7f0d774
+    attempt_0_content_review:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json
+      sha256: b3ec680d6d25a907bb2d4408570e3b324179d0f99a4ba69d64e2badc639c968c
+    attempt_0_fact_review:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_fact_authorization_review.v0.1.json
+      sha256: 1607b53c6ba3c2fbd2e47e90f3c11f019557625039f340f8c525d3f43ea2b250
+    attempt_0_adjudication:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/targeted_adjudication.v0.1.json
+      sha256: 0d875484fcd4e6aadca6b8ee5a9d815ba4c2aec5acc677c4ad0c3b705b5bf79e
+  positive_count: 20
+  structure_count: 80
+  route_count: 20
+  counts_toward_300: 0
+  packet_digest: 18028883db56810ff3a04f753c735b770adfbf10830ffbd7b036d7b2cb7bae41
