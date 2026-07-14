@@ -77,6 +77,14 @@ from p2_targeted_repair_r5 import (
     build_targeted_repair_r5_documents,
     validate_targeted_repair_r5_documents,
 )
+from p2_targeted_repair_r6 import (
+    MECHANISM_IDENTITY_TAMPERS_R6_PATH,
+    PROGRAM_SCHEMA_TAMPERS_R6_PATH,
+    REQUIRED_SLOT_TAMPERS_R6_PATH,
+    TARGETED_RESULT_R6_PATH,
+    build_targeted_repair_r6_documents,
+    validate_targeted_repair_r6_documents,
+)
 from p2_generator_core_r4 import (
     Gate1ValidationError as Gate1ValidationErrorR4,
     realize_request as realize_request_r4,
@@ -112,6 +120,10 @@ def selected_documents(root: Path, phase: str) -> dict[Path, bytes]:
     if phase == "targeted-repair-r5":
         documents = build_targeted_repair_r5_documents(root)
         validate_targeted_repair_r5_documents(documents)
+        return documents
+    if phase == "targeted-repair-r6":
+        documents = build_targeted_repair_r6_documents(root)
+        validate_targeted_repair_r6_documents(documents)
         return documents
     documents = build_documents(root)
     validate_documents(documents)
@@ -814,6 +826,72 @@ def targeted_repair_r5_selftest(root: Path) -> int:
     return 0 if not failures else 1
 
 
+def targeted_repair_r6_selftest(root: Path) -> int:
+    first = build_targeted_repair_r6_documents(root)
+    second = build_targeted_repair_r6_documents(root)
+    failures: list[str] = []
+    if first != second:
+        failures.append("deterministic_second_run")
+    try:
+        validate_targeted_repair_r6_documents(first)
+    except (KeyError, TypeError, ValueError) as exc:
+        failures.append(f"valid_fixture:{exc}")
+    mutations: list[tuple[str, Path, str, str]] = [
+        (
+            "early_p3",
+            TARGETED_RESULT_R6_PATH,
+            "p3_allowed: false",
+            "p3_allowed: true",
+        ),
+        (
+            "required_slot_tamper_claimed_accepted",
+            REQUIRED_SLOT_TAMPERS_R6_PATH,
+            '"tamper_rejected":true',
+            '"tamper_rejected":false',
+        ),
+        (
+            "program_schema_tamper_claimed_accepted",
+            PROGRAM_SCHEMA_TAMPERS_R6_PATH,
+            '"tamper_rejected":true',
+            '"tamper_rejected":false',
+        ),
+        (
+            "mechanism_identity_overclaimed",
+            MECHANISM_IDENTITY_TAMPERS_R6_PATH,
+            '"nonmetadata_structure_change_claimed":false',
+            '"nonmetadata_structure_change_claimed":true',
+        ),
+    ]
+    for name, path, before, after in mutations:
+        mutated = dict(first)
+        content = mutated[path].decode("utf-8")
+        require(before in content, "E_REPAIR_R6_SELFTEST_PATTERN", name)
+        mutated[path] = content.replace(before, after, 1).encode("utf-8")
+        try:
+            validate_targeted_repair_r6_documents(mutated)
+        except (KeyError, TypeError, ValueError):
+            continue
+        failures.append(name)
+    try:
+        documents = build_targeted_repair_r6_documents(root)
+        validate_targeted_repair_r6_documents(documents)
+    except (KeyError, TypeError, ValueError) as exc:
+        failures.append(f"r6_executable_evidence:{exc}")
+    status = "SELFTEST_PASS" if not failures else "SELFTEST_FAIL"
+    sys.stdout.write(
+        canonical_json(
+            {
+                "status": status,
+                "phase": "targeted-repair-r6",
+                "negative_case_count": len(mutations) + 322,
+                "failures": failures,
+            }
+        )
+        + "\n"
+    )
+    return 0 if not failures else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
@@ -828,6 +906,7 @@ def main() -> int:
             "targeted-repair-r3",
             "targeted-repair-r4",
             "targeted-repair-r5",
+            "targeted-repair-r6",
             "final",
         ),
         default="auto",
@@ -838,7 +917,9 @@ def main() -> int:
         if (ROOT / FINAL_IMPORT_SENTINEL).is_file():
             phase = "final"
         elif (ROOT / TARGETED_RESULT_R2_PATH).is_file():
-            if (ROOT / TARGETED_RESULT_R5_PATH).is_file():
+            if (ROOT / TARGETED_RESULT_R6_PATH).is_file():
+                phase = "targeted-repair-r6"
+            elif (ROOT / TARGETED_RESULT_R5_PATH).is_file():
                 phase = "targeted-repair-r5"
             elif (ROOT / TARGETED_RESULT_R4_PATH).is_file():
                 phase = "targeted-repair-r4"
@@ -861,6 +942,8 @@ def main() -> int:
             return targeted_repair_r4_selftest(ROOT)
         if phase == "targeted-repair-r5":
             return targeted_repair_r5_selftest(ROOT)
+        if phase == "targeted-repair-r6":
+            return targeted_repair_r6_selftest(ROOT)
         return checkpoint_selftest(ROOT)
     if args.check:
         mismatches = check_outputs(ROOT, phase)
