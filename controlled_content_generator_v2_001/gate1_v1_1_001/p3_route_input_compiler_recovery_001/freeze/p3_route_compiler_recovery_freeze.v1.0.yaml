@@ -1,0 +1,62 @@
+schema_version: gate1-p3-route-compiler-recovery-freeze-v1.0
+task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+result_state: PASS_TO_P4_RESEALED_PROBE
+artifacts:
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/open_route_inputs_20.v1.0.jsonl
+  : sha256: fa581050e2c07deebddb19b43a2a6f1d70da13a09a7e310d3524f3335fd9b6f0
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/open_route_gold_proposed_20.v1.0.jsonl
+  : sha256: 4b7728ef9e413b8c426d1af49b8bac375b5079ae83accf3aafe1691ef0004ce2
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/signed_route_semantic_review.v1.0.json
+  : sha256: f1e694ae5a0b0337b4975e4af19ce4b6b60008621a2a61afbb466d944b8e7f7c
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/signed_route_safety_review.v1.0.json
+  : sha256: 6830bf5530826d84c5fb45a2dae75d9d151a2af00eea3ab552c4ba0dad936f70
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/compiled_route_inputs_20.v1.0.jsonl
+  : sha256: 83f0050ffd3172410033e279380a9bfa92473ffa9a6f6e4b13d9b7dbcff8fc2e
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/open_route_actuals_20.v1.0.jsonl
+  : sha256: 2ce0fe13c2fb3e23e0e0b8571db16c601d0ff2407736fdfa485146496ed7ac69
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/open_route_actual_freeze.v1.0.yaml
+  : sha256: 9bf8d1b06fa6c05cd2070b7a231d076edf1eecae9774eae8f8bcc6d40c6fe17a
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/open_route_comparisons_20.v1.0.jsonl
+  : sha256: e7af5cfaa21c217a639bac0c2746cf7a3109cee84cf7c979567c04f1b77b6e21
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/regression/legacy_route_recomputed_20.v1.0.jsonl
+  : sha256: 475de6c28c0241d97bc157485c6ffdbd522b9fba03b1c67e61af15289fd9e0eb
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/regression/legacy_route_comparisons_20.v1.0.jsonl
+  : sha256: eeac1ed51102744c15561de006334469fb4e8525025416d719de2a9a49a5792b
+  ? controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/audit/external_exit_audit.v1.0.yaml
+  : sha256: 361e51eb729e2e5c2c3ec262295d3726c60d24ca63b02bfc3b526baebe737a3c
+current_metrics:
+  count: 20
+  action_match: 20
+  reason_match: 20
+  audience_content_leak_count: 0
+  action_distribution:
+    BLOCK: 7
+    REQUEST_INPUT: 6
+    DEGRADE: 7
+  reason_distribution:
+    输入冲突: 3
+    授权缺失: 7
+    事实缺失: 10
+legacy_metrics:
+  count: 20
+  action_match: 20
+  reason_match: 20
+  audience_content_leak_count: 0
+  action_distribution:
+    REQUEST_INPUT: 6
+    DEGRADE: 7
+    BLOCK: 7
+  reason_distribution:
+    授权缺失: 9
+    事实缺失: 11
+old_p4_tree: 404a77ec7f59e0ce639daddbcd3c8d658d9bed5b
+old_p4_failure_bytes_changed: false
+current_checker_sha256: 94b99d0d6520ba9c6c9a6d8fdacab1d340f1f5355e409c8fd68276e42d156dde
+p4_resealed_allowed: true
+generator_qualified: false
+p5_allowed: false
+core_numbers:
+  '300': UNCHANGED
+  '120': UNCHANGED
+  '86': UNCHANGED
+freeze_digest: 47e21bcba5b8fc249b10b25bc989779d9fac6014dfa8f9f7845f70eeee9b9092

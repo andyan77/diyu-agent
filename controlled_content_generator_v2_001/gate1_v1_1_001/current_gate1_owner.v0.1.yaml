@@ -1,26 +1,24 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER
-  task_id: GATE1_V11_OPEN_PROBE40_001
-  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001
+  owner_id: GATE1_V11_P3_ROUTE_COMPILER_RECOVERY_OWNER
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
-  result_state: PASS_TO_P4_SEALED_HIDDEN_PROBE
+  result_state: PASS_TO_P4_RESEALED_PROBE
   p3_complete: true
-  p4_allowed: true
+  p4_resealed_allowed: true
   current_generator:
-    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/run_p3_open_probe_r1.py
-    author_instruction: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/controlled_author_instruction.v0.2.md
-    author_model_config: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/author_model_and_session.v0.2.yaml
+    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/run_p3_route_recovery.py
+    route_contract: controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/route_contract.py
     active_component_count: 68
     active_edge_count: 85
     active_control_rule_count: 8
-    p3_component_addition_count: 0
-    historical_generator_entrypoints_consumed: []
+    generator_core_changed: false
+    author_instruction_or_model_changed: false
   predecessor:
-    owner_id: GATE1_V11_P2_FINAL_OWNER
-    owner_digest: ac4fe6c1ccdf8af787eb51d04f085883c27660690ccee6dfb996a90d89d4f7a7
-    p2_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/result/p2_final_result.v0.1.yaml
-    p2_result_sha256: 076bd9eb6c8ab67c0023bb454f6a82f16acecb284e896dc9029ef97582db5c3b
+    owner_id: GATE1_V11_P3_OPEN_PROBE_FINAL_OWNER
+    owner_digest: d63daca011eb2eb12ff585a1ccf5081b54d69781548000cdf265adbc40e2fd8a
+    task_id: GATE1_V11_OPEN_PROBE40_001
   core_numbers:
     target_total: 300
     reference_inventory: 120
@@ -38,4 +36,4 @@ current_gate1_owner:
     production_ready: false
     generator_qualified: false
     runtime_ingest_ready: false
-  owner_digest: d63daca011eb2eb12ff585a1ccf5081b54d69781548000cdf265adbc40e2fd8a
+  owner_digest: 53ee6367e15bc0e110551c91df67961e54062c4b110ba46933602850f0003605

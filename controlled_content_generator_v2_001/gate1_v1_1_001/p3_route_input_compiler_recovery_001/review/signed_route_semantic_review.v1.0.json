@@ -1,0 +1,80 @@
+{
+  "reviewer_role": "PRODUCT_ROUTE_SEMANTIC_REVIEWER",
+  "reviewer_identity_id": "PRODUCT_ROUTE_SEMANTIC_REVIEWER_1",
+  "reviewer_session_id": "PRS_R1_33cee06_20260714",
+  "review_run_id": "P3_OPEN_ROUTE_GOLD_SEMANTIC_REVIEW_R1_001",
+  "inputs_read": [
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/open_route_inputs_20.v1.0.jsonl",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/open_route_gold_proposed_20.v1.0.jsonl",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/contract/canonical_route_input_contract.v1.0.yaml",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/open_route_review_packet.v1.0.yaml",
+    "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml"
+  ],
+  "forbidden_inputs_read": false,
+  "case_reviews": [
+    {"case_id":"P3R-OPEN-CP01-01","profile_id":"CP01","proposed_action":"BLOCK","proposed_reason":"输入冲突","action_correct":true,"reason_correct":true,"rationale":"必需槽位虽齐备，但类型化输入明确命中 AGR_CP01_01；该规则要求内容围绕真实任务。显式 hard-guard 命中与 Profile 合同发生冲突，必须 BLOCK，主要原因归为输入冲突。"},
+    {"case_id":"P3R-OPEN-CP02-02","profile_id":"CP02","proposed_action":"BLOCK","proposed_reason":"输入冲突","action_correct":true,"reason_correct":true,"rationale":"类型化输入命中 AGR_CP02_01，而 CP02 明确禁止伪造门店事件。该显式命中否定了全量输入可直接成立的路径，故 BLOCK；主要异常是输入状态与 Profile 硬约束冲突。"},
+    {"case_id":"P3R-OPEN-CP03-03","profile_id":"CP03","proposed_action":"BLOCK","proposed_reason":"输入冲突","action_correct":true,"reason_correct":true,"rationale":"类型化输入命中 AGR_CP03_01，表示关键因果动作被省略；这直接违反 CP03 的完整步骤与判断节点要求。硬约束冲突不能通过正常生成路径继续，故 BLOCK 且归因输入冲突。"},
+    {"case_id":"P3R-OPEN-CP04-04","profile_id":"CP04","proposed_action":"BLOCK","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"ROLE_AUTHORITY_EXPANSION 表示表达超出已提供的 role_authority_boundaries 或 participant_authorizations。CP04 要求各岗位动作、权限及参与者授权；现有授权不覆盖扩张部分，故 BLOCK，主要原因是扩张范围的授权缺失。"},
+    {"case_id":"P3R-OPEN-CP05-05","profile_id":"CP05","proposed_action":"BLOCK","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"ROLE_AUTHORITY_EXPANSION 明示人物或岗位表达越过现有授权边界。CP05 要求真实人物、声明边界和人物授权语义；publication_scope_authorization 不足以授权越界部分，故 BLOCK 并归因授权缺失。"},
+    {"case_id":"P3R-OPEN-CP06-06","profile_id":"CP06","proposed_action":"BLOCK","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"FABRICATED_EVENT 表明所用事件缺少真实事实支撑。CP06 要求真实岗位、可观察信号和默认拒绝未列明事件真值；虚构事件不可进入候选内容，故 BLOCK，主要原因是事实缺失。"},
+    {"case_id":"P3R-OPEN-CP07-07","profile_id":"CP07","proposed_action":"BLOCK","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"FABRICATED_EVENT 与 CP07 所需真实用户问题、问题来源及 AGR_CP07_01 禁止虚构用户提问的约束一致构成阻断条件。事件或问题没有真实事实基础，故 BLOCK 且归因事实缺失。"},
+    {"case_id":"P3R-OPEN-CP08-08","profile_id":"CP08","proposed_action":"REQUEST_INPUT","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"CP08 必需的 publication_scope_authorization 明确缺失，其余必需槽位齐备，且未启用降级请求。应请求补充输入，主要原因是授权缺失。"},
+    {"case_id":"P3R-OPEN-CP09-09","profile_id":"CP09","proposed_action":"REQUEST_INPUT","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"cp09_core_input_signature 是 CP09 必需事实槽且明确缺失；不存在 hard guard、风险码或降级请求。应 REQUEST_INPUT，主要原因是事实缺失。"},
+    {"case_id":"P3R-OPEN-CP10-10","profile_id":"CP10","proposed_action":"REQUEST_INPUT","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"usable_source_materials 是 CP10 必需来源槽且明确缺失。Profile 的来源缺失路径禁止受众正文；当前未启用允许的 material_capture_plan，故 REQUEST_INPUT。来源缺口使长期体验结论缺乏事实依据，归为事实缺失。"},
+    {"case_id":"P3R-OPEN-CP11-11","profile_id":"CP11","proposed_action":"REQUEST_INPUT","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"publication_scope_authorization 是 CP11 唯一必需授权槽且明确缺失，未提供降级请求。应 REQUEST_INPUT，原因是授权缺失。"},
+    {"case_id":"P3R-OPEN-CP12-12","profile_id":"CP12","proposed_action":"REQUEST_INPUT","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"cp12_core_input_signature 是 CP12 必需事实槽且明确缺失；版本标记等其他槽位不能替代核心签名。未启用降级请求，故 REQUEST_INPUT，原因是事实缺失。"},
+    {"case_id":"P3R-OPEN-CP13-13","profile_id":"CP13","proposed_action":"REQUEST_INPUT","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"usable_source_materials 是 CP13 必需来源槽且明确缺失。来源缺失路径禁止将场景演绎作为已发生事实输出；当前无降级请求，故 REQUEST_INPUT，并将事实依据不足归为事实缺失。"},
+    {"case_id":"P3R-OPEN-CP14-14","profile_id":"CP14","proposed_action":"DEGRADE","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"publication_scope_authorization 明确缺失；启用的 authorization_collection_task 正是 CP14 授权缺失路径允许的非受众产物。故可 DEGRADE，主要原因是授权缺失。"},
+    {"case_id":"P3R-OPEN-CP15-15","profile_id":"CP15","proposed_action":"DEGRADE","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"cp15_core_input_signature 是必需事实槽且明确缺失；启用的 fact_collection_task 与 CP15 事实缺失路径允许产物完全一致。故 DEGRADE，原因是事实缺失。"},
+    {"case_id":"P3R-OPEN-CP16-16","profile_id":"CP16","proposed_action":"DEGRADE","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"usable_source_materials 是 CP16 必需来源槽且明确缺失；material_capture_plan 是来源缺失路径允许的非受众产物。隐私相关授权均已提供，不改变来源事实基础不足，故 DEGRADE 并归因事实缺失。"},
+    {"case_id":"P3R-OPEN-CP17-17","profile_id":"CP17","proposed_action":"DEGRADE","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"publication_scope_authorization 明确缺失；启用的 authorization_collection_task 属于 CP17 授权缺失路径允许产物。故 DEGRADE，原因是授权缺失。"},
+    {"case_id":"P3R-OPEN-CP18-18","profile_id":"CP18","proposed_action":"DEGRADE","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"cp18_core_input_signature 是必需事实槽且明确缺失，其他地方事实与声景来源不能替代它；fact_collection_task 是对应路径允许产物。故 DEGRADE，原因是事实缺失。"},
+    {"case_id":"P3R-OPEN-CP19-19","profile_id":"CP19","proposed_action":"DEGRADE","proposed_reason":"事实缺失","action_correct":true,"reason_correct":true,"rationale":"usable_source_materials 是 CP19 必需来源槽且明确缺失；material_capture_plan 与来源缺失路径允许产物一致。真实经营取舍缺少可用材料支撑，故 DEGRADE 并归因事实缺失。"},
+    {"case_id":"P3R-OPEN-CP20-20","profile_id":"CP20","proposed_action":"DEGRADE","proposed_reason":"授权缺失","action_correct":true,"reason_correct":true,"rationale":"CP20 同时要求 publication_scope_authorization 与 enterprise_public_authorization；仅提供后者不能补足前者。启用的 authorization_collection_task 是授权缺失路径允许产物，故 DEGRADE，原因是授权缺失。"}
+  ],
+  "substantive_disagreements": [],
+  "overall_verdict": "PASS",
+  "signed_attestation": {
+    "attestation_type": "named_reviewer_self_attestation",
+    "signed_by": "PRODUCT_ROUTE_SEMANTIC_REVIEWER_1",
+    "signed_on": "2026-07-14",
+    "statement": "本人确认本次独立审查仅使用 inputs_read 所列五项材料，未读取任何禁止材料，未依据案例编号推断答案，且未修改任何文件。20 条结论均基于类型化输入与对应 Profile 合同逐条判断。",
+    "signature": "PRODUCT_ROUTE_SEMANTIC_REVIEWER_1/P3_OPEN_ROUTE_GOLD_SEMANTIC_REVIEW_R1_001/PASS"
+  },
+  "report_digest_basis": {
+    "baseline_commit_claim": "33cee06",
+    "baseline_commit_basis": "依据任务声明；因读取白名单限制未读取 Git 元数据",
+    "source_file_sha256": {
+      "open_route_inputs_20.v1.0.jsonl": "fa581050e2c07deebddb19b43a2a6f1d70da13a09a7e310d3524f3335fd9b6f0",
+      "open_route_gold_proposed_20.v1.0.jsonl": "4b7728ef9e413b8c426d1af49b8bac375b5079ae83accf3aafe1691ef0004ce2",
+      "canonical_route_input_contract.v1.0.yaml": "06c098cce974080c5daa01cdf245f1362f853b3441a0686a868e56e30291a51d",
+      "open_route_review_packet.v1.0.yaml": "e65d0f064e42b75db0da0375ba05f66322cb74d0d8fe7c83f06a33263375279b",
+      "content_product_profiles.v0.2.yaml": "d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056"
+    },
+    "embedded_contract_digest": "2bf40bb9ca48af24d1d1319baf4d33a70f9915d898d3d490aaa9ffbcb8e20e52",
+    "embedded_packet_digest": "202bb0920f7e4ee72c1604acba9de030f6aead010d13541cefeacc9f5f900033",
+    "embedded_profile_registry_digest": "160f640f3c677b3e3aa7fb13c89549c61825cdde1919731bc573740ae38ef53b",
+    "binding_check": "20/20 case_id、profile_id 与 bound_input_digest 匹配，无绑定不一致",
+    "semantic_basis": "逐条使用 hard_guard_hits、risk_codes、missing、degrade_request，并交叉核对对应 Profile 的 input_requirements、founder_hard_guards 与 input_sufficiency_routes；案例编号未作为证据。"
+  },
+  "changed_files": [],
+  "checks_run": [
+    "五项允许输入的 SHA-256 核对",
+    "20 条 input/gold case_id、profile_id 与 bound_input_digest 绑定核对",
+    "20 条 provided/missing 槽位与对应 Profile 必需槽位核对",
+    "BLOCK 异常语义及 REQUEST_INPUT/DEGRADE 路径与允许产物核对"
+  ],
+  "failures": [],
+  "readiness_flags": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}
