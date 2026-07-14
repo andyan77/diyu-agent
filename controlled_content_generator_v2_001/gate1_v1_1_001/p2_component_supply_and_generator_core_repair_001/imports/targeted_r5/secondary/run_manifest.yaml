@@ -1,0 +1,114 @@
+schema_version: v0.1
+task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+prompt_revision: r5
+review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+review_run_id: P2-SECONDARY-R5-RUN-20260713-6F18AC1
+review_started_at: '2026-07-13T20:04:39-07:00'
+review_completed_at: '2026-07-13T20:04:39-07:00'
+repository:
+  path: /home/diyu/笛语领域通用数据库
+  reviewed_commit: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+  head_at_start: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+  head_at_finish: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+  branch: agent/gate1-v1-1-retrospective-recovery-plan
+review_packet:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r5.jsonl
+  sha256: de59316fd7d88237e00cc84bd8802959d194995ddf5aef703477bd4921adc245
+  expected_count: 27
+  actual_count: 27
+frozen_standard:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+  sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+decision_counts:
+  APPROVE: 27
+  REPAIR: 0
+  REJECT: 0
+grade_counts:
+  A: 27
+  B: 0
+  C: 0
+  D: 0
+defect_severity_counts:
+  NONE: 26
+  OBSERVATION: 1
+  MINOR: 0
+  MAJOR: 0
+  FATAL: 0
+replay_counts:
+  positive_lanes: 40
+  shared_ab_pairs: 20
+  axis_body_pairs: 120
+  pointer_cases: 410
+  pointer_pass: 410
+  component_ablations: 410
+  component_ablation_rejections: 410
+  path_substitutions: 120
+  path_substitution_rejections: 120
+  trust_tampers: 180
+  trust_tamper_rejections: 180
+  ordinary_mechanism_tampers: 62
+  ordinary_mechanism_tamper_rejections: 62
+  ordinary_binding_slot_tampers: 510
+  ordinary_binding_slot_rejections: 510
+  sound_authorization_or_silence_checks: 40
+  external_provider_requests: 0
+  external_provider_responses: 0
+  audience_surface_outputs: 0
+coverage:
+  every_packet_item_read: true
+  every_packet_item_traced: true
+  packet_order_preserved: true
+  source_parent_assets_checked: 23
+  direct_source_spans_checked: 18
+  indexed_source_spans_checked: 14
+  profile_design_basis_entries_checked: 150
+  founder_design_components_checked: 16
+repository_write_audit:
+  initial_status_sha256: 1d23d8f1449600b1990b27cbefa0c59dbc2c02b613689c66282197ba81a295b8
+  final_status_sha256: 1d23d8f1449600b1990b27cbefa0c59dbc2c02b613689c66282197ba81a295b8
+  status_unchanged: true
+  preexisting_modified_paths:
+  - ci/checkers/check_gate1_v1_1_current.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+  reviewer_repository_write_count: 0
+  reviewer_repository_written_paths: []
+  no_repository_writes: true
+independence:
+  component_author_or_p2_executor: false
+  activator: false
+  self_approval_used: false
+  sibling_or_primary_review_content_opened: false
+  sibling_or_primary_review_content_used: false
+  executor_summary_used_as_oracle: false
+  approval_target_used: false
+activation_and_readiness:
+  activation_performed: false
+  readiness_transition_performed: false
+  active_component_count: 0
+  active_edge_count: 0
+  core_numbers_unchanged:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+  all_readiness_false: true
+outputs:
+  records_jsonl:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r5/secondary/records.jsonl
+    sha256: 625e5490c39f91b3071bb043d370ab949956ea483f0d4196493c35e045486db9
+    record_count: 27
+    line_count: 27
+  report_md:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r5/secondary/report.md
+    sha256: 006d38bfe43e1a1df39db26d9005f6d0f32676f8b9f9d28bd2a62458ab679f0a
+  run_manifest_yaml:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r5/secondary/run_manifest.yaml
+    sha256_basis: sha256(canonical JSON of parsed manifest with outputs.run_manifest_yaml.sha256
+      omitted)
+    sha256: 13dfde7d024ab64085e20ef7de2f1c6a007ff21e160f9a2b23af9a36d8e3a889
+signed_attestation: SIGNED_ATTESTATION::P2-SECONDARY-PROVENANCE-REVIEWER-B::019f5dce-9436-7e03-be80-220461f6107d::P2-SECONDARY-R5-RUN-20260713-6F18AC1::I
+  independently read and traced all 27 R5 packet subjects and actual committed code/evidence;
+  I used no sibling review content, made no repository writes, performed no activation,
+  and report the recorded decisions without a target approval count.
+signed_attestation_sha256: 2cfab5a447b870183c026395967f2db8d2b97d8a954f12a693ff6084616fbc45

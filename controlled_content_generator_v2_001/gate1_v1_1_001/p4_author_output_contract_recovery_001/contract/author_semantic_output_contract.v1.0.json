@@ -1,0 +1,136 @@
+{
+  "schema_version": "gate1-p4-author-semantic-contract-v1.0",
+  "task_id": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001",
+  "raw_top_level_fields": [
+    "audio_execution",
+    "author_attestation",
+    "body",
+    "cta",
+    "request_id",
+    "run_id",
+    "schema_version",
+    "semantic_claims",
+    "semantic_component_usage",
+    "semantic_surfaces",
+    "spoken_lines",
+    "synthetic_disclosure",
+    "title",
+    "visual_execution"
+  ],
+  "semantic_surface_fields": [
+    "authorization_ids",
+    "fact_ids",
+    "source_ids",
+    "surface_kind",
+    "text"
+  ],
+  "semantic_claim_fields": [
+    "authorization_ids",
+    "claim_boundary",
+    "claim_text",
+    "fact_ids",
+    "source_ids"
+  ],
+  "semantic_component_usage_fields": [
+    "component_id",
+    "implementation_note",
+    "surface_ordinals"
+  ],
+  "author_attestation_fields_and_values": {
+    "external_service_called": false,
+    "input_backfilled_after_authoring": false,
+    "review_performed_by_author": false,
+    "second_candidate_generated": false,
+    "unbound_fact_added": false
+  },
+  "surface_kind_enum": [
+    "audio_execution",
+    "body",
+    "cta",
+    "spoken_line",
+    "synthetic_disclosure",
+    "title",
+    "visual_execution"
+  ],
+  "role_allowed_surface_kinds": {
+    "audience_facing_reasoning_move": ["body", "spoken_line", "visual_execution"],
+    "capture_instruction": ["audio_execution", "visual_execution"],
+    "closing": ["body", "cta", "spoken_line", "visual_execution"],
+    "ending_operator": ["body", "cta", "spoken_line", "visual_execution"],
+    "information_order_operator": ["body", "spoken_line", "title", "visual_execution"],
+    "narrative_mechanism_operator": ["body", "spoken_line", "visual_execution"],
+    "observable_action": ["body", "spoken_line", "visual_execution"],
+    "professional_judgment": ["body", "spoken_line"],
+    "rhythm_operator": ["audio_execution", "body", "spoken_line", "visual_execution"],
+    "scene": ["body", "title", "visual_execution"],
+    "sound_subject_operator": ["audio_execution", "spoken_line"],
+    "transition": ["body", "visual_execution"],
+    "trigger": ["body", "spoken_line", "title", "visual_execution"],
+    "visual_beat": ["body", "visual_execution"],
+    "visual_subject_operator": ["body", "visual_execution"]
+  },
+  "surface_order": [
+    "synthetic_disclosure",
+    "title",
+    "body[]",
+    "spoken_lines[]",
+    "cta_if_nonempty",
+    "visual_execution[]",
+    "audio_execution[]"
+  ],
+  "semantic_invariants": {
+    "product_core_requirement_name": "product_core_requirements",
+    "every_core_fact_must_appear_on_a_real_surface": true,
+    "claim_text_must_be_verbatim_on_a_real_surface": true,
+    "fact_source_authorization_closure_is_exact": true,
+    "every_approved_component_must_have_real_surface_evidence": true,
+    "component_pointer_must_bind_core_or_required_slot_fact": true,
+    "component_pointer_must_use_role_compatible_surface": true,
+    "unknown_or_alias_fields_forbidden": true,
+    "serializer_may_add_semantic_content": false,
+    "serializer_may_rewrite_text": false,
+    "serializer_may_infer_missing_bindings": false
+  },
+  "raw_schema_version": "gate1-p4-author-semantic-output-v1.0",
+  "normalized_schema_version": "gate1-p4-author-output-contract-recovery-v1.0",
+  "run_id_unique_across_batch": true,
+  "raw_type_contract": {
+    "audio_execution": "nonempty_string_array_allow_empty",
+    "author_attestation": "exact_false_boolean_object",
+    "body": "nonempty_string_array_min_1",
+    "cta": "string_allow_empty",
+    "request_id": "nonempty_string",
+    "run_id": "nonempty_string_unique_across_batch",
+    "schema_version": "nonempty_string",
+    "semantic_claims": "semantic_claim_array_min_1",
+    "semantic_component_usage": "semantic_component_usage_array",
+    "semantic_surfaces": "semantic_surface_array_exact_join",
+    "spoken_lines": "nonempty_string_array_allow_empty",
+    "synthetic_disclosure": "nonempty_string",
+    "title": "nonempty_string",
+    "visual_execution": "nonempty_string_array_min_1"
+  },
+  "nested_type_contract": {
+    "semantic_claim": {
+      "authorization_ids": "unique_nonempty_string_array_min_1",
+      "claim_boundary": "nonempty_string_exact_material_boundary",
+      "claim_text": "nonempty_string_verbatim_on_surface",
+      "fact_ids": "unique_nonempty_string_array_min_1",
+      "source_ids": "unique_nonempty_string_array_min_1"
+    },
+    "semantic_component_usage": {
+      "component_id": "nonempty_string_unique",
+      "implementation_note": "nonempty_string",
+      "surface_ordinals": "unique_positive_integer_array_min_1"
+    },
+    "semantic_surface": {
+      "authorization_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+      "fact_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+      "source_ids": "unique_nonempty_string_array_disclosure_may_be_empty",
+      "surface_kind": "enum_nonempty_string",
+      "text": "nonempty_string"
+    }
+  },
+  "output_contract_section_changed": true,
+  "content_authoring_semantics_changed": false
+}

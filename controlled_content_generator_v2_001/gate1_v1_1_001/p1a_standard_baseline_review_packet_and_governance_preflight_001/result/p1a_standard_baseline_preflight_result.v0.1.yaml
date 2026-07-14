@@ -1,0 +1,25 @@
+p1a_standard_baseline_preflight_result:
+  schema_version: v0.1
+  task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
+  execution_status: PASS_PENDING_INDEPENDENT_REVIEWS
+  first_gate_verdict: NOT_CREATED
+  core_number_impact:
+    target_total: 300
+    legacy_reference_content: 120
+    component_candidates: 86
+    all_unchanged: true
+  review_decision_boundary:
+    review_decisions_created: false
+    counted_positive_parent_count: NOT_FROZEN
+    component_approved_count: NOT_FROZEN
+    route_gold_answer_count: 0
+    route_blind_review_packet_created: true
+    unified_blank_review_record_template_created: true
+  readiness:
+    readiness_changed: false
+    generation_allowed: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+    production_ready: false
+  next_action: IDENTITY_ISOLATED_INDEPENDENT_REVIEWS_ONLY
+  result_digest: baaf86fbaecc9ad1fabb3eac35068bac6323b1ce6c44aa77eef358f5f6664232

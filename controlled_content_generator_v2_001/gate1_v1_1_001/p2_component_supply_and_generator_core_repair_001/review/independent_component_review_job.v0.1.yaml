@@ -1,0 +1,24 @@
+independent_component_review_job:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  checkpoint_state: PENDING_INDEPENDENT_COMPONENT_REVIEW
+  review_packet_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/independent_component_review_packet.v0.1.jsonl
+  review_packet_sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+  packet_item_counts:
+    PROPOSED_ACTIVE_COMPONENT: 54
+    CONTROL_RULE_SEPARATION: 8
+    PROPOSED_COMPONENT_CP_EDGE: 162
+    AB_STRUCTURAL_PATH_CAPABILITY: 20
+  review_identity_policy:
+    reviewer_count: 2
+    reviewers_must_be_different_instances_or_sessions: true
+    reviewers_must_differ_from_component_author_and_p2_executor: true
+    reviewers_must_differ_from_final_activator: true
+    third_review_only_for_real_disagreements: true
+  review_roles:
+    primary: content value, atomicity, composability, CP fit, and AB capability
+    secondary: provenance, evidence span, fact and authorization boundary, compatibility, and edge truth
+  scoring_contract: FROZEN_V1_1_COMMON_80_PLUS_TYPE_20_WITH_EXISTING_VETOES
+  self_approval_allowed: false
+  component_activation_allowed_before_closeout: false
+  review_job_digest: e365f778983f3f316dad584dae80d56cde5a083a68e71d2303131b9c868c5e53

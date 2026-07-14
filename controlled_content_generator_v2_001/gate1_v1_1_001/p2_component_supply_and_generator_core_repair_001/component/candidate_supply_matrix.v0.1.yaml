@@ -1,0 +1,760 @@
+candidate_supply_matrix:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  candidate_complete_profile_count: 20
+  approved_complete_profile_count: 0
+  components_active: false
+  entries:
+  - content_product_type_id: CP01
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+      - RCV2-004-JUDGMENT-BOUNDED-ORDINARY-PARTICIPANT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-STATUS-MAP-OVERVIEW-DETAIL
+      - RCV2-004-CAPTURE-CONTINUOUS-ACTION-PROOF
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP02
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+      - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-ACTION-05-DRAFT-CLEANUP
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+      - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP03
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-VISUAL-SILENT-OBJECT-CONTACT-RHYTHM
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-CONTACT-SOURCE-SOUND-SYNC
+      - RCV2-004-CAPTURE-CONTINUOUS-ACTION-PROOF
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP04
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: transition
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-TRANSITION-PARALLEL-WORK-STATE
+      - RCV2-004-TRANSITION-RESULT-FIRST-ROLE-READBACK
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-BOUNDED-ORDINARY-PARTICIPANT
+      - RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-MULTI-ROLE-PARALLEL-FRAME
+      - RCV2-004-CAPTURE-STATUS-MAP-OVERVIEW-DETAIL
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP05
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-BOUNDED-ORDINARY-PARTICIPANT
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP06
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-SOURCE-BOUND-SINGLE-VARIABLE
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP07
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+      - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: closing
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP08
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-VISUAL-SILENT-OBJECT-CONTACT-RHYTHM
+      - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP09
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+      - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+      - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-SOURCE-BOUND-SINGLE-VARIABLE
+      - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: closing
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP10
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      - RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-VERSION-MATCHED-ACTION
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP11
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP12
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+      - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      - RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-VERSION-MATCHED-ACTION
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP13
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-SOURCE-BOUND-SINGLE-VARIABLE
+      - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: transition
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE
+      - RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP14
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-VISUAL-SILENT-OBJECT-CONTACT-RHYTHM
+      - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-CONTACT-SOURCE-SOUND-SYNC
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP15
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+      - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: transition
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-TRANSITION-SOURCE-BOUND-TIME-SLICE
+      - RCV2-004-TRANSITION-PARALLEL-WORK-STATE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-MULTI-ROLE-PARALLEL-FRAME
+      - RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP16
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+      - RCV2-004-JUDGMENT-BOUNDED-ORDINARY-PARTICIPANT
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-MULTI-ROLE-PARALLEL-FRAME
+      - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP17
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+      - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+      - RCV2-004-CAPTURE-STATUS-MAP-OVERVIEW-DETAIL
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP18
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: scene
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: visual_beat
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: observable_action
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-CONTACT-SOURCE-SOUND-SYNC
+      - RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP19
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      - RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: closing
+      minimum: 1
+      candidate_count: 1
+      candidate_component_ids:
+      - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  - content_product_type_id: CP20
+    candidate_supply_complete: true
+    approved_supply_complete: false
+    required_roles:
+    - role: trigger
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: professional_judgment
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      - RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+    - role: capture_instruction
+      minimum: 1
+      candidate_count: 2
+      candidate_component_ids:
+      - RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      candidate_coverage: COMPLETE_PENDING_INDEPENDENT_REVIEW
+      approved_count: 0
+  matrix_digest: 10753927ac1863cee1c1a3b74b7b0554c28bc9f7b401703d73a1192c4e8ef3e4

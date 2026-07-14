@@ -1,0 +1,22 @@
+p4_resealed_lifecycle:
+  schema_version: gate1-p4r-lifecycle-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  state: STOPPED_RETURN_TO_P3
+  hidden_created: true
+  hidden_exposed: true
+  generator_qualified: false
+  p5_allowed: false
+  readiness_true_keys: []
+  technical_gate_pass: false
+  first_failure_code: E_P4_SURFACE_FIELDS
+  all_cases_marked_exposed_after_run: true
+  positive_first_output_count: 20
+  anomaly_first_actual_count: 20
+  human_review_started: false
+  qualification_decision_requested: false
+  H_admitted_count: 0
+  recovery_requires_new_authorization: true
+  recovery_requires_third_fresh_hidden_set: true
+  lifecycle_digest: 57b5f491a176abf75177ef5801e730c08ef274e262dc7f2b22be1d79adda9e02
+  tool_freeze_commit: 7c887f7122f1d290158d161c1a60b15e5987550d
+  hidden_input_freeze_commit: cc17657f4572c3c50665ab652b54c568f296f795

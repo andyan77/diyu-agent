@@ -1,0 +1,100 @@
+p4_curation_contract:
+  schema_version: gate1-p4-curation-contract-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  curator_role: ISOLATED_HIDDEN_MATERIAL_CURATOR
+  allowed_inputs:
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/baseline/curator_allowed_input.v0.1.json
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/curation/curation_contract.v0.1.yaml
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/p4_independent_review_contract.v0.1.yaml
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+  forbidden_inputs:
+  - P3 open inputs, outputs, reviews, repair basis, or feedback
+  - P1B cases and route gold
+  - historical hidden, sealed, or qualification probe materials
+  - author context, generated candidates, or reviewer conclusions
+  positive_schema:
+    schema_version: gate1-p4-curated-positive-v0.1
+    required_top_level_fields:
+    - schema_version
+    - task_id
+    - case_id
+    - profile_id
+    - assigned_variant
+    - run_order
+    - scenario_title
+    - scenario_summary
+    - platform
+    - audience
+    - duration_seconds
+    - typed_material
+    - product_core_requirements
+    - curation_rationale
+    - case_digest
+    typed_material_required:
+    - material_id
+    - namespace
+    - profile_id
+    - sources
+    - authorizations
+    - facts
+    - claim_boundary
+    - synthetic_test_only
+    - publishable
+    - runtime_consumable
+    - may_enter_300
+    - material_digest
+    fact_required:
+    - fact_id
+    - slot_id
+    - semantic_kind
+    - value
+    - source_ids
+    - authorization_ids
+    - fact_value_digest
+  anomaly_classes:
+    INPUT_CONFLICT:
+    - BLOCK
+    - 输入冲突
+    AUTHORIZATION_HIGH_RISK:
+    - BLOCK
+    - 授权缺失
+    FACT_HIGH_RISK:
+    - BLOCK
+    - 事实缺失
+    FACT_MISSING_REQUEST:
+    - REQUEST_INPUT
+    - 事实缺失
+    AUTHORIZATION_MISSING_REQUEST:
+    - REQUEST_INPUT
+    - 授权缺失
+    FACT_MISSING_DEGRADE:
+    - DEGRADE
+    - 事实缺失
+    AUTHORIZATION_MISSING_DEGRADE:
+    - DEGRADE
+    - 授权缺失
+  anomaly_schema:
+    schema_version: gate1-p4-curated-anomaly-v0.1
+    required_top_level_fields:
+    - schema_version
+    - task_id
+    - case_id
+    - profile_id
+    - run_order
+    - anomaly_class
+    - actual_input_payload
+    - gold_primary_action
+    - gold_primary_reason_category
+    - gold_rationale
+    - case_digest
+  distribution:
+    profile_positive_and_anomaly_each: 1
+    lane_A: 10
+    lane_B: 10
+    variant_counts:
+      A1: 5
+      A2: 5
+      B1: 5
+      B2: 5
+    case_replacement_after_freeze: false
+  contract_digest: 39eb519bd03a4d22eb9e51b309f7e4f54310870f6c2a98ba0f94a4217a3b37a4

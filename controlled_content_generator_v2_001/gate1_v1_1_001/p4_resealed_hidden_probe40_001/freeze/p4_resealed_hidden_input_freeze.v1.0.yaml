@@ -1,0 +1,29 @@
+p4_resealed_hidden_input_freeze:
+  schema_version: gate1-p4r-hidden-input-freeze-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  tool_freeze_commit: 7c887f7122f1d290158d161c1a60b15e5987550d
+  containing_commit_is_hidden_freeze_commit: true
+  artifacts:
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/curation/curated_positive_20.v1.0.jsonl: 2d56123ecb975d641e95e365e3ad86753ed17d275d34f34a58b3d638a1bf91e7
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/curation/curated_anomaly_route_inputs_20.v1.0.jsonl
+    : de62d8e57c91f9f864c64739972e53ac92f069e72df8cfb3edf4ad42b20e3a00
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/curation/curated_anomaly_route_gold_20.v1.0.jsonl
+    : 20c24757dd5e65008648ac6b27db4a534bbec3a4e722907a07cd435ef082879c
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/curation/curator_run_receipt.v1.0.yaml: 2dfcf705f4eb0d91deff56a8f64d70c1d776032039074ac7a069ec4983f6c424
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/curation/pre_freeze_validation.v1.0.yaml: 108f437151da55a8ff470d565f5dc97990b26236a6beac7a4db54317c6aa2653
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/freeze/positive_author_requests_20.v1.0.jsonl
+    : 744d8f3d53452a92269bee29e4eb43228e8685389de7cd80fa0227bb9bbe6037
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/freeze/anomaly_route_inputs_20.v1.0.jsonl
+    : de62d8e57c91f9f864c64739972e53ac92f069e72df8cfb3edf4ad42b20e3a00
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/freeze/anomaly_route_gold_20.v1.0.jsonl: 20c24757dd5e65008648ac6b27db4a534bbec3a4e722907a07cd435ef082879c
+    controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/freeze/sealed_run_order_40.v1.0.jsonl: a0d55d9a1608bf0d4804c5b0b9f7d1b31c4a7abef5b7766e494e090a579867ad
+  output_or_actual_or_review_present: false
+  new_material_created_after_p3_freeze: true
+  old_or_historical_case_reuse_count: 0
+  generator_qualified: false
+  p5_allowed: false
+  core_numbers:
+    '300': UNCHANGED
+    '120': UNCHANGED
+    '86': UNCHANGED
+  freeze_digest: 95479c83457c5d18e658bff74b09438c861e9c08687647b06aeda2563fa3586a

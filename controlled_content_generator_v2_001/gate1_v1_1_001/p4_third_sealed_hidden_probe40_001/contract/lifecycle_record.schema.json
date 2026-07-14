@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gate1-third-p4-lifecycle-v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "task_id", "lifecycle_state", "previous_lifecycle_digest", "evidence_digests",
+    "hidden_frozen", "hidden_exposed", "hidden_reusable",
+    "technical_gate_pass", "reviews_pass", "decision_present",
+    "approved_first_output_request_ids", "H", "generator_qualified",
+    "p5_allowed", "target_baseline_count", "positive_target_count",
+    "route_target_count", "legacy_reference_inventory_count",
+    "counted_positive_parent_count",
+    "historical_component_inventory_count", "active_component_count",
+    "external_provider_request_count", "p5_executed", "readiness",
+    "lifecycle_digest"
+  ],
+  "properties": {
+    "schema_version": {"const": "gate1-third-p4-lifecycle-v1.0"},
+    "task_id": {"const": "GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001"},
+    "lifecycle_state": {
+      "enum": [
+        "TOOLS_FROZEN_PENDING_HIDDEN_CURATION",
+        "HIDDEN_INPUTS_FROZEN",
+        "STOPPED_RETURN_TO_P3",
+        "PASS_PENDING_FOUNDER_QUALIFICATION_DECISION",
+        "STOPPED_QUALIFICATION_REJECTED",
+        "PASS_TO_P5_POSITIVE_SCALE"
+      ]
+    },
+    "previous_lifecycle_digest": {
+      "type": "string",
+      "pattern": "^$|^[0-9a-f]{64}$"
+    },
+    "evidence_digests": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+    "hidden_frozen": {"type": "boolean"},
+    "hidden_exposed": {"type": "boolean"},
+    "hidden_reusable": {"type": "boolean"},
+    "technical_gate_pass": {"type": "boolean"},
+    "reviews_pass": {"type": "boolean"},
+    "decision_present": {"type": "boolean"},
+    "approved_first_output_request_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "H": {"type": "integer", "minimum": 0, "maximum": 20},
+    "generator_qualified": {"type": "boolean"},
+    "p5_allowed": {"type": "boolean"},
+    "target_baseline_count": {"const": 300},
+    "positive_target_count": {"const": 240},
+    "route_target_count": {"const": 60},
+    "legacy_reference_inventory_count": {"const": 120},
+    "counted_positive_parent_count": {"const": 29},
+    "historical_component_inventory_count": {"const": 86},
+    "active_component_count": {"const": 68},
+    "external_provider_request_count": {"const": 0},
+    "p5_executed": {"const": false},
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidatepack_ready", "KE_ready", "RAG_ready", "DIFY_ready",
+        "production_servable", "generation_eligible", "generation_allowed",
+        "release_ready", "production_ready"
+      ],
+      "properties": {
+        "candidatepack_ready": {"const": false},
+        "KE_ready": {"const": false},
+        "RAG_ready": {"const": false},
+        "DIFY_ready": {"const": false},
+        "production_servable": {"const": false},
+        "generation_eligible": {"const": false},
+        "generation_allowed": {"const": false},
+        "release_ready": {"const": false},
+        "production_ready": {"const": false}
+      }
+    },
+    "lifecycle_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

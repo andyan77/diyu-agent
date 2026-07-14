@@ -1,0 +1,108 @@
+p2_final_result:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  result_state: PASS_TO_P3_OPEN_PROBE
+  p2_complete: true
+  p3_allowed: true
+  reviewed_checkpoint_commit: c37a894930025aac99db18a055d5a79294fa89dc
+  review_packet_sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+  targeted_r1_reviewed_commit: 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+  targeted_r1_review_packet_sha256: 5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50
+  targeted_r2_reviewed_commit: 211b9b241d7660dfa688d3b8db4716ce4e871d27
+  targeted_r2_review_packet_sha256: 6eaa8e8f365888ea887a13e3065e9cb711f8f518460f61d4865f3e24852986ef
+  targeted_r3_reviewed_commit: e83c4a27259d64dd1a52d41d9ca0b9cc7237db61
+  targeted_r3_review_packet_sha256: e14bf95b40d87c83be48e45f2455d983c3c5e412f88ef41f5b034b9d2403883d
+  targeted_r4_reviewed_commit: 87d3ca89ba9cbb743ee82af105cf831bbd8e2dab
+  targeted_r4_review_packet_sha256: 95c2a44e8d473844ada77d242ede0299a6b4db63b2699dfc633af0704d2c7e72
+  targeted_r5_reviewed_commit: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+  targeted_r5_review_packet_sha256: de59316fd7d88237e00cc84bd8802959d194995ddf5aef703477bd4921adc245
+  targeted_r6_reviewed_commit: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+  targeted_r6_review_packet_sha256: 2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8
+  initial_review_record_count_per_reviewer: 244
+  initial_review_disposition_counts:
+    APPROVE: 90
+    REPAIR: 32
+    REJECT: 30
+    DISAGREEMENT_REQUIRES_ADJUDICATION: 92
+  initial_adjudication_record_count: 92
+  initial_adjudication_disposition_counts:
+    APPROVE: 0
+    REPAIR: 66
+    REJECT: 26
+  targeted_r1_review_record_count_per_reviewer: 141
+  targeted_r1_review_disposition_counts:
+    APPROVE: 27
+    REPAIR: 32
+    REJECT: 0
+    DISAGREEMENT_REQUIRES_ADJUDICATION: 82
+  targeted_r2_review_record_count_per_reviewer: 134
+  targeted_r2_review_disposition_counts:
+    APPROVE: 107
+    REPAIR: 20
+    REJECT: 0
+    DISAGREEMENT_REQUIRES_ADJUDICATION: 7
+  targeted_r2_failure_evidence_preserved: true
+  targeted_r3_review_record_count_per_reviewer: 29
+  targeted_r3_review_disposition_counts:
+    APPROVE: 2
+    REPAIR: 21
+    REJECT: 0
+    DISAGREEMENT_REQUIRES_ADJUDICATION: 6
+  targeted_r3_failure_evidence_preserved: true
+  targeted_r4_review_record_count_per_reviewer: 27
+  targeted_r4_review_disposition_counts:
+    APPROVE: 0
+    REPAIR: 21
+    REJECT: 0
+    DISAGREEMENT_REQUIRES_ADJUDICATION: 6
+  targeted_r4_failure_evidence_preserved: true
+  targeted_r5_review_record_count_per_reviewer: 27
+  targeted_r5_review_disposition_counts:
+    APPROVE: 26
+    REPAIR: 0
+    REJECT: 0
+    DISAGREEMENT_REQUIRES_ADJUDICATION: 1
+  targeted_r5_failure_evidence_preserved: true
+  targeted_r6_review_record_count_per_reviewer: 1
+  targeted_r6_review_disposition_counts:
+    APPROVE: 1
+    REPAIR: 0
+    REJECT: 0
+  unresolved_review_disagreement_count: 0
+  self_approval_count: 0
+  active_component_count: 68
+  revised_historical_component_count: 18
+  necessary_addition_count: 30
+  active_control_rule_count: 8
+  active_edge_count: 85
+  approved_supply_complete_profile_count: 20
+  active_ab_path_profile_count: 20
+  typed_author_request_count: 40
+  structural_realization_count: 40
+  component_ablation_case_count: 410
+  axis_body_pair_case_count: 120
+  component_pointer_case_count: 410
+  observable_effect_tamper_case_count: 62
+  bound_fact_effect_case_count: 62
+  required_slot_tamper_case_count: 20
+  path_program_schema_tamper_case_count: 240
+  path_program_tamper_case_count: 120
+  trust_contract_tamper_case_count: 180
+  route_case_count: 60
+  route_primary_action_match_count: 60
+  route_primary_reason_match_count: 60
+  external_provider_request_count: 0
+  external_provider_response_count: 0
+  audience_content_created_count: 0
+  composition_plan_created_count: 0
+  core_number_impact:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness:
+    generator_qualified: false
+    generation_allowed: false
+    runtime_ingest_ready: false
+    production_ready: false
+  result_digest: 8001b1614dc32c4f6282d7aecd7f133460e3780ff7523673bf363766fe55a149

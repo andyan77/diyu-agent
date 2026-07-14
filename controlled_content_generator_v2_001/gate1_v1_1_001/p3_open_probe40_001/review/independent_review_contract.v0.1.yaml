@@ -1,0 +1,73 @@
+independent_review_contract:
+  schema_version: gate1-p3-independent-review-contract-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  reviewer_identity_policy:
+    reviewer_must_not_be_author: true
+    reviewer_must_not_be_executor_builder_or_finalizer: true
+    two_reviewers_must_be_distinct_instances_and_sessions: true
+    blind_prediction_must_be_recorded_before_label_reveal: true
+  execution_lineage:
+    task_baseline_commit: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+    freeze_commit: bb598b098bf2fc673ede61a0f947d5e485ac7058
+    review_head_policy: MUST_DESCEND_FROM_FREEZE_COMMIT
+    frozen_input_policy: VERIFY_FILE_BYTES_AGAINST_CORRECTED_V0_2_MANIFEST
+    legacy_manifest_policy: PRESERVE_V0_1_AS_METADATA_ERROR_EVIDENCE
+  review_roles:
+    review_1: CONTENT_PRODUCT_USER_VALUE_STRUCTURE_PLATFORM_ANTI_FORMULA
+    review_2: FACT_SOURCE_AUTHORIZATION_CLAIM_COMPONENT_ROUTE_SAFETY
+  public_quality_dimensions:
+    truth_evidence_traceability: 20
+    apparel_business_specificity: 10
+    role_brand_viewpoint_consistency: 10
+    user_value_information_gain: 10
+    platform_native_executability: 10
+    anti_formula_ethics_restraint: 10
+  product_quality_dimensions:
+    core_product_value: 15
+    product_specific_narrative_av: 10
+    continuity_composability_accumulation: 5
+  grade_bands:
+    A:
+    - 90
+    - 100
+    B:
+    - 80
+    - 89
+    C:
+    - 70
+    - 79
+    D:
+    - 0
+    - 69
+  critical_minimums:
+    A:
+      truth_evidence_traceability: 18
+      core_product_value: 13
+      role_brand_viewpoint_consistency: 8
+      platform_native_executability: 8
+      anti_formula_ethics_restraint: 8
+    B:
+      truth_evidence_traceability: 17
+      core_product_value: 12
+      role_brand_viewpoint_consistency: 7
+      platform_native_executability: 7
+      anti_formula_ethics_restraint: 7
+  hard_vetoes:
+  - FABRICATED_OR_REALITY_WASHED_FACT
+  - UNBOUND_OR_OUT_OF_SCOPE_CLAIM
+  - AUTHORIZATION_OR_PRIVACY_VIOLATION
+  - CROSS_SUBJECT_OR_TENANT_MISUSE
+  - PRODUCT_MANDATORY_INPUT_OR_GUARD_VIOLATION
+  - UNSAFE_OR_DISCRIMINATORY_PROMISE
+  - SUBSTANTIAL_SOURCE_OR_LEGACY_COPY
+  - SELF_APPROVAL_OR_READINESS_ESCALATION
+  p3_pass_lines:
+    first_acceptance_rate_minimum: 0.9
+    blind_top1_accuracy_minimum: 0.85
+    human_confirmed_formula_or_near_duplicate_rate_maximum: 0.1
+    route_action_and_reason_accuracy: 1.0
+    hard_error_count: 0
+    structure_hard_gate_pass_required: true
+  score_definition: Arithmetic mean of the 20 positive 70+30 scores; structure and route are separate
+    non-compensable hard gates.
+  contract_digest: 46b4ad8fe239c680e4d4e236b5750e0070d2daabdc973b82dc7e0f4b54a5306e

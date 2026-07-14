@@ -1,0 +1,22 @@
+third_p4_hidden_input_freeze:
+  schema_version: gate1-third-p4-hidden-input-freeze-v1.0
+  task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
+  tool_commit: 8f5320ae07c50a759491bff7a47febd8d1b26c4d
+  curation_bundle_sha256: 5ca3010917a22755bc66c1bd37827f35af93a97fd8c8eb49da3ae5253d316181
+  role_manifest_sha256: cc3469d1da0a7eb289cba5a70a5294da828c8a43627252346caeba7841d36a5d
+  positive_requests_sha256: e1dd8a95ebbd7b01c7b6ce327509574252867d44a17d76edb034fe90f91651f0
+  anomaly_inputs_sha256: 92b4d8b9cc5bd8faf916836fbf8b9640275b6a1ae9868a415f3060f85516a55a
+  anomaly_gold_sha256: 459ff9bdc2f716b9ca3d6e2171b27db9fbde2e15631d17c921921d946bbc04ce
+  role_manifest_digest: cf6c3e7294b8d8c71259b16449834a668f0d3046be391e58373e39a62692d6fc
+  anti_reuse:
+    exact_or_containment_hits: 0
+    maximum_similarity: 0.754967
+    threshold: 0.82
+  positive_count: 20
+  anomaly_count: 20
+  gold_count: 20
+  output_count_at_freeze: 0
+  route_actual_count_at_freeze: 0
+  review_count_at_freeze: 0
+  hidden_reusable: false
+  freeze_digest: 37b0dbb04c26a1be0f20df606207844dd6a29884252c2930df272a454c90aeec

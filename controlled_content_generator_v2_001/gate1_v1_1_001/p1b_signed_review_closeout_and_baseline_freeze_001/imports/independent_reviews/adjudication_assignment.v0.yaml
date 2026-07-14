@@ -1,0 +1,94 @@
+adjudication_assignment:
+  assignment_id: GATE1_V11_INDEPENDENT_ADJUDICATION_001
+  status: frozen_for_independent_adjudicator
+  source_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  business_repository_write_allowed: false
+  route_actuals_may_be_read: false
+  primary_records:
+    path: independent_reviews/primary/records.jsonl
+    sha256: fdaaff1355e3365fa51ecc26cac8d342f2c736b69cd2022ecf921ce339778a51
+  secondary_records:
+    path: independent_reviews/secondary/records.jsonl
+    sha256: 61586c7fce34baa59db1c179eeeae7214b6afebb3daa2282221e68e91f7e6b61
+  reviewer_identity_rules:
+    - 第三审身份_会话_运行和签署必须与前两审均不同
+    - 第三审可以读取两份已签署原记录及其证据
+    - 第三审不得读取路线实际答案_密封预期答案_比较结果或相邻路线结果文件
+    - 第三审只解决本清单列出的冲突_不得改写两份原记录
+    - 结论只作为P1B输入_不冻结最终合格数或组件保留数
+  conflict_selection_rule:
+    content: 两份审查都认为具备候选价值但主要内容产品归属不同_会影响产品覆盖
+    route: 主动作一致但标准主要原因码不同_会影响路线黄金答案
+    component: 保留_修复_重分类为控制规则的处置不同_会影响后续组件分区
+  explicitly_not_selected:
+    - 两份记录都要求不计数或修复_只是措辞颗粒度不同
+    - 总分差不超过10分且没有跨越一个以上等级
+    - 路线BLOCK动作下veto布尔字段表达不同_主动作本身一致
+  conflicts:
+    content_product_mapping:
+      - P1A-LEGACY-CONTENT-P7D40-REPAIR-021
+      - P1A-LEGACY-CONTENT-P7D40-REPAIR-030
+      - P1A-LEGACY-CONTENT-P7D40-REPAIR-162
+    route_reason_code:
+      - P1A-ROUTE-DEV-ROUTE-CP01-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP02-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP03-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP04-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP04-RISK-OR-INPUT-001
+      - P1A-ROUTE-DEV-ROUTE-CP05-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP05-RISK-OR-INPUT-001
+      - P1A-ROUTE-DEV-ROUTE-CP06-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP07-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP08-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP09-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP10-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP10-RISK-OR-INPUT-001
+      - P1A-ROUTE-DEV-ROUTE-CP11-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP12-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP12-RISK-OR-INPUT-001
+      - P1A-ROUTE-DEV-ROUTE-CP13-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP14-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP15-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP16-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP17-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP18-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP18-RISK-OR-INPUT-001
+      - P1A-ROUTE-DEV-ROUTE-CP19-GUARD-001
+      - P1A-ROUTE-DEV-ROUTE-CP20-GUARD-001
+    component_disposition:
+      - P1A-COMPONENT-RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+      - P1A-COMPONENT-RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+      - P1A-COMPONENT-RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+      - P1A-COMPONENT-RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+      - P1A-COMPONENT-RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+      - P1A-COMPONENT-RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+      - P1A-COMPONENT-RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+      - P1A-COMPONENT-RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+      - P1A-COMPONENT-RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+      - P1A-COMPONENT-RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      - P1A-COMPONENT-RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+      - P1A-COMPONENT-RCV2-003-TRANSITION-ROLE-SPECIFIC-HANDOFF
+      - P1A-COMPONENT-RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+      - P1A-COMPONENT-RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      - P1A-COMPONENT-RCV2-003-VISUAL-LIGHT-COLOR-CONTEXT
+  output_directory: independent_reviews/adjudication
+  output_files:
+    - records.jsonl
+    - report.md
+    - run_manifest.yaml
+  required_per_record:
+    - conflict_type
+    - packet_item_id
+    - primary_record_ref_and_digest
+    - secondary_record_ref_and_digest
+    - source_evidence_refs
+    - original_conclusions_preserved
+    - adjudicated_value
+    - rationale
+    - final_disposition_for_p1b
+    - reviewer_identity_session_run_instruction_and_configuration_digests
+    - append_only_signature_and_record_digest
+  core_number_impact:
+    300: unchanged
+    120: unchanged
+    86: unchanged

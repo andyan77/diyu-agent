@@ -1,0 +1,130 @@
+independent_review_run_manifest:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  prompt_revision: r0
+  review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+  reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+  reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+  review_run_id: P2-PRIMARY-RUN-20260713-C37A894
+  review_completed_at_utc: '2026-07-13T23:50:40Z'
+  repository: /home/diyu/笛语领域通用数据库
+  reviewed_commit: c37a894930025aac99db18a055d5a79294fa89dc
+  review_branch: agent/gate1-v1-1-retrospective-recovery-plan
+  checkpoint_state: PENDING_INDEPENDENT_COMPONENT_REVIEW
+  execution_brief_path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/execution_prompt.v0.md
+  frozen_standard_path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+  frozen_standard_sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+  review_job_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/independent_component_review_job.v0.1.yaml
+  review_packet_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/independent_component_review_packet.v0.1.jsonl
+  review_packet_sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+  packet_item_counts:
+    PROPOSED_ACTIVE_COMPONENT: 54
+    CONTROL_RULE_SEPARATION: 8
+    PROPOSED_COMPONENT_CP_EDGE: 162
+    AB_STRUCTURAL_PATH_CAPABILITY: 20
+    total: 244
+  decision_counts:
+    APPROVE: 148
+    REJECT: 57
+    REPAIR: 39
+  grade_counts:
+    A: 148
+    B: 38
+    C: 10
+    D: 48
+  primary_complete_role_coverage:
+    complete_product_count: 9
+    complete_products:
+    - CP01
+    - CP02
+    - CP06
+    - CP07
+    - CP10
+    - CP11
+    - CP15
+    - CP16
+    - CP19
+    products_with_gaps:
+      CP03:
+      - trigger
+      CP04:
+      - professional_judgment
+      CP05:
+      - scene
+      - trigger
+      CP08:
+      - professional_judgment
+      - scene
+      CP09:
+      - professional_judgment
+      - trigger
+      CP12:
+      - observable_action
+      - trigger
+      CP13:
+      - scene
+      - visual_beat
+      CP14:
+      - scene
+      CP17:
+      - trigger
+      CP18:
+      - observable_action
+      - scene
+      - visual_beat
+      CP20:
+      - trigger
+  ab_structural_path_approved_count: 0
+  outputs:
+    file_count: 3
+    records:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/primary/records.jsonl
+      sha256: a53d4a6c23b07eb40f26e82580d08f01b6995fa613bfb394ca6b7e25846712b2
+      record_count: 244
+      jsonl_line_count: 244
+    report:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/primary/report.md
+      sha256: 89c2491cd843bc53f9fb0f86ce17c2ec29e539b95fc9134726daf06f19e0911a
+    run_manifest:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/primary/run_manifest.yaml
+      hash_policy: sha256 of canonical JSON manifest payload excluding outputs.run_manifest.manifest_payload_sha256
+      manifest_payload_sha256: 22a15f322f0d4b530cb2da0ef81b1a48b3fb1742d46fd4916a4302a375ff4c5c
+  repository_write_attestation:
+    repository_files_written_by_reviewer: 0
+    no_repo_writes_by_reviewer: true
+    worktree_clean_before: true
+    worktree_clean_after: false
+    head_unchanged_at_closeout: true
+    upstream_alignment_unchanged_at_closeout: true
+    concurrent_worktree_drift_detected: true
+    untracked_paths_observed_at_closeout:
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_documents.py
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core.py
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_review_closeout.py
+    untracked_paths_created_read_or_used_by_reviewer: false
+  sibling_review_visibility:
+    secondary_review_directory_read: false
+    secondary_review_output_read: false
+    sibling_review_material_used: false
+    visibility: NONE
+  activation:
+    components_activated: false
+    edges_activated: false
+    paths_activated: false
+    p3_activated: false
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+  signed_attestation: SIGNED::P2-PRIMARY-CONTENT-REVIEWER-A::019f5dce-25f9-74c3-85d6-c19280e9664a::P2-PRIMARY-RUN-20260713-C37A894::I
+    attest that I actually read and independently decided every one of the 244 packet
+    items at commit c37a894930025aac99db18a055d5a79294fa89dc; I did not view or use
+    any sibling or secondary review output; I made no repository write and performed
+    no activation.

@@ -1,0 +1,87 @@
+p3_open_repair_freeze:
+  schema_version: gate1-p3-open-repair-freeze-v0.2
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  baseline_commit: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  attempt_0_failure_commit: 80501c4c502fd28fcad53d0e8a07144875b73036
+  freeze_state: FROZEN_BEFORE_ATTEMPT_1_AUTHORING
+  attempt: 1
+  p2_frozen_inputs:
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+    : 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+    : 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+    : de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+    : 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+    ? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    : e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+  repair_basis:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/repair/attempt_1/repair_basis.v0.1.yaml
+    sha256: 538580ff4fb6bfff7602466b05dce9d21cf63d1140dfe154551e1346e7f0d774
+  attempt_0_integrity_manifest:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/repair/attempt_1/attempt_0_integrity_manifest.v0.1.jsonl
+    sha256: 6be18cd7fdd670b57f054f8e379bab0aa61e8eda60dfe900041a8c9e288a92cc
+    count: 45
+  scenario_set:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/baseline/synthetic_positive_scenarios.v0.2.yaml
+    sha256: b2930aad1d7799c7a3cb112754ed8ea4a1b416165eec94afe66e4982e16e76df
+  typed_material:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/typed_material_20.v0.2.jsonl
+    sha256: 171a5661282ca072f65366c9bd410e61a2d1a8952c5910d10a2538dccb9910ee
+    count: 20
+  structure:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/structure_80.v0.2.jsonl
+    sha256: 838bdd5add508dadd09ed998175ad31602b587dca35b23c40c6432d4aa3a7a3a
+    count: 80
+  differences:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/difference_80.v0.2.jsonl
+    sha256: 20d40fc8b716d7a750337c4cdf0a4d46cd0a731fdf976a3b0f7b99310aee5902
+    count: 80
+  axis_removals:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_1/axis_removal_480.v0.2.jsonl
+    sha256: 82d0293e047113d74ce0adabe78e2a37a96075b6b4b3e9c7046746f9a549e4ff
+    count: 480
+  author_instruction:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/controlled_author_instruction.v0.2.md
+    sha256: 5962400130fd59ed8b94611cb4c2d46a9f10b3672041369325e3acf417b5a98e
+  author_model:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/author_model_and_session.v0.2.yaml
+    sha256: 516bc60467bfe30991ea9228ff34b3c753d96410f74424ca5dbffc74d91283d3
+    object_digest: 77c857ec7f18702dde527634392908a7ad81940fd27e9a77e60d4db54a357204
+  positive_assignments:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/positive_structure_assignment_20.v0.2.jsonl
+    sha256: ed7d53cc29d8719cc2bfea403e9cb604d694f682e663c4d8295f572584b67856
+    count: 20
+  author_requests:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/positive_author_requests_20.v0.2.jsonl
+    sha256: d1d2a314222130751e3a743e8f25033164a033342021f97cbcca5bf0bc4f2708
+    count: 20
+  route_selections:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/route_selection_20.v0.2.jsonl
+    sha256: 815912ef58edd81203589960d013c4ece35b58e2a1b52f366cacd17602e5b5bc
+    count: 20
+  route_inputs:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/route_inputs_20.v0.2.jsonl
+    sha256: 118de86e842ae80c8d7bd40c36c5b1f7d1ee1f296c4bad8f5013a33887c8c9b3
+    count: 20
+  same_author_identity_and_platform_agent: true
+  attempt_1_author_run_limit: 1
+  reroll_allowed: false
+  component_addition_count: 0
+  open_core_repair_window_used: true
+  open_core_repair_window_remaining: 0
+  counts_toward_300: 0
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  freeze_manifest_digest: caeb90502bde9ec1f2c28d93dec5531a18e6c906d3e2514e30ba68b776b3d578

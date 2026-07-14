@@ -1,0 +1,76 @@
+run_manifest:
+  review_job_id: GATE1_V11_INDEPENDENT_REVIEW_CHECKPOINT_001
+  reviewer_identity_id: gate1_primary_content_value_reviewer_cleanroom_v1
+  reviewer_instance_or_session_id: codex_subagent_root_gate1_primary_review_cleanroom_20260713
+  review_run_id: GATE1-V11-PRIMARY-CONTENT-VALUE-20260713-001
+  review_role: PRIMARY_CONTENT_VALUE
+  source_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  source_branch: agent/gate1-v1-1-retrospective-recovery-plan
+  business_repository_write_allowed: false
+  business_repository_write_count: 0
+  started_at: '2026-07-13T13:37:42Z'
+  completed_at: '2026-07-13T13:37:42Z'
+  input_bindings:
+    review_job:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001/independent_reviews/review_job.v0.yaml
+      sha256: 511e203a464b7e57fdf2661abc7254f168c0da59c1631f618a861f3cf8f9192a
+    blindness_amendment:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001/independent_reviews/review_job_blindness_amendment.v0.yaml
+      sha256: fa10da85ac4b380d426fc3ac896d56e832b2ff877001ff0d6767793f1f1861c1
+    combined_instruction_sha256: 2cab6e4aa2fa25a9595d853b8576dfe2e395026e00934a63f7dec9b86edbb080
+    standard:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+      sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+    review_packet:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/review/unified_gate1_review_packet.v0.1.jsonl
+      sha256: 3790b629fb636ef33dbaad369896c1efb55709971c8a01ef2a60a99fa201d64f
+    review_contract:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/review/independent_review_contract.v0.1.yaml
+      sha256: dbe137cd7ed1af0a9001230ff6d40852b1b5ffeca97fc287d1efe844e9e04a0c
+    allowed_content_source:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+      sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    allowed_route_source:
+      path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/route_inputs.v0.1.jsonl
+      sha256: 68bc65bff904652f1e565097117c7e8dfccdcc6ef00d2e3a0e93a082a4d72f12
+    allowed_component_source:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+      sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+  coverage:
+    legacy_reference_content: 120
+    route_case: 60
+    component_candidate: 86
+    total: 266
+  blindness_attestation:
+    route_actuals_read: false
+    route_comparison_or_results_read: false
+    other_reviewer_outputs_read: false
+    invalidated_reviewer_intermediate_judgments_read: false
+    route_wide_repository_search_performed: false
+  source_generation_lane_or_pair_ref_policy:
+    source_records_proved_real_lane_or_pair_metadata: false
+    all_record_values: null
+    optional_lane_applicability_used_for_approval: false
+  model_or_instance_configuration:
+    description: OpenAI Codex GPT-5 clean-room primary semantic review; isolated subagent
+      session; business repository read-only; route actuals unseen; standard v1.1
+      bound
+    sha256: 210b27b12d391fe9b3a19f156cd9cb4b942010ad483c41f1b721c1e869c6ca3b
+  output_bindings:
+    records:
+      path: records.jsonl
+      sha256: fdaaff1355e3365fa51ecc26cac8d342f2c736b69cd2022ecf921ce339778a51
+      record_count: 266
+    report:
+      path: report.md
+      sha256: 149bab88fdfca4203781ddb8aaee76897364bdca9ccd72ce2789f32ad3b7fe5c
+  append_only_record_digest_algorithm: SHA256(canonical JSON excluding integrity.append_only_record_sha256)
+  hard_verdict: REVIEW_DELIVERY_PASS__BASELINE_NOT_READY_TO_FREEZE
+  core_number_impact:
+    300: unchanged
+    120: unchanged
+    86: unchanged
+  count_n_frozen: false
+  component_keep_count_frozen: false
+  route_gold_compared_to_actual: false
+  secret_material_recorded: false

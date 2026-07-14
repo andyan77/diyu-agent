@@ -1,0 +1,82 @@
+schema_version: v0.1
+task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+prompt_revision: r0
+review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+review_run_id: P2-SECONDARY-RUN-20260713-C37A894
+review_completed_at_utc: '2026-07-13T23:45:16Z'
+repository: /home/diyu/笛语领域通用数据库
+reviewed_commit: c37a894930025aac99db18a055d5a79294fa89dc
+snapshot_verification:
+  head_exact_match: true
+  worktree_before_review_clean: true
+  authorized_execution_baseline_is_ancestor: true
+  worktree_after_review_clean: false
+  concurrent_untracked_paths_observed:
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_documents.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_review_closeout.py
+  concurrent_paths_created_or_read_by_reviewer: false
+review_packet:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/independent_component_review_packet.v0.1.jsonl
+  sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+  record_count: 244
+  object_counts:
+    PROPOSED_ACTIVE_COMPONENT: 54
+    CONTROL_RULE_SEPARATION: 8
+    PROPOSED_COMPONENT_CP_EDGE: 162
+    AB_STRUCTURAL_PATH_CAPABILITY: 20
+outputs:
+  artifact_count: 3
+  records:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/secondary/records.jsonl
+    sha256: e6e3445af0113122ffb23d30e12e775e58433a6f925c36fe6dfb8e1531296e2b
+    record_count: 244
+    packet_order_preserved: true
+    canonical_record_digest_rule: sha256(canonical_json(record excluding record_digest)); UTF-8; sorted keys; separators comma/colon; ensure_ascii=false
+    decision_counts:
+      APPROVE: 101
+      REJECT: 36
+      REPAIR: 107
+  report:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/secondary/report.md
+    sha256: be132ef007eb53ff1052974f2cb08a94cba0545bc35da899b904f85f10ce288e
+    nonapproved_item_count: 143
+  run_manifest:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/secondary/run_manifest.yaml
+    self_file_sha256_embedded: false
+    self_hash_note: A file cannot embed its own stable byte hash; manifest_content_digest below authenticates canonical manifest content excluding that digest.
+repository_writes: false
+repository_write_paths: []
+sibling_review_visibility:
+  scope: current P2 independent review task
+  primary_review_output_read: false
+  sibling_review_directory_inspected: false
+  sibling_verdict_used: false
+activation_performed: false
+readiness_transition_performed: false
+review_authorizes_activation: false
+review_authorizes_p3: false
+readiness_flags_remain_false:
+- candidatepack_ready
+- KE_ready
+- RAG_ready
+- DIFY_ready
+- production_servable
+- generation_eligible
+- generation_allowed
+- release_ready
+- production_ready
+signed_attestation: 'SIGNED BY P2-SECONDARY-PROVENANCE-REVIEWER-B / session 019f5dce-9436-7e03-be80-220461f6107d / run P2-SECONDARY-RUN-20260713-C37A894: I independently read and traced all 244 packet items at commit c37a894930025aac99db18a055d5a79294fa89dc; I did not inspect or use any primary or sibling review output for this P2 task; I am not the component author, P2 executor, or final activator; I made no repository writes, performed no activation, and recorded each verdict without targeting an approval count.'
+verification:
+  packet_hash_count_order_passed: true
+  source_derived_component_count: 34
+  verified_parent_reference_count: 37
+  verified_exact_span_count: 48
+  design_component_count: 20
+  record_schema_score_arithmetic_and_digest_count_passed: 244
+  nonapproved_ids_present_once_in_report: 143
+  packet_subjects_inactive_pending_two_reviews: 244
+  artifact_validation_failures: []
+manifest_content_digest: c361b92099c1747f46f92bc1b0a0598edd2d21a74c6b2af9a81635df3c45c8af

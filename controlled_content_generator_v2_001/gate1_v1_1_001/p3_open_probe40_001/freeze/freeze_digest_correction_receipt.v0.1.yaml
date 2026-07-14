@@ -1,0 +1,44 @@
+freeze_digest_correction_receipt:
+  schema_version: gate1-p3-freeze-digest-correction-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  baseline_commit: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  freeze_commit: bb598b098bf2fc673ede61a0f947d5e485ac7058
+  current_review_head_policy: MUST_DESCEND_FROM_FREEZE_COMMIT
+  original_manifest_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/p3_open_baseline_manifest.v0.1.yaml
+  original_manifest_sha256: 4bd2616689201d35f60127e3581817c4365e2f791c3a0bd3f1058458d1fbd64a
+  corrected_manifest_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/p3_open_baseline_manifest.v0.2.yaml
+  corrected_manifest_sha256: fe004a585878c996ce542751538ca44b577080ee7d835dcd37dd5a3aa3609cee
+  root_cause: digest_object(list) was stored under four sha256 field names
+  corrections:
+  - manifest_key: positive_assignments
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_structure_assignment_20.v0.1.jsonl
+    legacy_v0_1_object_digest: 53f3c5b0cea67183ab389c38580052637c9e2e255f23d83b4cb21b2f4f3d3692
+    corrected_file_sha256: 1f06c942cee782e8b46b8aea2980b5ff8203a294c91e84f73f1961e978aef53d
+    git_blob_oid_at_freeze_commit: 5a3b4b37d83223fecb1197a1a3feb90f946ec84e
+    byte_mutation_count: 0
+  - manifest_key: author_requests
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl
+    legacy_v0_1_object_digest: 722b50c465d99f8fb98fba1ce4c9cc40ed9231cef5fd02dbd7b52172df7de6d3
+    corrected_file_sha256: 6e649ca0bb255b4cbbdd4bd97f1441cb654bb73f4715da35250f8de561ceb279
+    git_blob_oid_at_freeze_commit: 353f67fcab0b013b0ea78561578b1599c09aac40
+    byte_mutation_count: 0
+  - manifest_key: route_selections
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/route_selection_20.v0.1.jsonl
+    legacy_v0_1_object_digest: 2552a4da96f751049ff4836a7e09a729521e5569569c3c06864c49200dbf154b
+    corrected_file_sha256: 7f01fa79931db680835e96569e774da6f315b4a889f8ee5b0b4289a6b339c9af
+    git_blob_oid_at_freeze_commit: 9b9e893de42f525c0ef98b3b4de8e5f6bca39a28
+    byte_mutation_count: 0
+  - manifest_key: route_inputs
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/route_inputs_20.v0.1.jsonl
+    legacy_v0_1_object_digest: 342caccac01bf24d73b3885a880f29f0c3cbf947fc18aba1cbe23513a4416814
+    corrected_file_sha256: 118de86e842ae80c8d7bd40c36c5b1f7d1ee1f296c4bad8f5013a33887c8c9b3
+    git_blob_oid_at_freeze_commit: ef26ddc26d242a7d8b44f2222eda74923b620a72
+    byte_mutation_count: 0
+  frozen_files_present_in_commit_before_author_run: true
+  frozen_input_byte_mutation_count: 0
+  author_output_mutation_count: 0
+  route_actual_mutation_count: 0
+  author_rerun_count: 0
+  metadata_only_correction: true
+  open_core_repair_window_used: false
+  receipt_digest: a52bfb59a193c083f7899281fea1c7b643bde318395b7be09d31f25156f9ef1f

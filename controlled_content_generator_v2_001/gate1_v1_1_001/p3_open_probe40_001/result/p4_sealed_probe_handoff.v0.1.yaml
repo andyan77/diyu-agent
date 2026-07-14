@@ -1,0 +1,31 @@
+p4_sealed_probe_handoff:
+  schema_version: gate1-p3-to-p4-handoff-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  handoff_state: P4_NOT_ALLOWED
+  p4_allowed: false
+  p4_execution_authorized: false
+  p3_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/result/p3_open_probe40_result.v0.1.yaml
+  p3_result_digest: 91abd810f68ef7ff8efb28ceeea03d9813ba09179dcb34128134eea9b79c3e76
+  frozen_generator_core:
+    p2_core_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    p2_core_sha256: e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+    p3_author_instruction_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/controlled_author_instruction.v0.1.md
+    p3_author_instruction_sha256: a1ff67f02b9cd7c12f9516d76a0b3cbcfea7cddc2609fe3aa8ae7d90dcf914dc
+    p3_author_model_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/author_model_and_session.v0.1.yaml
+    p3_author_request_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl
+  current_positive_outputs_are_open_development_evidence_only: true
+  counts_toward_300: 0
+  generator_qualified: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  handoff_digest: fe0995269f44e8fa75aede024808e55fefb4925849e2f455db9b5c05e9e3867d

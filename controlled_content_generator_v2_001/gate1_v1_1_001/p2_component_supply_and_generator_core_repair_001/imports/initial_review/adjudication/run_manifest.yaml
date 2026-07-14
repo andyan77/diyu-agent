@@ -1,0 +1,149 @@
+targeted_third_adjudication_run_manifest:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  prompt_revision: r0
+  review_role: TARGETED_THIRD_ADJUDICATION
+  reviewer_identity_id: P2-TARGETED-ADJUDICATOR-C
+  reviewer_instance_or_session_id: 019f5de8-8338-7082-9d10-96cf5bbf7c21
+  review_run_id: P2-ADJUDICATION-RUN-20260713-C37A894
+  reviewed_commit: c37a894930025aac99db18a055d5a79294fa89dc
+  snapshot_verification:
+    head_at_adjudication_start: c37a894930025aac99db18a055d5a79294fa89dc
+    head_at_artifact_closeout: 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+    head_exact_match_at_start: true
+    head_exact_match_at_closeout: false
+    concurrent_head_advance_detected: true
+    reviewed_commit_is_ancestor_of_closeout_head: true
+    repo_reads_bound_to_reviewed_git_object: true
+    packet_worktree_bytes_match_reviewed_git_object: true
+    worktree_status_at_artifact_closeout:
+    - ' M controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_documents.py'
+    - ' M controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py'
+    - ' M controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core.py'
+    - ' M controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_review_closeout.py'
+    - ?? controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_adjudication.py
+    concurrent_head_and_worktree_files_read_or_used: false
+  review_packet:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/independent_component_review_packet.v0.1.jsonl
+    sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+    record_count: 244
+    object_counts:
+      PROPOSED_ACTIVE_COMPONENT: 54
+      CONTROL_RULE_SEPARATION: 8
+      PROPOSED_COMPONENT_CP_EDGE: 162
+      AB_STRUCTURAL_PATH_CAPABILITY: 20
+  input_reviews:
+    primary:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/primary/records.jsonl
+      sha256: a53d4a6c23b07eb40f26e82580d08f01b6995fa613bfb394ca6b7e25846712b2
+      record_count: 244
+      canonical_record_digests_valid: true
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-RUN-20260713-C37A894
+    secondary:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/secondary/records.jsonl
+      sha256: e6e3445af0113122ffb23d30e12e775e58433a6f925c36fe6dfb8e1531296e2b
+      record_count: 244
+      canonical_record_digests_valid: true
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-RUN-20260713-C37A894
+  truth_sources:
+    frozen_standard:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+      sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+    content_product_profiles:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+      sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+    ab_divergence_contract:
+      path: controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/contracts/orch_ab_divergence_contract.v0.1.json
+      sha256: 6862166cffb84dfb45ad8d98c82d5ae1faed18739df5e502d43a5d21d384a221
+    frozen_parent_corpus:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+      sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    edge_constructor:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_component_model.py
+      sha256: 14dc144642e75c869ba899e4d77182ec86bf41aea02770bffe07574daefb8a7a
+  disagreement_scope:
+    expected_disagreement_count: 92
+    actual_disagreement_count: 92
+    matching_decision_count: 152
+    matching_decisions_adjudicated: 0
+    packet_order_preserved: true
+    pair_counts:
+      APPROVE__REJECT: 1
+      APPROVE__REPAIR: 57
+      REJECT__APPROVE: 9
+      REJECT__REPAIR: 18
+      REPAIR__APPROVE: 2
+      REPAIR__REJECT: 5
+  adjudication:
+    record_count: 92
+    decision_counts:
+      APPROVE: 0
+      REPAIR: 66
+      REJECT: 26
+    object_decision_counts:
+      PROPOSED_ACTIVE_COMPONENT:
+        APPROVE: 0
+        REPAIR: 25
+        REJECT: 0
+      CONTROL_RULE_SEPARATION:
+        APPROVE: 0
+        REPAIR: 0
+        REJECT: 0
+      PROPOSED_COMPONENT_CP_EDGE:
+        APPROVE: 0
+        REPAIR: 40
+        REJECT: 22
+      AB_STRUCTURAL_PATH_CAPABILITY:
+        APPROVE: 0
+        REPAIR: 1
+        REJECT: 4
+    source_parent_refs_recomputed: 23
+    source_parent_ref_failures: 0
+    disputed_edges_checked_against_profiles: 62
+    disputed_ab_paths_checked_against_contract: 5
+  outputs:
+    artifact_count: 3
+    records:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/adjudication/records.jsonl
+      sha256: 84be65d38eafae22b1bb50baebe17f7674bd298592f3d1b989b22c5c766062bc
+      record_count: 92
+      jsonl_line_count: 92
+      canonical_record_digest_rule: sha256(canonical_json(record excluding record_digest)); UTF-8; sorted keys; separators comma/colon; ensure_ascii=false
+    report:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/adjudication/report.md
+      sha256: 7765d6aeb4048df2c5458f5e068f4f616a953320accc2b1d35ce294744e45b30
+    run_manifest:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/adjudication/run_manifest.yaml
+      self_file_sha256_embedded: false
+      hash_policy: manifest_content_digest is SHA-256 of canonical JSON for this payload excluding manifest_content_digest
+  repository_writes: false
+  repository_write_paths: []
+  external_write_paths:
+  - /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/adjudication/records.jsonl
+  - /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/adjudication/report.md
+  - /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/adjudication/run_manifest.yaml
+  activation_performed: false
+  readiness_transition_performed: false
+  generator_claim_made: false
+  readiness_flags_remain_false:
+  - candidatepack_ready
+  - KE_ready
+  - RAG_ready
+  - DIFY_ready
+  - production_servable
+  - generation_eligible
+  - generation_allowed
+  - release_ready
+  - production_ready
+  identity_isolation_attestation:
+    different_from_component_author: true
+    different_from_p2_executor: true
+    different_from_primary_reviewer: true
+    different_from_secondary_reviewer: true
+    different_from_final_activator: true
+  signed_attestation: SIGNED::P2-TARGETED-ADJUDICATOR-C::019f5de8-8338-7082-9d10-96cf5bbf7c21::P2-ADJUDICATION-RUN-20260713-C37A894::I adjudicated only the 92 genuine primary/secondary decision disagreements at the frozen commit and packet hash; I did not adjudicate matching decisions, write the repository, activate any object, transition readiness, or make a generator claim.
+  manifest_content_digest: 2df189323cfe4c15bf2b0415f6e9b94a6e9c52b482385b18b0a141becb3c7580

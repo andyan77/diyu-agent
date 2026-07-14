@@ -1,0 +1,19 @@
+p1b_successor_compatibility_receipt:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  p1b_materializer:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/run_p1b_signed_review_closeout_freezer.py
+    sha256_before: b82cfcedd747f8ac43748f57405c5760f5637e604403a8f5ed8893e504fba11f
+    sha256_after: d7ab6454bdf31ecba7020109ba51cca8b5527e5aa07ad9afad690221aee9c2c8
+    historical_task_outputs_changed: false
+    historical_owner_sha256: 541443a9c5c34047fb5c9a4652412cc019218abd60d29528b57dbc1d771d637a
+    historical_checker_sha256: 6474966c8ea5d0fdb2c5d40cc5888969f5fc8ebb63f8006d61504a4aaae8e231
+    global_owner_managed_by_p1b_after_successor: false
+  current_checker:
+    path: ci/checkers/check_gate1_v1_1_current.py
+    sha256_before: 6474966c8ea5d0fdb2c5d40cc5888969f5fc8ebb63f8006d61504a4aaae8e231
+    sha256_after: 2aec6f38dd6d64118506ad998c504e950eeaae34fc97b718ab285e49edc035bd
+    recursive_checker_chain: false
+  shared_ledger_modified: false
+  readiness_changed: false
+  receipt_digest: 8af6d8c154cd8a03689375614c5a42175b516d13427d1e899c36e0fde5e75143

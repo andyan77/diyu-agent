@@ -1,0 +1,425 @@
+{
+  "schema_version": "gate1-p3-independent-review-v0.2",
+  "task_id": "GATE1_V11_OPEN_PROBE40_001",
+  "review_id": "P3-R1-CONTENT-VALUE-REVIEW-001",
+  "reviewer_identity": "P3-R1-REVIEWER-CONTENT-VALUE-001",
+  "reviewer_platform_agent_id": "019f5f55-9ca7-7253-b688-aace5512992c",
+  "reviewer_session_id": "P3-R1-REVIEW-SESSION-CONTENT-001",
+  "review_run_id": "P3-R1-REVIEW-RUN-CONTENT-001",
+  "reviewer_model_capability_id": "gpt-5.6-sol",
+  "reviewer_reasoning_effort": "high",
+  "reviewer_role": "CONTENT_PRODUCT_USER_VALUE_STRUCTURE_PLATFORM_ANTI_FORMULA",
+  "author_identity_excluded": true,
+  "executor_builder_finalizer_identity_excluded": true,
+  "blind_stage": {
+    "schema_version": "gate1-p3-blind-stage-v0.2",
+    "task_id": "GATE1_V11_OPEN_PROBE40_001",
+    "review_id": "P3-R1-CONTENT-VALUE-REVIEW-001",
+    "reviewer_identity": "P3-R1-REVIEWER-CONTENT-VALUE-001",
+    "reviewer_session_id": "P3-R1-REVIEW-SESSION-CONTENT-001",
+    "review_run_id": "P3-R1-REVIEW-RUN-CONTENT-001",
+    "reviewer_role": "CONTENT_PRODUCT_USER_VALUE_STRUCTURE_PLATFORM_ANTI_FORMULA",
+    "reviewer_model_capability_id": "gpt-5.6-sol",
+    "reviewer_reasoning_effort": "high",
+    "reviewer_platform_agent_id": "019f5f55-9ca7-7253-b688-aace5512992c",
+    "recorded_before_label_reveal": true,
+    "label_mapping_accessed": false,
+    "blind_packet_sha256": "3e5e1c04a1ad01e5b2e8ca9e46a39d7deb322b13b31ead10571a9672c5b6bd73",
+    "choice_catalog_sha256": "af68bed4f82159fc47034dd970c3fc53b1530278b7148feb570c1dd97c0bbc69",
+    "predictions": [
+      {
+        "blind_id": "P3-R1-BLIND-01",
+        "predicted_profile_id": "CP02",
+        "reason": "内容以同一门店入口展示盘为固定空间，并用09:10、13:40、18:20三个明确时段记录空盘、肩线复位和待归架状态；核心是门店时段内的微小现场变化，而非完整岗位任务或陈列实验。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-02",
+        "predicted_profile_id": "CP17",
+        "reason": "内容锁定真实陈列区域与原状态，只移动一件中间色测试服装，再以同机位复核色块分布；具备陈列目标、单变量调整和视觉复核，并明确不外推用户行为或销售因果。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-03",
+        "predicted_profile_id": "CP05",
+        "reason": "内容用第一阶段与六个月后两个时间节点、返工记录、练习样片和本人解释证明判断能力变化；它以人物职业经历和技能形成证据为主，并拒绝把辛苦自动包装为成长。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-04",
+        "predicted_profile_id": "CP13",
+        "reason": "同一件测试马甲被放入衬衫、薄针织和厚针织三组衣橱关系，分别说明轻量、层次与肩部空间不足；核心是产品在生活搭配中的有限角色、适用任务和使用条件。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-05",
+        "predicted_profile_id": "CP15",
+        "reason": "三件样衣沿收货核对、整烫、陈列准备连续流转，并保留两件通过、一件标签待复核的批次状态；内容主体正是商品到店后的岗位接力和生命周期节点。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-06",
+        "predicted_profile_id": "CP20",
+        "reason": "内容把承诺原文、时间节点、三项执行证据、完成或偏差、修正动作与下一复核时间放入同一台账；未完成项原样保留，完整对应承诺到兑现的追踪结构。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-07",
+        "predicted_profile_id": "CP09",
+        "reason": "内容基于同一动作明确给出轻层通勤的适用条件、厚层叠穿的不适用条件和替代方向；主价值是帮助反选并约束结论，而不是泛化产品优点。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-08",
+        "predicted_profile_id": "CP04",
+        "reason": "收货员、整烫员和陈列员围绕同一组测试样衣依权限完成核对、放行处理与白板交接；每个岗位只确认自身部分，重点是多岗位协作和交接结果。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-09",
+        "predicted_profile_id": "CP12",
+        "reason": "内容明确对照V0.1与V0.2，记录结构变更后的坐姿结果，并将行走状态列为下一验证项；版本、变更点、当前结果和待验证事项构成清晰版本日志。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-10",
+        "predicted_profile_id": "CP18",
+        "reason": "内容以“澄川”北桥测试门店和雨前下午为地方与节令锚点，记录防潮垫、雨具挂点及入口声景；它呈现本地门店随天气发生的生活事件，同时克制外推城市习惯。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-11",
+        "predicted_profile_id": "CP08",
+        "reason": "镜头展开外层、缝份、里层和交叠处，对照结构图解释局部厚度来源；内容围绕真实部件、材料结构与可观察依据展开，并限定只说明这一处构造。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-12",
+        "predicted_profile_id": "CP07",
+        "reason": "内容从“通勤外套少皱”的具体用户问题出发，拆分长时间坐姿、可接受整理等条件，排除不满足方向并要求补充面料与护理信息；核心是条件化诊断而非直接推荐。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-13",
+        "predicted_profile_id": "CP19",
+        "reason": "三种经营方案被按覆盖面、换陈成本、重点展示和复核需求比较，最终选择方案丙并保留甲乙放弃理由与代价；这是有选项、有舍弃、有后续复核的经营决策复盘。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-14",
+        "predicted_profile_id": "CP16",
+        "reason": "内容从匿名用户的久坐通勤与抬手任务识别需求，通过两件外套的动作结果调整方案，并保留进一步试用和长期感受未确认状态；完整体现真实服务过程与边界。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-15",
+        "predicted_profile_id": "CP01",
+        "reason": "获授权的陈列员在闭店前二十分钟围绕测试针织上装执行核卡、移开、恢复领口和记录待办的动作链；具体人员、岗位、周期、对象及左侧完成右侧未完状态齐全。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-16",
+        "predicted_profile_id": "CP03",
+        "reason": "袖口压线任务从卷起的输入边缘开始，连续呈现整理、固定、第一段压线、停机判断、调整和第二段压线，并保留可见结果；核心是含判断节点的单项手艺全过程。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-17",
+        "predicted_profile_id": "CP14",
+        "reason": "内容以真实材料、固定自然侧光、中性灰参照卡、一次轻推、停止状态及同步接触声构成感官短片；只呈现明暗、折线和形变反应，不命名未测试性能。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-18",
+        "predicted_profile_id": "CP11",
+        "reason": "三种口袋位置方案经拿取与坐姿动作验证，方案丙因保留线条而承担增加一道工序的成本，甲乙放弃理由也被归档；内容核心是设计选项、最终取舍和材料工序约束。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-19",
+        "predicted_profile_id": "CP10",
+        "reason": "同一样本在固定条件下于第0、7、21日留有日期记录、同机位图像和有限结果，且明确局限于该样本与这些条件；这是可追溯的长期验证档案。"
+      },
+      {
+        "blind_id": "P3-R1-BLIND-20",
+        "predicted_profile_id": "CP06",
+        "reason": "内容通过平放减弱、悬挂后同区重现这一可观察信号，形成继续检查受力与结构关系的有限岗位判断；判断条件和不能单片归因的适用限制都被保留。"
+      }
+    ],
+    "blind_stage_digest": "87a1dec66e98c0ad33ffe5413073deda3c0a344694b73bdcac9ad6e24e6ff579"
+  },
+  "coverage": {
+    "structure_records_read": 80,
+    "positive_outputs_read": 20,
+    "route_results_read": 20,
+    "machine_report_read": true,
+    "attempt_0_failure_records_read": true,
+    "attempt_1_repair_basis_read": true
+  },
+  "positive_scores": [
+    {
+      "profile_id": "CP01",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP01",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 90,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["闭店前二十分钟、陈列员甲、测试针织上装及左右区域状态构成完整岗位微纪录。", "核卡、逐件移开、恢复领口和记录待办均落到连续画面，右侧未完成状态没有被改写。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP02",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP02",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 13, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 88,
+      "grade": "B",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["09:10空盘、13:40右肩线偏离并复位、18:20待归架形成同一入口的三段可见状态。", "固定机位与声音锚点可直接执行，且不为状态变化补写客流或销量原因。"],
+      "defects": ["时段微变化清楚，但对用户的解释性收益主要停留在状态观察层。"]
+    },
+    {
+      "profile_id": "CP03",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP03",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 90,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["卷边输入、第一段压线、转角未贴平、停机检查、调整和第二段压线完整保留判断节点。", "结果近景、手部工具和机声停机声同步，未从测试袖口外推整件性能。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP04",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP04",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 90,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["收货核编号、整烫仅处理放行件、陈列按白板状态接手，三个岗位动作与权限边界均具体。", "同一测试对象在并列画面、任务卡、动作记录和交接白板中连续可追，待复核件留在后场。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP05",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP05",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 90,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["第一阶段返工记录与六个月后预标风险点由日期、练习样片和本人说明交叉支撑。", "成长只落在有记录的判断步骤变化，明确不以加班、辛苦或虚构师徒冲突代替证据。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP06",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP06",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 13, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 89,
+      "grade": "B",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["平放起拱减弱、悬挂后同区重现和区域标记构成观察先于判断的证据链。", "结论仅指向继续核对受力与结构，明确不能凭单片判定全部原因。"],
+      "defects": ["有限判断专业且可信，但当前用户收益主要是诊断方向，尚无后续验证结果。"]
+    },
+    {
+      "profile_id": "CP07",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP07",
+      "public_quality": {"truth_evidence_traceability": 18, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 8, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 12, "product_specific_narrative_av": 8, "continuity_composability_accumulation": 4},
+      "total_score": 84,
+      "grade": "B",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["围绕通勤少皱问题拆出长时间坐姿、可手工整理、具体面料和护理信息，并以补充信息CTA收口。", "缺少面料记录时拒绝绝对推荐，条件卡和排除路径可被平台直接呈现。"],
+      "defects": ["排除项与替代方向仍以抽象流程表述，没有给出一个具体被排除方向。"]
+    },
+    {
+      "profile_id": "CP08",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP08",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 10, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["外层、缝份、里层与交叠处的局部厚度通过微距展开和结构图被逐层说明。", "内容严格限定为这一处构造，不从触感或局部结构推导耐久、保暖等整体性能。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP09",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP09",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["同一动作下对照薄层下摆位置与厚层肩部活动余量，直接形成适用和不适用条件。", "用户获得轻层通勤可用、当前厚层叠穿不可用的反选信息，且不转为身体评价或绝对适配。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP10",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP10",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 5},
+      "total_score": 90,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["第0、7、21日以同一标记区、固定机位和日期记录展示平整、轻微翘起及未继续扩大。", "三节点记录天然可继续累积，且结论只覆盖该样本在给定条件下的状态。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP11",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP11",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 10, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 8},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["三种口袋位置以拿取、坐姿、前片线条和增加一道工序的代价完成真实设计取舍。", "方案丙进入下一轮而甲乙放弃理由保留，胚样、动作与评审字段可互相指认。"],
+      "defects": ["与CP19共享高度相近的甲乙丙选项矩阵、逐项代价和选丙收口，构成人工确认的近重复。"]
+    },
+    {
+      "profile_id": "CP12",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP12",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 5},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["V0.1坐姿前摆上移与V0.2调整后幅度减小通过同机位相同动作直接比较。", "行走状态明确留在待验证栏，版本节点、当前结果和下一验证项适合持续积累。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP13",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP13",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["同一马甲在衬衫、薄针织、厚针织三组关系中分别产生轻量、层次和肩部空间不足。", "两个适用任务与一个反选条件把产品限定为过渡层角色，没有包装为万能单品或身体判断。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP14",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP14",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 10, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 10, "anti_formula_ethics_restraint": 10},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 10, "continuity_composability_accumulation": 4},
+      "total_score": 94,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["固定自然侧光、中性灰参照卡、一次轻推和停手状态使明暗与折线反应可复核。", "声画严格同步接触动作，只呈现可见形变，不命名高级感、耐久或其他未测试性能。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP15",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP15",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 5},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["三件样衣被实际重排为已核对和待复核状态，两件进入整烫及陈列准备，一件停在标签复核。", "全景状态图与收货、整烫、陈列局部节点互相回指，每步仅更新实际完成状态。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP16",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP16",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 10},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 92,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["匿名任务卡把久坐通勤和抬手需求转为两件外套的同动作对照，方案调整有直接依据。", "第二件仅进入进一步试用，长期感受未被提前确认；画面不识别个人也不评价用户身体。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP17",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP17",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 9, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 10},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 91,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["同机位同光线下只移动一件中间色测试服装，原右端集中与移动后分布构成单变量对照。", "结论只描述画面色块变化，不伪造前后效果，也不推导用户行为或销售因果。"],
+      "defects": []
+    },
+    {
+      "profile_id": "CP18",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP18",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 8, "platform_native_executability": 9, "anti_formula_ethics_restraint": 9},
+      "product_quality": {"core_product_value": 13, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 4},
+      "total_score": 88,
+      "grade": "B",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["“澄川”北桥、雨前下午、天气任务卡与入口声景建立合成本地时间空间锚点。", "查看任务卡、把防潮垫移入内侧、调整回收架并留出雨具挂点构成真实主动作与停止状态。"],
+      "defects": ["地方生活纹理主要由合成地名、天气任务与入口声景承担，地域信息增益仍偏薄。"]
+    },
+    {
+      "profile_id": "CP19",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP19",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 8},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 5},
+      "total_score": 90,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["覆盖面、额外两次换陈、重点展示和一次复核被放在同一经营决策台账中比较。", "方案丙进入测试且覆盖与复核时间保留，甲乙的真实放弃理由没有被包装成价值观胜利。"],
+      "defects": ["与CP11共享高度相近的甲乙丙选项矩阵、逐项代价和选丙收口，构成人工确认的近重复。"]
+    },
+    {
+      "profile_id": "CP20",
+      "request_id": "P3-R1-OPEN-POSITIVE-CP20",
+      "public_quality": {"truth_evidence_traceability": 19, "apparel_business_specificity": 8, "role_brand_viewpoint_consistency": 9, "user_value_information_gain": 9, "platform_native_executability": 9, "anti_formula_ethics_restraint": 10},
+      "product_quality": {"core_product_value": 14, "product_specific_narrative_av": 9, "continuity_composability_accumulation": 5},
+      "total_score": 92,
+      "grade": "A",
+      "critical_minimum_pass": true,
+      "hard_vetoes": [],
+      "first_acceptable": true,
+      "evidence": ["承诺原文、三项执行记录、三个日期节点、完成与偏差、修正动作和下次复核均在同一台账。", "材料缺失项原样标记未完成，补齐后再复核；情绪说明没有替代兑现证据。"],
+      "defects": []
+    }
+  ],
+  "p3_score": 90.2,
+  "first_acceptable_count": 20,
+  "first_acceptance_rate": 1.0,
+  "blind_top1_correct_count": 20,
+  "blind_top1_accuracy": 1.0,
+  "human_confirmed_formula_or_near_duplicate_profile_ids": ["CP11", "CP19"],
+  "human_confirmed_formula_or_near_duplicate_rate": 0.1,
+  "hard_error_profile_ids": [],
+  "structure_hard_gate_pass": true,
+  "route_hard_gate_pass": true,
+  "findings": [
+    {"severity": "PASS_EVIDENCE", "code": "FIRST_ACCEPTANCE_GATE_PASSED", "evidence": "20/20正向首稿达到A或B，均满足对应truth、core、role、platform、anti-formula关键最低分且hard_vetoes为空。"},
+    {"severity": "PASS_EVIDENCE", "code": "BLIND_TOP1_GATE_PASSED", "evidence": "Stage 1锁定预测揭盲后逐条比对为20/20正确；原predictions、理由及blind_stage_digest保持不变。"},
+    {"severity": "OBSERVATION", "code": "HUMAN_NEAR_DUPLICATE_WITHIN_LIMIT", "evidence": "人工确认CP11与CP19共享甲乙丙逐项取舍并选丙的高度相近表面矩阵，共2/20；其余共同合成披露属于强制治理表面，不据此判为公式化。"},
+    {"severity": "PASS_EVIDENCE", "code": "STRUCTURE_HARD_GATE_PASSED", "evidence": "已实际核验80/80结构、80/80差异记录与480/480六轴移除；每个profile含A1/A2/B1/B2，A/B跨路线六轴差异及路线内三轴差异均达最低数，340个角色绑定与活跃边、组件和结构摘要一致。"},
+    {"severity": "PASS_EVIDENCE", "code": "ROUTE_HARD_GATE_PASSED", "evidence": "20/20异常案例主动作及主原因均正确，分布为BLOCK 7、DEGRADE 7、REQUEST_INPUT 6；20/20未生成受众标题、正文、口播或运行计划，不存在全阻止假绿。"},
+    {"severity": "OBSERVATION", "code": "CONTENT_RESERVATIONS_NON_BLOCKING", "evidence": "CP07的具体排除方向仍偏抽象，CP18的地方生活纹理偏薄，均按B级扣分；二者仍提供可执行条件或主动作并满足B级关键最低分。"},
+    {"severity": "PASS_EVIDENCE", "code": "NO_HARD_FACT_OR_AUTHORIZATION_ERROR", "evidence": "20个正向表面的具体声明均有fact/source/authorization链接并保留各自claim boundary；未发现虚构真实事件、越权、隐私泄露、未授权品牌主张或把待验证写成已证明。"},
+    {"severity": "OBSERVATION", "code": "MACHINE_EVIDENCE_NOT_TREATED_AS_CONTENT_PASS", "evidence": "机器报告的覆盖、重复和路由计数仅作辅助；其明确不能证明自由文本无虚构或组件语义实现，本结论来自逐表面、组件落点、结构差异、移除效应及attempt 0失败记录的人审。"}
+  ],
+  "overall_verdict": "PASS",
+  "signed_record_digest": "8e2ea220a29b04dc552a5822a0531dd0d2efca877baa5ebdf57aada58d37a424"
+}

@@ -1,0 +1,288 @@
+synthetic_positive_scenarios:
+  schema_version: v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  namespace: SYNTHETIC_P3_OPEN_QUALIFICATION_ONLY
+  publishable: false
+  runtime_consumable: false
+  counts_toward_300: false
+  scenarios:
+    - profile_id: CP01
+      scenario_name: 样本岗位的闭店陈列复位
+      setting: 合成门店样本区的闭店前陈列台
+      actor: 获授权的合成岗位角色“陈列员甲”
+      object: 一组已标记为测试道具的针织上装
+      time_marker: 合成班次结束前二十分钟
+      source_evidence: [任务卡写明复位范围, 固定机位记录开始与停止状态]
+      observations: [左侧叠放高度不一致, 一件衣领压在下层]
+      actions: [核对任务卡, 逐件移开, 恢复领口朝向, 记录仍未处理的右侧区域]
+      judgment: 只处理任务卡授权范围，不把整间门店写成已完成
+      result: 左侧测试区域完成复位，右侧区域仍待下一班次核对
+      open_boundary: 不推断效率提升，不把未完成部分写成完成
+      sound: 衣架轻碰声与纸质任务卡翻页声
+      visual: 同一机位保留开始、动作链和停止状态
+    - profile_id: CP02
+      scenario_name: 样本门店的三个时段切片
+      setting: 合成门店样本区的入口展示盘
+      actor: 获授权的合成门店记录角色
+      object: 同一个测试展示盘与三件无品牌测试服装
+      time_marker: 合成日的09:10、13:40和18:20
+      source_evidence: [三个固定时点的同机位记录, 当日任务便签]
+      observations: [上午展示盘为空, 午后放入试穿回收件, 晚间完成分类但未归架]
+      actions: [固定机位记录, 标记状态变化, 晚间留下待归架标签]
+      judgment: 普通状态变化可以没有高潮，只记录看得见的差别
+      result: 三个时段形成同一空间的状态序列
+      open_boundary: 不编造顾客事件，不推断客流或销量
+      sound: 门铃测试音、衣架移动声与晚间环境底噪
+      visual: 同一构图的三个时间切片
+    - profile_id: CP03
+      scenario_name: 样本袖口压线的完整操作
+      setting: 合成工艺测试台
+      actor: 获授权的合成样衣工角色
+      object: 一片无品牌测试袖口与压线工具
+      time_marker: 合成工艺记录批次03
+      source_evidence: [连续俯拍记录, 工序卡, 操作后近景]
+      observations: [输入边缘有轻微卷起, 第一段压线后转角仍未贴平]
+      actions: [整理输入边缘, 固定起点, 完成第一段压线, 停机检查转角, 调整后完成第二段]
+      judgment: 转角未贴平时先停机检查，不能剪掉中间判断
+      result: 袖口测试件完成两段压线，转角状态可见
+      open_boundary: 不把样本工序推成整件产品性能
+      sound: 真实测试机运转声、停机声和布料接触声
+      visual: 手部、工具、输入状态、判断节点和结果连续可见
+    - profile_id: CP04
+      scenario_name: 样本上新任务的三岗位交接
+      setting: 合成门店后场与陈列区之间
+      actor: 获授权的合成收货员、整烫员和陈列员
+      object: 一组带测试编号的无品牌样衣
+      time_marker: 合成上新任务的同一工作段
+      source_evidence: [岗位任务卡, 三段独立动作记录, 交接白板]
+      observations: [收货记录一件待复核, 整烫只接收已核对件, 陈列等待可上架标记]
+      actions: [收货员核对编号, 整烫员处理已放行件, 陈列员按白板状态接手]
+      judgment: 三个岗位各说自己能确认的部分，不代替其他岗位作结论
+      result: 已放行测试件进入陈列，待复核件留在后场
+      open_boundary: 不编造争吵，不把协作写成个人英雄故事
+      sound: 各岗位现场短句、蒸汽声与白板笔声
+      visual: 同一测试对象在三个岗位之间的状态变化
+    - profile_id: CP05
+      scenario_name: 合成人物的两阶段技能记录
+      setting: 合成档案室与测试操作台
+      actor: 获授权的合成人物“样本角色五号”
+      object: 两份带日期的测试记录与一组练习样片
+      time_marker: 合成记录中的第一阶段与六个月后复核阶段
+      source_evidence: [两份日期明确的练习记录, 本人合成测试授权, 样片对照]
+      observations: [第一阶段记录频繁返工, 后一阶段能在操作前标出风险点]
+      actions: [翻看旧记录, 对照两阶段样片, 本人解释判断方式的变化]
+      judgment: 只把有记录的技能变化写成成长，不把加班或辛苦自动等同成长
+      result: 两阶段证据显示判断步骤发生变化
+      open_boundary: 不补写苦难、冲突、师徒故事或未记录经历
+      sound: 档案翻页声与合成人物的授权口述
+      visual: 日期、记录字段和样片差异交叉呈现
+    - profile_id: CP06
+      scenario_name: 样本面料起拱的有限判断
+      setting: 合成专业观察台
+      actor: 获授权的合成版型岗位角色
+      object: 一片有横向起拱的测试前片
+      time_marker: 合成观察批次06
+      source_evidence: [平放与悬挂对照, 局部测量标记, 岗位权限说明]
+      observations: [平放时起拱减弱, 悬挂后在同一区域重新出现]
+      actions: [平放观察, 悬挂复核, 标记出现区域]
+      judgment: 当前信号支持检查受力与结构关系，但不能单凭这一片判定全部原因
+      result: 形成一个需继续核对结构和受力的有限判断
+      open_boundary: 不给万能结论，不跨出岗位权限
+      sound: 操作台接触声与简短岗位解释
+      visual: 局部细节、整体悬挂状态和限制说明
+    - profile_id: CP07
+      scenario_name: 合成问题的条件诊断
+      setting: 合成问题诊断台
+      actor: 获授权的合成专业答疑角色
+      object: 一条明确标为合成测试的提问记录
+      time_marker: P3开放测试批次
+      source_evidence: [合成提问原文, 条件补充表, 可用判断依据]
+      observations: [提问要求通勤外套少皱, 使用条件包含长时间坐姿与可接受手工整理]
+      actions: [拆分条件, 排除不满足条件的方向, 给出需要补充的面料与护理信息]
+      judgment: 在缺少具体面料记录时只能给条件路径，不能给绝对答案
+      result: 得到适用条件、排除项和待补信息
+      open_boundary: 不虚构真实用户，不套用固定三招
+      sound: 无需现场声，以清楚口述为主
+      visual: 条件卡片与排除路径逐项出现
+    - profile_id: CP08
+      scenario_name: 样本衣片的结构拆解
+      setting: 合成材料与结构观察台
+      actor: 获授权的合成工艺讲解角色
+      object: 一片带可见缝份和里层的无品牌测试衣片
+      time_marker: 合成拆解记录08
+      source_evidence: [微距记录, 结构标记图, 允许公开的测试工序说明]
+      observations: [外层、缝份和里层在边缘处可分辨, 局部厚度只在交叠处增加]
+      actions: [从表面移动到边缘, 展开交叠层, 对照结构图]
+      judgment: 局部结构说明的是这一处构造，不能替整件产品背书
+      result: 表面、交叠和里层关系被清楚标出
+      open_boundary: 不从触感推出耐久、保暖或其他整体性能
+      sound: 指示笔轻触声与材料翻动声
+      visual: 微距、结构图和手部展开动作同步
+    - profile_id: CP09
+      scenario_name: 样本短夹克的反选条件
+      setting: 合成搭配测试区
+      actor: 获授权的合成产品说明角色
+      object: 一件无品牌短夹克测试样与两种内搭体积
+      time_marker: 合成条件测试09
+      source_evidence: [两组搭配记录, 下摆位置标记, 活动范围观察]
+      observations: [薄层内搭时下摆位置清楚, 厚层叠穿时肩部活动余量不足]
+      actions: [分别完成两组搭配, 记录活动状态, 对照使用任务]
+      judgment: 适合轻层通勤任务，不适合当前厚层叠穿条件
+      result: 形成适用、不适用和替代方向
+      open_boundary: 不评价身体，不写绝对适配
+      sound: 布料摩擦声与条件说明
+      visual: 同一动作下两种内搭状态对照
+    - profile_id: CP10
+      scenario_name: 样本衣片的三次状态记录
+      setting: 合成长期观察架
+      actor: 获授权的合成记录角色
+      object: 一片带测试编号的无品牌衣片
+      time_marker: 第0日、第7日和第21日的合成记录节点
+      source_evidence: [三份日期记录, 相同机位图像, 条件表]
+      observations: [第0日边缘平整, 第7日出现一处轻微翘起, 第21日该处未继续扩大]
+      actions: [按固定条件放置, 到点拍摄, 核对同一标记区域]
+      judgment: 三个节点只支持描述这片样本在这些条件下的状态
+      result: 得到有时间标记的有限变化记录
+      open_boundary: 不把单个样本推成普遍规律，不生成未记录的长期结论
+      sound: 日期牌放置声与记录笔声
+      visual: 同一标记区域的固定机位对照
+    - profile_id: CP11
+      scenario_name: 样本外套的口袋位置取舍
+      setting: 合成设计档案桌与试样台
+      actor: 获授权的合成设计岗位角色
+      object: 三张口袋位置方案图与一件无品牌测试胚样
+      time_marker: 合成设计评审节点11
+      source_evidence: [三张方案图, 评审记录, 成本与动作约束表]
+      observations: [方案甲拿取顺手但破坏前片线条, 方案乙更整洁但坐姿触碰明显, 方案丙保留线条且需增加一道工序]
+      actions: [逐项试放, 完成坐姿与拿取动作, 在评审表记录放弃理由]
+      judgment: 选择方案丙是当前约束下的取舍，不是灵感神话
+      result: 方案丙进入下一轮，甲乙的放弃理由保留
+      open_boundary: 不隐藏成本与使用代价，不补写不存在的灵感故事
+      sound: 纸样移动声、坐姿动作声与简短设计说明
+      visual: 三方案、动作测试和评审字段交叉呈现
+    - profile_id: CP12
+      scenario_name: 样本版型的第二阶段变更
+      setting: 合成版本对照台
+      actor: 获授权的合成产品岗位角色
+      object: 标记为V0.1与V0.2的两件无品牌测试胚样
+      time_marker: 合成版本节点V0.1至V0.2
+      source_evidence: [版本记录, 两件胚样, 变更字段表]
+      observations: [V0.1坐姿时前摆上移, V0.2调整一处结构后上移幅度在测试动作中减小]
+      actions: [同机位完成相同坐姿动作, 对照变更点, 记录仍待验证的行走状态]
+      judgment: 只能确认当前测试动作中的差异，行走状态仍待验证
+      result: V0.2完成当前节点记录，下一验证项明确
+      open_boundary: 不编造版本历史，不把待验证写成已证明
+      sound: 版本牌放置声与相同动作的布料声
+      visual: 两版本同动作匹配对照
+    - profile_id: CP13
+      scenario_name: 样本马甲的三种衣橱任务
+      setting: 合成衣橱关系测试区
+      actor: 获授权的合成产品观察角色
+      object: 一件无品牌测试马甲与三组已有测试服装
+      time_marker: 合成季节过渡任务13
+      source_evidence: [三组搭配记录, 活动条件表, 季节任务说明]
+      observations: [衬衫外层保持轻量, 薄针织外层增加层次, 厚针织内搭时肩部空间不足]
+      actions: [在同一动作下完成三组搭配, 记录条件与反选项]
+      judgment: 这件测试马甲承担有限的过渡层角色，不是万能单品
+      result: 两个适用任务和一个反选条件形成衣橱关系
+      open_boundary: 不虚构真实生活经历，场景只作合成任务演示
+      sound: 三种材料的真实接触声
+      visual: 同一物件在三组关系中的位置变化
+    - profile_id: CP14
+      scenario_name: 样本材料的一次回弹观察
+      setting: 合成自然侧光观察台
+      actor: 获授权的合成拍摄角色
+      object: 一片无品牌测试材料
+      time_marker: 合成物性记录14
+      source_evidence: [正常速度连续镜头, 同步原声, 光线记录]
+      observations: [材料被轻推后形成一道折线, 松手后折线部分减弱但仍可见]
+      actions: [平放, 轻推一次, 停手, 保持镜头观察]
+      judgment: 只呈现可见形变和当前反应，不命名未测试性能
+      result: 一次动作及其可见停止状态被完整记录
+      open_boundary: 不写高级感、治愈感、耐久或其他性能结论
+      sound: 材料与台面接触的同步原声
+      visual: 正常速度、一次动作、固定侧光、无旁白
+    - profile_id: CP15
+      scenario_name: 样本到货件的岗位状态图
+      setting: 合成门店后场、整烫台和陈列区
+      actor: 获授权的合成收货、整烫与陈列岗位
+      object: 一批带测试编号的三件无品牌样衣
+      time_marker: 合成到货日10:00至16:00
+      source_evidence: [到货单, 三岗位状态板, 每个节点的固定记录]
+      observations: [两件核对通过, 一件标签待复核, 已通过件完成整烫并进入陈列准备]
+      actions: [收货核对, 状态标记, 整烫, 陈列前复核]
+      judgment: 每个节点只更新实际完成状态
+      result: 两件到达陈列准备，一件停在标签复核
+      open_boundary: 不编造库存、售罄、调拨或销售结果
+      sound: 扫描提示音、蒸汽声和状态板磁贴声
+      visual: 全景状态图切到每个岗位的局部动作
+    - profile_id: CP16
+      scenario_name: 匿名合成服务任务的方案调整
+      setting: 合成服务咨询区
+      actor: 获授权的合成服务岗位与匿名合成用户U16
+      object: 两件无品牌测试外套与一张匿名任务卡
+      time_marker: P3合成服务记录16
+      source_evidence: [匿名任务卡, 用户测试授权, 方案调整记录]
+      observations: [任务是久坐通勤并需方便抬手, 第一件坐姿合适但抬手受限, 第二件两项动作都可完成]
+      actions: [复述任务, 分别完成坐姿和抬手动作, 根据动作结果调整方案]
+      judgment: 服务岗位只说明观察和选择理由，不评价用户身体
+      result: 第二件进入进一步试用，长期感受未在本次确认
+      open_boundary: 不塑造英雄导购，不泄露身份，不编造真实顾客
+      sound: 经授权的匿名任务复述与动作环境声
+      visual: 只拍任务卡、服装和不识别个人的动作范围
+    - profile_id: CP17
+      scenario_name: 样本陈列区的单变量调整
+      setting: 合成门店入口右侧陈列区
+      actor: 获授权的合成陈列岗位角色
+      object: 同一组无品牌测试服装与固定陈列架
+      time_marker: 合成空间实验17
+      source_evidence: [调整前固定机位, 单变量调整记录, 调整后同机位复核]
+      observations: [原状态色块集中在右端, 只移动一件中间色测试服装后色块分布改变]
+      actions: [锁定机位, 记录原状态, 只移动一件, 回到同机位复核]
+      judgment: 只能描述画面分布变化，不能推断用户行为或销售因果
+      result: 单变量前后状态可对照
+      open_boundary: 不制造假前后，不把相关观察写成因果
+      sound: 衣架移动声与位置标记声
+      visual: 同机位、同光线、只变一个陈列位置
+    - profile_id: CP18
+      scenario_name: 合成城市澄川的测试门店雨前记录
+      setting: 明确虚构的合成城市“澄川”北桥测试门店
+      actor: 获授权的合成本地门店记录角色
+      object: 门口防潮垫、试衣回收架和测试雨具挂点
+      time_marker: 合成节令记录中的雨前下午
+      source_evidence: [虚构城市声明, 合成气候任务卡, 门店本地测试记录]
+      observations: [门外光线转暗, 防潮垫被移到入口内侧, 回收架留出雨具挂点]
+      actions: [查看合成天气任务卡, 移动防潮垫, 调整回收架位置]
+      judgment: 只记录这份合成门店任务，不推断真实城市习惯或常客关系
+      result: 测试门店完成雨前局部调整
+      open_boundary: 城市、门店、气候和事件均为合成测试，不得冒充真实地方生活
+      sound: 合成门铃测试音、垫面摩擦声与门外环境底噪
+      visual: 虚构地名声明、入口动作和局部停止状态
+    - profile_id: CP19
+      scenario_name: 合成经营方案的成本取舍复盘
+      setting: 合成经营评审白板前
+      actor: 获授权的合成经营发言角色
+      object: 三个测试陈列方案及其时间成本记录
+      time_marker: 合成季度评审节点19
+      source_evidence: [三方案记录, 时间成本表, 最终选择签注]
+      observations: [方案甲覆盖面大但需要额外两次换陈, 方案乙改动最少但无法展示重点, 方案丙覆盖适中且保留一次复核]
+      actions: [比较三项, 记录放弃理由, 选择方案丙并保留复核节点]
+      judgment: 选择包含真实放弃与代价，不包装成价值观胜利
+      result: 方案丙进入测试，覆盖范围和复核时间已写明
+      open_boundary: 不自我表彰，不空喊长期主义，不宣称未发生的经营结果
+      sound: 白板笔声与字段核对口述
+      visual: 方案、代价、放弃项和当前结果并列
+    - profile_id: CP20
+      scenario_name: 合成公开承诺的节点核对
+      setting: 合成承诺证据台账
+      actor: 获授权的合成企业发言角色
+      object: 一条明确标为合成测试的公开承诺与三项节点记录
+      time_marker: 合成承诺日、首次节点和本次复核日
+      source_evidence: [合成承诺原文, 三项执行记录, 本次复核签注]
+      observations: [两项按节点完成, 一项因测试材料缺失未完成, 修正动作是补齐材料后再复核]
+      actions: [逐项对照承诺, 标记完成与偏差, 写入下一复核时间]
+      judgment: 未完成项必须原样保留，情绪说明不能替代证据
+      result: 两项完成、一项偏差及其修正动作被记录
+      open_boundary: 不把偏差写成兑现，不新增承诺，不删未完成项
+      sound: 台账翻页声和逐项核对口述
+      visual: 承诺节点、证据、结果、偏差和下一复核并列

@@ -1,0 +1,19 @@
+p4_resealed_pre_freeze_validation:
+  schema_version: gate1-p4r-pre-freeze-validation-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  positive_count: 20
+  anomaly_count: 20
+  compiler_invocation_count: 20
+  compiled_payload_complete_count: 20
+  anti_reuse:
+    current_material_text_count: 459
+    historical_material_text_count: 220
+    bounded_pair_comparison_count: 36967
+    normalized_exact_or_containment_hit_count: 0
+    maximum_sequence_similarity: 0.470588
+    threshold: 0.82
+    pass: true
+  gold_fields_in_compiler_input_count: 0
+  author_agent_id: 019f608a-0129-76b0-a039-6129ea09395d
+  pass: true
+  validation_digest: 05a7f649d0318a2f8ac44964f4389fbcce87723826c49ce2cf543c739a995b58

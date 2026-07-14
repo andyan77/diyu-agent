@@ -1,0 +1,47 @@
+governance_compatibility_repair_receipt:
+  schema_version: v0.1
+  task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
+  modified_live_checker_count: 2
+  modified_live_checkers:
+  - path: ci/checkers/check_gkb_v2_b_channel_24_component_review.py
+    sha256_before: ff4060e02f387e92b9ec1613df31b5b855cbd04a1155d92f5ca03dacf3191394
+    sha256_after: 33ee144c6028901b6dd2ba07a77dcf4be887fe14fab7b43f8b75a185fef6f8d2
+    reason: Historical B24 protection no longer owns the current branch write surface.
+    negative_injection_proof:
+      command: python3 ci/checkers/check_gkb_v2_b_channel_24_component_review.py --selftest
+      must_reject: historical B24 asset mutation
+  - path: ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py
+    sha256_before: 95fcf3e6716e86f01a210c64dbe4685705962583ff9b2c560182389ba66df71c
+    sha256_after: 831b59d1b8437c97e11993efff9fdcc7f83267491b6fc84bd4b4a92e22b01997
+    reason: Historical 19-33 protection remains local; current ledger authority delegates to the existing owner.
+    negative_injection_proof:
+      command: python3 ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py --selftest
+      must_reject:
+      - historical route 33 mutation
+      - unauthorized route 34
+  new_current_checker:
+    path: ci/checkers/check_gate1_v1_1_current.py
+    sha256: 29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806
+    negative_injection_proof:
+      command: python3 ci/checkers/check_gate1_v1_1_current.py --selftest
+      must_reject:
+      - readiness flip
+      - unauthorized path
+      - active legacy edge
+      - route actual leakage into blind packet
+      - same reviewer identity
+      - missing scoring contract
+  v1_current_checker_repair:
+    path: ci/checkers/check_gate1_v1_1_current.py
+    sha256_before: 679343b9187ad12c3af077ab4041a3c706bcef56b915c6ef0234af54319ee716
+    sha256_after: 29a872dd08b13c02a776ca4b4074a419320667a97b6c16125ab03432626d3806
+    negative_injection_proof:
+      command: python3 ci/checkers/check_gate1_v1_1_current.py --selftest
+      must_reject:
+      - route actual leakage into blind packet
+      - same reviewer identity or session/run/signature
+      - missing scoring contract
+      - review role mapped to generation lane
+  shared_ledger_or_horizon_modified: false
+  historical_allowlist_expanded: false
+  receipt_digest: e5aff46ec5f3469274571b8e7e97633c9290d167391ed8bcf195a6986516b0fb

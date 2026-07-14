@@ -1,0 +1,27 @@
+review_session_invalidations:
+  schema_version: v0
+  job_sha256: 511e203a464b7e57fdf2661abc7254f168c0da59c1631f618a861f3cf8f9192a
+  blindness_amendment_sha256: fa10da85ac4b380d426fc3ac896d56e832b2ff877001ff0d6767793f1f1861c1
+  sessions:
+    - reviewer_identity: gate1_primary_independent_review_initial_session
+      invalidated_scope: entire_review
+      reason: 路线词汇宽搜索意外显示当前实现路线结果
+      signed_records_created: false
+      output_files_created: false
+      judgments_may_be_reused: false
+      business_repository_changed: false
+    - reviewer_identity: gate1_secondary_independent_review_initial_session
+      invalidated_scope: entire_review
+      reason: 路线词汇宽搜索意外显示密封路线预期答案_为保持一份报告一个完整独立身份而整份废止
+      signed_records_created: false
+      output_files_created: false
+      judgments_may_be_reused: false
+      business_repository_changed: false
+  active_replacements:
+    primary: gate1_primary_review_cleanroom
+    secondary: gate1_secondary_review_cleanroom
+  prompt_count_impact: none_external_review_checkpoint_internal_rerun
+  core_number_impact:
+    300: unchanged
+    120: unchanged
+    86: unchanged

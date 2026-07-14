@@ -1,0 +1,44 @@
+p3_delivery_receipt:
+  schema_version: gate1-p3-delivery-receipt-v0.2
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  repository_before: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  attempt_0_failure_commit: 80501c4c502fd28fcad53d0e8a07144875b73036
+  repair_freeze_commit: 817d35105be95f027465951e524496728f9bcaa5
+  repository_after: RECORDED_IN_GIT_COMMIT_AND_DELIVERY_RESPONSE
+  branch: agent/gate1-v1-1-retrospective-recovery-plan
+  merge_request_14_must_remain_draft: true
+  p1a_p1b_p2_historical_integrity:
+    manifest_record_count: 212
+    unauthorized_mutation_count: 0
+    authorized_compatibility_mutation_count: 0
+    authorized_compatibility_mutations: []
+  structure_attempt_0_preserved: true
+  single_repair_window_used: true
+  second_repair_window_opened: false
+  targeted_component_window_used: false
+  final_structure_80_result: true
+  positive_20_first_output_result: true
+  route_20_action_and_reason_result: true
+  blind_product_identification_result:
+    review_one: 1.0
+    review_two: 1.0
+  independent_review_reports:
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/signed_content_value_review.v0.2.json
+    score: 90.2
+    verdict: PASS
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/signed_fact_authorization_review.v0.2.json
+    score: 93.6
+    verdict: PASS
+  blind_packet_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/attempt_1/blind_positive_20.v0.2.jsonl
+  author_run_receipt_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/open_probe/attempt_1/author_run_receipt.v0.2.yaml
+  result_state: PASS_TO_P4_SEALED_HIDDEN_PROBE
+  p4_allowed: true
+  p4_hidden_material_access_count: 0
+  counts_toward_300: 0
+  core_number_impact:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness_all_remain_false: true
+  receipt_digest: 4baea27e29829c979bcdb270af0644753c9ebc1410193cdf1c8f4be0a29cde35

@@ -1,0 +1,31 @@
+review_job_blindness_amendment:
+  amendment_id: GATE1_V11_REVIEW_ROUTE_BLINDNESS_AMENDMENT_001
+  applies_to_job_sha256: 511e203a464b7e57fdf2661abc7254f168c0da59c1631f618a861f3cf8f9192a
+  reason: 首次第一审因路线词汇宽范围搜索意外看到实际结果并主动废止身份
+  effective_before_any_signed_route_review: true
+  invalidated_reviewer:
+    identity: gate1_primary_independent_review_initial_session
+    signed_records_created: false
+    output_files_created: false
+    business_repository_changed: false
+  route_blind_read_policy:
+    allowed:
+      - 已冻结v1.1标准快照
+      - 统一盲审包
+      - 盲审包逐条明确引用的路线输入记录
+      - 盲审包逐条明确引用的参考内容和组件来源记录
+    forbidden:
+      - 对整个业务仓或controlled_content_generator_v2_001目录做路线词汇宽范围搜索
+      - 读取任何文件名包含route_actuals或route_regression_actuals的文件
+      - 读取任何当前实现比较结果_路线结果_回归结果或答案清单
+      - 通过提交历史_检查器fixture_报告或旧审查结论反推出路线答案
+    stop_rule: 任何实际动作或原因码意外可见时立即废止当前审查身份_不得产出或签署路线记录
+  required_attestation:
+    - 审查者须记录本修订摘要
+    - 审查者须明确声明签署前未看到路线实际答案
+    - 初次被废止身份的任何中间判断均不得交给替代审查者
+  prompt_count_impact: none_external_review_checkpoint_internal_rerun
+  core_number_impact:
+    300: unchanged
+    120: unchanged
+    86: unchanged

@@ -1,0 +1,49 @@
+third_p4_blind_packet_construction_failure:
+  schema_version: gate1-third-p4-blind-packet-construction-failure-v1.0
+  task_id: GATE1_V11_P5_PREREQUISITE_P4_AUTHOR_OUTPUT_RECOVERY_001
+  failure_stage: BLIND_REVIEW_PACKET_CONSTRUCTION
+  first_error_code: E_BLIND_LABEL_LEAK
+  affected_output_count: 20
+  affected_request_ids:
+  - P4T3-POS-CP01
+  - P4T3-POS-CP02
+  - P4T3-POS-CP03
+  - P4T3-POS-CP04
+  - P4T3-POS-CP05
+  - P4T3-POS-CP06
+  - P4T3-POS-CP07
+  - P4T3-POS-CP08
+  - P4T3-POS-CP09
+  - P4T3-POS-CP10
+  - P4T3-POS-CP11
+  - P4T3-POS-CP12
+  - P4T3-POS-CP13
+  - P4T3-POS-CP14
+  - P4T3-POS-CP15
+  - P4T3-POS-CP16
+  - P4T3-POS-CP17
+  - P4T3-POS-CP18
+  - P4T3-POS-CP19
+  - P4T3-POS-CP20
+  leak_surface_distribution:
+    body: 20
+  frozen_fact_value_profile_id_hit_count: 23
+  requests_with_profile_id_in_frozen_fact_values: 20
+  root_cause_code: CURATED_CORE_FACTS_EMBED_BLIND_PROFILE_IDS
+  root_cause_summary: Frozen synthetic core facts embed each CP identifier, while the frozen author contract requires every core fact to appear on a real reviewed surface.
+  machine_author_and_route_gate_pass: true
+  blind_review_packet_created: false
+  independent_review_started: false
+  second_candidate_count: 0
+  replacement_count: 0
+  hidden_batch_reusable: false
+  same_batch_repair_allowed: false
+  frozen_tool_changed_after_hidden_freeze: false
+  frozen_input_changed_after_hidden_freeze: false
+  first_output_changed_after_authoring: false
+  required_lifecycle_state: STOPPED_RETURN_TO_P3
+  H: 0
+  generator_qualified: false
+  p5_allowed: false
+  p5_executed: false
+  failure_digest: 95fb4c4a0053c64209048b7dd9c6d4bf981774aae353528a2db269eccb4e0b20

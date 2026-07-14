@@ -1,0 +1,16 @@
+p2_final_current_checker_compatibility_receipt:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  current_checker:
+    path: ci/checkers/check_gate1_v1_1_current.py
+    sha256_before_final_closeout: 2aec6f38dd6d64118506ad998c504e950eeaae34fc97b718ab285e49edc035bd
+    sha256_after_final_closeout: 09fd2c0f10e2166c8bbee9994447bb67b4ee77bae788a2f0fa0b9a42c486c162
+    recursive_checker_chain: false
+    checkpoint_validation_retained: true
+    p1a_validation_retained: true
+    p1b_validation_retained: true
+  p1a_p1b_task_roots_modified: false
+  checkpoint_assets_rewritten: false
+  shared_ledger_modified: false
+  readiness_changed: false
+  receipt_digest: 78a48954ff06252e6b81885f11dd682356097b8f1212aa744526d84b2b7a223c

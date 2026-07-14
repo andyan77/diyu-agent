@@ -1,0 +1,144 @@
+schema_version: v0.1
+task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+prompt_revision: r3
+review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+review_run_id: P2-SECONDARY-R3-RUN-20260713-E83C4A2
+reviewed_repository: /home/diyu/笛语领域通用数据库
+reviewed_commit: e83c4a27259d64dd1a52d41d9ca0b9cc7237db61
+review_timestamp_utc: '2026-07-14T01:43:49+00:00'
+review_packet:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r3.jsonl
+  sha256: e14bf95b40d87c83be48e45f2455d983c3c5e412f88ef41f5b034b9d2403883d
+  committed_sha256_recomputed: e14bf95b40d87c83be48e45f2455d983c3c5e412f88ef41f5b034b9d2403883d
+  item_count: 29
+  item_counts:
+    GENERATOR_CORE_CONTRACT_REPAIR: 1
+    REVISED_AB_STRUCTURAL_PATH_CAPABILITY: 20
+    REVISED_COMPONENT_CP_EDGE: 1
+    REVISED_OR_NECESSARY_COMPONENT: 7
+bound_evidence:
+  frozen_standard:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+    sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+  generator_core_reviewed_from_commit:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core.py
+    sha256: e7765148ee0a8ffb374488d53aa4fada164ce175e89ebac7973b7332f68e3b3d
+  targeted_review_job:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_job.r3.yaml
+    sha256: fe6aea8d285d3dce306071792bdeb7d960946f5eddfd54819602b2e2d325c52d
+  targeted_checkpoint_result:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/result/p2_targeted_repair_checkpoint_result.r3.yaml
+    sha256: 36c45611d6c295add647d1e0bbd9e2d3a48d84f7f94cf7245661581570f7577b
+  frozen_parent_corpus:
+    path: /home/diyu/笛语领域通用数据库/07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+    sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+  content_product_profiles:
+    path: /home/diyu/笛语领域通用数据库/07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+    sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+  component_candidate_manifest:
+    path: /home/diyu/笛语领域通用数据库/07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/component_candidate_manifest.v0.1.jsonl
+    sha256: 70ce2f7ebae3699fba6be0a0fff5d4a0a8e1023bbd32ae5a4f7340b3c4f43f7d
+  reviewed_component_registry:
+    path: /home/diyu/笛语领域通用数据库/07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+    sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+coverage:
+  every_packet_item_read_in_packet_order: true
+  revised_or_necessary_components_reviewed: 7
+  profile_derived_component_design_bases_traced: 7
+  cp16_replacement_edges_reviewed: 1
+  ab_paths_reviewed_and_executed: 20
+  intended_lane_requests_realized: 40
+  unique_components_traced_in_paths: 68
+  component_uses_traced_in_paths: 205
+  source_derived_components_traced_in_paths: 22
+  source_parent_references_traced: 23
+  source_spans_traced: 32
+  founder_authorized_design_components_traced_in_paths: 16
+  profile_derived_design_components_traced_in_paths: 30
+  six_axis_exact_binding_checks_passed: 120
+  six_axis_structural_divergence_paths_passed: 20
+  canonical_same_typed_fact_authorization_pairs_passed: 20
+  typed_material_revalidation_rejected: 20
+  fact_value_material_request_redigest_tamper_rejected: 20
+  material_digest_request_redigest_tamper_rejected: 20
+  stripped_nonaxis_fact_authorization_binding_rejected: 20
+  unknown_axis_enum_rejected: 20
+  fact_set_digest_tamper_rejected: 20
+  authorization_set_digest_tamper_rejected: 20
+  cp16_critical_slot_removal_rejected: 4
+  one_axis_contract_removal_accepted_defect: 20
+  two_axis_contract_removal_accepted_defect: 20
+  component_claim_boundary_tamper_accepted_defect: 20
+  operator_binding_digest_tamper_accepted_defect: 20
+  allowed_values_digest_tamper_accepted_defect: 20
+  realization_target_tamper_accepted_defect: 20
+verdict_counts:
+  APPROVE: 8
+  REPAIR: 21
+  REJECT: 0
+grade_counts:
+  A: 8
+  B: 21
+defect_severity_counts:
+  MAJOR: 21
+  NONE: 8
+hard_veto_record_count: 0
+outputs:
+  records_jsonl:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r3/secondary/records.jsonl
+    sha256: 71297a4ce550ac6252093aa0c1eac86c8ee04caedd4696a78ec446512186b7b5
+    record_count: 29
+    byte_count: 107189
+  report_md:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r3/secondary/report.md
+    sha256: 2a3df64da8961afb4ab84fe28491e8783a0aaa26925ad21c52e2e7db8b9d6b33
+    byte_count: 10182
+  run_manifest_yaml:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r3/secondary/run_manifest.yaml
+    sha256: 89aae2a83cc5e96e8e00ff71bfe0c59eef79c8399e1fce81e2949e17432bb62b
+    sha256_scope: canonical JSON of this manifest excluding outputs.run_manifest_yaml.sha256; this avoids recursive self-hashing
+    self_hash_is_scope_not_file_hash: true
+repository_write_audit:
+  reviewer_repository_writes: []
+  reviewer_repository_write_count: 0
+  no_repository_writes_by_this_reviewer: true
+  initial_head: e83c4a27259d64dd1a52d41d9ca0b9cc7237db61
+  initial_worktree_clean: false
+  preexisting_worktree_changes:
+  - ci/checkers/check_gate1_v1_1_current.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+  final_head_at_manifest_snapshot: e83c4a27259d64dd1a52d41d9ca0b9cc7237db61
+  final_worktree_clean_at_manifest_snapshot: false
+  bound_review_inputs_read_from_commit_objects: true
+  preexisting_worktree_versions_opened_or_used: false
+  git_status_porcelain_v2_at_manifest_snapshot:
+  - '# branch.oid e83c4a27259d64dd1a52d41d9ca0b9cc7237db61'
+  - '# branch.head agent/gate1-v1-1-retrospective-recovery-plan'
+  - '# branch.upstream origin/agent/gate1-v1-1-retrospective-recovery-plan'
+  - '# branch.ab +0 -0'
+  - 1 .M N... 100644 100644 100644 d577ce9c540247ac6d52af3144402d4ee86a255a d577ce9c540247ac6d52af3144402d4ee86a255a ci/checkers/check_gate1_v1_1_current.py
+  - 1 .M N... 100644 100644 100644 9922d1ae5cd452d030ddab4a64b105c331c959a5 9922d1ae5cd452d030ddab4a64b105c331c959a5 controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+isolation_and_state:
+  sibling_review_output_content_visibility: NONE
+  sibling_review_files_opened: []
+  sibling_review_content_used: false
+  prior_same_identity_review_schema_consulted: true
+  component_author_or_executor_identity_used: false
+  activation_performed: false
+  readiness_transition_performed: false
+  repository_outputs_written: false
+  external_review_outputs_written_only: true
+  production_or_release_readiness_asserted: false
+  external_provider_called: false
+  audience_surface_generated: false
+  real_brand_fact_supplied: false
+  baseline_300_incremented: false
+signed_attestation: I, P2-SECONDARY-PROVENANCE-REVIEWER-B, acting as SECONDARY_PROVENANCE_FACT_AUTHORIZATION in session 019f5dce-9436-7e03-be80-220461f6107d
+  and run P2-SECONDARY-R3-RUN-20260713-E83C4A2, attest that I independently read, traced, scored, and decided all 29 actual
+  r3 packet items at commit e83c4a27259d64dd1a52d41d9ca0b9cc7237db61; executed all 20 A/B paths and the documented adversarial
+  cases against the committed generator source; did not inspect or use sibling review output content; did not optimize for
+  supply or an approval target; did not write the repository; and did not activate any object, change readiness, call a provider,
+  generate audience content, supply a real brand fact, or increment the 300 baseline. The 8 APPROVE and 21 REPAIR decisions
+  are bound to the packet hash and canonical per-record digests recorded here.

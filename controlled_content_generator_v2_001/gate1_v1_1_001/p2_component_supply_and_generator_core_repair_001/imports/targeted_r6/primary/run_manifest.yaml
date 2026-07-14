@@ -1,0 +1,129 @@
+independent_review_run_manifest:
+  schema_version: v0.1
+  review_record_schema: p2_signed_review.v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  prompt_revision: r6
+  review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+  reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+  reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+  review_run_id: P2-PRIMARY-R6-RUN-20260713-6555C83
+  review_completed_at_utc: '2026-07-14T03:36:14Z'
+  repository: /home/diyu/笛语领域通用数据库
+  reviewed_commit: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+  review_branch: agent/gate1-v1-1-retrospective-recovery-plan
+  checkpoint_state: PENDING_TARGETED_R6_TWO_REVIEW
+  review_packet_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r6.jsonl
+  review_packet_sha256: 2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8
+  packet_item_counts:
+    EXECUTABLE_SLOT_AND_PATH_SCHEMA_GENERATOR_CORE_REPAIR: 1
+    total: 1
+  subject_hashes:
+    generator_core: e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+    evidence_harness: 95b7c3c4ba80d1317fd166fbd4f11845fa048a8cc1128ebae9b43b2669ec39ba
+    required_slot_evidence: 4dc1a3e6cd2c1575d35833631bd508288b297faaee54ae4303572b5040cb0f09
+    program_schema_evidence: 779d29317c0cf2a0c12f36badcc5e196b9b48dca145c276cfaecf18480ed132b
+    mechanism_identity_evidence: 03c9382618b078d9bffc26f1be6e2bf6c1b274e9883e17bdf9011abb6901e7e8
+    bound_fact_evidence: 4830f3acc2230a0952165562344f7172b5d0f99c2ded7dfcda90e2f9a79877c2
+    frozen_standard: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+    execution_brief: ab31642db7579123a462feb32b8dfe74130aec2601ec242cca2fb84c3ac30017
+  decision_counts:
+    APPROVE: 1
+    REPAIR: 0
+    REJECT: 0
+  grade_counts:
+    A: 1
+    B: 0
+    C: 0
+    D: 0
+  defect_severity_counts:
+    NONE: 0
+    OBSERVATION: 1
+    MINOR: 0
+    MAJOR: 0
+    FATAL: 0
+  score:
+    common_score_80: 78
+    type_score_20: 19
+    total_score_100: 97
+    grade: A
+  evidence_recomputation:
+    packet_subjects_read: 1/1
+    evidence_rows_read_and_digest_verified: 384/384
+    requests_realized: 40/40
+    ab_pairs_realized: 20/20
+    same_exact_typed_material: 20/20
+    independent_sessions: 20/20
+    axis_body_differences: 120/120
+    ending_topology_differences: 20/20
+    pointers_resolved_and_matched: 410/410
+    component_ablations_rejected: 410/410
+    path_substitutions_rejected: 120/120
+    trust_tampers_rejected: 180/180
+    required_slot_tampers_rejected: 20/20
+    baseline_slot_comparisons: 1230/1230
+    lane_a_schema_tampers_rejected: 240/240
+    lane_b_schema_tampers_rejected: 240/240
+    mechanism_identity_tampers_rejected: 62/62
+    mechanism_nonmetadata_body_changes: 0/62
+    bound_fact_structural_effects: 62/62
+    evidence_documents_byte_identical: 4/4
+    audience_outputs_empty: 40/40
+  r5_surface_immutability:
+    r5_commit: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+    r6_parent_is_r5_commit: true
+    reviewed_surface_diff_count: 0
+    approved_r5_components_or_paths_modified: false
+  review_implications:
+    targeted_item_approved: true
+    p2_complete_by_this_review_alone: false
+    p3_allowed_by_this_review: false
+    activation_authorized: false
+    audience_content_quality_proven: false
+  outputs:
+    file_count: 3
+    records:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r6/primary/records.jsonl
+      sha256: f71484a4ca3d72ce95f5d50e5f66f688a9ed023a1103d273bfaa944d7961ca0a
+      record_count: 1
+      jsonl_line_count: 1
+    report:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r6/primary/report.md
+      sha256: 6f7a84b5b741de3f9ec1466aff02b90e99f768424b518603124f79b120013569
+      line_count: 158
+    run_manifest:
+      path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r6/primary/run_manifest.yaml
+      hash_policy: sha256 of canonical JSON payload excluding outputs.run_manifest.manifest_payload_sha256
+      manifest_payload_sha256: db6c0fcd27c78a5f42114225c6a6d7531cc5f9a0f97add961e333bb603c4c161
+  repository_write_attestation:
+    repository_files_written_by_reviewer: 0
+    no_repo_writes_by_reviewer: true
+    head_unchanged_at_write: true
+    reviewed_target_worktree_diff_count: 0
+    preexisting_or_concurrent_paths:
+    - ci/checkers/check_gate1_v1_1_current.py
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+    drift_created_or_modified_by_reviewer: false
+  sibling_review_visibility:
+    packet_embedded_secondary_metadata_read: true
+    secondary_output_file_read: false
+    secondary_directory_inspected: false
+    other_reviewer_output_used: false
+    visibility: PACKET_METADATA_ONLY
+  activation:
+    components_activated: false
+    controls_activated: false
+    edges_activated: false
+    paths_activated: false
+    generator_activated: false
+    p3_activated: false
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+  signed_attestation: SIGNED::P2-PRIMARY-CONTENT-REVIEWER-A::019f5dce-25f9-74c3-85d6-c19280e9664a::P2-PRIMARY-R6-RUN-20260713-6555C83::I actually read and independently decided the sole R6 item at 6555c83c58c54e698ef50c3ff707e44a255d5d9b; reran all specified evidence; opened no secondary output beyond packet metadata; wrote no Git repository file; made no audience-content or quality claim; and performed no activation or readiness transition.

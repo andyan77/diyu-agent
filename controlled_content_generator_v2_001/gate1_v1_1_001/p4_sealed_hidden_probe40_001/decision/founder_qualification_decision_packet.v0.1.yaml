@@ -1,0 +1,40 @@
+founder_qualification_decision_packet:
+  schema_version: gate1-p4-founder-qualification-decision-packet-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  decision_state: NOT_ELIGIBLE_FOR_DECISION
+  decision_received: false
+  approved_hidden_positive_ids: []
+  checkpoint_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/result/p4_checkpoint_result.v0.1.yaml
+  checkpoint_result_digest: 6852c0cf01ec92d167a3608eec776b248f89fa7ec211f327dc15e4414620e2a0
+  contract_thresholds_met: false
+  machine_or_executor_qualification_decision: null
+  founder_decision: null
+  founder_decision_recorded: false
+  generator_qualified: false
+  qualification_eligibility: false
+  H_candidate:
+    status: NOT_ADMITTED
+    candidate_positive_count: 0
+    candidate_source:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/positive_20_first_outputs.v0.1.jsonl
+      sha256: 17c7da686a52252897e57313707b6947283585b26595d6df00be21b6bc611a65
+    founder_admitted_to_H: false
+    H_admitted_count: 0
+    counts_toward_300: 0
+  decision_boundary:
+    only_founder_may_decide_generator_qualification: true
+    packet_does_not_self_qualify_generator: true
+    no_production_or_generation_authority_granted: true
+  readiness:
+    DIFY_ready: false
+    KE_ready: false
+    RAG_ready: false
+    candidatepack_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    production_servable: false
+    release_ready: false
+    runtime_ingest_ready: false
+    generator_qualified: false
+  packet_digest: af59f7c1bc03d1d0acef9a7e7cd826ad2d8fa0545d5d8a20e3df243765793c2f

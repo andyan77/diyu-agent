@@ -1,0 +1,29 @@
+machine_acceptance_report:
+  schema_version: gate1-p3-machine-acceptance-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  positive_first_output_count: 20
+  positive_profile_coverage_count: 20
+  single_author_platform_agent_count: 1
+  exact_duplicate_pair_count: 0
+  exact_duplicate_pairs: []
+  machine_similarity_review_queue_count: 0
+  machine_similarity_review_queue: []
+  machine_similarity_is_not_human_near_duplicate_verdict: true
+  route_case_count: 20
+  route_action_counts:
+    BLOCK: 7
+    DEGRADE: 7
+    REQUEST_INPUT: 6
+  route_action_mismatch_count: 0
+  route_reason_mismatch_count: 0
+  route_audience_content_count: 0
+  exit_audit:
+    event_count: 2
+    controlled_execution_agent_run_count: 1
+    external_provider_request_count: 0
+    external_api_call_count: 0
+    credential_read_count: 0
+    network_dispatch_count: 0
+  machine_can_prove_full_free_text_fabrication_absence: false
+  independent_full_surface_review_required: true
+  machine_report_digest: d15b86177182fa2af600c186885cd1f6b67c6a9a82e22c0218a6a9b1df4edf02

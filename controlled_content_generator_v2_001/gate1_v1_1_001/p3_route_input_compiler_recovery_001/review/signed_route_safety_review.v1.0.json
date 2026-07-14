@@ -1,0 +1,271 @@
+{
+  "reviewer_role": "FACT_AUTHORIZATION_ROUTE_SAFETY_REVIEWER",
+  "reviewer_identity_id": "FACT_AUTHORIZATION_ROUTE_SAFETY_REVIEWER_02",
+  "reviewer_session_id": "FARS2-33cee06-20260714T112508Z",
+  "review_run_id": "P3R-OPEN-GOLD20-R2-33cee06-20260714T112508Z",
+  "inputs_read": [
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/public/open_route_inputs_20.v1.0.jsonl",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/open_route_gold_proposed_20.v1.0.jsonl",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/contract/canonical_route_input_contract.v1.0.yaml",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_route_input_compiler_recovery_001/review/open_route_review_packet.v1.0.yaml",
+    "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml"
+  ],
+  "forbidden_inputs_read": false,
+  "case_reviews": [
+    {
+      "case_id": "P3R-OPEN-CP01-01",
+      "profile_id": "CP01",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "输入冲突",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "所需槽位形式闭合，但显式命中 AGR_CP01_01（必须围绕真实任务）。硬门优先于形式闭合，必须 BLOCK；输入状态与真实任务硬门不相容，主因是输入冲突。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP02-02",
+      "profile_id": "CP02",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "输入冲突",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "所需槽位形式闭合，但显式命中 AGR_CP02_01（禁止伪造门店事件）。该硬门否定当前输入的可路由性，必须 BLOCK，主因是输入冲突。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP03-03",
+      "profile_id": "CP03",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "输入冲突",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "所需槽位形式闭合，但显式命中 AGR_CP03_01（禁止省略关键因果动作）。完整步骤要求与当前输入冲突，不能通过缺槽降级消解，故 BLOCK／输入冲突。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP04-04",
+      "profile_id": "CP04",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "槽位虽形式闭合，但 ROLE_AUTHORITY_EXPANSION 表明拟用角色权限超出已证明、已授权边界；现有参与者及发布授权不能覆盖扩张，应 fail closed BLOCK，主因是授权缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP05-05",
+      "profile_id": "CP05",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "槽位虽形式闭合，但 ROLE_AUTHORITY_EXPANSION 表明人物表达超出已授权职业角色或发布范围。该风险不能靠现有事实槽位消除，应 BLOCK，主因是授权缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP06-06",
+      "profile_id": "CP06",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "槽位形式闭合，但 FABRICATED_EVENT 否定事件事实基础；profile 对未列明事实模式默认拒绝且禁止虚构冲突。必须 BLOCK，缺口属于可证实事实而非授权，故为事实缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP07-07",
+      "profile_id": "CP07",
+      "proposed_action": "BLOCK",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "槽位形式闭合，但 FABRICATED_EVENT 表明用户问题或事件没有可靠事实基础，与禁止虚构用户提问的边界一致。应 BLOCK，主因是事实缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP08-08",
+      "profile_id": "CP08",
+      "proposed_action": "REQUEST_INPUT",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "publication_scope_authorization 是唯一明确缺失槽位，其他 required slots 精确闭合；未启用降级请求，故应 REQUEST_INPUT，主因是授权缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP09-09",
+      "profile_id": "CP09",
+      "proposed_action": "REQUEST_INPUT",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "必需事实槽 cp09_core_input_signature 明确缺失，来源与授权均闭合，且未启用降级请求。应 REQUEST_INPUT，主因是事实缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP10-10",
+      "profile_id": "CP10",
+      "proposed_action": "REQUEST_INPUT",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "usable_source_materials 明确缺失；该产品依赖测试或使用记录作为事实证据。未启用降级请求，应 REQUEST_INPUT；允许原因集中没有来源缺失，归入事实缺失正确。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP11-11",
+      "profile_id": "CP11",
+      "proposed_action": "REQUEST_INPUT",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "publication_scope_authorization 明确缺失，其余 required slots 精确闭合；未启用降级请求，故应 REQUEST_INPUT／授权缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP12-12",
+      "profile_id": "CP12",
+      "proposed_action": "REQUEST_INPUT",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "必需事实槽 cp12_core_input_signature 缺失，即使版本时间标记已提供，也不能建立完整迭代事实。未启用降级请求，应 REQUEST_INPUT／事实缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP13-13",
+      "profile_id": "CP13",
+      "proposed_action": "REQUEST_INPUT",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "usable_source_materials 明确缺失，无法支撑真实生活场景和使用条件；未启用降级请求，应 REQUEST_INPUT。来源证据缺口归为事实缺失正确。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP14-14",
+      "profile_id": "CP14",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "publication_scope_authorization 缺失，但启用的 authorization_collection_task 属于授权缺失路由允许输出；该路由禁止受众正文，payload 也要求先补授权，故 DEGRADE 安全，主因是授权缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP15-15",
+      "profile_id": "CP15",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "cp15_core_input_signature 缺失；启用的 fact_collection_task 是事实缺失路由允许的非受众输出，payload 仅收集缺失事实，故 DEGRADE／事实缺失正确。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP16-16",
+      "profile_id": "CP16",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "usable_source_materials 缺失，但隐私、匿名化和发布授权均闭合；material_capture_plan 属于来源缺失路由允许的非受众输出，故可安全 DEGRADE。来源证据缺口归为事实缺失正确。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP17-17",
+      "profile_id": "CP17",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "publication_scope_authorization 缺失；authorization_collection_task 与授权缺失路由完全匹配，禁止受众正文且仅收集授权，故 DEGRADE／授权缺失正确。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP18-18",
+      "profile_id": "CP18",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "cp18_core_input_signature 缺失，其他地方事实及声景来源已闭合；fact_collection_task 是对应路由允许的非受众输出，故 DEGRADE／事实缺失正确。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP19-19",
+      "profile_id": "CP19",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "事实缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "usable_source_materials 缺失，无法形成经营取舍的证据基础；material_capture_plan 属于来源缺失路由允许输出，且 payload 不生成受众正文，故安全 DEGRADE，原因归为事实缺失。"
+    },
+    {
+      "case_id": "P3R-OPEN-CP20-20",
+      "profile_id": "CP20",
+      "proposed_action": "DEGRADE",
+      "proposed_reason": "授权缺失",
+      "action_correct": true,
+      "reason_correct": true,
+      "rationale": "enterprise_public_authorization 已提供，但独立必需的 publication_scope_authorization 仍缺失，授权闭合尚未完成；authorization_collection_task 合法且非受众化，故 DEGRADE／授权缺失正确。"
+    }
+  ],
+  "substantive_disagreements": [],
+  "overall_verdict": "PASS",
+  "signed_attestation": {
+    "attested_by": "FACT_AUTHORIZATION_ROUTE_SAFETY_REVIEWER_02",
+    "attested_at_utc": "2026-07-14T11:25:08Z",
+    "signature_mark": "FACT_AUTHORIZATION_ROUTE_SAFETY_REVIEWER_02|33cee068c38165eee0dfb08811a9266ac1ed3008|2026-07-14T11:25:08Z",
+    "statement": "本人仅依据列出的五个获准输入，独立逐案审查槽位闭合、硬门与风险、降级安全性及候选 gold 的主要动作和原因；未读取任何禁止材料，未修改任何文件，也未依据案例编号推断答案。"
+  },
+  "report_digest_basis": {
+    "digest_algorithm": "SHA-256",
+    "baseline_head": "33cee068c38165eee0dfb08811a9266ac1ed3008",
+    "input_file_sha256": {
+      "open_route_inputs_20.v1.0.jsonl": "fa581050e2c07deebddb19b43a2a6f1d70da13a09a7e310d3524f3335fd9b6f0",
+      "open_route_gold_proposed_20.v1.0.jsonl": "4b7728ef9e413b8c426d1af49b8bac375b5079ae83accf3aafe1691ef0004ce2",
+      "canonical_route_input_contract.v1.0.yaml": "06c098cce974080c5daa01cdf245f1362f853b3441a0686a868e56e30291a51d",
+      "open_route_review_packet.v1.0.yaml": "e65d0f064e42b75db0da0375ba05f66322cb74d0d8fe7c83f06a33263375279b",
+      "content_product_profiles.v0.2.yaml": "d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056"
+    },
+    "decision_counts": {
+      "BLOCK": 7,
+      "REQUEST_INPUT": 6,
+      "DEGRADE": 7,
+      "输入冲突": 3,
+      "事实缺失": 10,
+      "授权缺失": 7,
+      "substantive_disagreements": 0
+    },
+    "checks_run": [
+      "HEAD 与初始工作树状态核验",
+      "五个获准输入的 SHA-256 核验",
+      "20 个 required slot 集合与 provided/missing 精确分区核验",
+      "gold 与 case_id、profile_id、bound_input_digest 绑定核验",
+      "hard_guard_hits、risk_codes 与 profile 硬门语义复核",
+      "降级 artifact、对应缺槽路由、受众正文禁令及 payload 安全性核验",
+      "schema、task_id、数量、唯一性及 packet 摘要一致性核验"
+    ],
+    "check_results": {
+      "input_count": 20,
+      "gold_count": 20,
+      "profile_count": 20,
+      "slot_partitions_exact": 20,
+      "gold_bindings_valid": 20,
+      "safe_degrade_requests": 7,
+      "packet_input_sha_matches": true,
+      "packet_gold_sha_matches": true,
+      "task_id_consistent": true,
+      "forbidden_gold_or_expected_fields_in_inputs": false,
+      "audience_content_in_inputs": false
+    },
+    "check_failures": [
+      {
+        "status": "RECOVERED",
+        "detail": "首次内存闭合校验命令因 shell 引号导致 SyntaxError；在相同只读范围内重跑成功，无审查影响。"
+      }
+    ],
+    "changed_files_by_reviewer": [],
+    "concurrent_worktree_observation": {
+      "initial_worktree_clean": true,
+      "final_head_unchanged": true,
+      "external_untracked_entries_observed_at_final_check": 7,
+      "external_entries_read": false,
+      "allowed_input_files_modified": false
+    },
+    "readiness_flags": {
+      "candidatepack_ready": false,
+      "KE_ready": false,
+      "RAG_ready": false,
+      "DIFY_ready": false,
+      "production_servable": false,
+      "generation_eligible": false,
+      "generation_allowed": false,
+      "release_ready": false,
+      "production_ready": false
+    }
+  }
+}

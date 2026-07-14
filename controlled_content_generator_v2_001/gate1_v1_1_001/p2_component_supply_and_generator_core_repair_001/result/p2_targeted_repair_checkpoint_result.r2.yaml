@@ -1,0 +1,22 @@
+p2_targeted_repair_checkpoint_result:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  checkpoint_state: PENDING_TARGETED_R2_TWO_REVIEW
+  p2_complete: false
+  p3_allowed: false
+  review_packet_sha256: 6eaa8e8f365888ea887a13e3065e9cb711f8f518460f61d4865f3e24852986ef
+  review_item_count: 134
+  active_component_count: 0
+  active_edge_count: 0
+  self_approval_count: 0
+  core_numbers:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+    all_unchanged: true
+  readiness:
+    generator_qualified: false
+    generation_allowed: false
+    runtime_ingest_ready: false
+    production_ready: false
+  result_digest: 4f4012150eca6f7f37977bba905b6a492f89844274d7d22477fe91e0df81f1e8

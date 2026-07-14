@@ -1,0 +1,626 @@
+run_manifest:
+  run_id: GATE1-V11-SECONDARY-REVIEW-RUN-20260713-01
+  review_role: SECONDARY_FACT_AUTHORIZATION
+  reviewer_identity_id: GATE1_SECONDARY_FACT_AUTHORIZATION_CLEANROOM_REVIEWER_20260713
+  reviewer_instance_or_session_id: CODEX_ISOLATED_INSTANCE_GATE1_SECONDARY_20260713_01
+  source_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  source_worktree_before: clean
+  source_worktree_after: clean
+  business_repository_write_count: 0
+  instruction_sha256: 511e203a464b7e57fdf2661abc7254f168c0da59c1631f618a861f3cf8f9192a
+  blindness_amendment_sha256: fa10da85ac4b380d426fc3ac896d56e832b2ff877001ff0d6767793f1f1861c1
+  standard_sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+  review_packet_sha256: 3790b629fb636ef33dbaad369896c1efb55709971c8a01ef2a60a99fa201d64f
+  review_contract_sha256: dbe137cd7ed1af0a9001230ff6d40852b1b5ffeca97fc287d1efe844e9e04a0c
+  blank_template_sha256: 509ae9700b062af30cd1803b93cebdc0b531918bfdd5ca5e4c4fbb7152d8669e
+  model_or_instance_configuration:
+    agent_family: Codex based on GPT-5
+    review_mode: isolated secondary fact authorization review
+    route_actual_visibility: forbidden_and_not_seen
+    other_reviewer_visibility: forbidden_and_not_seen
+    temperature: system_managed
+  model_or_instance_configuration_sha256: d13cdce6cb684f97ffc2d2e46dee12441d7e3a40b0ca142fee898eea40233b90
+  reviewed_at: '2026-07-13T13:49:57Z'
+  route_actual_seen_before_signature: false
+  other_reviewer_output_seen_before_signature: false
+  forbidden_adjacent_files_read: false
+  creative_lane_inferred_from_historical_path: false
+  full_content_browse_and_primary_mapping:
+  - object_id: RV80-ASSET-001
+    primary_content_product_id: CP16
+    source_record_sha256: ef4240b86772f538ab9b4a0480225c3c46ff09d1cbf4fa984587cef66d6d2ec4
+  - object_id: RV80-ASSET-002
+    primary_content_product_id: CP10
+    source_record_sha256: 9619e0da82287523b30756b8d76ecfcf932dba12d47a3833272314cfef89a3d2
+  - object_id: P7D40-REPAIR-006
+    primary_content_product_id: CP12
+    source_record_sha256: 4cfc0a3f5badb35294a30160755171a4a8474963675cc0fc9c88cc37d9d4e0b8
+  - object_id: P7D40-REPAIR-012
+    primary_content_product_id: CP15
+    source_record_sha256: c4fcfb02763b92980610f04ead8362d93a83f6102231ca440a2eab21717cccad
+  - object_id: RV80-ASSET-003
+    primary_content_product_id: CP11
+    source_record_sha256: 67ec4c800c0a632478b6b6d153029395a2e9fca3508e2f56bf6dd424fb6f20c6
+  - object_id: RV80-ASSET-004
+    primary_content_product_id: CP11
+    source_record_sha256: 3d32e0a37d79bdff68d41be0032ed84ebd3e476e3eb58e1cc38fda48b9f0065b
+  - object_id: RV80-ASSET-005
+    primary_content_product_id: CP12
+    source_record_sha256: 8b6fb9cb0e899caee2ab65ba03706cf4125ce38064d1bdbe36772f92e7ffe860
+  - object_id: P7D40-REPAIR-021
+    primary_content_product_id: CP19
+    source_record_sha256: e1393dc8e0a6ba0ee014a2f8234b6b8765b079fce2327e08d4e73c8e93f03cdc
+  - object_id: RV80-ASSET-006
+    primary_content_product_id: NOT_MAPPABLE
+    source_record_sha256: 18c13c769a3c144fe76592afb59d9b793ab98a360bcbeb3d7dd134fd34dfd3d9
+  - object_id: RV80-ASSET-007
+    primary_content_product_id: CP17
+    source_record_sha256: 2c5d6bb33f8da7a09c5b19f1f50f4185de21280dd9a88aec70743999faf57642
+  - object_id: RV80-ASSET-008
+    primary_content_product_id: CP06
+    source_record_sha256: 8abb8ffdc47e99b00177858fb89e7bee69ae9e92bc5c4fe01d02ed6756463698
+  - object_id: P7D40-REPAIR-030
+    primary_content_product_id: CP06
+    source_record_sha256: a336e4c9b0bd130fe324778e74f33db54e8e71b1a04645d839a114e23e8882ec
+  - object_id: RV80-ASSET-009
+    primary_content_product_id: CP09
+    source_record_sha256: 7fd9a216370ee428042fabdbe5782ceab1321822d2ee41b4557519face05c9bf
+  - object_id: P7D40-REPAIR-040
+    primary_content_product_id: CP09
+    source_record_sha256: fc3f7f9383dd23be589731a6318ccf8c12aed347697801aecd288c7cf81e7219
+  - object_id: RV80-ASSET-010
+    primary_content_product_id: CP09
+    source_record_sha256: a3de5496098f0e5a41c63cd836368bcd2706cacd07d369c0633a7c6a8a38bba6
+  - object_id: RV80-ASSET-011
+    primary_content_product_id: CP13
+    source_record_sha256: 02a31eed4fc8f178324d6f1c0204795fa54ebeab12cb531624579e3fe9062b6a
+  - object_id: P7D40-REPAIR-048
+    primary_content_product_id: CP13
+    source_record_sha256: e114266fad6beec937b04afb8f2793337e9ef3a1ca581c812139980ac0d243b9
+  - object_id: RV80-ASSET-012
+    primary_content_product_id: CP19
+    source_record_sha256: 94b097dade618d38c6fa6747e4ae4f935dddb39455928414a586c6731c0df1a7
+  - object_id: RV80-ASSET-013
+    primary_content_product_id: CP04
+    source_record_sha256: 16cd8b1065ad370e95068af9db903b648e7c8f9762334f098085357aeac04820
+  - object_id: RV80-ASSET-014
+    primary_content_product_id: CP01
+    source_record_sha256: eda390c2eb97b4d3318ca9bc85afa0906f0163f821cc344db6506d88ef45eefa
+  - object_id: P7D40-REPAIR-054
+    primary_content_product_id: CP04
+    source_record_sha256: 868786df9e373c4f7828cc228e1d1a45b54f2f1d365a9b6893344049f8a55b9b
+  - object_id: P7D40-REPAIR-063
+    primary_content_product_id: CP01
+    source_record_sha256: 5fce7876ede0ac509d54a9b5971f72a11380f0c8d27f1b82a4269fe2f24f124b
+  - object_id: RV80-ASSET-015
+    primary_content_product_id: CP02
+    source_record_sha256: ba74582058e8359d60a61f8b370e22ac0d2f1804dbe1d02b476ba4efa8262b59
+  - object_id: RV80-ASSET-016
+    primary_content_product_id: CP06
+    source_record_sha256: 77ea25eb216c28c676807ac887e1d8049e1552fd4944df858e735c8e961aca55
+  - object_id: P7D40-REPAIR-071
+    primary_content_product_id: CP04
+    source_record_sha256: 7e1d55fa62560c15bfcee13ccf98b4501b8f44863853dd2314b7ef8e2f35eeac
+  - object_id: RV80-ASSET-017
+    primary_content_product_id: CP04
+    source_record_sha256: 8efd92d012df15f853a54867478aa47e3e6298f6992b3387386b1f6d722ef442
+  - object_id: RV80-ASSET-018
+    primary_content_product_id: CP04
+    source_record_sha256: 55ae4cf4e98ecc70e823d806da5612f3c5abc671bef38f8d898ae8145005de05
+  - object_id: RV80-ASSET-019
+    primary_content_product_id: CP01
+    source_record_sha256: 3383ed7952dd4eddf978d1b763fb802dbc80e857f6fb9a9a297572d06510677a
+  - object_id: P7D40-REPAIR-077
+    primary_content_product_id: CP04
+    source_record_sha256: 0fcdb46d17bbad518e48f712c7f5840f5f7fb8aa5363485b13dec3a164990ced
+  - object_id: RV80-ASSET-020
+    primary_content_product_id: CP19
+    source_record_sha256: 5a6049b3adddc764c64932165dcfa188bfcd73376de5b29459660cbb4366272a
+  - object_id: RV80-ASSET-021
+    primary_content_product_id: CP07
+    source_record_sha256: a29319e1d3d6b5701426fd890d3bff86274b7a05ed3b5d33647aa9aea912af20
+  - object_id: P7D40-REPAIR-082
+    primary_content_product_id: CP07
+    source_record_sha256: 4059574c9913a9d430667821e85a9005b8d061e4f84c65b73f530fd3cbaee896
+  - object_id: RV80-ASSET-022
+    primary_content_product_id: CP07
+    source_record_sha256: 5fcd37176d8c04700798d99e34914627f37b556e38cdde2671d7b3a628feb472
+  - object_id: P7D40-REPAIR-089
+    primary_content_product_id: CP07
+    source_record_sha256: fb7aeec405eff042fde69826e5a88d54df2619286674f2704b0ea5740168fcf3
+  - object_id: RV80-ASSET-023
+    primary_content_product_id: CP08
+    source_record_sha256: 9bf341ff977662a4d2c57d9f0492b593fcb28ddad63d83417a735fd8f4963dcf
+  - object_id: RV80-ASSET-024
+    primary_content_product_id: CP07
+    source_record_sha256: f710d4fe753138c73ff26a35e4b04a4e15fce4812f80f0c270161a9a00ff18e7
+  - object_id: P7D40-REPAIR-097
+    primary_content_product_id: CP06
+    source_record_sha256: 3c433a2e0b4069eb8eaf4c3994d25ddff8c6afde78d15c9cae737e453471338c
+  - object_id: RV80-ASSET-025
+    primary_content_product_id: CP16
+    source_record_sha256: 2f14448d7aa9c665a3777f0f3f8bc676cca2f12fa570b1bb66084753c205430a
+  - object_id: RV80-ASSET-026
+    primary_content_product_id: CP10
+    source_record_sha256: 83315a36c53c46ba2b421e990f828a8db4ab517eaa5f6541e1cde14ac3e753c3
+  - object_id: P7D40-REPAIR-105
+    primary_content_product_id: CP06
+    source_record_sha256: 1d04b8514323cfbc9449dafe4d6dcc63090fa91fa15ef2f5be58bb4ee3840cdc
+  - object_id: RV80-ASSET-027
+    primary_content_product_id: CP06
+    source_record_sha256: c0d3189c064d87bd786055f8a07cd8516277ff01bf49a1355774e8e6e3bed96c
+  - object_id: RV80-ASSET-028
+    primary_content_product_id: CP07
+    source_record_sha256: a8925eae5d73a628af68f73994c15a73b4e5deedec010b68c372d8ae81de97e0
+  - object_id: RV80-ASSET-029
+    primary_content_product_id: CP09
+    source_record_sha256: 3a01510073374e000136d9910f94a24aa279b483b48d2b9ffa789940fbf0d6ce
+  - object_id: RV80-ASSET-030
+    primary_content_product_id: CP09
+    source_record_sha256: bc6b1cc7e86e811894051d86caea40c909155ad41d246b66890e92e681a5395e
+  - object_id: P7D40-REPAIR-115
+    primary_content_product_id: CP09
+    source_record_sha256: 1a500c650e59a88eabd13407555bc72b442f88573677025a614382f311f1aa28
+  - object_id: P7D40-REPAIR-127
+    primary_content_product_id: CP08
+    source_record_sha256: 96b74d563e49885e58ae842344549a4727a8f9711ea57cb1945636772fed2e56
+  - object_id: RV80-ASSET-031
+    primary_content_product_id: CP08
+    source_record_sha256: a67b6b07d471d5a89d207a29ed787e2827234660afe09bc92a2f509403dac523
+  - object_id: RV80-ASSET-032
+    primary_content_product_id: CP08
+    source_record_sha256: f1db1110932a596f3a071b466d7542bcc00bbac0a8972e41c30d751f44d4db05
+  - object_id: P7D40-REPAIR-129
+    primary_content_product_id: CP08
+    source_record_sha256: 2146ab4d2ae248b78254a90036e5c054204acfe225f50b337b4df9aa31921bd8
+  - object_id: RV80-ASSET-033
+    primary_content_product_id: CP08
+    source_record_sha256: 0b3b74f9110594827b92bb36d24b220fd64fb55be50c3eea6a1bbf14a799d95e
+  - object_id: RV80-ASSET-034
+    primary_content_product_id: CP07
+    source_record_sha256: 6a7888ea36f83639a8618258a975f14d2a7189e2119151863c88c00de0189612
+  - object_id: RV80-ASSET-035
+    primary_content_product_id: CP08
+    source_record_sha256: 3bd3af22a46429e9acc653c66c1ac180f4b0bf3abf1c361aa5e3b1220f86c0b9
+  - object_id: P7D40-REPAIR-138
+    primary_content_product_id: CP08
+    source_record_sha256: 4e1922218f3876d74f0e8a72cd23cc87699250b28d793e9238d554714bec5ac9
+  - object_id: RV80-ASSET-036
+    primary_content_product_id: CP08
+    source_record_sha256: 14df43714fe014728a76aa62ef0facfd03b1198f50ba33c51dce7b08a3e6aabe
+  - object_id: P7D40-REPAIR-151
+    primary_content_product_id: CP08
+    source_record_sha256: c8c8805f4121d01a2037a3dfb183ec467fd592308d19147c22bf9620ab14d1a5
+  - object_id: RV80-ASSET-037
+    primary_content_product_id: CP08
+    source_record_sha256: 90012165a9c6d6e3f988868ff541ea15c0c3d310343f5ae7ac49dd2503e8aa52
+  - object_id: RV80-ASSET-038
+    primary_content_product_id: CP08
+    source_record_sha256: f83954eeb6d889b87437f269bfa83bb4e9dd25206bf453e062ba0d16b858996e
+  - object_id: RV80-ASSET-039
+    primary_content_product_id: CP09
+    source_record_sha256: a36461660f6881a00680f7449eff92c52ee368b44420bbbf19f0328908a7fa63
+  - object_id: P7D40-REPAIR-154
+    primary_content_product_id: CP09
+    source_record_sha256: 1e4f95c688dc9b18fc4ccc891c7400e165c165a8c9c27543005a3aaa22d86d34
+  - object_id: RV80-ASSET-040
+    primary_content_product_id: CP07
+    source_record_sha256: b986a531668646fa48d40d7fc719b2a45e465facd431e151547e219582ce9624
+  - object_id: RV80-ASSET-041
+    primary_content_product_id: CP10
+    source_record_sha256: 2875e68399b605400c17b0efbf25d8a719b47c61fcc76548b54c75c73fe8a8a0
+  - object_id: P7D40-REPAIR-162
+    primary_content_product_id: CP10
+    source_record_sha256: 1e1da77ed7c27d738b751f5bc6eb61095dacdc05f1425903bd25627ed303629a
+  - object_id: RV80-ASSET-042
+    primary_content_product_id: CP10
+    source_record_sha256: 582160933b2b08ca970cc33d0a70ea3ed2f1b21e111cdbda9623a7805f9c32da
+  - object_id: RV80-ASSET-043
+    primary_content_product_id: CP08
+    source_record_sha256: c9e6f658f0760a47a71c32f3b1dcec655aadc75e592eaf99bd74c74e1fb69f0e
+  - object_id: P7D40-REPAIR-170
+    primary_content_product_id: CP08
+    source_record_sha256: 3a2ee613eb9253f51a6f2edfb125421c6db42791043739ba400a1e642c68b631
+  - object_id: RV80-ASSET-044
+    primary_content_product_id: CP08
+    source_record_sha256: 7d1c550a6097a5d2d56115b26d110d417299cdba779d073da1a1ab0d0a23f26d
+  - object_id: P7D40-REPAIR-177
+    primary_content_product_id: CP08
+    source_record_sha256: 21d2b8e8d1122cd73ac87f89de562d2f9c222c2a4271d2a7f334caa05754e1a2
+  - object_id: RV80-ASSET-045
+    primary_content_product_id: CP08
+    source_record_sha256: c73b3226020272e56c5e91cd95306bee93255f71a72257d91e9793df03e895e7
+  - object_id: RV80-ASSET-046
+    primary_content_product_id: CP08
+    source_record_sha256: d725e5caa537f4a5af7af47adbea90d8464e0f89a3c067207ef68f2953ba7e3f
+  - object_id: P7D40-REPAIR-191
+    primary_content_product_id: CP17
+    source_record_sha256: f4e3bf9ea14d285c565baa1d6888449c42b76008e140a811d849aedb9faf3e07
+  - object_id: RV80-ASSET-047
+    primary_content_product_id: CP17
+    source_record_sha256: 5647e05f03342ace9f171a2595685240e2e6ea248b6ebea80731b9d032f4dd17
+  - object_id: RV80-ASSET-048
+    primary_content_product_id: CP02
+    source_record_sha256: 077893f5c189ef184390e9d93b519dee0fa7fdacabc577e1356b09e52bb44b49
+  - object_id: RV80-ASSET-049
+    primary_content_product_id: CP17
+    source_record_sha256: c279a7c11384e5f29422a4c1b005ac50895bf6e87c31a9c4d830d560edb64142
+  - object_id: RV80-ASSET-050
+    primary_content_product_id: CP17
+    source_record_sha256: 520f2ecd5d85ef0883063570716c974b7cf119c5d0eea8722071161e25383865
+  - object_id: P7D40-REPAIR-195
+    primary_content_product_id: CP17
+    source_record_sha256: 5190f8e24bd8bc33bb3e6375b9ea793e75d75bb0603fff73346bd1579196e079
+  - object_id: RV80-ASSET-051
+    primary_content_product_id: CP17
+    source_record_sha256: 2e779209b3aca9ef32897b5b828fcd100b46f61a4984ceb43eac50f052a27a3e
+  - object_id: P7D40-REPAIR-202
+    primary_content_product_id: CP17
+    source_record_sha256: 4fe68b4e5e976b8022e1b317a3a17a414efcef217dcb8168f981534b9c7a8637
+  - object_id: RV80-ASSET-052
+    primary_content_product_id: CP17
+    source_record_sha256: 74a41673fd16b5cdd2bc6cfab8b54a6d75e106a6907e0d3525ae48bf14e4c4b2
+  - object_id: RV80-ASSET-053
+    primary_content_product_id: CP01
+    source_record_sha256: 394436460d9eb2238ae0b50130b9975e729588cadb512ac1ee2e03a69ce7d6b3
+  - object_id: RV80-ASSET-054
+    primary_content_product_id: CP01
+    source_record_sha256: fd515f5e05829a15143b52e6de39f98b4cc48f6936bdc822d988ce5b422e3a10
+  - object_id: P7D40-REPAIR-214
+    primary_content_product_id: CP02
+    source_record_sha256: 91a1f29345d7ac965fb3d7199c4338478506e35847c565762ffeea8d91a6e471
+  - object_id: RV80-ASSET-055
+    primary_content_product_id: CP13
+    source_record_sha256: 0bf552ebbcbea064819e652b2ca7bc9abf61eaadfeb215030800433c19ec0d5d
+  - object_id: P7D40-REPAIR-224
+    primary_content_product_id: CP13
+    source_record_sha256: 154614bc0fa8b2e505dc3bb241aea6a0e72f36b09b4e38bad07e3377caacbd8c
+  - object_id: RV80-ASSET-056
+    primary_content_product_id: CP13
+    source_record_sha256: 425484a87684afa3ca343201a7e28a8db384592ffe2777b69a7d7659353452ee
+  - object_id: RV80-ASSET-057
+    primary_content_product_id: CP13
+    source_record_sha256: ac81b276fd30deb6b64851a8e277e60bc64e0c6bfc2f2ff7d0f3e5206551cd6c
+  - object_id: P7D40-REPAIR-226
+    primary_content_product_id: CP16
+    source_record_sha256: 369a8dd4363503c883e03e350fe28e88f536f445e934869565fce29454037b11
+  - object_id: RV80-ASSET-058
+    primary_content_product_id: CP13
+    source_record_sha256: 7b84fb025875ea72cd80f10550c734f51199d3fb6c0d4b5cd1b45319cf3de7cb
+  - object_id: RV80-ASSET-059
+    primary_content_product_id: CP15
+    source_record_sha256: 5f48c06c6babeb28a8ce3f902ac8ef4a97bc16f7f5af38396c50235977cbe5b5
+  - object_id: P7D40-REPAIR-234
+    primary_content_product_id: CP17
+    source_record_sha256: 3e5d7ad8b74bbeab8d09ee2865deb7d46b4b1540a72a15410c7f113f4ab95639
+  - object_id: RV80-ASSET-060
+    primary_content_product_id: CP15
+    source_record_sha256: dbd105c28fce5912a8f927f9cbfffeb1f70b8a5b62a1f0835aea8558d5c5022c
+  - object_id: RV80-ASSET-061
+    primary_content_product_id: CP17
+    source_record_sha256: 98afc236849f699f9873d9d56276514d3ffd379b09947c9b9b1870a349fc36ea
+  - object_id: RV80-ASSET-062
+    primary_content_product_id: CP04
+    source_record_sha256: 2057281ac9cc99b68982efd708f61063d42610d4e0c56328dd25d687f25f5917
+  - object_id: P7D40-REPAIR-243
+    primary_content_product_id: CP04
+    source_record_sha256: 709e9f350bf2944747695ab8a75deba5aa73d3c9881d7ef23f243bae8aba8f06
+  - object_id: RV80-ASSET-063
+    primary_content_product_id: CP09
+    source_record_sha256: defe5d7cb842d5096fa194b17b62c8fcd7bf3a05c1c26e867c0f62b9a841c991
+  - object_id: RV80-ASSET-064
+    primary_content_product_id: CP10
+    source_record_sha256: f52c4817b7db7823c97aa7f2714ddeb040aade2c9127aef290f1d431aa710983
+  - object_id: P7D40-REPAIR-254
+    primary_content_product_id: CP10
+    source_record_sha256: 8d7fa6ddadd9d7e17cd63a7b8c902de83e663262a863174d1d32e3a661169d83
+  - object_id: P7D40-REPAIR-263
+    primary_content_product_id: CP13
+    source_record_sha256: d699a998e2002a248197dab7cd8df04eaa8137c16fdd8b71aad22ca8a6cd7fee
+  - object_id: RV80-ASSET-065
+    primary_content_product_id: CP13
+    source_record_sha256: e55cf91becce9b06a5b7c5489109ca81519ea89f3bd50d1aec0fd865c4c1b514
+  - object_id: RV80-ASSET-066
+    primary_content_product_id: CP07
+    source_record_sha256: 64da351944a6f98116f7af826eea03a1eb96ca25091512448aafe56e3ada6b93
+  - object_id: RV80-ASSET-067
+    primary_content_product_id: CP13
+    source_record_sha256: a43ceb5613fe11e04591f7eecb18ba27644f470b532e9db61e215a20769c8684
+  - object_id: RV80-ASSET-068
+    primary_content_product_id: CP13
+    source_record_sha256: f35f17d7dbc916a5d50541764c2dfb2de211b39fd66ff794351fd58127f318f8
+  - object_id: P7D40-REPAIR-267
+    primary_content_product_id: CP08
+    source_record_sha256: c7d39c9f607fe7dc83c3e6b67503c2e40a8b31cb41568563f5295cd820f20ac1
+  - object_id: P7D40-REPAIR-276
+    primary_content_product_id: CP13
+    source_record_sha256: f6bddc4a8134ff2249e9d9cd8a37ed0227f41b26d33b0ca9271c97890e3dfef1
+  - object_id: RV80-ASSET-069
+    primary_content_product_id: CP13
+    source_record_sha256: 07dd3849e93456dc8cc90e25fd09a7790fe3c601081187a07c5de2a642b5d787
+  - object_id: RV80-ASSET-070
+    primary_content_product_id: CP13
+    source_record_sha256: b7b64bcf899b08b76acf2b1264e6dbf5476810e24d81853405ac90cdf9ef2045
+  - object_id: P7D40-REPAIR-287
+    primary_content_product_id: CP13
+    source_record_sha256: be94583b18c7c875c503a52be195a6ad56c967323b47b74309ec8d611a648acd
+  - object_id: RV80-ASSET-071
+    primary_content_product_id: CP13
+    source_record_sha256: e78850e5e8f89b490e0a53931603596437a6b3c7de31ba279bd6d3f5c3b52561
+  - object_id: RV80-ASSET-072
+    primary_content_product_id: CP13
+    source_record_sha256: a9b8aebacff65a4bdb7f74dd9980a488131e76980558f33f85b92e8e64ac3002
+  - object_id: P7D40-REPAIR-289
+    primary_content_product_id: CP09
+    source_record_sha256: f90677b23db380bf484f6ca388c827608e2661c1d5b142bcfe41721c522414ef
+  - object_id: RV80-ASSET-073
+    primary_content_product_id: CP07
+    source_record_sha256: febb29643e6794e1beabf47015ada033d70bb334a17f5b309cdb3828468f0f56
+  - object_id: RV80-ASSET-074
+    primary_content_product_id: CP07
+    source_record_sha256: 86bfd6af4f9cef8a2baebeea3d083316038b9942db09537fbe4fe66054e30560
+  - object_id: RV80-ASSET-075
+    primary_content_product_id: CP13
+    source_record_sha256: 199806c5a5eb681bcd3ac4b0adc0a463feefadd0ecc812d110ef8d546ce39ded
+  - object_id: P7D40-REPAIR-298
+    primary_content_product_id: CP13
+    source_record_sha256: 64aa9d3f570c942c45925847c626c59cb0b8d635808ff2c0072fc6a1188b048c
+  - object_id: RV80-ASSET-076
+    primary_content_product_id: CP13
+    source_record_sha256: f2a87d989a557ef0ee448909d2b12bef75717f6c7546d361eb7c8438a1c9da3e
+  - object_id: RV80-ASSET-077
+    primary_content_product_id: CP17
+    source_record_sha256: 7b87e3a5122625f3bc26b7feda88061a06a65b490e532ce84e2b0b1a5e87bc9a
+  - object_id: P7D40-REPAIR-312
+    primary_content_product_id: CP17
+    source_record_sha256: 3d76760a7140241b84a26235ab0f48c019b65f82b2472511acccb78eaed35ec7
+  - object_id: RV80-ASSET-078
+    primary_content_product_id: CP17
+    source_record_sha256: 7b1a7aaf2aca64d7d48b921ddaf8613778b3b1fa33d38dba562f390a3042ac78
+  - object_id: P7D40-REPAIR-316
+    primary_content_product_id: CP13
+    source_record_sha256: 86dfda06f00534ab0e56f139bb74d63fd3580e5cdbbd41c536d7648de6769b51
+  - object_id: RV80-ASSET-079
+    primary_content_product_id: CP06
+    source_record_sha256: b49586314afdca6403a7e295e32dbafcd18d7618fcd567b249cc5550a1dd698c
+  - object_id: RV80-ASSET-080
+    primary_content_product_id: CP13
+    source_record_sha256: 4d9b485a5fba7bf19789048f8d37280be8181e3dccd47c90d0aea173791d651e
+  deep_reviewed_content_ids:
+  - RV80-ASSET-001
+  - RV80-ASSET-002
+  - P7D40-REPAIR-006
+  - P7D40-REPAIR-012
+  - RV80-ASSET-003
+  - RV80-ASSET-004
+  - RV80-ASSET-005
+  - P7D40-REPAIR-021
+  - RV80-ASSET-007
+  - RV80-ASSET-008
+  - P7D40-REPAIR-030
+  - RV80-ASSET-009
+  - P7D40-REPAIR-040
+  - RV80-ASSET-011
+  - P7D40-REPAIR-048
+  - RV80-ASSET-012
+  - RV80-ASSET-013
+  - RV80-ASSET-014
+  - P7D40-REPAIR-054
+  - P7D40-REPAIR-063
+  - RV80-ASSET-015
+  - RV80-ASSET-017
+  - RV80-ASSET-021
+  - P7D40-REPAIR-082
+  - RV80-ASSET-023
+  - P7D40-REPAIR-097
+  - RV80-ASSET-025
+  - RV80-ASSET-026
+  - P7D40-REPAIR-105
+  - RV80-ASSET-029
+  - P7D40-REPAIR-127
+  - RV80-ASSET-035
+  - P7D40-REPAIR-151
+  - P7D40-REPAIR-154
+  - RV80-ASSET-041
+  - P7D40-REPAIR-162
+  - P7D40-REPAIR-170
+  - RV80-ASSET-047
+  - RV80-ASSET-048
+  - RV80-ASSET-053
+  - P7D40-REPAIR-226
+  - RV80-ASSET-059
+  - RV80-ASSET-060
+  - RV80-ASSET-061
+  - RV80-ASSET-062
+  - P7D40-REPAIR-263
+  - RV80-ASSET-065
+  - RV80-ASSET-066
+  deep_reviewed_route_ids:
+  - DEV-ROUTE-CP01-MISSING-001
+  - DEV-ROUTE-CP01-GUARD-001
+  - DEV-ROUTE-CP01-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP02-MISSING-001
+  - DEV-ROUTE-CP02-GUARD-001
+  - DEV-ROUTE-CP02-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP03-MISSING-001
+  - DEV-ROUTE-CP03-GUARD-001
+  - DEV-ROUTE-CP03-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP04-MISSING-001
+  - DEV-ROUTE-CP04-GUARD-001
+  - DEV-ROUTE-CP04-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP05-MISSING-001
+  - DEV-ROUTE-CP05-GUARD-001
+  - DEV-ROUTE-CP05-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP06-MISSING-001
+  - DEV-ROUTE-CP06-GUARD-001
+  - DEV-ROUTE-CP06-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP07-MISSING-001
+  - DEV-ROUTE-CP07-GUARD-001
+  - DEV-ROUTE-CP07-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP08-MISSING-001
+  - DEV-ROUTE-CP08-GUARD-001
+  - DEV-ROUTE-CP08-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP09-MISSING-001
+  - DEV-ROUTE-CP09-GUARD-001
+  - DEV-ROUTE-CP09-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP10-MISSING-001
+  - DEV-ROUTE-CP10-GUARD-001
+  - DEV-ROUTE-CP10-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP11-MISSING-001
+  - DEV-ROUTE-CP11-GUARD-001
+  - DEV-ROUTE-CP11-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP12-MISSING-001
+  - DEV-ROUTE-CP12-GUARD-001
+  - DEV-ROUTE-CP12-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP13-MISSING-001
+  - DEV-ROUTE-CP13-GUARD-001
+  - DEV-ROUTE-CP13-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP14-MISSING-001
+  - DEV-ROUTE-CP14-GUARD-001
+  - DEV-ROUTE-CP14-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP15-MISSING-001
+  - DEV-ROUTE-CP15-GUARD-001
+  - DEV-ROUTE-CP15-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP16-MISSING-001
+  - DEV-ROUTE-CP16-GUARD-001
+  - DEV-ROUTE-CP16-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP17-MISSING-001
+  - DEV-ROUTE-CP17-GUARD-001
+  - DEV-ROUTE-CP17-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP18-MISSING-001
+  - DEV-ROUTE-CP18-GUARD-001
+  - DEV-ROUTE-CP18-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP19-MISSING-001
+  - DEV-ROUTE-CP19-GUARD-001
+  - DEV-ROUTE-CP19-RISK-OR-INPUT-001
+  - DEV-ROUTE-CP20-MISSING-001
+  - DEV-ROUTE-CP20-GUARD-001
+  - DEV-ROUTE-CP20-RISK-OR-INPUT-001
+  deep_reviewed_component_ids:
+  - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+  - RCV2-002-ACTION-04-COPY-OVERCLAIM-PAUSE
+  - RCV2-002-ACTION-05-DRAFT-CLEANUP
+  - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+  - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+  - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+  - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+  - RCV2-002-ACTION-15-TABLE-REARRANGE
+  - RCV2-002-CAPTURE-DUO-STATIC-PHONE
+  - RCV2-002-CAPTURE-OBJECT-ONLY-STATIC-PHONE
+  - RCV2-002-CAPTURE-SOLO-STATIC-PHONE
+  - RCV2-002-JUDGE-01-DEFER-DISPLAY-UNTIL-OBSERVED
+  - RCV2-002-JUDGE-03-SERIES-ROLE-NOT-RETITLE
+  - RCV2-002-JUDGE-04-CLAIM-EVIDENCE-LIMIT
+  - RCV2-002-JUDGE-05-ONLY-SITE-DOABLE-ACTIONS
+  - RCV2-002-JUDGE-06-ANONYMIZE-CLOTHING-STORY
+  - RCV2-002-JUDGE-07-WORKMANSHIP-VS-LIFESPAN
+  - RCV2-002-JUDGE-08-LIGHT-BEFORE-COLOR-CLAIM
+  - RCV2-002-JUDGE-09-OBSERVABLE-VS-RECORD-CLAIM
+  - RCV2-002-JUDGE-10-DEMO-NOT-BODY-PROMISE
+  - RCV2-002-JUDGE-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+  - RCV2-002-JUDGE-12-COLOR-AREA-POSITION-MEASURE
+  - RCV2-002-JUDGE-14-DISPLAY-VIEWING-ORDER
+  - RCV2-002-JUDGE-15-LEAD-CONNECT-SUPPORT
+  - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+  - RCV2-002-SCENE-02-CLAIM-BOUNDARY-FITTING
+  - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+  - RCV2-002-SCENE-04-COPY-CLAIM-PAUSE
+  - RCV2-002-SCENE-05-DRAFT-CLEANUP-STATION
+  - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+  - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+  - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+  - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+  - RCV2-002-SCENE-10-STYLING-DEMO-WALK
+  - RCV2-002-SCENE-11-OUTFIT-EXPLANATION-SPLIT
+  - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+  - RCV2-002-SCENE-13-PRODUCT-ROLE-CONTEXTS
+  - RCV2-002-SCENE-14-DISPLAY-CENTER-SUPPORT
+  - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+  - RCV2-002-TRIGGER-01-ARRIVAL-CHECK
+  - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+  - RCV2-002-TRIGGER-03-CONTEXT-ROLE-SHIFT
+  - RCV2-002-TRIGGER-04-COPY-OVERCLAIM-PAUSE
+  - RCV2-002-TRIGGER-05-DRAFT-CLEANUP
+  - RCV2-002-TRIGGER-06-DISPLAY-RESET
+  - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+  - RCV2-002-TRIGGER-08-LIGHT-CONDITION
+  - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+  - RCV2-002-TRIGGER-10-STYLING-METHOD-DEMO
+  - RCV2-002-TRIGGER-11-OUTFIT-COMPLEXITY
+  - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+  - RCV2-002-TRIGGER-13-PRODUCT-ROLE-SWITCH
+  - RCV2-002-TRIGGER-14-MAIN-SUPPORT-SPACE
+  - RCV2-002-TRIGGER-15-NEW-GOODS-GROUPING
+  - RCV2-002-VISUAL-12-COLOR-AREA-HIERARCHY
+  - RCV2-003-CAPTURE-SERVICE-ROLE-BOUNDARY
+  - RCV2-003-CLOSING-LOCAL-EVIDENCE-LONG-TERM-DEFER
+  - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+  - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+  - RCV2-003-TRANSITION-DISPLAY-HIERARCHY-SPACE
+  - RCV2-003-TRANSITION-ROLE-SPECIFIC-HANDOFF
+  - RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+  - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+  - RCV2-003-VISUAL-LIGHT-COLOR-CONTEXT
+  - RCV2-004-CAPTURE-CONTACT-SOURCE-SOUND-SYNC
+  - RCV2-004-CAPTURE-CONTINUOUS-ACTION-PROOF
+  - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+  - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+  - RCV2-004-CAPTURE-MULTI-ROLE-PARALLEL-FRAME
+  - RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+  - RCV2-004-CAPTURE-STATUS-MAP-OVERVIEW-DETAIL
+  - RCV2-004-CAPTURE-UNRESOLVED-STATE-HOLD
+  - RCV2-004-CAPTURE-VERSION-MATCHED-ACTION
+  - RCV2-004-CLOSING-COMPLETED-PENDING-HANDOFF
+  - RCV2-004-JUDGMENT-BOUNDED-ORDINARY-PARTICIPANT
+  - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+  - RCV2-004-JUDGMENT-RECORDER-NOT-DECISION-OWNER
+  - RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+  - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+  - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+  - RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+  - RCV2-004-REASONING-SOURCE-BOUND-SINGLE-VARIABLE
+  - RCV2-004-TRANSITION-PARALLEL-WORK-STATE
+  - RCV2-004-TRANSITION-RESULT-FIRST-ROLE-READBACK
+  - RCV2-004-TRANSITION-SOURCE-BOUND-TIME-SLICE
+  - RCV2-004-VISUAL-SILENT-OBJECT-CONTACT-RHYTHM
+  coverage:
+    content_browsed: 120
+    content_deep_reviewed: 48
+    route_browsed: 60
+    route_deep_reviewed: 60
+    component_screened: 86
+    component_deep_reviewed: 86
+    deep_content_count_by_product:
+      CP01: 3
+      CP02: 2
+      CP04: 4
+      CP06: 4
+      CP07: 3
+      CP08: 5
+      CP09: 4
+      CP10: 4
+      CP11: 2
+      CP12: 2
+      CP13: 4
+      CP15: 3
+      CP16: 3
+      CP17: 3
+      CP19: 2
+    content_products_without_honest_primary_mapping:
+    - CP03
+    - CP05
+    - CP14
+    - CP18
+    - CP20
+  output_files:
+    records.jsonl:
+      sha256: 61586c7fce34baa59db1c179eeeae7214b6afebb3daa2282221e68e91f7e6b61
+      record_count: 194
+    report.md:
+      sha256: 38ce8105b9e747eb0f26ceca15e8173da56143e99078a485414dcebd64f7a76c
+  record_digest_method: SHA256(canonical JSON UTF-8 with append_only_record_digest and append_only_record_sha256 set to null; sort_keys=true; separators comma/colon)
+  append_only_attestation: All signed records were independently produced in this isolated run; correction requires a new superseding record.
+  core_number_impact:
+    '300': unchanged
+    '120': unchanged_inventory_pending_P1B_count_freeze
+    '86': unchanged_candidate_inventory_pending_P1B_disposition_freeze

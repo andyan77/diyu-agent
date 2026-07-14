@@ -1,0 +1,202 @@
+review_job:
+  job_id: GATE1_V11_INDEPENDENT_REVIEW_CHECKPOINT_001
+  version: v0
+  purpose: 在P1B冻结结论前形成两份相互独立且可追溯的正式审查记录
+  status: frozen_for_independent_review
+  business_repository: /home/diyu/笛语领域通用数据库
+  business_repository_write_allowed: false
+  source_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  source_worktree_expected: clean
+
+  frozen_inputs:
+    standard:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+      sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+    review_packet:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/review/unified_gate1_review_packet.v0.1.jsonl
+      sha256: 3790b629fb636ef33dbaad369896c1efb55709971c8a01ef2a60a99fa201d64f
+    review_contract:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/review/independent_review_contract.v0.1.yaml
+      sha256: dbe137cd7ed1af0a9001230ff6d40852b1b5ffeca97fc287d1efe844e9e04a0c
+    blank_record_template:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/review/unified_independent_review_record_template.v0.1.yaml
+      sha256: 509ae9700b062af30cd1803b93cebdc0b531918bfdd5ca5e4c4fbb7152d8669e
+    route_actuals:
+      path: controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/route/route_regression_actuals.v0.1.jsonl
+      hidden_until_primary_route_records_signed: true
+
+  core_number_policy:
+    target_total: 300
+    legacy_reference_content: 120
+    component_candidates: 86
+    reviews_may_change_core_numbers: false
+    note: 本检查点只形成审查证据，不冻结最终合格数，不批准组件，不改变三项核心数字
+
+  common_rules:
+    - 两位审查者必须使用不同身份、不同会话或实例、不同运行编号和不同签署
+    - 两位审查者在各自初始结论签署前不得读取对方记录、报告或中间结论
+    - 审查者不得是内容作者、P1A建包方或后续P1B冻结执行方
+    - 两位审查者使用同一标准、同一审查包和同一记录结构
+    - 审查结论必须基于实际读取对象和来源，不得只审查清单字段
+    - 已签署记录禁止覆盖；纠正只能新增替代记录并保留原记录
+    - 路线实际结果在第一审路线答案全部签署前保持不可见
+    - 历史路径中的b_channel只作名称，不得推断为乙创作通道
+    - 来源对象没有真实甲乙通道或配对字段时，source_generation_lane_or_pair_ref必须为空
+    - optional_lane_applicability只能是非阻断意见，不得作为来源事实、批准证据或双通道合格结论
+    - 失败、低分、拒绝和证据不足对象必须保留，不得删除或换样
+
+  reviewer_assignments:
+    primary_content_value:
+      review_role: PRIMARY_CONTENT_VALUE
+      required_coverage:
+        legacy_reference_content:
+          all_items: true
+          duties:
+            - 独立映射一个主要内容产品或明确无法映射
+            - 逐项完成公共质量70分和产品专属质量30分
+            - 判断硬门_否决_等级_处置_缺陷_补救和状态
+        route_case:
+          all_items: true
+          blind_to_actuals: true
+          duties:
+            - 独立确定唯一主动作
+            - 独立确定标准原因码
+            - 记录证据和风险，不使用单条百分制
+        component_candidate:
+          all_items: true
+          duties:
+            - 逐项完成公共组件质量80分和类型专属质量20分
+            - 确定保留_修复_合并_搁置_拒绝或重分类为控制规则
+            - 逐项说明来源_父级_证据区间_适用边界和内容产品适用决定
+      output_directory: independent_reviews/primary
+
+    secondary_fact_authorization:
+      review_role: SECONDARY_FACT_AUTHORIZATION
+      required_coverage:
+        legacy_reference_content:
+          deep_review_minimum: 48
+          minimum_per_content_product: 2
+          selection_method:
+            - 先独立浏览并映射全部参考内容，不读取第一审映射
+            - 每个可识别内容产品按对象编号稳定选取至少两条
+            - 追加全部涉及专业事实_真人_顾客_承诺_隐私_授权_来源不足或高风险的条目
+          duties:
+            - 复核事实_来源_授权_角色边界_高风险和一票否决
+            - 独立给出适用评分_硬门_处置和结论
+        route_case:
+          deep_review_minimum: 12
+          selection_method:
+            - 独立浏览全部路线输入
+            - 覆盖明确阻止_请求补充_安全降级三类风险语义
+            - 追加全部高风险路线
+          blind_to_actuals: true
+          duties:
+            - 独立给出主动作_原因码_证据和风险结论
+        component_candidate:
+          selection_method:
+            - 审查全部涉及事实_来源_授权_真人_品牌主张_专业结论或证据不足的候选
+            - 对其余候选至少完成来源与边界筛查并列出未深审理由
+          duties:
+            - 复核来源_授权_证据区间_边界_高风险和处置
+            - 对实际深审对象填写完整组件记录
+      output_directory: independent_reviews/secondary
+
+    independent_adjudication:
+      review_role: INDEPENDENT_ADJUDICATION
+      trigger_only: true
+      triggers:
+        - 一票否决意见不同
+        - 同一对象总分相差超过10分
+        - 等级跨越一个以上
+        - 处置结论冲突
+        - 路线主动作或主要原因码冲突
+        - 任一方标记高风险且另一方放行
+      rules:
+        - 第三审与前两审身份_会话_运行和签署均不同
+        - 只审查冲突对象
+        - 保留前两份原记录_原分数_原证据和原结论
+        - 禁止平均_覆盖或静默取交集
+      output_directory: independent_reviews/adjudication
+
+  record_schema:
+    identity:
+      review_record_id: required
+      reviewer_identity_id: required
+      reviewer_instance_or_session_id: required
+      review_run_id: required
+      review_role: required
+      reviewed_at: required
+      instruction_sha256: required
+      input_sha256: required
+      model_or_instance_configuration_sha256: required
+    object:
+      packet_item_id: required
+      object_type: required
+      object_id: required
+      primary_content_product_id: required_or_explicit_not_mappable
+      source_refs: required
+      source_digests: required
+      parent_refs: required_when_applicable
+      source_generation_lane_or_pair_ref: null_unless_source_proves
+      optional_lane_applicability: nonblocking_only
+    evaluation:
+      criterion_scores:
+        format: list_of_criterion_id_maximum_awarded_evidence_and_reason
+        required_for_content_and_component: true
+      common_score: required_for_content_and_component
+      object_specific_score: required_for_content_and_component
+      total_score_out_of_100: required_for_content_and_component
+      key_item_minimum_results: required_for_content_and_component
+      hard_gate_results: required
+      veto: required
+      veto_reason: required_when_veto
+      quality_grade: required_for_content_and_component
+      defect_severity: required
+      defect_codes: required_list_may_be_empty
+      remediation_required: required
+      disposition: required
+      lifecycle_status: required
+      conclusion: required
+    route_determination:
+      primary_action: required_for_route
+      reason_code: required_for_route
+      evidence_refs: required_for_route
+      actual_result_seen_before_signature: must_be_false_for_initial_route_review
+    component_determination:
+      applicability_decisions: required_for_component
+      applicability_item_fields:
+        - content_product_id
+        - decision
+        - conditions
+        - boundary
+        - evidence_refs
+    integrity:
+      append_only_signature_or_attestation: required
+      append_only_record_sha256: required
+      supersedes_record_id: null_unless_append_only_correction
+
+  output_contract:
+    per_reviewer_files:
+      - records.jsonl
+      - report.md
+      - run_manifest.yaml
+    report_required_fields:
+      - hard_verdict
+      - overall_score_out_of_100
+      - reviewed_object_counts_by_type
+      - blocking_findings
+      - non_blocking_findings
+      - disagreements_for_adjudication
+      - core_number_impact_300_120_86
+      - append_only_attestation
+    review_records_are_external_inputs_for_p1b: true
+    p1b_may_not_invent_or_complete_missing_review_judgments: true
+    incomplete_records_must_be_rejected_not_repaired_by_p1b: true
+
+  completion_gate:
+    - 第一审完整覆盖其三类对象职责并签署
+    - 第二审达到合同覆盖并签署
+    - 两份报告身份_会话_运行_签署和文件摘要相互独立
+    - 需要第三审的分歧全部形成追加式裁决
+    - Root逐份复核并分别给出满分100分的交付质量评分
+    - 未完成前不得输出或执行P1B

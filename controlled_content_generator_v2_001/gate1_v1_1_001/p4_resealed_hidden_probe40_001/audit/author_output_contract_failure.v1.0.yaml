@@ -1,0 +1,66 @@
+p4_resealed_author_output_contract_failure:
+  schema_version: gate1-p4r-author-output-contract-failure-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  prompt_revision: r0
+  detected_by: frozen_p4_resealed_validate_author
+  frozen_validator_exit_code: 1
+  first_failure_code: E_P4_SURFACE_FIELDS
+  positive_output_path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_resealed_hidden_probe40_001/run/positive_20_first_outputs.v1.0.jsonl
+  positive_output_sha256: b1a9a608d7cce325fe886ff88cdf23d5769a441439f58e3ced8a69c16ebff25b
+  captured_first_output_count: 20
+  affected_output_count: 20
+  structural_deviations:
+    surface_units:
+      affected_record_count: 208
+      actual_fields:
+      - authorization_ids
+      - fact_ids
+      - source_ids
+      - surface_id
+      - surface_type
+      - text
+      required_fields:
+      - authorization_ids
+      - fact_ids
+      - source_ids
+      - surface_kind
+      - surface_unit_id
+      - text
+    claims:
+      affected_record_count: 63
+      actual_fields:
+      - authorization_ids
+      - claim_boundary
+      - claim_id
+      - claim_text
+      - fact_ids
+      - source_ids
+      - surface_ids
+      required_fields:
+      - authorization_ids
+      - claim_boundary
+      - claim_id
+      - claim_text
+      - fact_ids
+      - source_ids
+    component_usage:
+      affected_record_count: 85
+      actual_fields:
+      - component_id
+      - realization
+      - surface_ids
+      required_fields:
+      - component_id
+      - implementation_note
+      - implementation_surface_unit_ids
+  diagnostic_scope: read_only_key_set_enumeration_after_frozen_validator_failure
+  later_semantic_checks_reached: false
+  persisted_output_rewritten: false
+  validator_or_frozen_tool_relaxed: false
+  author_rerun_or_replacement_count: 0
+  human_review_started: false
+  hidden_exposed: true
+  required_terminal_state: STOPPED_RETURN_TO_P3
+  recovery_requires_new_authorization: true
+  recovery_requires_third_fresh_hidden_set: true
+  failure_digest: 77249b224498643172df6eb73e229e50586b0fafac4a44158d8c17314123f392

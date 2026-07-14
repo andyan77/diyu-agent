@@ -1,0 +1,57 @@
+p3_open_repair_basis:
+  schema_version: gate1-p3-open-repair-basis-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  attempt_0_failure_commit: 80501c4c502fd28fcad53d0e8a07144875b73036
+  attempt_0_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/result/p3_open_probe40_result.v0.1.yaml
+  attempt_0_result_sha256: 472fa001937ba4f8597a132c821fcb30aea2cee416617ed9139ef028d6a7bd96
+  review_one:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_content_value_review.v0.1.json
+    sha256: b3ec680d6d25a907bb2d4408570e3b324179d0f99a4ba69d64e2badc639c968c
+    score: 80.95
+    first_acceptable_count: 9
+    blind_top1_correct_count: 0
+    verdict: FAIL
+  review_two:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/signed_fact_authorization_review.v0.1.json
+    sha256: 1607b53c6ba3c2fbd2e47e90f3c11f019557625039f340f8c525d3f43ea2b250
+    score: 87.8
+    first_acceptable_count: 9
+    blind_top1_correct_count: 1
+    verdict: FAIL
+  adjudication:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/review/targeted_adjudication.v0.1.json
+    sha256: 0d875484fcd4e6aadca6b8ee5a9d815ba4c2aec5acc677c4ad0c3b705b5bf79e
+    digest: c1ece9143019f1aee9c490b7e59f66f1349d660fc823b34baabcd6be54d5bd45
+    attempt_0_remains_failed: true
+  root_causes:
+  - P3_SLOT_MAPPING_COLLAPSED_SPECIFIC_ACTIONS_AND_OBSERVATIONS
+  - P3_SCENARIO_TO_APPROVED_COMPONENT_REALIZATION_GAP
+  - AUTHOR_INSTRUCTION_SURFACED_GOVERNANCE_BOUNDARIES_AS_REPEATED_COPY
+  - BLIND_PACKET_OMITTED_THE_FIXED_20_PRODUCT_CHOICE_CATALOG
+  repair_scope:
+  - P3_SYNTHETIC_MATERIAL_MAPPING
+  - P3_COMPONENT_REALIZATION_REQUIREMENTS
+  - P3_AUTHOR_INSTRUCTION
+  - P3_BLIND_REVIEW_PROTOCOL
+  p2_component_mutation_count: 0
+  p2_edge_mutation_count: 0
+  p2_path_mutation_count: 0
+  component_addition_count: 0
+  open_core_repair_window_used: true
+  open_core_repair_window_remaining: 0
+  attempt_0_outputs_and_failure_denominator_preserved: true
+  attempt_0_p4_allowed: false
+  counts_toward_300: 0
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  repair_basis_digest: c07f700e612b70e48a1eff9c43cba731e7e2985cb3437e1e90c10bd7112993e1

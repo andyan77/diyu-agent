@@ -1,0 +1,126 @@
+run_manifest:
+  assignment_id: GATE1_V11_INDEPENDENT_ADJUDICATION_001
+  review_role: INDEPENDENT_ADJUDICATION
+  reviewer_identity_id: gate1_independent_adjudicator_cleanroom_v1
+  reviewer_instance_or_session_id: codex_subagent_root_gate1_independent_adjudicator_20260713
+  review_run_id: GATE1-V11-INDEPENDENT-ADJUDICATION-20260713-001
+  reviewed_at: '2026-07-13T14:03:12Z'
+  source_commit: 01da326e4195b47e9b769b025bdf962936f10419
+  source_worktree_before: clean
+  source_worktree_after: clean
+  business_repository_write_allowed: false
+  business_repository_write_count: 0
+
+  instruction_binding:
+    adjudication_assignment:
+      path: independent_reviews/adjudication_assignment.v0.yaml
+      sha256: 1cf4c1987af6a803baa741877bb51462e789b46341c9550040e8936e13a9a98b
+    original_review_job:
+      path: independent_reviews/review_job.v0.yaml
+      sha256: 511e203a464b7e57fdf2661abc7254f168c0da59c1631f618a861f3cf8f9192a
+    blindness_amendment:
+      path: independent_reviews/review_job_blindness_amendment.v0.yaml
+      sha256: fa10da85ac4b380d426fc3ac896d56e832b2ff877001ff0d6767793f1f1861c1
+    invalidated_sessions_registry:
+      path: independent_reviews/review_session_invalidations.v0.yaml
+      sha256: 5cb3c049ef8c99a4f89400a1c76b4383ae407f78d0d918603fff04d187583fcb
+
+  signed_review_inputs:
+    primary_records:
+      path: independent_reviews/primary/records.jsonl
+      sha256: fdaaff1355e3365fa51ecc26cac8d342f2c736b69cd2022ecf921ce339778a51
+      all_record_digests_recomputed: 266/266
+    primary_report:
+      path: independent_reviews/primary/report.md
+      sha256: 149bab88fdfca4203781ddb8aaee76897364bdca9ccd72ce2789f32ad3b7fe5c
+    primary_manifest:
+      path: independent_reviews/primary/run_manifest.yaml
+      sha256: 801916ecf79b01023c2eec8b2d5e969565be6afe3f7c29e77dd61a7e5660a4c9
+    secondary_records:
+      path: independent_reviews/secondary/records.jsonl
+      sha256: 61586c7fce34baa59db1c179eeeae7214b6afebb3daa2282221e68e91f7e6b61
+      all_record_digests_recomputed: 194/194
+    secondary_report:
+      path: independent_reviews/secondary/report.md
+      sha256: 38ce8105b9e747eb0f26ceca15e8173da56143e99078a485414dcebd64f7a76c
+    secondary_manifest:
+      path: independent_reviews/secondary/run_manifest.yaml
+      sha256: 07283675742cf0fd9900d6a5edc7b664071e4f4b603cb0a54786bd6ddf107bcb
+
+  frozen_business_inputs:
+    standard:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+      sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+    review_packet:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/review/unified_gate1_review_packet.v0.1.jsonl
+      sha256: 3790b629fb636ef33dbaad369896c1efb55709971c8a01ef2a60a99fa201d64f
+    content_source:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+      sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+    route_source:
+      path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/route_inputs.v0.1.jsonl
+      sha256: 68bc65bff904652f1e565097117c7e8dfccdcc6ef00d2e3a0e93a082a4d72f12
+    component_source:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+      sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+
+  model_or_instance_configuration:
+    agent_family: OpenAI Codex based on GPT-5
+    review_mode: independent_conflict_adjudication_cleanroom
+    business_repository_write_allowed: false
+    route_actual_visibility: forbidden_and_not_seen
+    adjudicated_conflicts_only: true
+    primary_secondary_identity_isolation: true
+    sha256: 88ade794f93a8306286154ec992dc48abab4d3b3bd6233958d26fe9ade3e9b55
+
+  blindness_attestation:
+    route_actuals_read: false
+    route_regression_actuals_read: false
+    sealed_route_expectations_read: false
+    route_comparison_or_results_read: false
+    current_route_implementation_reports_read: false
+    adjacent_route_files_read: false
+    wide_route_repository_search_performed: false
+    only_assignment_listed_conflicts_adjudicated: true
+
+  coverage:
+    content_product_mapping_conflicts: 3/3
+    route_reason_code_conflicts: 25/25
+    component_disposition_conflicts: 15/15
+    total_assignment_conflicts: 43/43
+    missing_records: 0
+    extra_records: 0
+
+  adjudication_summary:
+    content_mapping:
+      P7D40-REPAIR-021: CP11
+      P7D40-REPAIR-030: CP08
+      P7D40-REPAIR-162: CP08
+    route:
+      primary_action_for_all: BLOCK
+      guard_case_reason_code: 输入冲突
+      CP04_role_authority_risk_reason_code: 授权缺失
+      fabricated_person_or_event_risk_reason_code: 事实缺失
+    component:
+      v0_2_judge_objects: RECLASSIFY_AS_CONTROL_RULE_AND_REPAIR_BEFORE_USE
+      v0_3_narrative_or_visual_objects: KEEP_SEMANTICALLY_AND_REPAIR_LIFECYCLE_BEFORE_REVIEW
+
+  output_files:
+    records:
+      path: independent_reviews/adjudication/records.jsonl
+      sha256: 47b88fd579f7fce70ed20f4a9ad43000f013019b5cbcf7e1338c04137e7c973c
+      record_count: 43
+      record_digest_algorithm: SHA256(canonical JSON with append_only_signature_and_record_digest.record_sha256 set to null)
+    report:
+      path: independent_reviews/adjudication/report.md
+      sha256: 940742b85805a8abe6cf495cb34a2095081507e863bd4bc8abe165b91084959a
+
+  append_only_attestation: 两份原审记录未被覆盖；本次记录若需纠正只能追加替代记录。
+  p1b_input_only: true
+  count_n_frozen: false
+  component_keep_count_frozen: false
+  route_actual_comparison_performed: false
+  core_number_impact:
+    '300': unchanged
+    '120': unchanged
+    '86': unchanged

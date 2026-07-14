@@ -1,0 +1,43 @@
+p4_pre_freeze_validation:
+  schema_version: gate1-p4-pre-freeze-validation-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  positive_count: 20
+  anomaly_count: 20
+  profile_coverage:
+  - CP01
+  - CP02
+  - CP03
+  - CP04
+  - CP05
+  - CP06
+  - CP07
+  - CP08
+  - CP09
+  - CP10
+  - CP11
+  - CP12
+  - CP13
+  - CP14
+  - CP15
+  - CP16
+  - CP17
+  - CP18
+  - CP19
+  - CP20
+  variant_counts:
+    A1: 5
+    A2: 5
+    B1: 5
+    B2: 5
+  anti_reuse:
+    p3_request_comparison_count: 20
+    raw_text_pair_space: 107744
+    indexed_candidate_pair_count: 22
+    indexed_prefilter: 4_CHARACTER_SHINGLE_OVERLAP_AT_LEAST_0_2_TOP_200
+    normalized_exact_30_character_hit_count: 0
+    maximum_sequence_similarity: 0.215385
+    threshold: 0.82
+    pass: true
+  validity_check_scope: CONTRACT_CLOSURE_BOUNDARY_AND_DUPLICATION_ONLY
+  expected_output_quality_was_not_considered: true
+  validation_digest: 087c1bd0dc2be89fcd40206d03c850480fef77cc285023f99658a0c6e4b060b9

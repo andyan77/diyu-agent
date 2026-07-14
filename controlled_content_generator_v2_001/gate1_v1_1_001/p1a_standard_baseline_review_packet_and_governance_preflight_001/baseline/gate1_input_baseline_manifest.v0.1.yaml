@@ -1,0 +1,48 @@
+gate1_input_baseline_manifest:
+  schema_version: v0.1
+  task_id: GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_001
+  baseline_commit: 473a8664bdab37246db1b75785f765e62c80ed86
+  anchor_report:
+    path: docs/reports/gate1_v1_1_generator_gkb_retrospective_and_recovery_plan_20260713.md
+    pre_p1a_sha256: 8b5088b895245b11fc0270159f98a373be73aa13e236377819cd3d107975eb01
+    after_p1a_policy_correction_sha256: b89dd9f29bc084c9df69595efc6e3145372ade05210c0ecfe7df76f5aba6f02d
+  standard:
+    external_source_path: /mnt/c/Users/Administrator/Documents/笛语agent/planning/笛语内容编排生成器与人审评价标准体系_v1.1.md
+    snapshot_path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+    sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+  review_inputs:
+    legacy_reference_content:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+      sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+      count: 120
+      read_only: true
+    route_input_cases:
+      path: controlled_content_generator_v2_001/creative_authoring_route_oracle_convergence_001/route/route_inputs.v0.1.jsonl
+      sha256: 68bc65bff904652f1e565097117c7e8dfccdcc6ef00d2e3a0e93a082a4d72f12
+      count: 60
+      read_only: true
+    route_actual_records:
+      path: controlled_content_generator_v2_001/b_channel_component_consumption_and_claim_closure_dev_gate_001/route/route_regression_actuals.v0.1.jsonl
+      sha256: bb7d68686761b7be092f191a0f46cb7493a3947f98959703c3ccaa69a86de3ad
+      count: 60
+      observed_implementation_only: true
+      may_not_define_gold_answer: true
+      excluded_from_blind_review_packet: true
+      comparison_allowed_only_after_signed_independent_determination: true
+    component_candidates:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+      sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+      count: 86
+      read_only: true
+  historical_failure_evidence:
+    pull_request_number: 13
+    commit: d2a9225d4fafea6651a53d8f02a489629a81ef84
+    result_path: controlled_content_generator_v2_001/b_channel_claim_closure_dev_gate_authorized_transport_replay_001/result/development_gate_result.v0.1.json
+    result_sha256_at_historical_commit: 83d03d14c53aecc82d461782f4d560ae0e0a6c4eea02dc662cfc49c0fef344f2
+    classification: HISTORICAL_FAILURE_EVIDENCE_NOT_ACCEPTANCE
+  p1a_boundary:
+    review_decisions_created: false
+    counted_positive_parent_count: NOT_FROZEN
+    component_dispositions_created: false
+    route_gold_answers_created: false
+  manifest_digest: a2278a67bc3fda07ba5e12c3f07888661791ce420653053dc783ea56879a6bbc

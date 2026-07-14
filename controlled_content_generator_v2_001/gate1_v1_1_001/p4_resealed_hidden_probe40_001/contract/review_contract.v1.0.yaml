@@ -1,0 +1,29 @@
+p4_resealed_review_contract:
+  schema_version: gate1-p4r-review-contract-v1.0
+  task_id: GATE1_V11_P3_ROUTE_INPUT_COMPILER_RECOVERY_AND_P4_RESEALED_PROBE40_001
+  review_roles:
+  - CONTENT_VALUE
+  - FACT_AUTHORIZATION
+  blind_first: true
+  score_dimensions:
+    public_quality:
+      truth_and_boundary: 20
+      apparel_specificity: 10
+      role_and_brand_consistency: 10
+      user_value: 10
+      platform_execution: 10
+      anti_formula: 10
+    product_quality:
+      product_core_fidelity: 15
+      product_specific_narrative_av: 10
+      continuity: 5
+  first_acceptable_min_score: 80
+  batch_thresholds:
+    first_acceptable_min_each: 18
+    blind_top1_min_each: 17
+    formula_or_near_duplicate_union_max: 2
+    hard_error_union_max: 0
+    route_action_match: 20
+    route_reason_match: 20
+  third_review_only_for_substantive_disagreement: true
+  contract_digest: 06dbed99c8aac5f6f2f3167751eb49f2db661c2c6b02005bc118bcdf5421da72

@@ -1,0 +1,189 @@
+schema_version: v0.1
+task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+prompt_revision: r6
+review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+review_run_id: P2-SECONDARY-R6-RUN-20260713-6555C83
+review_started_at: '2026-07-13T20:34:05-07:00'
+review_completed_at: '2026-07-13T20:34:05-07:00'
+repository:
+  path: /home/diyu/笛语领域通用数据库
+  reviewed_commit: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+  head_at_start: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+  head_at_finish: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+  branch: agent/gate1-v1-1-retrospective-recovery-plan
+review_packet:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/review/targeted_repair_review_packet.r6.jsonl
+  sha256: 2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8
+  expected_count: 1
+  actual_count: 1
+  packet_item_ids:
+  - P2R6-GENERATOR-CORE
+frozen_standard:
+  path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+  sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+reviewed_subject:
+  core:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    sha256: e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+    line_count: 260
+  harness:
+    path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_documents_r6.py
+    sha256: 95b7c3c4ba80d1317fd166fbd4f11845fa048a8cc1128ebae9b43b2669ec39ba
+    line_count: 508
+  evidence_documents:
+  - path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/required_slot_trust_root_tamper_results.r6.jsonl
+    sha256: 4dc1a3e6cd2c1575d35833631bd508288b297faaee54ae4303572b5040cb0f09
+    row_count: 20
+    rebuilt_byte_identical: true
+  - path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/path_program_schema_tamper_results.r6.jsonl
+    sha256: 779d29317c0cf2a0c12f36badcc5e196b9b48dca145c276cfaecf18480ed132b
+    row_count: 240
+    rebuilt_byte_identical: true
+  - path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/mechanism_identity_tamper_results.r6.jsonl
+    sha256: 03c9382618b078d9bffc26f1be6e2bf6c1b274e9883e17bdf9011abb6901e7e8
+    row_count: 62
+    rebuilt_byte_identical: true
+  - path: /home/diyu/笛语领域通用数据库/controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/bound_fact_structural_effect_results.r6.jsonl
+    sha256: 4830f3acc2230a0952165562344f7172b5d0f99c2ded7dfcda90e2f9a79877c2
+    row_count: 62
+    rebuilt_byte_identical: true
+decision_counts:
+  APPROVE: 1
+  REPAIR: 0
+  REJECT: 0
+grade_counts:
+  A: 1
+  B: 0
+  C: 0
+  D: 0
+defect_severity_counts:
+  NONE: 0
+  OBSERVATION: 1
+  MINOR: 0
+  MAJOR: 0
+  FATAL: 0
+replay_counts:
+  positive_requests: 40
+  positive_request_pass: 40
+  shared_ab_pairs: 20
+  shared_ab_pair_pass: 20
+  axis_outputs_exact_material_fact_authorization_binding: 240
+  axis_body_pairs: 120
+  axis_body_pair_pass: 120
+  pointer_cases: 410
+  pointer_pass: 410
+  component_ablations: 410
+  component_ablation_rejections: 410
+  path_substitutions: 120
+  path_substitution_rejections: 120
+  trust_tampers: 180
+  trust_tamper_rejections: 180
+  required_slot_trust_root_tampers: 20
+  required_slot_trust_root_rejections: 20
+  path_program_schema_tampers: 240
+  path_program_schema_rejections: 240
+  mechanism_identity_tampers: 62
+  mechanism_identity_rejections: 62
+  bound_fact_structural_effects: 62
+  bound_fact_structural_effect_pass: 62
+  supplemental_input_fact_authorization_slot_tampers: 60
+  supplemental_input_fact_authorization_slot_rejections: 60
+  supplemental_fact_value_tampers: 40
+  supplemental_fact_value_rejections: 40
+  supplemental_source_truth_tampers: 40
+  supplemental_source_truth_rejections: 40
+  supplemental_authorization_scope_tampers: 40
+  supplemental_authorization_scope_rejections: 40
+  supplemental_audience_contract_tampers: 40
+  supplemental_audience_contract_rejections: 40
+  exact_component_typed_references: 2060
+  exact_component_typed_reference_pass: 2060
+  sound_authorization_checks: 40
+  sound_authorization_pass: 40
+  external_provider_requests: 0
+  external_provider_responses: 0
+  audience_surface_outputs: 0
+r5_immutability:
+  compared_commit: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+  all_compared_blobs_unchanged: true
+  blob_sha256:
+    revised_component_candidates_r5: 4bca6b75e37c878c4259a74a36d9109a3822332f7a7efc7db9513698982c73f2
+    necessary_addition_candidates_r5: 51b402f74a5ea4a2efa2f9e27a0686fed395c78a2a78d8c54416f6e63d223145
+    revised_control_rules_r5: 51c9f1abe568a5b2795651c8b7fa749135558ce204b01b3af5f65d67e839bc99
+    final_edge_candidates_r5: 557f3282d1c54f01a9bf1fb8f6f36b0c61d69e04f71f560dae757a98b0d8bf34
+    revised_supply_matrix_r5: 141ad520d256b980fcd3f525f73469eb3c0b9fd50148e78a2807804eedd3c96f
+    revised_ab_paths_r5: a59c026f806eee35c0088c96fd4ce17c6bdbfac4d00a1e944e042da19c6e7d22
+    generator_core_r5: 62962ef7b01e3b0a9ed6b28e23e32ae98b94e498d12541dfcb2c136ff0ea4295
+    path_semantics_r5: 6a3df4071c6c9d84d2f4f513f4586d029ea9510e515fb195e7cbd49128abb43b
+coverage:
+  every_packet_item_read: true
+  every_packet_item_traced: true
+  packet_order_preserved: true
+  complete_core_read: true
+  complete_harness_read: true
+  all_four_evidence_files_read_bytewise: true
+  all_evidence_rows_digest_checked: 384
+  profiles_executed: 20
+  paths_executed: 20
+  selected_components_checked: 68
+  ordinary_components_checked: 62
+  axis_operators_checked: 6
+  control_rules_checked: 8
+  cp16_exact_trigger_binding_checked: true
+repository_write_audit:
+  initial_status_sha256: b4525372e5b3307b3f22173b3d65f058ae1b1d9b097b8d7450cc104ec30eaa88
+  final_status_sha256: b4525372e5b3307b3f22173b3d65f058ae1b1d9b097b8d7450cc104ec30eaa88
+  status_unchanged: true
+  initial_worktree_diff_sha256: 77159677458818708c85f33e4be45ec2b6f8baa57baaa565d254178c8db79581
+  final_worktree_diff_sha256: 69a946f80ae3c8d598912598b8259f15c48e87a14fa7c39ce2e2303946ebc978
+  index_diff_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+  preexisting_modified_paths:
+  - ci/checkers/check_gate1_v1_1_current.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+  reviewer_repository_write_count: 0
+  reviewer_repository_written_paths: []
+  no_repository_writes: true
+  worktree_diff_content_unchanged: false
+  concurrent_preexisting_path_content_drift_observed: true
+  concurrent_drift_paths:
+  - ci/checkers/check_gate1_v1_1_current.py
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_final_materializer.py
+independence:
+  component_author_or_p2_executor: false
+  activator: false
+  self_approval_used: false
+  primary_review_output_opened: false
+  primary_review_output_used: false
+  sibling_review_output_opened: false
+  sibling_review_output_used: false
+  executor_summary_used_as_oracle: false
+  approval_target_used: false
+activation_and_readiness:
+  activation_performed: false
+  readiness_transition_performed: false
+  p2_complete: false
+  p3_allowed: false
+  active_component_count: 0
+  active_edge_count: 0
+  core_numbers_unchanged:
+    target_total: 300
+    reference_inventory: 120
+    historical_component_inventory: 86
+  all_readiness_false: true
+outputs:
+  records_jsonl:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r6/secondary/records.jsonl
+    sha256: 55631b58d9fc040aff7a1cc803aa1d2b25fff559992b8ca75d16a324bfb3930d
+    record_count: 1
+    line_count: 1
+  report_md:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r6/secondary/report.md
+    sha256: 9c7ee00ad84a00fb064155ac18393cb2080382dac0197bc405b2cd74b2e37084
+  run_manifest_yaml:
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001/independent_reviews/targeted_r6/secondary/run_manifest.yaml
+    sha256_basis: sha256(canonical JSON of parsed manifest with outputs.run_manifest_yaml.sha256 omitted)
+    sha256: 770944bbc02101c88b4338379e323fd1646f47dbd9db75772787cf2d55dabbd0
+signed_attestation: SIGNED_ATTESTATION::P2-SECONDARY-PROVENANCE-REVIEWER-B::019f5dce-9436-7e03-be80-220461f6107d::P2-SECONDARY-R6-RUN-20260713-6555C83::I independently read and traced the sole R6 packet subject, committed core, complete harness, four evidence blobs, and every requested executable matrix; I opened or used no primary or sibling review output, made no Git repository write, performed no activation or readiness transition, and report the recorded decision without an approval target.
+signed_attestation_sha256: d04276263bf376371a3f4944ff79ca552b47568239ad4e2c35de8c36fb2ab48b

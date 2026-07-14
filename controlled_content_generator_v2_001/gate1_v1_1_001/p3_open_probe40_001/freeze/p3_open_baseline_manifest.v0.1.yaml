@@ -1,0 +1,83 @@
+p3_open_baseline_manifest:
+  schema_version: gate1-p3-open-freeze-manifest-v0.1
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  baseline_commit: b707f97f16f1d8cdfe6cdee87ee7edba76170c8c
+  freeze_state: FROZEN_BEFORE_AUTHORING
+  component_set:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+    sha256: 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+  control_rule_set:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+    sha256: 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+  edge_set:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+    sha256: de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+  path_set:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+    sha256: 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+  p2_core:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    sha256: e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+  p3_structure:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/structure/attempt_0/structure_80.v0.1.jsonl
+    sha256: 1231e36e65c4d2be1d89e45f8877f06d297aacb59492b14ba38828c4ee86fa1c
+    count: 80
+  positive_assignments:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_structure_assignment_20.v0.1.jsonl
+    sha256: 53f3c5b0cea67183ab389c38580052637c9e2e255f23d83b4cb21b2f4f3d3692
+    count: 20
+  author_instruction:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/controlled_author_instruction.v0.1.md
+    sha256: a1ff67f02b9cd7c12f9516d76a0b3cbcfea7cddc2609fe3aa8ae7d90dcf914dc
+  author_model_config:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/author_model_and_session.v0.1.yaml
+    object_digest: 47427d5785e35434575bde0af945a5be91765a0442d9975a02e71102b4b17aa0
+  author_requests:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/positive_author_requests_20.v0.1.jsonl
+    sha256: 722b50c465d99f8fb98fba1ce4c9cc40ed9231cef5fd02dbd7b52172df7de6d3
+    count: 20
+  route_selections:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/route_selection_20.v0.1.jsonl
+    sha256: 2552a4da96f751049ff4836a7e09a729521e5569569c3c06864c49200dbf154b
+    count: 20
+  route_inputs:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/route_inputs_20.v0.1.jsonl
+    sha256: 342caccac01bf24d73b3885a880f29f0c3cbf947fc18aba1cbe23513a4416814
+    count: 20
+  profile_contract:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+    sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+  standard:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+    sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+  historical_integrity_manifest:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/baseline/historical_integrity_manifest.v0.1.jsonl
+    sha256: 3f5b2f1f24fcf550e85499eb0b6833199ffdc9af90d9141505fdda70acc89dd5
+    count: 212
+  p3_core_sources:
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/p3_common.py
+    sha256: a24aa0f799ec282d3cc789daa1880e2655d5417d9f8c719240154f66c2c4b065
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/p3_structure.py
+    sha256: 23acef80bbbf8d46661d713f68fbb0bc90a34ca5fa8343a88d0266b27ddcf2c0
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/p3_prepare.py
+    sha256: 0345a47416db7316f8751e2d2fa9e7dc6c3e5d2c2270f0779ae5bae35cb3b057
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/p3_open_core.py
+    sha256: bd982d1faf7cf4acf5bf857e5f7a4f5697a080c2c69b74ad1306a99ec4eea668
+  randomness_policy: NO_VISIBLE_SEED__SINGLE_OUTPUT__NO_REROLL
+  model_unexposed_parameters: PLATFORM_NOT_EXPOSED__NOT_GUESSED
+  component_supplement_window_used: false
+  open_core_repair_window_used: false
+  counts_toward_300: 0
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  freeze_manifest_digest: 063e61e8275d25a6aba6fd94b2f1459338cf798f1879f85936ff83dbc3e978b2

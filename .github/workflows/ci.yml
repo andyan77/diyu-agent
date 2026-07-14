@@ -70,6 +70,9 @@ jobs:
           python3 ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py
           python3 ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py --selftest
           python3 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check
+          python3 controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/run_p1a_standard_baseline_review_packet_freezer.py --check
+          python3 ci/checkers/check_gate1_v1_1_current.py
+          python3 ci/checkers/check_gate1_v1_1_current.py --selftest
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -106,6 +109,8 @@ jobs:
             "ci/checkers/check_gkb_v2_b_channel_24_component_review.py --selftest" \
             "ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py" \
             "ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py --selftest" \
+            "ci/checkers/check_gate1_v1_1_current.py" \
+            "ci/checkers/check_gate1_v1_1_current.py --selftest" \
             "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check"
           do
             set +e

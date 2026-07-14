@@ -1,0 +1,97 @@
+p4_checkpoint_result:
+  schema_version: gate1-p4-checkpoint-result-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  prompt_revision: r0
+  result_state: STOPPED_RETURN_TO_P3
+  p4_execution_complete: true
+  contract_thresholds_met: false
+  founder_qualification_decision_required: false
+  founder_qualification_decision_recorded: false
+  generator_qualified: false
+  qualification_eligibility: false
+  p5_allowed: false
+  metrics_recomputed_from_raw_signed_reports:
+    review_one:
+      score: 90.45
+      accepted_count: 20
+      blind_correct_count: 20
+      formula_ids:
+      - CP11
+      - CP19
+      hard_ids: []
+      pass: false
+    review_two:
+      score: 95.7
+      accepted_count: 20
+      blind_correct_count: 20
+      formula_ids: []
+      hard_ids: []
+      pass: false
+    formula_profile_ids_union:
+    - CP11
+    - CP19
+    hard_error_profile_ids_union: []
+    substantive_disagreements: []
+    adjudication_used: false
+    route:
+      route_case_count: 20
+      route_action_match_count: 7
+      route_reason_match_count: 8
+      route_audience_content_count: 0
+      route_gate_pass: false
+    thresholds:
+      review_one_first_acceptable_18_of_20: true
+      review_two_first_acceptable_18_of_20: true
+      review_one_blind_top1_17_of_20: true
+      review_two_blind_top1_17_of_20: true
+      formula_union_at_most_2: true
+      hard_error_union_zero: true
+      route_action_20_of_20: false
+      route_reason_20_of_20: false
+      route_audience_content_zero: true
+      raw_report_verdicts_both_pass: false
+      all_true_disagreements_closed: true
+    all_thresholds_met: false
+  evidence:
+    route_actual_freeze:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/anomaly_actual_freeze.v0.1.yaml
+      sha256: f49518df0b9a95fb43be0c886225d95595d70fcd89e6fba4729e157c8b562c2c
+    route_comparisons:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/anomaly_20_comparisons.v0.1.jsonl
+      sha256: 05c1e75160bde3abe6aab85a53542224388f5aa87e92eeb1c9fee7c84acbd058
+    review_one_stage:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/staging/content_value_blind_stage.v0.1.json
+      sha256: b6188f165b736500d8b3eb4df88bbe635f7402a11c0dafcee9c5b9eff666f28f
+    review_two_stage:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/staging/fact_authorization_blind_stage.v0.1.json
+      sha256: 84df68473b644679ac354da59cdd8fb8a74704122b79ab1db5548e8e94ca7eaf
+    review_one_signed_report:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/signed_content_value_review.v0.1.json
+      sha256: 6cc35049021073b10f63958a87e833ce2f9ae1149d8e9cd9487b1de4da46e721
+    review_two_signed_report:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/review/signed_fact_authorization_review.v0.1.json
+      sha256: d71758b3a385b3d054de3e6413c595800e4d837f785672b8fa702b43252ba4e5
+    adjudication: null
+  H_candidate:
+    status: NOT_ADMITTED
+    candidate_positive_count: 0
+    candidate_source:
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_sealed_hidden_probe40_001/run/positive_20_first_outputs.v0.1.jsonl
+      sha256: 17c7da686a52252897e57313707b6947283585b26595d6df00be21b6bc611a65
+    founder_admitted_to_H: false
+    H_admitted_count: 0
+    counts_toward_300: 0
+  H: []
+  readiness:
+    DIFY_ready: false
+    KE_ready: false
+    RAG_ready: false
+    candidatepack_ready: false
+    generation_allowed: false
+    generation_eligible: false
+    production_ready: false
+    production_servable: false
+    release_ready: false
+    runtime_ingest_ready: false
+    generator_qualified: false
+  result_digest: 6852c0cf01ec92d167a3608eec776b248f89fa7ec211f327dc15e4414620e2a0

@@ -1,0 +1,36 @@
+p4_sealed_probe_handoff:
+  schema_version: gate1-p3-to-p4-handoff-v0.2
+  task_id: GATE1_V11_OPEN_PROBE40_001
+  handoff_state: P4_BRIEF_MAY_BE_DRAFTED_NOT_EXECUTED
+  p4_allowed: true
+  p4_execution_authorized: false
+  p4_hidden_material_created_or_accessed: false
+  p3_result_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/result/p3_open_probe40_result.v0.2.yaml
+  p3_result_digest: 0197e65d43e7866cb041f71a6cdb9b9224198ab23c962c5e80bf518c1a5e28dc
+  frozen_generator_core:
+    p2_core_path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/p2_generator_core_r6.py
+    p2_core_sha256: e15eab89cef2cb9b2a35d76ca3550b67f2c49c583fc9efe107ebaf062f527015
+    p3_author_instruction_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/controlled_author_instruction.v0.2.md
+    p3_author_instruction_sha256: 5962400130fd59ed8b94611cb4c2d46a9f10b3672041369325e3acf417b5a98e
+    p3_author_model_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/author_model_and_session.v0.2.yaml
+    p3_author_model_sha256: 516bc60467bfe30991ea9228ff34b3c753d96410f74424ca5dbffc74d91283d3
+    p3_author_request_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/positive_author_requests_20.v0.2.jsonl
+    p3_author_request_sha256: d1d2a314222130751e3a743e8f25033164a033342021f97cbcca5bf0bc4f2708
+    repair_freeze_path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/freeze/attempt_1/p3_open_repair_freeze.v0.2.yaml
+    repair_freeze_sha256: 7e1497e6e862be41fb9968f0bd9a20e82942f2907ef4599e3b7986f2599558db
+  open_outputs_are_development_evidence_only: true
+  counts_toward_300: 0
+  generator_qualified: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
+    generator_qualified: false
+    runtime_ingest_ready: false
+  handoff_digest: 39ec602a37e45d6a7c0bb181b4d8750e13790025bc5ede441e7fd63c311aaab3
