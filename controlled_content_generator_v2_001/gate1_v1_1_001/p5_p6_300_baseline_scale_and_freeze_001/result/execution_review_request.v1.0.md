@@ -18,6 +18,7 @@
 5. Recompute adjudicated triage: 156 direct A approvals, 28 light-revision candidates, 27 fresh-topup cases, and 184 first-acceptable outputs.
 6. Recompute the fail-closed bound: `(184 + 27) / (211 + 27) = 211 / 238 = 88.6555% < 90%`.
 7. Confirm no revision/topup directory, approved-positive-240 file, candidate-300 manifest, final review, final baseline, provider call, or readiness transition exists.
+8. Confirm the historical recovery-plan report remains at its P1A as-built digest; this task records its full terminal status only inside the P5/P6 task root so the standalone P1A freezer remains reproducible.
 
 ## Boundary
 
