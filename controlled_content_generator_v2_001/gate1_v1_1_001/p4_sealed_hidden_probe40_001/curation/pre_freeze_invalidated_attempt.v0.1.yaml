@@ -1,0 +1,39 @@
+p4_pre_freeze_invalidated_attempt:
+  schema_version: gate1-p4-pre-freeze-invalidated-attempt-v0.1
+  task_id: GATE1_V11_SEALED_HIDDEN_PROBE40_001
+  attempt_id: P4-CURATION-DRAFT-INVALIDATED-001
+  phase: BEFORE_HIDDEN_FREEZE
+  author_or_generator_received_material: false
+  material_was_committed: false
+  material_was_frozen: false
+  material_was_exposed_as_hidden_test: false
+  invalidation_reason: exhaustive_pairwise_near_duplicate_check_was_computationally_unbounded
+  invalidated_file_digests:
+    curated_positive_20: 38d2f25e0a6193abd5c0f188db6a87b043e228dfb4fa466fc92139a7b508c2bf
+    curated_anomaly_20: 398a5e087b55af81bf11d637590add9c70d88ae56b59e36dc8c7129df79e1bf5
+    curator_run_receipt: 5633c6c1aa09e03e0311f6ca62f0a15578b4b780d71119eb73a830a22c57a025
+  invalidated_draft_bytes_erased_before_new_tool_freeze: true
+  reuse_in_next_curation_forbidden: true
+  next_curator_must_use_fresh_identity_and_fresh_material: true
+  generator_qualified: false
+  p5_allowed: false
+  subsequent_invalidated_attempts:
+  - attempt_id: P4-CURATION-DRAFT-INVALIDATED-002
+    phase: AFTER_UNCOMMITTED_FREEZE_MATERIALIZATION_BEFORE_AUTHOR_EXPOSURE
+    curator_platform_agent_id: 019f5fc8-820e-7021-8815-1dab37d62dc1
+    author_or_generator_received_material: false
+    material_was_committed: false
+    freeze_artifacts_materialized: true
+    freeze_commit_created: false
+    bound_hidden_commit_created: false
+    material_was_exposed_as_hidden_test: false
+    invalidation_reason: route_guard_gold_fields_present_false_sentinel_self_matched_gold_prefix_rule
+    invalidated_file_digests:
+      curated_positive_20: 91db8349de22da7fe75a90f48bde0a177b0c2876502926c9c705eb3e0683e2b1
+      curated_anomaly_20: 8fda7da92c67eeb5365cabb93b9f14a1551469105290e5d31105baf72666eff2
+      curator_run_receipt: 90c252089cae4c47f7c2ff0e5a4bf3cd39be161869dccc2914e5f0b1b660db2a
+    invalidated_draft_bytes_erased_before_final_tool_freeze: true
+    reuse_in_next_curation_forbidden: true
+    next_curator_must_use_fresh_identity_and_fresh_material: true
+    generator_qualified: false
+    p5_allowed: false

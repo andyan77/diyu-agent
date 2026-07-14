@@ -28,6 +28,7 @@ TASK_ID = "GATE1_V11_STANDARD_BASELINE_REVIEW_PACKET_AND_GOVERNANCE_PREFLIGHT_00
 P1B_TASK_ID = "GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001"
 P2_TASK_ID = "GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001"
 P3_TASK_ID = "GATE1_V11_OPEN_PROBE40_001"
+P4_TASK_ID = "GATE1_V11_SEALED_HIDDEN_PROBE40_001"
 BASELINE_COMMIT = "473a8664bdab37246db1b75785f765e62c80ed86"
 V1_REPAIR_BASELINE_COMMIT = "69235a23d62d6c92683fadf572f7b8c291771dd6"
 TASK_ROOT = Path(
@@ -45,6 +46,17 @@ P2_TASK_ROOT = Path(
 P3_TASK_ROOT = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/"
     "p3_open_probe40_001"
+)
+P4_TASK_ROOT = Path(
+    "controlled_content_generator_v2_001/gate1_v1_1_001/"
+    "p4_sealed_hidden_probe40_001"
+)
+P4_BASELINE_COMMIT = "44609ef9d87594019b444d5bbfa229493f9ef566"
+P4_CONDITIONAL_COMPAT_PATHS = frozenset(
+    {
+        P3_TASK_ROOT / "p3_current_guard.py",
+        P3_TASK_ROOT / "p3_final_r1.py",
+    }
 )
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
@@ -605,7 +617,11 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
 def unexpected_write_paths(paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
-        if path.is_relative_to(P2_TASK_ROOT) or path.is_relative_to(P3_TASK_ROOT):
+        if (
+            path.is_relative_to(P2_TASK_ROOT)
+            or path.is_relative_to(P3_TASK_ROOT)
+            or path.is_relative_to(P4_TASK_ROOT)
+        ):
             continue
         if path not in {
             CURRENT_OWNER_PATH,
@@ -628,6 +644,57 @@ def validate_p3_successor(root: Path, errors: list[dict[str, str]]) -> None:
         errors.extend(validate_p3_current(root))
     except (ImportError, OSError, TypeError, ValueError) as exc:
         add_error(errors, "E_P3_GUARD_IMPORT", str(exc))
+
+
+def validate_p4_successor(root: Path, errors: list[dict[str, str]]) -> None:
+    """Load the P4 guard as a library, never as a nested checker process."""
+
+    module_root = ROOT / P4_TASK_ROOT
+    if str(module_root) not in sys.path:
+        sys.path.insert(0, str(module_root))
+    try:
+        from p4_guard import validate_p4_current
+
+        errors.extend(validate_p4_current(root))
+    except (ImportError, OSError, TypeError, ValueError) as exc:
+        add_error(errors, "E_P4_GUARD_IMPORT", str(exc))
+
+
+def validate_p4_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
+    """Keep the P4 delta inside the exact execution-brief write surface."""
+
+    if not (root / ".git").exists() or not (root / P4_TASK_ROOT).exists():
+        return
+    ancestor = git(root, ["merge-base", "--is-ancestor", P4_BASELINE_COMMIT, "HEAD"])
+    if ancestor.returncode != 0:
+        add_error(errors, "E_P4_BASELINE", "P4 baseline is not an ancestor")
+        return
+    results = (
+        git(root, ["diff", "--name-only", f"{P4_BASELINE_COMMIT}..HEAD"]),
+        git(root, ["diff", "--name-only", "HEAD"]),
+        git(root, ["ls-files", "--others", "--exclude-standard"]),
+    )
+    if any(result.returncode != 0 for result in results):
+        add_error(errors, "E_P4_WRITE_SURFACE", "unable to inspect git paths")
+        return
+    paths = {
+        Path(line)
+        for result in results
+        for line in result.stdout.splitlines()
+        if line
+    }
+    allowed_exact = {
+        CURRENT_CHECKER_PATH,
+        CURRENT_OWNER_PATH,
+        *P4_CONDITIONAL_COMPAT_PATHS,
+    }
+    unexpected = sorted(
+        path.as_posix()
+        for path in paths
+        if not path.is_relative_to(P4_TASK_ROOT) and path not in allowed_exact
+    )
+    if unexpected:
+        add_error(errors, "E_P4_WRITE_SURFACE", str(unexpected))
 
 
 def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
@@ -5293,6 +5360,7 @@ def validate(root: Path) -> list[dict[str, str]]:
     if errors:
         return errors
     validate_write_surface(root, errors)
+    validate_p4_write_surface(root, errors)
     validate_report(root, errors)
     source = source_maps(root, errors)
     validate_standard(root, errors)
@@ -5314,6 +5382,8 @@ def validate(root: Path) -> list[dict[str, str]]:
         validate_p2_final(root, errors)
     if (root / P3_TASK_ROOT).exists():
         validate_p3_successor(root, errors)
+    if (root / P4_TASK_ROOT).exists():
+        validate_p4_successor(root, errors)
     return errors
 
 
@@ -5343,6 +5413,8 @@ def copy_fixture(root: Path, target: Path) -> None:
         shutil.copytree(root / P2_TASK_ROOT, target / P2_TASK_ROOT)
     if (root / P3_TASK_ROOT).exists():
         shutil.copytree(root / P3_TASK_ROOT, target / P3_TASK_ROOT)
+    if (root / P4_TASK_ROOT).exists():
+        shutil.copytree(root / P4_TASK_ROOT, target / P4_TASK_ROOT)
 
 
 def mutate_yaml(path: Path, mutate: Callable[[dict[str, Any]], None]) -> None:
@@ -6049,6 +6121,29 @@ def selftest(root: Path) -> int:
                     "actual": p1b_selftest.stderr or p1b_selftest.stdout,
                 }
             )
+    if (root / P4_TASK_ROOT).exists():
+        module_root = root / P4_TASK_ROOT
+        if str(module_root) not in sys.path:
+            sys.path.insert(0, str(module_root))
+        try:
+            from p4_guard import selftest as p4_guard_selftest
+
+            if p4_guard_selftest(root) != 0:
+                failures.append(
+                    {
+                        "case": "p4_negative_tamper_suite",
+                        "expected": "return 0",
+                        "actual": "nonzero",
+                    }
+                )
+        except (ImportError, OSError, TypeError, ValueError) as exc:
+            failures.append(
+                {
+                    "case": "p4_negative_tamper_suite",
+                    "expected": "import and return 0",
+                    "actual": str(exc),
+                }
+            )
     if failures:
         print(
             json.dumps(
@@ -6070,6 +6165,7 @@ def selftest(root: Path) -> int:
                 "p1b_negative_tamper_suite_passed": (
                     root / P1B_MATERIALIZER_PATH
                 ).exists(),
+                "p4_negative_tamper_suite_passed": (root / P4_TASK_ROOT).exists(),
             },
             ensure_ascii=False,
         )
