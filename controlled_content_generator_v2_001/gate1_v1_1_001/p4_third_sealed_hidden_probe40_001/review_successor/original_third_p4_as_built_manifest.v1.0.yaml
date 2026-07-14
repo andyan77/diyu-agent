@@ -1,0 +1,68 @@
+original_third_p4_as_built:
+  schema_version: gate1-third-p4-original-as-built-v1.0
+  source_head: 17753363612bc45446b709107c7d277d266b0024
+  file_count: 31
+  files:
+  - path: build_curator_allowed_input.py
+    sha256: cf55e028da9f6e401265d3b048899cece02e28a3839f693fd7411d4bd9e9978b
+  - path: contract/blind_review_stage.schema.json
+    sha256: f7c86ded864ceec3a51d204986e5c810a426eee1de0d02f4cd4d9b52155eb72d
+  - path: contract/curation_bundle.schema.json
+    sha256: 8b0c981833a411ff0e957ac80a286d61df8dc4decc14c09f805526dc913cc438
+  - path: contract/curator_allowed_input.v1.0.json
+    sha256: b32f8b5c40372b5369b6fe4c3811edafcbc0cbe97b4cf83010707aa18321666f
+  - path: contract/independent_review.schema.json
+    sha256: cd980c81e30a67ffd70c186c3f59731951adbf5e6baf6a2df7c26905ed73ed7c
+  - path: contract/lifecycle_record.schema.json
+    sha256: b139245be21bd97adcecec773cd7bb2104f3e4fefcc6a42069122e1b64e85600
+  - path: contract/qualification_decision.schema.json
+    sha256: 0406f72c0a03f43be20a1c749a149a799bcb7491212e1331ab7b0d8ed0348149
+  - path: contract/targeted_adjudication.schema.json
+    sha256: 65bc49dba5fb7e59c3b67671253ed677f48f6ae172f96255dc5817b4428ee080
+  - path: contract/third_p4_contract.v1.0.json
+    sha256: 50e3383e5c24c2c18ce315a815412b7feb1be1961326001c8639a5946576bbb5
+  - path: curation/role_manifest.v1.0.json
+    sha256: cc3469d1da0a7eb289cba5a70a5294da828c8a43627252346caeba7841d36a5d
+  - path: curation/third_hidden_curation_bundle.v1.0.json
+    sha256: 5ca3010917a22755bc66c1bd37827f35af93a97fd8c8eb49da3ae5253d316181
+  - path: freeze/anomaly_route_gold_20.v1.0.jsonl
+    sha256: 459ff9bdc2f716b9ca3d6e2171b27db9fbde2e15631d17c921921d946bbc04ce
+  - path: freeze/anomaly_route_inputs_20.v1.0.jsonl
+    sha256: 92b4d8b9cc5bd8faf916836fbf8b9640275b6a1ae9868a415f3060f85516a55a
+  - path: freeze/hidden_input_freeze.v1.0.yaml
+    sha256: 98130c772f5d29bffd8e27779ffb479fbb44531f9fb8494a49fdc79aee28ec55
+  - path: freeze/positive_author_requests_20.v1.0.jsonl
+    sha256: e1dd8a95ebbd7b01c7b6ce327509574252867d44a17d76edb034fe90f91651f0
+  - path: freeze/tool_commit_binding.v1.0.yaml
+    sha256: f380b708a20ccf4a00ea40443db1ecc0ad032b91e18ae3fd891699812dd45257
+  - path: freeze/tool_freeze.v1.0.yaml
+    sha256: 8979b591d12c5a11e653eb117e29004d4aae75ee9831c7cd0ed7c1b017305681
+  - path: result/blind_packet_construction_failure.v1.0.yaml
+    sha256: 65b125bd8ba12ab0d7142824fdff08866fc51e96ec7b247e97ee841766d17069
+  - path: result/qualification_checkpoint_result.v1.0.yaml
+    sha256: fff55637f14f6e6186fc68d0d72e54061610d28d747ba32c56f4982330587f1d
+  - path: result/third_p4_lifecycle.v1.0.yaml
+    sha256: e44f4f640bdd2366a9b40e39a6b599c3161a8afed4b860bf4f60eeec8c00345e
+  - path: run/anomaly_actual_freeze.v1.0.yaml
+    sha256: 575182a67ed99e329d763dc34f4b232fe795613702d4ad994c3b530c07753b07
+  - path: run/anomaly_comparisons_20.v1.0.jsonl
+    sha256: db3223345a585984ef58beffe7a9f629f3478767ef49bb8c24e8d6ee698f33d0
+  - path: run/anomaly_compiled_inputs_20.v1.0.jsonl
+    sha256: 88e002b5ca1107c4591ea118c4782c75002c7dc706adfa04fe9b486c1f7b334b
+  - path: run/anomaly_first_actuals_20.v1.0.jsonl
+    sha256: 5d32af8af54de2432a469d30284e6c04a0b44d66bf77d1e6935c41b06f429816
+  - path: run/author_run_receipt.v1.0.yaml
+    sha256: c31b8578e288b10df0f76ec968d3612440ce849e51f7467e098d4d9385e3b25b
+  - path: run/external_exit_audit.v1.0.yaml
+    sha256: 56573fe2ab4424f8ed7d264429eae7cd7240ad76582e5c192fb41708bd717a02
+  - path: run/machine_acceptance_report.v1.0.yaml
+    sha256: bc34ac3262b9e107831445dbc923465a3db62a04b66f33add0f4a09db4e7f2b1
+  - path: run/positive_20_first_outputs.v1.0.jsonl
+    sha256: 531af40ced8b449f12473bd39ec127dd5d483a18c5edd240ada3b0dc3d33bace
+  - path: run/positive_20_first_raw_outputs.v1.0.jsonl
+    sha256: 011bdf6fef9125733b5aa3da9ddca86fe28d6d3062ce9cb3a6a8e39f2b313d8e
+  - path: third_p4.py
+    sha256: 88baf1aaacb4f0da534aca0992dcdc5cb5901b948efc80da379417fc642b6ce4
+  - path: third_p4_guard.py
+    sha256: 730190fe6bebf66e88d69bc2c49a8880fc9da4f7e9f636ab1f6042b8f6b635d1
+  manifest_digest: c0abc6bb73a4009301c33e44e5e945b1a68e958c200aa43a42e96057f909f795
