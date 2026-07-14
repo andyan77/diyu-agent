@@ -129,7 +129,8 @@ ROUTE_RESULT = TASK_ROOT / "route/route_result.v1.0.yaml"
 PROFILE_RE = re.compile(r"^CP(?:0[1-9]|1\d|20)$")
 SCENARIO_ID_RE = re.compile(r"^P5-CUR-CP(?:0[1-9]|1\d|20)-\d{3}$")
 AUDIENCE_INTERNAL_ID_RE = re.compile(
-    r"(?:G1V11-P5|P5-CUR|(?:^|[^A-Za-z])(?:FACT|AUTH|SRC)-[A-Za-z0-9-]+)"
+    r"(?:G1V11-P5|P5-CUR|\bCP(?:0[1-9]|1\d|20)\b|"
+    r"(?:^|[^A-Za-z])(?:FACT|AUTH|SRC)-[A-Za-z0-9-]+)"
 )
 AUDIENCE_GOVERNANCE_PHRASES = (
     "仅限本请求",
@@ -138,6 +139,10 @@ AUDIENCE_GOVERNANCE_PHRASES = (
     "仅供资格测试",
     "本资格测试",
     "内部事件编号",
+    "product_core_requirements",
+    "claim_boundary",
+    "synthetic_qualification_only",
+    "assigned_variant",
 )
 PROFILE_IDS = tuple(f"CP{number:02d}" for number in range(1, 21))
 MODEL_CAPABILITY = "gpt-5.6-sol"
