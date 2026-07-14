@@ -1,0 +1,44 @@
+schema_version: gate1-v1.1-300-baseline-contract-v1.0
+task_id: GATE1_V11_300_BASELINE_SCALE_AND_INDEPENDENT_FREEZE_001
+line_role: NONBLOCKING_QUALITY_AND_REGRESSION_BASELINE
+targets:
+  approved_positive_count: 240
+  frozen_route_count: 60
+  total_baseline_count: 300
+  product_count: 20
+  approved_positive_per_product: 12
+  route_per_product: 3
+quality_gates:
+  overall_first_acceptance_rate_minimum: 0.90
+  first_acceptable_per_product_minimum: 11
+  blind_product_accuracy_minimum: 0.85
+  formulaic_or_near_duplicate_rate_maximum: 0.10
+  hard_veto_count_maximum: 0
+  route_action_match_required: 60
+  route_reason_match_required: 60
+batch_policy:
+  maximum_candidate_count_per_batch: 40
+  failed_first_candidates_remain_in_denominator: true
+  replacement_or_reroll_forbidden: true
+  top_up_is_append_only: true
+  one_recoverable_runner: p5_p6_baseline.py
+review_policy:
+  content_primary_reviews_all_candidates: true
+  fact_authorization_secondary_minimum: 48
+  fact_authorization_secondary_per_product_minimum: 2
+  author_may_review: false
+  production_may_final_review: false
+  substantive_disagreement_only_third_review: true
+frozen_core_numbers:
+  target_baseline_count: 300
+  historical_reference_inventory_count: 120
+  historical_component_inventory_count: 86
+  active_component_count: 68
+  active_control_rule_count: 8
+  active_component_profile_edge_count: 85
+readiness_policy:
+  nonblocking_for_system_mainline: true
+  production_or_deployment_unlock: false
+  generator_qualification_is_separate: true
+  all_system_readiness_flags_remain_false: true
+
