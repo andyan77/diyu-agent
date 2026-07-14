@@ -1,0 +1,31 @@
+gate1_generator_contract:
+  schema_version: v0.3
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  generator_version: gate1-v1.1-p2-composable-successor-v0.4
+  scope: P2_LOCAL_STRUCTURAL_VALIDATION_ONLY
+  single_current_entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/run_p2_component_supply_and_generator_core_repair.py
+  active_core_module: p2_generator_core_r6.py
+  historical_non_active_core_modules:
+  - p2_generator_core.py
+  - p2_generator_core_r4.py
+  - p2_generator_core_r5.py
+  approved_path_registry_is_authoritative: true
+  profile_lane_program_owner: APPROVED_PROFILE_LANE_PATH
+  axis_component_profile_lane_payload_allowed: false
+  all_selected_components_require_addressable_structural_output: true
+  component_required_slots_must_equal_binding_slots: true
+  path_program_schema_is_executable: true
+  mechanism_metadata_change_may_not_claim_nonmetadata_effect: true
+  hash_or_token_semantic_selection_allowed: false
+  field_name_or_path_guessing_allowed: false
+  first_match_binding_allowed: false
+  generator_may_write_composition_plan: false
+  composition_plan_owner: ORCH
+  external_provider_allowed: false
+  audience_content_generation_allowed_in_p2: false
+  readiness:
+    generator_qualified: false
+    generation_allowed: false
+    runtime_ingest_ready: false
+    production_ready: false
+  contract_digest: f9f96d71f87fb3fed399d093ede36a9d323ae11ab9de724adfd84bc68ab23d49

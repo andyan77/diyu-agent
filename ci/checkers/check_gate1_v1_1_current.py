@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import shutil
@@ -139,17 +140,93 @@ P2_TARGET_AB_PATH = P2_TASK_ROOT / "ab/revised_ab_path_candidates.r1.jsonl"
 P2_TARGET_REVIEW_PACKET_PATH = (
     P2_TASK_ROOT / "review/targeted_repair_review_packet.r1.jsonl"
 )
+P2_TARGET_R2_REVISED_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/revised_component_candidates.r2.jsonl"
+)
+P2_TARGET_R2_ADDITIONS_PATH = (
+    P2_TASK_ROOT / "component/necessary_addition_candidates.r2.jsonl"
+)
+P2_TARGET_R2_RULES_PATH = P2_TASK_ROOT / "component/revised_control_rules.r2.jsonl"
+P2_TARGET_R2_EDGES_PATH = P2_TASK_ROOT / "component/final_edge_candidates.r2.jsonl"
+P2_TARGET_R2_AB_PATH = P2_TASK_ROOT / "ab/revised_ab_path_candidates.r2.jsonl"
+P2_TARGET_R2_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/targeted_repair_review_packet.r2.jsonl"
+)
+P2_TARGET_R3_REVISED_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/revised_component_candidates.r3.jsonl"
+)
+P2_TARGET_R3_ADDITIONS_PATH = (
+    P2_TASK_ROOT / "component/necessary_addition_candidates.r3.jsonl"
+)
+P2_TARGET_R3_RULES_PATH = P2_TASK_ROOT / "component/revised_control_rules.r3.jsonl"
+P2_TARGET_R3_EDGES_PATH = P2_TASK_ROOT / "component/final_edge_candidates.r3.jsonl"
+P2_TARGET_R3_AB_PATH = P2_TASK_ROOT / "ab/revised_ab_path_candidates.r3.jsonl"
+P2_TARGET_R3_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/targeted_repair_review_packet.r3.jsonl"
+)
+P2_TARGET_R4_REVISED_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/revised_component_candidates.r4.jsonl"
+)
+P2_TARGET_R4_ADDITIONS_PATH = (
+    P2_TASK_ROOT / "component/necessary_addition_candidates.r4.jsonl"
+)
+P2_TARGET_R4_RULES_PATH = P2_TASK_ROOT / "component/revised_control_rules.r4.jsonl"
+P2_TARGET_R4_EDGES_PATH = P2_TASK_ROOT / "component/final_edge_candidates.r4.jsonl"
+P2_TARGET_R4_AB_PATH = P2_TASK_ROOT / "ab/revised_ab_path_candidates.r4.jsonl"
+P2_TARGET_R4_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/targeted_repair_review_packet.r4.jsonl"
+)
+P2_TARGET_R5_REVISED_COMPONENTS_PATH = (
+    P2_TASK_ROOT / "component/revised_component_candidates.r5.jsonl"
+)
+P2_TARGET_R5_ADDITIONS_PATH = (
+    P2_TASK_ROOT / "component/necessary_addition_candidates.r5.jsonl"
+)
+P2_TARGET_R5_RULES_PATH = P2_TASK_ROOT / "component/revised_control_rules.r5.jsonl"
+P2_TARGET_R5_EDGES_PATH = P2_TASK_ROOT / "component/final_edge_candidates.r5.jsonl"
+P2_TARGET_R5_AB_PATH = P2_TASK_ROOT / "ab/revised_ab_path_candidates.r5.jsonl"
+P2_TARGET_R5_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/targeted_repair_review_packet.r5.jsonl"
+)
+P2_TARGET_R6_REVIEW_PACKET_PATH = (
+    P2_TASK_ROOT / "review/targeted_repair_review_packet.r6.jsonl"
+)
 P2_INITIAL_PRIMARY_DIR = P2_TASK_ROOT / "imports/initial_review/primary"
 P2_INITIAL_SECONDARY_DIR = P2_TASK_ROOT / "imports/initial_review/secondary"
 P2_INITIAL_ADJUDICATION_DIR = P2_TASK_ROOT / "imports/initial_review/adjudication"
 P2_TARGET_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r1/primary"
 P2_TARGET_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r1/secondary"
+P2_TARGET_R2_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r2/primary"
+P2_TARGET_R2_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r2/secondary"
+P2_TARGET_R3_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r3/primary"
+P2_TARGET_R3_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r3/secondary"
+P2_TARGET_R4_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r4/primary"
+P2_TARGET_R4_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r4/secondary"
+P2_TARGET_R5_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r5/primary"
+P2_TARGET_R5_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r5/secondary"
+P2_TARGET_R6_PRIMARY_DIR = P2_TASK_ROOT / "imports/targeted_r6/primary"
+P2_TARGET_R6_SECONDARY_DIR = P2_TASK_ROOT / "imports/targeted_r6/secondary"
 P2_IMPORT_MANIFEST_PATH = (
     P2_TASK_ROOT / "imports/independent_review_import_manifest.v0.1.yaml"
 )
 P2_INITIAL_COMBINED_PATH = P2_TASK_ROOT / "review/combined_review_records.v0.1.jsonl"
 P2_TARGET_COMBINED_PATH = (
     P2_TASK_ROOT / "review/targeted_r1_combined_review_records.v0.1.jsonl"
+)
+P2_TARGET_R2_COMBINED_PATH = (
+    P2_TASK_ROOT / "review/targeted_r2_combined_review_records.v0.1.jsonl"
+)
+P2_TARGET_R3_COMBINED_PATH = (
+    P2_TASK_ROOT / "review/targeted_r3_combined_review_records.v0.1.jsonl"
+)
+P2_TARGET_R4_COMBINED_PATH = (
+    P2_TASK_ROOT / "review/targeted_r4_combined_review_records.v0.1.jsonl"
+)
+P2_TARGET_R5_COMBINED_PATH = (
+    P2_TASK_ROOT / "review/targeted_r5_combined_review_records.v0.1.jsonl"
+)
+P2_TARGET_R6_COMBINED_PATH = (
+    P2_TASK_ROOT / "review/targeted_r6_combined_review_records.v0.1.jsonl"
 )
 P2_REVIEW_CLOSEOUT_PATH = (
     P2_TASK_ROOT / "review/independent_component_review_closeout.v0.1.yaml"
@@ -174,11 +251,32 @@ P2_REALIZATIONS_PATH = (
     P2_TASK_ROOT / "generator/component_realization_results.v0.1.jsonl"
 )
 P2_PAIR_RESULTS_PATH = P2_TASK_ROOT / "generator/ab_pair_results.v0.1.jsonl"
+P2_AXIS_BODY_PAIR_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/axis_body_pair_results.v0.1.jsonl"
+)
+P2_PATH_PROGRAM_TAMPER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/path_program_tamper_results.v0.1.jsonl"
+)
+P2_TRUST_CONTRACT_TAMPER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/trust_contract_tamper_results.v0.1.jsonl"
+)
+P2_COMPONENT_POINTER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/component_pointer_results.v0.1.jsonl"
+)
+P2_OBSERVABLE_EFFECT_TAMPER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/observable_effect_tamper_results.v0.1.jsonl"
+)
+P2_BOUND_FACT_EFFECT_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/bound_fact_structural_effect_results.v0.1.jsonl"
+)
+P2_REQUIRED_SLOT_TAMPER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/required_slot_trust_root_tamper_results.v0.1.jsonl"
+)
+P2_PROGRAM_SCHEMA_TAMPER_RESULTS_PATH = (
+    P2_TASK_ROOT / "generator/path_program_schema_tamper_results.v0.1.jsonl"
+)
 P2_ABLATION_RESULTS_PATH = (
     P2_TASK_ROOT / "generator/component_ablation_results.v0.1.jsonl"
-)
-P2_TAMPER_RESULTS_PATH = (
-    P2_TASK_ROOT / "generator/component_digest_tamper_results.v0.1.jsonl"
 )
 P2_ROUTE_ACTUALS_PATH = P2_TASK_ROOT / "generator/route_actuals.v0.1.jsonl"
 P2_ROUTE_COMPARISONS_PATH = (
@@ -197,6 +295,26 @@ P2_INITIAL_REVIEW_PACKET_SHA256 = (
 )
 P2_TARGET_REVIEW_PACKET_SHA256 = (
     "5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50"
+)
+P2_TARGET_R2_REVIEWED_COMMIT = "211b9b241d7660dfa688d3b8db4716ce4e871d27"
+P2_TARGET_R2_REVIEW_PACKET_SHA256 = (
+    "6eaa8e8f365888ea887a13e3065e9cb711f8f518460f61d4865f3e24852986ef"
+)
+P2_TARGET_R3_REVIEWED_COMMIT = "e83c4a27259d64dd1a52d41d9ca0b9cc7237db61"
+P2_TARGET_R3_REVIEW_PACKET_SHA256 = (
+    "e14bf95b40d87c83be48e45f2455d983c3c5e412f88ef41f5b034b9d2403883d"
+)
+P2_TARGET_R4_REVIEWED_COMMIT = "87d3ca89ba9cbb743ee82af105cf831bbd8e2dab"
+P2_TARGET_R4_REVIEW_PACKET_SHA256 = (
+    "95c2a44e8d473844ada77d242ede0299a6b4db63b2699dfc633af0704d2c7e72"
+)
+P2_TARGET_R5_REVIEWED_COMMIT = "6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a"
+P2_TARGET_R5_REVIEW_PACKET_SHA256 = (
+    "de59316fd7d88237e00cc84bd8802959d194995ddf5aef703477bd4921adc245"
+)
+P2_TARGET_R6_REVIEWED_COMMIT = "6555c83c58c54e698ef50c3ff707e44a255d5d9b"
+P2_TARGET_R6_REVIEW_PACKET_SHA256 = (
+    "2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8"
 )
 P2_CHECKPOINT_CURRENT_CHECKER_SHA256 = (
     "2aec6f38dd6d64118506ad998c504e950eeaae34fc97b718ab285e49edc035bd"
@@ -341,6 +459,22 @@ READY_KEYS = frozenset(
         "runtime_provider_adapter_qualified",
     }
 )
+P2_AXIS_OPERATOR_ROLE_BY_AXIS = {
+    "narrative_mechanism": "narrative_mechanism_operator",
+    "information_order": "information_order_operator",
+    "visual_subject": "visual_subject_operator",
+    "sound_subject": "sound_subject_operator",
+    "rhythm": "rhythm_operator",
+    "ending": "ending_operator",
+}
+P2_AXIS_OUTPUT_KIND_BY_AXIS = {
+    "narrative_mechanism": "NARRATIVE_SEGMENT_GRAPH",
+    "information_order": "INFORMATION_NODE_SEQUENCE",
+    "visual_subject": "VISUAL_FOCUS_MAP",
+    "sound_subject": "SOUND_CUE_MAP",
+    "rhythm": "STRUCTURAL_BEAT_MAP",
+    "ending": "BOUNDARY_CLOSURE_MAP",
+}
 
 
 class UniqueKeyLoader(yaml.SafeLoader):
@@ -1141,17 +1275,21 @@ def validate_owner(root: Path, errors: list[dict[str, str]]) -> None:
                 not isinstance(predecessor, dict)
                 or predecessor.get("owner_id")
                 != "GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER"
-                or predecessor.get("reviewed_checkpoint_commit")
-                != "c37a894930025aac99db18a055d5a79294fa89dc"
-                or predecessor.get("review_packet_sha256")
-                != P2_INITIAL_REVIEW_PACKET_SHA256
+                or predecessor.get("final_targeted_review", {}).get(
+                    "reviewed_checkpoint_commit"
+                )
+                != P2_TARGET_R6_REVIEWED_COMMIT
+                or predecessor.get("final_targeted_review", {}).get(
+                    "review_packet_sha256"
+                )
+                != P2_TARGET_R6_REVIEW_PACKET_SHA256
             ):
                 add_error(errors, "E_OWNER_POLICY", "p2 final predecessor")
             generator = owner.get("current_generator")
             if (
                 not isinstance(generator, dict)
                 or generator.get("entrypoint") != P2_MATERIALIZER_PATH.as_posix()
-                or generator.get("active_component_count") != 49
+                or generator.get("active_component_count") != 68
                 or generator.get("active_edge_count") != 85
                 or generator.get("active_control_rule_count") != 8
                 or generator.get("historical_generator_entrypoints_consumed") != []
@@ -2484,8 +2622,23 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
 
     try:
         initial_packet = [row for row, _ in read_jsonl(root / P2_REVIEW_PACKET_PATH)]
-        targeted_packet = [
+        targeted_r1_packet = [
             row for row, _ in read_jsonl(root / P2_TARGET_REVIEW_PACKET_PATH)
+        ]
+        targeted_r2_packet = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R2_REVIEW_PACKET_PATH)
+        ]
+        targeted_r3_packet = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R3_REVIEW_PACKET_PATH)
+        ]
+        targeted_r4_packet = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R4_REVIEW_PACKET_PATH)
+        ]
+        targeted_r5_packet = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R5_REVIEW_PACKET_PATH)
+        ]
+        targeted_r6_packet = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R6_REVIEW_PACKET_PATH)
         ]
     except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
         add_error(errors, "E_P2_FINAL_PACKET", str(exc))
@@ -2493,7 +2646,32 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
     if sha256_file(root / P2_REVIEW_PACKET_PATH) != P2_INITIAL_REVIEW_PACKET_SHA256:
         add_error(errors, "E_P2_FINAL_PACKET", "initial packet drift")
     if sha256_file(root / P2_TARGET_REVIEW_PACKET_PATH) != P2_TARGET_REVIEW_PACKET_SHA256:
-        add_error(errors, "E_P2_FINAL_PACKET", "targeted packet drift")
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted r1 packet drift")
+    if (
+        sha256_file(root / P2_TARGET_R2_REVIEW_PACKET_PATH)
+        != P2_TARGET_R2_REVIEW_PACKET_SHA256
+    ):
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted r2 packet drift")
+    if (
+        sha256_file(root / P2_TARGET_R3_REVIEW_PACKET_PATH)
+        != P2_TARGET_R3_REVIEW_PACKET_SHA256
+    ):
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted r3 packet drift")
+    if (
+        sha256_file(root / P2_TARGET_R4_REVIEW_PACKET_PATH)
+        != P2_TARGET_R4_REVIEW_PACKET_SHA256
+    ):
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted r4 packet drift")
+    if (
+        sha256_file(root / P2_TARGET_R5_REVIEW_PACKET_PATH)
+        != P2_TARGET_R5_REVIEW_PACKET_SHA256
+    ):
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted r5 packet drift")
+    if (
+        sha256_file(root / P2_TARGET_R6_REVIEW_PACKET_PATH)
+        != P2_TARGET_R6_REVIEW_PACKET_SHA256
+    ):
+        add_error(errors, "E_P2_FINAL_PACKET", "targeted r6 packet drift")
     initial_primary, initial_primary_meta = p2_signed_review(
         root,
         P2_INITIAL_PRIMARY_DIR,
@@ -2514,24 +2692,124 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         "r0",
         errors,
     )
-    targeted_primary, targeted_primary_meta = p2_signed_review(
+    targeted_r1_primary, targeted_r1_primary_meta = p2_signed_review(
         root,
         P2_TARGET_PRIMARY_DIR,
-        targeted_packet,
+        targeted_r1_packet,
         "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
         P2_TARGET_REVIEWED_COMMIT,
         P2_TARGET_REVIEW_PACKET_SHA256,
         "r1",
         errors,
     )
-    targeted_secondary, targeted_secondary_meta = p2_signed_review(
+    targeted_r1_secondary, targeted_r1_secondary_meta = p2_signed_review(
         root,
         P2_TARGET_SECONDARY_DIR,
-        targeted_packet,
+        targeted_r1_packet,
         "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
         P2_TARGET_REVIEWED_COMMIT,
         P2_TARGET_REVIEW_PACKET_SHA256,
         "r1",
+        errors,
+    )
+    targeted_r2_primary, targeted_r2_primary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R2_PRIMARY_DIR,
+        targeted_r2_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        P2_TARGET_R2_REVIEWED_COMMIT,
+        P2_TARGET_R2_REVIEW_PACKET_SHA256,
+        "r2",
+        errors,
+    )
+    targeted_r2_secondary, targeted_r2_secondary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R2_SECONDARY_DIR,
+        targeted_r2_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        P2_TARGET_R2_REVIEWED_COMMIT,
+        P2_TARGET_R2_REVIEW_PACKET_SHA256,
+        "r2",
+        errors,
+    )
+    targeted_r3_primary, targeted_r3_primary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R3_PRIMARY_DIR,
+        targeted_r3_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        P2_TARGET_R3_REVIEWED_COMMIT,
+        P2_TARGET_R3_REVIEW_PACKET_SHA256,
+        "r3",
+        errors,
+    )
+    targeted_r3_secondary, targeted_r3_secondary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R3_SECONDARY_DIR,
+        targeted_r3_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        P2_TARGET_R3_REVIEWED_COMMIT,
+        P2_TARGET_R3_REVIEW_PACKET_SHA256,
+        "r3",
+        errors,
+    )
+    targeted_r4_primary, targeted_r4_primary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R4_PRIMARY_DIR,
+        targeted_r4_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        P2_TARGET_R4_REVIEWED_COMMIT,
+        P2_TARGET_R4_REVIEW_PACKET_SHA256,
+        "r4",
+        errors,
+    )
+    targeted_r4_secondary, targeted_r4_secondary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R4_SECONDARY_DIR,
+        targeted_r4_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        P2_TARGET_R4_REVIEWED_COMMIT,
+        P2_TARGET_R4_REVIEW_PACKET_SHA256,
+        "r4",
+        errors,
+    )
+    targeted_r5_primary, targeted_r5_primary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R5_PRIMARY_DIR,
+        targeted_r5_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        P2_TARGET_R5_REVIEWED_COMMIT,
+        P2_TARGET_R5_REVIEW_PACKET_SHA256,
+        "r5",
+        errors,
+    )
+    targeted_r5_secondary, targeted_r5_secondary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R5_SECONDARY_DIR,
+        targeted_r5_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        P2_TARGET_R5_REVIEWED_COMMIT,
+        P2_TARGET_R5_REVIEW_PACKET_SHA256,
+        "r5",
+        errors,
+    )
+    targeted_r6_primary, targeted_r6_primary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R6_PRIMARY_DIR,
+        targeted_r6_packet,
+        "PRIMARY_CONTENT_VALUE_COMPOSABILITY",
+        P2_TARGET_R6_REVIEWED_COMMIT,
+        P2_TARGET_R6_REVIEW_PACKET_SHA256,
+        "r6",
+        errors,
+    )
+    targeted_r6_secondary, targeted_r6_secondary_meta = p2_signed_review(
+        root,
+        P2_TARGET_R6_SECONDARY_DIR,
+        targeted_r6_packet,
+        "SECONDARY_PROVENANCE_FACT_AUTHORIZATION",
+        P2_TARGET_R6_REVIEWED_COMMIT,
+        P2_TARGET_R6_REVIEW_PACKET_SHA256,
+        "r6",
         errors,
     )
     if any(
@@ -2539,8 +2817,18 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         for meta in (
             initial_primary_meta,
             initial_secondary_meta,
-            targeted_primary_meta,
-            targeted_secondary_meta,
+            targeted_r1_primary_meta,
+            targeted_r1_secondary_meta,
+            targeted_r2_primary_meta,
+            targeted_r2_secondary_meta,
+            targeted_r3_primary_meta,
+            targeted_r3_secondary_meta,
+            targeted_r4_primary_meta,
+            targeted_r4_secondary_meta,
+            targeted_r5_primary_meta,
+            targeted_r5_secondary_meta,
+            targeted_r6_primary_meta,
+            targeted_r6_secondary_meta,
         )
     ):
         return
@@ -2548,9 +2836,66 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         initial_primary_meta["identity"] == initial_secondary_meta["identity"]
         or initial_primary_meta["session"] == initial_secondary_meta["session"]
         or initial_primary_meta["run"] == initial_secondary_meta["run"]
-        or targeted_primary_meta["identity"] == targeted_secondary_meta["identity"]
-        or targeted_primary_meta["session"] == targeted_secondary_meta["session"]
-        or targeted_primary_meta["run"] == targeted_secondary_meta["run"]
+        or targeted_r1_primary_meta["identity"]
+        == targeted_r1_secondary_meta["identity"]
+        or targeted_r1_primary_meta["session"]
+        == targeted_r1_secondary_meta["session"]
+        or targeted_r1_primary_meta["run"] == targeted_r1_secondary_meta["run"]
+        or targeted_r2_primary_meta["identity"]
+        != targeted_r1_primary_meta["identity"]
+        or targeted_r2_secondary_meta["identity"]
+        != targeted_r1_secondary_meta["identity"]
+        or targeted_r2_primary_meta["identity"]
+        == targeted_r2_secondary_meta["identity"]
+        or targeted_r2_primary_meta["session"]
+        == targeted_r2_secondary_meta["session"]
+        or targeted_r2_primary_meta["run"] == targeted_r2_secondary_meta["run"]
+        or targeted_r2_primary_meta["run"] == targeted_r1_primary_meta["run"]
+        or targeted_r2_secondary_meta["run"] == targeted_r1_secondary_meta["run"]
+        or targeted_r3_primary_meta["identity"]
+        != targeted_r2_primary_meta["identity"]
+        or targeted_r3_secondary_meta["identity"]
+        != targeted_r2_secondary_meta["identity"]
+        or targeted_r3_primary_meta["identity"]
+        == targeted_r3_secondary_meta["identity"]
+        or targeted_r3_primary_meta["session"]
+        == targeted_r3_secondary_meta["session"]
+        or targeted_r3_primary_meta["run"] == targeted_r3_secondary_meta["run"]
+        or targeted_r3_primary_meta["run"] == targeted_r2_primary_meta["run"]
+        or targeted_r3_secondary_meta["run"] == targeted_r2_secondary_meta["run"]
+        or targeted_r4_primary_meta["identity"]
+        != targeted_r3_primary_meta["identity"]
+        or targeted_r4_secondary_meta["identity"]
+        != targeted_r3_secondary_meta["identity"]
+        or targeted_r4_primary_meta["identity"]
+        == targeted_r4_secondary_meta["identity"]
+        or targeted_r4_primary_meta["session"]
+        == targeted_r4_secondary_meta["session"]
+        or targeted_r4_primary_meta["run"] == targeted_r4_secondary_meta["run"]
+        or targeted_r4_primary_meta["run"] == targeted_r3_primary_meta["run"]
+        or targeted_r4_secondary_meta["run"] == targeted_r3_secondary_meta["run"]
+        or targeted_r5_primary_meta["identity"]
+        != targeted_r4_primary_meta["identity"]
+        or targeted_r5_secondary_meta["identity"]
+        != targeted_r4_secondary_meta["identity"]
+        or targeted_r5_primary_meta["identity"]
+        == targeted_r5_secondary_meta["identity"]
+        or targeted_r5_primary_meta["session"]
+        == targeted_r5_secondary_meta["session"]
+        or targeted_r5_primary_meta["run"] == targeted_r5_secondary_meta["run"]
+        or targeted_r5_primary_meta["run"] == targeted_r4_primary_meta["run"]
+        or targeted_r5_secondary_meta["run"] == targeted_r4_secondary_meta["run"]
+        or targeted_r6_primary_meta["identity"]
+        != targeted_r5_primary_meta["identity"]
+        or targeted_r6_secondary_meta["identity"]
+        != targeted_r5_secondary_meta["identity"]
+        or targeted_r6_primary_meta["identity"]
+        == targeted_r6_secondary_meta["identity"]
+        or targeted_r6_primary_meta["session"]
+        == targeted_r6_secondary_meta["session"]
+        or targeted_r6_primary_meta["run"] == targeted_r6_secondary_meta["run"]
+        or targeted_r6_primary_meta["run"] == targeted_r5_primary_meta["run"]
+        or targeted_r6_secondary_meta["run"] == targeted_r5_secondary_meta["run"]
     ):
         add_error(errors, "E_P2_FINAL_REVIEW_IDENTITY", "primary/secondary collision")
 
@@ -2645,27 +2990,234 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
     ):
         add_error(errors, "E_P2_FINAL_ADJUDICATION_ARTIFACT", "binding")
 
-    target_decisions = {
+    target_r1_decisions = {
         str(packet_item["packet_item_id"]): (
             primary["decision"],
             secondary["decision"],
         )
         for packet_item, primary, secondary in zip(
-            targeted_packet, targeted_primary, targeted_secondary, strict=False
+            targeted_r1_packet,
+            targeted_r1_primary,
+            targeted_r1_secondary,
+            strict=False,
         )
     }
-    if len(target_decisions) != 141 or any(
-        decisions != ("APPROVE", "APPROVE")
-        for decisions in target_decisions.values()
+    target_r1_counts = Counter(target_r1_decisions.values())
+    if target_r1_counts != Counter(
+        {
+            ("APPROVE", "APPROVE"): 27,
+            ("REPAIR", "REPAIR"): 32,
+            ("APPROVE", "REPAIR"): 2,
+            ("REPAIR", "APPROVE"): 80,
+        }
     ):
-        add_error(errors, "E_P2_FINAL_TARGET_REVIEW", "not 141 matching approvals")
+        add_error(errors, "E_P2_FINAL_TARGET_R1_REVIEW", str(target_r1_counts))
+
+    target_r2_decisions = {
+        str(packet_item["packet_item_id"]): (
+            primary["decision"],
+            secondary["decision"],
+        )
+        for packet_item, primary, secondary in zip(
+            targeted_r2_packet,
+            targeted_r2_primary,
+            targeted_r2_secondary,
+            strict=False,
+        )
+    }
+    target_r2_counts = Counter(target_r2_decisions.values())
+    if target_r2_counts != Counter(
+        {
+            ("APPROVE", "APPROVE"): 107,
+            ("REPAIR", "REPAIR"): 20,
+            ("REPAIR", "APPROVE"): 7,
+        }
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R2_REVIEW", str(target_r2_counts))
+
+    target_r3_decisions = {
+        str(packet_item["packet_item_id"]): (
+            primary["decision"],
+            secondary["decision"],
+        )
+        for packet_item, primary, secondary in zip(
+            targeted_r3_packet,
+            targeted_r3_primary,
+            targeted_r3_secondary,
+            strict=False,
+        )
+    }
+    target_r3_counts = Counter(target_r3_decisions.values())
+    if target_r3_counts != Counter(
+        {
+            ("APPROVE", "APPROVE"): 2,
+            ("REPAIR", "REPAIR"): 21,
+            ("REPAIR", "APPROVE"): 6,
+        }
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R3_REVIEW", str(target_r3_counts))
+
+    target_r4_decisions = {
+        str(packet_item["packet_item_id"]): (
+            primary["decision"],
+            secondary["decision"],
+        )
+        for packet_item, primary, secondary in zip(
+            targeted_r4_packet,
+            targeted_r4_primary,
+            targeted_r4_secondary,
+            strict=False,
+        )
+    }
+    target_r4_counts = Counter(target_r4_decisions.values())
+    if target_r4_counts != Counter(
+        {
+            ("REPAIR", "REPAIR"): 21,
+            ("REPAIR", "APPROVE"): 6,
+        }
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R4_REVIEW", str(target_r4_counts))
+    target_r4_subjects = {
+        str(row.get("packet_item_id")): row.get("review_subject")
+        for row in targeted_r4_packet
+    }
+
+    target_r5_decisions = {
+        str(packet_item["packet_item_id"]): (
+            primary["decision"],
+            secondary["decision"],
+        )
+        for packet_item, primary, secondary in zip(
+            targeted_r5_packet,
+            targeted_r5_primary,
+            targeted_r5_secondary,
+            strict=False,
+        )
+    }
+    target_r5_counts = Counter(target_r5_decisions.values())
+    if target_r5_counts != Counter(
+        {("APPROVE", "APPROVE"): 26, ("REPAIR", "APPROVE"): 1}
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R5_REVIEW", str(target_r5_counts))
+    target_r5_subjects = {
+        str(row.get("packet_item_id")): row.get("review_subject")
+        for row in targeted_r5_packet
+    }
+    r5_core_subject = target_r5_subjects.get("P2R5-GENERATOR-CORE")
+    if (
+        not isinstance(r5_core_subject, dict)
+        or r5_core_subject.get("sha256")
+        != sha256_file(root / P2_TASK_ROOT / "p2_generator_core_r5.py")
+        or r5_core_subject.get("path_semantics_source", {}).get("sha256")
+        != sha256_file(root / P2_TASK_ROOT / "p2_path_semantics_r5.py")
+        or r5_core_subject.get("evidence_harness", {}).get("sha256")
+        != sha256_file(root / P2_TASK_ROOT / "p2_final_documents_r5.py")
+        or r5_core_subject.get("external_provider_allowed") is not False
+        or r5_core_subject.get("audience_content_allowed") is not False
+        or r5_core_subject.get("readiness_transition_allowed") is not False
+    ):
+        add_error(errors, "E_P2_FINAL_R5_CORE_REVIEW_BINDING", "subject drift")
+
+    target_r6_decisions = {
+        str(packet_item["packet_item_id"]): (
+            primary["decision"],
+            secondary["decision"],
+        )
+        for packet_item, primary, secondary in zip(
+            targeted_r6_packet,
+            targeted_r6_primary,
+            targeted_r6_secondary,
+            strict=False,
+        )
+    }
+    if target_r6_decisions != {"P2R6-GENERATOR-CORE": ("APPROVE", "APPROVE")}:
+        add_error(errors, "E_P2_FINAL_TARGET_R6_REVIEW", str(target_r6_decisions))
+    target_r6_subjects = {
+        str(row.get("packet_item_id")): row.get("review_subject")
+        for row in targeted_r6_packet
+    }
+    r6_core_subject = target_r6_subjects.get("P2R6-GENERATOR-CORE")
+    expected_r6_evidence = {
+        "generator/required_slot_trust_root_tamper_results.r6.jsonl": 20,
+        "generator/path_program_schema_tamper_results.r6.jsonl": 240,
+        "generator/mechanism_identity_tamper_results.r6.jsonl": 62,
+        "generator/bound_fact_structural_effect_results.r6.jsonl": 62,
+    }
+    r6_evidence_rows = (
+        r6_core_subject.get("evidence_documents", [])
+        if isinstance(r6_core_subject, dict)
+        else []
+    )
+    r6_evidence_by_suffix = {
+        str(row.get("path")).split("p2_component_supply_and_generator_core_repair_001/", 1)[-1]: row
+        for row in r6_evidence_rows
+        if isinstance(row, dict)
+    }
+    r5_primary_core = next(
+        (
+            row
+            for row in targeted_r5_primary
+            if row.get("packet_item_id") == "P2R5-GENERATOR-CORE"
+        ),
+        {},
+    )
+    r5_secondary_core = next(
+        (
+            row
+            for row in targeted_r5_secondary
+            if row.get("packet_item_id") == "P2R5-GENERATOR-CORE"
+        ),
+        {},
+    )
+    expected_r5_failure = {
+        "review_packet_sha256": P2_TARGET_R5_REVIEW_PACKET_SHA256,
+        "primary_decision": "REPAIR",
+        "primary_record_digest": r5_primary_core.get("record_digest"),
+        "secondary_decision": "APPROVE",
+        "secondary_record_digest": r5_secondary_core.get("record_digest"),
+    }
+    if (
+        not isinstance(r6_core_subject, dict)
+        or r6_core_subject.get("sha256")
+        != sha256_file(root / P2_TASK_ROOT / "p2_generator_core_r6.py")
+        or r6_core_subject.get("evidence_harness", {}).get("sha256")
+        != sha256_file(root / P2_TASK_ROOT / "p2_final_documents_r6.py")
+        or r6_core_subject.get("external_provider_allowed") is not False
+        or r6_core_subject.get("audience_content_allowed") is not False
+        or r6_core_subject.get("readiness_transition_allowed") is not False
+        or r6_core_subject.get("approved_r5_components_and_paths_modified") is not False
+        or canonical_json(r6_core_subject.get("r5_failure_evidence"))
+        != canonical_json(expected_r5_failure)
+        or set(r6_evidence_by_suffix) != set(expected_r6_evidence)
+        or any(
+            row.get("case_count") != expected_r6_evidence[suffix]
+            or row.get("sha256") != sha256_file(root / P2_TASK_ROOT / suffix)
+            for suffix, row in r6_evidence_by_suffix.items()
+        )
+    ):
+        add_error(errors, "E_P2_FINAL_R6_CORE_REVIEW_BINDING", "subject drift")
 
     try:
         initial_combined = [
             row for row, _ in read_jsonl(root / P2_INITIAL_COMBINED_PATH)
         ]
-        targeted_combined = [
+        targeted_r1_combined = [
             row for row, _ in read_jsonl(root / P2_TARGET_COMBINED_PATH)
+        ]
+        targeted_r2_combined = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R2_COMBINED_PATH)
+        ]
+        targeted_r3_combined = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R3_COMBINED_PATH)
+        ]
+        targeted_r4_combined = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R4_COMBINED_PATH)
+        ]
+        targeted_r5_combined = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R5_COMBINED_PATH)
+        ]
+        targeted_r6_combined = [
+            row for row, _ in read_jsonl(root / P2_TARGET_R6_COMBINED_PATH)
         ]
         active_components = [
             row for row, _ in read_jsonl(root / P2_ACTIVE_COMPONENTS_PATH)
@@ -2676,8 +3228,37 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         requests = [row for row, _ in read_jsonl(root / P2_AUTHOR_REQUESTS_PATH)]
         realizations = [row for row, _ in read_jsonl(root / P2_REALIZATIONS_PATH)]
         pair_results = [row for row, _ in read_jsonl(root / P2_PAIR_RESULTS_PATH)]
+        axis_body_pairs = [
+            row for row, _ in read_jsonl(root / P2_AXIS_BODY_PAIR_RESULTS_PATH)
+        ]
+        path_program_tampers = [
+            row for row, _ in read_jsonl(root / P2_PATH_PROGRAM_TAMPER_RESULTS_PATH)
+        ]
+        trust_contract_tampers = [
+            row for row, _ in read_jsonl(root / P2_TRUST_CONTRACT_TAMPER_RESULTS_PATH)
+        ]
+        component_pointer_results = [
+            row for row, _ in read_jsonl(root / P2_COMPONENT_POINTER_RESULTS_PATH)
+        ]
+        observable_effect_tampers = [
+            row
+            for row, _ in read_jsonl(
+                root / P2_OBSERVABLE_EFFECT_TAMPER_RESULTS_PATH
+            )
+        ]
+        bound_fact_effects = [
+            row
+            for row, _ in read_jsonl(root / P2_BOUND_FACT_EFFECT_RESULTS_PATH)
+        ]
+        required_slot_tampers = [
+            row
+            for row, _ in read_jsonl(root / P2_REQUIRED_SLOT_TAMPER_RESULTS_PATH)
+        ]
+        program_schema_tampers = [
+            row
+            for row, _ in read_jsonl(root / P2_PROGRAM_SCHEMA_TAMPER_RESULTS_PATH)
+        ]
         ablations = [row for row, _ in read_jsonl(root / P2_ABLATION_RESULTS_PATH)]
-        tampers = [row for row, _ in read_jsonl(root / P2_TAMPER_RESULTS_PATH)]
         route_actuals = [row for row, _ in read_jsonl(root / P2_ROUTE_ACTUALS_PATH)]
         route_comparisons = [
             row for row, _ in read_jsonl(root / P2_ROUTE_COMPARISONS_PATH)
@@ -2716,6 +3297,193 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         add_error(errors, "E_P2_FINAL_PARSE", str(exc))
         return
 
+    def preserves_candidate_payload(
+        active: dict[str, Any],
+        candidate: dict[str, Any],
+        lifecycle_keys: set[str],
+    ) -> bool:
+        return all(
+            key in lifecycle_keys
+            or canonical_json(active.get(key)) == canonical_json(value)
+            for key, value in candidate.items()
+        )
+
+    def digest_value(value: Any) -> str:
+        return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
+
+    def shared_material_binding(material: dict[str, Any]) -> dict[str, Any]:
+        facts = [
+            {
+                "fact_id": str(row.get("fact_id")),
+                "slot_id": str(row.get("slot_id")),
+                "fact_value_digest": str(row.get("fact_value_digest")),
+                "claim_boundary": str(row.get("claim_boundary")),
+            }
+            for row in material.get("facts", [])
+            if isinstance(row, dict)
+        ]
+        authorizations = [
+            {
+                "authorization_id": str(row.get("authorization_id")),
+                "slot_id": str(row.get("slot_id")),
+                "subject_id": str(row.get("subject_id")),
+                "purpose": str(row.get("purpose")),
+                "scope": row.get("scope"),
+                "validity_condition": str(row.get("validity_condition")),
+            }
+            for row in material.get("authorizations", [])
+            if isinstance(row, dict)
+        ]
+        binding = {
+            "material_id": str(material.get("material_id")),
+            "material_digest": str(material.get("material_digest")),
+            "fact_object_ids": [row["fact_id"] for row in facts],
+            "fact_set_digest": digest_value(facts),
+            "authorization_object_ids": [
+                row["authorization_id"] for row in authorizations
+            ],
+            "authorization_set_digest": digest_value(authorizations),
+            "claim_boundary_digest": digest_value(material.get("claim_boundary")),
+        }
+        binding["binding_digest"] = digest_value(binding)
+        return binding
+
+    def resolve_pointer(document: dict[str, Any], pointer: str) -> Any:
+        node: Any = document
+        for token in pointer.removeprefix("/").split("/"):
+            if not isinstance(node, dict) or token not in node:
+                return None
+            node = node[token]
+        return node
+
+    def expected_active_binding(
+        binding: dict[str, Any], component: dict[str, Any]
+    ) -> dict[str, Any]:
+        expected = copy.deepcopy(binding)
+        expected["reviewed_candidate_component_digest"] = expected[
+            "component_digest"
+        ]
+        expected["component_digest"] = component["component_digest"]
+        expected["component_role"] = component["component_role"]
+        expected["binding_digest"] = digest_value(
+            expected["exact_typed_object_bindings"]
+        )
+        return expected
+
+    def expected_axis_body(
+        axis: str,
+        program: dict[str, Any],
+        material_contract: dict[str, Any],
+    ) -> dict[str, Any]:
+        catalog = material_contract.get("typed_object_catalog", {})
+        fact_by_slot = {
+            str(row.get("slot_id")): str(row.get("object_id"))
+            for row in catalog.get("fact", [])
+            if isinstance(row, dict)
+        }
+
+        def fact_ref(slot_id: str) -> dict[str, str]:
+            if slot_id not in fact_by_slot:
+                raise ValueError(f"missing fact slot {slot_id}")
+            return {
+                "fact_object_id": fact_by_slot[slot_id],
+                "fact_slot_id": slot_id,
+            }
+
+        if axis == "narrative_mechanism":
+            relation_mode = str(program.get("relation_mode"))
+            ordered_slots = list(map(str, program.get("ordered_fact_slots", [])))
+            stop_slots = list(map(str, program.get("stop_boundary_slots", [])))
+            return {
+                "relation_mode": relation_mode,
+                "segments": [
+                    {
+                        "segment_index": index,
+                        **fact_ref(slot_id),
+                        "relation_to_next": relation_mode,
+                    }
+                    for index, slot_id in enumerate(ordered_slots)
+                ],
+                "stop_boundary_fact_refs": [
+                    fact_ref(slot_id) for slot_id in stop_slots
+                ],
+            }
+        if axis == "information_order":
+            ordered_slots = list(map(str, program.get("ordered_fact_slots", [])))
+            return {
+                "ordering_is_authoritative": program.get(
+                    "ordering_is_authoritative"
+                ),
+                "ordered_nodes": [
+                    {"position": index, **fact_ref(slot_id)}
+                    for index, slot_id in enumerate(ordered_slots)
+                ],
+            }
+        if axis == "visual_subject":
+            return {
+                "focus_mode": str(program.get("focus_mode")),
+                "lead_fact_ref": fact_ref(str(program.get("lead_fact_slot"))),
+                "supporting_fact_refs": [
+                    fact_ref(slot_id)
+                    for slot_id in map(
+                        str, program.get("supporting_fact_slots", [])
+                    )
+                ],
+                "all_facts_remain_available": True,
+            }
+        if axis == "sound_subject":
+            authorization_ids = [
+                str(row.get("object_id"))
+                for row in catalog.get("authorization", [])
+                if isinstance(row, dict)
+            ]
+            return {
+                "cue_source_class": str(program.get("cue_source_class")),
+                "cues": [
+                    {
+                        "cue_index": index,
+                        **fact_ref(slot_id),
+                        "source_policy": str(
+                            program.get("missing_source_behavior")
+                        ),
+                    }
+                    for index, slot_id in enumerate(
+                        map(str, program.get("cue_fact_slots", []))
+                    )
+                ],
+                "authorization_object_ids": authorization_ids,
+                "authorization_set_digest": material_contract.get(
+                    "shared_material_binding", {}
+                ).get("authorization_set_digest"),
+            }
+        if axis == "rhythm":
+            return {
+                "cadence_mode": str(program.get("cadence_mode")),
+                "chronology_policy": str(program.get("chronology_policy")),
+                "beat_groups": [
+                    {
+                        "beat_index": index,
+                        "fact_refs": [
+                            fact_ref(slot_id) for slot_id in map(str, group)
+                        ],
+                    }
+                    for index, group in enumerate(
+                        program.get("beat_fact_slot_groups", [])
+                    )
+                    if isinstance(group, list)
+                ],
+            }
+        return {
+            "closure_mode": str(program.get("closure_mode")),
+            "boundary_fact_refs": [
+                fact_ref(slot_id)
+                for slot_id in map(str, program.get("boundary_fact_slots", []))
+            ],
+            "next_step_policy": str(program.get("next_step_policy")),
+            "claims_resolved": program.get("claims_resolved"),
+            "may_add_commitment": program.get("may_add_commitment"),
+        }
+
     if len(initial_combined) != 244:
         add_error(errors, "E_P2_FINAL_COMBINED", "initial count")
     for row in initial_combined:
@@ -2733,21 +3501,109 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
             or row.get("combined_digest") != object_digest(row, "combined_digest")
         ):
             add_error(errors, "E_P2_FINAL_COMBINED", item_id)
-    if len(targeted_combined) != 141 or any(
+    targeted_r1_combined_counts = Counter(
+        (
+            row.get("combined_disposition"),
+            row.get("requires_targeted_adjudication"),
+        )
+        for row in targeted_r1_combined
+    )
+    if len(targeted_r1_combined) != 141 or targeted_r1_combined_counts != Counter(
+        {
+            ("APPROVE", False): 27,
+            ("REPAIR", False): 32,
+            ("DISAGREEMENT_REQUIRES_ADJUDICATION", True): 82,
+        }
+    ) or any(
+        row.get("combined_digest") != object_digest(row, "combined_digest")
+        for row in targeted_r1_combined
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R1_COMBINED", "failure evidence drift")
+    targeted_r2_combined_counts = Counter(
+        (
+            row.get("combined_disposition"),
+            row.get("requires_targeted_adjudication"),
+        )
+        for row in targeted_r2_combined
+    )
+    if len(targeted_r2_combined) != 134 or targeted_r2_combined_counts != Counter(
+        {
+            ("APPROVE", False): 107,
+            ("REPAIR", False): 20,
+            ("DISAGREEMENT_REQUIRES_ADJUDICATION", True): 7,
+        }
+    ) or any(
+        row.get("combined_digest") != object_digest(row, "combined_digest")
+        for row in targeted_r2_combined
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R2_COMBINED", "failure evidence drift")
+    targeted_r3_combined_counts = Counter(
+        (
+            row.get("combined_disposition"),
+            row.get("requires_targeted_adjudication"),
+        )
+        for row in targeted_r3_combined
+    )
+    if len(targeted_r3_combined) != 29 or targeted_r3_combined_counts != Counter(
+        {
+            ("APPROVE", False): 2,
+            ("REPAIR", False): 21,
+            ("DISAGREEMENT_REQUIRES_ADJUDICATION", True): 6,
+        }
+    ) or any(
+        row.get("combined_digest") != object_digest(row, "combined_digest")
+        for row in targeted_r3_combined
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R3_COMBINED", "failure evidence drift")
+    targeted_r4_combined_counts = Counter(
+        (
+            row.get("combined_disposition"),
+            row.get("requires_targeted_adjudication"),
+        )
+        for row in targeted_r4_combined
+    )
+    if len(targeted_r4_combined) != 27 or targeted_r4_combined_counts != Counter(
+        {
+            ("REPAIR", False): 21,
+            ("DISAGREEMENT_REQUIRES_ADJUDICATION", True): 6,
+        }
+    ) or any(
+        row.get("combined_digest") != object_digest(row, "combined_digest")
+        for row in targeted_r4_combined
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R4_COMBINED", "failure evidence drift")
+    targeted_r5_combined_counts = Counter(
+        (
+            row.get("combined_disposition"),
+            row.get("requires_targeted_adjudication"),
+        )
+        for row in targeted_r5_combined
+    )
+    if len(targeted_r5_combined) != 27 or targeted_r5_combined_counts != Counter(
+        {
+            ("APPROVE", False): 26,
+            ("DISAGREEMENT_REQUIRES_ADJUDICATION", True): 1,
+        }
+    ) or any(
+        row.get("combined_digest") != object_digest(row, "combined_digest")
+        for row in targeted_r5_combined
+    ):
+        add_error(errors, "E_P2_FINAL_TARGET_R5_COMBINED", "failure evidence drift")
+    if len(targeted_r6_combined) != 1 or any(
         row.get("combined_disposition") != "APPROVE"
         or row.get("requires_targeted_adjudication") is not False
         or row.get("combined_digest") != object_digest(row, "combined_digest")
-        for row in targeted_combined
+        for row in targeted_r6_combined
     ):
-        add_error(errors, "E_P2_FINAL_TARGET_COMBINED", "targeted closeout")
+        add_error(errors, "E_P2_FINAL_TARGET_R6_COMBINED", "r6 closeout")
 
     manifest_files = import_manifest.get("files")
     if (
         import_manifest.get("manifest_digest")
         != object_digest(import_manifest, "manifest_digest")
-        or import_manifest.get("imported_file_count") != 15
+        or import_manifest.get("imported_file_count") != 45
         or not isinstance(manifest_files, list)
-        or len(manifest_files) != 15
+        or len(manifest_files) != 45
         or any(
             not isinstance(row, dict)
             or row.get("byte_imported_without_rewrite") is not True
@@ -2762,8 +3618,31 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         != object_digest(review_closeout, "review_closeout_digest")
         or review_closeout.get("initial_real_disagreement_count") != 92
         or review_closeout.get("initial_adjudication_record_count") != 92
-        or review_closeout.get("targeted_matching_approval_count") != 141
-        or review_closeout.get("targeted_unresolved_disagreement_count") != 0
+        or review_closeout.get("targeted_r1_combined_record_count") != 141
+        or review_closeout.get("targeted_r1_matching_approval_count") != 27
+        or review_closeout.get("targeted_r1_failure_or_open_count") != 114
+        or review_closeout.get("targeted_r2_combined_record_count") != 134
+        or review_closeout.get("targeted_r2_matching_approval_count") != 107
+        or review_closeout.get("targeted_r2_matching_repair_count") != 20
+        or review_closeout.get("targeted_r2_unresolved_disagreement_count") != 7
+        or review_closeout.get("targeted_r2_failure_evidence_preserved") is not True
+        or review_closeout.get("targeted_r3_combined_record_count") != 29
+        or review_closeout.get("targeted_r3_matching_approval_count") != 2
+        or review_closeout.get("targeted_r3_matching_repair_count") != 21
+        or review_closeout.get("targeted_r3_unresolved_disagreement_count") != 6
+        or review_closeout.get("targeted_r3_failure_evidence_preserved") is not True
+        or review_closeout.get("targeted_r4_combined_record_count") != 27
+        or review_closeout.get("targeted_r4_matching_approval_count") != 0
+        or review_closeout.get("targeted_r4_matching_repair_count") != 21
+        or review_closeout.get("targeted_r4_unresolved_disagreement_count") != 6
+        or review_closeout.get("targeted_r4_failure_evidence_preserved") is not True
+        or review_closeout.get("targeted_r5_combined_record_count") != 27
+        or review_closeout.get("targeted_r5_matching_approval_count") != 26
+        or review_closeout.get("targeted_r5_unresolved_disagreement_count") != 1
+        or review_closeout.get("targeted_r5_failure_evidence_preserved") is not True
+        or review_closeout.get("targeted_r6_combined_record_count") != 1
+        or review_closeout.get("targeted_r6_matching_approval_count") != 1
+        or review_closeout.get("targeted_r6_unresolved_disagreement_count") != 0
         or review_closeout.get("executor_self_approval_count") != 0
     ):
         add_error(errors, "E_P2_FINAL_REVIEW_CLOSEOUT", "counts or digest")
@@ -2774,11 +3653,11 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
     }
     revised_components = {
         row.get("component_id"): row
-        for row, _ in read_jsonl(root / P2_TARGET_REVISED_COMPONENTS_PATH)
+        for row, _ in read_jsonl(root / P2_TARGET_R5_REVISED_COMPONENTS_PATH)
     }
     additions = {
         row.get("component_id"): row
-        for row, _ in read_jsonl(root / P2_TARGET_ADDITIONS_PATH)
+        for row, _ in read_jsonl(root / P2_TARGET_R5_ADDITIONS_PATH)
     }
     candidate_pool = {**original_components, **revised_components, **additions}
     active_by_id = {row.get("component_id"): row for row in active_components}
@@ -2787,33 +3666,65 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         for item_id, value in expected_initial.items()
         if value["final_disposition"] == "APPROVE"
     }
-    if len(active_components) != len(active_by_id) or len(active_components) != 49:
+    if len(active_components) != len(active_by_id) or len(active_components) != 68:
         add_error(errors, "E_P2_FINAL_COMPONENT_COUNT", str(len(active_components)))
     for component_id, row in active_by_id.items():
         candidate = candidate_pool.get(component_id)
-        target_item_id = f"P2R1-COMPONENT-{component_id}"
+        target_r5_item_id = f"P2R5-COMPONENT-{component_id}"
+        target_r4_item_id = f"P2R4-COMPONENT-{component_id}"
+        target_r3_item_id = f"P2R3-COMPONENT-{component_id}"
+        target_r2_item_id = f"P2R2-COMPONENT-{component_id}"
+        target_r1_item_id = f"P2R1-COMPONENT-{component_id}"
         initial_item_id = f"P2-COMPONENT-{component_id}"
-        approved = (
-            target_decisions.get(target_item_id) == ("APPROVE", "APPROVE")
-            if target_item_id in target_decisions
-            else initial_item_id in initial_final_approved
+        approved = any(
+            (
+                target_r5_decisions.get(target_r5_item_id)
+                == ("APPROVE", "APPROVE"),
+                target_r4_decisions.get(target_r4_item_id)
+                == ("APPROVE", "APPROVE"),
+                target_r3_decisions.get(target_r3_item_id)
+                == ("APPROVE", "APPROVE"),
+                target_r2_decisions.get(target_r2_item_id)
+                == ("APPROVE", "APPROVE"),
+                target_r1_decisions.get(target_r1_item_id)
+                == ("APPROVE", "APPROVE"),
+                initial_item_id in initial_final_approved,
+            )
         )
+        reviewed_r5_subject = target_r5_subjects.get(target_r5_item_id)
         if (
             not isinstance(candidate, dict)
             or row.get("reviewed_candidate_component_digest")
             != candidate.get("component_digest")
             or row.get("component_digest") != object_digest(row, "component_digest")
+            or not preserves_candidate_payload(
+                row,
+                candidate,
+                {
+                    "component_digest",
+                    "active",
+                    "new_generator_consumable",
+                    "independent_review_state",
+                    "readiness",
+                },
+            )
             or row.get("active") is not True
             or row.get("new_generator_consumable") is not True
-            or row.get("independent_review_state") != "APPROVED_BY_TWO_REVIEWS"
+            or row.get("independent_review_state")
+            != "APPROVED_BY_REQUIRED_INDEPENDENT_REVIEW"
             or recursively_find_true(row.get("readiness"), READY_KEYS)
             or not approved
+            or (
+                reviewed_r5_subject is not None
+                and canonical_json(candidate)
+                != canonical_json(reviewed_r5_subject)
+            )
         ):
             add_error(errors, "E_P2_FINAL_COMPONENT", str(component_id))
 
     target_rule_candidates = {
         row.get("control_rule_id"): row
-        for row, _ in read_jsonl(root / P2_TARGET_RULES_PATH)
+        for row, _ in read_jsonl(root / P2_TARGET_R5_RULES_PATH)
     }
     if len(active_rules) != 8:
         add_error(errors, "E_P2_FINAL_RULE_COUNT", str(len(active_rules)))
@@ -2822,13 +3733,26 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         candidate = target_rule_candidates.get(rule_id)
         if (
             not isinstance(candidate, dict)
-            or target_decisions.get(f"P2R1-CONTROL-{rule_id}")
-            != ("APPROVE", "APPROVE")
+            or not any(
+                (
+                    target_r2_decisions.get(f"P2R2-CONTROL-{rule_id}")
+                    == ("APPROVE", "APPROVE"),
+                    target_r1_decisions.get(f"P2R1-CONTROL-{rule_id}")
+                    == ("APPROVE", "APPROVE"),
+                )
+            )
             or row.get("reviewed_candidate_control_rule_digest")
             != candidate.get("control_rule_digest")
             or row.get("control_rule_digest")
             != object_digest(row, "control_rule_digest")
+            or not preserves_candidate_payload(
+                row,
+                candidate,
+                {"control_rule_digest", "active", "independent_review_state"},
+            )
             or row.get("active") is not True
+            or row.get("independent_review_state")
+            != "APPROVED_BY_REQUIRED_INDEPENDENT_REVIEW"
             or row.get("contributes_component_supply") is not False
             or row.get("may_write_audience_surface") is not False
         ):
@@ -2836,7 +3760,14 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
 
     target_edge_candidates = {
         row.get("edge_id"): row
-        for row, _ in read_jsonl(root / P2_TARGET_EDGES_PATH)
+        for row, _ in read_jsonl(root / P2_TARGET_R5_EDGES_PATH)
+    }
+    target_path_candidates = {
+        row.get("content_product_type_id"): row
+        for row, _ in read_jsonl(root / P2_TARGET_R5_AB_PATH)
+    }
+    active_path_by_profile = {
+        row.get("content_product_type_id"): row for row in active_paths
     }
     active_edge_by_id = {row.get("edge_id"): row for row in active_edges}
     if len(active_edges) != len(active_edge_by_id) or len(active_edges) != 85:
@@ -2844,15 +3775,111 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
     for edge_id, row in active_edge_by_id.items():
         candidate = target_edge_candidates.get(edge_id)
         component = active_by_id.get(row.get("component_id"))
+        reviewed_path_candidate = target_path_candidates.get(
+            row.get("content_product_type_id")
+        )
+        active_path = active_path_by_profile.get(row.get("content_product_type_id"))
+        material_contract = (
+            active_path.get("shared_typed_material_contract")
+            if isinstance(active_path, dict)
+            else None
+        )
+        path_component_bindings = {
+            binding.get("component_id"): binding
+            for binding in (
+                material_contract.get("component_exact_bindings", [])
+                if isinstance(material_contract, dict)
+                else []
+            )
+            if isinstance(binding, dict)
+        }
+        candidate_exact_binding = (
+            next(
+                (
+                    binding
+                    for binding in reviewed_path_candidate.get(
+                        "shared_typed_material_contract", {}
+                    ).get("component_exact_bindings", [])
+                    if isinstance(binding, dict)
+                    and binding.get("component_id") == row.get("component_id")
+                ),
+                None,
+            )
+            if isinstance(reviewed_path_candidate, dict)
+            else None
+        )
+        expected_exact_binding = (
+            expected_active_binding(candidate_exact_binding, component)
+            if isinstance(candidate_exact_binding, dict)
+            and isinstance(component, dict)
+            else None
+        )
+        exact_binding = row.get("component_exact_binding")
+        candidate_profile_binding = (
+            reviewed_path_candidate.get("shared_typed_material_contract", {}).get(
+                "profile_exact_binding"
+            )
+            if isinstance(reviewed_path_candidate, dict)
+            else None
+        )
+        profile_binding = row.get("profile_exact_binding")
+        path_exact_binding = path_component_bindings.get(row.get("component_id"))
         if (
             not isinstance(candidate, dict)
             or not isinstance(component, dict)
-            or target_decisions.get(f"P2R1-{edge_id}")
-            != ("APPROVE", "APPROVE")
+            or not any(
+                (
+                    target_r3_decisions.get(str(edge_id))
+                    == ("APPROVE", "APPROVE"),
+                    target_r2_decisions.get(f"P2R2-{edge_id}")
+                    == ("APPROVE", "APPROVE"),
+                )
+            )
             or row.get("reviewed_candidate_edge_digest") != candidate.get("edge_digest")
             or row.get("component_digest") != component.get("component_digest")
             or row.get("edge_digest") != object_digest(row, "edge_digest")
+            or not preserves_candidate_payload(
+                row,
+                candidate,
+                {
+                    "edge_digest",
+                    "component_digest",
+                    "component_exact_binding",
+                    "profile_exact_binding",
+                    "shared_material_contract",
+                    "active",
+                    "independent_review_state",
+                },
+            )
             or row.get("active") is not True
+            or row.get("independent_review_state")
+            != "APPROVED_BY_REQUIRED_INDEPENDENT_REVIEW"
+            or row.get("binding_activation_basis")
+            != "TARGETED_R5_PATH_MATCHING_TWO_APPROVALS"
+            or row.get("binding_review_packet_item_id")
+            != f"P2R5-AB-{row.get('content_product_type_id')}"
+            or not isinstance(exact_binding, dict)
+            or exact_binding.get("binding_digest")
+            != digest_value(exact_binding.get("exact_typed_object_bindings"))
+            or canonical_json(exact_binding)
+            != canonical_json(expected_exact_binding)
+            or canonical_json(exact_binding) != canonical_json(path_exact_binding)
+            or not isinstance(profile_binding, dict)
+            or profile_binding.get("binding_digest")
+            != digest_value(profile_binding.get("exact_profile_bindings"))
+            or canonical_json(profile_binding)
+            != canonical_json(candidate_profile_binding)
+            or not isinstance(material_contract, dict)
+            or canonical_json(profile_binding)
+            != canonical_json(material_contract.get("profile_exact_binding"))
+            or row.get("shared_material_contract", {}).get("material_id")
+            != material_contract.get("material_id")
+            or row.get("shared_material_contract", {}).get("material_digest")
+            != material_contract.get("material_digest")
+            or row.get("shared_material_contract", {}).get(
+                "typed_object_catalog_digest"
+            )
+            != material_contract.get("typed_object_catalog_digest")
         ):
             add_error(errors, "E_P2_FINAL_EDGE", str(edge_id))
 
@@ -2880,27 +3907,425 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
     ):
         add_error(errors, "E_P2_FINAL_SUPPLY", str(complete_profiles))
 
-    target_path_candidates = {
-        row.get("content_product_type_id"): row
-        for row, _ in read_jsonl(root / P2_TARGET_AB_PATH)
-    }
     if len(active_paths) != 20:
         add_error(errors, "E_P2_FINAL_AB_COUNT", str(len(active_paths)))
     for row in active_paths:
         profile_id = row.get("content_product_type_id")
         candidate = target_path_candidates.get(profile_id)
+        r5_packet_id = f"P2R5-AB-{profile_id}"
+        r5_subject = target_r5_subjects.get(r5_packet_id)
+        lanes_by_id = {
+            lane.get("lane_id"): lane
+            for lane in (row.get("lane_a"), row.get("lane_b"))
+            if isinstance(lane, dict)
+        }
+        component_bindings = {
+            binding.get("component_id"): binding
+            for binding in row.get("shared_typed_material_contract", {}).get(
+                "component_exact_bindings", []
+            )
+            if isinstance(binding, dict)
+        }
+        component_contracts = {
+            contract.get("component_id"): contract
+            for contract in row.get("component_realization_contracts", [])
+            if isinstance(contract, dict)
+        }
+        axis_contracts = {
+            contract.get("axis"): contract
+            for contract in row.get("axis_realization_contracts", [])
+            if isinstance(contract, dict)
+        }
+        r5_path_valid = (
+            isinstance(candidate, dict)
+            and canonical_json(candidate) == canonical_json(r5_subject)
+            and target_r5_decisions.get(r5_packet_id) == ("APPROVE", "APPROVE")
+            and row.get("reviewed_candidate_path_digest")
+            == candidate.get("path_digest")
+            and row.get("path_digest") == object_digest(row, "path_digest")
+            and row.get("schema_version") == "v0.3"
+            and row.get("active") is True
+            and row.get("structural_candidate_only") is False
+            and row.get("p2_structural_validation_only") is True
+            and row.get("independent_review_state")
+            == "APPROVED_BY_REQUIRED_INDEPENDENT_REVIEW"
+            and row.get("activation_basis")
+            == "TARGETED_R5_MATCHING_TWO_APPROVALS"
+            and row.get("review_packet_item_id") == r5_packet_id
+            and row.get("content_quality_proven") is False
+            and canonical_json(row.get("trusted_profile_contract"))
+            == canonical_json(profile_by_id.get(profile_id))
+            and set(lanes_by_id) == {"A", "B"}
+            and lanes_by_id["A"].get("session_id")
+            != lanes_by_id["B"].get("session_id")
+            and lanes_by_id["A"].get("other_lane_visible") is False
+            and lanes_by_id["B"].get("other_lane_visible") is False
+            and set(axis_contracts) == set(P2_AXIS_OPERATOR_ROLE_BY_AXIS)
+            and set(row.get("observable_difference_axes", []))
+            == set(P2_AXIS_OPERATOR_ROLE_BY_AXIS)
+            and row.get("observable_difference_axis_count") == 6
+            and row.get("body_level_difference_axis_count") == 6
+            and row.get("all_selected_components_have_addressable_output_contract")
+            is True
+        )
+        for component_id, binding in component_bindings.items():
+            component = active_by_id.get(component_id)
+            exact_objects = binding.get("exact_typed_object_bindings", {})
+            exact_slot_contract = (
+                isinstance(component, dict)
+                and isinstance(exact_objects, dict)
+                and {
+                    str(row.get("slot_id"))
+                    for row in exact_objects.get("input", [])
+                    if isinstance(row, dict)
+                }
+                == set(map(str, component.get("required_input_slots", [])))
+                and {
+                    str(row.get("slot_id"))
+                    for row in exact_objects.get("fact", [])
+                    if isinstance(row, dict)
+                }
+                == set(map(str, component.get("required_fact_slots", [])))
+                and {
+                    str(row.get("slot_id"))
+                    for row in exact_objects.get("authorization", [])
+                    if isinstance(row, dict)
+                }
+                == set(map(str, component.get("required_authorization_slots", [])))
+            )
+            r5_path_valid &= (
+                isinstance(component, dict)
+                and exact_slot_contract
+                and binding.get("component_digest")
+                == component.get("component_digest")
+                and binding.get("binding_digest")
+                == digest_value(binding.get("exact_typed_object_bindings"))
+            )
+        selected_ids = set(lanes_by_id.get("A", {}).get("component_ids", []))
+        selected_ids.update(lanes_by_id.get("B", {}).get("component_ids", []))
+        r5_path_valid &= selected_ids == set(component_bindings)
+        operator_ids: set[str] = set()
+        for axis, expected_role in P2_AXIS_OPERATOR_ROLE_BY_AXIS.items():
+            contract = axis_contracts.get(axis)
+            operator_id = (
+                contract.get("operator_component_id")
+                if isinstance(contract, dict)
+                else None
+            )
+            operator = active_by_id.get(operator_id)
+            operator_ids.add(str(operator_id))
+            lane_a_program = lanes_by_id.get("A", {}).get("axis_programs", {}).get(axis)
+            lane_b_program = lanes_by_id.get("B", {}).get("axis_programs", {}).get(axis)
+            lane_a_output = contract.get("lane_a_structural_output", {}) if isinstance(contract, dict) else {}
+            lane_b_output = contract.get("lane_b_structural_output", {}) if isinstance(contract, dict) else {}
+            r5_path_valid &= (
+                isinstance(contract, dict)
+                and isinstance(operator, dict)
+                and operator.get("component_role") == expected_role
+                and operator.get("mechanism", {})
+                .get("path_program_schema", {})
+                .get("profile_or_lane_payload_in_component_allowed")
+                is False
+                and operator.get("mechanism", {})
+                .get("path_program_schema", {})
+                .get("component_reviewed_value_registry_allowed")
+                is False
+                and contract.get("component_contains_profile_lane_payload") is False
+                and contract.get("operator_component_digest")
+                == operator.get("component_digest")
+                and contract.get("operator_mechanism_digest")
+                == digest_value(operator.get("mechanism"))
+                and canonical_json(contract.get("operator_component_binding"))
+                == canonical_json(component_bindings.get(operator_id))
+                and contract.get("lane_a_program_digest")
+                == digest_value(lane_a_program)
+                and contract.get("lane_b_program_digest")
+                == digest_value(lane_b_program)
+                and contract.get("lane_a_value")
+                == lanes_by_id.get("A", {}).get("axes", {}).get(axis)
+                and contract.get("lane_b_value")
+                == lanes_by_id.get("B", {}).get("axes", {}).get(axis)
+                and contract.get("path_program_is_authoritative") is True
+                and isinstance(lane_a_program, dict)
+                and isinstance(lane_b_program, dict)
+                and set(lane_a_program)
+                == set(
+                    map(
+                        str,
+                        operator.get("mechanism", {})
+                        .get("path_program_schema", {})
+                        .get("required_fields", []),
+                    )
+                )
+                and set(lane_b_program)
+                == set(
+                    map(
+                        str,
+                        operator.get("mechanism", {})
+                        .get("path_program_schema", {})
+                        .get("required_fields", []),
+                    )
+                )
+                and contract.get("same_fact_set_must_be_preserved") is True
+                and lane_a_output.get("path_program_digest")
+                == digest_value(lane_a_program)
+                and lane_b_output.get("path_program_digest")
+                == digest_value(lane_b_program)
+                and lane_a_output.get("structural_body_digest")
+                == digest_value(lane_a_output.get("structural_body"))
+                and lane_b_output.get("structural_body_digest")
+                == digest_value(lane_b_output.get("structural_body"))
+                and lane_a_output.get("structural_output_digest")
+                == object_digest(lane_a_output, "structural_output_digest")
+                and lane_b_output.get("structural_output_digest")
+                == object_digest(lane_b_output, "structural_output_digest")
+                and lane_a_output.get("structural_body_digest")
+                != lane_b_output.get("structural_body_digest")
+            )
+        ordinary_ids = selected_ids.difference(operator_ids)
+        r5_path_valid &= set(component_contracts) == ordinary_ids
+        for component_id, contract in component_contracts.items():
+            component = active_by_id.get(component_id)
+            binding = component_bindings.get(component_id)
+            output = contract.get("expected_structural_output", {})
+            r5_path_valid &= (
+                isinstance(component, dict)
+                and isinstance(binding, dict)
+                and contract.get("component_digest")
+                == component.get("component_digest")
+                and contract.get("exact_binding_digest")
+                == binding.get("binding_digest")
+                and output.get("component_id") == component_id
+                and output.get("component_digest")
+                == component.get("component_digest")
+                and output.get("component_binding_digest")
+                == binding.get("binding_digest")
+                and output.get("structural_body_digest")
+                == digest_value(output.get("structural_body"))
+                and output.get("structural_output_digest")
+                == object_digest(output, "structural_output_digest")
+            )
+        if not r5_path_valid:
+            add_error(errors, "E_P2_FINAL_AB_PATH", str(profile_id))
+        continue
         lanes = [row.get("lane_a"), row.get("lane_b")]
         axes = row.get("observable_difference_axes")
+        material_contract = row.get("shared_typed_material_contract")
+        contracts = row.get("axis_realization_contracts")
+        material_bindings = {
+            binding.get("component_id"): binding
+            for binding in (
+                material_contract.get("component_exact_bindings", [])
+                if isinstance(material_contract, dict)
+                else []
+            )
+            if isinstance(binding, dict)
+        }
+        contract_by_axis = {
+            contract.get("axis"): contract
+            for contract in (contracts if isinstance(contracts, list) else [])
+            if isinstance(contract, dict)
+        }
+        expected_shared_binding = (
+            material_contract.get("shared_material_binding")
+            if isinstance(material_contract, dict)
+            else None
+        )
+        axis_contracts_valid = (
+            set(contract_by_axis) == set(P2_AXIS_OPERATOR_ROLE_BY_AXIS)
+            and isinstance(axes, list)
+            and set(axes) == set(contract_by_axis)
+        )
+        for axis, expected_role in P2_AXIS_OPERATOR_ROLE_BY_AXIS.items():
+            contract = contract_by_axis.get(axis)
+            if not isinstance(contract, dict):
+                axis_contracts_valid = False
+                continue
+            operator_id = contract.get("operator_component_id")
+            operator = active_by_id.get(operator_id)
+            operator_binding = contract.get("operator_component_binding")
+            parameter_schema = (
+                operator.get("mechanism", {}).get("parameter_schema")
+                if isinstance(operator, dict)
+                else None
+            )
+            lane_a_output = contract.get("lane_a_structural_output")
+            lane_b_output = contract.get("lane_b_structural_output")
+            profile_programs = (
+                parameter_schema.get("reviewed_value_programs", {}).get(
+                    profile_id
+                )
+                if isinstance(parameter_schema, dict)
+                else None
+            )
+            outputs_valid = True
+            for lane_name, output in (
+                ("lane_a", lane_a_output),
+                ("lane_b", lane_b_output),
+            ):
+                if not isinstance(output, dict):
+                    outputs_valid = False
+                    continue
+                lane_value = str(contract.get(f"{lane_name}_value"))
+                program = (
+                    profile_programs.get(lane_value)
+                    if isinstance(profile_programs, dict)
+                    else None
+                )
+                try:
+                    expected_body = (
+                        expected_axis_body(axis, program, material_contract)
+                        if isinstance(program, dict)
+                        and isinstance(material_contract, dict)
+                        else None
+                    )
+                except (TypeError, ValueError):
+                    expected_body = None
+                if (
+                    output.get("axis") != axis
+                    or output.get("output_kind")
+                    != P2_AXIS_OUTPUT_KIND_BY_AXIS[axis]
+                    or output.get("reviewed_parameter_value") != lane_value
+                    or not isinstance(program, dict)
+                    or program.get("axis") != axis
+                    or program.get("reviewed_parameter_value") != lane_value
+                    or program.get("applicable_profile_id") != profile_id
+                    or program.get("unknown_or_other_profile_behavior")
+                    != "REJECT"
+                    or output.get("semantic_program_digest")
+                    != digest_value(program)
+                    or output.get("shared_material_binding")
+                    != expected_shared_binding
+                    or canonical_json(output.get("structural_body"))
+                    != canonical_json(expected_body)
+                    or output.get("structural_body_digest")
+                    != digest_value(output.get("structural_body"))
+                    or output.get("structural_effect_digest")
+                    != output.get("structural_body_digest")
+                    or output.get("structural_output_digest")
+                    != object_digest(output, "structural_output_digest")
+                ):
+                    outputs_valid = False
+            if (
+                not isinstance(operator, dict)
+                or operator.get("component_role") != expected_role
+                or not isinstance(parameter_schema, dict)
+                or parameter_schema.get("axis") != axis
+                or parameter_schema.get("value_type")
+                != "PROFILE_AND_LANE_REVIEWED_SEMANTIC_PROGRAM"
+                or parameter_schema.get("unknown_value_behavior") != "REJECT"
+                or parameter_schema.get("known_but_wrong_lane_value_behavior")
+                != "REJECT"
+                or parameter_schema.get("known_but_wrong_profile_value_behavior")
+                != "REJECT"
+                or parameter_schema.get("output_kind")
+                != P2_AXIS_OUTPUT_KIND_BY_AXIS[axis]
+                or not isinstance(profile_programs, dict)
+                or contract.get("lane_a_value")
+                not in profile_programs
+                or contract.get("lane_b_value")
+                not in profile_programs
+                or contract.get("allowed_values_digest")
+                != digest_value(parameter_schema.get("allowed_values"))
+                or contract.get("lane_a_program_digest")
+                != digest_value(
+                    profile_programs.get(contract.get("lane_a_value"), {})
+                )
+                or contract.get("lane_b_program_digest")
+                != digest_value(
+                    profile_programs.get(contract.get("lane_b_value"), {})
+                )
+                or contract.get("approved_lane_value_is_authoritative") is not True
+                or not isinstance(operator_binding, dict)
+                or operator_binding.get("binding_digest")
+                != digest_value(
+                    operator_binding.get("exact_typed_object_bindings")
+                )
+                or canonical_json(operator_binding)
+                != canonical_json(material_bindings.get(operator_id))
+                or contract.get("operator_mechanism_digest")
+                != hashlib.sha256(
+                    canonical_json(operator.get("mechanism")).encode("utf-8")
+                ).hexdigest()
+                or contract.get("lane_a_value")
+                == contract.get("lane_b_value")
+                or contract.get("values_must_differ") is not True
+                or contract.get("same_fact_set_must_be_preserved") is not True
+                or contract.get("structural_bodies_must_differ") is not True
+                or contract.get("shared_material_binding")
+                != expected_shared_binding
+                or not outputs_valid
+                or not isinstance(lane_a_output, dict)
+                or not isinstance(lane_b_output, dict)
+                or lane_a_output.get("structural_body_digest")
+                == lane_b_output.get("structural_body_digest")
+                or contract.get("realization_target")
+                != f"/structural_realization/lane_{{lane_id}}/axes/{axis}"
+            ):
+                axis_contracts_valid = False
+            for lane_index, lane in enumerate(lanes):
+                lane_key = "lane_a_value" if lane_index == 0 else "lane_b_value"
+                parameter = (
+                    lane.get("axis_operator_parameters", {}).get(axis, {})
+                    if isinstance(lane, dict)
+                    else {}
+                )
+                if (
+                    not isinstance(parameter, dict)
+                    or parameter.get("operator_component_id") != operator_id
+                    or parameter.get("parameter_value") != contract.get(lane_key)
+                    or lane.get(axis) != contract.get(lane_key)
+                    or operator_id not in set(lane.get("component_ids", []))
+                ):
+                    axis_contracts_valid = False
+        expected_active_candidate = copy.deepcopy(candidate) if isinstance(candidate, dict) else None
+        if isinstance(expected_active_candidate, dict):
+            expected_bindings = []
+            for binding in expected_active_candidate[
+                "shared_typed_material_contract"
+            ]["component_exact_bindings"]:
+                component = active_by_id.get(binding.get("component_id"))
+                if not isinstance(component, dict):
+                    axis_contracts_valid = False
+                    continue
+                expected_bindings.append(expected_active_binding(binding, component))
+            expected_active_candidate["shared_typed_material_contract"][
+                "component_exact_bindings"
+            ] = expected_bindings
+            expected_binding_by_id = {
+                binding["component_id"]: binding for binding in expected_bindings
+            }
+            for contract in expected_active_candidate["axis_realization_contracts"]:
+                contract["operator_component_binding"] = expected_binding_by_id[
+                    contract["operator_component_id"]
+                ]
         if (
             not isinstance(candidate, dict)
-            or target_decisions.get(f"P2R1-AB-{profile_id}")
+            or canonical_json(candidate)
+            != canonical_json(
+                target_r4_subjects.get(f"P2R4-AB-{profile_id}")
+            )
+            or target_r4_decisions.get(f"P2R4-AB-{profile_id}")
             != ("APPROVE", "APPROVE")
             or row.get("reviewed_candidate_path_digest") != candidate.get("path_digest")
             or row.get("path_digest") != object_digest(row, "path_digest")
+            or not preserves_candidate_payload(
+                row,
+                expected_active_candidate,
+                {
+                    "path_digest",
+                    "active",
+                    "structural_candidate_only",
+                    "independent_review_state",
+                },
+            )
             or row.get("active") is not True
+            or row.get("independent_review_state")
+            != "APPROVED_BY_REQUIRED_INDEPENDENT_REVIEW"
             or row.get("content_quality_proven") is not False
             or not isinstance(axes, list)
-            or len(axes) < 4
+            or len(axes) != 6
+            or not axis_contracts_valid
             or any(
                 not isinstance(lane, dict)
                 or not set(lane.get("component_ids", [])).issubset(active_by_id)
@@ -2911,6 +4336,9 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
             add_error(errors, "E_P2_FINAL_AB_PATH", str(profile_id))
 
     component_realization_ids: set[str] = set()
+    active_path_by_cp = {
+        row.get("content_product_type_id"): row for row in active_paths
+    }
     request_by_id = {row.get("request_id"): row for row in requests}
     realization_by_request = {row.get("request_id"): row for row in realizations}
     if len(requests) != 40 or len(realization_by_request) != 40:
@@ -2920,6 +4348,185 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         realization = realization_by_request.get(request_id)
         material = request.get("typed_material")
         bindings = request.get("component_bindings")
+        path = active_path_by_cp.get(request.get("content_product_type_id"))
+        lane = request.get("lane")
+        lane_key = (
+            "lane_a"
+            if isinstance(lane, dict) and lane.get("lane_id") == "A"
+            else "lane_b"
+            if isinstance(lane, dict) and lane.get("lane_id") == "B"
+            else ""
+        )
+        expected_lane = path.get(lane_key) if isinstance(path, dict) and lane_key else None
+        path_material = (
+            path.get("shared_typed_material_contract")
+            if isinstance(path, dict)
+            else None
+        )
+        path_control = (
+            path.get("author_request_control_contract")
+            if isinstance(path, dict)
+            else None
+        )
+        request_bindings = {
+            binding.get("component_id"): binding
+            for binding in request.get("component_bindings", [])
+            if isinstance(binding, dict)
+        }
+        material_catalog = (
+            {
+                "source": [
+                    {
+                        "slot_id": str(item.get("slot_id")),
+                        "object_id": str(item.get("source_id")),
+                    }
+                    for item in material.get("sources", [])
+                ],
+                "input": [
+                    {
+                        "slot_id": str(item.get("slot_id")),
+                        "object_id": str(item.get("input_id")),
+                    }
+                    for item in material.get("component_inputs", [])
+                ],
+                "fact": [
+                    {
+                        "slot_id": str(item.get("slot_id")),
+                        "object_id": str(item.get("fact_id")),
+                    }
+                    for item in material.get("facts", [])
+                ],
+                "authorization": [
+                    {
+                        "slot_id": str(item.get("slot_id")),
+                        "object_id": str(item.get("authorization_id")),
+                    }
+                    for item in material.get("authorizations", [])
+                ],
+            }
+            if isinstance(material, dict)
+            else None
+        )
+        path_bindings = {
+            binding.get("component_id"): binding
+            for binding in (
+                path_material.get("component_exact_bindings", [])
+                if isinstance(path_material, dict)
+                else []
+            )
+            if isinstance(binding, dict)
+        }
+        realization_contributions = (
+            realization.get("component_contributions", [])
+            if isinstance(realization, dict)
+            else []
+        )
+
+        def resolve_realization_pointer(pointer: Any) -> Any:
+            node: Any = realization
+            for token in str(pointer).removeprefix("/").split("/"):
+                if not isinstance(node, dict) or token not in node:
+                    return None
+                node = node[token]
+            return node
+
+        r5_request_valid = (
+            isinstance(profile, dict)
+            and isinstance(path, dict)
+            and isinstance(realization, dict)
+            and isinstance(expected_lane, dict)
+            and isinstance(path_material, dict)
+            and isinstance(path_control, dict)
+            and canonical_json(request.get("profile_contract"))
+            == canonical_json(profile)
+            and request.get("request_digest") == object_digest(request, "request_digest")
+            and request.get("generator_version")
+            == "gate1-v1.1-p2-composable-successor-v0.4"
+            and request.get("external_provider_allowed") is False
+            and request.get("publishable") is False
+            and request.get("runtime_consumable") is False
+            and request.get("may_enter_300") is False
+            and canonical_json(request.get("approved_path_binding"))
+            == canonical_json(
+                (lambda binding: {
+                    **binding,
+                    "binding_digest": digest_value(binding),
+                })(
+                    {
+                    "content_product_type_id": path.get("content_product_type_id"),
+                    "profile_digest": profile.get("profile_digest"),
+                    "path_digest": path.get("path_digest"),
+                    "lane_key": lane_key,
+                    }
+                )
+            )
+            and canonical_json(request.get("lane")) == canonical_json(expected_lane)
+            and isinstance(material, dict)
+            and material.get("material_digest")
+            == object_digest(material, "material_digest")
+            and material.get("material_id") == path_material.get("material_id")
+            and material.get("material_digest")
+            == path_material.get("material_digest")
+            and material.get("synthetic_test_only") is True
+            and material.get("publishable") is False
+            and material.get("runtime_consumable") is False
+            and material.get("may_enter_300") is False
+            and canonical_json(material_catalog)
+            == canonical_json(path_material.get("typed_object_catalog"))
+            and digest_value(material_catalog)
+            == path_material.get("typed_object_catalog_digest")
+            and canonical_json(request_bindings) == canonical_json(path_bindings)
+            and canonical_json(request.get("axis_realization_contracts"))
+            == canonical_json(path.get("axis_realization_contracts"))
+            and canonical_json(request.get("component_realization_contracts"))
+            == canonical_json(path.get("component_realization_contracts"))
+            and canonical_json(request.get("control_rule_bindings"))
+            == canonical_json(path_control.get("control_rule_bindings"))
+            and canonical_json(request.get("hard_prohibitions"))
+            == canonical_json(path_control.get("hard_prohibitions"))
+            and canonical_json(request.get("expected_output_structure"))
+            == canonical_json(path_control.get("expected_output_structure"))
+            and realization.get("request_digest") == request.get("request_digest")
+            and realization.get("realization_digest")
+            == object_digest(realization, "realization_digest")
+            and realization.get("selected_component_count")
+            == realization.get("realized_component_count")
+            == len(expected_lane.get("component_ids", []))
+            and realization.get("unrealized_component_count") == 0
+            and realization.get("audience_title") == ""
+            and realization.get("audience_body") == []
+            and realization.get("spoken_script") == []
+            and realization.get("publishable") is False
+            and realization.get("runtime_consumable") is False
+            and realization.get("may_enter_300") is False
+            and len(realization_contributions)
+            == len(expected_lane.get("component_ids", []))
+        )
+        contribution_ids: set[str] = set()
+        for contribution in realization_contributions:
+            component_id = str(contribution.get("component_id"))
+            component = active_by_id.get(component_id)
+            resolved = resolve_realization_pointer(
+                contribution.get("implementation_pointer")
+            )
+            contribution_ids.add(component_id)
+            r5_request_valid &= (
+                isinstance(component, dict)
+                and isinstance(resolved, dict)
+                and contribution.get("component_digest")
+                == component.get("component_digest")
+                and contribution.get("structural_body_digest")
+                == resolved.get("structural_body_digest")
+                and contribution.get("structural_output_digest")
+                == resolved.get("structural_output_digest")
+            )
+        r5_request_valid &= contribution_ids == set(
+            map(str, expected_lane.get("component_ids", []))
+        )
+        component_realization_ids.update(contribution_ids)
+        if not r5_request_valid:
+            add_error(errors, "E_P2_FINAL_REQUEST_PATH_BINDING", str(request_id))
+        continue
         if (
             not isinstance(profile, dict)
             or canonical_json(request.get("profile_contract")) != canonical_json(profile)
@@ -2933,9 +4540,15 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
             or material.get("publishable") is not False
             or material.get("runtime_consumable") is not False
             or material.get("may_enter_300") is not False
+            or material.get("material_digest")
+            != object_digest(material, "material_digest")
             or not isinstance(bindings, list)
             or not bindings
             or not isinstance(realization, dict)
+            or not isinstance(path, dict)
+            or not isinstance(lane, dict)
+            or not isinstance(expected_lane, dict)
+            or not isinstance(path_material, dict)
         ):
             add_error(errors, "E_P2_FINAL_REQUEST", str(request_id))
             continue
@@ -2947,6 +4560,70 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
             row.get("authorization_id"): row
             for row in material.get("authorizations", [])
         }
+        material_catalog = {
+            "source": [
+                {"slot_id": str(row.get("slot_id")), "object_id": str(row.get("source_id"))}
+                for row in material.get("sources", [])
+            ],
+            "input": [
+                {"slot_id": str(row.get("slot_id")), "object_id": str(row.get("input_id"))}
+                for row in material.get("component_inputs", [])
+            ],
+            "fact": [
+                {"slot_id": str(row.get("slot_id")), "object_id": str(row.get("fact_id"))}
+                for row in material.get("facts", [])
+            ],
+            "authorization": [
+                {
+                    "slot_id": str(row.get("slot_id")),
+                    "object_id": str(row.get("authorization_id")),
+                }
+                for row in material.get("authorizations", [])
+            ],
+        }
+        if (
+            material.get("material_id") != path_material.get("material_id")
+            or material.get("material_digest") != path_material.get("material_digest")
+            or canonical_json(material_catalog)
+            != canonical_json(path_material.get("typed_object_catalog"))
+            or hashlib.sha256(canonical_json(material_catalog).encode("utf-8")).hexdigest()
+            != path_material.get("typed_object_catalog_digest")
+            or canonical_json(lane.get("axes"))
+            != canonical_json(
+                {
+                    axis: expected_lane.get(axis)
+                    for axis in P2_AXIS_OPERATOR_ROLE_BY_AXIS
+                }
+            )
+            or canonical_json(lane.get("axis_operator_parameters"))
+            != canonical_json(expected_lane.get("axis_operator_parameters"))
+            or canonical_json(lane.get("axis_realization_contracts"))
+            != canonical_json(path.get("axis_realization_contracts"))
+            or canonical_json(shared_material_binding(material))
+            != canonical_json(path_material.get("shared_material_binding"))
+            or path_material.get("claim_boundary_digest")
+            != digest_value(material.get("claim_boundary"))
+            or canonical_json(request.get("approved_path_binding"))
+            != canonical_json(
+                {
+                    "content_product_type_id": request.get(
+                        "content_product_type_id"
+                    ),
+                    "path_digest": path.get("path_digest"),
+                    "lane_key": lane_key,
+                }
+            )
+        ):
+            add_error(errors, "E_P2_FINAL_REQUEST_PATH_BINDING", str(request_id))
+        exact_binding_by_component = {
+            row.get("component_id"): row
+            for row in path_material.get("component_exact_bindings", [])
+            if isinstance(row, dict)
+        }
+        if {row.get("component_id") for row in bindings} != set(
+            expected_lane.get("component_ids", [])
+        ):
+            add_error(errors, "E_P2_FINAL_REQUEST_COMPONENT_SET", str(request_id))
         for binding in bindings:
             component = active_by_id.get(binding.get("component_id"))
             expected_sets = (
@@ -2962,8 +4639,22 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
                 not isinstance(component, dict)
                 or binding.get("component_digest") != component.get("component_digest")
                 or binding.get("component_role") != component.get("component_role")
+                or canonical_json(binding.get("claim_boundary"))
+                != canonical_json(component.get("claim_boundary"))
+                or list(map(str, binding.get("required_input_slots", [])))
+                != list(map(str, component.get("required_input_slots", [])))
+                or list(map(str, binding.get("required_fact_slots", [])))
+                != list(map(str, component.get("required_fact_slots", [])))
+                or list(map(str, binding.get("required_authorization_slots", [])))
+                != list(
+                    map(str, component.get("required_authorization_slots", []))
+                )
             ):
                 add_error(errors, "E_P2_FINAL_REQUEST_COMPONENT", str(request_id))
+                continue
+            exact_binding = exact_binding_by_component.get(binding.get("component_id"))
+            if not isinstance(exact_binding, dict):
+                add_error(errors, "E_P2_FINAL_EXACT_BINDING", str(request_id))
                 continue
             for slot_key, id_key, object_by_id in expected_sets:
                 slots = list(map(str, binding.get(slot_key, [])))
@@ -2972,13 +4663,129 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
                     str(object_by_id.get(object_id, {}).get("slot_id"))
                     for object_id in object_ids
                 ]
-                if not slots or actual_slots != slots:
+                kind = {
+                    "required_input_slots": "input",
+                    "required_fact_slots": "fact",
+                    "required_authorization_slots": "authorization",
+                }[slot_key]
+                exact_pairs = exact_binding.get("exact_typed_object_bindings", {}).get(
+                    kind, []
+                )
+                if (
+                    not slots
+                    or actual_slots != slots
+                    or slots != [str(row.get("slot_id")) for row in exact_pairs]
+                    or object_ids != [str(row.get("object_id")) for row in exact_pairs]
+                ):
                     add_error(
                         errors,
                         "E_P2_FINAL_TYPED_BINDING",
                         f"{request_id}:{binding.get('component_id')}:{slot_key}",
                     )
         contributions = realization.get("component_contributions")
+        axis_realizations = realization.get("lane_axis_realizations")
+        axis_realization_by_name = {
+            row.get("axis"): row
+            for row in (axis_realizations if isinstance(axis_realizations, list) else [])
+            if isinstance(row, dict)
+        }
+        expected_contract_by_axis = {
+            row.get("axis"): row
+            for row in path.get("axis_realization_contracts", [])
+            if isinstance(row, dict)
+        }
+        axis_realizations_valid = set(axis_realization_by_name) == set(
+            P2_AXIS_OPERATOR_ROLE_BY_AXIS
+        )
+        for axis, contract in expected_contract_by_axis.items():
+            realized = axis_realization_by_name.get(axis)
+            pointer = (
+                str(realized.get("implementation_pointer"))
+                if isinstance(realized, dict)
+                else ""
+            )
+            structural_output = resolve_pointer(realization, pointer)
+            contract_output_key = (
+                "lane_a_structural_output"
+                if lane.get("lane_id") == "A"
+                else "lane_b_structural_output"
+            )
+            if (
+                not isinstance(realized, dict)
+                or realized.get("axis_value") != lane.get("axes", {}).get(axis)
+                or realized.get("supporting_component_ids")
+                != contract.get("supporting_component_ids")
+                or realized.get("operator_component_id")
+                != contract.get("operator_component_id")
+                or realized.get("operator_mechanism_digest")
+                != contract.get("operator_mechanism_digest")
+                or realized.get("operator_binding_digest")
+                != contract.get("operator_component_binding", {}).get("binding_digest")
+                or realized.get("implementation_pointer")
+                != str(contract.get("realization_target", "")).format(
+                    lane_id=lane.get("lane_id")
+                )
+                or not isinstance(structural_output, dict)
+                or structural_output.get("structural_output_digest")
+                != realized.get("structural_output_digest")
+                or structural_output.get("semantic_program_digest")
+                != realized.get("semantic_program_digest")
+                or structural_output.get("structural_body_digest")
+                != realized.get("structural_body_digest")
+                or canonical_json(structural_output)
+                != canonical_json(contract.get(contract_output_key))
+            ):
+                axis_realizations_valid = False
+        binding_by_component = {
+            row.get("component_id"): row for row in bindings if isinstance(row, dict)
+        }
+        contribution_by_component = {
+            row.get("component_id"): row
+            for row in (contributions if isinstance(contributions, list) else [])
+            if isinstance(row, dict)
+        }
+        contributions_valid = set(contribution_by_component) == set(
+            binding_by_component
+        )
+        for component_id, contribution in contribution_by_component.items():
+            binding = binding_by_component.get(component_id)
+            component = active_by_id.get(component_id)
+            effect = contribution.get("observable_structural_effect")
+            expected_typed_binding_digest = (
+                hashlib.sha256(
+                    canonical_json(
+                        {
+                            "input_object_ids": binding.get("input_object_ids"),
+                            "fact_object_ids": binding.get("fact_object_ids"),
+                            "authorization_object_ids": binding.get(
+                                "authorization_object_ids"
+                            ),
+                        }
+                    ).encode("utf-8")
+                ).hexdigest()
+                if isinstance(binding, dict)
+                else ""
+            )
+            expected_effect = (
+                {
+                    "component_role": component.get("component_role"),
+                    "mechanism_digest": digest_value(
+                        component.get("mechanism", {})
+                    ),
+                    "typed_binding_digest": expected_typed_binding_digest,
+                }
+                if isinstance(component, dict)
+                else None
+            )
+            if (
+                not isinstance(binding, dict)
+                or not isinstance(component, dict)
+                or not isinstance(effect, dict)
+                or contribution.get("component_digest")
+                != component.get("component_digest")
+                or canonical_json(effect) != canonical_json(expected_effect)
+            ):
+                contributions_valid = False
         if (
             realization.get("realization_digest")
             != object_digest(realization, "realization_digest")
@@ -2991,6 +4798,8 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
             or realization.get("audience_title") != ""
             or realization.get("audience_body") != []
             or realization.get("spoken_script") != []
+            or not axis_realizations_valid
+            or not contributions_valid
         ):
             add_error(errors, "E_P2_FINAL_REALIZATION", str(request_id))
         component_realization_ids.update(
@@ -2999,25 +4808,77 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
     if component_realization_ids != set(map(str, active_by_id)):
         add_error(errors, "E_P2_FINAL_COMPONENT_USE", "selected but unrealized")
     if len(pair_results) != 20 or any(
-        row.get("same_material_digest") is not True
-        or row.get("same_source_fact_authorization_boundary") is not True
+        row.get("same_source_fact_authorization_boundary") is not True
         or row.get("independent_session_ids") is not True
         or row.get("minimum_four_axes_pass") is not True
-        or row.get("observable_difference_axis_count", 0) < 4
-        or row.get("lane_a_axis_realization_digest")
-        == row.get("lane_b_axis_realization_digest")
+        or row.get("observable_difference_axis_count") != 6
+        or row.get("all_six_structural_bodies_differ") is not True
+        or row.get("ending_action_topology_differs") is not True
         or row.get("content_quality_proven") is not False
+        or row.get("pair_digest") != object_digest(row, "pair_digest")
         for row in pair_results
     ):
         add_error(errors, "E_P2_FINAL_AB_PAIR", "20 structural pairs")
-    if not ablations or any(
-        row.get("implementation_changed") is not True for row in ablations
+    if len(axis_body_pairs) != 120 or any(
+        row.get("body_level_difference") is not True
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in axis_body_pairs
     ):
-        add_error(errors, "E_P2_FINAL_ABLATION", "component removal had no effect")
-    if len(tampers) != len(active_components) or any(
-        row.get("tamper_rejected") is not True for row in tampers
+        add_error(errors, "E_P2_FINAL_AXIS_BODY_PAIR", "120 body differences")
+    if len(path_program_tampers) != 120 or any(
+        row.get("substitution_rejected") is not True
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in path_program_tampers
     ):
-        add_error(errors, "E_P2_FINAL_COMPONENT_TAMPER", "digest tamper accepted")
+        add_error(errors, "E_P2_FINAL_PATH_PROGRAM_TAMPER", "120 substitutions")
+    if len(trust_contract_tampers) != 180 or any(
+        row.get("tamper_rejected") is not True
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in trust_contract_tampers
+    ):
+        add_error(errors, "E_P2_FINAL_TRUST_CONTRACT_TAMPER", "180 contract attacks")
+    if len(ablations) != 410 or any(
+        row.get("ablation_rejected") is not True
+        or row.get("required_output_dependency_preserved") is not True
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in ablations
+    ):
+        add_error(errors, "E_P2_FINAL_ABLATION", "required output dependency lost")
+    if len(component_pointer_results) != 410 or any(
+        row.get("pointer_resolved") is not True
+        or row.get("digest_matches") is not True
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in component_pointer_results
+    ):
+        add_error(errors, "E_P2_FINAL_COMPONENT_POINTER", "unresolved component output")
+    if len(observable_effect_tampers) != 62 or any(
+        row.get("registry_identity_rejected") is not True
+        or row.get("nonmetadata_structure_change_claimed") is not False
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in observable_effect_tampers
+    ):
+        add_error(errors, "E_P2_FINAL_COMPONENT_IDENTITY", "identity tamper not rejected")
+    if len(bound_fact_effects) != 62 or any(
+        row.get("same_required_slot_preserved") is not True
+        or row.get("nonmetadata_structure_changed") is not True
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in bound_fact_effects
+    ):
+        add_error(errors, "E_P2_FINAL_BOUND_FACT_EFFECT", "bound fact effect missing")
+    if len(required_slot_tampers) != 20 or any(
+        row.get("tamper_rejected") is not True
+        or row.get("error_code") != "E_COMPONENT_REQUIRED_SLOT_MISMATCH"
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in required_slot_tampers
+    ):
+        add_error(errors, "E_P2_FINAL_REQUIRED_SLOT", "wrong-slot trust root accepted")
+    if len(program_schema_tampers) != 240 or any(
+        row.get("tamper_rejected") is not True
+        or row.get("error_code") != "E_AXIS_PROGRAM_FIELD_SET"
+        or row.get("case_digest") != object_digest(row, "case_digest")
+        for row in program_schema_tampers
+    ):
+        add_error(errors, "E_P2_FINAL_PROGRAM_SCHEMA", "open program schema")
 
     route_inputs = {
         row.get("case_id"): row for row, _ in read_jsonl(root / ROUTE_INPUT_PATH)
@@ -3098,6 +4959,19 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         or generator_contract.get("audience_content_generation_allowed_in_p2")
         is not False
         or generator_contract.get("generator_may_write_composition_plan") is not False
+        or generator_contract.get("active_core_module") != "p2_generator_core_r6.py"
+        or generator_contract.get("approved_path_registry_is_authoritative") is not True
+        or generator_contract.get("axis_component_profile_lane_payload_allowed")
+        is not False
+        or generator_contract.get(
+            "all_selected_components_require_addressable_structural_output"
+        )
+        is not True
+        or generator_contract.get("component_required_slots_must_equal_binding_slots")
+        is not True
+        or generator_contract.get("path_program_schema_is_executable") is not True
+        or generator_contract.get("hash_or_token_semantic_selection_allowed")
+        is not False
         or recursively_find_true(generator_contract.get("readiness"), READY_KEYS)
     ):
         add_error(errors, "E_P2_FINAL_GENERATOR_CONTRACT", "boundary")
@@ -3105,7 +4979,19 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         generator_registry.get("registry_digest")
         != object_digest(generator_registry, "registry_digest")
         or generator_registry.get("current_generator_entrypoint_count") != 1
+        or not str(generator_registry.get("core_module", {}).get("path", "")).endswith(
+            "p2_generator_core_r6.py"
+        )
+        or generator_registry.get("core_module", {}).get("sha256")
+        != sha256_file(root / P2_TASK_ROOT / "p2_generator_core_r6.py")
         or generator_registry.get("historical_generator_entrypoints_consumed") != []
+        or any(
+            row.get("active") is not False
+            for row in generator_registry.get(
+                "historical_non_active_core_modules", []
+            )
+            if isinstance(row, dict)
+        )
         or generator_registry.get("generator_qualified") is not False
         or generator_registry.get("runtime_ready") is not False
         or generator_registry.get("production_ready") is not False
@@ -3135,12 +5021,71 @@ def validate_p2_final(root: Path, errors: list[dict[str, str]]) -> None:
         or final_result.get("p2_complete") is not True
         or final_result.get("p3_allowed") is not True
         or final_result.get("self_approval_count") != 0
-        or final_result.get("active_component_count") != 49
-        or final_result.get("revised_historical_component_count") != 19
-        or final_result.get("necessary_addition_count") != 9
+        or final_result.get("targeted_r1_review_record_count_per_reviewer") != 141
+        or final_result.get("targeted_r1_review_disposition_counts")
+        != {
+            "APPROVE": 27,
+            "REPAIR": 32,
+            "REJECT": 0,
+            "DISAGREEMENT_REQUIRES_ADJUDICATION": 82,
+        }
+        or final_result.get("targeted_r2_review_record_count_per_reviewer") != 134
+        or final_result.get("targeted_r2_review_disposition_counts")
+        != {
+            "APPROVE": 107,
+            "REPAIR": 20,
+            "REJECT": 0,
+            "DISAGREEMENT_REQUIRES_ADJUDICATION": 7,
+        }
+        or final_result.get("targeted_r2_failure_evidence_preserved") is not True
+        or final_result.get("targeted_r3_review_record_count_per_reviewer") != 29
+        or final_result.get("targeted_r3_review_disposition_counts")
+        != {
+            "APPROVE": 2,
+            "REPAIR": 21,
+            "REJECT": 0,
+            "DISAGREEMENT_REQUIRES_ADJUDICATION": 6,
+        }
+        or final_result.get("targeted_r3_failure_evidence_preserved") is not True
+        or final_result.get("targeted_r4_review_record_count_per_reviewer") != 27
+        or final_result.get("targeted_r4_review_disposition_counts")
+        != {
+            "APPROVE": 0,
+            "REPAIR": 21,
+            "REJECT": 0,
+            "DISAGREEMENT_REQUIRES_ADJUDICATION": 6,
+        }
+        or final_result.get("targeted_r4_failure_evidence_preserved") is not True
+        or final_result.get("targeted_r5_review_record_count_per_reviewer") != 27
+        or final_result.get("targeted_r5_review_disposition_counts")
+        != {
+            "APPROVE": 26,
+            "REPAIR": 0,
+            "REJECT": 0,
+            "DISAGREEMENT_REQUIRES_ADJUDICATION": 1,
+        }
+        or final_result.get("targeted_r5_failure_evidence_preserved") is not True
+        or final_result.get("targeted_r6_review_record_count_per_reviewer") != 1
+        or final_result.get("targeted_r6_review_disposition_counts")
+        != {"APPROVE": 1, "REPAIR": 0, "REJECT": 0}
+        or final_result.get("active_component_count") != 68
+        or final_result.get("revised_historical_component_count") != 18
+        or final_result.get("necessary_addition_count") != 30
         or final_result.get("active_control_rule_count") != 8
         or final_result.get("active_edge_count") != 85
         or final_result.get("approved_supply_complete_profile_count") != 20
+        or final_result.get("active_ab_path_profile_count") != 20
+        or final_result.get("typed_author_request_count") != 40
+        or final_result.get("structural_realization_count") != 40
+        or final_result.get("component_ablation_case_count") != len(ablations)
+        or final_result.get("axis_body_pair_case_count") != 120
+        or final_result.get("component_pointer_case_count") != 410
+        or final_result.get("observable_effect_tamper_case_count") != 62
+        or final_result.get("bound_fact_effect_case_count") != 62
+        or final_result.get("required_slot_tamper_case_count") != 20
+        or final_result.get("path_program_schema_tamper_case_count") != 240
+        or final_result.get("path_program_tamper_case_count") != 120
+        or final_result.get("trust_contract_tamper_case_count") != 180
         or final_result.get("route_primary_action_match_count") != 60
         or final_result.get("route_primary_reason_match_count") != 60
         or final_result.get("external_provider_request_count") != 0
@@ -3204,9 +5149,41 @@ def validate(root: Path) -> list[dict[str, str]]:
             P2_TARGET_EDGES_PATH,
             P2_TARGET_AB_PATH,
             P2_TARGET_REVIEW_PACKET_PATH,
+            P2_TARGET_R2_REVISED_COMPONENTS_PATH,
+            P2_TARGET_R2_ADDITIONS_PATH,
+            P2_TARGET_R2_RULES_PATH,
+            P2_TARGET_R2_EDGES_PATH,
+            P2_TARGET_R2_AB_PATH,
+            P2_TARGET_R2_REVIEW_PACKET_PATH,
+            P2_TARGET_R3_REVISED_COMPONENTS_PATH,
+            P2_TARGET_R3_ADDITIONS_PATH,
+            P2_TARGET_R3_RULES_PATH,
+            P2_TARGET_R3_EDGES_PATH,
+            P2_TARGET_R3_AB_PATH,
+            P2_TARGET_R3_REVIEW_PACKET_PATH,
+            P2_TARGET_R4_REVISED_COMPONENTS_PATH,
+            P2_TARGET_R4_ADDITIONS_PATH,
+            P2_TARGET_R4_RULES_PATH,
+            P2_TARGET_R4_EDGES_PATH,
+            P2_TARGET_R4_AB_PATH,
+            P2_TARGET_R4_REVIEW_PACKET_PATH,
+            P2_TARGET_R5_REVISED_COMPONENTS_PATH,
+            P2_TARGET_R5_ADDITIONS_PATH,
+            P2_TARGET_R5_RULES_PATH,
+            P2_TARGET_R5_EDGES_PATH,
+            P2_TARGET_R5_AB_PATH,
+            P2_TARGET_R5_REVIEW_PACKET_PATH,
+            P2_TARGET_R6_REVIEW_PACKET_PATH,
+            P2_TASK_ROOT / "p2_generator_core_r6.py",
+            P2_TASK_ROOT / "p2_final_documents_r6.py",
             P2_IMPORT_MANIFEST_PATH,
             P2_INITIAL_COMBINED_PATH,
             P2_TARGET_COMBINED_PATH,
+            P2_TARGET_R2_COMBINED_PATH,
+            P2_TARGET_R3_COMBINED_PATH,
+            P2_TARGET_R4_COMBINED_PATH,
+            P2_TARGET_R5_COMBINED_PATH,
+            P2_TARGET_R6_COMBINED_PATH,
             P2_REVIEW_CLOSEOUT_PATH,
             P2_ACTIVE_COMPONENTS_PATH,
             P2_ACTIVE_RULES_PATH,
@@ -3218,8 +5195,15 @@ def validate(root: Path) -> list[dict[str, str]]:
             P2_AUTHOR_REQUESTS_PATH,
             P2_REALIZATIONS_PATH,
             P2_PAIR_RESULTS_PATH,
+            P2_AXIS_BODY_PAIR_RESULTS_PATH,
+            P2_PATH_PROGRAM_TAMPER_RESULTS_PATH,
+            P2_TRUST_CONTRACT_TAMPER_RESULTS_PATH,
+            P2_COMPONENT_POINTER_RESULTS_PATH,
+            P2_OBSERVABLE_EFFECT_TAMPER_RESULTS_PATH,
+            P2_BOUND_FACT_EFFECT_RESULTS_PATH,
+            P2_REQUIRED_SLOT_TAMPER_RESULTS_PATH,
+            P2_PROGRAM_SCHEMA_TAMPER_RESULTS_PATH,
             P2_ABLATION_RESULTS_PATH,
-            P2_TAMPER_RESULTS_PATH,
             P2_ROUTE_ACTUALS_PATH,
             P2_ROUTE_COMPARISONS_PATH,
             P2_PROVIDER_AUDIT_PATH,
@@ -3230,6 +5214,16 @@ def validate(root: Path) -> list[dict[str, str]]:
             *(P2_INITIAL_ADJUDICATION_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
             *(P2_TARGET_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
             *(P2_TARGET_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R2_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R2_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R3_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R3_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R4_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R4_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R5_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R5_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R6_PRIMARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
+            *(P2_TARGET_R6_SECONDARY_DIR / name for name in ("records.jsonl", "report.md", "run_manifest.yaml")),
         )
     for relative_path in required:
         if not (root / relative_path).exists():
@@ -3316,6 +5310,97 @@ def tamper_p2_ab_axis(rows: list[dict[str, Any]]) -> None:
     axis = rows[0]["observable_difference_axes"][0]
     rows[0]["lane_b"][axis] = rows[0]["lane_a"][axis]
     rows[0]["path_digest"] = object_digest(rows[0], "path_digest")
+
+
+def tamper_p2_final_exact_binding(rows: list[dict[str, Any]]) -> None:
+    binding = rows[0]["component_exact_binding"]
+    binding["exact_typed_object_bindings"]["input"][0]["object_id"] += "-FORGED"
+    binding["binding_digest"] = hashlib.sha256(
+        canonical_json(binding["exact_typed_object_bindings"]).encode("utf-8")
+    ).hexdigest()
+    rows[0]["edge_digest"] = object_digest(rows[0], "edge_digest")
+
+
+def tamper_p2_final_axis_operator(rows: list[dict[str, Any]]) -> None:
+    contracts = rows[0]["axis_realization_contracts"]
+    contracts[0]["operator_component_id"] = contracts[1]["operator_component_id"]
+    rows[0]["path_digest"] = object_digest(rows[0], "path_digest")
+
+
+def tamper_p2_final_request_axis(rows: list[dict[str, Any]]) -> None:
+    contracts = rows[0]["axis_realization_contracts"]
+    contracts[0]["operator_component_id"] = contracts[1]["operator_component_id"]
+    rows[0]["request_digest"] = object_digest(rows[0], "request_digest")
+
+
+def tamper_p2_r1_failure_evidence(rows: list[dict[str, Any]]) -> None:
+    row = next(row for row in rows if row["requires_targeted_adjudication"])
+    row["requires_targeted_adjudication"] = False
+    row["combined_disposition"] = "APPROVE"
+    row["combined_digest"] = object_digest(row, "combined_digest")
+
+
+def tamper_p2_r2_signed_decision(rows: list[dict[str, Any]]) -> None:
+    rows[0]["decision"] = "REPAIR"
+    rows[0]["defect_severity"] = "MINOR"
+    rows[0]["record_digest"] = object_digest(rows[0], "record_digest")
+
+
+def tamper_p2_r3_unknown_axis(rows: list[dict[str, Any]]) -> None:
+    axis = rows[0]["observable_difference_axes"][0]
+    rows[0]["lane_b"]["axes"][axis] = "UNREVIEWED_AXIS_VALUE"
+    rows[0]["lane_b"]["axis_programs"][axis][
+        "reviewed_path_value"
+    ] = "UNREVIEWED_AXIS_VALUE"
+    contract = next(
+        row for row in rows[0]["axis_realization_contracts"] if row["axis"] == axis
+    )
+    contract["lane_b_value"] = "UNREVIEWED_AXIS_VALUE"
+    rows[0]["path_digest"] = object_digest(rows[0], "path_digest")
+
+
+def tamper_p2_request_material_truth(rows: list[dict[str, Any]]) -> None:
+    rows[0]["typed_material"]["facts"][0]["fact_value_digest"] = "f" * 64
+    rows[0]["typed_material"]["material_digest"] = object_digest(
+        rows[0]["typed_material"], "material_digest"
+    )
+    rows[0]["request_digest"] = object_digest(rows[0], "request_digest")
+
+
+def tamper_p2_request_strip_nonaxis_binding(rows: list[dict[str, Any]]) -> None:
+    axis_roles = set(P2_AXIS_OPERATOR_ROLE_BY_AXIS.values())
+    binding = next(
+        row
+        for row in rows[0]["component_bindings"]
+        if row["component_role"] not in axis_roles
+        and (
+            row["exact_typed_object_bindings"].get("fact")
+            or row["exact_typed_object_bindings"].get("authorization")
+        )
+    )
+    binding["exact_typed_object_bindings"]["fact"] = []
+    binding["exact_typed_object_bindings"]["authorization"] = []
+    binding["binding_digest"] = hashlib.sha256(
+        canonical_json(binding["exact_typed_object_bindings"]).encode("utf-8")
+    ).hexdigest()
+    rows[0]["request_digest"] = object_digest(rows[0], "request_digest")
+
+
+def tamper_p2_evidence_accept(rows: list[dict[str, Any]]) -> None:
+    rows[0]["tamper_rejected"] = False
+    rows[0]["error_code"] = ""
+    rows[0]["case_digest"] = object_digest(rows[0], "case_digest")
+
+
+def tamper_current_owner_lineage(value: dict[str, Any]) -> None:
+    owner = value["current_gate1_owner"]
+    authority = owner.get("current_ledger_authority")
+    if isinstance(authority, dict):
+        authority["shared_horizon_modified"] = True
+        return
+    owner["predecessor"]["final_targeted_review"][
+        "reviewed_checkpoint_commit"
+    ] = "0" * 40
 
 
 def selftest(root: Path) -> int:
@@ -3405,9 +5490,7 @@ def selftest(root: Path) -> int:
             "E_OWNER_POLICY",
             lambda temp: mutate_yaml(
                 temp / CURRENT_OWNER_PATH,
-                lambda value: value["current_gate1_owner"][
-                    "current_ledger_authority"
-                ].update({"shared_horizon_modified": True}),
+                tamper_current_owner_lineage,
             ),
         ),
         (
@@ -3497,6 +5580,136 @@ def selftest(root: Path) -> int:
             ),
         ),
     ]
+    owner_id = load_yaml(root / CURRENT_OWNER_PATH).get("current_gate1_owner", {}).get(
+        "owner_id"
+    )
+    if owner_id == "GATE1_V11_P2_FINAL_OWNER":
+        tests.extend(
+            [
+                (
+                    "p2_final_r1_failure_evidence_erased",
+                    "E_P2_FINAL_TARGET_R1_COMBINED",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_TARGET_COMBINED_PATH,
+                        tamper_p2_r1_failure_evidence,
+                    ),
+                ),
+                (
+                    "p2_final_r2_signed_decision_forged",
+                    "E_P2_FINAL_TARGET_R2_REVIEW",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_TARGET_R2_PRIMARY_DIR / "records.jsonl",
+                        tamper_p2_r2_signed_decision,
+                    ),
+                ),
+                (
+                    "p2_final_r3_failure_evidence_erased",
+                    "E_P2_FINAL_TARGET_R3_COMBINED",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_TARGET_R3_COMBINED_PATH,
+                        tamper_p2_r1_failure_evidence,
+                    ),
+                ),
+                (
+                    "p2_final_r4_failure_evidence_erased",
+                    "E_P2_FINAL_TARGET_R4_COMBINED",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_TARGET_R4_COMBINED_PATH,
+                        tamper_p2_r1_failure_evidence,
+                    ),
+                ),
+                (
+                    "p2_final_r5_signed_decision_forged",
+                    "E_P2_FINAL_TARGET_R5_REVIEW",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_TARGET_R5_PRIMARY_DIR / "records.jsonl",
+                        tamper_p2_r2_signed_decision,
+                    ),
+                ),
+                (
+                    "p2_final_r6_signed_decision_forged",
+                    "E_P2_FINAL_TARGET_R6_REVIEW",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_TARGET_R6_PRIMARY_DIR / "records.jsonl",
+                        tamper_p2_r2_signed_decision,
+                    ),
+                ),
+                (
+                    "p2_final_required_slot_tamper_accepted",
+                    "E_P2_FINAL_REQUIRED_SLOT",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_REQUIRED_SLOT_TAMPER_RESULTS_PATH,
+                        tamper_p2_evidence_accept,
+                    ),
+                ),
+                (
+                    "p2_final_program_schema_tamper_accepted",
+                    "E_P2_FINAL_PROGRAM_SCHEMA",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_PROGRAM_SCHEMA_TAMPER_RESULTS_PATH,
+                        tamper_p2_evidence_accept,
+                    ),
+                ),
+                (
+                    "p2_final_exact_object_binding_forged",
+                    "E_P2_FINAL_EDGE",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_ACTIVE_EDGES_PATH,
+                        tamper_p2_final_exact_binding,
+                    ),
+                ),
+                (
+                    "p2_final_axis_operator_substituted",
+                    "E_P2_FINAL_AB_PATH",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_ACTIVE_AB_PATH,
+                        tamper_p2_final_axis_operator,
+                    ),
+                ),
+                (
+                    "p2_final_request_operator_substituted",
+                    "E_P2_FINAL_REQUEST_PATH_BINDING",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_AUTHOR_REQUESTS_PATH,
+                        tamper_p2_final_request_axis,
+                    ),
+                ),
+                (
+                    "p2_final_unreviewed_axis_value",
+                    "E_P2_FINAL_AB_PATH",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_ACTIVE_AB_PATH,
+                        tamper_p2_r3_unknown_axis,
+                    ),
+                ),
+                (
+                    "p2_final_material_truth_tamper",
+                    "E_P2_FINAL_REQUEST_PATH_BINDING",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_AUTHOR_REQUESTS_PATH,
+                        tamper_p2_request_material_truth,
+                    ),
+                ),
+                (
+                    "p2_final_nonaxis_binding_stripped",
+                    "E_P2_FINAL_REQUEST_PATH_BINDING",
+                    lambda temp: mutate_jsonl(
+                        temp / P2_AUTHOR_REQUESTS_PATH,
+                        tamper_p2_request_strip_nonaxis_binding,
+                    ),
+                ),
+                (
+                    "p2_final_readiness_flip",
+                    "E_P2_FINAL_RESULT",
+                    lambda temp: mutate_yaml(
+                        temp / P2_FINAL_RESULT_PATH,
+                        lambda value: value["p2_final_result"]["readiness"].update(
+                            {"generation_allowed": True}
+                        ),
+                    ),
+                ),
+            ]
+        )
     failures: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="gate1-p1a-checker-selftest-") as temporary:
         base = Path(temporary)

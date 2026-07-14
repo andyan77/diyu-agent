@@ -1,0 +1,239 @@
+independent_component_review_closeout:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  initial_reviewed_commit: c37a894930025aac99db18a055d5a79294fa89dc
+  initial_review_packet_sha256: 67751ab60e6ee8e227c4aaff3dccd4c7f3c5d027ceda2f910f4ea1a600231095
+  targeted_r1_reviewed_commit: 6d7aa877a12867ee9a73e50a8e292ef4a631d7a9
+  targeted_r1_review_packet_sha256: 5d32c3dd1140013978f42df887ec98462b723317bf58daaf8eaa040d608bea50
+  targeted_r2_reviewed_commit: 211b9b241d7660dfa688d3b8db4716ce4e871d27
+  targeted_r2_review_packet_sha256: 6eaa8e8f365888ea887a13e3065e9cb711f8f518460f61d4865f3e24852986ef
+  targeted_r3_reviewed_commit: e83c4a27259d64dd1a52d41d9ca0b9cc7237db61
+  targeted_r3_review_packet_sha256: e14bf95b40d87c83be48e45f2455d983c3c5e412f88ef41f5b034b9d2403883d
+  targeted_r4_reviewed_commit: 87d3ca89ba9cbb743ee82af105cf831bbd8e2dab
+  targeted_r4_review_packet_sha256: 95c2a44e8d473844ada77d242ede0299a6b4db63b2699dfc633af0704d2c7e72
+  targeted_r5_reviewed_commit: 6f18ac14a15e7e17bfb3f45809c3b33d3b1c1d5a
+  targeted_r5_review_packet_sha256: de59316fd7d88237e00cc84bd8802959d194995ddf5aef703477bd4921adc245
+  targeted_r6_reviewed_commit: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+  targeted_r6_review_packet_sha256: 2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8
+  reviewer_identities:
+    initial_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-RUN-20260713-C37A894
+      record_count: 244
+      decision_counts:
+        APPROVE: 148
+        REPAIR: 39
+        REJECT: 57
+      records_sha256: a53d4a6c23b07eb40f26e82580d08f01b6995fa613bfb394ca6b7e25846712b2
+      report_sha256: 89c2491cd843bc53f9fb0f86ce17c2ec29e539b95fc9134726daf06f19e0911a
+      run_manifest_sha256: c2d5a87bfca3502c0b23885e4e9668655d52fb8f7d24fd74352e4c5f463af776
+    initial_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-RUN-20260713-C37A894
+      record_count: 244
+      decision_counts:
+        APPROVE: 101
+        REPAIR: 107
+        REJECT: 36
+      records_sha256: e6e3445af0113122ffb23d30e12e775e58433a6f925c36fe6dfb8e1531296e2b
+      report_sha256: be132ef007eb53ff1052974f2cb08a94cba0545bc35da899b904f85f10ce288e
+      run_manifest_sha256: ba12668619ba48dbd1080f36d52624f4407cd3bdebd4500933ad158450b4e8eb
+    initial_adjudication:
+      review_role: TARGETED_THIRD_ADJUDICATION
+      reviewer_identity_id: P2-TARGETED-ADJUDICATOR-C
+      reviewer_instance_or_session_id: 019f5de8-8338-7082-9d10-96cf5bbf7c21
+      review_run_id: P2-ADJUDICATION-RUN-20260713-C37A894
+      record_count: 92
+      records_sha256: 84be65d38eafae22b1bb50baebe17f7674bd298592f3d1b989b22c5c766062bc
+      report_sha256: 7765d6aeb4048df2c5458f5e068f4f616a953320accc2b1d35ce294744e45b30
+      run_manifest_sha256: b70c5840d8acb42e2c3d2c62d7277c72730ec84dd9b577460d5d0bc147d4a2e9
+    targeted_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-R1-RUN-20260713-6D7AA87
+      record_count: 141
+      decision_counts:
+        APPROVE: 29
+        REPAIR: 112
+        REJECT: 0
+      records_sha256: d2b451fec8756b955886d67c6bed2534d1303a09a0bbcf0496b63c31205e012b
+      report_sha256: 6da06c5e5f0d58c9e6c376989607d12e85621b84cc516cc03b9e9ba6c68cd3af
+      run_manifest_sha256: 656af709b98a7e11d4e1e915802fc603d83fd81a32ce83c4ad28a79344306ae0
+    targeted_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-R1-RUN-20260713-6D7AA87
+      record_count: 141
+      decision_counts:
+        APPROVE: 107
+        REPAIR: 34
+        REJECT: 0
+      records_sha256: 182e2f3310afa3503ca2faab3d5513c3b2241016a20280328d4296e9ec570264
+      report_sha256: cc0ff1e04745d9279b996afbc50a44ebc556d03f581f6f5fcd79601d7babcea3
+      run_manifest_sha256: d4ec5b2dded7696e4450c5d62a24cd846440623c20064edc0e91f129a14b17b0
+    targeted_r2_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-R2-RUN-20260713-211B9B2
+      record_count: 134
+      decision_counts:
+        APPROVE: 107
+        REPAIR: 27
+        REJECT: 0
+      records_sha256: 6bae62468962b6592f1870ee41e1146d079c3f2a8af367577dfc113c20846391
+      report_sha256: 10a44e679d6085d8cf307ad2db0bc4671fb2b9eace11d79d53392ca79af85f3a
+      run_manifest_sha256: 569d36600133c6b85cfe8d6e209ddd8e764c3e92e45721d8b621edf862441778
+    targeted_r2_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-R2-RUN-20260713-211B9B2
+      record_count: 134
+      decision_counts:
+        APPROVE: 114
+        REPAIR: 20
+        REJECT: 0
+      records_sha256: f2746fb87a080945326e5b306875368559d5b014ce1be811e6eee17fb233afe2
+      report_sha256: 4769f019bfc688036cea1eb16e545f5e89aff6dff66974e7c0ff203774d1f37c
+      run_manifest_sha256: c91455f59e4de17af0f32af405609d038d3e0ea8536bff9dcd6542f266445b9f
+    targeted_r3_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-R3-RUN-20260713-E83C4A2
+      record_count: 29
+      decision_counts:
+        APPROVE: 2
+        REPAIR: 27
+        REJECT: 0
+      records_sha256: 889f1b4c99ad6dbae8f11428fe98c8af41f83ff4187a80c2c446001780c8b397
+      report_sha256: 0d1fa5b9498a0edd45cf6c7439429d6d2f6014711fde1f3e41d6138b9bffdb59
+      run_manifest_sha256: 87ea4c1155ea81a6dab70d86020a59baeb821fcaa00238cfced962c91ee9c140
+    targeted_r3_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-R3-RUN-20260713-E83C4A2
+      record_count: 29
+      decision_counts:
+        APPROVE: 8
+        REPAIR: 21
+        REJECT: 0
+      records_sha256: 71297a4ce550ac6252093aa0c1eac86c8ee04caedd4696a78ec446512186b7b5
+      report_sha256: 2a3df64da8961afb4ab84fe28491e8783a0aaa26925ad21c52e2e7db8b9d6b33
+      run_manifest_sha256: 2238b3de48b6647b163f11b5b47dc590c8768320b7a675605e6edb91847bec20
+    targeted_r4_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-R4-RUN-20260713-87D3CA8
+      record_count: 27
+      decision_counts:
+        APPROVE: 0
+        REPAIR: 27
+        REJECT: 0
+      records_sha256: 35d785d126543ca395b82fbf2154fb627bbdacc43846cda6576addf62950f687
+      report_sha256: ec537349769e00239c19d523af0d63cf436ba76bfd6145887558fa7286e510f1
+      run_manifest_sha256: 4939ad397d5ae93c6ee7b5bf46f1bd1a0d009088245eba3d9cdb6d9938e96ada
+    targeted_r4_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-R4-RUN-20260713-87D3CA8
+      record_count: 27
+      decision_counts:
+        APPROVE: 6
+        REPAIR: 21
+        REJECT: 0
+      records_sha256: 7facaed22e59ddc0c62c894de4ee8b7b6451c2ffc8f388e1264298aeb6ef5baa
+      report_sha256: 4e2680f218a9b9c1cfb62c0d779c9a7c74defedbe5be32d627d1773814d43c65
+      run_manifest_sha256: 9655676122f6a893a926ddd93a948cef23dc41e0bc4a6faac8b8afc44fc4f925
+    targeted_r5_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-R5-RUN-20260713-6F18AC1
+      record_count: 27
+      decision_counts:
+        APPROVE: 26
+        REPAIR: 1
+        REJECT: 0
+      records_sha256: cdfa692d176772418ee59e199448c77f06e975543bdf1ecc6453a48710f3c9b4
+      report_sha256: bbc34e1327ba60ce609816c2acde93d2467bb6849f35855d8cb1edb1d34128c4
+      run_manifest_sha256: 21387d5403bd09318e0241caad52193a0db04a5aa830a65ba392c5caf5b192f6
+    targeted_r5_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-R5-RUN-20260713-6F18AC1
+      record_count: 27
+      decision_counts:
+        APPROVE: 27
+        REPAIR: 0
+        REJECT: 0
+      records_sha256: 625e5490c39f91b3071bb043d370ab949956ea483f0d4196493c35e045486db9
+      report_sha256: 006d38bfe43e1a1df39db26d9005f6d0f32676f8b9f9d28bd2a62458ab679f0a
+      run_manifest_sha256: 8db046c5d9481d68e62ce3fa2619f801ecc788f958c5cc409d69b2cedf9a4814
+    targeted_r6_primary:
+      review_role: PRIMARY_CONTENT_VALUE_COMPOSABILITY
+      reviewer_identity_id: P2-PRIMARY-CONTENT-REVIEWER-A
+      reviewer_instance_or_session_id: 019f5dce-25f9-74c3-85d6-c19280e9664a
+      review_run_id: P2-PRIMARY-R6-RUN-20260713-6555C83
+      record_count: 1
+      decision_counts:
+        APPROVE: 1
+        REPAIR: 0
+        REJECT: 0
+      records_sha256: f71484a4ca3d72ce95f5d50e5f66f688a9ed023a1103d273bfaa944d7961ca0a
+      report_sha256: 6f7a84b5b741de3f9ec1466aff02b90e99f768424b518603124f79b120013569
+      run_manifest_sha256: faae47e26598fff4e45ab4744b4b518ec16b9e559707feae8d877b7abc0d8c01
+    targeted_r6_secondary:
+      review_role: SECONDARY_PROVENANCE_FACT_AUTHORIZATION
+      reviewer_identity_id: P2-SECONDARY-PROVENANCE-REVIEWER-B
+      reviewer_instance_or_session_id: 019f5dce-9436-7e03-be80-220461f6107d
+      review_run_id: P2-SECONDARY-R6-RUN-20260713-6555C83
+      record_count: 1
+      decision_counts:
+        APPROVE: 1
+        REPAIR: 0
+        REJECT: 0
+      records_sha256: 55631b58d9fc040aff7a1cc803aa1d2b25fff559992b8ca75d16a324bfb3930d
+      report_sha256: 9c7ee00ad84a00fb064155ac18393cb2080382dac0197bc405b2cd74b2e37084
+      run_manifest_sha256: 2166bfc79470a03c0c3d0a57d1ba7036f272ffaa54891c85853051648a8a957a
+  initial_combined_record_count: 244
+  initial_real_disagreement_count: 92
+  initial_adjudication_record_count: 92
+  targeted_r1_combined_record_count: 141
+  targeted_r1_matching_approval_count: 27
+  targeted_r1_failure_or_open_count: 114
+  targeted_r2_combined_record_count: 134
+  targeted_r2_matching_approval_count: 107
+  targeted_r2_unresolved_disagreement_count: 7
+  targeted_r2_matching_repair_count: 20
+  targeted_r2_failure_evidence_preserved: true
+  targeted_r3_combined_record_count: 29
+  targeted_r3_matching_approval_count: 2
+  targeted_r3_unresolved_disagreement_count: 6
+  targeted_r3_matching_repair_count: 21
+  targeted_r3_failure_evidence_preserved: true
+  targeted_r4_combined_record_count: 27
+  targeted_r4_matching_approval_count: 0
+  targeted_r4_unresolved_disagreement_count: 6
+  targeted_r4_matching_repair_count: 21
+  targeted_r4_failure_evidence_preserved: true
+  targeted_r5_combined_record_count: 27
+  targeted_r5_matching_approval_count: 26
+  targeted_r5_unresolved_disagreement_count: 1
+  targeted_r5_failure_evidence_preserved: true
+  targeted_r6_combined_record_count: 1
+  targeted_r6_matching_approval_count: 1
+  targeted_r6_unresolved_disagreement_count: 0
+  executor_self_approval_count: 0
+  review_closeout_digest: 863afc5ca826ba092f1679feefac8ea12346d34975592cc91e9e4e9945f51d84

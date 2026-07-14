@@ -1,0 +1,576 @@
+approved_component_supply_matrix:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  approved_complete_profile_count: 20
+  entries:
+  - content_product_type_id: CP01
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-01-ARRIVAL-INSPECTION
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-ACTION-01-KNIT-RECOVERY-CHECK
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-CONTINUOUS-ACTION-PROOF
+      complete: true
+  - content_product_type_id: CP02
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+      complete: true
+  - content_product_type_id: CP03
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-SCENE-ORDERED-CRAFT-PROCESS
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-ACTION-SOURCE-BOUND-CRAFT-STEP
+      complete: true
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-TRIGGER-07-WORKMANSHIP-DETAIL-CHECK
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-VISUAL-CRAFT-STEP-STATE-SEQUENCE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-CAPTURE-CAUSAL-STEP-COVERAGE
+      complete: true
+  - content_product_type_id: CP04
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-SCENE-SHARED-OBJECT-ROLE-HANDOFF
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-ACTION-AUTHORIZED-ROLE-HANDOFF
+      complete: true
+    - role: transition
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-TRANSITION-PARALLEL-WORK-STATE
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-JUDGMENT-ROLE-AUTHORITY-HANDOFF
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-MULTI-ROLE-PARALLEL-FRAME
+      complete: true
+  - content_product_type_id: CP05
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-SCENE-CAREER-STAGE-EVIDENCE
+      complete: true
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-TRIGGER-CAREER-STAGE-CHANGE
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      complete: true
+  - content_product_type_id: CP06
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-07-INSIDE-DETAIL-INSPECTION
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-JUDGMENT-OBSERVATION-BASIS-LIMIT
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      complete: true
+  - content_product_type_id: CP07
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-JUDGMENT-CONDITION-FIT-ALTERNATIVE
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+      complete: true
+    - role: closing
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-CLOSING-CONDITION-OR-ALTERNATIVE
+      complete: true
+  - content_product_type_id: CP08
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-09-MATERIAL-CLAIM-BOUNDARY
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-003-VISUAL-DETAIL-PATH-STRUCTURE
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-JUDGMENT-MATERIAL-STRUCTURE-USE
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-003-REASONING-EVIDENCE-BEFORE-CONCLUSION
+      complete: true
+  - content_product_type_id: CP09
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-TRIGGER-02-UNSUPPORTED-FIT-CLAIM
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-JUDGMENT-CONDITION-FIT-ALTERNATIVE
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-CONDITION-EXCLUSION-ALTERNATIVE
+      complete: true
+    - role: closing
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-CLOSING-CONDITION-OR-ALTERNATIVE
+      complete: true
+  - content_product_type_id: CP10
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-TRIGGER-09-OBSERVATION-VS-RECORD
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+      complete: true
+  - content_product_type_id: CP11
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-SCENE-RECORDED-TRADEOFF
+      complete: true
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-TRIGGER-RECORDED-TRADEOFF
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      complete: true
+  - content_product_type_id: CP12
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-TRIGGER-VERSION-CHANGE-RECORD
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-ACTION-MATCHED-VERSION-CHANGE
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-VERSION-MATCHED-ACTION
+      complete: true
+  - content_product_type_id: CP13
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-03-MULTI-CONTEXT-PRODUCT
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-003-REASONING-GARMENT-ROLE-NOT-BODY-JUDGMENT
+      complete: true
+    - role: transition
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-003-TRANSITION-SAME-OBJECT-OBSERVATION-ENTRY
+      complete: true
+  - content_product_type_id: CP14
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-08-LIGHT-COLOR-OBSERVATION
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-VISUAL-SILENT-OBJECT-CONTACT-RHYTHM
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-ACTION-08-COLOR-COMPARISON-PROP
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-CONTACT-SOURCE-SOUND-SYNC
+      complete: true
+  - content_product_type_id: CP15
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-15-ARRIVAL-TABLE-REARRANGE
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-ACTION-15-TABLE-REARRANGE
+      complete: true
+    - role: transition
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-TRANSITION-SOURCE-BOUND-TIME-SLICE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-STATUS-MAP-OVERVIEW-DETAIL
+      complete: true
+  - content_product_type_id: CP16
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-TRIGGER-AUTHORIZED-SERVICE-NEED
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-ACTION-10-STYLING-TUCK-WALK
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-SOURCE-BOUND-TASK-FRICTION
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-CAPTURE-PRIVACY-SAFE-SERVICE-FEEDBACK
+      complete: true
+  - content_product_type_id: CP17
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-SCENE-12-WINDOW-COLOR-ADJUSTMENT
+      complete: true
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-TRIGGER-12-COLOR-AREA-IMBALANCE
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-002-ACTION-12-WINDOW-COLOR-MOVE
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+      complete: true
+  - content_product_type_id: CP18
+    approved_supply_complete: true
+    required_roles:
+    - role: scene
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-SCENE-AUTHORIZED-LOCAL-CONTEXT
+      complete: true
+    - role: visual_beat
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE
+      complete: true
+    - role: observable_action
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-ACTION-AUTHORIZED-LOCAL-ROUTINE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-SOURCE-SOUND-TIME-ANCHOR
+      complete: true
+  - content_product_type_id: CP19
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-TRIGGER-RECORDED-TRADEOFF
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-RESULT-TO-AUTHORIZED-TRACE
+      complete: true
+    - role: closing
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-CLOSING-TRADEOFF-COST-BOUNDARY
+      complete: true
+  - content_product_type_id: CP20
+    approved_supply_complete: true
+    required_roles:
+    - role: trigger
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - G1V11-P2-TRIGGER-COMMITMENT-EVIDENCE-CHECK
+      complete: true
+    - role: professional_judgment
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-JUDGMENT-EVIDENCE-LEDGER-READER
+      complete: true
+    - role: audience_facing_reasoning_move
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-REASONING-AUTHORIZED-FIELD-TRACE
+      complete: true
+    - role: capture_instruction
+      minimum: 1
+      approved_count: 1
+      approved_component_ids:
+      - RCV2-004-CAPTURE-DOCUMENT-OBJECT-CROSS-BIND
+      complete: true
+  matrix_digest: a82174dee0d32f95f53a376f79a3347631be2642d7dbcca39a3c08c283508751

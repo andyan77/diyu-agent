@@ -1,42 +1,31 @@
 current_gate1_owner:
   schema_version: v0.1
-  owner_id: GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER
+  owner_id: GATE1_V11_P2_FINAL_OWNER
   task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
-  baseline_commit: 81ddfe975a11b3dc9533d6828ac6418328b0f254
   current_task_root: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001
   current_checker: ci/checkers/check_gate1_v1_1_current.py
+  result_state: PASS_TO_P3_OPEN_PROBE
+  p2_complete: true
+  p3_allowed: true
+  current_generator:
+    entrypoint: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/run_p2_component_supply_and_generator_core_repair.py
+    active_component_count: 68
+    active_edge_count: 85
+    active_control_rule_count: 8
+    historical_generator_entrypoints_consumed: []
   predecessor:
-    task_id: GATE1_V11_SIGNED_REVIEW_CLOSEOUT_AND_BASELINE_FREEZE_001
-    result_state: STOPPED_COMPONENT_SUPPLY_GAP
-    p2_allowed_by_p1b: false
-    historical_owner_sha256: 541443a9c5c34047fb5c9a4652412cc019218abd60d29528b57dbc1d771d637a
-    historical_checker_sha256: 6474966c8ea5d0fdb2c5d40cc5888969f5fc8ebb63f8006d61504a4aaae8e231
-  protected_inputs:
-    standard_source: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
-    p1b_result: controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/result/p1b_signed_review_closeout_result.v0.1.yaml
-    p1b_route_gold: controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/route/route_60_gold_answers.v0.1.jsonl
-    historical_component_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
-    profile_source: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
-  checkpoint:
-    state: PENDING_INDEPENDENT_COMPONENT_REVIEW
-    p2_final_complete: false
-    proposed_component_count: 54
-    proposed_edge_count: 162
-    active_component_count: 0
-    active_edge_count: 0
-    self_approval_count: 0
-    p3_allowed: false
+    owner_id: GATE1_V11_P2_COMPONENT_REVIEW_CHECKPOINT_OWNER
+    final_targeted_review:
+      reviewed_checkpoint_commit: 6555c83c58c54e698ef50c3ff707e44a255d5d9b
+      review_packet_sha256: 2da6b6eaebd03feea33094e6606730e357d07ae57e38119414685a96332f52a8
   core_numbers:
     target_total: 300
     reference_inventory: 120
     historical_component_inventory: 86
-  current_ledger_authority:
-    checker_path: controlled_content_generator_v2_001/b_lane_independent_composition_dev_gate_001/phase_0/check_current_ledger_owner.py
-    shared_horizon_modified: false
-    terminal_derivation: delegated_to_existing_owner
+    all_unchanged: true
   readiness:
-    changed: false
     generation_allowed: false
     generator_qualified: false
     runtime_ingest_ready: false
     production_ready: false
+  owner_digest: ac4fe6c1ccdf8af787eb51d04f085883c27660690ccee6dfb996a90d89d4f7a7

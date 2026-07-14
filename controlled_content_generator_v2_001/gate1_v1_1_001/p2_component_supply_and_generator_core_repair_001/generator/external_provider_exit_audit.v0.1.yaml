@@ -1,0 +1,21 @@
+external_provider_exit_audit:
+  schema_version: v0.1
+  task_id: GATE1_V11_COMPONENT_SUPPLY_AND_GENERATOR_CORE_REPAIR_001
+  unique_exit: ExternalProviderExitAudit.dispatch
+  event_count: 1
+  blocked_attempt_count: 1
+  external_provider_request_count: 0
+  external_provider_response_count: 0
+  derived_from_event_log: true
+  events:
+  - event_type: BLOCKED_EXTERNAL_PROVIDER_ATTEMPT
+    provider: SYNTHETIC_NEGATIVE_TEST_PROVIDER
+    request_digest: '0000000000000000000000000000000000000000000000000000000000000000'
+    network_dispatch_started: false
+    provider_response_received: false
+    event_digest: 4ee5d1ceb203bacf3bfa79dc865f549abcd82b868106bff39034ef898965658f
+  audit_digest: 8df3d185c463ec89ad124b559f08e48cb1c2244ab113b95fbacc845983e16cc4
+  negative_dispatch_test:
+    synthetic_test_only: true
+    blocked_before_network_dispatch: true
+    error_code: E_EXTERNAL_PROVIDER_DISABLED
