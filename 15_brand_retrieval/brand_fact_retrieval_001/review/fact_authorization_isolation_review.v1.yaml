@@ -1,0 +1,59 @@
+review:
+  schema_version: v1.0
+  review_id: PKG5-FACT-AUTH-ISOLATION-REVIEW-001
+  task_id: DIYU_BRAND_FACT_RETRIEVAL_001
+  review_type: FACT_AUTHORIZATION_PRIVACY_ISOLATION
+  reviewer_identity: codex-pkg5-fact-auth-privacy-isolation-e4453184
+  reviewer_session_id: e4453184-12d8-42d7-8127-fdf497ab8511
+  reviewer_run_id: 77fdcb46-326e-400e-928c-441efe611d20
+  targeted_confirmation_run_id: c1b8c13e-7f61-4e94-a1e9-6ba0e9a15f48
+  binding_confirmation_run_id: 8b3dd760-a2cd-44e4-8bc4-2f408e415542
+  candidate_commit: 2f408e48b5fe48df0195a37d015c4e4b6c55b335
+  candidate_snapshot_digest: cdc1689bbbec4ae69ffbad882c2f4761aaf4ea2bdee4b0a429f34c8122d24a8b
+  score: 100
+  verdict: PASS
+  hard_blockers: []
+  acceptance_ids:
+    - PKG5-A02
+    - PKG5-A03
+    - PKG5-A04
+    - PKG5-A05
+    - PKG5-A06
+    - PKG5-A07
+    - PKG5-A08
+    - PKG5-A10
+    - PKG5-A13
+  initial_review:
+    candidate_commit: 8e43cb4
+    score: 76
+    verdict: FAIL
+    blocker_ids:
+      - PKG5-HB-01
+      - PKG5-HB-02
+  findings:
+    - finding_id: PKG5-HB-01
+      status: RESOLVED
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/materialize_retrieval.py:494
+        - 15_brand_retrieval/brand_fact_retrieval_001/brand_fact_retrieval.py:630
+        - 15_brand_retrieval/brand_fact_retrieval_001/fixtures/retrieval_cases.v1.jsonl:29
+      conclusion: HOLD facts expose no value selectors; trusted account scope and grant checks precede gap classification, and different guessed quantities produce indistinguishable results per scope.
+    - finding_id: PKG5-HB-02
+      status: RESOLVED
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/materialize_retrieval.py:66
+        - 15_brand_retrieval/brand_fact_retrieval_001/data/source_dispositions.v1.jsonl:63
+        - 15_brand_retrieval/brand_fact_retrieval_001/data/source_dispositions.v1.jsonl:73
+      conclusion: The mixed restricted asset section remains HOLD, while the multi-product R&D source is split into eight contiguous source-exact fragments.
+    - finding_id: PKG5-FACT-BOUNDARIES
+      status: PASS
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/retrieval_manifest.v1.json:10
+        - 15_brand_retrieval/brand_fact_retrieval_001/result/brand_fact_retrieval_result.v1.json:12
+      conclusion: Counts are 29 fragments, 5 facts, 179 HOLD and 206 dispositions; external calls remain zero, readiness remains false, and 300/120/86 are unchanged.
+    - finding_id: PKG5-CHECKER-SELFTEST-ORACLE
+      status: RESOLVED
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py:734
+      conclusion: Review score tampering is now evaluated from the temporary copy; fact and isolation checks are unchanged.
+  signed_at: 2026-07-15T15:51:09Z
