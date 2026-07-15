@@ -13,32 +13,38 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Final, Sequence, cast
 
+import yaml  # type: ignore[import-untyped]
+
 
 Doc = dict[str, object]
 BASELINE: Final = "95b8b1700b7e96b1d2383465713bef8c36e7f6cb"
 ALLOWED_ROOT: Final = "14_dify_shell/dify_content_shell_001/"
+PUBLIC_TOPIC_PATH: Final = "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml"
+PUBLIC_CONTRACT_PATH: Final = (
+    "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml"
+)
 FLOW_FILE: Final = "conversation_flow.version_neutral.v1.json"
 MAPPING_FILE: Final = "state_action_mapping.v1.json"
 JOURNEYS_FILE: Final = "journeys.simulated.v1.json"
 RESULT_FILE: Final = "result_and_review_request.v1.json"
 CORE_PACKAGE_FILES: Final = {FLOW_FILE, MAPPING_FILE, JOURNEYS_FILE, RESULT_FILE, "check_dify_content_shell.py"}
 FROZEN_CANDIDATE_STATE: Final = "READY_FOR_TARGETED_INDEPENDENT_REREVIEWS"
-SUCCESS_STATE: Final = "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7"
-FIXED_IMPLEMENTATION_STAGE: Final = "LIGHTWEIGHT_IMPLEMENTATION_CANDIDATE_REVIEW_STATUS_RECORDED_IN_RESULT"
+SUCCESS_STATE: Final = "PASS_DIFY_CONVERSATION_SHELL_R4_PENDING_PACKAGE_7"
+FIXED_IMPLEMENTATION_STAGE: Final = "R4_CONTRACT_ALIGNMENT_CANDIDATE_REVIEW_STATUS_RECORDED_IN_RESULT"
 REVIEWED_IMPLEMENTATION_FILES: Final = (FLOW_FILE, MAPPING_FILE, JOURNEYS_FILE, "check_dify_content_shell.py")
 TARGETED_REVIEWS: Final = {
-    "NOVICE_EXPERIENCE_TARGETED_REREVIEW": (
-        "reviews/novice_experience/targeted-rereview-r3.json",
-        "NOVICE_EXPERIENCE_AND_NECESSARY_REGRESSION_ONLY",
+    "USER_SEMANTICS_AND_NOVICE_EXPERIENCE_TARGETED_R4_REVIEW": (
+        "reviews/novice_experience/targeted-rereview-r4.json",
+        "R4_CLOTHING_TOPICS_ACTION_CARD_LANGUAGE_AND_NECESSARY_REGRESSION_ONLY",
     ),
-    "LIGHTWEIGHT_ARCHITECTURE_AND_TRUST_TARGETED_REREVIEW": (
-        "reviews/architecture_trust/targeted-rereview-r3.json",
-        "LIGHTWEIGHT_ARCHITECTURE_TRUST_AND_NECESSARY_REGRESSION_ONLY",
+    "PUBLIC_CONTRACT_AND_LIGHTWEIGHT_ARCHITECTURE_TARGETED_R4_REVIEW": (
+        "reviews/architecture_trust/targeted-rereview-r4.json",
+        "R4_PUBLIC_SOURCE_CONSUMPTION_EIGHT_ACTIONS_TRUST_AND_LIGHTWEIGHT_REGRESSION_ONLY",
     ),
 }
 ACCEPTANCE_IDS: Final = tuple(f"PKG4-A{number:02d}" for number in range(1, 13)) + tuple(
     f"PKG4-S{number:02d}" for number in range(1, 9)
-)
+) + tuple(f"PKG4-R4-A{number:02d}" for number in range(1, 13))
 SUMMARY_FIELDS: Final = tuple("为哪个内容账号 讲什么 给谁看 发到哪里 现有真实材料 还缺什么 采用什么大方向".split())
 FEEDBACK_FIELDS: Final = ("selected_candidate_ref", "necessary_modification", "short_reason")
 READINESS_FLAGS: Final = tuple(
@@ -59,7 +65,8 @@ EXPECTED_CASE_IDS: Final = frozenset(
     "SERVER-CONFIRMED-ACCOUNT EDIT-REQUIRES-RECONFIRM CANCEL-RETURNS-TO-CHAT "
     "UNTRUSTED-IDENTITY-SOURCES-REJECTED TWO-CANDIDATES-SELECT-REVISE-RETURN "
     "THREE-CANDIDATES-SELECT-ACCEPT CHANGE-REQUIREMENT-RECONFIRM MISSING-FACT MISSING-MATERIAL "
-    "MISSING-AUTHORIZATION OUT-OF-SCOPE DEGRADE-SAFELY BLOCK-UNSAFE-REQUEST".split()
+    "MISSING-AUTHORIZATION NEEDS-INTERVIEW NEEDS-RESHOOT NEEDS-ANONYMIZATION OUT-OF-SCOPE "
+    "DEGRADE-SAFELY BLOCK-UNSAFE-REQUEST".split()
 )
 DIRECT_CASE_ASSERTIONS: Final[tuple[tuple[str, str, str, object], ...]] = (
     ("CHAT-TWO-TURNS", "input", "turn_count", 2),
@@ -95,10 +102,14 @@ DIRECT_CASE_ASSERTIONS: Final[tuple[tuple[str, str, str, object], ...]] = (
     ("CHANGE-REQUIREMENT-RECONFIRM", "expected", "requirement_confirmation", "DRAFT"),
     ("CHANGE-REQUIREMENT-RECONFIRM", "expected", "selected_candidate_ref", "UNBOUND"),
     ("CHANGE-REQUIREMENT-RECONFIRM", "expected", "prepare_placeholder_requested", False),
+    ("NEEDS-INTERVIEW", "expected", "action_card", "INTERVIEW"),
+    ("NEEDS-RESHOOT", "expected", "action_card", "RESHOOT"),
+    ("NEEDS-ANONYMIZATION", "expected", "action_card", "ANONYMIZE"),
 )
 FORBIDDEN_ENGINE_KEYS: Final = frozenset("states routes transitions from event to requires effects guards".split())
 VISIBLE_LEAK_PATTERNS: Final = (
     re.compile(r"\bCP[0-9]{2}\b"),
+    re.compile(r"\bTOPIC-[0-9]{2}\b"),
     re.compile(r"\b(?:BNO|BRV|VGA|BCL|FC)-[0-9]{2}\b"),
     re.compile(r"\b(?:G1V11|RCV2)-[A-Z0-9-]+\b"),
     re.compile(
@@ -128,6 +139,12 @@ PINNED_HISTORICAL_REVIEW_FILES: Final = {
         "a55b0ebfd7a9bb75efe2011b89166d7efab8c52039698d91eb0dc1dca889ba71"
     ),
     "reviews/findings-ledger.json": "6700586afd47055864c72197eac26d28013ba5405cdee720f94590b3290d0747",
+    "reviews/novice_experience/targeted-rereview-r3.json": (
+        "003a3490c82da689159ac45b12a1713dbb53ac58630a9d2b218c9c403bcb77b8"
+    ),
+    "reviews/architecture_trust/targeted-rereview-r3.json": (
+        "92c9a28f1d004850d22a907e21ff7b861c788847f317947f54ee23d111aae85c"
+    ),
 }
 
 
@@ -193,6 +210,14 @@ def load(path: Path) -> Doc:
     return to_doc(value, str(path))
 
 
+def load_yaml(path: Path) -> Doc:
+    try:
+        value: object = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        raise ValueError(f"cannot load {path}: {exc}") from exc
+    return to_doc(value, str(path))
+
+
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -253,6 +278,10 @@ class PackageChecker:
         self.repo = repo
         self.root = root
         self.app = doc(flow, "application", "flow")
+        self.public_topics = doc(load_yaml(repo / PUBLIC_TOPIC_PATH), "topic_product_mapping", "public topic source")
+        self.public_contract = doc(
+            load_yaml(repo / PUBLIC_CONTRACT_PATH), "public_foundation_contract", "public contract source"
+        )
         self.errors: list[str] = []
         self.cases: dict[str, Doc] = {}
         self.candidate_refs: dict[str, frozenset[str]] = {}
@@ -302,6 +331,60 @@ class PackageChecker:
                 self.error("A02_FACT_WRITE", "interaction guidance cannot write brand facts")
         if tuple(stage_ids) != EXPECTED_STAGE_IDS:
             self.error("S01_STAGE_SET", "only the six allowed human-readable stages may remain")
+
+    def check_public_topic_alignment(self, experience: Doc) -> None:
+        public_pairs: list[tuple[str, str]] = []
+        for raw_category in items(self.public_topics, "categories", "public topic source"):
+            category = to_doc(raw_category, "public topic category")
+            public_pairs.append(
+                (
+                    text(category, "topic_category_id", "public topic category"),
+                    text(category, "display_name", "public topic category"),
+                )
+            )
+        if len(public_pairs) != 8 or len(public_pairs) != len(set(public_pairs)):
+            self.error("R4_A02_PUBLIC_TOPIC_SOURCE", "public topic source must contain eight unique id/name pairs")
+
+        if experience.get("public_topic_source_ref") != PUBLIC_TOPIC_PATH:
+            self.error("R4_A03_TOPIC_SOURCE_REF", "flow must reference the public topic source directly")
+        declared_pairs: list[tuple[str, str]] = []
+        for raw_mapping in items(experience, "topic_category_display_mapping", "user experience"):
+            mapping = to_doc(raw_mapping, "topic display mapping")
+            if set(mapping) != {"topic_category_id", "display_name"}:
+                self.error("R4_A08_TOPIC_MAPPING_SHAPE", "topic mapping may contain only public id and display name")
+            declared_pairs.append(
+                (
+                    text(mapping, "topic_category_id", "topic display mapping"),
+                    text(mapping, "display_name", "topic display mapping"),
+                )
+            )
+        if len(declared_pairs) != len(set(declared_pairs)) or tuple(declared_pairs) != tuple(public_pairs):
+            self.error(
+                "R4_A02_TOPIC_ALIGNMENT",
+                "topic ids, names, order, presence, and uniqueness must match the public source",
+            )
+
+        visible_topics = tuple(
+            to_str(value, "user-visible topic")
+            for value in items(experience, "user_visible_topic_categories", "user experience")
+        )
+        public_names = tuple(display_name for _topic_id, display_name in public_pairs)
+        if visible_topics != public_names or len(visible_topics) != len(set(visible_topics)):
+            self.error("R4_A02_VISIBLE_TOPICS", "users must see only the ordered public display names")
+
+        visibility = doc(experience, "public_topic_visibility", "user experience")
+        if visibility.get("display_name_only") is not True:
+            self.error("R4_A09_TOPIC_VISIBILITY", "topic user surface must be display-name-only")
+        for key in (
+            "internal_content_product_id_visible",
+            "component_id_visible",
+            "relationship_or_path_visible",
+            "raw_error_code_visible",
+        ):
+            if flag(visibility, key, "public topic visibility"):
+                self.error("R4_A09_TOPIC_VISIBILITY", f"{key} must remain false")
+        if re.search(r"\bCP[0-9]{2}\b", canonical_json(self.flow)):
+            self.error("R4_A08_INTERNAL_PRODUCT_COPY", "flow must not copy internal content product ids")
 
     def check_candidate_and_experience(self) -> None:
         candidate = doc(self.flow, "candidate", "flow")
@@ -354,8 +437,7 @@ class PackageChecker:
         )
         if fields != SUMMARY_FIELDS:
             self.error("A03_SUMMARY_FIELDS", "plain-language summary fields are incomplete")
-        if len(items(experience, "user_visible_topic_categories", "user experience")) != 8:
-            self.error("A09_TOPIC_COUNT", "the user surface must expose eight public categories")
+        self.check_public_topic_alignment(experience)
 
         confirmation = doc(self.app, "confirmation_policy", "application")
         if confirmation.get("prepare_placeholder_requires_requirement_confirmation") != "CONFIRMED":
@@ -454,7 +536,7 @@ class PackageChecker:
                 self.error("S07_REVIEW_FILE_HASH", f"targeted review digest differs: {relative}")
             evidence = load(review_path)
             binding = {
-                "schema_version": "r3-targeted-review-v1",
+                "schema_version": "r4-targeted-review-v1",
                 "review_role": role,
                 "review_scope": scope,
                 "reviewed_candidate_commit": commit,
@@ -517,6 +599,8 @@ class PackageChecker:
     def check_mapping(self) -> None:
         if self.mapping.get("mapping_kind") != "THIN_ACTION_OWNERSHIP_REFERENCE_ONLY":
             self.error("A06_MAPPING_KIND", "mapping must remain a thin action-ownership reference")
+        if self.mapping.get("contract_ref") != PUBLIC_CONTRACT_PATH:
+            self.error("R4_A04_ACTION_SOURCE_REF", "mapping must reference the public contract directly")
         if flag(self.mapping, "copies_public_models", "mapping") or flag(
             self.mapping, "is_flow_source_of_truth", "mapping"
         ):
@@ -557,14 +641,63 @@ class PackageChecker:
         for key, value in doc(self.mapping, "non_ownership_assertions", "mapping").items():
             if to_bool(value, f"non-ownership {key}"):
                 self.error("A06_OWNERSHIP_DRIFT", f"{key} must remain false")
-        action_types: set[str] = set()
+        delivery = doc(self.public_contract, "delivery_contract", "public contract")
+        public_action_types = tuple(
+            to_str(value, "public action type")
+            for value in items(delivery, "action_card_types", "public delivery contract")
+        )
+        if len(public_action_types) != 8 or len(public_action_types) != len(set(public_action_types)):
+            self.error("R4_A04_PUBLIC_ACTION_SOURCE", "public contract must contain eight unique action types")
+
+        action_types: list[str] = []
+        display_values: dict[str, set[str]] = {
+            key: set() for key in ("user_visible_title", "user_visible_reason", "user_visible_next_action")
+        }
+        expected_card_fields = {
+            "action_type",
+            "user_visible_title",
+            "user_visible_reason",
+            "user_visible_next_action",
+            "contains_publishable_candidate",
+            "creates_light_content_plan",
+            "writes_brand_fact",
+            "external_call_implemented",
+        }
         for raw in items(self.mapping, "action_cards", "mapping"):
             card = to_doc(raw, "action card")
-            action_types.add(text(card, "action_type", "action card"))
-            if flag(card, "contains_publishable_candidate", "action card"):
-                self.error("A08_FAKE_PUBLISHABLE", "action cards cannot contain publishable candidates")
-        if action_types != {"COLLECT_FACT", "COLLECT_MATERIAL", "REQUEST_AUTHORIZATION", "DEGRADE", "BLOCK"}:
-            self.error("A08_ACTION_CARDS", "action card set is incomplete")
+            if set(card) != expected_card_fields:
+                self.error("R4_A04_ACTION_SHAPE", "action cards must use the single thin display mapping shape")
+            action_types.append(text(card, "action_type", "action card"))
+            for field, values in display_values.items():
+                value = text(card, field, "action card").strip()
+                if not value:
+                    self.error("R4_A05_ACTION_DISPLAY", f"action card {field} must be non-empty")
+                if value in values:
+                    self.error("R4_A05_ACTION_DISPLAY", f"action card {field} must not be folded into another action")
+                values.add(value)
+            for key, code in (
+                ("contains_publishable_candidate", "A08_FAKE_PUBLISHABLE"),
+                ("creates_light_content_plan", "R4_A08_ACTION_PLAN"),
+                ("writes_brand_fact", "R4_A09_ACTION_FACT"),
+                ("external_call_implemented", "R4_A10_ACTION_EXTERNAL_CALL"),
+            ):
+                if flag(card, key, "action card"):
+                    self.error(code, f"action card {key} must remain false")
+        if tuple(action_types) != public_action_types or len(action_types) != len(set(action_types)):
+            self.error("R4_A04_ACTION_SET", "action types must exactly match the ordered public contract set")
+
+        unknown = doc(self.mapping, "unknown_action_behavior", "mapping")
+        if unknown.get("behavior") != "REPORT_INCOMPATIBLE_AND_BLOCK":
+            self.error("R4_A06_UNKNOWN_ACTION", "unknown actions must report incompatibility and block")
+        text(unknown, "user_visible_reason", "unknown action behavior")
+        for key in (
+            "contains_publishable_candidate",
+            "creates_light_content_plan",
+            "writes_brand_fact",
+            "external_call_implemented",
+        ):
+            if flag(unknown, key, "unknown action behavior"):
+                self.error("R4_A06_UNKNOWN_ACTION", f"unknown action fallback {key} must remain false")
 
     def load_candidate_sets(self) -> None:
         sets = doc(self.journeys, "candidate_sets", "journeys")
@@ -646,6 +779,9 @@ class PackageChecker:
             "MISSING-FACT": "COLLECT_FACT",
             "MISSING-MATERIAL": "COLLECT_MATERIAL",
             "MISSING-AUTHORIZATION": "REQUEST_AUTHORIZATION",
+            "NEEDS-INTERVIEW": "INTERVIEW",
+            "NEEDS-RESHOOT": "RESHOOT",
+            "NEEDS-ANONYMIZATION": "ANONYMIZE",
             "OUT-OF-SCOPE": "BLOCK",
             "DEGRADE-SAFELY": "DEGRADE",
             "BLOCK-UNSAFE-REQUEST": "BLOCK",
@@ -676,7 +812,10 @@ class PackageChecker:
             self.error("A12_EXTERNAL_CALL", "journey external call count must be zero")
         coverage = tuple(to_str(value, "acceptance id") for value in items(self.journeys, "acceptance_coverage"))
         if coverage != ACCEPTANCE_IDS:
-            self.error("A11_ACCEPTANCE_COVERAGE", "coverage must list PKG4-A01-A12 and PKG4-S01-S08")
+            self.error(
+                "A11_ACCEPTANCE_COVERAGE",
+                "coverage must list PKG4-A01-A12, PKG4-S01-S08, and PKG4-R4-A01-A12",
+            )
         common = doc(self.journeys, "common_expected_boundaries", "journeys")
         expected_common: Doc = {
             "plan_created": False,
@@ -844,6 +983,92 @@ def selftest(flow: Doc, mapping: Doc, journeys: Doc, result: Doc, repo: Path, ro
         targeted = doc(changed_result, "targeted_rereviews", "changed result")
         targeted["reviews"] = items(targeted, "reviews", "changed targeted rereviews")[:1]
         expect("MISSING_TARGETED_REVIEW", flow, mapping, journeys, changed_result, "S07_REVIEW_ROLES")
+
+    changed_flow = copy.deepcopy(flow)
+    changed_experience = doc(doc(changed_flow, "application", "flow"), "user_experience", "application")
+    generic_topics = [f"通用行业占位{index}" for index in range(1, 9)]
+    for raw_mapping, generic_name in zip(
+        items(changed_experience, "topic_category_display_mapping", "user experience"), generic_topics, strict=True
+    ):
+        to_doc(raw_mapping, "topic display mapping")["display_name"] = generic_name
+    changed_experience["user_visible_topic_categories"] = generic_topics
+    expect("GENERIC_TOPIC_REPLACEMENT", changed_flow, mapping, journeys, result, "R4_A02_TOPIC_ALIGNMENT")
+
+    changed_flow = copy.deepcopy(flow)
+    changed_experience = doc(doc(changed_flow, "application", "flow"), "user_experience", "application")
+    items(changed_experience, "topic_category_display_mapping", "user experience").pop()
+    items(changed_experience, "user_visible_topic_categories", "user experience").pop()
+    expect("MISSING_TOPIC", changed_flow, mapping, journeys, result, "R4_A02_TOPIC_ALIGNMENT")
+
+    changed_flow = copy.deepcopy(flow)
+    changed_experience = doc(doc(changed_flow, "application", "flow"), "user_experience", "application")
+    changed_topics = items(changed_experience, "topic_category_display_mapping", "user experience")
+    changed_topics[1] = copy.deepcopy(changed_topics[0])
+    changed_visible_topics = items(changed_experience, "user_visible_topic_categories", "user experience")
+    changed_visible_topics[1] = changed_visible_topics[0]
+    expect("DUPLICATE_TOPIC", changed_flow, mapping, journeys, result, "R4_A02_TOPIC_ALIGNMENT")
+
+    changed_flow = copy.deepcopy(flow)
+    changed_experience = doc(doc(changed_flow, "application", "flow"), "user_experience", "application")
+    changed_topic = to_doc(
+        items(changed_experience, "topic_category_display_mapping", "user experience")[0], "topic mapping"
+    )
+    changed_topic["topic_category_id"] = "TOPIC-99"
+    expect("TOPIC_ID_DRIFT", changed_flow, mapping, journeys, result, "R4_A02_TOPIC_ALIGNMENT")
+
+    changed_flow = copy.deepcopy(flow)
+    changed_experience = doc(doc(changed_flow, "application", "flow"), "user_experience", "application")
+    changed_topic = to_doc(
+        items(changed_experience, "topic_category_display_mapping", "user experience")[0], "topic mapping"
+    )
+    changed_topic["display_name"] = "名称漂移"
+    items(changed_experience, "user_visible_topic_categories", "user experience")[0] = "名称漂移"
+    expect("TOPIC_NAME_DRIFT", changed_flow, mapping, journeys, result, "R4_A02_TOPIC_ALIGNMENT")
+
+    changed_mapping = copy.deepcopy(mapping)
+    items(changed_mapping, "action_cards", "mapping").pop()
+    expect("MISSING_ACTION", flow, changed_mapping, journeys, result, "R4_A04_ACTION_SET")
+
+    changed_mapping = copy.deepcopy(mapping)
+    changed_actions = items(changed_mapping, "action_cards", "mapping")
+    to_doc(changed_actions[-1], "action card")["action_type"] = text(
+        to_doc(changed_actions[0], "action card"), "action_type"
+    )
+    expect("DUPLICATE_ACTION", flow, changed_mapping, journeys, result, "R4_A04_ACTION_SET")
+
+    changed_mapping = copy.deepcopy(mapping)
+    changed_actions = items(changed_mapping, "action_cards", "mapping")
+    extra_action = copy.deepcopy(to_doc(changed_actions[-1], "action card"))
+    extra_action.update(
+        {
+            "action_type": "CUSTOM_UNKNOWN_ACTION",
+            "user_visible_title": "自造行动",
+            "user_visible_reason": "这是一条不应通过的自造行动。",
+            "user_visible_next_action": "这条自造行动必须被检查器拒绝。",
+        }
+    )
+    changed_actions.append(extra_action)
+    expect("EXTRA_ACTION", flow, changed_mapping, journeys, result, "R4_A04_ACTION_SET")
+
+    changed_mapping = copy.deepcopy(mapping)
+    fold_actions: list[Doc] = [
+        to_doc(raw, "action card") for raw in items(changed_mapping, "action_cards", "mapping")
+    ]
+    material = next(card for card in fold_actions if card.get("action_type") == "COLLECT_MATERIAL")
+    interview = next(card for card in fold_actions if card.get("action_type") == "INTERVIEW")
+    for key in ("user_visible_title", "user_visible_reason", "user_visible_next_action"):
+        interview[key] = material[key]
+    expect("FOLDED_ACTION", flow, changed_mapping, journeys, result, "R4_A05_ACTION_DISPLAY")
+
+    changed_mapping = copy.deepcopy(mapping)
+    doc(changed_mapping, "unknown_action_behavior", "mapping")["behavior"] = "GUESS_AND_CONTINUE"
+    expect("UNKNOWN_ACTION_GUESS", flow, changed_mapping, journeys, result, "R4_A06_UNKNOWN_ACTION")
+
+    changed_mapping = copy.deepcopy(mapping)
+    first_action = to_doc(items(changed_mapping, "action_cards", "mapping")[0], "action card")
+    first_action["user_visible_title"] = "TOPIC-01"
+    expect("VISIBLE_TOPIC_ID", flow, changed_mapping, journeys, result, "A09_USER_VISIBLE_LEAK")
+
     scope_cases = (
         ("PACKAGE_ONLY_SCOPE", {f"{ALLOWED_ROOT}{FLOW_FILE}"}, ()),
         (

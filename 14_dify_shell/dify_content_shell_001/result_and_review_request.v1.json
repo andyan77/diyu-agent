@@ -1,29 +1,19 @@
 {
-  "schema_version": "v1.2",
+  "schema_version": "v1.3",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
-  "revision": "r3",
-  "candidate_state": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
-  "success_terminal_when_targeted_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
-  "baseline_commit": "95b8b1700b7e96b1d2383465713bef8c36e7f6cb",
-  "candidate_before_r2": "143a6caa7ac1ed3571336c3950e249728cbc18f7",
-  "r3_master_sync": {
-    "pre_sync_commit": "d5339c70454164c07df95641bce412a88d099f73",
-    "merged_master_commit": "f40c902767a0b991169d604be6ff0ed556460cde",
-    "merge_commit": "c1a8b2b0849d11a3c6512dff8a3b246ca3974d81",
-    "merge_parents": [
-      "d5339c70454164c07df95641bce412a88d099f73",
-      "f40c902767a0b991169d604be6ff0ed556460cde"
-    ],
-    "r2_package_tree_before": "60e88e69d384449f97c490d1e598b35a7bd84ace",
-    "r2_package_tree_after": "60e88e69d384449f97c490d1e598b35a7bd84ace",
-    "r2_package_bytes_unchanged_by_sync": true
+  "revision": "r4",
+  "candidate_state": "PASS_DIFY_CONVERSATION_SHELL_R4_PENDING_PACKAGE_7",
+  "success_terminal_when_targeted_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_R4_PENDING_PACKAGE_7",
+  "predecessor": {
+    "merged_pull_request": "https://github.com/andyan77/diyu-agent/pull/17",
+    "merged_master_commit": "b7edf9e564a3cbc79e11762e968630df07b48896",
+    "merged_master_ci_run": "https://github.com/andyan77/diyu-agent/actions/runs/29420080292",
+    "merged_master_ci_conclusion": "SUCCESS"
   },
-  "implementation_candidate_bound_by_historical_reviews": "a5ecdc4a8231c144f043074ff8d5b889d258b71d",
-  "branch": "agent/diyu-dify-conversation-shell-001",
-  "worktree": "/home/diyu/worktrees/diyu-dify-conversation-shell-001",
-  "draft_pull_request": "https://github.com/andyan77/diyu-agent/pull/17",
-  "target_dify_version": "UNKNOWN_NOT_VERIFIED",
-  "version_evidence": "No trusted target Dify version or native export evidence was found in the authorized local repository and configuration search.",
+  "branch": "agent/diyu-dify-conversation-shell-contract-alignment-001",
+  "worktree": "/home/diyu/worktrees/diyu-dify-conversation-shell-contract-alignment-001",
+  "exclusive_write_root": "14_dify_shell/dify_content_shell_001",
+  "draft_pull_request": "https://github.com/andyan77/diyu-agent/pull/20",
   "candidate_artifacts": {
     "flow": "14_dify_shell/dify_content_shell_001/conversation_flow.version_neutral.v1.json",
     "mapping": "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json",
@@ -31,140 +21,139 @@
     "checker": "14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
     "native_export": false,
     "importability_claimed": false,
-    "new_implementation_files_added_in_r2": false,
-    "additional_checker_added_in_r2": false
+    "new_implementation_files_added": false,
+    "additional_checker_added": false
   },
-  "r2_lightweight_reduction": {
-    "generic_from_event_to_requires_effects_language_removed": true,
-    "adjacency_graph_and_queue_traversal_removed": true,
-    "global_reachability_rules_removed": true,
-    "generic_guard_evaluator_removed": true,
-    "generic_effect_applier_removed": true,
-    "runtime_state_transition_interpreter_removed": true,
-    "journeys_use_direct_parameterized_assertions": true,
-    "interaction_stages_are_human_readable_guidance_only": true
+  "public_truth_sources": {
+    "topics": "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml",
+    "action_cards": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+    "read_only": true,
+    "copied_as_parallel_truth": false
   },
-  "local_evidence": {
-    "status": "PASS_R3_SCOPE_COMPAT_TARGETED_REREVIEWS_RECORDED_PENDING_REMOTE_CHECKS",
-    "journey_case_count": 18,
-    "transition_count_is_quality_metric": false,
-    "user_visible_string_count": 82,
-    "external_call_count": 0,
-    "ordinary_check": "PASS",
-    "selftest": "PASS",
-    "optimized_check_exit_code": 2,
-    "optimized_selftest_exit_code": 2,
-    "ruff": "PASS",
-    "ruff_format": "PASS",
-    "mypy_strict": "PASS",
-    "checker_line_count": 903,
-    "gate1_ordinary_check": "PASS_EXIT_0",
-    "gate1_selftest": "PASS_EXIT_0",
-    "gate1_optimized_check": "REFUSED_EXIT_2",
-    "gate1_optimized_selftest": "REFUSED_EXIT_2",
-    "public_foundation_ordinary_check": "PASS_EXIT_0",
-    "public_foundation_selftest": "PASS_EXIT_0",
-    "public_foundation_optimized_check": "REFUSED_EXIT_2",
-    "public_foundation_optimized_selftest": "REFUSED_EXIT_2",
-    "json_parse": "PASS",
-    "diff_integrity": "PASS",
-    "sensitive_information_scan": "PASS"
+  "r4_alignment": {
+    "topic_count": 8,
+    "topic_id_name_order_matches_public_source": true,
+    "old_generic_topic_placeholders_remaining": 0,
+    "action_card_count": 8,
+    "action_types_match_public_contract": true,
+    "interview_reshoot_anonymize_are_independent": true,
+    "representative_journeys_added": [
+      "NEEDS-INTERVIEW",
+      "NEEDS-RESHOOT",
+      "NEEDS-ANONYMIZATION"
+    ],
+    "unknown_action_behavior": "REPORT_INCOMPATIBLE_AND_BLOCK",
+    "external_call_count": 0
   },
-  "historical_independent_reviews": [
+  "failure_and_fix_record": [
     {
-      "review_id": "NOVICE_EXPERIENCE_AND_MULTI_CANDIDATE_REVIEW",
-      "reviewer_identity": "codex-independent-novice-experience-reviewer",
-      "reviewer_session": "/root/novice_experience_review",
-      "review_run_id": "NOVICE-UX-a5ecdc4-20260715T094551Z",
-      "reviewed_commit": "a5ecdc4a8231c144f043074ff8d5b889d258b71d",
-      "score": 94,
-      "verdict": "PASS",
-      "blockers": [],
-      "record": "14_dify_shell/dify_content_shell_001/reviews/novice_experience/review-output-2026-07-15-025016.md",
-      "historical_only_after_r2_lightweight_change": true,
-      "may_approve_revised_candidate": false
+      "failure": "R3 checker accepted any eight user-visible topic labels.",
+      "root_cause": "Only the topic count was checked; public ids, names, order, missing entries, and duplicates were not compared.",
+      "fix": "The unique checker now reads the public topic YAML and compares the thin id/display-name mapping and visible names exactly."
     },
     {
-      "review_id": "ARCHITECTURE_AND_TRUST_BOUNDARY_REVIEW",
-      "reviewer_identity": "codex-independent-architecture-trust-reviewer",
-      "reviewer_session": "/root/architecture_trust_review",
-      "review_run_id": "DIYU-PKG4-ARCHTRUST-a5ecdc4-20260715-01",
-      "reviewed_commit": "a5ecdc4a8231c144f043074ff8d5b889d258b71d",
-      "score": 96,
-      "verdict": "PASS",
-      "blockers": [],
-      "record": "14_dify_shell/dify_content_shell_001/reviews/architecture_trust/review-output-2026-07-15-025016.md",
-      "historical_only_after_r2_lightweight_change": true,
-      "may_approve_revised_candidate": false
+      "failure": "R3 shell exposed only five of the eight public action-card types.",
+      "root_cause": "The unique checker hard-coded the incomplete five-action set.",
+      "fix": "The unique checker now reads the public contract action types and validates eight independent display mappings and journeys."
+    }
+  ],
+  "local_evidence": {
+    "status": "PASS_R4_LOCAL_AND_TARGETED_REVIEWS_PENDING_REMOTE_CHECKS",
+    "journey_case_count": 21,
+    "user_visible_string_count": 103,
+    "external_call_count": 0,
+    "ordinary_check": "PASS_EXIT_0",
+    "selftest": "PASS_EXIT_0",
+    "optimized_check_exit_code": 2,
+    "optimized_selftest_exit_code": 2,
+    "r4_negative_cases": [
+      "same_count_generic_topic_replacement_rejected",
+      "missing_topic_rejected",
+      "duplicate_topic_rejected",
+      "topic_id_drift_rejected",
+      "topic_name_drift_rejected",
+      "missing_action_rejected",
+      "duplicate_action_rejected",
+      "extra_action_rejected",
+      "folded_action_display_rejected",
+      "unknown_action_guess_rejected",
+      "internal_topic_id_on_user_surface_rejected"
+    ],
+    "package_2_ordinary_check": "PASS_EXIT_0",
+    "package_2_selftest": "PASS_EXIT_0",
+    "public_foundation_ordinary_check": "PASS_EXIT_0",
+    "public_foundation_selftest": "PASS_EXIT_0",
+    "ruff": "PASS",
+    "mypy_strict": "PASS",
+    "json_parse": "PASS",
+    "diff_integrity": "PASS",
+    "sensitive_information_scan": "PASS_LOCAL_CHANGED_LINE_SCAN_PENDING_REMOTE_SECRET_SCAN"
+  },
+  "review_governor_evidence": {
+    "primary_scene": "completion_audit",
+    "secondary_scenes": [
+      "code_change_review",
+      "release_gate",
+      "security_special",
+      "architecture_special"
+    ],
+    "code_review_checks": "PASS_5_OF_5",
+    "security_review_checks": "PASS_4_OF_5_RLS_NOT_APPLICABLE_NO_ALEMBIC",
+    "diff_guard_scan": "PASS_NO_SECRET_LLM_SQL_LAYER_OR_PORT_VIOLATIONS",
+    "runtime_consumer_status": "PACKAGE_7_INTEGRATION_PENDING_BY_AUTHORIZED_ROADMAP"
+  },
+  "historical_review_evidence": [
+    {
+      "path": "reviews/novice_experience/targeted-rereview-r3.json",
+      "sha256": "003a3490c82da689159ac45b12a1713dbb53ac58630a9d2b218c9c403bcb77b8",
+      "immutable": true
+    },
+    {
+      "path": "reviews/architecture_trust/targeted-rereview-r3.json",
+      "sha256": "92c9a28f1d004850d22a907e21ff7b861c788847f317947f54ee23d111aae85c",
+      "immutable": true
     }
   ],
   "targeted_rereviews": {
     "state": "COMPLETED_TARGETED_INDEPENDENT_REREVIEWS",
     "required_same_final_candidate": true,
-    "novice_experience_and_multi_candidate": {
-      "minimum_score": 90,
-      "scope": "r2 lightweight reduction regression and original novice journey responsibilities"
-    },
-    "lightweight_architecture_and_trust_boundary": {
-      "minimum_score": 90,
-      "scope": "generic workflow engine removal, trust boundaries, and necessary regression"
-    },
+    "required_review_count": 2,
+    "minimum_score_each": 90,
+    "new_full_review_rounds": 0,
     "reviews": [
       {
-        "review_role": "NOVICE_EXPERIENCE_TARGETED_REREVIEW",
-        "path": "reviews/novice_experience/targeted-rereview-r3.json",
-        "sha256": "003a3490c82da689159ac45b12a1713dbb53ac58630a9d2b218c9c403bcb77b8",
-        "reviewer_identity": "codex-independent-novice-experience-reviewer-r3",
+        "review_role": "USER_SEMANTICS_AND_NOVICE_EXPERIENCE_TARGETED_R4_REVIEW",
+        "path": "reviews/novice_experience/targeted-rereview-r4.json",
+        "sha256": "cdef0c75f70d37c2626bcfc5dd6e2b29eea3679421fe757e12dbd95ccabafdcc",
+        "reviewer_identity": "codex-independent-user-semantics-novice-reviewer-r4",
         "reviewer_session": "/root/novice_experience_review",
-        "review_run_id": "NOVICE-R3-9b0b2783-20260715T130406Z",
-        "score": 96,
+        "review_run_id": "R4-95926d75-20260715T143552Z",
+        "score": 98,
         "verdict": "PASS",
         "blocking_findings": []
       },
       {
-        "review_role": "LIGHTWEIGHT_ARCHITECTURE_AND_TRUST_TARGETED_REREVIEW",
-        "path": "reviews/architecture_trust/targeted-rereview-r3.json",
-        "sha256": "92c9a28f1d004850d22a907e21ff7b861c788847f317947f54ee23d111aae85c",
-        "reviewer_identity": "codex-independent-lightweight-architecture-trust-reviewer-r3",
+        "review_role": "PUBLIC_CONTRACT_AND_LIGHTWEIGHT_ARCHITECTURE_TARGETED_R4_REVIEW",
+        "path": "reviews/architecture_trust/targeted-rereview-r4.json",
+        "sha256": "9432c4d178e0df794734d5917ada7f30f0655a6132b75e2f9fabf1db051d2413",
+        "reviewer_identity": "codex-independent-public-contract-lightweight-trust-reviewer-r4",
         "reviewer_session": "/root/architecture_trust_review",
-        "review_run_id": "DIYU-PKG4-R3-ARCHTRUST-CONT-9b0b2783-20260715T130407Z",
-        "score": 96,
+        "review_run_id": "DIYU-PKG4-R4-95926d75-20260715T144148Z",
+        "score": 100,
         "verdict": "PASS",
         "blocking_findings": []
       }
     ]
   },
   "frozen_candidate": {
-    "commit": "9b0b278342134e593508c63e4f935315c1d26e35",
+    "commit": "95926d75489b6b08cb0ea984ed4ab40754f5e0f6",
     "reviewed_file_sha256": {
-      "conversation_flow.version_neutral.v1.json": "9a31d9199f7e4ed99548308de08f2091c03c2ce84d871f239e4edfa6850a7ece",
-      "state_action_mapping.v1.json": "c4ad73fa5b4f3c1bb22b9931b976e935a813c77ba0e1e2ed4eba0be239943ed1",
-      "journeys.simulated.v1.json": "d353ff6158ca70b13aa12bb31fbd3d7c89f9df1c276845cd08ff2bb2fb9351ee",
-      "check_dify_content_shell.py": "652b4a5e4ea8f971f63c2d772e7d1ebd87f44dab238a4f49c4757fc82dc5bb0a"
+      "conversation_flow.version_neutral.v1.json": "11ab730f6f052b3e687bd9c8d4f439153e911e883c5db9a689224e5d9dee6463",
+      "state_action_mapping.v1.json": "ac9b1cdb2e8dc957324cf70e1da36d4716495256692e5119a0b8e02ba23e8dde",
+      "journeys.simulated.v1.json": "666b7b6a150ade4adb9c74ba5fe054dc5a169e3dbc81502013e43e145b76e200",
+      "check_dify_content_shell.py": "258a003a9ae30e13284a18bb90e114e85b9f7566f42fe370eafae6277c8833e1"
     },
-    "unified_sha256": "ee90007b4ec210d71c395fe50504ef04a15df6426bdbac45ed79f4f72d039d07"
-  },
-  "acceptance_review_request": {
-    "PKG4-A01": "Verify exactly one version-neutral conversation candidate and one natural-chat entry.",
-    "PKG4-A02": "Verify ordinary chat cannot create a plan, request preparation or authoring, or write brand facts.",
-    "PKG4-A03": "Verify inspiration, vague, clear, and return-to-chat journeys remain available and ask no more than three questions.",
-    "PKG4-A04": "Verify confirmation and server-confirmed scope are both required before the preparation placeholder, and edits require reconfirmation.",
-    "PKG4-A05": "Verify Dify values, self-reports, and conversation variables cannot grant identity, scope, or permission.",
-    "PKG4-A06": "Verify public models, internal product mapping, atomic components, relationships, and paths are not copied or re-owned.",
-    "PKG4-A07": "Verify two-to-three candidates, selected-reference binding, local revision, return, and human-only difference judgment.",
-    "PKG4-A08": "Verify missing facts, materials, authorization, scope, degradation, and blocking produce honest action cards without fake body text.",
-    "PKG4-A09": "Verify recursive user-visible output does not expose internal identifiers, fields, errors, secrets, or service URLs.",
-    "PKG4-A10": "Verify only selected reference, necessary modification, and short reason are retained as feedback.",
-    "PKG4-A11": "Re-run the unique checker, selftest, and fixed direct journey assertions.",
-    "PKG4-A12": "Verify no real external calls, all readiness false, allowed write scope only, and 300/120/86 unharmed.",
-    "PKG4-S01": "Verify no reusable route language, graph traversal, guard/effect evaluator, or transition interpreter remains.",
-    "PKG4-S02": "Verify the checker directly asserts fixed parameterized journeys without interpreting a state graph.",
-    "PKG4-S03": "Verify PKG4-A01 through PKG4-A12 did not regress after subtraction.",
-    "PKG4-S04": "Verify identity, facts, authorization, scope, privacy, and leakage boundaries were not weakened.",
-    "PKG4-S05": "Verify ordinary expression, creative entry, and candidates do not depend on internal products or expression assets.",
-    "PKG4-S06": "Verify one candidate, one checker, and one representative journey set.",
-    "PKG4-S07": "Verify the revised candidate is not self-approved before targeted rereviews and successful remote checks.",
-    "PKG4-S08": "Verify 300/120/86 remain unchanged or unharmed and external calls remain zero."
+    "unified_sha256": "c282ff48ef1545f434b342df04a8bb2da37a6e9759c1c5aa8982f2a3db1f3eb9"
   },
   "core_number_impact": {
     "target_300_changed_or_harmed": false,
@@ -185,31 +174,16 @@
     "release_ready": false,
     "production_ready": false
   },
-  "shared_checker_resolution": {
-    "owner": "PACKAGE_2_V1",
-    "error": "E_REVIEW_POST_CANDIDATE_SCOPE",
-    "classification": "SHARED_CENTRAL_CHECK_SCOPE_CONFLICT_NOT_PACKAGE_4_BUSINESS_FAILURE",
-    "package_4_may_modify_shared_checker_or_workflow": false,
-    "state": "RESOLVED_BY_MASTER_F40C902_AND_SYNCED",
-    "resolved_master_commit": "f40c902767a0b991169d604be6ff0ed556460cde"
-  },
-  "remote_checks_before_r2": {
-    "run": "https://github.com/andyan77/diyu-agent/actions/runs/29406142828",
-    "secret_scan": "SUCCESS",
-    "checker_compatibility": "FAILURE_SHARED_SCOPE_CONFLICT",
-    "package_4_reserved_checks_reached": false
-  },
   "merge_authorized": false,
-  "r3_scope_compatibility": {
-    "latest_master_ref": "f40c902767a0b991169d604be6ff0ed556460cde",
-    "final_implementation_candidate": "9b0b278342134e593508c63e4f935315c1d26e35",
-    "package_4_only_changes": "PASS",
-    "package_4_plus_external_mixed_changes": "REJECTED_A12_WRITE_SCOPE",
-    "successor_package_only_changes": "NOT_BLOCKED",
-    "compact_builtin_selftest_count": 3,
-    "existing_checker_only": true,
-    "new_checker_or_test_file_added": false,
-    "new_review_round_or_role_added": false,
-    "original_two_r3_review_files_updated_in_place": true
+  "requested_merge_authorization": "APPROVE_PACKAGE_4_R4_COMPATIBILITY_MERGE",
+  "execution_review_request": {
+    "request": "Verify r4 topic and action-card compatibility, original lightweight behavior, hard boundaries, two targeted reviews, and remote checks.",
+    "merge_before_root_approval": false
+  },
+  "facts_for_next_planning": {
+    "package_5_blocked": false,
+    "package_7_must_wait_for_r4_merge": true,
+    "real_dify_or_external_runtime_connected": false,
+    "topic_and_action_sources_remain_public_foundation_owned": true
   }
 }

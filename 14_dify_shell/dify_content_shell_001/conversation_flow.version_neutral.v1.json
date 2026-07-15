@@ -1,15 +1,15 @@
 {
   "schema_version": "v1.1",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
-  "revision": "r2-lightweight",
+  "revision": "r4-contract-alignment",
   "candidate": {
     "kind": "VERSION_NEUTRAL_FLOW_CANDIDATE",
     "target_dify_version": "UNKNOWN_NOT_VERIFIED",
     "native_dify_export": false,
     "importable_claimed": false,
     "application_count": 1,
-    "current_stage": "LIGHTWEIGHT_IMPLEMENTATION_CANDIDATE_REVIEW_STATUS_RECORDED_IN_RESULT",
-    "expected_success_terminal": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7"
+    "current_stage": "R4_CONTRACT_ALIGNMENT_CANDIDATE_REVIEW_STATUS_RECORDED_IN_RESULT",
+    "expected_success_terminal": "PASS_DIFY_CONVERSATION_SHELL_R4_PENDING_PACKAGE_7"
   },
   "application": {
     "application_id": "diyu-conversation-shell-version-neutral",
@@ -68,15 +68,57 @@
         "还缺什么",
         "采用什么大方向"
       ],
+      "public_topic_source_ref": "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml",
+      "topic_category_display_mapping": [
+        {
+          "topic_category_id": "TOPIC-01",
+          "display_name": "真实工作与人物"
+        },
+        {
+          "topic_category_id": "TOPIC-02",
+          "display_name": "手艺、工艺与专业知识"
+        },
+        {
+          "topic_category_id": "TOPIC-03",
+          "display_name": "用户问题与理性选择"
+        },
+        {
+          "topic_category_id": "TOPIC-04",
+          "display_name": "产品研发与验证"
+        },
+        {
+          "topic_category_id": "TOPIC-05",
+          "display_name": "穿搭与衣橱关系"
+        },
+        {
+          "topic_category_id": "TOPIC-06",
+          "display_name": "商品质感与视觉审美"
+        },
+        {
+          "topic_category_id": "TOPIC-07",
+          "display_name": "门店运营与空间经营"
+        },
+        {
+          "topic_category_id": "TOPIC-08",
+          "display_name": "城市门店与本地生活"
+        }
+      ],
+      "public_topic_visibility": {
+        "display_name_only": true,
+        "internal_content_product_id_visible": false,
+        "component_id_visible": false,
+        "relationship_or_path_visible": false,
+        "raw_error_code_visible": false
+      },
       "user_visible_topic_categories": [
-        "家居装修与空间",
-        "健康生活与运动",
-        "餐饮与在地消费",
-        "服饰美妆与个人风格",
-        "职业教育与专业服务",
-        "亲子家庭与日常生活",
-        "旅行户外与城市体验",
-        "数码工具与效率"
+        "真实工作与人物",
+        "手艺、工艺与专业知识",
+        "用户问题与理性选择",
+        "产品研发与验证",
+        "穿搭与衣橱关系",
+        "商品质感与视觉审美",
+        "门店运营与空间经营",
+        "城市门店与本地生活"
       ]
     },
     "interaction_stages": [
@@ -122,7 +164,7 @@
       },
       {
         "stage_id": "ACTION_CARD",
-        "purpose": "缺事实、材料、授权或范围时给补料、降级或停止选择",
+        "purpose": "条件不足时展示公共合同约定的八类通俗行动卡",
         "user_visible_text": "当前条件不足时只给出下一步选择，不会填造可发布正文。",
         "allows_return_to_chat": true,
         "creates_plan": false,
