@@ -2,7 +2,7 @@
   "schema_version": "v1.3",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
   "revision": "r4",
-  "candidate_state": "READY_FOR_TARGETED_INDEPENDENT_REREVIEWS",
+  "candidate_state": "PASS_DIFY_CONVERSATION_SHELL_R4_PENDING_PACKAGE_7",
   "success_terminal_when_targeted_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_R4_PENDING_PACKAGE_7",
   "predecessor": {
     "merged_pull_request": "https://github.com/andyan77/diyu-agent/pull/17",
@@ -58,7 +58,7 @@
     }
   ],
   "local_evidence": {
-    "status": "PASS_R4_LOCAL_BEFORE_FREEZE",
+    "status": "PASS_R4_LOCAL_AND_TARGETED_REVIEWS_PENDING_REMOTE_CHECKS",
     "journey_case_count": 21,
     "user_visible_string_count": 103,
     "external_call_count": 0,
@@ -89,6 +89,19 @@
     "diff_integrity": "PASS",
     "sensitive_information_scan": "PASS_LOCAL_CHANGED_LINE_SCAN_PENDING_REMOTE_SECRET_SCAN"
   },
+  "review_governor_evidence": {
+    "primary_scene": "completion_audit",
+    "secondary_scenes": [
+      "code_change_review",
+      "release_gate",
+      "security_special",
+      "architecture_special"
+    ],
+    "code_review_checks": "PASS_5_OF_5",
+    "security_review_checks": "PASS_4_OF_5_RLS_NOT_APPLICABLE_NO_ALEMBIC",
+    "diff_guard_scan": "PASS_NO_SECRET_LLM_SQL_LAYER_OR_PORT_VIOLATIONS",
+    "runtime_consumer_status": "PACKAGE_7_INTEGRATION_PENDING_BY_AUTHORIZED_ROADMAP"
+  },
   "historical_review_evidence": [
     {
       "path": "reviews/novice_experience/targeted-rereview-r3.json",
@@ -102,14 +115,46 @@
     }
   ],
   "targeted_rereviews": {
-    "state": "PENDING_TARGETED_INDEPENDENT_REREVIEWS",
+    "state": "COMPLETED_TARGETED_INDEPENDENT_REREVIEWS",
     "required_same_final_candidate": true,
     "required_review_count": 2,
     "minimum_score_each": 90,
     "new_full_review_rounds": 0,
-    "reviews": []
+    "reviews": [
+      {
+        "review_role": "USER_SEMANTICS_AND_NOVICE_EXPERIENCE_TARGETED_R4_REVIEW",
+        "path": "reviews/novice_experience/targeted-rereview-r4.json",
+        "sha256": "cdef0c75f70d37c2626bcfc5dd6e2b29eea3679421fe757e12dbd95ccabafdcc",
+        "reviewer_identity": "codex-independent-user-semantics-novice-reviewer-r4",
+        "reviewer_session": "/root/novice_experience_review",
+        "review_run_id": "R4-95926d75-20260715T143552Z",
+        "score": 98,
+        "verdict": "PASS",
+        "blocking_findings": []
+      },
+      {
+        "review_role": "PUBLIC_CONTRACT_AND_LIGHTWEIGHT_ARCHITECTURE_TARGETED_R4_REVIEW",
+        "path": "reviews/architecture_trust/targeted-rereview-r4.json",
+        "sha256": "9432c4d178e0df794734d5917ada7f30f0655a6132b75e2f9fabf1db051d2413",
+        "reviewer_identity": "codex-independent-public-contract-lightweight-trust-reviewer-r4",
+        "reviewer_session": "/root/architecture_trust_review",
+        "review_run_id": "DIYU-PKG4-R4-95926d75-20260715T144148Z",
+        "score": 100,
+        "verdict": "PASS",
+        "blocking_findings": []
+      }
+    ]
   },
-  "frozen_candidate": null,
+  "frozen_candidate": {
+    "commit": "95926d75489b6b08cb0ea984ed4ab40754f5e0f6",
+    "reviewed_file_sha256": {
+      "conversation_flow.version_neutral.v1.json": "11ab730f6f052b3e687bd9c8d4f439153e911e883c5db9a689224e5d9dee6463",
+      "state_action_mapping.v1.json": "ac9b1cdb2e8dc957324cf70e1da36d4716495256692e5119a0b8e02ba23e8dde",
+      "journeys.simulated.v1.json": "666b7b6a150ade4adb9c74ba5fe054dc5a169e3dbc81502013e43e145b76e200",
+      "check_dify_content_shell.py": "258a003a9ae30e13284a18bb90e114e85b9f7566f42fe370eafae6277c8833e1"
+    },
+    "unified_sha256": "c282ff48ef1545f434b342df04a8bb2da37a6e9759c1c5aa8982f2a3db1f3eb9"
+  },
   "core_number_impact": {
     "target_300_changed_or_harmed": false,
     "frozen_reference_120_changed_or_harmed": false,

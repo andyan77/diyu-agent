@@ -1,0 +1,280 @@
+{
+  "schema_version": "r4-targeted-review-v1",
+  "review_role": "PUBLIC_CONTRACT_AND_LIGHTWEIGHT_ARCHITECTURE_TARGETED_R4_REVIEW",
+  "review_scope": "R4_PUBLIC_SOURCE_CONSUMPTION_EIGHT_ACTIONS_TRUST_AND_LIGHTWEIGHT_REGRESSION_ONLY",
+  "reviewer_identity": "codex-independent-public-contract-lightweight-trust-reviewer-r4",
+  "reviewer_session": "/root/architecture_trust_review",
+  "review_run_id": "DIYU-PKG4-R4-95926d75-20260715T144148Z",
+  "reviewed_candidate_commit": "95926d75489b6b08cb0ea984ed4ab40754f5e0f6",
+  "reviewed_snapshot_digest": "c282ff48ef1545f434b342df04a8bb2da37a6e9759c1c5aa8982f2a3db1f3eb9",
+  "reviewed_file_sha256": {
+    "conversation_flow.version_neutral.v1.json": "11ab730f6f052b3e687bd9c8d4f439153e911e883c5db9a689224e5d9dee6463",
+    "state_action_mapping.v1.json": "ac9b1cdb2e8dc957324cf70e1da36d4716495256692e5119a0b8e02ba23e8dde",
+    "journeys.simulated.v1.json": "666b7b6a150ade4adb9c74ba5fe054dc5a169e3dbc81502013e43e145b76e200",
+    "check_dify_content_shell.py": "258a003a9ae30e13284a18bb90e114e85b9f7566f42fe370eafae6277c8833e1"
+  },
+  "score": 100,
+  "verdict": "PASS",
+  "blocking_findings": [],
+  "necessary_regression_findings": [],
+  "repo_changed": false,
+  "reviewer_write_scope": {
+    "created_evidence_file": "14_dify_shell/dify_content_shell_001/reviews/architecture_trust/targeted-rereview-r4.json",
+    "implementation_mutated": false,
+    "result_file_mutated": false,
+    "historical_evidence_mutated": false
+  },
+  "score_rationale": {
+    "public_source_consumption_and_exact_alignment": 30,
+    "package_2_eight_action_adoption_and_fail_closed_behavior": 20,
+    "fact_authorization_privacy_and_enterprise_trust_boundaries": 20,
+    "lightweight_architecture_and_no_internal_model_copy": 20,
+    "necessary_regression_quality_and_integrity": 10,
+    "total": 100
+  },
+  "executed_commands": [
+    {
+      "command": "git status --short --branch; git rev-parse HEAD; git show -s --format=<commit,parent,subject> HEAD",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Candidate HEAD is 95926d75489b6b08cb0ea984ed4ab40754f5e0f6 on the dedicated r4 branch; the initial worktree was clean."
+    },
+    {
+      "command": "sha256sum <four frozen implementation files> and recompute canonical four-file digest",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "All four SHA-256 values and unified digest c282ff48ef1545f434b342df04a8bb2da37a6e9759c1c5aa8982f2a3db1f3eb9 matched exactly."
+    },
+    {
+      "command": "python3 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 1,
+      "classification": "RUNTIME_VERIFIED_NON_CANDIDATE_LIFECYCLE_INTERLOCK",
+      "result": "The only error was S07_REVIEW_FILE_SET after the independent novice r4 evidence appeared concurrently while result remained READY_FOR_TARGETED_INDEPENDENT_REREVIEWS; no frozen implementation error was reported."
+    },
+    {
+      "command": "python3 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py --selftest",
+      "exit_code": 1,
+      "classification": "RUNTIME_VERIFIED_NON_CANDIDATE_LIFECYCLE_INTERLOCK",
+      "result": "The repository lifecycle precheck stopped at the same sole S07_REVIEW_FILE_SET interlock before selftest dispatch."
+    },
+    {
+      "command": "python3 -O 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 2,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Expected fail-closed refusal: optimized mode disables assertions and the deterministic checker did not run."
+    },
+    {
+      "command": "python3 -O 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py --selftest",
+      "exit_code": 2,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Expected fail-closed refusal in optimized selftest mode."
+    },
+    {
+      "command": "Import the original package 4 checker and call validate(..., check_repository=False) plus its original selftest(...) against the frozen files",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "errors=(), journey_cases=21, visible_strings=103, selftest_failures=(); this isolates the frozen candidate logic from the concurrent review-file lifecycle interlock without modifying repository files."
+    },
+    {
+      "command": "In-memory public YAML source mutation probes through the original checker loader",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "A changed public topic display name caused R4_A02_TOPIC_ALIGNMENT/R4_A02_VISIBLE_TOPICS; a changed public action type caused R4_A04_ACTION_SET."
+    },
+    {
+      "command": "In-memory folded INTERVIEW/RESHOOT/ANONYMIZE and unknown-action probes through the original checker",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Each of the three folded displays caused R4_A05_ACTION_DISPLAY for title, reason, and next action; GUESS_AND_CONTINUE caused R4_A06_UNKNOWN_ACTION."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Package 2 PASS; focused tests executed by its checker; core_numbers=[300,120,86], global_readiness_all_false=true."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py --selftest",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Package 2 selftest PASS with seven negative cases."
+    },
+    {
+      "command": "Exercise package 2 _action_card for all public delivery action_card_types",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "All eight public actions were preserved, each had a specific next action, and every returned card excluded a publishable candidate."
+    },
+    {
+      "command": "AST/JSON/YAML exact comparison of public action_card_types, package 2 _next_action keys, and package 4 action_cards",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Exact ordered 8/8 equality: COLLECT_FACT, COLLECT_MATERIAL, REQUEST_AUTHORIZATION, INTERVIEW, RESHOOT, ANONYMIZE, DEGRADE, BLOCK."
+    },
+    {
+      "command": "RUFF_CACHE_DIR=/tmp/diyu-r4-review-ruff uv run --no-sync ruff check --no-cache 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "All checks passed."
+    },
+    {
+      "command": "MYPY_CACHE_DIR=/tmp/diyu-r4-review-mypy uv run --no-sync mypy --strict --no-incremental 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "Success: no issues found in one source file."
+    },
+    {
+      "command": "jq empty <package 4 JSON files>; git diff --check b7edf9e5..95926d75 -- 14_dify_shell/dify_content_shell_001",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "JSON parsing and diff whitespace/integrity checks passed."
+    },
+    {
+      "command": "gitleaks detect --source . --config .gitleaks.toml --redact --no-banner",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "192 commits and approximately 329 MB scanned; no leaks found."
+    },
+    {
+      "command": "rg scans for obsolete generic topics, internal product/atomic references, engine keys, direct LLM SDK imports, raw SQL, and cross-layer/Port/migration paths",
+      "exit_code": 0,
+      "classification": "RUNTIME_VERIFIED",
+      "result": "No obsolete generic topic remained; no copied CP/component/edge/path data appeared; only explicit false lightweight-engine declarations matched; no direct SDK, SQL, src/ports, frontend, or alembic change was present."
+    }
+  ],
+  "execution_notes": {
+    "original_checker_lifecycle_interlock": "The package checker intentionally requires the pending result to have zero r4 review files and the completed result to have exactly two. During independent parallel review, the novice evidence appeared after the initial clean-state check, so the repository-level invocation correctly failed closed until the coordinator binds both review files in result_and_review_request.v1.json.",
+    "candidate_defect_assessment": "NOT_A_CANDIDATE_DEFECT",
+    "review_harness_retry": "The first read-only importlib probe omitted sys.modules registration and failed inside dataclasses; the corrected probe registered the module, then the unchanged original checker validate/selftest completed with exit 0.",
+    "public_foundation_checker_observation": "Its ordinary and selftest invocations also stopped only because they transitively invoke the same package 4 repository lifecycle check; this does not alter the independently verified public YAML content or frozen package 4 implementation conclusion."
+  },
+  "evidence_classification": {
+    "runtime_verified": [
+      "candidate commit, four file hashes, and unified digest",
+      "package 4 core validation and original negative selftests",
+      "public truth source mutation fail-closed behavior",
+      "three independent action display anti-folding probes",
+      "unknown action blocking probe",
+      "package 2 ordinary gate, focused tests, selftest, and eight-action response probe",
+      "public/package2/package4 exact ordered action equality",
+      "optimized-mode refusal",
+      "ruff strict lint, mypy strict, JSON parsing, diff check, gitleaks, and targeted scans"
+    ],
+    "static_repository_judgment": [
+      "PackageChecker.__init__ loads both public YAML files from the current repository tree before comparisons.",
+      "The package 4 topic projection contains only the public category id and display name, not internal product mappings.",
+      "The package 4 action display projection is a thin non-authoritative mapping and references the public contract.",
+      "Fact, authorization, privacy, enterprise scope, ownership, and internal leakage declarations remain fail-closed.",
+      "The six interaction stages remain human-readable guidance and do not implement a routing language, graph traversal, state machine, guard evaluator, or effect interpreter."
+    ],
+    "not_applicable": [
+      "layer-guard: no src/ or backend/src/ file and no cross-layer import changed",
+      "port-contract-guard: no src/ports contract or consumer changed",
+      "RLS/database migration review: no database, ORM, SQL, schema, or alembic artifact changed",
+      "frontend API construction and upload security: no frontend or upload implementation changed",
+      "external runtime verification: external calls are forbidden and the candidate implements none"
+    ],
+    "needs_more_evidence": []
+  },
+  "public_contract_assessment": {
+    "topic_source": "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml",
+    "topic_source_consumed_directly": true,
+    "topic_alignment": "PASS_EXACT_ORDERED_8_OF_8",
+    "topic_comparison_fields": [
+      "topic_category_id",
+      "display_name",
+      "order",
+      "presence",
+      "uniqueness"
+    ],
+    "obsolete_generic_topic_residue": 0,
+    "action_source": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+    "action_source_consumed_directly": true,
+    "action_alignment": "PASS_EXACT_ORDERED_8_OF_8",
+    "action_types": [
+      "COLLECT_FACT",
+      "COLLECT_MATERIAL",
+      "REQUEST_AUTHORIZATION",
+      "INTERVIEW",
+      "RESHOOT",
+      "ANONYMIZE",
+      "DEGRADE",
+      "BLOCK"
+    ],
+    "package_2_exact_adoption": true,
+    "package_2_specific_nonpublishable_response_for_all_eight": true,
+    "interview_reshoot_anonymize_independent": true,
+    "representative_journeys_present": [
+      "NEEDS-INTERVIEW",
+      "NEEDS-RESHOOT",
+      "NEEDS-ANONYMIZATION"
+    ],
+    "unknown_action_behavior": "REPORT_INCOMPATIBLE_AND_BLOCK",
+    "mutation_fail_closed": true,
+    "public_truth_duplicated_as_authoritative_model": false,
+    "internal_product_mapping_copied": false,
+    "atomic_component_relationship_or_path_model_copied": false
+  },
+  "guard_order": [
+    {
+      "priority": "P0",
+      "guard": "security-guard",
+      "verdict": "PASS",
+      "evidence": "Full gitleaks scan found no leak; no direct LLM SDK, SQL execution, dynamic execution on input, external provider, database, credential, or network binding was added; trust hints cannot grant scope."
+    },
+    {
+      "priority": "P1",
+      "guard": "layer-guard",
+      "verdict": "NOT_APPLICABLE",
+      "evidence": "All candidate changes are under 14_dify_shell/dify_content_shell_001; no src layer or cross-layer import changed."
+    },
+    {
+      "priority": "P2",
+      "guard": "port-contract-guard",
+      "verdict": "NOT_APPLICABLE",
+      "evidence": "No src/ports interface, adapter, signature, or caller changed."
+    }
+  ],
+  "trust_boundary_assessment": {
+    "fact_truth_owned_or_written_here": false,
+    "authorization_truth_owned_here": false,
+    "client_or_dify_hint_can_grant_scope": false,
+    "server_confirmed_scope_remains_only_trusted_unlock": true,
+    "privacy_regression": false,
+    "anonymization_is_distinct_and_nonpublishable": true,
+    "cross_tenant_organization_store_or_account_widening_path": false,
+    "internal_identifier_leak_regression": false,
+    "action_cards_create_publishable_body": false,
+    "action_cards_create_light_content_plan": false,
+    "action_cards_write_brand_fact": false,
+    "external_call_count": 0,
+    "readiness_all_false": true,
+    "rls_review": "NOT_APPLICABLE_NO_DATABASE_OR_ALEMBIC_CHANGE",
+    "core_numbers_300_120_86_changed_or_harmed": false
+  },
+  "lightweight_architecture_assessment": {
+    "application_count": 1,
+    "human_readable_stage_count": 6,
+    "generic_route_language_implemented": false,
+    "graph_traversal_implemented": false,
+    "state_transition_runtime_implemented": false,
+    "guard_evaluator_implemented": false,
+    "effect_interpreter_implemented": false,
+    "persistent_memory_implemented": false,
+    "user_profile_implemented": false,
+    "preference_system_implemented": false,
+    "light_content_plan_owned_here": false,
+    "public_or_internal_model_copy_detected": false,
+    "new_checker_schema_ledger_or_platform_detected": false,
+    "assessment": "PASS_LIGHTWEIGHT_BOUNDARY_PRESERVED"
+  },
+  "provided_automatic_evidence": {
+    "review_code_checks": "5/5 PASS",
+    "review_security_checks": "4/5 PASS",
+    "rls_check": "NOT_APPLICABLE_NO_ALEMBIC",
+    "targeted_diff_scan": "NO_SECRET_LLM_SDK_SQL_CROSS_LAYER_OR_PORT_CHANGE",
+    "independent_confirmation": "ruff, mypy, gitleaks, diff scope, source patterns, and N/A path conditions were independently rechecked in this review."
+  },
+  "findings": [],
+  "recommendation": "PASS. No frozen implementation change is recommended. The coordinator may bind both r4 review evidence files into result_and_review_request.v1.json and rerun the ordinary package 4 and public-foundation gates; the current S07 lifecycle interlock should then close without touching the four frozen implementation files."
+}

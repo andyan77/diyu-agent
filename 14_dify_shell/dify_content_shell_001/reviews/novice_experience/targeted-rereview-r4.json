@@ -1,0 +1,211 @@
+{
+  "schema_version": "r4-targeted-review-v1",
+  "review_role": "USER_SEMANTICS_AND_NOVICE_EXPERIENCE_TARGETED_R4_REVIEW",
+  "review_scope": "R4_CLOTHING_TOPICS_ACTION_CARD_LANGUAGE_AND_NECESSARY_REGRESSION_ONLY",
+  "reviewer_identity": "codex-independent-user-semantics-novice-reviewer-r4",
+  "reviewer_session": "/root/novice_experience_review",
+  "review_run_id": "R4-95926d75-20260715T143552Z",
+  "reviewed_candidate_commit": "95926d75489b6b08cb0ea984ed4ab40754f5e0f6",
+  "reviewed_snapshot_digest": "c282ff48ef1545f434b342df04a8bb2da37a6e9759c1c5aa8982f2a3db1f3eb9",
+  "reviewed_file_sha256": {
+    "conversation_flow.version_neutral.v1.json": "11ab730f6f052b3e687bd9c8d4f439153e911e883c5db9a689224e5d9dee6463",
+    "state_action_mapping.v1.json": "ac9b1cdb2e8dc957324cf70e1da36d4716495256692e5119a0b8e02ba23e8dde",
+    "journeys.simulated.v1.json": "666b7b6a150ade4adb9c74ba5fe054dc5a169e3dbc81502013e43e145b76e200",
+    "check_dify_content_shell.py": "258a003a9ae30e13284a18bb90e114e85b9f7566f42fe370eafae6277c8833e1"
+  },
+  "score": 98,
+  "verdict": "PASS",
+  "blocking_findings": [],
+  "necessary_regression_findings": [],
+  "repo_changed": false,
+  "executed_commands": [
+    {
+      "command": "python3 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 0,
+      "result": "PASS_DIFY_CONTENT_SHELL_PACKAGE cases=21 visible_strings=103 external_calls=0 readiness=false lightweight=true"
+    },
+    {
+      "command": "python3 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py --selftest",
+      "exit_code": 0,
+      "result": "PASS_DIFY_CONTENT_SHELL_SELFTEST cases=21 visible_strings=103 external_calls=0 readiness=false lightweight=true"
+    },
+    {
+      "command": "python3 -O 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 2,
+      "result": "REFUSED_AS_REQUIRED"
+    },
+    {
+      "command": "python3 -O 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py --selftest",
+      "exit_code": 2,
+      "result": "REFUSED_AS_REQUIRED"
+    }
+  ],
+  "evidence_classification": {
+    "tested": [
+      "冻结四文件逐项SHA-256与指定值完全一致，按checker规范计算的统一摘要为c282ff48ef1545f434b342df04a8bb2da37a6e9759c1c5aa8982f2a3db1f3eb9。",
+      "普通检查和selftest均以exit 0通过；两项优化模式均按合同以exit 2拒绝。",
+      "唯一checker从公共题材YAML和公共合同YAML读取真源，验证21个直接旅程、103条用户可见字符串及正反篡改自测。"
+    ],
+    "static_human_judgment": [
+      "八类题材名称均为服装、工艺、穿搭、商品、门店语境下的普通中文，编号、名称和顺序与公共题材真源一致。",
+      "用户可见题材列表只展示八个display_name，不展示TOPIC编号、内部内容产品编号、组件、关系、路径或原始错误码。",
+      "采访、补拍和匿名化三类行动在标题、原因、下一步和旅程上各自表达不同问题及可执行动作，没有折叠为补材料、授权或降级。",
+      "普通聊天、灵感、每轮一至三个澄清问题、通俗摘要、确认与重确认、二至三个候选、选择、局部修改和退回均保持可理解且无回归。"
+    ],
+    "not_claimed": [
+      "真实Dify导入或运行能力",
+      "真实聊天模型质量",
+      "真实内容质量",
+      "真实外部服务接线"
+    ]
+  },
+  "topic_assessment": {
+    "status": "PASS",
+    "truth_source": "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml",
+    "source_evidence": "topic_product_mapping.v1.yaml:13-69,131-143",
+    "flow_evidence": "conversation_flow.version_neutral.v1.json:71-122",
+    "aligned_topics": [
+      {
+        "topic_category_id": "TOPIC-01",
+        "display_name": "真实工作与人物"
+      },
+      {
+        "topic_category_id": "TOPIC-02",
+        "display_name": "手艺、工艺与专业知识"
+      },
+      {
+        "topic_category_id": "TOPIC-03",
+        "display_name": "用户问题与理性选择"
+      },
+      {
+        "topic_category_id": "TOPIC-04",
+        "display_name": "产品研发与验证"
+      },
+      {
+        "topic_category_id": "TOPIC-05",
+        "display_name": "穿搭与衣橱关系"
+      },
+      {
+        "topic_category_id": "TOPIC-06",
+        "display_name": "商品质感与视觉审美"
+      },
+      {
+        "topic_category_id": "TOPIC-07",
+        "display_name": "门店运营与空间经营"
+      },
+      {
+        "topic_category_id": "TOPIC-08",
+        "display_name": "城市门店与本地生活"
+      }
+    ],
+    "count": 8,
+    "order_matches_truth_source": true,
+    "names_match_truth_source": true,
+    "old_generic_industry_topics_remaining": [],
+    "user_visible_surface_is_display_name_only": true,
+    "internal_identifiers_visible": false,
+    "human_judgment": "八个名称边界清楚、措辞通俗，能够让小白按真实工作、工艺知识、用户问题、研发验证、穿搭、质感、门店经营和城市生活理解选题，不需要接触内部产品体系。"
+  },
+  "action_card_assessment": {
+    "status": "PASS",
+    "truth_source": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+    "source_evidence": "public_foundation_contract.v1.yaml:411-444",
+    "mapping_evidence": "state_action_mapping.v1.json:75-164",
+    "journey_evidence": "journeys.simulated.v1.json:309-415",
+    "aligned_action_types": [
+      "COLLECT_FACT",
+      "COLLECT_MATERIAL",
+      "REQUEST_AUTHORIZATION",
+      "INTERVIEW",
+      "RESHOOT",
+      "ANONYMIZE",
+      "DEGRADE",
+      "BLOCK"
+    ],
+    "count": 8,
+    "distinct_novice_actions": {
+      "INTERVIEW": {
+        "title": "安排真实采访",
+        "reason_assessment": "明确说明缺少当事人一手经历或专业说明，现有材料不能替代采访。",
+        "next_action_assessment": "要求联系受访者、完成采访并取得本人确认，步骤具体可执行。",
+        "representative_journey": "NEEDS-INTERVIEW",
+        "independent_from_other_actions": true
+      },
+      "RESHOOT": {
+        "title": "完成必要补拍",
+        "reason_assessment": "明确说明缺少支撑表达的画面细节，且不能用文字猜补。",
+        "next_action_assessment": "要求按缺口清单补拍并确认可用范围，步骤具体可执行。",
+        "representative_journey": "NEEDS-RESHOOT",
+        "independent_from_other_actions": true
+      },
+      "ANONYMIZE": {
+        "title": "隐去可识别信息",
+        "reason_assessment": "明确说明材料含可识别人物信息且缺少直接展示确认。",
+        "next_action_assessment": "明确列出去除姓名、联系方式和清晰人脸，并要求确认无法反推本人。",
+        "representative_journey": "NEEDS-ANONYMIZATION",
+        "independent_from_other_actions": true
+      }
+    },
+    "all_titles_reasons_and_next_actions_non_empty_and_distinct": true,
+    "all_cards_non_publishable": true,
+    "all_cards_create_light_content_plan": false,
+    "all_cards_write_brand_fact": false,
+    "all_cards_trigger_external_call": false,
+    "unknown_action_behavior": "REPORT_INCOMPATIBLE_AND_BLOCK",
+    "unknown_action_is_fail_closed": true
+  },
+  "regression_assessment": {
+    "status": "PASS",
+    "natural_chat": {
+      "status": "PASS",
+      "evidence": "conversation_flow.version_neutral.v1.json:16-20,124-132; journeys.simulated.v1.json:116-130"
+    },
+    "inspiration": {
+      "status": "PASS",
+      "evidence": "conversation_flow.version_neutral.v1.json:50-60,133-140; journeys.simulated.v1.json:132-145"
+    },
+    "clarification_one_to_three_questions": {
+      "status": "PASS",
+      "evidence": "conversation_flow.version_neutral.v1.json:56-60; journeys.simulated.v1.json:146-159"
+    },
+    "plain_summary_and_confirmation": {
+      "status": "PASS",
+      "evidence": "conversation_flow.version_neutral.v1.json:62-70,141-179; journeys.simulated.v1.json:160-216,292-306"
+    },
+    "two_to_three_candidates": {
+      "status": "PASS",
+      "evidence": "conversation_flow.version_neutral.v1.json:181-190; journeys.simulated.v1.json:56-113,250-290"
+    },
+    "selection_local_revision_and_return": {
+      "status": "PASS",
+      "evidence": "journeys.simulated.v1.json:250-273"
+    },
+    "human_candidate_difference": {
+      "status": "PASS",
+      "machine_score_reused": false,
+      "assessment": "二候选是现场切入和问题切入；三候选是过程顺拍、问题拆解和选择复盘，差异位于叙事入口与信息组织，不是近义改写。"
+    },
+    "user_visible_internal_identifier_or_raw_error_leak": {
+      "status": "PASS",
+      "tested_visible_string_count": 103,
+      "static_assessment": "人工审读未见内部产品编号、TOPIC编号、组件编号、关系、路径或原始错误码进入用户可见字段。"
+    },
+    "lightweight_and_simulation_boundary": {
+      "status": "PASS",
+      "evidence": "conversation_flow.version_neutral.v1.json:21-33,210-241; journeys.simulated.v1.json:5-13,49-55"
+    }
+  },
+  "acceptance_results": {
+    "PKG4-R4-A02": "PASS",
+    "PKG4-R4-A03": "PASS",
+    "PKG4-R4-A04": "PASS",
+    "PKG4-R4-A05": "PASS",
+    "PKG4-R4-A06": "PASS",
+    "PKG4-R4-A07": "PASS",
+    "PKG4-R4-A08": "PASS",
+    "PKG4-R4-A09": "PASS",
+    "PKG4-R4-A10": "PASS"
+  },
+  "findings": [],
+  "recommendation": "该冻结候选通过r4用户语义与小白体验定向复审，可继续写入另一份独立r4审查并最小更新结果证据；本结论不授权合并或真实Dify接线。"
+}
