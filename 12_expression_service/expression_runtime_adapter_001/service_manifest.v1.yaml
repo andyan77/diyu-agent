@@ -39,6 +39,20 @@ light_expression_service_manifest:
     neutral_profile_path: neutral_expression_profile.v1.yaml
     neutral_profile_sha256: 30d8ce76fa49ebfad79634cbaa19f69e8d8ad5bbc09c958403dcc8847d3025c6
     formal_enterprise_profile_database_created: false
+  confirmed_requirement_extension:
+    required_fields:
+    - selected_internal_content_product_id
+    - primary_audience
+    - required_precise_fact_kinds
+    allowed_precise_fact_kinds: [SKU, SPECIFICATION, PRICE, STOCK, TIME_POINT, AUTHORIZATION, REVOCATION]
+    product_must_be_explicit_and_allowed_by_selected_topic: true
+    audience_must_be_explicit: true
+    keyword_or_digest_inference_allowed: false
+    local_simulation_only: true
+    local_simulation_values:
+      selected_internal_content_product_id: CP03
+      primary_audience: 关注手艺过程与专业判断的模拟品牌账号受众
+      required_precise_fact_kinds: [TIME_POINT]
   runtime_boundaries:
     external_provider_adapter_count: 0
     external_model_call_count: 0

@@ -133,8 +133,16 @@ FORBIDDEN_IMPLEMENTATION_IMPORTS = frozenset(
 REQUIRED_TEST_METHODS = frozenset(
     {
         "test_valid_request_without_atom_references_uses_neutral_profile",
+        "test_narrative_only_input_is_allowed_without_precise_claim_requirement",
+        "test_missing_required_precise_fact_returns_collection_card",
+        "test_explicit_product_and_audience_are_carried_without_inference",
+        "test_missing_or_out_of_topic_product_never_selects_a_default",
+        "test_missing_audience_returns_requirement_collection_card",
+        "test_unregistered_requirement_change_cannot_reuse_confirmation",
         "test_body_cannot_create_trust_without_server_context",
         "test_client_cannot_override_hard_prohibitions",
+        "test_unknown_creative_hints_are_ignored_with_diagnostics",
+        "test_evaluation_rules_are_server_resolved_when_omitted",
         "test_fact_only_input_degrades_safely",
         "test_empty_material_and_facts_returns_collection_card",
         "test_missing_fact_authorization_requests_authorization",
@@ -212,6 +220,19 @@ def validate_manifest(manifest: dict[str, Any]) -> None:
         "E_TRUSTED_EVIDENCE_REGISTRATION",
     )
     require(trust.get("normal_runtime_requires_atom_refs") is False, "E_ATOM_RUNTIME")
+    requirement = manifest.get("confirmed_requirement_extension", {})
+    require(
+        requirement.get("required_fields")
+        == [
+            "selected_internal_content_product_id",
+            "primary_audience",
+            "required_precise_fact_kinds",
+        ],
+        "E_REQUIREMENT_EXTENSION_FIELDS",
+    )
+    require(requirement.get("keyword_or_digest_inference_allowed") is False, "E_REQUIREMENT_INFERENCE")
+    require(requirement.get("product_must_be_explicit_and_allowed_by_selected_topic") is True, "E_PRODUCT_ROUTE")
+    require(requirement.get("audience_must_be_explicit") is True, "E_AUDIENCE_ROUTE")
     runtime = manifest.get("runtime_boundaries", {})
     for key in (
         "external_provider_adapter_count",
@@ -286,6 +307,10 @@ def validate_source_shape(root: Path) -> None:
     validate_implementation_source(http, SOURCE_PATHS[1])
     for token in ("class LightExpressionService", "def prepare(", "def validate(", "PENDING_EXTERNAL_REVIEW"):
         require(token in core, f"E_CORE_SHAPE:{token}")
+    require("int(digest_object(key)" not in core, "E_DIGEST_PRODUCT_INFERENCE")
+    require("与该题材相关的普通用户" not in core, "E_HARDCODED_AUDIENCE")
+    require('requirement["selected_internal_content_product_id"]' in core, "E_EXPLICIT_PRODUCT_ROUTE")
+    require('requirement["primary_audience"]' in core, "E_EXPLICIT_AUDIENCE_ROUTE")
     for method, path in EXPECTED_ENDPOINTS:
         del method
         require(path in http, f"E_HTTP_ENDPOINT:{path}")

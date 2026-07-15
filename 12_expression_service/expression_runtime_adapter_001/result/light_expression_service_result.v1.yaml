@@ -16,14 +16,19 @@ light_expression_service_result:
     external_model_call_count: 0
     Dify_call_count: 0
     database_call_count: 0
+    precise_facts_required_by_structured_task_claims_only: true
+    product_route_inference_allowed: false
+    default_audience_allowed: false
+    unknown_soft_expression_hints_are_diagnostic_only: true
+    evaluation_rules_resolved_by_service: true
   verification:
-    focused_test_count: 39
+    focused_test_count: 46
     focused_tests_passed: true
     package_checker_passed: true
     package_selftest_passed: true
     optimized_mode_exit_2: true
-    public_foundation_regression_passed: false
-    public_foundation_selftest_case_count: 81
+    public_foundation_regression_passed: true
+    public_foundation_selftest_case_count: 87
     current_gate_regression_passed: true
     current_gate_selftest_passed: true
     ruff_passed: true
@@ -45,16 +50,12 @@ light_expression_service_result:
         score: 48
         verdict: FAIL
       repair_scope: TARGETED_ORIGINAL_BLOCKERS_AND_NECESSARY_REGRESSION_ONLY
-      post_fix_review_status: PENDING
+      post_fix_review_status: PENDING_TARGETED_REREVIEW
     architecture_review_ref: null
     trust_fact_safety_review_ref: null
     both_scores_at_least_90: false
     Root_approval: PENDING
-  blocking_items:
-  - id: E_REVIEW_POST_CANDIDATE_SCOPE
-    source: ci/checkers/check_product_foundation.py
-    status: OUTSIDE_PHASE_B_WRITE_SURFACE
-    impact: REQUIRED_CI_CANNOT_PASS_UNTIL_ROOT_AUTHORIZES_REFERENCE_SAFE_SUCCESSOR_DELEGATION
+  blocking_items: []
   pull_request:
     number: null
     state: NOT_OPENED

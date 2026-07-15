@@ -10,9 +10,7 @@ import json
 import threading
 import unittest
 from pathlib import Path
-from typing import Any
-
-import yaml
+from typing import Any, Callable
 
 from http_entrypoint import build_server
 from light_expression_service import (
@@ -24,10 +22,6 @@ from light_expression_service import (
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
-CONTRACT_PATH = (
-    REPOSITORY_ROOT
-    / "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml"
-)
 IDENTITY_PATH = (
     REPOSITORY_ROOT
     / "11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml"
@@ -36,8 +30,7 @@ FIXED_TIME = parse_time("2026-07-14T00:00:00Z")
 
 
 def contract_prepare_request() -> dict[str, Any]:
-    contract = yaml.safe_load(CONTRACT_PATH.read_text(encoding="utf-8"))["public_foundation_contract"]
-    return copy.deepcopy(contract["api_contracts"][0]["request_example"])
+    return LightExpressionService(REPOSITORY_ROOT).local_simulation_request()
 
 
 def service_and_context() -> tuple[LightExpressionService, TrustedUpstreamContext]:
@@ -48,6 +41,7 @@ def service_and_context() -> tuple[LightExpressionService, TrustedUpstreamContex
 def trusted_context_for_request(request: dict[str, Any]) -> TrustedUpstreamContext:
     return TrustedUpstreamContext.from_simulation_identity(
         IDENTITY_PATH,
+        (copy.deepcopy(request["confirmed_requirement"]),),
         tuple(copy.deepcopy(request["scoped_retrieval_fragments"])),
         tuple(copy.deepcopy(request["verified_precise_facts"])),
     )
@@ -136,6 +130,47 @@ class PrepareTests(unittest.TestCase):
         changed["request_id"] = "REQ-SIM-PREPARE-CHANGED"
         second = self.prepare(changed)
         self.assertEqual(first, second)
+        self.assertEqual(second["references"]["selected_internal_content_product_id"], "CP03")
+        self.assertEqual(
+            second["primary_audience"],
+            "关注手艺过程与专业判断的模拟品牌账号受众",
+        )
+
+    def test_explicit_product_and_audience_are_carried_without_inference(self) -> None:
+        result = self.prepare()
+        self.assertEqual(result["references"]["selected_internal_content_product_id"], "CP03")
+        self.assertEqual(
+            result["primary_audience"],
+            self.request["confirmed_requirement"]["primary_audience"],
+        )
+
+    def test_missing_or_out_of_topic_product_never_selects_a_default(self) -> None:
+        missing = copy.deepcopy(self.request)
+        del missing["confirmed_requirement"]["selected_internal_content_product_id"]
+        missing_result = self.prepare(missing, register_request_evidence=True)
+        self.assertEqual(missing_result["object_type"], "ACTION_CARD")
+        self.assertEqual(missing_result["action_type"], "COLLECT_MATERIAL")
+
+        outside = copy.deepcopy(self.request)
+        outside["confirmed_requirement"]["selected_internal_content_product_id"] = "CP20"
+        outside_result = self.prepare(outside, register_request_evidence=True)
+        self.assertEqual(outside_result["object_type"], "ACTION_CARD")
+        self.assertEqual(outside_result["action_type"], "BLOCK")
+
+    def test_missing_audience_returns_requirement_collection_card(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["confirmed_requirement"]["primary_audience"] = ""
+        result = self.prepare(changed, register_request_evidence=True)
+        self.assertEqual(result["object_type"], "ACTION_CARD")
+        self.assertEqual(result["action_type"], "COLLECT_MATERIAL")
+
+    def test_unregistered_requirement_change_cannot_reuse_confirmation(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["confirmed_requirement"]["primary_audience"] = "未经登记的新受众"
+        result = self.prepare(changed)
+        self.assertEqual(result["object_type"], "ACTION_CARD")
+        self.assertEqual(result["action_type"], "BLOCK")
+        self.assertIn("受信上游登记", result["plain_language_reason"])
 
     def test_concurrent_replay_keeps_one_deterministic_plan(self) -> None:
         requests = []
@@ -181,6 +216,26 @@ class PrepareTests(unittest.TestCase):
         self.assertEqual(result["object_type"], "ACTION_CARD")
         self.assertEqual(result["action_type"], "BLOCK")
 
+    def test_unknown_creative_hints_are_ignored_with_diagnostics(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["requested_high_level_mode_refs"].append("expression-mode://future-experiment/v9")
+        changed["client_soft_preferences"]["future_camera_energy"] = "high"
+        result = self.prepare(changed)
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertNotIn(
+            "expression-mode://future-experiment/v9",
+            result["expression_guidance"]["high_level_mode_refs"],
+        )
+        self.assertNotIn("future_camera_energy", result["expression_guidance"]["client_soft_preferences"])
+        self.assertEqual(len(result["diagnostic_warnings"]), 2)
+
+    def test_evaluation_rules_are_server_resolved_when_omitted(self) -> None:
+        changed = copy.deepcopy(self.request)
+        del changed["evaluation_rules"]
+        result = self.prepare(changed)
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertEqual(result["hard_check_policy"], list(self.service.hard_categories))
+
     def test_self_claimed_trust_field_is_rejected(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["trusted"] = True
@@ -203,20 +258,32 @@ class PrepareTests(unittest.TestCase):
         self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
         self.assertEqual(result["expression_guidance"]["material_mode"], "DEGRADED_FACT_ONLY")
 
-    def test_narrative_only_input_requires_a_precise_fact(self) -> None:
+    def test_narrative_only_input_is_allowed_without_precise_claim_requirement(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["verified_precise_facts"] = []
-        result = self.prepare(changed)
+        changed["confirmed_requirement"]["required_precise_fact_kinds"] = []
+        result = self.prepare(changed, register_request_evidence=True)
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertEqual(result["expression_guidance"]["material_mode"], "DEGRADED_NARRATIVE_ONLY")
+        self.assertEqual(result["references"]["precise_fact_refs"], [])
+
+    def test_missing_required_precise_fact_returns_collection_card(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["verified_precise_facts"] = []
+        changed["confirmed_requirement"]["required_precise_fact_kinds"] = ["PRICE", "STOCK"]
+        result = self.prepare(changed, register_request_evidence=True)
         self.assertEqual(result["object_type"], "ACTION_CARD")
         self.assertEqual(result["action_type"], "COLLECT_FACT")
+        self.assertEqual(result["missing_or_invalid_refs"], ["PRICE", "STOCK"])
 
     def test_empty_material_and_facts_returns_collection_card(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["scoped_retrieval_fragments"] = []
         changed["verified_precise_facts"] = []
-        result = self.prepare(changed)
+        changed["confirmed_requirement"]["required_precise_fact_kinds"] = []
+        result = self.prepare(changed, register_request_evidence=True)
         self.assertEqual(result["object_type"], "ACTION_CARD")
-        self.assertEqual(result["action_type"], "COLLECT_FACT")
+        self.assertEqual(result["action_type"], "COLLECT_MATERIAL")
         self.assertFalse(result["publishable_candidate_included"])
 
     def test_missing_fact_authorization_requests_authorization(self) -> None:
@@ -243,7 +310,7 @@ class PrepareTests(unittest.TestCase):
                 self.assertEqual(result["action_type"], expected)
 
     def test_cross_tenant_store_and_account_fail_closed(self) -> None:
-        mutations = (
+        mutations: tuple[tuple[str, Callable[[dict[str, Any]], None]], ...] = (
             ("tenant", lambda value: value["trusted_scope"].__setitem__("tenant_id", "TENANT-OTHER")),
             (
                 "store",
@@ -275,7 +342,7 @@ class PrepareTests(unittest.TestCase):
         self.assertIn("受信上游登记", result["plain_language_reason"])
 
     def test_authorization_kind_and_disclosure_scope_are_bound(self) -> None:
-        for name, mutate in (
+        mutations: tuple[tuple[str, Callable[[dict[str, Any]], None]], ...] = (
             (
                 "confirmation_grant_reused_as_fact_grant",
                 lambda value: value["verified_precise_facts"][0].__setitem__(
@@ -288,7 +355,8 @@ class PrepareTests(unittest.TestCase):
                     "disclosure_scope", "PUBLIC_UNRESTRICTED"
                 ),
             ),
-        ):
+        )
+        for name, mutate in mutations:
             with self.subTest(name=name):
                 changed = copy.deepcopy(self.request)
                 mutate(changed)
@@ -308,7 +376,7 @@ class PrepareTests(unittest.TestCase):
                 self.assertEqual(result["action_type"], "REQUEST_AUTHORIZATION")
 
     def test_future_or_empty_evidence_is_not_usable(self) -> None:
-        mutations = (
+        mutations: tuple[tuple[str, Callable[[dict[str, Any]], None]], ...] = (
             (
                 "future_fact",
                 lambda value: value["verified_precise_facts"][0].__setitem__(

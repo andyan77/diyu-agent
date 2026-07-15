@@ -24,6 +24,7 @@ PUBLIC_CONTRACT_PATH = FOUNDATION_ROOT / "contract/public_foundation_contract.v1
 SIMULATION_IDENTITY_PATH = FOUNDATION_ROOT / "identity/simulation_tenant.v1.yaml"
 TOPIC_MAPPING_PATH = FOUNDATION_ROOT / "taxonomy/topic_product_mapping.v1.yaml"
 NEUTRAL_PROFILE_PATH = PACKAGE_ROOT / "neutral_expression_profile.v1.yaml"
+SERVICE_MANIFEST_PATH = PACKAGE_ROOT / "service_manifest.v1.yaml"
 
 PREPARE_FIELDS = frozenset(
     {
@@ -70,7 +71,6 @@ REQUIRED_PREPARE_FIELDS = frozenset(
         "verified_precise_facts",
         "server_expression_profile",
         "output_requirements",
-        "evaluation_rules",
     }
 )
 REQUIRED_VALIDATE_FIELDS = frozenset(VALIDATE_FIELDS)
@@ -96,6 +96,13 @@ REQUIRED_REQUIREMENT_FIELDS = frozenset(
         "target_platform",
         "confirmed_by_principal_id",
         "confirmed_at",
+    }
+)
+REQUIRED_ROUTING_REQUIREMENT_FIELDS = frozenset(
+    {
+        "selected_internal_content_product_id",
+        "primary_audience",
+        "required_precise_fact_kinds",
     }
 )
 REQUIRED_CONFIRMATION_FIELDS = frozenset(
@@ -149,6 +156,17 @@ ALLOWED_FACT_KINDS = frozenset(
 )
 ALLOWED_SOFT_PREFERENCE_FIELDS = frozenset(
     {"rhythm", "emotional_intensity", "narrative_entry", "visual_focus", "ending_tendency"}
+)
+FORBIDDEN_CLIENT_OVERRIDE_FIELDS = frozenset(
+    {
+        "hard_prohibitions",
+        "prohibited_expression_categories",
+        "facts",
+        "authorization",
+        "privacy",
+        "trusted_scope",
+        "server_expression_profile",
+    }
 )
 ALLOWED_SURFACE_FIELDS = frozenset(
     {"title", "body", "spoken_lines", "CTA", "execution_payload", "surface_units"}
@@ -273,6 +291,7 @@ class TrustedUpstreamContext:
     accounts: dict[str, AccountAuthority]
     authorization_grants: dict[str, JsonObject]
     subject_confirmations: dict[str, JsonObject]
+    trusted_requirement_digests: frozenset[str]
     trusted_fragment_digests: frozenset[str]
     trusted_fact_digests: frozenset[str]
     simulation_only: bool
@@ -283,6 +302,7 @@ class TrustedUpstreamContext:
     def from_simulation_identity(
         cls,
         path: Path = SIMULATION_IDENTITY_PATH,
+        trusted_requirements: tuple[JsonObject, ...] = (),
         trusted_fragments: tuple[JsonObject, ...] = (),
         trusted_facts: tuple[JsonObject, ...] = (),
     ) -> TrustedUpstreamContext:
@@ -330,6 +350,7 @@ class TrustedUpstreamContext:
             accounts=accounts,
             authorization_grants=grants,
             subject_confirmations=confirmations,
+            trusted_requirement_digests=frozenset(digest_object(item) for item in trusted_requirements),
             trusted_fragment_digests=frozenset(digest_object(item) for item in trusted_fragments),
             trusted_fact_digests=frozenset(digest_object(item) for item in trusted_facts),
             simulation_only=bool(tenant["simulation_only"]),
@@ -403,6 +424,7 @@ class LightExpressionService:
         self.contract = load_yaml(self.contract_path)["public_foundation_contract"]
         self.topic_mapping = load_yaml(self.topic_path)["topic_product_mapping"]
         self.neutral_profile = load_yaml(self.profile_path)["neutral_expression_profile"]
+        self.service_manifest = load_yaml(SERVICE_MANIFEST_PATH)["light_expression_service_manifest"]
         expression = self.contract["light_expression_contract"]
         self.allowed_modes = frozenset(
             str(row["mode_ref"]) for row in expression["high_level_modes"]
@@ -415,17 +437,31 @@ class LightExpressionService:
         }
         self.store = InMemoryPlanStore()
 
-    def local_simulation_context(self) -> TrustedUpstreamContext:
-        """Build the explicit local server context from registered public fixture evidence."""
+    def local_simulation_request(self) -> JsonObject:
+        """Return the public example with the package-owned confirmed-task extension."""
 
-        prepare_api = next(
+        prepare_api = require_mapping(next(
             row
             for row in self.contract["api_contracts"]
             if row.get("method") == "POST" and row.get("path") == "/v1/content/prepare"
+        ), "本地模拟准备合同")
+        request = copy.deepcopy(require_mapping(prepare_api["request_example"], "本地模拟准备请求"))
+        requirement = require_mapping(request["confirmed_requirement"], "本地模拟确认任务")
+        extension = require_mapping(
+            self.service_manifest["confirmed_requirement_extension"],
+            "确认任务扩展",
         )
-        request = prepare_api["request_example"]
+        values = require_mapping(extension["local_simulation_values"], "本地模拟任务扩展值")
+        requirement.update(copy.deepcopy(values))
+        return request
+
+    def local_simulation_context(self) -> TrustedUpstreamContext:
+        """Build the explicit local server context from registered public fixture evidence."""
+
+        request = self.local_simulation_request()
         return TrustedUpstreamContext.from_simulation_identity(
             self.repository_root / SIMULATION_IDENTITY_PATH.relative_to(REPOSITORY_ROOT),
+            (copy.deepcopy(request["confirmed_requirement"]),),
             tuple(copy.deepcopy(request["scoped_retrieval_fragments"])),
             tuple(copy.deepcopy(request["verified_precise_facts"])),
         )
@@ -459,21 +495,35 @@ class LightExpressionService:
             self._validate_scope(request, trusted_context)
             account = self._validate_requirement_and_confirmation(request, trusted_context, now)
             profile = self._resolve_profile(request, trusted_context)
-            modes = self._validate_expression_hints(request)
+            modes, soft_preferences, expression_warnings = self._validate_expression_hints(request)
             output_requirements = self._validate_output_and_evaluation(request)
             fragments = self._validate_fragments(request, trusted_context, account, now)
             facts = self._validate_facts(request, trusted_context, account, now)
-            if not facts:
+            requirement = require_mapping(request["confirmed_requirement"], "确认任务书")
+            required_fact_kinds = set(
+                self._string_list(requirement["required_precise_fact_kinds"], "所需精确事实类型")
+            )
+            available_fact_kinds = {str(item["fact_kind"]) for item in facts}
+            missing_fact_kinds = sorted(required_fact_kinds - available_fact_kinds)
+            if missing_fact_kinds:
                 raise PreparationIssue(
                     "COLLECT_FACT",
-                    "当前没有可用于内容计划的精确事实，请先补充或确认事实。",
-                    ["verified_precise_facts"],
+                    "已确认任务需要的精确事实尚未齐全，请先补充对应事实。",
+                    missing_fact_kinds,
+                )
+            if not fragments and not facts:
+                raise PreparationIssue(
+                    "COLLECT_MATERIAL",
+                    "当前没有可追溯的叙事资料或精确事实，请先补充材料。",
+                    ["scoped_retrieval_fragments", "verified_precise_facts"],
                 )
             return self._materialize_plan(
                 request,
                 trusted_context,
                 profile,
                 modes,
+                soft_preferences,
+                expression_warnings,
                 output_requirements,
                 fragments,
                 facts,
@@ -660,6 +710,19 @@ class LightExpressionService:
         account = context.accounts[str(scope["content_account_id"])]
         requirement = require_mapping(request["confirmed_requirement"], "确认任务书")
         require_fields(requirement, REQUIRED_REQUIREMENT_FIELDS, "确认任务书")
+        missing_routing = sorted(REQUIRED_ROUTING_REQUIREMENT_FIELDS - requirement.keys())
+        if missing_routing:
+            raise PreparationIssue(
+                "COLLECT_MATERIAL",
+                "已确认任务还缺少明确的内容方向、主要受众或精确事实需求，请补充后再继续。",
+                missing_routing,
+            )
+        if digest_object(requirement) not in context.trusted_requirement_digests:
+            raise PreparationIssue(
+                "BLOCK",
+                "确认任务书没有出现在服务端受信上游登记中。",
+                [str(requirement.get("requirement_id", "unresolved"))],
+            )
         if requirement["status"] != "CONFIRMED":
             raise PreparationIssue("BLOCK", "任务书尚未由用户确认。", ["confirmed_requirement"])
         if (
@@ -668,8 +731,32 @@ class LightExpressionService:
             or requirement["confirmed_by_principal_id"] != context.login_principal_id
         ):
             raise PreparationIssue("BLOCK", "任务书与当前企业、账号或登录身份不一致。", ["confirmed_requirement"])
-        if str(requirement["topic_category_id"]) not in self.topic_products:
+        topic_id = str(requirement["topic_category_id"])
+        if topic_id not in self.topic_products:
             raise PreparationIssue("BLOCK", "题材入口不在当前公共分类中。", ["topic_category_id"])
+        selected_product = str(requirement["selected_internal_content_product_id"])
+        if selected_product not in self.topic_products[topic_id]:
+            raise PreparationIssue(
+                "BLOCK",
+                "已确认的内部内容方向不属于当前所选通俗题材。",
+                ["selected_internal_content_product_id"],
+            )
+        if not isinstance(requirement["primary_audience"], str) or not requirement["primary_audience"].strip():
+            raise PreparationIssue(
+                "COLLECT_MATERIAL",
+                "已确认任务还缺少明确的主要受众，请补充后再继续。",
+                ["primary_audience"],
+            )
+        required_fact_kinds = self._string_list(
+            requirement["required_precise_fact_kinds"],
+            "所需精确事实类型",
+        )
+        if not set(required_fact_kinds).issubset(ALLOWED_FACT_KINDS):
+            raise PreparationIssue(
+                "BLOCK",
+                "已确认任务包含当前合同不支持的精确事实类型。",
+                sorted(set(required_fact_kinds) - ALLOWED_FACT_KINDS),
+            )
         if not isinstance(requirement["requirement_version"], int) or requirement["requirement_version"] < 1:
             raise PreparationIssue("BLOCK", "任务书版本无效。", ["requirement_version"])
         if not str(requirement["plain_language_summary"]).strip():
@@ -747,17 +834,28 @@ class LightExpressionService:
             raise PreparationIssue("BLOCK", "企业专属表达配置尚未由后续品牌模块载入。", ["resolved_profile_ref"])
         return copy.deepcopy(self.neutral_profile)
 
-    def _validate_expression_hints(self, request: JsonObject) -> list[str]:
+    def _validate_expression_hints(self, request: JsonObject) -> tuple[list[str], JsonObject, list[str]]:
         modes = self._string_list(request.get("requested_high_level_mode_refs", []), "高层表达模式")
-        if not set(modes).issubset(self.allowed_modes):
-            raise PreparationIssue("BLOCK", "请求包含未知的高层表达模式。", sorted(set(modes) - self.allowed_modes))
+        accepted_modes = [mode for mode in modes if mode in self.allowed_modes]
+        unknown_modes = sorted(set(modes) - self.allowed_modes)
         examples = self._string_list(request.get("approved_example_refs", []), "示例引用")
         if any(not value.startswith("example://") for value in examples):
             raise PreparationIssue("BLOCK", "示例引用格式无效。", examples)
         soft = require_mapping(request.get("client_soft_preferences", {}), "临时软偏好")
         unknown_soft = sorted(soft.keys() - ALLOWED_SOFT_PREFERENCE_FIELDS)
+        forbidden_overrides = sorted(set(unknown_soft) & FORBIDDEN_CLIENT_OVERRIDE_FIELDS)
+        if forbidden_overrides:
+            raise PreparationIssue("BLOCK", "临时偏好不能修改服务端硬禁区。", forbidden_overrides)
+        accepted_soft = {
+            key: copy.deepcopy(value)
+            for key, value in soft.items()
+            if key in ALLOWED_SOFT_PREFERENCE_FIELDS
+        }
+        warnings: list[str] = []
+        if unknown_modes:
+            warnings.append("未知高层表达模式已忽略，不影响事实、授权或范围。")
         if unknown_soft:
-            raise PreparationIssue("BLOCK", "临时偏好不能修改服务端硬禁区。", unknown_soft)
+            warnings.append("未知临时软偏好已忽略，不影响服务端硬保护。")
         diagnostics = require_mapping(request.get("experimental_diagnostics", {}), "实验诊断")
         allowed_diagnostic = {
             "expression_baseline_ref",
@@ -768,7 +866,7 @@ class LightExpressionService:
         }
         if set(diagnostics) - allowed_diagnostic:
             raise PreparationIssue("BLOCK", "实验诊断包含未知字段。", sorted(set(diagnostics) - allowed_diagnostic))
-        return modes
+        return accepted_modes, accepted_soft, warnings
 
     def _validate_output_and_evaluation(self, request: JsonObject) -> JsonObject:
         output = require_mapping(request["output_requirements"], "输出要求")
@@ -781,11 +879,13 @@ class LightExpressionService:
         fields = self._string_list(output["audience_surface_fields"], "用户可见字段")
         if not fields or not set(fields).issubset(ALLOWED_SURFACE_FIELDS):
             raise PreparationIssue("BLOCK", "输出包含未知的用户可见字段。", fields)
-        rules = require_mapping(request["evaluation_rules"], "评审规则")
-        hard = self._string_list(rules.get("hard_check_categories"), "硬检查类别")
-        soft = self._string_list(rules.get("soft_evaluation_tasks"), "软评价任务")
-        if tuple(hard) != self.hard_categories or tuple(soft) != self.soft_tasks:
-            raise PreparationIssue("BLOCK", "调用方不得删除或改写服务端评审规则。", ["evaluation_rules"])
+        supplied_rules = request.get("evaluation_rules")
+        if supplied_rules is not None:
+            rules = require_mapping(supplied_rules, "评审规则")
+            hard = self._string_list(rules.get("hard_check_categories"), "硬检查类别")
+            soft = self._string_list(rules.get("soft_evaluation_tasks"), "软评价任务")
+            if tuple(hard) != self.hard_categories or tuple(soft) != self.soft_tasks:
+                raise PreparationIssue("BLOCK", "调用方不得删除或改写服务端评审规则。", ["evaluation_rules"])
         return copy.deepcopy(output)
 
     def _validate_fragments(
@@ -948,6 +1048,8 @@ class LightExpressionService:
         context: TrustedUpstreamContext,
         profile: JsonObject,
         modes: list[str],
+        soft_preferences: JsonObject,
+        expression_warnings: list[str],
         output: JsonObject,
         fragments: list[JsonObject],
         facts: list[JsonObject],
@@ -964,8 +1066,7 @@ class LightExpressionService:
         semantic_request.pop("request_id", None)
         input_digest = digest_object(semantic_request)
         plan_id = f"PLAN-{digest_object(key)[:16].upper()}"
-        products = self.topic_products[str(requirement["topic_category_id"])]
-        selected_product = products[int(digest_object(key)[:8], 16) % len(products)]
+        selected_product = str(requirement["selected_internal_content_product_id"])
         diagnostics = copy.deepcopy(request.get("experimental_diagnostics", {}))
         diagnostic_values: list[str] = []
         for field, value in diagnostics.items():
@@ -973,7 +1074,9 @@ class LightExpressionService:
                 diagnostic_values.extend(str(item) for item in value)
             elif value is not None:
                 diagnostic_values.append(str(value))
-        diagnostic_warnings = ["可选实验引用未解析，不影响事实、授权或范围。"] if diagnostic_values else []
+        diagnostic_warnings = list(expression_warnings)
+        if diagnostic_values:
+            diagnostic_warnings.append("可选实验引用未解析，不影响事实、授权或范围。")
 
         def factory(revision: int) -> JsonObject:
             composition_ref = f"plan://{plan_id}/revisions/{revision}"
@@ -991,7 +1094,7 @@ class LightExpressionService:
                 "requirement_id": requirement["requirement_id"],
                 "requirement_version": requirement["requirement_version"],
                 "task_objective": requirement["plain_language_summary"],
-                "primary_audience": "与该题材相关的普通用户",
+                "primary_audience": requirement["primary_audience"],
                 "output_requirements": copy.deepcopy(output),
                 "candidate_policy": {
                     "required_candidate_count": output["required_candidate_count"],
@@ -1013,7 +1116,7 @@ class LightExpressionService:
                     ),
                     "high_level_mode_refs": modes,
                     "approved_example_refs": copy.deepcopy(request.get("approved_example_refs", [])),
-                    "client_soft_preferences": copy.deepcopy(request.get("client_soft_preferences", {})),
+                    "client_soft_preferences": copy.deepcopy(soft_preferences),
                     "material_mode": material_mode,
                     "may_grant_fact_authorization_or_scope": False,
                 },
@@ -1029,6 +1132,9 @@ class LightExpressionService:
                     "precise_fact_refs": [item["fact_id"] for item in facts],
                     "brand_expression_profile_ref": profile["profile_ref"],
                     "selected_internal_content_product_id": selected_product,
+                    "required_precise_fact_kinds": copy.deepcopy(
+                        requirement["required_precise_fact_kinds"]
+                    ),
                     "high_level_mode_refs": modes,
                     "approved_example_refs": copy.deepcopy(request.get("approved_example_refs", [])),
                     "experimental_diagnostics": diagnostics,
