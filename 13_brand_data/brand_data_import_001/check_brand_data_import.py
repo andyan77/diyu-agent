@@ -702,9 +702,9 @@ def current_task_changed_paths(
         "origin/master and HEAD have no verifiable common point",
         repo_root,
     )
-    changed = git_paths(["diff", "--name-only", f"{merge_base}..HEAD"], repo_root)
-    changed |= git_paths(["diff", "--name-only"], repo_root)
-    changed |= git_paths(["diff", "--cached", "--name-only"], repo_root)
+    changed = git_paths(["diff", "--no-renames", "--name-only", f"{merge_base}..HEAD"], repo_root)
+    changed |= git_paths(["diff", "--no-renames", "--name-only"], repo_root)
+    changed |= git_paths(["diff", "--no-renames", "--cached", "--name-only"], repo_root)
     changed |= git_paths(["ls-files", "--others", "--exclude-standard"], repo_root)
     return changed
 
@@ -738,7 +738,10 @@ def run_scope_selftests() -> list[str]:
         run_test_git(repo_root, ["config", "user.name", "Brand Data Scope Selftest"])
         run_test_git(repo_root, ["config", "user.email", "scope-selftest@example.invalid"])
         (repo_root / "README.md").write_text("scope baseline\n", encoding="utf-8")
-        run_test_git(repo_root, ["add", "README.md"])
+        external_path = Path("12_expression_service/expression_runtime_adapter_001/scope-probe.txt")
+        (repo_root / external_path).parent.mkdir(parents=True)
+        (repo_root / external_path).write_text("external baseline\n", encoding="utf-8")
+        run_test_git(repo_root, ["add", "README.md", external_path.as_posix()])
         run_test_git(repo_root, ["commit", "--quiet", "-m", "scope baseline"])
         baseline = run_test_git(repo_root, ["rev-parse", "HEAD"])
         run_test_git(repo_root, ["update-ref", SCOPE_BASE_REF, baseline])
@@ -753,11 +756,9 @@ def run_scope_selftests() -> list[str]:
         if scope_errors:
             failures.append("SCOPE_PACKAGE_3_ONLY: expected pass")
 
-        external_path = Path("12_expression_service/expression_runtime_adapter_001/scope-probe.txt")
-        (repo_root / external_path).parent.mkdir(parents=True)
-        (repo_root / external_path).write_text("external\n", encoding="utf-8")
-        run_test_git(repo_root, ["add", external_path.as_posix()])
-        run_test_git(repo_root, ["commit", "--quiet", "-m", "mixed package changes"])
+        renamed_path = PACKAGE_RELATIVE_ROOT / "renamed-external-scope-probe.txt"
+        run_test_git(repo_root, ["mv", external_path.as_posix(), renamed_path.as_posix()])
+        run_test_git(repo_root, ["commit", "--quiet", "-m", "mixed cross-boundary rename"])
         scope_errors = []
         validate_changed_path_scope(current_task_changed_paths(repo_root), scope_errors)
         if not scope_errors:
