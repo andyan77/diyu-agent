@@ -1,0 +1,90 @@
+light_expression_service_result:
+  schema_version: v1.0
+  task_id: DIYU_LIGHT_EXPRESSION_SERVICE_001
+  phase: PHASE_B_LIGHT_EXPRESSION_INTERFACE
+  state: PENDING_ROOT_APPROVAL
+  baseline_master_commit: 95b8b1700b7e96b1d2383465713bef8c36e7f6cb
+  implementation:
+    endpoint_count: 4
+    prepare_is_deterministic: true
+    prepare_generates_audience_body: false
+    validate_decisions: [PASS, REVISE, BLOCK]
+    semantic_fact_review_is_external: true
+    neutral_profile_only: true
+    formal_brand_database_created: false
+    external_provider_adapter_count: 0
+    external_model_call_count: 0
+    Dify_call_count: 0
+    database_call_count: 0
+    precise_facts_required_by_structured_task_claims_only: true
+    product_route_inference_allowed: false
+    default_audience_allowed: false
+    unknown_soft_expression_hints_are_diagnostic_only: true
+    evaluation_rules_resolved_by_service: true
+  verification:
+    focused_test_count: 46
+    focused_tests_passed: true
+    package_checker_passed: true
+    package_selftest_passed: true
+    optimized_mode_exit_2: true
+    public_foundation_regression_passed: true
+    public_foundation_selftest_case_count: 87
+    current_gate_regression_passed: true
+    current_gate_selftest_passed: true
+    ruff_passed: true
+    mypy_strict_passed: true
+    remote_required_checks_green: false
+  review:
+    candidate_commit: c4f32fb1e17dcd5264a2ea20bc881b402a3b6a04
+    candidate_tree: 5d8243c3a87bedcfcfc7c5324b27987929f8f958
+    initial_formal_round:
+      reviewed_candidate_commit: db83c8a84986aa08185a752c6b1bc02d03fc78c3
+      architecture:
+        reviewer_identity: Codex-Lumen-Delta-17
+        reviewer_session_id: 019f6510-ca2c-7190-be17-baf58a2aff54
+        score: 68
+        verdict: FAIL
+      trust_fact_safety:
+        reviewer_identity: codex-trust-fact-safety-7c4e1b9d
+        reviewer_session_id: 019f6510-cacf-76e2-bfdf-f7d01080f9fe
+        score: 48
+        verdict: FAIL
+      repair_scope: TARGETED_ORIGINAL_BLOCKERS_AND_NECESSARY_REGRESSION_ONLY
+      post_fix_review_status: PASSED_TARGETED_REREVIEW
+    architecture_review_ref:
+      path: 12_expression_service/expression_runtime_adapter_001/review/light_expression_architecture_review.v1.yaml
+      sha256: 3acc059bb99c7a711345de05e44a95f62b76af1b42e8b1513792efbd41fdf329
+      score: 97
+      verdict: PASS
+    trust_fact_safety_review_ref:
+      path: 12_expression_service/expression_runtime_adapter_001/review/trust_fact_safety_review.v1.yaml
+      sha256: d2aaf95fa15a0a9df6a641c9bbc6034db27b3be9ccf7236ce9c9d395a16c86ea
+      score: 97
+      verdict: PASS
+    both_scores_at_least_90: true
+    Root_approval: PENDING
+  blocking_items: []
+  pull_request:
+    number: 19
+    state: OPEN_DRAFT
+    merged: false
+  core_numbers:
+    target_case_baseline: 300
+    frozen_reference_inventory: 120
+    historical_component_inventory: 86
+    changed_or_harmed: false
+  historical_expression_assets:
+    active_component_count: 68
+    active_edge_count: 85
+    ab_structural_path_group_count: 20
+    changed_or_harmed: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false

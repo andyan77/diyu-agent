@@ -7,6 +7,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -41,6 +42,76 @@ MANIFEST_PATH = Path("project-infra/product_workspace_manifest.v1.yaml")
 LEGACY_GATE1_CHECKER_PATH = Path("ci/checkers/check_gate1_v1_1_current.py")
 CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
 WORKFLOW_PATH = Path(".github/workflows/ci.yml")
+FROZEN_REVIEWED_COMMIT = "3f610726943dee5545d4d310f107239f2eeb9234"
+AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
+    {LEGACY_GATE1_CHECKER_PATH, CHECKER_PATH, WORKFLOW_PATH}
+)
+SUCCESSOR_PACKAGES = (
+    (
+        "PACKAGE_2_LIGHT_EXPRESSION_SERVICE",
+        Path("12_expression_service/expression_runtime_adapter_001"),
+        Path("12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py"),
+        "PACKAGE_2_ONLY",
+    ),
+    (
+        "PACKAGE_3_BRAND_DATA",
+        Path("13_brand_data/brand_data_import_001"),
+        Path("13_brand_data/brand_data_import_001/check_brand_data_import.py"),
+        "PACKAGE_3_ONLY",
+    ),
+    (
+        "PACKAGE_4_DIFY_SHELL",
+        Path("14_dify_shell/dify_content_shell_001"),
+        Path("14_dify_shell/dify_content_shell_001/check_dify_content_shell.py"),
+        "PACKAGE_4_ONLY",
+    ),
+)
+SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
+SUCCESSOR_OPTIMIZED_STEP_NAME = "Verify reserved downstream package fail-closed optimized mode"
+SUCCESSOR_NORMAL_RUN_LINES = (
+    "set -euo pipefail",
+    "run_downstream_package_checker() {",
+    '  package_root="$1"',
+    '  checker="$2"',
+    '  if [ ! -e "$package_root" ]; then',
+    "    return 0",
+    "  fi",
+    '  test -d "$package_root"',
+    '  test -f "$checker"',
+    '  python3 "$checker"',
+    '  python3 "$checker" --selftest',
+    "}",
+    *(
+        f'run_downstream_package_checker "{package_root.as_posix()}" "{checker.as_posix()}"'
+        for _, package_root, checker, _ in SUCCESSOR_PACKAGES
+    ),
+)
+SUCCESSOR_OPTIMIZED_RUN_LINES = (
+    "set -euo pipefail",
+    "run_downstream_package_checker_optimized() {",
+    '  package_root="$1"',
+    '  checker="$2"',
+    '  if [ ! -e "$package_root" ]; then',
+    "    return 0",
+    "  fi",
+    '  test -d "$package_root"',
+    '  test -f "$checker"',
+    "  set +e",
+    '  python3 -O "$checker"',
+    "  code=$?",
+    "  set -e",
+    '  test "$code" -eq 2',
+    "  set +e",
+    '  python3 -O "$checker" --selftest',
+    "  code=$?",
+    "  set -e",
+    '  test "$code" -eq 2',
+    "}",
+    *(
+        f'run_downstream_package_checker_optimized "{package_root.as_posix()}" "{checker.as_posix()}"'
+        for _, package_root, checker, _ in SUCCESSOR_PACKAGES
+    ),
+)
 
 BASE_FOUNDATION_FILES = frozenset(
     {
@@ -420,14 +491,33 @@ def count_jsonl(path: Path) -> int:
     return len(path.read_text(encoding="utf-8").splitlines())
 
 
+def git_blob(root: Path, commit: str, relative_path: Path) -> bytes:
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{relative_path.as_posix()}"],
+        cwd=root,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    require(
+        completed.returncode == 0,
+        f"E_FROZEN_SNAPSHOT_BLOB:{relative_path}",
+    )
+    return completed.stdout
+
+
 def snapshot_digest(root: Path) -> str:
     digest = hashlib.sha256()
     for relative_path in SNAPSHOT_PATHS:
-        path = root / relative_path
-        require(path.is_file(), f"E_SNAPSHOT_MISSING:{relative_path}")
+        if relative_path in AUTHORIZED_CURRENT_LIVE_PATHS:
+            payload = git_blob(root, FROZEN_REVIEWED_COMMIT, relative_path)
+        else:
+            path = root / relative_path
+            require(path.is_file(), f"E_SNAPSHOT_MISSING:{relative_path}")
+            payload = path.read_bytes()
         digest.update(relative_path.as_posix().encode("utf-8"))
         digest.update(b"\0")
-        digest.update(path.read_bytes())
+        digest.update(payload)
         digest.update(b"\0")
     return digest.hexdigest()
 
@@ -459,6 +549,40 @@ def workflow_active_run_lines(root: Path) -> tuple[str, ...]:
     )
 
 
+def workflow_checker_steps(root: Path) -> list[dict[str, Any]]:
+    workflow = root / WORKFLOW_PATH
+    require(workflow.is_file(), "E_WORKFLOW_MISSING")
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    require(isinstance(document, dict), "E_WORKFLOW_DOCUMENT")
+    jobs = document.get("jobs")
+    require(isinstance(jobs, dict), "E_WORKFLOW_JOBS")
+    job = jobs.get("checker-compatibility")
+    require(isinstance(job, dict), "E_WORKFLOW_CHECKER_JOB")
+    steps = job.get("steps")
+    require(isinstance(steps, list), "E_WORKFLOW_STEPS")
+    require(all(isinstance(step, dict) for step in steps), "E_WORKFLOW_STEP_OBJECT")
+    return steps
+
+
+def normalized_run_lines(run: str) -> tuple[str, ...]:
+    return tuple(line.rstrip() for line in run.splitlines() if line.strip())
+
+
+def require_exact_workflow_step(
+    steps: list[dict[str, Any]], name: str, expected_lines: tuple[str, ...], code: str
+) -> None:
+    matches = [step for step in steps if step.get("name") == name]
+    require(len(matches) == 1, f"{code}:COUNT")
+    step = matches[0]
+    require(
+        step.get("env") == {"PYTHONDONTWRITEBYTECODE": "1"},
+        f"{code}:ENV",
+    )
+    run = step.get("run")
+    require(isinstance(run, str), f"{code}:RUN")
+    require(normalized_run_lines(run) == expected_lines, f"{code}:BODY")
+
+
 def validate_workflow_registration(root: Path) -> None:
     active_lines = workflow_active_run_lines(root)
     for required_line in WORKFLOW_REQUIRED_ACTIVE_LINES:
@@ -472,6 +596,81 @@ def validate_workflow_registration(root: Path) -> None:
         pin_digests == [sha256_file(root / CHECKER_PATH)],
         "E_WORKFLOW_CHECKER_DIGEST_PIN",
     )
+    steps = workflow_checker_steps(root)
+    require_exact_workflow_step(
+        steps,
+        SUCCESSOR_NORMAL_STEP_NAME,
+        SUCCESSOR_NORMAL_RUN_LINES,
+        "E_WORKFLOW_SUCCESSOR_NORMAL",
+    )
+    require_exact_workflow_step(
+        steps,
+        SUCCESSOR_OPTIMIZED_STEP_NAME,
+        SUCCESSOR_OPTIMIZED_RUN_LINES,
+        "E_WORKFLOW_SUCCESSOR_OPTIMIZED",
+    )
+
+
+def path_is_in_successor_root(path: str) -> bool:
+    return any(
+        path.startswith(f"{package_root.as_posix()}/")
+        for _, package_root, _, _ in SUCCESSOR_PACKAGES
+    )
+
+
+def validate_post_candidate_paths(paths: set[str]) -> None:
+    fixed_paths = {
+        RESULT_PATH.as_posix(),
+        ARCH_REVIEW_PATH.as_posix(),
+        TRUST_REVIEW_PATH.as_posix(),
+        COORDINATOR_PATH.as_posix(),
+        *(path.as_posix() for path in AUTHORIZED_CURRENT_LIVE_PATHS),
+    }
+    unauthorized = sorted(
+        path
+        for path in paths
+        if path not in fixed_paths and not path_is_in_successor_root(path)
+    )
+    require(not unauthorized, f"E_REVIEW_POST_CANDIDATE_SCOPE:{unauthorized}")
+
+
+def run_successor_checker(root: Path, checker: Path) -> None:
+    environment = dict(os.environ)
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    invocations = (
+        ([sys.executable, checker.as_posix()], 0, "NORMAL"),
+        ([sys.executable, checker.as_posix(), "--selftest"], 0, "SELFTEST"),
+        ([sys.executable, "-O", checker.as_posix()], 2, "OPTIMIZED"),
+        (
+            [sys.executable, "-O", checker.as_posix(), "--selftest"],
+            2,
+            "OPTIMIZED_SELFTEST",
+        ),
+    )
+    for command, expected_code, mode in invocations:
+        completed = subprocess.run(
+            command,
+            cwd=root,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            env=environment,
+        )
+        require(
+            completed.returncode == expected_code,
+            f"E_SUCCESSOR_CHECKER_{mode}:{checker}:{completed.returncode}",
+        )
+
+
+def validate_successor_packages(root: Path) -> None:
+    for _, package_root, checker, _ in SUCCESSOR_PACKAGES:
+        package_path = root / package_root
+        if not package_path.exists():
+            continue
+        require(package_path.is_dir(), f"E_SUCCESSOR_ROOT_NOT_DIRECTORY:{package_root}")
+        require((root / checker).is_file(), f"E_SUCCESSOR_CHECKER_MISSING:{checker}")
+        run_successor_checker(root, checker)
 
 
 def validate_foundation_files(root: Path, review_state: str) -> None:
@@ -3042,6 +3241,18 @@ def validate_status_and_manifest(
         for right in roots:
             if left != right:
                 require(not left.startswith(f"{right}/"), "E_MANIFEST_ROOT_OVERLAP")
+    expected_downstream = [
+        {
+            "package_id": package_id,
+            "root": package_root.as_posix(),
+            "owner": owner_id,
+            "unlocked_when": (
+                "PUBLIC_FOUNDATION_TREE_ON_MASTER_AND_REQUIRED_CHECKS_GREEN"
+            ),
+        }
+        for package_id, package_root, _, owner_id in SUCCESSOR_PACKAGES
+    ]
+    require(downstream == expected_downstream, "E_MANIFEST_DOWNSTREAM_BINDING")
     require(
         manifest.get("readiness_transition_authorized") is False, "E_MANIFEST_READINESS"
     )
@@ -3121,16 +3332,7 @@ def validate_reviews(root: Path, result: dict[str, Any]) -> None:
             check=False,
         )
         require(evidence_diff.returncode == 0, "E_REVIEW_EVIDENCE_DIFF")
-        allowed_evidence_paths = {
-            RESULT_PATH.as_posix(),
-            ARCH_REVIEW_PATH.as_posix(),
-            TRUST_REVIEW_PATH.as_posix(),
-            COORDINATOR_PATH.as_posix(),
-        }
-        require(
-            set(evidence_diff.stdout.splitlines()).issubset(allowed_evidence_paths),
-            "E_REVIEW_POST_CANDIDATE_SCOPE",
-        )
+        validate_post_candidate_paths(set(evidence_diff.stdout.splitlines()))
     reviewer_records: list[dict[str, Any]] = []
     for report in reports:
         reviewer = report.get("reviewer")
@@ -3297,6 +3499,7 @@ def validate_repository(root: Path = ROOT) -> dict[str, Any]:
     validate_status_and_manifest(root, status, manifest)
     validate_workflow_registration(root)
     validate_result(root, result)
+    validate_successor_packages(root)
     return {
         "task_id": TASK_ID,
         "contract_cases": len(cases),
@@ -4056,6 +4259,38 @@ def run_selftest() -> dict[str, Any]:
         "E_MANIFEST_ROOT_COLLISION",
     )
 
+    mutated_manifest = copy.deepcopy(manifest)
+    mutated_manifest["downstream_reserved_write_roots"][0]["root"] += "_extra"
+    expect_failure(
+        lambda: validate_status_and_manifest(ROOT, status, mutated_manifest),
+        "E_MANIFEST_DOWNSTREAM_BINDING",
+    )
+
+    validate_post_candidate_paths(
+        {
+            (
+                package_root
+                / f"selftest-{package_id.lower()}.txt"
+            ).as_posix()
+            for package_id, package_root, _, _ in SUCCESSOR_PACKAGES
+        }
+    )
+    expect_failure(
+        lambda: validate_post_candidate_paths(
+            {"12_expression_service/unreserved_package/file.txt"}
+        ),
+        "E_REVIEW_POST_CANDIDATE_SCOPE",
+    )
+    expect_failure(
+        lambda: validate_post_candidate_paths(
+            {
+                "12_expression_service/"
+                "expression_runtime_adapter_001_extra/file.txt"
+            }
+        ),
+        "E_REVIEW_POST_CANDIDATE_SCOPE",
+    )
+
     with tempfile.TemporaryDirectory(
         prefix="product-foundation-selftest-"
     ) as temporary:
@@ -4127,6 +4362,49 @@ def run_selftest() -> dict[str, Any]:
         expect_failure(
             lambda: validate_workflow_registration(temp_root),
             "E_WORKFLOW_CHECKER_DIGEST_PIN",
+        )
+
+        shutil.copy2(ROOT / WORKFLOW_PATH, destination)
+        workflow_text = destination.read_text(encoding="utf-8")
+        skipped_call = SUCCESSOR_NORMAL_RUN_LINES[-1]
+        destination.write_text(
+            workflow_text.replace(skipped_call, f"# {skipped_call}", 1),
+            encoding="utf-8",
+        )
+        expect_failure(
+            lambda: validate_workflow_registration(temp_root),
+            "E_WORKFLOW_SUCCESSOR_NORMAL:BODY",
+        )
+
+    with tempfile.TemporaryDirectory(
+        prefix="product-foundation-successor-checkers-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        passing_checker = """#!/usr/bin/env python3
+import sys
+if not __debug__:
+    raise SystemExit(2)
+raise SystemExit(0)
+"""
+        for _, package_root, checker, _ in SUCCESSOR_PACKAGES:
+            (temp_root / package_root).mkdir(parents=True, exist_ok=True)
+            checker_path = temp_root / checker
+            checker_path.write_text(passing_checker, encoding="utf-8")
+        validate_successor_packages(temp_root)
+
+        missing_checker = temp_root / SUCCESSOR_PACKAGES[1][2]
+        missing_checker.unlink()
+        expect_failure(
+            lambda: validate_successor_packages(temp_root),
+            "E_SUCCESSOR_CHECKER_MISSING",
+        )
+
+        missing_checker.write_text(passing_checker, encoding="utf-8")
+        failing_checker = temp_root / SUCCESSOR_PACKAGES[0][2]
+        failing_checker.write_text("raise SystemExit(1)\n", encoding="utf-8")
+        expect_failure(
+            lambda: validate_successor_packages(temp_root),
+            "E_SUCCESSOR_CHECKER_NORMAL",
         )
 
     return {"selftest_cases": SELFTEST_FAILURE_CASES_RUN, "result": "PASS"}
