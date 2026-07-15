@@ -158,6 +158,20 @@ ALLOWED_CANDIDATE_FIELDS = frozenset(
 )
 HIDDEN_SURFACE_KEYS = frozenset(
     {
+        "tenant_id",
+        "brand_id",
+        "organization_id",
+        "store_id",
+        "login_principal_id",
+        "content_account_id",
+        "authorization_ref",
+        "source_ref",
+        "fact_id",
+        "fragment_id",
+        "requirement_id",
+        "plan_id",
+        "trusted_scope",
+        "trusted_scope_ref",
         "content_product_id",
         "component_id",
         "route_code",
@@ -170,12 +184,15 @@ HIDDEN_SURFACE_KEYS = frozenset(
 PROHIBITED_SURFACE_PATTERN = re.compile(
     r"(?:(?<![A-Z0-9])CP\d{2}(?!\d)|(?<![A-Z0-9])(?:BNO|BRV|VGA|BCL|FC)-\d{2}(?!\d)|"
     r"(?<![A-Z0-9])(?:G1V11|RCV2)-[A-Z0-9-]+|(?<![A-Z0-9])E_[A-Z0-9_]+|"
+    r"(?<![A-Z0-9])(?:TENANT|BRAND|ORG|STORE|ACCOUNT|AUTH|FACT|FRAGMENT|ROLE|SIM-LOGIN)-[A-Z0-9-]+|"
+    r"\b(?:plan|scope|requirement)://[^\s\"']+|"
     r"(?<![A-Z0-9])(?:all_required_inputs_present|required_source_missing|required_fact_missing|"
     r"required_authorization_missing)(?![A-Z0-9_])|\b(?:simulation_only|publish_allowed)\b)",
     re.IGNORECASE,
 )
 PII_SURFACE_PATTERN = re.compile(
-    r"(?:\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b|(?<!\d)1[3-9]\d{9}(?!\d))",
+    r"(?:\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b|(?<!\d)1[3-9]\d{9}(?!\d)|"
+    r"(?<!\d)\d{17}[0-9X](?!\d)|身份证|家庭住址|(?:^|[，。；;])住址[:：])",
     re.IGNORECASE,
 )
 
@@ -256,12 +273,19 @@ class TrustedUpstreamContext:
     accounts: dict[str, AccountAuthority]
     authorization_grants: dict[str, JsonObject]
     subject_confirmations: dict[str, JsonObject]
+    trusted_fragment_digests: frozenset[str]
+    trusted_fact_digests: frozenset[str]
     simulation_only: bool
     publish_allowed: bool
     source_digest: str
 
     @classmethod
-    def from_simulation_identity(cls, path: Path = SIMULATION_IDENTITY_PATH) -> TrustedUpstreamContext:
+    def from_simulation_identity(
+        cls,
+        path: Path = SIMULATION_IDENTITY_PATH,
+        trusted_fragments: tuple[JsonObject, ...] = (),
+        trusted_facts: tuple[JsonObject, ...] = (),
+    ) -> TrustedUpstreamContext:
         raw = load_yaml(path)["simulation_tenant"]
         tenant = require_mapping(raw.get("tenant"), "simulation tenant")
         principal_rows = require_list(raw.get("login_principals"), "login principals")
@@ -306,6 +330,8 @@ class TrustedUpstreamContext:
             accounts=accounts,
             authorization_grants=grants,
             subject_confirmations=confirmations,
+            trusted_fragment_digests=frozenset(digest_object(item) for item in trusted_fragments),
+            trusted_fact_digests=frozenset(digest_object(item) for item in trusted_facts),
             simulation_only=bool(tenant["simulation_only"]),
             publish_allowed=bool(tenant["publish_allowed"]),
             source_digest=hashlib.sha256(path.read_bytes()).hexdigest(),
@@ -389,6 +415,21 @@ class LightExpressionService:
         }
         self.store = InMemoryPlanStore()
 
+    def local_simulation_context(self) -> TrustedUpstreamContext:
+        """Build the explicit local server context from registered public fixture evidence."""
+
+        prepare_api = next(
+            row
+            for row in self.contract["api_contracts"]
+            if row.get("method") == "POST" and row.get("path") == "/v1/content/prepare"
+        )
+        request = prepare_api["request_example"]
+        return TrustedUpstreamContext.from_simulation_identity(
+            self.repository_root / SIMULATION_IDENTITY_PATH.relative_to(REPOSITORY_ROOT),
+            tuple(copy.deepcopy(request["scoped_retrieval_fragments"])),
+            tuple(copy.deepcopy(request["verified_precise_facts"])),
+        )
+
     def readiness(self) -> JsonObject:
         loaded = all(path.is_file() for path in (self.contract_path, self.topic_path, self.profile_path))
         return {
@@ -422,11 +463,11 @@ class LightExpressionService:
             output_requirements = self._validate_output_and_evaluation(request)
             fragments = self._validate_fragments(request, trusted_context, account, now)
             facts = self._validate_facts(request, trusted_context, account, now)
-            if not fragments and not facts:
+            if not facts:
                 raise PreparationIssue(
-                    "COLLECT_MATERIAL",
-                    "当前没有可追溯的资料或事实，请先补充材料后再准备内容。",
-                    ["scoped_retrieval_fragments", "verified_precise_facts"],
+                    "COLLECT_FACT",
+                    "当前没有可用于内容计划的精确事实，请先补充或确认事实。",
+                    ["verified_precise_facts"],
                 )
             return self._materialize_plan(
                 request,
@@ -494,6 +535,14 @@ class LightExpressionService:
                 )
             if not surfaces or not any(value not in (None, "", [], {}) for value in surfaces.values()):
                 revise_reasons.append("候选没有可检查的用户可见内容。")
+            required_surfaces = set(plan["output_requirements"]["audience_surface_fields"])
+            missing_surfaces = {
+                field
+                for field in required_surfaces
+                if field not in surfaces or surfaces[field] in (None, "", [], {})
+            }
+            if missing_surfaces:
+                revise_reasons.append("候选缺少计划要求的用户可见内容字段。")
             leak = self._find_surface_leak(surfaces)
             if leak is not None:
                 hard_issues.append(
@@ -654,7 +703,8 @@ class LightExpressionService:
                 context,
                 account,
                 now,
-                required_kind="REQUIREMENT_CONFIRMATION",
+                allowed_kinds=frozenset({"REQUIREMENT_CONFIRMATION"}),
+                allowed_disclosure_scopes=frozenset({"REQUIREMENT_CONFIRMATION_ONLY"}),
             )
             for ref in confirmation_refs
         ):
@@ -662,7 +712,13 @@ class LightExpressionService:
         subject_ref = evidence.get("subject_confirmation_ref")
         if route.subject_confirmation_required:
             subject = context.subject_confirmations.get(str(subject_ref)) if subject_ref else None
-            if not self._subject_confirmation_is_valid(subject, context, account, now):
+            if not self._subject_confirmation_is_valid(
+                subject,
+                context,
+                account,
+                now,
+                route.scope,
+            ):
                 raise PreparationIssue("ANONYMIZE", "人物观点尚无有效本人确认，请补确认或改为匿名表达。", [str(subject_ref)])
         return account
 
@@ -744,10 +800,24 @@ class LightExpressionService:
         for raw in fragments:
             item = require_mapping(raw, "叙事资料")
             require_fields(item, REQUIRED_FRAGMENT_FIELDS, "叙事资料")
+            if digest_object(item) not in context.trusted_fragment_digests:
+                raise PreparationIssue(
+                    "BLOCK",
+                    "叙事资料没有出现在服务端受信上游登记中。",
+                    [str(item["fragment_id"])],
+                )
             if item["status"] != "ACTIVE" or parse_time(item["valid_until"]) < now:
                 raise PreparationIssue("COLLECT_MATERIAL", "叙事资料已失效或被撤回。", [str(item["fragment_id"])])
+            if parse_time(item["observed_at"]) > now:
+                raise PreparationIssue("COLLECT_MATERIAL", "叙事资料的记录时间尚未到达。", [str(item["fragment_id"])])
             grant = context.authorization_grants.get(str(item["authorization_ref"]))
-            if item["authorization_state"] != "GRANTED" or not self._grant_is_valid(grant, context, account, now):
+            if item["authorization_state"] != "GRANTED" or not self._grant_is_valid(
+                grant,
+                context,
+                account,
+                now,
+                allowed_kinds=frozenset({"MATERIAL_AND_FACT_DISCLOSURE"}),
+            ):
                 raise PreparationIssue("REQUEST_AUTHORIZATION", "叙事资料缺少当前有效授权。", [str(item["fragment_id"])])
             if (
                 item["tenant_id"] != context.tenant_id
@@ -758,6 +828,7 @@ class LightExpressionService:
                 or account.organization_id not in item["applicable_organization_ids"]
                 or account.store_id not in item["applicable_store_ids"]
                 or account.account_id not in item["applicable_content_account_ids"]
+                or item["disclosure_scope"] != grant["disclosure_scope"]
             ):
                 raise PreparationIssue("BLOCK", "叙事资料与当前企业、门店或账号范围不一致。", [str(item["fragment_id"])])
             if not str(item["source_ref"]).strip():
@@ -777,10 +848,26 @@ class LightExpressionService:
         for raw in facts:
             item = require_mapping(raw, "精确事实")
             require_fields(item, REQUIRED_FACT_FIELDS, "精确事实")
+            if digest_object(item) not in context.trusted_fact_digests:
+                raise PreparationIssue(
+                    "BLOCK",
+                    "精确事实没有出现在服务端受信上游登记中。",
+                    [str(item["fact_id"])],
+                )
             if item["status"] != "ACTIVE" or parse_time(item["valid_until"]) < now:
                 raise PreparationIssue("COLLECT_FACT", "精确事实已失效或被撤回。", [str(item["fact_id"])])
+            if parse_time(item["effective_at"]) > now:
+                raise PreparationIssue("COLLECT_FACT", "精确事实尚未生效。", [str(item["fact_id"])])
+            if item["value"] in (None, "", [], {}):
+                raise PreparationIssue("COLLECT_FACT", "精确事实缺少可用值。", [str(item["fact_id"])])
             grant = context.authorization_grants.get(str(item["authorization_ref"]))
-            if not self._grant_is_valid(grant, context, account, now):
+            if not self._grant_is_valid(
+                grant,
+                context,
+                account,
+                now,
+                allowed_kinds=frozenset({"MATERIAL_AND_FACT_DISCLOSURE", "FACT_DISCLOSURE"}),
+            ):
                 raise PreparationIssue("REQUEST_AUTHORIZATION", "精确事实缺少当前有效授权。", [str(item["fact_id"])])
             if (
                 item["tenant_id"] != context.tenant_id
@@ -789,6 +876,7 @@ class LightExpressionService:
                 or item["organization_id"] != grant["source_organization_id"]
                 or item["store_id"] != grant["source_store_id"]
                 or account.account_id not in item["applicable_content_account_ids"]
+                or item["disclosure_scope"] != grant["disclosure_scope"]
             ):
                 raise PreparationIssue("BLOCK", "精确事实与当前企业、门店或账号范围不一致。", [str(item["fact_id"])])
             if item["fact_kind"] not in ALLOWED_FACT_KINDS:
@@ -804,11 +892,17 @@ class LightExpressionService:
         context: TrustedUpstreamContext,
         account: AccountAuthority,
         now: datetime,
-        required_kind: str | None = None,
+        allowed_kinds: frozenset[str] | None = None,
+        allowed_disclosure_scopes: frozenset[str] | None = None,
     ) -> bool:
         if grant is None or grant.get("status") != "GRANTED":
             return False
-        if required_kind is not None and grant.get("authorization_kind") != required_kind:
+        if allowed_kinds is not None and grant.get("authorization_kind") not in allowed_kinds:
+            return False
+        if (
+            allowed_disclosure_scopes is not None
+            and grant.get("disclosure_scope") not in allowed_disclosure_scopes
+        ):
             return False
         try:
             within_time = parse_time(grant["valid_from"]) <= now <= parse_time(grant["valid_until"])
@@ -829,6 +923,7 @@ class LightExpressionService:
         context: TrustedUpstreamContext,
         account: AccountAuthority,
         now: datetime,
+        expected_scope: str,
     ) -> bool:
         if record is None:
             return False
@@ -840,6 +935,8 @@ class LightExpressionService:
                 and record.get("organization_id") == account.organization_id
                 and record.get("store_id") == account.store_id
                 and record.get("content_account_id") == account.account_id
+                and record.get("confirmation_scope") == expected_scope
+                and parse_time(record["confirmed_at"]) <= now
                 and parse_time(record["valid_until"]) >= now
             )
         except (KeyError, TypeError, ValueError):
@@ -1007,7 +1104,7 @@ class LightExpressionService:
     def _find_surface_leak(self, value: Any) -> str | None:
         if isinstance(value, dict):
             for key, child in value.items():
-                if str(key) in HIDDEN_SURFACE_KEYS:
+                if str(key).casefold() in HIDDEN_SURFACE_KEYS:
                     return str(key)
                 found = self._find_surface_leak(child)
                 if found is not None:

@@ -2,6 +2,8 @@
 
 This package implements the Phase B local vertical slice of the public light-expression contract. It prepares one deterministic `LightContentPlan` or action card, then validates candidate references and deterministic hard boundaries. It does not write audience content, call a model, connect to Dify, or access a database.
 
+Facts and narrative fragments are usable only when the server-owned trusted context has registered their exact object digests. Repeating a legal authorization reference inside the request body cannot register or upgrade new evidence.
+
 Run the focused tests and package gate:
 
 ```bash

@@ -119,7 +119,7 @@ def main() -> int:
         raise SystemExit("--port must be between 0 and 65535")
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     service = LightExpressionService()
-    context = TrustedUpstreamContext.from_simulation_identity() if args.simulation_context else None
+    context = service.local_simulation_context() if args.simulation_context else None
     server = build_server(args.host, args.port, service, context)
     LOGGER.info("light-expression service listening on %s:%s", *server.server_address)
     try:

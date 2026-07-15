@@ -30,6 +30,8 @@ light_expression_service_manifest:
   trust_boundary:
     trusted_context_injected_outside_request_body: true
     client_trust_labels_authoritative: false
+    request_body_may_register_fact_or_fragment: false
+    exact_evidence_digest_must_be_registered_by_trusted_context: true
     local_simulation_requires_explicit_start_flag: true
     normal_runtime_requires_atom_refs: false
   expression_profile:

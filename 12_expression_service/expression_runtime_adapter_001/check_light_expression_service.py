@@ -139,14 +139,23 @@ REQUIRED_TEST_METHODS = frozenset(
         "test_empty_material_and_facts_returns_collection_card",
         "test_missing_fact_authorization_requests_authorization",
         "test_cross_tenant_store_and_account_fail_closed",
+        "test_unregistered_request_body_fact_cannot_self_upgrade",
+        "test_authorization_kind_and_disclosure_scope_are_bound",
+        "test_requirement_confirmation_grant_is_purpose_and_scope_bound",
+        "test_future_or_empty_evidence_is_not_usable",
+        "test_subject_confirmation_cannot_be_replayed_across_scope_or_account",
         "test_used_references_must_be_plan_subsets",
         "test_all_user_visible_surfaces_are_scanned_for_internal_leaks",
+        "test_nested_scope_and_authorization_fields_are_internal_leaks",
+        "test_internal_identifier_values_are_blocked_on_every_surface",
         "test_obvious_contact_information_is_a_privacy_hard_issue",
+        "test_all_plan_required_surfaces_must_be_present",
         "test_structured_pass_keeps_semantic_review_pending_and_scores_empty",
         "test_candidate_count_and_difference_policy_are_explicit",
         "test_request_id_does_not_change_deterministic_plan",
         "test_concurrent_replay_keeps_one_deterministic_plan",
         "test_four_http_endpoints_run_locally",
+        "test_http_body_cannot_register_a_fabricated_fact",
         "test_simulation_context_cannot_bind_non_loopback_host",
     }
 )
@@ -197,6 +206,11 @@ def validate_manifest(manifest: dict[str, Any]) -> None:
     trust = manifest.get("trust_boundary", {})
     require(trust.get("trusted_context_injected_outside_request_body") is True, "E_TRUST_INJECTION")
     require(trust.get("client_trust_labels_authoritative") is False, "E_CLIENT_TRUST")
+    require(trust.get("request_body_may_register_fact_or_fragment") is False, "E_CLIENT_EVIDENCE_REGISTRATION")
+    require(
+        trust.get("exact_evidence_digest_must_be_registered_by_trusted_context") is True,
+        "E_TRUSTED_EVIDENCE_REGISTRATION",
+    )
     require(trust.get("normal_runtime_requires_atom_refs") is False, "E_ATOM_RUNTIME")
     runtime = manifest.get("runtime_boundaries", {})
     for key in (
@@ -437,6 +451,10 @@ def run_selftest(root: Path) -> dict[str, Any]:
     mutated_manifest["runtime_boundaries"]["external_model_call_count"] = 1
     expect_failure(lambda: validate_manifest(mutated_manifest), "E_RUNTIME_BOUNDARY")
 
+    mutated_manifest = copy.deepcopy(manifest)
+    mutated_manifest["trust_boundary"]["request_body_may_register_fact_or_fragment"] = True
+    expect_failure(lambda: validate_manifest(mutated_manifest), "E_CLIENT_EVIDENCE_REGISTRATION")
+
     mutated_result = copy.deepcopy(result)
     mutated_result["core_numbers"]["target_case_baseline"] = 301
     expect_failure(lambda: validate_result(mutated_result), "E_RESULT_CORE_NUMBERS")
@@ -467,7 +485,7 @@ def run_selftest(root: Path) -> dict[str, Any]:
         lambda: validate_review(review, "LIGHT_EXPRESSION_ARCHITECTURE_REVIEW"),
         "E_REVIEW_SCORE",
     )
-    return {"task_id": TASK_ID, "selftest": "PASS", "negative_case_count": 6}
+    return {"task_id": TASK_ID, "selftest": "PASS", "negative_case_count": 7}
 
 
 def parse_args() -> argparse.Namespace:

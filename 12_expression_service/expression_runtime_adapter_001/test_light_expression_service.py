@@ -41,9 +41,15 @@ def contract_prepare_request() -> dict[str, Any]:
 
 
 def service_and_context() -> tuple[LightExpressionService, TrustedUpstreamContext]:
-    return (
-        LightExpressionService(REPOSITORY_ROOT),
-        TrustedUpstreamContext.from_simulation_identity(IDENTITY_PATH),
+    service = LightExpressionService(REPOSITORY_ROOT)
+    return service, service.local_simulation_context()
+
+
+def trusted_context_for_request(request: dict[str, Any]) -> TrustedUpstreamContext:
+    return TrustedUpstreamContext.from_simulation_identity(
+        IDENTITY_PATH,
+        tuple(copy.deepcopy(request["scoped_retrieval_fragments"])),
+        tuple(copy.deepcopy(request["verified_precise_facts"])),
     )
 
 
@@ -104,8 +110,14 @@ class PrepareTests(unittest.TestCase):
         self.service, self.context = service_and_context()
         self.request = contract_prepare_request()
 
-    def prepare(self, request: dict[str, Any] | None = None) -> dict[str, Any]:
-        return self.service.prepare(request or self.request, self.context, FIXED_TIME)
+    def prepare(
+        self,
+        request: dict[str, Any] | None = None,
+        register_request_evidence: bool = False,
+    ) -> dict[str, Any]:
+        payload = request or self.request
+        context = trusted_context_for_request(payload) if register_request_evidence else self.context
+        return self.service.prepare(payload, context, FIXED_TIME)
 
     def test_valid_request_without_atom_references_uses_neutral_profile(self) -> None:
         result = self.prepare()
@@ -191,12 +203,12 @@ class PrepareTests(unittest.TestCase):
         self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
         self.assertEqual(result["expression_guidance"]["material_mode"], "DEGRADED_FACT_ONLY")
 
-    def test_narrative_only_input_degrades_safely(self) -> None:
+    def test_narrative_only_input_requires_a_precise_fact(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["verified_precise_facts"] = []
         result = self.prepare(changed)
-        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
-        self.assertEqual(result["expression_guidance"]["material_mode"], "DEGRADED_NARRATIVE_ONLY")
+        self.assertEqual(result["object_type"], "ACTION_CARD")
+        self.assertEqual(result["action_type"], "COLLECT_FACT")
 
     def test_empty_material_and_facts_returns_collection_card(self) -> None:
         changed = copy.deepcopy(self.request)
@@ -204,19 +216,19 @@ class PrepareTests(unittest.TestCase):
         changed["verified_precise_facts"] = []
         result = self.prepare(changed)
         self.assertEqual(result["object_type"], "ACTION_CARD")
-        self.assertEqual(result["action_type"], "COLLECT_MATERIAL")
+        self.assertEqual(result["action_type"], "COLLECT_FACT")
         self.assertFalse(result["publishable_candidate_included"])
 
     def test_missing_fact_authorization_requests_authorization(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["verified_precise_facts"][0]["authorization_ref"] = "AUTH-MISSING"
-        result = self.prepare(changed)
+        result = self.prepare(changed, register_request_evidence=True)
         self.assertEqual(result["action_type"], "REQUEST_AUTHORIZATION")
 
     def test_missing_fact_source_requests_fact(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["verified_precise_facts"][0]["source_ref"] = ""
-        result = self.prepare(changed)
+        result = self.prepare(changed, register_request_evidence=True)
         self.assertEqual(result["action_type"], "COLLECT_FACT")
 
     def test_expired_and_revoked_inputs_fail_closed(self) -> None:
@@ -227,7 +239,7 @@ class PrepareTests(unittest.TestCase):
             with self.subTest(field=field):
                 changed = copy.deepcopy(self.request)
                 changed["verified_precise_facts"][0][field] = value
-                result = self.prepare(changed)
+                result = self.prepare(changed, register_request_evidence=True)
                 self.assertEqual(result["action_type"], expected)
 
     def test_cross_tenant_store_and_account_fail_closed(self) -> None:
@@ -250,8 +262,73 @@ class PrepareTests(unittest.TestCase):
             with self.subTest(name=name):
                 changed = copy.deepcopy(self.request)
                 mutate(changed)
-                result = self.prepare(changed)
+                result = self.prepare(changed, register_request_evidence=True)
                 self.assertEqual(result["action_type"], "BLOCK")
+
+    def test_unregistered_request_body_fact_cannot_self_upgrade(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["verified_precise_facts"][0]["fact_id"] = "FACT-CLIENT-FABRICATED"
+        changed["verified_precise_facts"][0]["source_ref"] = "client://fabricated"
+        result = self.prepare(changed)
+        self.assertEqual(result["object_type"], "ACTION_CARD")
+        self.assertEqual(result["action_type"], "BLOCK")
+        self.assertIn("受信上游登记", result["plain_language_reason"])
+
+    def test_authorization_kind_and_disclosure_scope_are_bound(self) -> None:
+        for name, mutate in (
+            (
+                "confirmation_grant_reused_as_fact_grant",
+                lambda value: value["verified_precise_facts"][0].__setitem__(
+                    "authorization_ref", "AUTH-SIM-CONFIRM-001"
+                ),
+            ),
+            (
+                "disclosure_scope_mismatch",
+                lambda value: value["verified_precise_facts"][0].__setitem__(
+                    "disclosure_scope", "PUBLIC_UNRESTRICTED"
+                ),
+            ),
+        ):
+            with self.subTest(name=name):
+                changed = copy.deepcopy(self.request)
+                mutate(changed)
+                result = self.prepare(changed, register_request_evidence=True)
+                self.assertNotEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+
+    def test_requirement_confirmation_grant_is_purpose_and_scope_bound(self) -> None:
+        for field, value in (
+            ("authorization_kind", "FACT_DISCLOSURE"),
+            ("disclosure_scope", "CONTENT_ACCOUNT_ONLY"),
+        ):
+            with self.subTest(field=field):
+                context = copy.deepcopy(self.context)
+                context.authorization_grants["AUTH-SIM-CONFIRM-001"][field] = value
+                result = self.service.prepare(self.request, context, FIXED_TIME)
+                self.assertEqual(result["object_type"], "ACTION_CARD")
+                self.assertEqual(result["action_type"], "REQUEST_AUTHORIZATION")
+
+    def test_future_or_empty_evidence_is_not_usable(self) -> None:
+        mutations = (
+            (
+                "future_fact",
+                lambda value: value["verified_precise_facts"][0].__setitem__(
+                    "effective_at", "2026-07-15T00:00:00Z"
+                ),
+            ),
+            ("empty_fact", lambda value: value["verified_precise_facts"][0].__setitem__("value", "")),
+            (
+                "future_observation",
+                lambda value: value["scoped_retrieval_fragments"][0].__setitem__(
+                    "observed_at", "2026-07-15T00:00:00Z"
+                ),
+            ),
+        )
+        for name, mutate in mutations:
+            with self.subTest(name=name):
+                changed = copy.deepcopy(self.request)
+                mutate(changed)
+                result = self.prepare(changed, register_request_evidence=True)
+                self.assertIn(result["action_type"], {"COLLECT_FACT", "COLLECT_MATERIAL"})
 
     def test_missing_person_confirmation_routes_to_anonymize(self) -> None:
         changed = copy.deepcopy(self.request)
@@ -262,6 +339,18 @@ class PrepareTests(unittest.TestCase):
             "confirmation_scope": "person_and_customer_authorization",
             "authorization_refs": ["AUTH-SIM-CONFIRM-001"],
             "subject_confirmation_ref": None,
+        }
+        result = self.prepare(changed)
+        self.assertEqual(result["action_type"], "ANONYMIZE")
+
+    def test_subject_confirmation_cannot_be_replayed_across_scope_or_account(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["confirmation_evidence"] = {
+            "confirmed_by_principal_id": "SIM-LOGIN-DIYU-ACCEPTANCE-001",
+            "confirmed_by_role_ids": ["ROLE-GU-JINYAN"],
+            "confirmation_scope": "person_and_customer_authorization",
+            "authorization_refs": ["AUTH-SIM-CONFIRM-001"],
+            "subject_confirmation_ref": "SUBJECT-CONFIRM-SIM-001",
         }
         result = self.prepare(changed)
         self.assertEqual(result["action_type"], "ANONYMIZE")
@@ -337,12 +426,34 @@ class ValidateTests(unittest.TestCase):
         result = self.validate(changed)
         self.assertEqual(result["decision"], "BLOCK")
 
+    def test_nested_scope_and_authorization_fields_are_internal_leaks(self) -> None:
+        for hidden_key in ("tenant_id", "Tenant_Id", "authorization_ref", "fact_id"):
+            with self.subTest(hidden_key=hidden_key):
+                changed = copy.deepcopy(self.request)
+                changed["candidate"]["candidate_user_visible_surfaces"]["execution_payload"] = {
+                    hidden_key: "internal"
+                }
+                self.assertEqual(self.validate(changed)["decision"], "BLOCK")
+
+    def test_internal_identifier_values_are_blocked_on_every_surface(self) -> None:
+        for value in (
+            "TENANT-DIYU-SIM-001",
+            "AUTH-SIM-001",
+            "plan://TENANT-DIYU-SIM-001/requirements/REQ/revisions/1",
+        ):
+            with self.subTest(value=value):
+                changed = copy.deepcopy(self.request)
+                changed["candidate"]["candidate_user_visible_surfaces"]["body"] = value
+                self.assertEqual(self.validate(changed)["decision"], "BLOCK")
+
     def test_obvious_contact_information_is_a_privacy_hard_issue(self) -> None:
-        changed = copy.deepcopy(self.request)
-        changed["candidate"]["candidate_user_visible_surfaces"]["CTA"] = "请联系 13812345678"
-        result = self.validate(changed)
-        self.assertEqual(result["decision"], "BLOCK")
-        self.assertIn("privacy", {item["category"] for item in result["hard_issues"]})
+        for text in ("请联系 13812345678", "身份证 110101199001011234", "家庭住址：某市某路1号"):
+            with self.subTest(text=text):
+                changed = copy.deepcopy(self.request)
+                changed["candidate"]["candidate_user_visible_surfaces"]["CTA"] = text
+                result = self.validate(changed)
+                self.assertEqual(result["decision"], "BLOCK")
+                self.assertIn("privacy", {item["category"] for item in result["hard_issues"]})
 
     def test_empty_candidate_is_revise_not_fabricated_quality_score(self) -> None:
         changed = copy.deepcopy(self.request)
@@ -351,6 +462,12 @@ class ValidateTests(unittest.TestCase):
         self.assertEqual(result["decision"], "REVISE")
         self.assertEqual(result["hard_issues"], [])
         self.assertTrue(all(item["score"] is None for item in result["soft_evaluation_tasks"]))
+
+    def test_all_plan_required_surfaces_must_be_present(self) -> None:
+        changed = copy.deepcopy(self.request)
+        changed["candidate"]["candidate_user_visible_surfaces"] = {"title": "只有标题"}
+        result = self.validate(changed)
+        self.assertEqual(result["decision"], "REVISE")
 
     def test_pure_creative_difference_is_not_a_fact_hard_issue(self) -> None:
         changed = copy.deepcopy(self.request)
@@ -433,6 +550,23 @@ class HttpTests(unittest.TestCase):
             self.assertEqual(status, 403)
             self.assertEqual(result["object_type"], "ACTION_CARD")
             self.assertEqual(result["action_type"], "BLOCK")
+        finally:
+            server.shutdown()
+            thread.join(timeout=5)
+            server.server_close()
+
+    def test_http_body_cannot_register_a_fabricated_fact(self) -> None:
+        _, context = service_and_context()
+        server, thread, port = self._run_server(context)
+        try:
+            payload = contract_prepare_request()
+            payload["verified_precise_facts"][0]["fact_id"] = "FACT-CLIENT-FABRICATED"
+            payload["verified_precise_facts"][0]["source_ref"] = "client://fabricated"
+            status, result = request_json("127.0.0.1", port, "POST", "/v1/content/prepare", payload)
+            self.assertEqual(status, 200)
+            self.assertEqual(result["object_type"], "ACTION_CARD")
+            self.assertEqual(result["action_type"], "BLOCK")
+            self.assertIn("受信上游登记", result["plain_language_reason"])
         finally:
             server.shutdown()
             thread.join(timeout=5)
