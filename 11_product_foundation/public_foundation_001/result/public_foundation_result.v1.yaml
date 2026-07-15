@@ -3,10 +3,14 @@ public_foundation_result:
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
   candidate_snapshot_digest: 95fb58ee71e3c19741c1d5352990edd677e0446db17ce3f7a400f23c11684453
-  candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
-  review_state: PENDING_INDEPENDENT_REVIEWS
-  reviewed_candidate_commit: null
-  independent_reviews: []
+  candidate_state: COMPLETE_PENDING_ROOT_MERGE_APPROVAL
+  review_state: PENDING_ROOT_MERGE_APPROVAL
+  reviewed_candidate_commit: 3f610726943dee5545d4d310f107239f2eeb9234
+  independent_reviews:
+  - path: 11_product_foundation/public_foundation_001/review/architecture_consumability_review.v1.yaml
+    sha256: 4ae3cbb4cb6f10ab6987541b55efd1dcb32b3d797f88a756fb78076771f2c7fe
+  - path: 11_product_foundation/public_foundation_001/review/trust_fact_safety_review.v1.yaml
+    sha256: e09a05e129d693d9d2b2eafdcacda76c5cc100c1732da768e11e78e6541c467b
   coordinator_decision: null
   independent_review_attempts:
   - attempt: 1
