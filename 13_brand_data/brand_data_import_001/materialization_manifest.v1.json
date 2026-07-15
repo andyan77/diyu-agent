@@ -1,0 +1,164 @@
+{
+  "artifacts": [
+    {
+      "byte_size": 3202,
+      "path": "data/example_references.v1.jsonl",
+      "sha256": "744ea4c5df6630e36f077980f53bd95a78d055fb81821257d376534ff034bb1c"
+    },
+    {
+      "byte_size": 5186,
+      "path": "data/expression_import_candidates.v1.json",
+      "sha256": "f5dade80ab3d3ffab8cc7aa1cedab3ddf53a239a9efef8f8375ab547859c9189"
+    },
+    {
+      "byte_size": 518590,
+      "path": "data/narrative_units.v1.jsonl",
+      "sha256": "8fd7e96f109352ad38eeb3335844998935335d3cd14dedb6ce7f6e0952451d3d"
+    },
+    {
+      "byte_size": 13145,
+      "path": "data/precise_facts.v1.jsonl",
+      "sha256": "246a578fd7e35bf8b854758c8d22b4de819aad3432b819846b4cbd3cad9e756c"
+    },
+    {
+      "byte_size": 1451,
+      "path": "fixtures/check_cases.v1.jsonl",
+      "sha256": "e6a5c0f4aa3103c03e11732de53f5f1437e1027eebd49ab3ee76a2a9805c39dd"
+    }
+  ],
+  "baseline_commit": "95b8b1700b7e96b1d2383465713bef8c36e7f6cb",
+  "external_calls": {
+    "database": 0,
+    "dify": 0,
+    "model": 0,
+    "production": 0,
+    "retrieval": 0
+  },
+  "materialization": {
+    "body_preservation": "EXACT_UTF8_TEXT_FROM_BYTE_RANGE",
+    "narrative_segmentation": "MARKDOWN_LEVEL_ONE_SECTIONS",
+    "scope_classification": "EXPLICIT_MANUAL_ALLOWLIST_WITH_FAIL_CLOSED_HOLDS",
+    "semantic_quality_machine_claimed": false
+  },
+  "public_anchors": [
+    {
+      "path": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+      "sha256": "a3aec92fdcc22635bb07bc5d2595ebaa5cfa1f1c9d5fad42cc39481808bbc1af"
+    },
+    {
+      "path": "11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml",
+      "sha256": "65b8242b9b760e64f8e441c4334c68fa76f6dc3a11e2fe2f8f62ad6a887c3cbc"
+    }
+  ],
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "database_imported": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "generator_qualified": false,
+    "production_ready": false,
+    "production_servable": false,
+    "publish_allowed": false,
+    "release_ready": false,
+    "retrieval_available": false,
+    "retrieval_ready": false,
+    "runtime_ready": false
+  },
+  "schema_version": "v1.0",
+  "sources": [
+    {
+      "byte_size": 30537,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第一批：品牌世界设定、组织结构与事实治理基线.md",
+      "observed_from": null,
+      "observed_until": null,
+      "sha256": "db876e2ebcddb905df8e000eefbd4abcc306bfc6172b0635221df5a9aeefb163",
+      "snapshot_path": "source_snapshots/第一批：品牌世界设定、组织结构与事实治理基线.md",
+      "source_id": "SOURCE-01",
+      "temporal_note": "UNDATED_SOURCE"
+    },
+    {
+      "byte_size": 32616,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第二批：商品体系、尺码规格、库存流转与真实到店资料.md",
+      "observed_from": "2026-07-10",
+      "observed_until": "2026-07-10",
+      "sha256": "ca39dc31f5ce9faff74aec55186b22c6ab784bfef202b56991edf7de7c9adfa5",
+      "snapshot_path": "source_snapshots/第二批：商品体系、尺码规格、库存流转与真实到店资料.md",
+      "source_id": "SOURCE-02",
+      "temporal_note": "SOURCE_STATES_END_OF_BUSINESS_LOCAL_WITHOUT_TIMEZONE"
+    },
+    {
+      "byte_size": 27389,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第三批：门店空间、陈列现状、动线调整与真实商品搭配.md",
+      "observed_from": "2026-07-11",
+      "observed_until": "2026-07-11",
+      "sha256": "90e6c1da841acdee1eef0abd3fae41bf0230f8aa6e549e738c988707c665503c",
+      "snapshot_path": "source_snapshots/第三批：门店空间、陈列现状、动线调整与真实商品搭配.md",
+      "source_id": "SOURCE-03",
+      "temporal_note": "SOURCE_STATES_END_OF_BUSINESS_LOCAL_WITHOUT_TIMEZONE"
+    },
+    {
+      "byte_size": 33847,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第四批：每日真实记录、顾客服务、研发验证、经营选择与承诺.md",
+      "observed_from": "2026-07-03",
+      "observed_until": "2026-07-12",
+      "sha256": "1560ace1e15affb5a20e9a80df2b7184aa826af6811fe8a54eeca32f33eabe23",
+      "snapshot_path": "source_snapshots/第四批：每日真实记录、顾客服务、研发验证、经营选择与承诺.md",
+      "source_id": "SOURCE-04",
+      "temporal_note": "SOURCE_STATES_DATE_RANGE_WITHOUT_TIMEZONE"
+    },
+    {
+      "byte_size": 32559,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第五批：图片、视频、文件、人物授权与使用范围.md",
+      "observed_from": "2026-07-12",
+      "observed_until": "2026-07-12",
+      "sha256": "8f53d4d510a754ba34ebbc21d86b539874fc180005e28baedb8ff6b62aa99b0e",
+      "snapshot_path": "source_snapshots/第五批：图片、视频、文件、人物授权与使用范围.md",
+      "source_id": "SOURCE-05",
+      "temporal_note": "SOURCE_STATES_STATUS_DATE_WITHOUT_TIMEZONE"
+    },
+    {
+      "byte_size": 35731,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第六批：已发布内容、审核修改、实际反馈、重复控制与能力覆盖.md",
+      "observed_from": "2026-07-12",
+      "observed_until": "2026-07-12",
+      "sha256": "698a1636493f46d80ed91c5957b0f07ea4e901928b8321152a85ab2a153d7172",
+      "snapshot_path": "source_snapshots/第六批：已发布内容、审核修改、实际反馈、重复控制与能力覆盖.md",
+      "source_id": "SOURCE-06",
+      "temporal_note": "SOURCE_STATES_END_OF_BUSINESS_LOCAL_WITHOUT_TIMEZONE"
+    },
+    {
+      "byte_size": 27411,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第七批：真实业务请求、生成裁决、越权阻断与缺料反馈.md",
+      "observed_from": null,
+      "observed_until": null,
+      "sha256": "94988999e4ff256f70e579c710696024f79f5e15705493da2e58a13ab3c6c31f",
+      "snapshot_path": "source_snapshots/第七批：真实业务请求、生成裁决、越权阻断与缺料反馈.md",
+      "source_id": "SOURCE-07",
+      "temporal_note": "UNDATED_SCENARIO_SOURCE"
+    },
+    {
+      "byte_size": 53719,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第八批：11账号矩阵、人物岗位档案与30天连续事实记录.md",
+      "observed_from": "2026-08-03",
+      "observed_until": "2026-09-01",
+      "sha256": "3b4577c411ea34ce46db5e8fe13b0af3ce751dcc443a4db95f59a32a1ca923f9",
+      "snapshot_path": "source_snapshots/第八批：11账号矩阵、人物岗位档案与30天连续事实记录.md",
+      "source_id": "SOURCE-08",
+      "temporal_note": "EXPLICIT_SIMULATED_FUTURE_CYCLE"
+    },
+    {
+      "byte_size": 28678,
+      "expected_external_path": "/mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/综合补充增强包：经营责任、交易售后、本地生活、人物成长与事实纠错.md",
+      "observed_from": null,
+      "observed_until": null,
+      "sha256": "d4d6089fa03f58676ea72022ee8c99e3d44d2bf63f44e1a268814b491d430a3d",
+      "snapshot_path": "source_snapshots/综合补充增强包：经营责任、交易售后、本地生活、人物成长与事实纠错.md",
+      "source_id": "SOURCE-09",
+      "temporal_note": "UNDATED_SOURCE"
+    }
+  ],
+  "task_id": "DIYU_BRAND_DATA_IMPORT_READY_001"
+}
