@@ -11,6 +11,7 @@ import logging
 import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import date, datetime, time, timezone
 from pathlib import Path
 from typing import Any, cast
 
@@ -42,7 +43,9 @@ TRUST_REVIEW_PATH = PACKAGE_ROOT / "review/source_fact_authorization_review.v1.y
 EXPRESSION_REVIEW_PATH = PACKAGE_ROOT / "review/brand_expression_consumability_review.v1.yaml"
 REVIEW_REQUEST_PATH = PACKAGE_ROOT / "review/execution_review_request.v1.md"
 
-ALLOWED_FACT_KINDS = frozenset({"SKU", "SPECIFICATION", "PRICE", "STOCK", "TIME_POINT", "AUTHORIZATION", "REVOCATION"})
+ALLOWED_FACT_KINDS = frozenset(
+    {"SKU", "SPECIFICATION", "PRICE", "STOCK", "TIME_POINT", "STATUS", "AUTHORIZATION", "REVOCATION"}
+)
 READY_STATE = "READY_FOR_PACKAGE_5_REVIEW"
 NON_CONSUMABLE_STATES = frozenset(
     {
@@ -184,6 +187,43 @@ def account_organizations(bundle: Bundle) -> dict[str, str]:
     return {item["account_id"]: item["organization_id"] for item in bundle.identity["content_accounts"]}
 
 
+def parse_temporal(value: Any, *, end_of_day: bool = False) -> datetime | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        if len(value) == 10:
+            boundary = time.max if end_of_day else time.min
+            return datetime.combine(date.fromisoformat(value), boundary, tzinfo=timezone.utc)
+        normalized = value[:-1] + "+00:00" if value.endswith("Z") else value
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return None
+    return parsed.astimezone(timezone.utc)
+
+
+def grant_is_current(grant: dict[str, Any]) -> bool:
+    evaluated_at = parse_temporal(materialize.PACKAGE_EVALUATED_AT)
+    valid_from = parse_temporal(grant.get("valid_from"))
+    valid_until = parse_temporal(grant.get("valid_until"), end_of_day=True)
+    return (
+        evaluated_at is not None
+        and valid_from is not None
+        and valid_until is not None
+        and valid_from <= evaluated_at <= valid_until
+    )
+
+
+def record_is_current(record: dict[str, Any]) -> bool:
+    value = record.get("valid_until")
+    if value is None:
+        return True
+    evaluated_at = parse_temporal(materialize.PACKAGE_EVALUATED_AT)
+    valid_until = parse_temporal(value, end_of_day=True)
+    return evaluated_at is not None and valid_until is not None and evaluated_at <= valid_until
+
+
 def locator_bytes(source: bytes, locator: dict[str, Any], label: str, errors: list[str]) -> bytes:
     required = {"byte_start", "byte_end_exclusive", "line_start", "line_end"}
     if not required.issubset(locator):
@@ -267,6 +307,12 @@ def validate_manifest(bundle: Bundle, errors: list[str]) -> None:
 def grant_matches_narrative(record: dict[str, Any], grant: dict[str, Any]) -> bool:
     return (
         grant.get("status") == "GRANTED"
+        and grant.get("authorization_kind") == "MATERIAL_AND_FACT_DISCLOSURE"
+        and grant.get("disclosure_scope") == "CONTENT_ACCOUNT_ONLY"
+        and record.get("disclosure_scope") == grant.get("disclosure_scope")
+        and grant_is_current(grant)
+        and grant.get("simulation_only") is True
+        and grant.get("publish_allowed") is False
         and grant.get("tenant_id") == record.get("tenant_id")
         and grant.get("brand_id") == record.get("brand_id")
         and grant.get("source_organization_id") == record.get("source_organization_id")
@@ -353,6 +399,12 @@ def validate_narratives(bundle: Bundle, errors: list[str]) -> None:
                 errors.append(f"{label}: ready narrative authorization does not close")
             if record.get("authorization_state") != "GRANTED":
                 errors.append(f"{label}: ready narrative authorization state is not GRANTED")
+            if not record_is_current(record):
+                errors.append(f"{label}: ready narrative validity has expired or is invalid")
+            if any(
+                marker in str(record.get("body", "")) for marker in materialize.UNREGISTERED_SCOPE_MARKERS
+            ):
+                errors.append(f"{label}: ready narrative body contains an unregistered source scope")
         elif state == "HOLD_UNREGISTERED_SCOPE":
             if any(
                 (
@@ -372,6 +424,12 @@ def grant_matches_fact(record: dict[str, Any], grant: dict[str, Any], account_or
     target_organizations = {account_orgs[account_id] for account_id in account_ids if account_id in account_orgs}
     return (
         grant.get("status") == "GRANTED"
+        and grant.get("authorization_kind") in {"FACT_DISCLOSURE", "MATERIAL_AND_FACT_DISCLOSURE"}
+        and grant.get("disclosure_scope") == "CONTENT_ACCOUNT_ONLY"
+        and record.get("disclosure_scope") == grant.get("disclosure_scope")
+        and grant_is_current(grant)
+        and grant.get("simulation_only") is True
+        and grant.get("publish_allowed") is False
         and grant.get("tenant_id") == record.get("tenant_id")
         and grant.get("brand_id") == record.get("brand_id")
         and grant.get("source_organization_id") == record.get("organization_id")
@@ -459,6 +517,10 @@ def validate_facts(bundle: Bundle, errors: list[str]) -> None:
             grant = grants.get(authorization_ref) if isinstance(authorization_ref, str) else None
             if grant is None or not grant_matches_fact(record, grant, account_orgs):
                 errors.append(f"{label}: ready fact authorization does not close")
+            if record.get("authorization_state") != "GRANTED":
+                errors.append(f"{label}: ready fact authorization state is not GRANTED")
+            if not record_is_current(record):
+                errors.append(f"{label}: ready fact validity has expired or is invalid")
         elif state == "HOLD_UNREGISTERED_SCOPE":
             if record.get("organization_id") is not None or record.get("store_id") is not None:
                 errors.append(f"{label}: unregistered fact leaked into a registered source scope")
@@ -655,8 +717,45 @@ def mutate_case(bundle: Bundle, mutation: str) -> None:
         fact["import_review_state"] = READY_STATE
         fact["applicable_content_account_ids"] = ["ACCOUNT-DIYU-HQ-OFFICIAL"]
         fact["authorization_ref"] = "AUTH-SIM-001"
+    elif mutation == "MAKE_UNREGISTERED_NARRATIVE_READY":
+        narrative = next(
+            item for item in bundle.narratives if item["import_review_state"] == "HOLD_UNREGISTERED_SCOPE"
+        )
+        narrative.update(
+            {
+                "applicable_content_account_ids": ["ACCOUNT-DIYU-HQ-OFFICIAL"],
+                "applicable_organization_ids": ["ORG-DIYU-HQ"],
+                "applicable_store_ids": [],
+                "authorization_ref": "AUTH-SIM-001",
+                "authorization_state": "GRANTED",
+                "disclosure_scope": "CONTENT_ACCOUNT_ONLY",
+                "hold_reason": None,
+                "import_review_state": READY_STATE,
+                "source_organization_id": "ORG-DIYU-HQ",
+                "source_scope_label": "笛语童装总部",
+                "source_store_id": None,
+            }
+        )
     elif mutation == "REMOVE_READY_AUTHORIZATION":
         ready_fact["authorization_ref"] = None
+    elif mutation == "USE_REQUIREMENT_CONFIRMATION_GRANT":
+        ready_fact["authorization_ref"] = "AUTH-SIM-CONFIRM-001"
+    elif mutation == "EXPIRE_READY_GRANT":
+        next(
+            grant
+            for grant in bundle.identity["authorization_grants"]
+            if grant["authorization_id"] == ready_fact["authorization_ref"]
+        )["valid_until"] = "2026-07-14T23:59:59Z"
+    elif mutation == "DEFER_READY_GRANT":
+        next(
+            grant
+            for grant in bundle.identity["authorization_grants"]
+            if grant["authorization_id"] == ready_fact["authorization_ref"]
+        )["valid_from"] = "2026-07-16T00:00:00Z"
+    elif mutation == "REVOKE_READY_FACT_AUTHORIZATION_STATE":
+        ready_fact["authorization_state"] = "REVOKED"
+    elif mutation == "EXPIRE_READY_FACT_VALIDITY":
+        ready_fact["valid_until"] = "2026-07-14"
     elif mutation == "MAKE_REVOKED_RUNTIME_CONSUMABLE":
         ready_fact["status"] = "REVOKED"
         ready_fact["revocation_ref"] = "REVOCATION-TEST"

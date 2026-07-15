@@ -18,6 +18,7 @@ TASK_ID = "DIYU_BRAND_DATA_IMPORT_READY_001"
 TENANT_ID = "TENANT-DIYU-SIM-001"
 BRAND_ID = "BRAND-DIYU-SIM-001"
 NEUTRAL_PROFILE_REF = "expression-profile://neutral-default/v1"
+PACKAGE_EVALUATED_AT = "2026-07-15T00:00:00Z"
 
 
 @dataclass(frozen=True)
@@ -132,12 +133,12 @@ REGISTERED_SCOPE_MARKERS = (
     ("总部", HQ_SCOPE),
 )
 UNREGISTERED_SCOPE_MARKERS = (
-    "宁波鄞州",
-    "武汉江汉",
-    "长沙梅溪湖",
-    "成都锦江",
-    "重庆江北",
-    "昆明西山",
+    "宁波",
+    "武汉",
+    "长沙",
+    "成都",
+    "重庆",
+    "昆明",
 )
 
 # These headings were manually selected as headquarters-authored narrative candidates.
@@ -307,13 +308,13 @@ def explicit_heading_scope(heading: str) -> Scope | None:
     return None
 
 
-def narrative_classification(source: SourceSpec, heading: str) -> tuple[str, Scope | None, str]:
+def narrative_classification(source: SourceSpec, heading: str, body: str) -> tuple[str, Scope | None, str]:
+    if any(marker in body for marker in UNREGISTERED_SCOPE_MARKERS):
+        return "HOLD_UNREGISTERED_SCOPE", None, "SOURCE_SCOPE_NOT_IN_PUBLIC_IDENTITY_CONTRACT"
     if source.source_id == "SOURCE-07":
         return "HOLD_NON_FACT_SCENARIO", None, "REQUEST_AND_DECISION_SCENARIO_ONLY"
     if source.source_id == "SOURCE-08":
         return "HOLD_FUTURE_SIMULATION", None, "EXPLICIT_FUTURE_SIMULATION_NOT_OBSERVED"
-    if any(marker in heading for marker in UNREGISTERED_SCOPE_MARKERS):
-        return "HOLD_UNREGISTERED_SCOPE", None, "SOURCE_SCOPE_NOT_IN_PUBLIC_IDENTITY_CONTRACT"
     if heading in READY_HQ_HEADINGS.get(source.source_id, set()):
         return "READY_FOR_PACKAGE_5_REVIEW", HQ_SCOPE, "MANUALLY_CURATED_HQ_SCOPE"
     registered_scope = explicit_heading_scope(heading)
@@ -326,7 +327,7 @@ def materialize_narrative_units() -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for source in SOURCES:
         for section in split_level_one_sections(source):
-            import_state, scope, reason = narrative_classification(source, section["heading"])
+            import_state, scope, reason = narrative_classification(source, section["heading"], section["body"])
             ready = import_state == "READY_FOR_PACKAGE_5_REVIEW"
             record = {
                 "applicable_content_account_ids": [scope.content_account_id] if ready and scope else [],
@@ -455,8 +456,8 @@ def materialize_precise_facts() -> list[dict[str, Any]]:
         ),
         precise_fact(
             "BD-FACT-006",
-            "STOCK",
-            {"color": "雾蓝", "quantity": 12, "size_cm": 130, "state": "PAUSED_SHIPMENT"},
+            "STATUS",
+            {"affected_sample_count": 12, "color": "雾蓝", "size_cm": 130, "state": "PAUSED_SHIPMENT"},
             57,
             59,
             status="RECONFIRMATION_REQUIRED",
@@ -493,8 +494,8 @@ def materialize_precise_facts() -> list[dict[str, Any]]:
         ),
         precise_fact(
             "BD-FACT-009",
-            "STOCK",
-            {"color": "藏青", "quantity": 0, "size_cm": 110, "store": "武汉江汉店"},
+            "STATUS",
+            {"color": "藏青", "size_cm": 110, "state": "OUT_OF_STOCK", "store": "武汉江汉店"},
             63,
             79,
             organization_id=None,
@@ -583,7 +584,13 @@ def materialize_cases() -> list[dict[str, Any]]:
         {"acceptance": "PKG3-A01", "case_id": "changed_source_digest", "expected_pass": False, "mutation": "CHANGE_SOURCE_DIGEST"},
         {"acceptance": "PKG3-A04", "case_id": "unknown_identifier", "expected_pass": False, "mutation": "SET_UNKNOWN_ORGANIZATION"},
         {"acceptance": "PKG3-A05", "case_id": "unregistered_scope_leak", "expected_pass": False, "mutation": "MAKE_UNREGISTERED_FACT_READY"},
+        {"acceptance": "PKG3-A05", "case_id": "unregistered_narrative_scope_leak", "expected_pass": False, "mutation": "MAKE_UNREGISTERED_NARRATIVE_READY"},
         {"acceptance": "PKG3-A06", "case_id": "unauthorized_direct_use", "expected_pass": False, "mutation": "REMOVE_READY_AUTHORIZATION"},
+        {"acceptance": "PKG3-A06", "case_id": "wrong_authorization_kind", "expected_pass": False, "mutation": "USE_REQUIREMENT_CONFIRMATION_GRANT"},
+        {"acceptance": "PKG3-A06", "case_id": "expired_authorization_grant", "expected_pass": False, "mutation": "EXPIRE_READY_GRANT"},
+        {"acceptance": "PKG3-A06", "case_id": "not_yet_valid_authorization_grant", "expected_pass": False, "mutation": "DEFER_READY_GRANT"},
+        {"acceptance": "PKG3-A06", "case_id": "revoked_fact_authorization_state", "expected_pass": False, "mutation": "REVOKE_READY_FACT_AUTHORIZATION_STATE"},
+        {"acceptance": "PKG3-A06", "case_id": "expired_fact_validity", "expected_pass": False, "mutation": "EXPIRE_READY_FACT_VALIDITY"},
         {"acceptance": "PKG3-A06", "case_id": "revoked_direct_use", "expected_pass": False, "mutation": "MAKE_REVOKED_RUNTIME_CONSUMABLE"},
         {"acceptance": "PKG3-A06", "case_id": "expired_direct_use", "expected_pass": False, "mutation": "MAKE_EXPIRED_RUNTIME_CONSUMABLE"},
         {"acceptance": "PKG3-A06", "case_id": "conflict_direct_use", "expected_pass": False, "mutation": "MAKE_CONFLICT_RUNTIME_CONSUMABLE"},

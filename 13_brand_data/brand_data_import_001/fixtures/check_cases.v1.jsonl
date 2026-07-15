@@ -4,7 +4,13 @@
 {"acceptance":"PKG3-A01","case_id":"changed_source_digest","expected_pass":false,"mutation":"CHANGE_SOURCE_DIGEST"}
 {"acceptance":"PKG3-A04","case_id":"unknown_identifier","expected_pass":false,"mutation":"SET_UNKNOWN_ORGANIZATION"}
 {"acceptance":"PKG3-A05","case_id":"unregistered_scope_leak","expected_pass":false,"mutation":"MAKE_UNREGISTERED_FACT_READY"}
+{"acceptance":"PKG3-A05","case_id":"unregistered_narrative_scope_leak","expected_pass":false,"mutation":"MAKE_UNREGISTERED_NARRATIVE_READY"}
 {"acceptance":"PKG3-A06","case_id":"unauthorized_direct_use","expected_pass":false,"mutation":"REMOVE_READY_AUTHORIZATION"}
+{"acceptance":"PKG3-A06","case_id":"wrong_authorization_kind","expected_pass":false,"mutation":"USE_REQUIREMENT_CONFIRMATION_GRANT"}
+{"acceptance":"PKG3-A06","case_id":"expired_authorization_grant","expected_pass":false,"mutation":"EXPIRE_READY_GRANT"}
+{"acceptance":"PKG3-A06","case_id":"not_yet_valid_authorization_grant","expected_pass":false,"mutation":"DEFER_READY_GRANT"}
+{"acceptance":"PKG3-A06","case_id":"revoked_fact_authorization_state","expected_pass":false,"mutation":"REVOKE_READY_FACT_AUTHORIZATION_STATE"}
+{"acceptance":"PKG3-A06","case_id":"expired_fact_validity","expected_pass":false,"mutation":"EXPIRE_READY_FACT_VALIDITY"}
 {"acceptance":"PKG3-A06","case_id":"revoked_direct_use","expected_pass":false,"mutation":"MAKE_REVOKED_RUNTIME_CONSUMABLE"}
 {"acceptance":"PKG3-A06","case_id":"expired_direct_use","expected_pass":false,"mutation":"MAKE_EXPIRED_RUNTIME_CONSUMABLE"}
 {"acceptance":"PKG3-A06","case_id":"conflict_direct_use","expected_pass":false,"mutation":"MAKE_CONFLICT_RUNTIME_CONSUMABLE"}
