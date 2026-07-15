@@ -1,7 +1,7 @@
 {
   "schema_version": "v1.1",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
-  "revision": "r2-direct-journey-assertions",
+  "revision": "r4-contract-alignment-direct-journey-assertions",
   "simulation_boundary": {
     "simulation_only": true,
     "intent_results_are_injected": true,
@@ -32,7 +32,19 @@
     "PKG4-S05",
     "PKG4-S06",
     "PKG4-S07",
-    "PKG4-S08"
+    "PKG4-S08",
+    "PKG4-R4-A01",
+    "PKG4-R4-A02",
+    "PKG4-R4-A03",
+    "PKG4-R4-A04",
+    "PKG4-R4-A05",
+    "PKG4-R4-A06",
+    "PKG4-R4-A07",
+    "PKG4-R4-A08",
+    "PKG4-R4-A09",
+    "PKG4-R4-A10",
+    "PKG4-R4-A11",
+    "PKG4-R4-A12"
   ],
   "common_expected_boundaries": {
     "plan_created": false,
@@ -314,7 +326,7 @@
       "expected": {
         "action_card": "COLLECT_MATERIAL",
         "action_card_contains_publishable_candidate": false,
-        "user_visible_output": "还没有足够的真实材料，请补拍或补充已获准使用的资料。"
+        "user_visible_output": "还没有足够的真实资料，请补充已有且获准使用的材料。"
       }
     },
     {
@@ -327,6 +339,42 @@
         "action_card": "REQUEST_AUTHORIZATION",
         "action_card_contains_publishable_candidate": false,
         "user_visible_output": "当前身份或材料使用范围尚未确认，暂不能继续。"
+      }
+    },
+    {
+      "case_id": "NEEDS-INTERVIEW",
+      "user_visible_case_label": "需要采访时安排真实采访",
+      "simulated_inputs": {
+        "missing_condition": "INTERVIEW"
+      },
+      "expected": {
+        "action_card": "INTERVIEW",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "需要当事人的真实经历或专业说明，请先完成采访并取得本人确认。"
+      }
+    },
+    {
+      "case_id": "NEEDS-RESHOOT",
+      "user_visible_case_label": "需要补拍时完成必要画面",
+      "simulated_inputs": {
+        "missing_condition": "RESHOOT"
+      },
+      "expected": {
+        "action_card": "RESHOOT",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "现有画面缺少必要细节，请按缺口完成补拍并确认可用范围。"
+      }
+    },
+    {
+      "case_id": "NEEDS-ANONYMIZATION",
+      "user_visible_case_label": "需要匿名化时隐去可识别信息",
+      "simulated_inputs": {
+        "missing_condition": "ANONYMIZE"
+      },
+      "expected": {
+        "action_card": "ANONYMIZE",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "人物信息暂不适合直接展示，请先隐去可识别信息并确认无法反推本人。"
       }
     },
     {
