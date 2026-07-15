@@ -22,6 +22,20 @@ MAPPING_FILE: Final = "state_action_mapping.v1.json"
 JOURNEYS_FILE: Final = "journeys.simulated.v1.json"
 RESULT_FILE: Final = "result_and_review_request.v1.json"
 CORE_PACKAGE_FILES: Final = {FLOW_FILE, MAPPING_FILE, JOURNEYS_FILE, RESULT_FILE, "check_dify_content_shell.py"}
+FROZEN_CANDIDATE_STATE: Final = "READY_FOR_TARGETED_INDEPENDENT_REREVIEWS"
+SUCCESS_STATE: Final = "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7"
+FIXED_IMPLEMENTATION_STAGE: Final = "LIGHTWEIGHT_IMPLEMENTATION_CANDIDATE_REVIEW_STATUS_RECORDED_IN_RESULT"
+REVIEWED_IMPLEMENTATION_FILES: Final = (FLOW_FILE, MAPPING_FILE, JOURNEYS_FILE, "check_dify_content_shell.py")
+TARGETED_REVIEWS: Final = {
+    "NOVICE_EXPERIENCE_TARGETED_REREVIEW": (
+        "reviews/novice_experience/targeted-rereview-r3.json",
+        "NOVICE_EXPERIENCE_AND_NECESSARY_REGRESSION_ONLY",
+    ),
+    "LIGHTWEIGHT_ARCHITECTURE_AND_TRUST_TARGETED_REREVIEW": (
+        "reviews/architecture_trust/targeted-rereview-r3.json",
+        "LIGHTWEIGHT_ARCHITECTURE_TRUST_AND_NECESSARY_REGRESSION_ONLY",
+    ),
+}
 ACCEPTANCE_IDS: Final = tuple(f"PKG4-A{number:02d}" for number in range(1, 13)) + tuple(
     f"PKG4-S{number:02d}" for number in range(1, 9)
 )
@@ -179,6 +193,22 @@ def load(path: Path) -> Doc:
     return to_doc(value, str(path))
 
 
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def canonical_json(value: object) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def implementation_hashes(root: Path) -> dict[str, str]:
+    return {name: sha256_file(root / name) for name in REVIEWED_IMPLEMENTATION_FILES}
+
+
+def implementation_digest(hashes: dict[str, str]) -> str:
+    return hashlib.sha256(canonical_json(hashes).encode("utf-8")).hexdigest()
+
+
 def visible_strings(value: object, visible: bool = False) -> list[str]:
     found: list[str] = []
     if isinstance(value, dict):
@@ -275,13 +305,11 @@ class PackageChecker:
             ("native_dify_export", False, "A12_NATIVE_EXPORT"),
             ("importable_claimed", False, "A12_IMPORTABLE_CLAIM"),
             ("application_count", 1, "A01_APPLICATION_COUNT"),
-            ("current_stage", "PENDING_SHARED_CHECKER_MERGE_AND_FINAL_FREEZE", "S07_CANDIDATE_STAGE"),
+            ("current_stage", FIXED_IMPLEMENTATION_STAGE, "S07_CANDIDATE_STAGE"),
         )
         for key, expected, code in expected_values:
             if candidate.get(key) != expected:
                 self.error(code, f"candidate {key} must be {expected!r}")
-        if self.result.get("candidate_state") != "PENDING_SHARED_CHECKER_MERGE_AND_FINAL_FREEZE":
-            self.error("S07_PREMATURE_SUCCESS", "r2 candidate must wait for the shared fix and final freeze")
 
         entry = doc(self.app, "entry_experience", "application")
         if entry.get("kind") != "NATURAL_CHAT" or flag(entry, "parameter_form_required", "entry experience"):
@@ -357,6 +385,98 @@ class PackageChecker:
         for key in ("persistent_memory_implemented", "user_profile_implemented", "preference_system_implemented"):
             if flag(feedback, key, "feedback"):
                 self.error("A10_HEAVY_MEMORY", f"{key} must remain false")
+
+    def check_review_lifecycle(self) -> None:
+        state = self.result.get("candidate_state")
+        if state not in {FROZEN_CANDIDATE_STATE, SUCCESS_STATE}:
+            self.error("S07_CANDIDATE_STATE", "candidate must be frozen for rereview or backed by completed rereviews")
+            return
+        targeted = doc(self.result, "targeted_rereviews", "result")
+        review_refs = items(targeted, "reviews", "targeted rereviews")
+        if state == FROZEN_CANDIDATE_STATE:
+            valid_pending = (
+                targeted.get("state") == "PENDING_TARGETED_INDEPENDENT_REREVIEWS"
+                and not review_refs
+                and self.result.get("frozen_candidate") is None
+            )
+            if not valid_pending:
+                self.error("S07_PREMATURE_SUCCESS", "frozen candidate must not claim completed targeted rereviews")
+            return
+        if targeted.get("state") != "COMPLETED_TARGETED_INDEPENDENT_REREVIEWS":
+            self.error("S07_REVIEW_STATE", "successful result requires completed targeted rereviews")
+            return
+        frozen = doc(self.result, "frozen_candidate", "result")
+        commit = text(frozen, "commit", "frozen candidate")
+        hashes = implementation_hashes(self.root)
+        digest = implementation_digest(hashes)
+        frozen_binding = {
+            "reviewed_file_sha256": hashes,
+            "unified_sha256": digest,
+        }
+        if re.fullmatch(r"[0-9a-f]{40}", commit) is None or any(
+            frozen.get(key) != value for key, value in frozen_binding.items()
+        ):
+            self.error("S07_FROZEN_BINDING", "frozen commit and four-file digests must match the implementation")
+        commit_checks = (
+            git(self.repo, ("cat-file", "-e", f"{commit}^{{commit}}")),
+            git(self.repo, ("merge-base", "--is-ancestor", commit, "HEAD")),
+        )
+        if any(check.returncode != 0 for check in commit_checks):
+            self.error("S07_FROZEN_COMMIT", "frozen candidate must exist and be an ancestor of HEAD")
+        touched = git(self.repo, ("log", "--format=", "--name-only", f"{commit}..HEAD", "--"))
+        protected = {f"{ALLOWED_ROOT}{name}" for name in REVIEWED_IMPLEMENTATION_FILES}
+        if touched.returncode != 0 or set(touched.stdout.splitlines()) & protected:
+            self.error("S07_FROZEN_IMPLEMENTATION_CHANGED", "reviewed implementation changed after freezing")
+
+        refs = {
+            text(ref, "review_role"): ref
+            for ref in (to_doc(raw_ref, "targeted review reference") for raw_ref in review_refs)
+        }
+        if len(review_refs) != 2 or set(refs) != set(TARGETED_REVIEWS):
+            self.error("S07_REVIEW_ROLES", "exactly the two targeted rereviews are required")
+            return
+        identities: dict[str, set[str]] = {
+            key: set() for key in ("reviewer_identity", "reviewer_session", "review_run_id")
+        }
+        for role, (relative, scope) in TARGETED_REVIEWS.items():
+            ref = refs[role]
+            review_path = self.root / relative
+            if ref.get("path") != relative or not review_path.is_file():
+                self.error("S07_REVIEW_PATH", f"targeted review is missing or misplaced: {relative}")
+                continue
+            if ref.get("sha256") != sha256_file(review_path):
+                self.error("S07_REVIEW_FILE_HASH", f"targeted review digest differs: {relative}")
+            evidence = load(review_path)
+            binding = {
+                "schema_version": "r3-targeted-review-v1",
+                "review_role": role,
+                "review_scope": scope,
+                "reviewed_candidate_commit": commit,
+                "reviewed_snapshot_digest": digest,
+                "reviewed_file_sha256": hashes,
+                "verdict": "PASS",
+                "blocking_findings": [],
+                "repo_changed": False,
+            }
+            if any(evidence.get(key) != value for key, value in binding.items()):
+                self.error("S07_REVIEW_BINDING", f"targeted review is not bound and passing: {relative}")
+            if to_int(evidence.get("score"), f"{relative} score") < 90:
+                self.error("S07_REVIEW_SCORE", f"targeted review score is below 90: {relative}")
+            to_list(evidence.get("necessary_regression_findings"), f"{relative} necessary regression findings")
+            for key in (
+                "reviewer_identity",
+                "reviewer_session",
+                "review_run_id",
+                "score",
+                "verdict",
+                "blocking_findings",
+            ):
+                if ref.get(key) != evidence.get(key):
+                    self.error("S07_RESULT_REVIEW_REF", f"result reference differs from {relative}: {key}")
+            for key in identities:
+                identities[key].add(text(evidence, key, relative))
+        if any(len(values) != 2 for values in identities.values()):
+            self.error("S07_REVIEWER_COLLISION", "targeted reviewers must use different identities, sessions, and runs")
 
     def check_boundaries(self) -> None:
         identity = doc(self.app, "identity_policy", "application")
@@ -613,10 +733,19 @@ class PackageChecker:
             path = self.root / relative
             if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected_hash:
                 self.error("S07_HISTORICAL_REVIEW_CHANGED", f"historical review evidence changed: {relative}")
+        expected_review_files = set(PINNED_HISTORICAL_REVIEW_FILES)
+        if self.result.get("candidate_state") == SUCCESS_STATE:
+            expected_review_files.update(relative for relative, _scope in TARGETED_REVIEWS.values())
+        actual_review_files = {
+            path.relative_to(self.root).as_posix() for path in (self.root / "reviews").rglob("*") if path.is_file()
+        }
+        if actual_review_files != expected_review_files:
+            self.error("S07_REVIEW_FILE_SET", "review evidence files must be exactly the historical and current pair")
 
     def run(self, *, check_repository: bool) -> Summary:
         self.check_lightweight_shape()
         self.check_candidate_and_experience()
+        self.check_review_lifecycle()
         self.check_boundaries()
         self.check_mapping()
         self.check_journeys()
@@ -703,8 +832,13 @@ def selftest(flow: Doc, mapping: Doc, journeys: Doc, result: Doc, repo: Path, ro
             doc(case, "expected", "unconfirmed case")["prepare_placeholder_requested"] = True
     expect("UNCONFIRMED_PREPARE", flow, mapping, changed_journeys, result, "A11_DIRECT_ASSERTION")
     changed_result = copy.deepcopy(result)
-    changed_result["candidate_state"] = "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7"
-    expect("PREMATURE_SUCCESS", flow, mapping, journeys, changed_result, "S07_PREMATURE_SUCCESS")
+    if result.get("candidate_state") == FROZEN_CANDIDATE_STATE:
+        changed_result["candidate_state"] = SUCCESS_STATE
+        expect("PREMATURE_SUCCESS", flow, mapping, journeys, changed_result, "S07_REVIEW_STATE")
+    else:
+        targeted = doc(changed_result, "targeted_rereviews", "changed result")
+        targeted["reviews"] = items(targeted, "reviews", "changed targeted rereviews")[:1]
+        expect("MISSING_TARGETED_REVIEW", flow, mapping, journeys, changed_result, "S07_REVIEW_ROLES")
     return tuple(failures)
 
 

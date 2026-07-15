@@ -1,11 +1,23 @@
 {
-  "schema_version": "v1.1",
+  "schema_version": "v1.2",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
-  "revision": "r2",
-  "candidate_state": "PENDING_SHARED_CHECKER_MERGE_AND_FINAL_FREEZE",
+  "revision": "r3",
+  "candidate_state": "READY_FOR_TARGETED_INDEPENDENT_REREVIEWS",
   "success_terminal_when_targeted_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
   "baseline_commit": "95b8b1700b7e96b1d2383465713bef8c36e7f6cb",
   "candidate_before_r2": "143a6caa7ac1ed3571336c3950e249728cbc18f7",
+  "r3_master_sync": {
+    "pre_sync_commit": "d5339c70454164c07df95641bce412a88d099f73",
+    "merged_master_commit": "f40c902767a0b991169d604be6ff0ed556460cde",
+    "merge_commit": "c1a8b2b0849d11a3c6512dff8a3b246ca3974d81",
+    "merge_parents": [
+      "d5339c70454164c07df95641bce412a88d099f73",
+      "f40c902767a0b991169d604be6ff0ed556460cde"
+    ],
+    "r2_package_tree_before": "60e88e69d384449f97c490d1e598b35a7bd84ace",
+    "r2_package_tree_after": "60e88e69d384449f97c490d1e598b35a7bd84ace",
+    "r2_package_bytes_unchanged_by_sync": true
+  },
   "implementation_candidate_bound_by_historical_reviews": "a5ecdc4a8231c144f043074ff8d5b889d258b71d",
   "branch": "agent/diyu-dify-conversation-shell-001",
   "worktree": "/home/diyu/worktrees/diyu-dify-conversation-shell-001",
@@ -33,7 +45,7 @@
     "interaction_stages_are_human_readable_guidance_only": true
   },
   "local_evidence": {
-    "status": "PASS_R2_LOCAL_PACKAGE_CHECKS_PENDING_SHARED_CHECKER_MERGE_AND_FINAL_FREEZE",
+    "status": "PASS_R3_FINAL_IMPLEMENTATION_FREEZE_PREFLIGHT",
     "journey_case_count": 18,
     "transition_count_is_quality_metric": false,
     "user_visible_string_count": 82,
@@ -45,7 +57,18 @@
     "ruff": "PASS",
     "ruff_format": "PASS",
     "mypy_strict": "PASS",
-    "checker_line_count": 752
+    "checker_line_count": 886,
+    "gate1_ordinary_check": "PASS_EXIT_0",
+    "gate1_selftest": "PASS_EXIT_0",
+    "gate1_optimized_check": "REFUSED_EXIT_2",
+    "gate1_optimized_selftest": "REFUSED_EXIT_2",
+    "public_foundation_ordinary_check": "PASS_EXIT_0",
+    "public_foundation_selftest": "PASS_EXIT_0",
+    "public_foundation_optimized_check": "REFUSED_EXIT_2",
+    "public_foundation_optimized_selftest": "REFUSED_EXIT_2",
+    "json_parse": "PASS",
+    "diff_integrity": "PASS",
+    "sensitive_information_scan": "PASS"
   },
   "historical_independent_reviews": [
     {
@@ -76,7 +99,7 @@
     }
   ],
   "targeted_rereviews": {
-    "state": "NOT_RUN_UNTIL_SHARED_CHECKER_FIX_MERGED_AND_FINAL_CANDIDATE_FROZEN",
+    "state": "PENDING_TARGETED_INDEPENDENT_REREVIEWS",
     "required_same_final_candidate": true,
     "novice_experience_and_multi_candidate": {
       "minimum_score": 90,
@@ -85,8 +108,10 @@
     "lightweight_architecture_and_trust_boundary": {
       "minimum_score": 90,
       "scope": "generic workflow engine removal, trust boundaries, and necessary regression"
-    }
+    },
+    "reviews": []
   },
+  "frozen_candidate": null,
   "acceptance_review_request": {
     "PKG4-A01": "Verify exactly one version-neutral conversation candidate and one natural-chat entry.",
     "PKG4-A02": "Verify ordinary chat cannot create a plan, request preparation or authoring, or write brand facts.",
@@ -128,12 +153,13 @@
     "release_ready": false,
     "production_ready": false
   },
-  "shared_checker_conflict": {
+  "shared_checker_resolution": {
     "owner": "PACKAGE_2_V1",
     "error": "E_REVIEW_POST_CANDIDATE_SCOPE",
     "classification": "SHARED_CENTRAL_CHECK_SCOPE_CONFLICT_NOT_PACKAGE_4_BUSINESS_FAILURE",
     "package_4_may_modify_shared_checker_or_workflow": false,
-    "state": "PENDING_SHARED_FIX_MERGE_AND_SUCCESSFUL_MASTER_CHECKS"
+    "state": "RESOLVED_BY_MASTER_F40C902_AND_SYNCED",
+    "resolved_master_commit": "f40c902767a0b991169d604be6ff0ed556460cde"
   },
   "remote_checks_before_r2": {
     "run": "https://github.com/andyan77/diyu-agent/actions/runs/29406142828",
