@@ -731,9 +731,10 @@ def validate_runtime_import_boundary(errors: list[str]) -> None:
             errors.append(f"external runtime imports found in {relative}: {sorted(forbidden)}")
 
 
-def load_reviews(errors: list[str]) -> list[JsonObject]:
+def load_reviews(package_root: Path, errors: list[str]) -> list[JsonObject]:
     reviews: list[JsonObject] = []
-    for path in REVIEW_PATHS:
+    for canonical_path in REVIEW_PATHS:
+        path = package_root / canonical_path.relative_to(PACKAGE_ROOT)
         if not path.is_file():
             errors.append(f"review missing: {path.relative_to(PACKAGE_ROOT)}")
             continue
@@ -745,8 +746,8 @@ def load_reviews(errors: list[str]) -> list[JsonObject]:
     return reviews
 
 
-def validate_reviews(bundle: Bundle, errors: list[str]) -> None:
-    reviews = load_reviews(errors)
+def validate_reviews(bundle: Bundle, package_root: Path, errors: list[str]) -> None:
+    reviews = load_reviews(package_root, errors)
     if len(reviews) != 2:
         return
     snapshot = candidate_snapshot_digest()
@@ -875,7 +876,7 @@ def validate_package(
     if run_cases:
         run_fixture_cases(bundle, errors)
     if require_reviews:
-        validate_reviews(bundle, errors)
+        validate_reviews(bundle, package_root, errors)
     return errors
 
 
