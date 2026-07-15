@@ -1,13 +1,13 @@
 review:
   review_id: BRAND_EXPRESSION_CONSUMABILITY_REVIEW
-  status: PENDING_FIXED_CANDIDATE
-  reviewer_identity_id: PENDING-EXPRESSION-REVIEWER
-  session_id: PENDING-EXPRESSION-SESSION
-  run_record_id: PENDING-EXPRESSION-RUN
-  candidate_commit: 0000000000000000000000000000000000000000
+  status: COMPLETE
+  reviewer_identity_id: codex-independent-expression-reviewer-001
+  session_id: 019f653c-1e35-7730-b3d4-14528f905c6a
+  run_record_id: EXPRESSION-RERUN-20260715-002
+  candidate_commit: 627049c432d87c9cea96976458d3349aac46eb42
   scope: brand_expression_and_package_5_consumability
-  score: null
-  verdict: PENDING
+  score: 100
+  verdict: PASS
   hard_blockers: []
   acceptance_coverage:
   - PKG3-A01
@@ -22,4 +22,13 @@ review:
   - PKG3-A10
   - PKG3-A11
   - PKG3-A12
-  evidence: []
+  evidence:
+  - HEAD equals the candidate commit; the worktree was clean and all seven delta files remained within 13_brand_data/brand_data_import_001/**.
+  - Core source, locator, digest, deterministic materialization, expression, and write-scope validation completed with zero errors; 19 parameterized cases completed with zero failures.
+  - BD-NARR-01-017 and BD-NARR-03-003 are isolated with null source mappings, empty applicable mappings, no authorization, disclosure_scope NONE, and non-consumable/non-publishable flags.
+  - The READY-body scan found zero explicit unregistered-marker hits.
+  - Emitted precise fact kinds are the permitted subset SKU, SPECIFICATION, and STOCK; the unsupported-kind negative case passes.
+  - BD-FACT-006 preserves twelve affected samples and paused shipment state; BD-FACT-009 preserves the Wuhan out-of-stock statement; neither invents inventory quantity.
+  - All 11 accounts retain the public neutral profile, all six modes match the public contract, all three examples close to source ranges, and every expression authority and publishability flag remains false.
+  - All readiness flags remain false, all external-call counts remain zero, and the 300/120/86 protected assets remain unaffected.
+  findings: []

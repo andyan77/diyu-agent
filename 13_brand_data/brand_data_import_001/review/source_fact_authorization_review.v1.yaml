@@ -1,13 +1,13 @@
 review:
   review_id: SOURCE_FACT_AUTHORIZATION_REVIEW
-  status: PENDING_FIXED_CANDIDATE
-  reviewer_identity_id: PENDING-TRUST-REVIEWER
-  session_id: PENDING-TRUST-SESSION
-  run_record_id: PENDING-TRUST-RUN
-  candidate_commit: 0000000000000000000000000000000000000000
+  status: COMPLETE
+  reviewer_identity_id: codex-independent-source-fact-reviewer-001
+  session_id: 019f653b-f32b-7c23-bead-c22d5d6ec98d
+  run_record_id: TRUST-RERUN-20260715-002
+  candidate_commit: 627049c432d87c9cea96976458d3349aac46eb42
   scope: source_fact_identity_authorization_and_anti_false_green
-  score: null
-  verdict: PENDING
+  score: 100
+  verdict: PASS
   hard_blockers: []
   acceptance_coverage:
   - PKG3-A01
@@ -22,4 +22,13 @@ review:
   - PKG3-A10
   - PKG3-A11
   - PKG3-A12
-  evidence: []
+  evidence:
+  - HEAD equals the pinned candidate; the worktree was clean and the reviewed delta was confined to 13_brand_data/brand_data_import_001/**.
+  - BD-NARR-01-017 and BD-NARR-03-003 are HOLD_UNREGISTERED_SCOPE with empty registered mappings, no authorization, and no consumability or publishing authority.
+  - All 31 READY narratives contain zero explicit unregistered-scope marker hits.
+  - All precise fact kinds are within the public VERIFIED_PRECISE_FACT enum; the unsupported STATUS regression is rejected.
+  - BD-FACT-006 and BD-FACT-009 retain source-supported stock states and contain no invented quantity field.
+  - Core validators, file-scope validation, and all 19 compact cases passed; code and security guards passed.
+  - Both optimized-mode checker invocations refused execution with exit code 2.
+  - All readiness flags remain false, external-call counts remain zero, and the 300/120/86 assets are unaffected.
+  findings: []
