@@ -1,0 +1,47 @@
+independent_review:
+  schema_version: v1.0
+  task_id: DIYU_LIGHT_EXPRESSION_SERVICE_001
+  review_id: TRUST_FACT_SAFETY_REVIEW
+  reviewer_identity: codex-trust-fact-safety-7c4e1b9d
+  reviewer_session_id: 019f6510-cacf-76e2-bfdf-f7d01080f9fe
+  reviewer_run_id: trust-targeted-c4f32fb1-20260715-r1
+  review_scope: TARGETED_ORIGINAL_BLOCKERS_V1_ACCEPTANCE_AND_NECESSARY_REGRESSION
+  reviewed_candidate_commit: c4f32fb1e17dcd5264a2ea20bc881b402a3b6a04
+  reviewed_candidate_tree: 5d8243c3a87bedcfcfc7c5324b27987929f8f958
+  signed_at: '2026-07-15T11:02:23Z'
+  score: 97
+  verdict: PASS
+  hard_veto: false
+  blocking_findings: []
+  nonblocking_findings: []
+  verified_acceptance_ids: [PKG2-S01, PKG2-S02, PKG2-S03, PKG2-S04, PKG2-S05, PKG2-S06, PKG2-S07, PKG2-S08, PKG2-S09, PKG2-S10]
+  reviewed_artifacts:
+  - path: 12_expression_service/expression_runtime_adapter_001/README.md
+    sha256: 6968da173bf9173c9dba584840bef9f05b7c965111c0068a9abe30bf24fd4bb3
+  - path: 12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py
+    sha256: adb51e7e72eaa535069027d6b637af5c0ef72b9b08f67e5d0df377bc6b167f11
+  - path: 12_expression_service/expression_runtime_adapter_001/http_entrypoint.py
+    sha256: b360c4b1c3d4ae79576eba0292012126aa0576a0309c570b5fda6f2550690b08
+  - path: 12_expression_service/expression_runtime_adapter_001/light_expression_service.py
+    sha256: bb57ac6d356fd81b3f2da8e3e7596fed19f384fb95634270b8a23d84e59957f5
+  - path: 12_expression_service/expression_runtime_adapter_001/neutral_expression_profile.v1.yaml
+    sha256: 30d8ce76fa49ebfad79634cbaa19f69e8d8ad5bbc09c958403dcc8847d3025c6
+  - path: 12_expression_service/expression_runtime_adapter_001/service_manifest.v1.yaml
+    sha256: ca354c12a30990ac84e2267bc22b427450804c18ff44b6cb50a71a79ff56c172
+  - path: 12_expression_service/expression_runtime_adapter_001/test_light_expression_service.py
+    sha256: 0d06b815d72c39484be05060a402a0f2443855b57add368c28cdb84fe1be3e0c
+  reviewed_candidate_result:
+    path: 12_expression_service/expression_runtime_adapter_001/result/light_expression_service_result.v1.yaml
+    sha256: 6a53a2a71e15d248211d1adec072c2420cac62070d7b66c7b7f9e7402db14668
+  checks_run:
+  - focused service tests passed 46 of 46
+  - package checker and seven negative selftests passed
+  - fabricated evidence and grant-scope replay probes failed closed
+  - public foundation and current Gate1 normal checks passed
+  - optimized mode refused execution with exit 2
+  evidence:
+  - Requirements, fragments, and facts are bound to server-registered exact digests.
+  - Authorization purpose, disclosure scope, tenant, store, account, time, expiry, and revocation are enforced.
+  - Subject confirmation is scoped and cannot be replayed across account or tenant boundaries.
+  - All user-visible surfaces are recursively checked for internal identifiers and covered privacy data.
+  - Semantic fact review remains external and all readiness flags remain false.

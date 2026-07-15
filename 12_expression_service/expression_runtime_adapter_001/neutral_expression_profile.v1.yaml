@@ -1,0 +1,20 @@
+neutral_expression_profile:
+  schema_version: v1.0
+  task_id: DIYU_LIGHT_EXPRESSION_SERVICE_001
+  profile_ref: expression-profile://neutral-default/v1
+  profile_version: 1
+  resolution_mode: NEUTRAL_DEFAULT
+  tenant_specific: false
+  tone_tendencies: [natural, clear, restrained]
+  preferred_phrasing: []
+  prohibited_expression_categories:
+  - fabricated_fact
+  - unsupported_promise
+  - body_judgment
+  literal_prohibited_phrases: []
+  expression_intensity: MEDIUM
+  perspective: TASK_APPROPRIATE
+  approved_example_refs: []
+  may_grant_fact_authorization_or_scope: false
+  cross_tenant_borrowing_allowed: false
+  runtime_publishable: false
