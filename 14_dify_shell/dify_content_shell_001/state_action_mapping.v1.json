@@ -1,8 +1,10 @@
 {
-  "schema_version": "v1.0",
+  "schema_version": "v1.1",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
-  "mapping_kind": "THIN_REFERENCE_ONLY",
+  "revision": "r2-lightweight",
+  "mapping_kind": "THIN_ACTION_OWNERSHIP_REFERENCE_ONLY",
   "copies_public_models": false,
+  "is_flow_source_of_truth": false,
   "contract_ref": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
   "authority_sources": [
     {
@@ -26,79 +28,45 @@
       "may_unlock_confirmed_prepare_placeholder": false
     }
   ],
-  "state_mappings": [
+  "interaction_responsibilities": [
     {
-      "states": [
-        "chat",
-        "chat_model_placeholder"
-      ],
-      "public_action": "NORMAL_CHAT",
-      "owner": "DIFY",
+      "experience_area": "ORDINARY_CHAT",
+      "owner_reference": "DIFY_SHELL_WITH_UNBOUND_CHAT_PLACEHOLDER",
       "creates_light_content_plan": false,
       "writes_brand_fact": false,
       "external_call_implemented": false
     },
     {
-      "states": [
-        "inspiration",
-        "clarification"
-      ],
-      "public_action": "FIND_INSPIRATION_OR_CLARIFY",
-      "owner": "DIFY",
+      "experience_area": "INSPIRATION_CLARIFICATION_AND_SUMMARY",
+      "owner_reference": "DIFY_SHELL",
       "creates_light_content_plan": false,
       "writes_brand_fact": false,
       "external_call_implemented": false
     },
     {
-      "states": [
-        "requirement_summary",
-        "awaiting_confirmation"
-      ],
-      "public_action": "REQUIREMENT_SUMMARY_AND_CONFIRMATION_UI",
-      "owner": "DIFY",
+      "experience_area": "CONFIRMED_PREPARATION_PLACEHOLDER",
+      "owner_reference": "EXPRESSION_SERVICE_CONTRACT_PLACEHOLDER",
       "creates_light_content_plan": false,
       "writes_brand_fact": false,
       "external_call_implemented": false
     },
     {
-      "states": [
-        "prepare_placeholder"
-      ],
-      "public_action": "EXPRESSION_SERVICE_PREPARE_PLACEHOLDER",
-      "owner": "EXPRESSION_SERVICE",
+      "experience_area": "CANDIDATE_AUTHORING_AND_REVISION_PLACEHOLDER",
+      "owner_reference": "UNBOUND_MODEL_PLACEHOLDER",
       "creates_light_content_plan": false,
       "writes_brand_fact": false,
       "external_call_implemented": false
     },
     {
-      "states": [
-        "candidate_authoring_placeholder",
-        "revision_placeholder"
-      ],
-      "public_action": "MODEL_AUTHOR_OR_REVISE_PLACEHOLDER",
-      "owner": "DIFY_MODEL_NODE",
+      "experience_area": "CANDIDATE_DISPLAY_SELECTION_AND_MINIMAL_FEEDBACK",
+      "owner_reference": "DIFY_SHELL",
       "creates_light_content_plan": false,
       "writes_brand_fact": false,
       "external_call_implemented": false
     },
     {
-      "states": [
-        "candidate_display",
-        "candidate_selected",
-        "result_status"
-      ],
-      "public_action": "RESULT_DISPLAY_SELECTION_AND_MINIMAL_FEEDBACK",
-      "owner": "DIFY",
-      "creates_light_content_plan": false,
-      "writes_brand_fact": false,
-      "external_call_implemented": false
-    },
-    {
-      "states": [
-        "action_card"
-      ],
-      "public_action": "PLAIN_LANGUAGE_ACTION_CARD",
-      "owner": "DIFY",
+      "experience_area": "PLAIN_LANGUAGE_ACTION_CARD",
+      "owner_reference": "DIFY_SHELL",
       "creates_light_content_plan": false,
       "writes_brand_fact": false,
       "external_call_implemented": false
@@ -141,6 +109,8 @@
     "fact_truth_owned_here": false,
     "authorization_truth_owned_here": false,
     "light_content_plan_owned_here": false,
-    "internal_product_mapping_copied_here": false
+    "internal_product_mapping_copied_here": false,
+    "atomic_component_model_copied_here": false,
+    "relationship_or_path_model_copied_here": false
   }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic checker for the version-neutral Dify conversation shell."""
+"""Direct deterministic checks for the lightweight Dify conversation shell."""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ import json
 import re
 import subprocess
 import sys
-from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Final, Sequence, cast
@@ -21,52 +20,69 @@ ALLOWED_ROOT: Final = "14_dify_shell/dify_content_shell_001/"
 FLOW_FILE: Final = "conversation_flow.version_neutral.v1.json"
 MAPPING_FILE: Final = "state_action_mapping.v1.json"
 JOURNEYS_FILE: Final = "journeys.simulated.v1.json"
-ACCEPTANCE_IDS: Final = tuple(f"PKG4-A{number:02d}" for number in range(1, 13))
-SUMMARY_FIELDS: Final = (
-    "为哪个内容账号",
-    "讲什么",
-    "给谁看",
-    "发到哪里",
-    "现有真实材料",
-    "还缺什么",
-    "采用什么大方向",
+RESULT_FILE: Final = "result_and_review_request.v1.json"
+CORE_PACKAGE_FILES: Final = {FLOW_FILE, MAPPING_FILE, JOURNEYS_FILE, RESULT_FILE, "check_dify_content_shell.py"}
+ACCEPTANCE_IDS: Final = tuple(f"PKG4-A{number:02d}" for number in range(1, 13)) + tuple(
+    f"PKG4-S{number:02d}" for number in range(1, 9)
 )
+SUMMARY_FIELDS: Final = tuple("为哪个内容账号 讲什么 给谁看 发到哪里 现有真实材料 还缺什么 采用什么大方向".split())
 FEEDBACK_FIELDS: Final = ("selected_candidate_ref", "necessary_modification", "short_reason")
-READINESS_FLAGS: Final = (
-    "candidatepack_ready",
-    "KE_ready",
-    "RAG_ready",
-    "DIFY_ready",
-    "production_servable",
-    "generation_eligible",
-    "generation_allowed",
-    "generator_qualified",
-    "retrieval_ready",
-    "runtime_ready",
-    "release_ready",
-    "production_ready",
+READINESS_FLAGS: Final = tuple(
+    "candidatepack_ready KE_ready RAG_ready DIFY_ready production_servable generation_eligible generation_allowed "
+    "generator_qualified retrieval_ready runtime_ready release_ready production_ready".split()
 )
-EXPECTED_CASE_IDS: Final = {
-    "CHAT-TWO-TURNS",
-    "ENTRY-INSPIRATION",
-    "ENTRY-VAGUE",
-    "ENTRY-CLEAR",
-    "UNCONFIRMED-BLOCKS-PREPARE",
-    "EDIT-REQUIRES-RECONFIRM",
-    "CANCEL-AFTER-CONFIRM",
-    "SERVER-CONFIRMED-ACCOUNT",
-    "SELF-REPORTED-ACCOUNT-REJECTED",
-    "DIFY-USER-REJECTED",
-    "TWO-CANDIDATES-SELECT-REVISE-RETURN",
-    "THREE-CANDIDATES-SELECT-ACCEPT",
-    "CHANGE-REQUIREMENT-RECONFIRM",
-    "MISSING-FACT",
-    "MISSING-MATERIAL",
-    "MISSING-AUTHORIZATION",
-    "OUT-OF-SCOPE",
-    "DEGRADE-SAFELY",
-    "BLOCK-UNSAFE-REQUEST",
-}
+EXPECTED_STAGE_IDS: Final = tuple(
+    "CHAT INSPIRATION_OR_CLARIFICATION REQUIREMENT_SUMMARY_AND_CONFIRMATION CONTENT_PREPARATION_PLACEHOLDER "
+    "CANDIDATES_AND_LOCAL_REVISION ACTION_CARD".split()
+)
+EXPECTED_RESPONSIBILITIES: Final = frozenset(
+    "ORDINARY_CHAT INSPIRATION_CLARIFICATION_AND_SUMMARY CONFIRMED_PREPARATION_PLACEHOLDER "
+    "CANDIDATE_AUTHORING_AND_REVISION_PLACEHOLDER CANDIDATE_DISPLAY_SELECTION_AND_MINIMAL_FEEDBACK "
+    "PLAIN_LANGUAGE_ACTION_CARD".split()
+)
+EXPECTED_CASE_IDS: Final = frozenset(
+    "CHAT-TWO-TURNS ENTRY-INSPIRATION ENTRY-VAGUE ENTRY-CLEAR UNCONFIRMED-BLOCKS-PREPARE "
+    "SERVER-CONFIRMED-ACCOUNT EDIT-REQUIRES-RECONFIRM CANCEL-RETURNS-TO-CHAT "
+    "UNTRUSTED-IDENTITY-SOURCES-REJECTED TWO-CANDIDATES-SELECT-REVISE-RETURN "
+    "THREE-CANDIDATES-SELECT-ACCEPT CHANGE-REQUIREMENT-RECONFIRM MISSING-FACT MISSING-MATERIAL "
+    "MISSING-AUTHORIZATION OUT-OF-SCOPE DEGRADE-SAFELY BLOCK-UNSAFE-REQUEST".split()
+)
+DIRECT_CASE_ASSERTIONS: Final[tuple[tuple[str, str, str, object], ...]] = (
+    ("CHAT-TWO-TURNS", "input", "turn_count", 2),
+    ("CHAT-TWO-TURNS", "expected", "prepare_placeholder_requested", False),
+    ("CHAT-TWO-TURNS", "expected", "author_placeholder_requested", False),
+    ("ENTRY-INSPIRATION", "expected", "direction_count", 3),
+    ("ENTRY-CLEAR", "expected", "experience", "REQUIREMENT_SUMMARY"),
+    ("ENTRY-CLEAR", "expected", "prepare_placeholder_requested", False),
+    ("UNCONFIRMED-BLOCKS-PREPARE", "input", "requirement_confirmation", "DRAFT"),
+    ("UNCONFIRMED-BLOCKS-PREPARE", "input", "scope_authority", "SERVER_CONFIRMED"),
+    ("UNCONFIRMED-BLOCKS-PREPARE", "expected", "prepare_placeholder_requested", False),
+    ("UNCONFIRMED-BLOCKS-PREPARE", "expected", "confirmation_required", True),
+    ("SERVER-CONFIRMED-ACCOUNT", "input", "requirement_confirmation", "CONFIRMED"),
+    ("SERVER-CONFIRMED-ACCOUNT", "input", "scope_authority", "SERVER_CONFIRMED"),
+    ("SERVER-CONFIRMED-ACCOUNT", "expected", "prepare_placeholder_requested", True),
+    ("SERVER-CONFIRMED-ACCOUNT", "expected", "external_service_called", False),
+    ("EDIT-REQUIRES-RECONFIRM", "expected", "requirement_confirmation", "DRAFT"),
+    ("EDIT-REQUIRES-RECONFIRM", "expected", "selected_candidate_ref", "UNBOUND"),
+    ("EDIT-REQUIRES-RECONFIRM", "expected", "prepare_placeholder_requested", False),
+    ("CANCEL-RETURNS-TO-CHAT", "expected", "mode", "CHAT"),
+    ("CANCEL-RETURNS-TO-CHAT", "expected", "returns_to_chat", True),
+    ("UNTRUSTED-IDENTITY-SOURCES-REJECTED", "expected", "prepare_placeholder_requested", False),
+    ("UNTRUSTED-IDENTITY-SOURCES-REJECTED", "expected", "action_card", "REQUEST_AUTHORIZATION"),
+    ("TWO-CANDIDATES-SELECT-REVISE-RETURN", "input", "candidate_set_ref", "two_candidates"),
+    ("TWO-CANDIDATES-SELECT-REVISE-RETURN", "expected", "candidate_count", 2),
+    ("TWO-CANDIDATES-SELECT-REVISE-RETURN", "expected", "selection_is_displayed_candidate", True),
+    ("TWO-CANDIDATES-SELECT-REVISE-RETURN", "expected", "local_revision_bound_to_selection", True),
+    ("TWO-CANDIDATES-SELECT-REVISE-RETURN", "expected", "local_revision_bound_to_confirmed_requirement", True),
+    ("THREE-CANDIDATES-SELECT-ACCEPT", "input", "candidate_set_ref", "three_candidates"),
+    ("THREE-CANDIDATES-SELECT-ACCEPT", "expected", "candidate_count", 3),
+    ("THREE-CANDIDATES-SELECT-ACCEPT", "expected", "selection_is_displayed_candidate", True),
+    ("THREE-CANDIDATES-SELECT-ACCEPT", "expected", "publish_allowed", False),
+    ("CHANGE-REQUIREMENT-RECONFIRM", "expected", "requirement_confirmation", "DRAFT"),
+    ("CHANGE-REQUIREMENT-RECONFIRM", "expected", "selected_candidate_ref", "UNBOUND"),
+    ("CHANGE-REQUIREMENT-RECONFIRM", "expected", "prepare_placeholder_requested", False),
+)
+FORBIDDEN_ENGINE_KEYS: Final = frozenset("states routes transitions from event to requires effects guards".split())
 VISIBLE_LEAK_PATTERNS: Final = (
     re.compile(r"\bCP[0-9]{2}\b"),
     re.compile(r"\b(?:BNO|BRV|VGA|BCL|FC)-[0-9]{2}\b"),
@@ -90,64 +106,51 @@ PINNED_CORE_FILES: Final = {
         "b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl"
     ): "de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601",
 }
-
-
-class DataError(ValueError):
-    """Raised when a package document has an unsafe or unexpected shape."""
+PINNED_HISTORICAL_REVIEW_FILES: Final = {
+    "reviews/novice_experience/review-output-2026-07-15-025016.md": (
+        "69c2e45ece23d21e83777dc0c7f99c34e378d21741dae5b582a6c2399b0e06d4"
+    ),
+    "reviews/architecture_trust/review-output-2026-07-15-025016.md": (
+        "a55b0ebfd7a9bb75efe2011b89166d7efab8c52039698d91eb0dc1dca889ba71"
+    ),
+    "reviews/findings-ledger.json": "6700586afd47055864c72197eac26d28013ba5405cdee720f94590b3290d0747",
+}
 
 
 @dataclass(frozen=True)
 class Summary:
-    """Stable package validation result."""
-
     errors: tuple[str, ...]
-    journeys: int
-    transitions: int
+    journey_cases: int
     visible_strings: int
-
-
-@dataclass
-class Runtime:
-    """Only the three allowed session markers plus journey-local observations."""
-
-    state: str
-    markers: dict[str, str]
-    selected_ref: str | None = None
-    active_refs: frozenset[str] = frozenset()
-    candidate_count: int = 0
-    prepare_requested: bool = False
-    author_requested: bool = False
-    feedback_recorded: bool = False
-    external_calls: int = 0
 
 
 def to_doc(value: object, label: str) -> Doc:
     if not isinstance(value, dict):
-        raise DataError(f"{label} must be an object")
+        raise ValueError(f"{label} must be an object")
     return cast(Doc, value)
 
 
 def to_list(value: object, label: str) -> list[object]:
     if not isinstance(value, list):
-        raise DataError(f"{label} must be a list")
+        raise ValueError(f"{label} must be a list")
     return cast(list[object], value)
 
 
 def to_str(value: object, label: str) -> str:
     if not isinstance(value, str):
-        raise DataError(f"{label} must be a string")
+        raise ValueError(f"{label} must be a string")
     return value
 
 
 def to_bool(value: object, label: str) -> bool:
     if not isinstance(value, bool):
-        raise DataError(f"{label} must be a boolean")
+        raise ValueError(f"{label} must be a boolean")
     return value
 
 
 def to_int(value: object, label: str) -> int:
     if isinstance(value, bool) or not isinstance(value, int):
-        raise DataError(f"{label} must be an integer")
+        raise ValueError(f"{label} must be an integer")
     return value
 
 
@@ -172,7 +175,7 @@ def load(path: Path) -> Doc:
         with path.open(encoding="utf-8") as handle:
             value: object = json.load(handle)
     except (OSError, json.JSONDecodeError) as exc:
-        raise DataError(f"cannot load {path}: {exc}") from exc
+        raise ValueError(f"cannot load {path}: {exc}") from exc
     return to_doc(value, str(path))
 
 
@@ -189,30 +192,82 @@ def visible_strings(value: object, visible: bool = False) -> list[str]:
     return found
 
 
+def structural_keys(value: object) -> set[str]:
+    found: set[str] = set()
+    if isinstance(value, dict):
+        for key, child in cast(Doc, value).items():
+            found.add(key)
+            found.update(structural_keys(child))
+    elif isinstance(value, list):
+        for child in cast(list[object], value):
+            found.update(structural_keys(child))
+    return found
+
+
 def git(repo: Path, arguments: Sequence[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(["git", *arguments], cwd=repo, check=False, capture_output=True, text=True, encoding="utf-8")
 
 
 class PackageChecker:
-    """Package-specific checks; this is not a general workflow engine."""
-
-    def __init__(self, flow: Doc, mapping: Doc, journeys: Doc, repo: Path, root: Path) -> None:
+    def __init__(self, flow: Doc, mapping: Doc, journeys: Doc, result: Doc, repo: Path, root: Path) -> None:
         self.flow = flow
         self.mapping = mapping
-        self.journeys_doc = journeys
+        self.journeys = journeys
+        self.result = result
         self.repo = repo
         self.root = root
         self.app = doc(flow, "application", "flow")
         self.errors: list[str] = []
-        self.routes: dict[tuple[str, str], Doc] = {}
-        self.state_ids: set[str] = set()
-        self.candidate_sets: dict[str, frozenset[str]] = {}
-        self.journey_count = 0
+        self.cases: dict[str, Doc] = {}
+        self.candidate_refs: dict[str, frozenset[str]] = {}
 
     def error(self, code: str, message: str) -> None:
         self.errors.append(f"{code}: {message}")
 
-    def check_candidate_ui(self) -> None:
+    def expect(self, case_id: str, section: Doc, key: str, expected: object, code: str) -> None:
+        if section.get(key) != expected:
+            self.error(code, f"{case_id} must declare {key}={expected!r}")
+
+    def case(self, case_id: str) -> tuple[Doc, Doc]:
+        case = self.cases.get(case_id)
+        if case is None:
+            raise ValueError(f"missing journey case {case_id}")
+        return doc(case, "simulated_inputs", case_id), doc(case, "expected", case_id)
+
+    def check_lightweight_shape(self) -> None:
+        forbidden = set()
+        for candidate in (self.flow, self.mapping, self.journeys):
+            forbidden.update(structural_keys(candidate) & FORBIDDEN_ENGINE_KEYS)
+        if forbidden:
+            self.error("S01_FORBIDDEN_RUNTIME_MODEL", f"generic workflow keys remain: {sorted(forbidden)}")
+
+        constraints = doc(self.app, "lightweight_constraints", "application")
+        for key in (
+            "generic_route_language_implemented",
+            "graph_traversal_implemented",
+            "guard_evaluator_implemented",
+            "effect_interpreter_implemented",
+            "state_transition_runtime_implemented",
+        ):
+            if flag(constraints, key, "lightweight constraints"):
+                self.error("S01_RUNTIME_ENGINE_PRESENT", f"{key} must remain false")
+        if not flag(constraints, "interaction_stages_are_human_readable_guidance_only", "lightweight constraints"):
+            self.error("S01_STAGE_SEMANTICS", "interaction stages must be guidance only")
+
+        stage_ids: list[str] = []
+        for raw_stage in items(self.app, "interaction_stages", "application"):
+            stage = to_doc(raw_stage, "interaction stage")
+            stage_ids.append(text(stage, "stage_id", "interaction stage"))
+            if not flag(stage, "allows_return_to_chat", "interaction stage"):
+                self.error("A03_RETURN_TO_CHAT", "every human-readable stage must allow return to chat")
+            if flag(stage, "creates_plan", "interaction stage"):
+                self.error("A06_PLAN_OWNERSHIP", "interaction guidance cannot create a plan")
+            if flag(stage, "writes_brand_fact", "interaction stage"):
+                self.error("A02_FACT_WRITE", "interaction guidance cannot write brand facts")
+        if tuple(stage_ids) != EXPECTED_STAGE_IDS:
+            self.error("S01_STAGE_SET", "only the six allowed human-readable stages may remain")
+
+    def check_candidate_and_experience(self) -> None:
         candidate = doc(self.flow, "candidate", "flow")
         expected_values: tuple[tuple[str, object, str], ...] = (
             ("kind", "VERSION_NEUTRAL_FLOW_CANDIDATE", "A01_CANDIDATE_KIND"),
@@ -220,51 +275,81 @@ class PackageChecker:
             ("native_dify_export", False, "A12_NATIVE_EXPORT"),
             ("importable_claimed", False, "A12_IMPORTABLE_CLAIM"),
             ("application_count", 1, "A01_APPLICATION_COUNT"),
+            ("current_stage", "PENDING_SHARED_CHECKER_MERGE_AND_FINAL_FREEZE", "S07_CANDIDATE_STAGE"),
         )
         for key, expected, code in expected_values:
             if candidate.get(key) != expected:
                 self.error(code, f"candidate {key} must be {expected!r}")
+        if self.result.get("candidate_state") != "PENDING_SHARED_CHECKER_MERGE_AND_FINAL_FREEZE":
+            self.error("S07_PREMATURE_SUCCESS", "r2 candidate must wait for the shared fix and final freeze")
 
+        entry = doc(self.app, "entry_experience", "application")
+        if entry.get("kind") != "NATURAL_CHAT" or flag(entry, "parameter_form_required", "entry experience"):
+            self.error("A03_NATURAL_ENTRY", "entry must be natural chat without a parameter form")
         intent = doc(self.app, "intent_resolution", "application")
         for key in (
             "natural_language_parser_implemented",
             "keyword_classifier_implemented",
             "regex_intent_engine_implemented",
         ):
-            if flag(intent, key, "intent_resolution"):
+            if flag(intent, key, "intent resolution"):
                 self.error("A03_FORBIDDEN_INTENT_ENGINE", f"{key} must remain false")
         if intent.get("local_journeys") != "EXPLICIT_SIMULATED_INTENT_RESULT_INJECTION":
-            self.error("A03_SIMULATED_INTENT", "journeys must inject explicit simulated intent results")
+            self.error("A03_SIMULATED_INTENT", "local journeys must inject explicit simulated results")
 
-        marker_names = set(doc(self.app, "minimal_session_markers", "application"))
-        if marker_names != {"mode", "requirement_confirmation", "selected_candidate_ref"}:
-            self.error("A10_SESSION_MARKERS", "only mode, confirmation, and selected reference may persist")
+        if set(doc(self.app, "minimal_session_markers", "application")) != {
+            "mode",
+            "requirement_confirmation",
+            "selected_candidate_ref",
+        }:
+            self.error("A10_SESSION_MARKERS", "only the three minimal session markers may remain")
         experience = doc(self.app, "user_experience", "application")
-        if not 2 <= len(items(experience, "user_visible_inspiration_directions", "user_experience")) <= 3:
+        direction_count = len(items(experience, "user_visible_inspiration_directions", "user experience"))
+        if not 2 <= direction_count <= 3:
             self.error("A03_DIRECTION_COUNT", "inspiration must offer two or three directions")
-        clarification = doc(experience, "clarification_policy", "user_experience")
+        clarification = doc(experience, "clarification_policy", "user experience")
         minimum = to_int(clarification.get("questions_per_turn_minimum"), "question minimum")
         maximum = to_int(clarification.get("questions_per_turn_maximum"), "question maximum")
         if minimum < 1 or maximum > 3 or minimum > maximum:
             self.error("A03_QUESTION_COUNT", "clarification must ask one to three questions")
-        if flag(clarification, "parameters_are_entry_requirement", "clarification"):
+        if flag(clarification, "parameters_are_entry_requirement", "clarification policy"):
             self.error("A03_PARAMETER_GATE", "parameters cannot gate content creation")
-        summary_fields = tuple(
+        fields = tuple(
             to_str(value, "summary field")
-            for value in items(experience, "user_visible_requirement_summary_fields", "user_experience")
+            for value in items(experience, "user_visible_requirement_summary_fields", "user experience")
         )
-        if summary_fields != SUMMARY_FIELDS:
+        if fields != SUMMARY_FIELDS:
             self.error("A03_SUMMARY_FIELDS", "plain-language summary fields are incomplete")
-        if len(items(experience, "user_visible_topic_categories", "user_experience")) != 8:
-            self.error("A09_TOPIC_COUNT", "the user surface must expose exactly eight topic categories")
+        if len(items(experience, "user_visible_topic_categories", "user experience")) != 8:
+            self.error("A09_TOPIC_COUNT", "the user surface must expose eight public categories")
+
+        confirmation = doc(self.app, "confirmation_policy", "application")
+        if confirmation.get("prepare_placeholder_requires_requirement_confirmation") != "CONFIRMED":
+            self.error("A04_CONFIRMATION_BOUNDARY", "preparation requires confirmed requirements")
+        if confirmation.get("prepare_placeholder_requires_scope_authority") != "SERVER_CONFIRMED":
+            self.error("A04_SCOPE_BOUNDARY", "preparation requires server-confirmed scope")
+        for key in ("requirement_edit_invalidates_confirmation", "requirement_edit_clears_selected_candidate"):
+            if not flag(confirmation, key, "confirmation policy"):
+                self.error("A04_RECONFIRMATION", f"{key} must remain true")
+        if flag(confirmation, "untrusted_sources_may_unlock_prepare", "confirmation policy"):
+            self.error("A05_UNTRUSTED_UNLOCK", "untrusted sources cannot unlock preparation")
 
         policy = doc(self.app, "candidate_policy", "application")
         if policy.get("minimum_count") != 2 or policy.get("maximum_count") != 3:
-            self.error("A07_CANDIDATE_RANGE", "candidate range must be two to three")
-        if flag(policy, "machine_claims_semantic_difference", "candidate_policy"):
-            self.error("A07_FALSE_DIFFERENCE", "machine cannot claim semantic difference")
-        if flag(policy, "near_synonym_rewording_accepted_as_difference", "candidate_policy"):
-            self.error("A07_NEAR_SYNONYM", "near-synonym rewrites cannot count as difference")
+            self.error("A07_CANDIDATE_RANGE", "candidate range must remain two to three")
+        for key in (
+            "selection_must_reference_displayed_candidate",
+            "local_revision_requires_confirmed_requirement",
+            "local_revision_requires_selected_candidate",
+            "requirement_change_requires_reconfirmation",
+            "human_experience_review_required",
+        ):
+            if not flag(policy, key, "candidate policy"):
+                self.error("A07_CANDIDATE_BINDING", f"{key} must remain true")
+        for key in ("machine_claims_semantic_difference", "near_synonym_rewording_accepted_as_difference"):
+            if flag(policy, key, "candidate policy"):
+                self.error("A07_FALSE_DIFFERENCE", f"{key} must remain false")
+
         feedback = doc(self.app, "feedback_policy", "application")
         stored = tuple(to_str(value, "feedback field") for value in items(feedback, "stored_fields", "feedback"))
         if stored != FEEDBACK_FIELDS:
@@ -278,10 +363,17 @@ class PackageChecker:
         for key in ("dify_user_field", "self_reported_company_store_or_account", "conversation_variables"):
             if identity.get(key) != "UNTRUSTED_HINT":
                 self.error("A05_UNTRUSTED_IDENTITY", f"{key} must remain an untrusted hint")
-        if flag(identity, "trusted_scope_model_copied", "identity_policy"):
+        if identity.get("server_confirmed_scope") != "TRUSTED_REFERENCE":
+            self.error("A05_SERVER_AUTHORITY", "server-confirmed scope must remain a trusted reference")
+        if flag(identity, "trusted_scope_model_copied", "identity policy"):
             self.error("A06_MODEL_COPY", "trusted scope model cannot be copied")
-        if flag(identity, "hint_may_grant_identity_scope_or_permission", "identity_policy"):
+        if flag(identity, "hint_may_grant_identity_scope_or_permission", "identity policy"):
             self.error("A05_HINT_GRANT", "a hint cannot grant identity, scope, or permission")
+
+        for key, value in doc(self.app, "ownership_boundaries", "application").items():
+            if to_bool(value, f"ownership boundary {key}"):
+                code = "A02_FACT_WRITE" if key == "writes_brand_fact" else "A06_OWNERSHIP_DRIFT"
+                self.error(code, f"{key} must remain false")
         bindings = doc(self.app, "external_bindings", "application")
         for key, value in bindings.items():
             if key == "external_call_count":
@@ -296,113 +388,30 @@ class PackageChecker:
             if flag(readiness, key, "readiness"):
                 self.error("A12_FALSE_READY", f"{key} must remain false")
 
-    def build_routes(self) -> None:
-        adjacency: dict[str, set[str]] = {}
-        creation_states: set[str] = set()
-        raw_states = items(self.app, "states", "application")
-        for index, raw_state in enumerate(raw_states):
-            state = to_doc(raw_state, f"states[{index}]")
-            state_id = text(state, "id", "state")
-            if state_id in self.state_ids:
-                self.error("A11_DUPLICATE_STATE", f"duplicate state {state_id}")
-            self.state_ids.add(state_id)
-            adjacency[state_id] = set()
-            if state.get("mode") == "CREATION":
-                creation_states.add(state_id)
-            if flag(state, "creates_plan", "state"):
-                self.error("A06_PLAN_OWNERSHIP", f"state {state_id} cannot create a plan")
-            if flag(state, "writes_brand_fact", "state"):
-                self.error("A02_FACT_WRITE", f"state {state_id} cannot write brand facts")
-        exit_states: set[str] = set()
-        for index, raw_route in enumerate(items(self.app, "routes", "application")):
-            route = to_doc(raw_route, f"routes[{index}]")
-            source, event, target = (text(route, key, "route") for key in ("from", "event", "to"))
-            key = (source, event)
-            if key in self.routes:
-                self.error("A11_AMBIGUOUS_ROUTE", f"duplicate route {source}/{event}")
-            self.routes[key] = route
-            if source not in adjacency or target not in adjacency:
-                self.error("A11_UNKNOWN_STATE", f"route {source}/{event} references an unknown state")
-            else:
-                adjacency[source].add(target)
-            if event == "EXIT_CREATION" and target == "chat":
-                exit_states.add(source)
-        missing_exits = creation_states - exit_states
-        if missing_exits:
-            self.error("A03_EXIT_ROUTE", f"states missing chat exit: {', '.join(sorted(missing_exits))}")
-        entry = text(self.app, "entry_state", "application")
-        reached: set[str] = set()
-        queue: deque[str] = deque([entry])
-        while queue:
-            current = queue.popleft()
-            if current not in reached:
-                reached.add(current)
-                queue.extend(adjacency.get(current, set()) - reached)
-        if self.state_ids - reached:
-            self.error("A11_UNREACHABLE_STATE", f"unreachable states: {sorted(self.state_ids - reached)}")
-
-    def require_guard(self, source: str, event: str, required: dict[str, str], code: str) -> None:
-        route = self.routes.get((source, event))
-        if route is None:
-            self.error(code, f"missing route {source}/{event}")
-            return
-        guards = doc(route, "requires", "route")
-        if any(guards.get(key) != value for key, value in required.items()):
-            self.error(code, f"route {source}/{event} is missing required guards")
-
-    def check_route_guards(self) -> None:
-        self.require_guard(
-            "awaiting_confirmation",
-            "CONFIRM_REQUIREMENT",
-            {"requirement_confirmation": "DRAFT", "scope_authority": "SERVER_CONFIRMED"},
-            "A04_CONFIRM_GUARD",
-        )
-        confirm = self.routes.get(("awaiting_confirmation", "CONFIRM_REQUIREMENT"))
-        if confirm is not None:
-            markers = doc(doc(confirm, "effects", "confirm route"), "set_markers", "confirm effects")
-            if markers.get("requirement_confirmation") != "CONFIRMED":
-                self.error("A04_CONFIRM_EFFECT", "confirmation must set the confirmed marker")
-        self.require_guard(
-            "prepare_placeholder",
-            "PREPARE_READY",
-            {"requirement_confirmation": "CONFIRMED", "scope_authority": "SERVER_CONFIRMED"},
-            "A04_PREPARE_GUARD",
-        )
-        self.require_guard(
-            "candidate_selected",
-            "REVISE_SELECTED",
-            {"requirement_confirmation": "CONFIRMED", "selected_candidate_ref": "BOUND"},
-            "A07_REVISION_BINDING",
-        )
-        for source in ("candidate_display", "candidate_selected", "result_status"):
-            route = self.routes.get((source, "CHANGE_REQUIREMENT"))
-            if route is None:
-                self.error("A04_RECONFIRM_ROUTE", f"{source} cannot return to requirement editing")
-                continue
-            markers = doc(doc(route, "effects", "change route"), "set_markers", "change effects")
-            if markers.get("requirement_confirmation") != "DRAFT":
-                self.error("A04_RECONFIRM_RESET", f"{source} does not reset confirmation")
-            if markers.get("selected_candidate_ref") != "UNBOUND":
-                self.error("A07_SELECTION_RESET", f"{source} does not clear candidate selection")
-
     def check_mapping(self) -> None:
-        if self.mapping.get("mapping_kind") != "THIN_REFERENCE_ONLY" or flag(
-            self.mapping, "copies_public_models", "mapping"
+        if self.mapping.get("mapping_kind") != "THIN_ACTION_OWNERSHIP_REFERENCE_ONLY":
+            self.error("A06_MAPPING_KIND", "mapping must remain a thin action-ownership reference")
+        if flag(self.mapping, "copies_public_models", "mapping") or flag(
+            self.mapping, "is_flow_source_of_truth", "mapping"
         ):
-            self.error("A06_MODEL_COPY", "mapping must be a thin reference without copied public models")
-        mapped: list[str] = []
-        for index, raw in enumerate(items(self.mapping, "state_mappings", "mapping")):
-            mapping = to_doc(raw, f"state_mappings[{index}]")
-            mapped.extend(to_str(value, "mapped state") for value in items(mapping, "states", "mapping"))
+            self.error("A06_MODEL_COPY", "mapping cannot copy public models or become a flow source")
+        if "state_mappings" in self.mapping:
+            self.error("S01_STATE_MAPPING", "per-state mapping must not return")
+
+        areas: list[str] = []
+        for raw in items(self.mapping, "interaction_responsibilities", "mapping"):
+            responsibility = to_doc(raw, "interaction responsibility")
+            areas.append(text(responsibility, "experience_area", "interaction responsibility"))
             for key, code in (
                 ("creates_light_content_plan", "A06_PLAN_OWNERSHIP"),
                 ("writes_brand_fact", "A02_FACT_WRITE"),
                 ("external_call_implemented", "A12_EXTERNAL_CALL"),
             ):
-                if flag(mapping, key, "state mapping"):
-                    self.error(code, f"state mapping {key} must remain false")
-        if len(mapped) != len(set(mapped)) or set(mapped) != self.state_ids:
-            self.error("A06_STATE_MAPPING", "each state needs exactly one thin ownership mapping")
+                if flag(responsibility, key, "interaction responsibility"):
+                    self.error(code, f"interaction responsibility {key} must remain false")
+        if len(areas) != len(set(areas)) or set(areas) != EXPECTED_RESPONSIBILITIES:
+            self.error("A06_ACTION_OWNERSHIP", "thin action responsibilities are incomplete or duplicated")
+
         authorities: dict[str, Doc] = {}
         for raw in items(self.mapping, "authority_sources", "mapping"):
             authority = to_doc(raw, "authority source")
@@ -412,10 +421,13 @@ class PackageChecker:
             if mapped_authority is None or mapped_authority.get("classification") != "UNTRUSTED_HINT":
                 self.error("A05_AUTHORITY_MAPPING", f"{source} must remain an untrusted hint")
             elif mapped_authority.get("may_unlock_confirmed_prepare_placeholder") is not False:
-                self.error("A05_AUTHORITY_UNLOCK", f"{source} cannot unlock prepare")
+                self.error("A05_AUTHORITY_UNLOCK", f"{source} cannot unlock preparation")
         server = authorities.get("SERVER_CONFIRMED_SCOPE")
         if server is None or server.get("classification") != "TRUSTED_REFERENCE":
             self.error("A05_SERVER_AUTHORITY", "server-confirmed scope mapping is missing")
+        elif server.get("may_unlock_confirmed_prepare_placeholder") is not True:
+            self.error("A05_SERVER_AUTHORITY", "server-confirmed scope must be the only trusted unlock reference")
+
         for key, value in doc(self.mapping, "non_ownership_assertions", "mapping").items():
             if to_bool(value, f"non-ownership {key}"):
                 self.error("A06_OWNERSHIP_DRIFT", f"{key} must remain false")
@@ -429,107 +441,99 @@ class PackageChecker:
             self.error("A08_ACTION_CARDS", "action card set is incomplete")
 
     def load_candidate_sets(self) -> None:
-        for name, raw in doc(self.journeys_doc, "candidate_sets", "journeys").items():
-            candidate_set = to_doc(raw, f"candidate set {name}")
-            candidates = items(candidate_set, "candidates", f"candidate set {name}")
-            if not 2 <= len(candidates) <= 3:
-                self.error("A07_CANDIDATE_COUNT", f"{name} must contain two or three candidates")
+        sets = doc(self.journeys, "candidate_sets", "journeys")
+        if set(sets) != {"two_candidates", "three_candidates"}:
+            self.error("A07_CANDIDATE_SETS", "exactly the two- and three-candidate fixtures are required")
+        for set_name, raw_set in sets.items():
+            candidate_set = to_doc(raw_set, f"candidate set {set_name}")
+            candidates = items(candidate_set, "candidates", f"candidate set {set_name}")
+            expected_count = 2 if set_name == "two_candidates" else 3
+            if len(candidates) != expected_count:
+                self.error("A07_CANDIDATE_COUNT", f"{set_name} must contain {expected_count} candidates")
             if candidate_set.get("machine_difference_score") is not None:
-                self.error("A07_FALSE_SCORE", f"{name} cannot contain a machine difference score")
+                self.error("A07_FALSE_SCORE", f"{set_name} cannot contain a machine difference score")
             if candidate_set.get("human_difference_review_required") is not True:
-                self.error("A07_HUMAN_REVIEW", f"{name} must require human experience review")
+                self.error("A07_HUMAN_REVIEW", f"{set_name} must require human experience review")
             refs: list[str] = []
             for raw_candidate in candidates:
-                candidate = to_doc(raw_candidate, f"candidate in {name}")
+                candidate = to_doc(raw_candidate, f"candidate in {set_name}")
                 refs.append(text(candidate, "candidate_ref", "candidate"))
                 if not flag(candidate, "simulation_only", "candidate"):
-                    self.error("A11_SIMULATION_LABEL", f"{name} candidate must be simulation-only")
+                    self.error("A11_SIMULATION_LABEL", f"{set_name} candidate must be simulation-only")
                 if flag(candidate, "publish_allowed", "candidate"):
-                    self.error("A08_PUBLISHABLE_CANDIDATE", f"{name} candidate cannot be publishable")
+                    self.error("A08_PUBLISHABLE_CANDIDATE", f"{set_name} candidate cannot be publishable")
             if len(refs) != len(set(refs)):
-                self.error("A07_CANDIDATE_REFS", f"{name} candidate references must be unique")
-            self.candidate_sets[name] = frozenset(refs)
+                self.error("A07_CANDIDATE_REFS", f"{set_name} candidate references must be unique")
+            self.candidate_refs[set_name] = frozenset(refs)
 
-    @staticmethod
-    def guards_pass(route: Doc, markers: dict[str, str]) -> bool:
-        return all(markers.get(key) == to_str(value, f"guard {key}") for key, value in doc(route, "requires").items())
+    def load_cases(self) -> None:
+        for raw_case in items(self.journeys, "journey_cases", "journeys"):
+            case = to_doc(raw_case, "journey case")
+            case_id = text(case, "case_id", "journey case")
+            if case_id in self.cases:
+                self.error("A11_DUPLICATE_CASE", f"duplicate case {case_id}")
+            self.cases[case_id] = case
+            text(case, "user_visible_case_label", case_id)
+            doc(case, "simulated_inputs", case_id)
+            doc(case, "expected", case_id)
+        if set(self.cases) != EXPECTED_CASE_IDS:
+            self.error("A11_CASE_COVERAGE", f"journey cases differ: {sorted(set(self.cases) ^ EXPECTED_CASE_IDS)}")
 
-    @staticmethod
-    def apply_route(runtime: Runtime, route: Doc) -> None:
-        effects = doc(route, "effects", "route")
-        raw_markers = effects.get("set_markers")
-        if raw_markers is not None:
-            for key, value in to_doc(raw_markers, "set_markers").items():
-                runtime.markers[key] = to_str(value, f"marker {key}")
-            if runtime.markers.get("selected_candidate_ref") == "UNBOUND":
-                runtime.selected_ref = None
-        runtime.prepare_requested |= effects.get("prepare_placeholder_requested") is True
-        runtime.author_requested |= effects.get("author_placeholder_requested") is True
-        runtime.feedback_recorded |= effects.get("minimal_feedback_recorded") is True
-        runtime.external_calls += int(effects.get("external_call_made") is True)
-        runtime.state = text(route, "to", "route")
+    def check_direct_cases(self) -> None:
+        for case_id, section_name, key, expected_value in DIRECT_CASE_ASSERTIONS:
+            inputs, expected = self.case(case_id)
+            section = inputs if section_name == "input" else expected
+            self.expect(case_id, section, key, expected_value, "A11_DIRECT_ASSERTION")
 
-    def check_step(self, case_id: str, step: Doc, runtime: Runtime, route: Doc) -> None:
-        event = text(step, "simulated_intent_result", case_id)
-        if "expected_direction_count" in step:
-            count = to_int(step.get("expected_direction_count"), f"{case_id} direction count")
-            if not 2 <= count <= 3:
-                self.error("A03_DIRECTION_COUNT", f"{case_id} must show two or three directions")
-        if "expected_question_count" in step:
-            count = to_int(step.get("expected_question_count"), f"{case_id} question count")
-            if not 1 <= count <= 3:
-                self.error("A03_QUESTION_COUNT", f"{case_id} must ask one to three questions")
-        if event == "AUTHORING_SIMULATED":
-            set_name = text(step, "candidate_set_ref", case_id)
-            refs = self.candidate_sets.get(set_name)
-            if refs is None:
-                self.error("A07_UNKNOWN_CANDIDATE_SET", f"{case_id} references unknown set {set_name}")
-            else:
-                runtime.active_refs = refs
-                runtime.candidate_count = len(refs)
-                if step.get("expected_candidate_count") != len(refs):
-                    self.error("A07_CANDIDATE_COUNT", f"{case_id} candidate count mismatch")
-        if event == "SELECT_CANDIDATE":
-            selected = text(step, "selected_candidate_ref", case_id)
-            if selected not in runtime.active_refs:
-                self.error("A07_UNKNOWN_SELECTION", f"{case_id} selected an undisplayed candidate")
-            runtime.selected_ref = selected
-        if event in {"REVISE_SELECTED", "REVISION_SIMULATED", "ACCEPT_SELECTED"}:
-            if text(step, "bound_candidate_ref", case_id) != runtime.selected_ref:
-                self.error("A07_REVISION_BINDING", f"{case_id} did not bind the selected candidate")
-        if event == "REVISE_SELECTED":
-            if (
-                not text(step, "necessary_modification", case_id).strip()
-                or not text(step, "short_reason", case_id).strip()
-            ):
-                self.error("A10_FEEDBACK_VALUE", f"{case_id} feedback values cannot be empty")
-        if "expected_action_card" in step:
-            expected = text(step, "expected_action_card", case_id)
-            if doc(route, "effects", "route").get("action_card") != expected:
-                self.error("A08_ACTION_CARD_ROUTE", f"{case_id} action card mismatch")
-
-    def check_expected(self, case_id: str, expected: Doc, runtime: Runtime) -> None:
-        actual: Doc = {
-            "plan_created": False,
-            "prepare_placeholder_requested": runtime.prepare_requested,
-            "author_placeholder_requested": runtime.author_requested,
-            "brand_fact_written": False,
-            "external_call_count": runtime.external_calls,
-            "candidate_count": runtime.candidate_count,
-            "publish_allowed": False,
-            "publishable_candidate_created": False,
-            "requirement_confirmation": runtime.markers.get("requirement_confirmation"),
-            "selected_candidate_ref": runtime.markers.get("selected_candidate_ref"),
-            "minimal_feedback_fields": list(FEEDBACK_FIELDS) if runtime.feedback_recorded else [],
+        vague_expected = self.case("ENTRY-VAGUE")[1]
+        if not 1 <= to_int(vague_expected.get("question_count"), "ENTRY-VAGUE question count") <= 3:
+            self.error("A03_QUESTION_COUNT", "ENTRY-VAGUE must ask one to three questions")
+        untrusted_inputs = self.case("UNTRUSTED-IDENTITY-SOURCES-REJECTED")[0]
+        claimed_sources = {
+            to_str(value, "claimed authority source")
+            for value in items(untrusted_inputs, "claimed_authority_sources", "untrusted identity case")
         }
-        for key, value in expected.items():
-            if key not in actual:
-                self.error("A11_UNKNOWN_EXPECTATION", f"{case_id} uses unsupported expectation {key}")
-            elif actual[key] != value:
-                self.error("A11_JOURNEY_EFFECT", f"{case_id} expected {key}={value!r}, got {actual[key]!r}")
+        if claimed_sources != {
+            "DIFY_USER_FIELD",
+            "SELF_REPORTED_COMPANY_STORE_OR_ACCOUNT",
+            "CONVERSATION_VARIABLE",
+        }:
+            self.error("A05_UNTRUSTED_CASE_COVERAGE", "all three untrusted identity sources must be covered")
+
+        for case_id, set_name in (
+            ("TWO-CANDIDATES-SELECT-REVISE-RETURN", "two_candidates"),
+            ("THREE-CANDIDATES-SELECT-ACCEPT", "three_candidates"),
+        ):
+            inputs, _ = self.case(case_id)
+            if text(inputs, "selected_candidate_ref", case_id) not in self.candidate_refs.get(set_name, frozenset()):
+                self.error("A07_UNKNOWN_SELECTION", f"{case_id} must select a displayed candidate")
+            if items(inputs, "optional_expression_asset_refs", case_id):
+                self.error("A06_OPTIONAL_ASSETS", f"{case_id} must work without atomic components, relations, or paths")
+        feedback = tuple(
+            to_str(value, "minimal feedback field")
+            for value in items(self.case("TWO-CANDIDATES-SELECT-REVISE-RETURN")[1], "minimal_feedback_fields")
+        )
+        if feedback != FEEDBACK_FIELDS:
+            self.error("A10_FEEDBACK_FIELDS", "two-candidate case must retain only minimal feedback")
+
+        expected_cards = {
+            "MISSING-FACT": "COLLECT_FACT",
+            "MISSING-MATERIAL": "COLLECT_MATERIAL",
+            "MISSING-AUTHORIZATION": "REQUEST_AUTHORIZATION",
+            "OUT-OF-SCOPE": "BLOCK",
+            "DEGRADE-SAFELY": "DEGRADE",
+            "BLOCK-UNSAFE-REQUEST": "BLOCK",
+        }
+        for case_id, action_card in expected_cards.items():
+            _, expected = self.case(case_id)
+            if (
+                expected.get("action_card") != action_card
+                or expected.get("action_card_contains_publishable_candidate") is not False
+            ):
+                self.error("A08_ACTION_CARD", f"{case_id} must return a non-publishable {action_card} card")
 
     def check_journeys(self) -> None:
-        boundary = doc(self.journeys_doc, "simulation_boundary", "journeys")
+        boundary = doc(self.journeys, "simulation_boundary", "journeys")
         for key in ("simulation_only", "intent_results_are_injected"):
             if not flag(boundary, key, "simulation boundary"):
                 self.error("A11_SIMULATION_BOUNDARY", f"{key} must be true")
@@ -544,79 +548,29 @@ class PackageChecker:
                 self.error("A11_FALSE_RUNTIME_CLAIM", f"{key} must be false")
         if boundary.get("external_call_count") != 0:
             self.error("A12_EXTERNAL_CALL", "journey external call count must be zero")
-        coverage = tuple(
-            to_str(value, "acceptance id") for value in items(self.journeys_doc, "acceptance_coverage", "journeys")
-        )
+        coverage = tuple(to_str(value, "acceptance id") for value in items(self.journeys, "acceptance_coverage"))
         if coverage != ACCEPTANCE_IDS:
-            self.error("A11_ACCEPTANCE_COVERAGE", "coverage must list PKG4-A01 through PKG4-A12")
-        self.load_candidate_sets()
-        initial = {
-            key: to_str(value, f"initial marker {key}")
-            for key, value in doc(self.app, "initial_markers", "application").items()
+            self.error("A11_ACCEPTANCE_COVERAGE", "coverage must list PKG4-A01-A12 and PKG4-S01-S08")
+        common = doc(self.journeys, "common_expected_boundaries", "journeys")
+        expected_common: Doc = {
+            "plan_created": False,
+            "brand_fact_written": False,
+            "external_call_count": 0,
+            "publish_allowed": False,
+            "publishable_candidate_created": False,
         }
-        entry = text(self.app, "entry_state", "application")
-        case_ids: set[str] = set()
-        no_optional_assets = False
-        for raw_group in items(self.journeys_doc, "journey_groups", "journeys"):
-            group = to_doc(raw_group, "journey group")
-            common_markers = {
-                key: to_str(value, f"group marker {key}")
-                for key, value in doc(group, "common_initial_markers", "journey group").items()
-            }
-            common_steps = [to_doc(value, "common step") for value in items(group, "common_steps", "group")]
-            for raw_variant in items(group, "variants", "group"):
-                variant = to_doc(raw_variant, "journey variant")
-                case_id = text(variant, "case_id", "variant")
-                if case_id in case_ids:
-                    self.error("A11_DUPLICATE_CASE", f"duplicate case {case_id}")
-                case_ids.add(case_id)
-                self.journey_count += 1
-                markers = {**initial, **common_markers}
-                if variant.get("initial_marker_overrides") is not None:
-                    markers.update(
-                        {
-                            key: to_str(value, f"override {key}")
-                            for key, value in to_doc(
-                                variant.get("initial_marker_overrides"), "marker overrides"
-                            ).items()
-                        }
-                    )
-                runtime = Runtime(state=entry, markers=markers)
-                variant_steps = [to_doc(value, "variant step") for value in items(variant, "steps", case_id)]
-                for step in [*common_steps, *variant_steps]:
-                    event = text(step, "simulated_intent_result", case_id)
-                    expected_state = text(step, "expected_state", case_id)
-                    route = self.routes.get((runtime.state, event))
-                    usable = route is not None and self.guards_pass(route, runtime.markers)
-                    if step.get("expect_rejected") is True:
-                        if usable:
-                            self.error("A04_EXPECTED_REJECTION", f"{case_id} unexpectedly allowed {event}")
-                        if runtime.state != expected_state:
-                            self.error("A11_REJECTED_STATE", f"{case_id} rejected event changed state")
-                        continue
-                    if route is None:
-                        self.error("A11_MISSING_ROUTE", f"{case_id} lacks {runtime.state}/{event}")
-                        continue
-                    if not usable:
-                        self.error("A11_GUARD_FAILURE", f"{case_id} failed guard for {runtime.state}/{event}")
-                        continue
-                    self.check_step(case_id, step, runtime, route)
-                    self.apply_route(runtime, route)
-                    if runtime.state != expected_state:
-                        self.error("A11_STATE_MISMATCH", f"{case_id} expected {expected_state}, got {runtime.state}")
-                self.check_expected(case_id, doc(variant, "expected_effects", case_id), runtime)
-                if variant.get("optional_expression_asset_refs") == [] and runtime.candidate_count in {2, 3}:
-                    no_optional_assets = True
-        if case_ids != EXPECTED_CASE_IDS:
-            self.error("A11_CASE_COVERAGE", f"journey cases differ: {sorted(case_ids ^ EXPECTED_CASE_IDS)}")
-        if not no_optional_assets:
-            self.error("A06_OPTIONAL_ASSETS", "a successful candidate journey must omit optional expression assets")
+        if common != expected_common:
+            self.error("A12_COMMON_BOUNDARIES", "all fixed journeys must share the five fail-closed boundaries")
+        self.load_candidate_sets()
+        self.load_cases()
+        if set(self.cases) == EXPECTED_CASE_IDS:
+            self.check_direct_cases()
 
     def check_visible_output(self) -> int:
         strings = [
             *visible_strings(self.flow),
             *visible_strings(self.mapping),
-            *visible_strings(self.journeys_doc),
+            *visible_strings(self.journeys),
         ]
         for value in strings:
             for pattern in VISIBLE_LEAK_PATTERNS:
@@ -625,13 +579,20 @@ class PackageChecker:
         return len(strings)
 
     def check_repository(self) -> None:
+        if {path.name for path in self.root.iterdir() if path.is_file()} != CORE_PACKAGE_FILES:
+            self.error("S06_CORE_FILE_SET", "r2 must reuse exactly the five existing core package files")
         if [path.name for path in sorted(self.root.glob("conversation_flow*.json"))] != [FLOW_FILE]:
             self.error("A01_FLOW_FILE_COUNT", "exactly one version-neutral flow candidate is allowed")
         if [path.name for path in sorted(self.root.glob("check_*.py"))] != ["check_dify_content_shell.py"]:
             self.error("A11_CHECKER_COUNT", "exactly one package checker is allowed")
+
+        base_ref = "refs/remotes/origin/master"
+        if git(self.repo, ("rev-parse", "--verify", base_ref)).returncode != 0:
+            base_ref = BASELINE
         changed: set[str] = set()
         for arguments in (
-            ("diff", "--name-only", BASELINE, "--"),
+            ("diff", "--name-only", f"{base_ref}...HEAD", "--"),
+            ("diff", "--name-only", "--"),
             ("diff", "--cached", "--name-only", "--"),
             ("ls-files", "--others", "--exclude-standard"),
         ):
@@ -643,89 +604,107 @@ class PackageChecker:
             if not changed_path.startswith(ALLOWED_ROOT):
                 self.error("A12_WRITE_SCOPE", f"changed path is outside the exclusive root: {changed_path}")
         if git(self.repo, ("merge-base", "--is-ancestor", BASELINE, "HEAD")).returncode != 0:
-            self.error("A12_BASELINE", "exact baseline is not an ancestor of HEAD")
-        for relative, expected in PINNED_CORE_FILES.items():
-            core_path = self.repo / relative
-            if not core_path.is_file() or hashlib.sha256(core_path.read_bytes()).hexdigest() != expected:
+            self.error("A12_BASELINE", "the exact r1 baseline must remain an ancestor of HEAD")
+        for relative, expected_hash in PINNED_CORE_FILES.items():
+            path = self.repo / relative
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected_hash:
                 self.error("A12_CORE_NUMBER_GUARD", f"pinned 120/86 evidence changed: {relative}")
+        for relative, expected_hash in PINNED_HISTORICAL_REVIEW_FILES.items():
+            path = self.root / relative
+            if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected_hash:
+                self.error("S07_HISTORICAL_REVIEW_CHANGED", f"historical review evidence changed: {relative}")
 
     def run(self, *, check_repository: bool) -> Summary:
-        self.check_candidate_ui()
+        self.check_lightweight_shape()
+        self.check_candidate_and_experience()
         self.check_boundaries()
-        self.build_routes()
-        self.check_route_guards()
         self.check_mapping()
         self.check_journeys()
         visible_count = self.check_visible_output()
         if check_repository:
             self.check_repository()
-        return Summary(tuple(self.errors), self.journey_count, len(self.routes), visible_count)
+        return Summary(tuple(self.errors), len(self.cases), visible_count)
 
 
-def validate(flow: Doc, mapping: Doc, journeys: Doc, repo: Path, root: Path, *, check_repository: bool) -> Summary:
+def validate(
+    flow: Doc,
+    mapping: Doc,
+    journeys: Doc,
+    result: Doc,
+    repo: Path,
+    root: Path,
+    *,
+    check_repository: bool,
+) -> Summary:
     try:
-        return PackageChecker(flow, mapping, journeys, repo, root).run(check_repository=check_repository)
-    except DataError as exc:
-        return Summary((f"A11_DATA_SHAPE: {exc}",), 0, 0, 0)
+        return PackageChecker(flow, mapping, journeys, result, repo, root).run(check_repository=check_repository)
+    except ValueError as exc:
+        return Summary((f"A11_DATA_SHAPE: {exc}",), 0, 0)
 
 
-def route(flow: Doc, source: str, event: str) -> Doc:
-    app = doc(flow, "application", "flow")
-    for raw in items(app, "routes", "application"):
-        candidate = to_doc(raw, "route")
-        if candidate.get("from") == source and candidate.get("event") == event:
-            return candidate
-    raise DataError(f"route {source}/{event} not found")
-
-
-def selftest(flow: Doc, mapping: Doc, journeys: Doc, repo: Path, root: Path) -> tuple[str, ...]:
+def selftest(flow: Doc, mapping: Doc, journeys: Doc, result: Doc, repo: Path, root: Path) -> tuple[str, ...]:
     failures: list[str] = []
 
-    def expect(name: str, changed_flow: Doc, changed_mapping: Doc, changed_journeys: Doc, code: str) -> None:
-        summary = validate(changed_flow, changed_mapping, changed_journeys, repo, root, check_repository=False)
+    def expect(
+        name: str,
+        changed_flow: Doc,
+        changed_mapping: Doc,
+        changed_journeys: Doc,
+        changed_result: Doc,
+        code: str,
+    ) -> None:
+        summary = validate(
+            changed_flow,
+            changed_mapping,
+            changed_journeys,
+            changed_result,
+            repo,
+            root,
+            check_repository=False,
+        )
         if not any(error.startswith(f"{code}:") for error in summary.errors):
             failures.append(f"SELFTEST_{name}: expected {code}")
 
-    changed = copy.deepcopy(flow)
-    doc(changed, "candidate", "flow")["application_count"] = 2
-    expect("SECOND_APP", changed, mapping, journeys, "A01_APPLICATION_COUNT")
-    changed = copy.deepcopy(flow)
-    identity = doc(doc(changed, "application", "flow"), "identity_policy", "application")
+    changed_flow = copy.deepcopy(flow)
+    doc(changed_flow, "application", "flow")["routes"] = []
+    expect("GENERIC_ROUTE_LANGUAGE", changed_flow, mapping, journeys, result, "S01_FORBIDDEN_RUNTIME_MODEL")
+    changed_flow = copy.deepcopy(flow)
+    constraints = doc(doc(changed_flow, "application", "flow"), "lightweight_constraints", "application")
+    constraints["graph_traversal_implemented"] = True
+    expect("GRAPH_RUNTIME", changed_flow, mapping, journeys, result, "S01_RUNTIME_ENGINE_PRESENT")
+    changed_flow = copy.deepcopy(flow)
+    identity = doc(doc(changed_flow, "application", "flow"), "identity_policy", "application")
     identity["hint_may_grant_identity_scope_or_permission"] = True
-    expect("HINT_GRANT", changed, mapping, journeys, "A05_HINT_GRANT")
-    changed = copy.deepcopy(flow)
-    doc(route(changed, "prepare_placeholder", "PREPARE_READY"), "requires", "route").pop(
-        "requirement_confirmation", None
-    )
-    expect("CONFIRM_GUARD", changed, mapping, journeys, "A04_PREPARE_GUARD")
+    expect("HINT_GRANT", changed_flow, mapping, journeys, result, "A05_HINT_GRANT")
+    changed_flow = copy.deepcopy(flow)
+    confirmation = doc(doc(changed_flow, "application", "flow"), "confirmation_policy", "application")
+    confirmation["prepare_placeholder_requires_requirement_confirmation"] = "DRAFT"
+    expect("CONFIRM_BOUNDARY", changed_flow, mapping, journeys, result, "A04_CONFIRMATION_BOUNDARY")
     changed_mapping = copy.deepcopy(mapping)
-    changed_mapping["copies_public_models"] = True
-    expect("MODEL_COPY", flow, changed_mapping, journeys, "A06_MODEL_COPY")
+    changed_mapping["state_mappings"] = []
+    expect("STATE_MAPPING", flow, changed_mapping, journeys, result, "S01_STATE_MAPPING")
     changed_mapping = copy.deepcopy(mapping)
     first_card = to_doc(items(changed_mapping, "action_cards", "mapping")[0], "action card")
     first_card["contains_publishable_candidate"] = True
-    expect("ACTION_CARD_BODY", flow, changed_mapping, journeys, "A08_FAKE_PUBLISHABLE")
+    expect("ACTION_CARD_BODY", flow, changed_mapping, journeys, result, "A08_FAKE_PUBLISHABLE")
     changed_journeys = copy.deepcopy(journeys)
-    candidates = items(doc(doc(changed_journeys, "candidate_sets", "journeys"), "two_candidates"), "candidates")
-    candidates.extend(copy.deepcopy(candidates[:2]))
-    expect("FOUR_CANDIDATES", flow, mapping, changed_journeys, "A07_CANDIDATE_COUNT")
+    two_set = doc(doc(changed_journeys, "candidate_sets", "journeys"), "two_candidates", "candidate sets")
+    first_candidate = to_doc(items(two_set, "candidates", "two-candidate set")[0], "candidate")
+    doc(first_candidate, "user_visible_surfaces", "candidate")["title"] = "CP02"
+    expect("VISIBLE_LEAK", flow, mapping, changed_journeys, result, "A09_USER_VISIBLE_LEAK")
+    changed_flow = copy.deepcopy(flow)
+    bindings = doc(doc(changed_flow, "application", "flow"), "external_bindings", "application")
+    bindings["author_model_connected"] = True
+    expect("EXTERNAL_BINDING", changed_flow, mapping, journeys, result, "A12_EXTERNAL_BINDING")
     changed_journeys = copy.deepcopy(journeys)
-    candidates = items(doc(doc(changed_journeys, "candidate_sets", "journeys"), "two_candidates"), "candidates")
-    surfaces = doc(to_doc(candidates[0], "candidate"), "user_visible_surfaces", "candidate")
-    surfaces["title"] = "CP02"
-    expect("VISIBLE_LEAK", flow, mapping, changed_journeys, "A09_USER_VISIBLE_LEAK")
-    changed = copy.deepcopy(flow)
-    bindings = doc(doc(changed, "application", "flow"), "external_bindings", "application")
-    bindings["model_connected"] = True
-    expect("EXTERNAL_BINDING", changed, mapping, journeys, "A12_EXTERNAL_BINDING")
-    changed = copy.deepcopy(flow)
-    feedback = doc(doc(changed, "application", "flow"), "feedback_policy", "application")
-    items(feedback, "stored_fields", "feedback").append("long_term_profile")
-    expect("HEAVY_FEEDBACK", changed, mapping, journeys, "A10_FEEDBACK_FIELDS")
-    changed = copy.deepcopy(flow)
-    intent = doc(doc(changed, "application", "flow"), "intent_resolution", "application")
-    intent["keyword_classifier_implemented"] = True
-    expect("INTENT_ENGINE", changed, mapping, journeys, "A03_FORBIDDEN_INTENT_ENGINE")
+    for raw_case in items(changed_journeys, "journey_cases", "journeys"):
+        case = to_doc(raw_case, "journey case")
+        if case.get("case_id") == "UNCONFIRMED-BLOCKS-PREPARE":
+            doc(case, "expected", "unconfirmed case")["prepare_placeholder_requested"] = True
+    expect("UNCONFIRMED_PREPARE", flow, mapping, changed_journeys, result, "A11_DIRECT_ASSERTION")
+    changed_result = copy.deepcopy(result)
+    changed_result["candidate_state"] = "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7"
+    expect("PREMATURE_SUCCESS", flow, mapping, journeys, changed_result, "S07_PREMATURE_SUCCESS")
     return tuple(failures)
 
 
@@ -734,7 +713,7 @@ def parse_arguments(arguments: Sequence[str]) -> bool:
         return False
     if list(arguments) == ["--selftest"]:
         return True
-    raise DataError("usage: check_dify_content_shell.py [--selftest]")
+    raise ValueError("usage: check_dify_content_shell.py [--selftest]")
 
 
 def main(arguments: Sequence[str]) -> int:
@@ -745,23 +724,26 @@ def main(arguments: Sequence[str]) -> int:
         run_selftest = parse_arguments(arguments)
         root = Path(__file__).resolve().parent
         repo = root.parents[1]
-        flow, mapping, journeys = (load(root / name) for name in (FLOW_FILE, MAPPING_FILE, JOURNEYS_FILE))
-        summary = validate(flow, mapping, journeys, repo, root, check_repository=True)
+        flow = load(root / FLOW_FILE)
+        mapping = load(root / MAPPING_FILE)
+        journeys = load(root / JOURNEYS_FILE)
+        result = load(root / RESULT_FILE)
+        summary = validate(flow, mapping, journeys, result, repo, root, check_repository=True)
         if summary.errors:
             sys.stderr.write("FAIL_DIFY_CONTENT_SHELL\n" + "\n".join(summary.errors) + "\n")
             return 1
         if run_selftest:
-            failures = selftest(flow, mapping, journeys, repo, root)
+            failures = selftest(flow, mapping, journeys, result, repo, root)
             if failures:
                 sys.stderr.write("FAIL_DIFY_CONTENT_SHELL_SELFTEST\n" + "\n".join(failures) + "\n")
                 return 1
         mode = "SELFTEST" if run_selftest else "PACKAGE"
         sys.stdout.write(
-            f"PASS_DIFY_CONTENT_SHELL_{mode} journeys={summary.journeys} transitions={summary.transitions} "
-            f"visible_strings={summary.visible_strings} external_calls=0 readiness=false\n"
+            f"PASS_DIFY_CONTENT_SHELL_{mode} cases={summary.journey_cases} "
+            f"visible_strings={summary.visible_strings} external_calls=0 readiness=false lightweight=true\n"
         )
         return 0
-    except DataError as exc:
+    except ValueError as exc:
         sys.stderr.write(f"FAIL_DIFY_CONTENT_SHELL_INPUT: {exc}\n")
         return 1
 
