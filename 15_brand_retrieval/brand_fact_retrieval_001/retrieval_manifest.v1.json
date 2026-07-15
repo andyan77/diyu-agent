@@ -7,16 +7,16 @@
       "sha256": "6a8e9fbcce5588cc73b58fe20c3d3fdeb0f13cab6297a148a8dccc5ae77c4155"
     },
     {
-      "byte_size": 56010,
+      "byte_size": 60075,
       "path": "data/retrieval_fragments.v1.jsonl",
-      "record_count": 23,
-      "sha256": "6e3e434822417978cd5079f19e551741c00d4aa80811384ee533a9a9139b620b"
+      "record_count": 29,
+      "sha256": "6c6827cd3e370bd633729f7bdce8cf61793dc45a04b938b08e2dabc609a887b7"
     },
     {
-      "byte_size": 80636,
+      "byte_size": 130945,
       "path": "data/source_dispositions.v1.jsonl",
       "record_count": 206,
-      "sha256": "117b9d92936e604a6d17ac42cb333190423dbd4b501947e2df2408dc34e6ac75"
+      "sha256": "9a8bd65053e3a847cfe38e071bdc0e26db93ade641199678972bec35856bf483"
     },
     {
       "byte_size": 5976,
@@ -32,13 +32,14 @@
     "target_300": 300
   },
   "counts": {
-    "active_retrieval_fragments": 23,
+    "active_retrieval_fragments": 29,
     "active_verified_precise_facts": 5,
     "expression_example_candidates": 3,
     "hold_reason_counts": {
       "EXPLICIT_FUTURE_SIMULATION_NOT_OBSERVED": 15,
       "NO_MATCHING_NARRATIVE_DISCLOSURE_GRANT": 5,
       "PACKAGE5_MISSING_OBSERVATION_TIME": 8,
+      "PACKAGE5_MIXED_RESTRICTED_ASSET_BOUNDARIES": 1,
       "PACKAGE5_RECONFIRMATION_REQUIRED": 1,
       "REQUEST_AND_DECISION_SCENARIO_ONLY": 21,
       "SCOPE_OR_SEMANTIC_REVIEW_REQUIRED": 33,
@@ -46,7 +47,7 @@
       "SOURCE_REQUIRES_CURRENT_STATE_RECONFIRMATION": 1,
       "SOURCE_SCOPE_NOT_IN_PUBLIC_IDENTITY_CONTRACT": 93
     },
-    "hold_records": 178,
+    "hold_records": 179,
     "package3_narrative_input": 197,
     "package3_precise_fact_input": 9,
     "source_dispositions": 206
@@ -60,9 +61,9 @@
     "production": 0
   },
   "fixture": {
-    "case_count": 28,
+    "case_count": 32,
     "path": "fixtures/retrieval_cases.v1.jsonl",
-    "sha256": "dc0dc6d82f03cceea873e943e549017ac5d9e399f52152321dcda2a1a5f1467e"
+    "sha256": "d5ed4da0d208ff4178bd5bb51e28521406fc685b853dd7bac0a2b6605d467ed1"
   },
   "input_anchors": [
     {
@@ -99,11 +100,11 @@
     }
   ],
   "materialization": {
-    "activation_rule": "READY_PLUS_SOURCE_TIME_SCOPE_AUTHORIZATION_EVIDENCE_CLOSED",
+    "activation_rule": "READY_PLUS_PACKAGE5_SEMANTIC_DECISION_PLUS_SOURCE_TIME_SCOPE_AUTHORIZATION_EVIDENCE_CLOSED",
     "binary_index_created": false,
     "date_normalization": "DATE_ONLY_NO_TIMEZONE_TO_UTC_DAY_START_WITH_PRECISION_LABEL",
     "idempotent": true,
-    "narrative_segmentation": "REUSE_PACKAGE3_NATURAL_LEVEL_ONE_SECTIONS",
+    "narrative_segmentation": "REUSE_PACKAGE3_NATURAL_SECTIONS_WITH_ONE_EIGHT_PRODUCT_SUBSECTION_SPLIT",
     "production_semantic_quality_claimed": false,
     "rebuild_mode": "DELETE_AND_REBUILD_TRANSPARENT_JSON"
   },

@@ -575,7 +575,9 @@ class BrandFactRetrievalService:
                 continue
             if not matches:
                 if required:
-                    gaps.append(self._missing_fact_gap(fact_kind, selectors))
+                    gaps.append(
+                        self._missing_fact_gap(fact_kind, selectors, scope, now)
+                    )
                 continue
             chosen = self._choose_fact(matches)
             if chosen is None:
@@ -626,14 +628,19 @@ class BrandFactRetrievalService:
         return min(latest, key=lambda row: str(row.get("fact_id")))
 
     def _missing_fact_gap(
-        self, fact_kind: str, selectors: Mapping[str, Any]
+        self,
+        fact_kind: str,
+        selectors: Mapping[str, Any],
+        scope: TrustedScope,
+        now: datetime,
     ) -> JsonObject:
         held = [
             row
             for row in self.index.dispositions
             if row.get("record_type") == "PRECISE_FACT"
             and row.get("fact_kind") == fact_kind
-            and self._disposition_selectors_match(row, selectors)
+            and self._held_fact_scope_matches(row, scope, now)
+            and self._held_fact_identifier_matches(row, selectors)
         ]
         reasons = {str(row.get("reason_code")) for row in held}
         if any(
@@ -653,16 +660,66 @@ class BrandFactRetrievalService:
             fact_kind=fact_kind,
         )
 
+    def _held_fact_scope_matches(
+        self,
+        row: JsonObject,
+        scope: TrustedScope,
+        now: datetime,
+    ) -> bool:
+        source_organization = row.get("source_organization_id")
+        source_store = row.get("source_store_id")
+        if (
+            row.get("tenant_id") != scope.tenant_id
+            or row.get("brand_id") != scope.brand_id
+            or not isinstance(source_organization, str)
+            or source_organization not in self.authority.organizations
+            or source_organization not in scope.allowed_source_organization_ids
+            or scope.content_account_id
+            not in row.get("applicable_content_account_ids", [])
+        ):
+            return False
+        if source_store is not None:
+            if (
+                not isinstance(source_store, str)
+                or source_store not in self.authority.stores
+                or self.authority.stores[source_store].get("organization_id")
+                != source_organization
+            ):
+                return False
+        grant_ref = row.get("authorization_ref")
+        grant = self.authority.grants.get(grant_ref) if isinstance(grant_ref, str) else None
+        if grant is None:
+            return False
+        try:
+            within_time = (
+                parse_timestamp(grant.get("valid_from"))
+                <= now
+                <= parse_timestamp(grant.get("valid_until"))
+            )
+        except RetrievalContractError:
+            return False
+        return bool(
+            grant.get("status") == "GRANTED"
+            and within_time
+            and grant.get("tenant_id") == scope.tenant_id
+            and grant.get("brand_id") == scope.brand_id
+            and grant.get("source_organization_id") == source_organization
+            and grant.get("source_store_id") == source_store
+            and scope.organization_id in grant.get("permitted_organization_ids", [])
+            and scope.store_id in grant.get("permitted_store_ids", [])
+            and scope.content_account_id
+            in grant.get("permitted_content_account_ids", [])
+            and grant.get("disclosure_scope") == row.get("disclosure_scope")
+        )
+
     @staticmethod
-    def _disposition_selectors_match(
+    def _held_fact_identifier_matches(
         row: JsonObject, selectors: Mapping[str, Any]
     ) -> bool:
-        if not selectors:
+        requested_fact_id = selectors.get("fact_id")
+        if requested_fact_id is None:
             return True
-        projection = row.get("selector_projection")
-        if not isinstance(projection, dict):
-            return False
-        return all(projection.get(key) == expected for key, expected in selectors.items())
+        return bool(requested_fact_id == row.get("source_record_id"))
 
     def _resolve_expression_candidates(self, request: Mapping[str, Any]) -> JsonObject:
         partition = self.index.expression_candidates

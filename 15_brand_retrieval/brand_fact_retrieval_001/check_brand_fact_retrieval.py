@@ -255,9 +255,9 @@ def validate_manifest(bundle: Bundle, repo_root: Path, errors: list[str]) -> Non
 
     counts = manifest.get("counts")
     expected_counts = {
-        "active_retrieval_fragments": 23,
+        "active_retrieval_fragments": 29,
         "active_verified_precise_facts": 5,
-        "hold_records": 178,
+        "hold_records": 179,
         "source_dispositions": 206,
         "package3_narrative_input": 197,
         "package3_precise_fact_input": 9,
@@ -324,6 +324,39 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
         errors.append("plan or generator must not be created")
 
     version = bundle.manifest.get("data_version_digest")
+    source_manifest = materialize.load_json(repo_root / materialize.PACKAGE_3_MANIFEST)
+    source_rows = source_manifest.get("sources")
+    source_snapshots: dict[str, Path] = {}
+    if not isinstance(source_rows, list):
+        errors.append("Package 3 source manifest has no sources")
+    else:
+        for source_row in source_rows:
+            if not isinstance(source_row, dict):
+                continue
+            source_id = source_row.get("source_id")
+            snapshot_path = source_row.get("snapshot_path")
+            if isinstance(source_id, str) and isinstance(snapshot_path, str):
+                source_snapshots[source_id] = (
+                    repo_root / materialize.PACKAGE_3_ROOT / snapshot_path
+                )
+
+    def source_slice(row: JsonObject, label: str) -> bytes | None:
+        source_id = row.get("source_id")
+        snapshot = source_snapshots.get(str(source_id))
+        locator = row.get("source_position")
+        if snapshot is None or not isinstance(locator, dict):
+            errors.append(f"source locator missing: {label}")
+            return None
+        if row.get("source_sha256") != sha256_file(snapshot):
+            errors.append(f"source snapshot digest mismatch: {label}")
+            return None
+        start = locator.get("byte_start")
+        end = locator.get("byte_end_exclusive")
+        if not isinstance(start, int) or not isinstance(end, int):
+            errors.append(f"source byte locator invalid: {label}")
+            return None
+        return snapshot.read_bytes()[start:end]
+
     fragment_ids: set[str] = set()
     for row in bundle.fragments:
         identifier = row.get("fragment_id")
@@ -338,6 +371,9 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
             errors.append(f"fragment data version mismatch: {identifier}")
         if row.get("fragment_sha256") != sha256_bytes(str(row.get("text", "")).encode("utf-8")):
             errors.append(f"fragment body digest mismatch: {identifier}")
+        source_bytes = source_slice(row, identifier)
+        if source_bytes is not None and source_bytes != str(row.get("text", "")).encode("utf-8"):
+            errors.append(f"fragment source slice mismatch: {identifier}")
         if row.get("simulation_only") is not True or row.get("publish_allowed") is not False:
             errors.append(f"fragment simulation boundary invalid: {identifier}")
         if row.get("runtime_consumable") is not False:
@@ -361,6 +397,9 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
             errors.append(f"fact simulation boundary invalid: {identifier}")
         if row.get("runtime_consumable") is not False:
             errors.append(f"fact marked runtime consumable: {identifier}")
+        source_bytes = source_slice(row, identifier)
+        if source_bytes is not None and row.get("source_excerpt_sha256") != sha256_bytes(source_bytes):
+            errors.append(f"fact source excerpt digest mismatch: {identifier}")
 
     source_narratives = {
         str(row["unit_id"]): row
@@ -374,6 +413,7 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
         errors.append("Package 3 source count drift")
     seen_sources: set[tuple[str, str]] = set()
     active_disposition_ids: set[str] = set()
+    disposition_by_source: dict[str, JsonObject] = {}
     hold_count = 0
     for row in bundle.dispositions:
         record_type = row.get("record_type")
@@ -383,6 +423,7 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
             errors.append(f"duplicate source disposition: {key}")
             continue
         seen_sources.add(key)
+        disposition_by_source[str(source_id)] = row
         source = (
             source_narratives.get(str(source_id))
             if record_type == "NARRATIVE"
@@ -395,15 +436,39 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
             errors.append(f"source disposition digest mismatch: {key}")
         disposition = row.get("package5_disposition")
         derived = row.get("derived_record_id")
+        derived_ids = row.get("derived_record_ids")
+        if not isinstance(derived_ids, list) or any(
+            not isinstance(identifier, str) for identifier in derived_ids
+        ):
+            errors.append(f"derived_record_ids invalid: {key}")
+            derived_ids = []
+        require_fields(
+            row,
+            {
+                "tenant_id", "brand_id", "source_organization_id",
+                "source_store_id", "applicable_content_account_ids",
+                "authorization_ref", "disclosure_scope",
+            },
+            f"disposition {key}",
+            errors,
+        )
+        projection = row.get("selector_projection")
+        if record_type == "PRECISE_FACT" and (
+            not isinstance(projection, dict) or set(projection) != {"fact_id"}
+        ):
+            errors.append(f"precise fact HOLD projection exposes value selectors: {key}")
         if disposition == "HOLD":
             hold_count += 1
-            if derived is not None:
+            if derived is not None or derived_ids:
                 errors.append(f"HOLD disposition has derived record: {key}")
         elif disposition in {"ACTIVE_FOR_SIMULATION_RETRIEVAL", "ACTIVE_VERIFIED_PRECISE_FACT"}:
-            if not isinstance(derived, str):
-                errors.append(f"active disposition lacks derived record: {key}")
-            else:
-                active_disposition_ids.add(derived)
+            if not derived_ids:
+                errors.append(f"active disposition lacks derived records: {key}")
+            active_disposition_ids.update(str(identifier) for identifier in derived_ids)
+            if len(derived_ids) == 1 and derived != derived_ids[0]:
+                errors.append(f"single derived record pointer mismatch: {key}")
+            if len(derived_ids) > 1 and derived is not None:
+                errors.append(f"multi-fragment source must not claim one primary record: {key}")
         else:
             errors.append(f"unknown disposition: {key}")
     expected_source_keys = {
@@ -414,8 +479,19 @@ def validate_records(bundle: Bundle, repo_root: Path, errors: list[str]) -> None
         errors.append("source disposition coverage is not exactly 197 narratives plus 9 facts")
     if active_disposition_ids != fragment_ids | fact_ids:
         errors.append("active dispositions do not exactly close over derived records")
-    if hold_count != 178:
-        errors.append(f"expected 178 HOLD dispositions, found {hold_count}")
+    if hold_count != 179:
+        errors.append(f"expected 179 HOLD dispositions, found {hold_count}")
+    restricted = disposition_by_source.get("BD-NARR-05-004", {})
+    if not (
+        restricted.get("package5_disposition") == "HOLD"
+        and restricted.get("reason_code")
+        == "PACKAGE5_MIXED_RESTRICTED_ASSET_BOUNDARIES"
+    ):
+        errors.append("mixed restricted asset section must remain HOLD")
+    split = disposition_by_source.get("BD-NARR-04-013", {})
+    split_ids = split.get("derived_record_ids")
+    if not isinstance(split_ids, list) or len(split_ids) != 8:
+        errors.append("multi-product R&D section must produce eight traceable fragments")
 
 
 def validate_expression(bundle: Bundle, errors: list[str]) -> None:
@@ -617,8 +693,8 @@ def run_fixture_cases(bundle: Bundle, errors: list[str]) -> None:
                 raise ValueError(f"unknown operation {operation}")
         except (KeyError, TypeError, ValueError, RetrievalContractError) as exc:
             errors.append(f"{case_id}: {exc}")
-    if len(case_ids) != 28:
-        errors.append(f"expected 28 fixture cases, found {len(case_ids)}")
+    if len(case_ids) != 32:
+        errors.append(f"expected 32 fixture cases, found {len(case_ids)}")
 
 
 def validate_materialization(package_root: Path, errors: list[str]) -> None:
@@ -753,10 +829,10 @@ def validate_result(bundle: Bundle, require_reviews: bool, errors: list[str]) ->
         errors.append("result task_id mismatch")
     counts = result.get("counts")
     expected = {
-        "active_retrieval_fragments": 23,
+        "active_retrieval_fragments": 29,
         "active_verified_precise_facts": 5,
-        "hold_records": 178,
-        "fixture_cases": 28,
+        "hold_records": 179,
+        "fixture_cases": 32,
     }
     if not isinstance(counts, dict) or any(counts.get(key) != value for key, value in expected.items()):
         errors.append("result counts mismatch")
@@ -885,7 +961,7 @@ def main() -> int:
             print(f"FAIL: {error}", file=sys.stderr)
         return 1
     mode = "final" if require_reviews else "pre-review"
-    print(f"PASS: Package 5 brand fact retrieval ({mode}, 28 cases)")
+    print(f"PASS: Package 5 brand fact retrieval ({mode}, 32 cases)")
     return 0
 
 

@@ -7,6 +7,7 @@ import argparse
 import copy
 import hashlib
 import json
+import re
 import tempfile
 from collections import Counter
 from datetime import timezone
@@ -61,6 +62,37 @@ GENERATED_PATHS = (
     Path("data/expression_candidates.v1.json"),
     Path("retrieval_manifest.v1.json"),
 )
+
+NARRATIVE_SEMANTIC_APPROVALS = frozenset(
+    {
+        "BD-NARR-02-006",
+        "BD-NARR-03-002",
+        "BD-NARR-03-012",
+        "BD-NARR-03-014",
+        "BD-NARR-03-015",
+        "BD-NARR-03-018",
+        "BD-NARR-04-013",
+        "BD-NARR-04-019",
+        "BD-NARR-05-002",
+        "BD-NARR-05-003",
+        "BD-NARR-05-011",
+        "BD-NARR-05-013",
+        "BD-NARR-05-015",
+        "BD-NARR-05-016",
+        "BD-NARR-05-017",
+        "BD-NARR-05-023",
+        "BD-NARR-06-002",
+        "BD-NARR-06-017",
+        "BD-NARR-06-018",
+        "BD-NARR-06-021",
+        "BD-NARR-06-024",
+        "BD-NARR-06-027",
+    }
+)
+NARRATIVE_SEMANTIC_HOLDS = {
+    "BD-NARR-05-004": "PACKAGE5_MIXED_RESTRICTED_ASSET_BOUNDARIES",
+}
+PRODUCT_SUBSECTION_SPLIT_IDS = frozenset({"BD-NARR-04-013"})
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -261,6 +293,12 @@ def narrative_disposition(
         return "HOLD", str(row.get("hold_reason") or row.get("import_review_state")), None
     if row.get("source_status") != "SOURCE_ASSERTED" or not row.get("observed_at"):
         return "HOLD", "PACKAGE5_MISSING_OBSERVATION_TIME", None
+    unit_id = str(row.get("unit_id"))
+    if row.get("semantic_review_required") is True:
+        if unit_id in NARRATIVE_SEMANTIC_HOLDS:
+            return "HOLD", NARRATIVE_SEMANTIC_HOLDS[unit_id], None
+        if unit_id not in NARRATIVE_SEMANTIC_APPROVALS:
+            return "HOLD", "PACKAGE5_SEMANTIC_REVIEW_NOT_COMPLETED", None
     if row.get("revocation_ref") not in (None, ""):
         return "HOLD", "PACKAGE5_REVOKED", None
     closes, reason, grant = grant_closes_record(
@@ -274,6 +312,46 @@ def narrative_disposition(
     if not closes:
         return "HOLD", reason, grant
     return "ACTIVE_FOR_SIMULATION_RETRIEVAL", reason, grant
+
+
+def reviewed_narrative_segments(row: JsonObject) -> list[JsonObject]:
+    body = row.get("body")
+    locator = row.get("locator")
+    unit_id = str(row.get("unit_id"))
+    if not isinstance(body, str) or not isinstance(locator, dict):
+        raise ValueError(f"narrative body or locator missing: {unit_id}")
+    if unit_id not in PRODUCT_SUBSECTION_SPLIT_IDS:
+        return [{"suffix": "", "text": body, "locator": copy.deepcopy(locator)}]
+
+    starts = [match.start() for match in re.finditer(r"(?m)^##\s+\d+\.", body)]
+    if len(starts) != 8:
+        raise ValueError(f"expected eight product subsections: {unit_id}")
+    parent_byte_start = locator.get("byte_start")
+    parent_line_start = locator.get("line_start")
+    if not isinstance(parent_byte_start, int) or not isinstance(parent_line_start, int):
+        raise ValueError(f"narrative locator invalid: {unit_id}")
+    segments: list[JsonObject] = []
+    for index, start in enumerate(starts):
+        end = starts[index + 1] if index + 1 < len(starts) else len(body)
+        text = body[start:end]
+        leading_text = body[:start]
+        byte_start = parent_byte_start + len(leading_text.encode("utf-8"))
+        byte_end = byte_start + len(text.encode("utf-8"))
+        line_start = parent_line_start + leading_text.count("\n")
+        line_end = line_start + max(0, len(text.splitlines()) - 1)
+        segments.append(
+            {
+                "suffix": f"-S{index + 1:02d}",
+                "text": text,
+                "locator": {
+                    "byte_start": byte_start,
+                    "byte_end_exclusive": byte_end,
+                    "line_start": line_start,
+                    "line_end": line_end,
+                },
+            }
+        )
+    return segments
 
 
 def fact_disposition(
@@ -331,14 +409,18 @@ def derive_bundle(repo_root: Path) -> tuple[list[JsonObject], list[JsonObject], 
         disposition, reason, grant = narrative_disposition(
             row, grants, organizations, stores, accounts
         )
-        output_id: str | None = None
+        output_ids: list[str] = []
         if disposition == "ACTIVE_FOR_SIMULATION_RETRIEVAL":
             if grant is None:
                 raise ValueError("active narrative has no grant")
-            output_id = f"PKG5-FRAGMENT-{row['unit_id']}"
-            locator = copy.deepcopy(row["locator"])
-            fragments.append(
-                {
+            for segment in reviewed_narrative_segments(row):
+                suffix = str(segment["suffix"])
+                output_id = f"PKG5-FRAGMENT-{row['unit_id']}{suffix}"
+                output_ids.append(output_id)
+                locator = copy.deepcopy(segment["locator"])
+                text = str(segment["text"])
+                fragments.append(
+                    {
                     "fragment_id": output_id,
                     "unit_id": row["unit_id"],
                     "tenant_id": row["tenant_id"],
@@ -352,7 +434,7 @@ def derive_bundle(repo_root: Path) -> tuple[list[JsonObject], list[JsonObject], 
                     ),
                     "source_position": locator,
                     "source_sha256": row["source_sha256"],
-                    "fragment_sha256": row["body_sha256"],
+                    "fragment_sha256": sha256_bytes(text.encode("utf-8")),
                     "applicable_organization_ids": copy.deepcopy(
                         row["applicable_organization_ids"]
                     ),
@@ -368,15 +450,15 @@ def derive_bundle(repo_root: Path) -> tuple[list[JsonObject], list[JsonObject], 
                     "disclosure_scope": row["disclosure_scope"],
                     "revocation_ref": row.get("revocation_ref"),
                     "status": "ACTIVE",
-                    "text": row["body"],
+                    "text": text,
                     "data_version_digest": data_version_digest,
                     "derivation_review_state": "PACKAGE5_EVIDENCE_CLOSED",
                     "package6_adapter_eligible": True,
                     "simulation_only": True,
                     "publish_allowed": False,
                     "runtime_consumable": False,
-                }
-            )
+                    }
+                )
         dispositions.append(
             {
                 "record_type": "NARRATIVE",
@@ -386,9 +468,19 @@ def derive_bundle(repo_root: Path) -> tuple[list[JsonObject], list[JsonObject], 
                 "package3_review_state": row["import_review_state"],
                 "package5_disposition": disposition,
                 "reason_code": reason,
-                "derived_record_id": output_id,
+                "derived_record_id": output_ids[0] if len(output_ids) == 1 else None,
+                "derived_record_ids": output_ids,
                 "fact_kind": None,
                 "selector_projection": {},
+                "tenant_id": row.get("tenant_id"),
+                "brand_id": row.get("brand_id"),
+                "source_organization_id": row.get("source_organization_id"),
+                "source_store_id": row.get("source_store_id"),
+                "applicable_content_account_ids": copy.deepcopy(
+                    row.get("applicable_content_account_ids", [])
+                ),
+                "authorization_ref": row.get("authorization_ref"),
+                "disclosure_scope": row.get("disclosure_scope"),
             }
         )
 
@@ -400,8 +492,6 @@ def derive_bundle(repo_root: Path) -> tuple[list[JsonObject], list[JsonObject], 
         fact_output_id: str | None = None
         value = copy.deepcopy(row.get("value"))
         selector_projection: JsonObject = {"fact_id": row["fact_id"]}
-        if isinstance(value, dict):
-            selector_projection.update(copy.deepcopy(value))
         if disposition == "ACTIVE_VERIFIED_PRECISE_FACT":
             if grant is None:
                 raise ValueError("active precise fact has no grant")
@@ -449,8 +539,18 @@ def derive_bundle(repo_root: Path) -> tuple[list[JsonObject], list[JsonObject], 
                 "package5_disposition": disposition,
                 "reason_code": reason,
                 "derived_record_id": fact_output_id,
+                "derived_record_ids": [fact_output_id] if fact_output_id else [],
                 "fact_kind": row["fact_kind"],
                 "selector_projection": selector_projection,
+                "tenant_id": row.get("tenant_id"),
+                "brand_id": row.get("brand_id"),
+                "source_organization_id": row.get("organization_id"),
+                "source_store_id": row.get("store_id"),
+                "applicable_content_account_ids": copy.deepcopy(
+                    row.get("applicable_content_account_ids", [])
+                ),
+                "authorization_ref": row.get("authorization_ref"),
+                "disclosure_scope": row.get("disclosure_scope"),
             }
         )
 
@@ -540,8 +640,14 @@ def materialize(repo_root: Path, output_root: Path) -> JsonObject:
             {"path": path, "sha256": digest} for path, digest in sorted(input_hashes.items())
         ],
         "materialization": {
-            "narrative_segmentation": "REUSE_PACKAGE3_NATURAL_LEVEL_ONE_SECTIONS",
-            "activation_rule": "READY_PLUS_SOURCE_TIME_SCOPE_AUTHORIZATION_EVIDENCE_CLOSED",
+            "narrative_segmentation": (
+                "REUSE_PACKAGE3_NATURAL_SECTIONS_WITH_ONE_"
+                "EIGHT_PRODUCT_SUBSECTION_SPLIT"
+            ),
+            "activation_rule": (
+                "READY_PLUS_PACKAGE5_SEMANTIC_DECISION_PLUS_"
+                "SOURCE_TIME_SCOPE_AUTHORIZATION_EVIDENCE_CLOSED"
+            ),
             "date_normalization": "DATE_ONLY_NO_TIMEZONE_TO_UTC_DAY_START_WITH_PRECISION_LABEL",
             "rebuild_mode": "DELETE_AND_REBUILD_TRANSPARENT_JSON",
             "idempotent": True,
