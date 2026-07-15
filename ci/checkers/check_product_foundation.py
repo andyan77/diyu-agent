@@ -298,14 +298,42 @@ URI_REFERENCE_PATTERN = re.compile(r"^[a-z][a-z0-9+.-]*://[^\s]+$")
 USER_VISIBLE_SURFACE_FIELDS = frozenset(
     {"title", "body", "spoken_lines", "CTA", "execution_payload", "surface_units"}
 )
+PREPARE_CASE_INPUT_FIELDS = frozenset(
+    {
+        "principal_id",
+        "content_account_id",
+        "acting_maker_role_id",
+        "confirmed_by_role_id",
+        "confirmed_by_role_ids",
+        "confirmation_scope",
+        "subject_confirmation_ref",
+        "trusted_scope_match",
+        "trusted_scope",
+        "requirement_status",
+        "active_plan_count_for_key",
+        "material_state",
+        "authorization_state",
+        "missing_required",
+        "evaluation_time",
+        "verified_precise_facts",
+        "server_expression_profile_mode",
+        "client_soft_preferences",
+        "experimental_diagnostics",
+        "required_candidate_count",
+    }
+)
 VALIDATE_CASE_INPUT_FIELDS = frozenset(
     {
         "trusted_scope_match",
         "trusted_scope",
         "evaluation_time",
         "verified_precise_facts",
+        "scoped_retrieval_fragments",
         "plan_consistent",
-        "structured_claim_refs_within_plan",
+        "plan_allowed_fact_refs",
+        "plan_allowed_material_refs",
+        "actually_used_fact_refs",
+        "actually_used_material_refs",
         "semantic_fact_review_status",
         "soft_evaluation_scores",
         "authorization_state",
@@ -1374,6 +1402,16 @@ def validate_contract_data(
             and not has_internal_identifier(response["plain_language_reason"]),
             "E_VALIDATE_PLAIN_LANGUAGE_REASON",
         )
+    require(
+        all(
+            response.get("actually_used_fact_refs")
+            == validate_request.get("actually_used_fact_refs")
+            and response.get("actually_used_material_refs")
+            == validate_request.get("actually_used_material_refs")
+            for response in validate_responses.values()
+        ),
+        "E_VALIDATE_RESPONSE_SOURCE_REFS",
+    )
     pass_response = validate_responses.get("pass")
     require(
         isinstance(pass_response, dict)
@@ -2460,7 +2498,10 @@ def fact_rejection_code(
 
 
 def evaluate_case(
-    case: dict[str, Any], identity: dict[str, Any] | None = None
+    case: dict[str, Any],
+    identity: dict[str, Any] | None = None,
+    *,
+    trusted_upstream: bool = False,
 ) -> dict[str, Any]:
     operation = case.get("operation")
     data = case.get("input")
@@ -2509,6 +2550,8 @@ def evaluate_case(
         ):
             return {"decision": "REJECT_UNTRUSTED_IDENTITY"}
     if operation == "consume_material":
+        if not trusted_upstream:
+            return {"decision": "REJECT_UNTRUSTED_UPSTREAM"}
         trusted_scope = data.get("trusted_scope")
         fragment = data.get("retrieval_fragment")
         if (
@@ -2542,20 +2585,20 @@ def evaluate_case(
             return {"decision": "REJECT_FACT_PRECEDENCE_OVERRIDE"}
         return {"decision": "USE_PRECISE_FACT"}
     if operation == "prepare":
+        if not trusted_upstream:
+            return {
+                "decision": "REJECT_UNTRUSTED_UPSTREAM",
+                "light_plan_created": False,
+            }
+        if not set(data).issubset(PREPARE_CASE_INPUT_FIELDS):
+            return {
+                "decision": "REJECT_UNTRUSTED_UPSTREAM_FIELD",
+                "light_plan_created": False,
+            }
         client_soft_preferences = data.get("client_soft_preferences", {})
         if not isinstance(client_soft_preferences, dict) or not set(
             client_soft_preferences
         ).issubset(CLIENT_SOFT_PREFERENCE_FIELDS):
-            return {
-                "decision": "REJECT_HARD_PROHIBITION_OVERRIDE",
-                "light_plan_created": False,
-            }
-        if data.get("client_declared_profile_authority") is True:
-            return {
-                "decision": "REJECT_UNTRUSTED_EXPRESSION_PROFILE",
-                "light_plan_created": False,
-            }
-        if data.get("client_soft_preferences_override_hard_prohibition") is True:
             return {
                 "decision": "REJECT_HARD_PROHIBITION_OVERRIDE",
                 "light_plan_created": False,
@@ -2677,6 +2720,8 @@ def evaluate_case(
             }
         return {"decision": "PREPARE_PLAN", "light_plan_created": True}
     if operation == "validate":
+        if not trusted_upstream:
+            return {"decision": "REJECT_UNTRUSTED_UPSTREAM"}
         if set(data) != VALIDATE_CASE_INPUT_FIELDS:
             return {"decision": "VALIDATE_BLOCK"}
         visible_payload = data.get("candidate_user_visible_surfaces")
@@ -2698,16 +2743,26 @@ def evaluate_case(
         ):
             return {"decision": "REJECT_SCOPE_OVERRIDE"}
         facts = data.get("verified_precise_facts")
-        if not isinstance(trusted_scope, dict) or not isinstance(facts, list):
+        fragments = data.get("scoped_retrieval_fragments")
+        if (
+            not isinstance(trusted_scope, dict)
+            or not isinstance(facts, list)
+            or not isinstance(fragments, list)
+        ):
             return {"decision": "VALIDATE_BLOCK"}
-        if any(not isinstance(fact, dict) for fact in facts):
+        if any(not isinstance(fact, dict) for fact in facts) or any(
+            not isinstance(fragment, dict) for fragment in fragments
+        ):
+            return {"decision": "VALIDATE_BLOCK"}
+        evaluation_time = data.get("evaluation_time")
+        if not is_nonempty_string(evaluation_time):
             return {"decision": "VALIDATE_BLOCK"}
         fact_rejections = [
             fact_rejection_code(
                 fact,
                 trusted_scope,
                 identity,
-                FIXTURE_SERVER_EVALUATION_TIME,
+                evaluation_time,
             )
             for fact in facts
         ]
@@ -2715,9 +2770,58 @@ def evaluate_case(
             return {"decision": "REJECT_SCOPE_OVERRIDE"}
         if any(fact_rejections):
             return {"decision": "VALIDATE_BLOCK"}
-        if not data.get("plan_consistent") or not data.get(
-            "structured_claim_refs_within_plan"
+        fragment_rejections = [
+            narrative_fragment_rejection_code(
+                fragment,
+                trusted_scope,
+                identity,
+                evaluation_time,
+            )
+            for fragment in fragments
+        ]
+        if any(
+            rejection
+            in {
+                "TENANT_MISMATCH",
+                "SOURCE_SCOPE_UNKNOWN",
+                "STORE_SCOPE_MISMATCH",
+                "ACCOUNT_SCOPE_MISMATCH",
+            }
+            for rejection in fragment_rejections
         ):
+            return {"decision": "REJECT_SCOPE_OVERRIDE"}
+        if any(fragment_rejections):
+            return {"decision": "VALIDATE_BLOCK"}
+        reference_lists = (
+            data.get("plan_allowed_fact_refs"),
+            data.get("plan_allowed_material_refs"),
+            data.get("actually_used_fact_refs"),
+            data.get("actually_used_material_refs"),
+        )
+        if any(
+            not isinstance(values, list)
+            or any(not is_nonempty_string(value) for value in values)
+            or len(values) != len(set(values))
+            for values in reference_lists
+        ):
+            return {"decision": "VALIDATE_BLOCK"}
+        plan_fact_refs, plan_material_refs, used_fact_refs, used_material_refs = (
+            set(values) for values in reference_lists
+        )
+        available_fact_refs = {fact.get("fact_id") for fact in facts}
+        available_material_refs = {
+            fragment.get("fragment_id") for fragment in fragments
+        }
+        if (
+            not plan_fact_refs.issubset(available_fact_refs)
+            or not plan_material_refs.issubset(available_material_refs)
+            or not used_fact_refs.issubset(plan_fact_refs)
+            or not used_material_refs.issubset(plan_material_refs)
+            or not used_fact_refs.issubset(available_fact_refs)
+            or not used_material_refs.issubset(available_material_refs)
+        ):
+            return {"decision": "VALIDATE_BLOCK"}
+        if not data.get("plan_consistent"):
             return {"decision": "VALIDATE_REVISE"}
         if data.get("authorization_state") != "GRANTED":
             return {"decision": "VALIDATE_BLOCK"}
@@ -2801,7 +2905,8 @@ def validate_cases(cases: list[dict[str, Any]], identity: dict[str, Any]) -> Non
     for case in cases:
         expected = case.get("expected")
         require(isinstance(expected, dict), f"E_CASE_EXPECTED:{case.get('case_id')}")
-        actual = evaluate_case(case, identity)
+        # The fixture harness supplies trust; no field inside a case can grant it.
+        actual = evaluate_case(case, identity, trusted_upstream=True)
         require(
             actual.get("decision") == expected.get("decision"),
             f"E_CASE_DECISION:{case.get('case_id')}",
@@ -3330,6 +3435,20 @@ def run_selftest() -> dict[str, Any]:
         "E_VALIDATE_SEMANTIC_REVIEW_STATUS",
     )
 
+    mutated_contract = copy.deepcopy(contract)
+    validate_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/validate"
+    )
+    validate_contract["response_examples"]["pass"]["actually_used_fact_refs"] = [
+        "FACT-NOT-USED"
+    ]
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_VALIDATE_RESPONSE_SOURCE_REFS",
+    )
+
     for collection_field, expected_error in (
         ("scoped_retrieval_fragments", "E_PREPARE_FRAGMENT_SAFETY"),
         ("verified_precise_facts", "E_PREPARE_FACT_SAFETY"),
@@ -3512,7 +3631,7 @@ def run_selftest() -> dict[str, Any]:
     ):
         without_optional_assets["input"].pop(field, None)
     require(
-        evaluate_case(without_optional_assets, identity)
+        evaluate_case(without_optional_assets, identity, trusted_upstream=True)
         == {"decision": "PREPARE_PLAN", "light_plan_created": True},
         "E_SELFTEST_ATOM_FREE_PREPARE",
     )
@@ -3525,8 +3644,8 @@ def run_selftest() -> dict[str, Any]:
         "structural_path_ref": "UNKNOWN-PATH",
     }
     require(
-        evaluate_case(with_unknown_experiment_refs, identity)
-        == evaluate_case(without_optional_assets, identity),
+        evaluate_case(with_unknown_experiment_refs, identity, trusted_upstream=True)
+        == evaluate_case(without_optional_assets, identity, trusted_upstream=True),
         "E_SELFTEST_EXPERIMENT_REFS_CHANGED_AUTHORITY",
     )
 
@@ -3548,24 +3667,31 @@ def run_selftest() -> dict[str, Any]:
                 "E_SELFTEST_EXPRESSION_GUIDANCE_AUTHORITY",
             )
 
-    for field, decision in (
-        ("client_declared_profile_authority", "REJECT_UNTRUSTED_EXPRESSION_PROFILE"),
-        (
-            "client_soft_preferences_override_hard_prohibition",
-            "REJECT_HARD_PROHIBITION_OVERRIDE",
-        ),
+    require(
+        evaluate_case(base_prepare, identity).get("decision")
+        == "REJECT_UNTRUSTED_UPSTREAM",
+        "E_SELFTEST_PAYLOAD_CANNOT_DECLARE_TRUST",
+    )
+
+    for field, value in (
+        ("trusted", True),
+        ("verified", True),
+        ("formal_brand_expression_profile", {"mode": "SERVER_RESOLVED"}),
     ):
         mutated_prepare = copy.deepcopy(base_prepare)
-        mutated_prepare["input"][field] = True
+        mutated_prepare["input"][field] = value
         require(
-            evaluate_case(mutated_prepare, identity).get("decision") == decision,
-            f"E_SELFTEST_PREPARE_BOUNDARY:{field}",
+            evaluate_case(mutated_prepare, identity, trusted_upstream=True).get(
+                "decision"
+            )
+            == "REJECT_UNTRUSTED_UPSTREAM_FIELD",
+            f"E_SELFTEST_PREPARE_TRUST_FIELD:{field}",
         )
 
     mutated_prepare = copy.deepcopy(base_prepare)
     mutated_prepare["input"]["client_soft_preferences"] = {"prohibited_phrasing": []}
     require(
-        evaluate_case(mutated_prepare, identity).get("decision")
+        evaluate_case(mutated_prepare, identity, trusted_upstream=True).get("decision")
         == "REJECT_HARD_PROHIBITION_OVERRIDE",
         "E_SELFTEST_CLIENT_SOFT_PREFERENCE_ALLOWLIST",
     )
@@ -3573,12 +3699,17 @@ def run_selftest() -> dict[str, Any]:
     mutated_prepare = copy.deepcopy(base_prepare)
     mutated_prepare["input"]["required_candidate_count"] = 4
     require(
-        evaluate_case(mutated_prepare, identity).get("decision")
+        evaluate_case(mutated_prepare, identity, trusted_upstream=True).get("decision")
         == "REJECT_CANDIDATE_COUNT",
         "E_SELFTEST_CANDIDATE_COUNT",
     )
 
     base_validate = next(case for case in cases if case["case_id"] == "PF-POS-005")
+    require(
+        evaluate_case(base_validate, identity).get("decision")
+        == "REJECT_UNTRUSTED_UPSTREAM",
+        "E_SELFTEST_VALIDATE_REQUIRES_TRUSTED_CONTEXT",
+    )
     for field, invalid_value in (
         ("soft_evaluation_scores", {"naturalness": 95}),
         ("semantic_fact_review_status", "VERIFIED"),
@@ -3586,9 +3717,57 @@ def run_selftest() -> dict[str, Any]:
         mutated_validate = copy.deepcopy(base_validate)
         mutated_validate["input"][field] = invalid_value
         require(
-            evaluate_case(mutated_validate, identity).get("decision")
+            evaluate_case(mutated_validate, identity, trusted_upstream=True).get(
+                "decision"
+            )
             == "VALIDATE_BLOCK",
             f"E_SELFTEST_FAKE_SEMANTIC_RESULT:{field}",
+        )
+
+    for field, invalid_ref in (
+        ("actually_used_fact_refs", "FACT-NOT-IN-PLAN"),
+        ("actually_used_material_refs", "FRAGMENT-NOT-IN-PLAN"),
+    ):
+        mutated_cases = copy.deepcopy(cases)
+        positive_validate = next(
+            case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+        )
+        positive_validate["input"][field] = [invalid_ref]
+        expect_failure(
+            lambda: validate_cases(mutated_cases, identity),
+            "E_CASE_DECISION",
+        )
+
+    for field, invalid_ref in (
+        ("plan_allowed_fact_refs", "FACT-NOT-AVAILABLE"),
+        ("plan_allowed_material_refs", "FRAGMENT-NOT-AVAILABLE"),
+    ):
+        mutated_cases = copy.deepcopy(cases)
+        positive_validate = next(
+            case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+        )
+        positive_validate["input"][field].append(invalid_ref)
+        expect_failure(
+            lambda: validate_cases(mutated_cases, identity),
+            "E_CASE_DECISION",
+        )
+
+    for field, invalid_value in (
+        ("status", "REVOKED"),
+        ("valid_until", "2026-07-13T23:59:59Z"),
+        ("authorization_ref", "AUTH-SIM-NOT-REGISTERED"),
+        ("applicable_content_account_ids", ["ACCOUNT-DIYU-FOUNDER"]),
+    ):
+        mutated_cases = copy.deepcopy(cases)
+        positive_validate = next(
+            case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+        )
+        positive_validate["input"]["scoped_retrieval_fragments"][0][field] = (
+            invalid_value
+        )
+        expect_failure(
+            lambda: validate_cases(mutated_cases, identity),
+            "E_CASE_DECISION",
         )
 
     mutated_cases = copy.deepcopy(cases)
