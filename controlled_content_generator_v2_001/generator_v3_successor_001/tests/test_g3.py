@@ -334,6 +334,27 @@ def main() -> int:
     clean_flags = g3_gates.cn_number_findings(output, request)
     check("cn_num_clean_baseline", clean_flags == [])
 
+    # v3.1 反向（执行包5）：可分离末段免责节拍 >2 条/产品 → 机器硬失败。
+    # 测结构位置（末段落在限度免责、无进行中场景状态）——第3轮"打地鼠"根因门。
+    trio, trio_reqs = [], []
+    for k in range(3):
+        base = tampered_output(body=[*raw["body"][:-1],
+                                     f"耐久那本账，要走正式测试才算得上数，第{k + 1}项那几栏空着。"])
+        out_k, req_k = _clone_for_batch(base, "TD", k)
+        trio.append(out_k)
+        trio_reqs.append(req_k)
+    report = g3_gates.gate_batch(trio, trio_reqs, frozen)
+    check("neg_gate_terminal_disclaim_beat",
+          any("E_G3_TERMINAL_DISCLAIM_BEAT" in c
+              for row in report["per_output"] for c in row["hard_codes"]))
+
+    # v3.1 正向：末段落在进行中的具体场景状态（CP16 式）→ 不误报免责节拍
+    scene_end = tampered_output(body=[*raw["body"][:-1],
+                                      "这会儿这件还挂在预留架上，等她之后带上演出鞋再来对一遍。"])
+    scene_cls = g3_expression.classify_ending(scene_end["body"][-1])
+    check("terminal_scene_ending_not_disclaim",
+          scene_cls != "END_BOUNDARY_DISCLAIM")
+
     # 词典回归锚：上一轮 10 条泄漏的代表句必须命中
     for text in ("图片已经获准上线", "没有把它说成完成", "发布由其他岗位批准",
                  "没有给它补上所属人，也没有把状态写进画面"):

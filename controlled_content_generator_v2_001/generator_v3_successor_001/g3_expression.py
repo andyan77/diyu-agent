@@ -31,7 +31,10 @@ ENDING_ARCHETYPES = [
     "STATE_SNAPSHOT",      # 收在当下状态的静态快照
     "SENSORY_CLOSE",       # 收在一个感官细节（声音/触感/画面）
     "FORWARD_SCHEDULE",    # 收在时间表上的下一个节点
-    "LIMIT_AS_FACT",       # 收在以事实形态陈述的适用限度（禁治理措辞）
+    # v3.1（执行包5）：删除 LIMIT_AS_FACT——它把界限发牌进末段收尾，是第3轮
+    # "可分离末段免责节拍"跨条同构套路的结构源头。改为收在进行中的场景状态/价值
+    # 本身（CP16 6/6 样板：末段落在具体产品/场景状态，限度已溶进非收尾段）。
+    "SCENE_CONTINUATION",  # 收在进行中的具体场景状态/价值（禁限度免责作收束）
 ]
 TITLE_ARCHETYPES = [
     "DETAIL_HOOK",     # 具体细节钩子
@@ -69,7 +72,10 @@ AUDIO_SIGNATURES = [
 BOUNDARY_POSITIONS = [
     "EARLY_WEAVE",           # 限度事实织进前两段
     "MID_WEAVE",             # 限度事实织进中段
-    "LATE_FACT",             # 限度事实作末段事实句（非治理句）
+    # v3.1（执行包5）：删除 LATE_FACT——限度落末段=可分离免责节拍的直接发牌源。
+    # 改为 SCENE_STATE_WEAVE：限度溶进一处进行中的具体场景状态里（非收尾段），
+    # 界限即"那件还挂在预留架上没人穿过"式的物理场景事实，而非独立免责宣告。
+    "SCENE_STATE_WEAVE",     # 限度溶进一处进行中的场景状态（CP16 式，禁作收尾节拍）
     "SPLIT_TWO_POINTS",      # 限度拆成两处小点分布
     "VISUAL_CARRIED",        # 限度由画面表面承载，正文只留痕
     "SPOKEN_CARRIED",        # 限度由口播承载（spoken_format 非 EMPTY 时）
@@ -225,12 +231,32 @@ def classify_opening(body_first: str) -> str:
     return "OPEN_OTHER"
 
 
+# v3.1（执行包5）：可分离末段免责节拍检测。第3轮失败根因=界限被实现为收尾处
+# 一个可分离的免责节拍（"排在后面工位/那几栏空着/要走正式测试才算数/别的不填/
+# 取景之外/没人来问"），跨条修辞动作同构（词面 n-gram 重叠≈0，故旧句族门看不见）。
+# 这里测的是**结构位置**：末段是否被限度/延后/缺料/免责标记主导。
+_BOUNDARY_DISCLAIM_RE = re.compile(
+    r"排在(后面|后头)|后面(的)?工位|没轮到|轮不到|那几?(栏|格)|一栏空|空着|"
+    r"没(有人|人)(来问|能答|问过|上手)|要走(正式|真正)|才算(得上|数)|算不上|"
+    r"取景之外|画框(外|够不到)|镜头(够不着|没(走|扫|摇)到)|不(填|做|算)这(几|一)|"
+    r"别的(格子|栏|款|样)(今天|这次|暂时)?(不|没|另)|排在这一?轮之外|这趟没")
+# 进行中的具体场景状态/价值信号（末段落在此=合规收束，CP16 式）
+_SCENE_STATE_RE = re.compile(
+    r"(挂|摆|放|搁|立|铺|叠|收|贴|压|提|绷|夹|锁|翻)(在|着|好|住|回|上|下)|"
+    r"这会儿|这一?回镜头|已经(定|成|挂|摆|收)|正(坐|站|走|试|穿|翻|拍|量)|"
+    r"手(里|上)|身上|上身|台(上|面)|架(上|子)")
+
+
 def classify_ending(body_last: str) -> str:
     s = body_last.strip()
     if _GOV_DEFER_RE.search(s[-40:]):
         return "END_GOV_DEFER"  # 禁用类：治理让渡收尾（结尾位置）
     if _STATUS_DISCLAIM_RE.search(s[-32:]):
         return "END_STATUS_DISCLAIM"  # 上一轮 CP01/06 模板："没有X确认/结论/状态"
+    # v3.1：末段限度免责主导、且无进行中场景状态收束 → 可分离免责节拍（禁用类）
+    disc = len(_BOUNDARY_DISCLAIM_RE.findall(s[-48:]))
+    if disc >= 1 and not _SCENE_STATE_RE.search(s[-24:]):
+        return "END_BOUNDARY_DISCLAIM"
     if s.endswith("？"):
         return "END_QUESTION"
     if _PENDING_RE.search(s[-30:]):
@@ -310,6 +336,15 @@ def concentration_findings(
             if sig["ending_class"] == "END_GOV_DEFER":
                 findings.append({"kind": "GOV_DEFER_ENDING", "profile_id": profile_id,
                                  "class": "END_GOV_DEFER", "request_ids": [rid]})
+        # v3.1（执行包5）：可分离末段免责节拍——契约禁止（末段须落价值/场景状态）。
+        # 同产品任意一条即发现，>cap 升 HARD（见 gate_batch）；这是第3轮"打地鼠"
+        # 收敛的结构位置门，改词不能逃（改词仍触位置+密度信号，唯一出路=真溶景）。
+        disc_ids = [rid for rid, sig in rows
+                    if sig["ending_class"] == "END_BOUNDARY_DISCLAIM"]
+        if disc_ids:
+            findings.append({"kind": "TERMINAL_DISCLAIM_BEAT", "profile_id": profile_id,
+                             "class": "END_BOUNDARY_DISCLAIM",
+                             "request_ids": sorted(disc_ids)})
     # v3：限度句族 / 声音写法模板家族 集中度（第2轮病灶机器化，per-CP cap 同上）
     findings += _family_concentration(outputs, per_profile_cap)
     return findings

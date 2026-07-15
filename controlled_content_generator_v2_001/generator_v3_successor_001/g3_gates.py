@@ -288,6 +288,23 @@ def gate_batch(
     }
     for finding in concentration:
         kind = str(finding["kind"])
+        # v3.1（执行包5）：可分离末段免责节拍——契约禁末段落限度免责。
+        # 单条 → FLAG（作者自检+人审信号）；同产品 >2 条 → HARD（模板收敛坐实）。
+        # 测的是结构位置非句族，改词不能逃（唯一出路=真把末段落价值/场景状态）。
+        if kind == "TERMINAL_DISCLAIM_BEAT":
+            ids = finding["request_ids"]
+            if len(ids) > 2:
+                for row in per_output:
+                    if row["request_id"] in ids:
+                        row["hard_codes"] = sorted(
+                            set(row["hard_codes"]) | {"E_G3_TERMINAL_DISCLAIM_BEAT"})
+                        row["machine_first_fail"] = True
+            else:
+                for row in per_output:
+                    if row["request_id"] in ids:
+                        row["flag_codes"] = sorted(
+                            set(row["flag_codes"]) | {"F_G3_TERMINAL_DISCLAIM_BEAT"})
+            continue
         code = _HARD_CONCENTRATION.get(kind)
         if code:
             if kind != "GOV_DEFER_ENDING":
