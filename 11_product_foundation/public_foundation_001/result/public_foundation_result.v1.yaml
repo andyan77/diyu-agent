@@ -2,7 +2,7 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 9f5528ded2297b74a4ad1c10cfb61cb4c9f5ae77ca44daea86ede5d77bb6ac20
+  candidate_snapshot_digest: 95fb58ee71e3c19741c1d5352990edd677e0446db17ce3f7a400f23c11684453
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
@@ -120,6 +120,28 @@ public_foundation_result:
       verdict: PASS
       score: 98
       blocker_ids: []
+    disposition: REMEDIATED_IN_SAME_TARGETED_REVIEW_CONTINUATION
+  - attempt: 6
+    reviewed_commit: 8e7fd31575d58d1fb4f133a83c21e7d32df60763
+    reviewed_snapshot_digest: 9f5528ded2297b74a4ad1c10cfb61cb4c9f5ae77ca44daea86ede5d77bb6ac20
+    review_scope: SUCCESSOR_DELEGATION_AND_NECESSARY_REGRESSION_ONLY
+    architecture_review:
+      reviewer_agent_id: 019f6436-f2b8-75e2-a945-4ff4d4de8ee9
+      reviewer_instance_or_session_id: session://019f6436-f2b8-75e2-a945-4ff4d4de8ee9/phase-a-targeted-successor
+      review_run_id: PHASEA-TARGETED-ARCH-8E7FD31-002
+      append_only_signature_or_attestation: agent-attestation://019f6436-f2b8-75e2-a945-4ff4d4de8ee9/PHASEA-TARGETED-ARCH-8E7FD31-002/8e7fd31575d58d1fb4f133a83c21e7d32df60763
+      verdict: PASS
+      score: 96
+      blocker_ids: []
+    trust_fact_safety_review:
+      reviewer_agent_id: 019f6436-f35e-78a0-94e0-eae8a5c69795
+      reviewer_instance_or_session_id: session://019f6436-f35e-78a0-94e0-eae8a5c69795/phase-a-targeted-successor
+      review_run_id: PHASEA-TARGETED-TRUST-8E7FD31-002
+      append_only_signature_or_attestation: agent-attestation://019f6436-f35e-78a0-94e0-eae8a5c69795/PHASEA-TARGETED-TRUST-8E7FD31-002/8e7fd31575d58d1fb4f133a83c21e7d32df60763
+      verdict: FAIL
+      score: 84
+      blocker_ids:
+      - TF-SUCCESSOR-CI-METADATA-002
     disposition: REMEDIATED_IN_SAME_TARGETED_REVIEW_CONTINUATION
   delivery_counts:
     simulated_tenant_count: 1

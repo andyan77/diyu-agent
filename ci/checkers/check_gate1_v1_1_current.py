@@ -768,13 +768,17 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
     if not workflow.is_file():
         return False
     document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
-    if not isinstance(document, dict) or not isinstance(document.get("jobs"), dict):
+    if (
+        not isinstance(document, dict)
+        or not isinstance(document.get("jobs"), dict)
+        or "defaults" in document
+        or "env" in document
+    ):
         return False
     job = document["jobs"].get("checker-compatibility")
     if (
         not isinstance(job, dict)
-        or "if" in job
-        or "continue-on-error" in job
+        or set(job) != {"name", "runs-on", "steps"}
         or not isinstance(job.get("steps"), list)
     ):
         return False
@@ -789,8 +793,8 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         ]
         if (
             len(matching) != 1
-            or "if" in matching[0]
-            or "continue-on-error" in matching[0]
+            or set(matching[0]) != {"name", "env", "run"}
+            or matching[0].get("env") != {"PYTHONDONTWRITEBYTECODE": "1"}
         ):
             return False
 
@@ -6732,6 +6736,26 @@ def selftest(root: Path) -> int:
             f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n",
             f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n"
             "        continue-on-error: true\n",
+        ),
+        (
+            "downstream_job_defaults_rejected",
+            "  checker-compatibility:\n",
+            "  checker-compatibility:\n"
+            "    defaults:\n"
+            "      run:\n"
+            "        working-directory: 11_product_foundation\n",
+        ),
+        (
+            "downstream_normal_step_shell_override_rejected",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n"
+            "        shell: bash -n {0}\n",
+        ),
+        (
+            "downstream_optimized_working_directory_rejected",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n"
+            "        working-directory: 11_product_foundation\n",
         ),
     )
     for case_name, marker, replacement in workflow_metadata_mutations:
