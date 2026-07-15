@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "477a6929bad0ce772e25a070466c28024ffba31ab565c5d8a17aa1a9bdaf8f02"
+    "b54ed6c8b89665ebe257549fad52cc82687906bc53e9f5cef18ad74d9de13190"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -134,6 +134,13 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
     (
         Path("14_dify_shell/dify_content_shell_001"),
         Path("14_dify_shell/dify_content_shell_001/check_dify_content_shell.py"),
+    ),
+    (
+        Path("15_brand_retrieval/brand_fact_retrieval_001"),
+        Path(
+            "15_brand_retrieval/brand_fact_retrieval_001/"
+            "check_brand_fact_retrieval.py"
+        ),
     ),
 )
 DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
@@ -853,7 +860,7 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
 
 
 def is_registered_downstream_successor_write_path(root: Path, path: Path) -> bool:
-    """Delegate only an existing reserved root with its registered package checker."""
+    """Delegate only an existing registered root with its package checker."""
 
     for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS:
         if not path.is_relative_to(package_root):

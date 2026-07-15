@@ -1,0 +1,48 @@
+{
+  "candidate_commit": null,
+  "candidate_snapshot_digest": "3d2471ddec02791e8e89de303ba84638d1524c13c6ca24b3b93427e333fd7256",
+  "checks": {
+    "deterministic_materialization": true,
+    "expression_partition_non_authoritative": true,
+    "filter_before_ranking": true,
+    "package2_output_shape_compatible": true,
+    "precise_fact_channel_independent": true,
+    "source_and_authorization_closure": true
+  },
+  "core_numbers": {
+    "changed": false,
+    "historical_86": 86,
+    "reference_120": 120,
+    "target_300": 300
+  },
+  "counts": {
+    "active_retrieval_fragments": 23,
+    "active_verified_precise_facts": 5,
+    "fixture_cases": 28,
+    "hold_records": 178
+  },
+  "external_calls": {
+    "database": 0,
+    "dify": 0,
+    "model": 0,
+    "network": 0,
+    "production": 0
+  },
+  "independent_reviews": [],
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "database_imported": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false,
+    "retrieval_ready": false
+  },
+  "schema_version": "v1.0",
+  "status": "CANDIDATE_PENDING_INDEPENDENT_REVIEWS",
+  "task_id": "DIYU_BRAND_FACT_RETRIEVAL_001"
+}

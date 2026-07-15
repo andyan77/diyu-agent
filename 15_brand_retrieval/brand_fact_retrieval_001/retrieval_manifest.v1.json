@@ -1,0 +1,173 @@
+{
+  "artifacts": [
+    {
+      "byte_size": 2419,
+      "path": "data/expression_candidates.v1.json",
+      "record_count": 1,
+      "sha256": "6a8e9fbcce5588cc73b58fe20c3d3fdeb0f13cab6297a148a8dccc5ae77c4155"
+    },
+    {
+      "byte_size": 56010,
+      "path": "data/retrieval_fragments.v1.jsonl",
+      "record_count": 23,
+      "sha256": "6e3e434822417978cd5079f19e551741c00d4aa80811384ee533a9a9139b620b"
+    },
+    {
+      "byte_size": 80636,
+      "path": "data/source_dispositions.v1.jsonl",
+      "record_count": 206,
+      "sha256": "117b9d92936e604a6d17ac42cb333190423dbd4b501947e2df2408dc34e6ac75"
+    },
+    {
+      "byte_size": 5976,
+      "path": "data/verified_precise_facts.v1.jsonl",
+      "record_count": 5,
+      "sha256": "97e4b517a8567495407f1ca5e5ba053ec925d8ca56579aa88e5d23a689787393"
+    }
+  ],
+  "baseline_master_commit": "8475fdf1043e820f37c763b45ee680ea1a98b1e0",
+  "core_numbers": {
+    "historical_86": 86,
+    "reference_120": 120,
+    "target_300": 300
+  },
+  "counts": {
+    "active_retrieval_fragments": 23,
+    "active_verified_precise_facts": 5,
+    "expression_example_candidates": 3,
+    "hold_reason_counts": {
+      "EXPLICIT_FUTURE_SIMULATION_NOT_OBSERVED": 15,
+      "NO_MATCHING_NARRATIVE_DISCLOSURE_GRANT": 5,
+      "PACKAGE5_MISSING_OBSERVATION_TIME": 8,
+      "PACKAGE5_RECONFIRMATION_REQUIRED": 1,
+      "REQUEST_AND_DECISION_SCENARIO_ONLY": 21,
+      "SCOPE_OR_SEMANTIC_REVIEW_REQUIRED": 33,
+      "SOURCE_REQUIRES_CURRENT_DAY_RECONFIRMATION": 1,
+      "SOURCE_REQUIRES_CURRENT_STATE_RECONFIRMATION": 1,
+      "SOURCE_SCOPE_NOT_IN_PUBLIC_IDENTITY_CONTRACT": 93
+    },
+    "hold_records": 178,
+    "package3_narrative_input": 197,
+    "package3_precise_fact_input": 9,
+    "source_dispositions": 206
+  },
+  "data_version_digest": "391ba3397855bbb3f97c0ac66c28d46c12ceb37aaee901d94907ddaeec22a69a",
+  "external_calls": {
+    "database": 0,
+    "dify": 0,
+    "model": 0,
+    "network": 0,
+    "production": 0
+  },
+  "fixture": {
+    "case_count": 28,
+    "path": "fixtures/retrieval_cases.v1.jsonl",
+    "sha256": "dc0dc6d82f03cceea873e943e549017ac5d9e399f52152321dcda2a1a5f1467e"
+  },
+  "input_anchors": [
+    {
+      "path": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+      "sha256": "a3aec92fdcc22635bb07bc5d2595ebaa5cfa1f1c9d5fad42cc39481808bbc1af"
+    },
+    {
+      "path": "11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml",
+      "sha256": "65b8242b9b760e64f8e441c4334c68fa76f6dc3a11e2fe2f8f62ad6a887c3cbc"
+    },
+    {
+      "path": "12_expression_service/expression_runtime_adapter_001/service_manifest.v1.yaml",
+      "sha256": "ca354c12a30990ac84e2267bc22b427450804c18ff44b6cb50a71a79ff56c172"
+    },
+    {
+      "path": "13_brand_data/brand_data_import_001/data/example_references.v1.jsonl",
+      "sha256": "744ea4c5df6630e36f077980f53bd95a78d055fb81821257d376534ff034bb1c"
+    },
+    {
+      "path": "13_brand_data/brand_data_import_001/data/expression_import_candidates.v1.json",
+      "sha256": "f5dade80ab3d3ffab8cc7aa1cedab3ddf53a239a9efef8f8375ab547859c9189"
+    },
+    {
+      "path": "13_brand_data/brand_data_import_001/data/narrative_units.v1.jsonl",
+      "sha256": "668700fd0bb7c41ccc1e3d2e9727132f407abb35b5b4c53717a62e18b4f656c9"
+    },
+    {
+      "path": "13_brand_data/brand_data_import_001/data/precise_facts.v1.jsonl",
+      "sha256": "85a77bd70e07d99d31579028306e50aa312d9a94856f0875178aa16dfabe1bf6"
+    },
+    {
+      "path": "13_brand_data/brand_data_import_001/materialization_manifest.v1.json",
+      "sha256": "9f2d86c153e0dbbf2f184a3552b7a58bedf0f10b552ac62603f040da6e96d848"
+    }
+  ],
+  "materialization": {
+    "activation_rule": "READY_PLUS_SOURCE_TIME_SCOPE_AUTHORIZATION_EVIDENCE_CLOSED",
+    "binary_index_created": false,
+    "date_normalization": "DATE_ONLY_NO_TIMEZONE_TO_UTC_DAY_START_WITH_PRECISION_LABEL",
+    "idempotent": true,
+    "narrative_segmentation": "REUSE_PACKAGE3_NATURAL_LEVEL_ONE_SECTIONS",
+    "production_semantic_quality_claimed": false,
+    "rebuild_mode": "DELETE_AND_REBUILD_TRANSPARENT_JSON"
+  },
+  "materialized_at_fixed_evaluation_time": "2026-07-15T00:00:00Z",
+  "output_contract": {
+    "fact_required_fields": [
+      "fact_id",
+      "tenant_id",
+      "brand_id",
+      "organization_id",
+      "store_id",
+      "applicable_content_account_ids",
+      "fact_kind",
+      "value",
+      "source_ref",
+      "effective_at",
+      "valid_until",
+      "authorization_ref",
+      "disclosure_scope",
+      "status"
+    ],
+    "fragment_required_fields": [
+      "fragment_id",
+      "tenant_id",
+      "brand_id",
+      "source_organization_id",
+      "source_store_id",
+      "source_ref",
+      "applicable_organization_ids",
+      "applicable_store_ids",
+      "applicable_content_account_ids",
+      "observed_at",
+      "valid_until",
+      "authorization_ref",
+      "authorization_state",
+      "disclosure_scope",
+      "status"
+    ],
+    "parallel_context_bundle_created": false,
+    "plan_or_generator_created": false,
+    "scoped_retrieval_fragments_field": "scoped_retrieval_fragments",
+    "verified_precise_facts_field": "verified_precise_facts"
+  },
+  "policy_version": "pkg5-evidence-closed-filter-first-v1",
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "database_imported": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false,
+    "retrieval_ready": false
+  },
+  "schema_version": "v1.0",
+  "simulation_boundary": {
+    "package2_prepare_called": false,
+    "package6_adapter_eligible": true,
+    "publish_allowed": false,
+    "runtime_consumable": false,
+    "simulation_only": true
+  },
+  "task_id": "DIYU_BRAND_FACT_RETRIEVAL_001"
+}
