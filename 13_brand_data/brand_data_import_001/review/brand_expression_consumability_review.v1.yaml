@@ -4,7 +4,7 @@ review:
   reviewer_identity_id: codex-independent-expression-reviewer-001
   session_id: 019f653c-1e35-7730-b3d4-14528f905c6a
   run_record_id: EXPRESSION-RERUN-20260715-002
-  candidate_commit: 627049c432d87c9cea96976458d3349aac46eb42
+  candidate_commit: 6d294feb05f759f4657537b402a2d09863ae7d20
   scope: brand_expression_and_package_5_consumability
   score: 100
   verdict: PASS
@@ -30,5 +30,7 @@ review:
   - Emitted precise fact kinds are the permitted subset SKU, SPECIFICATION, and STOCK; the unsupported-kind negative case passes.
   - BD-FACT-006 preserves twelve affected samples and paused shipment state; BD-FACT-009 preserves the Wuhan out-of-stock statement; neither invents inventory quantity.
   - All 11 accounts retain the public neutral profile, all six modes match the public contract, all three examples close to source ranges, and every expression authority and publishability flag remains false.
+  - The nine snapshots are R100 path-only renames to source-01.md through source-09.md; original external filenames, bytes, hashes, locators, and all semantic data blobs are unchanged.
+  - Under core.quotePath=true, the package checks and CI Gate 1 checker plus selftest pass.
   - All readiness flags remain false, all external-call counts remain zero, and the 300/120/86 protected assets remain unaffected.
   findings: []
