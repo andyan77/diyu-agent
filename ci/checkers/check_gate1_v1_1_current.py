@@ -80,6 +80,27 @@ P4_CONDITIONAL_COMPAT_PATHS = frozenset(
         P3_TASK_ROOT / "p3_final_r1.py",
     }
 )
+PUBLIC_FOUNDATION_ROOT = Path("11_product_foundation/public_foundation_001")
+PUBLIC_FOUNDATION_EXACT_PATHS = frozenset(
+    {
+        Path(".github/workflows/ci.yml"),
+        Path("AGENTS.md"),
+        Path("README.md"),
+        Path("ci/checkers/check_product_foundation.py"),
+        Path("project-infra/current_product_status.v1.yaml"),
+        Path("project-infra/product_workspace_manifest.v1.yaml"),
+    }
+)
+PUBLIC_FOUNDATION_CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
+PUBLIC_FOUNDATION_RESULT_PATH = (
+    PUBLIC_FOUNDATION_ROOT / "result/public_foundation_result.v1.yaml"
+)
+P4_THIRD_TOOL_FREEZE_PATH = (
+    P4_THIRD_TASK_ROOT / "freeze/tool_freeze.v1.0.yaml"
+)
+PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
+    "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
+)
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/current_gate1_owner.v0.1.yaml"
@@ -636,6 +657,88 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
     )
 
 
+def is_public_foundation_write_path(path: Path) -> bool:
+    """Delegate only the fixed product-foundation surface to its current checker."""
+
+    return (
+        path.is_relative_to(PUBLIC_FOUNDATION_ROOT)
+        or path in PUBLIC_FOUNDATION_EXACT_PATHS
+    )
+
+
+def public_foundation_checker_handoff_is_valid(root: Path) -> bool:
+    """Validate the frozen predecessor identity before delegating its successor."""
+
+    try:
+        freeze = load_yaml(root / P4_THIRD_TOOL_FREEZE_PATH).get(
+            "third_p4_tool_freeze"
+        )
+        result = load_yaml(root / PUBLIC_FOUNDATION_RESULT_PATH).get(
+            "public_foundation_result"
+        )
+        if not isinstance(freeze, dict) or not isinstance(result, dict):
+            return False
+        tool_files = freeze.get("tool_file_sha256")
+        return (
+            freeze.get("tool_freeze_digest")
+            == object_digest(freeze, "tool_freeze_digest")
+            and isinstance(tool_files, dict)
+            and tool_files.get(CURRENT_CHECKER_PATH.as_posix())
+            == PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256
+            and result.get("task_id")
+            == "DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001"
+            and (root / PUBLIC_FOUNDATION_CHECKER_PATH).is_file()
+        )
+    except (OSError, TypeError, ValueError, yaml.YAMLError):
+        return False
+
+
+def filter_public_foundation_checker_handoff(
+    root: Path, errors: list[dict[str, str]]
+) -> list[dict[str, str]]:
+    """Suppress only the predecessor's expected self-drift after a valid handoff."""
+
+    if not public_foundation_checker_handoff_is_valid(root):
+        return errors
+    return [
+        error
+        for error in errors
+        if not (
+            error.get("code") == "E_T3_TOOL_FILE_DRIFT"
+            and error.get("detail") == CURRENT_CHECKER_PATH.as_posix()
+        )
+    ]
+
+
+def install_public_foundation_recovery_handoff(recovery_guard: Any) -> None:
+    """Wrap the frozen P4 validator without changing its on-disk implementation."""
+
+    if getattr(recovery_guard, "_public_foundation_handoff_installed", False):
+        return
+    frozen_loader = recovery_guard._load_third_guard
+
+    def compatible_loader(root: Path) -> Any:
+        third_guard = frozen_loader(root)
+        frozen_validate_tool_freeze = third_guard._validate_tool_freeze
+
+        def compatible_validate_tool_freeze(
+            candidate_root: Path, errors: list[dict[str, str]]
+        ) -> None:
+            frozen_errors: list[dict[str, str]] = []
+            frozen_validate_tool_freeze(candidate_root, frozen_errors)
+            errors.extend(
+                filter_public_foundation_checker_handoff(
+                    candidate_root, frozen_errors
+                )
+            )
+
+        third_guard._validate_tool_freeze = compatible_validate_tool_freeze
+        return third_guard
+
+    recovery_guard._load_third_guard = compatible_loader
+    recovery_guard._public_foundation_handoff_installed = True
+
+
 def unexpected_write_paths(paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
@@ -648,6 +751,8 @@ def unexpected_write_paths(paths: set[Path]) -> list[str]:
             or path.is_relative_to(P4_AUTHOR_RECOVERY_TASK_ROOT)
             or path.is_relative_to(P4_THIRD_TASK_ROOT)
         ):
+            continue
+        if is_public_foundation_write_path(path):
             continue
         if path not in {
             CURRENT_OWNER_PATH,
@@ -805,6 +910,7 @@ def validate_p4_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         and not path.is_relative_to(P4_RESEALED_TASK_ROOT)
         and not path.is_relative_to(P4_AUTHOR_RECOVERY_TASK_ROOT)
         and not path.is_relative_to(P4_THIRD_TASK_ROOT)
+        and not is_public_foundation_write_path(path)
         and path not in allowed_exact
     )
     if unexpected:
@@ -5596,9 +5702,10 @@ def validate(root: Path) -> list[dict[str, str]]:
         if str(module_root) not in sys.path:
             sys.path.insert(0, str(module_root))
         try:
-            from recovery_guard import validate_recovery
+            import recovery_guard
 
-            errors.extend(validate_recovery(root))
+            install_public_foundation_recovery_handoff(recovery_guard)
+            errors.extend(recovery_guard.validate_recovery(root))
         except (ImportError, OSError, TypeError, ValueError) as exc:
             add_error(errors, "E_P4_AUTHOR_RECOVERY_GUARD_IMPORT", str(exc))
     if (root / P3_TASK_ROOT).exists() and not successor_active:
@@ -6361,6 +6468,42 @@ def selftest(root: Path) -> int:
         failures.append(
             {"case": "unauthorized_path", "expected": "E_WRITE_SURFACE", "actual": []}
         )
+    if unexpected_write_paths(
+        {PUBLIC_FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml"}
+    ):
+        failures.append(
+            {
+                "case": "public_foundation_delegation",
+                "expected": "delegated to check_product_foundation.py",
+                "actual": ["E_WRITE_SURFACE"],
+            }
+        )
+    retained_handoff_errors = filter_public_foundation_checker_handoff(
+        root,
+        [
+            {
+                "code": "E_T3_TOOL_FILE_DRIFT",
+                "detail": CURRENT_CHECKER_PATH.as_posix(),
+            },
+            {
+                "code": "E_T3_TOOL_FILE_DRIFT",
+                "detail": "historical/other_frozen_tool.py",
+            },
+        ],
+    )
+    if retained_handoff_errors != [
+        {
+            "code": "E_T3_TOOL_FILE_DRIFT",
+            "detail": "historical/other_frozen_tool.py",
+        }
+    ]:
+        failures.append(
+            {
+                "case": "public_foundation_historical_tool_handoff",
+                "expected": "only the exact predecessor self-drift is delegated",
+                "actual": retained_handoff_errors,
+            }
+        )
     if (root / P1B_MATERIALIZER_PATH).exists():
         p1b_selftest = subprocess.run(
             [sys.executable, str(root / P1B_MATERIALIZER_PATH), "--selftest"],
@@ -6504,9 +6647,10 @@ def selftest(root: Path) -> int:
         if str(successor_root) not in sys.path:
             sys.path.insert(0, str(successor_root))
         try:
-            from recovery_guard import selftest as recovery_selftest
+            import recovery_guard
 
-            if recovery_selftest(root) != 0:
+            install_public_foundation_recovery_handoff(recovery_guard)
+            if recovery_guard.selftest(root) != 0:
                 failures.append(
                     {
                         "case": "p4_author_recovery_negative_tamper_suite",

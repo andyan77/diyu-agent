@@ -2,7 +2,7 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 73524bec6815d43654a52e15559be133b4eaa549dd20b06041abfc6574d6f262
+  candidate_snapshot_digest: 42bfa37e3b25e7dacb21e1a7cb8f9c9e0ecfcb7790e89caabc5f2d8ce0cc7ebe
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
@@ -29,6 +29,21 @@ public_foundation_result:
   external_provider_audit_basis: NO_PROVIDER_ADAPTER_OR_CALL_PATH_IN_AUTHORIZED_DIFF
   continuous_integration_extended: true
   continuous_deployment_implemented: false
+  compatibility_repair:
+    trigger: REMOTE_REQUIRED_CHECK_FAILURE_AFTER_FOUNDATION_CANDIDATE_PUSH
+    observed_run_id: 29378035598
+    observed_run_url: https://github.com/andyan77/diyu-agent/actions/runs/29378035598
+    observed_error_codes:
+    - E_WRITE_SURFACE
+    - E_P4_WRITE_SURFACE
+    predecessor_checker: ci/checkers/check_gate1_v1_1_current.py
+    predecessor_as_built_sha256: 1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8
+    successor_checker_sha256: cdb6ef3afdc6ac903babd50196431ef20e0763daa38b82501c2c03b17ad40b3f
+    repair_shape: EXACT_FOUNDATION_SURFACE_DELEGATION_WITH_FROZEN_PREDECESSOR_IDENTITY
+    frozen_business_asset_mutation_count: 0
+    unrelated_historical_tool_drift_still_rejected: true
+    active_component_tamper_still_rejected: true
+    unauthorized_write_path_still_rejected: true
   package_unlock:
     current_candidate_state: LOCKED
     unlock_condition: FOUNDATION_TREE_MERGED_TO_MASTER_AND_REQUIRED_CHECKS_GREEN

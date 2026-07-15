@@ -36,6 +36,7 @@ TRUST_REVIEW_PATH = FOUNDATION_ROOT / "review/trust_fact_safety_review.v1.yaml"
 COORDINATOR_PATH = FOUNDATION_ROOT / "review/coordinator_decision.v1.yaml"
 STATUS_PATH = Path("project-infra/current_product_status.v1.yaml")
 MANIFEST_PATH = Path("project-infra/product_workspace_manifest.v1.yaml")
+LEGACY_GATE1_CHECKER_PATH = Path("ci/checkers/check_gate1_v1_1_current.py")
 CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
 WORKFLOW_PATH = Path(".github/workflows/ci.yml")
 
@@ -64,6 +65,7 @@ SNAPSHOT_PATHS = (
     CASES_PATH,
     STATUS_PATH,
     MANIFEST_PATH,
+    LEGACY_GATE1_CHECKER_PATH,
     CHECKER_PATH,
     WORKFLOW_PATH,
 )
@@ -1402,7 +1404,23 @@ def run_selftest() -> dict[str, Any]:
             "E_FOUNDATION_FILE_SET",
         )
 
-    return {"selftest_cases": 8, "result": "PASS"}
+    with tempfile.TemporaryDirectory(
+        prefix="product-foundation-history-tamper-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        for relative_path, _, _ in EXPECTED_EXPRESSION_ASSETS.values():
+            source = ROOT / relative_path
+            destination = temp_root / relative_path
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+        tampered = temp_root / EXPECTED_EXPRESSION_ASSETS["ACTIVE_COMPONENTS"][0]
+        tampered.write_bytes(tampered.read_bytes() + b"\n")
+        expect_failure(
+            lambda: validate_expression_baseline(temp_root, contract),
+            "E_ASSET_LIVE_DIGEST:ACTIVE_COMPONENTS",
+        )
+
+    return {"selftest_cases": 9, "result": "PASS"}
 
 
 def parse_args() -> argparse.Namespace:
