@@ -144,6 +144,10 @@ EXPRESSION_PLAN_FIELDS = frozenset(
         "ending_archetype",
         "title_archetype",
         "narrative_arc",
+        "body_architecture",
+        "spoken_format",
+        "audio_signature",
+        "boundary_position",
         "boundary_realization",
         "forbidden_patterns",
     }
@@ -303,7 +307,9 @@ def validate_request(request: Mapping[str, Any]) -> None:
     require(set(plan) == EXPRESSION_PLAN_FIELDS, "E_EXPRESSION_PLAN_FIELDS",
             ",".join(sorted(set(plan) ^ EXPRESSION_PLAN_FIELDS)))
     for key in ("plan_id", "opening_archetype", "ending_archetype",
-                "title_archetype", "narrative_arc", "boundary_realization"):
+                "title_archetype", "narrative_arc", "body_architecture",
+                "spoken_format", "audio_signature", "boundary_position",
+                "boundary_realization"):
         _text(plan.get(key), f"E_EXPRESSION_PLAN_VALUE:{key}")
     _text_list(plan.get("forbidden_patterns"), "E_EXPRESSION_PLAN_FORBIDDEN",
                allow_empty=True)

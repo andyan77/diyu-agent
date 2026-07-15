@@ -33,16 +33,24 @@ PKG1 = Path(__file__).resolve().parent
 GATE1 = ROOT / "controlled_content_generator_v2_001/gate1_v1_1_001"
 P5 = GATE1 / "p5_p6_300_baseline_scale_and_freeze_001"
 
-BATCH_ID = "PKG1R1"
+import os  # noqa: E402
+
+ROUND = int(os.environ.get("PKG1_ROUND", "1"))
+BATCH_ID = f"PKG1R{ROUND}"
+_RD = PKG1 if ROUND == 1 else PKG1 / f"round{ROUND}"
+# 场景基座跨轮冻结不变；round≥2 的请求/输出/审查/结果落在 round 子目录
 SCENARIOS = PKG1 / "inputs/scenarios.g3.v1.jsonl"
-REQUESTS = PKG1 / "inputs/requests.g3.v1.jsonl"
-INPUT_FREEZE = PKG1 / "inputs/input_freeze.v1.yaml"
-AUTHOR_RAW_DIR = PKG1 / "outputs/author_raw"
-FIRST_OUTPUTS = PKG1 / "outputs/first_outputs.g3.v1.jsonl"
-GATE_REPORT = PKG1 / "outputs/machine_gate_report.v1.json"
-BLIND_PACKET = PKG1 / "review/blind/neutral_packet.v1.jsonl"
-BLIND_MAPPING = PKG1 / "review/blind/neutral_mapping.v1.jsonl"
-AUTHOR_INSTRUCTION = G3 / "contract/g3_author_instruction.v2.0.md"
+REQUESTS = _RD / "inputs/requests.g3.v1.jsonl"
+INPUT_FREEZE = _RD / "inputs/input_freeze.v1.yaml"
+AUTHOR_RAW_DIR = _RD / "outputs/author_raw"
+FIRST_OUTPUTS = _RD / "outputs/first_outputs.g3.v1.jsonl"
+GATE_REPORT = _RD / "outputs/machine_gate_report.v1.json"
+BLIND_PACKET = _RD / "review/blind/neutral_packet.v1.jsonl"
+BLIND_MAPPING = _RD / "review/blind/neutral_mapping.v1.jsonl"
+AUTHOR_INSTRUCTION = G3 / ("contract/g3_author_instruction.v2.0.md" if ROUND == 1
+                           else "contract/g3_author_instruction.v2.1.md")
+REVIEW_DIR = _RD / "review"
+RESULT_DIR = _RD / "result"
 
 G3_MODULES = [
     "g3_author_contract.py", "g3_lexicon.py", "g3_expression.py",
@@ -85,15 +93,17 @@ def frozen_corpus() -> dict[str, str]:
     return corpus
 
 
-def authors_by_profile() -> dict[str, dict[str, str]]:
-    return {
-        f"CP{n:02d}": {
-            "author_identity": f"G3-AUTHOR-{BATCH_ID}-CP{n:02d}",
-            "author_session_logical_id": f"G3-AUTHOR-SESSION-{BATCH_ID}-CP{n:02d}",
-            "author_platform_agent_id": f"G3-AUTHOR-SESSION-{BATCH_ID}-CP{n:02d}",
-        }
-        for n in range(1, 21)
-    }
+def authors_by_profile() -> dict[str, Any]:
+    def author(cp: str, suffix: str) -> dict[str, str]:
+        sid = f"G3-AUTHOR-SESSION-{BATCH_ID}-{cp}{suffix}"
+        return {"author_identity": f"G3-AUTHOR-{BATCH_ID}-{cp}{suffix}",
+                "author_session_logical_id": sid,
+                "author_platform_agent_id": sid}
+    if ROUND == 1:
+        return {f"CP{n:02d}": author(f"CP{n:02d}", "") for n in range(1, 21)}
+    # 第2轮起：每产品两名作者（前3条A、后3条B），打破单脑收敛
+    return {f"CP{n:02d}": [author(f"CP{n:02d}", "-A"), author(f"CP{n:02d}", "-B")]
+            for n in range(1, 21)}
 
 
 def cmd_freeze_inputs() -> int:
@@ -112,7 +122,7 @@ def cmd_freeze_inputs() -> int:
     for request in requests:
         by_cp.setdefault(request["profile_id"], []).append(request)
     for cp, rows in sorted(by_cp.items()):
-        write_jsonl(PKG1 / f"inputs/requests_by_cp/{cp}.jsonl", rows)
+        write_jsonl(_RD / f"inputs/requests_by_cp/{cp}.jsonl", rows)
     lines = [
         "schema: pkg1_open_regression_input_freeze.v1",
         f"task_id: {contract.TASK_ID}",
@@ -210,7 +220,7 @@ def cmd_blind_packet() -> int:
     mapping = []
     rows = sorted(outputs,
                   key=lambda o: hashlib.sha256(
-                      (str(o["output_digest"]) + "PKG1BLINDSALT").encode()
+                      (str(o["output_digest"]) + f"{BATCH_ID}BLINDSALT").encode()
                   ).hexdigest())
     for index, output in enumerate(rows, 1):
         neutral_id = f"BLIND-{index:03d}"
@@ -245,15 +255,15 @@ def cmd_metrics() -> int:
     gate = json.loads(GATE_REPORT.read_text(encoding="utf-8"))
     gate_by_id = {row["request_id"]: row for row in gate["per_output"]}
     content: dict[str, dict[str, Any]] = {}
-    for path in sorted((PKG1 / "review").glob("content_review.*.jsonl")):
+    for path in sorted((REVIEW_DIR).glob("content_review.*.jsonl")):
         for row in read_jsonl(path):
             content[str(row["request_id"])] = row
     fact: dict[str, dict[str, Any]] = {}
-    for path in sorted((PKG1 / "review").glob("fact_review.*.jsonl")):
+    for path in sorted((REVIEW_DIR).glob("fact_review.*.jsonl")):
         for row in read_jsonl(path):
             fact[str(row["request_id"])] = row
     blind_choices = {row["neutral_id"]: row
-                     for row in read_jsonl(PKG1 / "review/blind_choices.v1.jsonl")}
+                     for row in read_jsonl(REVIEW_DIR / "blind_choices.v1.jsonl")}
     mapping = read_jsonl(BLIND_MAPPING)
 
     total = len(outputs)
@@ -312,6 +322,7 @@ def cmd_metrics() -> int:
         "schema_version": "pkg1-open-regression-metrics-v1",
         "task_id": contract.TASK_ID,
         "batch_id": BATCH_ID,
+        "formal_round": ROUND,
         "output_count": total,
         "first_acceptable_count": len(acceptable_ids),
         "first_acceptance_rate": round(rate, 6),
@@ -347,7 +358,7 @@ def cmd_metrics() -> int:
             set(outputs) - set(acceptable_ids)),
     }
     metrics["metrics_digest"] = contract.object_digest(metrics, "metrics_digest")
-    out = PKG1 / "result/round1_metrics.v1.json"
+    out = RESULT_DIR / f"round{ROUND}_metrics.v1.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(contract.canonical_json(metrics) + "\n", encoding="utf-8")
     print(contract.canonical_json({k: metrics[k] for k in (

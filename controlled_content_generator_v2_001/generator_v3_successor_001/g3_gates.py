@@ -27,6 +27,48 @@ import g3_lexicon  # noqa: E402
 import g3_similarity  # noqa: E402
 
 _DIGIT_RUN_RE = re.compile(r"\d+(?:\.\d+)?")
+# v2：合成披露语句内嵌受众正文（第1轮 CP18 病灶的机器化，HARD）
+_DISCLOSURE_IN_BODY_RE = re.compile(
+    r"(是|均为|都是|为)合成(的)?|合成的?(门店|人物|顾客|城市|场景|品牌|内容)|"
+    r"不是真实(的)?(门店|人物|顾客|品牌|城市)|非真实(门店|人物|品牌)")
+
+
+def cross_output_reuse_findings(
+    outputs: "Sequence[Mapping[str, Any]]",
+    requests_by_id: Mapping[str, Mapping[str, Any]],
+    min_len: int = 10,
+) -> list[dict[str, Any]]:
+    """同产品跨条近逐字复用（FLAG）：两条输出共享 ≥min_len 字的连续片段，
+    且该片段不出自任一方的材料文本（事实/来源/目标里的引用不算复用）。"""
+    by_profile: dict[str, list[tuple[str, str, str]]] = {}
+    for output in outputs:
+        rid = str(output["request_id"])
+        text = g3_similarity.normalize(g3_similarity.audience_fulltext(output))
+        material = g3_similarity.normalize(
+            _material_text(requests_by_id[rid]))
+        by_profile.setdefault(str(output["profile_id"]), []).append(
+            (rid, text, material))
+    findings: list[dict[str, Any]] = []
+    for profile_id in sorted(by_profile):
+        rows = by_profile[profile_id]
+        for i in range(len(rows)):
+            rid_a, text_a, mat_a = rows[i]
+            grams_a = {text_a[k:k + min_len]
+                       for k in range(max(0, len(text_a) - min_len + 1))}
+            for j in range(i + 1, len(rows)):
+                rid_b, text_b, mat_b = rows[j]
+                grams_b = {text_b[k:k + min_len]
+                           for k in range(max(0, len(text_b) - min_len + 1))}
+                shared = sorted(
+                    g for g in grams_a & grams_b
+                    if g not in mat_a and g not in mat_b)
+                if shared:
+                    findings.append(
+                        {"kind": "CROSS_OUTPUT_REUSE", "profile_id": profile_id,
+                         "request_ids": sorted([rid_a, rid_b]),
+                         "shared_count": len(shared),
+                         "samples": shared[:3]})
+    return findings
 
 
 def _material_text(request: Mapping[str, Any]) -> str:
@@ -145,13 +187,15 @@ def gate_batch(
         request = request_by_id[request_id]
         hard: list[str] = []
         flag: list[str] = []
-        # 1. 治理语言 + 标签泄漏（受众表面，不含披露表面）
+        # 1. 治理语言 + 标签泄漏 + 披露内嵌（受众表面，不含披露表面）
         for kind, text in contract.audience_texts(_as_raw_view(output)):
             del kind
             gov_hard, gov_flag = g3_lexicon.scan_governance(text)
             hard += [f"E_G3_GOVERNANCE:{c}" for c in gov_hard]
             flag += [f"F_G3_GOVERNANCE:{c}" for c in gov_flag]
             hard += [f"E_G3_LABEL_LEAK:{c}" for c in g3_lexicon.scan_label_leak(text)]
+            if _DISCLOSURE_IN_BODY_RE.search(text):
+                hard.append("E_G3_DISCLOSURE_IN_BODY")
         # 2. 数字绑定
         num_hard, num_flag = number_findings(output, request)
         hard += [f"E_G3_{c}" for c in num_hard]
@@ -187,6 +231,12 @@ def gate_batch(
                     row["machine_first_fail"] = True
     near_dup_batch = g3_similarity.pairwise_batch_findings(list(outputs))
     frozen_reuse = g3_similarity.frozen_reuse_findings(list(outputs), frozen_texts)
+    cross_reuse = cross_output_reuse_findings(list(outputs), request_by_id)
+    for finding in cross_reuse:
+        for row in per_output:
+            if row["request_id"] in finding["request_ids"]:
+                row["flag_codes"] = sorted(
+                    set(row["flag_codes"]) | {"F_G3_CROSS_OUTPUT_REUSE"})
     for finding in frozen_reuse:
         for row in per_output:
             if row["request_id"] == finding["request_id"]:
@@ -204,6 +254,7 @@ def gate_batch(
         "concentration_findings": concentration,
         "near_dup_batch_findings": near_dup_batch,
         "frozen_reuse_findings": frozen_reuse,
+        "cross_output_reuse_findings": cross_reuse,
     }
     report["report_digest"] = contract.object_digest(report, "report_digest")
     return report

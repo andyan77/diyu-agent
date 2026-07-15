@@ -1,0 +1,70 @@
+schema: pkg1_open_regression_round_result.v1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+formal_round: 2
+formal_rounds_used: 2
+formal_rounds_allowed: 3
+verdict: FORMAL_ROUND_2_FAILED_QUALITY_GATES
+
+gates:
+  first_acceptance:
+    required: ">=0.90"
+    actual: 0.075        # 9/120（B级9条=CP06-009/010等block2；其余111条C）
+    pass: false
+  formulaic_or_near_duplicate:
+    required: "<=0.10"
+    actual: 0.925        # 111/120
+    pass: false
+  hard_vetoes_in_acceptable:
+    required: 0
+    actual: 0            # 可接受9条中0硬否决；全批事实硬否决2条均在C集
+    pass: true
+  blind_recognizability:
+    required: ">=0.85"
+    actual: 0.933333     # 112/120
+    pass: true
+  route_60:
+    required: "60/60 action + 60/60 reason, zero leak"
+    actual: "60/60 + 60/60 + 0"
+    pass: true
+  focus_cp_blind_improvement:
+    CP01: {last: "3/11", this: "3/6", improved: true}
+    CP06: {last: "6/11", this: "6/6", improved: true}
+    CP07: {last: "7/11", this: "6/6", improved: true}
+
+machine_gate:
+  hard_fail: 0
+  near_dup: 0
+  frozen_reuse: 0
+  concentration_findings: 3
+  cross_output_reuse_pairs: 1
+
+fact_track:
+  approved: 118
+  hard_rejected:
+    - id: G3-POS-CP05-005
+      code: H_FABRICATED_FACT
+      note: 编造"两只西装袖胚布"，与FACT-03"胚布练习里没有这类样本"相悖
+    - id: G3-POS-CP15-001
+      code: H_FABRICATED_FACT
+      note: 标题把"17件过检、6件上架"夸大为"十七件走到壁架"（中文数字绕过机器数字门）
+
+content_track:
+  grades: {A: 0, B: 9, C: 111, D: 0}
+  formulaic_true: 111
+  reviewer_consensus: >
+    第1轮四维中的三维（正文架构/口播句式/声音设计的"档型"层）已被第2轮修复
+    （CP07六条0套路为成功样板；CP06 4/6）；但(1)限度/缺料句族在同产品乃至跨产品
+    仍成套复用；(2)声音表面的"写法"坍缩为2-3个模板家族（"唯一破点"14条+
+    "近远双层"8条）；(3)CP08/09/10/15等正文骨架整条复用；(4)CP04角色边界段、
+    CP18"这只是…记录"免责句、CP19范围界定句、CP20读权分派元语言各自成族。
+
+root_cause_analysis: >
+  跨作者收敛的根源在策展层措辞单一文化：120条请求的claim_boundary与
+  audience_safe_boundary事实本身共享「这X只…还没…/看不出来/只对这处成立」
+  句族（作者互不可见却同族复现，只能来自共同输入）；表达计划发牌控制了
+  "档型"却未控制"句族措辞"；机器集中度门未覆盖限度句族与声音写法家族；
+  中文数字不在数字门检测范围（CP15-001由人审补获）。
+
+failed_ids_retained_in_denominator: true
+resampling_used: false
+next: FORMAL_ROUND_3_FINAL (curation-layer repair + gate upgrade; see round3 design)

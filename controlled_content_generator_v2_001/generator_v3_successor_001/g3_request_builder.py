@@ -254,12 +254,15 @@ def build_batch(
     for profile_id in sorted(by_profile):
         rows = sorted(by_profile[profile_id], key=lambda s: str(s["scenario_id"]))
         plans = g3_expression.assign_plans(profile_id, batch_id, len(rows))
-        for scenario, plan in zip(rows, plans, strict=True):
+        assigned = authors_by_profile[profile_id]
+        author_pool = [assigned] if isinstance(assigned, Mapping) else list(assigned)
+        for index, (scenario, plan) in enumerate(zip(rows, plans, strict=True)):
             run_order += 1
+            author = author_pool[index * len(author_pool) // len(rows)]
             requests.append(
                 build_request(
                     scenario, plan, ab_paths[profile_id], components,
-                    authors_by_profile[profile_id], run_order,
+                    author, run_order,
                     author_instruction_sha256, author_instruction_path,
                 )
             )

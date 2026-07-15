@@ -41,6 +41,39 @@ TITLE_ARCHETYPES = [
     "RESULT_HOOK",     # 结果状态钩子
     "PLACE_TIME_HOOK", # 地点/时间钩子
 ]
+# ---- v2（第2正式轮新增）：四个深层维度，治"边缘互异、内芯同构" ----
+BODY_ARCHITECTURES = [
+    "CHRONO_SINGLE_THREAD",  # 单线时序推进
+    "CONTRAST_TWO_OBJECT",   # 双对象/双状态对照交替
+    "MOSAIC_THREE_SCENES",   # 三个独立小画面拼合，无显式串词
+    "CAUSAL_CHAIN",          # 因果链：现象→机制→后果
+    "ZOOM_DETAIL_TO_WHOLE",  # 由一处细节逐层放大到整体
+    "EVIDENCE_WALK",         # 跟随一件实物/一页记录走动线
+]
+SPOKEN_FORMATS = [
+    "EMPTY_NO_SPOKEN",       # 无口播（声音轴改由 audio 表面承载核心事实）
+    "SINGLE_OBSERVATION",    # 一句现场观察
+    "TWO_VOICE_EXCHANGE",    # 两句一来一回
+    "COUNTED_REPORT",        # 报数式（数值必须出自材料）
+    "QUESTION_ECHO",         # 一句问＋一句答
+    "PROCESS_MURMUR",        # 干活时的低声自语一句
+]
+AUDIO_SIGNATURES = [
+    "AMBIENT_CONTINUOUS",    # 连续环境底声
+    "ACTION_ACCENTS",        # 动作重音点缀
+    "SINGLE_MARK_SOUND",     # 单一标志声贯穿
+    "LAYERED_NEAR_FAR",      # 近景/远景双层声
+    "QUIET_ONE_BREAK",       # 安静中一次声音破点
+    "RHYTHMIC_TASK",         # 有节奏的作业声
+]
+BOUNDARY_POSITIONS = [
+    "EARLY_WEAVE",           # 限度事实织进前两段
+    "MID_WEAVE",             # 限度事实织进中段
+    "LATE_FACT",             # 限度事实作末段事实句（非治理句）
+    "SPLIT_TWO_POINTS",      # 限度拆成两处小点分布
+    "VISUAL_CARRIED",        # 限度由画面表面承载，正文只留痕
+    "SPOKEN_CARRIED",        # 限度由口播承载（spoken_format 非 EMPTY 时）
+]
 # 每产品允许的叙事弧（依据 V1.1 标准产品定义，避免弧型与产品指纹冲突）
 NARRATIVE_ARCS: dict[str, list[str]] = {
     "CP01": ["TASK_ARC", "PROBLEM_FIX_ARC", "SHADOWING_ARC"],
@@ -83,6 +116,10 @@ def assign_plans(
     e_off = _offset(profile_id, batch_id, "ending", len(ENDING_ARCHETYPES))
     t_off = _offset(profile_id, batch_id, "title", len(TITLE_ARCHETYPES))
     a_off = _offset(profile_id, batch_id, "arc", len(arcs))
+    b_off = _offset(profile_id, batch_id, "body", len(BODY_ARCHITECTURES))
+    s_off = _offset(profile_id, batch_id, "spoken", len(SPOKEN_FORMATS))
+    au_off = _offset(profile_id, batch_id, "audio", len(AUDIO_SIGNATURES))
+    bp_off = _offset(profile_id, batch_id, "boundary", len(BOUNDARY_POSITIONS))
     plans = []
     for i in range(count):
         opening = OPENING_ARCHETYPES[(o_off + i) % len(OPENING_ARCHETYPES)]
@@ -90,6 +127,10 @@ def assign_plans(
         ending = ENDING_ARCHETYPES[(e_off + i * 5) % len(ENDING_ARCHETYPES)]
         title = TITLE_ARCHETYPES[(t_off + i) % len(TITLE_ARCHETYPES)]
         arc = arcs[(a_off + i) % len(arcs)]
+        spoken = SPOKEN_FORMATS[(s_off + i) % len(SPOKEN_FORMATS)]
+        boundary_pos = BOUNDARY_POSITIONS[(bp_off + i) % len(BOUNDARY_POSITIONS)]
+        if boundary_pos == "SPOKEN_CARRIED" and spoken == "EMPTY_NO_SPOKEN":
+            boundary_pos = "MID_WEAVE"  # 确定性冲突消解
         plans.append(
             {
                 "plan_id": f"G3-PLAN-{batch_id}-{profile_id}-{i + 1:03d}",
@@ -97,12 +138,19 @@ def assign_plans(
                 "ending_archetype": ending,
                 "title_archetype": title,
                 "narrative_arc": arc,
+                "body_architecture": BODY_ARCHITECTURES[(b_off + i) % len(BODY_ARCHITECTURES)],
+                "spoken_format": spoken,
+                "audio_signature": AUDIO_SIGNATURES[(au_off + i) % len(AUDIO_SIGNATURES)],
+                "boundary_position": boundary_pos,
                 "boundary_realization": "INTEGRATED_FACT_LIMIT",
                 "forbidden_patterns": [
                     "仍由X决定/确认/批准 式收尾",
                     "年份台账式履历骨架（除非叙事弧为 ARCHIVE_REVISIT）",
                     "『先排除…』标题句式（除非标题档型为 CONTRAST_HOOK 且本批首次）",
                     "证据名录+否定边界+缺料静默 统一骨架",
+                    "『这只是…还没…』收尾句族（同产品全批至多1条）",
+                    "合成披露语句内嵌受众正文（披露只在专用披露表面）",
+                    "与同批同产品其他条目复用同一正文段式/口播句式/声音设计/边界措辞",
                 ],
             }
         )

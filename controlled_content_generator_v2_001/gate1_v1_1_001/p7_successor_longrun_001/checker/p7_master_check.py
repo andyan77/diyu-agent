@@ -32,6 +32,11 @@ ALLOWED_WRITE_PREFIXES = (P7 + "/", G3 + "/")
 
 BASELINE_COMMIT = "b4c40beb509d81db30b497abf38af1da6dc797da"
 
+# 执行包1各正式轮证据的冻结提交（历史轮字节完整性锚点；新轮证据提交后在此登记）。
+# 轮次语义：模块/指令随轮演进是修复协议的合法部分；历史轮的复现性由其冻结提交
+# 保证（在该提交处代码+证据同锚），检查器对历史轮做字节完整性、对最新轮做对盘校验。
+PKG1_ROUND_FREEZE_COMMITS = {1: "c2e5b91a6da72fdf74a8b90edd8e494eaf9b31fc"}
+
 # 核心口径（源指令 §1，不得改变）
 CORE_CALIBER = {"total": 300, "positive": 240, "abnormal": 60,
                 "reference_stock": 120, "historical_component_stock": 86}
@@ -253,20 +258,69 @@ def check_g3_selftest(root: Path) -> tuple[bool, list[str]]:
     return ok, tail or [r.stdout[-200:], r.stderr[-200:]]
 
 
+def _pkg1_rounds(root: Path) -> list[tuple[int, Path]]:
+    """已物化冻结清单的正式轮列表 [(轮次, 轮目录)]，升序。round1=pkg1 根。"""
+    pkg1 = root / P7 / "pkg1_open_regression"
+    rounds = []
+    if (pkg1 / "inputs/input_freeze.v1.yaml").is_file():
+        rounds.append((1, pkg1))
+    for d in sorted(pkg1.glob("round[0-9]*")):
+        if (d / "inputs/input_freeze.v1.yaml").is_file():
+            rounds.append((int(d.name[5:]), d))
+    return sorted(rounds)
+
+
+def history_intact(diff_lines: list[str], status_lines: list[str]) -> bool:
+    """历史轮字节完整性判据：对冻结提交零差异 且 无未跟踪/未提交条目。"""
+    return not diff_lines and not status_lines
+
+
 def check_pkg1_input_freeze(root: Path) -> tuple[bool, list[str]]:
-    """pkg1 冻结输入清单里的每个摘要与在盘文件一致；分片并集=总文件。"""
+    """轮次感知冻结校验：最新轮冻结清单逐摘要对盘（场景基座/本轮请求/作者指令/
+    生成器模块 + 分片并集=总文件）；历史轮证据对其冻结提交做字节完整性。"""
     import re as _re
     pkg1 = root / P7 / "pkg1_open_regression"
-    freeze = pkg1 / "inputs/input_freeze.v1.yaml"
-    if not freeze.is_file():
+    rounds = _pkg1_rounds(root)
+    if not rounds:
         return True, ["SKIP: not materialized yet"]
-    text = freeze.read_text(encoding="utf-8")
     ok = True
     details = []
-    for key, rel in (
-        ("scenarios_sha256", pkg1 / "inputs/scenarios.g3.v1.jsonl"),
-        ("requests_sha256", pkg1 / "inputs/requests.g3.v1.jsonl"),
-    ):
+    # --- 历史轮：对冻结提交零字节漂移（含未跟踪新增） ---
+    for rnd, rdir in rounds[:-1]:
+        commit = PKG1_ROUND_FREEZE_COMMITS.get(rnd)
+        if commit is None:
+            ok = False
+            details.append(f"round{rnd}: FREEZE COMMIT UNREGISTERED")
+            continue
+        paths = [str((rdir / p).relative_to(root))
+                 for p in ("inputs", "outputs", "review", "result", "route")
+                 if (rdir / p).exists()]
+        diff = subprocess.run(
+            ["git", "diff", "--name-only", commit, "--", *paths],
+            capture_output=True, text=True, cwd=str(root))
+        status = subprocess.run(
+            ["git", "status", "--porcelain", "--", *paths],
+            capture_output=True, text=True, cwd=str(root))
+        diff_lines = [l for l in diff.stdout.splitlines() if l]
+        status_lines = [l for l in status.stdout.splitlines() if l]
+        if diff.returncode or status.returncode or not history_intact(
+                diff_lines, status_lines):
+            ok = False
+            details.append(
+                f"round{rnd}_HISTORY_TAMPERED {(diff_lines + status_lines)[:4]}")
+        else:
+            details.append(f"round{rnd}: byte-intact vs {commit[:7]}")
+    # --- 最新轮：冻结清单逐摘要对盘 ---
+    latest, latest_dir = rounds[-1]
+    text = (latest_dir / "inputs/input_freeze.v1.yaml").read_text(encoding="utf-8")
+    instruction = (root / G3 / ("contract/g3_author_instruction.v2.0.md"
+                                if latest == 1
+                                else "contract/g3_author_instruction.v2.1.md"))
+    checks = [("scenarios_sha256", pkg1 / "inputs/scenarios.g3.v1.jsonl"),
+              ("requests_sha256", latest_dir / "inputs/requests.g3.v1.jsonl")]
+    if "author_instruction_sha256:" in text:
+        checks.append(("author_instruction_sha256", instruction))
+    for key, rel in checks:
         m = _re.search(rf"{key}: ([0-9a-f]{{64}})", text)
         if not (m and rel.is_file() and sha256_file(rel) == m.group(1)):
             ok = False
@@ -277,16 +331,17 @@ def check_pkg1_input_freeze(root: Path) -> tuple[bool, list[str]]:
         if sha256_file(f) != m.group(2):
             ok = False
             details.append(f"DRIFT module {m.group(1)}")
-    # 分片并集 = 总文件
-    canonical = {l for l in (pkg1 / "inputs/requests.g3.v1.jsonl"
+    # 分片并集 = 总文件（最新轮）
+    canonical = {l for l in (latest_dir / "inputs/requests.g3.v1.jsonl"
                              ).read_text(encoding="utf-8").splitlines() if l}
     shards = set()
-    for shard in sorted((pkg1 / "inputs/requests_by_cp").glob("CP*.jsonl")):
+    for shard in sorted((latest_dir / "inputs/requests_by_cp").glob("CP*.jsonl")):
         shards.update(l for l in shard.read_text(encoding="utf-8").splitlines() if l)
     if canonical != shards:
         ok = False
         details.append("shard union != canonical requests")
-    details.append(f"requests={len(canonical)} shards_match={canonical == shards}")
+    details.append(f"round{latest}_requests={len(canonical)}"
+                   f" shards_match={canonical == shards}")
     return ok, details
 
 
@@ -317,11 +372,16 @@ def check_pkg1_route(root: Path) -> tuple[bool, list[str]]:
 
 
 def check_pkg1_blind(root: Path) -> tuple[bool, list[str]]:
-    """盲审包零标签泄漏 + 映射双射 + 包与首输出一一对应。"""
+    """盲审包零标签泄漏 + 映射双射 + 包与首输出一一对应（最新已物化盲包的轮）。"""
     pkg1 = root / P7 / "pkg1_open_regression"
-    packet = pkg1 / "review/blind/neutral_packet.v1.jsonl"
-    if not packet.is_file():
+    rounds = _pkg1_rounds(root) or [(1, pkg1)]
+    with_packet = [(n, d) for n, d in rounds
+                   if (d / "review/blind/neutral_packet.v1.jsonl").is_file()]
+    if not with_packet:
         return True, ["SKIP: not materialized yet"]
+    rnd, rdir = with_packet[-1]
+    pkg1 = rdir
+    packet = pkg1 / "review/blind/neutral_packet.v1.jsonl"
     rows = [json.loads(l) for l in packet.read_text(encoding="utf-8").splitlines() if l]
     leaks = []
     for row in rows:
@@ -337,22 +397,34 @@ def check_pkg1_blind(root: Path) -> tuple[bool, list[str]]:
                  and len(set(request_ids)) == len(request_ids)
                  and len(mapping) == len(rows))
     ok = not leaks and bijection
-    return ok, [f"items={len(rows)} leaks={sorted(set(leaks))} bijection={bijection}"]
+    return ok, [f"round={rnd} items={len(rows)}"
+                f" leaks={sorted(set(leaks))} bijection={bijection}"]
 
 
 def check_pkg1_reviews(root: Path) -> tuple[bool, list[str]]:
-    """角色碰撞=0；审查覆盖100%；指标与从原始文件重算一致；分母完整。"""
+    """轮次感知审查校验（对最新已出指标的轮）：角色碰撞=0；分母完整；
+    指标重算一致——现行轮用现行模块重算（非破坏：先快照、错则还原判 FAIL）；
+    历史轮指标的完整性由 pkg1_input_freeze 节的冻结提交锚点担保，此处不重算。"""
+    import os as _os
     pkg1 = root / P7 / "pkg1_open_regression"
-    metrics_file = pkg1 / "result/round1_metrics.v1.json"
-    if not metrics_file.is_file():
+    rounds = _pkg1_rounds(root)
+    live = [(n, d) for n, d in rounds
+            if (d / f"result/round{n}_metrics.v1.json").is_file()]
+    if not live:
         return True, ["SKIP: not materialized yet"]
+    n, rdir = live[-1]
+    latest_freeze_round = rounds[-1][0]
+    metrics_file = rdir / f"result/round{n}_metrics.v1.json"
     metrics = json.loads(metrics_file.read_text(encoding="utf-8"))
     requests = [json.loads(l) for l in
-                (pkg1 / "inputs/requests.g3.v1.jsonl"
+                (rdir / "inputs/requests.g3.v1.jsonl"
                  ).read_text(encoding="utf-8").splitlines() if l]
-    authors = {str(r["author_identity"]) for r in requests}
+    authors = set()
+    for r in requests:
+        pool = r["author_identity"]
+        authors.update(map(str, pool if isinstance(pool, list) else [pool]))
     reviewers: set[str] = set()
-    for f in sorted((pkg1 / "review").glob("*_review.*.jsonl")):
+    for f in sorted((rdir / "review").glob("*_review.*.jsonl")):
         for line in f.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 reviewers.add(str(json.loads(line).get("reviewer_identity")))
@@ -360,16 +432,24 @@ def check_pkg1_reviews(root: Path) -> tuple[bool, list[str]]:
     denominator = (metrics["output_count"] == len(requests)
                    and len(metrics["failed_ids_retained_in_denominator"])
                    == metrics["output_count"] - metrics["first_acceptable_count"])
-    # 重算一致性
-    r = subprocess.run(
-        ["python3", str(pkg1 / "run_pkg1.py"), "metrics"],
-        capture_output=True, text=True, cwd=str(root))
-    fresh = json.loads(metrics_file.read_text(encoding="utf-8"))
-    recompute_identical = (r.returncode == 0 and fresh == metrics)
+    if n == latest_freeze_round:
+        before = metrics_file.read_bytes()
+        env = dict(_os.environ, PKG1_ROUND=str(n))
+        r = subprocess.run(
+            ["python3", str(pkg1 / "run_pkg1.py"), "metrics"],
+            capture_output=True, text=True, cwd=str(root), env=env)
+        after = metrics_file.read_bytes()
+        recompute_identical = (r.returncode == 0 and after == before)
+        if after != before:
+            metrics_file.write_bytes(before)
+        recompute_note = f"metrics_recompute_identical={recompute_identical}"
+    else:
+        recompute_identical = True
+        recompute_note = (f"round{n} metrics anchored to freeze commit"
+                          f" (modules superseded by round{latest_freeze_round})")
     ok = not collisions and denominator and recompute_identical
-    return ok, [f"role_collisions={collisions}",
-                f"denominator_intact={denominator}",
-                f"metrics_recompute_identical={recompute_identical}"]
+    return ok, [f"round={n} role_collisions={collisions}",
+                f"denominator_intact={denominator}", recompute_note]
 
 
 SECTIONS: dict[str, object] = {
@@ -459,6 +539,13 @@ def selftest() -> int:
     expect("denominator_drop_detected",
            not denominator_ok(120, 119, 5, 114))
     expect("denominator_intact_ok", denominator_ok(120, 120, 6, 114))
+
+    # 5b. 历史轮证据被改写/塞入未跟踪文件 → history_intact 必须失败
+    expect("history_committed_tamper_detected",
+           not history_intact(["pkg1/result/round1_metrics.v1.json"], []))
+    expect("history_untracked_injection_detected",
+           not history_intact([], ["?? pkg1/review/extra.jsonl"]))
+    expect("history_clean_ok", history_intact([], []))
 
     # 6. 修改路线黄金答案 → route_gold_ok 必须失败（临时根缺文件即漂移语义）
     with tempfile.TemporaryDirectory() as tmp:
