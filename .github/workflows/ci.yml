@@ -73,6 +73,28 @@ jobs:
           python3 controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/run_p1a_standard_baseline_review_packet_freezer.py --check
           python3 ci/checkers/check_gate1_v1_1_current.py
           python3 ci/checkers/check_gate1_v1_1_current.py --selftest
+          test "$(sha256sum ci/checkers/check_product_foundation.py | cut -d ' ' -f 1)" = "ed1fc96a20cf86d08a80418caa927ff13734e1cd4d5a4bc0e0ed915ef61be823"
+          python3 ci/checkers/check_product_foundation.py
+          python3 ci/checkers/check_product_foundation.py --selftest
+      - name: Run reserved downstream package checks
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          set -euo pipefail
+          run_downstream_package_checker() {
+            package_root="$1"
+            checker="$2"
+            if [ ! -e "$package_root" ]; then
+              return 0
+            fi
+            test -d "$package_root"
+            test -f "$checker"
+            python3 "$checker"
+            python3 "$checker" --selftest
+          }
+          run_downstream_package_checker "12_expression_service/expression_runtime_adapter_001" "12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py"
+          run_downstream_package_checker "13_brand_data/brand_data_import_001" "13_brand_data/brand_data_import_001/check_brand_data_import.py"
+          run_downstream_package_checker "14_dify_shell/dify_content_shell_001" "14_dify_shell/dify_content_shell_001/check_dify_content_shell.py"
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -111,6 +133,8 @@ jobs:
             "ci/checkers/check_orch_generator_v2_b_channel_component_consumption_dev_gate.py --selftest" \
             "ci/checkers/check_gate1_v1_1_current.py" \
             "ci/checkers/check_gate1_v1_1_current.py --selftest" \
+            "ci/checkers/check_product_foundation.py" \
+            "ci/checkers/check_product_foundation.py --selftest" \
             "07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/run_b_channel_component_review_freezer.py --check"
           do
             set +e
@@ -119,6 +143,33 @@ jobs:
             set -e
             test "$code" -eq 2
           done
+      - name: Verify reserved downstream package fail-closed optimized mode
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          set -euo pipefail
+          run_downstream_package_checker_optimized() {
+            package_root="$1"
+            checker="$2"
+            if [ ! -e "$package_root" ]; then
+              return 0
+            fi
+            test -d "$package_root"
+            test -f "$checker"
+            set +e
+            python3 -O "$checker"
+            code=$?
+            set -e
+            test "$code" -eq 2
+            set +e
+            python3 -O "$checker" --selftest
+            code=$?
+            set -e
+            test "$code" -eq 2
+          }
+          run_downstream_package_checker_optimized "12_expression_service/expression_runtime_adapter_001" "12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py"
+          run_downstream_package_checker_optimized "13_brand_data/brand_data_import_001" "13_brand_data/brand_data_import_001/check_brand_data_import.py"
+          run_downstream_package_checker_optimized "14_dify_shell/dify_content_shell_001" "14_dify_shell/dify_content_shell_001/check_dify_content_shell.py"
 
   secret-scan:
     name: secret-scan

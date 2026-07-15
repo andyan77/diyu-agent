@@ -1,0 +1,27 @@
+coordinator_decision:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  decision_id: ROOT_PHASE_A_FINAL_MERGE_APPROVAL
+  coordinator:
+    agent_id: root-final-review
+    coordinator_identity_id: ROOT
+    coordinator_instance_or_session_id: conversation://2026-07-15/phase-a-final-review
+    decision_run_id: ROOT-PHASEA-FINAL-20260715-001
+    append_only_signature_or_attestation: conversation-attestation://root/2026-07-15/APPROVE_PHASE_A_MERGE/3f610726943dee5545d4d310f107239f2eeb9234
+  reviewed_candidate_commit: 3f610726943dee5545d4d310f107239f2eeb9234
+  reviewed_snapshot_digest: 95fb58ee71e3c19741c1d5352990edd677e0446db17ce3f7a400f23c11684453
+  reviewed_evidence_commit: 75145cabf9455201d2eddc9cfab9d880d5c8ba97
+  decision: PASS_TO_MERGE
+  approval_token: APPROVE_PHASE_A_MERGE
+  score: 98
+  independent_review_scores:
+    architecture_consumability: 98
+    trust_fact_safety: 98
+  material_disagreements: []
+  blocking_findings: []
+  evidence:
+  - Both independent reviews passed with score 98 and no blocking findings against the same frozen candidate.
+  - The evidence commit added review evidence and minimal result references without implementation changes.
+  - Local current checks and both remote required checks passed.
+  - Core numbers 300, 120, and 86 are unchanged and all readiness flags remain false.
+  attestation_semantics: ROOT_CONVERSATION_DIRECTIVE_NOT_CRYPTOGRAPHIC_SIGNATURE

@@ -1,0 +1,935 @@
+public_foundation_contract:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  contract_id: DIYU-PUBLIC-FOUNDATION-001
+  owner: PUBLIC_FOUNDATION_001
+  lifecycle:
+    candidate_state: REVIEW_PENDING_PUBLIC_FOUNDATION
+    frozen_state: PUBLIC_FOUNDATION_FROZEN
+    frozen_state_requires:
+    - candidate_reviewed_by_two_independent_reviewers
+    - coordinator_decision_PASS_TO_MERGE
+    - protected_merge_commit_on_remote_master
+    - checker-compatibility_success_on_merged_master
+    - secret-scan_success_on_merged_master
+    branch_candidate_may_not_self_activate: true
+  implementation_boundary:
+    contract_only: true
+    http_service_implemented: false
+    database_schema_implemented: false
+    retrieval_pipeline_implemented: false
+    Dify_workflow_implemented: false
+    model_provider_called: false
+    deployment_implemented: false
+    continuous_deployment_implemented: false
+
+  expression_v1_baseline:
+    consumption_mode: OPTIONAL_OFFLINE_REFERENCE
+    normal_runtime_dependency: false
+    normal_request_may_omit_all_asset_refs: true
+    missing_asset_refs_block_prepare: false
+    unknown_experiment_refs: DIAGNOSTIC_WARNING_ONLY
+    permitted_uses:
+    - OFFLINE_RESEARCH
+    - REGRESSION_EVALUATION
+    - DIAGNOSTIC
+    - EXPLICIT_EXPERIMENT
+    assets_may_not_be_copied_to_brand_facts: true
+    assets:
+    - asset_id: ACTIVE_COMPONENTS
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+      count: 68
+      sha256: 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    - asset_id: ACTIVE_CONTROL_RULES
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+      count: 8
+      sha256: 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+    - asset_id: ACTIVE_EDGES
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+      count: 85
+      sha256: de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    - asset_id: ACTIVE_AB_STRUCTURAL_PATHS
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+      count: 20
+      sha256: 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+    - asset_id: GENERATOR_CONTRACT
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/gate1_generator_contract.v0.1.yaml
+      sha256: 67be34b2db8be54e5a81ef46c71367d196c12e29886dbcae62daf55a8d7518fa
+    - asset_id: GENERATOR_REGISTRY
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/active_gate1_generator_registry.v0.1.yaml
+      sha256: 46b83a926efaceb43010278bc33156a587dc7d38361dd8a149a5e1b96ecbff7a
+    - asset_id: P2_FINAL_RESULT
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/result/p2_final_result.v0.1.yaml
+      sha256: 076bd9eb6c8ab67c0023bb454f6a82f16acecb284e896dc9029ef97582db5c3b
+    - asset_id: P3_OPEN_PROBE_RESULT
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/result/p3_open_probe40_result.v0.2.yaml
+      sha256: c06955256ef9190f5b89221c69417353791fbc7a4b0eb4f8dab0be2826b6fcb0
+    status:
+      generator_qualified: false
+      runtime_ready: false
+      production_ready: false
+
+  core_number_guard:
+    target_case_baseline:
+      count: 300
+      frozen: false
+      changed_or_harmed: false
+      second_inventory_created: false
+    frozen_reference_inventory:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+      count: 120
+      sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+      changed_or_harmed: false
+    historical_component_inventory:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+      count: 86
+      sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+      changed_or_harmed: false
+    failed_quality_candidate:
+      pull_request: 15
+      head_commit: b4c40beb509d81db30b497abf38af1da6dc797da
+      classification: OPEN_DRAFT_FAILURE_EVIDENCE_NOT_APPROVED_BASELINE
+
+  trusted_scope_contract:
+    authority: SERVER_CONFIRMED_SCOPE
+    future_store: POSTGRESQL
+    required_dimensions:
+    - tenant_id
+    - brand_id
+    - organization_id
+    - store_ids
+    - login_principal_id
+    - allowed_content_account_ids
+    request_projection_fields:
+    - tenant_id
+    - brand_id
+    - organization_id
+    - store_id
+    - login_principal_id
+    - content_account_id
+    client_claims_are_hints_only: true
+    user_input_may_override_server_scope: false
+    Dify_user_id_is_trusted_login_identity: false
+    cross_tenant_access: FORBIDDEN
+    cross_organization_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
+    cross_store_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
+    cross_content_account_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
+    server_confirmed_acting_role_required: true
+    principal_account_role_grant_required: true
+    identity_contract_ref: ../identity/simulation_tenant.v1.yaml
+    real_identity_policy:
+      one_login_principal_per_real_person: true
+      shared_credentials_allowed: false
+      content_account_is_login_identity: false
+
+  intent_and_requirement_contract:
+    intents:
+    - intent_id: NORMAL_CHAT
+      user_label: 普通聊天
+      creates_composition_plan: false
+      writes_brand_fact: false
+      may_request_creation: false
+    - intent_id: FIND_INSPIRATION
+      user_label: 帮我找灵感
+      creates_composition_plan: false
+      writes_brand_fact: false
+      may_offer_directions: true
+    - intent_id: NEED_MORE_INFORMATION
+      user_label: 需要补充信息
+      creates_composition_plan: false
+      writes_brand_fact: false
+      returns_action_card: true
+    - intent_id: AWAITING_CONFIRMATION
+      user_label: 等待确认
+      creates_composition_plan: false
+      writes_brand_fact: false
+      requirement_status: DRAFT_SUMMARY
+    - intent_id: START_CREATION
+      user_label: 开始内容制作
+      creates_composition_plan: true
+      writes_brand_fact: false
+      required_requirement_status: CONFIRMED
+    - intent_id: REVISE_OUTPUT
+      user_label: 修改成品
+      creates_competing_composition_plan: false
+      writes_brand_fact: false
+      preserves_confirmed_facts_unless_reconfirmed: true
+    requirement_version:
+      required_fields:
+      - requirement_id
+      - requirement_version
+      - plain_language_summary
+      - tenant_id
+      - content_account_id
+      - topic_category_id
+      - target_platform
+      - confirmed_by_principal_id
+      - confirmed_at
+      allowed_statuses:
+      - DRAFT_SUMMARY
+      - CONFIRMED
+      - SUPERSEDED
+      prepare_requires_status: CONFIRMED
+      unconfirmed_requirement_may_enter_prepare: false
+
+  brand_fact_contract:
+    channels:
+    - channel_id: SCOPED_NARRATIVE_RETRIEVAL
+      future_owner: DIFY_KNOWLEDGE_BASE
+      purpose: find_relevant_narrative_fragments
+      required_metadata:
+      - fragment_id
+      - tenant_id
+      - brand_id
+      - source_organization_id
+      - source_store_id
+      - source_ref
+      - applicable_organization_ids
+      - applicable_store_ids
+      - applicable_content_account_ids
+      - observed_at
+      - valid_until
+      - authorization_ref
+      - authorization_state
+      - disclosure_scope
+      - status
+      source_scope_must_be_registered: true
+      target_scope_must_match_authorization_grant: true
+      expired_revoked_or_ungranted_fragment_is_usable: false
+      may_grant_authorization: false
+      may_override_precise_fact: false
+      may_override_revocation: false
+    - channel_id: VERIFIED_PRECISE_FACT
+      future_owner: POSTGRESQL
+      purpose: authoritative_operational_fact
+      fact_kinds:
+      - SKU
+      - SPECIFICATION
+      - PRICE
+      - STOCK
+      - TIME_POINT
+      - AUTHORIZATION
+      - REVOCATION
+      required_metadata:
+      - fact_id
+      - tenant_id
+      - brand_id
+      - organization_id
+      - store_id
+      - applicable_content_account_ids
+      - fact_kind
+      - value
+      - source_ref
+      - effective_at
+      - valid_until
+      - authorization_ref
+      - disclosure_scope
+      - status
+      source_scope_must_be_registered: true
+      target_scope_must_match_authorization_grant: true
+      cross_scope_requires_explicit_authorization: true
+      authorization_must_cover_fact_and_disclosure: true
+      expired_or_revoked_fact_is_usable: false
+      precedence_over_narrative_retrieval: true
+    precedence:
+    - newer_verified_precise_fact_over_older_precise_fact
+    - verified_precise_fact_over_retrieved_narrative
+    - revocation_over_prior_authorization
+    - narrower_confirmed_scope_over_broader_retrieved_text
+    non_fact_inputs:
+    - expression_component
+    - control_rule
+    - structural_path
+    - brand_expression_profile
+    - high_level_mode
+    - approved_example
+    - client_soft_preference
+    - user_preference_without_confirmation
+    - model_inference
+    expression_asset_may_be_fact_or_authorization: false
+    expression_guidance_may_be_fact_authorization_or_scope: false
+
+  light_expression_contract:
+    brand_expression_profile:
+      resolution_authority: SERVER_TRUSTED_UPSTREAM
+      client_may_supply_formal_profile: false
+      client_soft_preferences_may_override_hard_prohibitions: false
+      allowed_client_soft_preference_fields:
+      - rhythm
+      - emotional_intensity
+      - narrative_entry
+      - visual_focus
+      - ending_tendency
+      profile_may_grant_fact_authorization_or_scope: false
+      cross_tenant_profile_borrowing_allowed: false
+      neutral_default_profile:
+        profile_ref: expression-profile://neutral-default/v1
+        profile_version: 1
+        resolution_mode: NEUTRAL_DEFAULT
+        tenant_specific: false
+        tone_tendencies: [natural, clear, restrained]
+        preferred_phrasing: []
+        prohibited_phrasing: [fabricated_fact, unsupported_promise, body_judgment]
+        expression_intensity: MEDIUM
+        perspective: TASK_APPROPRIATE
+        approved_example_refs: []
+    high_level_modes:
+    - mode_ref: expression-mode://documentary-observation/v1
+      user_label: 纪实观察
+    - mode_ref: expression-mode://professional-explanation/v1
+      user_label: 专业拆解
+    - mode_ref: expression-mode://life-scene/v1
+      user_label: 生活场景
+    - mode_ref: expression-mode://styling-demonstration/v1
+      user_label: 搭配演示
+    - mode_ref: expression-mode://store-micro-documentary/v1
+      user_label: 门店微纪录
+    - mode_ref: expression-mode://product-role-narrative/v1
+      user_label: 产品角色叙事
+    mode_selection_required: false
+    mode_is_script_template: false
+    mode_may_grant_fact_authorization_or_scope: false
+    approved_example_may_grant_fact_authorization_or_scope: false
+    candidate_policy:
+      minimum_count: 2
+      maximum_count: 3
+      near_duplicate_rewording_counts_as_distinct: false
+      difference_dimensions:
+      - narrative_entry
+      - information_order
+      - visual_focus
+      - rhythm
+      - emotional_intensity
+      - ending
+    hard_check_categories:
+    - fact_support
+    - source_provenance
+    - authorization
+    - privacy
+    - trusted_scope
+    - effective_time_and_revocation
+    - enterprise_commitment
+    - explicit_brand_prohibition
+    - internal_identifier_leak
+    soft_evaluation_tasks:
+    - task_fit
+    - brand_fit
+    - naturalness
+    - platform_fit
+    - candidate_difference
+    missing_real_evaluator_status: PENDING_EXTERNAL_EVALUATION
+    soft_score_may_be_fabricated: false
+    experimental_diagnostics:
+      normal_runtime_required: false
+      allowed_reference_fields:
+      - expression_baseline_ref
+      - component_refs
+      - control_rule_refs
+      - edge_refs
+      - structural_path_ref
+      unknown_reference_behavior: DIAGNOSTIC_WARNING_ONLY
+      may_change_fact_authorization_scope_or_publishability: false
+
+  light_content_plan_contract:
+    object_name: LightContentPlan
+    authority: EXPRESSION_SERVICE_PREPARE
+    is_independent_microservice: false
+    required_fields:
+    - object_type
+    - plan_id
+    - plan_revision
+    - composition_plan_ref
+    - tenant_id
+    - organization_id
+    - content_account_id
+    - requirement_id
+    - requirement_version
+    - task_objective
+    - primary_audience
+    - output_requirements
+    - candidate_policy
+    - expression_guidance
+    - hard_check_policy
+    - soft_evaluation_tasks
+    - references
+    object_type: LIGHT_CONTENT_PLAN
+    composition_plan_ref_is_derived_from:
+    - plan_id
+    - plan_revision
+    unique_key_fields:
+    - tenant_id
+    - content_account_id
+    - requirement_id
+    - requirement_version
+    maximum_active_plans_per_key: 1
+    plan_revision_policy: NEW_REVISION_SUPERSEDES_PRIOR_REVISION
+    competing_plan_writers_forbidden:
+    - DIFY
+    - RETRIEVAL_LAYER
+    - GENERATOR
+    required_references:
+    - trusted_scope_ref
+    - confirmed_requirement_ref
+    - retrieval_fragment_refs
+    - precise_fact_refs
+    - brand_expression_profile_ref
+    - selected_internal_content_product_id
+    optional_references:
+    - high_level_mode_refs
+    - approved_example_refs
+    - experimental_diagnostics
+    atom_component_edge_and_path_refs_required: false
+    audience_body_allowed_in_plan: false
+
+  composition_workflow:
+    ordered_stages:
+    - stage: REQUIREMENT_SUMMARY
+      owner: DIFY
+      output: EDITABLE_PLAIN_LANGUAGE_SUMMARY
+    - stage: USER_CONFIRMATION
+      owner: USER_WITH_TRUSTED_LOGIN
+      output: CONFIRMED_REQUIREMENT_VERSION
+    - stage: PREPARE
+      owner: EXPRESSION_SERVICE
+      output_union:
+      - LIGHT_CONTENT_PLAN
+      - ACTION_CARD
+    - stage: CANDIDATE_AUTHORING
+      owner: DIFY_MODEL_NODE
+      input: LIGHT_CONTENT_PLAN_REFERENCE
+      may_add_facts: false
+      may_create_competing_plan: false
+    - stage: VALIDATE
+      owner: EXPRESSION_SERVICE
+      output_union:
+      - PASS
+      - REVISE
+      - BLOCK
+    prepare_must_precede_candidate_authoring: true
+    candidate_authoring_must_precede_validate: true
+
+  delivery_contract:
+    success_object: EDITABLE_CONTENT_PRODUCTION_PACKAGE
+    success_required_fields:
+    - package_id
+    - plan_ref
+    - candidate_version
+    - content_account_id
+    - audience_surfaces
+    - used_fact_refs
+    - used_material_refs
+    - validation_decision_ref
+    action_card_types:
+    - COLLECT_FACT
+    - COLLECT_MATERIAL
+    - REQUEST_AUTHORIZATION
+    - INTERVIEW
+    - RESHOOT
+    - ANONYMIZE
+    - DEGRADE
+    - BLOCK
+    action_card_discriminator_field: object_type
+    action_card_discriminator_value: ACTION_CARD
+    action_card_type_field: action_type
+    action_card_required_fields:
+    - object_type
+    - action_type
+    - decision_id
+    - action_card_id
+    - plan_key_or_requirement_ref
+    - plain_language_reason
+    - missing_or_invalid_refs
+    - next_action
+    action_card_may_contain_publishable_candidate: false
+    missing_input_may_be_filled_by_model: false
+
+  api_contracts:
+  - method: POST
+    path: /v1/content/prepare
+    implemented_in_this_package: false
+    request_source: SERVER_TRUSTED_UPSTREAM_ENVELOPE
+    trusted_upstream_only_fields:
+    - trusted_scope_ref
+    - trusted_scope
+    - acting_role_id
+    - confirmation_evidence
+    - scoped_retrieval_fragments
+    - verified_precise_facts
+    - server_expression_profile
+    client_hint_fields:
+    - requested_high_level_mode_refs
+    - approved_example_refs
+    - client_soft_preferences
+    - output_requirements
+    client_trust_or_verified_labels_are_authoritative: false
+    request_required_fields:
+    - api_version
+    - request_id
+    - trusted_scope_ref
+    - trusted_scope
+    - acting_role_id
+    - confirmed_requirement
+    - confirmation_evidence
+    - scoped_retrieval_fragments
+    - verified_precise_facts
+    - server_expression_profile
+    - output_requirements
+    - evaluation_rules
+    response_union:
+    - LIGHT_CONTENT_PLAN
+    - ACTION_CARD
+    trace_fields:
+    - request_id
+    - requirement_id
+    - requirement_version
+    - decision_id
+    request_example:
+      api_version: v1
+      request_id: REQ-SIM-PREPARE-001
+      trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
+      trusted_scope:
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        store_id: null
+        login_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      acting_role_id: ROLE-HQ-CONTENT-TEAM
+      confirmed_requirement:
+        requirement_id: REQ-DIYU-SIM-001
+        requirement_version: 1
+        status: CONFIRMED
+        plain_language_summary: 使用已授权的模拟事实准备一份结构计划
+        tenant_id: TENANT-DIYU-SIM-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+        topic_category_id: TOPIC-02
+        target_platform: SIMULATED_CHANNEL
+        confirmed_by_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        confirmed_at: '2026-07-14T00:00:00Z'
+      confirmation_evidence:
+        confirmed_by_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        confirmed_by_role_ids: [ROLE-XU-WENCHUAN]
+        confirmation_scope: product_content
+        authorization_refs: [AUTH-SIM-CONFIRM-001]
+        subject_confirmation_ref: null
+      scoped_retrieval_fragments:
+      - fragment_id: FRAGMENT-SIM-001
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        source_organization_id: ORG-DIYU-HQ
+        source_store_id: null
+        source_ref: fixture://public-foundation/narrative/001
+        applicable_organization_ids: [ORG-DIYU-HQ]
+        applicable_store_ids: [null]
+        applicable_content_account_ids: [ACCOUNT-DIYU-HQ-OFFICIAL]
+        observed_at: '2026-07-14T00:00:00Z'
+        valid_until: '2026-08-14T00:00:00Z'
+        authorization_ref: AUTH-SIM-001
+        authorization_state: GRANTED
+        disclosure_scope: CONTENT_ACCOUNT_ONLY
+        status: ACTIVE
+      verified_precise_facts:
+      - fact_id: FACT-SIM-001
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        store_id: null
+        applicable_content_account_ids: [ACCOUNT-DIYU-HQ-OFFICIAL]
+        fact_kind: TIME_POINT
+        value: SIMULATED_VALUE
+        source_ref: fixture://public-foundation/fact/001
+        effective_at: '2026-07-14T00:00:00Z'
+        valid_until: '2026-08-14T00:00:00Z'
+        authorization_ref: AUTH-SIM-001
+        disclosure_scope: CONTENT_ACCOUNT_ONLY
+        status: ACTIVE
+      server_expression_profile:
+        resolution_authority: SERVER_TRUSTED_UPSTREAM
+        requested_profile_ref: null
+        resolved_profile_ref: expression-profile://neutral-default/v1
+        resolution_mode: NEUTRAL_DEFAULT
+        tenant_id: TENANT-DIYU-SIM-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      requested_high_level_mode_refs:
+      - expression-mode://documentary-observation/v1
+      approved_example_refs: []
+      client_soft_preferences:
+        rhythm: concise
+        emotional_intensity: restrained
+      output_requirements:
+        target_platform: SIMULATED_CHANNEL
+        required_candidate_count: 3
+        audience_surface_fields: [title, body, spoken_lines, CTA]
+      evaluation_rules:
+        hard_check_categories:
+        - fact_support
+        - source_provenance
+        - authorization
+        - privacy
+        - trusted_scope
+        - effective_time_and_revocation
+        - enterprise_commitment
+        - explicit_brand_prohibition
+        - internal_identifier_leak
+        soft_evaluation_tasks:
+        - task_fit
+        - brand_fit
+        - naturalness
+        - platform_fit
+        - candidate_difference
+    response_examples:
+      light_content_plan:
+        object_type: LIGHT_CONTENT_PLAN
+        plan_id: PLAN-SIM-001
+        plan_revision: 1
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+        tenant_id: TENANT-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+        requirement_id: REQ-DIYU-SIM-001
+        requirement_version: 1
+        task_objective: 使用已授权的模拟事实准备专业但自然的内容候选
+        primary_audience: 需要理解商品专业信息的普通用户
+        output_requirements:
+          target_platform: SIMULATED_CHANNEL
+          required_candidate_count: 3
+          audience_surface_fields: [title, body, spoken_lines, CTA]
+        candidate_policy:
+          required_candidate_count: 3
+          difference_dimensions:
+          - narrative_entry
+          - information_order
+          - visual_focus
+          - rhythm
+          near_duplicate_rewording_counts_as_distinct: false
+        hard_check_policy:
+        - fact_support
+        - source_provenance
+        - authorization
+        - privacy
+        - trusted_scope
+        - effective_time_and_revocation
+        - enterprise_commitment
+        - explicit_brand_prohibition
+        - internal_identifier_leak
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: brand_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: naturalness
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: platform_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: candidate_difference
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        references:
+          trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
+          confirmed_requirement_ref: requirement://REQ-DIYU-SIM-001/versions/1
+          retrieval_fragment_refs: [FRAGMENT-SIM-001]
+          precise_fact_refs: [FACT-SIM-001]
+          brand_expression_profile_ref: expression-profile://neutral-default/v1
+          selected_internal_content_product_id: CP02
+        expression_guidance:
+          brand_expression_profile_ref: expression-profile://neutral-default/v1
+          high_level_mode_refs:
+          - expression-mode://documentary-observation/v1
+          approved_example_refs: []
+          client_soft_preferences:
+            rhythm: concise
+            emotional_intensity: restrained
+          may_grant_fact_authorization_or_scope: false
+      action_card:
+        object_type: ACTION_CARD
+        action_type: COLLECT_FACT
+        decision_id: DECISION-SIM-ACTION-001
+        action_card_id: ACTION-SIM-001
+        plan_key_or_requirement_ref: requirement://REQ-DIYU-SIM-001/versions/1
+        plain_language_reason: 缺少当前有效且获准披露的精确事实
+        missing_or_invalid_refs: [FACT-SIM-MISSING]
+        next_action: 补充或确认事实后重新准备
+  - method: POST
+    path: /v1/content/validate
+    implemented_in_this_package: false
+    request_required_fields:
+    - api_version
+    - request_id
+    - trusted_scope_ref
+    - trusted_scope
+    - composition_plan_ref
+    - candidate
+    - actually_used_fact_refs
+    - actually_used_material_refs
+    response_union:
+    - PASS
+    - REVISE
+    - BLOCK
+    response_required_fields:
+    - object_type
+    - decision
+    - decision_id
+    - composition_plan_ref
+    - hard_issues
+    - soft_evaluation_tasks
+    - semantic_fact_review_status
+    - actually_used_fact_refs
+    - actually_used_material_refs
+    - plain_language_reason
+    checks:
+    - fact_support
+    - source_provenance
+    - authorization
+    - privacy
+    - trusted_scope
+    - effective_time_and_revocation
+    - enterprise_commitment
+    - explicit_brand_prohibition
+    - plan_consistency
+    - internal_identifier_leak
+    hard_checks_do_not_prove_candidate_semantics: true
+    semantic_fact_review_required_before_publish: true
+    request_example:
+      api_version: v1
+      request_id: REQ-SIM-VALIDATE-001
+      trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
+      trusted_scope:
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        store_id: null
+        login_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+      candidate:
+        candidate_id: CANDIDATE-SIM-001
+        candidate_version: 1
+        audience_surface_refs: [fixture://public-foundation/surface/001]
+        audience_text_embedded_in_contract: false
+      actually_used_fact_refs: [FACT-SIM-001]
+      actually_used_material_refs: [FRAGMENT-SIM-001]
+    response_examples:
+      pass:
+        object_type: VALIDATION_DECISION
+        decision: PASS
+        decision_id: DECISION-SIM-PASS-001
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+        hard_issues: []
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: brand_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: naturalness
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: platform_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: candidate_difference
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        semantic_fact_review_status: PENDING_EXTERNAL_REVIEW
+        actually_used_fact_refs: [FACT-SIM-001]
+        actually_used_material_refs: [FRAGMENT-SIM-001]
+        plain_language_reason: 结构化硬检查通过，正文语义事实复核和表达质量评价仍待完成。
+      revise:
+        object_type: VALIDATION_DECISION
+        decision: REVISE
+        decision_id: DECISION-SIM-REVISE-001
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+        hard_issues: [UNSUPPORTED_STRUCTURED_REFERENCE]
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        semantic_fact_review_status: PENDING_EXTERNAL_REVIEW
+        actually_used_fact_refs: [FACT-SIM-001]
+        actually_used_material_refs: [FRAGMENT-SIM-001]
+        plain_language_reason: 有一处结构化引用不完整，请按计划允许的资料修改，正文语义仍需复核。
+      block:
+        object_type: VALIDATION_DECISION
+        decision: BLOCK
+        decision_id: DECISION-SIM-BLOCK-001
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+        hard_issues: [SCOPE_OR_AUTHORIZATION_MISMATCH]
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        semantic_fact_review_status: NOT_REACHED
+        actually_used_fact_refs: [FACT-SIM-001]
+        actually_used_material_refs: [FRAGMENT-SIM-001]
+        plain_language_reason: 资料范围或授权与当前账号不一致，暂不能继续。
+    evaluation_time_source: SERVER_CLOCK
+    client_supplied_evaluation_time_accepted: false
+  - method: GET
+    path: /healthz
+    implemented_in_this_package: false
+    future_semantics: PROCESS_IS_ALIVE
+    may_claim_dependency_readiness: false
+  - method: GET
+    path: /readyz
+    implemented_in_this_package: false
+    future_semantics: REQUIRED_DEPENDENCIES_AND_CONTRACTS_READY
+    current_response_ready: false
+
+  user_output_contract:
+    hidden_internal_identifiers:
+    - content_product_id
+    - component_id
+    - route_code
+    - raw_error_code
+    - internal_route_id
+    prohibited_patterns:
+    - 'CP[0-9]{2}'
+    - '(BNO|BRV|VGA|BCL|FC)-[0-9]{2}'
+    - '(G1V11|RCV2)-[A-Z0-9-]+'
+    - '(all_required_inputs_present|required_source_missing|required_fact_missing|required_authorization_missing)'
+    - 'E_[A-Z0-9_]+'
+    hidden_internal_route_values:
+    - all_required_inputs_present
+    - required_source_missing
+    - required_fact_missing
+    - required_authorization_missing
+    candidate_surface_container: candidate_user_visible_surfaces
+    allowed_candidate_surface_fields:
+    - title
+    - body
+    - spoken_lines
+    - CTA
+    - execution_payload
+    - surface_units
+    unknown_candidate_surface_field_behavior: BLOCK
+    all_concurrent_candidate_surfaces_scanned_together: true
+    plain_language_reason_required: true
+    internal_identifiers_allowed_in_internal_trace: true
+
+  case_evidence_contract:
+    creates_second_case_inventory: false
+    append_only: true
+    case_id_is_stable: true
+    required_case_fields:
+    - case_id
+    - source_inventory_ref
+    - role
+    - visibility
+    - contamination_status
+    required_evidence_event_fields:
+    - event_id
+    - stage
+    - actor_identity
+    - occurred_at
+    - input_digest
+    - output_digest
+    - decision
+    allowed_visibility:
+    - OPEN_DEVELOPMENT
+    - SEALED_HIDDEN
+    - HISTORICAL_FAILURE
+    allowed_contamination_status:
+    - CLEAN
+    - CONTAMINATED_RETAINED_AS_EVIDENCE
+    - NOT_APPLICABLE
+    prior_event_mutation_allowed: false
+    failed_case_deletion_allowed: false
+    pull_request_15_may_be_approved_asset: false
+
+  module_ownership:
+    DIFY:
+      owns:
+      - normal_chat
+      - inspiration
+      - requirement_clarification
+      - requirement_confirmation_ui
+      - candidate_authoring_model_call
+      - result_display
+      - user_requested_revision
+      does_not_own:
+      - trusted_identity
+      - precise_fact_truth
+      - light_content_plan
+      - authorization_truth
+    EXPRESSION_SERVICE:
+      owns:
+      - prepare
+      - light_content_plan
+      - server_expression_profile_resolution
+      - validate
+      does_not_own:
+      - brand_fact_truth
+      - trusted_login_identity
+    BRAND_FACT_MODULE:
+      owns:
+      - scoped_narrative_material
+      - verified_precise_fact_import_assets
+      does_not_own:
+      - expression_components
+      - light_content_plan
+    POSTGRESQL:
+      future_owns:
+      - trusted_identity_scope
+      - verified_precise_facts
+      not_implemented_in_this_package: true
+    DIFY_KNOWLEDGE_BASE:
+      future_owns:
+      - scoped_narrative_retrieval
+      must_not_own:
+      - identity
+      - authorization
+      - current_price
+      - current_stock
+      not_implemented_in_this_package: true
+
+  downstream_package_boundaries:
+  - package_id: PACKAGE_2_LIGHT_EXPRESSION_SERVICE
+    exclusive_root: 12_expression_service/expression_runtime_adapter_001
+    purpose: light_expression_http_interface_and_plan_runtime
+    state_before_foundation_master_green: LOCKED
+  - package_id: PACKAGE_3_BRAND_DATA
+    exclusive_root: 13_brand_data/brand_data_import_001
+    purpose: brand_narrative_and_precise_fact_import_assets
+    state_before_foundation_master_green: LOCKED
+  - package_id: PACKAGE_4_DIFY_SHELL
+    exclusive_root: 14_dify_shell/dify_content_shell_001
+    purpose: normal_chat_and_content_creation_conversation_shell
+    state_before_foundation_master_green: LOCKED
+  light_content_plan_contract_owner: PACKAGE_2_LIGHT_EXPRESSION_SERVICE
+  downstream_may_create_parallel_public_model: false
+
+  review_protocol:
+    author_identity: codex-execution-primary
+    final_merger_identity: codex-execution-primary
+    required_reviews:
+    - review_id: ARCHITECTURE_CONSUMABILITY_REVIEW
+      scope: architecture_downstream_consumability_simplicity_user_interaction
+      minimum_score: 90
+    - review_id: TRUST_FACT_SAFETY_REVIEW
+      scope: identity_tenant_store_fact_authorization_anti_false_green
+      minimum_score: 90
+    coordinator_review_required: true
+    coordinator_minimum_score: 90
+    reviewer_must_not_be_author_or_final_merger: true
+    reviewer_instances_must_be_distinct: true
+    material_disagreement_requires_third_review: true
+    merge_decision: PASS_TO_MERGE
+
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false

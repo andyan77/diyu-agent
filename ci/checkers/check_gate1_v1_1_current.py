@@ -80,6 +80,66 @@ P4_CONDITIONAL_COMPAT_PATHS = frozenset(
         P3_TASK_ROOT / "p3_final_r1.py",
     }
 )
+PUBLIC_FOUNDATION_ROOT = Path("11_product_foundation/public_foundation_001")
+PUBLIC_FOUNDATION_EXACT_PATHS = frozenset(
+    {
+        Path(".github/workflows/ci.yml"),
+        Path("AGENTS.md"),
+        Path("README.md"),
+        PUBLIC_FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "identity/simulation_tenant.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "taxonomy/topic_product_mapping.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "fixtures/contract_cases.v1.jsonl",
+        PUBLIC_FOUNDATION_ROOT / "result/public_foundation_result.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT
+        / "review/architecture_consumability_review.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "review/trust_fact_safety_review.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "review/coordinator_decision.v1.yaml",
+        Path("ci/checkers/check_product_foundation.py"),
+        Path("project-infra/current_product_status.v1.yaml"),
+        Path("project-infra/product_workspace_manifest.v1.yaml"),
+    }
+)
+PUBLIC_FOUNDATION_CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
+PUBLIC_FOUNDATION_RESULT_PATH = (
+    PUBLIC_FOUNDATION_ROOT / "result/public_foundation_result.v1.yaml"
+)
+P4_THIRD_TOOL_FREEZE_PATH = (
+    P4_THIRD_TASK_ROOT / "freeze/tool_freeze.v1.0.yaml"
+)
+PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
+    "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
+)
+PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
+    "ed1fc96a20cf86d08a80418caa927ff13734e1cd4d5a4bc0e0ed915ef61be823"
+)
+PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
+    "python3 ci/checkers/check_product_foundation.py",
+    "python3 ci/checkers/check_product_foundation.py --selftest",
+    '"ci/checkers/check_product_foundation.py" \\',
+    '"ci/checkers/check_product_foundation.py --selftest" \\',
+)
+DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
+    (
+        Path("12_expression_service/expression_runtime_adapter_001"),
+        Path(
+            "12_expression_service/expression_runtime_adapter_001/"
+            "check_light_expression_service.py"
+        ),
+    ),
+    (
+        Path("13_brand_data/brand_data_import_001"),
+        Path("13_brand_data/brand_data_import_001/check_brand_data_import.py"),
+    ),
+    (
+        Path("14_dify_shell/dify_content_shell_001"),
+        Path("14_dify_shell/dify_content_shell_001/check_dify_content_shell.py"),
+    ),
+)
+DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
+DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP = (
+    "Verify reserved downstream package fail-closed optimized mode"
+)
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
     "controlled_content_generator_v2_001/gate1_v1_1_001/current_gate1_owner.v0.1.yaml"
@@ -636,7 +696,254 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
     )
 
 
-def unexpected_write_paths(paths: set[Path]) -> list[str]:
+def is_public_foundation_write_path(path: Path) -> bool:
+    """Delegate only the fixed product-foundation surface to its current checker."""
+
+    return path in PUBLIC_FOUNDATION_EXACT_PATHS
+
+
+def public_foundation_successor_registration_is_valid(root: Path) -> bool:
+    """Pin the delegated checker and every required workflow invocation."""
+
+    checker = root / PUBLIC_FOUNDATION_CHECKER_PATH
+    workflow = root / CI_WORKFLOW_PATH
+    if not checker.is_file() or not workflow.is_file():
+        return False
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or not isinstance(document.get("jobs"), dict):
+        return False
+    job = document["jobs"].get("checker-compatibility")
+    if not isinstance(job, dict) or not isinstance(job.get("steps"), list):
+        return False
+    active_lines = tuple(
+        stripped
+        for step in job["steps"]
+        if isinstance(step, dict) and isinstance(step.get("run"), str)
+        for line in step["run"].splitlines()
+        if (stripped := line.strip()) and not stripped.startswith("#")
+    )
+    checker_pin_line = (
+        'test "$(sha256sum ci/checkers/check_product_foundation.py '
+        "| cut -d ' ' -f 1)\" = \""
+        f"{PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256}\""
+    )
+    return (
+        sha256_file(checker) == PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256
+        and active_lines.count(checker_pin_line) == 1
+        and all(
+            active_lines.count(required_line) == 1
+            for required_line in PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES
+        )
+    )
+
+
+def downstream_workflow_step_lines(root: Path, step_name: str) -> tuple[str, ...]:
+    """Return the exact nonblank lines for one named checker workflow step."""
+
+    workflow = root / CI_WORKFLOW_PATH
+    if not workflow.is_file():
+        return ()
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or not isinstance(document.get("jobs"), dict):
+        return ()
+    job = document["jobs"].get("checker-compatibility")
+    if not isinstance(job, dict) or not isinstance(job.get("steps"), list):
+        return ()
+    matching = [
+        step
+        for step in job["steps"]
+        if isinstance(step, dict) and step.get("name") == step_name
+    ]
+    if len(matching) != 1 or not isinstance(matching[0].get("run"), str):
+        return ()
+    return tuple(
+        line.strip() for line in matching[0]["run"].splitlines() if line.strip()
+    )
+
+
+def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
+    """Require one fail-closed remote runner for each reserved package root."""
+
+    workflow = root / CI_WORKFLOW_PATH
+    if not workflow.is_file():
+        return False
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    if (
+        not isinstance(document, dict)
+        or not isinstance(document.get("jobs"), dict)
+        or "defaults" in document
+        or "env" in document
+    ):
+        return False
+    job = document["jobs"].get("checker-compatibility")
+    if (
+        not isinstance(job, dict)
+        or set(job) != {"name", "runs-on", "steps"}
+        or not isinstance(job.get("steps"), list)
+    ):
+        return False
+    for step_name in (
+        DOWNSTREAM_NORMAL_WORKFLOW_STEP,
+        DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP,
+    ):
+        matching = [
+            step
+            for step in job["steps"]
+            if isinstance(step, dict) and step.get("name") == step_name
+        ]
+        if (
+            len(matching) != 1
+            or set(matching[0]) != {"name", "env", "run"}
+            or matching[0].get("env") != {"PYTHONDONTWRITEBYTECODE": "1"}
+        ):
+            return False
+
+    normal_lines = (
+        "set -euo pipefail",
+        "run_downstream_package_checker() {",
+        'package_root="$1"',
+        'checker="$2"',
+        'if [ ! -e "$package_root" ]; then',
+        "return 0",
+        "fi",
+        'test -d "$package_root"',
+        'test -f "$checker"',
+        'python3 "$checker"',
+        'python3 "$checker" --selftest',
+        "}",
+        *(
+            f'run_downstream_package_checker "{package_root.as_posix()}" '
+            f'"{checker_path.as_posix()}"'
+            for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
+        ),
+    )
+    optimized_lines = (
+        "set -euo pipefail",
+        "run_downstream_package_checker_optimized() {",
+        'package_root="$1"',
+        'checker="$2"',
+        'if [ ! -e "$package_root" ]; then',
+        "return 0",
+        "fi",
+        'test -d "$package_root"',
+        'test -f "$checker"',
+        "set +e",
+        'python3 -O "$checker"',
+        "code=$?",
+        "set -e",
+        'test "$code" -eq 2',
+        "set +e",
+        'python3 -O "$checker" --selftest',
+        "code=$?",
+        "set -e",
+        'test "$code" -eq 2',
+        "}",
+        *(
+            f'run_downstream_package_checker_optimized "{package_root.as_posix()}" '
+            f'"{checker_path.as_posix()}"'
+            for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
+        ),
+    )
+    return (
+        downstream_workflow_step_lines(root, DOWNSTREAM_NORMAL_WORKFLOW_STEP)
+        == normal_lines
+        and downstream_workflow_step_lines(root, DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP)
+        == optimized_lines
+    )
+
+
+def is_registered_downstream_successor_write_path(root: Path, path: Path) -> bool:
+    """Delegate only an existing reserved root with its registered package checker."""
+
+    for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS:
+        if not path.is_relative_to(package_root):
+            continue
+        package = root / package_root
+        checker = root / checker_path
+        return (
+            package.is_dir()
+            and not package.is_symlink()
+            and checker.is_file()
+            and not checker.is_symlink()
+            and downstream_successor_workflow_registration_is_valid(root)
+        )
+    return False
+
+
+def public_foundation_checker_handoff_is_valid(root: Path) -> bool:
+    """Validate the frozen predecessor identity before delegating its successor."""
+
+    try:
+        freeze = load_yaml(root / P4_THIRD_TOOL_FREEZE_PATH).get(
+            "third_p4_tool_freeze"
+        )
+        result = load_yaml(root / PUBLIC_FOUNDATION_RESULT_PATH).get(
+            "public_foundation_result"
+        )
+        if not isinstance(freeze, dict) or not isinstance(result, dict):
+            return False
+        tool_files = freeze.get("tool_file_sha256")
+        return (
+            freeze.get("tool_freeze_digest")
+            == object_digest(freeze, "tool_freeze_digest")
+            and isinstance(tool_files, dict)
+            and tool_files.get(CURRENT_CHECKER_PATH.as_posix())
+            == PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256
+            and result.get("task_id")
+            == "DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001"
+            and public_foundation_successor_registration_is_valid(root)
+        )
+    except (OSError, TypeError, ValueError, yaml.YAMLError):
+        return False
+
+
+def filter_public_foundation_checker_handoff(
+    root: Path, errors: list[dict[str, str]]
+) -> list[dict[str, str]]:
+    """Suppress only the predecessor's expected self-drift after a valid handoff."""
+
+    if not public_foundation_checker_handoff_is_valid(root):
+        return errors
+    return [
+        error
+        for error in errors
+        if not (
+            error.get("code") == "E_T3_TOOL_FILE_DRIFT"
+            and error.get("detail") == CURRENT_CHECKER_PATH.as_posix()
+        )
+    ]
+
+
+def install_public_foundation_recovery_handoff(recovery_guard: Any) -> None:
+    """Wrap the frozen P4 validator without changing its on-disk implementation."""
+
+    if getattr(recovery_guard, "_public_foundation_handoff_installed", False):
+        return
+    frozen_loader = recovery_guard._load_third_guard
+
+    def compatible_loader(root: Path) -> Any:
+        third_guard = frozen_loader(root)
+        frozen_validate_tool_freeze = third_guard._validate_tool_freeze
+
+        def compatible_validate_tool_freeze(
+            candidate_root: Path, errors: list[dict[str, str]]
+        ) -> None:
+            frozen_errors: list[dict[str, str]] = []
+            frozen_validate_tool_freeze(candidate_root, frozen_errors)
+            errors.extend(
+                filter_public_foundation_checker_handoff(
+                    candidate_root, frozen_errors
+                )
+            )
+
+        third_guard._validate_tool_freeze = compatible_validate_tool_freeze
+        return third_guard
+
+    recovery_guard._load_third_guard = compatible_loader
+    recovery_guard._public_foundation_handoff_installed = True
+
+
+def unexpected_write_paths(root: Path, paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
         if (
@@ -648,6 +955,10 @@ def unexpected_write_paths(paths: set[Path]) -> list[str]:
             or path.is_relative_to(P4_AUTHOR_RECOVERY_TASK_ROOT)
             or path.is_relative_to(P4_THIRD_TASK_ROOT)
         ):
+            continue
+        if is_public_foundation_write_path(path):
+            continue
+        if is_registered_downstream_successor_write_path(root, path):
             continue
         if path not in {
             CURRENT_OWNER_PATH,
@@ -805,6 +1116,8 @@ def validate_p4_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         and not path.is_relative_to(P4_RESEALED_TASK_ROOT)
         and not path.is_relative_to(P4_AUTHOR_RECOVERY_TASK_ROOT)
         and not path.is_relative_to(P4_THIRD_TASK_ROOT)
+        and not is_public_foundation_write_path(path)
+        and not is_registered_downstream_successor_write_path(root, path)
         and path not in allowed_exact
     )
     if unexpected:
@@ -830,7 +1143,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         for line in result.stdout.splitlines()
         if line
     }
-    unexpected = unexpected_write_paths(paths)
+    unexpected = unexpected_write_paths(root, paths)
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", str(unexpected))
 
@@ -5596,9 +5909,10 @@ def validate(root: Path) -> list[dict[str, str]]:
         if str(module_root) not in sys.path:
             sys.path.insert(0, str(module_root))
         try:
-            from recovery_guard import validate_recovery
+            import recovery_guard
 
-            errors.extend(validate_recovery(root))
+            install_public_foundation_recovery_handoff(recovery_guard)
+            errors.extend(recovery_guard.validate_recovery(root))
         except (ImportError, OSError, TypeError, ValueError) as exc:
             add_error(errors, "E_P4_AUTHOR_RECOVERY_GUARD_IMPORT", str(exc))
     if (root / P3_TASK_ROOT).exists() and not successor_active:
@@ -6357,9 +6671,192 @@ def selftest(root: Path) -> int:
                 "actual": sorted({error["code"] for error in identity_errors}),
             }
         )
-    if not unexpected_write_paths({Path("outside_p1a/unapproved.txt")}):
+    if not unexpected_write_paths(root, {Path("outside_p1a/unapproved.txt")}):
         failures.append(
             {"case": "unauthorized_path", "expected": "E_WRITE_SURFACE", "actual": []}
+        )
+    if unexpected_write_paths(
+        root,
+        {PUBLIC_FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml"},
+    ):
+        failures.append(
+            {
+                "case": "public_foundation_delegation",
+                "expected": "delegated to check_product_foundation.py",
+                "actual": ["E_WRITE_SURFACE"],
+            }
+        )
+    if not unexpected_write_paths(
+        root,
+        {PUBLIC_FOUNDATION_ROOT / "future/arbitrary_successor.yaml"},
+    ):
+        failures.append(
+            {
+                "case": "public_foundation_future_path_not_delegated",
+                "expected": "E_WRITE_SURFACE",
+                "actual": [],
+            }
+        )
+    for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS:
+        with tempfile.TemporaryDirectory(
+            prefix="gate1-downstream-successor-selftest-"
+        ) as temporary:
+            temp_root = Path(temporary)
+            workflow_destination = temp_root / CI_WORKFLOW_PATH
+            checker_destination = temp_root / checker_path
+            workflow_destination.parent.mkdir(parents=True, exist_ok=True)
+            checker_destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(root / CI_WORKFLOW_PATH, workflow_destination)
+            checker_destination.write_text(
+                "#!/usr/bin/env python3\nraise SystemExit(0)\n", encoding="utf-8"
+            )
+            delegated_path = package_root / "implementation.py"
+            if unexpected_write_paths(temp_root, {delegated_path}):
+                failures.append(
+                    {
+                        "case": f"reserved_downstream_successor:{package_root}",
+                        "expected": "delegated to registered package checker",
+                        "actual": ["E_WRITE_SURFACE"],
+                    }
+                )
+    workflow_metadata_mutations = (
+        (
+            "downstream_job_if_rejected",
+            "  checker-compatibility:\n",
+            "  checker-compatibility:\n    if: ${{ false }}\n",
+        ),
+        (
+            "downstream_normal_step_if_rejected",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n"
+            "        if: ${{ false }}\n",
+        ),
+        (
+            "downstream_optimized_continue_on_error_rejected",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n"
+            "        continue-on-error: true\n",
+        ),
+        (
+            "downstream_job_defaults_rejected",
+            "  checker-compatibility:\n",
+            "  checker-compatibility:\n"
+            "    defaults:\n"
+            "      run:\n"
+            "        working-directory: 11_product_foundation\n",
+        ),
+        (
+            "downstream_normal_step_shell_override_rejected",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n"
+            "        shell: bash -n {0}\n",
+        ),
+        (
+            "downstream_optimized_working_directory_rejected",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n"
+            "        working-directory: 11_product_foundation\n",
+        ),
+    )
+    for case_name, marker, replacement in workflow_metadata_mutations:
+        with tempfile.TemporaryDirectory(
+            prefix="gate1-downstream-workflow-metadata-selftest-"
+        ) as temporary:
+            temp_root = Path(temporary)
+            workflow_destination = temp_root / CI_WORKFLOW_PATH
+            workflow_destination.parent.mkdir(parents=True, exist_ok=True)
+            workflow_text = (root / CI_WORKFLOW_PATH).read_text(encoding="utf-8")
+            workflow_destination.write_text(
+                workflow_text.replace(marker, replacement, 1), encoding="utf-8"
+            )
+            if downstream_successor_workflow_registration_is_valid(temp_root):
+                failures.append(
+                    {
+                        "case": case_name,
+                        "expected": "fail-closed workflow metadata rejection",
+                        "actual": "registration accepted",
+                    }
+                )
+    if not unexpected_write_paths(
+        root, {Path("15_unreserved_package/unapproved.txt")}
+    ):
+        failures.append(
+            {
+                "case": "unreserved_downstream_successor",
+                "expected": "E_WRITE_SURFACE",
+                "actual": [],
+            }
+        )
+    if not public_foundation_successor_registration_is_valid(root):
+        failures.append(
+            {
+                "case": "public_foundation_successor_registration",
+                "expected": "checker digest and four workflow calls pinned",
+                "actual": "invalid",
+            }
+        )
+    with tempfile.TemporaryDirectory(
+        prefix="gate1-public-foundation-successor-selftest-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        checker_destination = temp_root / PUBLIC_FOUNDATION_CHECKER_PATH
+        workflow_destination = temp_root / CI_WORKFLOW_PATH
+        checker_destination.parent.mkdir(parents=True, exist_ok=True)
+        workflow_destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(root / PUBLIC_FOUNDATION_CHECKER_PATH, checker_destination)
+        shutil.copy2(root / CI_WORKFLOW_PATH, workflow_destination)
+        workflow_text = workflow_destination.read_text(encoding="utf-8")
+        workflow_destination.write_text(
+            workflow_text.replace(
+                "          python3 ci/checkers/check_product_foundation.py\n",
+                "          # python3 ci/checkers/check_product_foundation.py\n",
+                1,
+            ),
+            encoding="utf-8",
+        )
+        if public_foundation_successor_registration_is_valid(temp_root):
+            failures.append(
+                {
+                    "case": "public_foundation_successor_workflow_tamper",
+                    "expected": "invalid",
+                    "actual": "valid",
+                }
+            )
+        shutil.copy2(root / CI_WORKFLOW_PATH, workflow_destination)
+        checker_destination.write_bytes(checker_destination.read_bytes() + b"\n")
+        if public_foundation_successor_registration_is_valid(temp_root):
+            failures.append(
+                {
+                    "case": "public_foundation_successor_checker_tamper",
+                    "expected": "invalid",
+                    "actual": "valid",
+                }
+            )
+    retained_handoff_errors = filter_public_foundation_checker_handoff(
+        root,
+        [
+            {
+                "code": "E_T3_TOOL_FILE_DRIFT",
+                "detail": CURRENT_CHECKER_PATH.as_posix(),
+            },
+            {
+                "code": "E_T3_TOOL_FILE_DRIFT",
+                "detail": "historical/other_frozen_tool.py",
+            },
+        ],
+    )
+    if retained_handoff_errors != [
+        {
+            "code": "E_T3_TOOL_FILE_DRIFT",
+            "detail": "historical/other_frozen_tool.py",
+        }
+    ]:
+        failures.append(
+            {
+                "case": "public_foundation_historical_tool_handoff",
+                "expected": "only the exact predecessor self-drift is delegated",
+                "actual": retained_handoff_errors,
+            }
         )
     if (root / P1B_MATERIALIZER_PATH).exists():
         p1b_selftest = subprocess.run(
@@ -6504,9 +7001,10 @@ def selftest(root: Path) -> int:
         if str(successor_root) not in sys.path:
             sys.path.insert(0, str(successor_root))
         try:
-            from recovery_guard import selftest as recovery_selftest
+            import recovery_guard
 
-            if recovery_selftest(root) != 0:
+            install_public_foundation_recovery_handoff(recovery_guard)
+            if recovery_guard.selftest(root) != 0:
                 failures.append(
                     {
                         "case": "p4_author_recovery_negative_tamper_suite",

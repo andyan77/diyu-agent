@@ -2,24 +2,60 @@
 
 ## Project role
 
-This repository is the Diyu knowledge engineering workspace.
+This repository is the single business repository for the Diyu content agent.
+The current product route is declared by:
 
-## Non-negotiable architecture rules
+- `project-infra/current_product_status.v1.yaml`
+- `project-infra/product_workspace_manifest.v1.yaml`
+- `11_product_foundation/public_foundation_001/`
 
-- Do not write raw Markdown or GPT output directly into ABox or TBox.
-- Do not write KE truth source unless the task explicitly authorizes KE landing.
-- Do not write Serving Projection unless the task explicitly authorizes serving materialization.
-- Do not write RAG context_bundle unless the task explicitly authorizes RAG work.
-- Do not write DIFY workflow unless the task explicitly authorizes DIFY work.
-- RAG must only consume serving projection.
-- DIFY must only consume context_bundle.
-- User feedback must not write ABox / TBox / Evidence directly.
-- No evidence means not production_servable.
-- not_production_ready must not enter generation.
+Older knowledge-engineering manifests remain historical evidence. They must not
+be used to infer the current product phase or silently rewritten.
+
+## Authority boundaries
+
+- Server-confirmed tenant, organization, store, login user, and content-account
+  scope is authoritative. User or Dify input cannot widen it.
+- Login identity and outward-facing content account are separate objects. Real
+  people never share credentials. A simulation exception must be explicit and
+  non-publishable.
+- Narrative retrieval is supporting evidence. It cannot grant authorization or
+  override a newer exact fact for SKU, specification, price, stock, time,
+  authorization, or revocation.
+- Expression components, rules, edges, and A/B paths are optional offline
+  research, regression, diagnostic, or explicit-experiment assets. Normal
+  requests and light content plans must work without them. They are not brand
+  facts, permissions, stock records, or source text.
+- A confirmed requirement version may have one versioned light content plan.
+  The expression `prepare` operation owns that plan; Dify, retrieval, and the
+  generator may not create competing plans.
+- Brand expression profiles, high-level modes, examples, and client soft
+  preferences guide expression only. They cannot grant facts, authorization,
+  scope, or publishability, and client preferences cannot weaken server-side
+  prohibitions.
+- No evidence or authorization means no publishable output. Missing inputs must
+  produce an action card, degradation, or stop decision.
+
+## Historical and forbidden default writes
+
+Unless an execution brief explicitly authorizes them, do not modify:
+
+- `KE/**`
+- `serving_projection/**`
+- `rag/**`
+- `dify/**`
+- `candidatepack_etl/candidatepack_instances/**`
+- P1-P4 evidence, gold answers, first failures, or frozen expression assets
+- runtime or production files
+- secret files or external service configuration
+
+Never write raw Markdown or model output directly into ABox, TBox, Evidence,
+brand facts, or another truth source. User feedback cannot directly write those
+truth sources.
 
 ## Readiness flags
 
-Unless a task explicitly authorizes a readiness transition, all of the following must remain false:
+Unless a task explicitly authorizes a transition, all of these remain false:
 
 - candidatepack_ready
 - KE_ready
@@ -28,29 +64,19 @@ Unless a task explicitly authorizes a readiness transition, all of the following
 - production_servable
 - generation_eligible
 - generation_allowed
+- generator_qualified
+- retrieval_ready
+- runtime_ready
 - release_ready
 - production_ready
 
-## Forbidden default writes
+## Execution discipline
 
-Do not modify:
-
-- KE/**
-- serving_projection/**
-- rag/**
-- dify/**
-- candidatepack_etl/candidatepack_instances/**
-- runtime production files
-- secret files
-- external service config
-
-unless explicitly listed in the Execution Brief allowed writes.
-
-## Required execution discipline
-
-- Read the Execution Brief before writing.
-- Stop if baseline HEAD or worktree status differs.
-- Stop if allowed write surface is ambiguous.
-- Stop if a task requires production, external runtime, secret handling, or true KE landing without explicit authorization.
-- Run only delta checks required by the task.
-- Report changed files, checks run, failures, and readiness flags.
+- Read the current execution brief and nearest `AGENTS.md` before writing.
+- Verify the expected HEAD, branch, worktree, and allowed write surface.
+- Work with unrelated user changes; never delete or revert them.
+- Stop before production, external runtime, secrets, paid services, or a truth
+  transition that lacks explicit authorization.
+- Prefer the repository's current contracts and checkers over parallel models.
+- Run the task's delta checks and report changed files, failures, remote checks,
+  and every readiness transition.
