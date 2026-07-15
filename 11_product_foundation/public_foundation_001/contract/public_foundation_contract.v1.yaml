@@ -274,6 +274,7 @@ public_foundation_contract:
     - selected_internal_content_product_id
     - selected_component_refs
     - selected_control_rule_refs
+    - selected_edge_refs
     - selected_structural_path_ref
     audience_body_allowed_in_plan: false
 
@@ -443,6 +444,7 @@ public_foundation_contract:
           selected_internal_content_product_id: CP02
           selected_component_refs: [G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE]
           selected_control_rule_refs: [G1V11-CR-04-CLAIM-EVIDENCE-LIMIT]
+          selected_edge_refs: [P2R2-EDGE-CP02-visual_beat-01]
           selected_structural_path_ref: structural-path://CP02/A
       action_card:
         object_type: ACTION_CARD
@@ -469,6 +471,12 @@ public_foundation_contract:
     - PASS
     - REVISE
     - BLOCK
+    response_required_fields:
+    - object_type
+    - decision
+    - decision_id
+    - composition_plan_ref
+    - plain_language_reason
     checks:
     - fact_support
     - authorization
@@ -500,16 +508,19 @@ public_foundation_contract:
         decision: PASS
         decision_id: DECISION-SIM-PASS-001
         composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+        plain_language_reason: 事实、授权、范围和内容结构均已核对通过。
       revise:
         object_type: VALIDATION_DECISION
         decision: REVISE
         decision_id: DECISION-SIM-REVISE-001
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
         reason_codes: [UNSUPPORTED_CLAIM]
         plain_language_reason: 有一处说法缺少事实支持，请按已确认资料修改。
       block:
         object_type: VALIDATION_DECISION
         decision: BLOCK
         decision_id: DECISION-SIM-BLOCK-001
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
         reason_codes: [SCOPE_OR_AUTHORIZATION_MISMATCH]
         plain_language_reason: 资料范围或授权与当前账号不一致，暂不能继续。
     evaluation_time_source: SERVER_CLOCK

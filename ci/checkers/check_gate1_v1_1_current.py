@@ -111,13 +111,13 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "b0afce3e17957a63a3a84e8954fc608066b67c353538f5f41beb3de0e5cefda1"
+    "b49ca1aa201ecb512794d5466a6cd85fccb66090540e7da3cdca2c2757c7bbad"
 )
-PUBLIC_FOUNDATION_WORKFLOW_REGISTRATION_SNIPPETS = (
-    "          python3 ci/checkers/check_product_foundation.py\n",
-    "          python3 ci/checkers/check_product_foundation.py --selftest\n",
-    '            "ci/checkers/check_product_foundation.py" \\\n',
-    '            "ci/checkers/check_product_foundation.py --selftest" \\\n',
+PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
+    "python3 ci/checkers/check_product_foundation.py",
+    "python3 ci/checkers/check_product_foundation.py --selftest",
+    '"ci/checkers/check_product_foundation.py" \\',
+    '"ci/checkers/check_product_foundation.py --selftest" \\',
 )
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
@@ -688,12 +688,30 @@ def public_foundation_successor_registration_is_valid(root: Path) -> bool:
     workflow = root / CI_WORKFLOW_PATH
     if not checker.is_file() or not workflow.is_file():
         return False
-    workflow_text = workflow.read_text(encoding="utf-8")
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or not isinstance(document.get("jobs"), dict):
+        return False
+    job = document["jobs"].get("checker-compatibility")
+    if not isinstance(job, dict) or not isinstance(job.get("steps"), list):
+        return False
+    active_lines = tuple(
+        stripped
+        for step in job["steps"]
+        if isinstance(step, dict) and isinstance(step.get("run"), str)
+        for line in step["run"].splitlines()
+        if (stripped := line.strip()) and not stripped.startswith("#")
+    )
+    checker_pin_line = (
+        'test "$(sha256sum ci/checkers/check_product_foundation.py '
+        "| cut -d ' ' -f 1)\" = \""
+        f"{PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256}\""
+    )
     return (
         sha256_file(checker) == PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256
+        and active_lines.count(checker_pin_line) == 1
         and all(
-            workflow_text.count(snippet) == 1
-            for snippet in PUBLIC_FOUNDATION_WORKFLOW_REGISTRATION_SNIPPETS
+            active_lines.count(required_line) == 1
+            for required_line in PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES
         )
     )
 
@@ -6541,7 +6559,9 @@ def selftest(root: Path) -> int:
         workflow_text = workflow_destination.read_text(encoding="utf-8")
         workflow_destination.write_text(
             workflow_text.replace(
-                PUBLIC_FOUNDATION_WORKFLOW_REGISTRATION_SNIPPETS[0], "", 1
+                "          python3 ci/checkers/check_product_foundation.py\n",
+                "          # python3 ci/checkers/check_product_foundation.py\n",
+                1,
             ),
             encoding="utf-8",
         )

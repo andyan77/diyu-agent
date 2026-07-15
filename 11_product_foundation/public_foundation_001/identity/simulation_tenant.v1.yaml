@@ -53,36 +53,58 @@ simulation_tenant:
     - account_id: ACCOUNT-DIYU-HQ-OFFICIAL
       maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
       confirmer_role_ids: [ROLE-LU-QINGLAN, ROLE-XU-WENCHUAN, ROLE-ZHOU-JINGYI, ROLE-GU-JINYAN]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-FOUNDER
       maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
       confirmer_role_ids: [ROLE-LIN-ZHIYUAN]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-PRODUCT-LEAD
       maker_role_ids: [ROLE-PRODUCT-ASSISTANT, ROLE-HQ-CONTENT-TEAM]
       confirmer_role_ids: [ROLE-XU-WENCHUAN, ROLE-LU-QINGLAN]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-RETAIL-DISPLAY
       maker_role_ids: [ROLE-RETAIL-OPS-TEAM]
       confirmer_role_ids: [ROLE-ZHOU-JINGYI, ROLE-GU-ZHIXIA]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-CONTENT-LEAD
       maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
       confirmer_role_ids: [ROLE-TANG-YUAN]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-HZ-BINJIANG
       maker_role_ids: [ROLE-SHEN-YAN, ROLE-HZ-STORE-STAFF]
       confirmer_role_ids: [ROLE-SHEN-YAN]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-JS-OFFICIAL
       maker_role_ids: [ROLE-JS-CONTENT-SPECIALIST]
       confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-LU-QINGLAN]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-JS-PRINCIPAL
       maker_role_ids: [ROLE-JS-REGIONAL-TEAM]
       confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-YE-CHENGQI, ROLE-FANG-NING]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-JS-STYLING-SERVICE
       maker_role_ids: [ROLE-XU-ZHINING, ROLE-JS-CONTENT-SPECIALIST]
       confirmer_role_ids: [ROLE-XU-ZHINING]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-SZ-PARK
       maker_role_ids: [ROLE-YE-CHENGQI, ROLE-SZ-CONTENT-STAFF]
       confirmer_role_ids: [ROLE-YE-CHENGQI]
+      simulation_only: true
+      publish_allowed: false
     - account_id: ACCOUNT-DIYU-WX-BINHU
       maker_role_ids: [ROLE-FANG-NING, ROLE-WX-STORE-STAFF]
       confirmer_role_ids: [ROLE-FANG-NING]
+      simulation_only: true
+      publish_allowed: false
 
   authorization_grants:
   - authorization_id: AUTH-SIM-001
@@ -173,6 +195,21 @@ simulation_tenant:
     valid_from: '2026-07-01T00:00:00Z'
     valid_until: '2026-12-31T23:59:59Z'
     status: GRANTED
+    simulation_only: true
+    publish_allowed: false
+
+  subject_confirmation_records:
+  - subject_confirmation_id: SUBJECT-CONFIRM-SIM-001
+    tenant_id: TENANT-DIYU-SIM-001
+    brand_id: BRAND-DIYU-SIM-001
+    organization_id: ORG-DIYU-HQ
+    store_id: null
+    content_account_id: ACCOUNT-DIYU-CONTENT-LEAD
+    confirmation_scope: quoted_person_viewpoint
+    subject_role_id: ROLE-XU-WENCHUAN
+    confirmed_at: '2026-07-14T00:00:00Z'
+    valid_until: '2026-12-31T23:59:59Z'
+    status: ACTIVE
     simulation_only: true
     publish_allowed: false
 
@@ -365,18 +402,26 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-LU-QINGLAN]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: product_content
       confirmer_role_ids: [ROLE-XU-WENCHUAN]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: store_and_display_content
       confirmer_role_ids: [ROLE-ZHOU-JINGYI]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: person_and_customer_authorization
       confirmer_role_ids: [ROLE-GU-JINYAN]
       approval_mode: ANY_OF
       subject_confirmation_required: true
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-HQ
     - ORG-DIYU-HZ-BINJIANG
@@ -401,6 +446,8 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-LIN-ZHIYUAN]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids: [ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
     forbidden_claim_scopes:
@@ -420,10 +467,14 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-XU-WENCHUAN]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: safety_quality_testing_supplier_responsibility
       confirmer_role_ids: [ROLE-XU-WENCHUAN, ROLE-LU-QINGLAN]
       approval_mode: ALL_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids: [ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
     forbidden_claim_scopes:
@@ -443,10 +494,14 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-ZHOU-JINGYI]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: cross_store_or_regional_comparison
       confirmer_role_ids: [ROLE-ZHOU-JINGYI, ROLE-GU-ZHIXIA]
       approval_mode: ALL_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-HQ
     - ORG-DIYU-HZ-BINJIANG
@@ -470,10 +525,14 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-TANG-YUAN]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: quoted_person_viewpoint
       confirmer_role_ids: [ROLE-TANG-YUAN]
       approval_mode: ANY_OF
       subject_confirmation_required: true
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids: [ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
     forbidden_claim_scopes:
@@ -493,6 +552,8 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-SHEN-YAN]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids: [ORG-DIYU-HZ-BINJIANG, ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
     forbidden_claim_scopes:
@@ -513,10 +574,14 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-GU-ZHIXIA]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: quality_brand_history_national_policy
       confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-LU-QINGLAN]
       approval_mode: ALL_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-SZ-PARK
@@ -540,10 +605,14 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-GU-ZHIXIA]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     - scope: two_store_dispute
       confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-YE-CHENGQI, ROLE-FANG-NING]
       approval_mode: ALL_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-SZ-PARK
@@ -567,6 +636,8 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-XU-ZHINING]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-SZ-PARK
@@ -589,6 +660,8 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-YE-CHENGQI]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-JS-AGENT
@@ -611,6 +684,8 @@ simulation_tenant:
       confirmer_role_ids: [ROLE-FANG-NING]
       approval_mode: ANY_OF
       subject_confirmation_required: false
+      simulation_only: true
+      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-WX-BINHU
     - ORG-DIYU-JS-AGENT
@@ -629,6 +704,7 @@ simulation_tenant:
     organization_count: 5
     store_count: 3
     authorization_grant_count: 6
+    subject_confirmation_record_count: 1
     every_account_retains_own_material_maker_and_confirmer_scope: true
     every_record_simulation_only: true
     every_record_publish_allowed: false

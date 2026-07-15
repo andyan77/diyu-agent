@@ -2,7 +2,7 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 1dbeabfc45049d53aaf2465f56ee351b3cbff2dff04add4a291711ba3b1666e6
+  candidate_snapshot_digest: 2638602d33c2f7ef8207912e8ce246e49daaf81c4d5796251956842d0a037282
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
@@ -55,6 +55,28 @@ public_foundation_result:
       - TF-04
       - TF-05
     disposition: REMEDIATED_WITHIN_AUTHORIZED_FOUNDATION_SURFACE_PENDING_REREVIEW
+  - attempt: 3
+    reviewed_commit: 2941b891f3033932154dd2dcf85e2e34663f315b
+    reviewed_snapshot_digest: 1dbeabfc45049d53aaf2465f56ee351b3cbff2dff04add4a291711ba3b1666e6
+    architecture_review:
+      reviewer_agent_id: 019f636c-813b-77f0-835c-e9ec70f198e6
+      verdict: FAIL
+      score: 80
+      blocker_ids:
+      - ARCH-API-001
+      - GOV-SIMULATION-003
+      - GOV-HISTORY-005
+    trust_fact_safety_review:
+      reviewer_agent_id: 019f636c-8192-7843-bf73-160bbaa7c093
+      verdict: FAIL
+      score: 62
+      blocker_ids:
+      - TF-02-SUBJECT-CONFIRMATION
+      - TF-03-NARRATIVE-SELF-REPORT
+      - TF-04-USER-SURFACE-LEAK
+      - TF-05-CASE-DELETION
+      - TF-05-CIRCULAR-CHECKER-PIN
+    disposition: REMEDIATED_WITHIN_AUTHORIZED_FOUNDATION_SURFACE_PENDING_REREVIEW
   delivery_counts:
     simulated_tenant_count: 1
     simulated_login_principal_count: 1
@@ -65,7 +87,7 @@ public_foundation_result:
     control_rule_count: 8
     expression_edge_count: 85
     ab_structural_path_group_count: 20
-    contract_case_count: 35
+    contract_case_count: 37
   expression_baseline_digest_match: true
   core_numbers_300_120_86_unchanged: true
   second_case_300_inventory_created: false
@@ -85,7 +107,7 @@ public_foundation_result:
     - E_P4_WRITE_SURFACE
     predecessor_checker: ci/checkers/check_gate1_v1_1_current.py
     predecessor_as_built_sha256: 1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8
-    successor_checker_sha256: 99c84f5b9b084c1143c11f5579b48360f72ce572be0548a1a5e2b9d9c5e24e7e
+    successor_checker_sha256: d3e68ed5d20cc49d093c3fef06612d9d79b7a7cc81e18ad77a224bcb8ebdd828
     repair_shape: EXACT_FOUNDATION_SURFACE_DELEGATION_WITH_FROZEN_PREDECESSOR_IDENTITY
     frozen_business_asset_mutation_count: 0
     unrelated_historical_tool_drift_still_rejected: true
