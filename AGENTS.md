@@ -22,11 +22,17 @@ be used to infer the current product phase or silently rewritten.
 - Narrative retrieval is supporting evidence. It cannot grant authorization or
   override a newer exact fact for SKU, specification, price, stock, time,
   authorization, or revocation.
-- Expression components, rules, edges, and A/B paths are referenced expression
-  assets. They are not brand facts, permissions, stock records, or source text.
-- A confirmed requirement version may have one canonical composition plan.
+- Expression components, rules, edges, and A/B paths are optional offline
+  research, regression, diagnostic, or explicit-experiment assets. Normal
+  requests and light content plans must work without them. They are not brand
+  facts, permissions, stock records, or source text.
+- A confirmed requirement version may have one versioned light content plan.
   The expression `prepare` operation owns that plan; Dify, retrieval, and the
-  generator may not create competing canonical plans.
+  generator may not create competing plans.
+- Brand expression profiles, high-level modes, examples, and client soft
+  preferences guide expression only. They cannot grant facts, authorization,
+  scope, or publishability, and client preferences cannot weaken server-side
+  prohibitions.
 - No evidence or authorization means no publishable output. Missing inputs must
   produce an action card, degradation, or stop decision.
 

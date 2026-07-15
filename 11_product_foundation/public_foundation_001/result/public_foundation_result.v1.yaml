@@ -2,7 +2,7 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 5fb9e16a4d8a2f522f21bb3ff34ce0d6e26250e15560457b30dffc4eb2034f7b
+  candidate_snapshot_digest: ac8bd092f60e0466d137015b3d608ad4f3a1e8e6c644f4252d1e13f6b68de6f6
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
@@ -111,6 +111,10 @@ public_foundation_result:
     ab_structural_path_group_count: 20
     contract_case_count: 37
   expression_baseline_digest_match: true
+  runtime_architecture: LIGHT_EXPRESSION
+  normal_runtime_requires_atom_edge_or_path_refs: false
+  historical_expression_assets_role: OPTIONAL_OFFLINE_RESEARCH_REGRESSION_AND_EXPERIMENT
+  neutral_default_expression_profile_ref: expression-profile://neutral-default/v1
   core_numbers_300_120_86_unchanged: true
   second_case_300_inventory_created: false
   http_service_implemented: false
@@ -129,7 +133,7 @@ public_foundation_result:
     - E_P4_WRITE_SURFACE
     predecessor_checker: ci/checkers/check_gate1_v1_1_current.py
     predecessor_as_built_sha256: 1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8
-    successor_checker_sha256: b822dee0a09a52b9654d95d6d9f3acfe1c5c7bbe279245537ff2818cf25efec7
+    successor_checker_sha256: b28d059502e17991853127f93634a01fa8caa64215e20788aa81751af77aaaf9
     repair_shape: EXACT_FOUNDATION_SURFACE_DELEGATION_WITH_FROZEN_PREDECESSOR_IDENTITY
     frozen_business_asset_mutation_count: 0
     unrelated_historical_tool_drift_still_rejected: true
@@ -139,7 +143,7 @@ public_foundation_result:
     current_candidate_state: LOCKED
     unlock_condition: FOUNDATION_TREE_MERGED_TO_MASTER_AND_REQUIRED_CHECKS_GREEN
     packages_after_condition:
-    - PACKAGE_2_GENERATOR_INTERFACE
+    - PACKAGE_2_LIGHT_EXPRESSION_SERVICE
     - PACKAGE_3_BRAND_DATA
     - PACKAGE_4_DIFY_SHELL
   readiness:

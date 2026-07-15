@@ -242,7 +242,58 @@ ALLOWED_FACT_KINDS = frozenset(
     }
 )
 FIXTURE_SERVER_EVALUATION_TIME = "2026-07-14T00:00:00Z"
-EXPECTED_EXPRESSION_BASELINE_REF = "expression://gate1-v1.1/active"
+NEUTRAL_EXPRESSION_PROFILE_REF = "expression-profile://neutral-default/v1"
+HIGH_LEVEL_MODE_REFS = frozenset(
+    {
+        "expression-mode://documentary-observation/v1",
+        "expression-mode://professional-explanation/v1",
+        "expression-mode://life-scene/v1",
+        "expression-mode://styling-demonstration/v1",
+        "expression-mode://store-micro-documentary/v1",
+        "expression-mode://product-role-narrative/v1",
+    }
+)
+HARD_CHECK_CATEGORIES = frozenset(
+    {
+        "fact_support",
+        "source_provenance",
+        "authorization",
+        "privacy",
+        "trusted_scope",
+        "effective_time_and_revocation",
+        "enterprise_commitment",
+        "explicit_brand_prohibition",
+        "internal_identifier_leak",
+    }
+)
+SOFT_EVALUATION_TASKS = frozenset(
+    {
+        "task_fit",
+        "brand_fit",
+        "naturalness",
+        "platform_fit",
+        "candidate_difference",
+    }
+)
+EXPRESSION_GUIDANCE_INPUT_KINDS = frozenset(
+    {
+        "EXPRESSION_COMPONENT",
+        "BRAND_EXPRESSION_PROFILE",
+        "HIGH_LEVEL_MODE",
+        "APPROVED_EXAMPLE",
+        "CLIENT_SOFT_PREFERENCE",
+    }
+)
+AUTHORITY_CLAIM_KINDS = frozenset({"BRAND_FACT", "AUTHORIZATION", "TRUSTED_SCOPE"})
+CLIENT_SOFT_PREFERENCE_FIELDS = frozenset(
+    {
+        "rhythm",
+        "emotional_intensity",
+        "narrative_entry",
+        "visual_focus",
+        "ending_tendency",
+    }
+)
 URI_REFERENCE_PATTERN = re.compile(r"^[a-z][a-z0-9+.-]*://[^\s]+$")
 USER_VISIBLE_SURFACE_FIELDS = frozenset(
     {"title", "body", "spoken_lines", "CTA", "execution_payload", "surface_units"}
@@ -254,7 +305,9 @@ VALIDATE_CASE_INPUT_FIELDS = frozenset(
         "evaluation_time",
         "verified_precise_facts",
         "plan_consistent",
-        "all_claims_supported",
+        "structured_claim_refs_within_plan",
+        "semantic_fact_review_status",
+        "soft_evaluation_scores",
         "authorization_state",
         "internal_identifier_leak",
         "candidate_user_visible_surfaces",
@@ -402,8 +455,25 @@ def validate_expression_baseline(root: Path, contract: dict[str, Any]) -> None:
     baseline = contract.get("expression_v1_baseline")
     require(isinstance(baseline, dict), "E_EXPRESSION_BASELINE")
     require(
-        baseline.get("consumption_mode") == "REFERENCE_ONLY",
+        baseline.get("consumption_mode") == "OPTIONAL_OFFLINE_REFERENCE",
         "E_EXPRESSION_REFERENCE_MODE",
+    )
+    require(
+        baseline.get("normal_runtime_dependency") is False
+        and baseline.get("normal_request_may_omit_all_asset_refs") is True
+        and baseline.get("missing_asset_refs_block_prepare") is False,
+        "E_EXPRESSION_RUNTIME_OPTIONALITY",
+    )
+    require(
+        baseline.get("unknown_experiment_refs") == "DIAGNOSTIC_WARNING_ONLY"
+        and set(baseline.get("permitted_uses", []))
+        == {
+            "OFFLINE_RESEARCH",
+            "REGRESSION_EVALUATION",
+            "DIAGNOSTIC",
+            "EXPLICIT_EXPERIMENT",
+        },
+        "E_EXPRESSION_OFFLINE_USE_POLICY",
     )
     require(
         baseline.get("assets_may_not_be_copied_to_brand_facts") is True,
@@ -663,9 +733,104 @@ def validate_contract_data(
         fact_contract.get("expression_asset_may_be_fact_or_authorization") is False,
         "E_EXPRESSION_AS_FACT_POLICY",
     )
+    require(
+        {
+            "expression_component",
+            "control_rule",
+            "structural_path",
+            "brand_expression_profile",
+            "high_level_mode",
+            "approved_example",
+            "client_soft_preference",
+            "user_preference_without_confirmation",
+            "model_inference",
+        }
+        == set(fact_contract.get("non_fact_inputs", []))
+        and fact_contract.get("expression_guidance_may_be_fact_authorization_or_scope")
+        is False,
+        "E_EXPRESSION_GUIDANCE_AS_AUTHORITY_POLICY",
+    )
 
-    plan = contract.get("canonical_composition_plan_contract")
+    expression = contract.get("light_expression_contract")
+    require(isinstance(expression, dict), "E_LIGHT_EXPRESSION_CONTRACT")
+    profile = expression.get("brand_expression_profile")
+    require(isinstance(profile, dict), "E_BRAND_EXPRESSION_PROFILE")
+    require(
+        profile.get("resolution_authority") == "SERVER_TRUSTED_UPSTREAM"
+        and profile.get("client_may_supply_formal_profile") is False
+        and profile.get("client_soft_preferences_may_override_hard_prohibitions")
+        is False
+        and set(profile.get("allowed_client_soft_preference_fields", []))
+        == CLIENT_SOFT_PREFERENCE_FIELDS
+        and profile.get("profile_may_grant_fact_authorization_or_scope") is False
+        and profile.get("cross_tenant_profile_borrowing_allowed") is False,
+        "E_EXPRESSION_PROFILE_BOUNDARY",
+    )
+    neutral_profile = profile.get("neutral_default_profile")
+    require(isinstance(neutral_profile, dict), "E_NEUTRAL_EXPRESSION_PROFILE")
+    require(
+        neutral_profile.get("profile_ref") == NEUTRAL_EXPRESSION_PROFILE_REF
+        and neutral_profile.get("profile_version") == 1
+        and neutral_profile.get("resolution_mode") == "NEUTRAL_DEFAULT"
+        and neutral_profile.get("tenant_specific") is False
+        and neutral_profile.get("approved_example_refs") == [],
+        "E_NEUTRAL_EXPRESSION_PROFILE_FIELDS",
+    )
+    modes = expression.get("high_level_modes")
+    require(
+        isinstance(modes, list)
+        and {item.get("mode_ref") for item in modes if isinstance(item, dict)}
+        == HIGH_LEVEL_MODE_REFS
+        and all(is_nonempty_string(item.get("user_label")) for item in modes),
+        "E_HIGH_LEVEL_MODES",
+    )
+    require(
+        expression.get("mode_selection_required") is False
+        and expression.get("mode_is_script_template") is False
+        and expression.get("mode_may_grant_fact_authorization_or_scope") is False
+        and expression.get("approved_example_may_grant_fact_authorization_or_scope")
+        is False,
+        "E_EXPRESSION_GUIDANCE_AUTHORITY",
+    )
+    candidate_policy = expression.get("candidate_policy")
+    require(isinstance(candidate_policy, dict), "E_CANDIDATE_POLICY")
+    difference_dimensions = set(candidate_policy.get("difference_dimensions", []))
+    require(
+        candidate_policy.get("minimum_count") == 2
+        and candidate_policy.get("maximum_count") == 3
+        and candidate_policy.get("near_duplicate_rewording_counts_as_distinct") is False
+        and len(difference_dimensions) >= 4,
+        "E_CANDIDATE_POLICY_FIELDS",
+    )
+    require(
+        set(expression.get("hard_check_categories", [])) == HARD_CHECK_CATEGORIES
+        and set(expression.get("soft_evaluation_tasks", [])) == SOFT_EVALUATION_TASKS
+        and expression.get("missing_real_evaluator_status")
+        == "PENDING_EXTERNAL_EVALUATION"
+        and expression.get("soft_score_may_be_fabricated") is False,
+        "E_HARD_SOFT_EVALUATION_BOUNDARY",
+    )
+    diagnostics = expression.get("experimental_diagnostics")
+    require(isinstance(diagnostics, dict), "E_EXPERIMENTAL_DIAGNOSTICS")
+    require(
+        diagnostics.get("normal_runtime_required") is False
+        and set(diagnostics.get("allowed_reference_fields", []))
+        == {
+            "expression_baseline_ref",
+            "component_refs",
+            "control_rule_refs",
+            "edge_refs",
+            "structural_path_ref",
+        }
+        and diagnostics.get("unknown_reference_behavior") == "DIAGNOSTIC_WARNING_ONLY"
+        and diagnostics.get("may_change_fact_authorization_scope_or_publishability")
+        is False,
+        "E_EXPERIMENTAL_DIAGNOSTIC_BOUNDARY",
+    )
+
+    plan = contract.get("light_content_plan_contract")
     require(isinstance(plan, dict), "E_PLAN_CONTRACT")
+    require(plan.get("object_name") == "LightContentPlan", "E_PLAN_NAME")
     require(plan.get("authority") == "EXPRESSION_SERVICE_PREPARE", "E_PLAN_AUTHORITY")
     require(plan.get("is_independent_microservice") is False, "E_PLAN_MICROSERVICE")
     plan_required_fields = {
@@ -678,27 +843,58 @@ def validate_contract_data(
         "content_account_id",
         "requirement_id",
         "requirement_version",
+        "task_objective",
+        "primary_audience",
+        "output_requirements",
+        "candidate_policy",
+        "expression_guidance",
+        "hard_check_policy",
+        "soft_evaluation_tasks",
         "references",
     }
     require(
         set(plan.get("required_fields", [])) == plan_required_fields,
         "E_PLAN_REQUIRED_FIELDS",
     )
-    require(plan.get("object_type") == "CANONICAL_COMPOSITION_PLAN", "E_PLAN_TYPE")
+    require(plan.get("object_type") == "LIGHT_CONTENT_PLAN", "E_PLAN_TYPE")
     require(
         set(plan.get("composition_plan_ref_is_derived_from", []))
-        == {"plan_id", "plan_revision"},
-        "E_PLAN_REFERENCE_DERIVATION",
-    )
-    require(
-        plan.get("maximum_active_canonical_plans_per_key") == 1, "E_PLAN_UNIQUENESS"
+        == {"plan_id", "plan_revision"}
+        and set(plan.get("unique_key_fields", []))
+        == {
+            "tenant_id",
+            "content_account_id",
+            "requirement_id",
+            "requirement_version",
+        }
+        and plan.get("maximum_active_plans_per_key") == 1,
+        "E_PLAN_UNIQUENESS",
     )
     require(
         set(plan.get("competing_plan_writers_forbidden", []))
         == {"DIFY", "RETRIEVAL_LAYER", "GENERATOR"},
         "E_COMPETING_PLAN_WRITERS",
     )
-    require(plan.get("audience_body_allowed_in_plan") is False, "E_PLAN_BODY")
+    required_plan_references = {
+        "trusted_scope_ref",
+        "confirmed_requirement_ref",
+        "retrieval_fragment_refs",
+        "precise_fact_refs",
+        "brand_expression_profile_ref",
+        "selected_internal_content_product_id",
+    }
+    require(
+        set(plan.get("required_references", [])) == required_plan_references
+        and set(plan.get("optional_references", []))
+        == {
+            "high_level_mode_refs",
+            "approved_example_refs",
+            "experimental_diagnostics",
+        }
+        and plan.get("atom_component_edge_and_path_refs_required") is False
+        and plan.get("audience_body_allowed_in_plan") is False,
+        "E_PLAN_REFERENCE_POLICY",
+    )
 
     workflow = contract.get("composition_workflow")
     require(isinstance(workflow, dict), "E_WORKFLOW")
@@ -716,30 +912,26 @@ def validate_contract_data(
         "E_WORKFLOW_ORDER",
     )
     require(
-        workflow.get("prepare_must_precede_candidate_authoring") is True,
-        "E_PREPARE_ORDER",
-    )
-    require(
-        workflow.get("candidate_authoring_must_precede_validate") is True,
-        "E_VALIDATE_ORDER",
+        workflow.get("prepare_must_precede_candidate_authoring") is True
+        and workflow.get("candidate_authoring_must_precede_validate") is True,
+        "E_WORKFLOW_ORDER_GUARDS",
     )
     candidate = next(
         item for item in stages if item.get("stage") == "CANDIDATE_AUTHORING"
     )
-    require(candidate.get("may_add_facts") is False, "E_CANDIDATE_FACT_ADD")
     require(
-        candidate.get("may_create_canonical_plan") is False, "E_CANDIDATE_PLAN_WRITE"
+        candidate.get("input") == "LIGHT_CONTENT_PLAN_REFERENCE"
+        and candidate.get("may_add_facts") is False
+        and candidate.get("may_create_competing_plan") is False,
+        "E_CANDIDATE_AUTHORING_BOUNDARY",
     )
 
     delivery = contract.get("delivery_contract")
     require(isinstance(delivery, dict), "E_DELIVERY_CONTRACT")
     require(
-        delivery.get("action_card_may_contain_publishable_candidate") is False,
-        "E_ACTION_CARD_PUBLISHABLE",
-    )
-    require(
-        delivery.get("missing_input_may_be_filled_by_model") is False,
-        "E_MODEL_FILL_MISSING",
+        delivery.get("action_card_may_contain_publishable_candidate") is False
+        and delivery.get("missing_input_may_be_filled_by_model") is False,
+        "E_ACTION_CARD_SAFETY",
     )
     require(
         delivery.get("action_card_discriminator_field") == "object_type"
@@ -748,14 +940,10 @@ def validate_contract_data(
         "E_ACTION_CARD_DISCRIMINATOR",
     )
     require(
-        {"object_type", "action_type"}.issubset(
+        {"object_type", "action_type", "decision_id"}.issubset(
             delivery.get("action_card_required_fields", [])
         ),
         "E_ACTION_CARD_TYPE_FIELDS",
-    )
-    require(
-        "decision_id" in delivery.get("action_card_required_fields", []),
-        "E_ACTION_CARD_DECISION_ID",
     )
 
     endpoints = contract.get("api_contracts")
@@ -799,8 +987,32 @@ def validate_contract_data(
         "confirmation_evidence",
         "scoped_retrieval_fragments",
         "verified_precise_facts",
-        "expression_baseline_ref",
+        "server_expression_profile",
+        "output_requirements",
+        "evaluation_rules",
     }
+    require(
+        prepare.get("request_source") == "SERVER_TRUSTED_UPSTREAM_ENVELOPE"
+        and set(prepare.get("trusted_upstream_only_fields", []))
+        == {
+            "trusted_scope_ref",
+            "trusted_scope",
+            "acting_role_id",
+            "confirmation_evidence",
+            "scoped_retrieval_fragments",
+            "verified_precise_facts",
+            "server_expression_profile",
+        }
+        and set(prepare.get("client_hint_fields", []))
+        == {
+            "requested_high_level_mode_refs",
+            "approved_example_refs",
+            "client_soft_preferences",
+            "output_requirements",
+        }
+        and prepare.get("client_trust_or_verified_labels_are_authoritative") is False,
+        "E_PREPARE_TRUST_BOUNDARY",
+    )
     require(
         set(prepare.get("request_required_fields", [])) == expected_prepare_fields
         and expected_prepare_fields.issubset(prepare_request),
@@ -821,10 +1033,42 @@ def validate_contract_data(
         prepare_request.get("trusted_scope_ref") == expected_scope_ref,
         "E_PREPARE_TRUSTED_SCOPE_REF",
     )
+    server_profile = prepare_request.get("server_expression_profile")
+    require(isinstance(server_profile, dict), "E_PREPARE_SERVER_PROFILE")
     require(
-        prepare_request.get("expression_baseline_ref")
-        == EXPECTED_EXPRESSION_BASELINE_REF,
-        "E_PREPARE_EXPRESSION_BASELINE_REF",
+        server_profile.get("resolution_authority") == "SERVER_TRUSTED_UPSTREAM"
+        and server_profile.get("requested_profile_ref") is None
+        and server_profile.get("resolved_profile_ref") == NEUTRAL_EXPRESSION_PROFILE_REF
+        and server_profile.get("resolution_mode") == "NEUTRAL_DEFAULT"
+        and server_profile.get("tenant_id") == trusted_scope_example.get("tenant_id")
+        and server_profile.get("content_account_id")
+        == trusted_scope_example.get("content_account_id"),
+        "E_PREPARE_SERVER_PROFILE_BOUNDARY",
+    )
+    require(
+        set(prepare_request.get("requested_high_level_mode_refs", []))
+        <= HIGH_LEVEL_MODE_REFS
+        and isinstance(prepare_request.get("approved_example_refs"), list)
+        and isinstance(prepare_request.get("client_soft_preferences"), dict),
+        "E_PREPARE_EXPRESSION_GUIDANCE",
+    )
+    output_requirements = prepare_request.get("output_requirements")
+    require(isinstance(output_requirements, dict), "E_PREPARE_OUTPUT_REQUIREMENTS")
+    requested_candidate_count = output_requirements.get("required_candidate_count")
+    require(
+        isinstance(requested_candidate_count, int)
+        and 2 <= requested_candidate_count <= 3
+        and set(output_requirements.get("audience_surface_fields", []))
+        <= USER_VISIBLE_SURFACE_FIELDS,
+        "E_PREPARE_CANDIDATE_COUNT",
+    )
+    evaluation_rules = prepare_request.get("evaluation_rules")
+    require(isinstance(evaluation_rules, dict), "E_PREPARE_EVALUATION_RULES")
+    require(
+        set(evaluation_rules.get("hard_check_categories", [])) == HARD_CHECK_CATEGORIES
+        and set(evaluation_rules.get("soft_evaluation_tasks", []))
+        == SOFT_EVALUATION_TASKS,
+        "E_PREPARE_HARD_SOFT_RULES",
     )
     confirmation_example = prepare_request.get("confirmation_evidence")
     require(
@@ -909,124 +1153,80 @@ def validate_contract_data(
         is None,
         "E_PREPARE_FACT_SAFETY",
     )
-    plan_example = prepare_responses.get("canonical_composition_plan")
+    plan_example = prepare_responses.get("light_content_plan")
     action_example = prepare_responses.get("action_card")
     require(isinstance(plan_example, dict), "E_PREPARE_PLAN_EXAMPLE")
     require(isinstance(action_example, dict), "E_PREPARE_ACTION_EXAMPLE")
     require(plan_required_fields.issubset(plan_example), "E_PREPARE_PLAN_FIELDS")
     require(
-        plan_example.get("composition_plan_ref")
+        plan_example.get("object_type") == "LIGHT_CONTENT_PLAN"
+        and plan_example.get("composition_plan_ref")
         == f"plan://{plan_example.get('plan_id')}/revisions/{plan_example.get('plan_revision')}",
         "E_PREPARE_PLAN_REF",
     )
     plan_references = plan_example.get("references")
     require(isinstance(plan_references, dict), "E_PREPARE_PLAN_REFERENCES")
     require(
-        set(plan_references) == set(plan.get("required_references", []))
+        set(plan_references) == required_plan_references
         and all(value not in (None, "", []) for value in plan_references.values()),
         "E_PREPARE_PLAN_REFERENCE_FIELDS",
     )
-    list_reference_fields = (
-        "retrieval_fragment_refs",
-        "precise_fact_refs",
+    for field in ("retrieval_fragment_refs", "precise_fact_refs"):
+        values = plan_references.get(field)
+        require(
+            isinstance(values, list)
+            and len(values) == len(set(values))
+            and all(is_nonempty_string(value) for value in values),
+            "E_PREPARE_PLAN_REFERENCE_LISTS",
+        )
+    forbidden_runtime_refs = {
+        "expression_baseline_ref",
         "selected_component_refs",
         "selected_control_rule_refs",
         "selected_edge_refs",
-    )
-    require(
-        all(
-            isinstance(plan_references.get(field), list)
-            and len(plan_references[field]) == len(set(plan_references[field]))
-            and all(is_nonempty_string(value) for value in plan_references[field])
-            for field in list_reference_fields
-        ),
-        "E_PREPARE_PLAN_REFERENCE_LISTS",
-    )
-    active_components = load_jsonl(
-        root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_COMPONENTS"][0])
-    )
-    active_rules = load_jsonl(
-        root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_CONTROL_RULES"][0])
-    )
-    active_edges = load_jsonl(root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_EDGES"][0]))
-    active_paths = load_jsonl(
-        root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_AB_STRUCTURAL_PATHS"][0])
-    )
-    component_ids = {item.get("component_id") for item in active_components}
-    control_rule_ids = {item.get("control_rule_id") for item in active_rules}
-    edge_by_id = {item.get("edge_id"): item for item in active_edges}
-    selected_product = plan_references["selected_internal_content_product_id"]
-    selected_components = set(plan_references["selected_component_refs"])
-    selected_control_rules = set(plan_references["selected_control_rule_refs"])
-    selected_edge_ids = set(plan_references["selected_edge_refs"])
-    selected_path = next(
-        (
-            item
-            for item in active_paths
-            if item.get("content_product_type_id") == selected_product
-        ),
-        None,
-    )
-    require(isinstance(selected_path, dict), "E_PREPARE_PLAN_STRUCTURAL_PATH")
-    lane_a = selected_path.get("lane_a")
-    require(isinstance(lane_a, dict), "E_PREPARE_PLAN_STRUCTURAL_LANE")
-    expected_components = set(lane_a.get("component_ids", []))
-    expected_control_rules = {
-        item.get("control_rule_id")
-        for item in selected_path.get("author_request_control_contract", {}).get(
-            "control_rule_bindings", []
-        )
-        if isinstance(item, dict)
-    }
-    expected_edges = {
-        edge_id
-        for edge_id, edge in edge_by_id.items()
-        if edge.get("active") is True
-        and edge.get("content_product_type_id") == selected_product
-        and edge.get("component_id") in expected_components
+        "selected_structural_path_ref",
     }
     require(
-        bool(expected_components)
-        and expected_components.issubset(component_ids)
-        and selected_components == expected_components,
-        "E_PREPARE_PLAN_COMPONENT_REFS",
+        not forbidden_runtime_refs.intersection(plan_references),
+        "E_PREPARE_PLAN_ATOM_RUNTIME_DEPENDENCY",
+    )
+    plan_candidate_policy = plan_example.get("candidate_policy")
+    require(isinstance(plan_candidate_policy, dict), "E_PLAN_CANDIDATE_POLICY")
+    require(
+        plan_candidate_policy.get("required_candidate_count")
+        == requested_candidate_count
+        and 2 <= requested_candidate_count <= 3
+        and len(set(plan_candidate_policy.get("difference_dimensions", []))) >= 4
+        and set(plan_candidate_policy.get("difference_dimensions", []))
+        <= difference_dimensions
+        and plan_candidate_policy.get("near_duplicate_rewording_counts_as_distinct")
+        is False,
+        "E_PLAN_CANDIDATE_POLICY_FIELDS",
+    )
+    guidance = plan_example.get("expression_guidance")
+    require(isinstance(guidance, dict), "E_PLAN_EXPRESSION_GUIDANCE")
+    require(
+        guidance.get("brand_expression_profile_ref") == NEUTRAL_EXPRESSION_PROFILE_REF
+        and set(guidance.get("high_level_mode_refs", [])) <= HIGH_LEVEL_MODE_REFS
+        and isinstance(guidance.get("approved_example_refs"), list)
+        and isinstance(guidance.get("client_soft_preferences"), dict)
+        and guidance.get("may_grant_fact_authorization_or_scope") is False,
+        "E_PLAN_EXPRESSION_GUIDANCE_BOUNDARY",
     )
     require(
-        bool(expected_control_rules)
-        and expected_control_rules.issubset(control_rule_ids)
-        and selected_control_rules == expected_control_rules,
-        "E_PREPARE_PLAN_CONTROL_REFS",
+        set(plan_example.get("hard_check_policy", [])) == HARD_CHECK_CATEGORIES,
+        "E_PLAN_HARD_CHECK_POLICY",
     )
+    plan_soft_tasks = plan_example.get("soft_evaluation_tasks")
     require(
-        bool(expected_edges)
-        and expected_edges.issubset(edge_by_id)
-        and selected_edge_ids == expected_edges,
-        "E_PREPARE_PLAN_EDGE_REFS",
-    )
-    selected_edges = [edge_by_id[edge_id] for edge_id in selected_edge_ids]
-    require(
-        all(
-            edge.get("content_product_type_id") == selected_product
-            and edge.get("component_id") in selected_components
-            for edge in selected_edges
-        )
-        and {edge.get("component_id") for edge in selected_edges}.issubset(
-            selected_components
-        )
-        and {edge.get("required_component_role") for edge in selected_edges}
-        == {
-            item.get("role")
-            for item in selected_path.get("trusted_profile_contract", {}).get(
-                "required_component_roles", []
-            )
-            if isinstance(item, dict) and item.get("min_count", 0) > 0
-        },
-        "E_PREPARE_PLAN_EDGE_BINDING",
-    )
-    require(
-        plan_references["selected_structural_path_ref"]
-        == f"structural-path://{selected_product}/A",
-        "E_PREPARE_PLAN_STRUCTURAL_PATH_REF",
+        isinstance(plan_soft_tasks, list)
+        and {item.get("task_id") for item in plan_soft_tasks} == SOFT_EVALUATION_TASKS
+        and all(
+            item.get("status") == "PENDING_EXTERNAL_EVALUATION"
+            and item.get("score") is None
+            for item in plan_soft_tasks
+        ),
+        "E_PLAN_SOFT_EVALUATION_TASKS",
     )
     confirmed_requirement = prepare_request.get("confirmed_requirement")
     require(isinstance(confirmed_requirement, dict), "E_PREPARE_REQUIREMENT")
@@ -1058,8 +1258,8 @@ def validate_contract_data(
         and set(plan_references.get("retrieval_fragment_refs", []))
         == expected_fragment_refs
         and set(plan_references.get("precise_fact_refs", [])) == expected_fact_refs
-        and plan_references.get("expression_baseline_ref")
-        == EXPECTED_EXPRESSION_BASELINE_REF,
+        and plan_references.get("brand_expression_profile_ref")
+        == NEUTRAL_EXPRESSION_PROFILE_REF,
         "E_PREPARE_PLAN_SOURCE_REFS",
     )
     require(
@@ -1094,13 +1294,10 @@ def validate_contract_data(
         "E_VALIDATE_REQUEST_EXAMPLE_FIELDS",
     )
     require(
-        set(validate_request.get("trusted_scope", {})) == set(REQUEST_SCOPE_FIELDS),
-        "E_VALIDATE_TRUSTED_SCOPE_EXAMPLE",
-    )
-    require(
-        validate_request.get("trusted_scope") == trusted_scope_example
+        set(validate_request.get("trusted_scope", {})) == set(REQUEST_SCOPE_FIELDS)
+        and validate_request.get("trusted_scope") == trusted_scope_example
         and validate_request.get("trusted_scope_ref") == expected_scope_ref,
-        "E_VALIDATE_TRUSTED_SCOPE_REF",
+        "E_VALIDATE_TRUSTED_SCOPE_EXAMPLE",
     )
     require(
         validate_request.get("composition_plan_ref")
@@ -1125,46 +1322,75 @@ def validate_contract_data(
         "decision",
         "decision_id",
         "composition_plan_ref",
+        "hard_issues",
+        "soft_evaluation_tasks",
+        "semantic_fact_review_status",
+        "actually_used_fact_refs",
+        "actually_used_material_refs",
         "plain_language_reason",
     }
     require(
         set(validate.get("response_required_fields", [])) == response_required_fields
         and all(
-            response_required_fields.issubset(response)
-            and all(
-                response.get(field) not in (None, "")
-                for field in response_required_fields
-            )
+            isinstance(response, dict) and response_required_fields.issubset(response)
             for response in validate_responses.values()
-            if isinstance(response, dict)
         ),
         "E_VALIDATE_RESPONSE_REQUIRED_FIELDS",
     )
-    require(
-        all(
-            response.get("object_type") == "VALIDATION_DECISION"
-            and bool(response.get("decision_id"))
+    for response in validate_responses.values():
+        require(
+            isinstance(response, dict)
+            and response_required_fields.issubset(response)
+            and response.get("object_type") == "VALIDATION_DECISION"
+            and is_nonempty_string(response.get("decision_id"))
             and response.get("composition_plan_ref")
             == plan_example.get("composition_plan_ref")
-            for response in validate_responses.values()
-            if isinstance(response, dict)
-        ),
-        "E_VALIDATE_RESPONSE_FIELDS",
-    )
-    require(
-        all(
+            and isinstance(response.get("hard_issues"), list)
+            and isinstance(response.get("actually_used_fact_refs"), list)
+            and isinstance(response.get("actually_used_material_refs"), list),
+            "E_VALIDATE_RESPONSE_FIELDS",
+        )
+        response_soft_tasks = response.get("soft_evaluation_tasks")
+        require(
+            isinstance(response_soft_tasks, list)
+            and response_soft_tasks
+            and all(
+                isinstance(item, dict)
+                and item.get("task_id") in SOFT_EVALUATION_TASKS
+                and item.get("status") == "PENDING_EXTERNAL_EVALUATION"
+                and item.get("score") is None
+                for item in response_soft_tasks
+            ),
+            "E_VALIDATE_SOFT_EVALUATION_TASKS",
+        )
+        require(
+            response.get("semantic_fact_review_status")
+            in {"PENDING_EXTERNAL_REVIEW", "NOT_REACHED"},
+            "E_VALIDATE_SEMANTIC_REVIEW_STATUS",
+        )
+        require(
             isinstance(response.get("plain_language_reason"), str)
             and bool(response["plain_language_reason"].strip())
-            and not has_internal_identifier(response["plain_language_reason"])
-            for response in validate_responses.values()
-            if isinstance(response, dict)
-        ),
-        "E_VALIDATE_PLAIN_LANGUAGE_REASON",
+            and not has_internal_identifier(response["plain_language_reason"]),
+            "E_VALIDATE_PLAIN_LANGUAGE_REASON",
+        )
+    pass_response = validate_responses.get("pass")
+    require(
+        isinstance(pass_response, dict)
+        and pass_response.get("hard_issues") == []
+        and pass_response.get("semantic_fact_review_status")
+        == "PENDING_EXTERNAL_REVIEW"
+        and {item.get("task_id") for item in pass_response["soft_evaluation_tasks"]}
+        == SOFT_EVALUATION_TASKS,
+        "E_VALIDATE_PASS_IS_NOT_SEMANTIC_PROOF",
     )
     require(
-        validate.get("evaluation_time_source") == "SERVER_CLOCK"
+        set(validate.get("checks", [])) == HARD_CHECK_CATEGORIES | {"plan_consistency"}
+        and validate.get("hard_checks_do_not_prove_candidate_semantics") is True
+        and validate.get("semantic_fact_review_required_before_publish") is True
+        and validate.get("evaluation_time_source") == "SERVER_CLOCK"
         and validate.get("client_supplied_evaluation_time_accepted") is False,
-        "E_VALIDATE_SERVER_TIME",
+        "E_VALIDATE_BOUNDARY",
     )
 
     output_contract = contract.get("user_output_contract")
@@ -1235,11 +1461,11 @@ def validate_contract_data(
         "E_MODULE_OWNER_SET",
     )
     require(
-        "canonical_composition_plan" in ownership["DIFY"].get("does_not_own", []),
+        "light_content_plan" in ownership["DIFY"].get("does_not_own", []),
         "E_DIFY_PLAN_OWNER",
     )
     require(
-        "canonical_composition_plan" in ownership["EXPRESSION_SERVICE"].get("owns", []),
+        "light_content_plan" in ownership["EXPRESSION_SERVICE"].get("owns", []),
         "E_EXPRESSION_PLAN_OWNER",
     )
 
@@ -1259,6 +1485,11 @@ def validate_contract_data(
     require(
         contract.get("downstream_may_create_parallel_public_model") is False,
         "E_PARALLEL_PUBLIC_MODEL",
+    )
+    require(
+        contract.get("light_content_plan_contract_owner")
+        == "PACKAGE_2_LIGHT_EXPRESSION_SERVICE",
+        "E_LIGHT_PLAN_PACKAGE_OWNER",
     )
     validate_all_false(contract.get("readiness"), "E_CONTRACT_READINESS")
 
@@ -2311,10 +2542,35 @@ def evaluate_case(
             return {"decision": "REJECT_FACT_PRECEDENCE_OVERRIDE"}
         return {"decision": "USE_PRECISE_FACT"}
     if operation == "prepare":
-        if data.get("expression_baseline_matches") is not True:
+        client_soft_preferences = data.get("client_soft_preferences", {})
+        if not isinstance(client_soft_preferences, dict) or not set(
+            client_soft_preferences
+        ).issubset(CLIENT_SOFT_PREFERENCE_FIELDS):
             return {
-                "decision": "REJECT_BASELINE_TAMPER",
-                "canonical_plan_created": False,
+                "decision": "REJECT_HARD_PROHIBITION_OVERRIDE",
+                "light_plan_created": False,
+            }
+        if data.get("client_declared_profile_authority") is True:
+            return {
+                "decision": "REJECT_UNTRUSTED_EXPRESSION_PROFILE",
+                "light_plan_created": False,
+            }
+        if data.get("client_soft_preferences_override_hard_prohibition") is True:
+            return {
+                "decision": "REJECT_HARD_PROHIBITION_OVERRIDE",
+                "light_plan_created": False,
+            }
+        profile_mode = data.get("server_expression_profile_mode", "NEUTRAL_DEFAULT")
+        if profile_mode not in {"NEUTRAL_DEFAULT", "SERVER_RESOLVED"}:
+            return {
+                "decision": "REJECT_UNTRUSTED_EXPRESSION_PROFILE",
+                "light_plan_created": False,
+            }
+        candidate_count = data.get("required_candidate_count", 2)
+        if not isinstance(candidate_count, int) or not 2 <= candidate_count <= 3:
+            return {
+                "decision": "REJECT_CANDIDATE_COUNT",
+                "light_plan_created": False,
             }
         trusted_scope = data.get("trusted_scope")
         if (
@@ -2326,7 +2582,7 @@ def evaluate_case(
         ):
             return {
                 "decision": "REJECT_SCOPE_OVERRIDE",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if identity is None or not account_role_is_authorized(
             identity,
@@ -2337,7 +2593,7 @@ def evaluate_case(
         ):
             return {
                 "decision": "REJECT_UNAUTHORIZED_ACCOUNT_ROLE",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         confirmed_role_ids = data.get("confirmed_by_role_ids")
         if not isinstance(confirmed_role_ids, list):
@@ -2353,17 +2609,17 @@ def evaluate_case(
         ):
             return {
                 "decision": "REJECT_UNAUTHORIZED_CONFIRMATION_ROLE",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if data.get("requirement_status") != "CONFIRMED":
             return {
                 "decision": "REJECT_UNCONFIRMED_REQUIREMENT",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if data.get("active_plan_count_for_key") != 0:
             return {
-                "decision": "REJECT_DUPLICATE_CANONICAL_PLAN",
-                "canonical_plan_created": False,
+                "decision": "REJECT_DUPLICATE_LIGHT_PLAN",
+                "light_plan_created": False,
             }
         if (
             data.get("material_state") != "ACTIVE"
@@ -2371,23 +2627,23 @@ def evaluate_case(
         ):
             return {
                 "decision": "ACTION_CARD_REQUEST_AUTHORIZATION",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         facts = data.get("verified_precise_facts")
         if not isinstance(trusted_scope, dict) or not isinstance(facts, list):
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if not facts and not data.get("missing_required"):
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if any(not isinstance(fact, dict) for fact in facts):
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         fact_rejections = [
             fact_rejection_code(
@@ -2401,25 +2657,25 @@ def evaluate_case(
         if "SCOPE_MISMATCH" in fact_rejections:
             return {
                 "decision": "REJECT_SCOPE_OVERRIDE",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if any(fact_rejections):
             return {
                 "decision": "ACTION_CARD_REQUEST_AUTHORIZATION",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
         if data.get("missing_required"):
             missing = data["missing_required"]
             if any(str(item).startswith("material:") for item in missing):
                 return {
                     "decision": "ACTION_CARD_COLLECT_MATERIAL",
-                    "canonical_plan_created": False,
+                    "light_plan_created": False,
                 }
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
-                "canonical_plan_created": False,
+                "light_plan_created": False,
             }
-        return {"decision": "PREPARE_PLAN", "canonical_plan_created": True}
+        return {"decision": "PREPARE_PLAN", "light_plan_created": True}
     if operation == "validate":
         if set(data) != VALIDATE_CASE_INPUT_FIELDS:
             return {"decision": "VALIDATE_BLOCK"}
@@ -2459,17 +2715,23 @@ def evaluate_case(
             return {"decision": "REJECT_SCOPE_OVERRIDE"}
         if any(fact_rejections):
             return {"decision": "VALIDATE_BLOCK"}
-        if not data.get("plan_consistent") or not data.get("all_claims_supported"):
+        if not data.get("plan_consistent") or not data.get(
+            "structured_claim_refs_within_plan"
+        ):
             return {"decision": "VALIDATE_REVISE"}
         if data.get("authorization_state") != "GRANTED":
             return {"decision": "VALIDATE_BLOCK"}
-        return {"decision": "VALIDATE_PASS"}
+        if data.get("soft_evaluation_scores") != {}:
+            return {"decision": "VALIDATE_BLOCK"}
+        if data.get("semantic_fact_review_status") != "PENDING_EXTERNAL_REVIEW":
+            return {"decision": "VALIDATE_BLOCK"}
+        return {"decision": "VALIDATE_PASS_PENDING_SEMANTIC_REVIEW"}
     if operation == "fact_input":
         if (
-            data.get("input_kind") == "EXPRESSION_COMPONENT"
-            and data.get("claimed_as") == "BRAND_FACT"
+            data.get("input_kind") in EXPRESSION_GUIDANCE_INPUT_KINDS
+            and data.get("claimed_as") in AUTHORITY_CLAIM_KINDS
         ):
-            return {"decision": "REJECT_COMPONENT_AS_FACT"}
+            return {"decision": "REJECT_EXPRESSION_GUIDANCE_AS_AUTHORITY"}
     if operation == "simulation_record":
         if (
             data.get("simulation_only") is not True
@@ -2544,7 +2806,7 @@ def validate_cases(cases: list[dict[str, Any]], identity: dict[str, Any]) -> Non
             actual.get("decision") == expected.get("decision"),
             f"E_CASE_DECISION:{case.get('case_id')}",
         )
-        for key in ("plan_created", "brand_fact_written", "canonical_plan_created"):
+        for key in ("plan_created", "brand_fact_written", "light_plan_created"):
             if key in expected:
                 require(
                     actual.get(key) == expected.get(key),
@@ -2572,8 +2834,8 @@ def validate_cases(cases: list[dict[str, Any]], identity: dict[str, Any]) -> Non
         "REJECT_FACT_PRECEDENCE_OVERRIDE",
         "REJECT_CHAT_SIDE_EFFECT",
         "REJECT_UNCONFIRMED_REQUIREMENT",
-        "REJECT_COMPONENT_AS_FACT",
-        "REJECT_DUPLICATE_CANONICAL_PLAN",
+        "REJECT_EXPRESSION_GUIDANCE_AS_AUTHORITY",
+        "REJECT_DUPLICATE_LIGHT_PLAN",
         "REJECT_SIMULATION_PUBLISH",
         "REJECT_INTERNAL_IDENTIFIER_LEAK",
         "REJECT_BASELINE_TAMPER",
@@ -2610,6 +2872,8 @@ def validate_status_and_manifest(
     require(
         expression
         == {
+            "asset_runtime_role": "OPTIONAL_OFFLINE_RESEARCH_REGRESSION_AND_EXPERIMENT",
+            "normal_runtime_requires_asset_refs": False,
             "active_component_count": 68,
             "active_control_rule_count": 8,
             "active_edge_count": 85,
@@ -2661,6 +2925,13 @@ def validate_status_and_manifest(
                 require(not left.startswith(f"{right}/"), "E_MANIFEST_ROOT_OVERLAP")
     require(
         manifest.get("readiness_transition_authorized") is False, "E_MANIFEST_READINESS"
+    )
+    require(
+        manifest.get("shared_model_ownership", {}).get("light_content_plan_contract")
+        == "PACKAGE_2_ONLY"
+        and "second_light_content_plan"
+        in manifest.get("forbidden_parallel_models", []),
+        "E_MANIFEST_LIGHT_PLAN_OWNERSHIP",
     )
 
 
@@ -2764,6 +3035,15 @@ def validate_result(root: Path, result: dict[str, Any]) -> None:
     )
     require(
         result.get("expression_baseline_digest_match") is True, "E_RESULT_EXPRESSION"
+    )
+    require(
+        result.get("runtime_architecture") == "LIGHT_EXPRESSION"
+        and result.get("normal_runtime_requires_atom_edge_or_path_refs") is False
+        and result.get("historical_expression_assets_role")
+        == "OPTIONAL_OFFLINE_RESEARCH_REGRESSION_AND_EXPERIMENT"
+        and result.get("neutral_default_expression_profile_ref")
+        == NEUTRAL_EXPRESSION_PROFILE_REF,
+        "E_RESULT_LIGHT_EXPRESSION_ARCHITECTURE",
     )
     require(
         result.get("core_numbers_300_120_86_unchanged") is True, "E_RESULT_CORE_NUMBERS"
@@ -2870,12 +3150,52 @@ def run_selftest() -> dict[str, Any]:
     )
 
     mutated_contract = copy.deepcopy(contract)
-    mutated_contract["canonical_composition_plan_contract"]["required_fields"].remove(
+    mutated_contract["brand_fact_contract"][
+        "expression_guidance_may_be_fact_authorization_or_scope"
+    ] = True
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_EXPRESSION_GUIDANCE_AS_AUTHORITY_POLICY",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["light_content_plan_contract"]["required_fields"].remove(
         "composition_plan_ref"
     )
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PLAN_REQUIRED_FIELDS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["expression_v1_baseline"]["normal_runtime_dependency"] = True
+    expect_failure(
+        lambda: validate_expression_baseline(ROOT, mutated_contract),
+        "E_EXPRESSION_RUNTIME_OPTIONALITY",
+    )
+
+    for profile_field in (
+        "client_may_supply_formal_profile",
+        "client_soft_preferences_may_override_hard_prohibitions",
+        "profile_may_grant_fact_authorization_or_scope",
+        "cross_tenant_profile_borrowing_allowed",
+    ):
+        mutated_contract = copy.deepcopy(contract)
+        mutated_contract["light_expression_contract"]["brand_expression_profile"][
+            profile_field
+        ] = True
+        expect_failure(
+            lambda: validate_contract_data(ROOT, mutated_contract, identity),
+            "E_EXPRESSION_PROFILE_BOUNDARY",
+        )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["light_expression_contract"]["hard_check_categories"].remove(
+        "authorization"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_HARD_SOFT_EVALUATION_BOUNDARY",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -2888,6 +3208,18 @@ def run_selftest() -> dict[str, Any]:
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PREPARE_REQUEST_EXAMPLE_FIELDS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["client_trust_or_verified_labels_are_authoritative"] = True
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_TRUST_BOUNDARY",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -2910,27 +3242,51 @@ def run_selftest() -> dict[str, Any]:
         for item in mutated_contract["api_contracts"]
         if item["path"] == "/v1/content/prepare"
     )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+    prepare_contract["request_example"]["output_requirements"][
+        "required_candidate_count"
+    ] = 4
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_CANDIDATE_COUNT",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["light_content_plan"]["references"][
         "selected_component_refs"
-    ] = []
+    ] = ["COMPONENT-NOT-RUNTIME"]
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PREPARE_PLAN_REFERENCE_FIELDS",
     )
 
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "selected_edge_refs"
-    ] = []
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_REFERENCE_FIELDS",
-    )
+    for reference_field, invalid_value in (
+        ("trusted_scope_ref", "scope://unregistered"),
+        (
+            "confirmed_requirement_ref",
+            "requirement://REQ-NOT-REGISTERED/versions/1",
+        ),
+        ("precise_fact_refs", ["FACT-NOT-REGISTERED"]),
+        ("retrieval_fragment_refs", ["FRAGMENT-NOT-REGISTERED"]),
+        ("brand_expression_profile_ref", "expression-profile://unregistered/v1"),
+    ):
+        mutated_contract = copy.deepcopy(contract)
+        prepare_contract = next(
+            item
+            for item in mutated_contract["api_contracts"]
+            if item["path"] == "/v1/content/prepare"
+        )
+        prepare_contract["response_examples"]["light_content_plan"]["references"][
+            reference_field
+        ] = invalid_value
+        expect_failure(
+            lambda: validate_contract_data(ROOT, mutated_contract, identity),
+            "E_PREPARE_PLAN_SOURCE_REFS",
+        )
 
     mutated_contract = copy.deepcopy(contract)
     prepare_contract = next(
@@ -2938,125 +3294,40 @@ def run_selftest() -> dict[str, Any]:
         for item in mutated_contract["api_contracts"]
         if item["path"] == "/v1/content/prepare"
     )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "selected_component_refs"
-    ].pop()
+    prepare_contract["response_examples"]["light_content_plan"][
+        "soft_evaluation_tasks"
+    ][0]["score"] = 95
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_COMPONENT_REFS",
+        "E_PLAN_SOFT_EVALUATION_TASKS",
     )
 
     mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
+    validate_contract = next(
         item
         for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
+        if item["path"] == "/v1/content/validate"
     )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "selected_control_rule_refs"
-    ].pop()
+    validate_contract["response_examples"]["pass"]["soft_evaluation_tasks"][0][
+        "score"
+    ] = 95
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_CONTROL_REFS",
+        "E_VALIDATE_SOFT_EVALUATION_TASKS",
     )
 
     mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
+    validate_contract = next(
         item
         for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
+        if item["path"] == "/v1/content/validate"
     )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "selected_edge_refs"
-    ].pop()
+    validate_contract["response_examples"]["pass"]["semantic_fact_review_status"] = (
+        "VERIFIED"
+    )
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_EDGE_REFS",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    selected_edges = prepare_contract["response_examples"][
-        "canonical_composition_plan"
-    ]["references"]["selected_edge_refs"]
-    selected_edges.append(selected_edges[0])
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_REFERENCE_LISTS",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "trusted_scope_ref"
-    ] = "scope://unregistered"
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_SOURCE_REFS",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "confirmed_requirement_ref"
-    ] = "requirement://REQ-NOT-REGISTERED/versions/1"
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_SOURCE_REFS",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "precise_fact_refs"
-    ] = ["FACT-NOT-REGISTERED"]
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_SOURCE_REFS",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "expression_baseline_ref"
-    ] = "expression://unregistered"
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_SOURCE_REFS",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
-        "retrieval_fragment_refs"
-    ] = ["FRAGMENT-NOT-REGISTERED"]
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_PLAN_SOURCE_REFS",
+        "E_VALIDATE_SEMANTIC_REVIEW_STATUS",
     )
 
     for collection_field, expected_error in (
@@ -3228,6 +3499,97 @@ def run_selftest() -> dict[str, Any]:
     mutated_cases = copy.deepcopy(cases)
     mutated_cases[0]["expected"]["decision"] = "PREPARE_PLAN"
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    base_prepare = next(case for case in cases if case["case_id"] == "PF-POS-003")
+    without_optional_assets = copy.deepcopy(base_prepare)
+    for field in (
+        "experimental_diagnostics",
+        "expression_baseline_ref",
+        "component_refs",
+        "control_rule_refs",
+        "edge_refs",
+        "structural_path_ref",
+    ):
+        without_optional_assets["input"].pop(field, None)
+    require(
+        evaluate_case(without_optional_assets, identity)
+        == {"decision": "PREPARE_PLAN", "light_plan_created": True},
+        "E_SELFTEST_ATOM_FREE_PREPARE",
+    )
+
+    with_unknown_experiment_refs = copy.deepcopy(without_optional_assets)
+    with_unknown_experiment_refs["input"]["experimental_diagnostics"] = {
+        "component_refs": ["UNKNOWN-COMPONENT"],
+        "control_rule_refs": ["UNKNOWN-RULE"],
+        "edge_refs": ["UNKNOWN-EDGE"],
+        "structural_path_ref": "UNKNOWN-PATH",
+    }
+    require(
+        evaluate_case(with_unknown_experiment_refs, identity)
+        == evaluate_case(without_optional_assets, identity),
+        "E_SELFTEST_EXPERIMENT_REFS_CHANGED_AUTHORITY",
+    )
+
+    for input_kind in EXPRESSION_GUIDANCE_INPUT_KINDS:
+        for claimed_as in AUTHORITY_CLAIM_KINDS:
+            require(
+                evaluate_case(
+                    {
+                        "case_id": "SELFTEST-EXPRESSION-AUTHORITY",
+                        "operation": "fact_input",
+                        "input": {
+                            "input_kind": input_kind,
+                            "claimed_as": claimed_as,
+                        },
+                    },
+                    identity,
+                ).get("decision")
+                == "REJECT_EXPRESSION_GUIDANCE_AS_AUTHORITY",
+                "E_SELFTEST_EXPRESSION_GUIDANCE_AUTHORITY",
+            )
+
+    for field, decision in (
+        ("client_declared_profile_authority", "REJECT_UNTRUSTED_EXPRESSION_PROFILE"),
+        (
+            "client_soft_preferences_override_hard_prohibition",
+            "REJECT_HARD_PROHIBITION_OVERRIDE",
+        ),
+    ):
+        mutated_prepare = copy.deepcopy(base_prepare)
+        mutated_prepare["input"][field] = True
+        require(
+            evaluate_case(mutated_prepare, identity).get("decision") == decision,
+            f"E_SELFTEST_PREPARE_BOUNDARY:{field}",
+        )
+
+    mutated_prepare = copy.deepcopy(base_prepare)
+    mutated_prepare["input"]["client_soft_preferences"] = {"prohibited_phrasing": []}
+    require(
+        evaluate_case(mutated_prepare, identity).get("decision")
+        == "REJECT_HARD_PROHIBITION_OVERRIDE",
+        "E_SELFTEST_CLIENT_SOFT_PREFERENCE_ALLOWLIST",
+    )
+
+    mutated_prepare = copy.deepcopy(base_prepare)
+    mutated_prepare["input"]["required_candidate_count"] = 4
+    require(
+        evaluate_case(mutated_prepare, identity).get("decision")
+        == "REJECT_CANDIDATE_COUNT",
+        "E_SELFTEST_CANDIDATE_COUNT",
+    )
+
+    base_validate = next(case for case in cases if case["case_id"] == "PF-POS-005")
+    for field, invalid_value in (
+        ("soft_evaluation_scores", {"naturalness": 95}),
+        ("semantic_fact_review_status", "VERIFIED"),
+    ):
+        mutated_validate = copy.deepcopy(base_validate)
+        mutated_validate["input"][field] = invalid_value
+        require(
+            evaluate_case(mutated_validate, identity).get("decision")
+            == "VALIDATE_BLOCK",
+            f"E_SELFTEST_FAKE_SEMANTIC_RESULT:{field}",
+        )
 
     mutated_cases = copy.deepcopy(cases)
     positive_validate = next(

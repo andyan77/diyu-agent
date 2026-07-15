@@ -14,6 +14,8 @@ current_product_status:
     - secret-scan_success
     may_not_self_activate_from_branch: true
   expression_v1:
+    asset_runtime_role: OPTIONAL_OFFLINE_RESEARCH_REGRESSION_AND_EXPERIMENT
+    normal_runtime_requires_asset_refs: false
     active_component_count: 68
     active_control_rule_count: 8
     active_edge_count: 85
@@ -30,7 +32,7 @@ current_product_status:
     failure_evidence_pull_request: 15
   downstream_unlock:
     unlock_condition: PUBLIC_FOUNDATION_TREE_ON_MASTER_AND_REQUIRED_CHECKS_GREEN
-    package_2_generator_interface:
+    package_2_light_expression_service:
       candidate_state: LOCKED
       activated_state: ALLOWED_TO_START
     package_3_brand_data:

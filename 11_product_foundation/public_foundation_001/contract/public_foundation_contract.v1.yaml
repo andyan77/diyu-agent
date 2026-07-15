@@ -24,7 +24,16 @@ public_foundation_contract:
     continuous_deployment_implemented: false
 
   expression_v1_baseline:
-    consumption_mode: REFERENCE_ONLY
+    consumption_mode: OPTIONAL_OFFLINE_REFERENCE
+    normal_runtime_dependency: false
+    normal_request_may_omit_all_asset_refs: true
+    missing_asset_refs_block_prepare: false
+    unknown_experiment_refs: DIAGNOSTIC_WARNING_ONLY
+    permitted_uses:
+    - OFFLINE_RESEARCH
+    - REGRESSION_EVALUATION
+    - DIAGNOSTIC
+    - EXPLICIT_EXPERIMENT
     assets_may_not_be_copied_to_brand_facts: true
     assets:
     - asset_id: ACTIVE_COMPONENTS
@@ -231,12 +240,98 @@ public_foundation_contract:
     - expression_component
     - control_rule
     - structural_path
+    - brand_expression_profile
+    - high_level_mode
+    - approved_example
+    - client_soft_preference
     - user_preference_without_confirmation
     - model_inference
     expression_asset_may_be_fact_or_authorization: false
+    expression_guidance_may_be_fact_authorization_or_scope: false
 
-  canonical_composition_plan_contract:
-    object_name: CanonicalCompositionPlan
+  light_expression_contract:
+    brand_expression_profile:
+      resolution_authority: SERVER_TRUSTED_UPSTREAM
+      client_may_supply_formal_profile: false
+      client_soft_preferences_may_override_hard_prohibitions: false
+      allowed_client_soft_preference_fields:
+      - rhythm
+      - emotional_intensity
+      - narrative_entry
+      - visual_focus
+      - ending_tendency
+      profile_may_grant_fact_authorization_or_scope: false
+      cross_tenant_profile_borrowing_allowed: false
+      neutral_default_profile:
+        profile_ref: expression-profile://neutral-default/v1
+        profile_version: 1
+        resolution_mode: NEUTRAL_DEFAULT
+        tenant_specific: false
+        tone_tendencies: [natural, clear, restrained]
+        preferred_phrasing: []
+        prohibited_phrasing: [fabricated_fact, unsupported_promise, body_judgment]
+        expression_intensity: MEDIUM
+        perspective: TASK_APPROPRIATE
+        approved_example_refs: []
+    high_level_modes:
+    - mode_ref: expression-mode://documentary-observation/v1
+      user_label: 纪实观察
+    - mode_ref: expression-mode://professional-explanation/v1
+      user_label: 专业拆解
+    - mode_ref: expression-mode://life-scene/v1
+      user_label: 生活场景
+    - mode_ref: expression-mode://styling-demonstration/v1
+      user_label: 搭配演示
+    - mode_ref: expression-mode://store-micro-documentary/v1
+      user_label: 门店微纪录
+    - mode_ref: expression-mode://product-role-narrative/v1
+      user_label: 产品角色叙事
+    mode_selection_required: false
+    mode_is_script_template: false
+    mode_may_grant_fact_authorization_or_scope: false
+    approved_example_may_grant_fact_authorization_or_scope: false
+    candidate_policy:
+      minimum_count: 2
+      maximum_count: 3
+      near_duplicate_rewording_counts_as_distinct: false
+      difference_dimensions:
+      - narrative_entry
+      - information_order
+      - visual_focus
+      - rhythm
+      - emotional_intensity
+      - ending
+    hard_check_categories:
+    - fact_support
+    - source_provenance
+    - authorization
+    - privacy
+    - trusted_scope
+    - effective_time_and_revocation
+    - enterprise_commitment
+    - explicit_brand_prohibition
+    - internal_identifier_leak
+    soft_evaluation_tasks:
+    - task_fit
+    - brand_fit
+    - naturalness
+    - platform_fit
+    - candidate_difference
+    missing_real_evaluator_status: PENDING_EXTERNAL_EVALUATION
+    soft_score_may_be_fabricated: false
+    experimental_diagnostics:
+      normal_runtime_required: false
+      allowed_reference_fields:
+      - expression_baseline_ref
+      - component_refs
+      - control_rule_refs
+      - edge_refs
+      - structural_path_ref
+      unknown_reference_behavior: DIAGNOSTIC_WARNING_ONLY
+      may_change_fact_authorization_scope_or_publishability: false
+
+  light_content_plan_contract:
+    object_name: LightContentPlan
     authority: EXPRESSION_SERVICE_PREPARE
     is_independent_microservice: false
     required_fields:
@@ -249,17 +344,24 @@ public_foundation_contract:
     - content_account_id
     - requirement_id
     - requirement_version
+    - task_objective
+    - primary_audience
+    - output_requirements
+    - candidate_policy
+    - expression_guidance
+    - hard_check_policy
+    - soft_evaluation_tasks
     - references
-    object_type: CANONICAL_COMPOSITION_PLAN
+    object_type: LIGHT_CONTENT_PLAN
     composition_plan_ref_is_derived_from:
     - plan_id
     - plan_revision
-    canonical_key_fields:
+    unique_key_fields:
     - tenant_id
     - content_account_id
     - requirement_id
     - requirement_version
-    maximum_active_canonical_plans_per_key: 1
+    maximum_active_plans_per_key: 1
     plan_revision_policy: NEW_REVISION_SUPERSEDES_PRIOR_REVISION
     competing_plan_writers_forbidden:
     - DIFY
@@ -270,12 +372,13 @@ public_foundation_contract:
     - confirmed_requirement_ref
     - retrieval_fragment_refs
     - precise_fact_refs
-    - expression_baseline_ref
+    - brand_expression_profile_ref
     - selected_internal_content_product_id
-    - selected_component_refs
-    - selected_control_rule_refs
-    - selected_edge_refs
-    - selected_structural_path_ref
+    optional_references:
+    - high_level_mode_refs
+    - approved_example_refs
+    - experimental_diagnostics
+    atom_component_edge_and_path_refs_required: false
     audience_body_allowed_in_plan: false
 
   composition_workflow:
@@ -289,13 +392,13 @@ public_foundation_contract:
     - stage: PREPARE
       owner: EXPRESSION_SERVICE
       output_union:
-      - CANONICAL_COMPOSITION_PLAN
+      - LIGHT_CONTENT_PLAN
       - ACTION_CARD
     - stage: CANDIDATE_AUTHORING
       owner: DIFY_MODEL_NODE
-      input: CANONICAL_COMPOSITION_PLAN_REFERENCE
+      input: LIGHT_CONTENT_PLAN_REFERENCE
       may_add_facts: false
-      may_create_canonical_plan: false
+      may_create_competing_plan: false
     - stage: VALIDATE
       owner: EXPRESSION_SERVICE
       output_union:
@@ -344,6 +447,21 @@ public_foundation_contract:
   - method: POST
     path: /v1/content/prepare
     implemented_in_this_package: false
+    request_source: SERVER_TRUSTED_UPSTREAM_ENVELOPE
+    trusted_upstream_only_fields:
+    - trusted_scope_ref
+    - trusted_scope
+    - acting_role_id
+    - confirmation_evidence
+    - scoped_retrieval_fragments
+    - verified_precise_facts
+    - server_expression_profile
+    client_hint_fields:
+    - requested_high_level_mode_refs
+    - approved_example_refs
+    - client_soft_preferences
+    - output_requirements
+    client_trust_or_verified_labels_are_authoritative: false
     request_required_fields:
     - api_version
     - request_id
@@ -354,9 +472,11 @@ public_foundation_contract:
     - confirmation_evidence
     - scoped_retrieval_fragments
     - verified_precise_facts
-    - expression_baseline_ref
+    - server_expression_profile
+    - output_requirements
+    - evaluation_rules
     response_union:
-    - CANONICAL_COMPOSITION_PLAN
+    - LIGHT_CONTENT_PLAN
     - ACTION_CARD
     trace_fields:
     - request_id
@@ -423,10 +543,43 @@ public_foundation_contract:
         authorization_ref: AUTH-SIM-001
         disclosure_scope: CONTENT_ACCOUNT_ONLY
         status: ACTIVE
-      expression_baseline_ref: expression://gate1-v1.1/active
+      server_expression_profile:
+        resolution_authority: SERVER_TRUSTED_UPSTREAM
+        requested_profile_ref: null
+        resolved_profile_ref: expression-profile://neutral-default/v1
+        resolution_mode: NEUTRAL_DEFAULT
+        tenant_id: TENANT-DIYU-SIM-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      requested_high_level_mode_refs:
+      - expression-mode://documentary-observation/v1
+      approved_example_refs: []
+      client_soft_preferences:
+        rhythm: concise
+        emotional_intensity: restrained
+      output_requirements:
+        target_platform: SIMULATED_CHANNEL
+        required_candidate_count: 3
+        audience_surface_fields: [title, body, spoken_lines, CTA]
+      evaluation_rules:
+        hard_check_categories:
+        - fact_support
+        - source_provenance
+        - authorization
+        - privacy
+        - trusted_scope
+        - effective_time_and_revocation
+        - enterprise_commitment
+        - explicit_brand_prohibition
+        - internal_identifier_leak
+        soft_evaluation_tasks:
+        - task_fit
+        - brand_fit
+        - naturalness
+        - platform_fit
+        - candidate_difference
     response_examples:
-      canonical_composition_plan:
-        object_type: CANONICAL_COMPOSITION_PLAN
+      light_content_plan:
+        object_type: LIGHT_CONTENT_PLAN
         plan_id: PLAN-SIM-001
         plan_revision: 1
         composition_plan_ref: plan://PLAN-SIM-001/revisions/1
@@ -435,39 +588,62 @@ public_foundation_contract:
         content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
         requirement_id: REQ-DIYU-SIM-001
         requirement_version: 1
+        task_objective: 使用已授权的模拟事实准备专业但自然的内容候选
+        primary_audience: 需要理解商品专业信息的普通用户
+        output_requirements:
+          target_platform: SIMULATED_CHANNEL
+          required_candidate_count: 3
+          audience_surface_fields: [title, body, spoken_lines, CTA]
+        candidate_policy:
+          required_candidate_count: 3
+          difference_dimensions:
+          - narrative_entry
+          - information_order
+          - visual_focus
+          - rhythm
+          near_duplicate_rewording_counts_as_distinct: false
+        hard_check_policy:
+        - fact_support
+        - source_provenance
+        - authorization
+        - privacy
+        - trusted_scope
+        - effective_time_and_revocation
+        - enterprise_commitment
+        - explicit_brand_prohibition
+        - internal_identifier_leak
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: brand_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: naturalness
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: platform_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: candidate_difference
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
         references:
           trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
           confirmed_requirement_ref: requirement://REQ-DIYU-SIM-001/versions/1
           retrieval_fragment_refs: [FRAGMENT-SIM-001]
           precise_fact_refs: [FACT-SIM-001]
-          expression_baseline_ref: expression://gate1-v1.1/active
+          brand_expression_profile_ref: expression-profile://neutral-default/v1
           selected_internal_content_product_id: CP02
-          selected_component_refs:
-          - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
-          - G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE
-          - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
-          - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
-          - G1V11-P2-AXIS-NARRATIVE-MECHANISM
-          - G1V11-P2-AXIS-INFORMATION-ORDER
-          - G1V11-P2-AXIS-VISUAL-SUBJECT
-          - G1V11-P2-AXIS-SOUND-SUBJECT
-          - G1V11-P2-AXIS-RHYTHM
-          - G1V11-P2-AXIS-ENDING-BOUNDARY
-          selected_control_rule_refs:
-          - G1V11-CR-04-CLAIM-EVIDENCE-LIMIT
-          - G1V11-CR-05-ONLY-SITE-DOABLE-ACTIONS
-          - G1V11-CR-06-ANONYMIZE-CLOTHING-STORY
-          - G1V11-CR-07-WORKMANSHIP-VS-LIFESPAN
-          - G1V11-CR-08-LIGHT-BEFORE-COLOR-CLAIM
-          - G1V11-CR-09-OBSERVABLE-VS-RECORD-CLAIM
-          - G1V11-CR-10-DEMO-NOT-BODY-PROMISE
-          - G1V11-CR-11-OUTFIT-ROLE-NOT-BODY-JUDGE
-          selected_edge_refs:
-          - P2R2-EDGE-CP02-capture_instruction-01
-          - P2R2-EDGE-CP02-observable_action-01
-          - P2R2-EDGE-CP02-scene-01
-          - P2R2-EDGE-CP02-visual_beat-01
-          selected_structural_path_ref: structural-path://CP02/A
+        expression_guidance:
+          brand_expression_profile_ref: expression-profile://neutral-default/v1
+          high_level_mode_refs:
+          - expression-mode://documentary-observation/v1
+          approved_example_refs: []
+          client_soft_preferences:
+            rhythm: concise
+            emotional_intensity: restrained
+          may_grant_fact_authorization_or_scope: false
       action_card:
         object_type: ACTION_CARD
         action_type: COLLECT_FACT
@@ -498,13 +674,25 @@ public_foundation_contract:
     - decision
     - decision_id
     - composition_plan_ref
+    - hard_issues
+    - soft_evaluation_tasks
+    - semantic_fact_review_status
+    - actually_used_fact_refs
+    - actually_used_material_refs
     - plain_language_reason
     checks:
     - fact_support
+    - source_provenance
     - authorization
+    - privacy
     - trusted_scope
+    - effective_time_and_revocation
+    - enterprise_commitment
+    - explicit_brand_prohibition
     - plan_consistency
     - internal_identifier_leak
+    hard_checks_do_not_prove_candidate_semantics: true
+    semantic_fact_review_required_before_publish: true
     request_example:
       api_version: v1
       request_id: REQ-SIM-VALIDATE-001
@@ -530,20 +718,54 @@ public_foundation_contract:
         decision: PASS
         decision_id: DECISION-SIM-PASS-001
         composition_plan_ref: plan://PLAN-SIM-001/revisions/1
-        plain_language_reason: 事实、授权、范围和内容结构均已核对通过。
+        hard_issues: []
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: brand_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: naturalness
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: platform_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        - task_id: candidate_difference
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        semantic_fact_review_status: PENDING_EXTERNAL_REVIEW
+        actually_used_fact_refs: [FACT-SIM-001]
+        actually_used_material_refs: [FRAGMENT-SIM-001]
+        plain_language_reason: 结构化硬检查通过，正文语义事实复核和表达质量评价仍待完成。
       revise:
         object_type: VALIDATION_DECISION
         decision: REVISE
         decision_id: DECISION-SIM-REVISE-001
         composition_plan_ref: plan://PLAN-SIM-001/revisions/1
-        reason_codes: [UNSUPPORTED_CLAIM]
-        plain_language_reason: 有一处说法缺少事实支持，请按已确认资料修改。
+        hard_issues: [UNSUPPORTED_STRUCTURED_REFERENCE]
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        semantic_fact_review_status: PENDING_EXTERNAL_REVIEW
+        actually_used_fact_refs: [FACT-SIM-001]
+        actually_used_material_refs: [FRAGMENT-SIM-001]
+        plain_language_reason: 有一处结构化引用不完整，请按计划允许的资料修改，正文语义仍需复核。
       block:
         object_type: VALIDATION_DECISION
         decision: BLOCK
         decision_id: DECISION-SIM-BLOCK-001
         composition_plan_ref: plan://PLAN-SIM-001/revisions/1
-        reason_codes: [SCOPE_OR_AUTHORIZATION_MISMATCH]
+        hard_issues: [SCOPE_OR_AUTHORIZATION_MISMATCH]
+        soft_evaluation_tasks:
+        - task_id: task_fit
+          status: PENDING_EXTERNAL_EVALUATION
+          score: null
+        semantic_fact_review_status: NOT_REACHED
+        actually_used_fact_refs: [FACT-SIM-001]
+        actually_used_material_refs: [FRAGMENT-SIM-001]
         plain_language_reason: 资料范围或授权与当前账号不一致，暂不能继续。
     evaluation_time_source: SERVER_CLOCK
     client_supplied_evaluation_time_accepted: false
@@ -632,13 +854,13 @@ public_foundation_contract:
       does_not_own:
       - trusted_identity
       - precise_fact_truth
-      - canonical_composition_plan
+      - light_content_plan
       - authorization_truth
     EXPRESSION_SERVICE:
       owns:
-      - component_rule_and_path_references
       - prepare
-      - canonical_composition_plan
+      - light_content_plan
+      - server_expression_profile_resolution
       - validate
       does_not_own:
       - brand_fact_truth
@@ -649,7 +871,7 @@ public_foundation_contract:
       - verified_precise_fact_import_assets
       does_not_own:
       - expression_components
-      - canonical_composition_plan
+      - light_content_plan
     POSTGRESQL:
       future_owns:
       - trusted_identity_scope
@@ -666,9 +888,9 @@ public_foundation_contract:
       not_implemented_in_this_package: true
 
   downstream_package_boundaries:
-  - package_id: PACKAGE_2_GENERATOR_INTERFACE
+  - package_id: PACKAGE_2_LIGHT_EXPRESSION_SERVICE
     exclusive_root: 12_expression_service/expression_runtime_adapter_001
-    purpose: generator_http_interface_and_expression_runtime_adapter
+    purpose: light_expression_http_interface_and_plan_runtime
     state_before_foundation_master_green: LOCKED
   - package_id: PACKAGE_3_BRAND_DATA
     exclusive_root: 13_brand_data/brand_data_import_001
@@ -678,7 +900,7 @@ public_foundation_contract:
     exclusive_root: 14_dify_shell/dify_content_shell_001
     purpose: normal_chat_and_content_creation_conversation_shell
     state_before_foundation_master_green: LOCKED
-  common_contract_owner: PACKAGE_1_PUBLIC_FOUNDATION_ONLY
+  light_content_plan_contract_owner: PACKAGE_2_LIGHT_EXPRESSION_SERVICE
   downstream_may_create_parallel_public_model: false
 
   review_protocol:
