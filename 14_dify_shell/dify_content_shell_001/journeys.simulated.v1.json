@@ -1,0 +1,370 @@
+{
+  "schema_version": "v1.1",
+  "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
+  "revision": "r2-direct-journey-assertions",
+  "simulation_boundary": {
+    "simulation_only": true,
+    "intent_results_are_injected": true,
+    "natural_language_understanding_claimed": false,
+    "chat_quality_claimed": false,
+    "content_quality_claimed": false,
+    "dify_import_or_runtime_claimed": false,
+    "external_call_count": 0,
+    "publish_allowed": false
+  },
+  "acceptance_coverage": [
+    "PKG4-A01",
+    "PKG4-A02",
+    "PKG4-A03",
+    "PKG4-A04",
+    "PKG4-A05",
+    "PKG4-A06",
+    "PKG4-A07",
+    "PKG4-A08",
+    "PKG4-A09",
+    "PKG4-A10",
+    "PKG4-A11",
+    "PKG4-A12",
+    "PKG4-S01",
+    "PKG4-S02",
+    "PKG4-S03",
+    "PKG4-S04",
+    "PKG4-S05",
+    "PKG4-S06",
+    "PKG4-S07",
+    "PKG4-S08"
+  ],
+  "common_expected_boundaries": {
+    "plan_created": false,
+    "brand_fact_written": false,
+    "external_call_count": 0,
+    "publish_allowed": false,
+    "publishable_candidate_created": false
+  },
+  "candidate_sets": {
+    "two_candidates": {
+      "human_difference_review_required": true,
+      "machine_difference_score": null,
+      "candidates": [
+        {
+          "candidate_ref": "candidate://simulated/two/1",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向一｜先看现场（模拟占位）",
+            "body": "从一段真实工作现场开始，再补充背景和限制；正文等待后续模型与事实服务接线。"
+          }
+        },
+        {
+          "candidate_ref": "candidate://simulated/two/2",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向二｜先讲问题（模拟占位）",
+            "body": "先提出观众真正关心的问题，再用已核实材料回答；正文等待后续模型与事实服务接线。"
+          }
+        }
+      ]
+    },
+    "three_candidates": {
+      "human_difference_review_required": true,
+      "machine_difference_score": null,
+      "candidates": [
+        {
+          "candidate_ref": "candidate://simulated/three/1",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向一｜现场顺拍（模拟占位）",
+            "body": "按真实动作发生的顺序展开，保留环境和过程；这里没有生成可发布正文。"
+          }
+        },
+        {
+          "candidate_ref": "candidate://simulated/three/2",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向二｜问题拆解（模拟占位）",
+            "body": "从一个具体疑问切入，依次说明判断和适用边界；这里没有生成可发布正文。"
+          }
+        },
+        {
+          "candidate_ref": "candidate://simulated/three/3",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向三｜选择复盘（模拟占位）",
+            "body": "先交代一次取舍，再展示依据和仍然存在的限制；这里没有生成可发布正文。"
+          }
+        }
+      ]
+    }
+  },
+  "journey_cases": [
+    {
+      "case_id": "CHAT-TWO-TURNS",
+      "user_visible_case_label": "两轮普通聊天",
+      "simulated_inputs": {
+        "injected_intent_result": "NORMAL_CHAT",
+        "turn_count": 2
+      },
+      "expected": {
+        "experience": "ORDINARY_CHAT",
+        "ordinary_chat_turns": 2,
+        "prepare_placeholder_requested": false,
+        "author_placeholder_requested": false,
+        "returns_to_chat": true,
+        "user_visible_output": "我们继续聊这件事；当前不会创建内容计划，也不会进入内容准备。"
+      }
+    },
+    {
+      "case_id": "ENTRY-INSPIRATION",
+      "user_visible_case_label": "无方向时找灵感",
+      "simulated_inputs": {
+        "injected_intent_result": "FIND_INSPIRATION",
+        "direction_known": false
+      },
+      "expected": {
+        "experience": "INSPIRATION",
+        "direction_count": 3,
+        "returns_to_chat": true,
+        "user_visible_output": "给你三个通俗方向：跟拍现场、回答问题、讲清一次选择。"
+      }
+    },
+    {
+      "case_id": "ENTRY-VAGUE",
+      "user_visible_case_label": "模糊想法只补问关键问题",
+      "simulated_inputs": {
+        "injected_intent_result": "VAGUE_CREATION",
+        "requirement_detail": "VAGUE"
+      },
+      "expected": {
+        "experience": "CLARIFICATION",
+        "question_count": 3,
+        "summary_offered_after_answers": true,
+        "user_visible_output": "我只问三点：想讲什么、给谁看、手上有什么真实材料？"
+      }
+    },
+    {
+      "case_id": "ENTRY-CLEAR",
+      "user_visible_case_label": "明确需求直接整理摘要",
+      "simulated_inputs": {
+        "injected_intent_result": "CLEAR_CREATION",
+        "requirement_detail": "CLEAR"
+      },
+      "expected": {
+        "experience": "REQUIREMENT_SUMMARY",
+        "question_count": 0,
+        "summary_offered": true,
+        "prepare_placeholder_requested": false,
+        "user_visible_output": "需求已经比较明确，我直接整理成可修改摘要；确认前不会开始准备。"
+      }
+    },
+    {
+      "case_id": "UNCONFIRMED-BLOCKS-PREPARE",
+      "user_visible_case_label": "未确认摘要不能进入准备",
+      "simulated_inputs": {
+        "requirement_confirmation": "DRAFT",
+        "scope_authority": "SERVER_CONFIRMED"
+      },
+      "expected": {
+        "prepare_placeholder_requested": false,
+        "confirmation_required": true,
+        "user_visible_output": "请先确认摘要；现在还没有开始准备内容。"
+      }
+    },
+    {
+      "case_id": "SERVER-CONFIRMED-ACCOUNT",
+      "user_visible_case_label": "可信范围和确认任务同时成立",
+      "simulated_inputs": {
+        "requirement_confirmation": "CONFIRMED",
+        "scope_authority": "SERVER_CONFIRMED"
+      },
+      "expected": {
+        "prepare_placeholder_requested": true,
+        "external_service_called": false,
+        "experience": "CONTENT_PREPARATION_PLACEHOLDER",
+        "user_visible_output": "需求和使用范围都已确认；这里只展示后续准备位置，没有调用真实服务。"
+      }
+    },
+    {
+      "case_id": "EDIT-REQUIRES-RECONFIRM",
+      "user_visible_case_label": "修改需求后原确认失效",
+      "simulated_inputs": {
+        "previous_requirement_confirmation": "CONFIRMED",
+        "requirement_changed": true
+      },
+      "expected": {
+        "requirement_confirmation": "DRAFT",
+        "selected_candidate_ref": "UNBOUND",
+        "prepare_placeholder_requested": false,
+        "reconfirmation_required": true,
+        "user_visible_output": "摘要已更新，请重新确认后再继续。"
+      }
+    },
+    {
+      "case_id": "CANCEL-RETURNS-TO-CHAT",
+      "user_visible_case_label": "制作中随时返回聊天",
+      "simulated_inputs": {
+        "injected_intent_result": "EXIT_CREATION",
+        "previous_mode": "CREATION"
+      },
+      "expected": {
+        "mode": "CHAT",
+        "requirement_confirmation": "NOT_CREATED",
+        "selected_candidate_ref": "UNBOUND",
+        "returns_to_chat": true,
+        "user_visible_output": "好的，先不做内容，我们继续聊天。"
+      }
+    },
+    {
+      "case_id": "UNTRUSTED-IDENTITY-SOURCES-REJECTED",
+      "user_visible_case_label": "用户自报和Dify字段不能取得权限",
+      "simulated_inputs": {
+        "requirement_confirmation": "CONFIRMED",
+        "claimed_authority_sources": [
+          "DIFY_USER_FIELD",
+          "SELF_REPORTED_COMPANY_STORE_OR_ACCOUNT",
+          "CONVERSATION_VARIABLE"
+        ]
+      },
+      "expected": {
+        "all_claimed_sources_grant_permission": false,
+        "prepare_placeholder_requested": false,
+        "action_card": "REQUEST_AUTHORIZATION",
+        "user_visible_output": "当前使用范围尚未由服务端确认，请先确认权限。"
+      }
+    },
+    {
+      "case_id": "TWO-CANDIDATES-SELECT-REVISE-RETURN",
+      "user_visible_case_label": "两个候选的选择、局部修改和退回",
+      "simulated_inputs": {
+        "candidate_set_ref": "two_candidates",
+        "selected_candidate_ref": "candidate://simulated/two/1",
+        "requirement_confirmation": "CONFIRMED",
+        "necessary_modification": "换开头并缩短",
+        "short_reason": "先让重点更清楚",
+        "optional_expression_asset_refs": []
+      },
+      "expected": {
+        "candidate_count": 2,
+        "selection_is_displayed_candidate": true,
+        "local_revision_bound_to_selection": true,
+        "local_revision_bound_to_confirmed_requirement": true,
+        "return_to_candidate_list_supported": true,
+        "minimal_feedback_fields": [
+          "selected_candidate_ref",
+          "necessary_modification",
+          "short_reason"
+        ],
+        "user_visible_output": "已按选中的候选调整开头和长度；也可以退回两个方向重新选择。"
+      }
+    },
+    {
+      "case_id": "THREE-CANDIDATES-SELECT-ACCEPT",
+      "user_visible_case_label": "三个候选的展示、选择和保留",
+      "simulated_inputs": {
+        "candidate_set_ref": "three_candidates",
+        "selected_candidate_ref": "candidate://simulated/three/3",
+        "requirement_confirmation": "CONFIRMED",
+        "optional_expression_asset_refs": []
+      },
+      "expected": {
+        "candidate_count": 3,
+        "selection_is_displayed_candidate": true,
+        "selected_candidate_retained": true,
+        "publish_allowed": false,
+        "user_visible_output": "已保留你选的第三个模拟候选；它仍不可直接发布。"
+      }
+    },
+    {
+      "case_id": "CHANGE-REQUIREMENT-RECONFIRM",
+      "user_visible_case_label": "候选阶段修改需求后重新确认",
+      "simulated_inputs": {
+        "previous_requirement_confirmation": "CONFIRMED",
+        "previous_selected_candidate_ref": "candidate://simulated/two/2",
+        "requirement_changed": true
+      },
+      "expected": {
+        "requirement_confirmation": "DRAFT",
+        "selected_candidate_ref": "UNBOUND",
+        "prepare_placeholder_requested": false,
+        "reconfirmation_required": true,
+        "user_visible_output": "需求已改变，原候选选择已清除，请重新确认摘要。"
+      }
+    },
+    {
+      "case_id": "MISSING-FACT",
+      "user_visible_case_label": "缺事实时补充事实",
+      "simulated_inputs": {
+        "missing_condition": "FACT"
+      },
+      "expected": {
+        "action_card": "COLLECT_FACT",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "缺少当前有效且获准使用的事实，请先补充或确认。"
+      }
+    },
+    {
+      "case_id": "MISSING-MATERIAL",
+      "user_visible_case_label": "缺材料时补充材料",
+      "simulated_inputs": {
+        "missing_condition": "MATERIAL"
+      },
+      "expected": {
+        "action_card": "COLLECT_MATERIAL",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "还没有足够的真实材料，请补拍或补充已获准使用的资料。"
+      }
+    },
+    {
+      "case_id": "MISSING-AUTHORIZATION",
+      "user_visible_case_label": "缺授权时请求确认权限",
+      "simulated_inputs": {
+        "missing_condition": "AUTHORIZATION"
+      },
+      "expected": {
+        "action_card": "REQUEST_AUTHORIZATION",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "当前身份或材料使用范围尚未确认，暂不能继续。"
+      }
+    },
+    {
+      "case_id": "OUT-OF-SCOPE",
+      "user_visible_case_label": "越界请求必须阻止",
+      "simulated_inputs": {
+        "missing_condition": "SCOPE"
+      },
+      "expected": {
+        "action_card": "BLOCK",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "请求超出当前账号或资料授权范围，不能继续制作。"
+      }
+    },
+    {
+      "case_id": "DEGRADE-SAFELY",
+      "user_visible_case_label": "资料不足时安全降级",
+      "simulated_inputs": {
+        "available_material_supports_publishable_body": false,
+        "low_risk_direction_hint_possible": true
+      },
+      "expected": {
+        "action_card": "DEGRADE",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "现有资料只够整理低风险方向提示，不生成可发布正文。"
+      }
+    },
+    {
+      "case_id": "BLOCK-UNSAFE-REQUEST",
+      "user_visible_case_label": "无法诚实完成时停止",
+      "simulated_inputs": {
+        "honest_completion_possible": false
+      },
+      "expected": {
+        "action_card": "BLOCK",
+        "action_card_contains_publishable_candidate": false,
+        "user_visible_output": "当前条件下无法诚实完成，先停止，不会填造结果。"
+      }
+    }
+  ]
+}
