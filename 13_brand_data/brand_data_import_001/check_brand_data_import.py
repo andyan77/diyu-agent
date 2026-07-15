@@ -10,6 +10,7 @@ import json
 import logging
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from datetime import date, datetime, time, timezone
 from pathlib import Path
@@ -30,6 +31,7 @@ PACKAGE_ROOT = Path(__file__).resolve().parent
 REPO_ROOT = PACKAGE_ROOT.parents[1]
 PACKAGE_RELATIVE_ROOT = Path("13_brand_data/brand_data_import_001")
 BASELINE_COMMIT = "95b8b1700b7e96b1d2383465713bef8c36e7f6cb"
+SCOPE_BASE_REF = "refs/remotes/origin/master"
 MANIFEST_PATH = PACKAGE_ROOT / "materialization_manifest.v1.json"
 NARRATIVE_PATH = PACKAGE_ROOT / "data/narrative_units.v1.jsonl"
 FACT_PATH = PACKAGE_ROOT / "data/precise_facts.v1.jsonl"
@@ -659,14 +661,119 @@ def validate_bundle(bundle: Bundle) -> list[str]:
     return errors
 
 
-def git_paths(args: list[str]) -> set[Path]:
+def git_paths(args: list[str], repo_root: Path = REPO_ROOT) -> set[Path]:
     process = subprocess.run(
         ["git", *args, "-z"],
-        cwd=REPO_ROOT,
-        check=True,
+        cwd=repo_root,
+        check=False,
         capture_output=True,
     )
+    if process.returncode != 0:
+        command = " ".join(["git", *args])
+        raise ValueError(f"Git scope comparison failed: {command}")
     return {Path(value.decode("utf-8")) for value in process.stdout.split(b"\0") if value}
+
+
+def git_revision(args: list[str], label: str, repo_root: Path = REPO_ROOT) -> str:
+    process = subprocess.run(
+        ["git", *args],
+        cwd=repo_root,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    values = process.stdout.splitlines()
+    if process.returncode != 0 or len(values) != 1 or not values[0]:
+        raise ValueError(f"Git scope comparison failed: {label}")
+    return values[0]
+
+
+def current_task_changed_paths(
+    repo_root: Path = REPO_ROOT,
+    scope_base_ref: str = SCOPE_BASE_REF,
+) -> set[Path]:
+    origin_master = git_revision(
+        ["rev-parse", "--verify", f"{scope_base_ref}^{{commit}}"],
+        "origin/master is unavailable",
+        repo_root,
+    )
+    merge_base = git_revision(
+        ["merge-base", origin_master, "HEAD"],
+        "origin/master and HEAD have no verifiable common point",
+        repo_root,
+    )
+    changed = git_paths(["diff", "--name-only", f"{merge_base}..HEAD"], repo_root)
+    changed |= git_paths(["diff", "--name-only"], repo_root)
+    changed |= git_paths(["diff", "--cached", "--name-only"], repo_root)
+    changed |= git_paths(["ls-files", "--others", "--exclude-standard"], repo_root)
+    return changed
+
+
+def validate_changed_path_scope(changed: set[Path], errors: list[str]) -> None:
+    package_changes = {path for path in changed if path.is_relative_to(PACKAGE_RELATIVE_ROOT)}
+    outside_changes = sorted(str(path) for path in changed if path not in package_changes)
+    if package_changes and outside_changes:
+        errors.append(f"write scope mixes exclusive root with external paths: {outside_changes}")
+
+
+def run_test_git(repo_root: Path, args: list[str]) -> str:
+    process = subprocess.run(
+        ["git", *args],
+        cwd=repo_root,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if process.returncode != 0:
+        command = " ".join(["git", *args])
+        raise ValueError(f"scope selftest Git command failed: {command}")
+    return process.stdout.strip()
+
+
+def run_scope_selftests() -> list[str]:
+    failures: list[str] = []
+    with tempfile.TemporaryDirectory(prefix="brand-data-scope-selftest-") as temporary:
+        repo_root = Path(temporary)
+        run_test_git(repo_root, ["init", "--quiet", "--initial-branch=main"])
+        run_test_git(repo_root, ["config", "user.name", "Brand Data Scope Selftest"])
+        run_test_git(repo_root, ["config", "user.email", "scope-selftest@example.invalid"])
+        (repo_root / "README.md").write_text("scope baseline\n", encoding="utf-8")
+        run_test_git(repo_root, ["add", "README.md"])
+        run_test_git(repo_root, ["commit", "--quiet", "-m", "scope baseline"])
+        baseline = run_test_git(repo_root, ["rev-parse", "HEAD"])
+        run_test_git(repo_root, ["update-ref", SCOPE_BASE_REF, baseline])
+
+        package_path = PACKAGE_RELATIVE_ROOT / "scope-probe.txt"
+        (repo_root / package_path).parent.mkdir(parents=True)
+        (repo_root / package_path).write_text("package 3\n", encoding="utf-8")
+        run_test_git(repo_root, ["add", package_path.as_posix()])
+        run_test_git(repo_root, ["commit", "--quiet", "-m", "package 3 only"])
+        scope_errors: list[str] = []
+        validate_changed_path_scope(current_task_changed_paths(repo_root), scope_errors)
+        if scope_errors:
+            failures.append("SCOPE_PACKAGE_3_ONLY: expected pass")
+
+        external_path = Path("12_expression_service/expression_runtime_adapter_001/scope-probe.txt")
+        (repo_root / external_path).parent.mkdir(parents=True)
+        (repo_root / external_path).write_text("external\n", encoding="utf-8")
+        run_test_git(repo_root, ["add", external_path.as_posix()])
+        run_test_git(repo_root, ["commit", "--quiet", "-m", "mixed package changes"])
+        scope_errors = []
+        validate_changed_path_scope(current_task_changed_paths(repo_root), scope_errors)
+        if not scope_errors:
+            failures.append("SCOPE_PACKAGE_3_MIXED_WITH_EXTERNAL: expected failure")
+
+        run_test_git(repo_root, ["checkout", "--quiet", "-b", "other-successor", baseline])
+        successor_path = Path("14_dify_shell/dify_content_shell_001/scope-probe.txt")
+        (repo_root / successor_path).parent.mkdir(parents=True)
+        (repo_root / successor_path).write_text("package 4\n", encoding="utf-8")
+        run_test_git(repo_root, ["add", successor_path.as_posix()])
+        run_test_git(repo_root, ["commit", "--quiet", "-m", "other successor only"])
+        scope_errors = []
+        validate_changed_path_scope(current_task_changed_paths(repo_root), scope_errors)
+        if scope_errors:
+            failures.append("SCOPE_OTHER_SUCCESSOR_ONLY: expected pass")
+    return failures
 
 
 def validate_file_scope(errors: list[str]) -> None:
@@ -688,13 +795,7 @@ def validate_file_scope(errors: list[str]) -> None:
     if checkers != [Path(__file__).resolve()]:
         errors.append("package must contain exactly one checker entry")
 
-    changed = set()
-    changed |= git_paths(["diff", "--name-only", BASELINE_COMMIT])
-    changed |= git_paths(["diff", "--cached", "--name-only", BASELINE_COMMIT])
-    changed |= git_paths(["ls-files", "--others", "--exclude-standard"])
-    outside = sorted(str(path) for path in changed if not path.is_relative_to(PACKAGE_RELATIVE_ROOT))
-    if outside:
-        errors.append(f"write scope escaped exclusive root: {outside}")
+    validate_changed_path_scope(current_task_changed_paths(), errors)
 
     for source in materialize.SOURCES:
         snapshot_path = PACKAGE_RELATIVE_ROOT / "source_snapshots" / source.snapshot_filename
@@ -803,6 +904,7 @@ def run_selftests(bundle: Bundle) -> list[str]:
             failures.append(
                 f"{case['case_id']}: expected_pass={case['expected_pass']} actual_pass={passed}"
             )
+    failures.extend(run_scope_selftests())
     return failures
 
 
