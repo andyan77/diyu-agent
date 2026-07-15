@@ -1,0 +1,67 @@
+{
+ "schema_version": "g3-gate-calibration-v0.2",
+ "purpose": "第3轮门升级在第2轮已知病灶批（111/120 人审判套路、2 事实编造）上的召回/误伤证明",
+ "corpus": "round2/outputs/first_outputs.g3.v1.jsonl (120条) + round2 requests",
+ "new_detectors": {
+  "boundary_family_concentration": "同产品限度句族固定公式 >2 → HARD（6 族，正则见 g3_expression.BOUNDARY_FAMILY_PATTERNS）",
+  "audio_template_concentration": "同产品声音行话模板 >2 → HARD（2 族）",
+  "batch_family_concentration": "全批同族 >8 → FLAG（连坐会误伤同族偶发合法用者，降 FLAG 交人审）",
+  "cn_number_pair_binding": "中文数量词(值≥2)+量词 成对绑定材料（同形或阿拉伯等值+同量词），仅事实承载表面 → FLAG"
+ },
+ "results": {
+  "machine_hard_items": 46,
+  "machine_hard_by_code": {
+   "E_G3_BOUNDARY_FAMILY_CONCENTRATION": 43,
+   "E_G3_AUDIO_TEMPLATE_CONCENTRATION": 6
+  },
+  "machine_flag_items": 101,
+  "machine_flag_by_code": {
+   "F_G3_AUDIO_TEMPLATE_BATCH_CONCENTRATION": 47,
+   "F_G3_BOUNDARY_FAMILY_BATCH_CONCENTRATION": 62,
+   "F_G3_CN_NUM_UNBOUND_两处": 7,
+   "F_G3_CN_NUM_UNBOUND_两次": 1,
+   "F_G3_CN_NUM_UNBOUND_两组": 1,
+   "F_G3_CN_NUM_UNBOUND_两只": 6,
+   "F_G3_CN_NUM_UNBOUND_两件": 2,
+   "F_G3_CN_NUM_UNBOUND_两条": 8,
+   "F_G3_CN_NUM_UNBOUND_两间": 1,
+   "F_G3_CN_NUM_UNBOUND_两遍": 1,
+   "F_G3_CN_NUM_UNBOUND_四个": 4,
+   "F_G3_CN_NUM_UNBOUND_三格": 1,
+   "F_G3_CN_NUM_UNBOUND_三张": 1,
+   "F_G3_CN_NUM_UNBOUND_两回": 5,
+   "F_G3_GOVERNANCE": 3,
+   "F_G3_CN_NUM_UNBOUND_四道": 1,
+   "F_G3_CN_NUM_UNBOUND_三段": 1,
+   "F_G3_CN_NUM_UNBOUND_三处": 4,
+   "F_G3_CN_NUM_UNBOUND_三条": 3,
+   "F_G3_CN_NUM_UNBOUND_两步": 2,
+   "F_G3_CN_NUM_UNBOUND_六个": 2,
+   "F_G3_CN_NUM_UNBOUND_三层": 1,
+   "F_G3_FINGERPRINT": 3,
+   "F_G3_CN_NUM_UNBOUND_两个": 4,
+   "F_G3_CN_NUM_UNBOUND_二件": 1,
+   "F_G3_CN_NUM_UNBOUND_两人": 1,
+   "F_G3_CROSS_OUTPUT_REUSE": 2,
+   "F_G3_CN_NUM_UNBOUND_两道": 2,
+   "F_G3_CN_NUM_UNBOUND_两层": 1,
+   "F_G3_CN_NUM_UNBOUND_二次": 1,
+   "F_G3_CN_NUM_UNBOUND_两张": 1,
+   "F_G3_CN_NUM_UNBOUND_九个": 1,
+   "F_G3_CN_NUM_UNBOUND_五个": 1,
+   "F_G3_CN_NUM_UNBOUND_六趟": 1,
+   "F_G3_CN_NUM_UNBOUND_十二趟": 1,
+   "F_G3_CN_NUM_UNBOUND_四趟": 1,
+   "F_G3_CN_NUM_UNBOUND_两排": 1,
+   "F_G3_CN_NUM_UNBOUND_三回": 1,
+   "F_G3_CN_NUM_UNBOUND_三个": 1,
+   "F_G3_CN_NUM_UNBOUND_两摞": 1
+  },
+  "known_good_9_wrongly_hard": [],
+  "cn_catches_cp05_005": true,
+  "note_known_limits": [
+   "错配型编造（数值在材料但挂错对象，如 CP15-001 十七件挂到壁架）机器不可判，留人审：作者指令 v2.2 增加标题量词精确映射红线",
+   "结构性骨架整条复用（CP09/10 类）超出正则表达能力，由策展结构多样化+人审兜底"
+  ]
+ }
+}

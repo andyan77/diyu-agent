@@ -148,6 +148,7 @@ EXPRESSION_PLAN_FIELDS = frozenset(
         "spoken_format",
         "audio_signature",
         "boundary_position",
+        "boundary_style",
         "boundary_realization",
         "forbidden_patterns",
     }

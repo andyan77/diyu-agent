@@ -27,6 +27,55 @@ import g3_lexicon  # noqa: E402
 import g3_similarity  # noqa: E402
 
 _DIGIT_RUN_RE = re.compile(r"\d+(?:\.\d+)?")
+# v3：中文数量词绑定（第2轮 CP15-001 以"十七件"绕过阿拉伯数字门的教训）。
+# 数值≥2 的中文数字+量词若在材料中无对应（同形或阿拉伯等值）→ FLAG 进人审。
+_CN_NUM_RE = re.compile(
+    r"[零一二两三四五六七八九十百]{1,4}"
+    r"(?=[件条处次个位张只段道趟遍轮回批组层排步声人款码格页间店家杆摞])")
+_CN_DIGITS = {"零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4,
+              "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+
+
+def _cn_to_int(token: str) -> int | None:
+    """一~九百九十九 的窄解析；解析失败返回 None（不判）。"""
+    if not token or any(c not in _CN_DIGITS and c not in "十百" for c in token):
+        return None
+    value, section, num = 0, 0, 0
+    for ch in token:
+        if ch in _CN_DIGITS:
+            num = _CN_DIGITS[ch]
+        elif ch == "十":
+            section += (num or 1) * 10
+            num = 0
+        elif ch == "百":
+            section += (num or 1) * 100
+            num = 0
+    value = section + num
+    return value if value > 0 else None
+
+
+def cn_number_findings(
+    output: Mapping[str, Any], request: Mapping[str, Any]
+) -> list[str]:
+    """受众表面中文数量词（值≥2）须在材料中有对应（同形中文或阿拉伯等值）。FLAG。"""
+    material = _material_text(request)
+    flag: set[str] = set()
+    for kind, text in contract.audience_texts(_as_raw_view(output)):
+        # 只查事实承载表面；画面/声音是导演性描写（三格/两层），不作数量断言
+        if kind in ("visual_execution", "audio_execution"):
+            continue
+        for m in _CN_NUM_RE.finditer(text):
+            token = m.group(0)
+            value = _cn_to_int(token)
+            if value is None or value < 2:
+                continue
+            measure = text[m.end():m.end() + 1]
+            # 成对绑定：中文同形对 或 阿拉伯等值+同量词 对（裸数值在材料中
+            # 他处出现不算——第2轮 CP05-005"两只"即因材料他处含 2 而漏检）
+            if (token + measure) in material or f"{value}{measure}" in material:
+                continue
+            flag.add(f"CN_NUM_UNBOUND_{token}{measure}")
+    return sorted(flag)
 # v2：合成披露语句内嵌受众正文（第1轮 CP18 病灶的机器化，HARD）
 _DISCLOSURE_IN_BODY_RE = re.compile(
     r"(是|均为|都是|为)合成(的)?|合成的?(门店|人物|顾客|城市|场景|品牌|内容)|"
@@ -196,10 +245,11 @@ def gate_batch(
             hard += [f"E_G3_LABEL_LEAK:{c}" for c in g3_lexicon.scan_label_leak(text)]
             if _DISCLOSURE_IN_BODY_RE.search(text):
                 hard.append("E_G3_DISCLOSURE_IN_BODY")
-        # 2. 数字绑定
+        # 2. 数字绑定（阿拉伯 HARD/FLAG + 中文数量词 FLAG）
         num_hard, num_flag = number_findings(output, request)
         hard += [f"E_G3_{c}" for c in num_hard]
         flag += [f"F_G3_{c}" for c in num_flag]
+        flag += [f"F_G3_{c}" for c in cn_number_findings(output, request)]
         # 3. 组件表面真实消费 + 核心覆盖
         hard += component_usage_findings(output, request)
         hard += core_coverage_findings(output, request)
@@ -222,13 +272,36 @@ def gate_batch(
         )
     # 6. 批级：骨架集中度（FLAG，含 END_GOV_DEFER 升 HARD）+ 近重复
     concentration = g3_expression.concentration_findings(list(outputs))
+    _HARD_CONCENTRATION = {
+        "GOV_DEFER_ENDING": "E_G3_GOV_DEFER_ENDING",
+        # v3：第2轮病灶——同产品限度句族/声音模板家族成套复用（>2/产品）升 HARD
+        "BOUNDARY_FAMILY_CONCENTRATION": "E_G3_BOUNDARY_FAMILY_CONCENTRATION",
+        "AUDIO_TEMPLATE_CONCENTRATION": "E_G3_AUDIO_TEMPLATE_CONCENTRATION",
+    }
+    # 批级坍缩（跨产品同族 >8/批）降 FLAG：连坐会误伤同族中偶发合法用者
+    # （第2轮 9 条良品中 6 条即因他人过量使用被批级扫入），交人审裁决
+    _FLAG_CONCENTRATION = {
+        "BOUNDARY_FAMILY_BATCH_CONCENTRATION":
+            "F_G3_BOUNDARY_FAMILY_BATCH_CONCENTRATION",
+        "AUDIO_TEMPLATE_BATCH_CONCENTRATION":
+            "F_G3_AUDIO_TEMPLATE_BATCH_CONCENTRATION",
+    }
     for finding in concentration:
-        if finding["kind"] == "GOV_DEFER_ENDING":
+        kind = str(finding["kind"])
+        code = _HARD_CONCENTRATION.get(kind)
+        if code:
+            if kind != "GOV_DEFER_ENDING":
+                code = f"{code}:{finding['class']}"
             for row in per_output:
                 if row["request_id"] in finding["request_ids"]:
-                    row["hard_codes"] = sorted(
-                        set(row["hard_codes"]) | {"E_G3_GOV_DEFER_ENDING"})
+                    row["hard_codes"] = sorted(set(row["hard_codes"]) | {code})
                     row["machine_first_fail"] = True
+        flag_code = _FLAG_CONCENTRATION.get(kind)
+        if flag_code:
+            for row in per_output:
+                if row["request_id"] in finding["request_ids"]:
+                    row["flag_codes"] = sorted(
+                        set(row["flag_codes"]) | {f"{flag_code}:{finding['class']}"})
     near_dup_batch = g3_similarity.pairwise_batch_findings(list(outputs))
     frozen_reuse = g3_similarity.frozen_reuse_findings(list(outputs), frozen_texts)
     cross_reuse = cross_output_reuse_findings(list(outputs), request_by_id)
@@ -261,6 +334,7 @@ def gate_batch(
 
 
 __all__ = [
+    "cn_number_findings",
     "component_usage_findings",
     "core_coverage_findings",
     "gate_batch",

@@ -38,8 +38,10 @@ import os  # noqa: E402
 ROUND = int(os.environ.get("PKG1_ROUND", "1"))
 BATCH_ID = f"PKG1R{ROUND}"
 _RD = PKG1 if ROUND == 1 else PKG1 / f"round{ROUND}"
-# 场景基座跨轮冻结不变；round≥2 的请求/输出/审查/结果落在 round 子目录
-SCENARIOS = PKG1 / "inputs/scenarios.g3.v1.jsonl"
+# round1/2 共用场景基座；round≥3 场景经边界措辞再策展（语义不变、风格发牌），
+# 落在本轮 inputs 下成为新基座版本。请求/输出/审查/结果始终落 round 子目录。
+SCENARIOS = (_RD / "inputs/scenarios.g3.v2.jsonl" if ROUND >= 3
+             else PKG1 / "inputs/scenarios.g3.v1.jsonl")
 REQUESTS = _RD / "inputs/requests.g3.v1.jsonl"
 INPUT_FREEZE = _RD / "inputs/input_freeze.v1.yaml"
 AUTHOR_RAW_DIR = _RD / "outputs/author_raw"
@@ -47,8 +49,9 @@ FIRST_OUTPUTS = _RD / "outputs/first_outputs.g3.v1.jsonl"
 GATE_REPORT = _RD / "outputs/machine_gate_report.v1.json"
 BLIND_PACKET = _RD / "review/blind/neutral_packet.v1.jsonl"
 BLIND_MAPPING = _RD / "review/blind/neutral_mapping.v1.jsonl"
-AUTHOR_INSTRUCTION = G3 / ("contract/g3_author_instruction.v2.0.md" if ROUND == 1
-                           else "contract/g3_author_instruction.v2.1.md")
+_INSTRUCTION_BY_ROUND = {1: "v2.0", 2: "v2.1"}
+AUTHOR_INSTRUCTION = G3 / ("contract/g3_author_instruction."
+                           f"{_INSTRUCTION_BY_ROUND.get(ROUND, 'v2.2')}.md")
 REVIEW_DIR = _RD / "review"
 RESULT_DIR = _RD / "result"
 

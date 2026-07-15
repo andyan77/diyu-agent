@@ -35,7 +35,10 @@ BASELINE_COMMIT = "b4c40beb509d81db30b497abf38af1da6dc797da"
 # 执行包1各正式轮证据的冻结提交（历史轮字节完整性锚点；新轮证据提交后在此登记）。
 # 轮次语义：模块/指令随轮演进是修复协议的合法部分；历史轮的复现性由其冻结提交
 # 保证（在该提交处代码+证据同锚），检查器对历史轮做字节完整性、对最新轮做对盘校验。
-PKG1_ROUND_FREEZE_COMMITS = {1: "c2e5b91a6da72fdf74a8b90edd8e494eaf9b31fc"}
+PKG1_ROUND_FREEZE_COMMITS = {
+    1: "c2e5b91a6da72fdf74a8b90edd8e494eaf9b31fc",
+    2: "eba66ac3ede5dc9b4820efc5310a6e084d22671a",
+}
 
 # 核心口径（源指令 §1，不得改变）
 CORE_CALIBER = {"total": 300, "positive": 240, "abnormal": 60,
@@ -313,10 +316,12 @@ def check_pkg1_input_freeze(root: Path) -> tuple[bool, list[str]]:
     # --- 最新轮：冻结清单逐摘要对盘 ---
     latest, latest_dir = rounds[-1]
     text = (latest_dir / "inputs/input_freeze.v1.yaml").read_text(encoding="utf-8")
-    instruction = (root / G3 / ("contract/g3_author_instruction.v2.0.md"
-                                if latest == 1
-                                else "contract/g3_author_instruction.v2.1.md"))
-    checks = [("scenarios_sha256", pkg1 / "inputs/scenarios.g3.v1.jsonl"),
+    instruction_ver = {1: "v2.0", 2: "v2.1"}.get(latest, "v2.2")
+    instruction = (root / G3
+                   / f"contract/g3_author_instruction.{instruction_ver}.md")
+    scenarios = (latest_dir / "inputs/scenarios.g3.v2.jsonl" if latest >= 3
+                 else pkg1 / "inputs/scenarios.g3.v1.jsonl")
+    checks = [("scenarios_sha256", scenarios),
               ("requests_sha256", latest_dir / "inputs/requests.g3.v1.jsonl")]
     if "author_instruction_sha256:" in text:
         checks.append(("author_instruction_sha256", instruction))
@@ -325,12 +330,23 @@ def check_pkg1_input_freeze(root: Path) -> tuple[bool, list[str]]:
         if not (m and rel.is_file() and sha256_file(rel) == m.group(1)):
             ok = False
             details.append(f"DRIFT {key}")
+    # 模块 SHA：仅当最新轮仍"开放"（判定文件未落盘）时强制与冻结一致——
+    # 判定已提交的轮，其复现锚点是冻结提交；此后模块漂移=面向下一轮的合法修复
+    round_closed = (latest_dir / f"result/round{latest}_result.v1.yaml").is_file()
+    module_drift = []
     for m in _re.finditer(r"  (g3_\w+\.py): ([0-9a-f]{64})", text):
         f = (root / "controlled_content_generator_v2_001"
              / "generator_v3_successor_001" / m.group(1))
         if sha256_file(f) != m.group(2):
+            module_drift.append(m.group(1))
+    if module_drift:
+        if round_closed:
+            details.append(f"round{latest} closed; modules evolved toward next"
+                           f" round: {len(module_drift)} drifted (anchored by"
+                           " freeze commit)")
+        else:
             ok = False
-            details.append(f"DRIFT module {m.group(1)}")
+            details += [f"DRIFT module {name}" for name in module_drift]
     # 分片并集 = 总文件（最新轮）
     canonical = {l for l in (latest_dir / "inputs/requests.g3.v1.jsonl"
                              ).read_text(encoding="utf-8").splitlines() if l}

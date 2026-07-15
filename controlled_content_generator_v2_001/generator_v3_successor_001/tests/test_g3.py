@@ -291,6 +291,49 @@ def main() -> int:
           any("E_G3_RUN_ID_DUPLICATE" in c
               for row in report["per_output"] for c in row["hard_codes"]))
 
+    # v3 反向：同产品限度句族固定公式 >2 条 → 机器硬失败（第2轮病灶机器化）
+    def _clone_for_batch(base_out, suffix, k):
+        out_k = copy.deepcopy(base_out)
+        rid = f"{raw['request_id']}-{suffix}{k}"
+        out_k["request_id"] = rid
+        out_k["run_id"] = f"G3RUN-{rid}-01"
+        req_k = copy.deepcopy(request)
+        req_k["request_id"] = rid
+        return out_k, req_k
+
+    trio, trio_reqs = [], []
+    for k in range(3):
+        base = tampered_output(body=[*raw["body"][:-1],
+                                     f"这套针法只在这件样衣上试过，第{k + 1}天再看走向。"])
+        out_k, req_k = _clone_for_batch(base, "BF", k)
+        trio.append(out_k)
+        trio_reqs.append(req_k)
+    report = g3_gates.gate_batch(trio, trio_reqs, frozen)
+    check("neg_gate_boundary_family_concentration",
+          any("E_G3_BOUNDARY_FAMILY_CONCENTRATION:BF_ONLY_TRIED" in c
+              for row in report["per_output"] for c in row["hard_codes"]))
+
+    # v3 反向：同产品声音模板家族 >2 条 → 机器硬失败
+    trio, trio_reqs = [], []
+    for k in range(3):
+        base = tampered_output(
+            audio_execution=[f"第{k + 1}段只留熨斗落下的一声，其余压到底。"])
+        out_k, req_k = _clone_for_batch(base, "AT", k)
+        trio.append(out_k)
+        trio_reqs.append(req_k)
+    report = g3_gates.gate_batch(trio, trio_reqs, frozen)
+    check("neg_gate_audio_template_concentration",
+          any("E_G3_AUDIO_TEMPLATE_CONCENTRATION:AT_SINGLE_MARK" in c
+              for row in report["per_output"] for c in row["hard_codes"]))
+
+    # v3 反向：材料外中文数量词（值≥2）→ FLAG 进人审
+    cn = tampered_output(title="十七件走到壁架，只有一件停在待核筐")
+    cn_flags = g3_gates.cn_number_findings(cn, request)
+    check("neg_gate_cn_num_unbound",
+          any("CN_NUM_UNBOUND_十七" in c for c in cn_flags))
+    clean_flags = g3_gates.cn_number_findings(output, request)
+    check("cn_num_clean_baseline", clean_flags == [])
+
     # 词典回归锚：上一轮 10 条泄漏的代表句必须命中
     for text in ("图片已经获准上线", "没有把它说成完成", "发布由其他岗位批准",
                  "没有给它补上所属人，也没有把状态写进画面"):

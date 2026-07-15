@@ -74,6 +74,37 @@ BOUNDARY_POSITIONS = [
     "VISUAL_CARRIED",        # 限度由画面表面承载，正文只留痕
     "SPOKEN_CARRIED",        # 限度由口播承载（spoken_format 非 EMPTY 时）
 ]
+# v3（第3轮）：限度句"措辞风格"发牌——第2轮四位审查一致发现限度句族跨作者
+# 收敛（根源=策展措辞单一文化），风格随请求发牌并先在策展层落实到边界事实本身。
+BOUNDARY_STYLES = [
+    "BS_NUM_LEDGER",     # 数字/清单对账式：已量三处，第四处空着
+    "BS_SCHEDULE_NEXT",  # 工序排期式：复测排在面料回缩之后（具体工位/日期）
+    "BS_SPATIAL_FRAME",  # 空间取景式：界限=镜头/空间没走到的位置
+    "BS_RECORD_FIELD",   # 记录字段式：表上某一栏空着（以单据/表格承载）
+    "BS_SENSORY_STATE",  # 感官状态式：以当下物理状态陈述界限
+    "BS_QA_THIRDPARTY",  # 他人视角留白式：顾客/同事怎么看没人问过
+]
+
+# 第2轮判死的限度句族固定公式（语义可保留，固定措辞禁成套；per-CP cap=2；
+# 按第2轮 120 条真实文本经验校准，见 evidence/gate_calibration_report.v0.2.json）
+BOUNDARY_FAMILY_PATTERNS: dict[str, str] = {
+    "BF_ONLY_TRIED": (r"只(在|对)[^，。；]{0,16}(上|里)?(试|用|走|看|量|测|放|穿)过"
+                      r"|只(验|测|量|证)(了|过|得了)"),
+    "BF_NOT_YET_VERB": r"还没(有)?[^，。；]{0,14}(试|测|验|看|排|做|问|洗|穿|比|动)",
+    "BF_CANT_TELL": r"(看不出来|看不出|给不出答案|说不上|无从谈起)",
+    "BF_NOT_EQUAL": r"(不代表|不等于|证不了|说明不了)",
+    "BF_THIS_ONLY": r"这(只是|不过是)",
+    "BF_SCOPE_ASIDE": (r"(另算|另论|另说|不掺|不在里面|排在这一?轮之外"
+                       r"|只覆盖|只管这)"),
+}
+# 第2轮声音写法坍缩的两个模板家族（120 条中"记号声/破点"族与"近远双层"族
+# 合计 ≥40 条命中；发明性行话名词族为锚，自然声景描写不会需要它们；per-CP cap=2）
+AUDIO_TEMPLATE_PATTERNS: dict[str, str] = {
+    "AT_SINGLE_MARK": (r"(记号声|记号音|标志声|声音落点|破点|断点)"
+                       r"|唯一[^，。；]{0,8}(一下|一声|一记|一响)"
+                       r"|(只留|只剩|只有)[^，。；]{0,10}(一声|一记|一响|一个)"),
+    "AT_NEAR_FAR": r"近处[\s\S]{0,60}远处|远处[\s\S]{0,60}近处|远近两层|分两层|分成两层",
+}
 # 每产品允许的叙事弧（依据 V1.1 标准产品定义，避免弧型与产品指纹冲突）
 NARRATIVE_ARCS: dict[str, list[str]] = {
     "CP01": ["TASK_ARC", "PROBLEM_FIX_ARC", "SHADOWING_ARC"],
@@ -120,6 +151,7 @@ def assign_plans(
     s_off = _offset(profile_id, batch_id, "spoken", len(SPOKEN_FORMATS))
     au_off = _offset(profile_id, batch_id, "audio", len(AUDIO_SIGNATURES))
     bp_off = _offset(profile_id, batch_id, "boundary", len(BOUNDARY_POSITIONS))
+    bs_off = _offset(profile_id, batch_id, "bstyle", len(BOUNDARY_STYLES))
     plans = []
     for i in range(count):
         opening = OPENING_ARCHETYPES[(o_off + i) % len(OPENING_ARCHETYPES)]
@@ -142,6 +174,7 @@ def assign_plans(
                 "spoken_format": spoken,
                 "audio_signature": AUDIO_SIGNATURES[(au_off + i) % len(AUDIO_SIGNATURES)],
                 "boundary_position": boundary_pos,
+                "boundary_style": BOUNDARY_STYLES[(bs_off + i) % len(BOUNDARY_STYLES)],
                 "boundary_realization": "INTEGRATED_FACT_LIMIT",
                 "forbidden_patterns": [
                     "仍由X决定/确认/批准 式收尾",
@@ -277,6 +310,55 @@ def concentration_findings(
             if sig["ending_class"] == "END_GOV_DEFER":
                 findings.append({"kind": "GOV_DEFER_ENDING", "profile_id": profile_id,
                                  "class": "END_GOV_DEFER", "request_ids": [rid]})
+    # v3：限度句族 / 声音写法模板家族 集中度（第2轮病灶机器化，per-CP cap 同上）
+    findings += _family_concentration(outputs, per_profile_cap)
+    return findings
+
+
+def _audience_prose(out: Mapping[str, Any]) -> str:
+    """限度句族扫描面：标题+正文+口播+CTA+画面（限度可由画面承载）。"""
+    parts = [str(out["title"]), *map(str, out["body"]),
+             *map(str, out["spoken_lines"]), str(out["cta"]),
+             *map(str, out["visual_execution"])]
+    return "\n".join(parts)
+
+
+def _family_concentration(
+    outputs: Sequence[Mapping[str, Any]],
+    per_profile_cap: int = 2,
+    batch_cap: int = 8,
+) -> list[dict[str, Any]]:
+    """限度句族 / 声音模板家族集中度，双层：
+    - 同产品内同族 > per_profile_cap → *_CONCENTRATION（第2轮同产品成套复用）；
+    - 全批同族 > batch_cap → *_BATCH_CONCENTRATION（第2轮声音写法跨产品坍缩：
+      每产品仅 1-2 条被发牌到该签名，但批内 50/120 用同一行话公式）。"""
+    specs = (
+        ("BOUNDARY_FAMILY_CONCENTRATION", BOUNDARY_FAMILY_PATTERNS,
+         _audience_prose),
+        ("AUDIO_TEMPLATE_CONCENTRATION", AUDIO_TEMPLATE_PATTERNS,
+         lambda o: "\n".join(map(str, o["audio_execution"]))),
+    )
+    findings: list[dict[str, Any]] = []
+    by_profile: dict[str, list[Mapping[str, Any]]] = {}
+    for out in outputs:
+        by_profile.setdefault(str(out["profile_id"]), []).append(out)
+    for kind, patterns, extractor in specs:
+        for family in sorted(patterns):
+            pattern = re.compile(patterns[family])
+            batch_hits: list[str] = []
+            for profile_id in sorted(by_profile):
+                rows = by_profile[profile_id]
+                hit_ids = sorted(str(o["request_id"]) for o in rows
+                                 if pattern.search(extractor(o)))
+                batch_hits += hit_ids
+                if len(hit_ids) > per_profile_cap:
+                    findings.append({"kind": kind, "profile_id": profile_id,
+                                     "class": family, "request_ids": hit_ids})
+            if len(batch_hits) > batch_cap:
+                findings.append({"kind": f"{kind.rsplit('_', 1)[0]}"
+                                 "_BATCH_CONCENTRATION",
+                                 "profile_id": "BATCH", "class": family,
+                                 "request_ids": sorted(batch_hits)})
     return findings
 
 
@@ -286,6 +368,9 @@ __all__ = [
     "OPENING_ARCHETYPES",
     "PROFILE_IDS",
     "TITLE_ARCHETYPES",
+    "AUDIO_TEMPLATE_PATTERNS",
+    "BOUNDARY_FAMILY_PATTERNS",
+    "BOUNDARY_STYLES",
     "assign_plans",
     "classify_ending",
     "classify_opening",
