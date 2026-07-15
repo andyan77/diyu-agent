@@ -2,7 +2,7 @@
   "schema_version": "v1.2",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
   "revision": "r3",
-  "candidate_state": "READY_FOR_TARGETED_INDEPENDENT_REREVIEWS",
+  "candidate_state": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
   "success_terminal_when_targeted_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
   "baseline_commit": "95b8b1700b7e96b1d2383465713bef8c36e7f6cb",
   "candidate_before_r2": "143a6caa7ac1ed3571336c3950e249728cbc18f7",
@@ -45,7 +45,7 @@
     "interaction_stages_are_human_readable_guidance_only": true
   },
   "local_evidence": {
-    "status": "PASS_R3_FINAL_IMPLEMENTATION_FREEZE_PREFLIGHT",
+    "status": "PASS_R3_TARGETED_REREVIEWS_RECORDED_PENDING_REMOTE_CHECKS",
     "journey_case_count": 18,
     "transition_count_is_quality_metric": false,
     "user_visible_string_count": 82,
@@ -99,7 +99,7 @@
     }
   ],
   "targeted_rereviews": {
-    "state": "PENDING_TARGETED_INDEPENDENT_REREVIEWS",
+    "state": "COMPLETED_TARGETED_INDEPENDENT_REREVIEWS",
     "required_same_final_candidate": true,
     "novice_experience_and_multi_candidate": {
       "minimum_score": 90,
@@ -109,9 +109,41 @@
       "minimum_score": 90,
       "scope": "generic workflow engine removal, trust boundaries, and necessary regression"
     },
-    "reviews": []
+    "reviews": [
+      {
+        "review_role": "NOVICE_EXPERIENCE_TARGETED_REREVIEW",
+        "path": "reviews/novice_experience/targeted-rereview-r3.json",
+        "sha256": "aa439285afe8a035fe32fc412d373a1cb257e6f5ef0ae27359d92977003d1da4",
+        "reviewer_identity": "codex-independent-novice-experience-reviewer-r3",
+        "reviewer_session": "/root/novice_experience_review",
+        "review_run_id": "NOVICE-R3-64e4291d-20260715T122420Z",
+        "score": 96,
+        "verdict": "PASS",
+        "blocking_findings": []
+      },
+      {
+        "review_role": "LIGHTWEIGHT_ARCHITECTURE_AND_TRUST_TARGETED_REREVIEW",
+        "path": "reviews/architecture_trust/targeted-rereview-r3.json",
+        "sha256": "bae24362244f90c5679ec4bb7763d66b23c3ef9f68b81c310b02b55725786e6d",
+        "reviewer_identity": "codex-independent-lightweight-architecture-trust-reviewer-r3",
+        "reviewer_session": "/root/architecture_trust_review",
+        "review_run_id": "DIYU-PKG4-R3-ARCHTRUST-64e4291d-20260715T122649Z",
+        "score": 95,
+        "verdict": "PASS",
+        "blocking_findings": []
+      }
+    ]
   },
-  "frozen_candidate": null,
+  "frozen_candidate": {
+    "commit": "64e4291d5527fb70824aa5994c012e0af3e1842e",
+    "reviewed_file_sha256": {
+      "conversation_flow.version_neutral.v1.json": "9a31d9199f7e4ed99548308de08f2091c03c2ce84d871f239e4edfa6850a7ece",
+      "state_action_mapping.v1.json": "c4ad73fa5b4f3c1bb22b9931b976e935a813c77ba0e1e2ed4eba0be239943ed1",
+      "journeys.simulated.v1.json": "d353ff6158ca70b13aa12bb31fbd3d7c89f9df1c276845cd08ff2bb2fb9351ee",
+      "check_dify_content_shell.py": "9fcf2247a0c8ea6dcd3bcfcfe4d6770fe5873c49a6251c4fc443cb498dbb0e42"
+    },
+    "unified_sha256": "4807d8bafceb5e0aab66b210f79018eabc69f7729d4aabef0416774fb4fc78fb"
+  },
   "acceptance_review_request": {
     "PKG4-A01": "Verify exactly one version-neutral conversation candidate and one natural-chat entry.",
     "PKG4-A02": "Verify ordinary chat cannot create a plan, request preparation or authoring, or write brand facts.",
