@@ -1,0 +1,146 @@
+{
+  "schema_version": "v1.0",
+  "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
+  "mapping_kind": "THIN_REFERENCE_ONLY",
+  "copies_public_models": false,
+  "contract_ref": "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+  "authority_sources": [
+    {
+      "input_source": "SERVER_CONFIRMED_SCOPE",
+      "classification": "TRUSTED_REFERENCE",
+      "may_unlock_confirmed_prepare_placeholder": true
+    },
+    {
+      "input_source": "DIFY_USER_FIELD",
+      "classification": "UNTRUSTED_HINT",
+      "may_unlock_confirmed_prepare_placeholder": false
+    },
+    {
+      "input_source": "SELF_REPORTED_COMPANY_STORE_OR_ACCOUNT",
+      "classification": "UNTRUSTED_HINT",
+      "may_unlock_confirmed_prepare_placeholder": false
+    },
+    {
+      "input_source": "CONVERSATION_VARIABLE",
+      "classification": "UNTRUSTED_HINT",
+      "may_unlock_confirmed_prepare_placeholder": false
+    }
+  ],
+  "state_mappings": [
+    {
+      "states": [
+        "chat",
+        "chat_model_placeholder"
+      ],
+      "public_action": "NORMAL_CHAT",
+      "owner": "DIFY",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    },
+    {
+      "states": [
+        "inspiration",
+        "clarification"
+      ],
+      "public_action": "FIND_INSPIRATION_OR_CLARIFY",
+      "owner": "DIFY",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    },
+    {
+      "states": [
+        "requirement_summary",
+        "awaiting_confirmation"
+      ],
+      "public_action": "REQUIREMENT_SUMMARY_AND_CONFIRMATION_UI",
+      "owner": "DIFY",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    },
+    {
+      "states": [
+        "prepare_placeholder"
+      ],
+      "public_action": "EXPRESSION_SERVICE_PREPARE_PLACEHOLDER",
+      "owner": "EXPRESSION_SERVICE",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    },
+    {
+      "states": [
+        "candidate_authoring_placeholder",
+        "revision_placeholder"
+      ],
+      "public_action": "MODEL_AUTHOR_OR_REVISE_PLACEHOLDER",
+      "owner": "DIFY_MODEL_NODE",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    },
+    {
+      "states": [
+        "candidate_display",
+        "candidate_selected",
+        "result_status"
+      ],
+      "public_action": "RESULT_DISPLAY_SELECTION_AND_MINIMAL_FEEDBACK",
+      "owner": "DIFY",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    },
+    {
+      "states": [
+        "action_card"
+      ],
+      "public_action": "PLAIN_LANGUAGE_ACTION_CARD",
+      "owner": "DIFY",
+      "creates_light_content_plan": false,
+      "writes_brand_fact": false,
+      "external_call_implemented": false
+    }
+  ],
+  "action_cards": [
+    {
+      "action_type": "COLLECT_FACT",
+      "user_visible_title": "补充事实",
+      "user_visible_reason": "缺少当前有效且获准使用的事实，先补充或确认，再继续准备。",
+      "contains_publishable_candidate": false
+    },
+    {
+      "action_type": "COLLECT_MATERIAL",
+      "user_visible_title": "补充材料",
+      "user_visible_reason": "还没有足够的真实材料，请补拍或补充已获准使用的资料。",
+      "contains_publishable_candidate": false
+    },
+    {
+      "action_type": "REQUEST_AUTHORIZATION",
+      "user_visible_title": "确认使用权限",
+      "user_visible_reason": "当前身份或材料使用范围尚未由服务端确认，暂不能继续。",
+      "contains_publishable_candidate": false
+    },
+    {
+      "action_type": "DEGRADE",
+      "user_visible_title": "先做低风险版本",
+      "user_visible_reason": "现有资料只够整理不含具体承诺的方向提示，不生成可发布正文。",
+      "contains_publishable_candidate": false
+    },
+    {
+      "action_type": "BLOCK",
+      "user_visible_title": "暂时停止",
+      "user_visible_reason": "请求超出当前账号或资料授权范围，不能继续制作。",
+      "contains_publishable_candidate": false
+    }
+  ],
+  "non_ownership_assertions": {
+    "trusted_identity_owned_here": false,
+    "fact_truth_owned_here": false,
+    "authorization_truth_owned_here": false,
+    "light_content_plan_owned_here": false,
+    "internal_product_mapping_copied_here": false
+  }
+}

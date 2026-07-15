@@ -1,0 +1,818 @@
+{
+  "schema_version": "v1.0",
+  "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
+  "candidate": {
+    "kind": "VERSION_NEUTRAL_FLOW_CANDIDATE",
+    "target_dify_version": "UNKNOWN_NOT_VERIFIED",
+    "native_dify_export": false,
+    "importable_claimed": false,
+    "application_count": 1,
+    "release_state": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7"
+  },
+  "public_contract_refs": [
+    "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml#trusted_scope_contract",
+    "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml#intent_and_requirement_contract",
+    "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml#composition_workflow",
+    "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml#delivery_contract",
+    "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml#categories"
+  ],
+  "application": {
+    "application_id": "DIYU_CONTENT_CONVERSATION_SHELL",
+    "entry_state": "chat",
+    "intent_resolution": {
+      "runtime": "CHAT_MODEL_PLACEHOLDER_NOT_CONNECTED",
+      "local_journeys": "EXPLICIT_SIMULATED_INTENT_RESULT_INJECTION",
+      "natural_language_parser_implemented": false,
+      "keyword_classifier_implemented": false,
+      "regex_intent_engine_implemented": false
+    },
+    "minimal_session_markers": {
+      "mode": [
+        "CHAT",
+        "CREATION"
+      ],
+      "requirement_confirmation": [
+        "NOT_CREATED",
+        "DRAFT",
+        "CONFIRMED"
+      ],
+      "selected_candidate_ref": [
+        "UNBOUND",
+        "BOUND"
+      ]
+    },
+    "initial_markers": {
+      "mode": "CHAT",
+      "requirement_confirmation": "NOT_CREATED",
+      "selected_candidate_ref": "UNBOUND",
+      "scope_authority": "UNTRUSTED_HINT"
+    },
+    "identity_policy": {
+      "authority": "SERVER_CONFIRMED_SCOPE_REFERENCE_ONLY",
+      "dify_user_field": "UNTRUSTED_HINT",
+      "self_reported_company_store_or_account": "UNTRUSTED_HINT",
+      "conversation_variables": "UNTRUSTED_HINT",
+      "trusted_scope_model_copied": false,
+      "hint_may_grant_identity_scope_or_permission": false,
+      "trusted_scope_required_before_prepare_placeholder": true
+    },
+    "external_bindings": {
+      "dify_connected": false,
+      "model_connected": false,
+      "expression_service_connected": false,
+      "database_connected": false,
+      "retrieval_connected": false,
+      "cloud_connected": false,
+      "credentials_bound": false,
+      "production_endpoint_present": false,
+      "external_call_count": 0
+    },
+    "user_experience": {
+      "user_visible_opening": "你好，我们可以先随便聊聊。想找内容灵感或准备拍点东西时，也可以直接告诉我。",
+      "user_visible_inspiration_directions": [
+        {
+          "title": "跟拍一个真实现场",
+          "example": "从开店、整理、讲解或收尾里选一段正在发生的工作。"
+        },
+        {
+          "title": "回答一个真实问题",
+          "example": "挑一个顾客最近反复问的问题，把适合和不适合讲明白。"
+        },
+        {
+          "title": "讲清一次选择",
+          "example": "说说团队为什么这样设计、陈列或服务，也保留取舍和限制。"
+        }
+      ],
+      "clarification_policy": {
+        "questions_per_turn_minimum": 1,
+        "questions_per_turn_maximum": 3,
+        "parameters_are_entry_requirement": false,
+        "user_visible_questions": [
+          "这次更想讲哪件真实发生的事？",
+          "主要想给谁看，准备发到哪里？",
+          "手上已经有哪些真实材料？"
+        ]
+      },
+      "user_visible_requirement_summary_fields": [
+        "为哪个内容账号",
+        "讲什么",
+        "给谁看",
+        "发到哪里",
+        "现有真实材料",
+        "还缺什么",
+        "采用什么大方向"
+      ],
+      "user_visible_requirement_summary_template": "我先按普通话整理一下：由你有权使用的内容账号，面向目标观众，在选定平台讲清这件事；目前可用材料和缺口会分别列出，方向也可以继续修改。确认无误后，我们才进入准备。",
+      "user_visible_topic_categories": [
+        {
+          "name": "真实工作与人物",
+          "examples": [
+            "拍今天的一项真实工作",
+            "记录一个岗位怎样完成任务"
+          ]
+        },
+        {
+          "name": "手艺、工艺与专业知识",
+          "examples": [
+            "拍清一项手艺的完整过程",
+            "解释一个版型或面料判断"
+          ]
+        },
+        {
+          "name": "用户问题与理性选择",
+          "examples": [
+            "回答一个真实顾客问题",
+            "说明什么情况不适合购买"
+          ]
+        },
+        {
+          "name": "产品研发与验证",
+          "examples": [
+            "讲一次设计取舍",
+            "比较两个产品版本"
+          ]
+        },
+        {
+          "name": "穿搭与衣橱关系",
+          "examples": [
+            "说明一件衣服在不同场景怎样穿",
+            "组合现有衣橱里的几件商品"
+          ]
+        },
+        {
+          "name": "商品质感与视觉审美",
+          "examples": [
+            "用光线和动作展示材料纹理",
+            "比较前后版本的可见差异"
+          ]
+        },
+        {
+          "name": "门店运营与空间经营",
+          "examples": [
+            "记录商品到店后的处理过程",
+            "讲一次陈列调整或通道变化"
+          ]
+        },
+        {
+          "name": "城市门店与本地生活",
+          "examples": [
+            "记录雨天或换季的门店日常",
+            "拍一段街区早班和本地服务"
+          ]
+        }
+      ]
+    },
+    "candidate_policy": {
+      "minimum_count": 2,
+      "maximum_count": 3,
+      "machine_claims_semantic_difference": false,
+      "near_synonym_rewording_accepted_as_difference": false,
+      "difference_review": "INDEPENDENT_HUMAN_EXPERIENCE_REVIEW",
+      "local_revision_requires_confirmed_requirement": true,
+      "local_revision_requires_selected_candidate_ref": true
+    },
+    "feedback_policy": {
+      "stored_fields": [
+        "selected_candidate_ref",
+        "necessary_modification",
+        "short_reason"
+      ],
+      "persistent_memory_implemented": false,
+      "user_profile_implemented": false,
+      "preference_system_implemented": false
+    },
+    "states": [
+      {
+        "id": "chat",
+        "mode": "CHAT",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "我们可以继续聊；想找灵感或准备内容时，直接说就可以。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "chat_model_placeholder",
+        "mode": "CHAT",
+        "owner": "UNBOUND_CHAT_MODEL_PLACEHOLDER",
+        "user_visible_text": "这是普通聊天位置；本地候选只验证不会误入内容制作，不代表已经接入任意话题回答能力。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "inspiration",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "先选一个顺手的方向，也可以都不选，继续说你的想法。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "clarification",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "我只补问几个关键点，答不上来也可以先留空。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "requirement_summary",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "这是可修改的需求摘要，还没有开始准备内容。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "awaiting_confirmation",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "请确认摘要；修改后需要重新确认。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "prepare_placeholder",
+        "mode": "CREATION",
+        "owner": "EXPRESSION_SERVICE_PLACEHOLDER",
+        "user_visible_text": "需求已经确认，接下来交给轻量内容准备位置；本地没有调用真实服务。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "candidate_authoring_placeholder",
+        "mode": "CREATION",
+        "owner": "UNBOUND_AUTHOR_MODEL_PLACEHOLDER",
+        "user_visible_text": "这里是候选制作位置；本地只接收明确标记的模拟候选。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "candidate_display",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "下面保留两到三个候选位置；请选择一个，或先退回调整需求。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "candidate_selected",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "已经选中一个模拟候选，可以说“换开头”“缩短”“别卖货”或“保留事实”。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "revision_placeholder",
+        "mode": "CREATION",
+        "owner": "UNBOUND_AUTHOR_MODEL_PLACEHOLDER",
+        "user_visible_text": "只调整已选候选的指定部分，并保持已确认事实不变；本地没有调用模型。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "action_card",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "当前条件不足，请按行动卡补料、降级或停止；这里不会填造可发布正文。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      },
+      {
+        "id": "result_status",
+        "mode": "CREATION",
+        "owner": "DIFY_SHELL",
+        "user_visible_text": "已保留为模拟成品候选，仍不可发布，真实闭环等待后续接线验证。",
+        "creates_plan": false,
+        "writes_brand_fact": false
+      }
+    ],
+    "routes": [
+      {
+        "from": "chat",
+        "event": "NORMAL_CHAT",
+        "to": "chat_model_placeholder",
+        "requires": {
+          "mode": "CHAT"
+        },
+        "effects": {}
+      },
+      {
+        "from": "chat_model_placeholder",
+        "event": "CHAT_RESPONSE_COMPLETE",
+        "to": "chat",
+        "requires": {
+          "mode": "CHAT"
+        },
+        "effects": {}
+      },
+      {
+        "from": "chat",
+        "event": "FIND_INSPIRATION",
+        "to": "inspiration",
+        "requires": {
+          "mode": "CHAT"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CREATION"
+          }
+        }
+      },
+      {
+        "from": "inspiration",
+        "event": "CHOOSE_DIRECTION",
+        "to": "requirement_summary",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT"
+          }
+        }
+      },
+      {
+        "from": "chat",
+        "event": "VAGUE_CREATION",
+        "to": "clarification",
+        "requires": {
+          "mode": "CHAT"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CREATION"
+          }
+        }
+      },
+      {
+        "from": "clarification",
+        "event": "PROVIDE_CLARIFICATION",
+        "to": "requirement_summary",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT"
+          }
+        }
+      },
+      {
+        "from": "chat",
+        "event": "CLEAR_CREATION",
+        "to": "requirement_summary",
+        "requires": {
+          "mode": "CHAT"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CREATION",
+            "requirement_confirmation": "DRAFT"
+          }
+        }
+      },
+      {
+        "from": "requirement_summary",
+        "event": "SHOW_SUMMARY",
+        "to": "awaiting_confirmation",
+        "requires": {
+          "requirement_confirmation": "DRAFT"
+        },
+        "effects": {}
+      },
+      {
+        "from": "awaiting_confirmation",
+        "event": "EDIT_REQUIREMENT",
+        "to": "requirement_summary",
+        "requires": {
+          "requirement_confirmation": "DRAFT"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "awaiting_confirmation",
+        "event": "CONFIRM_REQUIREMENT",
+        "to": "prepare_placeholder",
+        "requires": {
+          "requirement_confirmation": "DRAFT",
+          "scope_authority": "SERVER_CONFIRMED"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "CONFIRMED"
+          },
+          "prepare_placeholder_requested": true,
+          "external_call_made": false
+        }
+      },
+      {
+        "from": "awaiting_confirmation",
+        "event": "SCOPE_REJECTED",
+        "to": "action_card",
+        "requires": {
+          "scope_authority": "UNTRUSTED_HINT"
+        },
+        "effects": {
+          "action_card": "REQUEST_AUTHORIZATION"
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_READY",
+        "to": "candidate_authoring_placeholder",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED",
+          "scope_authority": "SERVER_CONFIRMED"
+        },
+        "effects": {
+          "author_placeholder_requested": true,
+          "external_call_made": false
+        }
+      },
+      {
+        "from": "candidate_authoring_placeholder",
+        "event": "AUTHORING_SIMULATED",
+        "to": "candidate_display",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "simulated_candidates_displayed": true,
+          "external_call_made": false
+        }
+      },
+      {
+        "from": "candidate_display",
+        "event": "SELECT_CANDIDATE",
+        "to": "candidate_selected",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "set_markers": {
+            "selected_candidate_ref": "BOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_selected",
+        "event": "REVISE_SELECTED",
+        "to": "revision_placeholder",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED",
+          "selected_candidate_ref": "BOUND"
+        },
+        "effects": {
+          "minimal_feedback_recorded": true,
+          "external_call_made": false
+        }
+      },
+      {
+        "from": "revision_placeholder",
+        "event": "REVISION_SIMULATED",
+        "to": "candidate_selected",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED",
+          "selected_candidate_ref": "BOUND"
+        },
+        "effects": {
+          "external_call_made": false
+        }
+      },
+      {
+        "from": "candidate_selected",
+        "event": "RETURN_TO_CANDIDATES",
+        "to": "candidate_display",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED",
+          "selected_candidate_ref": "BOUND"
+        },
+        "effects": {
+          "set_markers": {
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_selected",
+        "event": "ACCEPT_SELECTED",
+        "to": "result_status",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED",
+          "selected_candidate_ref": "BOUND"
+        },
+        "effects": {
+          "minimal_feedback_recorded": true,
+          "publish_allowed": false
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_MISSING_FACT",
+        "to": "action_card",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "action_card": "COLLECT_FACT"
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_MISSING_MATERIAL",
+        "to": "action_card",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "action_card": "COLLECT_MATERIAL"
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_MISSING_AUTHORIZATION",
+        "to": "action_card",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "action_card": "REQUEST_AUTHORIZATION"
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_OUT_OF_SCOPE",
+        "to": "action_card",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "action_card": "BLOCK"
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_DEGRADE",
+        "to": "action_card",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "action_card": "DEGRADE"
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "PREPARE_BLOCK",
+        "to": "action_card",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "action_card": "BLOCK"
+        }
+      },
+      {
+        "from": "action_card",
+        "event": "RETURN_TO_SUMMARY",
+        "to": "requirement_summary",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_display",
+        "event": "CHANGE_REQUIREMENT",
+        "to": "requirement_summary",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_selected",
+        "event": "CHANGE_REQUIREMENT",
+        "to": "requirement_summary",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "result_status",
+        "event": "CHANGE_REQUIREMENT",
+        "to": "requirement_summary",
+        "requires": {
+          "requirement_confirmation": "CONFIRMED"
+        },
+        "effects": {
+          "set_markers": {
+            "requirement_confirmation": "DRAFT",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "inspiration",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "clarification",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "requirement_summary",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "awaiting_confirmation",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "prepare_placeholder",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_authoring_placeholder",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_display",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "candidate_selected",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "revision_placeholder",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "action_card",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      },
+      {
+        "from": "result_status",
+        "event": "EXIT_CREATION",
+        "to": "chat",
+        "requires": {
+          "mode": "CREATION"
+        },
+        "effects": {
+          "set_markers": {
+            "mode": "CHAT",
+            "requirement_confirmation": "NOT_CREATED",
+            "selected_candidate_ref": "UNBOUND"
+          }
+        }
+      }
+    ],
+    "readiness": {
+      "candidatepack_ready": false,
+      "KE_ready": false,
+      "RAG_ready": false,
+      "DIFY_ready": false,
+      "production_servable": false,
+      "generation_eligible": false,
+      "generation_allowed": false,
+      "generator_qualified": false,
+      "retrieval_ready": false,
+      "runtime_ready": false,
+      "release_ready": false,
+      "production_ready": false
+    }
+  }
+}

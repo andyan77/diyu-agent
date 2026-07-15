@@ -1,0 +1,675 @@
+{
+  "schema_version": "v1.0",
+  "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
+  "simulation_boundary": {
+    "simulation_only": true,
+    "intent_results_are_injected": true,
+    "natural_language_understanding_claimed": false,
+    "chat_quality_claimed": false,
+    "content_quality_claimed": false,
+    "dify_import_or_runtime_claimed": false,
+    "external_call_count": 0,
+    "publish_allowed": false
+  },
+  "acceptance_coverage": [
+    "PKG4-A01",
+    "PKG4-A02",
+    "PKG4-A03",
+    "PKG4-A04",
+    "PKG4-A05",
+    "PKG4-A06",
+    "PKG4-A07",
+    "PKG4-A08",
+    "PKG4-A09",
+    "PKG4-A10",
+    "PKG4-A11",
+    "PKG4-A12"
+  ],
+  "candidate_sets": {
+    "two_candidates": {
+      "human_difference_review_required": true,
+      "machine_difference_score": null,
+      "candidates": [
+        {
+          "candidate_ref": "candidate://simulated/two/1",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向一｜先看现场（模拟占位）",
+            "body": "从一段真实工作现场开始，再补充背景和限制；正文等待后续模型与事实服务接线。"
+          }
+        },
+        {
+          "candidate_ref": "candidate://simulated/two/2",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向二｜先讲问题（模拟占位）",
+            "body": "先提出观众真正关心的问题，再用已核实材料回答；正文等待后续模型与事实服务接线。"
+          }
+        }
+      ]
+    },
+    "three_candidates": {
+      "human_difference_review_required": true,
+      "machine_difference_score": null,
+      "candidates": [
+        {
+          "candidate_ref": "candidate://simulated/three/1",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向一｜现场顺拍（模拟占位）",
+            "body": "按真实动作发生的顺序展开，保留环境和过程；这里没有生成可发布正文。"
+          }
+        },
+        {
+          "candidate_ref": "candidate://simulated/three/2",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向二｜问题拆解（模拟占位）",
+            "body": "从一个具体疑问切入，依次说明判断和适用边界；这里没有生成可发布正文。"
+          }
+        },
+        {
+          "candidate_ref": "candidate://simulated/three/3",
+          "simulation_only": true,
+          "publish_allowed": false,
+          "user_visible_surfaces": {
+            "title": "方向三｜选择复盘（模拟占位）",
+            "body": "先交代一次取舍，再展示依据和仍然存在的限制；这里没有生成可发布正文。"
+          }
+        }
+      ]
+    }
+  },
+  "journey_groups": [
+    {
+      "group_id": "NORMAL_CHAT",
+      "coverage": [
+        "PKG4-A02"
+      ],
+      "common_initial_markers": {
+        "scope_authority": "UNTRUSTED_HINT"
+      },
+      "common_steps": [],
+      "variants": [
+        {
+          "case_id": "CHAT-TWO-TURNS",
+          "user_visible_case_label": "两轮普通聊天",
+          "steps": [
+            {
+              "simulated_intent_result": "NORMAL_CHAT",
+              "expected_state": "chat_model_placeholder",
+              "user_visible_output": "我们继续聊这件事；当前不会创建内容计划。"
+            },
+            {
+              "simulated_intent_result": "CHAT_RESPONSE_COMPLETE",
+              "expected_state": "chat",
+              "user_visible_output": "还想从哪个角度接着聊？"
+            },
+            {
+              "simulated_intent_result": "NORMAL_CHAT",
+              "expected_state": "chat_model_placeholder",
+              "user_visible_output": "这是第二轮普通聊天，仍不会误入内容制作。"
+            },
+            {
+              "simulated_intent_result": "CHAT_RESPONSE_COMPLETE",
+              "expected_state": "chat",
+              "user_visible_output": "可以继续聊；想做内容时再告诉我。"
+            }
+          ],
+          "expected_effects": {
+            "plan_created": false,
+            "prepare_placeholder_requested": false,
+            "author_placeholder_requested": false,
+            "brand_fact_written": false,
+            "external_call_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "CREATION_ENTRY",
+      "coverage": [
+        "PKG4-A03"
+      ],
+      "common_initial_markers": {
+        "scope_authority": "SERVER_CONFIRMED"
+      },
+      "common_steps": [],
+      "variants": [
+        {
+          "case_id": "ENTRY-INSPIRATION",
+          "user_visible_case_label": "无方向时找灵感并退出",
+          "steps": [
+            {
+              "simulated_intent_result": "FIND_INSPIRATION",
+              "expected_state": "inspiration",
+              "expected_direction_count": 3,
+              "user_visible_output": "给你三个不同方向：跟拍现场、回答问题、讲清一次选择。"
+            },
+            {
+              "simulated_intent_result": "CHOOSE_DIRECTION",
+              "expected_state": "requirement_summary",
+              "user_visible_output": "已把你选的方向整理进可修改摘要。"
+            },
+            {
+              "simulated_intent_result": "SHOW_SUMMARY",
+              "expected_state": "awaiting_confirmation",
+              "user_visible_output": "请先确认摘要；现在还没有开始准备内容。"
+            },
+            {
+              "simulated_intent_result": "EXIT_CREATION",
+              "expected_state": "chat",
+              "user_visible_output": "好的，先不做内容，我们继续聊天。"
+            }
+          ],
+          "expected_effects": {
+            "plan_created": false,
+            "brand_fact_written": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "ENTRY-VAGUE",
+          "user_visible_case_label": "模糊想法只补问关键问题",
+          "steps": [
+            {
+              "simulated_intent_result": "VAGUE_CREATION",
+              "expected_state": "clarification",
+              "expected_question_count": 3,
+              "user_visible_output": "我只问三点：想讲什么、给谁看、手上有什么真实材料？"
+            },
+            {
+              "simulated_intent_result": "PROVIDE_CLARIFICATION",
+              "expected_state": "requirement_summary",
+              "user_visible_output": "信息够用了，我先整理成普通中文摘要。"
+            },
+            {
+              "simulated_intent_result": "SHOW_SUMMARY",
+              "expected_state": "awaiting_confirmation",
+              "user_visible_output": "摘要可以继续修改，确认后才进入准备。"
+            }
+          ],
+          "expected_effects": {
+            "plan_created": false,
+            "brand_fact_written": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "ENTRY-CLEAR",
+          "user_visible_case_label": "明确需求直接整理摘要",
+          "steps": [
+            {
+              "simulated_intent_result": "CLEAR_CREATION",
+              "expected_state": "requirement_summary",
+              "user_visible_output": "需求已经比较明确，我直接整理成可修改摘要。"
+            },
+            {
+              "simulated_intent_result": "SHOW_SUMMARY",
+              "expected_state": "awaiting_confirmation",
+              "user_visible_output": "请确认账号、主题、观众、平台、材料、缺口和方向。"
+            }
+          ],
+          "expected_effects": {
+            "plan_created": false,
+            "brand_fact_written": false,
+            "external_call_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "CONFIRMATION_GUARD",
+      "coverage": [
+        "PKG4-A04"
+      ],
+      "common_initial_markers": {
+        "scope_authority": "SERVER_CONFIRMED"
+      },
+      "common_steps": [
+        {
+          "simulated_intent_result": "CLEAR_CREATION",
+          "expected_state": "requirement_summary",
+          "user_visible_output": "已形成可修改摘要。"
+        },
+        {
+          "simulated_intent_result": "SHOW_SUMMARY",
+          "expected_state": "awaiting_confirmation",
+          "user_visible_output": "等待你的确认。"
+        }
+      ],
+      "variants": [
+        {
+          "case_id": "UNCONFIRMED-BLOCKS-PREPARE",
+          "user_visible_case_label": "未确认不能准备",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_READY",
+              "expect_rejected": true,
+              "expected_state": "awaiting_confirmation",
+              "user_visible_output": "摘要还没有确认，不能进入准备。"
+            }
+          ],
+          "expected_effects": {
+            "prepare_placeholder_requested": false,
+            "author_placeholder_requested": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "EDIT-REQUIRES-RECONFIRM",
+          "user_visible_case_label": "修改后必须重新确认",
+          "steps": [
+            {
+              "simulated_intent_result": "EDIT_REQUIREMENT",
+              "expected_state": "requirement_summary",
+              "user_visible_output": "摘要已修改，需要重新确认。"
+            },
+            {
+              "simulated_intent_result": "PREPARE_READY",
+              "expect_rejected": true,
+              "expected_state": "requirement_summary",
+              "user_visible_output": "修改后的摘要尚未重新确认，不能进入准备。"
+            }
+          ],
+          "expected_effects": {
+            "prepare_placeholder_requested": false,
+            "author_placeholder_requested": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "CANCEL-AFTER-CONFIRM",
+          "user_visible_case_label": "确认后仍可取消制作",
+          "steps": [
+            {
+              "simulated_intent_result": "CONFIRM_REQUIREMENT",
+              "expected_state": "prepare_placeholder",
+              "user_visible_output": "需求已确认，进入未接线的准备位置。"
+            },
+            {
+              "simulated_intent_result": "EXIT_CREATION",
+              "expected_state": "chat",
+              "user_visible_output": "好的，先不做内容，我们继续聊天。"
+            }
+          ],
+          "expected_effects": {
+            "prepare_placeholder_requested": true,
+            "author_placeholder_requested": false,
+            "external_call_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "IDENTITY_AND_SCOPE",
+      "coverage": [
+        "PKG4-A05",
+        "PKG4-A08"
+      ],
+      "common_initial_markers": {},
+      "common_steps": [
+        {
+          "simulated_intent_result": "CLEAR_CREATION",
+          "expected_state": "requirement_summary",
+          "user_visible_output": "先整理需求，不把输入中的账号说法当成权限。"
+        },
+        {
+          "simulated_intent_result": "SHOW_SUMMARY",
+          "expected_state": "awaiting_confirmation",
+          "user_visible_output": "等待确认，同时核对服务端范围。"
+        }
+      ],
+      "variants": [
+        {
+          "case_id": "SERVER-CONFIRMED-ACCOUNT",
+          "user_visible_case_label": "服务端确认账号可继续",
+          "initial_marker_overrides": {
+            "scope_authority": "SERVER_CONFIRMED"
+          },
+          "steps": [
+            {
+              "simulated_intent_result": "CONFIRM_REQUIREMENT",
+              "expected_state": "prepare_placeholder",
+              "user_visible_output": "账号范围已由服务端确认，可以进入准备位置。"
+            }
+          ],
+          "expected_effects": {
+            "prepare_placeholder_requested": true,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "SELF-REPORTED-ACCOUNT-REJECTED",
+          "user_visible_case_label": "用户自报账号不能授权",
+          "initial_marker_overrides": {
+            "scope_authority": "UNTRUSTED_HINT"
+          },
+          "steps": [
+            {
+              "simulated_intent_result": "CONFIRM_REQUIREMENT",
+              "expect_rejected": true,
+              "expected_state": "awaiting_confirmation",
+              "user_visible_output": "自报账号只是线索，不能据此进入准备。"
+            },
+            {
+              "simulated_intent_result": "SCOPE_REJECTED",
+              "expected_state": "action_card",
+              "expected_action_card": "REQUEST_AUTHORIZATION",
+              "user_visible_output": "请先完成服务端身份和账号范围确认。"
+            }
+          ],
+          "expected_effects": {
+            "prepare_placeholder_requested": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "DIFY-USER-REJECTED",
+          "user_visible_case_label": "对话平台用户值不能授权",
+          "initial_marker_overrides": {
+            "scope_authority": "UNTRUSTED_HINT"
+          },
+          "steps": [
+            {
+              "simulated_intent_result": "CONFIRM_REQUIREMENT",
+              "expect_rejected": true,
+              "expected_state": "awaiting_confirmation",
+              "user_visible_output": "对话平台传来的用户值不能替代服务端登录确认。"
+            },
+            {
+              "simulated_intent_result": "SCOPE_REJECTED",
+              "expected_state": "action_card",
+              "expected_action_card": "REQUEST_AUTHORIZATION",
+              "user_visible_output": "当前身份范围未确认，暂不能继续。"
+            }
+          ],
+          "expected_effects": {
+            "prepare_placeholder_requested": false,
+            "external_call_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "CANDIDATE_JOURNEY",
+      "coverage": [
+        "PKG4-A07",
+        "PKG4-A10",
+        "PKG4-A11"
+      ],
+      "common_initial_markers": {
+        "scope_authority": "SERVER_CONFIRMED"
+      },
+      "common_steps": [
+        {
+          "simulated_intent_result": "CLEAR_CREATION",
+          "expected_state": "requirement_summary",
+          "user_visible_output": "已形成可修改摘要。"
+        },
+        {
+          "simulated_intent_result": "SHOW_SUMMARY",
+          "expected_state": "awaiting_confirmation",
+          "user_visible_output": "请确认摘要。"
+        },
+        {
+          "simulated_intent_result": "CONFIRM_REQUIREMENT",
+          "expected_state": "prepare_placeholder",
+          "user_visible_output": "摘要已确认。"
+        },
+        {
+          "simulated_intent_result": "PREPARE_READY",
+          "expected_state": "candidate_authoring_placeholder",
+          "user_visible_output": "模拟准备结果允许进入候选制作占位。"
+        }
+      ],
+      "variants": [
+        {
+          "case_id": "TWO-CANDIDATES-SELECT-REVISE-RETURN",
+          "user_visible_case_label": "两个候选、选择、局部修改与退回",
+          "optional_expression_asset_refs": [],
+          "steps": [
+            {
+              "simulated_intent_result": "AUTHORING_SIMULATED",
+              "expected_state": "candidate_display",
+              "candidate_set_ref": "two_candidates",
+              "expected_candidate_count": 2,
+              "user_visible_output": "展示两个明确标记为模拟占位的候选方向。"
+            },
+            {
+              "simulated_intent_result": "SELECT_CANDIDATE",
+              "expected_state": "candidate_selected",
+              "selected_candidate_ref": "candidate://simulated/two/1",
+              "user_visible_output": "已选中第一个模拟候选。"
+            },
+            {
+              "simulated_intent_result": "REVISE_SELECTED",
+              "expected_state": "revision_placeholder",
+              "bound_candidate_ref": "candidate://simulated/two/1",
+              "necessary_modification": "换开头",
+              "short_reason": "先让现场更快出现",
+              "user_visible_output": "只修改已选候选的开头，并保留已确认事实。"
+            },
+            {
+              "simulated_intent_result": "REVISION_SIMULATED",
+              "expected_state": "candidate_selected",
+              "bound_candidate_ref": "candidate://simulated/two/1",
+              "user_visible_output": "模拟修改已返回，仍绑定原候选和原需求。"
+            },
+            {
+              "simulated_intent_result": "RETURN_TO_CANDIDATES",
+              "expected_state": "candidate_display",
+              "user_visible_output": "已退回候选列表，可以重新选择。"
+            }
+          ],
+          "expected_effects": {
+            "candidate_count": 2,
+            "minimal_feedback_fields": [
+              "selected_candidate_ref",
+              "necessary_modification",
+              "short_reason"
+            ],
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "THREE-CANDIDATES-SELECT-ACCEPT",
+          "user_visible_case_label": "三个候选、选择与模拟成品状态",
+          "optional_expression_asset_refs": [],
+          "steps": [
+            {
+              "simulated_intent_result": "AUTHORING_SIMULATED",
+              "expected_state": "candidate_display",
+              "candidate_set_ref": "three_candidates",
+              "expected_candidate_count": 3,
+              "user_visible_output": "展示三个模拟方向，差异质量留给独立体验审查。"
+            },
+            {
+              "simulated_intent_result": "SELECT_CANDIDATE",
+              "expected_state": "candidate_selected",
+              "selected_candidate_ref": "candidate://simulated/three/3",
+              "user_visible_output": "已选中第三个模拟候选。"
+            },
+            {
+              "simulated_intent_result": "ACCEPT_SELECTED",
+              "expected_state": "result_status",
+              "bound_candidate_ref": "candidate://simulated/three/3",
+              "short_reason": "更适合展示取舍",
+              "user_visible_output": "已保留为不可发布的模拟成品候选。"
+            }
+          ],
+          "expected_effects": {
+            "candidate_count": 3,
+            "publish_allowed": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "CHANGE-REQUIREMENT-RECONFIRM",
+          "user_visible_case_label": "选中后改需求并重新确认",
+          "optional_expression_asset_refs": [],
+          "steps": [
+            {
+              "simulated_intent_result": "AUTHORING_SIMULATED",
+              "expected_state": "candidate_display",
+              "candidate_set_ref": "two_candidates",
+              "expected_candidate_count": 2,
+              "user_visible_output": "展示两个模拟候选。"
+            },
+            {
+              "simulated_intent_result": "SELECT_CANDIDATE",
+              "expected_state": "candidate_selected",
+              "selected_candidate_ref": "candidate://simulated/two/2",
+              "user_visible_output": "已选中第二个模拟候选。"
+            },
+            {
+              "simulated_intent_result": "CHANGE_REQUIREMENT",
+              "expected_state": "requirement_summary",
+              "user_visible_output": "需求已改变，原确认和选择都已失效。"
+            },
+            {
+              "simulated_intent_result": "PREPARE_READY",
+              "expect_rejected": true,
+              "expected_state": "requirement_summary",
+              "user_visible_output": "新需求尚未重新确认，不能继续准备或修改候选。"
+            }
+          ],
+          "expected_effects": {
+            "requirement_confirmation": "DRAFT",
+            "selected_candidate_ref": "UNBOUND",
+            "external_call_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "ACTION_CARDS",
+      "coverage": [
+        "PKG4-A08",
+        "PKG4-A09"
+      ],
+      "common_initial_markers": {
+        "scope_authority": "SERVER_CONFIRMED"
+      },
+      "common_steps": [
+        {
+          "simulated_intent_result": "CLEAR_CREATION",
+          "expected_state": "requirement_summary",
+          "user_visible_output": "已形成可修改摘要。"
+        },
+        {
+          "simulated_intent_result": "SHOW_SUMMARY",
+          "expected_state": "awaiting_confirmation",
+          "user_visible_output": "请确认摘要。"
+        },
+        {
+          "simulated_intent_result": "CONFIRM_REQUIREMENT",
+          "expected_state": "prepare_placeholder",
+          "user_visible_output": "需求已确认，等待模拟准备结果。"
+        }
+      ],
+      "variants": [
+        {
+          "case_id": "MISSING-FACT",
+          "user_visible_case_label": "缺事实时补料",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_MISSING_FACT",
+              "expected_state": "action_card",
+              "expected_action_card": "COLLECT_FACT",
+              "user_visible_output": "缺少当前有效的事实，请补充或确认后再继续。"
+            }
+          ],
+          "expected_effects": {
+            "publishable_candidate_created": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "MISSING-MATERIAL",
+          "user_visible_case_label": "缺素材时补拍",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_MISSING_MATERIAL",
+              "expected_state": "action_card",
+              "expected_action_card": "COLLECT_MATERIAL",
+              "user_visible_output": "还缺真实素材，请补拍或补充已获准使用的资料。"
+            }
+          ],
+          "expected_effects": {
+            "publishable_candidate_created": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "MISSING-AUTHORIZATION",
+          "user_visible_case_label": "缺授权时请求确认",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_MISSING_AUTHORIZATION",
+              "expected_state": "action_card",
+              "expected_action_card": "REQUEST_AUTHORIZATION",
+              "user_visible_output": "材料使用范围尚未确认，暂不能继续。"
+            }
+          ],
+          "expected_effects": {
+            "publishable_candidate_created": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "OUT-OF-SCOPE",
+          "user_visible_case_label": "跨范围时阻止",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_OUT_OF_SCOPE",
+              "expected_state": "action_card",
+              "expected_action_card": "BLOCK",
+              "user_visible_output": "请求超出当前账号范围，不能继续制作。"
+            }
+          ],
+          "expected_effects": {
+            "publishable_candidate_created": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "DEGRADE-SAFELY",
+          "user_visible_case_label": "资料不足时降级",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_DEGRADE",
+              "expected_state": "action_card",
+              "expected_action_card": "DEGRADE",
+              "user_visible_output": "现有资料只够保留方向提示，不生成可发布正文。"
+            }
+          ],
+          "expected_effects": {
+            "publishable_candidate_created": false,
+            "external_call_count": 0
+          }
+        },
+        {
+          "case_id": "BLOCK-UNSAFE-REQUEST",
+          "user_visible_case_label": "无法诚实完成时停止",
+          "steps": [
+            {
+              "simulated_intent_result": "PREPARE_BLOCK",
+              "expected_state": "action_card",
+              "expected_action_card": "BLOCK",
+              "user_visible_output": "缺少必要事实或授权，不能用猜测补齐。"
+            }
+          ],
+          "expected_effects": {
+            "publishable_candidate_created": false,
+            "external_call_count": 0
+          }
+        }
+      ]
+    }
+  ]
+}

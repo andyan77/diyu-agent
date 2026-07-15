@@ -1,0 +1,110 @@
+{
+  "schema_version": "v1.0",
+  "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
+  "candidate_state": "READY_FOR_TWO_INDEPENDENT_REVIEWS",
+  "success_terminal_when_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
+  "baseline_commit": "95b8b1700b7e96b1d2383465713bef8c36e7f6cb",
+  "branch": "agent/diyu-dify-conversation-shell-001",
+  "worktree": "/home/diyu/worktrees/diyu-dify-conversation-shell-001",
+  "target_dify_version": "UNKNOWN_NOT_VERIFIED",
+  "version_evidence": "No trusted target Dify version or native export evidence was found in the authorized local repository and configuration search.",
+  "candidate_artifacts": {
+    "flow": "14_dify_shell/dify_content_shell_001/conversation_flow.version_neutral.v1.json",
+    "mapping": "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json",
+    "journeys": "14_dify_shell/dify_content_shell_001/journeys.simulated.v1.json",
+    "checker": "14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+    "native_export": false,
+    "importability_claimed": false
+  },
+  "local_evidence": {
+    "journey_count": 19,
+    "transition_count": 39,
+    "user_visible_string_count": 146,
+    "external_call_count": 0,
+    "ordinary_check": "PASS",
+    "selftest": "PASS",
+    "optimized_check_exit_code": 2,
+    "optimized_selftest_exit_code": 2,
+    "ruff": "PASS",
+    "mypy_strict": "PASS"
+  },
+  "review_requests": [
+    {
+      "review_id": "NOVICE_EXPERIENCE_AND_MULTI_CANDIDATE_REVIEW",
+      "reviewer_must_be_independent": true,
+      "minimum_score": 90,
+      "hard_blocker_scope": [
+        "PKG4-A01",
+        "PKG4-A02",
+        "PKG4-A03",
+        "PKG4-A04",
+        "PKG4-A07",
+        "PKG4-A08",
+        "PKG4-A09",
+        "PKG4-A10",
+        "PKG4-A11"
+      ],
+      "experience_questions": [
+        "Can a novice begin with natural chat rather than a parameter form?",
+        "Are inspiration, clarification, summary, confirmation, candidate choice, revision, return, and action cards understandable?",
+        "Do the two-to-three simulated candidate positions feel structurally distinguishable without a machine-made quality claim?"
+      ]
+    },
+    {
+      "review_id": "ARCHITECTURE_AND_TRUST_BOUNDARY_REVIEW",
+      "reviewer_must_be_independent": true,
+      "minimum_score": 90,
+      "hard_blocker_scope": [
+        "PKG4-A01",
+        "PKG4-A04",
+        "PKG4-A05",
+        "PKG4-A06",
+        "PKG4-A08",
+        "PKG4-A09",
+        "PKG4-A11",
+        "PKG4-A12"
+      ],
+      "architecture_questions": [
+        "Does the shell reference rather than copy identity, fact, authorization, topic-product, and light-plan models?",
+        "Can any Dify user value, self-report, or conversation variable widen trusted scope?",
+        "Are external runtime claims, readiness, write scope, and the 300/120/86 guards honest?"
+      ]
+    }
+  ],
+  "acceptance_review_request": {
+    "PKG4-A01": "Verify exactly one version-neutral conversation flow and one entry.",
+    "PKG4-A02": "Verify ordinary chat cannot create a plan, call prepare/author placeholders, or write brand facts.",
+    "PKG4-A03": "Verify inspiration, vague, clear, and exit journeys remain novice-friendly and ask no more than three questions.",
+    "PKG4-A04": "Verify prepare/author paths are unreachable before confirmation and after requirement edits until reconfirmed.",
+    "PKG4-A05": "Verify only a server-confirmed scope reference unlocks the confirmed placeholder path.",
+    "PKG4-A06": "Verify public models and the internal twenty-product mapping are not copied or re-owned.",
+    "PKG4-A07": "Verify two-to-three candidates, selected-reference binding, local revision, return, and human-only difference judgment.",
+    "PKG4-A08": "Verify missing facts, materials, authorization, and scope produce honest collect, degrade, or block cards without fake body text.",
+    "PKG4-A09": "Verify recursive user-visible output does not expose internal identifiers, fields, errors, secrets, or service URLs.",
+    "PKG4-A10": "Verify only selected reference, necessary modification, and short reason are retained as feedback.",
+    "PKG4-A11": "Re-run the unique checker, selftest, and reverse journeys from the fixed candidate snapshot.",
+    "PKG4-A12": "Verify no real Dify/model/API/database/retrieval/cloud calls, all readiness false, allowed write scope only, and 300/120/86 unharmed."
+  },
+  "core_number_impact": {
+    "target_300_changed_or_harmed": false,
+    "frozen_reference_120_changed_or_harmed": false,
+    "historical_component_inventory_86_changed_or_harmed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "independent_reviews": "PENDING",
+  "remote_checks": "NOT_RUN_BEFORE_PUSH",
+  "merge_authorized": false
+}
