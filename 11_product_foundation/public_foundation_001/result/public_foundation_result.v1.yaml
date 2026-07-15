@@ -2,7 +2,7 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 2638602d33c2f7ef8207912e8ce246e49daaf81c4d5796251956842d0a037282
+  candidate_snapshot_digest: 6b1d21a94bf868485551849c5edb6f2aabbc4049c7f5c678678d4c567f0550c4
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
@@ -77,6 +77,28 @@ public_foundation_result:
       - TF-05-CASE-DELETION
       - TF-05-CIRCULAR-CHECKER-PIN
     disposition: REMEDIATED_WITHIN_AUTHORIZED_FOUNDATION_SURFACE_PENDING_REREVIEW
+  - attempt: 4
+    reviewed_commit: 50fc5714f44490907fa4e4e6ecce0e30b8eea641
+    reviewed_snapshot_digest: 2638602d33c2f7ef8207912e8ce246e49daaf81c4d5796251956842d0a037282
+    architecture_review:
+      reviewer_agent_id: 019f6390-2cde-7101-8338-1319280b9f5e
+      verdict: FAIL
+      score: 84
+      blocker_ids:
+      - ARCH-PLAN-CLOSURE-001
+      nonblocking_ids:
+      - ARCH-OWNER-NAMING-001
+    trust_fact_safety_review:
+      reviewer_agent_id: 019f6397-c068-7833-a535-fcd391baec3c
+      verdict: FAIL
+      score: 72
+      blocker_ids:
+      - TF-PLAN-REF-001
+      - TF-DISCLOSURE-002
+      - TF-PROVENANCE-003
+      nonblocking_ids:
+      - TF-AUDIT-METADATA-004
+    disposition: REMEDIATED_WITHIN_AUTHORIZED_FOUNDATION_SURFACE_PENDING_REREVIEW
   delivery_counts:
     simulated_tenant_count: 1
     simulated_login_principal_count: 1
@@ -107,7 +129,7 @@ public_foundation_result:
     - E_P4_WRITE_SURFACE
     predecessor_checker: ci/checkers/check_gate1_v1_1_current.py
     predecessor_as_built_sha256: 1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8
-    successor_checker_sha256: d3e68ed5d20cc49d093c3fef06612d9d79b7a7cc81e18ad77a224bcb8ebdd828
+    successor_checker_sha256: 5b59d2ab6149d35b7126604b65630ee32bb99e77f55b4d60d2649bad1606d1a3
     repair_shape: EXACT_FOUNDATION_SURFACE_DELEGATION_WITH_FROZEN_PREDECESSOR_IDENTITY
     frozen_business_asset_mutation_count: 0
     unrelated_historical_tool_drift_still_rejected: true

@@ -442,9 +442,31 @@ public_foundation_contract:
           precise_fact_refs: [FACT-SIM-001]
           expression_baseline_ref: expression://gate1-v1.1/active
           selected_internal_content_product_id: CP02
-          selected_component_refs: [G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE]
-          selected_control_rule_refs: [G1V11-CR-04-CLAIM-EVIDENCE-LIMIT]
-          selected_edge_refs: [P2R2-EDGE-CP02-visual_beat-01]
+          selected_component_refs:
+          - RCV2-002-SCENE-06-DISPLAY-GARMENT-RESET
+          - G1V11-P2-VISUAL-FIXED-ANCHOR-CONTEXT-COMPARE
+          - RCV2-002-ACTION-06-COAT-SHOULDER-RESET
+          - RCV2-004-CAPTURE-MATCHED-FRAME-TIME-COMPARE
+          - G1V11-P2-AXIS-NARRATIVE-MECHANISM
+          - G1V11-P2-AXIS-INFORMATION-ORDER
+          - G1V11-P2-AXIS-VISUAL-SUBJECT
+          - G1V11-P2-AXIS-SOUND-SUBJECT
+          - G1V11-P2-AXIS-RHYTHM
+          - G1V11-P2-AXIS-ENDING-BOUNDARY
+          selected_control_rule_refs:
+          - G1V11-CR-04-CLAIM-EVIDENCE-LIMIT
+          - G1V11-CR-05-ONLY-SITE-DOABLE-ACTIONS
+          - G1V11-CR-06-ANONYMIZE-CLOTHING-STORY
+          - G1V11-CR-07-WORKMANSHIP-VS-LIFESPAN
+          - G1V11-CR-08-LIGHT-BEFORE-COLOR-CLAIM
+          - G1V11-CR-09-OBSERVABLE-VS-RECORD-CLAIM
+          - G1V11-CR-10-DEMO-NOT-BODY-PROMISE
+          - G1V11-CR-11-OUTFIT-ROLE-NOT-BODY-JUDGE
+          selected_edge_refs:
+          - P2R2-EDGE-CP02-capture_instruction-01
+          - P2R2-EDGE-CP02-observable_action-01
+          - P2R2-EDGE-CP02-scene-01
+          - P2R2-EDGE-CP02-visual_beat-01
           selected_structural_path_ref: structural-path://CP02/A
       action_card:
         object_type: ACTION_CARD
@@ -554,6 +576,16 @@ public_foundation_contract:
     - required_source_missing
     - required_fact_missing
     - required_authorization_missing
+    candidate_surface_container: candidate_user_visible_surfaces
+    allowed_candidate_surface_fields:
+    - title
+    - body
+    - spoken_lines
+    - CTA
+    - execution_payload
+    - surface_units
+    unknown_candidate_surface_field_behavior: BLOCK
+    all_concurrent_candidate_surfaces_scanned_together: true
     plain_language_reason_required: true
     internal_identifiers_allowed_in_internal_trace: true
 

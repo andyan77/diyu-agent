@@ -167,10 +167,11 @@ EXPECTED_EXPRESSION_ASSETS = {
     ),
 }
 PROHIBITED_USER_PATTERN = re.compile(
-    r"(?:\bCP\d{2}\b|\b(?:BNO|BRV|VGA|BCL|FC)-\d{2}\b|"
-    r"\bG1V11-[A-Z0-9-]+\b|\bRCV2-[A-Z0-9-]+\b|\bE_[A-Z0-9_]+\b|"
-    r"\b(?:all_required_inputs_present|required_source_missing|"
-    r"required_fact_missing|required_authorization_missing)\b)"
+    r"(?:(?<![A-Z0-9])CP\d{2}(?!\d)|(?<![A-Z0-9])(?:BNO|BRV|VGA|BCL|FC)-\d{2}(?!\d)|"
+    r"(?<![A-Z0-9])G1V11-[A-Z0-9-]+|(?<![A-Z0-9])RCV2-[A-Z0-9-]+|"
+    r"(?<![A-Z0-9])E_[A-Z0-9_]+|(?<![A-Z0-9])(?:all_required_inputs_present|"
+    r"required_source_missing|required_fact_missing|required_authorization_missing)(?![A-Z0-9_]))",
+    re.IGNORECASE,
 )
 INTERNAL_ROUTE_IDS = frozenset(
     {
@@ -241,6 +242,24 @@ ALLOWED_FACT_KINDS = frozenset(
     }
 )
 FIXTURE_SERVER_EVALUATION_TIME = "2026-07-14T00:00:00Z"
+EXPECTED_EXPRESSION_BASELINE_REF = "expression://gate1-v1.1/active"
+URI_REFERENCE_PATTERN = re.compile(r"^[a-z][a-z0-9+.-]*://[^\s]+$")
+USER_VISIBLE_SURFACE_FIELDS = frozenset(
+    {"title", "body", "spoken_lines", "CTA", "execution_payload", "surface_units"}
+)
+VALIDATE_CASE_INPUT_FIELDS = frozenset(
+    {
+        "trusted_scope_match",
+        "trusted_scope",
+        "evaluation_time",
+        "verified_precise_facts",
+        "plan_consistent",
+        "all_claims_supported",
+        "authorization_state",
+        "internal_identifier_leak",
+        "candidate_user_visible_surfaces",
+    }
+)
 WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
     "python3 ci/checkers/check_product_foundation.py --selftest",
@@ -261,6 +280,9 @@ EXPECTED_CASE_IDS = frozenset(
 
 class CheckFailure(RuntimeError):
     """A stable fail-closed validation error."""
+
+
+SELFTEST_FAILURE_CASES_RUN = 0
 
 
 def require(condition: bool, code: str) -> None:
@@ -788,6 +810,22 @@ def validate_contract_data(
         set(prepare_request.get("trusted_scope", {})) == set(REQUEST_SCOPE_FIELDS),
         "E_PREPARE_TRUSTED_SCOPE_EXAMPLE",
     )
+    trusted_scope_example = prepare_request["trusted_scope"]
+    expected_scope_ref = (
+        "scope://"
+        f"{trusted_scope_example.get('tenant_id')}/"
+        f"{trusted_scope_example.get('login_principal_id')}/"
+        f"{trusted_scope_example.get('content_account_id')}"
+    )
+    require(
+        prepare_request.get("trusted_scope_ref") == expected_scope_ref,
+        "E_PREPARE_TRUSTED_SCOPE_REF",
+    )
+    require(
+        prepare_request.get("expression_baseline_ref")
+        == EXPECTED_EXPRESSION_BASELINE_REF,
+        "E_PREPARE_EXPRESSION_BASELINE_REF",
+    )
     confirmation_example = prepare_request.get("confirmation_evidence")
     require(
         isinstance(confirmation_example, dict)
@@ -803,7 +841,6 @@ def validate_contract_data(
     )
     confirmed_role_ids = confirmation_example.get("confirmed_by_role_ids")
     authorization_refs = confirmation_example.get("authorization_refs")
-    trusted_scope_example = prepare_request["trusted_scope"]
     require(
         confirmation_example.get("confirmed_by_principal_id")
         == trusted_scope_example.get("login_principal_id")
@@ -889,6 +926,22 @@ def validate_contract_data(
         and all(value not in (None, "", []) for value in plan_references.values()),
         "E_PREPARE_PLAN_REFERENCE_FIELDS",
     )
+    list_reference_fields = (
+        "retrieval_fragment_refs",
+        "precise_fact_refs",
+        "selected_component_refs",
+        "selected_control_rule_refs",
+        "selected_edge_refs",
+    )
+    require(
+        all(
+            isinstance(plan_references.get(field), list)
+            and len(plan_references[field]) == len(set(plan_references[field]))
+            and all(is_nonempty_string(value) for value in plan_references[field])
+            for field in list_reference_fields
+        ),
+        "E_PREPARE_PLAN_REFERENCE_LISTS",
+    )
     active_components = load_jsonl(
         root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_COMPONENTS"][0])
     )
@@ -896,22 +949,58 @@ def validate_contract_data(
         root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_CONTROL_RULES"][0])
     )
     active_edges = load_jsonl(root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_EDGES"][0]))
+    active_paths = load_jsonl(
+        root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_AB_STRUCTURAL_PATHS"][0])
+    )
     component_ids = {item.get("component_id") for item in active_components}
     control_rule_ids = {item.get("control_rule_id") for item in active_rules}
     edge_by_id = {item.get("edge_id"): item for item in active_edges}
     selected_product = plan_references["selected_internal_content_product_id"]
     selected_components = set(plan_references["selected_component_refs"])
+    selected_control_rules = set(plan_references["selected_control_rule_refs"])
     selected_edge_ids = set(plan_references["selected_edge_refs"])
+    selected_path = next(
+        (
+            item
+            for item in active_paths
+            if item.get("content_product_type_id") == selected_product
+        ),
+        None,
+    )
+    require(isinstance(selected_path, dict), "E_PREPARE_PLAN_STRUCTURAL_PATH")
+    lane_a = selected_path.get("lane_a")
+    require(isinstance(lane_a, dict), "E_PREPARE_PLAN_STRUCTURAL_LANE")
+    expected_components = set(lane_a.get("component_ids", []))
+    expected_control_rules = {
+        item.get("control_rule_id")
+        for item in selected_path.get("author_request_control_contract", {}).get(
+            "control_rule_bindings", []
+        )
+        if isinstance(item, dict)
+    }
+    expected_edges = {
+        edge_id
+        for edge_id, edge in edge_by_id.items()
+        if edge.get("active") is True
+        and edge.get("content_product_type_id") == selected_product
+        and edge.get("component_id") in expected_components
+    }
     require(
-        selected_components.issubset(component_ids),
+        bool(expected_components)
+        and expected_components.issubset(component_ids)
+        and selected_components == expected_components,
         "E_PREPARE_PLAN_COMPONENT_REFS",
     )
     require(
-        set(plan_references["selected_control_rule_refs"]).issubset(control_rule_ids),
+        bool(expected_control_rules)
+        and expected_control_rules.issubset(control_rule_ids)
+        and selected_control_rules == expected_control_rules,
         "E_PREPARE_PLAN_CONTROL_REFS",
     )
     require(
-        bool(selected_edge_ids) and selected_edge_ids.issubset(edge_by_id),
+        bool(expected_edges)
+        and expected_edges.issubset(edge_by_id)
+        and selected_edge_ids == expected_edges,
         "E_PREPARE_PLAN_EDGE_REFS",
     )
     selected_edges = [edge_by_id[edge_id] for edge_id in selected_edge_ids]
@@ -921,14 +1010,57 @@ def validate_contract_data(
             and edge.get("component_id") in selected_components
             for edge in selected_edges
         )
-        and {edge.get("component_id") for edge in selected_edges}
-        == selected_components,
+        and {edge.get("component_id") for edge in selected_edges}.issubset(
+            selected_components
+        )
+        and {edge.get("required_component_role") for edge in selected_edges}
+        == {
+            item.get("role")
+            for item in selected_path.get("trusted_profile_contract", {}).get(
+                "required_component_roles", []
+            )
+            if isinstance(item, dict) and item.get("min_count", 0) > 0
+        },
         "E_PREPARE_PLAN_EDGE_BINDING",
     )
     require(
         plan_references["selected_structural_path_ref"]
         == f"structural-path://{selected_product}/A",
         "E_PREPARE_PLAN_STRUCTURAL_PATH_REF",
+    )
+    confirmed_requirement = prepare_request.get("confirmed_requirement")
+    require(isinstance(confirmed_requirement, dict), "E_PREPARE_REQUIREMENT")
+    require(
+        plan_example.get("tenant_id") == trusted_scope_example.get("tenant_id")
+        and plan_example.get("organization_id")
+        == trusted_scope_example.get("organization_id")
+        and plan_example.get("content_account_id")
+        == trusted_scope_example.get("content_account_id")
+        and plan_example.get("requirement_id")
+        == confirmed_requirement.get("requirement_id")
+        and plan_example.get("requirement_version")
+        == confirmed_requirement.get("requirement_version"),
+        "E_PREPARE_PLAN_SCOPE_BINDING",
+    )
+    expected_requirement_ref = (
+        f"requirement://{confirmed_requirement.get('requirement_id')}/versions/"
+        f"{confirmed_requirement.get('requirement_version')}"
+    )
+    expected_fragment_refs = {
+        item.get("fragment_id") for item in example_fragments if isinstance(item, dict)
+    }
+    expected_fact_refs = {
+        item.get("fact_id") for item in example_facts if isinstance(item, dict)
+    }
+    require(
+        plan_references.get("trusted_scope_ref") == expected_scope_ref
+        and plan_references.get("confirmed_requirement_ref") == expected_requirement_ref
+        and set(plan_references.get("retrieval_fragment_refs", []))
+        == expected_fragment_refs
+        and set(plan_references.get("precise_fact_refs", [])) == expected_fact_refs
+        and plan_references.get("expression_baseline_ref")
+        == EXPECTED_EXPRESSION_BASELINE_REF,
+        "E_PREPARE_PLAN_SOURCE_REFS",
     )
     require(
         action_example.get("object_type") == "ACTION_CARD"
@@ -966,6 +1098,20 @@ def validate_contract_data(
         "E_VALIDATE_TRUSTED_SCOPE_EXAMPLE",
     )
     require(
+        validate_request.get("trusted_scope") == trusted_scope_example
+        and validate_request.get("trusted_scope_ref") == expected_scope_ref,
+        "E_VALIDATE_TRUSTED_SCOPE_REF",
+    )
+    require(
+        validate_request.get("composition_plan_ref")
+        == plan_example.get("composition_plan_ref")
+        and set(validate_request.get("actually_used_fact_refs", []))
+        == expected_fact_refs
+        and set(validate_request.get("actually_used_material_refs", []))
+        == expected_fragment_refs,
+        "E_VALIDATE_SOURCE_REFS",
+    )
+    require(
         {
             response.get("decision")
             for response in validate_responses.values()
@@ -998,6 +1144,8 @@ def validate_contract_data(
         all(
             response.get("object_type") == "VALIDATION_DECISION"
             and bool(response.get("decision_id"))
+            and response.get("composition_plan_ref")
+            == plan_example.get("composition_plan_ref")
             for response in validate_responses.values()
             if isinstance(response, dict)
         ),
@@ -1047,6 +1195,16 @@ def validate_contract_data(
         set(output_contract.get("hidden_internal_route_values", []))
         == INTERNAL_ROUTE_IDS,
         "E_USER_OUTPUT_ROUTE_IDS",
+    )
+    require(
+        output_contract.get("candidate_surface_container")
+        == "candidate_user_visible_surfaces"
+        and set(output_contract.get("allowed_candidate_surface_fields", []))
+        == USER_VISIBLE_SURFACE_FIELDS
+        and output_contract.get("unknown_candidate_surface_field_behavior") == "BLOCK"
+        and output_contract.get("all_concurrent_candidate_surfaces_scanned_together")
+        is True,
+        "E_USER_OUTPUT_SURFACE_CLOSURE",
     )
 
     evidence = contract.get("case_evidence_contract")
@@ -1682,8 +1840,34 @@ def iter_text(value: Any) -> list[str]:
     return []
 
 
+def iter_string_values(value: Any) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [text for child in value.values() for text in iter_string_values(child)]
+    if isinstance(value, list):
+        return [text for child in value for text in iter_string_values(child)]
+    return []
+
+
 def has_internal_identifier(value: Any) -> bool:
-    return any(PROHIBITED_USER_PATTERN.search(text) for text in iter_text(value))
+    strings = iter_string_values(value)
+    combined = "".join(strings)
+    compact = re.sub(r"\s+", "", combined)
+    return any(
+        PROHIBITED_USER_PATTERN.search(text)
+        for text in [*iter_text(value), combined, compact]
+    )
+
+
+def is_nonempty_string(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def is_uri_reference(value: Any) -> bool:
+    return (
+        is_nonempty_string(value) and URI_REFERENCE_PATTERN.fullmatch(value) is not None
+    )
 
 
 def subject_confirmation_is_valid(
@@ -1925,6 +2109,20 @@ def narrative_fragment_rejection_code(
 ) -> str | None:
     if set(fragment) != set(NARRATIVE_FRAGMENT_METADATA):
         return "MISSING_OR_UNKNOWN_METADATA"
+    if (
+        not is_nonempty_string(fragment.get("fragment_id"))
+        or not is_uri_reference(fragment.get("source_ref"))
+        or not is_nonempty_string(fragment.get("authorization_ref"))
+        or not all(
+            isinstance(fragment.get(field), list) and bool(fragment.get(field))
+            for field in (
+                "applicable_organization_ids",
+                "applicable_store_ids",
+                "applicable_content_account_ids",
+            )
+        )
+    ):
+        return "MISSING_OR_UNKNOWN_METADATA"
     if fragment.get("tenant_id") != trusted_scope.get("tenant_id") or fragment.get(
         "brand_id"
     ) != trusted_scope.get("brand_id"):
@@ -1981,8 +2179,17 @@ def fact_rejection_code(
     identity: dict[str, Any],
     evaluation_time: str,
 ) -> str | None:
-    if set(PRECISE_FACT_METADATA) - set(fact):
-        return "MISSING_METADATA"
+    if set(fact) != set(PRECISE_FACT_METADATA):
+        return "MISSING_OR_UNKNOWN_METADATA"
+    if (
+        not is_nonempty_string(fact.get("fact_id"))
+        or not is_uri_reference(fact.get("source_ref"))
+        or not is_nonempty_string(fact.get("authorization_ref"))
+        or fact.get("value") in (None, "")
+        or not isinstance(fact.get("applicable_content_account_ids"), list)
+        or not fact.get("applicable_content_account_ids")
+    ):
+        return "MISSING_OR_UNKNOWN_METADATA"
     if (
         fact.get("tenant_id") != trusted_scope.get("tenant_id")
         or fact.get("brand_id") != trusted_scope.get("brand_id")
@@ -2214,20 +2421,15 @@ def evaluate_case(
             }
         return {"decision": "PREPARE_PLAN", "canonical_plan_created": True}
     if operation == "validate":
-        user_surface_fields = (
-            "candidate_user_visible_surfaces",
-            "candidate_user_visible_text",
-            "candidate",
-            "title",
-            "body",
-            "spoken_lines",
-            "CTA",
-            "execution_payload",
-            "surface_units",
-        )
-        visible_payload = {
-            field: data[field] for field in user_surface_fields if field in data
-        }
+        if set(data) != VALIDATE_CASE_INPUT_FIELDS:
+            return {"decision": "VALIDATE_BLOCK"}
+        visible_payload = data.get("candidate_user_visible_surfaces")
+        if (
+            not isinstance(visible_payload, dict)
+            or not visible_payload
+            or not set(visible_payload).issubset(USER_VISIBLE_SURFACE_FIELDS)
+        ):
+            return {"decision": "VALIDATE_BLOCK"}
         if data.get("internal_identifier_leak") or has_internal_identifier(
             visible_payload
         ):
@@ -2608,17 +2810,21 @@ def validate_repository(root: Path = ROOT) -> dict[str, Any]:
 
 
 def expect_failure(callback: Callable[[], None], expected_prefix: str) -> None:
+    global SELFTEST_FAILURE_CASES_RUN
     try:
         callback()
     except CheckFailure as error:
         require(
             str(error).startswith(expected_prefix), f"E_SELFTEST_WRONG_ERROR:{error}"
         )
+        SELFTEST_FAILURE_CASES_RUN += 1
         return
     raise CheckFailure(f"E_SELFTEST_FALSE_NEGATIVE:{expected_prefix}")
 
 
 def run_selftest() -> dict[str, Any]:
+    global SELFTEST_FAILURE_CASES_RUN
+    SELFTEST_FAILURE_CASES_RUN = 0
     validate_repository(ROOT)
     contract = load_yaml(ROOT, CONTRACT_PATH, "public_foundation_contract")
     identity = load_yaml(ROOT, IDENTITY_PATH, "simulation_tenant")
@@ -2724,6 +2930,173 @@ def run_selftest() -> dict[str, Any]:
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PREPARE_PLAN_REFERENCE_FIELDS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "selected_component_refs"
+    ].pop()
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_COMPONENT_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "selected_control_rule_refs"
+    ].pop()
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_CONTROL_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "selected_edge_refs"
+    ].pop()
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_EDGE_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    selected_edges = prepare_contract["response_examples"][
+        "canonical_composition_plan"
+    ]["references"]["selected_edge_refs"]
+    selected_edges.append(selected_edges[0])
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_REFERENCE_LISTS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "trusted_scope_ref"
+    ] = "scope://unregistered"
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_SOURCE_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "confirmed_requirement_ref"
+    ] = "requirement://REQ-NOT-REGISTERED/versions/1"
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_SOURCE_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "precise_fact_refs"
+    ] = ["FACT-NOT-REGISTERED"]
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_SOURCE_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "expression_baseline_ref"
+    ] = "expression://unregistered"
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_SOURCE_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "retrieval_fragment_refs"
+    ] = ["FRAGMENT-NOT-REGISTERED"]
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_SOURCE_REFS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["request_example"]["scoped_retrieval_fragments"][0][
+        "source_ref"
+    ] = ""
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_FRAGMENT_SAFETY",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["request_example"]["verified_precise_facts"][0]["source_ref"] = ""
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_FACT_SAFETY",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    validate_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/validate"
+    )
+    validate_contract["request_example"]["composition_plan_ref"] = (
+        "plan://PLAN-NOT-REGISTERED/revisions/1"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_VALIDATE_SOURCE_REFS",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -2873,6 +3246,30 @@ def run_selftest() -> dict[str, Any]:
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
     mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["user_visible_footer"] = {"note": "普通说明"}
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["candidate_user_visible_surfaces"][
+        "user_visible_footer"
+    ] = "普通说明"
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["candidate_user_visible_surfaces"]["title"] = "CP"
+    positive_validate["input"]["candidate_user_visible_surfaces"]["body"] = "01"
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
     subject_confirmed = next(
         case for case in mutated_cases if case["case_id"] == "PF-POS-011"
     )
@@ -2888,6 +3285,13 @@ def run_selftest() -> dict[str, Any]:
     scoped_material["input"]["retrieval_fragment"]["source_organization_id"] = (
         "ORG-NOT-REGISTERED"
     )
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    scoped_material = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-012"
+    )
+    scoped_material["input"]["retrieval_fragment"]["source_ref"] = ""
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
     expect_failure(
@@ -2939,6 +3343,13 @@ def run_selftest() -> dict[str, Any]:
     positive_validate["input"]["verified_precise_facts"][0]["authorization_ref"] = (
         "AUTH-SIM-NOT-REGISTERED"
     )
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["verified_precise_facts"][0]["source_ref"] = ""
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
     mutated_cases = copy.deepcopy(cases)
@@ -3042,7 +3453,7 @@ def run_selftest() -> dict[str, Any]:
             "E_WORKFLOW_CHECKER_DIGEST_PIN",
         )
 
-    return {"selftest_cases": 42, "result": "PASS"}
+    return {"selftest_cases": SELFTEST_FAILURE_CASES_RUN, "result": "PASS"}
 
 
 def parse_args() -> argparse.Namespace:
