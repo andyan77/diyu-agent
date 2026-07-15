@@ -38,8 +38,11 @@ import os  # noqa: E402
 ROUND = int(os.environ.get("PKG1_ROUND", "1"))
 BATCH_ID = f"PKG1R{ROUND}"
 _RD = PKG1 if ROUND == 1 else PKG1 / f"round{ROUND}"
-# round1/2 共用场景基座；round≥3 场景经边界措辞再策展（语义不变、风格发牌），
-# 落在本轮 inputs 下成为新基座版本。请求/输出/审查/结果始终落 round 子目录。
+# round1/2 共用 v1 场景基座；round≥3 场景经边界措辞再策展（语义不变、风格发牌）成 v2。
+# 执行包5 重跑（round5）复用 v2 边界基座——证据：CP16 用同一 v2 场景即六条全过，
+# 收敛根因在生成器把界限发牌进末段（v3.1 已删 LIMIT_AS_FACT/LATE_FACT）+ 作者未被
+# 要求溶景（v2.3 已加三H/三I），非场景本身，故不再全量再策展场景。请求/输出/审查/
+# 结果始终落 round 子目录。
 SCENARIOS = (_RD / "inputs/scenarios.g3.v2.jsonl" if ROUND >= 3
              else PKG1 / "inputs/scenarios.g3.v1.jsonl")
 REQUESTS = _RD / "inputs/requests.g3.v1.jsonl"
@@ -49,9 +52,11 @@ FIRST_OUTPUTS = _RD / "outputs/first_outputs.g3.v1.jsonl"
 GATE_REPORT = _RD / "outputs/machine_gate_report.v1.json"
 BLIND_PACKET = _RD / "review/blind/neutral_packet.v1.jsonl"
 BLIND_MAPPING = _RD / "review/blind/neutral_mapping.v1.jsonl"
-_INSTRUCTION_BY_ROUND = {1: "v2.0", 2: "v2.1"}
+# round3=v2.2；执行包5 重跑（round≥5）=v2.3（新增三H 收尾正向锚定/三I 界限溶景/
+# 三J 整条骨架互异，配 v3.1 生成器发牌池）。
+_INSTRUCTION_BY_ROUND = {1: "v2.0", 2: "v2.1", 3: "v2.2"}
 AUTHOR_INSTRUCTION = G3 / ("contract/g3_author_instruction."
-                           f"{_INSTRUCTION_BY_ROUND.get(ROUND, 'v2.2')}.md")
+                           f"{_INSTRUCTION_BY_ROUND.get(ROUND, 'v2.3')}.md")
 REVIEW_DIR = _RD / "review"
 RESULT_DIR = _RD / "result"
 
