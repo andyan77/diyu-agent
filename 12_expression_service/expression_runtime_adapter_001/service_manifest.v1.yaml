@@ -1,0 +1,75 @@
+light_expression_service_manifest:
+  schema_version: v1.0
+  task_id: DIYU_LIGHT_EXPRESSION_SERVICE_001
+  phase: PHASE_B_LIGHT_EXPRESSION_INTERFACE
+  baseline_master_commit: 95b8b1700b7e96b1d2383465713bef8c36e7f6cb
+  service_kind: SINGLE_PROCESS_STANDARD_LIBRARY_HTTP_VERTICAL_SLICE
+  main_write_root: 12_expression_service/expression_runtime_adapter_001
+  public_contract:
+    path: 11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml
+    sha256: a3aec92fdcc22635bb07bc5d2595ebaa5cfa1f1c9d5fad42cc39481808bbc1af
+    mutation_allowed_in_phase_b: false
+  trusted_simulation_identity:
+    path: 11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml
+    sha256: 65b8242b9b760e64f8e441c4334c68fa76f6dc3a11e2fe2f8f62ad6a887c3cbc
+    local_acceptance_only: true
+    publish_allowed: false
+  topic_mapping:
+    path: 11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml
+    sha256: e51f46635b6c3312e0626bc5aca448c91d20b0d71cae6a8de793ba5b603e2b95
+  entrypoints:
+    implementation: light_expression_service.py
+    http_adapter: http_entrypoint.py
+    test: test_light_expression_service.py
+    checker: check_light_expression_service.py
+  endpoints:
+  - {method: POST, path: /v1/content/prepare, semantics: PLAN_OR_ACTION_CARD}
+  - {method: POST, path: /v1/content/validate, semantics: PASS_REVISE_OR_BLOCK}
+  - {method: GET, path: /healthz, semantics: PROCESS_ONLY}
+  - {method: GET, path: /readyz, semantics: LOCAL_STATIC_CONTRACTS_ONLY}
+  trust_boundary:
+    trusted_context_injected_outside_request_body: true
+    client_trust_labels_authoritative: false
+    local_simulation_requires_explicit_start_flag: true
+    normal_runtime_requires_atom_refs: false
+  expression_profile:
+    supported_formal_profile_count: 1
+    neutral_profile_path: neutral_expression_profile.v1.yaml
+    neutral_profile_sha256: 30d8ce76fa49ebfad79634cbaa19f69e8d8ad5bbc09c958403dcc8847d3025c6
+    formal_enterprise_profile_database_created: false
+  runtime_boundaries:
+    external_provider_adapter_count: 0
+    external_model_call_count: 0
+    Dify_call_count: 0
+    database_call_count: 0
+    audience_body_generation_count: 0
+    content_external_call_measurement: source_inventory_and_local_endpoint_tests
+  historical_assets:
+    active_component_count: 68
+    active_component_sha256: 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    active_edge_count: 85
+    active_edge_sha256: de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    ab_structural_path_group_count: 20
+    ab_structural_path_sha256: 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+    runtime_role: OPTIONAL_OFFLINE_ONLY
+  core_numbers:
+    target_case_baseline: 300
+    frozen_reference_inventory: 120
+    historical_component_inventory: 86
+    changed_or_harmed: false
+  review_gate:
+    required_review_count: 2
+    minimum_score: 90
+    reviewer_must_not_be_author: true
+    reviewers_must_be_distinct: true
+    Root_approval_required_before_merge: true
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false
