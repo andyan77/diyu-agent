@@ -1,0 +1,59 @@
+# GATE1_V11_SUCCESSOR_LONGRUN_001 · 启动回执 v1.1
+# 本文件在合同冻结提交之后产生（提交2），记录提交1哈希；
+# 按源指令 §2.3，不把包含本文件自身的提交号写回任何已冻结合同，不制造自指。
+schema: launch_receipt.v1.1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+launched_at_utc: 2026-07-15T01:00:09Z
+contract_freeze_commit: bd6e049bb2f1bc98f7df08e26427f904046ef8f5
+contract_freeze_commit_contents:
+  - contract/source_execution_prompt.r1.md          # sha256 0ea18c0e... 与授权哈希一致
+  - contract/longrun_execution_contract.v1.1.md
+  - contract/execution_authorization.v1.1.yaml
+  - freeze/frozen_inputs.v1.1.yaml                  # 18/18 锚点复算一致
+  - freeze/p5_p6_full_tree_manifest.v1.1.tsv        # 66 文件，双跑字节一致
+
+task_branch: agent/gate1-v1-1-successor-longrun
+task_branch_created_from: b4c40beb509d81db30b497abf38af1da6dc797da
+task_workspace: /home/diyu/worktrees/gate1-longrun-001
+
+onsite_verification:
+  agents_md_read: true
+  quality_branch_local: b4c40beb509d81db30b497abf38af1da6dc797da
+  quality_branch_remote: b4c40beb509d81db30b497abf38af1da6dc797da   # ls-remote origin 实测
+  remote_master: 847e0db45ae0a3a116222e5f66b99cba225fd9f2           # 与 product_mainline_reference 一致
+  task_branch_preexisting_remote: false
+  task_worktree_preexisting: false
+
+external_workspaces_start_state:
+  original_main_workspace:
+    path: /home/diyu/笛语领域通用数据库
+    branch: agent/gate1-v1-1-retrospective-recovery-plan
+    head: "1775336"
+    untracked_user_files_present:
+      - controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/   # v1.0 草案，不读写不清理
+      - docs/reports/gate1_v1_1_successor_longrun_execution_charter_v1.0_20260714.md
+      - 若干用户 dotfiles（.bashrc/.claude/ 等，与本任务无关）
+    this_task_write_policy: zero_write
+  quality_evidence_workspace:
+    path: /home/diyu/worktrees/gate1-v1-1-300-quality-baseline
+    branch: agent/gate1-v1-1-300-quality-baseline
+    head: b4c40beb509d81db30b497abf38af1da6dc797da
+    status: clean
+    this_task_write_policy: zero_write
+  public_foundation_workspace:
+    path: /home/diyu/worktrees/diyu-public-foundation-001
+    branch: agent/diyu-public-foundation-001
+    head: 3bb6b0ea68e32202ca7b78eff8d9924eb83f0c85
+    status_dirty_files_at_start:   # 外部并行任务（执行包1产品化）自己的在制品，非本任务写入
+      - 11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml
+      - 11_product_foundation/public_foundation_001/fixtures/contract_cases.v1.jsonl
+      - 11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml
+      - ci/checkers/check_product_foundation.py
+    this_task_write_policy: zero_write
+    note: 其并行变化不构成本任务失败；结束时区分"外部并行变化"与"本任务造成的变化"
+
+execution_environment_notes:
+  external_paid_model_api_calls: 0
+  browser_dify_db_vector_cloud_production_calls: 0
+  sandbox: 任务工作区路径在本会话沙箱写白名单外，涉及该路径的写命令使用受控豁免执行；
+    所有写入仍严格限定在允许写入面内
