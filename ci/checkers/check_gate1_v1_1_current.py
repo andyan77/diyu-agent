@@ -86,6 +86,15 @@ PUBLIC_FOUNDATION_EXACT_PATHS = frozenset(
         Path(".github/workflows/ci.yml"),
         Path("AGENTS.md"),
         Path("README.md"),
+        PUBLIC_FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "identity/simulation_tenant.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "taxonomy/topic_product_mapping.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "fixtures/contract_cases.v1.jsonl",
+        PUBLIC_FOUNDATION_ROOT / "result/public_foundation_result.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT
+        / "review/architecture_consumability_review.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "review/trust_fact_safety_review.v1.yaml",
+        PUBLIC_FOUNDATION_ROOT / "review/coordinator_decision.v1.yaml",
         Path("ci/checkers/check_product_foundation.py"),
         Path("project-infra/current_product_status.v1.yaml"),
         Path("project-infra/product_workspace_manifest.v1.yaml"),
@@ -100,6 +109,15 @@ P4_THIRD_TOOL_FREEZE_PATH = (
 )
 PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
+)
+PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
+    "b0afce3e17957a63a3a84e8954fc608066b67c353538f5f41beb3de0e5cefda1"
+)
+PUBLIC_FOUNDATION_WORKFLOW_REGISTRATION_SNIPPETS = (
+    "          python3 ci/checkers/check_product_foundation.py\n",
+    "          python3 ci/checkers/check_product_foundation.py --selftest\n",
+    '            "ci/checkers/check_product_foundation.py" \\\n',
+    '            "ci/checkers/check_product_foundation.py --selftest" \\\n',
 )
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
@@ -660,9 +678,23 @@ def git(root: Path, args: list[str]) -> subprocess.CompletedProcess[str]:
 def is_public_foundation_write_path(path: Path) -> bool:
     """Delegate only the fixed product-foundation surface to its current checker."""
 
+    return path in PUBLIC_FOUNDATION_EXACT_PATHS
+
+
+def public_foundation_successor_registration_is_valid(root: Path) -> bool:
+    """Pin the delegated checker and every required workflow invocation."""
+
+    checker = root / PUBLIC_FOUNDATION_CHECKER_PATH
+    workflow = root / CI_WORKFLOW_PATH
+    if not checker.is_file() or not workflow.is_file():
+        return False
+    workflow_text = workflow.read_text(encoding="utf-8")
     return (
-        path.is_relative_to(PUBLIC_FOUNDATION_ROOT)
-        or path in PUBLIC_FOUNDATION_EXACT_PATHS
+        sha256_file(checker) == PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256
+        and all(
+            workflow_text.count(snippet) == 1
+            for snippet in PUBLIC_FOUNDATION_WORKFLOW_REGISTRATION_SNIPPETS
+        )
     )
 
 
@@ -687,7 +719,7 @@ def public_foundation_checker_handoff_is_valid(root: Path) -> bool:
             == PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256
             and result.get("task_id")
             == "DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001"
-            and (root / PUBLIC_FOUNDATION_CHECKER_PATH).is_file()
+            and public_foundation_successor_registration_is_valid(root)
         )
     except (OSError, TypeError, ValueError, yaml.YAMLError):
         return False
@@ -6478,6 +6510,59 @@ def selftest(root: Path) -> int:
                 "actual": ["E_WRITE_SURFACE"],
             }
         )
+    if not unexpected_write_paths(
+        {PUBLIC_FOUNDATION_ROOT / "future/arbitrary_successor.yaml"}
+    ):
+        failures.append(
+            {
+                "case": "public_foundation_future_path_not_delegated",
+                "expected": "E_WRITE_SURFACE",
+                "actual": [],
+            }
+        )
+    if not public_foundation_successor_registration_is_valid(root):
+        failures.append(
+            {
+                "case": "public_foundation_successor_registration",
+                "expected": "checker digest and four workflow calls pinned",
+                "actual": "invalid",
+            }
+        )
+    with tempfile.TemporaryDirectory(
+        prefix="gate1-public-foundation-successor-selftest-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        checker_destination = temp_root / PUBLIC_FOUNDATION_CHECKER_PATH
+        workflow_destination = temp_root / CI_WORKFLOW_PATH
+        checker_destination.parent.mkdir(parents=True, exist_ok=True)
+        workflow_destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(root / PUBLIC_FOUNDATION_CHECKER_PATH, checker_destination)
+        shutil.copy2(root / CI_WORKFLOW_PATH, workflow_destination)
+        workflow_text = workflow_destination.read_text(encoding="utf-8")
+        workflow_destination.write_text(
+            workflow_text.replace(
+                PUBLIC_FOUNDATION_WORKFLOW_REGISTRATION_SNIPPETS[0], "", 1
+            ),
+            encoding="utf-8",
+        )
+        if public_foundation_successor_registration_is_valid(temp_root):
+            failures.append(
+                {
+                    "case": "public_foundation_successor_workflow_tamper",
+                    "expected": "invalid",
+                    "actual": "valid",
+                }
+            )
+        shutil.copy2(root / CI_WORKFLOW_PATH, workflow_destination)
+        checker_destination.write_bytes(checker_destination.read_bytes() + b"\n")
+        if public_foundation_successor_registration_is_valid(temp_root):
+            failures.append(
+                {
+                    "case": "public_foundation_successor_checker_tamper",
+                    "expected": "invalid",
+                    "actual": "valid",
+                }
+            )
     retained_handoff_errors = filter_public_foundation_checker_handoff(
         root,
         [

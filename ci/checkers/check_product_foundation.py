@@ -168,7 +168,17 @@ EXPECTED_EXPRESSION_ASSETS = {
 }
 PROHIBITED_USER_PATTERN = re.compile(
     r"(?:\bCP\d{2}\b|\b(?:BNO|BRV|VGA|BCL|FC)-\d{2}\b|"
-    r"\bG1V11-[A-Z0-9-]+\b|\bRCV2-[A-Z0-9-]+\b|\bE_[A-Z0-9_]+\b)"
+    r"\bG1V11-[A-Z0-9-]+\b|\bRCV2-[A-Z0-9-]+\b|\bE_[A-Z0-9_]+\b|"
+    r"\b(?:all_required_inputs_present|required_source_missing|"
+    r"required_fact_missing|required_authorization_missing)\b)"
+)
+INTERNAL_ROUTE_IDS = frozenset(
+    {
+        "all_required_inputs_present",
+        "required_source_missing",
+        "required_fact_missing",
+        "required_authorization_missing",
+    }
 )
 TRUSTED_SCOPE_DIMENSIONS = (
     "tenant_id",
@@ -186,6 +196,23 @@ REQUEST_SCOPE_FIELDS = (
     "login_principal_id",
     "content_account_id",
 )
+NARRATIVE_FRAGMENT_METADATA = (
+    "fragment_id",
+    "tenant_id",
+    "brand_id",
+    "source_organization_id",
+    "source_store_id",
+    "source_ref",
+    "applicable_organization_ids",
+    "applicable_store_ids",
+    "applicable_content_account_ids",
+    "observed_at",
+    "valid_until",
+    "authorization_ref",
+    "authorization_state",
+    "disclosure_scope",
+    "status",
+)
 PRECISE_FACT_METADATA = (
     "fact_id",
     "tenant_id",
@@ -201,6 +228,24 @@ PRECISE_FACT_METADATA = (
     "authorization_ref",
     "disclosure_scope",
     "status",
+)
+ALLOWED_FACT_KINDS = frozenset(
+    {
+        "SKU",
+        "SPECIFICATION",
+        "PRICE",
+        "STOCK",
+        "TIME_POINT",
+        "AUTHORIZATION",
+        "REVOCATION",
+    }
+)
+FIXTURE_SERVER_EVALUATION_TIME = "2026-07-14T00:00:00Z"
+WORKFLOW_REGISTRATION_SNIPPETS = (
+    "          python3 ci/checkers/check_product_foundation.py\n",
+    "          python3 ci/checkers/check_product_foundation.py --selftest\n",
+    '            "ci/checkers/check_product_foundation.py" \\\n',
+    '            "ci/checkers/check_product_foundation.py --selftest" \\\n',
 )
 
 
@@ -269,6 +314,14 @@ def validate_all_false(mapping: Any, code: str) -> None:
     require(READINESS_KEYS.issubset(mapping), f"{code}:MISSING_KEYS")
     for key in READINESS_KEYS:
         require(mapping[key] is False, f"{code}:{key}")
+
+
+def validate_workflow_registration(root: Path) -> None:
+    workflow = root / WORKFLOW_PATH
+    require(workflow.is_file(), "E_WORKFLOW_MISSING")
+    text = workflow.read_text(encoding="utf-8")
+    for snippet in WORKFLOW_REGISTRATION_SNIPPETS:
+        require(text.count(snippet) == 1, "E_WORKFLOW_REGISTRATION")
 
 
 def validate_foundation_files(root: Path, review_state: str) -> None:
@@ -379,7 +432,9 @@ def validate_core_numbers(root: Path, contract: dict[str, Any]) -> None:
     )
 
 
-def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
+def validate_contract_data(
+    root: Path, contract: dict[str, Any], identity: dict[str, Any]
+) -> None:
     require(contract.get("schema_version") == "v1.0", "E_CONTRACT_VERSION")
     require(contract.get("task_id") == TASK_ID, "E_CONTRACT_TASK")
     boundary = contract.get("implementation_boundary")
@@ -499,6 +554,16 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         "E_FACT_CHANNEL_SET",
     )
     narrative = by_channel["SCOPED_NARRATIVE_RETRIEVAL"]
+    require(
+        tuple(narrative.get("required_metadata", [])) == NARRATIVE_FRAGMENT_METADATA,
+        "E_NARRATIVE_FRAGMENT_METADATA",
+    )
+    require(
+        narrative.get("source_scope_must_be_registered") is True
+        and narrative.get("target_scope_must_match_authorization_grant") is True
+        and narrative.get("expired_revoked_or_ungranted_fragment_is_usable") is False,
+        "E_NARRATIVE_SCOPE_POLICY",
+    )
     require(narrative.get("may_grant_authorization") is False, "E_RETRIEVAL_AUTHORITY")
     require(
         narrative.get("may_override_precise_fact") is False,
@@ -514,7 +579,9 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         "E_PRECISE_FACT_METADATA",
     )
     require(
-        precise.get("scope_must_match_trusted_request") is True,
+        precise.get("source_scope_must_be_registered") is True
+        and precise.get("target_scope_must_match_authorization_grant") is True
+        and precise.get("cross_scope_requires_explicit_authorization") is True,
         "E_PRECISE_SCOPE_POLICY",
     )
     require(
@@ -528,6 +595,10 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
     require(
         precise.get("precedence_over_narrative_retrieval") is True,
         "E_PRECISE_PRECEDENCE",
+    )
+    require(
+        set(precise.get("fact_kinds", [])) == ALLOWED_FACT_KINDS,
+        "E_PRECISE_FACT_KINDS",
     )
     require(
         fact_contract.get("expression_asset_may_be_fact_or_authorization") is False,
@@ -686,11 +757,49 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         and set(confirmation_example)
         == {
             "confirmed_by_principal_id",
-            "confirmed_by_role_id",
+            "confirmed_by_role_ids",
             "confirmation_scope",
-            "authorization_ref",
+            "authorization_refs",
+            "subject_confirmation_ref",
         },
         "E_PREPARE_CONFIRMATION_EXAMPLE",
+    )
+    confirmed_role_ids = confirmation_example.get("confirmed_by_role_ids")
+    authorization_refs = confirmation_example.get("authorization_refs")
+    trusted_scope_example = prepare_request["trusted_scope"]
+    require(
+        confirmation_example.get("confirmed_by_principal_id")
+        == trusted_scope_example.get("login_principal_id")
+        and isinstance(confirmed_role_ids, list)
+        and confirmed_role_ids
+        and account_role_is_authorized(
+            identity,
+            str(trusted_scope_example.get("login_principal_id")),
+            str(trusted_scope_example.get("content_account_id")),
+            [str(item) for item in confirmed_role_ids],
+            "CONFIRM",
+            str(confirmation_example.get("confirmation_scope")),
+            confirmation_example.get("subject_confirmation_ref"),
+        ),
+        "E_PREPARE_CONFIRMATION_AUTHORITY",
+    )
+    require(
+        isinstance(authorization_refs, list)
+        and authorization_refs
+        and all(
+            authorization_grant_covers(
+                identity,
+                authorization_ref,
+                trusted_scope_example.get("organization_id"),
+                trusted_scope_example.get("store_id"),
+                trusted_scope_example,
+                "REQUIREMENT_CONFIRMATION_ONLY",
+                FIXTURE_SERVER_EVALUATION_TIME,
+                frozenset({"REQUIREMENT_CONFIRMATION"}),
+            )
+            for authorization_ref in authorization_refs
+        ),
+        "E_PREPARE_CONFIRMATION_GRANT",
     )
     example_facts = prepare_request.get("verified_precise_facts")
     require(
@@ -698,6 +807,33 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         and len(example_facts) == 1
         and set(example_facts[0]) == set(PRECISE_FACT_METADATA),
         "E_PREPARE_FACT_EXAMPLE",
+    )
+    example_fragments = prepare_request.get("scoped_retrieval_fragments")
+    require(
+        isinstance(example_fragments, list)
+        and len(example_fragments) == 1
+        and set(example_fragments[0]) == set(NARRATIVE_FRAGMENT_METADATA),
+        "E_PREPARE_FRAGMENT_EXAMPLE",
+    )
+    require(
+        narrative_fragment_rejection_code(
+            example_fragments[0],
+            trusted_scope_example,
+            identity,
+            FIXTURE_SERVER_EVALUATION_TIME,
+        )
+        is None,
+        "E_PREPARE_FRAGMENT_SAFETY",
+    )
+    require(
+        fact_rejection_code(
+            example_facts[0],
+            trusted_scope_example,
+            identity,
+            FIXTURE_SERVER_EVALUATION_TIME,
+        )
+        is None,
+        "E_PREPARE_FACT_SAFETY",
     )
     plan_example = prepare_responses.get("canonical_composition_plan")
     action_example = prepare_responses.get("action_card")
@@ -708,6 +844,48 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         plan_example.get("composition_plan_ref")
         == f"plan://{plan_example.get('plan_id')}/revisions/{plan_example.get('plan_revision')}",
         "E_PREPARE_PLAN_REF",
+    )
+    plan_references = plan_example.get("references")
+    require(isinstance(plan_references, dict), "E_PREPARE_PLAN_REFERENCES")
+    require(
+        set(plan_references) == set(plan.get("required_references", []))
+        and all(value not in (None, "", []) for value in plan_references.values()),
+        "E_PREPARE_PLAN_REFERENCE_FIELDS",
+    )
+    active_components = load_jsonl(
+        root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_COMPONENTS"][0])
+    )
+    active_rules = load_jsonl(
+        root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_CONTROL_RULES"][0])
+    )
+    active_edges = load_jsonl(root, Path(EXPECTED_EXPRESSION_ASSETS["ACTIVE_EDGES"][0]))
+    component_ids = {item.get("component_id") for item in active_components}
+    control_rule_ids = {item.get("control_rule_id") for item in active_rules}
+    selected_product = plan_references["selected_internal_content_product_id"]
+    selected_components = set(plan_references["selected_component_refs"])
+    require(
+        selected_components.issubset(component_ids),
+        "E_PREPARE_PLAN_COMPONENT_REFS",
+    )
+    require(
+        set(plan_references["selected_control_rule_refs"]).issubset(control_rule_ids),
+        "E_PREPARE_PLAN_CONTROL_REFS",
+    )
+    require(
+        all(
+            any(
+                edge.get("content_product_type_id") == selected_product
+                and edge.get("component_id") == component_id
+                for edge in active_edges
+            )
+            for component_id in selected_components
+        ),
+        "E_PREPARE_PLAN_COMPONENT_PRODUCT_BINDING",
+    )
+    require(
+        plan_references["selected_structural_path_ref"]
+        == f"structural-path://{selected_product}/A",
+        "E_PREPARE_PLAN_STRUCTURAL_PATH_REF",
     )
     require(
         action_example.get("object_type") == "ACTION_CARD"
@@ -730,7 +908,6 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         "request_id",
         "trusted_scope_ref",
         "trusted_scope",
-        "evaluation_time",
         "composition_plan_ref",
         "candidate",
         "actually_used_fact_refs",
@@ -763,12 +940,33 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         ),
         "E_VALIDATE_RESPONSE_FIELDS",
     )
+    require(
+        all(
+            isinstance(response.get("plain_language_reason"), str)
+            and bool(response["plain_language_reason"].strip())
+            and not has_internal_identifier(response["plain_language_reason"])
+            for key, response in validate_responses.items()
+            if key in {"revise", "block"} and isinstance(response, dict)
+        ),
+        "E_VALIDATE_PLAIN_LANGUAGE_REASON",
+    )
+    require(
+        validate.get("evaluation_time_source") == "SERVER_CLOCK"
+        and validate.get("client_supplied_evaluation_time_accepted") is False,
+        "E_VALIDATE_SERVER_TIME",
+    )
 
     output_contract = contract.get("user_output_contract")
     require(isinstance(output_contract, dict), "E_USER_OUTPUT_CONTRACT")
     require(
         set(output_contract.get("hidden_internal_identifiers", []))
-        == {"content_product_id", "component_id", "route_code", "raw_error_code"},
+        == {
+            "content_product_id",
+            "component_id",
+            "route_code",
+            "raw_error_code",
+            "internal_route_id",
+        },
         "E_USER_OUTPUT_HIDDEN_IDS",
     )
     require(
@@ -777,9 +975,15 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
             "CP[0-9]{2}",
             "(BNO|BRV|VGA|BCL|FC)-[0-9]{2}",
             "(G1V11|RCV2)-[A-Z0-9-]+",
+            "(all_required_inputs_present|required_source_missing|required_fact_missing|required_authorization_missing)",
             "E_[A-Z0-9_]+",
         },
         "E_USER_OUTPUT_PATTERNS",
+    )
+    require(
+        set(output_contract.get("hidden_internal_route_values", []))
+        == INTERNAL_ROUTE_IDS,
+        "E_USER_OUTPUT_ROUTE_IDS",
     )
 
     evidence = contract.get("case_evidence_contract")
@@ -900,6 +1104,7 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     stores = identity.get("stores")
     roles = identity.get("work_roles")
     accounts = identity.get("content_accounts")
+    authorization_grants = identity.get("authorization_grants")
     require(isinstance(principals, list) and len(principals) == 1, "E_PRINCIPAL_COUNT")
     require(
         isinstance(organizations, list) and len(organizations) == 5,
@@ -908,6 +1113,10 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     require(isinstance(stores, list) and len(stores) == 3, "E_STORE_COUNT")
     require(isinstance(roles, list) and roles, "E_WORK_ROLES")
     require(isinstance(accounts, list) and len(accounts) == 11, "E_ACCOUNT_COUNT")
+    require(
+        isinstance(authorization_grants, list) and len(authorization_grants) == 6,
+        "E_AUTHORIZATION_GRANT_COUNT",
+    )
     require(
         identity.get("work_roles_are_login_principals") is False,
         "E_ROLE_LOGIN_COLLAPSE",
@@ -930,8 +1139,27 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         if isinstance(item, dict)
     }
     for organization in organizations:
+        require(
+            organization.get("tenant_id") == tenant.get("tenant_id"),
+            "E_ORG_TENANT_REF",
+        )
+        parent_id = organization.get("parent_organization_id")
+        authorizer_id = organization.get("authorized_by_organization_id")
+        require(
+            parent_id is None or parent_id in organization_ids,
+            "E_ORG_PARENT_REF",
+        )
+        require(
+            authorizer_id is None or authorizer_id in organization_ids,
+            "E_ORG_AUTHORIZER_REF",
+        )
         require(organization.get("simulation_only") is True, "E_ORG_SIMULATION")
         require(organization.get("publish_allowed") is False, "E_ORG_PUBLISH")
+    store_organization = {
+        item.get("store_id"): item.get("organization_id")
+        for item in stores
+        if isinstance(item, dict)
+    }
     for store in stores:
         require(store.get("organization_id") in organization_ids, "E_STORE_ORG_REF")
         require(store.get("simulation_only") is True, "E_STORE_SIMULATION")
@@ -958,6 +1186,11 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         require(
             store_id is None or store_id in store_ids, f"E_ACCOUNT_STORE:{account_id}"
         )
+        require(
+            store_id is None
+            or store_organization.get(store_id) == account.get("organization_id"),
+            f"E_ACCOUNT_STORE_ORGANIZATION:{account_id}",
+        )
         makers = account.get("maker_role_ids")
         routes = account.get("confirmation_routes")
         require(isinstance(makers, list) and makers, f"E_ACCOUNT_MAKERS:{account_id}")
@@ -973,6 +1206,23 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             )
             require(
                 set(confirmer_ids).issubset(role_ids), f"E_CONFIRMER_REF:{account_id}"
+            )
+            expected_mode = "ALL_OF" if len(confirmer_ids) > 1 else "ANY_OF"
+            require(
+                route.get("approval_mode") == expected_mode,
+                f"E_CONFIRMATION_MODE:{account_id}:{route.get('scope')}",
+            )
+            expected_subject_confirmation = (
+                account_id == "ACCOUNT-DIYU-CONTENT-LEAD"
+                and route.get("scope") == "quoted_person_viewpoint"
+            ) or (
+                account_id == "ACCOUNT-DIYU-HQ-OFFICIAL"
+                and route.get("scope") == "person_and_customer_authorization"
+            )
+            require(
+                route.get("subject_confirmation_required")
+                is expected_subject_confirmation,
+                f"E_SUBJECT_CONFIRMATION_POLICY:{account_id}:{route.get('scope')}",
             )
         allowed_orgs = account.get("allowed_source_organization_ids")
         require(
@@ -1011,6 +1261,10 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         "E_SIM_PRINCIPAL_ID",
     )
     require(
+        principal.get("tenant_id") == tenant.get("tenant_id"),
+        "E_SIM_PRINCIPAL_TENANT",
+    )
+    require(
         principal.get("trusted_identity_source") == "SERVER_MANAGED_ONLY",
         "E_SIM_IDENTITY_SOURCE",
     )
@@ -1043,6 +1297,90 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             f"E_SIM_CONFIRMER_GRANT:{account_id}",
         )
 
+    authorization_ids: set[str] = set()
+    for grant in authorization_grants:
+        require(isinstance(grant, dict), "E_AUTHORIZATION_GRANT_OBJECT")
+        authorization_id = grant.get("authorization_id")
+        require(
+            isinstance(authorization_id, str)
+            and authorization_id.startswith("AUTH-SIM-")
+            and authorization_id not in authorization_ids,
+            "E_AUTHORIZATION_GRANT_ID",
+        )
+        authorization_ids.add(authorization_id)
+        require(
+            grant.get("tenant_id") == tenant.get("tenant_id")
+            and grant.get("brand_id") == tenant.get("brand_id"),
+            f"E_AUTHORIZATION_TENANT:{authorization_id}",
+        )
+        source_org = grant.get("source_organization_id")
+        source_store = grant.get("source_store_id")
+        require(
+            source_org in organization_ids,
+            f"E_AUTHORIZATION_SOURCE_ORG:{authorization_id}",
+        )
+        require(
+            source_store is None or store_organization.get(source_store) == source_org,
+            f"E_AUTHORIZATION_SOURCE_STORE:{authorization_id}",
+        )
+        permitted_organizations = grant.get("permitted_organization_ids")
+        permitted_stores = grant.get("permitted_store_ids")
+        permitted_accounts = grant.get("permitted_content_account_ids")
+        require(
+            isinstance(permitted_organizations, list)
+            and permitted_organizations
+            and set(permitted_organizations).issubset(organization_ids),
+            f"E_AUTHORIZATION_TARGET_ORG:{authorization_id}",
+        )
+        require(
+            isinstance(permitted_stores, list)
+            and permitted_stores
+            and set(permitted_stores).issubset({None, *store_ids}),
+            f"E_AUTHORIZATION_TARGET_STORE:{authorization_id}",
+        )
+        require(
+            isinstance(permitted_accounts, list)
+            and permitted_accounts
+            and set(permitted_accounts).issubset(by_account),
+            f"E_AUTHORIZATION_TARGET_ACCOUNT:{authorization_id}",
+        )
+        for permitted_account_id in permitted_accounts:
+            permitted_account = by_account[permitted_account_id]
+            require(
+                permitted_account.get("organization_id") in permitted_organizations
+                and permitted_account.get("store_id") in permitted_stores,
+                f"E_AUTHORIZATION_TARGET_SCOPE:{authorization_id}:{permitted_account_id}",
+            )
+        valid_from = parse_iso_datetime(grant.get("valid_from"))
+        valid_until = parse_iso_datetime(grant.get("valid_until"))
+        require(
+            grant.get("status") == "GRANTED"
+            and valid_from is not None
+            and valid_until is not None
+            and valid_from <= valid_until,
+            f"E_AUTHORIZATION_STATE:{authorization_id}",
+        )
+        expected_disclosure_scope = (
+            "REQUIREMENT_CONFIRMATION_ONLY"
+            if grant.get("authorization_kind") == "REQUIREMENT_CONFIRMATION"
+            else "CONTENT_ACCOUNT_ONLY"
+        )
+        require(
+            grant.get("authorization_kind")
+            in {
+                "FACT_DISCLOSURE",
+                "MATERIAL_AND_FACT_DISCLOSURE",
+                "REQUIREMENT_CONFIRMATION",
+            }
+            and grant.get("disclosure_scope") == expected_disclosure_scope,
+            f"E_AUTHORIZATION_KIND_SCOPE:{authorization_id}",
+        )
+        require(
+            grant.get("simulation_only") is True
+            and grant.get("publish_allowed") is False,
+            f"E_AUTHORIZATION_SIMULATION:{authorization_id}",
+        )
+
     serialized = json.dumps(identity, ensure_ascii=False).lower()
     for forbidden in (
         "secret_value",
@@ -1057,6 +1395,10 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     require(invariants.get("login_principal_count") == 1, "E_IDENTITY_LOGIN_INVARIANT")
     require(
         invariants.get("content_account_count") == 11, "E_IDENTITY_ACCOUNT_INVARIANT"
+    )
+    require(
+        invariants.get("authorization_grant_count") == 6,
+        "E_IDENTITY_AUTHORIZATION_INVARIANT",
     )
     require(
         invariants.get("every_record_simulation_only") is True,
@@ -1200,9 +1542,10 @@ def account_role_is_authorized(
     identity: dict[str, Any],
     principal_id: str,
     account_id: str,
-    role_id: str,
+    role_ids: list[str],
     action: str,
     confirmation_scope: str | None = None,
+    subject_confirmation_ref: str | None = None,
 ) -> bool:
     principal = next(
         (
@@ -1232,8 +1575,13 @@ def account_role_is_authorized(
     )
     if not isinstance(grant, dict):
         return False
+    submitted_roles = set(role_ids)
+    if not submitted_roles:
+        return False
     if action == "MAKE":
-        return role_id in grant.get("maker_role_ids", [])
+        return len(submitted_roles) == 1 and submitted_roles.issubset(
+            grant.get("maker_role_ids", [])
+        )
     if action == "CONFIRM":
         route = next(
             (
@@ -1243,11 +1591,20 @@ def account_role_is_authorized(
             ),
             None,
         )
-        return (
-            isinstance(route, dict)
-            and role_id in route.get("confirmer_role_ids", [])
-            and role_id in grant.get("confirmer_role_ids", [])
-        )
+        if not isinstance(route, dict):
+            return False
+        allowed_roles = set(route.get("confirmer_role_ids", []))
+        if not submitted_roles.issubset(allowed_roles) or not submitted_roles.issubset(
+            grant.get("confirmer_role_ids", [])
+        ):
+            return False
+        if route.get("approval_mode") == "ALL_OF":
+            approval_satisfied = submitted_roles == allowed_roles
+        else:
+            approval_satisfied = bool(submitted_roles & allowed_roles)
+        if route.get("subject_confirmation_required") is True:
+            return approval_satisfied and bool(subject_confirmation_ref)
+        return approval_satisfied
     return False
 
 
@@ -1299,32 +1656,161 @@ def parse_iso_datetime(value: Any) -> datetime | None:
         return None
 
 
+def source_scope_is_registered(
+    identity: dict[str, Any], organization_id: Any, store_id: Any
+) -> bool:
+    organizations = {
+        item.get("organization_id")
+        for item in identity.get("organizations", [])
+        if isinstance(item, dict)
+    }
+    stores = {
+        item.get("store_id"): item.get("organization_id")
+        for item in identity.get("stores", [])
+        if isinstance(item, dict)
+    }
+    return organization_id in organizations and (
+        store_id is None or stores.get(store_id) == organization_id
+    )
+
+
+def authorization_grant_covers(
+    identity: dict[str, Any],
+    authorization_ref: Any,
+    source_organization_id: Any,
+    source_store_id: Any,
+    trusted_scope: dict[str, Any],
+    disclosure_scope: Any,
+    evaluation_time: str,
+    allowed_kinds: frozenset[str],
+) -> bool:
+    grant = next(
+        (
+            item
+            for item in identity.get("authorization_grants", [])
+            if item.get("authorization_id") == authorization_ref
+        ),
+        None,
+    )
+    if (
+        not isinstance(grant, dict)
+        or grant.get("authorization_kind") not in allowed_kinds
+    ):
+        return False
+    evaluation_at = parse_iso_datetime(evaluation_time)
+    valid_from = parse_iso_datetime(grant.get("valid_from"))
+    valid_until = parse_iso_datetime(grant.get("valid_until"))
+    return (
+        evaluation_at is not None
+        and valid_from is not None
+        and valid_until is not None
+        and valid_from <= evaluation_at <= valid_until
+        and grant.get("status") == "GRANTED"
+        and grant.get("tenant_id") == trusted_scope.get("tenant_id")
+        and grant.get("brand_id") == trusted_scope.get("brand_id")
+        and grant.get("source_organization_id") == source_organization_id
+        and grant.get("source_store_id") == source_store_id
+        and trusted_scope.get("organization_id")
+        in grant.get("permitted_organization_ids", [])
+        and trusted_scope.get("store_id") in grant.get("permitted_store_ids", [])
+        and trusted_scope.get("content_account_id")
+        in grant.get("permitted_content_account_ids", [])
+        and grant.get("disclosure_scope") == disclosure_scope
+    )
+
+
+def narrative_fragment_rejection_code(
+    fragment: dict[str, Any],
+    trusted_scope: dict[str, Any],
+    identity: dict[str, Any],
+    evaluation_time: str,
+) -> str | None:
+    if set(fragment) != set(NARRATIVE_FRAGMENT_METADATA):
+        return "MISSING_OR_UNKNOWN_METADATA"
+    if (
+        fragment.get("tenant_id") != trusted_scope.get("tenant_id")
+        or fragment.get("brand_id") != trusted_scope.get("brand_id")
+        or trusted_scope.get("organization_id")
+        not in fragment.get("applicable_organization_ids", [])
+        or trusted_scope.get("store_id") not in fragment.get("applicable_store_ids", [])
+        or trusted_scope.get("content_account_id")
+        not in fragment.get("applicable_content_account_ids", [])
+    ):
+        return "SCOPE_MISMATCH"
+    if not source_scope_is_registered(
+        identity,
+        fragment.get("source_organization_id"),
+        fragment.get("source_store_id"),
+    ):
+        return "SOURCE_SCOPE_UNKNOWN"
+    evaluation_at = parse_iso_datetime(evaluation_time)
+    observed_at = parse_iso_datetime(fragment.get("observed_at"))
+    valid_until = parse_iso_datetime(fragment.get("valid_until"))
+    if (
+        fragment.get("status") != "ACTIVE"
+        or fragment.get("authorization_state") != "GRANTED"
+        or fragment.get("disclosure_scope") != "CONTENT_ACCOUNT_ONLY"
+        or evaluation_at is None
+        or observed_at is None
+        or valid_until is None
+        or observed_at > evaluation_at
+        or valid_until < evaluation_at
+        or not authorization_grant_covers(
+            identity,
+            fragment.get("authorization_ref"),
+            fragment.get("source_organization_id"),
+            fragment.get("source_store_id"),
+            trusted_scope,
+            fragment.get("disclosure_scope"),
+            evaluation_time,
+            frozenset({"MATERIAL_AND_FACT_DISCLOSURE"}),
+        )
+    ):
+        return "AUTHORIZATION_OR_VALIDITY"
+    return None
+
+
 def fact_rejection_code(
-    fact: dict[str, Any], trusted_scope: dict[str, Any], evaluation_time: str
+    fact: dict[str, Any],
+    trusted_scope: dict[str, Any],
+    identity: dict[str, Any],
+    evaluation_time: str,
 ) -> str | None:
     if set(PRECISE_FACT_METADATA) - set(fact):
         return "MISSING_METADATA"
     if (
         fact.get("tenant_id") != trusted_scope.get("tenant_id")
         or fact.get("brand_id") != trusted_scope.get("brand_id")
-        or fact.get("organization_id") != trusted_scope.get("organization_id")
-        or fact.get("store_id") != trusted_scope.get("store_id")
         or trusted_scope.get("content_account_id")
         not in fact.get("applicable_content_account_ids", [])
     ):
         return "SCOPE_MISMATCH"
+    if not source_scope_is_registered(
+        identity, fact.get("organization_id"), fact.get("store_id")
+    ):
+        return "SOURCE_SCOPE_UNKNOWN"
     evaluation_at = parse_iso_datetime(evaluation_time)
     effective_at = parse_iso_datetime(fact.get("effective_at"))
     valid_until = parse_iso_datetime(fact.get("valid_until"))
     if (
         fact.get("status") != "ACTIVE"
-        or not fact.get("authorization_ref")
+        or fact.get("fact_kind") not in ALLOWED_FACT_KINDS
         or fact.get("disclosure_scope") != "CONTENT_ACCOUNT_ONLY"
         or evaluation_at is None
         or effective_at is None
         or valid_until is None
         or effective_at > evaluation_at
         or valid_until < evaluation_at
+        or not authorization_grant_covers(
+            identity,
+            fact.get("authorization_ref"),
+            fact.get("organization_id"),
+            fact.get("store_id"),
+            trusted_scope,
+            fact.get("disclosure_scope"),
+            evaluation_time,
+            frozenset({"FACT_DISCLOSURE", "MATERIAL_AND_FACT_DISCLOSURE"}),
+        )
     ):
         return "AUTHORIZATION_OR_VALIDITY"
     return None
@@ -1419,20 +1905,24 @@ def evaluate_case(
             identity,
             str(data.get("principal_id")),
             str(data.get("content_account_id")),
-            str(data.get("acting_maker_role_id")),
+            [str(data.get("acting_maker_role_id"))],
             "MAKE",
         ):
             return {
                 "decision": "REJECT_UNAUTHORIZED_ACCOUNT_ROLE",
                 "canonical_plan_created": False,
             }
+        confirmed_role_ids = data.get("confirmed_by_role_ids")
+        if not isinstance(confirmed_role_ids, list):
+            confirmed_role_ids = [str(data.get("confirmed_by_role_id"))]
         if not account_role_is_authorized(
             identity,
             str(data.get("principal_id")),
             str(data.get("content_account_id")),
-            str(data.get("confirmed_by_role_id")),
+            [str(item) for item in confirmed_role_ids],
             "CONFIRM",
             str(data.get("confirmation_scope")),
+            data.get("subject_confirmation_ref"),
         ):
             return {
                 "decision": "REJECT_UNAUTHORIZED_CONFIRMATION_ROLE",
@@ -1457,12 +1947,7 @@ def evaluate_case(
                 "canonical_plan_created": False,
             }
         facts = data.get("verified_precise_facts")
-        evaluation_time = data.get("evaluation_time")
-        if (
-            not isinstance(trusted_scope, dict)
-            or not isinstance(facts, list)
-            or not isinstance(evaluation_time, str)
-        ):
+        if not isinstance(trusted_scope, dict) or not isinstance(facts, list):
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
                 "canonical_plan_created": False,
@@ -1478,7 +1963,13 @@ def evaluate_case(
                 "canonical_plan_created": False,
             }
         fact_rejections = [
-            fact_rejection_code(fact, trusted_scope, evaluation_time) for fact in facts
+            fact_rejection_code(
+                fact,
+                trusted_scope,
+                identity,
+                FIXTURE_SERVER_EVALUATION_TIME,
+            )
+            for fact in facts
         ]
         if "SCOPE_MISMATCH" in fact_rejections:
             return {
@@ -1518,17 +2009,18 @@ def evaluate_case(
         ):
             return {"decision": "REJECT_SCOPE_OVERRIDE"}
         facts = data.get("verified_precise_facts")
-        evaluation_time = data.get("evaluation_time")
-        if (
-            not isinstance(trusted_scope, dict)
-            or not isinstance(facts, list)
-            or not isinstance(evaluation_time, str)
-        ):
+        if not isinstance(trusted_scope, dict) or not isinstance(facts, list):
             return {"decision": "VALIDATE_BLOCK"}
         if any(not isinstance(fact, dict) for fact in facts):
             return {"decision": "VALIDATE_BLOCK"}
         fact_rejections = [
-            fact_rejection_code(fact, trusted_scope, evaluation_time) for fact in facts
+            fact_rejection_code(
+                fact,
+                trusted_scope,
+                identity,
+                FIXTURE_SERVER_EVALUATION_TIME,
+            )
+            for fact in facts
         ]
         if "SCOPE_MISMATCH" in fact_rejections:
             return {"decision": "REJECT_SCOPE_OVERRIDE"}
@@ -1855,13 +2347,14 @@ def validate_repository(root: Path = ROOT) -> dict[str, Any]:
     status = load_yaml(root, STATUS_PATH, "current_product_status")
     manifest = load_yaml(root, MANIFEST_PATH, "product_workspace_manifest")
     result = load_yaml(root, RESULT_PATH, "public_foundation_result")
-    validate_contract_data(root, contract)
+    validate_contract_data(root, contract, identity)
     validate_expression_baseline(root, contract)
     validate_core_numbers(root, contract)
     validate_identity_data(identity)
     validate_topics_data(root, topics)
     validate_cases(cases, identity)
     validate_status_and_manifest(root, status, manifest)
+    validate_workflow_registration(root)
     validate_result(root, result)
     return {
         "task_id": TASK_ID,
@@ -1899,7 +2392,7 @@ def run_selftest() -> dict[str, Any]:
         "user_input_may_override_server_scope"
     ] = True
     expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract),
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_SCOPE_OVERRIDE_POLICY",
     )
 
@@ -1908,7 +2401,7 @@ def run_selftest() -> dict[str, Any]:
         "organization_id"
     )
     expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract),
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_SCOPE_DIMENSIONS",
     )
 
@@ -1917,8 +2410,17 @@ def run_selftest() -> dict[str, Any]:
         "authorization_ref"
     )
     expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract),
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PRECISE_FACT_METADATA",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["brand_fact_contract"]["channels"][0]["required_metadata"].remove(
+        "source_store_id"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_NARRATIVE_FRAGMENT_METADATA",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -1926,7 +2428,7 @@ def run_selftest() -> dict[str, Any]:
         "composition_plan_ref"
     )
     expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract),
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PLAN_REQUIRED_FIELDS",
     )
 
@@ -1938,8 +2440,36 @@ def run_selftest() -> dict[str, Any]:
     )
     prepare_contract["request_example"].pop("confirmation_evidence")
     expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract),
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_PREPARE_REQUEST_EXAMPLE_FIELDS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["request_example"]["confirmation_evidence"][
+        "authorization_refs"
+    ] = ["AUTH-SIM-NOT-REGISTERED"]
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_CONFIRMATION_GRANT",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["response_examples"]["canonical_composition_plan"]["references"][
+        "selected_component_refs"
+    ] = []
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
+        "E_PREPARE_PLAN_REFERENCE_FIELDS",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -1947,7 +2477,7 @@ def run_selftest() -> dict[str, Any]:
         "(G1V11|RCV2)-[A-Z0-9-]+"
     )
     expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract),
+        lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_USER_OUTPUT_PATTERNS",
     )
 
@@ -1978,6 +2508,45 @@ def run_selftest() -> dict[str, Any]:
         "E_SIM_MAKER_GRANT:ACCOUNT-DIYU-HQ-OFFICIAL",
     )
 
+    mutated_identity = copy.deepcopy(identity)
+    mutated_identity["organizations"][0]["tenant_id"] = "TENANT-OTHER"
+    expect_failure(lambda: validate_identity_data(mutated_identity), "E_ORG_TENANT_REF")
+
+    mutated_identity = copy.deepcopy(identity)
+    mutated_identity["content_accounts"][0]["store_id"] = "STORE-DIYU-HZ-BINJIANG"
+    expect_failure(
+        lambda: validate_identity_data(mutated_identity),
+        "E_ACCOUNT_STORE_ORGANIZATION:ACCOUNT-DIYU-HQ-OFFICIAL",
+    )
+
+    mutated_identity = copy.deepcopy(identity)
+    product_account = next(
+        account
+        for account in mutated_identity["content_accounts"]
+        if account["account_id"] == "ACCOUNT-DIYU-PRODUCT-LEAD"
+    )
+    product_account["confirmation_routes"][1]["approval_mode"] = "ANY_OF"
+    expect_failure(
+        lambda: validate_identity_data(mutated_identity),
+        "E_CONFIRMATION_MODE:ACCOUNT-DIYU-PRODUCT-LEAD:safety_quality_testing_supplier_responsibility",
+    )
+
+    mutated_identity = copy.deepcopy(identity)
+    mutated_identity["authorization_grants"][0]["permitted_content_account_ids"] = [
+        "ACCOUNT-DIYU-SZ-PARK"
+    ]
+    expect_failure(
+        lambda: validate_identity_data(mutated_identity),
+        "E_AUTHORIZATION_TARGET_SCOPE:AUTH-SIM-001:ACCOUNT-DIYU-SZ-PARK",
+    )
+
+    mutated_identity = copy.deepcopy(identity)
+    mutated_identity["authorization_grants"][0]["valid_from"] = "2027-01-01T00:00:00Z"
+    expect_failure(
+        lambda: validate_identity_data(mutated_identity),
+        "E_AUTHORIZATION_STATE:AUTH-SIM-001",
+    )
+
     mutated_topics = copy.deepcopy(topics)
     for category in mutated_topics["categories"]:
         category["internal_product_ids"] = [
@@ -2005,6 +2574,16 @@ def run_selftest() -> dict[str, Any]:
     positive_validate = next(
         case for case in mutated_cases if case["case_id"] == "PF-POS-005"
     )
+    positive_validate["input"]["candidate_user_visible_surfaces"]["title"] = (
+        "required_fact_missing"
+    )
+    positive_validate["input"]["internal_identifier_leak"] = False
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
     positive_validate["input"]["verified_precise_facts"][0][
         "applicable_content_account_ids"
     ] = ["ACCOUNT-DIYU-FOUNDER"]
@@ -2024,6 +2603,25 @@ def run_selftest() -> dict[str, Any]:
     )
     positive_validate["input"]["verified_precise_facts"][0]["valid_until"] = (
         "2026-07-13T23:59:59Z"
+    )
+    positive_validate["input"]["evaluation_time"] = "2020-01-01T00:00:00Z"
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["verified_precise_facts"][0]["authorization_ref"] = (
+        "AUTH-SIM-NOT-REGISTERED"
+    )
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["verified_precise_facts"][0]["fact_kind"] = (
+        "MODEL_INFERENCE"
     )
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
@@ -2077,7 +2675,24 @@ def run_selftest() -> dict[str, Any]:
             "E_ASSET_LIVE_DIGEST:ACTIVE_COMPONENTS",
         )
 
-    return {"selftest_cases": 20, "result": "PASS"}
+    with tempfile.TemporaryDirectory(
+        prefix="product-foundation-workflow-registration-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        destination = temp_root / WORKFLOW_PATH
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ROOT / WORKFLOW_PATH, destination)
+        workflow_text = destination.read_text(encoding="utf-8")
+        destination.write_text(
+            workflow_text.replace(WORKFLOW_REGISTRATION_SNIPPETS[0], "", 1),
+            encoding="utf-8",
+        )
+        expect_failure(
+            lambda: validate_workflow_registration(temp_root),
+            "E_WORKFLOW_REGISTRATION",
+        )
+
+    return {"selftest_cases": 32, "result": "PASS"}
 
 
 def parse_args() -> argparse.Namespace:
