@@ -238,6 +238,12 @@ def git(repo: Path, arguments: Sequence[str]) -> subprocess.CompletedProcess[str
     return subprocess.run(["git", *arguments], cwd=repo, check=False, capture_output=True, text=True, encoding="utf-8")
 
 
+def external_paths_when_package_changes(changed_paths: set[str]) -> tuple[str, ...]:
+    if not any(path.startswith(ALLOWED_ROOT) for path in changed_paths):
+        return ()
+    return tuple(sorted(path for path in changed_paths if not path.startswith(ALLOWED_ROOT)))
+
+
 class PackageChecker:
     def __init__(self, flow: Doc, mapping: Doc, journeys: Doc, result: Doc, repo: Path, root: Path) -> None:
         self.flow = flow
@@ -720,9 +726,8 @@ class PackageChecker:
             if result.returncode != 0:
                 self.error("A12_GIT_SCOPE", result.stderr.strip() or "git scope check failed")
             changed.update(line for line in result.stdout.splitlines() if line)
-        for changed_path in changed:
-            if not changed_path.startswith(ALLOWED_ROOT):
-                self.error("A12_WRITE_SCOPE", f"changed path is outside the exclusive root: {changed_path}")
+        for changed_path in external_paths_when_package_changes(changed):
+            self.error("A12_WRITE_SCOPE", f"package 4 is mixed with an external changed path: {changed_path}")
         if git(self.repo, ("merge-base", "--is-ancestor", BASELINE, "HEAD")).returncode != 0:
             self.error("A12_BASELINE", "the exact r1 baseline must remain an ancestor of HEAD")
         for relative, expected_hash in PINNED_CORE_FILES.items():
@@ -839,6 +844,18 @@ def selftest(flow: Doc, mapping: Doc, journeys: Doc, result: Doc, repo: Path, ro
         targeted = doc(changed_result, "targeted_rereviews", "changed result")
         targeted["reviews"] = items(targeted, "reviews", "changed targeted rereviews")[:1]
         expect("MISSING_TARGETED_REVIEW", flow, mapping, journeys, changed_result, "S07_REVIEW_ROLES")
+    scope_cases = (
+        ("PACKAGE_ONLY_SCOPE", {f"{ALLOWED_ROOT}{FLOW_FILE}"}, ()),
+        (
+            "PACKAGE_WITH_EXTERNAL_SCOPE",
+            {f"{ALLOWED_ROOT}{FLOW_FILE}", "15_successor_package/change.json"},
+            ("15_successor_package/change.json",),
+        ),
+        ("SUCCESSOR_ONLY_SCOPE", {"15_successor_package/change.json"}, ()),
+    )
+    for name, changed_paths, expected_external in scope_cases:
+        if external_paths_when_package_changes(changed_paths) != expected_external:
+            failures.append(f"SELFTEST_{name}: conditional package write scope differs")
     return tuple(failures)
 
 
