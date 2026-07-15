@@ -139,6 +139,8 @@ UNREGISTERED_SCOPE_MARKERS = (
     "成都",
     "重庆",
     "昆明",
+    "八家门店",
+    "蒋书宁",
 )
 
 # These headings were manually selected as headquarters-authored narrative candidates.
@@ -456,7 +458,7 @@ def materialize_precise_facts() -> list[dict[str, Any]]:
         ),
         precise_fact(
             "BD-FACT-006",
-            "STATUS",
+            "STOCK",
             {"affected_sample_count": 12, "color": "雾蓝", "size_cm": 130, "state": "PAUSED_SHIPMENT"},
             57,
             59,
@@ -494,7 +496,7 @@ def materialize_precise_facts() -> list[dict[str, Any]]:
         ),
         precise_fact(
             "BD-FACT-009",
-            "STATUS",
+            "STOCK",
             {"color": "藏青", "size_cm": 110, "state": "OUT_OF_STOCK", "store": "武汉江汉店"},
             63,
             79,
@@ -591,6 +593,7 @@ def materialize_cases() -> list[dict[str, Any]]:
         {"acceptance": "PKG3-A06", "case_id": "not_yet_valid_authorization_grant", "expected_pass": False, "mutation": "DEFER_READY_GRANT"},
         {"acceptance": "PKG3-A06", "case_id": "revoked_fact_authorization_state", "expected_pass": False, "mutation": "REVOKE_READY_FACT_AUTHORIZATION_STATE"},
         {"acceptance": "PKG3-A06", "case_id": "expired_fact_validity", "expected_pass": False, "mutation": "EXPIRE_READY_FACT_VALIDITY"},
+        {"acceptance": "PKG3-A07", "case_id": "unsupported_fact_kind", "expected_pass": False, "mutation": "SET_UNSUPPORTED_FACT_KIND"},
         {"acceptance": "PKG3-A06", "case_id": "revoked_direct_use", "expected_pass": False, "mutation": "MAKE_REVOKED_RUNTIME_CONSUMABLE"},
         {"acceptance": "PKG3-A06", "case_id": "expired_direct_use", "expected_pass": False, "mutation": "MAKE_EXPIRED_RUNTIME_CONSUMABLE"},
         {"acceptance": "PKG3-A06", "case_id": "conflict_direct_use", "expected_pass": False, "mutation": "MAKE_CONFLICT_RUNTIME_CONSUMABLE"},

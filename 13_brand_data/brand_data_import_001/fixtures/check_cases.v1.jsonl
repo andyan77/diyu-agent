@@ -11,6 +11,7 @@
 {"acceptance":"PKG3-A06","case_id":"not_yet_valid_authorization_grant","expected_pass":false,"mutation":"DEFER_READY_GRANT"}
 {"acceptance":"PKG3-A06","case_id":"revoked_fact_authorization_state","expected_pass":false,"mutation":"REVOKE_READY_FACT_AUTHORIZATION_STATE"}
 {"acceptance":"PKG3-A06","case_id":"expired_fact_validity","expected_pass":false,"mutation":"EXPIRE_READY_FACT_VALIDITY"}
+{"acceptance":"PKG3-A07","case_id":"unsupported_fact_kind","expected_pass":false,"mutation":"SET_UNSUPPORTED_FACT_KIND"}
 {"acceptance":"PKG3-A06","case_id":"revoked_direct_use","expected_pass":false,"mutation":"MAKE_REVOKED_RUNTIME_CONSUMABLE"}
 {"acceptance":"PKG3-A06","case_id":"expired_direct_use","expected_pass":false,"mutation":"MAKE_EXPIRED_RUNTIME_CONSUMABLE"}
 {"acceptance":"PKG3-A06","case_id":"conflict_direct_use","expected_pass":false,"mutation":"MAKE_CONFLICT_RUNTIME_CONSUMABLE"}

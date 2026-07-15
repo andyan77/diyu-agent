@@ -43,9 +43,6 @@ TRUST_REVIEW_PATH = PACKAGE_ROOT / "review/source_fact_authorization_review.v1.y
 EXPRESSION_REVIEW_PATH = PACKAGE_ROOT / "review/brand_expression_consumability_review.v1.yaml"
 REVIEW_REQUEST_PATH = PACKAGE_ROOT / "review/execution_review_request.v1.md"
 
-ALLOWED_FACT_KINDS = frozenset(
-    {"SKU", "SPECIFICATION", "PRICE", "STOCK", "TIME_POINT", "STATUS", "AUTHORIZATION", "REVOCATION"}
-)
 READY_STATE = "READY_FOR_PACKAGE_5_REVIEW"
 NON_CONSUMABLE_STATES = frozenset(
     {
@@ -185,6 +182,12 @@ def authorization_grants(bundle: Bundle) -> dict[str, dict[str, Any]]:
 
 def account_organizations(bundle: Bundle) -> dict[str, str]:
     return {item["account_id"]: item["organization_id"] for item in bundle.identity["content_accounts"]}
+
+
+def allowed_fact_kinds(bundle: Bundle) -> set[str]:
+    channels = bundle.contract["brand_fact_contract"]["channels"]
+    precise_channel = next(channel for channel in channels if channel["channel_id"] == "VERIFIED_PRECISE_FACT")
+    return {str(value) for value in precise_channel["fact_kinds"]}
 
 
 def parse_temporal(value: Any, *, end_of_day: bool = False) -> datetime | None:
@@ -470,6 +473,7 @@ def validate_facts(bundle: Bundle, errors: list[str]) -> None:
     }
     organizations, stores, accounts = registered_identifiers(bundle)
     account_orgs = account_organizations(bundle)
+    contract_fact_kinds = allowed_fact_kinds(bundle)
     grants = authorization_grants(bundle)
     seen_ids: set[str] = set()
     for record in bundle.facts:
@@ -495,7 +499,7 @@ def validate_facts(bundle: Bundle, errors: list[str]) -> None:
         source_spec = next(item for item in materialize.SOURCES if item.source_id == source_id)
         if record.get("source_sha256") != source_spec.sha256:
             errors.append(f"{label}: source digest mismatch")
-        if record.get("fact_kind") not in ALLOWED_FACT_KINDS:
+        if record.get("fact_kind") not in contract_fact_kinds:
             errors.append(f"{label}: unsupported precise fact kind")
         if record.get("value") is None or record.get("effective_at") is None:
             errors.append(f"{label}: precise fact lacks value or effective time")
@@ -756,6 +760,8 @@ def mutate_case(bundle: Bundle, mutation: str) -> None:
         ready_fact["authorization_state"] = "REVOKED"
     elif mutation == "EXPIRE_READY_FACT_VALIDITY":
         ready_fact["valid_until"] = "2026-07-14"
+    elif mutation == "SET_UNSUPPORTED_FACT_KIND":
+        ready_fact["fact_kind"] = "STATUS"
     elif mutation == "MAKE_REVOKED_RUNTIME_CONSUMABLE":
         ready_fact["status"] = "REVOKED"
         ready_fact["revocation_ref"] = "REVOCATION-TEST"
