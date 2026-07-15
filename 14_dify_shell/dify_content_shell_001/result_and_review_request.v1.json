@@ -1,7 +1,7 @@
 {
   "schema_version": "v1.0",
   "task_id": "DIYU_DIFY_CONVERSATION_SHELL_001",
-  "candidate_state": "READY_FOR_TWO_INDEPENDENT_REVIEWS",
+  "candidate_state": "TWO_INDEPENDENT_REVIEWS_PASSED_PENDING_REMOTE_CHECKS",
   "success_terminal_when_reviews_and_remote_checks_pass": "PASS_DIFY_CONVERSATION_SHELL_PENDING_PACKAGE_7",
   "baseline_commit": "95b8b1700b7e96b1d2383465713bef8c36e7f6cb",
   "branch": "agent/diyu-dify-conversation-shell-001",
@@ -26,7 +26,10 @@
     "optimized_check_exit_code": 2,
     "optimized_selftest_exit_code": 2,
     "ruff": "PASS",
-    "mypy_strict": "PASS"
+    "mypy_strict": "PASS",
+    "code_review_automated_checks": "PASS_5_OF_5",
+    "security_review_automated_checks": "PASS_4_OF_5_RLS_NOT_APPLICABLE",
+    "gitleaks": "PASS_NO_LEAKS"
   },
   "review_requests": [
     {
@@ -104,7 +107,38 @@
     "release_ready": false,
     "production_ready": false
   },
-  "independent_reviews": "PENDING",
+  "independent_reviews": [
+    {
+      "review_id": "NOVICE_EXPERIENCE_AND_MULTI_CANDIDATE_REVIEW",
+      "reviewer_identity": "codex-independent-novice-experience-reviewer",
+      "reviewer_session": "/root/novice_experience_review",
+      "review_run_id": "NOVICE-UX-a5ecdc4-20260715T094551Z",
+      "reviewed_commit": "a5ecdc4a8231c144f043074ff8d5b889d258b71d",
+      "score": 94,
+      "verdict": "PASS",
+      "blockers": [],
+      "record": "14_dify_shell/dify_content_shell_001/reviews/novice_experience/review-output-2026-07-15-025016.md"
+    },
+    {
+      "review_id": "ARCHITECTURE_AND_TRUST_BOUNDARY_REVIEW",
+      "reviewer_identity": "codex-independent-architecture-trust-reviewer",
+      "reviewer_session": "/root/architecture_trust_review",
+      "review_run_id": "DIYU-PKG4-ARCHTRUST-a5ecdc4-20260715-01",
+      "reviewed_commit": "a5ecdc4a8231c144f043074ff8d5b889d258b71d",
+      "score": 96,
+      "verdict": "PASS",
+      "blockers": [],
+      "record": "14_dify_shell/dify_content_shell_001/reviews/architecture_trust/review-output-2026-07-15-025016.md"
+    }
+  ],
+  "non_blocking_findings": [
+    {
+      "finding_id": "GOV-001",
+      "severity": "LOW",
+      "blocks_current_package": false,
+      "disposition": "DEFERRED_TO_PACKAGE_7_PRODUCT_COPY"
+    }
+  ],
   "remote_checks": "NOT_RUN_BEFORE_PUSH",
   "merge_authorized": false
 }
