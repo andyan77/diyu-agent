@@ -1,0 +1,42 @@
+# GATE1_V11_SUCCESSOR_LONGRUN_001 · 执行授权记录 v1.1
+schema: execution_authorization.v1.1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+prompt_revision: r1
+status: AUTHORIZED_ACTIVE          # 非 PENDING；项目发起人已授权立即执行
+authorized_executor:
+  platform: Claude Code
+  model_display_name: Fable 5
+  model_id: claude-fable-5
+  identity_evidence: 平台运行时自报模型标识（system 环境声明），未读取 ~/.claude/settings.json、凭据或隐藏配置
+authorization_source:
+  - 项目发起人会话内正式执行授权消息（2026-07-14，指定 Claude Code Fable 5 为唯一获授权执行编排方）
+  - source_execution_prompt.r1.md（逐字冻结于本目录）
+source_prompt_sha256: 0ea18c0e59f95e21f515092622fe02b6328e4433840d1106f4ed9e5de27b8eea
+source_baseline_commit: b4c40beb509d81db30b497abf38af1da6dc797da
+task_branch: agent/gate1-v1-1-successor-longrun
+task_workspace: /home/diyu/worktrees/gate1-longrun-001
+
+allowed_write_surface:
+  - controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/**
+  - controlled_content_generator_v2_001/generator_v3_successor_001/**
+
+forbidden_surface_summary:
+  - 全部 P1/P2/P3/P4 历史目录与 p5_p6_300_baseline_scale_and_freeze_001/**
+  - current_gate1_owner.v0.1.yaml、ci/checkers/**、.github/workflows/**、AGENTS.md、README.md、project-infra/**
+  - 公共基础、品牌事实、内容编排、Dify、检索、部署目录
+  - 旧120原文、86历史候选、路线60黄金答案、当前组件基座
+  - 原主工作区、质量证据工作区、公共基础工作区、产品化执行包1-10
+  - 密钥、生产配置、外部服务、外部付费模型接口
+
+remote_permissions:
+  push_task_branch: allowed
+  draft_pr: allowed_stacked_only   # base=agent/gate1-v1-1-300-quality-baseline, 标记不得合并
+  merge_or_release: forbidden
+
+supersedes:
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/contract/longrun_execution_contract.v1.0.md
+    location: 原主工作区未跟踪草案（本任务不读写不清理）
+    disposition: 冲突内容作废（模型锁定/旧基线/提交自指/旧P5P6写入权/过重角色治理）
+  - path: controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/contract/execution_authorization.v1.0.yaml
+    location: 原主工作区未跟踪草案（本任务不读写不清理）
+    disposition: 冲突内容作废；不再写 PENDING 启动令

@@ -1,0 +1,92 @@
+# GATE1_V11_SUCCESSOR_LONGRUN_001 · 冻结输入清单 frozen inputs
+# 全部摘要于任务工作区从来源提交 b4c40beb509d81db30b497abf38af1da6dc797da 检出后重新计算，
+# 并与 source_execution_prompt.r1.md §3 期望值逐一比对：18/18 一致。
+schema: frozen_inputs.v1.1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+source_commit: b4c40beb509d81db30b497abf38af1da6dc797da
+verified_at_workspace: /home/diyu/worktrees/gate1-longrun-001
+verification_method: sha256sum recomputed in task worktree; compared against execution prompt expected values
+verification_result: 18_of_18_match
+readonly: true
+
+core_caliber:
+  positive_target: 240
+  abnormal_target: 60
+  total_target: 300
+  reference_120_frozen_stock: 120
+  historical_component_candidate_stock: 86
+
+anchors:
+  v1_1_standard:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/diyu_content_composition_standard.v1.1.md
+    sha256: 022fc9b96919233e6f5268f5f9d0722b592914cc8919b5d1628dd3600a494542
+  v1_1_standard_contract:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/standard/v1_1_standard_contract.v0.1.yaml
+    sha256: cc5d447f86987c2df2cfb1ef801a48e925975e29b974b847de22ea8d0dea7e7d
+  reference_120_dispositions:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/content/reference_120_final_dispositions.v0.1.jsonl
+    sha256: d4798e9847f9e4800676f002c46bb431e03d2e4763b07c91685f7962f7525ed0
+    records: 120
+  route_60_gold:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/route/route_60_gold_answers.v0.1.jsonl
+    sha256: f87d984d1780423e7ace0d78c54ba40e97ab5b48c39950f691c7ffca6652e054
+    records: 60
+  active_components:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+    sha256: 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    records: 68
+  active_control_rules:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+    sha256: 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+    records: 8
+  active_edges:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+    sha256: de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    records: 85
+  active_ab_paths:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+    sha256: 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+    records: 20
+  active_generator_registry:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/active_gate1_generator_registry.v0.1.yaml
+    sha256: 46b83a926efaceb43010278bc33156a587dc7d38361dd8a149a5e1b96ecbff7a
+  current_author_instruction:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p4_author_output_contract_recovery_001/contract/controlled_author_instruction.v1.0.md
+    sha256: 8ff9ca749cdb6dd94c0812975012abd66642896e41e8e2f101178183ace66923
+  quality_stop:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/result/production_quality_gate_stop.v1.0.yaml
+    sha256: 4248e9ab0466f0e6dfa70f36f14dfd78ba79d6ea59028cccb94181a67853bcd0
+  quality_review:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/review/production/review_result.v1.0.yaml
+    sha256: e485f19ac696aef6ff68f75740dca8190db4a2e6c4387637bb2d3fedeec5266b
+  first_outputs:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/production/positive_first_outputs.v1.0.jsonl
+    sha256: e542effe6ac5a0455020117ce8ec66df814402f41222c3ec5441f6e2b188bc63
+    records: 211
+  failure_records:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/candidate/production_failures.v1.0.jsonl
+    sha256: 8cc8456c6e0fca8913ed69755c26c40797aeb404bfebfd97404e11bb020f9b19
+    records: 56
+  approved_references:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/production/reference_approved.v1.0.jsonl
+    sha256: 508a2ece5c3ea8d0fff856af79aa0df8f943174873ea8576aa098330bee4a0dd
+    records: 29
+  adjudicated_triage:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/review/production/adjudicated_triage.v1.0.jsonl
+    sha256: a0fba185500c7c2eef2840b8112a5f233ea2c581f2754a0f6fb4b9ad2f68b56c
+    records: 211
+  route_comparisons:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/route/route_comparisons.v1.0.jsonl
+    sha256: 2551b0d243ee80c8f13ff56b0617f3b1a7990095caafd385178d12abe3e6396d
+    records: 60
+  route_result:
+    path: controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/route/route_result.v1.0.yaml
+    sha256: 0390b7027bcdd8ff8eed58156e1b3336eb279d51c0512b1545b24191429c1dee
+
+p5_p6_full_tree_manifest:
+  path: controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/freeze/p5_p6_full_tree_manifest.v1.1.tsv
+  sha256: 65a44a14e3bcf22a9b76510fd3023cc591d66c1f9520f44624a48999392ae02b
+  files_covered: 66
+  format: "sha256 <TAB> bytes <TAB> path (sorted by path)"
+  determinism: regenerated twice, byte-identical
+  note: 覆盖来源提交中整个 p5_p6_300_baseline_scale_and_freeze_001/**，逐文件只读摘要，确保请求、首次输出、审查、失败、路线和回执无选择性遗漏。
