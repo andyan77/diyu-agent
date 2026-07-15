@@ -25,7 +25,7 @@ REPO_ROOT = PACKAGE_ROOT.parents[1]
 TASK_ID = "DIYU_BRAND_FACT_RETRIEVAL_001"
 BASELINE_MASTER_COMMIT = "8475fdf1043e820f37c763b45ee680ea1a98b1e0"
 BUILD_AT = "2026-07-15T00:00:00Z"
-POLICY_VERSION = "pkg5-evidence-closed-filter-first-v1"
+POLICY_VERSION = "pkg5-evidence-closed-filter-first-v2"
 
 PUBLIC_CONTRACT = Path(
     "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml"
