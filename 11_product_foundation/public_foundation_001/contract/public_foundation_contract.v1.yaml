@@ -1,0 +1,475 @@
+public_foundation_contract:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  contract_id: DIYU-PUBLIC-FOUNDATION-001
+  owner: PUBLIC_FOUNDATION_001
+  lifecycle:
+    candidate_state: REVIEW_PENDING_PUBLIC_FOUNDATION
+    frozen_state: PUBLIC_FOUNDATION_FROZEN
+    frozen_state_requires:
+    - candidate_reviewed_by_two_independent_reviewers
+    - coordinator_decision_PASS_TO_MERGE
+    - protected_merge_commit_on_remote_master
+    - checker-compatibility_success_on_merged_master
+    - secret-scan_success_on_merged_master
+    branch_candidate_may_not_self_activate: true
+  implementation_boundary:
+    contract_only: true
+    http_service_implemented: false
+    database_schema_implemented: false
+    retrieval_pipeline_implemented: false
+    Dify_workflow_implemented: false
+    model_provider_called: false
+    deployment_implemented: false
+    continuous_deployment_implemented: false
+
+  expression_v1_baseline:
+    consumption_mode: REFERENCE_ONLY
+    assets_may_not_be_copied_to_brand_facts: true
+    assets:
+    - asset_id: ACTIVE_COMPONENTS
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+      count: 68
+      sha256: 83dd1a8d35149785ac8bb172700b79d6221e5a7331b210018699fabaa49bc8ae
+    - asset_id: ACTIVE_CONTROL_RULES
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_control_rules.v0.1.jsonl
+      count: 8
+      sha256: 5d0ded265a6be6d0f39d35d2f739239225211081db6d6c4e4df0c8dcc2f09386
+    - asset_id: ACTIVE_EDGES
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/component/active_gate1_edges.v0.1.jsonl
+      count: 85
+      sha256: de366eb50afe8a5a9362d3faa2a6a845af9c334683bdb9a8489cbfad2b2566f0
+    - asset_id: ACTIVE_AB_STRUCTURAL_PATHS
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+      count: 20
+      sha256: 4756971ef58ed472d0447f61f00bac7b7ef594117c43ecfb9fe3d7106c9631f3
+    - asset_id: GENERATOR_CONTRACT
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/gate1_generator_contract.v0.1.yaml
+      sha256: 67be34b2db8be54e5a81ef46c71367d196c12e29886dbcae62daf55a8d7518fa
+    - asset_id: GENERATOR_REGISTRY
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/generator/active_gate1_generator_registry.v0.1.yaml
+      sha256: 46b83a926efaceb43010278bc33156a587dc7d38361dd8a149a5e1b96ecbff7a
+    - asset_id: P2_FINAL_RESULT
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/result/p2_final_result.v0.1.yaml
+      sha256: 076bd9eb6c8ab67c0023bb454f6a82f16acecb284e896dc9029ef97582db5c3b
+    - asset_id: P3_OPEN_PROBE_RESULT
+      path: controlled_content_generator_v2_001/gate1_v1_1_001/p3_open_probe40_001/result/p3_open_probe40_result.v0.2.yaml
+      sha256: c06955256ef9190f5b89221c69417353791fbc7a4b0eb4f8dab0be2826b6fcb0
+    status:
+      generator_qualified: false
+      runtime_ready: false
+      production_ready: false
+
+  core_number_guard:
+    target_case_baseline:
+      count: 300
+      frozen: false
+      changed_or_harmed: false
+      second_inventory_created: false
+    frozen_reference_inventory:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/clean_120_reference_corpus_freeze_001/founder_reviewed_clean_120_reference_corpus.v1.0.jsonl
+      count: 120
+      sha256: b6f8fccdcc38407d4791e85631d4a6df7366861617eccca5c13de4d311bb8c91
+      changed_or_harmed: false
+    historical_component_inventory:
+      path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/b_channel_component_review_and_handoff_001/reviewed_reusable_component_registry.v0.4.jsonl
+      count: 86
+      sha256: de7bb3f3142a2076d88d92494ab512d31d125bb7b96b0ed232ac0122b354a601
+      changed_or_harmed: false
+    failed_quality_candidate:
+      pull_request: 15
+      head_commit: b4c40beb509d81db30b497abf38af1da6dc797da
+      classification: OPEN_DRAFT_FAILURE_EVIDENCE_NOT_APPROVED_BASELINE
+
+  trusted_scope_contract:
+    authority: SERVER_CONFIRMED_SCOPE
+    future_store: POSTGRESQL
+    required_dimensions:
+    - tenant_id
+    - brand_id
+    - organization_id
+    - store_ids
+    - login_principal_id
+    - allowed_content_account_ids
+    client_claims_are_hints_only: true
+    user_input_may_override_server_scope: false
+    Dify_user_id_is_trusted_login_identity: false
+    cross_tenant_access: FORBIDDEN
+    cross_store_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
+    cross_content_account_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
+    identity_contract_ref: ../identity/simulation_tenant.v1.yaml
+    real_identity_policy:
+      one_login_principal_per_real_person: true
+      shared_credentials_allowed: false
+      content_account_is_login_identity: false
+
+  intent_and_requirement_contract:
+    intents:
+    - intent_id: NORMAL_CHAT
+      user_label: 普通聊天
+      creates_composition_plan: false
+      writes_brand_fact: false
+      may_request_creation: false
+    - intent_id: FIND_INSPIRATION
+      user_label: 帮我找灵感
+      creates_composition_plan: false
+      writes_brand_fact: false
+      may_offer_directions: true
+    - intent_id: NEED_MORE_INFORMATION
+      user_label: 需要补充信息
+      creates_composition_plan: false
+      writes_brand_fact: false
+      returns_action_card: true
+    - intent_id: AWAITING_CONFIRMATION
+      user_label: 等待确认
+      creates_composition_plan: false
+      writes_brand_fact: false
+      requirement_status: DRAFT_SUMMARY
+    - intent_id: START_CREATION
+      user_label: 开始内容制作
+      creates_composition_plan: true
+      writes_brand_fact: false
+      required_requirement_status: CONFIRMED
+    - intent_id: REVISE_OUTPUT
+      user_label: 修改成品
+      creates_competing_composition_plan: false
+      writes_brand_fact: false
+      preserves_confirmed_facts_unless_reconfirmed: true
+    requirement_version:
+      required_fields:
+      - requirement_id
+      - requirement_version
+      - plain_language_summary
+      - tenant_id
+      - content_account_id
+      - topic_category_id
+      - target_platform
+      - confirmed_by_principal_id
+      - confirmed_at
+      allowed_statuses:
+      - DRAFT_SUMMARY
+      - CONFIRMED
+      - SUPERSEDED
+      prepare_requires_status: CONFIRMED
+      unconfirmed_requirement_may_enter_prepare: false
+
+  brand_fact_contract:
+    channels:
+    - channel_id: SCOPED_NARRATIVE_RETRIEVAL
+      future_owner: DIFY_KNOWLEDGE_BASE
+      purpose: find_relevant_narrative_fragments
+      required_metadata:
+      - fragment_id
+      - tenant_id
+      - source_ref
+      - applicable_organization_ids
+      - applicable_content_account_ids
+      - observed_at
+      - valid_until
+      - authorization_ref
+      may_grant_authorization: false
+      may_override_precise_fact: false
+      may_override_revocation: false
+    - channel_id: VERIFIED_PRECISE_FACT
+      future_owner: POSTGRESQL
+      purpose: authoritative_operational_fact
+      fact_kinds:
+      - SKU
+      - SPECIFICATION
+      - PRICE
+      - STOCK
+      - TIME_POINT
+      - AUTHORIZATION
+      - REVOCATION
+      required_metadata:
+      - fact_id
+      - tenant_id
+      - fact_kind
+      - value
+      - source_ref
+      - effective_at
+      - status
+      precedence_over_narrative_retrieval: true
+    precedence:
+    - newer_verified_precise_fact_over_older_precise_fact
+    - verified_precise_fact_over_retrieved_narrative
+    - revocation_over_prior_authorization
+    - narrower_confirmed_scope_over_broader_retrieved_text
+    non_fact_inputs:
+    - expression_component
+    - control_rule
+    - structural_path
+    - user_preference_without_confirmation
+    - model_inference
+    expression_asset_may_be_fact_or_authorization: false
+
+  canonical_composition_plan_contract:
+    object_name: CanonicalCompositionPlan
+    authority: EXPRESSION_SERVICE_PREPARE
+    is_independent_microservice: false
+    canonical_key_fields:
+    - tenant_id
+    - content_account_id
+    - requirement_id
+    - requirement_version
+    maximum_active_canonical_plans_per_key: 1
+    plan_revision_policy: NEW_REVISION_SUPERSEDES_PRIOR_REVISION
+    competing_plan_writers_forbidden:
+    - DIFY
+    - RETRIEVAL_LAYER
+    - GENERATOR
+    required_references:
+    - trusted_scope_ref
+    - confirmed_requirement_ref
+    - retrieval_fragment_refs
+    - precise_fact_refs
+    - expression_baseline_ref
+    - selected_internal_content_product_id
+    - selected_component_refs
+    - selected_control_rule_refs
+    - selected_structural_path_ref
+    audience_body_allowed_in_plan: false
+
+  composition_workflow:
+    ordered_stages:
+    - stage: REQUIREMENT_SUMMARY
+      owner: DIFY
+      output: EDITABLE_PLAIN_LANGUAGE_SUMMARY
+    - stage: USER_CONFIRMATION
+      owner: USER_WITH_TRUSTED_LOGIN
+      output: CONFIRMED_REQUIREMENT_VERSION
+    - stage: PREPARE
+      owner: EXPRESSION_SERVICE
+      output_union:
+      - CANONICAL_COMPOSITION_PLAN
+      - ACTION_CARD
+    - stage: CANDIDATE_AUTHORING
+      owner: DIFY_MODEL_NODE
+      input: CANONICAL_COMPOSITION_PLAN_REFERENCE
+      may_add_facts: false
+      may_create_canonical_plan: false
+    - stage: VALIDATE
+      owner: EXPRESSION_SERVICE
+      output_union:
+      - PASS
+      - REVISE
+      - BLOCK
+    prepare_must_precede_candidate_authoring: true
+    candidate_authoring_must_precede_validate: true
+
+  delivery_contract:
+    success_object: EDITABLE_CONTENT_PRODUCTION_PACKAGE
+    success_required_fields:
+    - package_id
+    - plan_ref
+    - candidate_version
+    - content_account_id
+    - audience_surfaces
+    - used_fact_refs
+    - used_material_refs
+    - validation_decision_ref
+    action_card_types:
+    - COLLECT_FACT
+    - COLLECT_MATERIAL
+    - REQUEST_AUTHORIZATION
+    - INTERVIEW
+    - RESHOOT
+    - ANONYMIZE
+    - DEGRADE
+    - BLOCK
+    action_card_required_fields:
+    - action_card_id
+    - plan_key_or_requirement_ref
+    - plain_language_reason
+    - missing_or_invalid_refs
+    - next_action
+    action_card_may_contain_publishable_candidate: false
+    missing_input_may_be_filled_by_model: false
+
+  api_contracts:
+  - method: POST
+    path: /v1/content/prepare
+    implemented_in_this_package: false
+    request_required_fields:
+    - api_version
+    - request_id
+    - trusted_scope_ref
+    - confirmed_requirement
+    - scoped_retrieval_fragments
+    - verified_precise_facts
+    - expression_baseline_ref
+    response_union:
+    - CANONICAL_COMPOSITION_PLAN
+    - ACTION_CARD
+    trace_fields:
+    - request_id
+    - requirement_id
+    - requirement_version
+    - decision_id
+  - method: POST
+    path: /v1/content/validate
+    implemented_in_this_package: false
+    request_required_fields:
+    - api_version
+    - request_id
+    - trusted_scope_ref
+    - composition_plan_ref
+    - candidate
+    - actually_used_fact_refs
+    - actually_used_material_refs
+    response_union:
+    - PASS
+    - REVISE
+    - BLOCK
+    checks:
+    - fact_support
+    - authorization
+    - trusted_scope
+    - plan_consistency
+    - internal_identifier_leak
+  - method: GET
+    path: /healthz
+    implemented_in_this_package: false
+    future_semantics: PROCESS_IS_ALIVE
+    may_claim_dependency_readiness: false
+  - method: GET
+    path: /readyz
+    implemented_in_this_package: false
+    future_semantics: REQUIRED_DEPENDENCIES_AND_CONTRACTS_READY
+    current_response_ready: false
+
+  user_output_contract:
+    hidden_internal_identifiers:
+    - content_product_id
+    - component_id
+    - route_code
+    - raw_error_code
+    prohibited_patterns:
+    - 'CP[0-9]{2}'
+    - '(BNO|BRV|VGA|BCL|FC)-[0-9]{2}'
+    - 'E_[A-Z0-9_]+'
+    plain_language_reason_required: true
+    internal_identifiers_allowed_in_internal_trace: true
+
+  case_evidence_contract:
+    creates_second_case_inventory: false
+    append_only: true
+    case_id_is_stable: true
+    required_case_fields:
+    - case_id
+    - source_inventory_ref
+    - role
+    - visibility
+    - contamination_status
+    required_evidence_event_fields:
+    - event_id
+    - stage
+    - actor_identity
+    - occurred_at
+    - input_digest
+    - output_digest
+    - decision
+    allowed_visibility:
+    - OPEN_DEVELOPMENT
+    - SEALED_HIDDEN
+    - HISTORICAL_FAILURE
+    allowed_contamination_status:
+    - CLEAN
+    - CONTAMINATED_RETAINED_AS_EVIDENCE
+    - NOT_APPLICABLE
+    prior_event_mutation_allowed: false
+    failed_case_deletion_allowed: false
+    pull_request_15_may_be_approved_asset: false
+
+  module_ownership:
+    DIFY:
+      owns:
+      - normal_chat
+      - inspiration
+      - requirement_clarification
+      - requirement_confirmation_ui
+      - candidate_authoring_model_call
+      - result_display
+      - user_requested_revision
+      does_not_own:
+      - trusted_identity
+      - precise_fact_truth
+      - canonical_composition_plan
+      - authorization_truth
+    EXPRESSION_SERVICE:
+      owns:
+      - component_rule_and_path_references
+      - prepare
+      - canonical_composition_plan
+      - validate
+      does_not_own:
+      - brand_fact_truth
+      - trusted_login_identity
+    BRAND_FACT_MODULE:
+      owns:
+      - scoped_narrative_material
+      - verified_precise_fact_import_assets
+      does_not_own:
+      - expression_components
+      - canonical_composition_plan
+    POSTGRESQL:
+      future_owns:
+      - trusted_identity_scope
+      - verified_precise_facts
+      not_implemented_in_this_package: true
+    DIFY_KNOWLEDGE_BASE:
+      future_owns:
+      - scoped_narrative_retrieval
+      must_not_own:
+      - identity
+      - authorization
+      - current_price
+      - current_stock
+      not_implemented_in_this_package: true
+
+  downstream_package_boundaries:
+  - package_id: PACKAGE_2_GENERATOR_INTERFACE
+    exclusive_root: 12_expression_service/expression_runtime_adapter_001
+    purpose: generator_http_interface_and_expression_runtime_adapter
+    state_before_foundation_master_green: LOCKED
+  - package_id: PACKAGE_3_BRAND_DATA
+    exclusive_root: 13_brand_data/brand_data_import_001
+    purpose: brand_narrative_and_precise_fact_import_assets
+    state_before_foundation_master_green: LOCKED
+  - package_id: PACKAGE_4_DIFY_SHELL
+    exclusive_root: 14_dify_shell/dify_content_shell_001
+    purpose: normal_chat_and_content_creation_conversation_shell
+    state_before_foundation_master_green: LOCKED
+  common_contract_owner: PACKAGE_1_PUBLIC_FOUNDATION_ONLY
+  downstream_may_create_parallel_public_model: false
+
+  review_protocol:
+    author_identity: codex-execution-primary
+    final_merger_identity: codex-execution-primary
+    required_reviews:
+    - review_id: ARCHITECTURE_CONSUMABILITY_REVIEW
+      scope: architecture_downstream_consumability_simplicity_user_interaction
+      minimum_score: 90
+    - review_id: TRUST_FACT_SAFETY_REVIEW
+      scope: identity_tenant_store_fact_authorization_anti_false_green
+      minimum_score: 90
+    coordinator_review_required: true
+    coordinator_minimum_score: 90
+    reviewer_must_not_be_author_or_final_merger: true
+    reviewer_instances_must_be_distinct: true
+    material_disagreement_requires_third_review: true
+    merge_decision: PASS_TO_MERGE
+
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false

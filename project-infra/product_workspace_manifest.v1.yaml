@@ -1,0 +1,59 @@
+product_workspace_manifest:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  repository: andyan77/diyu-agent
+  integration_branch: master
+  single_current_owner:
+    owner_id: PUBLIC_FOUNDATION_001
+    root: 11_product_foundation/public_foundation_001
+    contract: 11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml
+    checker: ci/checkers/check_product_foundation.py
+  source_anchors:
+  - kind: execution_prompt
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/tasks/DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001/execution_prompt.v0.md
+    sha256: e66cfb7d15933835aa0687c2742957980b61631444938724206ea49452a27da2
+  - kind: master_planning
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/planning/master_planning_baseline_v5.md
+    sha256: 59b994f10fd9da3d1b9a2d7c4bfc7d8eb52ec6eaa4aa842062643d4600398f5f
+  - kind: coordinator_roadmap
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/planning/coordinator_execution_roadmap.md
+    sha256: cc39164783dff5f3762dab9e88426c59cd6feac2be99c20d5af4186f5221e31b
+  - kind: simulation_reference
+    path: /mnt/c/Users/Administrator/Documents/笛语agent/笛语童装专属数据库数据/第八批：11账号矩阵、人物岗位档案与30天连续事实记录.md
+    sha256: 3b4577c411ea34ce46db5e8fe13b0af3ce751dcc443a4db95f59a32a1ca923f9
+  current_roots:
+    public_contracts: 11_product_foundation/public_foundation_001
+    expression_v1: controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001
+    current_status: project-infra/current_product_status.v1.yaml
+  historical_roots:
+  - path: project-infra/current_workspace_status.yaml
+    authority: HISTORICAL_ONLY
+  - path: project-infra/workspace_manifest.yaml
+    authority: HISTORICAL_ONLY
+  - path: project-infra/canonical_source_digest_manifest.yaml
+    authority: HISTORICAL_ONLY
+  downstream_reserved_write_roots:
+  - package_id: PACKAGE_2_GENERATOR_INTERFACE
+    root: 12_expression_service/expression_runtime_adapter_001
+    owner: PACKAGE_2_ONLY
+    unlocked_when: PUBLIC_FOUNDATION_TREE_ON_MASTER_AND_REQUIRED_CHECKS_GREEN
+  - package_id: PACKAGE_3_BRAND_DATA
+    root: 13_brand_data/brand_data_import_001
+    owner: PACKAGE_3_ONLY
+    unlocked_when: PUBLIC_FOUNDATION_TREE_ON_MASTER_AND_REQUIRED_CHECKS_GREEN
+  - package_id: PACKAGE_4_DIFY_SHELL
+    root: 14_dify_shell/dify_content_shell_001
+    owner: PACKAGE_4_ONLY
+    unlocked_when: PUBLIC_FOUNDATION_TREE_ON_MASTER_AND_REQUIRED_CHECKS_GREEN
+  shared_model_ownership:
+    public_identifiers: PACKAGE_1_ONLY
+    trusted_scope_contract: PACKAGE_1_ONLY
+    fact_channel_contract: PACKAGE_1_ONLY
+    composition_plan_contract: PACKAGE_1_ONLY
+    central_checker_registration: PACKAGE_1_ONLY
+  forbidden_parallel_models:
+  - second_identity_model
+  - second_fact_authority_model
+  - second_canonical_composition_plan
+  - second_case_300_inventory
+  readiness_transition_authorized: false

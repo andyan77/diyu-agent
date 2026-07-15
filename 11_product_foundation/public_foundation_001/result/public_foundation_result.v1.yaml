@@ -1,0 +1,51 @@
+public_foundation_result:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
+  candidate_snapshot_digest: 73524bec6815d43654a52e15559be133b4eaa549dd20b06041abfc6574d6f262
+  candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
+  review_state: PENDING_INDEPENDENT_REVIEWS
+  reviewed_candidate_commit: null
+  independent_reviews: []
+  coordinator_decision: null
+  delivery_counts:
+    simulated_tenant_count: 1
+    simulated_login_principal_count: 1
+    simulated_content_account_count: 11
+    user_topic_category_count: 8
+    internal_content_product_count: 20
+    expression_component_count: 68
+    control_rule_count: 8
+    expression_edge_count: 85
+    ab_structural_path_group_count: 20
+    contract_case_count: 25
+  expression_baseline_digest_match: true
+  core_numbers_300_120_86_unchanged: true
+  second_case_300_inventory_created: false
+  http_service_implemented: false
+  database_schema_implemented: false
+  Dify_workflow_implemented: false
+  external_provider_call_count: 0
+  external_provider_audit_basis: NO_PROVIDER_ADAPTER_OR_CALL_PATH_IN_AUTHORIZED_DIFF
+  continuous_integration_extended: true
+  continuous_deployment_implemented: false
+  package_unlock:
+    current_candidate_state: LOCKED
+    unlock_condition: FOUNDATION_TREE_MERGED_TO_MASTER_AND_REQUIRED_CHECKS_GREEN
+    packages_after_condition:
+    - PACKAGE_2_GENERATOR_INTERFACE
+    - PACKAGE_3_BRAND_DATA
+    - PACKAGE_4_DIFY_SHELL
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false

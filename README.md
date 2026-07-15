@@ -1,23 +1,40 @@
-# 笛语领域通用数据库
+# 笛语智能体
 
-本工作区是笛语领域通用数据库 Codex 知识生成准备工作区。
+这是笛语智能体唯一业务主仓。当前主线是把已经验证过的表达能力，与可信身份、品牌资料、内容请求、编排和交付边界连接成一个可实施的产品。
 
-当前边界：
+## 当前已有
 
-- 当前不是 KE truth source。
-- 当前不是 CandidatePack。
-- 当前不是 RAG 或 DIFY 工作区。
-- 当前不允许 production、release、generation readiness 被置为 true。
-- W7 知识地图已完成并迁移为 canonical input copy。
-- 当前下一步是 `CODEX-KNOWLEDGE-GENERATION-CONTRACT-LOCK-001`。
+- 第一版表达基座：68 个激活组件、8 条控制规则、85 条适用关系、20 组甲乙结构路径；
+- 20 项内部内容产品及 8 类用户可理解的题材入口；
+- 受保护的远程自动检查与普通合并流程；
+- 公共基础合同：可信范围、模拟账号、事实双通道、唯一内容编排计划、准备和校验接口语义。
 
-后续顺序：
+第一版生成器尚未被判定合格，300 条质量基线尚未冻结。这里的“公共基础冻结”只允许后续执行包开始施工，不代表检索、Dify、运行服务、发布或生产已经就绪。
 
-1. contract lock
-2. brief pack
-3. pilot
-4. microbatch generation
-5. quality / dedupe / alignment
-6. CandidatePack eligibility split
+## 当前入口
 
-本工作区只承载 Codex 知识生成准备线的 source input copy、契约、brief、pilot、microbatch draft、质量对齐报告和 CandidatePack eligibility split 输出。它不拥有 KE truth source、Serving Projection、RAG context_bundle、DIFY workflow、runtime ledger 或 production release。
+- 当前产品状态：`project-infra/current_product_status.v1.yaml`
+- 当前工作区清单：`project-infra/product_workspace_manifest.v1.yaml`
+- 公共基础：`11_product_foundation/public_foundation_001/`
+- 表达基座：`controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/`
+
+旧的 `project-infra/current_workspace_status.yaml`、`workspace_manifest.yaml` 和 `canonical_source_digest_manifest.yaml` 是历史知识生产线证据，不再决定当前产品路线。
+
+## 后续模块
+
+公共基础进入远程 `master` 且必需检查通过后，才允许分别启动：
+
+1. 生成器普通接口和表达运行适配；
+2. 品牌叙事资料整理与少量精确事实导入；
+3. Dify 普通聊天和内容制作对话外壳。
+
+三个模块只消费同一套公共合同，不得分别发明身份、事实或内容编排模型。
+
+## 本地检查
+
+```bash
+python3 ci/checkers/check_product_foundation.py
+python3 ci/checkers/check_product_foundation.py --selftest
+```
+
+当前仓库没有 HTTP 服务、数据库表、Dify 工作流、模型调用或自动部署。本任务也不保存任何模拟登录密码。

@@ -1,0 +1,143 @@
+topic_product_mapping:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  mapping_kind: MANY_TO_MANY_USER_TOPIC_TO_INTERNAL_CONTENT_PRODUCT
+  user_selects_topic_not_internal_product_id: true
+  system_selects_one_primary_internal_product_per_confirmed_requirement: true
+  topic_is_not_permission_model: true
+  topic_is_not_new_content_product: true
+  internal_profile_source:
+    path: 07_microbatch_runs/scoped_content_microbatch_120_001/midbatch_320_001/controlled_composition_v2_001/content_product_profile_20_completion_001/content_product_profiles.v0.2.yaml
+    file_sha256: d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056
+    profile_count: 20
+  categories:
+  - topic_category_id: TOPIC-01
+    display_name: 真实工作与人物
+    plain_examples:
+    - 拍今天的一项真实工作
+    - 记录一个岗位怎样完成任务
+    - 讲一次团队协作或人物成长
+    internal_product_ids: [CP01, CP02, CP04, CP05, CP15, CP16, CP18, CP19]
+  - topic_category_id: TOPIC-02
+    display_name: 手艺、工艺与专业知识
+    plain_examples:
+    - 拍清一项手艺的完整过程
+    - 解释一个版型或面料判断
+    - 展示工具、动作和验证证据
+    internal_product_ids: [CP03, CP05, CP06, CP08, CP10, CP11, CP12, CP14]
+  - topic_category_id: TOPIC-03
+    display_name: 用户问题与理性选择
+    plain_examples:
+    - 回答一个真实顾客问题
+    - 说明什么情况不适合购买
+    - 复盘一次真实服务选择
+    internal_product_ids: [CP06, CP07, CP09, CP13, CP16, CP19]
+  - topic_category_id: TOPIC-04
+    display_name: 产品研发与验证
+    plain_examples:
+    - 讲一次设计取舍
+    - 比较两个产品版本
+    - 追踪一次验证或承诺
+    internal_product_ids: [CP08, CP10, CP11, CP12, CP19, CP20]
+  - topic_category_id: TOPIC-05
+    display_name: 穿搭与衣橱关系
+    plain_examples:
+    - 说明一件衣服在不同场景怎样穿
+    - 讲清适合和不适合的情况
+    - 组合现有衣橱里的几件商品
+    internal_product_ids: [CP07, CP09, CP13, CP16, CP18]
+  - topic_category_id: TOPIC-06
+    display_name: 商品质感与视觉审美
+    plain_examples:
+    - 用光线和动作展示材料纹理
+    - 用原声表现回弹和碰撞
+    - 比较前后版本的可见差异
+    internal_product_ids: [CP03, CP08, CP10, CP11, CP12, CP13, CP14, CP17]
+  - topic_category_id: TOPIC-07
+    display_name: 门店运营与空间经营
+    plain_examples:
+    - 记录商品到店后的处理过程
+    - 讲一次陈列调整或通道变化
+    - 复盘一项门店经营取舍
+    internal_product_ids: [CP01, CP02, CP04, CP15, CP16, CP17, CP19, CP20]
+  - topic_category_id: TOPIC-08
+    display_name: 城市门店与本地生活
+    plain_examples:
+    - 记录雨天或换季的门店日常
+    - 拍一段街区早班和本地服务
+    - 说明同一方案在不同门店的差异
+    internal_product_ids: [CP02, CP04, CP15, CP16, CP17, CP18, CP19]
+  internal_products:
+  - content_product_id: CP01
+    internal_label: 岗位任务VLOG
+    user_visible_id: false
+  - content_product_id: CP02
+    internal_label: 门店时段微纪录
+    user_visible_id: false
+  - content_product_id: CP03
+    internal_label: 单项手艺全过程
+    user_visible_id: false
+  - content_product_id: CP04
+    internal_label: 多岗位协作纪实
+    user_visible_id: false
+  - content_product_id: CP05
+    internal_label: 人物成长与职业史
+    user_visible_id: false
+  - content_product_id: CP06
+    internal_label: 专业判断切片
+    user_visible_id: false
+  - content_product_id: CP07
+    internal_label: 用户问题诊断室
+    user_visible_id: false
+  - content_product_id: CP08
+    internal_label: 工艺／面料／版型解构
+    user_visible_id: false
+  - content_product_id: CP09
+    internal_label: 适用边界与反选指南
+    user_visible_id: false
+  - content_product_id: CP10
+    internal_label: 证据与长期验证档案
+    user_visible_id: false
+  - content_product_id: CP11
+    internal_label: 产品诞生与设计取舍档案
+    user_visible_id: false
+  - content_product_id: CP12
+    internal_label: 产品迭代与版本日志
+    user_visible_id: false
+  - content_product_id: CP13
+    internal_label: 产品的生活与衣橱角色
+    user_visible_id: false
+  - content_product_id: CP14
+    internal_label: 物性影像与感官短片
+    user_visible_id: false
+  - content_product_id: CP15
+    internal_label: 商品到店生命周期
+    user_visible_id: false
+  - content_product_id: CP16
+    internal_label: 真实服务复盘
+    user_visible_id: false
+  - content_product_id: CP17
+    internal_label: 陈列换陈与空间实验
+    user_visible_id: false
+  - content_product_id: CP18
+    internal_label: 城市门店生活志
+    user_visible_id: false
+  - content_product_id: CP19
+    internal_label: 经营取舍与决策复盘
+    user_visible_id: false
+  - content_product_id: CP20
+    internal_label: 承诺—兑现追踪
+    user_visible_id: false
+  user_output_policy:
+    may_show_topic_display_name: true
+    may_show_plain_examples: true
+    may_show_internal_content_product_id: false
+    may_show_component_id: false
+    may_show_route_code: false
+    may_show_raw_error_code: false
+  invariants:
+    category_count: 8
+    internal_product_count: 20
+    every_category_maps_to_multiple_products: true
+    every_product_maps_to_multiple_categories: true
+    mapping_changes_fact_or_authorization_scope: false

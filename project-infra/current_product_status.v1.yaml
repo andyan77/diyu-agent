@@ -1,0 +1,64 @@
+current_product_status:
+  schema_version: v1.0
+  task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
+  product_name: Diyu Content Agent
+  repository_role: SINGLE_BUSINESS_REPOSITORY
+  current_owner: PUBLIC_FOUNDATION_001
+  baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
+  state_resolution:
+    candidate_state: REVIEW_PENDING_PUBLIC_FOUNDATION
+    master_green_state: PUBLIC_FOUNDATION_FROZEN
+    activation_requires:
+    - foundation_tree_merged_to_remote_master
+    - checker-compatibility_success
+    - secret-scan_success
+    may_not_self_activate_from_branch: true
+  expression_v1:
+    active_component_count: 68
+    active_control_rule_count: 8
+    active_edge_count: 85
+    ab_structural_path_group_count: 20
+    internal_content_product_count: 20
+    generator_qualified: false
+    runtime_ready: false
+  quality_baseline:
+    target_case_count: 300
+    target_baseline_frozen: false
+    frozen_reference_inventory_count: 120
+    historical_component_inventory_count: 86
+    changed_or_harmed_by_this_task: false
+    failure_evidence_pull_request: 15
+  downstream_unlock:
+    unlock_condition: PUBLIC_FOUNDATION_TREE_ON_MASTER_AND_REQUIRED_CHECKS_GREEN
+    package_2_generator_interface:
+      candidate_state: LOCKED
+      activated_state: ALLOWED_TO_START
+    package_3_brand_data:
+      candidate_state: LOCKED
+      activated_state: ALLOWED_TO_START
+    package_4_dify_shell:
+      candidate_state: LOCKED
+      activated_state: ALLOWED_TO_START
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false
+  historical_product_route_files:
+  - path: project-infra/current_workspace_status.yaml
+    sha256: f0ed9e1dffd9fdc0cae4358ae278607b0e2754aa70af88c9ff771ab048139294
+    authority: HISTORICAL_ONLY
+  - path: project-infra/workspace_manifest.yaml
+    sha256: 8d10d88790d9c7f1560d0f4d0d8ff65e2885a7bbac56f78ad920223350afaccc
+    authority: HISTORICAL_ONLY
+  - path: project-infra/canonical_source_digest_manifest.yaml
+    sha256: c6da3223e44c62e6ec9e653953c34e50a855c532b9c53814f2ede16c589c9c99
+    authority: HISTORICAL_ONLY
