@@ -4,14 +4,14 @@
   "review_scope": "NOVICE_EXPERIENCE_AND_NECESSARY_REGRESSION_ONLY",
   "reviewer_identity": "codex-independent-novice-experience-reviewer-r3",
   "reviewer_session": "/root/novice_experience_review",
-  "review_run_id": "NOVICE-R3-64e4291d-20260715T122420Z",
-  "reviewed_candidate_commit": "64e4291d5527fb70824aa5994c012e0af3e1842e",
-  "reviewed_snapshot_digest": "4807d8bafceb5e0aab66b210f79018eabc69f7729d4aabef0416774fb4fc78fb",
+  "review_run_id": "NOVICE-R3-9b0b2783-20260715T130406Z",
+  "reviewed_candidate_commit": "9b0b278342134e593508c63e4f935315c1d26e35",
+  "reviewed_snapshot_digest": "ee90007b4ec210d71c395fe50504ef04a15df6426bdbac45ed79f4f72d039d07",
   "reviewed_file_sha256": {
     "conversation_flow.version_neutral.v1.json": "9a31d9199f7e4ed99548308de08f2091c03c2ce84d871f239e4edfa6850a7ece",
     "state_action_mapping.v1.json": "c4ad73fa5b4f3c1bb22b9931b976e935a813c77ba0e1e2ed4eba0be239943ed1",
     "journeys.simulated.v1.json": "d353ff6158ca70b13aa12bb31fbd3d7c89f9df1c276845cd08ff2bb2fb9351ee",
-    "check_dify_content_shell.py": "9fcf2247a0c8ea6dcd3bcfcfe4d6770fe5873c49a6251c4fc443cb498dbb0e42"
+    "check_dify_content_shell.py": "652b4a5e4ea8f971f63c2d772e7d1ebd87f44dab238a4f49c4757fc82dc5bb0a"
   },
   "score": 96,
   "verdict": "PASS",
@@ -68,7 +68,8 @@
     "PKG4-A11": "PASS_DIRECT_PARAMETERIZED_JOURNEYS",
     "PKG4-A12": "PASS_ZERO_EXTERNAL_CALLS_AND_FALSE_READINESS",
     "PKG4-S01": "PASS_HEAVY_ENGINE_REMOVED",
-    "PKG4-S07": "PASS_FROZEN_CANDIDATE_NOT_SELF_APPROVED"
+    "PKG4-S07": "PASS_FROZEN_CANDIDATE_NOT_SELF_APPROVED",
+    "r3_scope_compatibility": "PASS_PACKAGE_ONLY_MIXED_REJECTED_AND_SUCCESSOR_ONLY_NOT_BLOCKED"
   },
   "human_candidate_difference_assessment": {
     "two_candidates": "PASS: 现场切入与问题切入的叙事入口和信息顺序不同。",
@@ -76,5 +77,79 @@
     "machine_score_reused": false
   },
   "findings": [],
-  "recommendation": "PASS；继续既定双审与Root合并批准门禁，本复审不授权合并。"
+  "recommendation": "PASS；当前冻结实现候选通过小白体验同轮续审，可更新既有r3证据；本复审不授权合并。",
+  "review_continuation": true,
+  "continuation_of_review_run_id": "NOVICE-R3-64e4291d-20260715T122420Z",
+  "execution_commands": [
+    {
+      "command": "python3 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py",
+      "exit_code": 1,
+      "result": "FAIL_DIFY_CONTENT_SHELL",
+      "errors": [
+        "S07_FROZEN_BINDING",
+        "S07_FROZEN_IMPLEMENTATION_CHANGED",
+        "S07_REVIEW_BINDING: novice_experience",
+        "S07_REVIEW_BINDING: architecture_trust"
+      ],
+      "classification": "EXPECTED_PENDING_EVIDENCE_REBIND_ONLY",
+      "implementation_blocker": false
+    },
+    {
+      "command": "python3 14_dify_shell/dify_content_shell_001/check_dify_content_shell.py --selftest",
+      "exit_code": 1,
+      "result": "FAIL_DIFY_CONTENT_SHELL",
+      "classification": "EXPECTED_PENDING_EVIDENCE_REBIND_BEFORE_SELFTEST_ENTRY",
+      "implementation_blocker": false
+    },
+    {
+      "command": "pure-memory validate and builtin selftest with pending targeted-rereview lifecycle",
+      "exit_code": 0,
+      "result": "PASS cases=18 visible_strings=82 builtin_selftest_failures=0"
+    },
+    {
+      "command": "python3 -O <checker> and python3 -O <checker> --selftest",
+      "exit_code": 2,
+      "result": "REFUSED_AS_REQUIRED"
+    }
+  ],
+  "conditional_scope_results": {
+    "package_4_only_changes": {
+      "external_paths_when_package_changes": [],
+      "outcome": "PASS"
+    },
+    "package_4_plus_external_mixed_changes": {
+      "external_paths_when_package_changes": [
+        "15_successor_package/change.json"
+      ],
+      "outcome": "FAIL_AS_REQUIRED"
+    },
+    "successor_package_only_changes": {
+      "external_paths_when_package_changes": [],
+      "outcome": "NOT_BLOCKED_AS_REQUIRED"
+    },
+    "actual_branch_external_paths_when_package_changes": []
+  },
+  "implementation_isolated_evidence": {
+    "method": "只读加载同一四文件，并在内存中使用待定向复审生命周期；未写入仓库",
+    "validation_errors": [],
+    "journey_case_count": 18,
+    "visible_string_count": 82,
+    "builtin_selftest_failures": []
+  },
+  "checker_change_assessment": {
+    "changed_implementation_files_since_prior_frozen_candidate": [
+      "check_dify_content_shell.py"
+    ],
+    "unchanged_experience_files": [
+      "conversation_flow.version_neutral.v1.json",
+      "state_action_mapping.v1.json",
+      "journeys.simulated.v1.json"
+    ],
+    "change_summary": "新增条件范围函数，并加入包4单独变化、包4与外部混改、只有后继包变化三个内置自测",
+    "regression_detected": false
+  },
+  "evidence_layer_status": {
+    "state": "APPROVED_FOR_REBIND_TO_CURRENT_FROZEN_CANDIDATE",
+    "old_binding_is_implementation_blocker": false
+  }
 }
