@@ -764,6 +764,36 @@ def downstream_workflow_step_lines(root: Path, step_name: str) -> tuple[str, ...
 def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
     """Require one fail-closed remote runner for each reserved package root."""
 
+    workflow = root / CI_WORKFLOW_PATH
+    if not workflow.is_file():
+        return False
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or not isinstance(document.get("jobs"), dict):
+        return False
+    job = document["jobs"].get("checker-compatibility")
+    if (
+        not isinstance(job, dict)
+        or "if" in job
+        or "continue-on-error" in job
+        or not isinstance(job.get("steps"), list)
+    ):
+        return False
+    for step_name in (
+        DOWNSTREAM_NORMAL_WORKFLOW_STEP,
+        DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP,
+    ):
+        matching = [
+            step
+            for step in job["steps"]
+            if isinstance(step, dict) and step.get("name") == step_name
+        ]
+        if (
+            len(matching) != 1
+            or "if" in matching[0]
+            or "continue-on-error" in matching[0]
+        ):
+            return False
+
     normal_lines = (
         "set -euo pipefail",
         "run_downstream_package_checker() {",
@@ -6683,6 +6713,44 @@ def selftest(root: Path) -> int:
                         "case": f"reserved_downstream_successor:{package_root}",
                         "expected": "delegated to registered package checker",
                         "actual": ["E_WRITE_SURFACE"],
+                    }
+                )
+    workflow_metadata_mutations = (
+        (
+            "downstream_job_if_rejected",
+            "  checker-compatibility:\n",
+            "  checker-compatibility:\n    if: ${{ false }}\n",
+        ),
+        (
+            "downstream_normal_step_if_rejected",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_NORMAL_WORKFLOW_STEP}\n"
+            "        if: ${{ false }}\n",
+        ),
+        (
+            "downstream_optimized_continue_on_error_rejected",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n",
+            f"      - name: {DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP}\n"
+            "        continue-on-error: true\n",
+        ),
+    )
+    for case_name, marker, replacement in workflow_metadata_mutations:
+        with tempfile.TemporaryDirectory(
+            prefix="gate1-downstream-workflow-metadata-selftest-"
+        ) as temporary:
+            temp_root = Path(temporary)
+            workflow_destination = temp_root / CI_WORKFLOW_PATH
+            workflow_destination.parent.mkdir(parents=True, exist_ok=True)
+            workflow_text = (root / CI_WORKFLOW_PATH).read_text(encoding="utf-8")
+            workflow_destination.write_text(
+                workflow_text.replace(marker, replacement, 1), encoding="utf-8"
+            )
+            if downstream_successor_workflow_registration_is_valid(temp_root):
+                failures.append(
+                    {
+                        "case": case_name,
+                        "expected": "fail-closed workflow metadata rejection",
+                        "actual": "registration accepted",
                     }
                 )
     if not unexpected_write_paths(
