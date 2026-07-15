@@ -111,13 +111,34 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "ae82299190e125858eee74c9b8111713e7fbf1e43ae13333ad73ebddfa8bb1d5"
+    "ed1fc96a20cf86d08a80418caa927ff13734e1cd4d5a4bc0e0ed915ef61be823"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
     "python3 ci/checkers/check_product_foundation.py --selftest",
     '"ci/checkers/check_product_foundation.py" \\',
     '"ci/checkers/check_product_foundation.py --selftest" \\',
+)
+DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
+    (
+        Path("12_expression_service/expression_runtime_adapter_001"),
+        Path(
+            "12_expression_service/expression_runtime_adapter_001/"
+            "check_light_expression_service.py"
+        ),
+    ),
+    (
+        Path("13_brand_data/brand_data_import_001"),
+        Path("13_brand_data/brand_data_import_001/check_brand_data_import.py"),
+    ),
+    (
+        Path("14_dify_shell/dify_content_shell_001"),
+        Path("14_dify_shell/dify_content_shell_001/check_dify_content_shell.py"),
+    ),
+)
+DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
+DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP = (
+    "Verify reserved downstream package fail-closed optimized mode"
 )
 P2_BASELINE_COMMIT = "81ddfe975a11b3dc9533d6828ac6418328b0f254"
 CURRENT_OWNER_PATH = Path(
@@ -716,6 +737,105 @@ def public_foundation_successor_registration_is_valid(root: Path) -> bool:
     )
 
 
+def downstream_workflow_step_lines(root: Path, step_name: str) -> tuple[str, ...]:
+    """Return the exact nonblank lines for one named checker workflow step."""
+
+    workflow = root / CI_WORKFLOW_PATH
+    if not workflow.is_file():
+        return ()
+    document = yaml.safe_load(workflow.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or not isinstance(document.get("jobs"), dict):
+        return ()
+    job = document["jobs"].get("checker-compatibility")
+    if not isinstance(job, dict) or not isinstance(job.get("steps"), list):
+        return ()
+    matching = [
+        step
+        for step in job["steps"]
+        if isinstance(step, dict) and step.get("name") == step_name
+    ]
+    if len(matching) != 1 or not isinstance(matching[0].get("run"), str):
+        return ()
+    return tuple(
+        line.strip() for line in matching[0]["run"].splitlines() if line.strip()
+    )
+
+
+def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
+    """Require one fail-closed remote runner for each reserved package root."""
+
+    normal_lines = (
+        "set -euo pipefail",
+        "run_downstream_package_checker() {",
+        'package_root="$1"',
+        'checker="$2"',
+        'if [ ! -e "$package_root" ]; then',
+        "return 0",
+        "fi",
+        'test -d "$package_root"',
+        'test -f "$checker"',
+        'python3 "$checker"',
+        'python3 "$checker" --selftest',
+        "}",
+        *(
+            f'run_downstream_package_checker "{package_root.as_posix()}" '
+            f'"{checker_path.as_posix()}"'
+            for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
+        ),
+    )
+    optimized_lines = (
+        "set -euo pipefail",
+        "run_downstream_package_checker_optimized() {",
+        'package_root="$1"',
+        'checker="$2"',
+        'if [ ! -e "$package_root" ]; then',
+        "return 0",
+        "fi",
+        'test -d "$package_root"',
+        'test -f "$checker"',
+        "set +e",
+        'python3 -O "$checker"',
+        "code=$?",
+        "set -e",
+        'test "$code" -eq 2',
+        "set +e",
+        'python3 -O "$checker" --selftest',
+        "code=$?",
+        "set -e",
+        'test "$code" -eq 2',
+        "}",
+        *(
+            f'run_downstream_package_checker_optimized "{package_root.as_posix()}" '
+            f'"{checker_path.as_posix()}"'
+            for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
+        ),
+    )
+    return (
+        downstream_workflow_step_lines(root, DOWNSTREAM_NORMAL_WORKFLOW_STEP)
+        == normal_lines
+        and downstream_workflow_step_lines(root, DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP)
+        == optimized_lines
+    )
+
+
+def is_registered_downstream_successor_write_path(root: Path, path: Path) -> bool:
+    """Delegate only an existing reserved root with its registered package checker."""
+
+    for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS:
+        if not path.is_relative_to(package_root):
+            continue
+        package = root / package_root
+        checker = root / checker_path
+        return (
+            package.is_dir()
+            and not package.is_symlink()
+            and checker.is_file()
+            and not checker.is_symlink()
+            and downstream_successor_workflow_registration_is_valid(root)
+        )
+    return False
+
+
 def public_foundation_checker_handoff_is_valid(root: Path) -> bool:
     """Validate the frozen predecessor identity before delegating its successor."""
 
@@ -789,7 +909,7 @@ def install_public_foundation_recovery_handoff(recovery_guard: Any) -> None:
     recovery_guard._public_foundation_handoff_installed = True
 
 
-def unexpected_write_paths(paths: set[Path]) -> list[str]:
+def unexpected_write_paths(root: Path, paths: set[Path]) -> list[str]:
     unexpected: list[str] = []
     for path in paths:
         if (
@@ -803,6 +923,8 @@ def unexpected_write_paths(paths: set[Path]) -> list[str]:
         ):
             continue
         if is_public_foundation_write_path(path):
+            continue
+        if is_registered_downstream_successor_write_path(root, path):
             continue
         if path not in {
             CURRENT_OWNER_PATH,
@@ -961,6 +1083,7 @@ def validate_p4_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         and not path.is_relative_to(P4_AUTHOR_RECOVERY_TASK_ROOT)
         and not path.is_relative_to(P4_THIRD_TASK_ROOT)
         and not is_public_foundation_write_path(path)
+        and not is_registered_downstream_successor_write_path(root, path)
         and path not in allowed_exact
     )
     if unexpected:
@@ -986,7 +1109,7 @@ def validate_write_surface(root: Path, errors: list[dict[str, str]]) -> None:
         for line in result.stdout.splitlines()
         if line
     }
-    unexpected = unexpected_write_paths(paths)
+    unexpected = unexpected_write_paths(root, paths)
     if unexpected:
         add_error(errors, "E_WRITE_SURFACE", str(unexpected))
 
@@ -6514,12 +6637,13 @@ def selftest(root: Path) -> int:
                 "actual": sorted({error["code"] for error in identity_errors}),
             }
         )
-    if not unexpected_write_paths({Path("outside_p1a/unapproved.txt")}):
+    if not unexpected_write_paths(root, {Path("outside_p1a/unapproved.txt")}):
         failures.append(
             {"case": "unauthorized_path", "expected": "E_WRITE_SURFACE", "actual": []}
         )
     if unexpected_write_paths(
-        {PUBLIC_FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml"}
+        root,
+        {PUBLIC_FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml"},
     ):
         failures.append(
             {
@@ -6529,11 +6653,44 @@ def selftest(root: Path) -> int:
             }
         )
     if not unexpected_write_paths(
-        {PUBLIC_FOUNDATION_ROOT / "future/arbitrary_successor.yaml"}
+        root,
+        {PUBLIC_FOUNDATION_ROOT / "future/arbitrary_successor.yaml"},
     ):
         failures.append(
             {
                 "case": "public_foundation_future_path_not_delegated",
+                "expected": "E_WRITE_SURFACE",
+                "actual": [],
+            }
+        )
+    for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS:
+        with tempfile.TemporaryDirectory(
+            prefix="gate1-downstream-successor-selftest-"
+        ) as temporary:
+            temp_root = Path(temporary)
+            workflow_destination = temp_root / CI_WORKFLOW_PATH
+            checker_destination = temp_root / checker_path
+            workflow_destination.parent.mkdir(parents=True, exist_ok=True)
+            checker_destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(root / CI_WORKFLOW_PATH, workflow_destination)
+            checker_destination.write_text(
+                "#!/usr/bin/env python3\nraise SystemExit(0)\n", encoding="utf-8"
+            )
+            delegated_path = package_root / "implementation.py"
+            if unexpected_write_paths(temp_root, {delegated_path}):
+                failures.append(
+                    {
+                        "case": f"reserved_downstream_successor:{package_root}",
+                        "expected": "delegated to registered package checker",
+                        "actual": ["E_WRITE_SURFACE"],
+                    }
+                )
+    if not unexpected_write_paths(
+        root, {Path("15_unreserved_package/unapproved.txt")}
+    ):
+        failures.append(
+            {
+                "case": "unreserved_downstream_successor",
                 "expected": "E_WRITE_SURFACE",
                 "actual": [],
             }

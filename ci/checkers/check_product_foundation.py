@@ -9,6 +9,7 @@ import hashlib
 import json
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 from collections import Counter
@@ -379,6 +380,15 @@ def sha256_file(path: Path) -> str:
     return sha256_bytes(path.read_bytes())
 
 
+def canonical_json(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def object_digest(value: dict[str, Any], digest_key: str) -> str:
+    payload = {key: child for key, child in value.items() if key != digest_key}
+    return sha256_bytes(canonical_json(payload).encode("utf-8"))
+
+
 def load_yaml(root: Path, relative_path: Path, top_key: str) -> dict[str, Any]:
     path = root / relative_path
     require(path.is_file(), f"E_MISSING_FILE:{relative_path}")
@@ -471,8 +481,12 @@ def validate_foundation_files(root: Path, review_state: str) -> None:
         if path.is_file()
     }
     expected = set(BASE_FOUNDATION_FILES)
+    if review_state in {"PENDING_ROOT_MERGE_APPROVAL", "PASS_TO_MERGE"}:
+        expected.update(
+            REVIEW_FILES - {COORDINATOR_PATH.relative_to(FOUNDATION_ROOT)}
+        )
     if review_state == "PASS_TO_MERGE":
-        expected.update(REVIEW_FILES)
+        expected.add(COORDINATOR_PATH.relative_to(FOUNDATION_ROOT))
     require(
         actual == expected,
         f"E_FOUNDATION_FILE_SET:{sorted(map(str, actual ^ expected))}",
@@ -3043,20 +3057,32 @@ def validate_status_and_manifest(
 def validate_reviews(root: Path, result: dict[str, Any]) -> None:
     review_state = result.get("review_state")
     require(
-        review_state in {"PENDING_INDEPENDENT_REVIEWS", "PASS_TO_MERGE"},
+        review_state
+        in {
+            "PENDING_INDEPENDENT_REVIEWS",
+            "PENDING_ROOT_MERGE_APPROVAL",
+            "PASS_TO_MERGE",
+        },
         "E_REVIEW_STATE",
     )
-    validate_foundation_files(
-        root, "PASS_TO_MERGE" if review_state == "PASS_TO_MERGE" else "PENDING"
+    expected_candidate_state = {
+        "PENDING_INDEPENDENT_REVIEWS": "COMPLETE_PENDING_INDEPENDENT_REVIEWS",
+        "PENDING_ROOT_MERGE_APPROVAL": "COMPLETE_PENDING_ROOT_MERGE_APPROVAL",
+        "PASS_TO_MERGE": "COMPLETE_APPROVED_FOR_MERGE",
+    }
+    require(
+        result.get("candidate_state") == expected_candidate_state[review_state],
+        "E_CANDIDATE_STATE",
     )
+    validate_foundation_files(root, str(review_state))
     if review_state == "PENDING_INDEPENDENT_REVIEWS":
+        require(result.get("reviewed_candidate_commit") is None, "E_PENDING_COMMIT")
         require(result.get("independent_reviews") == [], "E_PENDING_REVIEW_REFS")
         require(result.get("coordinator_decision") is None, "E_PENDING_COORDINATOR")
         return
 
     arch = load_yaml(root, ARCH_REVIEW_PATH, "independent_review")
     trust = load_yaml(root, TRUST_REVIEW_PATH, "independent_review")
-    coordinator = load_yaml(root, COORDINATOR_PATH, "coordinator_decision")
     reports = [arch, trust]
     expected_ids = {"ARCHITECTURE_CONSUMABILITY_REVIEW", "TRUST_FACT_SAFETY_REVIEW"}
     require(
@@ -3064,24 +3090,122 @@ def validate_reviews(root: Path, result: dict[str, Any]) -> None:
     )
     reviewed_commit = result.get("reviewed_candidate_commit")
     digest = result.get("candidate_snapshot_digest")
-    reviewer_ids: list[str] = []
+    require(
+        isinstance(reviewed_commit, str)
+        and re.fullmatch(r"[0-9a-f]{40}", reviewed_commit) is not None,
+        "E_REVIEWED_COMMIT_FORMAT",
+    )
+    if (root / ".git").exists():
+        commit_exists = subprocess.run(
+            ["git", "cat-file", "-e", f"{reviewed_commit}^{{commit}}"],
+            cwd=root,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        require(commit_exists.returncode == 0, "E_REVIEWED_COMMIT_MISSING")
+        ancestor = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", reviewed_commit, "HEAD"],
+            cwd=root,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        require(ancestor.returncode == 0, "E_REVIEWED_COMMIT_NOT_ANCESTOR")
+        evidence_diff = subprocess.run(
+            ["git", "diff", "--name-only", f"{reviewed_commit}..HEAD"],
+            cwd=root,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        require(evidence_diff.returncode == 0, "E_REVIEW_EVIDENCE_DIFF")
+        allowed_evidence_paths = {
+            RESULT_PATH.as_posix(),
+            ARCH_REVIEW_PATH.as_posix(),
+            TRUST_REVIEW_PATH.as_posix(),
+            COORDINATOR_PATH.as_posix(),
+        }
+        require(
+            set(evidence_diff.stdout.splitlines()).issubset(allowed_evidence_paths),
+            "E_REVIEW_POST_CANDIDATE_SCOPE",
+        )
+    reviewer_records: list[dict[str, Any]] = []
     for report in reports:
         reviewer = report.get("reviewer")
         require(isinstance(reviewer, dict), "E_REVIEWER")
         reviewer_id = reviewer.get("agent_id")
         require(isinstance(reviewer_id, str) and reviewer_id, "E_REVIEWER_ID")
-        reviewer_ids.append(reviewer_id)
+        required_reviewer_fields = {
+            "agent_id",
+            "reviewer_identity_id",
+            "reviewer_instance_or_session_id",
+            "review_run_id",
+            "append_only_signature_or_attestation",
+        }
+        require(set(reviewer) == required_reviewer_fields, "E_REVIEWER_FIELDS")
+        require(
+            reviewer.get("reviewer_identity_id") == reviewer_id
+            and all(
+                isinstance(reviewer.get(field), str) and reviewer[field]
+                for field in required_reviewer_fields
+            ),
+            "E_REVIEWER_BINDING",
+        )
+        reviewer_records.append(reviewer)
         require(reviewer_id != "codex-execution-primary", "E_REVIEWER_IS_AUTHOR")
         require(report.get("reviewed_commit") == reviewed_commit, "E_REVIEWED_COMMIT")
         require(report.get("reviewed_snapshot_digest") == digest, "E_REVIEWED_DIGEST")
+        require(
+            report.get("review_scope")
+            == "SUCCESSOR_DELEGATION_AND_NECESSARY_REGRESSION_ONLY"
+            and report.get("full_review_restarted") is False,
+            "E_REVIEW_SCOPE",
+        )
         require(report.get("verdict") == "PASS", "E_REVIEW_VERDICT")
         require(
             isinstance(report.get("score"), int) and report["score"] >= 90,
             "E_REVIEW_SCORE",
         )
         require(report.get("blocking_findings") == [], "E_REVIEW_BLOCKERS")
+        require(
+            isinstance(report.get("necessary_regression_findings"), list),
+            "E_REVIEW_REGRESSIONS",
+        )
         require(report.get("repo_changed") is False, "E_REVIEW_REPO_WRITE")
-    require(len(set(reviewer_ids)) == 2, "E_REVIEWER_IDENTITY_COLLISION")
+        require(
+            report.get("review_record_digest")
+            == object_digest(report, "review_record_digest"),
+            "E_REVIEW_RECORD_DIGEST",
+        )
+    for field in (
+        "agent_id",
+        "reviewer_identity_id",
+        "reviewer_instance_or_session_id",
+        "review_run_id",
+        "append_only_signature_or_attestation",
+    ):
+        require(
+            len({record[field] for record in reviewer_records}) == 2,
+            "E_REVIEWER_IDENTITY_COLLISION",
+        )
+    reviewer_ids = [record["agent_id"] for record in reviewer_records]
+    review_refs = result.get("independent_reviews")
+    require(
+        isinstance(review_refs, list)
+        and {item.get("path") for item in review_refs}
+        == {ARCH_REVIEW_PATH.as_posix(), TRUST_REVIEW_PATH.as_posix()},
+        "E_RESULT_REVIEW_REFS",
+    )
+    for record in review_refs:
+        path = root / str(record.get("path"))
+        require(sha256_file(path) == record.get("sha256"), "E_RESULT_REVIEW_DIGEST")
+    if review_state == "PENDING_ROOT_MERGE_APPROVAL":
+        require(result.get("coordinator_decision") is None, "E_PENDING_COORDINATOR")
+        return
+
+    coordinator = load_yaml(root, COORDINATOR_PATH, "coordinator_decision")
     coordinator_identity = coordinator.get("coordinator")
     require(isinstance(coordinator_identity, dict), "E_COORDINATOR_IDENTITY")
     coordinator_id = coordinator_identity.get("agent_id")
@@ -3104,16 +3228,6 @@ def validate_reviews(root: Path, result: dict[str, Any]) -> None:
     )
     require(coordinator.get("material_disagreements") == [], "E_MATERIAL_DISAGREEMENT")
     require(coordinator.get("blocking_findings") == [], "E_COORDINATOR_BLOCKERS")
-    review_refs = result.get("independent_reviews")
-    require(
-        isinstance(review_refs, list)
-        and {item.get("path") for item in review_refs}
-        == {ARCH_REVIEW_PATH.as_posix(), TRUST_REVIEW_PATH.as_posix()},
-        "E_RESULT_REVIEW_REFS",
-    )
-    for record in review_refs:
-        path = root / str(record.get("path"))
-        require(sha256_file(path) == record.get("sha256"), "E_RESULT_REVIEW_DIGEST")
     coordinator_ref = result.get("coordinator_decision")
     require(isinstance(coordinator_ref, dict), "E_RESULT_COORDINATOR_REF")
     require(
@@ -3950,13 +4064,10 @@ def run_selftest() -> dict[str, Any]:
         extra = temp_root / FOUNDATION_ROOT / "unexpected.yaml"
         extra.write_text("unexpected: true\n", encoding="utf-8")
         result = load_yaml(ROOT, RESULT_PATH, "public_foundation_result")
-        review_state = (
-            "PASS_TO_MERGE"
-            if result.get("review_state") == "PASS_TO_MERGE"
-            else "PENDING"
-        )
         expect_failure(
-            lambda: validate_foundation_files(temp_root, review_state),
+            lambda: validate_foundation_files(
+                temp_root, str(result.get("review_state"))
+            ),
             "E_FOUNDATION_FILE_SET",
         )
 
