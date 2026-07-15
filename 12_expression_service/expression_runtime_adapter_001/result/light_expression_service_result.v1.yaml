@@ -2,7 +2,7 @@ light_expression_service_result:
   schema_version: v1.0
   task_id: DIYU_LIGHT_EXPRESSION_SERVICE_001
   phase: PHASE_B_LIGHT_EXPRESSION_INTERFACE
-  state: CANDIDATE_READY_PENDING_INDEPENDENT_REVIEWS
+  state: PENDING_ROOT_APPROVAL
   baseline_master_commit: 95b8b1700b7e96b1d2383465713bef8c36e7f6cb
   implementation:
     endpoint_count: 4
@@ -35,8 +35,8 @@ light_expression_service_result:
     mypy_strict_passed: true
     remote_required_checks_green: false
   review:
-    candidate_commit: null
-    candidate_tree: null
+    candidate_commit: c4f32fb1e17dcd5264a2ea20bc881b402a3b6a04
+    candidate_tree: 5d8243c3a87bedcfcfc7c5324b27987929f8f958
     initial_formal_round:
       reviewed_candidate_commit: db83c8a84986aa08185a752c6b1bc02d03fc78c3
       architecture:
@@ -50,15 +50,23 @@ light_expression_service_result:
         score: 48
         verdict: FAIL
       repair_scope: TARGETED_ORIGINAL_BLOCKERS_AND_NECESSARY_REGRESSION_ONLY
-      post_fix_review_status: PENDING_TARGETED_REREVIEW
-    architecture_review_ref: null
-    trust_fact_safety_review_ref: null
-    both_scores_at_least_90: false
+      post_fix_review_status: PASSED_TARGETED_REREVIEW
+    architecture_review_ref:
+      path: 12_expression_service/expression_runtime_adapter_001/review/light_expression_architecture_review.v1.yaml
+      sha256: 3acc059bb99c7a711345de05e44a95f62b76af1b42e8b1513792efbd41fdf329
+      score: 97
+      verdict: PASS
+    trust_fact_safety_review_ref:
+      path: 12_expression_service/expression_runtime_adapter_001/review/trust_fact_safety_review.v1.yaml
+      sha256: d2aaf95fa15a0a9df6a641c9bbc6034db27b3be9ccf7236ce9c9d395a16c86ea
+      score: 97
+      verdict: PASS
+    both_scores_at_least_90: true
     Root_approval: PENDING
   blocking_items: []
   pull_request:
-    number: null
-    state: NOT_OPENED
+    number: 19
+    state: OPEN_DRAFT
     merged: false
   core_numbers:
     target_case_baseline: 300
