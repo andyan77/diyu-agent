@@ -1,0 +1,36 @@
+review:
+  review_id: SOURCE_FACT_AUTHORIZATION_REVIEW
+  status: COMPLETE
+  reviewer_identity_id: codex-independent-source-fact-reviewer-001
+  session_id: 019f653b-f32b-7c23-bead-c22d5d6ec98d
+  run_record_id: TRUST-RERUN-20260715-002
+  candidate_commit: 6d294feb05f759f4657537b402a2d09863ae7d20
+  scope: source_fact_identity_authorization_and_anti_false_green
+  score: 100
+  verdict: PASS
+  hard_blockers: []
+  acceptance_coverage:
+  - PKG3-A01
+  - PKG3-A02
+  - PKG3-A03
+  - PKG3-A04
+  - PKG3-A05
+  - PKG3-A06
+  - PKG3-A07
+  - PKG3-A08
+  - PKG3-A09
+  - PKG3-A10
+  - PKG3-A11
+  - PKG3-A12
+  evidence:
+  - HEAD equals the pinned candidate; the worktree was clean and the reviewed delta was confined to 13_brand_data/brand_data_import_001/**.
+  - BD-NARR-01-017 and BD-NARR-03-003 are HOLD_UNREGISTERED_SCOPE with empty registered mappings, no authorization, and no consumability or publishing authority.
+  - All 31 READY narratives contain zero explicit unregistered-scope marker hits.
+  - All precise fact kinds are within the public VERIFIED_PRECISE_FACT enum; the unsupported STATUS regression is rejected.
+  - BD-FACT-006 and BD-FACT-009 retain source-supported stock states and contain no invented quantity field.
+  - Core validators, file-scope validation, and all 19 compact cases passed; code and security guards passed.
+  - Both optimized-mode checker invocations refused execution with exit code 2.
+  - The nine snapshots are R100 path-only renames to source-01.md through source-09.md; original external filenames, bytes, hashes, locators, and derived artifacts are unchanged.
+  - The core.quotePath=true Gate 1 checker and its CI selftest pass.
+  - All readiness flags remain false, external-call counts remain zero, and the 300/120/86 assets are unaffected.
+  findings: []
