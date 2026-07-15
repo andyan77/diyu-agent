@@ -1,0 +1,50 @@
+# G3 后继生成器注册表 v0.1
+schema: g3_generator_registry.v0.1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+generator_version: gate1-v1.1-g3-successor-v0.1
+supersedes_generator: gate1-v1.1-p2-composable-successor-v0.4   # 只读委托，不覆盖不修改
+
+repair_scope_vs_v2:
+  - 冻结槽位真实填充：typed_material 覆盖 lane 全部组件 required_fact_slots 并集
+    （V2/P5 只填 4 个通用槽，组件消费只存在于登记）
+  - 边界去治理化：claim_boundary 槽用受众安全事实限度填充；治理措辞版仅作
+    claims 元数据；受众表面治理词典门（校准：上一轮 10 条泄漏 10/10 召回）
+  - 表达计划：每请求确定性互异档型（开场/收尾/标题/叙事弧），同批同产品
+    相同档型 ≤2（V1.1 标准 L773-779 触发线机器化；校准：上一轮 28 条套路 28/28 覆盖）
+  - 产品指纹合同：20 产品入口信号义务+邻品对比义务+机器谓词
+  - 批级机器门：治理语言/标签泄漏/未绑定数字/组件表面绑定/核心覆盖/骨架集中度/
+    近重复（批内 FLAG、对冻结语料 HARD）/run_id 唯一
+
+modules:   # sha256 与 pkg1 input_freeze.v1.yaml 一致（构成正式候选版本 r1）
+  g3_author_contract.py: 34915553f22c53f65b2a5b5ff4e0c3bf3f680376c58c458be43f90894be9e271
+  g3_lexicon.py: dad52232bfa70961990fbbddf0c52dc54b466acfedd2fbff50824ae58ef939b0
+  g3_expression.py: 21b513bce62019735a7c51a9ab8f578b5d58e4d8d7815ff58b703c74279ad96b
+  g3_fingerprint.py: 95aabfee85d7b20462cd70ed5eb408c040e5f0008a51c68e1a8309bf1f7bdd8c
+  g3_similarity.py: 9e3d6b1f52b38d27898279fc1206a622d943e5b1a1943be7f8ef790b91d31c81
+  g3_request_builder.py: 6318d1cdd10651b56dbfa81d7ebecda21d99749cc33acdc74639fac39d251edb
+  g3_gates.py: e1be0d12c378836ab680d1f7a2cc0c6a6b9280d2b5c9b6476f79e91f282ed49e
+  g3_route_driver.py: 0babbed80c70491ea69b75af3891b9b41924fb6603c25b9a6249e9900ea6e8bc
+  g3_calibration.py: aa75ebca34ae291f8b930fedd23166cf982a16040a529197c4a3d3084edcdab2
+
+author_contract:
+  instruction: contract/g3_author_instruction.v2.0.md
+  instruction_sha256: ec0d82406b298e2f750182c09f4ed8c5501291356a4da4aa8bf69da2e897ded4
+  raw_schema: gate1-g3-author-semantic-output-v3.0
+  model_capability_id: claude-fable-5      # v1.0 草案 gpt-5.6-sol 锁定已按源指令作废
+  reasoning_effort: high
+  service_tier: standard
+
+frozen_base_delegation:   # 零修改只读消费
+  component_base: p2_component_supply_and_generator_core_repair_001/component/active_gate1_components.v0.1.jsonl
+  ab_paths: p2_component_supply_and_generator_core_repair_001/ab/active_ab_structural_paths.v0.1.jsonl
+  route_compiler: p3_route_input_compiler_recovery_001/route_contract.py
+  route_engine: p2_generator_core.evaluate_route (gate1-v1.1-route-successor-v0.1)
+  route_gold: p1b .../route_60_gold_answers.v0.1.jsonl (sha f87d984d…)
+
+tests: tests/test_g3.py   # 26 检查含 12 反向/篡改案例，全绿
+calibration_evidence: evidence/gate_calibration_report.v0.1.json
+
+generator_qualified: false        # 待执行包2密封资格测试
+runtime_ready: false
+production_ready: false
+external_provider_exit: 无外部调用（Claude Code 环境内 Fable 5 及内部隔离代理）

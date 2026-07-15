@@ -1,0 +1,63 @@
+# 执行包1 · 第1正式轮结果（诚实失败记录，全部证据保留）
+schema: pkg1-formal-round-result-v1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+formal_round: 1
+formal_rounds_allowed: 3
+verdict: FORMAL_ROUND_1_FAILED_QUALITY_GATES
+generator_candidate: gate1-v1.1-g3-successor-v0.1 (r1)
+
+gates:
+  first_acceptance_rate: {value: 0.658333, threshold: ">=0.90", pass: false}
+  formulaic_or_near_duplicate_rate: {value: 1.000000, threshold: "<=0.10", pass: false}
+  hard_veto_in_acceptable_set: {value: 0, threshold: "=0", pass: true}
+  route_60_action_and_reason: {value: "60/60 + 60/60, 漏放0, 分布完整", pass: true}
+  blind_overall: {value: 0.983333, threshold: ">=0.85", pass: true}
+  focus_cp_blind_improvement:
+    CP01: {last_round: "3/11", this_round: "6/6", improved: true}
+    CP06: {last_round: "6/11", this_round: "6/6", improved: true}
+    CP07: {last_round: "7/11", this_round: "6/6", improved: true}
+
+tallies:
+  outputs: 120
+  machine_hard_fail: 3           # CP16-002/003/004 核心事实未绑面
+  content_acceptable: 82         # A=0 B=82 C=38（四分片）
+  fact_approved: 120             # 事实与授权轨零硬否决
+  first_acceptable: 79
+  formulaic_confirmed: 120       # 四位内容审查者独立一致
+  attempt_hard_vetoes: 9         # 6条CP18披露内嵌正文（内容轨）+3条机器绑定缺失
+  blind_correct: 118
+
+root_causes:                      # 四位独立内容审查者证据汇总
+  - 单作者每产品6条在"正文架构/口播格式/声音标记/边界句族"上自我收敛成内部模板；
+    表达计划v1只控制了开场/标题/收尾三个边缘维度
+  - "证据名录+否定边界+缺料静默"深层骨架跨产品复发（CP03/04/19/20最裸）
+  - "这只是…还没…"收尾句族与代价母题措辞跨条近逐字复用
+  - CP18作者把合成披露内嵌正文2-3次（元写作泄漏，6条内容硬否决）
+  - CP16作者3条核心事实漏登记表面绑定（机器硬失败）
+
+what_worked:                      # 保留进第2轮
+  - 指纹入口信号：盲判 98.3%，CP01/06/07 全对（上轮病灶根除）
+  - 治理语言词典门：正文治理泄漏0（上轮10条硬否决类型未复发）
+  - 事实纪律：120/120无编造/越权/授权缺口/未绑定数字
+  - 路线60：60/60+60/60，防全阻止闸通过
+  - 边缘三维表达计划：开场/标题/收尾确实互异
+
+round2_repairs:                   # 独立审查意见按源指令§6自动成为继续执行要求
+  - g3_expression v2：新增 body_architecture / spoken_format / audio_signature /
+    boundary_position 四维档型，产品内6条唯一发牌
+  - g3_gates v2：新增披露内嵌正文 HARD 门 + 产品内跨条近逐字句式复用检测（FLAG）
+  - 作者指令 v2.1：内部反模板纪律（审查者证据中的骨架逐条列为禁用）+
+    完备性自检扩展（核心绑定/组件登记，机械项）
+  - 作者拆分：每产品2名作者×3条，打破单脑收敛
+
+denominator_discipline: 第1轮全部120条首次输出、38条丙级、9条硬否决与全部审查
+  记录永久保留于本目录；第2轮为新生成器候选版本(r2)的全新回归，不替换本轮任何记录。
+evidence:
+  - inputs/input_freeze.v1.yaml
+  - outputs/first_outputs.g3.v1.jsonl
+  - outputs/machine_gate_report.v1.json
+  - review/content_review.block{1..4}.jsonl
+  - review/fact_review.block{1..4}.jsonl
+  - review/blind_choices.v1.jsonl + review/blind/
+  - result/round1_metrics.v1.json
+  - route/route_result.g3.yaml
