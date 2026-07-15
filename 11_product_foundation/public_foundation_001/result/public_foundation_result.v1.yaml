@@ -2,12 +2,35 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 42bfa37e3b25e7dacb21e1a7cb8f9c9e0ecfcb7790e89caabc5f2d8ce0cc7ebe
+  candidate_snapshot_digest: bcad620c173418f679108dd9c0d2fdb8ab4de6ae9d9be1bb633a6dbbb5fd4d0c
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
   independent_reviews: []
   coordinator_decision: null
+  independent_review_attempts:
+  - attempt: 1
+    reviewed_commit: 3bb6b0ea68e32202ca7b78eff8d9924eb83f0c85
+    reviewed_snapshot_digest: 42bfa37e3b25e7dacb21e1a7cb8f9c9e0ecfcb7790e89caabc5f2d8ce0cc7ebe
+    architecture_review:
+      reviewer_agent_id: 019f6329-3596-7572-a739-0097b87126c5
+      verdict: FAIL
+      score: 72
+      blocker_ids:
+      - ARCH-API-001
+      - ARCH-FACT-002
+      - GOV-SIMULATION-003
+      - GOV-ID-LEAK-004
+    trust_fact_safety_review:
+      reviewer_agent_id: 019f6329-3530-7b41-bc27-b7ed81c9278c
+      verdict: FAIL
+      score: 64
+      blocker_ids:
+      - TF-01
+      - TF-02
+      - TF-03
+      - TF-04
+    disposition: REMEDIATED_WITHIN_AUTHORIZED_FOUNDATION_SURFACE_PENDING_REREVIEW
   delivery_counts:
     simulated_tenant_count: 1
     simulated_login_principal_count: 1
@@ -18,7 +41,7 @@ public_foundation_result:
     control_rule_count: 8
     expression_edge_count: 85
     ab_structural_path_group_count: 20
-    contract_case_count: 25
+    contract_case_count: 31
   expression_baseline_digest_match: true
   core_numbers_300_120_86_unchanged: true
   second_case_300_inventory_created: false

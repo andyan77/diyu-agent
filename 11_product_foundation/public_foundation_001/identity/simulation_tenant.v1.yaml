@@ -49,6 +49,40 @@ simulation_tenant:
     - ACCOUNT-DIYU-JS-STYLING-SERVICE
     - ACCOUNT-DIYU-SZ-PARK
     - ACCOUNT-DIYU-WX-BINHU
+    account_role_grants:
+    - account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
+      confirmer_role_ids: [ROLE-LU-QINGLAN, ROLE-XU-WENCHUAN, ROLE-ZHOU-JINGYI, ROLE-GU-JINYAN]
+    - account_id: ACCOUNT-DIYU-FOUNDER
+      maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
+      confirmer_role_ids: [ROLE-LIN-ZHIYUAN]
+    - account_id: ACCOUNT-DIYU-PRODUCT-LEAD
+      maker_role_ids: [ROLE-PRODUCT-ASSISTANT, ROLE-HQ-CONTENT-TEAM]
+      confirmer_role_ids: [ROLE-XU-WENCHUAN, ROLE-LU-QINGLAN]
+    - account_id: ACCOUNT-DIYU-RETAIL-DISPLAY
+      maker_role_ids: [ROLE-RETAIL-OPS-TEAM]
+      confirmer_role_ids: [ROLE-ZHOU-JINGYI, ROLE-GU-ZHIXIA]
+    - account_id: ACCOUNT-DIYU-CONTENT-LEAD
+      maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
+      confirmer_role_ids: [ROLE-TANG-YUAN]
+    - account_id: ACCOUNT-DIYU-HZ-BINJIANG
+      maker_role_ids: [ROLE-SHEN-YAN, ROLE-HZ-STORE-STAFF]
+      confirmer_role_ids: [ROLE-SHEN-YAN]
+    - account_id: ACCOUNT-DIYU-JS-OFFICIAL
+      maker_role_ids: [ROLE-JS-CONTENT-SPECIALIST]
+      confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-LU-QINGLAN]
+    - account_id: ACCOUNT-DIYU-JS-PRINCIPAL
+      maker_role_ids: [ROLE-JS-REGIONAL-TEAM]
+      confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-YE-CHENGQI, ROLE-FANG-NING]
+    - account_id: ACCOUNT-DIYU-JS-STYLING-SERVICE
+      maker_role_ids: [ROLE-XU-ZHINING, ROLE-JS-CONTENT-SPECIALIST]
+      confirmer_role_ids: [ROLE-XU-ZHINING]
+    - account_id: ACCOUNT-DIYU-SZ-PARK
+      maker_role_ids: [ROLE-YE-CHENGQI, ROLE-SZ-CONTENT-STAFF]
+      confirmer_role_ids: [ROLE-YE-CHENGQI]
+    - account_id: ACCOUNT-DIYU-WX-BINHU
+      maker_role_ids: [ROLE-FANG-NING, ROLE-WX-STORE-STAFF]
+      confirmer_role_ids: [ROLE-FANG-NING]
 
   organizations:
   - organization_id: ORG-DIYU-HQ
@@ -113,78 +147,116 @@ simulation_tenant:
     display_name: 总部内容团队
     organization_id: ORG-DIYU-HQ
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-LU-QINGLAN
     display_name: 陆清岚
     organization_id: ORG-DIYU-HQ
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-GU-JINYAN
     display_name: 顾谨言
     organization_id: ORG-DIYU-HQ
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-LIN-ZHIYUAN
     display_name: 林知远
     organization_id: ORG-DIYU-HQ
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-XU-WENCHUAN
     display_name: 许闻川
     organization_id: ORG-DIYU-HQ
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-PRODUCT-ASSISTANT
     display_name: 商品研发助理
     organization_id: ORG-DIYU-HQ
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-ZHOU-JINGYI
     display_name: 周静宜
     organization_id: ORG-DIYU-HQ
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-RETAIL-OPS-TEAM
     display_name: 零售运营团队
     organization_id: ORG-DIYU-HQ
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-TANG-YUAN
     display_name: 唐予安
     organization_id: ORG-DIYU-HQ
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-SHEN-YAN
     display_name: 沈言
     organization_id: ORG-DIYU-HZ-BINJIANG
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-HZ-STORE-STAFF
     display_name: 杭州滨江店员
     organization_id: ORG-DIYU-HZ-BINJIANG
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-JS-CONTENT-SPECIALIST
     display_name: 江苏省级内容专员
     organization_id: ORG-DIYU-JS-AGENT
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-GU-ZHIXIA
     display_name: 顾知夏
     organization_id: ORG-DIYU-JS-AGENT
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-JS-REGIONAL-TEAM
     display_name: 江苏省级团队
     organization_id: ORG-DIYU-JS-AGENT
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-XU-ZHINING
     display_name: 许知宁
     organization_id: ORG-DIYU-JS-AGENT
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-YE-CHENGQI
     display_name: 叶成蹊
     organization_id: ORG-DIYU-SZ-PARK
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-SZ-CONTENT-STAFF
     display_name: 苏州园区店内容员工
     organization_id: ORG-DIYU-SZ-PARK
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-FANG-NING
     display_name: 方宁
     organization_id: ORG-DIYU-WX-BINHU
     role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-WX-STORE-STAFF
     display_name: 无锡滨湖店员
     organization_id: ORG-DIYU-WX-BINHU
     role_kind: TEAM
+    simulation_only: true
+    publish_allowed: false
   work_roles_are_login_principals: false
 
   content_accounts:

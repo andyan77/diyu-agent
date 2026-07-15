@@ -91,12 +91,22 @@ public_foundation_contract:
     - store_ids
     - login_principal_id
     - allowed_content_account_ids
+    request_projection_fields:
+    - tenant_id
+    - brand_id
+    - organization_id
+    - store_id
+    - login_principal_id
+    - content_account_id
     client_claims_are_hints_only: true
     user_input_may_override_server_scope: false
     Dify_user_id_is_trusted_login_identity: false
     cross_tenant_access: FORBIDDEN
+    cross_organization_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
     cross_store_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
     cross_content_account_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
+    server_confirmed_acting_role_required: true
+    principal_account_role_grant_required: true
     identity_contract_ref: ../identity/simulation_tenant.v1.yaml
     real_identity_policy:
       one_login_principal_per_real_person: true
@@ -184,11 +194,21 @@ public_foundation_contract:
       required_metadata:
       - fact_id
       - tenant_id
+      - brand_id
+      - organization_id
+      - store_id
+      - applicable_content_account_ids
       - fact_kind
       - value
       - source_ref
       - effective_at
+      - valid_until
+      - authorization_ref
+      - disclosure_scope
       - status
+      scope_must_match_trusted_request: true
+      authorization_must_cover_fact_and_disclosure: true
+      expired_or_revoked_fact_is_usable: false
       precedence_over_narrative_retrieval: true
     precedence:
     - newer_verified_precise_fact_over_older_precise_fact
@@ -207,6 +227,21 @@ public_foundation_contract:
     object_name: CanonicalCompositionPlan
     authority: EXPRESSION_SERVICE_PREPARE
     is_independent_microservice: false
+    required_fields:
+    - object_type
+    - plan_id
+    - plan_revision
+    - composition_plan_ref
+    - tenant_id
+    - organization_id
+    - content_account_id
+    - requirement_id
+    - requirement_version
+    - references
+    object_type: CANONICAL_COMPOSITION_PLAN
+    composition_plan_ref_is_derived_from:
+    - plan_id
+    - plan_revision
     canonical_key_fields:
     - tenant_id
     - content_account_id
@@ -277,7 +312,13 @@ public_foundation_contract:
     - ANONYMIZE
     - DEGRADE
     - BLOCK
+    action_card_discriminator_field: object_type
+    action_card_discriminator_value: ACTION_CARD
+    action_card_type_field: action_type
     action_card_required_fields:
+    - object_type
+    - action_type
+    - decision_id
     - action_card_id
     - plan_key_or_requirement_ref
     - plain_language_reason
@@ -294,7 +335,10 @@ public_foundation_contract:
     - api_version
     - request_id
     - trusted_scope_ref
+    - trusted_scope
+    - acting_role_id
     - confirmed_requirement
+    - confirmation_evidence
     - scoped_retrieval_fragments
     - verified_precise_facts
     - expression_baseline_ref
@@ -306,6 +350,84 @@ public_foundation_contract:
     - requirement_id
     - requirement_version
     - decision_id
+    request_example:
+      api_version: v1
+      request_id: REQ-SIM-PREPARE-001
+      trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
+      trusted_scope:
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        store_id: null
+        login_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      acting_role_id: ROLE-HQ-CONTENT-TEAM
+      confirmed_requirement:
+        requirement_id: REQ-DIYU-SIM-001
+        requirement_version: 1
+        status: CONFIRMED
+        plain_language_summary: 使用已授权的模拟事实准备一份结构计划
+        tenant_id: TENANT-DIYU-SIM-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+        topic_category_id: TOPIC-02
+        target_platform: SIMULATED_CHANNEL
+        confirmed_by_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        confirmed_at: '2026-07-14T00:00:00Z'
+      confirmation_evidence:
+        confirmed_by_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        confirmed_by_role_id: ROLE-XU-WENCHUAN
+        confirmation_scope: product_content
+        authorization_ref: AUTH-SIM-CONFIRM-001
+      scoped_retrieval_fragments:
+      - fragment_id: FRAGMENT-SIM-001
+        tenant_id: TENANT-DIYU-SIM-001
+        source_ref: fixture://public-foundation/narrative/001
+        applicable_organization_ids: [ORG-DIYU-HQ]
+        applicable_content_account_ids: [ACCOUNT-DIYU-HQ-OFFICIAL]
+        observed_at: '2026-07-14T00:00:00Z'
+        valid_until: '2026-08-14T00:00:00Z'
+        authorization_ref: AUTH-SIM-001
+      verified_precise_facts:
+      - fact_id: FACT-SIM-001
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        store_id: null
+        applicable_content_account_ids: [ACCOUNT-DIYU-HQ-OFFICIAL]
+        fact_kind: TIME_POINT
+        value: SIMULATED_VALUE
+        source_ref: fixture://public-foundation/fact/001
+        effective_at: '2026-07-14T00:00:00Z'
+        valid_until: '2026-08-14T00:00:00Z'
+        authorization_ref: AUTH-SIM-001
+        disclosure_scope: CONTENT_ACCOUNT_ONLY
+        status: ACTIVE
+      expression_baseline_ref: expression://gate1-v1.1/active
+    response_examples:
+      canonical_composition_plan:
+        object_type: CANONICAL_COMPOSITION_PLAN
+        plan_id: PLAN-SIM-001
+        plan_revision: 1
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+        tenant_id: TENANT-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+        requirement_id: REQ-DIYU-SIM-001
+        requirement_version: 1
+        references:
+          trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
+          retrieval_fragment_refs: [FRAGMENT-SIM-001]
+          precise_fact_refs: [FACT-SIM-001]
+          expression_baseline_ref: expression://gate1-v1.1/active
+      action_card:
+        object_type: ACTION_CARD
+        action_type: COLLECT_FACT
+        decision_id: DECISION-SIM-ACTION-001
+        action_card_id: ACTION-SIM-001
+        plan_key_or_requirement_ref: requirement://REQ-DIYU-SIM-001/versions/1
+        plain_language_reason: 缺少当前有效且获准披露的精确事实
+        missing_or_invalid_refs: [FACT-SIM-MISSING]
+        next_action: 补充或确认事实后重新准备
   - method: POST
     path: /v1/content/validate
     implemented_in_this_package: false
@@ -313,6 +435,8 @@ public_foundation_contract:
     - api_version
     - request_id
     - trusted_scope_ref
+    - trusted_scope
+    - evaluation_time
     - composition_plan_ref
     - candidate
     - actually_used_fact_refs
@@ -327,6 +451,42 @@ public_foundation_contract:
     - trusted_scope
     - plan_consistency
     - internal_identifier_leak
+    request_example:
+      api_version: v1
+      request_id: REQ-SIM-VALIDATE-001
+      trusted_scope_ref: scope://TENANT-DIYU-SIM-001/SIM-LOGIN-DIYU-ACCEPTANCE-001/ACCOUNT-DIYU-HQ-OFFICIAL
+      trusted_scope:
+        tenant_id: TENANT-DIYU-SIM-001
+        brand_id: BRAND-DIYU-SIM-001
+        organization_id: ORG-DIYU-HQ
+        store_id: null
+        login_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+        content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
+      evaluation_time: '2026-07-14T00:00:00Z'
+      composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+      candidate:
+        candidate_id: CANDIDATE-SIM-001
+        candidate_version: 1
+        audience_surface_refs: [fixture://public-foundation/surface/001]
+        audience_text_embedded_in_contract: false
+      actually_used_fact_refs: [FACT-SIM-001]
+      actually_used_material_refs: [FRAGMENT-SIM-001]
+    response_examples:
+      pass:
+        object_type: VALIDATION_DECISION
+        decision: PASS
+        decision_id: DECISION-SIM-PASS-001
+        composition_plan_ref: plan://PLAN-SIM-001/revisions/1
+      revise:
+        object_type: VALIDATION_DECISION
+        decision: REVISE
+        decision_id: DECISION-SIM-REVISE-001
+        reason_codes: [UNSUPPORTED_CLAIM]
+      block:
+        object_type: VALIDATION_DECISION
+        decision: BLOCK
+        decision_id: DECISION-SIM-BLOCK-001
+        reason_codes: [SCOPE_OR_AUTHORIZATION_MISMATCH]
   - method: GET
     path: /healthz
     implemented_in_this_package: false
@@ -347,6 +507,7 @@ public_foundation_contract:
     prohibited_patterns:
     - 'CP[0-9]{2}'
     - '(BNO|BRV|VGA|BCL|FC)-[0-9]{2}'
+    - '(G1V11|RCV2)-[A-Z0-9-]+'
     - 'E_[A-Z0-9_]+'
     plain_language_reason_required: true
     internal_identifiers_allowed_in_internal_trace: true

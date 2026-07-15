@@ -12,6 +12,7 @@ import shutil
 import sys
 import tempfile
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
 
@@ -166,7 +167,40 @@ EXPECTED_EXPRESSION_ASSETS = {
     ),
 }
 PROHIBITED_USER_PATTERN = re.compile(
-    r"(?:\bCP\d{2}\b|\b(?:BNO|BRV|VGA|BCL|FC)-\d{2}\b|\bE_[A-Z0-9_]+\b)"
+    r"(?:\bCP\d{2}\b|\b(?:BNO|BRV|VGA|BCL|FC)-\d{2}\b|"
+    r"\bG1V11-[A-Z0-9-]+\b|\bRCV2-[A-Z0-9-]+\b|\bE_[A-Z0-9_]+\b)"
+)
+TRUSTED_SCOPE_DIMENSIONS = (
+    "tenant_id",
+    "brand_id",
+    "organization_id",
+    "store_ids",
+    "login_principal_id",
+    "allowed_content_account_ids",
+)
+REQUEST_SCOPE_FIELDS = (
+    "tenant_id",
+    "brand_id",
+    "organization_id",
+    "store_id",
+    "login_principal_id",
+    "content_account_id",
+)
+PRECISE_FACT_METADATA = (
+    "fact_id",
+    "tenant_id",
+    "brand_id",
+    "organization_id",
+    "store_id",
+    "applicable_content_account_ids",
+    "fact_kind",
+    "value",
+    "source_ref",
+    "effective_at",
+    "valid_until",
+    "authorization_ref",
+    "disclosure_scope",
+    "status",
 )
 
 
@@ -366,7 +400,37 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         trusted.get("Dify_user_id_is_trusted_login_identity") is False,
         "E_DIFY_IDENTITY_POLICY",
     )
+    require(
+        tuple(trusted.get("required_dimensions", [])) == TRUSTED_SCOPE_DIMENSIONS,
+        "E_SCOPE_DIMENSIONS",
+    )
+    require(
+        tuple(trusted.get("request_projection_fields", [])) == REQUEST_SCOPE_FIELDS,
+        "E_SCOPE_REQUEST_PROJECTION",
+    )
     require(trusted.get("cross_tenant_access") == "FORBIDDEN", "E_CROSS_TENANT_POLICY")
+    require(
+        trusted.get("cross_organization_access")
+        == "FORBIDDEN_UNLESS_EXPLICITLY_GRANTED",
+        "E_CROSS_ORGANIZATION_POLICY",
+    )
+    require(
+        trusted.get("cross_store_access") == "FORBIDDEN_UNLESS_EXPLICITLY_GRANTED",
+        "E_CROSS_STORE_POLICY",
+    )
+    require(
+        trusted.get("cross_content_account_access")
+        == "FORBIDDEN_UNLESS_EXPLICITLY_GRANTED",
+        "E_CROSS_ACCOUNT_POLICY",
+    )
+    require(
+        trusted.get("server_confirmed_acting_role_required") is True,
+        "E_ACTING_ROLE_POLICY",
+    )
+    require(
+        trusted.get("principal_account_role_grant_required") is True,
+        "E_PRINCIPAL_ROLE_GRANT_POLICY",
+    )
     real_policy = trusted.get("real_identity_policy")
     require(isinstance(real_policy, dict), "E_REAL_IDENTITY_POLICY")
     require(
@@ -446,6 +510,22 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
     )
     precise = by_channel["VERIFIED_PRECISE_FACT"]
     require(
+        tuple(precise.get("required_metadata", [])) == PRECISE_FACT_METADATA,
+        "E_PRECISE_FACT_METADATA",
+    )
+    require(
+        precise.get("scope_must_match_trusted_request") is True,
+        "E_PRECISE_SCOPE_POLICY",
+    )
+    require(
+        precise.get("authorization_must_cover_fact_and_disclosure") is True,
+        "E_PRECISE_AUTHORIZATION_POLICY",
+    )
+    require(
+        precise.get("expired_or_revoked_fact_is_usable") is False,
+        "E_PRECISE_EXPIRY_POLICY",
+    )
+    require(
         precise.get("precedence_over_narrative_retrieval") is True,
         "E_PRECISE_PRECEDENCE",
     )
@@ -458,6 +538,28 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
     require(isinstance(plan, dict), "E_PLAN_CONTRACT")
     require(plan.get("authority") == "EXPRESSION_SERVICE_PREPARE", "E_PLAN_AUTHORITY")
     require(plan.get("is_independent_microservice") is False, "E_PLAN_MICROSERVICE")
+    plan_required_fields = {
+        "object_type",
+        "plan_id",
+        "plan_revision",
+        "composition_plan_ref",
+        "tenant_id",
+        "organization_id",
+        "content_account_id",
+        "requirement_id",
+        "requirement_version",
+        "references",
+    }
+    require(
+        set(plan.get("required_fields", [])) == plan_required_fields,
+        "E_PLAN_REQUIRED_FIELDS",
+    )
+    require(plan.get("object_type") == "CANONICAL_COMPOSITION_PLAN", "E_PLAN_TYPE")
+    require(
+        set(plan.get("composition_plan_ref_is_derived_from", []))
+        == {"plan_id", "plan_revision"},
+        "E_PLAN_REFERENCE_DERIVATION",
+    )
     require(
         plan.get("maximum_active_canonical_plans_per_key") == 1, "E_PLAN_UNIQUENESS"
     )
@@ -509,6 +611,22 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
         delivery.get("missing_input_may_be_filled_by_model") is False,
         "E_MODEL_FILL_MISSING",
     )
+    require(
+        delivery.get("action_card_discriminator_field") == "object_type"
+        and delivery.get("action_card_discriminator_value") == "ACTION_CARD"
+        and delivery.get("action_card_type_field") == "action_type",
+        "E_ACTION_CARD_DISCRIMINATOR",
+    )
+    require(
+        {"object_type", "action_type"}.issubset(
+            delivery.get("action_card_required_fields", [])
+        ),
+        "E_ACTION_CARD_TYPE_FIELDS",
+    )
+    require(
+        "decision_id" in delivery.get("action_card_required_fields", []),
+        "E_ACTION_CARD_DECISION_ID",
+    )
 
     endpoints = contract.get("api_contracts")
     require(isinstance(endpoints, list), "E_API_CONTRACTS")
@@ -533,6 +651,136 @@ def validate_contract_data(root: Path, contract: dict[str, Any]) -> None:
     )
     ready = next(item for item in endpoints if item.get("path") == "/readyz")
     require(ready.get("current_response_ready") is False, "E_READYZ_TRUE")
+
+    prepare = next(
+        item for item in endpoints if item.get("path") == "/v1/content/prepare"
+    )
+    prepare_request = prepare.get("request_example")
+    prepare_responses = prepare.get("response_examples")
+    require(isinstance(prepare_request, dict), "E_PREPARE_REQUEST_EXAMPLE")
+    require(isinstance(prepare_responses, dict), "E_PREPARE_RESPONSE_EXAMPLES")
+    expected_prepare_fields = {
+        "api_version",
+        "request_id",
+        "trusted_scope_ref",
+        "trusted_scope",
+        "acting_role_id",
+        "confirmed_requirement",
+        "confirmation_evidence",
+        "scoped_retrieval_fragments",
+        "verified_precise_facts",
+        "expression_baseline_ref",
+    }
+    require(
+        set(prepare.get("request_required_fields", [])) == expected_prepare_fields
+        and expected_prepare_fields.issubset(prepare_request),
+        "E_PREPARE_REQUEST_EXAMPLE_FIELDS",
+    )
+    require(
+        set(prepare_request.get("trusted_scope", {})) == set(REQUEST_SCOPE_FIELDS),
+        "E_PREPARE_TRUSTED_SCOPE_EXAMPLE",
+    )
+    confirmation_example = prepare_request.get("confirmation_evidence")
+    require(
+        isinstance(confirmation_example, dict)
+        and set(confirmation_example)
+        == {
+            "confirmed_by_principal_id",
+            "confirmed_by_role_id",
+            "confirmation_scope",
+            "authorization_ref",
+        },
+        "E_PREPARE_CONFIRMATION_EXAMPLE",
+    )
+    example_facts = prepare_request.get("verified_precise_facts")
+    require(
+        isinstance(example_facts, list)
+        and len(example_facts) == 1
+        and set(example_facts[0]) == set(PRECISE_FACT_METADATA),
+        "E_PREPARE_FACT_EXAMPLE",
+    )
+    plan_example = prepare_responses.get("canonical_composition_plan")
+    action_example = prepare_responses.get("action_card")
+    require(isinstance(plan_example, dict), "E_PREPARE_PLAN_EXAMPLE")
+    require(isinstance(action_example, dict), "E_PREPARE_ACTION_EXAMPLE")
+    require(plan_required_fields.issubset(plan_example), "E_PREPARE_PLAN_FIELDS")
+    require(
+        plan_example.get("composition_plan_ref")
+        == f"plan://{plan_example.get('plan_id')}/revisions/{plan_example.get('plan_revision')}",
+        "E_PREPARE_PLAN_REF",
+    )
+    require(
+        action_example.get("object_type") == "ACTION_CARD"
+        and action_example.get("action_type") in delivery.get("action_card_types", [])
+        and set(delivery.get("action_card_required_fields", [])).issubset(
+            action_example
+        ),
+        "E_PREPARE_ACTION_FIELDS",
+    )
+
+    validate = next(
+        item for item in endpoints if item.get("path") == "/v1/content/validate"
+    )
+    validate_request = validate.get("request_example")
+    validate_responses = validate.get("response_examples")
+    require(isinstance(validate_request, dict), "E_VALIDATE_REQUEST_EXAMPLE")
+    require(isinstance(validate_responses, dict), "E_VALIDATE_RESPONSE_EXAMPLES")
+    expected_validate_fields = {
+        "api_version",
+        "request_id",
+        "trusted_scope_ref",
+        "trusted_scope",
+        "evaluation_time",
+        "composition_plan_ref",
+        "candidate",
+        "actually_used_fact_refs",
+        "actually_used_material_refs",
+    }
+    require(
+        set(validate.get("request_required_fields", [])) == expected_validate_fields
+        and expected_validate_fields.issubset(validate_request),
+        "E_VALIDATE_REQUEST_EXAMPLE_FIELDS",
+    )
+    require(
+        set(validate_request.get("trusted_scope", {})) == set(REQUEST_SCOPE_FIELDS),
+        "E_VALIDATE_TRUSTED_SCOPE_EXAMPLE",
+    )
+    require(
+        {
+            response.get("decision")
+            for response in validate_responses.values()
+            if isinstance(response, dict)
+        }
+        == {"PASS", "REVISE", "BLOCK"},
+        "E_VALIDATE_RESPONSE_DECISIONS",
+    )
+    require(
+        all(
+            response.get("object_type") == "VALIDATION_DECISION"
+            and bool(response.get("decision_id"))
+            for response in validate_responses.values()
+            if isinstance(response, dict)
+        ),
+        "E_VALIDATE_RESPONSE_FIELDS",
+    )
+
+    output_contract = contract.get("user_output_contract")
+    require(isinstance(output_contract, dict), "E_USER_OUTPUT_CONTRACT")
+    require(
+        set(output_contract.get("hidden_internal_identifiers", []))
+        == {"content_product_id", "component_id", "route_code", "raw_error_code"},
+        "E_USER_OUTPUT_HIDDEN_IDS",
+    )
+    require(
+        set(output_contract.get("prohibited_patterns", []))
+        == {
+            "CP[0-9]{2}",
+            "(BNO|BRV|VGA|BCL|FC)-[0-9]{2}",
+            "(G1V11|RCV2)-[A-Z0-9-]+",
+            "E_[A-Z0-9_]+",
+        },
+        "E_USER_OUTPUT_PATTERNS",
+    )
 
     evidence = contract.get("case_evidence_contract")
     require(isinstance(evidence, dict), "E_CASE_EVIDENCE")
@@ -676,6 +924,11 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     )
     require(len(store_ids) == 3 and None not in store_ids, "E_STORE_IDS")
     require(len(role_ids) == len(roles) and None not in role_ids, "E_ROLE_IDS")
+    role_organization = {
+        item.get("role_id"): item.get("organization_id")
+        for item in roles
+        if isinstance(item, dict)
+    }
     for organization in organizations:
         require(organization.get("simulation_only") is True, "E_ORG_SIMULATION")
         require(organization.get("publish_allowed") is False, "E_ORG_PUBLISH")
@@ -685,6 +938,8 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         require(store.get("publish_allowed") is False, "E_STORE_PUBLISH")
     for role in roles:
         require(role.get("organization_id") in organization_ids, "E_ROLE_ORG_REF")
+        require(role.get("simulation_only") is True, "E_ROLE_SIMULATION")
+        require(role.get("publish_allowed") is False, "E_ROLE_PUBLISH")
 
     by_account = {
         item.get("account_id"): item for item in accounts if isinstance(item, dict)
@@ -729,6 +984,13 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             f"E_ACCOUNT_MATERIAL_REF:{account_id}",
         )
         require(
+            all(
+                role_organization[role_id] == account.get("organization_id")
+                for role_id in makers
+            ),
+            f"E_ACCOUNT_MAKER_ORGANIZATION:{account_id}",
+        )
+        require(
             account.get("cross_organization_source_requires_explicit_grant") is True,
             f"E_ACCOUNT_CROSS_SCOPE:{account_id}",
         )
@@ -759,6 +1021,27 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         set(principal.get("allowed_content_account_ids", [])) == set(by_account),
         "E_SIM_ACCOUNT_ALLOWLIST",
     )
+    grants = principal.get("account_role_grants")
+    require(isinstance(grants, list), "E_SIM_ACCOUNT_ROLE_GRANTS")
+    by_grant = {
+        item.get("account_id"): item for item in grants if isinstance(item, dict)
+    }
+    require(set(by_grant) == set(by_account), "E_SIM_ACCOUNT_ROLE_GRANT_IDS")
+    for account_id, account in by_account.items():
+        grant = by_grant[account_id]
+        expected_confirmers = {
+            role_id
+            for route in account["confirmation_routes"]
+            for role_id in route["confirmer_role_ids"]
+        }
+        require(
+            set(grant.get("maker_role_ids", [])) == set(account["maker_role_ids"]),
+            f"E_SIM_MAKER_GRANT:{account_id}",
+        )
+        require(
+            set(grant.get("confirmer_role_ids", [])) == expected_confirmers,
+            f"E_SIM_CONFIRMER_GRANT:{account_id}",
+        )
 
     serialized = json.dumps(identity, ensure_ascii=False).lower()
     for forbidden in (
@@ -899,7 +1182,157 @@ def validate_topics_data(root: Path, topics: dict[str, Any]) -> None:
     require(policy.get("may_show_raw_error_code") is False, "E_TOPIC_ERROR_VISIBILITY")
 
 
-def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
+def iter_text(value: Any) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [text for child in value.values() for text in iter_text(child)]
+    if isinstance(value, list):
+        return [text for child in value for text in iter_text(child)]
+    return []
+
+
+def has_internal_identifier(value: Any) -> bool:
+    return any(PROHIBITED_USER_PATTERN.search(text) for text in iter_text(value))
+
+
+def account_role_is_authorized(
+    identity: dict[str, Any],
+    principal_id: str,
+    account_id: str,
+    role_id: str,
+    action: str,
+    confirmation_scope: str | None = None,
+) -> bool:
+    principal = next(
+        (
+            item
+            for item in identity["login_principals"]
+            if item.get("principal_id") == principal_id
+        ),
+        None,
+    )
+    account = next(
+        (
+            item
+            for item in identity["content_accounts"]
+            if item.get("account_id") == account_id
+        ),
+        None,
+    )
+    if not isinstance(principal, dict) or not isinstance(account, dict):
+        return False
+    grant = next(
+        (
+            item
+            for item in principal.get("account_role_grants", [])
+            if item.get("account_id") == account_id
+        ),
+        None,
+    )
+    if not isinstance(grant, dict):
+        return False
+    if action == "MAKE":
+        return role_id in grant.get("maker_role_ids", [])
+    if action == "CONFIRM":
+        route = next(
+            (
+                item
+                for item in account.get("confirmation_routes", [])
+                if item.get("scope") == confirmation_scope
+            ),
+            None,
+        )
+        return (
+            isinstance(route, dict)
+            and role_id in route.get("confirmer_role_ids", [])
+            and role_id in grant.get("confirmer_role_ids", [])
+        )
+    return False
+
+
+def trusted_scope_matches_identity(
+    identity: dict[str, Any], trusted_scope: Any
+) -> bool:
+    if not isinstance(trusted_scope, dict):
+        return False
+    if set(trusted_scope) != set(REQUEST_SCOPE_FIELDS):
+        return False
+    tenant = identity.get("tenant")
+    if not isinstance(tenant, dict):
+        return False
+    principal = next(
+        (
+            item
+            for item in identity.get("login_principals", [])
+            if item.get("principal_id") == trusted_scope.get("login_principal_id")
+        ),
+        None,
+    )
+    account = next(
+        (
+            item
+            for item in identity.get("content_accounts", [])
+            if item.get("account_id") == trusted_scope.get("content_account_id")
+        ),
+        None,
+    )
+    if not isinstance(principal, dict) or not isinstance(account, dict):
+        return False
+    return (
+        trusted_scope.get("tenant_id") == tenant.get("tenant_id")
+        and trusted_scope.get("brand_id") == tenant.get("brand_id")
+        and trusted_scope.get("organization_id") == account.get("organization_id")
+        and trusted_scope.get("store_id") == account.get("store_id")
+        and principal.get("tenant_id") == tenant.get("tenant_id")
+        and account.get("account_id")
+        in principal.get("allowed_content_account_ids", [])
+    )
+
+
+def parse_iso_datetime(value: Any) -> datetime | None:
+    if not isinstance(value, str):
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def fact_rejection_code(
+    fact: dict[str, Any], trusted_scope: dict[str, Any], evaluation_time: str
+) -> str | None:
+    if set(PRECISE_FACT_METADATA) - set(fact):
+        return "MISSING_METADATA"
+    if (
+        fact.get("tenant_id") != trusted_scope.get("tenant_id")
+        or fact.get("brand_id") != trusted_scope.get("brand_id")
+        or fact.get("organization_id") != trusted_scope.get("organization_id")
+        or fact.get("store_id") != trusted_scope.get("store_id")
+        or trusted_scope.get("content_account_id")
+        not in fact.get("applicable_content_account_ids", [])
+    ):
+        return "SCOPE_MISMATCH"
+    evaluation_at = parse_iso_datetime(evaluation_time)
+    effective_at = parse_iso_datetime(fact.get("effective_at"))
+    valid_until = parse_iso_datetime(fact.get("valid_until"))
+    if (
+        fact.get("status") != "ACTIVE"
+        or not fact.get("authorization_ref")
+        or fact.get("disclosure_scope") != "CONTENT_ACCOUNT_ONLY"
+        or evaluation_at is None
+        or effective_at is None
+        or valid_until is None
+        or effective_at > evaluation_at
+        or valid_until < evaluation_at
+    ):
+        return "AUTHORIZATION_OR_VALIDITY"
+    return None
+
+
+def evaluate_case(
+    case: dict[str, Any], identity: dict[str, Any] | None = None
+) -> dict[str, Any]:
     operation = case.get("operation")
     data = case.get("input")
     require(isinstance(data, dict), f"E_CASE_INPUT:{case.get('case_id')}")
@@ -923,7 +1356,19 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
             "brand_fact_written": False,
         }
     if operation == "scope":
-        dimensions = ("tenant", "store", "account")
+        dimensions = (
+            "tenant",
+            "brand",
+            "organization",
+            "store",
+            "principal",
+            "account",
+        )
+        if any(
+            f"trusted_{name}_id" not in data or f"requested_{name}_id" not in data
+            for name in dimensions
+        ):
+            return {"decision": "REJECT_SCOPE_OVERRIDE"}
         if any(
             data.get(f"trusted_{name}_id") != data.get(f"requested_{name}_id")
             for name in dimensions
@@ -958,9 +1403,39 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
                 "decision": "REJECT_BASELINE_TAMPER",
                 "canonical_plan_created": False,
             }
-        if data.get("trusted_scope_match") is not True:
+        trusted_scope = data.get("trusted_scope")
+        if (
+            data.get("trusted_scope_match") is not True
+            or identity is None
+            or not trusted_scope_matches_identity(identity, trusted_scope)
+            or data.get("principal_id") != trusted_scope.get("login_principal_id")
+            or data.get("content_account_id") != trusted_scope.get("content_account_id")
+        ):
             return {
                 "decision": "REJECT_SCOPE_OVERRIDE",
+                "canonical_plan_created": False,
+            }
+        if identity is None or not account_role_is_authorized(
+            identity,
+            str(data.get("principal_id")),
+            str(data.get("content_account_id")),
+            str(data.get("acting_maker_role_id")),
+            "MAKE",
+        ):
+            return {
+                "decision": "REJECT_UNAUTHORIZED_ACCOUNT_ROLE",
+                "canonical_plan_created": False,
+            }
+        if not account_role_is_authorized(
+            identity,
+            str(data.get("principal_id")),
+            str(data.get("content_account_id")),
+            str(data.get("confirmed_by_role_id")),
+            "CONFIRM",
+            str(data.get("confirmation_scope")),
+        ):
+            return {
+                "decision": "REJECT_UNAUTHORIZED_CONFIRMATION_ROLE",
                 "canonical_plan_created": False,
             }
         if data.get("requirement_status") != "CONFIRMED":
@@ -981,17 +1456,84 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
                 "decision": "ACTION_CARD_REQUEST_AUTHORIZATION",
                 "canonical_plan_created": False,
             }
+        facts = data.get("verified_precise_facts")
+        evaluation_time = data.get("evaluation_time")
+        if (
+            not isinstance(trusted_scope, dict)
+            or not isinstance(facts, list)
+            or not isinstance(evaluation_time, str)
+        ):
+            return {
+                "decision": "ACTION_CARD_COLLECT_FACT",
+                "canonical_plan_created": False,
+            }
+        if not facts and not data.get("missing_required"):
+            return {
+                "decision": "ACTION_CARD_COLLECT_FACT",
+                "canonical_plan_created": False,
+            }
+        if any(not isinstance(fact, dict) for fact in facts):
+            return {
+                "decision": "ACTION_CARD_COLLECT_FACT",
+                "canonical_plan_created": False,
+            }
+        fact_rejections = [
+            fact_rejection_code(fact, trusted_scope, evaluation_time) for fact in facts
+        ]
+        if "SCOPE_MISMATCH" in fact_rejections:
+            return {
+                "decision": "REJECT_SCOPE_OVERRIDE",
+                "canonical_plan_created": False,
+            }
+        if any(fact_rejections):
+            return {
+                "decision": "ACTION_CARD_REQUEST_AUTHORIZATION",
+                "canonical_plan_created": False,
+            }
         if data.get("missing_required"):
+            missing = data["missing_required"]
+            if any(str(item).startswith("material:") for item in missing):
+                return {
+                    "decision": "ACTION_CARD_COLLECT_MATERIAL",
+                    "canonical_plan_created": False,
+                }
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
                 "canonical_plan_created": False,
             }
         return {"decision": "PREPARE_PLAN", "canonical_plan_created": True}
     if operation == "validate":
-        if data.get("internal_identifier_leak"):
+        if data.get("internal_identifier_leak") or has_internal_identifier(
+            data.get(
+                "candidate_user_visible_surfaces",
+                data.get("candidate_user_visible_text", ""),
+            )
+        ):
             return {"decision": "REJECT_INTERNAL_IDENTIFIER_LEAK"}
-        if not data.get("trusted_scope_match"):
+        trusted_scope = data.get("trusted_scope")
+        if (
+            not data.get("trusted_scope_match")
+            or identity is None
+            or not trusted_scope_matches_identity(identity, trusted_scope)
+        ):
             return {"decision": "REJECT_SCOPE_OVERRIDE"}
+        facts = data.get("verified_precise_facts")
+        evaluation_time = data.get("evaluation_time")
+        if (
+            not isinstance(trusted_scope, dict)
+            or not isinstance(facts, list)
+            or not isinstance(evaluation_time, str)
+        ):
+            return {"decision": "VALIDATE_BLOCK"}
+        if any(not isinstance(fact, dict) for fact in facts):
+            return {"decision": "VALIDATE_BLOCK"}
+        fact_rejections = [
+            fact_rejection_code(fact, trusted_scope, evaluation_time) for fact in facts
+        ]
+        if "SCOPE_MISMATCH" in fact_rejections:
+            return {"decision": "REJECT_SCOPE_OVERRIDE"}
+        if any(fact_rejections):
+            return {"decision": "VALIDATE_BLOCK"}
         if not data.get("plan_consistent") or not data.get("all_claims_supported"):
             return {"decision": "VALIDATE_REVISE"}
         if data.get("authorization_state") != "GRANTED":
@@ -1028,8 +1570,21 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
         ):
             return {"decision": "REJECT_UNAUTHORIZED_PATH"}
     if operation == "switch_account":
-        if data.get("account_is_allowlisted") and data.get(
-            "preserve_target_account_scope"
+        principal = None
+        if identity is not None:
+            principal = next(
+                (
+                    item
+                    for item in identity["login_principals"]
+                    if item.get("principal_id") == data.get("principal_id")
+                ),
+                None,
+            )
+        if (
+            isinstance(principal, dict)
+            and data.get("target_account_id")
+            in principal.get("allowed_content_account_ids", [])
+            and data.get("preserve_target_account_scope")
         ):
             return {"decision": "SWITCH_ACCOUNT"}
         return {"decision": "REJECT_ACCOUNT_SWITCH"}
@@ -1044,7 +1599,7 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     raise CheckFailure(f"E_CASE_UNHANDLED:{case.get('case_id')}")
 
 
-def validate_cases(cases: list[dict[str, Any]]) -> None:
+def validate_cases(cases: list[dict[str, Any]], identity: dict[str, Any]) -> None:
     require(len(cases) >= 20, "E_CASE_COUNT")
     ids = [case.get("case_id") for case in cases]
     require(len(ids) == len(set(ids)) and None not in ids, "E_CASE_IDS")
@@ -1056,7 +1611,7 @@ def validate_cases(cases: list[dict[str, Any]]) -> None:
     for case in cases:
         expected = case.get("expected")
         require(isinstance(expected, dict), f"E_CASE_EXPECTED:{case.get('case_id')}")
-        actual = evaluate_case(case)
+        actual = evaluate_case(case, identity)
         require(
             actual.get("decision") == expected.get("decision"),
             f"E_CASE_DECISION:{case.get('case_id')}",
@@ -1095,6 +1650,9 @@ def validate_cases(cases: list[dict[str, Any]]) -> None:
         "REJECT_INTERNAL_IDENTIFIER_LEAK",
         "REJECT_BASELINE_TAMPER",
         "REJECT_UNAUTHORIZED_PATH",
+        "REJECT_UNAUTHORIZED_ACCOUNT_ROLE",
+        "REJECT_UNAUTHORIZED_CONFIRMATION_ROLE",
+        "ACTION_CARD_COLLECT_MATERIAL",
     }
     require(required_decisions.issubset(decisions), "E_CASE_NEGATIVE_COVERAGE")
 
@@ -1302,7 +1860,7 @@ def validate_repository(root: Path = ROOT) -> dict[str, Any]:
     validate_core_numbers(root, contract)
     validate_identity_data(identity)
     validate_topics_data(root, topics)
-    validate_cases(cases)
+    validate_cases(cases, identity)
     validate_status_and_manifest(root, status, manifest)
     validate_result(root, result)
     return {
@@ -1345,6 +1903,54 @@ def run_selftest() -> dict[str, Any]:
         "E_SCOPE_OVERRIDE_POLICY",
     )
 
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["trusted_scope_contract"]["required_dimensions"].remove(
+        "organization_id"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract),
+        "E_SCOPE_DIMENSIONS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["brand_fact_contract"]["channels"][1]["required_metadata"].remove(
+        "authorization_ref"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract),
+        "E_PRECISE_FACT_METADATA",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["canonical_composition_plan_contract"]["required_fields"].remove(
+        "composition_plan_ref"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract),
+        "E_PLAN_REQUIRED_FIELDS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    prepare_contract = next(
+        item
+        for item in mutated_contract["api_contracts"]
+        if item["path"] == "/v1/content/prepare"
+    )
+    prepare_contract["request_example"].pop("confirmation_evidence")
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract),
+        "E_PREPARE_REQUEST_EXAMPLE_FIELDS",
+    )
+
+    mutated_contract = copy.deepcopy(contract)
+    mutated_contract["user_output_contract"]["prohibited_patterns"].remove(
+        "(G1V11|RCV2)-[A-Z0-9-]+"
+    )
+    expect_failure(
+        lambda: validate_contract_data(ROOT, mutated_contract),
+        "E_USER_OUTPUT_PATTERNS",
+    )
+
     mutated_identity = copy.deepcopy(identity)
     mutated_identity["content_accounts"][0]["publish_allowed"] = True
     expect_failure(
@@ -1352,9 +1958,24 @@ def run_selftest() -> dict[str, Any]:
     )
 
     mutated_identity = copy.deepcopy(identity)
+    mutated_identity["work_roles"][0]["simulation_only"] = False
+    expect_failure(
+        lambda: validate_identity_data(mutated_identity), "E_ROLE_SIMULATION"
+    )
+
+    mutated_identity = copy.deepcopy(identity)
     mutated_identity["login_principals"][0]["allowed_content_account_ids"].pop()
     expect_failure(
         lambda: validate_identity_data(mutated_identity), "E_SIM_ACCOUNT_ALLOWLIST"
+    )
+
+    mutated_identity = copy.deepcopy(identity)
+    mutated_identity["login_principals"][0]["account_role_grants"][0][
+        "maker_role_ids"
+    ].clear()
+    expect_failure(
+        lambda: validate_identity_data(mutated_identity),
+        "E_SIM_MAKER_GRANT:ACCOUNT-DIYU-HQ-OFFICIAL",
     )
 
     mutated_topics = copy.deepcopy(topics)
@@ -1368,7 +1989,43 @@ def run_selftest() -> dict[str, Any]:
 
     mutated_cases = copy.deepcopy(cases)
     mutated_cases[0]["expected"]["decision"] = "PREPARE_PLAN"
-    expect_failure(lambda: validate_cases(mutated_cases), "E_CASE_DECISION")
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["candidate_user_visible_surfaces"]["title"] = (
+        "泄漏 G1V11-P2-ACTION-AUTHORIZED-LOCAL-ROUTINE"
+    )
+    positive_validate["input"]["internal_identifier_leak"] = False
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["verified_precise_facts"][0][
+        "applicable_content_account_ids"
+    ] = ["ACCOUNT-DIYU-FOUNDER"]
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_prepare = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-003"
+    )
+    positive_prepare["input"]["trusted_scope"]["organization_id"] = "ORG-DIYU-SZ-PARK"
+    positive_prepare["input"]["trusted_scope"]["store_id"] = "STORE-DIYU-SZ-PARK"
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    mutated_cases = copy.deepcopy(cases)
+    positive_validate = next(
+        case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+    )
+    positive_validate["input"]["verified_precise_facts"][0]["valid_until"] = (
+        "2026-07-13T23:59:59Z"
+    )
+    expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
     mutated_status = copy.deepcopy(status)
     mutated_status["readiness"]["production_ready"] = True
@@ -1420,7 +2077,7 @@ def run_selftest() -> dict[str, Any]:
             "E_ASSET_LIVE_DIGEST:ACTIVE_COMPONENTS",
         )
 
-    return {"selftest_cases": 9, "result": "PASS"}
+    return {"selftest_cases": 20, "result": "PASS"}
 
 
 def parse_args() -> argparse.Namespace:
