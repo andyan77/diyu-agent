@@ -38,6 +38,7 @@ BASELINE_COMMIT = "b4c40beb509d81db30b497abf38af1da6dc797da"
 PKG1_ROUND_FREEZE_COMMITS = {
     1: "c2e5b91a6da72fdf74a8b90edd8e494eaf9b31fc",
     2: "eba66ac3ede5dc9b4820efc5310a6e084d22671a",
+    3: "cee8ad8af85491ad7a78a40018339b401f581da7",
 }
 
 # 核心口径（源指令 §1，不得改变）
@@ -316,7 +317,7 @@ def check_pkg1_input_freeze(root: Path) -> tuple[bool, list[str]]:
     # --- 最新轮：冻结清单逐摘要对盘 ---
     latest, latest_dir = rounds[-1]
     text = (latest_dir / "inputs/input_freeze.v1.yaml").read_text(encoding="utf-8")
-    instruction_ver = {1: "v2.0", 2: "v2.1"}.get(latest, "v2.2")
+    instruction_ver = {1: "v2.0", 2: "v2.1", 3: "v2.2"}.get(latest, "v2.3")
     instruction = (root / G3
                    / f"contract/g3_author_instruction.{instruction_ver}.md")
     scenarios = (latest_dir / "inputs/scenarios.g3.v2.jsonl" if latest >= 3

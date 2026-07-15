@@ -1,0 +1,142 @@
+schema: pkg1_open_regression_round_result.v1
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+formal_round: 5
+mechanism: CONDITIONAL_PACKAGE_5_MANDATORY_RERUN   # 非"第4正式轮"——源指令 line 393 的一次性执行包5重跑机制
+formal_rounds_used: 3                              # 3 正式轮已在 R1/R2/R3 用尽
+package5_used: true                                # 全任务唯一一次条件执行包5，本轮即其重跑
+verdict: FORMAL_ROUND_5_FAILED_QUALITY_GATES
+is_terminal: true
+metrics_digest: 8f5dde04751c4151907669ee6a837f54e01717bec160788fb651a843de260401
+
+gates:
+  first_acceptance:
+    required: ">=0.90"
+    actual: 0.175        # 21/120
+    pass: false
+  formulaic_or_near_duplicate:
+    required: "<=0.10"
+    actual: 0.825        # 99/120
+    pass: false
+  hard_vetoes_in_acceptable:
+    required: 0
+    actual: 0            # 可接受21条中0硬否决（5条硬否决全落C集/失败集）
+    pass: true
+  hard_vetoes_whole_batch:
+    note: 全批5条事实硬否决；均落失败集未污染可接受集，但核心验收要求全批硬否决为0
+    fact_track: 5
+    content_track: 0
+    machine_track: 0
+    pass: false
+  blind_recognizability:
+    required: ">=0.85"
+    actual: 0.933        # 112/120
+    pass: true
+  route_60:
+    required: "60/60 action + 60/60 reason, zero leak"
+    actual: "60/60 + 60/60 + 0（自第1轮冻结未变）"
+    pass: true
+  focus_cp_blind_improvement:
+    CP01: {last: "3/11", this: "3/6", improved: true}
+    CP06: {last: "6/11", this: "6/6", improved: true}
+    CP07: {last: "7/11", this: "6/6", improved: true}
+
+machine_gate:
+  outputs: 120
+  hard_fail: 0
+  terminal_disclaim_beat: 0    # 末段免责节拍结构位置门 END_BOUNDARY_DISCLAIM 零命中——v3.1 结构级修复在末段位置层确实生效
+  near_dup: 0
+  frozen_reuse: 0
+  cross_output_reuse_pairs: 0
+  concentration_findings: 3    # 均标题类 TITLE_COLON/TITLE_NUMBER 轻量 FLAG
+  note: >
+    第3轮唯一机器 HARD（CP06-011 "上线"治理词碰撞）本轮无复发；末段免责节拍被
+    END_BOUNDARY_DISCLAIM 结构位置门 + v2.3 三H/三I/三J 双层堵死，作者层零复发。
+
+fact_track:
+  approved: 115
+  hard_rejected:
+    - id: G3-POS-CP13-003
+      code: H_FABRICATED_FACT
+      note: >
+        正文"针脚密到能一天里反复套脱都不走形"——针脚密度+保形/耐久主张，
+        针脚/走形/套脱/反复/耐 均不在该请求 facts；无源性能主张。执行方独立复核确认。
+    - id: G3-POS-CP18-008
+      code: H_FABRICATED_FACT
+      note: >
+        画面"粗棉纹"编造棉纤维成分；facts 仅"宽罗纹"袖口结构、全份无"棉"。
+        与第3轮"羊毛混纺"同一红线。执行方独立复核确认（棉∉facts）。
+    - id: G3-POS-CP19-006
+      code: H_FABRICATED_FACT
+      note: >
+        声音"绗缝的棉层"编造棉填充；facts 仅"绗缝外套"、未授权填充物纤维、全份无"棉"。
+        执行方独立复核确认（棉∉facts）。
+    - id: G3-POS-CP20-001
+      code: H_FABRICATED_FACT
+      note: >
+        末段"客服已经把这4位排进下周一的回访电话，逐个打过去"——编造无源回访动作，
+        且与源事实"4条空号（号码无效）改发站内信"直接矛盾（空号无法电话回访）。
+        设计教训：此编造恰是作者为满足三H"末段落前向价值动作"而硬造出来的动作——
+        修末段免责节拍的合同诱发了新的编造类。执行方独立复核确认。
+    - id: G3-POS-CP18-002
+      code: H_OVERREACH_CLAIM
+      note: >
+        口播"六次问下来都指这摞"——"六次"有源但"都指这摞"把六次询问聚合成人群偏好，
+        直接违反该请求 claim_boundary 明文"不能把询问写成市场人群偏好或补架销售因果"。
+        执行方独立复核确认（比对 claim_boundary verbatim）。
+
+content_track:
+  grades: {A: 2, B: 19, C: 99, D: 0}
+  formulaic_true: 99
+  first_acceptable: 21
+  per_cp_acceptable:
+    CP01: "6/6"   # v3.1 三H/三I 对单主体档型真正生效：收尾落进行中场景/前向价值，旧免责节拍溶入实景
+    CP02: "6/6"   # 同上
+    CP03: "6/6"   # 同上（单项手艺全过程，工序天然发散）
+    CP08: "1/6"   # 仅 002 破格（半成品vs成品逐层标注，无免责公式）
+    CP13: "1/6"   # 仅 002 破格（坐/站功能对照溶限度）
+    CP14: "1/6"   # 仅 004 破格（拉链越弧线纯物性、动作收尾）
+    others: "0/6" # CP04/05/06/07/09/10/11/12/15/16/17/18/19/20 全套路
+  reviewer_consensus: >
+    四位独立内容审查者一致：v3.1 结构级修复在"末段位置层"确实生效（机器 n-gram≈0、
+    末段免责节拍零检出），单主体档型 CP01/02/03 收敛真被消除（各 6/6）——这是本轮
+    定向修复的真实定域成功。但对其余 17 个 CP，第3轮判死的"缺料静默/泛化免责"替代
+    公式家族仍在，只是被下沉/前移一段：换了承载位（P3-P5正文中段/口播/画面）而语义
+    家族跨条原样保留，且第3轮致死原词大面积复现——「那栏空着/账上还空着一笔」(CP11/
+    13/15/19)、「排在后面的工位」(CP06/09/10/16)、「取景之外/画框够不着」(CP13/18)、
+    「没人来问/没上过手的人能答」(CP06/07/14)。此外多岗位/成长档型（CP04/CP05）另共享
+    "证据名录+分栏署名+缺料静默"冗余骨架槽，超出 CP 指纹所需，跨6条同构。
+    按与前三轮完全同一口径判：限度承载位与句族成套复用→反套路关键项失守→封顶 C。
+
+root_cause_analysis: >
+  这是同一失败轴（跨条套路收敛）的第 4 次独立复现（R1/R2/R3 + 执行包5重跑）。
+  机制仍是"打地鼠"：v3.1 用结构位置门（END_BOUNDARY_DISCLAIM）精确堵死了"末段可分离
+  免责节拍"这一具体承载位——这一层是真封住了（机器 0 命中、CP01/02/03 全清为证），
+  但收敛并未消除，而是迁移到下一个未被门覆盖的承载位（正文中段/口播/画面里的同一
+  "缺料静默/泛化免责"语义家族）。根因不在任何单一句族或承载位，而在生成结构本身：
+  众多作者用同一批 typed_material、同一组边界事实、同一套发牌骨架填同一批语义槽位，
+  凡未被机器 HARD 强制发散的槽位必然坍缩到共同输入所隐含的同一修辞动作。
+  逐轮封死具体承载位（边界句面→末段节拍）只是把同一收敛不断赶到下一个槽位，
+  从未改变"多作者共同输入→语义槽坍缩"这一结构性根因。
+  定域成功（CP01/02/03）证明方向可行但强度/覆盖严重不足：单主体、工序天然线性的档型
+  能被"收尾正向锚定"救活，但多要素/判断/边界/复盘型档型（其余 17 CP）的限度表达仍会
+  在任意剩余槽位重新同构。
+
+honest_negative_findings:
+  - v3.1 修复非全盘失败：CP01/02/03 三个 CP 各 6/6 全接受是真实、可复算的定域成功（18/21 可接受条来自这 3 个 CP）。
+  - 但 18/120 的定域成功距 90% 首次可接受门槛差距巨大；82.5% 套路率距 ≤10% 门槛差距巨大。
+  - 修末段免责节拍的三H合同诱发了一类新编造（CP20-001 为满足"前向价值动作"硬造出与源矛盾的电话回访）——正向合同的副作用，记为设计教训。
+  - 五条事实硬否决中 3 条为纤维/材质编造（棉/耐久），与第3轮"羊毛混纺"同族，说明纤维核源仍需机器层确定性门（当前仅靠人审兜底）。
+
+failed_ids_retained_in_denominator: true
+resampling_used: false
+denominator_manipulation: none
+gold_answer_modified: false
+v11_standard_lowered: false
+self_review_as_independent_review: false   # 11位评审均独立代理，与作者及彼此隔离，执行方仅复验覆盖/digest不代评分
+
+package1_status: QUALITY_FAILED_AFTER_3_FORMAL_ROUNDS_PLUS_PACKAGE5_RERUN
+terminal_state_determination: >
+  源指令 §10 line 461 诚实停止条件#3（"执行包5已使用后仍不通过质量门"）——本轮即
+  全任务唯一一次条件执行包5的强制重跑，已使用且质量门（首次可接受率/套路率两项主门）
+  仍不达标。故诚实停止条件现已满足。执行包1 未取得资格，不进入执行包2/3/4。
+  按合法终态#2 形成可复核的诚实失败交付。不触发任何重采样/降标准/删失败/改分母。
