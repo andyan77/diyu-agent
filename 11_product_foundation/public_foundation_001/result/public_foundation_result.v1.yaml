@@ -2,7 +2,7 @@ public_foundation_result:
   schema_version: v1.0
   task_id: DIYU_ENGINEERING_ENTRY_AND_PUBLIC_FOUNDATION_FREEZE_001
   baseline_master_commit: 847e0db45ae0a3a116222e5f66b99cba225fd9f2
-  candidate_snapshot_digest: 6b1d21a94bf868485551849c5edb6f2aabbc4049c7f5c678678d4c567f0550c4
+  candidate_snapshot_digest: 5fb9e16a4d8a2f522f21bb3ff34ce0d6e26250e15560457b30dffc4eb2034f7b
   candidate_state: COMPLETE_PENDING_INDEPENDENT_REVIEWS
   review_state: PENDING_INDEPENDENT_REVIEWS
   reviewed_candidate_commit: null
@@ -129,7 +129,7 @@ public_foundation_result:
     - E_P4_WRITE_SURFACE
     predecessor_checker: ci/checkers/check_gate1_v1_1_current.py
     predecessor_as_built_sha256: 1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8
-    successor_checker_sha256: 5b59d2ab6149d35b7126604b65630ee32bb99e77f55b4d60d2649bad1606d1a3
+    successor_checker_sha256: b822dee0a09a52b9654d95d6d9f3acfe1c5c7bbe279245537ff2818cf25efec7
     repair_shape: EXACT_FOUNDATION_SURFACE_DELEGATION_WITH_FROZEN_PREDECESSOR_IDENTITY
     frozen_business_asset_mutation_count: 0
     unrelated_historical_tool_drift_still_rejected: true

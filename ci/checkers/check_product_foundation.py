@@ -3059,31 +3059,27 @@ def run_selftest() -> dict[str, Any]:
         "E_PREPARE_PLAN_SOURCE_REFS",
     )
 
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["request_example"]["scoped_retrieval_fragments"][0][
-        "source_ref"
-    ] = ""
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_FRAGMENT_SAFETY",
-    )
-
-    mutated_contract = copy.deepcopy(contract)
-    prepare_contract = next(
-        item
-        for item in mutated_contract["api_contracts"]
-        if item["path"] == "/v1/content/prepare"
-    )
-    prepare_contract["request_example"]["verified_precise_facts"][0]["source_ref"] = ""
-    expect_failure(
-        lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_FACT_SAFETY",
-    )
+    for collection_field, expected_error in (
+        ("scoped_retrieval_fragments", "E_PREPARE_FRAGMENT_SAFETY"),
+        ("verified_precise_facts", "E_PREPARE_FACT_SAFETY"),
+    ):
+        for metadata_field, invalid_value in (
+            ("source_ref", "not-a-uri-reference"),
+            ("authorization_ref", ""),
+        ):
+            mutated_contract = copy.deepcopy(contract)
+            prepare_contract = next(
+                item
+                for item in mutated_contract["api_contracts"]
+                if item["path"] == "/v1/content/prepare"
+            )
+            prepare_contract["request_example"][collection_field][0][metadata_field] = (
+                invalid_value
+            )
+            expect_failure(
+                lambda: validate_contract_data(ROOT, mutated_contract, identity),
+                expected_error,
+            )
 
     mutated_contract = copy.deepcopy(contract)
     validate_contract = next(
@@ -3098,6 +3094,22 @@ def run_selftest() -> dict[str, Any]:
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
         "E_VALIDATE_SOURCE_REFS",
     )
+
+    for reference_field, unregistered_ref in (
+        ("actually_used_fact_refs", "FACT-NOT-REGISTERED"),
+        ("actually_used_material_refs", "FRAGMENT-NOT-REGISTERED"),
+    ):
+        mutated_contract = copy.deepcopy(contract)
+        validate_contract = next(
+            item
+            for item in mutated_contract["api_contracts"]
+            if item["path"] == "/v1/content/validate"
+        )
+        validate_contract["request_example"][reference_field] = [unregistered_ref]
+        expect_failure(
+            lambda: validate_contract_data(ROOT, mutated_contract, identity),
+            "E_VALIDATE_SOURCE_REFS",
+        )
 
     mutated_contract = copy.deepcopy(contract)
     validate_contract = next(
@@ -3234,6 +3246,18 @@ def run_selftest() -> dict[str, Any]:
     positive_validate["input"]["candidate_user_visible_surfaces"]["CP01"] = "普通文本"
     positive_validate["input"]["internal_identifier_leak"] = False
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
+
+    for surface_field in ("execution_payload", "surface_units"):
+        mutated_cases = copy.deepcopy(cases)
+        positive_validate = next(
+            case for case in mutated_cases if case["case_id"] == "PF-POS-005"
+        )
+        positive_validate["input"]["candidate_user_visible_surfaces"][surface_field] = {
+            "CP01": "普通文本"
+        }
+        expect_failure(
+            lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION"
+        )
 
     mutated_cases = copy.deepcopy(cases)
     positive_validate = next(
