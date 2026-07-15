@@ -89,7 +89,7 @@ EXPECTED_PACKAGE_FILES = frozenset(
         Path("review/execution_review_request.v1.md"),
         Path("review/source_fact_authorization_review.v1.yaml"),
         Path("review/brand_expression_consumability_review.v1.yaml"),
-        *(Path("source_snapshots") / source.filename for source in materialize.SOURCES),
+        *(Path("source_snapshots") / source.snapshot_filename for source in materialize.SOURCES),
     }
 )
 
@@ -141,7 +141,7 @@ def load_yaml_object(path: Path, root_key: str) -> dict[str, Any]:
 
 def load_bundle() -> Bundle:
     source_bytes = {
-        source.source_id: (PACKAGE_ROOT / "source_snapshots" / source.filename).read_bytes()
+        source.source_id: (PACKAGE_ROOT / "source_snapshots" / source.snapshot_filename).read_bytes()
         for source in materialize.SOURCES
     }
     reviews = [
@@ -275,7 +275,7 @@ def validate_manifest(bundle: Bundle, errors: list[str]) -> None:
             errors.append(f"{source.source_id}: snapshot byte identity mismatch")
         if entry.get("sha256") != source.sha256 or entry.get("byte_size") != source.byte_size:
             errors.append(f"{source.source_id}: manifest digest or size mismatch")
-        if entry.get("snapshot_path") != f"source_snapshots/{source.filename}":
+        if entry.get("snapshot_path") != f"source_snapshots/{source.snapshot_filename}":
             errors.append(f"{source.source_id}: snapshot path mismatch")
 
     artifacts = {item.get("path"): item for item in bundle.manifest.get("artifacts", [])}
@@ -697,7 +697,7 @@ def validate_file_scope(errors: list[str]) -> None:
         errors.append(f"write scope escaped exclusive root: {outside}")
 
     for source in materialize.SOURCES:
-        snapshot_path = PACKAGE_RELATIVE_ROOT / "source_snapshots" / source.filename
+        snapshot_path = PACKAGE_RELATIVE_ROOT / "source_snapshots" / source.snapshot_filename
         process = subprocess.run(
             ["git", "show", f":{snapshot_path}"],
             cwd=REPO_ROOT,

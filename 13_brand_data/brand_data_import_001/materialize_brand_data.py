@@ -25,6 +25,7 @@ PACKAGE_EVALUATED_AT = "2026-07-15T00:00:00Z"
 class SourceSpec:
     source_id: str
     filename: str
+    snapshot_filename: str
     sha256: str
     byte_size: int
     observed_from: str | None
@@ -44,6 +45,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-01",
         "第一批：品牌世界设定、组织结构与事实治理基线.md",
+        "source-01.md",
         "db876e2ebcddb905df8e000eefbd4abcc306bfc6172b0635221df5a9aeefb163",
         30537,
         None,
@@ -53,6 +55,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-02",
         "第二批：商品体系、尺码规格、库存流转与真实到店资料.md",
+        "source-02.md",
         "ca39dc31f5ce9faff74aec55186b22c6ab784bfef202b56991edf7de7c9adfa5",
         32616,
         "2026-07-10",
@@ -62,6 +65,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-03",
         "第三批：门店空间、陈列现状、动线调整与真实商品搭配.md",
+        "source-03.md",
         "90e6c1da841acdee1eef0abd3fae41bf0230f8aa6e549e738c988707c665503c",
         27389,
         "2026-07-11",
@@ -71,6 +75,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-04",
         "第四批：每日真实记录、顾客服务、研发验证、经营选择与承诺.md",
+        "source-04.md",
         "1560ace1e15affb5a20e9a80df2b7184aa826af6811fe8a54eeca32f33eabe23",
         33847,
         "2026-07-03",
@@ -80,6 +85,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-05",
         "第五批：图片、视频、文件、人物授权与使用范围.md",
+        "source-05.md",
         "8f53d4d510a754ba34ebbc21d86b539874fc180005e28baedb8ff6b62aa99b0e",
         32559,
         "2026-07-12",
@@ -89,6 +95,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-06",
         "第六批：已发布内容、审核修改、实际反馈、重复控制与能力覆盖.md",
+        "source-06.md",
         "698a1636493f46d80ed91c5957b0f07ea4e901928b8321152a85ab2a153d7172",
         35731,
         "2026-07-12",
@@ -98,6 +105,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-07",
         "第七批：真实业务请求、生成裁决、越权阻断与缺料反馈.md",
+        "source-07.md",
         "94988999e4ff256f70e579c710696024f79f5e15705493da2e58a13ab3c6c31f",
         27411,
         None,
@@ -107,6 +115,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-08",
         "第八批：11账号矩阵、人物岗位档案与30天连续事实记录.md",
+        "source-08.md",
         "3b4577c411ea34ce46db5e8fe13b0af3ce751dcc443a4db95f59a32a1ca923f9",
         53719,
         "2026-08-03",
@@ -116,6 +125,7 @@ SOURCES = (
     SourceSpec(
         "SOURCE-09",
         "综合补充增强包：经营责任、交易售后、本地生活、人物成长与事实纠错.md",
+        "source-09.md",
         "d4d6089fa03f58676ea72022ee8c99e3d44d2bf63f44e1a268814b491d430a3d",
         28678,
         None,
@@ -243,7 +253,7 @@ def canonical_jsonl(values: list[dict[str, Any]]) -> bytes:
 
 
 def snapshot_bytes(source: SourceSpec) -> bytes:
-    value = (SNAPSHOT_ROOT / source.filename).read_bytes()
+    value = (SNAPSHOT_ROOT / source.snapshot_filename).read_bytes()
     if len(value) != source.byte_size or sha256_bytes(value) != source.sha256:
         raise ValueError(f"snapshot mismatch: {source.filename}")
     return value
@@ -674,7 +684,7 @@ def write_materialized_files() -> None:
                 "observed_from": source.observed_from,
                 "observed_until": source.observed_until,
                 "sha256": source.sha256,
-                "snapshot_path": "source_snapshots/" + source.filename,
+                "snapshot_path": "source_snapshots/" + source.snapshot_filename,
                 "source_id": source.source_id,
                 "temporal_note": source.temporal_note,
             }
