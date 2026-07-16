@@ -1,9 +1,9 @@
 fact_aware_plan_adapter_result:
   schema_version: v1.0
   task_id: DIYU_FACT_AWARE_PLAN_ADAPTER_001
-  status: CANDIDATE_PENDING_INDEPENDENT_REVIEWS
-  candidate_commit: PENDING
-  candidate_snapshot_digest: PENDING
+  status: PASS_FACT_AWARE_PLAN_ADAPTER_PENDING_PACKAGE_7
+  candidate_commit: a5c99cb545fe57d0df3cb45a071734e5ab0c836b
+  candidate_snapshot_digest: 1d3423b89066f36c9a83279fb98e3eda50418ab3716079849453a99625ecabae
   counts:
     capability_cases: 20
     topic_categories: 8
@@ -25,7 +25,15 @@ fact_aware_plan_adapter_result:
     all_8_topics_covered: true
     no_atom_dependency_proven: true
     semantic_and_aesthetic_review_pending: true
-  independent_reviews: []
+  independent_reviews:
+    - review_id: PKG6-ARCH-TARGETED-REREVIEW-A-001
+      reviewer_identity: Reviewer-A Architecture and Upstream Reuse Saffron-6C2E
+      score: 96
+      verdict: PASS
+    - review_id: PKG6-FACT-AUTH-REVIEW-B-R2-A5C99CB5
+      reviewer_identity: Codex Independent Reviewer B - Fact Authorization and Enterprise Isolation
+      score: 97
+      verdict: PASS
   external_calls:
     model: 0
     dify: 0

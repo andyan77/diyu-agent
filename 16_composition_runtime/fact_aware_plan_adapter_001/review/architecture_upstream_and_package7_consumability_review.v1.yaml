@@ -1,0 +1,34 @@
+review:
+  schema_version: v1.0
+  review_id: PKG6-ARCH-TARGETED-REREVIEW-A-001
+  task_id: DIYU_FACT_AWARE_PLAN_ADAPTER_001
+  review_type: ARCHITECTURE_UPSTREAM_REUSE_AND_PACKAGE7_CONSUMABILITY
+  reviewer_identity: Reviewer-A Architecture and Upstream Reuse Saffron-6C2E
+  reviewer_session_id: 7d614ef2-53c6-4fa5-a36b-2fe590fc5a19
+  reviewer_run_id: 88a32a63-842a-4993-b112-c64bc3967ef7
+  candidate_commit: a5c99cb545fe57d0df3cb45a071734e5ab0c836b
+  candidate_snapshot_digest: 1d3423b89066f36c9a83279fb98e3eda50418ab3716079849453a99625ecabae
+  score: 96
+  verdict: PASS
+  hard_blockers: []
+  acceptance_ids:
+    - PKG6-A01
+    - PKG6-A02
+    - PKG6-A04
+    - PKG6-A05
+    - PKG6-A06
+    - PKG6-A08
+    - PKG6-A09
+    - PKG6-A10
+    - PKG6-A11
+    - PKG6-A12
+  evidence:
+    - The worktree, candidate commit, and recomputed snapshot digest match exactly.
+    - Package 6 is the only mandatory successor root; deleting it raises E_SUCCESSOR_ROOT_MISSING locally and fails both remote runner modes.
+    - Packages 2 through 5 retain their prior optional-reservation behavior, while Package 5's complete file set and bytes remain bound to its reviewed commit.
+    - Package 5 retrieve and Package 2 prepare and validate remain true upstream calls; no second plan, context, store, HTTP service, or generator exists.
+    - The plan-bound ephemeral material projection remains exact, scope-bound, read-only, and directly consumable by Package 7.
+    - Package 6 pre-review checks and all 15 focused tests pass without changing upstream packages.
+  nonblocking_findings:
+    - The adapter uses Package 2's private action-card helper to preserve single ownership; this is narrow coupling, not a parallel contract.
+  signed_at: 2026-07-15T18:07:26-07:00
