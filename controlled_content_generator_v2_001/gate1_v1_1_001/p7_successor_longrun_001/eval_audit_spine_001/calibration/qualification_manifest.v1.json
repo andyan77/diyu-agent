@@ -1,0 +1,35 @@
+{
+  "schema_version": "eval-spine-calibration-manifest-v1",
+  "manifest_id": "EAS-M0-QUALIFICATION-V1",
+  "data_grid": "G3_MEASUREMENT_QUALIFICATION",
+  "content_status": "NOT_MATERIALIZED",
+  "sealed": true,
+  "case_count": 0,
+  "class_counts": {},
+  "dataset_manifest_digest": null,
+  "source_manifest_digest": null,
+  "gold_manifest_digest": null,
+  "record_manifest_digests": {},
+  "qualification_record_index_digest": null,
+  "allowed_consumers": [
+    "INDEPENDENT_AUDITOR",
+    "QUALIFICATION_ADJUDICATOR",
+    "QUALIFICATION_REVIEWER_A",
+    "QUALIFICATION_REVIEWER_B",
+    "QUALIFICATION_RUNNER",
+    "SEALED_DATA_CUSTODIAN"
+  ],
+  "prohibited_consumers": [
+    "EVALUATOR_DEVELOPER",
+    "GENERATOR_AUTHOR",
+    "GENERATOR_DEVELOPER",
+    "RUBRIC_DEVELOPER"
+  ],
+  "leakage_status": "NOT_EVALUATED",
+  "notes": [
+    "No sealed qualification cases or answers exist in this manifest version.",
+    "The sealed flag declares the intended access class, not that a qualification set has been built.",
+    "Any answer exposure to a prohibited consumer invalidates the affected set."
+  ],
+  "manifest_digest": null
+}

@@ -1,0 +1,524 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/measurement_report.v1.schema.json",
+  "title": "Eval Audit Spine M0 Reports v1",
+  "oneOf": [
+    {"$ref": "#/$defs/moduleReport"},
+    {"$ref": "#/$defs/recordManifest"},
+    {"$ref": "#/$defs/auditIntegrity"},
+    {"$ref": "#/$defs/independentAdjudication"},
+    {"$ref": "#/$defs/m0Decision"}
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "moduleId": {
+      "enum": [
+        "reference_assertion_extraction", "claim_atomization", "risk_classification",
+        "entailment", "fact_chain_end_to_end", "formulaic_construct",
+        "disclosure_and_omission", "review_calibration", "cost"
+      ]
+    },
+    "fullDigestMap": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "reference_assertion_extraction", "claim_atomization", "risk_classification",
+        "entailment", "fact_chain_end_to_end", "formulaic_construct",
+        "disclosure_and_omission", "review_calibration", "cost"
+      ],
+      "properties": {
+        "reference_assertion_extraction": {"$ref": "#/$defs/digest"},
+        "claim_atomization": {"$ref": "#/$defs/digest"},
+        "risk_classification": {"$ref": "#/$defs/digest"},
+        "entailment": {"$ref": "#/$defs/digest"},
+        "fact_chain_end_to_end": {"$ref": "#/$defs/digest"},
+        "formulaic_construct": {"$ref": "#/$defs/digest"},
+        "disclosure_and_omission": {"$ref": "#/$defs/digest"},
+        "review_calibration": {"$ref": "#/$defs/digest"},
+        "cost": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "partialDigestMap": {
+      "type": "object", "propertyNames": {"$ref": "#/$defs/moduleId"},
+      "additionalProperties": {"$ref": "#/$defs/digest"}
+    },
+    "referenceExtractionGates": {
+      "type": "object", "minProperties": 14, "maxProperties": 14,
+      "propertyNames": {"enum": [
+        "attribute_annotations_complete", "detection_critical_omissions_zero",
+        "detection_family_coverage", "detection_negative_control_count",
+        "detection_positive_sample_count", "detection_precision",
+        "detection_qualification_evidence_bound", "detection_recall",
+        "detection_record_shape_valid", "detection_sample_count",
+        "modality_correct_accuracy", "polarity_correct_accuracy",
+        "preconditions_correct_accuracy", "time_scope_correct_accuracy"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "claimAtomizationGates": {
+      "type": "object", "minProperties": 12, "maxProperties": 12,
+      "propertyNames": {"enum": [
+        "cross_surface_duplicate_annotations_complete",
+        "detection_critical_omissions_zero", "detection_family_coverage",
+        "detection_negative_control_count", "detection_positive_sample_count",
+        "detection_precision", "detection_qualification_evidence_bound",
+        "detection_recall", "detection_record_shape_valid", "detection_sample_count",
+        "incorrect_merge_rate", "merge_annotations_complete"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "riskClassificationGates": {
+      "type": "object", "minProperties": 9, "maxProperties": 9,
+      "propertyNames": {"enum": [
+        "family_coverage", "high_risk_downclassification_upper_below_one_percent",
+        "high_risk_downclassification_zero", "high_risk_sample",
+        "legal_control_sample", "legal_false_high_upper_at_most_five_percent",
+        "overall_accuracy", "qualification_evidence_bound", "record_shape_valid"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "entailmentGates": {
+      "type": "object", "minProperties": 23, "maxProperties": 23,
+      "propertyNames": {"enum": [
+        "abstention_annotations_complete", "contradicted_precision",
+        "contradicted_recall", "family_coverage", "high_risk_auto_pass_fn_zero",
+        "high_risk_contradicted_sample", "high_risk_unknown_sample",
+        "high_risk_upper_below_one_percent",
+        "joint_risk_downclass_and_unsafe_allow_zero",
+        "known_risk_regression_manifest_bound", "known_risk_regression_recall_one",
+        "known_risk_regression_sample", "known_risk_regression_shape_valid",
+        "known_risk_regression_unique",
+        "natural_false_hard_upper_at_most_five_percent", "natural_legal_sample",
+        "qualification_evidence_bound", "record_shape_valid", "supported_precision",
+        "supported_recall", "unknown_never_auto_allow", "unknown_precision",
+        "unknown_recall"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "endToEndGates": {
+      "type": "object", "minProperties": 10, "maxProperties": 10,
+      "propertyNames": {"enum": [
+        "chain_digest_closure_complete", "family_coverage",
+        "high_risk_unsafe_clear_zero", "high_risk_unsafe_sample",
+        "high_risk_unsafe_upper_below_one_percent",
+        "joint_risk_downclass_and_unsafe_allow_zero",
+        "natural_false_hard_upper_at_most_five_percent", "natural_legal_sample",
+        "qualification_evidence_bound", "record_shape_valid"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "formulaicGates": {
+      "type": "object", "minProperties": 29, "maxProperties": 29,
+      "propertyNames": {"enum": [
+        "adjudication_covers_reviewed_pairs", "adjudication_qualification_evidence_bound",
+        "adjudication_rate", "adjudication_records_valid",
+        "candidate_audit_manifest_valid", "candidate_audit_pairs_bound",
+        "candidate_audit_qualification_evidence_bound", "candidate_audit_shape_valid",
+        "candidate_gold_matches_adjudication", "candidate_miner_confirmed_sample",
+        "candidate_miner_recall", "class_counts_close_reviewed_denominator",
+        "class_counts_valid", "family_coverage", "fresh_pair_count", "interpretable",
+        "judgment_qualification_evidence_bound", "kappa",
+        "necessary_grammar_is_negative_subset", "necessary_grammar_pair_count",
+        "negative_agreement", "negative_pair_count", "positive_agreement",
+        "positive_pair_count", "raw_agreement", "registry_cross_binding",
+        "review_coverage_valid", "reviewer_independence_valid",
+        "rubric_frozen_before_qualification"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "disclosureGates": {
+      "type": "object", "minProperties": 16, "maxProperties": 16,
+      "propertyNames": {"enum": [
+        "all_deterministic_obligation_types_present",
+        "deterministic_disclosure_false_hard_zero",
+        "deterministic_disclosure_recall_one", "deterministic_disclosure_sample",
+        "disclosure_qualification_evidence_bound", "disclosure_record_shape_valid",
+        "family_coverage", "high_risk_omission_false_negative_zero",
+        "high_risk_omission_fn_upper_at_most_three_percent",
+        "joint_risk_downclass_and_omission_fn_zero", "omission_control_sample",
+        "omission_positive_sample", "omission_precision",
+        "omission_qualification_evidence_bound", "omission_recall",
+        "omission_record_shape_valid"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "reviewCalibrationGates": {
+      "type": "object", "minProperties": 13, "maxProperties": 13,
+      "propertyNames": {"enum": [
+        "approval_decision_agreement", "approval_negative_specific_agreement",
+        "approval_positive_specific_agreement", "coverage_complete",
+        "distinct_reviewers_present", "double_reviewed_item_count", "family_coverage",
+        "hard_veto_agreement_one", "hard_veto_cases_present",
+        "qualification_evidence_bound", "reviewer_provenance_complete",
+        "role_collision_absent", "two_decision_classes_present"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "costGates": {
+      "type": "object", "minProperties": 11, "maxProperties": 11,
+      "propertyNames": {"enum": [
+        "all_events_complete", "costs_recompute_from_rate_card",
+        "critical_fields_available", "event_contracts_valid", "event_ids_unique",
+        "expected_event_manifest_matches", "human_costs_recompute_from_rate_card",
+        "minimum_event_count", "provider_call_ids_unique", "rate_card_valid",
+        "source_event_manifest_matches"
+      ]},
+      "additionalProperties": {"type": "boolean"}
+    },
+    "moduleReport": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "module_id", "method_version", "visibility_partition",
+        "dataset_manifest_digest", "record_manifest_digest", "method_config_digest",
+        "evaluator_revision_digest", "execution_receipt_digest", "qualified", "result",
+        "result_digest", "report_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-m0-module-report-v1"},
+        "module_id": {"$ref": "#/$defs/moduleId"},
+        "method_version": {"const": 1},
+        "visibility_partition": {"const": "HIDDEN"},
+        "dataset_manifest_digest": {"$ref": "#/$defs/digest"},
+        "record_manifest_digest": {"$ref": "#/$defs/digest"},
+        "method_config_digest": {"$ref": "#/$defs/digest"},
+        "evaluator_revision_digest": {"$ref": "#/$defs/digest"},
+        "execution_receipt_digest": {"$ref": "#/$defs/digest"},
+        "qualified": {"type": "boolean"},
+        "result": {
+          "type": "object", "required": ["qualified", "gates"],
+          "properties": {
+            "qualified": {"type": "boolean"},
+            "gates": {"type": "object", "minProperties": 1,
+                      "additionalProperties": {"type": "boolean"}}
+          }
+        },
+        "result_digest": {"$ref": "#/$defs/digest"},
+        "report_digest": {"$ref": "#/$defs/digest"}
+      },
+      "allOf": [
+        {"if": {"properties": {"module_id": {"const": "reference_assertion_extraction"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/referenceExtractionGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "claim_atomization"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/claimAtomizationGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "risk_classification"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/riskClassificationGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "entailment"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/entailmentGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "fact_chain_end_to_end"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/endToEndGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "formulaic_construct"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/formulaicGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "disclosure_and_omission"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/disclosureGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "review_calibration"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/reviewCalibrationGates"}}}}}},
+        {"if": {"properties": {"module_id": {"const": "cost"}}},
+         "then": {"properties": {"result": {"properties": {"gates": {"$ref": "#/$defs/costGates"}}}}}}
+      ]
+    },
+    "recordManifest": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "module_id", "visibility_partition",
+        "dataset_manifest_digest", "record_count", "record_role_counts", "entries",
+        "record_manifest_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-m0-record-manifest-v1"},
+        "module_id": {"$ref": "#/$defs/moduleId"},
+        "visibility_partition": {"const": "HIDDEN"},
+        "dataset_manifest_digest": {"$ref": "#/$defs/digest"},
+        "record_count": {"type": "integer", "minimum": 1},
+        "record_role_counts": {"type": "object", "minProperties": 1,
+                               "additionalProperties": {"type": "integer", "minimum": 1}},
+        "entries": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["record_id", "record_digest", "record_role"],
+            "properties": {
+              "record_id": {"type": "string", "minLength": 1},
+              "record_digest": {"$ref": "#/$defs/digest"},
+              "record_role": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "record_manifest_digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "auditIntegrityGates": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "public_manifest_schema_valid", "source_group_isolation_pass",
+        "hidden_payload_leakage_absent", "artifact_digest_closure_pass"
+      ],
+      "properties": {
+        "public_manifest_schema_valid": {"const": true},
+        "source_group_isolation_pass": {"const": true},
+        "hidden_payload_leakage_absent": {"const": true},
+        "artifact_digest_closure_pass": {"const": true}
+      }
+    },
+    "auditIntegrity": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "report_id", "dataset_manifest_digest",
+        "visibility_partition", "gate_verdicts", "evidence_manifest_digest",
+        "executed_by", "executed_at", "report_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-audit-integrity-report-v1"},
+        "report_id": {"type": "string", "minLength": 1},
+        "dataset_manifest_digest": {"$ref": "#/$defs/digest"},
+        "visibility_partition": {"const": "HIDDEN"},
+        "gate_verdicts": {"$ref": "#/$defs/auditIntegrityGates"},
+        "evidence_manifest_digest": {"$ref": "#/$defs/digest"},
+        "executed_by": {"type": "string", "minLength": 1},
+        "executed_at": {"type": "string", "format": "date-time"},
+        "report_digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "independentGates": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "sealed_gold_integrity", "record_manifest_integrity",
+        "module_report_integrity", "module_metrics_recomputed",
+        "dataset_binding_integrity", "leakage_check_pass"
+      ],
+      "properties": {
+        "sealed_gold_integrity": {"const": true},
+        "record_manifest_integrity": {"const": true},
+        "module_report_integrity": {"const": true},
+        "module_metrics_recomputed": {"const": true},
+        "dataset_binding_integrity": {"const": true},
+        "leakage_check_pass": {"const": true}
+      }
+    },
+    "independentAdjudication": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "report_id", "reviewer_identity", "reviewer_provenance",
+        "independence_attestation", "qualification_manifest_digest",
+        "module_report_digests", "record_manifest_digests",
+        "recomputed_module_result_digests", "gate_verdicts", "gate_evidence_digests",
+        "review_assignment_digest", "reviewer_separation_digest",
+        "audit_integrity_report_digest", "open_finding_count", "status",
+        "reviewed_at", "report_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-m0-independent-adjudication-v1"},
+        "report_id": {"const": "M0-INDEPENDENT-ADJUDICATION"},
+        "reviewer_identity": {"type": "string", "minLength": 1},
+        "reviewer_provenance": {
+          "type": "object", "additionalProperties": false,
+          "required": ["reviewer_kind", "model_revision", "prompt_digest"],
+          "properties": {
+            "reviewer_kind": {"enum": ["HUMAN", "AI"]},
+            "model_revision": {"type": ["string", "null"]},
+            "prompt_digest": {"$ref": "#/$defs/nullableDigest"}
+          }
+        },
+        "independence_attestation": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "did_not_build_gold", "did_not_develop_evaluator",
+            "did_not_develop_generator", "did_not_author_module_reports"
+          ],
+          "properties": {
+            "did_not_build_gold": {"const": true},
+            "did_not_develop_evaluator": {"const": true},
+            "did_not_develop_generator": {"const": true},
+            "did_not_author_module_reports": {"const": true}
+          }
+        },
+        "qualification_manifest_digest": {"$ref": "#/$defs/digest"},
+        "module_report_digests": {"$ref": "#/$defs/fullDigestMap"},
+        "record_manifest_digests": {"$ref": "#/$defs/fullDigestMap"},
+        "recomputed_module_result_digests": {"$ref": "#/$defs/fullDigestMap"},
+        "gate_verdicts": {"$ref": "#/$defs/independentGates"},
+        "gate_evidence_digests": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "sealed_gold_integrity", "record_manifest_integrity",
+            "module_report_integrity", "module_metrics_recomputed",
+            "dataset_binding_integrity", "leakage_check_pass"
+          ],
+          "properties": {
+            "sealed_gold_integrity": {"$ref": "#/$defs/digest"},
+            "record_manifest_integrity": {"$ref": "#/$defs/digest"},
+            "module_report_integrity": {"$ref": "#/$defs/digest"},
+            "module_metrics_recomputed": {"$ref": "#/$defs/digest"},
+            "dataset_binding_integrity": {"$ref": "#/$defs/digest"},
+            "leakage_check_pass": {"$ref": "#/$defs/digest"}
+          }
+        },
+        "review_assignment_digest": {"$ref": "#/$defs/digest"},
+        "reviewer_separation_digest": {"$ref": "#/$defs/digest"},
+        "audit_integrity_report_digest": {"$ref": "#/$defs/digest"},
+        "open_finding_count": {"const": 0},
+        "status": {"const": "PASS"},
+        "reviewed_at": {"type": "string", "format": "date-time"},
+        "report_digest": {"$ref": "#/$defs/digest"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"reviewer_provenance": {
+            "properties": {"reviewer_kind": {"const": "AI"}},
+            "required": ["reviewer_kind"]}}},
+          "then": {"properties": {"reviewer_provenance": {"properties": {
+            "model_revision": {"type": "string", "minLength": 1},
+            "prompt_digest": {"$ref": "#/$defs/digest"}}}}},
+          "else": {"properties": {"reviewer_provenance": {"properties": {
+            "model_revision": {"type": "null"}, "prompt_digest": {"type": "null"}}}}}
+        }
+      ]
+    },
+    "m0Gates": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "fixed_module_set_complete", "module_reports_valid",
+        "record_manifests_complete_and_valid", "record_manifests_bound",
+        "qualification_manifest_binds_record_manifests", "single_hidden_dataset_bound",
+        "single_method_version", "all_modules_qualified",
+        "required_report_refs_complete", "module_report_refs_bound",
+        "qualification_manifest_ref_matches", "independent_adjudication_valid",
+        "independent_adjudication_ref_matches", "audit_integrity_valid",
+        "audit_integrity_ref_matches"
+      ],
+      "properties": {
+        "fixed_module_set_complete": {"type": "boolean"},
+        "module_reports_valid": {"type": "boolean"},
+        "record_manifests_complete_and_valid": {"type": "boolean"},
+        "record_manifests_bound": {"type": "boolean"},
+        "qualification_manifest_binds_record_manifests": {"type": "boolean"},
+        "single_hidden_dataset_bound": {"type": "boolean"},
+        "single_method_version": {"type": "boolean"},
+        "all_modules_qualified": {"type": "boolean"},
+        "required_report_refs_complete": {"type": "boolean"},
+        "module_report_refs_bound": {"type": "boolean"},
+        "qualification_manifest_ref_matches": {"type": "boolean"},
+        "independent_adjudication_valid": {"type": "boolean"},
+        "independent_adjudication_ref_matches": {"type": "boolean"},
+        "audit_integrity_valid": {"type": "boolean"},
+        "audit_integrity_ref_matches": {"type": "boolean"}
+      }
+    },
+    "requiredReportRefs": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "reference_assertion_extraction_report", "claim_atomization_report",
+        "risk_classification_report", "entailment_report",
+        "fact_chain_end_to_end_report", "formulaic_construct_report",
+        "disclosure_and_omission_report", "reviewer_agreement_report", "cost_report",
+        "immutable_qualification_manifest", "independent_adjudication_report",
+        "audit_integrity_report"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "reference_assertion_extraction_report": {"$ref": "#/$defs/digest"},
+        "claim_atomization_report": {"$ref": "#/$defs/digest"},
+        "risk_classification_report": {"$ref": "#/$defs/digest"},
+        "entailment_report": {"$ref": "#/$defs/digest"},
+        "fact_chain_end_to_end_report": {"$ref": "#/$defs/digest"},
+        "formulaic_construct_report": {"$ref": "#/$defs/digest"},
+        "disclosure_and_omission_report": {"$ref": "#/$defs/digest"},
+        "reviewer_agreement_report": {"$ref": "#/$defs/digest"},
+        "cost_report": {"$ref": "#/$defs/digest"},
+        "immutable_qualification_manifest": {"$ref": "#/$defs/digest"},
+        "independent_adjudication_report": {"$ref": "#/$defs/digest"},
+        "audit_integrity_report": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "m0Decision": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "status", "gates", "reason_codes",
+        "module_report_digests", "record_manifest_digests", "required_report_refs",
+        "qualification_manifest_digest", "independent_adjudication_report_digest",
+        "audit_integrity_report_digest", "method_version", "missing_module_ids",
+        "unknown_module_ids", "duplicate_module_ids", "invalid_module_reports",
+        "invalid_record_manifests", "independent_adjudication_errors",
+        "audit_integrity_errors", "unbound_record_manifest_ids", "failed_module_ids",
+        "missing_required_report_refs", "unknown_report_refs",
+        "unbound_module_report_ids", "claims_allowed", "claims_forbidden",
+        "decision_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-m0-decision-v1"},
+        "status": {"enum": ["PASS", "FAIL", "BLOCKED"]},
+        "gates": {"$ref": "#/$defs/m0Gates"},
+        "reason_codes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "module_report_digests": {"$ref": "#/$defs/partialDigestMap"},
+        "record_manifest_digests": {"$ref": "#/$defs/partialDigestMap"},
+        "required_report_refs": {"type": "object", "additionalProperties": {"$ref": "#/$defs/digest"}},
+        "qualification_manifest_digest": {"$ref": "#/$defs/nullableDigest"},
+        "independent_adjudication_report_digest": {"$ref": "#/$defs/nullableDigest"},
+        "audit_integrity_report_digest": {"$ref": "#/$defs/nullableDigest"},
+        "method_version": {"type": ["integer", "null"], "minimum": 1, "maximum": 1},
+        "missing_module_ids": {"type": "array", "items": {"$ref": "#/$defs/moduleId"}, "uniqueItems": true},
+        "unknown_module_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "duplicate_module_ids": {"type": "array", "items": {"$ref": "#/$defs/moduleId"}, "uniqueItems": true},
+        "invalid_module_reports": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+        "invalid_record_manifests": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+        "independent_adjudication_errors": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "audit_integrity_errors": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "unbound_record_manifest_ids": {"type": "array", "items": {"$ref": "#/$defs/moduleId"}, "uniqueItems": true},
+        "failed_module_ids": {"type": "array", "items": {"$ref": "#/$defs/moduleId"}, "uniqueItems": true},
+        "missing_required_report_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "unknown_report_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "unbound_module_report_ids": {"type": "array", "items": {"$ref": "#/$defs/moduleId"}, "uniqueItems": true},
+        "claims_allowed": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "claims_forbidden": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "decision_digest": {"$ref": "#/$defs/digest"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "PASS"}}, "required": ["status"]},
+          "then": {
+            "properties": {
+              "gates": {"properties": {
+                "fixed_module_set_complete": {"const": true},
+                "module_reports_valid": {"const": true},
+                "record_manifests_complete_and_valid": {"const": true},
+                "record_manifests_bound": {"const": true},
+                "qualification_manifest_binds_record_manifests": {"const": true},
+                "single_hidden_dataset_bound": {"const": true},
+                "single_method_version": {"const": true},
+                "all_modules_qualified": {"const": true},
+                "required_report_refs_complete": {"const": true},
+                "module_report_refs_bound": {"const": true},
+                "qualification_manifest_ref_matches": {"const": true},
+                "independent_adjudication_valid": {"const": true},
+                "independent_adjudication_ref_matches": {"const": true},
+                "audit_integrity_valid": {"const": true},
+                "audit_integrity_ref_matches": {"const": true}
+              }},
+              "reason_codes": {"maxItems": 0},
+              "module_report_digests": {"$ref": "#/$defs/fullDigestMap"},
+              "record_manifest_digests": {"$ref": "#/$defs/fullDigestMap"},
+              "required_report_refs": {"$ref": "#/$defs/requiredReportRefs"},
+              "qualification_manifest_digest": {"$ref": "#/$defs/digest"},
+              "independent_adjudication_report_digest": {"$ref": "#/$defs/digest"},
+              "audit_integrity_report_digest": {"$ref": "#/$defs/digest"},
+              "method_version": {"const": 1},
+              "missing_module_ids": {"maxItems": 0},
+              "unknown_module_ids": {"maxItems": 0},
+              "duplicate_module_ids": {"maxItems": 0},
+              "invalid_module_reports": {"maxProperties": 0},
+              "invalid_record_manifests": {"maxProperties": 0},
+              "independent_adjudication_errors": {"maxItems": 0},
+              "audit_integrity_errors": {"maxItems": 0},
+              "unbound_record_manifest_ids": {"maxItems": 0},
+              "failed_module_ids": {"maxItems": 0},
+              "missing_required_report_refs": {"maxItems": 0},
+              "unknown_report_refs": {"maxItems": 0},
+              "unbound_module_report_ids": {"maxItems": 0},
+              "claims_allowed": {"const": ["M0_MEASUREMENT_QUALIFIED"]},
+              "claims_forbidden": {"maxItems": 0}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "eval-spine-stage-decision-v1",
+  "decision_id": "EAS-M0-STATUS-V1",
+  "stage_id": "S1_M0_MEASUREMENT_QUALIFICATION",
+  "status": "NOT_QUALIFIED",
+  "reason_codes": [
+    "NO_ADJUDICATED_DEVELOPMENT_GOLD",
+    "NO_SEALED_QUALIFICATION_GOLD",
+    "NO_QUALIFICATION_RUN",
+    "NO_INDEPENDENT_ADJUDICATION_REPORT",
+    "NO_M0_QUALIFICATION_METERED_MODEL_OR_HUMAN_EVENTS",
+    "BUDGET_UNAPPROVED"
+  ],
+  "evidence_manifest_digests": [],
+  "next_allowed_stage": null,
+  "claims_allowed": [
+    "CONTRACTS_RUBRICS_AND_SCHEMAS_MATERIALIZED",
+    "REFERENCE_IMPLEMENTATION_AND_NEGATIVE_TESTS_MATERIALIZED",
+    "R5_READ_ONLY_SHADOW_DIAGNOSTIC_RECOMPUTABLE",
+    "V4_RECOVERY_CANDIDATE_MATERIALIZED",
+    "EXTERNAL_FORMULAIC_JUDGE_CONNECTIVITY_SMOKE_METERED"
+  ],
+  "claims_forbidden": [
+    "TRUSTED_EVALUATION",
+    "QUALIFIED_FACT_GATE",
+    "QUALIFIED_FORMULAIC_GATE",
+    "QUALIFIED_OMISSION_GATE",
+    "READY_FOR_GENERATOR_SCALE",
+    "READY_FOR_OPEN_120",
+    "READY_FOR_HIDDEN_40",
+    "READY_FOR_300"
+  ],
+  "decided_by": null,
+  "decision_digest": null
+}

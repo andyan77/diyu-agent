@@ -1,0 +1,95 @@
+{
+  "schema_version": "gate1-v4-family-strategies-v1",
+  "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+  "families": [
+    {
+      "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+      "profiles": ["CP01", "CP02", "CP03", "CP04", "CP05"],
+      "assignment_axes": {
+        "entry_lens": ["TASK_START", "ROLE_ENTRY", "MATERIAL_STATE", "HANDOFF_OBJECT"],
+        "evidence_route": ["TIME_SEQUENCE", "OBJECT_TRACE", "ROLE_LEDGER", "BEFORE_AFTER"],
+        "boundary_carrier": ["OBSERVED_SCOPE", "ROLE_SCOPE", "UNTESTED_BRANCH", "OBJECT_STATE"],
+        "closing_function": ["NEXT_VERIFIED_STEP", "CURRENT_STATE", "HANDOFF_POINT", "OPEN_OBSERVATION"]
+      },
+      "profile_strategy_overrides": {
+        "CP01": {
+          "strategy_id": "CP01_FROZEN_LINEAR_PROCESS_V1",
+          "frozen": true,
+          "reason_code": "R5_FOCUS_PROFILE_LINEAR_STRATEGY_VERIFIED",
+          "assignment_axes": {
+            "entry_lens": ["PERSON_TASK", "PROBLEM_AT_HAND", "SHADOWING_START", "ROLE_HANDOFF"],
+            "evidence_route": ["TASK_ACTION_CHAIN", "PROBLEM_FIX_CHAIN", "PERSON_OBJECT_TRACE", "JUDGMENT_SEQUENCE"],
+            "boundary_carrier": ["OBSERVED_TASK_SCOPE", "UNTESTED_TASK_BRANCH", "SINGLE_OBJECT_SCOPE", "ROLE_PERMISSION_SCOPE"],
+            "closing_function": ["NEXT_VERIFIED_STEP", "CURRENT_TASK_STATE", "HANDOFF_POINT", "OPEN_TASK_CHECK"]
+          }
+        },
+        "CP02": {
+          "strategy_id": "CP02_FROZEN_LINEAR_PROCESS_V1",
+          "frozen": true,
+          "reason_code": "R5_FOCUS_PROFILE_LINEAR_STRATEGY_VERIFIED",
+          "assignment_axes": {
+            "entry_lens": ["TIME_WINDOW", "MULTI_SPOT_SNAPSHOT", "RHYTHM_CHANGE", "PARALLEL_THREAD_START"],
+            "evidence_route": ["TIMESTAMP_SWEEP", "MULTI_SPOT_SEQUENCE", "PARALLEL_THREAD_TRACE", "RHYTHM_CYCLE"],
+            "boundary_carrier": ["OBSERVED_TIME_WINDOW", "UNSAMPLED_SPOT", "COUNT_SCOPE", "OBSERVATION_SCOPE"],
+            "closing_function": ["WINDOW_END_STATE", "NEXT_OBSERVATION", "OPEN_SPOT", "RHYTHM_CHECKPOINT"]
+          }
+        },
+        "CP03": {
+          "strategy_id": "CP03_FROZEN_LINEAR_PROCESS_V1",
+          "frozen": true,
+          "reason_code": "R5_FOCUS_PROFILE_LINEAR_STRATEGY_VERIFIED",
+          "assignment_axes": {
+            "entry_lens": ["CRAFT_START", "MATERIAL_START", "FIRST_PROCESS_STEP", "HAND_CONTACT"],
+            "evidence_route": ["PROCESS_CHAIN", "MATERIAL_JOURNEY", "CRAFT_CLOSEUP_CHAIN", "STEP_STATE_SEQUENCE"],
+            "boundary_carrier": ["OBSERVED_PROCESS_SCOPE", "UNTESTED_DURABILITY", "MATERIAL_SCOPE", "STEP_SCOPE"],
+            "closing_function": ["NEXT_PROCESS_STEP", "CURRENT_MATERIAL_STATE", "PROCESS_HANDOFF", "OPEN_CRAFT_CHECK"]
+          }
+        }
+      }
+    },
+    {
+      "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+      "profiles": ["CP06", "CP07", "CP08", "CP09", "CP10"],
+      "assignment_axes": {
+        "entry_lens": ["SIGNAL_FIRST", "QUESTION_FIRST", "REJECTED_OPTION", "DECISION_POINT"],
+        "evidence_route": ["CRITERIA_WALK", "COMPARISON_MATRIX", "ELIMINATION_PATH", "EVIDENCE_TIMELINE"],
+        "boundary_carrier": ["CRITERION_LIMIT", "ALTERNATIVE_UNTESTED", "EVIDENCE_GAP", "SCOPE_CONDITION"],
+        "closing_function": ["CONDITIONAL_DECISION", "NEXT_TEST", "ALTERNATIVE_ROUTE", "EVIDENCE_SNAPSHOT"]
+      },
+      "profile_strategy_overrides": {}
+    },
+    {
+      "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+      "profiles": ["CP11", "CP12", "CP13", "CP14"],
+      "assignment_axes": {
+        "entry_lens": ["TRADEOFF", "VERSION_MARKER", "LIFE_SCENE", "OBJECT_SENSE"],
+        "evidence_route": ["ORIGIN_TRACE", "VERSION_DIFF", "SCENE_MOSAIC", "MATERIAL_TRACE"],
+        "boundary_carrier": ["OPTION_SCOPE", "TIME_SCOPE", "SCENE_SCOPE", "MATERIAL_LIMIT"],
+        "closing_function": ["REJECTED_OPTION", "CHANGELOG_NODE", "SCENE_CONTINUES", "OBJECT_REMAINS"]
+      },
+      "profile_strategy_overrides": {}
+    },
+    {
+      "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+      "profiles": ["CP15", "CP16", "CP17", "CP18"],
+      "assignment_axes": {
+        "entry_lens": ["QUEUE_STATE", "SERVICE_GAP", "HYPOTHESIS", "LOCAL_MARKER"],
+        "evidence_route": ["BACKSTAGE_FLOW", "REPLAY_TIMELINE", "EXPERIMENT_LOG", "SEASONAL_TRACE"],
+        "boundary_carrier": ["QUEUE_SCOPE", "CASE_SCOPE", "EXPERIMENT_LIMIT", "LOCAL_SCOPE"],
+        "closing_function": ["NEXT_OWNER", "FOLLOWUP_STATE", "NEXT_MEASUREMENT", "SCENE_CONTINUES"]
+      },
+      "profile_strategy_overrides": {}
+    },
+    {
+      "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+      "profiles": ["CP19", "CP20"],
+      "assignment_axes": {
+        "entry_lens": ["COST_SIGNAL", "PROMISE_TEXT", "DEVIATION_FIRST", "CHECKPOINT"],
+        "evidence_route": ["DECISION_REPLAY", "PROMISE_TO_RECORD", "DEVIATION_LEDGER", "REMEDY_TRACE"],
+        "boundary_carrier": ["COST_SCOPE", "BATCH_SCOPE", "UNVERIFIED_REMEDY", "RECORD_LIMIT"],
+        "closing_function": ["DECISION_RECORD", "NEXT_VERIFIABLE_CHECK", "UNRESOLVED_GAP", "CURRENT_LEDGER"]
+      },
+      "profile_strategy_overrides": {}
+    }
+  ]
+}

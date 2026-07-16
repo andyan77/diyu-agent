@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/independent-review.v1.schema.json",
+  "title": "Eval Audit Spine Independent Review v1",
+  "type": "object",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {"properties": {"final_decision": {"const": "APPROVE_IMPLEMENTATION"}}, "required": ["final_decision"]},
+      "then": {
+        "properties": {
+          "gate_decisions": {"additionalProperties": {"enum": ["PASS", "NOT_QUALIFIED", "NOT_APPLICABLE"]}},
+          "findings": {
+            "items": {
+              "not": {
+                "allOf": [
+                  {"properties": {"severity": {"enum": ["P0", "P1"]}}, "required": ["severity"]},
+                  {"properties": {"status": {"const": "OPEN"}}, "required": ["status"]}
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "required": [
+    "schema_version",
+    "review_id",
+    "reviewer_identity",
+    "reviewer_role",
+    "independence_attestation",
+    "target_commit",
+    "target_manifest_digest",
+    "reviewed_evidence_refs",
+    "recompute_commands",
+    "gate_decisions",
+    "findings",
+    "final_decision",
+    "reviewed_at",
+    "review_digest"
+  ],
+  "properties": {
+    "schema_version": {"const": "eval-spine-independent-review-v1"},
+    "review_id": {"type": "string", "minLength": 1},
+    "reviewer_identity": {"type": "string", "minLength": 1},
+    "reviewer_role": {"enum": ["METHODOLOGY", "IMPLEMENTATION"]},
+    "independence_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["did_not_author_reviewed_scope", "did_not_read_peer_review_before_submission", "no_role_collision"],
+      "properties": {
+        "did_not_author_reviewed_scope": {"const": true},
+        "did_not_read_peer_review_before_submission": {"const": true},
+        "no_role_collision": {"const": true}
+      }
+    },
+    "target_commit": {"type": "string", "minLength": 7},
+    "target_manifest_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reviewed_evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+    "recompute_commands": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "gate_decisions": {"type": "object", "minProperties": 1, "additionalProperties": {"enum": ["PASS", "FAIL", "NOT_QUALIFIED", "NOT_APPLICABLE"]}},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding_id", "severity", "status", "summary", "evidence_refs"],
+        "properties": {
+          "finding_id": {"type": "string", "minLength": 1},
+          "severity": {"enum": ["P0", "P1", "P2", "P3"]},
+          "status": {"enum": ["OPEN", "RESOLVED", "ACCEPTED_NON_BLOCKING"]},
+          "summary": {"type": "string", "minLength": 1},
+          "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true}
+        }
+      }
+    },
+    "final_decision": {"enum": ["APPROVE_IMPLEMENTATION", "REQUEST_CHANGES", "BLOCK"]},
+    "reviewed_at": {"type": "string", "minLength": 1},
+    "review_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "schema_version": "eval-audit-spine-stage-and-kill-v1",
+  "contract_id": "EAS-STAGE-KILL-V1",
+  "current_state": "S0_REFERENCE_IMPLEMENTATION_SELFTESTED_REAL_RUN_NOT_EXECUTED",
+  "stages_are_sequential": true,
+  "no_stage_may_be_inferred_from_document_presence": true,
+  "stages": [
+    {
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "purpose": "消除双规划、补全批硬否决指标、首次尝试与成本溯源",
+      "entry_requires": [
+        "IMPLEMENTATION_AUTHORIZATION",
+        "APPROVED_WRITE_SURFACE"
+      ],
+      "exit_requires": [
+        "SINGLE_TEST_ASSIGNMENT_SOURCE_100_PERCENT",
+        "ASSIGNMENT_MATERIAL_MISMATCH_COUNT_ZERO",
+        "WHOLE_BATCH_HARD_VETO_METRIC_PRESENT",
+        "FIRST_PROVIDER_RESPONSE_IMMUTABLY_RETAINED",
+        "CALL_AND_COST_PROVENANCE_COMPLETE",
+        "GATE1_PLAN_IMPERSONATION_COUNT_ZERO"
+      ],
+      "kill_code": "STOP_S0_DETERMINISTIC_INTEGRITY"
+    },
+    {
+      "stage_id": "S1_M0_MEASUREMENT_QUALIFICATION",
+      "purpose": "证明参考断言、原子化、蕴含、套路和披露量规自身可靠",
+      "entry_requires": [
+        "S0_PASS",
+        "G2_MEASUREMENT_DEV_MATERIALIZED",
+        "G3_MEASUREMENT_QUALIFICATION_SEALED",
+        "INDEPENDENT_REVIEW_ROLES_ASSIGNED"
+      ],
+      "exit_requires": [
+        "MEASUREMENT_QUALIFICATION_CONTRACT_ALL_PASS",
+        "M0_STATUS_QUALIFIED",
+        "INDEPENDENT_ADJUDICATION_PASS"
+      ],
+      "method_version_limit": 2,
+      "revision_after_initial_limit": 1,
+      "kill_codes": [
+        "STOP_M0_REFERENCE_ASSERTION_UNQUALIFIED",
+        "STOP_M0_CLAIM_ATOMIZATION_UNQUALIFIED",
+        "STOP_M0_ENTAILMENT_UNQUALIFIED",
+        "STOP_M0_FORMULAIC_CONSTRUCT_UNQUALIFIED",
+        "STOP_M0_DISCLOSURE_UNQUALIFIED",
+        "STOP_M0_END_TO_END_UNQUALIFIED"
+      ]
+    },
+    {
+      "stage_id": "S2_FEASIBILITY_AND_COST",
+      "purpose": "证明二十产品材料容量、三门联合可行与三百规模成本可承受",
+      "entry_requires": [
+        "S1_PASS",
+        "FOUNDER_APPROVED_BUDGET_CEILINGS",
+        "FIVE_FAMILY_STRATEGIES_FROZEN"
+      ],
+      "exit_requires": [
+        "EACH_CP_HAS_AT_LEAST_12_LEGAL_DISTINCT_TEST_ASSIGNMENTS",
+        "NO_TEST_ASSIGNMENT_REQUIRES_UNSUPPORTED_ACTION",
+        "PROJECTED_300_COST_WITHIN_ALL_APPROVED_CEILINGS",
+        "P50_AND_P95_COST_AND_LATENCY_REPORTED"
+      ],
+      "kill_codes": [
+        "STOP_S2_MATERIAL_CAPACITY",
+        "STOP_S2_JOINT_FEASIBILITY",
+        "STOP_S2_BUDGET_UNAPPROVED",
+        "STOP_S2_BUDGET_EXCEEDED"
+      ]
+    },
+    {
+      "stage_id": "S3_CAUSAL_PILOT_60",
+      "purpose": "五家族各十二条，配对、随机、反平衡验证结构修复是否产生预注册提升",
+      "entry_requires": [
+        "S2_PASS",
+        "MINIMUM_USEFUL_EFFECT_PREREGISTERED",
+        "FACT_AND_ASSIGNMENT_PAIRING_FROZEN"
+      ],
+      "exit_requires": [
+        "CAUSAL_COMPARISON_INTERPRETABLE",
+        "PREREGISTERED_MINIMUM_USEFUL_EFFECT_MET",
+        "HIGH_RISK_HARD_VETO_COUNT_ZERO"
+      ],
+      "maximum_structural_revisions": 1,
+      "may_claim_v11_qualification": false,
+      "kill_code": "STOP_S3_NO_CAUSAL_LIFT"
+    },
+    {
+      "stage_id": "S4_OPEN_REGRESSION_120",
+      "purpose": "重跑第一门开放资格",
+      "entry_requires": [
+        "S3_PASS",
+        "NEW_OPEN_120_INPUTS_FROZEN",
+        "QUALIFICATION_MODE_NO_RETRY"
+      ],
+      "exit_requires": [
+        "FIRST_ACCEPTABLE_AT_LEAST_108_OF_120",
+        "FORMULAIC_AT_MOST_12_OF_120",
+        "WHOLE_BATCH_HARD_VETO_ZERO",
+        "BLIND_AND_ROUTE_AND_AUDIT_GATES_PASS"
+      ],
+      "maximum_frozen_runs": 2,
+      "kill_code": "STOP_S4_V11_OPEN_FAIL"
+    },
+    {
+      "stage_id": "S5_HIDDEN_QUALIFICATION_40",
+      "purpose": "全新隐藏二十正向加二十异常一次性密封资格",
+      "entry_requires": [
+        "S4_PASS",
+        "NEW_HIDDEN_40_SEALED",
+        "GENERATOR_AND_EVALUATOR_DEVELOPERS_BLINDED"
+      ],
+      "exit_requires": [
+        "V11_HIDDEN_40_CONTRACT_ALL_PASS",
+        "ZERO_SAMPLE_SWAP",
+        "WHOLE_BATCH_HARD_VETO_ZERO"
+      ],
+      "attempt_limit": 1,
+      "core_change_requires_entirely_new_hidden_set": true,
+      "kill_code": "STOP_S5_HIDDEN_FAIL"
+    },
+    {
+      "stage_id": "S6_BASELINE_240_PLUS_60",
+      "purpose": "扩量为二百四十正向和六十路线",
+      "entry_requires": [
+        "S5_PASS",
+        "COST_REFORECAST_WITHIN_BUDGET"
+      ],
+      "exit_requires": [
+        "POSITIVE_COUNT_EXACTLY_240",
+        "ROUTE_COUNT_EXACTLY_60",
+        "EACH_CP_AT_LEAST_11_OF_12_FIRST_ACCEPTABLE",
+        "GLOBAL_FIRST_ACCEPTANCE_AT_LEAST_0_90",
+        "FORMULAIC_RATE_AT_MOST_0_10",
+        "WHOLE_BATCH_HARD_VETO_ZERO",
+        "ROUTE_60_ALL_CORRECT",
+        "REVIEW_COVERAGE_COMPLETE"
+      ],
+      "kill_code": "STOP_S6_SCALE_FAIL"
+    },
+    {
+      "stage_id": "S7_INDEPENDENT_FINAL_AUDIT",
+      "purpose": "从原始记录独立复算并冻结候选基线",
+      "entry_requires": [
+        "S6_PASS",
+        "INDEPENDENT_AUDITOR_ASSIGNED"
+      ],
+      "exit_requires": [
+        "ALL_V11_FINAL_ADMISSION_REQUIREMENTS_PASS",
+        "METRICS_RECOMPUTE_IDENTICAL",
+        "FOUNDER_FINAL_DECISION"
+      ],
+      "kill_code": "STOP_S7_FINAL_AUDIT_FAIL"
+    }
+  ],
+  "global_kill_rules": [
+    {
+      "code": "STOP_DATA_LEAKAGE",
+      "condition": "SEALED_OR_HIDDEN_ANSWERS_EXPOSED_TO_PROHIBITED_ROLE",
+      "action": "INVALIDATE_AFFECTED_SET_AND_STOP"
+    },
+    {
+      "code": "STOP_FIRST_OUTPUT_LAUNDERING",
+      "condition": "FIRST_PROVIDER_RESPONSE_DISCARDED_OR_RETRY_PRESENTED_AS_FIRST",
+      "action": "FAIL_BATCH_AND_RETAIN_ALL_ATTEMPTS"
+    },
+    {
+      "code": "STOP_BUDGET",
+      "condition": "ANY_APPROVED_HARD_CEILING_REACHED_OR_FORECAST_EXCEEDED",
+      "action": "NO_NEW_CALLS_OR_REVIEWS"
+    },
+    {
+      "code": "STOP_EXTERNAL_LLM_DAILY_BUDGET",
+      "condition": "EXTERNAL_LLM_RESERVED_PLUS_SETTLED_COST_REACHES_30_CNY_IN_UTC_DAY",
+      "action": "NO_NEW_EXTERNAL_LLM_CALLS_UNTIL_NEXT_UTC_DAY"
+    },
+    {
+      "code": "REQUEST_STANDARD_REVISION",
+      "condition": "EVIDENCE_SUPPORTS_CONSTRUCT_OR_SCOPE_CHANGE_NOT_IMPLEMENTATION_PATCH",
+      "action": "FOUNDER_DECISION_AND_PROSPECTIVE_NEW_VERSION_ONLY"
+    }
+  ],
+  "human_only_fallback": {
+    "allowed_only_when": [
+      "AUTOMATED_MEASUREMENT_NOT_QUALIFIED",
+      "FULL_HUMAN_REVIEW_COST_WITHIN_APPROVED_BUDGET",
+      "NO_TRUSTED_AUTOMATED_EVALUATION_CLAIM"
+    ],
+    "otherwise": "STOP"
+  }
+}

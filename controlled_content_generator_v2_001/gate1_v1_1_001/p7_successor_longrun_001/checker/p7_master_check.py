@@ -27,6 +27,8 @@ DEFAULT_ROOT = Path(__file__).resolve().parents[4]
 GATE1 = "controlled_content_generator_v2_001/gate1_v1_1_001"
 P7 = f"{GATE1}/p7_successor_longrun_001"
 G3 = "controlled_content_generator_v2_001/generator_v3_successor_001"
+EVAL_SPINE = f"{P7}/eval_audit_spine_001"
+V4_RECOVERY = f"{G3}/v4_recovery"
 
 ALLOWED_WRITE_PREFIXES = (P7 + "/", G3 + "/")
 
@@ -262,6 +264,265 @@ def check_g3_selftest(root: Path) -> tuple[bool, list[str]]:
     return ok, tail or [r.stdout[-200:], r.stderr[-200:]]
 
 
+def check_eval_spine_selftest(root: Path) -> tuple[bool, list[str]]:
+    """评测脊柱反向测试全绿；通过只证明实现完整，不代表 M0 资格通过。"""
+    test_dir = root / EVAL_SPINE / "tests"
+    if not test_dir.is_dir():
+        return False, ["eval spine selftest directory missing"]
+    r = subprocess.run(
+        ["python3", "-m", "unittest", "discover", str(test_dir),
+         "-p", "test_*.py"],
+        capture_output=True, text=True, cwd=str(root))
+    combined = r.stdout + r.stderr
+    ok = r.returncode == 0 and "OK" in combined
+    ran = next((line.strip() for line in combined.splitlines()
+                if line.strip().startswith("Ran ")), "Ran ?")
+    return ok, [ran, "scope=artifact_integrity_not_m0_qualification"]
+
+
+def check_v4_recovery_selftest(root: Path) -> tuple[bool, list[str]]:
+    """后继生成器的单一测试分配、首稿与全批门反向测试。"""
+    test = root / V4_RECOVERY / "tests/test_v4_recovery.py"
+    if not test.is_file():
+        return False, ["v4 recovery selftest missing"]
+    r = subprocess.run(["python3", str(test)], capture_output=True, text=True,
+                       cwd=str(root))
+    combined = r.stdout + r.stderr
+    ok = r.returncode == 0 and ("OK" in combined or "ALL" in combined)
+    ran = next((line.strip() for line in combined.splitlines()
+                if line.strip().startswith("Ran ") or line.strip().startswith("ALL")),
+               "Ran ?")
+    return ok, [ran, "historical_g3_modules_untouched=true"]
+
+
+def check_m0_state_integrity(root: Path) -> tuple[bool, list[str]]:
+    """检查 M0 诚实状态，不把合同/测试全绿洗成资格通过。"""
+    status_path = root / EVAL_SPINE / "calibration/M0_STATUS.v1.json"
+    qualification_path = root / EVAL_SPINE / "contract/measurement_qualification.v1.json"
+    budget_path = root / EVAL_SPINE / "contract/cost_budget.v1.json"
+    dev_path = root / EVAL_SPINE / "calibration/dev_manifest.v1.json"
+    sealed_path = root / EVAL_SPINE / "calibration/qualification_manifest.v1.json"
+    required = [status_path, qualification_path, budget_path, dev_path, sealed_path]
+    if any(not path.is_file() for path in required):
+        return False, ["missing M0 contract or calibration state"]
+    status = json.loads(status_path.read_text(encoding="utf-8"))
+    qualification = json.loads(qualification_path.read_text(encoding="utf-8"))
+    budget = json.loads(budget_path.read_text(encoding="utf-8"))
+    dev = json.loads(dev_path.read_text(encoding="utf-8"))
+    sealed = json.loads(sealed_path.read_text(encoding="utf-8"))
+    ok = (status.get("status") == "NOT_QUALIFIED"
+          and qualification.get("current_status") == "M0_NOT_QUALIFIED"
+          and budget.get("approval_status") == "UNAPPROVED"
+          and dev.get("content_status") == "NOT_MATERIALIZED"
+          and sealed.get("content_status") == "NOT_MATERIALIZED"
+          and sealed.get("case_count") == 0
+          and sealed.get("source_manifest_digest") is None
+          and sealed.get("gold_manifest_digest") is None)
+    return ok, [
+        f"artifact_integrity_status={'PASS' if ok else 'FAIL'}",
+        f"m0_qualification_status={status.get('status')}",
+        f"budget_approval_status={budget.get('approval_status')}",
+        f"sealed_qualification_cases={sealed.get('case_count')}",
+    ]
+
+
+def check_m0_dataset_isolation(root: Path) -> tuple[bool, list[str]]:
+    """两轴六分区、来源组不可拆及隐藏公开面合同存在；空集不冒充资格集。"""
+    policy_path = root / EVAL_SPINE / "contract/data_isolation.v1.json"
+    schema_path = root / EVAL_SPINE / "schema/dataset_manifest.v1.schema.json"
+    if not policy_path.is_file() or not schema_path.is_file():
+        return False, ["dataset isolation contract/schema missing"]
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    model = policy.get("statistical_partition_model", {})
+    origins = model.get("case_origin_axis", [])
+    partitions = model.get("visibility_partition_axis", [])
+    cells = model.get("six_cells", [])
+    required = schema.get("required", [])
+    ok = (origins == ["NATURAL", "CHALLENGE"]
+          and partitions == ["DEVELOPMENT", "VALIDATION", "HIDDEN"]
+          and len(cells) == 6 and len(set(cells)) == 6
+          and model.get("source_group_is_indivisible_across_visibility_partitions") is True
+          and model.get("natural_and_challenge_metrics_must_not_be_pooled") is True
+          and {"case_origin", "visibility_partition", "source_group_id"}.issubset(required))
+    return ok, [f"statistical_cells={len(cells)}",
+                "case_origin_and_visibility_are_independent=true",
+                "hidden_payload_materialized=false"]
+
+
+def check_budget_stage_gate(root: Path) -> tuple[bool, list[str]]:
+    """未批准预算必须关闭规模阶段，而不是补零或继续执行。"""
+    budget_path = root / EVAL_SPINE / "contract/cost_budget.v1.json"
+    stage_path = root / EVAL_SPINE / "contract/stage_and_kill.v1.json"
+    if not budget_path.is_file() or not stage_path.is_file():
+        return False, ["budget/stage contract missing"]
+    budget = json.loads(budget_path.read_text(encoding="utf-8"))
+    stage = json.loads(stage_path.read_text(encoding="utf-8"))
+    ceilings = budget.get("hard_ceilings", {})
+    fail_rules = set(budget.get("fail_closed_rules", []))
+    ok = (budget.get("approval_status") == "UNAPPROVED"
+          and all(value is None for value in ceilings.values())
+          and "NO_SCALE_WHILE_APPROVAL_STATUS_IS_NOT_APPROVED" in fail_rules
+          and "NO_ZERO_COST_PLACEHOLDERS_FOR_UNKNOWN_COSTS" in fail_rules
+          and stage.get("current_state") not in {"S2_PASS", "S3_PASS", "S4_PASS",
+                                                   "S5_PASS", "S6_PASS", "S7_PASS"})
+    return ok, ["budget_status=UNAPPROVED",
+                "scale_status=BLOCKED_BUDGET_UNSET",
+                "invented_budget_values=0"]
+
+
+def check_candidate_manifest(root: Path) -> tuple[bool, list[str]]:
+    """候选清单必须覆盖并精确绑定当前实现，审核/证据自身不参与递归摘要。"""
+    manifest_path = root / EVAL_SPINE / "release/candidate_manifest.v1.json"
+    if not manifest_path.is_file():
+        return False, ["candidate manifest missing"]
+    eval_dir = root / EVAL_SPINE
+    sys.path.insert(0, str(eval_dir))
+    try:
+        from spine.manifest import verify_candidate_manifest
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        result = verify_candidate_manifest(root, manifest)
+    except (OSError, ValueError, TypeError) as exc:
+        return False, [f"candidate_manifest_invalid:{type(exc).__name__}"]
+    finally:
+        if sys.path and sys.path[0] == str(eval_dir):
+            sys.path.pop(0)
+    return bool(result.get("passed")), [
+        f"candidate_entry_count={manifest.get('entry_count')}",
+        f"candidate_manifest_digest={manifest.get('manifest_digest')}",
+        *[str(error) for error in result.get("errors", [])],
+    ]
+
+
+def check_independent_reviews(root: Path) -> tuple[bool, list[str]]:
+    """两份独立审核必须绑定同一实现提交与同一候选清单摘要。"""
+    review_dir = root / EVAL_SPINE / "review"
+    request = review_dir / "IMPLEMENTATION_REVIEW_REQUEST.v1.md"
+    manifest_path = root / EVAL_SPINE / "release/candidate_manifest.v1.json"
+    if not request.is_file():
+        return False, ["implementation review request missing"]
+    reports = sorted(review_dir.glob("*.review.v1.json"))
+    if not reports:
+        return True, ["PENDING: two independent reviews requested",
+                      "m0_qualification_status=NOT_QUALIFIED"]
+    if len(reports) != 2 or not manifest_path.is_file():
+        return False, [f"independent_review_count={len(reports)} expected=2"]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    target_digest = manifest.get("manifest_digest")
+    rows = [json.loads(path.read_text(encoding="utf-8")) for path in reports]
+    errors: list[str] = []
+    schema_path = root / EVAL_SPINE / "schema/independent_review.v1.schema.json"
+    try:
+        from jsonschema import Draft202012Validator
+        review_schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        validator = Draft202012Validator(review_schema)
+        for row, path in zip(rows, reports):
+            for error in sorted(validator.iter_errors(row), key=lambda item: list(item.path)):
+                errors.append(f"review_schema:{path.name}:{error.message}")
+    except (ImportError, OSError, ValueError) as exc:
+        errors.append(f"review_schema_validation_unavailable:{type(exc).__name__}")
+    identities = {str(row.get("reviewer_identity")) for row in rows}
+    roles = {str(row.get("reviewer_role")) for row in rows}
+    commits = {str(row.get("target_commit")) for row in rows}
+    digests = {str(row.get("target_manifest_digest")) for row in rows}
+    if len(identities) != 2:
+        errors.append("reviewer_identity_collision")
+    if roles != {"METHODOLOGY", "IMPLEMENTATION"}:
+        errors.append(f"review_roles={sorted(roles)}")
+    if len(commits) != 1:
+        errors.append("target_commit_mismatch")
+    if digests != {target_digest}:
+        errors.append("target_manifest_digest_mismatch")
+    target_commit = next(iter(commits)) if len(commits) == 1 else None
+    if target_commit:
+        commit_exists = subprocess.run(
+            ["git", "-C", str(root), "cat-file", "-e", f"{target_commit}^{{commit}}"],
+            capture_output=True, text=True).returncode == 0
+        if not commit_exists:
+            errors.append("target_commit_missing")
+        else:
+            ancestor = subprocess.run(
+                ["git", "-C", str(root), "merge-base", "--is-ancestor", target_commit, "HEAD"],
+                capture_output=True, text=True).returncode == 0
+            if not ancestor:
+                errors.append("target_commit_not_ancestor_of_head")
+            for entry in manifest.get("entries", []):
+                rel = str(entry.get("path", ""))
+                shown = subprocess.run(
+                    ["git", "-C", str(root), "show", f"{target_commit}:{rel}"],
+                    capture_output=True)
+                if shown.returncode != 0:
+                    errors.append(f"target_commit_missing_entry:{rel}")
+                elif hashlib.sha256(shown.stdout).hexdigest() != entry.get("sha256"):
+                    errors.append(f"target_commit_entry_drift:{rel}")
+    for row, path in zip(rows, reports):
+        attestation = row.get("independence_attestation", {})
+        if not isinstance(attestation, dict) or not all(attestation.get(key) is True for key in
+                ("did_not_author_reviewed_scope", "did_not_read_peer_review_before_submission",
+                 "no_role_collision")):
+            errors.append(f"independence_attestation_failed:{path.name}")
+        if row.get("final_decision") != "APPROVE_IMPLEMENTATION":
+            errors.append(f"review_not_approved:{path.name}")
+        if any(value == "FAIL" for value in row.get("gate_decisions", {}).values()):
+            errors.append(f"approved_review_contains_failed_gate:{path.name}")
+        for finding in row.get("findings", []):
+            if (finding.get("severity") in {"P0", "P1"}
+                    and finding.get("status") == "OPEN"):
+                errors.append(
+                    f"approved_review_contains_open_blocker:{path.name}:"
+                    f"{finding.get('finding_id')}")
+        unsigned = dict(row)
+        supplied = unsigned.pop("review_digest", None)
+        expected = hashlib.sha256(json.dumps(
+            unsigned, ensure_ascii=False, sort_keys=True,
+            separators=(",", ":")).encode("utf-8")).hexdigest()
+        if supplied != expected:
+            errors.append(f"review_digest_mismatch:{path.name}")
+    return not errors, ([f"independent_review_count={len(rows)}",
+                         f"target_commit={next(iter(commits))}",
+                         f"target_manifest_digest={target_digest}"]
+                        + sorted(errors))
+
+
+def check_recovery_shadow_recompute(root: Path) -> tuple[bool, list[str]]:
+    """只读复算 R5 的两个结构性缺口：5条旧门漏检、90/120双分配错配。"""
+    import importlib.util
+    eval_dir = root / EVAL_SPINE
+    sys.path.insert(0, str(eval_dir))
+    try:
+        from spine.runner import r5_shadow_audit
+        fixture = eval_dir / "fixtures/r5_known_veto_regression.v1.jsonl"
+        shadow = r5_shadow_audit(root, fixture)
+    finally:
+        if sys.path and sys.path[0] == str(eval_dir):
+            sys.path.pop(0)
+    allocator_path = root / V4_RECOVERY / "test_allocator.py"
+    if not allocator_path.is_file():
+        return False, ["v4 recovery allocator missing"]
+    v4_parent = root / G3
+    sys.path.insert(0, str(v4_parent))
+    try:
+        spec = importlib.util.spec_from_file_location(
+            "v4_recovery.test_allocator", allocator_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)  # type: ignore[union-attr]
+        r5 = root / P7 / "pkg1_open_regression/round5"
+        mismatch = module.diagnose_legacy_r5_plan_mismatch(
+            r5 / "inputs/scenarios.g3.v2.jsonl",
+            r5 / "inputs/requests.g3.v1.jsonl")
+    finally:
+        if sys.path and sys.path[0] == str(v4_parent):
+            sys.path.pop(0)
+    detected = len(shadow["development_rule_detected_ids"])
+    ok = (detected == 5 and shadow["legacy_machine_hard_failure_count"] == 0
+          and mismatch["request_count"] == 120 and mismatch["mismatch_count"] == 90
+          and mismatch["match_count"] == 30)
+    return ok, [f"r5_known_veto_shadow_detected={detected}/5",
+                "r5_legacy_machine_known_veto_detected=0/5",
+                f"r5_legacy_dual_assignment_mismatch={mismatch['mismatch_count']}/120",
+                "qualification_use=false"]
+
+
 def _pkg1_rounds(root: Path) -> list[tuple[int, Path]]:
     """已物化冻结清单的正式轮列表 [(轮次, 轮目录)]，升序。round1=pkg1 根。"""
     pkg1 = root / P7 / "pkg1_open_regression"
@@ -475,6 +736,14 @@ SECTIONS: dict[str, object] = {
     "external_workspaces": check_external_workspaces,
     "core_caliber": check_core_caliber,
     "g3_selftest": check_g3_selftest,
+    "eval_spine_selftest": check_eval_spine_selftest,
+    "v4_recovery_selftest": check_v4_recovery_selftest,
+    "m0_state_integrity": check_m0_state_integrity,
+    "m0_dataset_isolation": check_m0_dataset_isolation,
+    "budget_stage_gate": check_budget_stage_gate,
+    "candidate_manifest": check_candidate_manifest,
+    "independent_reviews": check_independent_reviews,
+    "recovery_shadow_recompute": check_recovery_shadow_recompute,
     "pkg1_input_freeze": check_pkg1_input_freeze,
     "pkg1_route": check_pkg1_route,
     "pkg1_blind": check_pkg1_blind,
@@ -609,6 +878,17 @@ def main() -> int:
         for d in details:
             print(f"    {d}")
     print(f"RESULT: {'ALL_PASS' if all_ok else 'FAILED'}")
+    if not args.section:
+        status_path = root / EVAL_SPINE / "calibration/M0_STATUS.v1.json"
+        m0 = "NOT_RUN"
+        if status_path.is_file():
+            try:
+                m0 = str(json.loads(status_path.read_text(encoding="utf-8")).get(
+                    "status", "NOT_RUN"))
+            except (OSError, ValueError):
+                m0 = "INVALID_STATE"
+        print(f"ARTIFACT_INTEGRITY: {'PASS' if all_ok else 'FAIL'}")
+        print(f"M0_QUALIFICATION: {m0}")
     return 0 if all_ok else 1
 
 

@@ -1,0 +1,165 @@
+{
+  "schema_version": "eval-audit-spine-six-grid-data-isolation-v1",
+  "contract_id": "EAS-DATA-ISOLATION-V1",
+  "statistical_partition_model": {
+    "axes_are_independent": true,
+    "case_origin_axis": [
+      "NATURAL",
+      "CHALLENGE"
+    ],
+    "visibility_partition_axis": [
+      "DEVELOPMENT",
+      "VALIDATION",
+      "HIDDEN"
+    ],
+    "six_cells": [
+      "NATURAL_DEVELOPMENT",
+      "NATURAL_VALIDATION",
+      "NATURAL_HIDDEN",
+      "CHALLENGE_DEVELOPMENT",
+      "CHALLENGE_VALIDATION",
+      "CHALLENGE_HIDDEN"
+    ],
+    "source_group_is_indivisible_across_visibility_partitions": true,
+    "natural_and_challenge_metrics_must_not_be_pooled": true,
+    "natural_purpose": "estimate_legal_false_block_abstention_and_queue_load",
+    "challenge_purpose": "measure_known_risk_recall_without_claiming_natural_prevalence",
+    "hidden_public_surface": "binding_count_digest_and_receipt_only_no_prompt_or_gold"
+  },
+  "role_access_grids_are_separate_from_statistical_partitions": true,
+  "cross_grid_copy_default": "DENY",
+  "cross_grid_copy_requires": [
+    "SOURCE_GRID_ID",
+    "TARGET_GRID_ID",
+    "OBJECT_DIGESTS",
+    "APPROVER_ID",
+    "APPROVAL_REASON",
+    "ALLOWED_USE",
+    "COPY_EVENT_DIGEST"
+  ],
+  "grids": [
+    {
+      "grid_id": "G1_REFERENCE_BUILD",
+      "purpose": "源证据切分、参考断言独立双标和裁决",
+      "allowed_roles": [
+        "DATA_CUSTODIAN",
+        "GOLD_BUILDER_A",
+        "GOLD_BUILDER_B",
+        "GOLD_ADJUDICATOR"
+      ],
+      "prohibited_roles": [
+        "GENERATOR_AUTHOR",
+        "GENERATOR_DEVELOPER"
+      ],
+      "may_tune_evaluator": false,
+      "may_prove_m0_qualification": false,
+      "promotion_rule": "ADJUDICATED_SUBSET_MAY_COPY_TO_G2_OR_SEALED_BY_INDEPENDENT_CUSTODIAN_TO_G3"
+    },
+    {
+      "grid_id": "G2_MEASUREMENT_DEV",
+      "purpose": "开发参考抽取、主张原子化、蕴含、套路和披露方法",
+      "allowed_roles": [
+        "DATA_CUSTODIAN",
+        "EVALUATOR_DEVELOPER",
+        "RUBRIC_DEVELOPER",
+        "DEVELOPMENT_REVIEWER"
+      ],
+      "prohibited_roles": [
+        "GENERATOR_AUTHOR"
+      ],
+      "may_tune_evaluator": true,
+      "may_prove_m0_qualification": false,
+      "reuse_rule": "MAY_REMAIN_AS_REGRESSION_ONLY"
+    },
+    {
+      "grid_id": "G3_MEASUREMENT_QUALIFICATION",
+      "purpose": "M0 密封资格金标和答案",
+      "allowed_roles": [
+        "SEALED_DATA_CUSTODIAN",
+        "QUALIFICATION_RUNNER",
+        "QUALIFICATION_REVIEWER_A",
+        "QUALIFICATION_REVIEWER_B",
+        "QUALIFICATION_ADJUDICATOR",
+        "INDEPENDENT_AUDITOR"
+      ],
+      "prohibited_roles": [
+        "EVALUATOR_DEVELOPER",
+        "RUBRIC_DEVELOPER",
+        "GENERATOR_DEVELOPER",
+        "GENERATOR_AUTHOR"
+      ],
+      "may_tune_evaluator": false,
+      "may_prove_m0_qualification": true,
+      "leak_action": "INVALIDATE_SET_AND_RESEAL_NEW_QUALIFICATION_SET"
+    },
+    {
+      "grid_id": "G4_GENERATOR_DEV",
+      "purpose": "R1-R5历史失败、结构修复开发和因果小闭环",
+      "allowed_roles": [
+        "GENERATOR_DEVELOPER",
+        "GENERATOR_AUTHOR",
+        "DEVELOPMENT_REVIEWER",
+        "EVALUATOR_DEVELOPER"
+      ],
+      "prohibited_roles": [],
+      "may_tune_generator": true,
+      "may_prove_hidden_or_final_qualification": false,
+      "reuse_rule": "FAILURES_RETAINED_AS_DEVELOPMENT_REGRESSION"
+    },
+    {
+      "grid_id": "G5_OPEN_QUALIFICATION",
+      "purpose": "全新开放120资格批次",
+      "allowed_roles": [
+        "OPEN_BATCH_CUSTODIAN",
+        "GENERATOR_AUTHOR_AFTER_INPUT_FREEZE",
+        "CONTENT_REVIEWER",
+        "FACT_REVIEWER",
+        "BLIND_REVIEWER",
+        "INDEPENDENT_AUDITOR"
+      ],
+      "prohibited_roles": [
+        "GENERATOR_AUTHOR_READING_REVIEW_IN_PROCESS"
+      ],
+      "input_visibility": "VISIBLE_ONLY_AFTER_FREEZE",
+      "review_visibility_to_generator": "DENY_UNTIL_BATCH_CLOSED",
+      "retry_policy": "NO_RETRY_IN_QUALIFICATION_MODE",
+      "may_prove_open_qualification": true
+    },
+    {
+      "grid_id": "G6_HIDDEN_AND_FINAL",
+      "purpose": "隐藏40、240+60终验答案、裁决和最终审计",
+      "allowed_roles": [
+        "SEALED_DATA_CUSTODIAN",
+        "HIDDEN_RUNNER",
+        "CONTENT_REVIEWER",
+        "FACT_REVIEWER",
+        "BLIND_REVIEWER",
+        "FINAL_AUDITOR",
+        "FOUNDER_DECISION_OWNER"
+      ],
+      "prohibited_roles": [
+        "GENERATOR_DEVELOPER_READING_HIDDEN_INPUTS_BEFORE_RUN",
+        "GENERATOR_AUTHOR_READING_GOLD_OR_REVIEW",
+        "EVALUATOR_DEVELOPER_READING_FINAL_GOLD"
+      ],
+      "hidden_input_visibility": "MINIMUM_DISCLOSURE_AT_EXECUTION_TIME",
+      "gold_and_review_visibility": "DENY_TO_GENERATOR_AND_EVALUATOR_DEVELOPERS",
+      "core_change_action": "INVALIDATE_PRIOR_HIDDEN_SET_FOR_NEW_QUALIFICATION",
+      "may_prove_final_qualification": true
+    }
+  ],
+  "contamination_rules": {
+    "development_case_seen_by_generator_cannot_be_new_hidden_evidence": true,
+    "qualification_answer_seen_by_evaluator_developer_invalidates_case": true,
+    "qualification_answer_seen_by_generator_invalidates_case": true,
+    "same_case_may_be_retained_as_regression_after_exposure": true,
+    "exposed_case_must_keep_original_history_and_new_role": true
+  },
+  "audit_requirements": {
+    "access_events_required": true,
+    "copy_events_required": true,
+    "manifest_digest_required_when_materialized": true,
+    "leak_scan_required_before_blind_or_sealed_use": true,
+    "role_collision_check_required": true
+  }
+}

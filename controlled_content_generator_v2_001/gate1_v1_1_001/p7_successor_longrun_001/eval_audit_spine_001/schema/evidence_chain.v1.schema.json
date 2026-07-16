@@ -1,0 +1,593 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/evidence-chain.v1.schema.json",
+  "title": "Eval Audit Spine Evidence Chain v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/sourceEvidenceUnit"
+    },
+    {
+      "$ref": "#/$defs/referenceAssertion"
+    },
+    {
+      "$ref": "#/$defs/referenceAssertionReview"
+    },
+    {
+      "$ref": "#/$defs/claimAtom"
+    },
+    {
+      "$ref": "#/$defs/entailmentFinding"
+    }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringIdArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "engineProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine_kind",
+        "engine_id",
+        "engine_revision",
+        "prompt_or_rule_digest",
+        "provider_call_id"
+      ],
+      "properties": {
+        "engine_kind": {
+          "enum": [
+            "HUMAN",
+            "LLM",
+            "RULE",
+            "HYBRID"
+          ]
+        },
+        "engine_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "engine_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "prompt_or_rule_digest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "provider_call_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "sourceEvidenceUnit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "evidence_unit_id",
+        "source_id",
+        "source_digest",
+        "byte_start",
+        "byte_end",
+        "text",
+        "authorization_ids",
+        "synthetic_test_only",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-source-evidence-unit-v1"
+        },
+        "evidence_unit_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "byte_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byte_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "text": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "authorization_ids": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "synthetic_test_only": {
+          "type": "boolean"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "referenceAssertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"verification_status": {"const": "SINGLE_REVIEWED"}}, "required": ["verification_status"]},
+          "then": {"properties": {"review_ids": {"minItems": 1}}}
+        },
+        {
+          "if": {"properties": {"verification_status": {"const": "DUAL_ADJUDICATED"}}, "required": ["verification_status"]},
+          "then": {"properties": {"review_ids": {"minItems": 2}}}
+        }
+      ],
+      "required": [
+        "schema_version",
+        "assertion_id",
+        "subject",
+        "predicate",
+        "object_value",
+        "unit",
+        "time_scope",
+        "polarity",
+        "modality",
+        "preconditions",
+        "evidence_unit_ids",
+        "authorization_ids",
+        "risk_class",
+        "extraction_origin",
+        "engine_provenance",
+        "verification_status",
+        "review_ids",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-reference-assertion-v1"
+        },
+        "assertion_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "subject": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "predicate": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "object_value": {
+          "type": [
+            "string",
+            "number",
+            "integer",
+            "boolean"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time_scope": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "polarity": {
+          "enum": [
+            "POSITIVE",
+            "NEGATIVE"
+          ]
+        },
+        "modality": {
+          "enum": [
+            "OBSERVED",
+            "REPORTED",
+            "PLANNED",
+            "POSSIBLE",
+            "UNKNOWN"
+          ]
+        },
+        "preconditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "evidence_unit_ids": {
+          "$ref": "#/$defs/stringIdArray",
+          "minItems": 1
+        },
+        "authorization_ids": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "risk_class": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ]
+        },
+        "extraction_origin": {
+          "enum": [
+            "HUMAN",
+            "PROBABILISTIC",
+            "DETERMINISTIC_STRUCTURED_INPUT"
+          ]
+        },
+        "engine_provenance": {
+          "$ref": "#/$defs/engineProvenance"
+        },
+        "verification_status": {
+          "enum": [
+            "PROPOSED",
+            "SINGLE_REVIEWED",
+            "DUAL_ADJUDICATED",
+            "REJECTED"
+          ]
+        },
+        "review_ids": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "referenceAssertionReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "review_id",
+        "assertion_id",
+        "assertion_object_digest",
+        "evidence_unit_ids",
+        "evidence_set_digest",
+        "reviewer_identity",
+        "reviewer_kind",
+        "model_revision",
+        "prompt_digest",
+        "reviewer_role",
+        "decision",
+        "evidence_digest",
+        "review_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-reference-assertion-review-v1"
+        },
+        "review_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "assertion_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "assertion_object_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "evidence_unit_ids": {
+          "$ref": "#/$defs/stringIdArray",
+          "minItems": 1
+        },
+        "evidence_set_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "reviewer_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reviewer_kind": {
+          "enum": [
+            "HUMAN",
+            "AI"
+          ]
+        },
+        "model_revision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prompt_digest": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/digest"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reviewer_role": {
+          "enum": [
+            "REVIEWER",
+            "ADJUDICATOR"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "CONFIRM",
+            "REJECT"
+          ]
+        },
+        "evidence_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "review_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "reviewer_kind": {
+                "const": "AI"
+              }
+            },
+            "required": [
+              "reviewer_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "model_revision": {
+                "$ref": "#/$defs/nonEmptyString"
+              },
+              "prompt_digest": {
+                "$ref": "#/$defs/digest"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "model_revision": {
+                "type": "null"
+              },
+              "prompt_digest": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "claimAtom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "claim_atom_id",
+        "output_id",
+        "surface_kind",
+        "text",
+        "char_start",
+        "char_end",
+        "extraction_origin",
+        "engine_provenance",
+        "risk_class",
+        "verification_status",
+        "review_ids",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-claim-atom-v1"
+        },
+        "claim_atom_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "output_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "surface_kind": {
+          "enum": [
+            "TITLE",
+            "BODY",
+            "SPOKEN_LINE",
+            "CTA",
+            "VISUAL_EXECUTION",
+            "AUDIO_EXECUTION"
+          ]
+        },
+        "text": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "char_start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "char_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "extraction_origin": {
+          "enum": [
+            "HUMAN",
+            "PROBABILISTIC",
+            "DETERMINISTIC_RULE"
+          ]
+        },
+        "engine_provenance": {
+          "$ref": "#/$defs/engineProvenance"
+        },
+        "risk_class": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ]
+        },
+        "verification_status": {
+          "enum": [
+            "PROPOSED",
+            "SINGLE_REVIEWED",
+            "DUAL_ADJUDICATED",
+            "REJECTED"
+          ]
+        },
+        "review_ids": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "entailmentFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"semantic_label": {"type": "null"}}, "required": ["semantic_label"]},
+          "then": {
+            "properties": {
+              "abstain": {"const": true},
+              "confidence": {"type": "null"},
+              "action": {"const": "ABSTAIN"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"abstain": {"const": true}}, "required": ["abstain"]},
+          "then": {"properties": {"semantic_label": {"type": "null"}, "action": {"const": "ABSTAIN"}}}
+        },
+        {
+          "if": {"properties": {"risk_class": {"enum": ["HIGH", "CRITICAL"]}}, "required": ["risk_class"]},
+          "then": {"properties": {"action": {"enum": ["REVIEW_REQUIRED", "ABSTAIN", "DETERMINISTIC_HARD"]}}}
+        },
+        {
+          "if": {"properties": {"action": {"const": "DETERMINISTIC_HARD"}}, "required": ["action"]},
+          "then": {
+            "properties": {
+              "semantic_label": {"const": "CONTRADICTED"},
+              "abstain": {"const": false},
+              "reference_assertion_ids": {"minItems": 1}
+            }
+          }
+        }
+      ],
+      "required": [
+        "schema_version",
+        "finding_id",
+        "claim_atom_id",
+        "reference_assertion_ids",
+        "semantic_label",
+        "abstain",
+        "confidence",
+        "risk_class",
+        "action",
+        "reason",
+        "engine_provenance",
+        "review_status",
+        "review_ids",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-entailment-finding-v1"
+        },
+        "finding_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "claim_atom_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reference_assertion_ids": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "semantic_label": {
+          "oneOf": [
+            {
+              "enum": [
+                "SUPPORTED",
+                "CONTRADICTED",
+                "UNKNOWN"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "abstain": {
+          "type": "boolean"
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "risk_class": {
+          "enum": [
+            "CRITICAL",
+            "HIGH",
+            "MEDIUM",
+            "LOW"
+          ]
+        },
+        "action": {
+          "enum": [
+            "NO_FINDING",
+            "REVIEW_REQUIRED",
+            "ABSTAIN",
+            "DETERMINISTIC_HARD"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "engine_provenance": {
+          "$ref": "#/$defs/engineProvenance"
+        },
+        "review_status": {
+          "enum": [
+            "UNREVIEWED",
+            "SINGLE_REVIEWED",
+            "DUAL_ADJUDICATED"
+          ]
+        },
+        "review_ids": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    }
+  }
+}

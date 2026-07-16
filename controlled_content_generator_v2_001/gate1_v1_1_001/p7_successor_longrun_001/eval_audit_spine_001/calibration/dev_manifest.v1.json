@@ -1,0 +1,28 @@
+{
+  "schema_version": "eval-spine-calibration-manifest-v1",
+  "manifest_id": "EAS-M0-DEV-V1",
+  "data_grid": "G2_MEASUREMENT_DEV",
+  "content_status": "NOT_MATERIALIZED",
+  "sealed": false,
+  "case_count": 0,
+  "class_counts": {},
+  "source_manifest_digest": null,
+  "gold_manifest_digest": null,
+  "allowed_consumers": [
+    "DATA_CUSTODIAN",
+    "DEVELOPMENT_REVIEWER",
+    "EVALUATOR_DEVELOPER",
+    "RUBRIC_DEVELOPER"
+  ],
+  "prohibited_consumers": [
+    "GENERATOR_AUTHOR"
+  ],
+  "leakage_status": "NOT_EVALUATED",
+  "notes": [
+    "No development cases or gold labels exist in this manifest version.",
+    "Materialized development cases may tune measurement methods but may not prove M0 qualification.",
+    "R1-R5 evidence may be referenced as known regression only and remains non-sealed."
+  ],
+  "manifest_digest": null
+}
+

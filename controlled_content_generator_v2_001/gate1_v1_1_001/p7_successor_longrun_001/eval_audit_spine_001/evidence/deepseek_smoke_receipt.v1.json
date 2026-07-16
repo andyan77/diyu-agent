@@ -1,0 +1,49 @@
+{
+  "budget_digest": "2a05483dab4eb95fdd83ba79825528089a500d32883040ef5d1644b1e8cea98f",
+  "call_status": "VALID",
+  "cost_cny_budget_basis": 0.0005119744,
+  "cost_usd": 6.39968e-05,
+  "formulaic_result": {
+    "axes": {
+      "argument_spine": "DIFFERENT",
+      "closing_function": "DIFFERENT",
+      "evidence_progression": "DIFFERENT",
+      "limitation_function": "DIFFERENT",
+      "transformation_depth": "SURFACE_ONLY",
+      "viewpoint_anchor": "DIFFERENT"
+    },
+    "derived_verdict": "NOT_FORMULAIC",
+    "evidence_notes": [
+      "左文使用说明式顺序（先解释再验证），右文使用叙事式顺序（从犹豫切入到边界）",
+      "左文聚焦操作步骤和未完成验证，右文聚焦顾客选择和可核对边界",
+      "左文视角为执行者/说明者，右文视角为观察者/叙述者",
+      "两文均以陈述句概述写作结构，但修辞策略完全不同",
+      "未转换为其他语法形式，仅表面结构差异"
+    ],
+    "necessary_grammar_exception_id": null
+  },
+  "model_revision": "deepseek-v4-flash",
+  "prompt_digest": "866765ecd31ede43f5f5730a34e76cd8987426d369cdde8a27a3b42457f1200e",
+  "prompt_revision": "FORMULAIC-RUBRIC-V1.1",
+  "provider": "DEEPSEEK",
+  "provider_call_id": "97323a50-e4c7-4787-a489-c934a71ad936",
+  "rate_card_digest": "473f2279ef84587364f462c4b9c024069852aaf57cba81235f1674fd316d3d7d",
+  "receipt_digest": "a025922447c876c5d900f6004293307b0e8a0d0d3c297c3b54fc89af6395687d",
+  "request_digest": "716d5bb7fac58590f656d8a016daad4add8d9ee74a757fa688ddac62bbd052f5",
+  "reservation_id": "8af80823-361f-4084-9bf2-6721d57c7de4",
+  "response_digest": "e554000ec650c3f39d02c255dda1a9544777c62475260b7fb2e5aa1b2be148a5",
+  "reviewer_identity": "DEEPSEEK-SMOKE-EVIDENCE",
+  "schema_version": "eval-spine-external-judge-receipt-v1",
+  "usage": {
+    "completion_tokens": 200,
+    "prompt_cache_hit_tokens": 256,
+    "prompt_cache_miss_tokens": 52,
+    "prompt_tokens": 308,
+    "prompt_tokens_details": {
+      "cached_tokens": 256
+    },
+    "total_tokens": 508
+  },
+  "validation_errors": [],
+  "wall_clock_seconds": 2.56676
+}

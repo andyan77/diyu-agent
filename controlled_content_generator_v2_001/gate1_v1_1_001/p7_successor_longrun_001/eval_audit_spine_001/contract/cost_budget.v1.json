@@ -1,0 +1,103 @@
+{
+  "schema_version": "eval-audit-spine-cost-budget-v1",
+  "contract_id": "EAS-COST-BUDGET-V1",
+  "approval_status": "UNAPPROVED",
+  "currency": "USD",
+  "approved_by": null,
+  "approved_at": null,
+  "price_snapshot_id": null,
+  "price_snapshot_captured_at": null,
+  "rate_card_digest": null,
+  "cost_classification_manifest_digest": null,
+  "hard_ceilings": {
+    "one_time_gold_and_measurement_usd": null,
+    "causal_pilot_60_usd": null,
+    "open_120_usd": null,
+    "hidden_40_usd": null,
+    "baseline_240_plus_60_usd": null,
+    "total_program_usd": null,
+    "total_model_input_tokens": null,
+    "total_model_cached_input_tokens": null,
+    "total_model_output_tokens": null,
+    "total_reviewer_minutes": null,
+    "p95_single_item_wall_clock_seconds": null,
+    "total_wall_clock_minutes": null
+  },
+  "required_cost_event_fields": [
+    "event_id",
+    "stage_id",
+    "task_kind",
+    "resource_kind",
+    "budget_category",
+    "outcome_status",
+    "source_telemetry_event_digest",
+    "object_id",
+    "attempt_id",
+    "provider",
+    "model_revision",
+    "provider_call_id",
+    "input_tokens",
+    "cached_input_tokens",
+    "output_tokens",
+    "price_snapshot_id",
+    "model_cost_usd",
+    "reviewer_minutes",
+    "reviewer_identity",
+    "labor_rate_snapshot_id",
+    "human_cost_usd",
+    "wall_clock_seconds",
+    "unavailable_reasons",
+    "event_digest"
+  ],
+  "projection_formula": {
+    "one_time": [
+      "reference_gold_build",
+      "claim_atom_gold_build",
+      "entailment_gold_build",
+      "formulaic_pair_gold_build",
+      "disclosure_gold_build",
+      "rubric_calibration",
+      "qualification_adjudication"
+    ],
+    "per_positive_item": [
+      "author_first_attempt",
+      "claim_atomization",
+      "entailment_candidate_generation",
+      "formulaic_candidate_generation",
+      "primary_content_review",
+      "primary_fact_review"
+    ],
+    "sampled_or_triggered": [
+      "second_expert_review",
+      "formulaic_pair_review",
+      "disclosure_omission_review",
+      "disagreement_adjudication"
+    ],
+    "route_and_hidden": [
+      "route_60",
+      "hidden_40",
+      "metamorphic_tests",
+      "final_independent_audit"
+    ]
+  },
+  "forecast_requirements": {
+    "p50_required": true,
+    "p95_required": true,
+    "model_cost_and_human_cost_separate": true,
+    "one_time_and_recurring_cost_separate": true,
+    "abstention_and_adjudication_load_included": true,
+    "failed_attempts_included": true,
+    "price_snapshot_age_days_maximum": 30,
+    "forecast_must_be_refreshed_after_causal_pilot": true,
+    "forecast_must_be_refreshed_before_240_plus_60": true
+  },
+  "fail_closed_rules": [
+    "NO_SCALE_WHILE_APPROVAL_STATUS_IS_NOT_APPROVED",
+    "NO_NEW_COST_EVENT_AFTER_ANY_HARD_CEILING_IS_REACHED",
+    "NO_SCALE_WHEN_P95_FORECAST_EXCEEDS_ANY_HARD_CEILING",
+    "NO_MISSING_CALL_OR_REVIEW_COSTS",
+    "NO_ZERO_COST_PLACEHOLDERS_FOR_UNKNOWN_COSTS"
+  ],
+  "current_decision": "S2_AND_LATER_BLOCKED_PENDING_FOUNDER_BUDGET_APPROVAL",
+  "budget_digest": null
+}

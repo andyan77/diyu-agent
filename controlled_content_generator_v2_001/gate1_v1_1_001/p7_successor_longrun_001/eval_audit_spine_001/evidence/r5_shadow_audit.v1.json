@@ -1,0 +1,43 @@
+{
+  "computed_at": "2026-07-15",
+  "dual_assignment_diagnostic": {
+    "match_count": 30,
+    "mismatch_count": 90,
+    "missing_curated_style_ids": [],
+    "missing_request_style_ids": [],
+    "read_only": true,
+    "report_digest": "b8c7f27488345b5de4f0faf7c78c2ae9de12ab48203135478fbe951b0d7466cf",
+    "request_count": 120,
+    "requests_sha256": "a62e637e9472f3f4606a912fa5760f6cfa27373fe2ff6a4483ec8131bb841ce9",
+    "scenario_count": 120,
+    "scenarios_sha256": "fbb7691d66e1470a92da3876588b016ed65b9631b7f8b9f2216c9d80fbf969e8",
+    "schema_version": "gate1-v4-legacy-r5-plan-mismatch-diagnostic-v1"
+  },
+  "qualification_use": false,
+  "receipt_digest": "932618d0e9921cbf5cb22c082836fa6ed4dc2dd8bab209c9edbb278d9fbb8d98",
+  "schema_version": "eval-spine-r5-read-only-shadow-receipt-v1",
+  "shadow_audit": {
+    "audit_kind": "LEGACY_READ_ONLY_SHADOW",
+    "claim_completeness_warning": "author semantic_claims were not treated as an exhaustive claim inventory",
+    "development_rule_detected_ids": [
+      "G3-POS-CP13-003",
+      "G3-POS-CP18-002",
+      "G3-POS-CP18-008",
+      "G3-POS-CP19-006",
+      "G3-POS-CP20-001"
+    ],
+    "expected_known_veto_ids": [
+      "G3-POS-CP13-003",
+      "G3-POS-CP18-002",
+      "G3-POS-CP18-008",
+      "G3-POS-CP19-006",
+      "G3-POS-CP20-001"
+    ],
+    "known_veto_regression_recall": 1.0,
+    "legacy_machine_hard_failure_count": 0,
+    "legacy_machine_known_veto_recall": 0.0,
+    "m0_qualification_status": "NOT_QUALIFIED",
+    "qualification_use": false,
+    "r5_output_digest": "c45a187eddda1ddf18cf8141b181d87f218cf0a653a4b4e1c29d39bc0579fa15"
+  }
+}

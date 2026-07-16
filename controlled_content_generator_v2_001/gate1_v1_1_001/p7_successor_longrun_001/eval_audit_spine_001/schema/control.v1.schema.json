@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/control.v1.schema.json",
+  "title": "Eval Audit Spine Control Objects v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/gate1TestAssignment"
+    },
+    {
+      "$ref": "#/$defs/reviewAssignment"
+    },
+    {
+      "$ref": "#/$defs/calibrationManifest"
+    }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullableDigest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/digest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringIdArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "surfacePolicyRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference_assertion_id",
+        "policy",
+        "reason_code"
+      ],
+      "properties": {
+        "reference_assertion_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "policy": {
+          "enum": [
+            "MUST_SURFACE",
+            "MAY_SURFACE",
+            "CONTROL_ONLY"
+          ]
+        },
+        "reason_code": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "gate1TestAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "object_type",
+        "assignment_id",
+        "assignment_set_id",
+        "case_id",
+        "scenario_id",
+        "scenario_digest",
+        "profile_id",
+        "family_id",
+        "material_packet_digest",
+        "allocation_version",
+        "strategy_version",
+        "strategy_digest",
+        "argument_spine",
+        "evidence_surface_policy",
+        "perspective_anchor",
+        "limitation_carrier",
+        "closing_function",
+        "paired_assignment_id",
+        "forbidden_inferences",
+        "stage_scope",
+        "not_formal_content_composition_plan",
+        "runtime_consumable",
+        "publishable",
+        "binds_enterprise_runtime_input",
+        "counts_toward_300",
+        "test_dna",
+        "assignment_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "gate1-test-assignment-v1"
+        },
+        "object_type": {
+          "const": "gate1_test_assignment"
+        },
+        "assignment_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "assignment_set_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "case_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scenario_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scenario_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "profile_id": {
+          "type": "string",
+          "pattern": "^CP(?:0[1-9]|1[0-9]|20)$"
+        },
+        "family_id": {
+          "enum": [
+            "F1_PEOPLE_AND_REAL_SCENE",
+            "F2_PROFESSIONAL_AND_SEARCH",
+            "F3_PRODUCT_RELATION_AND_AESTHETIC",
+            "F4_STORE_LOCAL_AND_RETAIL",
+            "F5_ENTERPRISE_LONG_TERM_TRUST"
+          ]
+        },
+        "material_packet_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "allocation_version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "strategy_version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "strategy_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "argument_spine": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "evidence_surface_policy": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/surfacePolicyRow"
+          }
+        },
+        "perspective_anchor": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "limitation_carrier": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "closing_function": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "paired_assignment_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "forbidden_inferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "stage_scope": {
+          "const": "GATE1_QUALIFICATION_ONLY"
+        },
+        "not_formal_content_composition_plan": {
+          "const": true
+        },
+        "runtime_consumable": {
+          "const": false
+        },
+        "publishable": {
+          "const": false
+        },
+        "binds_enterprise_runtime_input": {
+          "const": false
+        },
+        "counts_toward_300": {
+          "const": false
+        },
+        "test_dna": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "entry_lens",
+            "evidence_route",
+            "boundary_carrier",
+            "closing_function",
+            "strategy_id",
+            "strategy_source",
+            "strategy_frozen"
+          ],
+          "properties": {
+            "entry_lens": {"$ref": "#/$defs/nonEmptyString"},
+            "evidence_route": {"$ref": "#/$defs/nonEmptyString"},
+            "boundary_carrier": {"$ref": "#/$defs/nonEmptyString"},
+            "closing_function": {"$ref": "#/$defs/nonEmptyString"},
+            "strategy_id": {"$ref": "#/$defs/nonEmptyString"},
+            "strategy_source": {"enum": ["PROFILE_OVERRIDE", "FAMILY_DEFAULT"]},
+            "strategy_frozen": {"type": "boolean"}
+          }
+        },
+        "assignment_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "reviewAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "review_assignment_id",
+        "data_grid",
+        "object_ids",
+        "review_track",
+        "reviewer_id",
+        "reviewer_kind",
+        "rubric_version",
+        "visible_fields",
+        "hidden_fields",
+        "independence_attestation",
+        "assignment_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-review-assignment-v1"
+        },
+        "review_assignment_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "data_grid": {
+          "enum": [
+            "G1_REFERENCE_BUILD",
+            "G2_MEASUREMENT_DEV",
+            "G3_MEASUREMENT_QUALIFICATION",
+            "G4_GENERATOR_DEV",
+            "G5_OPEN_QUALIFICATION",
+            "G6_HIDDEN_AND_FINAL"
+          ]
+        },
+        "object_ids": {
+          "$ref": "#/$defs/stringIdArray",
+          "minItems": 1
+        },
+        "review_track": {
+          "enum": [
+            "REFERENCE_ASSERTION",
+            "CLAIM_ATOM",
+            "ENTAILMENT",
+            "FORMULAIC",
+            "DISCLOSURE",
+            "CONTENT_VALUE",
+            "FACT_AUTHORIZATION",
+            "BLIND_PROFILE",
+            "FINAL_AUDIT"
+          ]
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reviewer_kind": {
+          "enum": [
+            "HUMAN",
+            "AI_AGENT",
+            "HYBRID"
+          ]
+        },
+        "rubric_version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "visible_fields": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "hidden_fields": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "independence_attestation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "did_not_generate_or_modify_object",
+            "did_not_read_peer_in_process_review",
+            "did_not_read_prohibited_gold",
+            "role_collision_check_passed"
+          ],
+          "properties": {
+            "did_not_generate_or_modify_object": {
+              "const": true
+            },
+            "did_not_read_peer_in_process_review": {
+              "const": true
+            },
+            "did_not_read_prohibited_gold": {
+              "const": true
+            },
+            "role_collision_check_passed": {
+              "const": true
+            }
+          }
+        },
+        "assignment_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "calibrationManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"content_status": {"const": "ADJUDICATED"}}, "required": ["content_status"]},
+          "then": {
+            "properties": {
+              "data_grid": {"const": "G3_MEASUREMENT_QUALIFICATION"},
+              "sealed": {"const": true},
+              "case_count": {"minimum": 1},
+              "class_counts": {"minProperties": 1},
+              "dataset_manifest_digest": {"$ref": "#/$defs/digest"},
+              "source_manifest_digest": {"$ref": "#/$defs/digest"},
+              "gold_manifest_digest": {"$ref": "#/$defs/digest"},
+              "record_manifest_digests": {
+                "minProperties": 9,
+                "maxProperties": 9,
+                "additionalProperties": {"$ref": "#/$defs/digest"}
+              },
+              "qualification_record_index_digest": {"$ref": "#/$defs/digest"},
+              "leakage_status": {"const": "PASS"},
+              "manifest_digest": {"$ref": "#/$defs/digest"}
+            }
+          }
+        }
+      ],
+      "required": [
+        "schema_version",
+        "manifest_id",
+        "data_grid",
+        "content_status",
+        "sealed",
+        "case_count",
+        "class_counts",
+        "dataset_manifest_digest",
+        "source_manifest_digest",
+        "gold_manifest_digest",
+        "record_manifest_digests",
+        "qualification_record_index_digest",
+        "allowed_consumers",
+        "prohibited_consumers",
+        "leakage_status",
+        "notes",
+        "manifest_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-calibration-manifest-v1"
+        },
+        "manifest_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "data_grid": {
+          "enum": [
+            "G2_MEASUREMENT_DEV",
+            "G3_MEASUREMENT_QUALIFICATION"
+          ]
+        },
+        "content_status": {
+          "enum": [
+            "NOT_MATERIALIZED",
+            "MATERIALIZED_UNREVIEWED",
+            "ADJUDICATED",
+            "INVALIDATED"
+          ]
+        },
+        "sealed": {
+          "type": "boolean"
+        },
+        "case_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "class_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "dataset_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "source_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "gold_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "record_manifest_digests": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "reference_assertion_extraction",
+              "claim_atomization",
+              "risk_classification",
+              "entailment",
+              "fact_chain_end_to_end",
+              "formulaic_construct",
+              "disclosure_and_omission",
+              "review_calibration",
+              "cost"
+            ]
+          },
+          "additionalProperties": {"$ref": "#/$defs/digest"}
+        },
+        "qualification_record_index_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "allowed_consumers": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "prohibited_consumers": {
+          "$ref": "#/$defs/stringIdArray"
+        },
+        "leakage_status": {
+          "enum": [
+            "NOT_EVALUATED",
+            "PASS",
+            "FAILED_INVALIDATED"
+          ]
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        }
+      }
+    }
+  }
+}
