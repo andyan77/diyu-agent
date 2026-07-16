@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "b54ed6c8b89665ebe257549fad52cc82687906bc53e9f5cef18ad74d9de13190"
+    "4bbd54595d6159d2867895159ea88424115760db10838ac5df226c5e3ea7a9d8"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -142,7 +142,20 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_brand_fact_retrieval.py"
         ),
     ),
+    (
+        Path("16_composition_runtime/fact_aware_plan_adapter_001"),
+        Path(
+            "16_composition_runtime/fact_aware_plan_adapter_001/"
+            "check_fact_aware_plan_adapter.py"
+        ),
+    ),
 )
+DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
+    Path(
+        "15_brand_retrieval/brand_fact_retrieval_001/"
+        "check_brand_fact_retrieval.py"
+    ): "24cd9888f38f2f22b22aa6c5a23f388b39fa1469",
+}
 DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
 DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP = (
     "Verify reserved downstream package fail-closed optimized mode"
@@ -810,17 +823,37 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         "run_downstream_package_checker() {",
         'package_root="$1"',
         'checker="$2"',
+        'reference_commit="${3:-}"',
         'if [ ! -e "$package_root" ]; then',
         "return 0",
         "fi",
         'test -d "$package_root"',
         'test -f "$checker"',
-        'python3 "$checker"',
-        'python3 "$checker" --selftest',
+        'run_root="."',
+        'temporary_parent=""',
+        'if [ -n "$reference_commit" ]; then',
+        'temporary_parent="$(mktemp -d)"',
+        'run_root="$temporary_parent/snapshot"',
+        'git worktree add --detach "$run_root" "$reference_commit" >/dev/null',
+        "fi",
+        "set +e",
+        '(cd "$run_root" && python3 "$checker" && python3 "$checker" --selftest)',
+        "code=$?",
+        "set -e",
+        'if [ -n "$temporary_parent" ]; then',
+        'git worktree remove --force "$run_root" >/dev/null',
+        'rmdir "$temporary_parent"',
+        "fi",
+        'test "$code" -eq 0',
         "}",
         *(
             f'run_downstream_package_checker "{package_root.as_posix()}" '
             f'"{checker_path.as_posix()}"'
+            + (
+                f' "{DOWNSTREAM_REFERENCE_SAFE_COMMITS[checker_path]}"'
+                if checker_path in DOWNSTREAM_REFERENCE_SAFE_COMMITS
+                else ""
+            )
             for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
         ),
     )
@@ -829,25 +862,42 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         "run_downstream_package_checker_optimized() {",
         'package_root="$1"',
         'checker="$2"',
+        'reference_commit="${3:-}"',
         'if [ ! -e "$package_root" ]; then',
         "return 0",
         "fi",
         'test -d "$package_root"',
         'test -f "$checker"',
+        'run_root="."',
+        'temporary_parent=""',
+        'if [ -n "$reference_commit" ]; then',
+        'temporary_parent="$(mktemp -d)"',
+        'run_root="$temporary_parent/snapshot"',
+        'git worktree add --detach "$run_root" "$reference_commit" >/dev/null',
+        "fi",
         "set +e",
-        'python3 -O "$checker"',
+        '(cd "$run_root" && python3 -O "$checker")',
         "code=$?",
         "set -e",
         'test "$code" -eq 2',
         "set +e",
-        'python3 -O "$checker" --selftest',
+        '(cd "$run_root" && python3 -O "$checker" --selftest)',
         "code=$?",
         "set -e",
         'test "$code" -eq 2',
+        'if [ -n "$temporary_parent" ]; then',
+        'git worktree remove --force "$run_root" >/dev/null',
+        'rmdir "$temporary_parent"',
+        "fi",
         "}",
         *(
             f'run_downstream_package_checker_optimized "{package_root.as_posix()}" '
             f'"{checker_path.as_posix()}"'
+            + (
+                f' "{DOWNSTREAM_REFERENCE_SAFE_COMMITS[checker_path]}"'
+                if checker_path in DOWNSTREAM_REFERENCE_SAFE_COMMITS
+                else ""
+            )
             for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
         ),
     )
