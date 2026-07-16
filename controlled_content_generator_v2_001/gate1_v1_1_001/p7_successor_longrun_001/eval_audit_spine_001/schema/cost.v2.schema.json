@@ -1,0 +1,1295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/cost.v2.schema.json",
+  "title": "Eval Audit Spine Cost Objects v2 (disbursement accounting; budget gate removed per ruling #4)",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/rateCard"
+    },
+    {
+      "$ref": "#/$defs/expectedEventManifest"
+    },
+    {
+      "$ref": "#/$defs/sourceEventManifest"
+    },
+    {
+      "$ref": "#/$defs/meteringReport"
+    },
+    {
+      "$ref": "#/$defs/scaleAssumptionManifest"
+    },
+    {
+      "$ref": "#/$defs/scaleProjection"
+    },
+    {
+      "$ref": "#/$defs/accountingDecision"
+    }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nullableDigest": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/digest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "nullableNonEmptyString": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nonnegativeNumber": {
+      "type": "number",
+      "minimum": 0
+    },
+    "nullableNonnegativeNumber": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableTimestamp": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "budgetCategory": {
+      "enum": [
+        "one_time_gold_and_measurement_usd",
+        "causal_pilot_60_usd",
+        "open_120_usd",
+        "hidden_40_usd",
+        "baseline_240_plus_60_usd"
+      ]
+    },
+    "resourceKind": {
+      "enum": [
+        "MODEL_CALL",
+        "HUMAN_REVIEW",
+        "HYBRID"
+      ]
+    },
+    "outcomeStatus": {
+      "enum": [
+        "SUCCEEDED",
+        "FAILED",
+        "ABORTED"
+      ]
+    },
+    "errorList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "errorMap": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/errorList"
+      }
+    },
+    "rateRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_per_million",
+        "cached_input_per_million",
+        "output_per_million"
+      ],
+      "properties": {
+        "input_per_million": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "cached_input_per_million": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "output_per_million": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        }
+      }
+    },
+    "rateCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "snapshot_id",
+        "captured_at",
+        "currency",
+        "rates",
+        "labor_rates",
+        "rate_card_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-rate-card-v1"
+        },
+        "snapshot_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "captured_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "currency": {
+          "const": "USD"
+        },
+        "rates": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/rateRow"
+          }
+        },
+        "labor_rates": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/nonnegativeNumber"
+          }
+        },
+        "rate_card_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "expectedEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "stage_id",
+        "task_kind",
+        "resource_kind",
+        "budget_category",
+        "object_id"
+      ],
+      "properties": {
+        "event_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "stage_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "task_kind": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "resource_kind": {
+          "$ref": "#/$defs/resourceKind"
+        },
+        "budget_category": {
+          "$ref": "#/$defs/budgetCategory"
+        },
+        "object_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "expectedEventManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "stage_scope",
+        "registered_before_run",
+        "custodian_identity",
+        "approved_by",
+        "approved_at",
+        "source_run_manifest_digest",
+        "expected_events",
+        "manifest_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-expected-cost-events-v1"
+        },
+        "stage_scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "registered_before_run": {
+          "const": true
+        },
+        "custodian_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "approved_by": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "approved_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "source_run_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "expected_events": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/expectedEvent"
+          }
+        },
+        "manifest_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "sourceEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "resource_kind",
+        "outcome_status",
+        "source_telemetry_event_digest",
+        "provider_call_id",
+        "wall_clock_seconds"
+      ],
+      "properties": {
+        "event_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "resource_kind": {
+          "$ref": "#/$defs/resourceKind"
+        },
+        "outcome_status": {
+          "$ref": "#/$defs/outcomeStatus"
+        },
+        "source_telemetry_event_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "provider_call_id": {
+          "$ref": "#/$defs/nullableNonEmptyString"
+        },
+        "wall_clock_seconds": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resource_kind": {
+                "const": "HUMAN_REVIEW"
+              }
+            },
+            "required": [
+              "resource_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "provider_call_id": {
+                "const": null
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "provider_call_id": {
+                "$ref": "#/$defs/nonEmptyString"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "sourceEventManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "run_id",
+        "source_run_manifest_digest",
+        "generated_from_append_only_log",
+        "includes_failed_attempts",
+        "source_events",
+        "manifest_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-source-cost-events-v1"
+        },
+        "run_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "source_run_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "generated_from_append_only_log": {
+          "const": true
+        },
+        "includes_failed_attempts": {
+          "const": true
+        },
+        "source_events": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceEvent"
+          }
+        },
+        "manifest_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "meteringGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum_event_count",
+        "event_contracts_valid",
+        "critical_fields_available",
+        "event_ids_unique",
+        "provider_call_ids_unique",
+        "expected_event_manifest_matches",
+        "source_event_manifest_matches",
+        "rate_card_valid",
+        "costs_recompute_from_rate_card",
+        "human_costs_recompute_from_rate_card",
+        "all_events_complete"
+      ],
+      "properties": {
+        "minimum_event_count": {
+          "type": "boolean"
+        },
+        "event_contracts_valid": {
+          "type": "boolean"
+        },
+        "critical_fields_available": {
+          "type": "boolean"
+        },
+        "event_ids_unique": {
+          "type": "boolean"
+        },
+        "provider_call_ids_unique": {
+          "type": "boolean"
+        },
+        "expected_event_manifest_matches": {
+          "type": "boolean"
+        },
+        "source_event_manifest_matches": {
+          "type": "boolean"
+        },
+        "rate_card_valid": {
+          "type": "boolean"
+        },
+        "costs_recompute_from_rate_card": {
+          "type": "boolean"
+        },
+        "human_costs_recompute_from_rate_card": {
+          "type": "boolean"
+        },
+        "all_events_complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "allTrueMeteringGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "minimum_event_count",
+        "event_contracts_valid",
+        "critical_fields_available",
+        "event_ids_unique",
+        "provider_call_ids_unique",
+        "expected_event_manifest_matches",
+        "source_event_manifest_matches",
+        "rate_card_valid",
+        "costs_recompute_from_rate_card",
+        "human_costs_recompute_from_rate_card",
+        "all_events_complete"
+      ],
+      "properties": {
+        "minimum_event_count": {
+          "const": true
+        },
+        "event_contracts_valid": {
+          "const": true
+        },
+        "critical_fields_available": {
+          "const": true
+        },
+        "event_ids_unique": {
+          "const": true
+        },
+        "provider_call_ids_unique": {
+          "const": true
+        },
+        "expected_event_manifest_matches": {
+          "const": true
+        },
+        "source_event_manifest_matches": {
+          "const": true
+        },
+        "rate_card_valid": {
+          "const": true
+        },
+        "costs_recompute_from_rate_card": {
+          "const": true
+        },
+        "human_costs_recompute_from_rate_card": {
+          "const": true
+        },
+        "all_events_complete": {
+          "const": true
+        }
+      }
+    },
+    "budgetCategoryAmounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "one_time_gold_and_measurement_usd",
+        "causal_pilot_60_usd",
+        "open_120_usd",
+        "hidden_40_usd",
+        "baseline_240_plus_60_usd"
+      ],
+      "properties": {
+        "one_time_gold_and_measurement_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "causal_pilot_60_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "open_120_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "hidden_40_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "baseline_240_plus_60_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        }
+      }
+    },
+    "qualifiedBudgetCategoryAmounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "one_time_gold_and_measurement_usd",
+        "causal_pilot_60_usd",
+        "open_120_usd",
+        "hidden_40_usd",
+        "baseline_240_plus_60_usd"
+      ],
+      "properties": {
+        "one_time_gold_and_measurement_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "causal_pilot_60_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "open_120_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "hidden_40_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "baseline_240_plus_60_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        }
+      }
+    },
+    "meteringReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "qualified",
+        "gates",
+        "event_count",
+        "complete_event_count",
+        "errors",
+        "unavailable_critical_fields",
+        "duplicate_event_ids",
+        "duplicate_provider_call_ids",
+        "rate_card_errors",
+        "rate_card_digest",
+        "rate_card_captured_at",
+        "expected_event_manifest_errors",
+        "expected_event_manifest_digest",
+        "source_event_manifest_errors",
+        "source_event_manifest_digest",
+        "cost_recompute_errors",
+        "human_cost_recompute_errors",
+        "event_record_manifest_digest",
+        "actual_cost_by_budget_category_usd",
+        "total_model_cost_usd",
+        "total_input_tokens",
+        "total_cached_input_tokens",
+        "total_output_tokens",
+        "total_reviewer_minutes",
+        "total_human_cost_usd",
+        "total_wall_clock_seconds",
+        "p50_single_event_wall_clock_seconds",
+        "p95_single_event_wall_clock_seconds",
+        "p50_single_item_wall_clock_seconds",
+        "p95_single_item_wall_clock_seconds",
+        "total_program_cost_to_date_usd",
+        "report_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-metering-report-v1"
+        },
+        "qualified": {
+          "type": "boolean"
+        },
+        "gates": {
+          "$ref": "#/$defs/meteringGates"
+        },
+        "event_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete_event_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errors": {
+          "$ref": "#/$defs/errorMap"
+        },
+        "unavailable_critical_fields": {
+          "$ref": "#/$defs/errorMap"
+        },
+        "duplicate_event_ids": {
+          "$ref": "#/$defs/errorList"
+        },
+        "duplicate_provider_call_ids": {
+          "$ref": "#/$defs/errorList"
+        },
+        "rate_card_errors": {
+          "$ref": "#/$defs/errorList"
+        },
+        "rate_card_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "rate_card_captured_at": {
+          "$ref": "#/$defs/nullableTimestamp"
+        },
+        "expected_event_manifest_errors": {
+          "$ref": "#/$defs/errorList"
+        },
+        "expected_event_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "source_event_manifest_errors": {
+          "$ref": "#/$defs/errorList"
+        },
+        "source_event_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "cost_recompute_errors": {
+          "$ref": "#/$defs/errorList"
+        },
+        "human_cost_recompute_errors": {
+          "$ref": "#/$defs/errorList"
+        },
+        "event_record_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "actual_cost_by_budget_category_usd": {
+          "$ref": "#/$defs/budgetCategoryAmounts"
+        },
+        "total_model_cost_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_input_tokens": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_cached_input_tokens": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_output_tokens": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_reviewer_minutes": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_human_cost_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_wall_clock_seconds": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "p50_single_event_wall_clock_seconds": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "p95_single_event_wall_clock_seconds": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "p50_single_item_wall_clock_seconds": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "p95_single_item_wall_clock_seconds": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "total_program_cost_to_date_usd": {
+          "$ref": "#/$defs/nullableNonnegativeNumber"
+        },
+        "report_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "qualified": {
+                "const": true
+              }
+            },
+            "required": [
+              "qualified"
+            ]
+          },
+          "then": {
+            "properties": {
+              "gates": {
+                "$ref": "#/$defs/allTrueMeteringGates"
+              },
+              "event_count": {
+                "type": "integer",
+                "minimum": 12
+              },
+              "complete_event_count": {
+                "type": "integer",
+                "minimum": 12
+              },
+              "errors": {
+                "maxProperties": 0
+              },
+              "unavailable_critical_fields": {
+                "maxProperties": 0
+              },
+              "duplicate_event_ids": {
+                "maxItems": 0
+              },
+              "duplicate_provider_call_ids": {
+                "maxItems": 0
+              },
+              "rate_card_errors": {
+                "maxItems": 0
+              },
+              "rate_card_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "rate_card_captured_at": {
+                "$ref": "#/$defs/timestamp"
+              },
+              "expected_event_manifest_errors": {
+                "maxItems": 0
+              },
+              "expected_event_manifest_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "source_event_manifest_errors": {
+                "maxItems": 0
+              },
+              "source_event_manifest_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "cost_recompute_errors": {
+                "maxItems": 0
+              },
+              "human_cost_recompute_errors": {
+                "maxItems": 0
+              },
+              "actual_cost_by_budget_category_usd": {
+                "$ref": "#/$defs/qualifiedBudgetCategoryAmounts"
+              },
+              "total_model_cost_usd": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_input_tokens": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_cached_input_tokens": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_output_tokens": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_reviewer_minutes": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_human_cost_usd": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_wall_clock_seconds": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "p50_single_event_wall_clock_seconds": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "p95_single_event_wall_clock_seconds": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "p50_single_item_wall_clock_seconds": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "p95_single_item_wall_clock_seconds": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              },
+              "total_program_cost_to_date_usd": {
+                "$ref": "#/$defs/nonnegativeNumber"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "modelWorkload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workload_id",
+        "resource_kind",
+        "provider",
+        "model_revision",
+        "p50_event_count",
+        "p95_event_count",
+        "p50_input_tokens_per_event",
+        "p95_input_tokens_per_event",
+        "p50_cached_input_tokens_per_event",
+        "p95_cached_input_tokens_per_event",
+        "p50_output_tokens_per_event",
+        "p95_output_tokens_per_event",
+        "p50_wall_clock_seconds_per_event",
+        "p95_wall_clock_seconds_per_event"
+      ],
+      "properties": {
+        "workload_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "resource_kind": {
+          "const": "MODEL_CALL"
+        },
+        "provider": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "model_revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "p50_event_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "p95_event_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "p50_input_tokens_per_event": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p95_input_tokens_per_event": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p50_cached_input_tokens_per_event": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p95_cached_input_tokens_per_event": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p50_output_tokens_per_event": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p95_output_tokens_per_event": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "p50_wall_clock_seconds_per_event": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "p95_wall_clock_seconds_per_event": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        }
+      }
+    },
+    "humanWorkload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workload_id",
+        "resource_kind",
+        "reviewer_identity",
+        "p50_event_count",
+        "p95_event_count",
+        "p50_reviewer_minutes_per_event",
+        "p95_reviewer_minutes_per_event",
+        "p50_wall_clock_seconds_per_event",
+        "p95_wall_clock_seconds_per_event"
+      ],
+      "properties": {
+        "workload_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "resource_kind": {
+          "const": "HUMAN_REVIEW"
+        },
+        "reviewer_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "p50_event_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "p95_event_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "p50_reviewer_minutes_per_event": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "p95_reviewer_minutes_per_event": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "p50_wall_clock_seconds_per_event": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "p95_wall_clock_seconds_per_event": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        }
+      }
+    },
+    "workloadList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/modelWorkload"
+          },
+          {
+            "$ref": "#/$defs/humanWorkload"
+          }
+        ]
+      }
+    },
+    "stageWorkloads": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "one_time_gold_and_measurement_usd",
+        "causal_pilot_60_usd",
+        "open_120_usd",
+        "hidden_40_usd",
+        "baseline_240_plus_60_usd"
+      ],
+      "properties": {
+        "one_time_gold_and_measurement_usd": {
+          "$ref": "#/$defs/workloadList"
+        },
+        "causal_pilot_60_usd": {
+          "$ref": "#/$defs/workloadList"
+        },
+        "open_120_usd": {
+          "$ref": "#/$defs/workloadList"
+        },
+        "hidden_40_usd": {
+          "$ref": "#/$defs/workloadList"
+        },
+        "baseline_240_plus_60_usd": {
+          "$ref": "#/$defs/workloadList"
+        }
+      }
+    },
+    "scaleAssumptionManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "registered_before_scale",
+        "custodian_identity",
+        "approved_by",
+        "approved_at",
+        "price_snapshot_id",
+        "basis_metering_report_digest",
+        "basis_event_record_manifest_digest",
+        "single_item_wall_clock_seconds",
+        "stage_workloads",
+        "manifest_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-scale-assumption-manifest-v1"
+        },
+        "scope": {
+          "const": "FULL_PROGRAM_THROUGH_240_PLUS_60"
+        },
+        "registered_before_scale": {
+          "const": true
+        },
+        "custodian_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "approved_by": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "approved_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "price_snapshot_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "basis_metering_report_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "basis_event_record_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "single_item_wall_clock_seconds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "p50",
+            "p95"
+          ],
+          "properties": {
+            "p50": {
+              "$ref": "#/$defs/nonnegativeNumber"
+            },
+            "p95": {
+              "$ref": "#/$defs/nonnegativeNumber"
+            }
+          }
+        },
+        "stage_workloads": {
+          "$ref": "#/$defs/stageWorkloads"
+        },
+        "manifest_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "forecastValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "one_time_gold_and_measurement_usd",
+        "causal_pilot_60_usd",
+        "open_120_usd",
+        "hidden_40_usd",
+        "baseline_240_plus_60_usd",
+        "total_program_usd",
+        "total_model_input_tokens",
+        "total_model_cached_input_tokens",
+        "total_model_output_tokens",
+        "total_reviewer_minutes",
+        "p95_single_item_wall_clock_seconds",
+        "total_wall_clock_minutes"
+      ],
+      "properties": {
+        "one_time_gold_and_measurement_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "causal_pilot_60_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "open_120_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "hidden_40_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "baseline_240_plus_60_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "total_program_usd": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "total_model_input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_model_cached_input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_model_output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_reviewer_minutes": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "p95_single_item_wall_clock_seconds": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        },
+        "total_wall_clock_minutes": {
+          "$ref": "#/$defs/nonnegativeNumber"
+        }
+      }
+    },
+    "scaleProjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "price_snapshot_id",
+        "generated_at",
+        "basis_metering_report_digest",
+        "basis_event_record_manifest_digest",
+        "basis_event_count",
+        "assumption_manifest_digest",
+        "rate_card_digest",
+        "calculation_trace_digest",
+        "p50",
+        "p95",
+        "projection_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-scale-projection-v1"
+        },
+        "price_snapshot_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "generated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "basis_metering_report_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "basis_event_record_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "basis_event_count": {
+          "type": "integer",
+          "minimum": 12
+        },
+        "assumption_manifest_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "rate_card_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "calculation_trace_digest": {
+          "$ref": "#/$defs/digest"
+        },
+        "p50": {
+          "$ref": "#/$defs/forecastValues"
+        },
+        "p95": {
+          "$ref": "#/$defs/forecastValues"
+        },
+        "projection_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "accountingDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "passed",
+        "status",
+        "checked_at",
+        "metering_report_digest",
+        "rate_card_digest",
+        "expected_event_manifest_digest",
+        "source_event_manifest_digest",
+        "failed_gates",
+        "diagnostic_telemetry",
+        "budget_blocking",
+        "decision_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-accounting-decision-v1"
+        },
+        "passed": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "STOP_COST_ACCOUNTING_MISSING"
+          ]
+        },
+        "checked_at": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metering_report_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "rate_card_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "expected_event_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "source_event_manifest_digest": {
+          "$ref": "#/$defs/nullableDigest"
+        },
+        "failed_gates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "diagnostic_telemetry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_count",
+            "total_program_cost_to_date_usd",
+            "total_model_cost_usd",
+            "total_human_cost_usd",
+            "total_input_tokens",
+            "total_cached_input_tokens",
+            "total_output_tokens",
+            "total_reviewer_minutes",
+            "total_wall_clock_seconds",
+            "p95_single_item_wall_clock_seconds"
+          ],
+          "properties": {
+            "event_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "total_program_cost_to_date_usd": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_model_cost_usd": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_human_cost_usd": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_input_tokens": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_cached_input_tokens": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_output_tokens": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_reviewer_minutes": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "total_wall_clock_seconds": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            },
+            "p95_single_item_wall_clock_seconds": {
+              "$ref": "#/$defs/nullableNonnegativeNumber"
+            }
+          }
+        },
+        "budget_blocking": {
+          "const": false
+        },
+        "decision_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "PASS"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "passed": {
+                "const": true
+              },
+              "failed_gates": {
+                "maxItems": 0
+              },
+              "metering_report_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "rate_card_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "expected_event_manifest_digest": {
+                "$ref": "#/$defs/digest"
+              },
+              "source_event_manifest_digest": {
+                "$ref": "#/$defs/digest"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "passed": {
+                "const": false
+              },
+              "failed_gates": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -9,7 +9,9 @@ from typing import Any, Iterable
 from .canonical import digest_json
 from .contracts import validate_cost_event
 
-REQUIRED_CEILING_KEYS = {
+# 投影/遥测度量维度键集。依裁决 #4（拨付制+只记账），这些键只承载诊断计量，
+# 不再作为任何 hard-ceiling 阻断键集（原名 REQUIRED_CEILING_KEYS，M1-C2 迁移改名）。
+PROJECTION_METRIC_KEYS = {
     "one_time_gold_and_measurement_usd", "causal_pilot_60_usd",
     "open_120_usd", "hidden_40_usd", "baseline_240_plus_60_usd",
     "total_program_usd", "total_model_input_tokens",
@@ -18,12 +20,13 @@ REQUIRED_CEILING_KEYS = {
     "total_wall_clock_minutes",
 }
 
+# budget_category 是 24 字段成本事件的保留字段名（分类记账维度，非阻断门）。
 BUDGET_CATEGORY_KEYS = {
     "one_time_gold_and_measurement_usd", "causal_pilot_60_usd",
     "open_120_usd", "hidden_40_usd", "baseline_240_plus_60_usd",
 }
 
-FORECAST_AGGREGATE_KEYS = REQUIRED_CEILING_KEYS - BUDGET_CATEGORY_KEYS
+FORECAST_AGGREGATE_KEYS = PROJECTION_METRIC_KEYS - BUDGET_CATEGORY_KEYS
 MAX_PRICE_SNAPSHOT_AGE_DAYS = 30
 
 
@@ -450,7 +453,7 @@ def project_scale(*, fixed_cost: float, positive_items: int, route_items: int,
                   average_claims: float, per_claim_cost: float, per_pair_screen_cost: float,
                   human_item_cost: float, human_pair_cost: float,
                   candidate_pair_rate: float, contingency: float = .20) -> dict[str, Any]:
-    """仅供早期诊断的旧公式；输出明确不可进入预算门。"""
+    """仅供早期诊断的旧公式；输出只作诊断遥测，不进入任何门。"""
     profiles = 20
     per_profile = positive_items // profiles
     all_within_profile_pairs = profiles * (per_profile * (per_profile - 1) / 2)
@@ -462,7 +465,7 @@ def project_scale(*, fixed_cost: float, positive_items: int, route_items: int,
     baseline = fixed_cost + variable
     p95 = baseline * (1 + contingency)
     return {"schema_version": "eval-spine-diagnostic-cost-estimate-v1",
-            "budget_eligible": False,
+            "diagnostic_only": True,
             "projection_scope": "BASELINE_240_PLUS_60_DOLLAR_PARTIAL",
             "within_profile_pair_count": all_within_profile_pairs,
             "low": baseline * .85, "baseline": baseline, "high": p95}
@@ -613,7 +616,7 @@ def _validate_scale_assumption_manifest(
 
 def _forecast_values(manifest: dict[str, Any], rate_card: dict[str, Any],
                      quantile: str) -> tuple[dict[str, float | int], dict[str, Any]]:
-    values: dict[str, float | int] = {key: 0 for key in REQUIRED_CEILING_KEYS}
+    values: dict[str, float | int] = {key: 0 for key in PROJECTION_METRIC_KEYS}
     trace_rows: list[dict[str, Any]] = []
     for category in sorted(BUDGET_CATEGORY_KEYS):
         category_cost = 0.0
@@ -695,7 +698,7 @@ def build_scale_projection(*, assumption_manifest: dict[str, Any] | None,
     assert assumption_manifest is not None
     p50, p50_trace = _forecast_values(assumption_manifest, rate_card, "p50")
     p95, p95_trace = _forecast_values(assumption_manifest, rate_card, "p95")
-    if any(float(p50[key]) > float(p95[key]) for key in REQUIRED_CEILING_KEYS):
+    if any(float(p50[key]) > float(p95[key]) for key in PROJECTION_METRIC_KEYS):
         raise ValueError("scale_projection_quantile_order")
     trace = {
         "formula_version": "eval-spine-scale-formula-v1",
@@ -724,170 +727,58 @@ def build_scale_projection(*, assumption_manifest: dict[str, Any] | None,
     return projection
 
 
-def budget_gate(projection: dict[str, Any], budget: dict[str, Any], *,
-                assumption_manifest: dict[str, Any] | None = None,
-                cost_events: Iterable[dict[str, Any]] = (),
-                expected_event_manifest: dict[str, Any] | None = None,
-                source_event_manifest: dict[str, Any] | None = None,
-                rate_card: dict[str, Any] | None = None,
-                as_of: str | None = None) -> dict[str, Any]:
-    safe_projection = projection if isinstance(projection, dict) else {}
-    safe_budget = budget if isinstance(budget, dict) else {}
-    report: dict[str, Any] = {}
+def accounting_integrity_gate(cost_events: Iterable[dict[str, Any]] = (), *,
+                              rate_card: dict[str, Any] | None = None,
+                              expected_event_manifest: dict[str, Any] | None = None,
+                              source_event_manifest: dict[str, Any] | None = None,
+                              as_of: str | None = None) -> dict[str, Any]:
+    """记账完整性硬门（拨付制下唯一 STOP 语义：记账缺失=停）。
 
-    def decision(status: str, *, passed: bool = False,
-                 details: dict[str, Any] | None = None) -> dict[str, Any]:
-        value = {
-            "schema_version": "eval-spine-budget-decision-v1",
-            "passed": passed, "status": status, "checked_at": as_of,
-            "budget_digest": safe_budget.get("budget_digest"),
-            "rate_card_digest": ((rate_card or {}).get("rate_card_digest")
-                                 if isinstance(rate_card, dict) else None),
-            "metering_report_digest": report.get("report_digest"),
-            "assumption_manifest_digest": (
-                (assumption_manifest or {}).get("manifest_digest")
-                if isinstance(assumption_manifest, dict) else None),
-            "projection_digest": safe_projection.get("projection_digest"),
-            "expected_event_manifest_digest": (
-                (expected_event_manifest or {}).get("manifest_digest")
-                if isinstance(expected_event_manifest, dict) else None),
-            "source_event_manifest_digest": (
-                (source_event_manifest or {}).get("manifest_digest")
-                if isinstance(source_event_manifest, dict) else None),
-            "details": details or {}, "decision_digest": "",
-        }
-        unsigned = dict(value)
-        unsigned.pop("decision_digest")
-        value["decision_digest"] = digest_json(unsigned)
-        return value
-
-    if safe_budget.get("approval_status") != "APPROVED":
-        return decision("BLOCKED_BUDGET_UNSET")
-    budget_unsigned = dict(budget)
-    budget_digest = budget_unsigned.pop("budget_digest", None)
-    approval_fields = (budget.get("approved_by"), budget.get("approved_at"),
-                       budget.get("price_snapshot_id"),
-                       budget.get("price_snapshot_captured_at"),
-                       budget.get("rate_card_digest"),
-                       budget.get("cost_classification_manifest_digest"))
-    if (budget.get("schema_version") != "eval-audit-spine-cost-budget-v1"
-            or budget.get("contract_id") != "EAS-COST-BUDGET-V1"
-            or budget.get("currency") != "USD"
-            or not all(isinstance(value, str) and value.strip() for value in approval_fields)
-            or budget_digest != digest_json(budget_unsigned)):
-        return decision("BLOCKED_BUDGET_APPROVAL_INVALID")
-    as_of_dt = _utc_datetime(as_of)
-    approved_dt = _utc_datetime(budget.get("approved_at"))
-    price_dt = _utc_datetime(budget.get("price_snapshot_captured_at"))
-    if as_of_dt is None or approved_dt is None or price_dt is None:
-        return decision("BLOCKED_BUDGET_TIME_INVALID")
-    price_age_days = (as_of_dt - price_dt).total_seconds() / 86400
-    if (price_age_days < 0 or price_age_days > MAX_PRICE_SNAPSHOT_AGE_DAYS
-            or approved_dt > as_of_dt):
-        return decision("BLOCKED_PRICE_SNAPSHOT_STALE")
-    if (validate_rate_card(rate_card)
-            or (rate_card or {}).get("snapshot_id") != budget.get("price_snapshot_id")
-            or (rate_card or {}).get("rate_card_digest") != budget.get(
-                "rate_card_digest")
-            or (rate_card or {}).get("captured_at") != budget.get(
-                "price_snapshot_captured_at")):
-        return decision("BLOCKED_RATE_CARD_INVALID")
-    if (not isinstance(expected_event_manifest, dict)
-            or expected_event_manifest.get("manifest_digest") != budget.get(
-                "cost_classification_manifest_digest")):
-        return decision("BLOCKED_COST_CLASSIFICATION_INVALID")
-    try:
-        rows = list(cost_events)
-        _, report = _closed_metering_report(
-            rows, rate_card=rate_card,
-            expected_event_manifest=expected_event_manifest,
-            source_event_manifest=source_event_manifest)
-        recomputed_projection = build_scale_projection(
-            assumption_manifest=assumption_manifest, cost_events=rows,
-            expected_event_manifest=expected_event_manifest,
-            source_event_manifest=source_event_manifest,
-            rate_card=rate_card, generated_at=safe_projection.get("generated_at"))
-    except (AssertionError, TypeError, ValueError) as exc:
-        return decision("BLOCKED_PROJECTION_PROVENANCE_INVALID",
-                        details={"errors": [str(exc)]})
-    projection_unsigned = dict(safe_projection)
-    projection_digest = projection_unsigned.pop("projection_digest", None)
-    required_projection_fields = {
-        "schema_version", "price_snapshot_id", "generated_at",
-        "basis_metering_report_digest", "basis_event_count",
-        "basis_event_record_manifest_digest", "assumption_manifest_digest",
-        "rate_card_digest", "calculation_trace_digest", "p50", "p95",
-        "projection_digest"}
-    if (set(safe_projection) != required_projection_fields
-            or safe_projection.get("schema_version") != "eval-spine-scale-projection-v1"
-            or projection_digest != digest_json(projection_unsigned)
-            or safe_projection.get("price_snapshot_id") != budget.get("price_snapshot_id")
-            or safe_projection != recomputed_projection
-            or safe_projection.get("basis_metering_report_digest") != report.get("report_digest")
-            or safe_projection.get("basis_event_record_manifest_digest")
-                != report.get("event_record_manifest_digest")
-            or not isinstance(safe_projection.get("basis_event_count"), int)
-            or safe_projection["basis_event_count"] != report.get("event_count")
-            or safe_projection.get("assumption_manifest_digest")
-                != (assumption_manifest or {}).get("manifest_digest")
-            or safe_projection.get("rate_card_digest") != (rate_card or {}).get(
-                "rate_card_digest")):
-        return decision("BLOCKED_PROJECTION_PROVENANCE_INVALID")
-    generated_dt = _utc_datetime(safe_projection.get("generated_at"))
-    if generated_dt is None:
-        return decision("BLOCKED_PROJECTION_PROVENANCE_INVALID")
-    if generated_dt < price_dt or generated_dt > as_of_dt:
-        return decision("BLOCKED_PROJECTION_PROVENANCE_INVALID")
-    ceilings = budget.get("hard_ceilings")
-    if (not isinstance(ceilings, dict) or set(ceilings) != REQUIRED_CEILING_KEYS
-            or any(_nonnegative(value) is None for value in ceilings.values())):
-        return decision("BLOCKED_BUDGET_UNSET")
-    p50 = safe_projection.get("p50")
-    p95 = safe_projection.get("p95")
-    if not isinstance(p50, dict) or not isinstance(p95, dict):
-        return decision("BLOCKED_PROJECTION_INCOMPLETE",
-                        details={"missing_projection_keys": sorted(ceilings)})
-    missing = sorted(key for key in ceilings
-                     if _nonnegative(p50.get(key)) is None
-                     or _nonnegative(p95.get(key)) is None)
-    extra = sorted((set(p50) | set(p95)) - REQUIRED_CEILING_KEYS)
-    if extra:
-        return decision("BLOCKED_PROJECTION_INCOMPLETE",
-                        details={"unexpected_projection_keys": extra})
-    if missing:
-        return decision("BLOCKED_PROJECTION_INCOMPLETE",
-                        details={"missing_projection_keys": missing})
-    p50_exceeds_p95 = sorted(key for key in ceilings
-                             if float(p50[key]) > float(p95[key]))
-    actuals = dict(report.get("actual_cost_by_budget_category_usd", {}))
-    actuals.update({
-        "total_program_usd": report.get("total_program_cost_to_date_usd"),
-        "total_model_input_tokens": report.get("total_input_tokens"),
-        "total_model_cached_input_tokens": report.get("total_cached_input_tokens"),
-        "total_model_output_tokens": report.get("total_output_tokens"),
-        "total_reviewer_minutes": report.get("total_reviewer_minutes"),
-        "p95_single_item_wall_clock_seconds": report.get(
-            "p95_single_item_wall_clock_seconds"),
-        "total_wall_clock_minutes": (
-            float(report["total_wall_clock_seconds"]) / 60
-            if _nonnegative(report.get("total_wall_clock_seconds")) is not None else None),
-    })
-    actual_incomplete = sorted(key for key in ceilings
-                               if _nonnegative(actuals.get(key)) is None)
-    if actual_incomplete:
-        return decision("BLOCKED_ACTUAL_COST_INCOMPLETE",
-                        details={"missing_actual_keys": actual_incomplete})
-    actual_exceeded = sorted(key for key, ceiling in ceilings.items()
-                             if float(actuals[key]) >= float(ceiling))
-    if actual_exceeded:
-        return decision("STOP_BUDGET_ALREADY_EXCEEDED", details={
-            "price_snapshot_age_days": price_age_days,
-            "actual_exceeded_hard_ceilings": actual_exceeded})
-    exceeded = sorted(key for key, ceiling in ceilings.items()
-                      if float(p95[key]) > float(ceiling))
-    passed = not p50_exceeds_p95 and not exceeded
-    return decision("PASS" if passed else "STOP_SCALE_INFEASIBLE",
-                    passed=passed, details={
-                        "price_snapshot_age_days": price_age_days,
-                        "p50_exceeds_p95": p50_exceeds_p95,
-                        "exceeded_hard_ceilings": exceeded})
+    依裁决 #4 取代 budget_gate（M1-C2 迁移）：不检查任何总体预算批准或
+    hard ceiling；金额、令牌与吞吐总量仅作诊断遥测随决策附带输出。
+    DeepSeek 30 元/日窄门由 external_llm.py 独立承载，保留不动，不经本门。
+    拦截面：事件合同无效、关键字段缺失、事件/回执重复、与预登记清单或
+    append-only 源清单不符、费率卡不可复算——任一命中即 STOP。
+    """
+    rows = list(cost_events)
+    report = metering_report(rows, rate_card=rate_card,
+                             expected_event_manifest=expected_event_manifest,
+                             source_event_manifest=source_event_manifest)
+    failed_gates = sorted(key for key, ok in report["gates"].items() if not ok)
+    passed = report["qualified"] is True
+    value = {
+        "schema_version": "eval-spine-accounting-decision-v1",
+        "passed": passed,
+        "status": "PASS" if passed else "STOP_COST_ACCOUNTING_MISSING",
+        "checked_at": as_of,
+        "metering_report_digest": report.get("report_digest"),
+        "rate_card_digest": ((rate_card or {}).get("rate_card_digest")
+                             if isinstance(rate_card, dict) else None),
+        "expected_event_manifest_digest": (
+            (expected_event_manifest or {}).get("manifest_digest")
+            if isinstance(expected_event_manifest, dict) else None),
+        "source_event_manifest_digest": (
+            (source_event_manifest or {}).get("manifest_digest")
+            if isinstance(source_event_manifest, dict) else None),
+        "failed_gates": failed_gates,
+        "diagnostic_telemetry": {
+            "event_count": report["event_count"],
+            "total_program_cost_to_date_usd": report[
+                "total_program_cost_to_date_usd"],
+            "total_model_cost_usd": report["total_model_cost_usd"],
+            "total_human_cost_usd": report["total_human_cost_usd"],
+            "total_input_tokens": report["total_input_tokens"],
+            "total_cached_input_tokens": report["total_cached_input_tokens"],
+            "total_output_tokens": report["total_output_tokens"],
+            "total_reviewer_minutes": report["total_reviewer_minutes"],
+            "total_wall_clock_seconds": report["total_wall_clock_seconds"],
+            "p95_single_item_wall_clock_seconds": report[
+                "p95_single_item_wall_clock_seconds"],
+        },
+        "budget_blocking": False,
+        "decision_digest": "",
+    }
+    unsigned = dict(value)
+    unsigned.pop("decision_digest")
+    value["decision_digest"] = digest_json(unsigned)
+    return value

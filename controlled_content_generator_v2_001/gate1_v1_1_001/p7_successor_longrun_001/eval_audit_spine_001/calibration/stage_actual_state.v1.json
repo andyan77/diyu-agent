@@ -1,0 +1,13 @@
+{
+  "schema_version": "eval-spine-stage-actual-state-v1",
+  "description": "阶段推进的实际状态唯一登记处（真实发生过什么）。期望状态见 delivery_control_001/state/STATE_EXPECTATION.v1.json；两者由 checker 比较，本文件永不预写期望值。",
+  "executed_stages": [],
+  "stage_receipts": {},
+  "reference_implementation_selftested": true,
+  "real_run_executed": false,
+  "notes": [
+    "没有任何阶段（S0–S7）真实执行过；仅存在参考实现与本地反向自测。",
+    "取代 stage_and_kill.v1.json 内嵌的 current_state 字段（实际态/期望态分离，v2.5 §五）。",
+    "未来每个阶段真实执行后，在 executed_stages 追加 stage_id 并在 stage_receipts 登记 typed 回执路径与摘要。"
+  ]
+}

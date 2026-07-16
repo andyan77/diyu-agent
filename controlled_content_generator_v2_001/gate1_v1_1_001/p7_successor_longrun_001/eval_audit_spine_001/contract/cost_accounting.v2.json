@@ -1,0 +1,110 @@
+{
+  "schema_version": "eval-audit-spine-cost-accounting-v2",
+  "contract_id": "EAS-COST-ACCOUNTING-V2",
+  "supersedes": {
+    "contract_id": "EAS-COST-BUDGET-V1",
+    "path": "cost_budget.v1.json",
+    "ledger": "delivery_control_001/SUPERSESSION_LEDGER.v1.md §3",
+    "authority": "发起人裁决 #4（预算退出执行侧：拨付制+全量记账+不设阻断门）+ v2.5 §五"
+  },
+  "funding_model": "FOUNDER_ON_DEMAND_DISBURSEMENT",
+  "funding_rules": [
+    "发起人按需拨付；执行侧不发明总体预算数字、不设总体金额阻断门",
+    "成本事件全量记账；记账缺失 = 停（STOP_COST_ACCOUNTING_MISSING，拦未记账而非超预算）",
+    "成本与吞吐数据（含 P50/P95 投影）仅作诊断计量与排期参考，永不构成阶段技术阻断门",
+    "A 产品自身卖成本溯源，不能自己不记账（成本记录保留为产品要求）"
+  ],
+  "disbursement_ledger": [],
+  "disbursement_entry_required_fields": [
+    "disbursement_id",
+    "disbursed_by",
+    "disbursed_at",
+    "amount",
+    "currency",
+    "scope_note",
+    "evidence_ref"
+  ],
+  "currency": "USD",
+  "required_cost_event_fields": [
+    "event_id",
+    "stage_id",
+    "task_kind",
+    "resource_kind",
+    "budget_category",
+    "outcome_status",
+    "source_telemetry_event_digest",
+    "object_id",
+    "attempt_id",
+    "provider",
+    "model_revision",
+    "provider_call_id",
+    "input_tokens",
+    "cached_input_tokens",
+    "output_tokens",
+    "price_snapshot_id",
+    "model_cost_usd",
+    "reviewer_minutes",
+    "reviewer_identity",
+    "labor_rate_snapshot_id",
+    "human_cost_usd",
+    "wall_clock_seconds",
+    "unavailable_reasons",
+    "event_digest"
+  ],
+  "required_cost_event_fields_note": "24 字段成本事件 schema 保留面：与 cost_budget.v1.json 逐字一致，零增删",
+  "projection_formula": {
+    "purpose": "诊断遥测与排期（记账与拨付沟通用）；不进入任何阻断门",
+    "one_time": [
+      "reference_gold_build",
+      "claim_atom_gold_build",
+      "entailment_gold_build",
+      "formulaic_pair_gold_build",
+      "disclosure_gold_build",
+      "rubric_calibration",
+      "qualification_adjudication"
+    ],
+    "per_positive_item": [
+      "author_first_attempt",
+      "claim_atomization",
+      "entailment_candidate_generation",
+      "formulaic_candidate_generation",
+      "primary_content_review",
+      "primary_fact_review"
+    ],
+    "sampled_or_triggered": [
+      "second_expert_review",
+      "formulaic_pair_review",
+      "disclosure_omission_review",
+      "disagreement_adjudication"
+    ],
+    "route_and_hidden": [
+      "route_60",
+      "hidden_40",
+      "metamorphic_tests",
+      "final_independent_audit"
+    ]
+  },
+  "telemetry_requirements": {
+    "p50_required": true,
+    "p95_required": true,
+    "model_cost_and_human_cost_separate": true,
+    "one_time_and_recurring_cost_separate": true,
+    "abstention_and_adjudication_load_included": true,
+    "failed_attempts_included": true,
+    "price_snapshot_age_days_maximum": 30,
+    "forecast_must_be_refreshed_after_causal_pilot": true,
+    "forecast_must_be_refreshed_before_240_plus_60": true,
+    "blocking_semantics": "NONE_DIAGNOSTIC_ONLY"
+  },
+  "fail_closed_rules": [
+    "NO_MISSING_CALL_OR_REVIEW_COSTS",
+    "NO_ZERO_COST_PLACEHOLDERS_FOR_UNKNOWN_COSTS",
+    "NO_UNSETTLED_EXTERNAL_CALL_WITHOUT_FAILURE_RECEIPT",
+    "NO_METERING_REPORT_THAT_CANNOT_BE_RECOMPUTED_FROM_RATE_CARD"
+  ],
+  "fail_closed_migration_note": "v1 的 NO_SCALE_WHILE_APPROVAL_STATUS_IS_NOT_APPROVED、NO_NEW_COST_EVENT_AFTER_ANY_HARD_CEILING_IS_REACHED、NO_SCALE_WHEN_P95_FORECAST_EXCEEDS_ANY_HARD_CEILING 三条预算阻断规则已依裁决 #4 摘除；两条记账 fail-closed 规则保留并增补外部调用结算与复算规则",
+  "external_narrow_gates_retained": {
+    "STOP_EXTERNAL_LLM_DAILY_BUDGET": "DeepSeek 30 元人民币/UTC 日（external_llm_budget.v1.json 原样保留，本合同不改动其任何字段）"
+  },
+  "old_truth_removed": "v1 的 current_decision=S2_AND_LATER_BLOCKED_PENDING_FOUNDER_BUDGET_APPROVAL 旧真相不再复制到任何活跃文件；阶段推进合法性由 stage_and_kill.v2.json + 里程碑入口回执决定"
+}

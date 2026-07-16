@@ -1,0 +1,201 @@
+{
+  "schema_version": "eval-audit-spine-measurement-qualification-v2",
+  "contract_id": "EAS-M0-QUALIFICATION-V2",
+  "supersedes": {
+    "contract_id": "EAS-M0-QUALIFICATION-V1",
+    "path": "measurement_qualification.v1.json",
+    "ledger": "delivery_control_001/SUPERSESSION_LEDGER.v1.md §3"
+  },
+  "actual_status_file": "calibration/M0_STATUS.v1.json",
+  "actual_status_note": "本合同只定义资格门槛；实际资格状态唯一登记于 actual_status_file，不再在合同内记录 current_status 单一旧真相",
+  "qualification_is_conjunctive": true,
+  "gold_governance": {
+    "reference_source_required": true,
+    "two_independent_labels_required": true,
+    "independent_adjudicator_required_on_disagreement": true,
+    "reviewer_kind_and_model_provenance_required": true,
+    "digest_closed_qualification_record_index_required": true,
+    "gold_reviews_bind_case_source_payload_and_gold_digests": true,
+    "development_and_qualification_gold_must_be_disjoint": true,
+    "generator_developers_may_not_read_qualification_gold": true,
+    "evaluator_developers_may_not_read_qualification_answers": true
+  },
+  "qualification_set_minimums": {
+    "reference_extraction_positive_cases": 100,
+    "reference_extraction_negative_controls": 100,
+    "claim_atomization_positive_cases": 100,
+    "claim_atomization_negative_controls": 100,
+    "risk_classification_high_risk_cases": 300,
+    "risk_classification_legal_controls": 300,
+    "high_risk_contradicted_cases": 300,
+    "high_risk_unknown_cases": 100,
+    "natural_legal_supported_cases": 300,
+    "fact_chain_high_risk_unsafe_cases": 300,
+    "fact_chain_natural_legal_cases": 300,
+    "known_r5_hard_veto_cases_and_registered_variants_recall": 1.0,
+    "formulaic_double_reviewed_pairs_total": 300,
+    "formulaic_positive_pairs_minimum": 100,
+    "formulaic_negative_pairs_minimum": 100,
+    "formulaic_necessary_grammar_pairs_minimum": 20,
+    "deterministic_disclosure_cases_total": 100,
+    "deterministic_disclosure_obligation_types_required": 4,
+    "omission_misleading_high_risk_cases": 100,
+    "omission_nonmisleading_controls": 100,
+    "review_double_reviewed_items": 40,
+    "review_judgment_records": 80,
+    "cost_events": 12,
+    "cost_expected_event_manifests": 1,
+    "cost_source_event_manifests": 1,
+    "cost_rate_cards": 1,
+    "required_content_families": [
+      "F1_PEOPLE_AND_REAL_SCENE",
+      "F2_PROFESSIONAL_AND_SEARCH",
+      "F3_PRODUCT_RELATION_AND_AESTHETIC",
+      "F4_STORE_LOCAL_AND_RETAIL",
+      "F5_ENTERPRISE_LONG_TERM_TRUST"
+    ]
+  },
+  "module_gates": {
+    "reference_assertion_extraction": {
+      "critical_assertion_recall_minimum": 0.95,
+      "critical_assertion_precision_minimum": 0.9,
+      "high_risk_omission_count_maximum": 0,
+      "polarity_modality_time_and_precondition_accuracy_minimum": 0.95,
+      "report_false_positive_and_false_negative_rows": true
+    },
+    "claim_atomization": {
+      "critical_claim_recall_minimum": 0.95,
+      "critical_claim_precision_minimum": 0.9,
+      "high_risk_claim_omission_count_maximum": 0,
+      "incorrect_merge_rate_maximum": 0.05,
+      "report_false_positive_and_false_negative_rows": true
+    },
+    "risk_classification": {
+      "high_or_critical_downclassification_count_maximum": 0,
+      "high_or_critical_downclassification_upper_95_maximum": 0.01,
+      "overall_accuracy_minimum": 0.95,
+      "legal_false_high_upper_95_maximum": 0.05,
+      "per_family_confusion_required": true
+    },
+    "entailment": {
+      "semantic_labels": [
+        "SUPPORTED",
+        "CONTRADICTED",
+        "UNKNOWN"
+      ],
+      "contradicted_recall_minimum": 0.95,
+      "contradicted_precision_minimum": 0.85,
+      "supported_recall_minimum": 0.9,
+      "supported_precision_minimum": 0.9,
+      "unknown_recall_minimum": 0.9,
+      "unknown_precision_minimum": 0.9,
+      "known_r5_and_registered_variant_recall": 1.0,
+      "high_risk_false_negative_count_maximum": 0,
+      "abstention_must_be_reported": true,
+      "confusion_matrix_required": true
+    },
+    "fact_chain_end_to_end": {
+      "source_to_final_action_high_risk_unsafe_clear_count_maximum": 0,
+      "module_passes_do_not_substitute_for_end_to_end_pass": true,
+      "all_intermediate_object_digests_required": true
+    },
+    "formulaic_construct": {
+      "rubric_version_must_be_frozen_before_qualification": true,
+      "candidate_miner_recall_minimum": 0.95,
+      "machine_similarity_may_only_queue_review": true,
+      "raw_agreement_minimum": 0.9,
+      "positive_agreement_minimum": 0.8,
+      "negative_agreement_minimum": 0.8,
+      "cohen_kappa_binary_minimum_when_interpretable": 0.6,
+      "adjudication_rate_maximum": 0.2,
+      "necessary_grammar_exceptions_must_be_preregistered": true,
+      "post_hoc_exception_to_change_batch_result_forbidden": true
+    },
+    "disclosure_and_omission": {
+      "synthetic_identity_disclosure_deterministic_test_recall": 1.0,
+      "prohibited_real_identity_impersonation_deterministic_test_recall": 1.0,
+      "authorization_boundary_deterministic_test_recall": 1.0,
+      "privacy_redaction_or_block_deterministic_test_recall": 1.0,
+      "omission_misleading_recall_minimum": 0.95,
+      "omission_misleading_precision_minimum": 0.85,
+      "high_risk_omission_false_negative_count_maximum": 0,
+      "probabilistic_omission_detector_may_only_queue_review": true
+    },
+    "review_calibration": {
+      "deterministic_hard_gate_agreement_required": 1.0,
+      "semantic_high_risk_raw_agreement_must_be_reported": true,
+      "approval_decision_agreement_minimum": 0.9,
+      "class_specific_agreement_required": true,
+      "prevalence_and_class_distribution_required": true,
+      "kappa_may_not_be_reported_as_zero_or_one_when_uninterpretable": true
+    },
+    "cost": {
+      "minimum_complete_events": 12,
+      "event_contracts_and_event_digests_required": true,
+      "expected_event_manifest_registered_before_run": true,
+      "source_append_only_event_manifest_required": true,
+      "failed_and_aborted_calls_must_be_metered": true,
+      "budget_category_must_match_registered_classification": true,
+      "model_and_human_costs_recomputed_from_digest_bound_rate_card": true,
+      "settled_cost_events_complete_and_recomputable_required": true,
+      "formal_p95_projection_is_diagnostic_telemetry_only": true,
+      "formal_projection_recomputed_from_frozen_assumptions": true,
+      "daily_external_llm_budget_cny": 30.0,
+      "accounting_missing_is_stop": true
+    }
+  },
+  "uncertainty_reporting": {
+    "confidence_level": 0.95,
+    "binomial_interval_method": "CLOPPER_PEARSON_OR_PREDECLARED_EQUIVALENT",
+    "point_estimate_required": true,
+    "confidence_interval_required": true,
+    "sample_denominator_required": true,
+    "abstention_denominator_required": true,
+    "per_risk_class_breakdown_required": true,
+    "per_content_family_breakdown_required": true
+  },
+  "probabilistic_action_policy": {
+    "before_m0_pass": [
+      "REVIEW_REQUIRED",
+      "ABSTAIN"
+    ],
+    "after_m0_pass": [
+      "NO_FINDING",
+      "REVIEW_REQUIRED",
+      "ABSTAIN"
+    ],
+    "final_semantic_hard_veto_requires_independent_review": true,
+    "deterministic_hard_is_allowed_only_when_structured_evidence_mechanically_proves_violation": true,
+    "high_risk_auto_clear_from_probabilistic_output_forbidden": true
+  },
+  "revision_budget": {
+    "maximum_frozen_method_versions": 2,
+    "maximum_revisions_after_initial": 1,
+    "each_revision_requires_new_version_and_change_log": true,
+    "qualification_set_answers_remain_sealed_during_revisions": true,
+    "failure_after_budget_action": "STOP_M0_MEASUREMENT_UNQUALIFIED_OR_COST_HUMAN_ONLY_PATH"
+  },
+  "required_reports": [
+    "reference_assertion_extraction_report",
+    "claim_atomization_report",
+    "risk_classification_report",
+    "entailment_report",
+    "fact_chain_end_to_end_report",
+    "formulaic_construct_report",
+    "disclosure_and_omission_report",
+    "reviewer_agreement_report",
+    "cost_report",
+    "immutable_qualification_manifest",
+    "independent_adjudication_report",
+    "audit_integrity_report"
+  ],
+  "m0_pass_rule": "ALL_MODULE_GATES_AND_ALL_REQUIRED_REPORTS_AND_AUDIT_INTEGRITY_PASS",
+  "claims_forbidden_until_pass": [
+    "TRUSTED_EVALUATION",
+    "QUALIFIED_FACT_GATE",
+    "QUALIFIED_FORMULAIC_GATE",
+    "QUALIFIED_OMISSION_GATE",
+    "READY_FOR_GENERATOR_SCALE",
+    "READY_FOR_300"
+  ]
+}

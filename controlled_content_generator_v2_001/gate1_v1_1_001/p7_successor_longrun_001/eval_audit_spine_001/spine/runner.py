@@ -12,6 +12,18 @@ from .evidence_chain import known_risk_findings
 from .m0 import build_m0_decision
 
 
+def _actual_m0_status(root: Path) -> str:
+    """回显值读实际状态真源（M0_STATUS.v1.json），不再硬编码（v2.5 §五 B 家族迁移）。"""
+    status_path = (root / "controlled_content_generator_v2_001/gate1_v1_1_001"
+                   "/p7_successor_longrun_001/eval_audit_spine_001"
+                   "/calibration/M0_STATUS.v1.json")
+    try:
+        return str(json.loads(status_path.read_text(encoding="utf-8")).get(
+            "status", "INVALID_STATE"))
+    except (OSError, ValueError):
+        return "INVALID_STATE"
+
+
 def _surface(row: dict[str, Any]) -> str:
     parts: list[str] = []
     for key in ("title", "cta"):
@@ -51,7 +63,7 @@ def r5_shadow_audit(root: Path, fixture_path: Path) -> dict[str, Any]:
         "legacy_machine_known_veto_recall": 0.0 if hard_count == 0 and expected_ids else None,
         "claim_completeness_warning":
             "author semantic_claims were not treated as an exhaustive claim inventory",
-        "m0_qualification_status": "NOT_QUALIFIED",
+        "m0_qualification_status": _actual_m0_status(root),
     }
 
 

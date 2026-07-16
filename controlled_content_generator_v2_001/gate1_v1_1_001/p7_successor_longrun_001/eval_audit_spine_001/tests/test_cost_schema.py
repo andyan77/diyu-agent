@@ -16,8 +16,8 @@ PACKAGE = HERE.parents[1]
 sys.path.insert(0, str(PACKAGE))
 
 from spine.canonical import digest_json
-from spine.cost import (BUDGET_CATEGORY_KEYS, REQUIRED_CEILING_KEYS,
-                        budget_gate, build_scale_projection, metering_report)
+from spine.cost import (BUDGET_CATEGORY_KEYS, accounting_integrity_gate,
+                        build_scale_projection, metering_report)
 
 
 def _close(value: dict, digest_field: str) -> dict:
@@ -184,29 +184,11 @@ def _cost_artifacts() -> dict[str, dict]:
         rate_card=rate_card,
         generated_at="2026-07-15T10:00:00+00:00",
     )
-    budget = _close({
-        "schema_version": "eval-audit-spine-cost-budget-v1",
-        "contract_id": "EAS-COST-BUDGET-V1",
-        "currency": "USD",
-        "approval_status": "APPROVED",
-        "approved_by": "FOUNDER",
-        "approved_at": "2026-07-15T09:00:00+00:00",
-        "price_snapshot_id": "RATE-1",
-        "price_snapshot_captured_at": "2026-07-15T08:00:00+00:00",
-        "rate_card_digest": rate_card["rate_card_digest"],
-        "cost_classification_manifest_digest": expected_manifest[
-            "manifest_digest"],
-        "hard_ceilings": {key: 1000 for key in REQUIRED_CEILING_KEYS},
-        "budget_digest": "",
-    }, "budget_digest")
-    decision = budget_gate(
-        projection,
-        budget,
-        assumption_manifest=assumption,
-        cost_events=events,
+    decision = accounting_integrity_gate(
+        events,
+        rate_card=rate_card,
         expected_event_manifest=expected_manifest,
         source_event_manifest=source_manifest,
-        rate_card=rate_card,
         as_of="2026-07-15T12:00:00+00:00",
     )
     if decision["status"] != "PASS":
@@ -219,14 +201,14 @@ def _cost_artifacts() -> dict[str, dict]:
         "metering_report": report,
         "scale_assumption_manifest": assumption,
         "scale_projection": projection,
-        "budget_decision": decision,
+        "accounting_decision": decision,
     }
 
 
 class CostSchemaTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        schema_path = PACKAGE / "schema" / "cost.v1.schema.json"
+        schema_path = PACKAGE / "schema" / "cost.v2.schema.json"
         cls.schema = json.loads(schema_path.read_text(encoding="utf-8"))
         Draft202012Validator.check_schema(cls.schema)
         cls.validator = Draft202012Validator(
@@ -254,7 +236,7 @@ class CostSchemaTests(unittest.TestCase):
             "metering_report": "report_digest",
             "scale_assumption_manifest": "manifest_digest",
             "scale_projection": "projection_digest",
-            "budget_decision": "decision_digest",
+            "accounting_decision": "decision_digest",
         }
         for name, digest_field in digest_fields.items():
             with self.subTest(name=name):
@@ -272,6 +254,30 @@ class CostSchemaTests(unittest.TestCase):
                 tampered = copy.deepcopy(artifact)
                 tampered.pop("schema_version")
                 self.assertInvalid(tampered)
+
+    def test_accounting_stop_decision_is_schema_valid_and_fail_closed(self) -> None:
+        events = [copy.deepcopy(row) for row in
+                  self.artifacts["expected_event_manifest"]["expected_events"]]
+        # 只喂预登记清单的一半事件（且为不完整对象）→ 记账缺失必 STOP
+        decision = accounting_integrity_gate(
+            events[:6],
+            rate_card=self.artifacts["rate_card"],
+            expected_event_manifest=self.artifacts["expected_event_manifest"],
+            source_event_manifest=self.artifacts["source_event_manifest"],
+            as_of="2026-07-15T12:00:00+00:00")
+        self.assertEqual(decision["status"], "STOP_COST_ACCOUNTING_MISSING")
+        self.assertFalse(decision["passed"])
+        self.assertFalse(decision["budget_blocking"])
+        self.assertTrue(decision["failed_gates"])
+        self.assertValid(decision)
+        # 伪造 PASS 而保留失败门 → schema 拒绝
+        forged = copy.deepcopy(decision)
+        forged["status"] = "PASS"
+        forged["passed"] = True
+        unsigned = dict(forged)
+        unsigned.pop("decision_digest")
+        forged["decision_digest"] = digest_json(unsigned)
+        self.assertInvalid(forged)
 
     def test_resource_type_branches_fail_closed(self) -> None:
         expected = copy.deepcopy(self.artifacts["expected_event_manifest"])

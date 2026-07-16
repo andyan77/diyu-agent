@@ -1,0 +1,243 @@
+{
+  "schema_version": "eval-audit-spine-stage-and-kill-v2",
+  "contract_id": "EAS-STAGE-KILL-V2",
+  "supersedes": {
+    "contract_id": "EAS-STAGE-KILL-V1",
+    "path": "stage_and_kill.v1.json",
+    "ledger": "delivery_control_001/SUPERSESSION_LEDGER.v1.md §3",
+    "authority": "AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.5.md §五（裁决 #4/#7/#8/#9）@ 23f5fea"
+  },
+  "actual_state_file": "calibration/stage_actual_state.v1.json",
+  "actual_state_note": "本合同只定义门与拓扑，不记录当前执行状态；实际推进状态唯一登记于 actual_state_file，期望状态由 delivery_control_001/state/STATE_EXPECTATION.v1.json 按里程碑给出，checker 读取两者比较。",
+  "topology": {
+    "model": "Y_THREE_TRACK_STATE_MACHINE",
+    "shared_trunk": ["S0_DETERMINISTIC_HYGIENE"],
+    "track_A": ["S1_M0_MEASUREMENT_QUALIFICATION"],
+    "track_B": [
+      "S2_FEASIBILITY_AND_COST_TELEMETRY",
+      "S3_CAUSAL_PILOT_60",
+      "S4_OPEN_REGRESSION_120",
+      "S5_HIDDEN_QUALIFICATION_40",
+      "S6_BASELINE_240_PLUS_60",
+      "S7_INDEPENDENT_FINAL_AUDIT"
+    ],
+    "track_independence_rule": "B 轨任何阶段的 entry_requires 不得包含 S1_PASS、M0_STATUS_QUALIFIED 或 A2 资格键（裁决 #8：A/B 完全独立）。B 评测路线选 (b) 时的 A2_QUALIFIED 依赖属于 M6 里程碑入口层（PROMPT_REGISTRY/ready-set），不进入本阶段合同。",
+    "stages_are_sequential_within_track": true,
+    "no_stage_may_be_inferred_from_document_presence": true
+  },
+  "stages": [
+    {
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "track": "SHARED_TRUNK",
+      "purpose": "消除双规划、补全批硬否决指标、首次尝试与成本溯源",
+      "entry_requires": [
+        "IMPLEMENTATION_AUTHORIZATION",
+        "APPROVED_WRITE_SURFACE"
+      ],
+      "exit_requires": [
+        "SINGLE_TEST_ASSIGNMENT_SOURCE_100_PERCENT",
+        "ASSIGNMENT_MATERIAL_MISMATCH_COUNT_ZERO",
+        "WHOLE_BATCH_HARD_VETO_METRIC_PRESENT",
+        "FIRST_PROVIDER_RESPONSE_IMMUTABLY_RETAINED",
+        "CALL_AND_COST_PROVENANCE_COMPLETE",
+        "GATE1_PLAN_IMPERSONATION_COUNT_ZERO"
+      ],
+      "kill_code": "STOP_S0_DETERMINISTIC_INTEGRITY"
+    },
+    {
+      "stage_id": "S1_M0_MEASUREMENT_QUALIFICATION",
+      "track": "A",
+      "purpose": "证明参考断言、原子化、蕴含、套路和披露量规自身可靠",
+      "entry_requires": [
+        "S0_PASS",
+        "G2_MEASUREMENT_DEV_MATERIALIZED",
+        "G3_MEASUREMENT_QUALIFICATION_SEALED",
+        "INDEPENDENT_REVIEW_ROLES_ASSIGNED",
+        "QUALIFICATION_MATERIAL_ORDER_RECEIPTS_COMPLETE"
+      ],
+      "exit_requires": [
+        "MEASUREMENT_QUALIFICATION_CONTRACT_ALL_PASS",
+        "M0_STATUS_QUALIFIED",
+        "INDEPENDENT_ADJUDICATION_PASS"
+      ],
+      "method_version_limit": 2,
+      "revision_after_initial_limit": 1,
+      "qualification_material_order_contract": "delivery_control_001/contracts/QUAL_ORDER_CONTRACT.v1.json",
+      "kill_codes": [
+        "STOP_M0_REFERENCE_ASSERTION_UNQUALIFIED",
+        "STOP_M0_CLAIM_ATOMIZATION_UNQUALIFIED",
+        "STOP_M0_ENTAILMENT_UNQUALIFIED",
+        "STOP_M0_FORMULAIC_CONSTRUCT_UNQUALIFIED",
+        "STOP_M0_DISCLOSURE_UNQUALIFIED",
+        "STOP_M0_END_TO_END_UNQUALIFIED",
+        "STOP_QUALIFICATION_ORDER_VIOLATION"
+      ]
+    },
+    {
+      "stage_id": "S2_FEASIBILITY_AND_COST_TELEMETRY",
+      "track": "B",
+      "purpose": "证明二十产品材料容量与三门联合可行；成本与吞吐只作诊断遥测",
+      "entry_requires": [
+        "S0_PASS",
+        "FIVE_FAMILY_STRATEGIES_FROZEN",
+        "INDEPENDENT_REVIEW_ROLES_ASSIGNED",
+        "B_EVAL_ROUTE_FROZEN",
+        "NARRATIVE_FACT_REVIEW_CAPABILITY_READY"
+      ],
+      "entry_migration_note": "v1 的 S1_PASS 与 FOUNDER_APPROVED_BUDGET_CEILINGS 已依裁决 #8/#4 删除（v2.4 §五-2）",
+      "exit_requires": [
+        "EACH_CP_HAS_AT_LEAST_12_LEGAL_DISTINCT_TEST_ASSIGNMENTS",
+        "NO_TEST_ASSIGNMENT_REQUIRES_UNSUPPORTED_ACTION",
+        "P50_AND_P95_COST_AND_LATENCY_REPORTED"
+      ],
+      "exit_migration_note": "v1 的 PROJECTED_300_COST_WITHIN_ALL_APPROVED_CEILINGS 已删（裁决 #4）；P50/P95 遥测报告键保留",
+      "kill_codes": [
+        "STOP_S2_MATERIAL_CAPACITY",
+        "STOP_S2_JOINT_FEASIBILITY"
+      ]
+    },
+    {
+      "stage_id": "S3_CAUSAL_PILOT_60",
+      "track": "B",
+      "gate_type": "DIAGNOSTIC",
+      "purpose": "五家族各十二条，配对、随机、反平衡诊断结构修复是否产生预注册提升；诊断结论随包归档",
+      "entry_requires": [
+        "S2_PASS",
+        "MINIMUM_USEFUL_EFFECT_PREREGISTERED",
+        "FACT_AND_ASSIGNMENT_PAIRING_FROZEN"
+      ],
+      "safety_exit_requires": [
+        "CAUSAL_COMPARISON_INTERPRETABLE",
+        "HIGH_RISK_HARD_VETO_COUNT_ZERO",
+        "ANOMALIES_FULLY_REPORTED"
+      ],
+      "diagnostic_outcomes": [
+        "PREREGISTERED_MINIMUM_USEFUL_EFFECT_MET"
+      ],
+      "legal_exit_states": {
+        "S3_PASS": "安全出口全绿 且 预注册最小有效提升达成",
+        "S3_DIAGNOSTIC_COMPLETE": "安全出口全绿 且 提升未达成——不自动 kill，B 合格与否以 V1.1 最终结果门为准（裁决 #7）"
+      },
+      "maximum_structural_revisions": 1,
+      "may_claim_v11_qualification": false,
+      "kill_codes": [
+        "STOP_S3_SAFETY_EXIT",
+        "STOP_S3_DESIGN_UNQUALIFIED",
+        "STOP_S3_ANOMALY_UNREPORTED"
+      ],
+      "kill_migration_note": "v1 的 STOP_S3_NO_CAUSAL_LIFT 自动 kill 已删（裁决 #7 诊断门）；安全出口失败、设计不合格或异常未报告仍停止"
+    },
+    {
+      "stage_id": "S4_OPEN_REGRESSION_120",
+      "track": "B",
+      "purpose": "重跑第一门开放资格",
+      "entry_requires": [
+        "S3_DIAGNOSTIC_COMPLETE_OR_S3_PASS",
+        "S3_SAFETY_EXIT_ALL_GREEN",
+        "NEW_OPEN_120_INPUTS_FROZEN",
+        "QUALIFICATION_MODE_NO_RETRY"
+      ],
+      "entry_migration_note": "v1 的 S3_PASS 硬依赖改为 S3_DIAGNOSTIC_COMPLETE ∧ 安全出口全绿（v2.4 §五-4）",
+      "exit_requires": [
+        "FIRST_ACCEPTABLE_AT_LEAST_108_OF_120",
+        "FORMULAIC_AT_MOST_12_OF_120",
+        "WHOLE_BATCH_HARD_VETO_ZERO",
+        "BLIND_AND_ROUTE_AND_AUDIT_GATES_PASS"
+      ],
+      "maximum_frozen_runs": 2,
+      "kill_code": "STOP_S4_V11_OPEN_FAIL"
+    },
+    {
+      "stage_id": "S5_HIDDEN_QUALIFICATION_40",
+      "track": "B",
+      "purpose": "全新隐藏二十正向加二十异常一次性密封资格",
+      "entry_requires": [
+        "S4_PASS",
+        "NEW_HIDDEN_40_SEALED",
+        "GENERATOR_AND_EVALUATOR_DEVELOPERS_BLINDED"
+      ],
+      "exit_requires": [
+        "V11_HIDDEN_40_CONTRACT_ALL_PASS",
+        "ZERO_SAMPLE_SWAP",
+        "WHOLE_BATCH_HARD_VETO_ZERO"
+      ],
+      "attempt_limit": 1,
+      "core_change_requires_entirely_new_hidden_set": true,
+      "kill_code": "STOP_S5_HIDDEN_FAIL"
+    },
+    {
+      "stage_id": "S6_BASELINE_240_PLUS_60",
+      "track": "B",
+      "purpose": "扩量为二百四十正向和六十路线",
+      "entry_requires": [
+        "S5_PASS",
+        "COST_ACCOUNTING_COMPLETE_AND_RECOMPUTABLE"
+      ],
+      "entry_migration_note": "v1 的 COST_REFORECAST_WITHIN_BUDGET 已删（N2 实测 + 裁决 #4）；改为记账完整性检查（cost_accounting.v2.json）",
+      "exit_requires": [
+        "POSITIVE_COUNT_EXACTLY_240",
+        "ROUTE_COUNT_EXACTLY_60",
+        "EACH_CP_AT_LEAST_11_OF_12_FIRST_ACCEPTABLE",
+        "GLOBAL_FIRST_ACCEPTANCE_AT_LEAST_0_90",
+        "FORMULAIC_RATE_AT_MOST_0_10",
+        "WHOLE_BATCH_HARD_VETO_ZERO",
+        "ROUTE_60_ALL_CORRECT",
+        "REVIEW_COVERAGE_COMPLETE"
+      ],
+      "kill_code": "STOP_S6_SCALE_FAIL"
+    },
+    {
+      "stage_id": "S7_INDEPENDENT_FINAL_AUDIT",
+      "track": "B",
+      "purpose": "从原始记录独立复算并冻结候选基线",
+      "entry_requires": [
+        "S6_PASS",
+        "INDEPENDENT_AUDITOR_ASSIGNED"
+      ],
+      "exit_requires": [
+        "ALL_V11_FINAL_ADMISSION_REQUIREMENTS_PASS",
+        "METRICS_RECOMPUTE_IDENTICAL",
+        "FOUNDER_FINAL_DECISION"
+      ],
+      "kill_code": "STOP_S7_FINAL_AUDIT_FAIL"
+    }
+  ],
+  "global_kill_rules": [
+    {
+      "code": "STOP_DATA_LEAKAGE",
+      "condition": "SEALED_OR_HIDDEN_ANSWERS_EXPOSED_TO_PROHIBITED_ROLE",
+      "action": "INVALIDATE_AFFECTED_SET_AND_STOP"
+    },
+    {
+      "code": "STOP_FIRST_OUTPUT_LAUNDERING",
+      "condition": "FIRST_PROVIDER_RESPONSE_DISCARDED_OR_RETRY_PRESENTED_AS_FIRST",
+      "action": "FAIL_BATCH_AND_RETAIN_ALL_ATTEMPTS"
+    },
+    {
+      "code": "STOP_COST_ACCOUNTING_MISSING",
+      "condition": "ANY_CALL_OR_REVIEW_LACKS_SETTLED_COST_EVENT_OR_METERING_REPORT_NOT_RECOMPUTABLE",
+      "action": "NO_NEW_CALLS_OR_REVIEWS_UNTIL_FULLY_ACCOUNTED",
+      "migration_note": "取代 v1 的 STOP_BUDGET（ceiling 阻断门随拨付制摘除，裁决 #4）；拦的是未记账而非超预算"
+    },
+    {
+      "code": "STOP_EXTERNAL_LLM_DAILY_BUDGET",
+      "condition": "EXTERNAL_LLM_RESERVED_PLUS_SETTLED_COST_REACHES_30_CNY_IN_UTC_DAY",
+      "action": "NO_NEW_EXTERNAL_LLM_CALLS_UNTIL_NEXT_UTC_DAY",
+      "retention_note": "保留面：DeepSeek 30 元/日窄授权原样不动"
+    },
+    {
+      "code": "REQUEST_STANDARD_REVISION",
+      "condition": "EVIDENCE_SUPPORTS_CONSTRUCT_OR_SCOPE_CHANGE_NOT_IMPLEMENTATION_PATCH",
+      "action": "FOUNDER_DECISION_AND_PROSPECTIVE_NEW_VERSION_ONLY"
+    }
+  ],
+  "human_only_fallback": {
+    "allowed_only_when": [
+      "AUTOMATED_MEASUREMENT_NOT_QUALIFIED",
+      "FULL_HUMAN_REVIEW_COST_MODEL_REPORTED_AND_FOUNDER_DISBURSEMENT_CONFIRMED",
+      "NO_TRUSTED_AUTOMATED_EVALUATION_CLAIM"
+    ],
+    "migration_note": "v1 的 FULL_HUMAN_REVIEW_COST_WITHIN_APPROVED_BUDGET 依拨付制改写：成本模型如实上报 + 发起人确认拨付",
+    "otherwise": "STOP"
+  }
+}

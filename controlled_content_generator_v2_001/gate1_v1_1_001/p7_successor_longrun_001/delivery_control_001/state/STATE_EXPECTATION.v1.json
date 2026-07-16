@@ -1,0 +1,86 @@
+{
+  "schema_version": "p7-state-expectation-v1",
+  "description": "阶段-期望状态映射（期望态唯一登记处）。实际态在 eval_audit_spine_001/calibration/* 与 stage_actual_state.v1.json；checker 读取两者比较。严禁把实际证据文件改写成本文件中的期望值。",
+  "invariants_all_milestones": {
+    "manifest_consistency": [
+      "qualification_manifest: case_count==0 ⟺ content_status==NOT_MATERIALIZED ⟺ source/gold_manifest_digest 为 null",
+      "qualification_manifest: case_count>0 ⟹ content_status==MATERIALIZED 且 source/gold/dataset manifest digest 全部为 64 位十六进制",
+      "dev_manifest: 同上一致性规则",
+      "M0_STATUS.status ∈ {NOT_QUALIFIED, QUALIFIED, DIAGNOSTIC_FINAL}",
+      "M0_STATUS.status==QUALIFIED ⟹ evidence_manifest_digests 非空 且 decided_by 非 null 且存在独立裁决报告引用",
+      "M0_STATUS.status==NOT_QUALIFIED ⟹ claims_forbidden 包含 TRUSTED_EVALUATION 与 READY_FOR_300",
+      "stage_actual_state.executed_stages 中每个阶段必须有 stage_receipts 对应回执登记",
+      "stage_actual_state: B 轨阶段执行顺序必须符合 stage_and_kill.v2 轨内顺序；不得跳过其 entry_requires 声明的前序阶段"
+    ],
+    "forbidden_regressions": [
+      "任何活跃合同不得含 FOUNDER_APPROVED_BUDGET_CEILINGS / PROJECTED_300_COST_WITHIN_ALL_APPROVED_CEILINGS / COST_REFORECAST_WITHIN_BUDGET / STOP_BUDGET 键（总体预算阻断门复辟）",
+      "B 轨阶段 entry_requires 不得含 S1_PASS / M0_STATUS_QUALIFIED / A2 键（A→B 依赖复辟）",
+      "STOP_EXTERNAL_LLM_DAILY_BUDGET（DeepSeek 30 元/日）必须保留",
+      "24 字段成本事件清单必须与 cost_budget.v1.json 原文逐字一致"
+    ]
+  },
+  "milestone_expectations": {
+    "M1": {
+      "m0_status": ["NOT_QUALIFIED"],
+      "v11_status": ["NOT_QUALIFIED"],
+      "qualification_manifest_content_status": ["NOT_MATERIALIZED"],
+      "dev_manifest_content_status": ["NOT_MATERIALIZED"],
+      "executed_stages_allowed": [],
+      "real_run_executed": [false],
+      "note": "M1 诚实基线：任何资格物化或阶段执行出现即异常"
+    },
+    "M2": {
+      "m0_status": ["NOT_QUALIFIED"],
+      "v11_status": ["NOT_QUALIFIED"],
+      "qualification_manifest_content_status": ["NOT_MATERIALIZED"],
+      "dev_manifest_content_status": ["NOT_MATERIALIZED"],
+      "executed_stages_allowed": ["S0_DETERMINISTIC_HYGIENE"],
+      "real_run_executed": [false, true],
+      "note": "真实 S0 属 M2 流水线内默认授权"
+    },
+    "M3": {
+      "m0_status": ["NOT_QUALIFIED"],
+      "v11_status": ["NOT_QUALIFIED"],
+      "qualification_manifest_content_status": ["NOT_MATERIALIZED", "MATERIALIZED"],
+      "dev_manifest_content_status": ["NOT_MATERIALIZED", "MATERIALIZED"],
+      "executed_stages_allowed": ["S0_DETERMINISTIC_HYGIENE"],
+      "real_run_executed": [true],
+      "note": "金标物化与 QUAL-A/B 双冻结属 M3 合法产出（合法未来状态不得让 checker 失败）"
+    },
+    "M4": {
+      "m0_status": ["NOT_QUALIFIED", "QUALIFIED", "DIAGNOSTIC_FINAL"],
+      "v11_status": ["NOT_QUALIFIED"],
+      "qualification_manifest_content_status": ["MATERIALIZED"],
+      "dev_manifest_content_status": ["MATERIALIZED"],
+      "executed_stages_allowed": ["S0_DETERMINISTIC_HYGIENE", "S1_M0_MEASUREMENT_QUALIFICATION"],
+      "real_run_executed": [true],
+      "note": "M0 两种合法终态（A2_QUALIFIED / A2_DIAGNOSTIC_FINAL）均可；QUALIFIED 须伴随独立裁决证据"
+    },
+    "M5": {
+      "m0_status": ["QUALIFIED", "DIAGNOSTIC_FINAL"],
+      "v11_status": ["NOT_QUALIFIED"],
+      "qualification_manifest_content_status": ["MATERIALIZED"],
+      "dev_manifest_content_status": ["MATERIALIZED"],
+      "executed_stages_allowed": ["S0_DETERMINISTIC_HYGIENE", "S1_M0_MEASUREMENT_QUALIFICATION"],
+      "real_run_executed": [true]
+    },
+    "M6": {
+      "m0_status": ["NOT_QUALIFIED", "QUALIFIED", "DIAGNOSTIC_FINAL"],
+      "v11_status": ["NOT_QUALIFIED", "QUALIFIED"],
+      "qualification_manifest_content_status": ["NOT_MATERIALIZED", "MATERIALIZED"],
+      "dev_manifest_content_status": ["NOT_MATERIALIZED", "MATERIALIZED"],
+      "executed_stages_allowed": ["S0_DETERMINISTIC_HYGIENE", "S1_M0_MEASUREMENT_QUALIFICATION", "S2_FEASIBILITY_AND_COST_TELEMETRY", "S3_CAUSAL_PILOT_60", "S4_OPEN_REGRESSION_120", "S5_HIDDEN_QUALIFICATION_40", "S6_BASELINE_240_PLUS_60", "S7_INDEPENDENT_FINAL_AUDIT"],
+      "real_run_executed": [true],
+      "note": "B 轨与 A 轨并行（路线(a)）；B 轨推进不以 A 轨状态为前置"
+    },
+    "M7": {
+      "m0_status": ["NOT_QUALIFIED", "QUALIFIED", "DIAGNOSTIC_FINAL"],
+      "v11_status": ["QUALIFIED"],
+      "qualification_manifest_content_status": ["NOT_MATERIALIZED", "MATERIALIZED"],
+      "dev_manifest_content_status": ["NOT_MATERIALIZED", "MATERIALIZED"],
+      "executed_stages_allowed": ["S0_DETERMINISTIC_HYGIENE", "S1_M0_MEASUREMENT_QUALIFICATION", "S2_FEASIBILITY_AND_COST_TELEMETRY", "S3_CAUSAL_PILOT_60", "S4_OPEN_REGRESSION_120", "S5_HIDDEN_QUALIFICATION_40", "S6_BASELINE_240_PLUS_60", "S7_INDEPENDENT_FINAL_AUDIT"],
+      "real_run_executed": [true],
+      "note": "M7 入口仅接受 B_LIFT_READY==true（M6 PASS 链）"
+    }
+  }
+}

@@ -12,10 +12,12 @@ STAGE_GATE_KEYS = {
            "cost_provenance", "no_plan_impersonation"},
     "M0": {"measurement_qualification", "m0_status",
            "independent_adjudication"},
-    "S2": {"profile_capacity", "supported_assignments", "budget",
+    # S2 依裁决 #4 删 budget 键（拨付制+只记账，成本仅诊断遥测）
+    "S2": {"profile_capacity", "supported_assignments",
            "cost_latency_forecast"},
+    # S3 依裁决 #7 为诊断门：安全键硬性，minimum_useful_effect 只作诊断结论
     "S3": {"causal_interpretability", "minimum_useful_effect",
-           "hard_veto_zero"},
+           "hard_veto_zero", "anomalies_reported"},
     "S4": {"first_acceptance", "formulaic", "whole_batch_hard_veto_zero",
            "blind", "route", "audit"},
     "S5": {"hidden_contract", "sample_swap_zero", "whole_batch_hard_veto_zero"},
@@ -24,6 +26,10 @@ STAGE_GATE_KEYS = {
            "route_accuracy", "review_coverage"},
     "S7": {"v11_final_admission", "metrics_recompute", "founder_decision"},
 }
+
+# S3 安全出口键（硬性：任一 False 即 FAIL/停止）；其余为诊断结论键
+S3_SAFETY_KEYS = {"causal_interpretability", "hard_veto_zero",
+                  "anomalies_reported"}
 
 
 def whole_batch_metrics(outputs: Iterable[dict[str, Any]], *, target_count: int,
@@ -96,6 +102,18 @@ def stage_decision(*, stage: str, gates: dict[str, bool | None], revision_count:
         status = "BLOCKED"
     elif unknown or invalid_values:
         status = "FAIL"
+    elif stage == "S3":
+        # 诊断门（裁决 #7）：安全出口任一 False = 停止；安全全绿而
+        # 提升未达成 = S3_DIAGNOSTIC_COMPLETE（不自动 kill，诊断结论随包归档，
+        # B 合格与否以 V1.1 最终结果门为准）
+        if any(gates.get(key) is False for key in S3_SAFETY_KEYS):
+            status = "FAIL"
+        elif any(value is None for value in gates.values()):
+            status = "BLOCKED"
+        elif gates.get("minimum_useful_effect") is False:
+            status = "S3_DIAGNOSTIC_COMPLETE"
+        else:
+            status = "PASS"
     elif any(value is False for value in gates.values()):
         status = ("STOP_M0_MEASUREMENT_UNQUALIFIED"
                   if stage == "M0" and revision_count >= max_revisions else "FAIL")
@@ -103,8 +121,13 @@ def stage_decision(*, stage: str, gates: dict[str, bool | None], revision_count:
         status = "BLOCKED"
     else:
         status = "PASS"
-    return {"stage": stage, "status": status, "gates": gates,
-            "required_gate_keys": sorted(required) if required is not None else None,
-            "missing_gate_keys": missing, "unknown_gate_keys": unknown,
-            "invalid_gate_value_keys": invalid_values,
-            "revision_count": revision_count, "max_revisions": max_revisions}
+    result = {"stage": stage, "status": status, "gates": gates,
+              "gate_type": "DIAGNOSTIC" if stage == "S3" else "CONJUNCTIVE",
+              "required_gate_keys": sorted(required) if required is not None else None,
+              "missing_gate_keys": missing, "unknown_gate_keys": unknown,
+              "invalid_gate_value_keys": invalid_values,
+              "revision_count": revision_count, "max_revisions": max_revisions}
+    if stage == "S3":
+        result["s3_safety_exit_all_green"] = all(
+            gates.get(key) is True for key in S3_SAFETY_KEYS)
+    return result

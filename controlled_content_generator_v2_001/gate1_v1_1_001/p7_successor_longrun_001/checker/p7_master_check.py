@@ -29,6 +29,21 @@ P7 = f"{GATE1}/p7_successor_longrun_001"
 G3 = "controlled_content_generator_v2_001/generator_v3_successor_001"
 EVAL_SPINE = f"{P7}/eval_audit_spine_001"
 V4_RECOVERY = f"{G3}/v4_recovery"
+DC = f"{P7}/delivery_control_001"
+
+# v2.5 状态感知检查内部模块（P1 §十七：唯一总入口可拆内部模块，非平行检查器）
+import importlib.util as _importlib_util
+
+_v25_spec = _importlib_util.spec_from_file_location(
+    "v25_state_checks", Path(__file__).resolve().parent / "v25_state_checks.py")
+v25 = _importlib_util.module_from_spec(_v25_spec)
+assert _v25_spec.loader is not None
+_v25_spec.loader.exec_module(v25)
+
+# 运行上下文：main() 依 CLI 设置。checker 只从磁盘复算，不修改任何阶段状态，
+# 也不给自身实现签字（正式签字仅来自独立审核者的 signer_receipt）。
+CTX: dict[str, object] = {"milestone": "M1", "mode": "PRE_REVIEW",
+                          "state_file": None}
 
 ALLOWED_WRITE_PREFIXES = (P7 + "/", G3 + "/")
 
@@ -296,34 +311,13 @@ def check_v4_recovery_selftest(root: Path) -> tuple[bool, list[str]]:
 
 
 def check_m0_state_integrity(root: Path) -> tuple[bool, list[str]]:
-    """检查 M0 诚实状态，不把合同/测试全绿洗成资格通过。"""
-    status_path = root / EVAL_SPINE / "calibration/M0_STATUS.v1.json"
-    qualification_path = root / EVAL_SPINE / "contract/measurement_qualification.v1.json"
-    budget_path = root / EVAL_SPINE / "contract/cost_budget.v1.json"
-    dev_path = root / EVAL_SPINE / "calibration/dev_manifest.v1.json"
-    sealed_path = root / EVAL_SPINE / "calibration/qualification_manifest.v1.json"
-    required = [status_path, qualification_path, budget_path, dev_path, sealed_path]
-    if any(not path.is_file() for path in required):
-        return False, ["missing M0 contract or calibration state"]
-    status = json.loads(status_path.read_text(encoding="utf-8"))
-    qualification = json.loads(qualification_path.read_text(encoding="utf-8"))
-    budget = json.loads(budget_path.read_text(encoding="utf-8"))
-    dev = json.loads(dev_path.read_text(encoding="utf-8"))
-    sealed = json.loads(sealed_path.read_text(encoding="utf-8"))
-    ok = (status.get("status") == "NOT_QUALIFIED"
-          and qualification.get("current_status") == "M0_NOT_QUALIFIED"
-          and budget.get("approval_status") == "UNAPPROVED"
-          and dev.get("content_status") == "NOT_MATERIALIZED"
-          and sealed.get("content_status") == "NOT_MATERIALIZED"
-          and sealed.get("case_count") == 0
-          and sealed.get("source_manifest_digest") is None
-          and sealed.get("gold_manifest_digest") is None)
-    return ok, [
-        f"artifact_integrity_status={'PASS' if ok else 'FAIL'}",
-        f"m0_qualification_status={status.get('status')}",
-        f"budget_approval_status={budget.get('approval_status')}",
-        f"sealed_qualification_cases={sealed.get('case_count')}",
-    ]
+    """M0 实际态一致性不变量 + 里程碑期望比较（v2.5 §五 状态感知化迁移）。
+
+    v1 语义把 NOT_QUALIFIED/零案例/预算 UNAPPROVED 钉死为唯一通过态，导致
+    合法未来状态（金标物化、M0 合格、拨付发生）反而 FAIL——已按阶段参数化
+    期望改造；诚实性由一致性不变量（QUALIFIED 必须带证据/裁决、空集不得带
+    摘要、NOT_QUALIFIED 必须保留禁用主张）承担，不再靠冻结常量。"""
+    return v25.check_m0_state_integrity(root, CTX)
 
 
 def check_m0_dataset_isolation(root: Path) -> tuple[bool, list[str]]:
@@ -350,25 +344,37 @@ def check_m0_dataset_isolation(root: Path) -> tuple[bool, list[str]]:
                 "hidden_payload_materialized=false"]
 
 
-def check_budget_stage_gate(root: Path) -> tuple[bool, list[str]]:
-    """未批准预算必须关闭规模阶段，而不是补零或继续执行。"""
-    budget_path = root / EVAL_SPINE / "contract/cost_budget.v1.json"
-    stage_path = root / EVAL_SPINE / "contract/stage_and_kill.v1.json"
-    if not budget_path.is_file() or not stage_path.is_file():
-        return False, ["budget/stage contract missing"]
-    budget = json.loads(budget_path.read_text(encoding="utf-8"))
-    stage = json.loads(stage_path.read_text(encoding="utf-8"))
-    ceilings = budget.get("hard_ceilings", {})
-    fail_rules = set(budget.get("fail_closed_rules", []))
-    ok = (budget.get("approval_status") == "UNAPPROVED"
-          and all(value is None for value in ceilings.values())
-          and "NO_SCALE_WHILE_APPROVAL_STATUS_IS_NOT_APPROVED" in fail_rules
-          and "NO_ZERO_COST_PLACEHOLDERS_FOR_UNKNOWN_COSTS" in fail_rules
-          and stage.get("current_state") not in {"S2_PASS", "S3_PASS", "S4_PASS",
-                                                   "S5_PASS", "S6_PASS", "S7_PASS"})
-    return ok, ["budget_status=UNAPPROVED",
-                "scale_status=BLOCKED_BUDGET_UNSET",
-                "invented_budget_values=0"]
+def check_stage_contract_v2(root: Path) -> tuple[bool, list[str]]:
+    """阶段合同 v2：Y 三状态机、B 轨独立、S3 诊断门、S6 记账入口、旧预算键零残留。
+
+    取代 v1 的 check_budget_stage_gate（其把预算 UNAPPROVED 与 B 轨不得越过 S2
+    钉死为通过条件——拨付制落地或 B 轨合法推进即整体 FAIL 的 N4 位点）。"""
+    return v25.check_stage_contract_v2(root, CTX)
+
+
+def check_cost_accounting(root: Path) -> tuple[bool, list[str]]:
+    """拨付制记账合同 + 保留面（24 字段、DeepSeek 30 元/日）+ 运行时符号迁移。"""
+    return v25.check_cost_accounting_contract(root, CTX)
+
+
+def check_active_contract_set(root: Path) -> tuple[bool, list[str]]:
+    """ACTIVE_CONTRACT_SET 成员摘要复算；冻结清单存在时逐成员比对。"""
+    return v25.check_active_contract_set(root, CTX)
+
+
+def check_d0_status(root: Path) -> tuple[bool, list[str]]:
+    """D0 五条件从磁盘复算；布尔速记宣布已批准 = FAIL。"""
+    return v25.check_d0_status(root, CTX)
+
+
+def check_run_journal(root: Path) -> tuple[bool, list[str]]:
+    """RUN_JOURNAL 哈希链复算 + 与 Git 互校。"""
+    return v25.check_run_journal(root, CTX)
+
+
+def check_final_receipts(root: Path) -> tuple[bool, list[str]]:
+    """FINAL 模式硬门：typed 终态回执 + 两份有效独立签字绑定同一候选。"""
+    return v25.check_final_receipts(root, CTX)
 
 
 def check_candidate_manifest(root: Path) -> tuple[bool, list[str]]:
@@ -403,8 +409,14 @@ def check_independent_reviews(root: Path) -> tuple[bool, list[str]]:
         return False, ["implementation review request missing"]
     reports = sorted(review_dir.glob("*.review.v1.json"))
     if not reports:
+        status_path = root / EVAL_SPINE / "calibration/M0_STATUS.v1.json"
+        try:
+            actual = json.loads(status_path.read_text(encoding="utf-8")).get(
+                "status", "INVALID_STATE")
+        except (OSError, ValueError):
+            actual = "INVALID_STATE"
         return True, ["PENDING: two independent reviews requested",
-                      "m0_qualification_status=NOT_QUALIFIED"]
+                      f"m0_qualification_status={actual}"]
     if len(reports) != 2 or not manifest_path.is_file():
         return False, [f"independent_review_count={len(reports)} expected=2"]
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -740,7 +752,11 @@ SECTIONS: dict[str, object] = {
     "v4_recovery_selftest": check_v4_recovery_selftest,
     "m0_state_integrity": check_m0_state_integrity,
     "m0_dataset_isolation": check_m0_dataset_isolation,
-    "budget_stage_gate": check_budget_stage_gate,
+    "stage_contract_v2": check_stage_contract_v2,
+    "cost_accounting": check_cost_accounting,
+    "active_contract_set": check_active_contract_set,
+    "d0_status": check_d0_status,
+    "run_journal": check_run_journal,
     "candidate_manifest": check_candidate_manifest,
     "independent_reviews": check_independent_reviews,
     "recovery_shadow_recompute": check_recovery_shadow_recompute,
@@ -748,7 +764,26 @@ SECTIONS: dict[str, object] = {
     "pkg1_route": check_pkg1_route,
     "pkg1_blind": check_pkg1_blind,
     "pkg1_reviews": check_pkg1_reviews,
+    "final_receipts": check_final_receipts,
 }
+
+# A/B 分开判断（P1 §十七）：产品域标签；无互相牵连的全局 ALL_PASS。
+SECTION_SCOPES: dict[str, str] = {
+    "freeze_integrity": "SHARED", "write_surface": "SHARED",
+    "external_workspaces": "SHARED", "core_caliber": "SHARED",
+    "g3_selftest": "B", "eval_spine_selftest": "A",
+    "v4_recovery_selftest": "B", "m0_state_integrity": "A",
+    "m0_dataset_isolation": "A", "stage_contract_v2": "SHARED",
+    "cost_accounting": "SHARED", "active_contract_set": "SHARED",
+    "d0_status": "SHARED", "run_journal": "SHARED",
+    "candidate_manifest": "A", "independent_reviews": "A",
+    "recovery_shadow_recompute": "SHARED",
+    "pkg1_input_freeze": "B", "pkg1_route": "B", "pkg1_blind": "B",
+    "pkg1_reviews": "B", "final_receipts": "SHARED",
+}
+
+# 仅 FINAL 模式运行的节（PRE_REVIEW 只证送审条件，不要求签字存在）
+FINAL_ONLY_SECTIONS = {"final_receipts"}
 
 
 def selftest() -> int:
@@ -846,6 +881,50 @@ def selftest() -> int:
         expect("route_gold_tamper_detected", not route_gold_ok(tmp_root))
     expect("route_gold_clean", route_gold_ok(DEFAULT_ROOT))
 
+    # 7. v2.5 状态感知节的代表性负向案例（完整攻击矩阵在
+    #    delivery_control_001/tests/ 由 unittest 承载）
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_root = Path(tmp)
+        dc = tmp_root / DC
+        (dc / "contracts").mkdir(parents=True)
+        (dc / "state").mkdir(parents=True)
+        charter = dc / "contracts/D0_PRODUCT_DECOUPLING_CHARTER.v1.md"
+        charter.write_text("charter", encoding="utf-8")
+        # 布尔速记：无审核回执却宣布 d0_approved=true → 必须被抓
+        (dc / "state/D0_STATUS.v1.json").write_text(json.dumps({
+            "charter_path": f"{DC}/contracts/D0_PRODUCT_DECOUPLING_CHARTER.v1.md",
+            "charter_sha256": None, "active_contract_set_digest": None,
+            "review_receipt_path": None, "review_receipt_digest": None,
+            "d0_approved": True}), encoding="utf-8")
+        ok_forged, _ = v25.check_d0_status(tmp_root, {"milestone": "M1"})
+        expect("d0_boolean_shortcut_detected", not ok_forged)
+
+        # B 轨重新依赖 S1_PASS → 阶段合同节必须 FAIL
+        es_contract = tmp_root / EVAL_SPINE / "contract"
+        es_contract.mkdir(parents=True)
+        stage_v2 = json.loads((DEFAULT_ROOT / EVAL_SPINE
+                               / "contract/stage_and_kill.v2.json"
+                               ).read_text(encoding="utf-8"))
+        for stage in stage_v2["stages"]:
+            if stage["stage_id"] == "S2_FEASIBILITY_AND_COST_TELEMETRY":
+                stage["entry_requires"].append("S1_PASS")
+        (es_contract / "stage_and_kill.v2.json").write_text(
+            json.dumps(stage_v2, ensure_ascii=False), encoding="utf-8")
+        ok_dep, details_dep = v25.check_stage_contract_v2(
+            tmp_root, {"milestone": "M1"})
+        expect("b_track_a_dependency_detected", not ok_dep and any(
+            "depends on A track" in d or "S2 entry keys drifted" in d
+            for d in details_dep))
+
+        # journal 缺失 → run_journal 节必须 FAIL（STOP_RUN_JOURNAL_INVALID）
+        (dc / "tools").mkdir(parents=True)
+        shutil.copy(DEFAULT_ROOT / DC / "tools/run_journal.py",
+                    dc / "tools/run_journal.py")
+        ok_journal, details_journal = v25.check_run_journal(
+            tmp_root, {"milestone": "M1"})
+        expect("missing_journal_detected", not ok_journal and any(
+            "STOP_RUN_JOURNAL_INVALID" in d for d in details_journal))
+
     print("SELFTEST:", "ALL_NEGATIVE_CASES_ENFORCED" if not failures
           else f"FAILED {failures}")
     return 0 if not failures else 1
@@ -857,27 +936,54 @@ def main() -> int:
     ap.add_argument("--section")
     ap.add_argument("--list", action="store_true")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--milestone", choices=[f"M{i}" for i in range(1, 8)],
+                    default="M1", help="当前里程碑（决定期望状态映射）")
+    ap.add_argument("--product", choices=["SHARED", "A", "B", "ALL"],
+                    default="ALL", help="产品域过滤；A/B 分开判断，互不牵连")
+    ap.add_argument("--mode", choices=["PRE_REVIEW", "FINAL"],
+                    default="PRE_REVIEW",
+                    help="PRE_REVIEW=送审条件；FINAL=另需 typed PASS + 有效外部签字")
+    ap.add_argument("--state-file", default=None,
+                    help="覆盖 STATE_EXPECTATION 路径（测试/演进用）")
     args = ap.parse_args()
     if args.selftest:
         return selftest()
     if args.list:
         for name in SECTIONS:
-            print(name)
+            print(f"{name}  [{SECTION_SCOPES.get(name, 'SHARED')}]")
         return 0
+    CTX["milestone"] = args.milestone
+    CTX["mode"] = args.mode
+    CTX["state_file"] = args.state_file
     root = Path(args.root)
-    names = [args.section] if args.section else list(SECTIONS)
-    all_ok = True
+    if args.section:
+        names = [args.section]
+    else:
+        names = [name for name in SECTIONS
+                 if args.product == "ALL"
+                 or SECTION_SCOPES.get(name, "SHARED") == args.product]
+        if args.mode != "FINAL":
+            names = [name for name in names if name not in FINAL_ONLY_SECTIONS]
+    results: dict[str, bool] = {}
     for name in names:
         fn = SECTIONS.get(name)
         if fn is None:
             print(f"[ERROR] unknown section {name}")
             return 1
         ok, details = fn(root)  # type: ignore[operator]
-        all_ok &= ok
+        results[name] = ok
         print(f"[{'PASS' if ok else 'FAIL'}] {name}")
         for d in details:
             print(f"    {d}")
-    print(f"RESULT: {'ALL_PASS' if all_ok else 'FAILED'}")
+    # A/B 分开判断：逐产品域汇总，不设互相牵连的全局 ALL_PASS
+    print(f"MODE: {args.mode}  MILESTONE: {args.milestone}")
+    for scope in ("SHARED", "A", "B"):
+        scoped = {n: ok for n, ok in results.items()
+                  if SECTION_SCOPES.get(n, "SHARED") == scope}
+        if scoped:
+            verdict = "PASS" if all(scoped.values()) else "FAILED"
+            print(f"RESULT[{scope}]: {verdict} ({len(scoped)} sections)")
+    all_ok = all(results.values())
     if not args.section:
         status_path = root / EVAL_SPINE / "calibration/M0_STATUS.v1.json"
         m0 = "NOT_RUN"

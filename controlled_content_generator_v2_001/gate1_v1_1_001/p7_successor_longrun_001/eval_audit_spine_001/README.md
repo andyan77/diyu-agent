@@ -34,10 +34,10 @@ external_connectivity_smoke: PASS_NOT_QUALIFICATION
 
 ## 权威顺序
 
-1. 项目发起人的最新明确裁决；
+1. 项目发起人的最新明确裁决（现行生效链：`AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.5.md` @ 23f5fea，活跃合同指针见 `../delivery_control_001/ACTIVE_CONTRACT_SET.v1.json`）；
 2. `diyu_content_composition_standard.v1.1.md`；
-3. `EVAL_AUDIT_SPINE_PRODUCT_MAP.v1.1.md`；
-4. 本目录 `contract/`；
+3. `EVAL_AUDIT_SPINE_PRODUCT_MAP.v1.2.md`（v1.1 封存为历史）；
+4. 本目录 `contract/`（活跃版本：`stage_and_kill.v2.json`、`cost_accounting.v2.json`、`measurement_qualification.v2.json`、`implementation_charter.v2.md`；v1 封存为历史）；
 5. `rubric/` 与 `schema/`；
 6. 校准和运行产物。
 
@@ -51,8 +51,8 @@ external_connectivity_smoke: PASS_NOT_QUALIFICATION
 
 只有以下事项全部具备，才能从本地参考实现进入 M0 资格运行：
 
-1. 发起人批准 M0/300 总体预算上限和密封数据保全角色；已批准的 30 元/日 DeepSeek 开发调用预算不能替代总体预算；
+1. 密封数据保全角色到位；成本按拨付制全量记账（发起人按需拨付，无总体预算阻断门，记账缺失=停——裁决 #4）；已批准的 30 元/日 DeepSeek 开发调用预算仍为独立窄授权，不能替代记账义务；
 2. 六格数据责任人与独立评审角色到位；
-3. 开发金标和密封资格金标由不同流程物化；
+3. 开发金标和密封资格金标由不同流程物化（六步全序：题面冻结→双盲建标→金标冻结→方法冻结→盲预测→揭晓）；
 4. M0 运行器与反向测试接受独立实现审核；
 5. `M0_STATUS` 仍保持 `NOT_QUALIFIED`，直至真实资格报告合取通过。

@@ -27,8 +27,8 @@ from spine.adapters import adapt_v4_cost_event
 from spine.canonical import digest_json
 from spine.contracts import (ContractError, qualification_decision,
                              validate_dataset_rows, validate_gate1_test_assignment)
-from spine.cost import (BUDGET_CATEGORY_KEYS, REQUIRED_CEILING_KEYS,
-                        budget_gate, build_scale_projection,
+from spine.cost import (BUDGET_CATEGORY_KEYS, PROJECTION_METRIC_KEYS,
+                        accounting_integrity_gate, build_scale_projection,
                         metering_report, project_scale)
 from spine.disclosure import check_required_disclosures, omission_risk_action
 from spine.evidence_chain import (covered_claim_candidates, known_risk_findings,
@@ -249,26 +249,6 @@ def scale_assumption_fixture(report: dict) -> dict:
     unsigned.pop("manifest_digest")
     manifest["manifest_digest"] = digest_json(unsigned)
     return manifest
-
-
-def approved_budget_fixture(expected_manifest: dict,
-                            rate_card: dict, ceiling: float = 1000) -> dict:
-    budget = {
-        "schema_version": "eval-audit-spine-cost-budget-v1",
-        "contract_id": "EAS-COST-BUDGET-V1", "currency": "USD",
-        "approval_status": "APPROVED", "approved_by": "FOUNDER",
-        "approved_at": "2026-07-15T09:00:00+00:00",
-        "price_snapshot_id": "RATE-1",
-        "price_snapshot_captured_at": "2026-07-15T08:00:00+00:00",
-        "rate_card_digest": rate_card["rate_card_digest"],
-        "cost_classification_manifest_digest": expected_manifest[
-            "manifest_digest"],
-        "hard_ceilings": {key: ceiling for key in REQUIRED_CEILING_KEYS},
-        "budget_digest": ""}
-    unsigned = dict(budget)
-    unsigned.pop("budget_digest")
-    budget["budget_digest"] = digest_json(unsigned)
-    return budget
 
 
 def closed_chain(index: int) -> dict:
@@ -1052,7 +1032,7 @@ class OperationsTests(unittest.TestCase):
         self.assertEqual(stage_decision(stage="S4", gates=s4,
                                         revision_count=0)["status"], "PASS")
 
-    def test_metering_and_budget_do_not_invent_missing_numbers(self) -> None:
+    def test_metering_and_accounting_do_not_invent_missing_numbers(self) -> None:
         event = {"schema_version": "eval-spine-cost-event-v1", "event_id": "E1",
                  "stage_id": "DEV", "task_kind": "MODEL",
                  "resource_kind": "MODEL_CALL",
@@ -1074,9 +1054,11 @@ class OperationsTests(unittest.TestCase):
                                    per_pair_screen_cost=.001, human_item_cost=.1,
                                    human_pair_cost=.2, candidate_pair_rate=.1)
         self.assertEqual(projection["within_profile_pair_count"], 1320)
-        self.assertEqual(budget_gate(projection,
-                                    {"approval_status": "UNAPPROVED"})["status"],
-                         "BLOCKED_BUDGET_UNSET")
+        self.assertTrue(projection["diagnostic_only"])
+        gate = accounting_integrity_gate([event])
+        self.assertEqual(gate["status"], "STOP_COST_ACCOUNTING_MISSING")
+        self.assertFalse(gate["passed"])
+        self.assertFalse(gate["budget_blocking"])
         unavailable = copy.deepcopy(event)
         unavailable["model_cost_usd"] = None
         unavailable["unavailable_reasons"] = {
@@ -1086,8 +1068,28 @@ class OperationsTests(unittest.TestCase):
         unavailable["event_digest"] = digest_json(unsigned)
         self.assertFalse(metering_report([unavailable])["qualified"])
 
-    def test_budget_gate_checks_every_approved_hard_ceiling(self) -> None:
+    def test_accounting_gate_passes_complete_events_and_fails_closed(self) -> None:
         rate_card, events, expected_manifest, source_manifest = cost_fixture()
+        decision = accounting_integrity_gate(
+            events, rate_card=rate_card,
+            expected_event_manifest=expected_manifest,
+            source_event_manifest=source_manifest,
+            as_of="2026-07-15T12:00:00+00:00")
+        self.assertEqual(decision["status"], "PASS")
+        self.assertTrue(decision["passed"])
+        self.assertFalse(decision["budget_blocking"])
+        self.assertEqual(decision["failed_gates"], [])
+        self.assertEqual(decision["diagnostic_telemetry"]["event_count"],
+                         len(events))
+        # 少一个已发生调用的成本事件 = 与预登记清单不符 → 记账缺失即停
+        missing_one = accounting_integrity_gate(
+            events[:-1], rate_card=rate_card,
+            expected_event_manifest=expected_manifest,
+            source_event_manifest=source_manifest)
+        self.assertEqual(missing_one["status"], "STOP_COST_ACCOUNTING_MISSING")
+        self.assertIn("expected_event_manifest_matches",
+                      missing_one["failed_gates"])
+        # 投影保留为诊断遥测：键集为 PROJECTION_METRIC_KEYS 且防篡改
         report = metering_report(
             events, rate_card=rate_card,
             expected_event_manifest=expected_manifest,
@@ -1098,40 +1100,54 @@ class OperationsTests(unittest.TestCase):
             expected_event_manifest=expected_manifest,
             source_event_manifest=source_manifest, rate_card=rate_card,
             generated_at="2026-07-15T10:00:00+00:00")
-        budget = approved_budget_fixture(expected_manifest, rate_card)
-        self.assertEqual(budget_gate(
-            projection, budget, assumption_manifest=assumption,
-            cost_events=events, expected_event_manifest=expected_manifest,
-            source_event_manifest=source_manifest,
-            rate_card=rate_card,
-            as_of="2026-07-15T12:00:00+00:00")["status"],
-            "PASS")
-        tampered = copy.deepcopy(projection)
-        tampered["p95"]["total_reviewer_minutes"] = 0
-        unsigned_projection = dict(tampered)
-        unsigned_projection.pop("projection_digest")
-        tampered["projection_digest"] = digest_json(unsigned_projection)
-        self.assertEqual(budget_gate(
-            tampered, budget, assumption_manifest=assumption,
-            cost_events=events, expected_event_manifest=expected_manifest,
-            source_event_manifest=source_manifest,
-            rate_card=rate_card,
-            as_of="2026-07-15T12:00:00+00:00")["status"],
-            "BLOCKED_PROJECTION_PROVENANCE_INVALID")
-        budget = approved_budget_fixture(expected_manifest, rate_card)
-        budget["hard_ceilings"]["total_reviewer_minutes"] = 19
-        unsigned_budget = dict(budget)
-        unsigned_budget.pop("budget_digest")
-        budget["budget_digest"] = digest_json(unsigned_budget)
-        failed = budget_gate(
-            projection, budget, assumption_manifest=assumption,
-            cost_events=events, expected_event_manifest=expected_manifest,
-            source_event_manifest=source_manifest,
-            rate_card=rate_card,
-            as_of="2026-07-15T12:00:00+00:00")
-        self.assertEqual(failed["status"], "STOP_BUDGET_ALREADY_EXCEEDED")
-        self.assertEqual(failed["details"]["actual_exceeded_hard_ceilings"],
-                         ["total_reviewer_minutes"])
+        self.assertEqual(set(projection["p50"]), PROJECTION_METRIC_KEYS)
+        tampered_assumption = copy.deepcopy(assumption)
+        tampered_assumption["basis_metering_report_digest"] = "0" * 64
+        unsigned_assumption = dict(tampered_assumption)
+        unsigned_assumption.pop("manifest_digest")
+        tampered_assumption["manifest_digest"] = digest_json(
+            unsigned_assumption)
+        with self.assertRaises(ValueError):
+            build_scale_projection(
+                assumption_manifest=tampered_assumption, cost_events=events,
+                expected_event_manifest=expected_manifest,
+                source_event_manifest=source_manifest, rate_card=rate_card,
+                generated_at="2026-07-15T10:00:00+00:00")
+
+    def test_s3_diagnostic_gate_and_s2_without_budget_key(self) -> None:
+        gates = {"causal_interpretability": True,
+                 "minimum_useful_effect": False,
+                 "hard_veto_zero": True, "anomalies_reported": True}
+        decision = stage_decision(stage="S3", gates=gates, revision_count=0)
+        self.assertEqual(decision["status"], "S3_DIAGNOSTIC_COMPLETE")
+        self.assertEqual(decision["gate_type"], "DIAGNOSTIC")
+        self.assertTrue(decision["s3_safety_exit_all_green"])
+        lifted = stage_decision(stage="S3", gates={**gates,
+                                                   "minimum_useful_effect": True},
+                                revision_count=0)
+        self.assertEqual(lifted["status"], "PASS")
+        safety_fail = stage_decision(stage="S3",
+                                     gates={**gates, "hard_veto_zero": False},
+                                     revision_count=0)
+        self.assertEqual(safety_fail["status"], "FAIL")
+        self.assertFalse(safety_fail["s3_safety_exit_all_green"])
+        anomaly_unreported = stage_decision(
+            stage="S3", gates={**gates, "anomalies_reported": False},
+            revision_count=0)
+        self.assertEqual(anomaly_unreported["status"], "FAIL")
+        s2 = stage_decision(stage="S2",
+                            gates={"profile_capacity": True,
+                                   "supported_assignments": True,
+                                   "cost_latency_forecast": True},
+                            revision_count=0)
+        self.assertEqual(s2["status"], "PASS")
+        budget_key_regression = stage_decision(
+            stage="S2", gates={"profile_capacity": True,
+                               "supported_assignments": True,
+                               "cost_latency_forecast": True, "budget": True},
+            revision_count=0)
+        self.assertEqual(budget_key_regression["status"], "FAIL")
+        self.assertEqual(budget_key_regression["unknown_gate_keys"], ["budget"])
 
     def test_metering_recomputes_rate_card_and_rejects_duplicate_or_negative_events(self) -> None:
         rate_card, events, expected_manifest, source_manifest = cost_fixture()
@@ -1375,7 +1391,13 @@ class LegacyShadowTests(unittest.TestCase):
         self.assertEqual(result["expected_known_veto_ids"],
                          result["development_rule_detected_ids"])
         self.assertEqual(result["legacy_machine_hard_failure_count"], 0)
-        self.assertEqual(result["m0_qualification_status"], "NOT_QUALIFIED")
+        # 回显值必须等于实际状态真源，而非硬编码常量（实际态/期望态分离）
+        actual_status = json.loads(
+            (PACKAGE / "calibration/M0_STATUS.v1.json").read_text(
+                encoding="utf-8"))["status"]
+        self.assertEqual(result["m0_qualification_status"], actual_status)
+        self.assertIn(actual_status,
+                      {"NOT_QUALIFIED", "QUALIFIED", "DIAGNOSTIC_FINAL"})
         self.assertEqual(fixture.read_bytes(), before)
 
     def test_empty_integrity_snapshot_is_not_m0_pass(self) -> None:
