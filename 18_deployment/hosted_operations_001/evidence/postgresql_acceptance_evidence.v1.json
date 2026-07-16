@@ -1,0 +1,44 @@
+{
+  "acceptance_run_digest": "d3698b68a80ef38f0abec4981185f9fd942dae6cab70a62480b615def163ccc4",
+  "backup_dump_sha256": "d7e4431a36ca28abaa3225a066cbb138a79fad2648e3e75f525aae14636d820f",
+  "brand_import_idempotent": true,
+  "bundle_rollback_restored": true,
+  "concurrent_import_serialized": true,
+  "corrupt_backup_rejected": true,
+  "database_kind": "POSTGRESQL_14",
+  "external_model_calls": 0,
+  "failed_import_rolled_back": true,
+  "failed_upgrade_rolled_back": true,
+  "fresh_namespace_restore_equal": true,
+  "install_idempotent": true,
+  "local_task_database_count_after_cleanup": 0,
+  "real_cloud_mutations": 0,
+  "revocation_immediate": true,
+  "runtime": {
+    "cross_tenant_attacks_rejected": 2,
+    "feedback_brand_count": 2,
+    "prepared_and_validated_brand_count": 2,
+    "run_account_ids": [
+      "ACCOUNT-DIYU-HQ-OFFICIAL",
+      "ACCOUNT-QINGHE-LAB-BRAND-ACCOUNT"
+    ]
+  },
+  "same_display_name_scope_safe": true,
+  "source_object_counts": {
+    "accounts": 13,
+    "authorizations": 34,
+    "brands": 2,
+    "candidates": 4,
+    "feedback": 2,
+    "narrative_fragments": 31,
+    "organizations": 7,
+    "precise_facts": 20,
+    "principals": 2,
+    "sources": 12,
+    "stores": 4,
+    "tenants": 2
+  },
+  "stale_candidate_rejected": true,
+  "successful_upgrade_and_rollback": true,
+  "task_id": "DIYU_HOSTED_OPERATIONS_001"
+}

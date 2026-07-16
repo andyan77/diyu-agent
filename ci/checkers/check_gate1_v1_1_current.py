@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "4b0ea162138179a470aefad11f7600ba8a717f395234833f3edd2dd4d96a6c9c"
+    "c3e4dd6d89e02a3da69b3b8f6afc8afa920b3157709bf34e29f4953dc5b4c52f"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -156,11 +156,19 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_dify_end_to_end.py"
         ),
     ),
+    (
+        Path("18_deployment/hosted_operations_001"),
+        Path(
+            "18_deployment/hosted_operations_001/"
+            "check_hosted_operations.py"
+        ),
+    ),
 )
 MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
     {
         Path("16_composition_runtime/fact_aware_plan_adapter_001"),
         Path("17_dify_runtime/dify_end_to_end_001"),
+        Path("18_deployment/hosted_operations_001"),
     }
 )
 DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
@@ -168,6 +176,10 @@ DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
         "15_brand_retrieval/brand_fact_retrieval_001/"
         "check_brand_fact_retrieval.py"
     ): "24cd9888f38f2f22b22aa6c5a23f388b39fa1469",
+    Path(
+        "17_dify_runtime/dify_end_to_end_001/"
+        "check_dify_end_to_end.py"
+    ): "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
 }
 DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
 DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP = (

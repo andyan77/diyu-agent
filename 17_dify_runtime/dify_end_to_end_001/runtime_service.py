@@ -237,10 +237,12 @@ class Package7Runtime:
         self.unknown_action = copy.deepcopy(action_doc["unknown_action_behavior"])
 
     def _trusted_context(self, request: JsonObject) -> TrustedUpstreamContext:
-        active = self.repository.setting("active_runtime_brand")
-        root = self.repository.setting(str(active["identity_setting_key"]))
-        tenant = root["tenant"]
         principal_id = str(request["trusted_scope"]["login_principal_id"])
+        runtime_principal = self.repository.principal_by_id(principal_id)
+        if runtime_principal is None or runtime_principal.status != "ACTIVE":
+            raise RuntimeContractError("Trusted principal is unavailable")
+        root = self.repository.setting(f"identity_authority:{runtime_principal.tenant_id}")
+        tenant = root["tenant"]
         principal = next(
             row for row in root["login_principals"] if row["principal_id"] == principal_id
         )
@@ -298,9 +300,8 @@ class Package7Runtime:
         retrieval: JsonObject,
     ) -> JsonObject:
         del task
-        active = self.repository.setting("active_runtime_brand")
-        profile = self.repository.setting(str(active["profile_setting_key"]))
         scope = retrieval["resolved_scope"]
+        profile = self._brand_profile_for_account(str(scope["brand_id"]))
         return {
             "resolution_authority": "SERVER_TRUSTED_UPSTREAM",
             "requested_profile_ref": None,
@@ -316,10 +317,9 @@ class Package7Runtime:
         context: TrustedUpstreamContext,
         neutral_profile: JsonObject,
     ) -> JsonObject:
-        active = self.repository.setting("active_runtime_brand")
-        if active["tenant_id"] != context.tenant_id:
+        profile = self._brand_profile_for_account(context.brand_id)
+        if profile.get("tenant_specific") is not True:
             return copy.deepcopy(neutral_profile)
-        profile = self.repository.setting(str(active["profile_setting_key"]))
         if (
             profile.get("tenant_id") != context.tenant_id
             or profile.get("brand_id") != context.brand_id
@@ -329,13 +329,10 @@ class Package7Runtime:
         return copy.deepcopy(profile)
 
     def prepare(self, request: BridgePrepareRequest, principal_id: str) -> JsonObject:
-        account = self.repository.account_by_display_name(request.account_display_name)
-        if account is None or account.status != "ACTIVE":
-            return self._plain_action("BLOCK")
         try:
-            principal, account = self.repository.require_active_scope(
+            principal, account = self.repository.require_active_scope_by_display_name(
                 principal_id,
-                account.account_id,
+                request.account_display_name,
             )
         except ValueError:
             return self._plain_action("REQUEST_AUTHORIZATION")
@@ -412,42 +409,56 @@ class Package7Runtime:
         principal = self.repository.principal_by_id(principal_id)
         if principal is None or principal.status != "ACTIVE":
             raise RuntimeContractError("Unknown portal principal")
-        active = self.repository.setting("active_runtime_brand")
-        profile = self.repository.setting(str(active["profile_setting_key"]))
         allowed = set(principal.allowed_account_ids)
         accounts = [
             account
             for account in self.repository.all_accounts()
             if account.status == "ACTIVE" and account.account_id in allowed
         ]
-        role_cards = {
-            str(row["account_id"]): row
-            for row in profile.get("account_role_cards", [])
-            if isinstance(row, dict) and isinstance(row.get("account_id"), str)
+        profiles = {
+            account.account_id: self._brand_profile_for_account(account.brand_id)
+            for account in accounts
         }
-        roles = {
-            str(row["role_id"]): row
-            for row in profile.get("principal_roles", [])
-            if isinstance(row, dict) and isinstance(row.get("role_id"), str)
-        }
+        roles_by_account: dict[str, list[str]] = {}
+        storylines: dict[str, JsonObject] = {}
+        columns: dict[str, JsonObject] = {}
+        for account in accounts:
+            profile = profiles[account.account_id]
+            role_cards = {
+                str(row["account_id"]): row
+                for row in profile.get("account_role_cards", [])
+                if isinstance(row, dict) and isinstance(row.get("account_id"), str)
+            }
+            roles = {
+                str(row["role_id"]): row
+                for row in profile.get("principal_roles", [])
+                if isinstance(row, dict) and isinstance(row.get("role_id"), str)
+            }
+            role_card = role_cards.get(account.account_id)
+            if isinstance(role_card, dict):
+                role = roles.get(str(role_card.get("default_role_id")))
+                if isinstance(role, dict):
+                    roles_by_account[account.display_name] = [str(role["display_name"])]
+            for storyline in profile.get("storylines", []):
+                if isinstance(storyline, dict) and isinstance(storyline.get("storyline_id"), str):
+                    storylines[str(storyline["storyline_id"])] = storyline
+            for column in profile.get("columns", []):
+                if isinstance(column, dict) and isinstance(column.get("column_id"), str):
+                    columns[str(column["column_id"])] = column
         return {
             "content_accounts": [account.display_name for account in accounts],
-            "roles_by_account": {
-                account.display_name: [
-                    str(roles[str(role_cards[account.account_id]["default_role_id"])]["display_name"])
-                ]
-                for account in accounts
-                if account.account_id in role_cards
-                and str(role_cards[account.account_id].get("default_role_id")) in roles
-            },
-            "storylines": [str(row["display_name"]) for row in profile.get("storylines", [])],
+            "roles_by_account": roles_by_account,
+            "storylines": [
+                str(row["display_name"])
+                for row in sorted(storylines.values(), key=lambda item: str(item["storyline_id"]))
+            ],
             "columns_by_storyline": {
                 str(storyline["display_name"]): [
                     str(column["display_name"])
-                    for column in profile.get("columns", [])
+                    for column in columns.values()
                     if column.get("storyline_id") == storyline.get("storyline_id")
                 ]
-                for storyline in profile.get("storylines", [])
+                for storyline in storylines.values()
             },
             "topics": sorted(self.topic_by_label),
             "platforms": ["抖音", "视频号", "小红书", "公众号或图文", "其他"],
@@ -1701,10 +1712,10 @@ class Package7Runtime:
         )
 
     def _brand_profile_for_account(self, brand_id: str) -> JsonObject:
-        active = self.repository.setting("active_runtime_brand")
-        if active["brand_id"] != brand_id:
+        try:
+            profile = self.repository.setting(f"brand_expression_profile:{brand_id}")
+        except KeyError:
             return self.repository.setting("neutral_expression_profile")
-        profile = self.repository.setting(str(active["profile_setting_key"]))
         if profile.get("brand_id") != brand_id:
             raise RuntimeContractError("Brand profile isolation failed")
         return profile

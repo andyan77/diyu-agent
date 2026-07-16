@@ -1,0 +1,45 @@
+{
+  "application_version": "package8-v1",
+  "brand_import_bundle_version": "v1.0",
+  "core_numbers": {
+    "120": "UNCHANGED_HISTORICAL_SCOPE",
+    "300": "UNCHANGED_NOT_FROZEN",
+    "86": "UNCHANGED_HISTORICAL_SCOPE"
+  },
+  "database_schema": {
+    "current_version": 1,
+    "tested_upgrade_version": 2
+  },
+  "external_model_calls_allowed": false,
+  "hosted_operations_entrypoint": "18_deployment/hosted_operations_001/hosted_operations.py",
+  "package7_merge_commit": "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
+  "preconditions": {
+    "dify_community_version": "1.15.0",
+    "postgresql_minimum_major": 14,
+    "python_minimum": "3.10"
+  },
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false,
+    "runtime_ready": false
+  },
+  "real_cloud_mutations_allowed": false,
+  "schema_version": "v1.0",
+  "second_brand_fixture": {
+    "path": "18_deployment/hosted_operations_001/fixtures/second_brand_fixture.v1.yaml",
+    "sha256": "6836c30924e95c41faf6fb091cbe0d942d1e74b9fde81e9d5c4cc7aed4021055"
+  },
+  "status": "NON_PRODUCTION_HOSTED_OPERATIONS_CANDIDATE",
+  "task_id": "DIYU_HOSTED_OPERATIONS_001",
+  "template": {
+    "path": "18_deployment/hosted_operations_001/brand_input_template.v1.yaml",
+    "sha256": "566902097a2d977defdf7e629a5ce3c7b119ad269c6d898a53f594f868449bd7"
+  }
+}

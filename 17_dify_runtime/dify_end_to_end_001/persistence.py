@@ -11,7 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from sqlalchemy import Engine, create_engine, inspect, select, text
+from sqlalchemy import Engine, MetaData, Table, UniqueConstraint, create_engine, inspect, select, text
+from sqlalchemy.schema import AddConstraint, DropConstraint
 from sqlalchemy.orm import Session, sessionmaker
 
 
@@ -165,6 +166,8 @@ class RuntimeRepository:
 
     def initialize_schema(self, engine: Engine) -> None:
         Base.metadata.create_all(engine)
+        if engine.dialect.name == "postgresql":
+            self._migrate_account_display_scope(engine)
         fragment_columns = {
             str(column["name"])
             for column in inspect(engine).get_columns("runtime_narrative_fragments")
@@ -178,6 +181,40 @@ class RuntimeRepository:
                     )
                 )
 
+    @staticmethod
+    def _migrate_account_display_scope(engine: Engine) -> None:
+        """Replace the Package 7 global account label key with a tenant key."""
+
+        metadata = MetaData()
+        accounts = Table(RuntimeAccount.__tablename__, metadata, autoload_with=engine)
+        unique_constraints = [
+            constraint
+            for constraint in accounts.constraints
+            if isinstance(constraint, UniqueConstraint)
+        ]
+        global_label_constraints = [
+            constraint
+            for constraint in unique_constraints
+            if [column.name for column in constraint.columns] == ["display_name"]
+        ]
+        composite_exists = any(
+            [column.name for column in constraint.columns] == ["tenant_id", "display_name"]
+            for constraint in unique_constraints
+        )
+        if not global_label_constraints and composite_exists:
+            return
+        with engine.begin() as connection:
+            for constraint in global_label_constraints:
+                connection.execute(DropConstraint(constraint))
+            if not composite_exists:
+                replacement = UniqueConstraint(
+                    accounts.c.tenant_id,
+                    accounts.c.display_name,
+                    name="uq_runtime_account_tenant_display_name",
+                )
+                accounts.append_constraint(replacement)
+                connection.execute(AddConstraint(replacement))
+
     def principal_by_username(self, username: str) -> RuntimePrincipal | None:
         with self.sessions() as session:
             return session.scalar(select(RuntimePrincipal).where(RuntimePrincipal.username == username))
@@ -188,7 +225,12 @@ class RuntimeRepository:
 
     def account_by_display_name(self, display_name: str) -> RuntimeAccount | None:
         with self.sessions() as session:
-            return session.scalar(select(RuntimeAccount).where(RuntimeAccount.display_name == display_name))
+            rows = list(
+                session.scalars(
+                    select(RuntimeAccount).where(RuntimeAccount.display_name == display_name)
+                ).all()
+            )
+            return rows[0] if len(rows) == 1 else None
 
     def account_by_id(self, account_id: str) -> RuntimeAccount | None:
         with self.sessions() as session:
@@ -224,13 +266,20 @@ class RuntimeRepository:
 
         with self.sessions() as session:
             principal = session.get(RuntimePrincipal, principal_id)
-            account = session.scalar(
-                select(RuntimeAccount).where(RuntimeAccount.display_name == display_name)
+            if principal is None or principal.status != "ACTIVE":
+                raise ValueError("Current principal and account scope is not active")
+            accounts = list(
+                session.scalars(
+                    select(RuntimeAccount).where(
+                        RuntimeAccount.display_name == display_name,
+                        RuntimeAccount.tenant_id == principal.tenant_id,
+                        RuntimeAccount.account_id.in_(principal.allowed_account_ids),
+                    )
+                ).all()
             )
+            account = accounts[0] if len(accounts) == 1 else None
             if (
-                principal is None
-                or principal.status != "ACTIVE"
-                or account is None
+                account is None
                 or account.status != "ACTIVE"
                 or principal.tenant_id != account.tenant_id
                 or account.account_id not in principal.allowed_account_ids
@@ -242,30 +291,59 @@ class RuntimeRepository:
         with self.sessions() as session:
             return tuple(session.scalars(select(RuntimeAccount).order_by(RuntimeAccount.account_id)).all())
 
-    def identity_payloads(self) -> JsonObject:
+    def identity_payloads(self, tenant_id: str | None = None) -> JsonObject:
         with self.sessions() as session:
+            principal_statement = select(RuntimePrincipal)
+            account_statement = select(RuntimeAccount)
+            authorization_statement = select(RuntimeAuthorization)
+            confirmation_statement = select(RuntimeSubjectConfirmation)
+            if tenant_id is not None:
+                principal_statement = principal_statement.where(RuntimePrincipal.tenant_id == tenant_id)
+                account_statement = account_statement.where(RuntimeAccount.tenant_id == tenant_id)
+                authorization_statement = authorization_statement.where(RuntimeAuthorization.tenant_id == tenant_id)
+                confirmation_statement = confirmation_statement.where(RuntimeSubjectConfirmation.tenant_id == tenant_id)
             return {
-                "principals": [copy.deepcopy(row.payload) for row in session.scalars(select(RuntimePrincipal)).all()],
-                "accounts": [copy.deepcopy(row.payload) for row in session.scalars(select(RuntimeAccount)).all()],
+                "principals": [copy.deepcopy(row.payload) for row in session.scalars(principal_statement).all()],
+                "accounts": [copy.deepcopy(row.payload) for row in session.scalars(account_statement).all()],
                 "authorizations": [
-                    copy.deepcopy(row.payload) for row in session.scalars(select(RuntimeAuthorization)).all()
+                    copy.deepcopy(row.payload) for row in session.scalars(authorization_statement).all()
                 ],
                 "subject_confirmations": [
-                    copy.deepcopy(row.payload) for row in session.scalars(select(RuntimeSubjectConfirmation)).all()
+                    copy.deepcopy(row.payload) for row in session.scalars(confirmation_statement).all()
                 ],
             }
 
-    def narrative_fragments(self, fragment_ids: list[str] | None = None) -> tuple[JsonObject, ...]:
+    def narrative_fragments(
+        self,
+        fragment_ids: list[str] | None = None,
+        *,
+        tenant_id: str | None = None,
+        brand_id: str | None = None,
+    ) -> tuple[JsonObject, ...]:
         with self.sessions() as session:
             statement = select(RuntimeNarrativeFragment)
             if fragment_ids is not None:
                 statement = statement.where(RuntimeNarrativeFragment.fragment_id.in_(fragment_ids))
+            if tenant_id is not None:
+                statement = statement.where(RuntimeNarrativeFragment.tenant_id == tenant_id)
+            if brand_id is not None:
+                statement = statement.where(RuntimeNarrativeFragment.brand_id == brand_id)
             rows = session.scalars(statement.order_by(RuntimeNarrativeFragment.fragment_id)).all()
             return tuple(copy.deepcopy(row.payload) for row in rows)
 
-    def precise_facts(self) -> tuple[JsonObject, ...]:
+    def precise_facts(
+        self,
+        *,
+        tenant_id: str | None = None,
+        brand_id: str | None = None,
+    ) -> tuple[JsonObject, ...]:
         with self.sessions() as session:
-            rows = session.scalars(select(RuntimePreciseFact).order_by(RuntimePreciseFact.fact_id)).all()
+            statement = select(RuntimePreciseFact)
+            if tenant_id is not None:
+                statement = statement.where(RuntimePreciseFact.tenant_id == tenant_id)
+            if brand_id is not None:
+                statement = statement.where(RuntimePreciseFact.brand_id == brand_id)
+            rows = session.scalars(statement.order_by(RuntimePreciseFact.fact_id)).all()
             return tuple(copy.deepcopy(row.payload) for row in rows)
 
     def bind_dify_documents(self, mapping: dict[str, JsonObject]) -> None:

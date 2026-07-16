@@ -74,13 +74,20 @@ class RuntimePrincipal(Base):
 
 class RuntimeAccount(Base):
     __tablename__ = "runtime_content_accounts"
+    __table_args__ = (
+        UniqueConstraint(
+            "tenant_id",
+            "display_name",
+            name="uq_runtime_account_tenant_display_name",
+        ),
+    )
 
     account_id: Mapped[str] = mapped_column(String(160), primary_key=True)
     tenant_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
     brand_id: Mapped[str] = mapped_column(String(128), nullable=False)
     organization_id: Mapped[str] = mapped_column(String(128), nullable=False)
     store_id: Mapped[str | None] = mapped_column(String(128), nullable=True)
-    display_name: Mapped[str] = mapped_column(String(200), nullable=False, unique=True)
+    display_name: Mapped[str] = mapped_column(String(200), nullable=False)
     status: Mapped[str] = mapped_column(String(32), nullable=False, default="ACTIVE")
     maker_role_ids: Mapped[list[str]] = mapped_column(JSON, nullable=False)
     payload: Mapped[JsonObject] = mapped_column(JSON, nullable=False)

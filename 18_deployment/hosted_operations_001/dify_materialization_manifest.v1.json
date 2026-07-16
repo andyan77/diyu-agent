@@ -1,0 +1,29 @@
+{
+  "application_definition": {
+    "path": "17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml",
+    "sha256": "39734bce3ad23e1c8fd85c378cd892692d6267a4635593b5687f74c7f5d91600",
+    "singleton": true
+  },
+  "bridge": {
+    "path": "17_dify_runtime/dify_end_to_end_001/bridge_app.py",
+    "sha256": "311254f5aa5a775f96c78d8821d0a72d1bf71e5dd5b9498cfcece73326597a6b",
+    "singleton": true
+  },
+  "dify_platform_version": "1.15.0",
+  "formal_narrative_retrieval": {
+    "adapter_path": "17_dify_runtime/dify_end_to_end_001/dify_knowledge.py",
+    "adapter_sha256": "83de0ec65b9746ebe9cb08968ba2c1977dfc8062dd748e9a4c688d8b34553fac",
+    "source_projection_path": "15_brand_retrieval/brand_fact_retrieval_001/data/retrieval_fragments.v1.jsonl",
+    "source_projection_sha256": "7c68aae699c0deb68e4734d78d50a821410d3ca74589ba6570b7f7e60417daf3",
+    "truth_count": 1
+  },
+  "package7_manifest": {
+    "path": "17_dify_runtime/dify_end_to_end_001/dify_end_to_end_manifest.v1.json",
+    "sha256": "1f0935727f448b7ae70167d4dd07e18f4b46e0b830b7bfcca9c3d770f39bfd2d"
+  },
+  "real_dify_import_performed": false,
+  "rebuild_policy": "VALIDATE_DETERMINISTIC_INPUTS_LOCALLY_IMPORT_ON_PACKAGE9_ONLY",
+  "schema_version": "v1.0",
+  "secrets_included": false,
+  "task_id": "DIYU_HOSTED_OPERATIONS_001"
+}
