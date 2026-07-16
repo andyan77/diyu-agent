@@ -1,0 +1,37 @@
+{
+  "schema_version": "p7-domain-data-denylist-v1",
+  "authority": "D0 §④（denylist 原则）+ v2.4 §二-3 + P1 §十八",
+  "principle": "以下内容永不进入任何产品交付仓（240+60 基线资产集除外——它是 B 的交付物，随 B_DELIVERY 入库）",
+  "denied_path_prefixes": [
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p1b_signed_review_closeout_and_baseline_freeze_001/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p2_component_supply_and_generator_core_repair_001/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p3_",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p4_",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p5_p6_300_baseline_scale_and_freeze_001/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/pkg1_open_regression/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/freeze/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/ledger/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/calibration/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/fixtures/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/review/",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/"
+  ],
+  "denied_categories": [
+    "QUAL-A / QUAL-B（题面、双盲标注、金标、冻结记录）",
+    "隐藏 40（题面与答案）",
+    "G1/G2 开发与裁决金标",
+    "R1–R5 轮次数据、失败证据、round 输入输出",
+    "领域事实账本与编造样本",
+    "旧 120 原文、86 历史候选、路线 60 黄金答案、组件基座",
+    "审计内档（journal、STOP_LEDGER、审核回执、控制面全部）",
+    "密钥、凭据、.env*、.runtime/、生产配置",
+    "客户数据（任何形态，包括日志/缓存/遥测内嵌）"
+  ],
+  "enforcement": [
+    "tools/lift_chain.py denylist 前缀扫描（导出树零命中）",
+    "tools/sealed_scan.py 密封摘要 denylist 撞库（含 git 全历史与 pack 对象）",
+    "命中即停（v2.5 §七 新增停线 ③）"
+  ]
+}

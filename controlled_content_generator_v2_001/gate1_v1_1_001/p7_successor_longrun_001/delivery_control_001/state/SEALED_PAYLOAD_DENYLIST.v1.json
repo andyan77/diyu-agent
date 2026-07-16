@@ -1,0 +1,11 @@
+{
+  "schema_version": "p7-sealed-payload-denylist-v1",
+  "description": "已知密封载荷摘要 denylist（撞库扫描输入）。M1 阶段只含合成标记（不接触真实密封材料）；自 M3 起由密封保全角色登记真实载荷摘要。",
+  "entries": [
+    {
+      "sha256": "14f552627284d2f6ed4a213e34ba2810393bf095e645368cfd171945c051c6a9",
+      "kind": "SYNTHETIC_TEST_MARKER",
+      "note": "sha256(b'SYNTHETIC-SEALED-PAYLOAD-QUAL-MARKER-001')——仅供 M1 负向测试；真实密封载荷摘要自 M3 起追加"
+    }
+  ]
+}

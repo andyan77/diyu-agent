@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-cross-repo-lift-manifest-v1",
+  "title": "跨仓搬迁清单 schema（逐文件 sha256；机械同一性判据输入）",
+  "type": "object",
+  "required": [
+    "schema_version", "product", "source_commit", "source_tree_digest",
+    "target_repo", "target_first_commit_expectation", "entries",
+    "entry_count", "denylist_scan_clean", "manifest_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-cross-repo-lift-manifest-v1" },
+    "product": { "enum": ["A", "B"] },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "source_tree_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "target_repo": { "type": "string", "minLength": 1 },
+    "target_first_commit_expectation": {
+      "const": "CLEAN_ROOT_COMMIT_NO_SOURCE_HISTORY"
+    },
+    "entries": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["source_path", "target_path", "sha256"],
+        "properties": {
+          "source_path": { "type": "string", "minLength": 1 },
+          "target_path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "entry_count": { "type": "integer", "minimum": 1 },
+    "denylist_scan_clean": { "const": true },
+    "manifest_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
+}

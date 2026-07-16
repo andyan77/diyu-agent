@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-launch-record-v1",
+  "title": "里程碑启动记录 schema（v2.5 §壹-9：P1–P7 为启动记录，非授权令牌）",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "prompt_id",
+    "milestone_id",
+    "workspace",
+    "input_commit",
+    "rendered_prompt_path",
+    "rendered_prompt_digest",
+    "template_digest",
+    "predecessor_receipt_digest",
+    "handoff_digest",
+    "write_surface_allowlist",
+    "write_surface_denylist",
+    "allowed_git_actions",
+    "allowed_repo_and_remote_creation",
+    "allowed_models_and_materials",
+    "session_kind",
+    "session_id",
+    "requested_model",
+    "actual_model",
+    "auto_memory_disabled",
+    "launched_by",
+    "launched_at",
+    "launch_capability",
+    "record_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-launch-record-v1" },
+    "prompt_id": { "enum": ["P1", "P2", "P3", "P4", "P5", "P6", "P7"] },
+    "milestone_id": { "enum": ["M1", "M2", "M3", "M4", "M5", "M6", "M7"] },
+    "workspace": { "type": "string", "minLength": 1 },
+    "input_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "rendered_prompt_path": { "type": "string", "minLength": 1 },
+    "rendered_prompt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "template_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "predecessor_receipt_digest": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        { "const": "GENESIS_M1" }
+      ]
+    },
+    "handoff_digest": {
+      "oneOf": [
+        { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        { "const": "GENESIS_M1" }
+      ]
+    },
+    "route_binding": { "enum": ["a", "b", null] },
+    "write_surface_allowlist": {
+      "type": "array", "minItems": 1, "items": { "type": "string" }
+    },
+    "write_surface_denylist": {
+      "type": "array", "minItems": 1, "items": { "type": "string" }
+    },
+    "allowed_git_actions": {
+      "type": "array", "minItems": 1, "items": { "type": "string" }
+    },
+    "allowed_repo_and_remote_creation": {
+      "type": "array", "items": { "type": "string" }
+    },
+    "allowed_models_and_materials": {
+      "type": "array", "minItems": 1, "items": { "type": "string" }
+    },
+    "session_kind": {
+      "description": "必须为全新顶层会话；子代理伪装 = 无效启动记录",
+      "const": "TOP_LEVEL_FRESH"
+    },
+    "session_id": {
+      "oneOf": [
+        { "type": "string", "minLength": 8 },
+        {
+          "type": "object",
+          "required": ["value", "unavailable_reason", "evidence_ref"],
+          "properties": {
+            "value": { "const": "UNAVAILABLE" },
+            "unavailable_reason": { "type": "string", "minLength": 1 },
+            "evidence_ref": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "requested_model": { "type": "string", "pattern": "fable" },
+    "actual_model": { "type": "string", "minLength": 1 },
+    "auto_memory_disabled": { "const": true },
+    "launched_by": {
+      "description": "只能是会话外监督器；作者会话/子代理启动 = 无效",
+      "const": "SESSION_EXTERNAL_SUPERVISOR"
+    },
+    "launched_at": { "type": "string", "minLength": 1 },
+    "previous_session_exited_evidence": { "type": "string" },
+    "launch_capability": {
+      "enum": ["AUTO_LAUNCHED", "READY_TO_START", "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE"]
+    },
+    "exit_status": { "type": ["integer", "string", "null"] },
+    "record_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
+}

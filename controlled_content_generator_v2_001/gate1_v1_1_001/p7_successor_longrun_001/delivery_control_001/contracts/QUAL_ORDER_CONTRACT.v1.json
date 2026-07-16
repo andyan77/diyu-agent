@@ -1,0 +1,32 @@
+{
+  "schema_version": "p7-qual-order-contract-v1",
+  "authority": "v2.5 §四 4.6（#13 资格材料全序唯一化）+ P1 §十四；写入 M3/M4 入口合同与负向测试",
+  "stop_code": "STOP_QUALIFICATION_ORDER_VIOLATION",
+  "sets": {
+    "QUAL_A": {
+      "steps_m3": ["A1_FACE_FROZEN", "A2_DOUBLE_BLIND_LABELED", "A3_GOLD_FROZEN"],
+      "reveal_step_m4": "A6_REVEALED"
+    },
+    "QUAL_B": {
+      "steps_m3": ["B1_FACE_FROZEN", "B2_DOUBLE_BLIND_LABELED", "B3_GOLD_FROZEN"],
+      "reveal_step_m4": "B6_REVEALED"
+    }
+  },
+  "global_order_rules": [
+    "每步必须产出带单调序号与时间的回执；缺回执 = 该步未发生",
+    "QUAL-A 与 QUAL-B 互不相交（共同抽样框、分层随机、难度平衡）",
+    "两集的 ①②③ 必须全部先于任何 METHOD_FROZEN（④）与任何揭晓（⑥）",
+    "首次运行序：M1_FACE… 已毕 → M4_METHOD_V1_FROZEN → M5_QUAL_A_BLIND_PREDICTED → A6_REVEALED",
+    "合法 R1/R2 序：M4_METHOD_V2_FROZEN → B5_QUAL_B_BLIND_PREDICTED（使用既有密封 QUAL-B）→ B6_REVEALED",
+    "QUAL-B 在其盲预测之前从未揭晓、从未回传作者",
+    "R2 禁止重新构造 QUAL-B 的题面、双盲金标或冻结结果（A6 之后出现任何 B1/B2/B3 = 违规）",
+    "任何事后补录（回执序号/时间倒挂）、顺序颠倒 = STOP_QUALIFICATION_ORDER_VIOLATION"
+  ],
+  "canonical_event_codes": [
+    "A1_FACE_FROZEN", "A2_DOUBLE_BLIND_LABELED", "A3_GOLD_FROZEN",
+    "B1_FACE_FROZEN", "B2_DOUBLE_BLIND_LABELED", "B3_GOLD_FROZEN",
+    "M4_METHOD_V1_FROZEN", "A5_QUAL_A_BLIND_PREDICTED", "A6_REVEALED",
+    "M4_METHOD_V2_FROZEN", "B5_QUAL_B_BLIND_PREDICTED", "B6_REVEALED"
+  ],
+  "validator": "tools/qual_order.py（M3/M4 入口与 checker FINAL 复算；负向测试 tests/test_negative_attacks.py #18）"
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": "p7-milestone-dag-v1",
+  "description": "Y 形里程碑依赖图（v2.4 §三 3.8 + v2.5 §三 3.1′ + P1 §十三）。ready-set 必须按本图计算，禁止按 P1..P7 编号机械串行。",
+  "nodes": {
+    "M1": { "title": "地基硬化", "covers": "E0a", "track": "SHARED" },
+    "M2": { "title": "治理关闭+真实S0", "covers": "E0b+E0c", "track": "SHARED" },
+    "M3": { "title": "数据供给", "covers": "E1-S/D/Q", "track": "A" },
+    "M4": { "title": "首次M0资格化", "covers": "E2+E3", "track": "A" },
+    "M5": { "title": "产品A交付", "covers": "EP1+搬仓", "track": "A" },
+    "M6": { "title": "B资格主门", "covers": "E4-E7", "track": "B" },
+    "M7": { "title": "产品B交付", "covers": "E8+E9+搬仓", "track": "B" }
+  },
+  "edges": [
+    {
+      "to": "M2",
+      "requires": [
+        { "kind": "TYPED_RESULT", "milestone": "M1", "value": "PASS" }
+      ]
+    },
+    {
+      "to": "M3",
+      "requires": [
+        { "kind": "TYPED_RESULT", "milestone": "M2", "value": "PASS" }
+      ]
+    },
+    {
+      "to": "M6",
+      "requires": [
+        { "kind": "TYPED_RESULT", "milestone": "M2", "value": "PASS" },
+        { "kind": "ROUTE_FROZEN", "any_of": ["a", "b"] }
+      ],
+      "route_conditional": {
+        "a": [],
+        "b": [
+          {
+            "kind": "QUALIFICATION_FLAG",
+            "milestone": "M4",
+            "flag": "A2_QUALIFIED",
+            "note": "只接受 A2_QUALIFIED_RECEIPT（PASS 回执上的显式旗标）；通用 M4 关闭回执 / A2_DIAGNOSTIC_FINAL / 自然语言 '已结束' / 缺状态值回执一律不满足"
+          }
+        ]
+      },
+      "parallelism_note": "路线 (a) 下 M6 与 M3 并行（M2 PASS 后同时 ready）"
+    },
+    {
+      "to": "M4",
+      "requires": [
+        { "kind": "TYPED_RESULT", "milestone": "M3", "value": "PASS" },
+        { "kind": "QUALIFICATION_FLAG", "milestone": "M3", "flag": "LOGICAL_CORE_SEPARATED" }
+      ]
+    },
+    {
+      "to": "M5",
+      "requires": [
+        { "kind": "TYPED_RESULT_ANY", "milestone": "M4", "values": ["PASS", "DIAGNOSTIC_FINAL"], "note": "M4 有效最终结果两态均合法（A2_QUALIFIED / A2_DIAGNOSTIC_FINAL）" },
+        { "kind": "QUALIFICATION_FLAG_ANY_RESULT", "milestone": "M4", "flag": "A_LIFT_READY", "allowed_results": ["PASS", "DIAGNOSTIC_FINAL"] }
+      ]
+    },
+    {
+      "to": "M7",
+      "requires": [
+        { "kind": "TYPED_RESULT", "milestone": "M6", "value": "PASS" },
+        { "kind": "QUALIFICATION_FLAG", "milestone": "M6", "flag": "B_LIFT_READY", "note": "只接受 B_LIFT_READY==true；M6 的 FAIL/HONEST_STOP/普通关闭回执不得启动 M7" }
+      ]
+    }
+  ],
+  "anti_patterns_rejected": [
+    "按 P1..P7 编号串行而忽略本图（负向攻击 #30）",
+    "REVIEW_READY / ACTIVE 满足任何入口",
+    "失败回执携带正向资格旗标",
+    "无路线冻结记录即启动 M6"
+  ]
+}

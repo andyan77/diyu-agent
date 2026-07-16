@@ -1,0 +1,22 @@
+{
+  "schema_version": "p7-clean-room-profile-v1",
+  "product": "B",
+  "authority": "v2.5 §四 4.4′ + P1 §十九（B 在没有 A 和源仓的 hermetic 环境中可安装、运行、复算）",
+  "environment": {
+    "isolation": "全新容器或全新 venv",
+    "dependency_install": "仅按锁定清单安装；清单随 B_LIFT 提交冻结",
+    "PYTHONPATH": "必须清空",
+    "network": "离线运行（除声明依赖安装阶段）",
+    "product_A_absence": "环境中不安装、不可导入产品 A（import 探测零命中）",
+    "source_repo_paths": "零源仓绝对路径",
+    "host_caches": "禁借宿主缓存",
+    "editable_installs": "禁止"
+  },
+  "acceptance": [
+    "安装：锁定清单一次成功（无 A、无源仓）",
+    "运行：B 自含验证套件全绿",
+    "复算：E9 从原始事件独立重算结果与交付报告一致",
+    "扫描：B 树 import 图零 A 引用；denylist 撞库零命中；240+60 资产清单逐文件 sha256 一致"
+  ],
+  "violations_are_stop": true
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "p7-core-export-allowlist-v1",
+  "authority": "D0 §③（allowlist 原则）；抽取执行属 M3（逻辑）/M5、M7（物理），M1 仅登记",
+  "principle": "只允许列入：评测/审计逻辑代码、schema、量规模板、自含验证套件、产品文档模板；任何领域数据、资格材料、失败轮次、审计内档一律不在此表",
+  "product_A_export_candidates": [
+    {
+      "path_prefix": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/spine/",
+      "kind": "评测脊柱逻辑代码",
+      "note": "M3 core 抽取时按接口冻结逐文件登记 sha256；external_llm 密钥装载路径须替换为产品配置层"
+    },
+    {
+      "path_prefix": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/schema/",
+      "kind": "机器可检验形状"
+    },
+    {
+      "path_prefix": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/rubric/",
+      "kind": "量规模板（不含金标实例）"
+    },
+    {
+      "path_prefix": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/tests/",
+      "kind": "自含验证套件（剔除引用源仓私有路径的用例）"
+    }
+  ],
+  "product_B_export_candidates": [
+    {
+      "path_prefix": "controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/",
+      "kind": "生成器应用 + 自含验证套件",
+      "note": "B_LIFT 提交内容；240+60 资产属 E8 产物随 B_DELIVERY 入库"
+    }
+  ],
+  "hard_rules": [
+    "allowlist 之外零字节出仓",
+    "每次实际抽取生成 CROSS_REPO_LIFT_MANIFEST（逐文件 sha256）并经独立复核",
+    "候选文件若 import/引用 DOMAIN_DATA_DENYLIST 路径 → 不得原样导出，须先解耦",
+    "本表为原则登记；逐文件 allowlist 在 M3 接口冻结时物化为 manifest"
+  ]
+}

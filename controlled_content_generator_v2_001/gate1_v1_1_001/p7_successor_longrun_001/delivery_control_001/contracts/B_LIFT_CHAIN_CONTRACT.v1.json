@@ -1,0 +1,31 @@
+{
+  "schema_version": "p7-b-lift-chain-contract-v1",
+  "authority": "v2.5 §四 4.4′ M7 链（修复 v2.4 循环缺陷）+ P1 §十九",
+  "chain": [
+    { "step": 1, "id": "B_LIFT_COMMIT", "content": "干净搬仓首提交：生成器应用 + 自含验证套件；不含 240+60 资产；无源仓 Git 历史" },
+    { "step": 2, "id": "E8_ON_B_LIFT", "content": "E8 扩量在 B_LIFT 提交上运行（240 可折抵开放 120 合格数 N，逐条过标准六检）" },
+    { "step": 3, "id": "B_DELIVERY_COMMIT", "content": "240+60 资产及必要清单入库 = 交付提交" },
+    { "step": 4, "id": "E9_ON_B_DELIVERY", "content": "E9 针对 B_DELIVERY 提交从原始事件独立重算" },
+    { "step": 5, "id": "DUAL_DIGEST_SIGNOFF", "content": "终验签字同时绑定 B_LIFT commit/tree digest + B_DELIVERY commit/tree digest" }
+  ],
+  "mechanical_proofs_required": [
+    "EXECUTABLE_TREE_IDENTITY: B_LIFT 与 B_DELIVERY 的可执行代码树摘要完全不变（tools/lift_chain.py 复算）",
+    "ADDITIONS_RESTRICTED: B_DELIVERY 相对 B_LIFT 只允许新增 240+60 资产、资产清单、审计元数据（allowlisted 前缀）",
+    "POST_E9_IMMUTABILITY: E9 之后任何代码/资产/配置/依赖改变 → 资格失效（重新走链）",
+    "NO_IMPORT_A: 产品 B 树 import 图零产品 A 引用",
+    "HERMETIC: B 在无 A、无源仓的 clean-room（profile B）安装、运行、复算全通过"
+  ],
+  "addition_allowlist_prefixes": [
+    "assets/positive_240/",
+    "assets/route_60/",
+    "assets/manifests/",
+    "audit_metadata/"
+  ],
+  "executable_tree_definition": "除 addition_allowlist_prefixes 之外的全部路径均视为可执行代码树（含配置与依赖锁定清单）",
+  "signoff_binding": {
+    "receipt_schema": "schema/signer_receipt.v1.schema.json",
+    "must_bind": ["b_lift_commit", "b_lift_tree_digest", "b_delivery_commit", "b_delivery_tree_digest"],
+    "invalid_if": "只绑定单摘要 / 绑定源仓提交 / E9 于源仓完成后搬仓沿用签字"
+  },
+  "validator": "tools/lift_chain.py（负向测试 tests/test_negative_attacks.py #23/#24/#25）"
+}

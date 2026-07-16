@@ -1,0 +1,21 @@
+{
+  "schema_version": "p7-clean-room-profile-v1",
+  "product": "A",
+  "authority": "v2.5 §四 4.4′-③（#8 hermetic 验收规格）",
+  "environment": {
+    "isolation": "全新容器或全新 venv（二选一，交付时登记实际选型）",
+    "dependency_install": "仅按锁定清单（lockfile）安装；清单随交付物冻结",
+    "PYTHONPATH": "必须清空",
+    "network": "除声明的外部依赖安装阶段外离线运行",
+    "source_repo_paths": "sys.path 与环境变量中零源仓绝对路径（扫描证明）",
+    "host_caches": "禁借宿主 pip/npm 缓存目录（--no-cache 或隔离缓存）",
+    "editable_installs": "禁止（无 .egg-link / *.pth 指向源仓）"
+  },
+  "acceptance": [
+    "安装：锁定清单一次成功",
+    "运行：产品 A 自含验证套件全绿",
+    "复算：审计脊柱指标复算与交付报告逐字节一致",
+    "扫描：sys.path/env/包元数据零源仓路径引用；denylist 撞库零命中"
+  ],
+  "violations_are_stop": true
+}

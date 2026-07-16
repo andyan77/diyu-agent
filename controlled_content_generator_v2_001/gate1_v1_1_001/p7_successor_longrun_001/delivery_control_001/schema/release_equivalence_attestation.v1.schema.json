@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-release-equivalence-attestation-v1",
+  "title": "搬迁等价证明 schema（机械同一性 + 行为等价双证；签字绑双摘要）",
+  "type": "object",
+  "required": [
+    "schema_version", "product", "lift_manifest_digest",
+    "source_commit", "target_first_commit",
+    "digest_identity_proof", "behavior_equivalence_proof",
+    "leak_scan_report_digest", "clean_room_report_digest",
+    "rights_clearance_closed", "signer_receipt_path", "signer_receipt_digest",
+    "attestation_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-release-equivalence-attestation-v1" },
+    "product": { "enum": ["A", "B"] },
+    "lift_manifest_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "source_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "target_first_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "digest_identity_proof": {
+      "type": "object",
+      "required": ["all_entries_recomputed_identical", "mismatch_count"],
+      "properties": {
+        "all_entries_recomputed_identical": { "const": true },
+        "mismatch_count": { "const": 0 }
+      }
+    },
+    "behavior_equivalence_proof": {
+      "type": "object",
+      "required": ["suite_digest", "source_run_digest", "target_run_digest",
+                   "identical"],
+      "properties": {
+        "suite_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "source_run_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "target_run_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "identical": { "const": true }
+      }
+    },
+    "leak_scan_report_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "clean_room_report_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "rights_clearance_closed": { "const": true },
+    "b_lift_chain": {
+      "type": "object",
+      "description": "product==B 时必填：双提交/双树摘要绑定",
+      "required": ["b_lift_commit", "b_lift_tree_digest",
+                   "b_delivery_commit", "b_delivery_tree_digest",
+                   "executable_tree_identity"],
+      "properties": {
+        "b_lift_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "b_lift_tree_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "b_delivery_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "b_delivery_tree_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "executable_tree_identity": { "const": true }
+      }
+    },
+    "signer_receipt_path": { "type": "string", "minLength": 1 },
+    "signer_receipt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "attestation_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "product": { "const": "B" } } },
+      "then": { "required": ["b_lift_chain"] }
+    }
+  ],
+  "additionalProperties": false
+}
