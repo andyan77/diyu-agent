@@ -15,7 +15,7 @@ from fact_aware_plan_adapter import (
     PlanMaterialAccessDenied,
     SERVER_ACCESS_AUTHORITY,
     SERVER_TASK_AUTHORITY,
-    START_CONTENT_PRODUCTION,
+    START_CREATION,
     ServerConfirmedProductionTask,
     ServerPlanAccess,
 )
@@ -59,7 +59,7 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
         self,
         case: Mapping[str, Any],
         *,
-        intent: str = START_CONTENT_PRODUCTION,
+        intent: str = START_CREATION,
         authority_source: str = SERVER_TASK_AUTHORITY,
         requirement_updates: Mapping[str, Any] | None = None,
         soft_preferences: Mapping[str, Any] | None = None,
@@ -195,7 +195,7 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
     def test_untrusted_or_nonproduction_requests_do_not_enter_both_services(self) -> None:
         spoofed_mapping = {
             "authority_source": SERVER_TASK_AUTHORITY,
-            "intent": START_CONTENT_PRODUCTION,
+            "intent": START_CREATION,
             "trusted": True,
         }
         untrusted = self.adapter.prepare(spoofed_mapping)
@@ -205,7 +205,34 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
             self.task_for_case(self.case("CP03"), intent="FIND_INSPIRATION")
         )
         self.assertEqual(nonproduction["object_type"], "ACTION_CARD")
+        unsupported_alias = self.adapter.prepare(
+            self.task_for_case(
+                self.case("CP03"), intent="START_CONTENT_PRODUCTION"
+            )
+        )
+        self.assertEqual(unsupported_alias["object_type"], "ACTION_CARD")
         self.assertEqual(self.adapter.call_audit["package5_retrieve"], 0)
+        self.assertEqual(self.adapter.call_audit["package2_prepare"], 0)
+
+    def test_package5_required_fact_gap_cannot_degrade_to_narrative_plan(self) -> None:
+        case = copy.deepcopy(self.case("CP17"))
+        case["case_id"] = "PKG6-REQUIRED-FACT-GAP"
+        case["precise_fact_queries"] = [
+            {
+                "fact_kind": "STOCK",
+                "selectors": {"quantity": 1},
+                "required": True,
+            }
+        ]
+        case["required_precise_fact_kinds"] = []
+        result = self.adapter.prepare(self.task_for_case(case))
+        self.assertEqual(result["object_type"], "ACTION_CARD")
+        self.assertEqual(result["action_type"], "COLLECT_FACT")
+        self.assertIn(
+            "PRECISE_FACT_RECONFIRMATION_REQUIRED",
+            result["missing_or_invalid_refs"],
+        )
+        self.assertEqual(self.adapter.call_audit["package5_retrieve"], 1)
         self.assertEqual(self.adapter.call_audit["package2_prepare"], 0)
 
     def test_missing_product_audience_or_fact_returns_owner_action_card(self) -> None:

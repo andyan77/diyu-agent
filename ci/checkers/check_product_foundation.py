@@ -87,6 +87,9 @@ SERIAL_SUCCESSOR_PACKAGES = (
     ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
+MANDATORY_SUCCESSOR_ROOTS = frozenset(
+    {Path("16_composition_runtime/fact_aware_plan_adapter_001")}
+)
 REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(
         "15_brand_retrieval/brand_fact_retrieval_001/"
@@ -100,8 +103,11 @@ SUCCESSOR_NORMAL_RUN_LINES = (
     "run_downstream_package_checker() {",
     '  package_root="$1"',
     '  checker="$2"',
-    '  reference_commit="${3:-}"',
+    '  required="${3:-false}"',
+    '  reference_commit="${4:-}"',
+    '  test "$required" = "true" || test "$required" = "false"',
     '  if [ ! -e "$package_root" ]; then',
+    '    test "$required" = "false"',
     "    return 0",
     "  fi",
     '  test -d "$package_root"',
@@ -125,6 +131,7 @@ SUCCESSOR_NORMAL_RUN_LINES = (
     "}",
     *(
         f'run_downstream_package_checker "{package_root.as_posix()}" "{checker.as_posix()}"'
+        f' "{"true" if package_root in MANDATORY_SUCCESSOR_ROOTS else "false"}"'
         + (
             f' "{REFERENCE_SAFE_SUCCESSOR_COMMITS[checker]}"'
             if checker in REFERENCE_SAFE_SUCCESSOR_COMMITS
@@ -138,8 +145,11 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     "run_downstream_package_checker_optimized() {",
     '  package_root="$1"',
     '  checker="$2"',
-    '  reference_commit="${3:-}"',
+    '  required="${3:-false}"',
+    '  reference_commit="${4:-}"',
+    '  test "$required" = "true" || test "$required" = "false"',
     '  if [ ! -e "$package_root" ]; then',
+    '    test "$required" = "false"',
     "    return 0",
     "  fi",
     '  test -d "$package_root"',
@@ -168,6 +178,7 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     "}",
     *(
         f'run_downstream_package_checker_optimized "{package_root.as_posix()}" "{checker.as_posix()}"'
+        f' "{"true" if package_root in MANDATORY_SUCCESSOR_ROOTS else "false"}"'
         + (
             f' "{REFERENCE_SAFE_SUCCESSOR_COMMITS[checker]}"'
             if checker in REFERENCE_SAFE_SUCCESSOR_COMMITS
@@ -825,6 +836,10 @@ def validate_successor_packages(root: Path) -> None:
     for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES:
         package_path = root / package_root
         if not package_path.exists():
+            require(
+                package_root not in MANDATORY_SUCCESSOR_ROOTS,
+                f"E_SUCCESSOR_ROOT_MISSING:{package_root}",
+            )
             continue
         require(package_path.is_dir(), f"E_SUCCESSOR_ROOT_NOT_DIRECTORY:{package_root}")
         require((root / checker).is_file(), f"E_SUCCESSOR_CHECKER_MISSING:{checker}")
@@ -4563,6 +4578,14 @@ raise SystemExit(0)
         expect_failure(
             lambda: validate_successor_packages(temp_root),
             "E_SUCCESSOR_CHECKER_NORMAL",
+        )
+
+        failing_checker.write_text(passing_checker, encoding="utf-8")
+        mandatory_root = next(iter(MANDATORY_SUCCESSOR_ROOTS))
+        shutil.rmtree(temp_root / mandatory_root)
+        expect_failure(
+            lambda: validate_successor_packages(temp_root),
+            "E_SUCCESSOR_ROOT_MISSING",
         )
 
     with tempfile.TemporaryDirectory(

@@ -262,7 +262,7 @@ def validate_manifest(
         "internal_content_product_count": 20,
         "evidence_backed_plan_case_count": 10,
         "honest_action_card_case_count": 10,
-        "unit_test_count": 14,
+        "unit_test_count": 15,
     }
     if not isinstance(coverage, dict) or any(
         coverage.get(key) != value for key, value in expected_coverage.items()
@@ -366,6 +366,7 @@ def validate_source(package_root: Path, errors: list[str]) -> None:
     imported_roots: set[str] = set()
     classes: set[str] = set()
     called_attributes: set[str] = set()
+    string_constants: dict[str, str] = {}
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             imported_roots.update(alias.name.split(".")[0] for alias in node.names)
@@ -375,6 +376,14 @@ def validate_source(package_root: Path, errors: list[str]) -> None:
             classes.add(node.name)
         elif isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
             called_attributes.add(node.func.attr)
+        elif (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        ):
+            string_constants[node.targets[0].id] = node.value.value
     forbidden = imported_roots & FORBIDDEN_IMPORT_ROOTS
     if forbidden:
         errors.append(f"external runtime imports forbidden: {sorted(forbidden)}")
@@ -393,6 +402,8 @@ def validate_source(package_root: Path, errors: list[str]) -> None:
     for required_call in ("retrieve", "prepare", "validate"):
         if required_call not in called_attributes:
             errors.append(f"upstream entrypoint call missing: {required_call}")
+    if string_constants.get("START_CREATION") != "START_CREATION":
+        errors.append("public START_CREATION intent is not bound exactly")
     text = source_path.read_text(encoding="utf-8")
     if "approved_example_refs\": []" not in text:
         errors.append("Package 5 candidate examples are not forced empty")
@@ -639,6 +650,18 @@ def selftest(require_reviews: bool) -> list[str]:
             Path("fact_aware_plan_adapter.py"),
             lambda path: path.write_text(
                 f"import socket\n{path.read_text(encoding='utf-8')}",
+                encoding="utf-8",
+            ),
+        ),
+        (
+            "unsupported creation intent alias",
+            Path("fact_aware_plan_adapter.py"),
+            lambda path: path.write_text(
+                path.read_text(encoding="utf-8").replace(
+                    'START_CREATION = "START_CREATION"',
+                    'START_CREATION = "START_CONTENT_PRODUCTION"',
+                    1,
+                ),
                 encoding="utf-8",
             ),
         ),

@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "4bbd54595d6159d2867895159ea88424115760db10838ac5df226c5e3ea7a9d8"
+    "f25fa89e4c46345089934650a3b04471a56000c78e8261f8530237a04b10b3dd"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -149,6 +149,9 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_fact_aware_plan_adapter.py"
         ),
     ),
+)
+MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
+    {Path("16_composition_runtime/fact_aware_plan_adapter_001")}
 )
 DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
     Path(
@@ -823,8 +826,11 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         "run_downstream_package_checker() {",
         'package_root="$1"',
         'checker="$2"',
-        'reference_commit="${3:-}"',
+        'required="${3:-false}"',
+        'reference_commit="${4:-}"',
+        'test "$required" = "true" || test "$required" = "false"',
         'if [ ! -e "$package_root" ]; then',
+        'test "$required" = "false"',
         "return 0",
         "fi",
         'test -d "$package_root"',
@@ -849,6 +855,7 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         *(
             f'run_downstream_package_checker "{package_root.as_posix()}" '
             f'"{checker_path.as_posix()}"'
+            f' "{"true" if package_root in MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS else "false"}"'
             + (
                 f' "{DOWNSTREAM_REFERENCE_SAFE_COMMITS[checker_path]}"'
                 if checker_path in DOWNSTREAM_REFERENCE_SAFE_COMMITS
@@ -862,8 +869,11 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         "run_downstream_package_checker_optimized() {",
         'package_root="$1"',
         'checker="$2"',
-        'reference_commit="${3:-}"',
+        'required="${3:-false}"',
+        'reference_commit="${4:-}"',
+        'test "$required" = "true" || test "$required" = "false"',
         'if [ ! -e "$package_root" ]; then',
+        'test "$required" = "false"',
         "return 0",
         "fi",
         'test -d "$package_root"',
@@ -893,6 +903,7 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
         *(
             f'run_downstream_package_checker_optimized "{package_root.as_posix()}" '
             f'"{checker_path.as_posix()}"'
+            f' "{"true" if package_root in MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS else "false"}"'
             + (
                 f' "{DOWNSTREAM_REFERENCE_SAFE_COMMITS[checker_path]}"'
                 if checker_path in DOWNSTREAM_REFERENCE_SAFE_COMMITS

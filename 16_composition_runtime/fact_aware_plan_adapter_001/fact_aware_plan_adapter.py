@@ -45,7 +45,7 @@ from light_expression_service import (  # type: ignore[import-not-found]  # noqa
 )
 
 
-START_CONTENT_PRODUCTION = "START_CONTENT_PRODUCTION"
+START_CREATION = "START_CREATION"
 SERVER_TASK_AUTHORITY = "SERVER_CONFIRMED_TASK_REGISTRY"
 SERVER_ACCESS_AUTHORITY = "SERVER_SESSION_SCOPE"
 NEUTRAL_PROFILE_MODE = "NEUTRAL_DEFAULT"
@@ -177,7 +177,7 @@ class FactAwarePlanAdapter:
         action_request = {"confirmed_requirement": requirement}
         if (
             task.authority_source != SERVER_TASK_AUTHORITY
-            or task.intent != START_CONTENT_PRODUCTION
+            or task.intent != START_CREATION
         ):
             result = self._guard_action_card(
                 action_request,
@@ -223,6 +223,35 @@ class FactAwarePlanAdapter:
             self._append_record(
                 task,
                 None,
+                result,
+                package_5_called=True,
+                package_2_called=False,
+            )
+            return result
+
+        precise_fact_gaps = [
+            copy_mapping(gap)
+            for gap in retrieval["gaps"]
+            if str(gap.get("code", "")).startswith("PRECISE_FACT_")
+        ]
+        if precise_fact_gaps:
+            gap_codes = [str(gap["code"]) for gap in precise_fact_gaps]
+            fact_kinds = sorted(
+                {
+                    str(gap["fact_kind"])
+                    for gap in precise_fact_gaps
+                    if gap.get("fact_kind")
+                }
+            )
+            result = self._guard_action_card(
+                action_request,
+                "所需精确事实缺失、冲突或需要重新确认，不能降级为叙事计划。",
+                [*gap_codes, *fact_kinds],
+                action_type="COLLECT_FACT",
+            )
+            self._append_record(
+                task,
+                retrieval,
                 result,
                 package_5_called=True,
                 package_2_called=False,
@@ -437,13 +466,15 @@ class FactAwarePlanAdapter:
         request: JsonObject,
         reason: str,
         refs: list[str],
+        *,
+        action_type: str = "BLOCK",
     ) -> JsonObject:
         # Package 2 owns the action-card materializer; this adapter does not copy it.
         return cast(
             JsonObject,
             self.expression_service._action_card(  # noqa: SLF001
                 request,
-                PreparationIssue("BLOCK", reason, refs),
+                PreparationIssue(action_type, reason, refs),
             ),
         )
 
@@ -522,7 +553,7 @@ __all__ = [
     "PlanMaterialAccessDenied",
     "SERVER_ACCESS_AUTHORITY",
     "SERVER_TASK_AUTHORITY",
-    "START_CONTENT_PRODUCTION",
+    "START_CREATION",
     "ServerConfirmedProductionTask",
     "ServerPlanAccess",
 ]
