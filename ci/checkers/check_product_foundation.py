@@ -793,9 +793,11 @@ def run_successor_checker(root: Path, checker: Path) -> None:
                 text=True,
                 env=environment,
             )
+            output_tail = completed.stdout[-2000:].strip().replace("\n", " | ")
             require(
                 completed.returncode == expected_code,
-                f"E_SUCCESSOR_CHECKER_{mode}:{checker}:{completed.returncode}",
+                f"E_SUCCESSOR_CHECKER_{mode}:{checker}:"
+                f"{completed.returncode}:{output_tail}",
             )
     finally:
         if temporary is not None:
