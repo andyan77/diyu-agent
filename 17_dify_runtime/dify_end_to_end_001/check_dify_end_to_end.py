@@ -127,6 +127,7 @@ AUTHORIZED_COMPATIBILITY_PATHS = frozenset(
             "16_composition_runtime/fact_aware_plan_adapter_001/"
             "adapter_manifest.v1.yaml"
         ),
+        Path("ci/checkers/check_product_foundation.py"),
         Path("ci/checkers/check_gate1_v1_1_current.py"),
         Path(".github/workflows/ci.yml"),
     }
