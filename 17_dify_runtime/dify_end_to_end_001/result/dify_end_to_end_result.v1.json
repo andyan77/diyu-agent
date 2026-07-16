@@ -3,8 +3,8 @@
   "task_id": "DIYU_DIFY_END_TO_END_001",
   "state": "PASS_DIFY_END_TO_END_PENDING_PACKAGE_8",
   "success_claim": "PACKAGE7_ACCEPTANCE_COMPLETE_NOT_PRODUCTION_READY",
-  "reviewed_candidate_commit": "7ae81794ecae2529cea643842adcdbdac692bbfd",
-  "reviewed_snapshot_sha256": "6ac918bdd21f8ac6edf99856000a7b68c6351ddf",
+  "reviewed_candidate_commit": "f2dcbb268527d71da2d10ae8c001fd786cd6fc54",
+  "reviewed_snapshot_sha256": "611c9c86426145ba84770a40330475f86c147f40",
   "blocking_items": [],
   "external_objects": {
     "dify_app_count": 1,
@@ -33,9 +33,13 @@
     "known_total_tokens": 273612,
     "failed_or_unknown_billing_count": 3,
     "known_cost_rmb": "0.405101",
+    "original_authorized_request_upper_bound": 40,
+    "founder_additional_authorized_request_upper_bound": 60,
     "effective_authorized_request_upper_bound": 100,
     "authorized_cost_cny_upper_bound": 50,
-    "content_quality_reroll_count": 0
+    "content_quality_reroll_count": 0,
+    "new_content_model_calls_after_existing_stop": 0,
+    "new_remote_deployments_after_existing_stop": 0
   },
   "checks": {
     "package7_unit_tests": "PASS_52",
@@ -47,11 +51,11 @@
   },
   "independent_reviews": [
     {
-      "review_id": "DIYU-DIFY-END-TO-END-001-CONTENT-FINAL-BINDING-04",
+      "review_id": "DIYU_DIFY_END_TO_END_001_P7_CONTENT_ADDENDUM_V2_F2DCBB2_20260716T080433_05",
       "review_type": "CONTENT_EXPERIENCE_AND_ORGANIZATION"
     },
     {
-      "review_id": "DIYU-PKG7-TRUST-FINAL-BINDING-04-7AE81794",
+      "review_id": "DIYU-PKG7-TRUST-ADDENDUM-V2-F2DCBB26-CODEX-05",
       "review_type": "TRUST_FACT_AUTHORIZATION_PRIVACY_AND_RUNTIME"
     }
   ],
