@@ -61,6 +61,14 @@ CENTRAL_COMPATIBILITY_PATHS = (
 CANDIDATE_SNAPSHOT_PATHS = tuple(
     PACKAGE_RELATIVE_ROOT / path for path in IMMUTABLE_PACKAGE_FILES
 ) + CENTRAL_COMPATIBILITY_PATHS
+PACKAGE7_SUCCESSOR_EXTENSION_PATHS = frozenset(
+    {
+        Path("fact_aware_plan_adapter.py"),
+        Path("test_fact_aware_plan_adapter.py"),
+        Path("check_fact_aware_plan_adapter.py"),
+        MANIFEST_PATH,
+    }
+)
 REQUIRED_FALSE_FLAGS = frozenset(
     {
         "candidatepack_ready",
@@ -85,11 +93,11 @@ EXPECTED_UPSTREAM_ANCHORS = {
     "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml":
         "e51f46635b6c3312e0626bc5aca448c91d20b0d71cae6a8de793ba5b603e2b95",
     "12_expression_service/expression_runtime_adapter_001/light_expression_service.py":
-        "bb57ac6d356fd81b3f2da8e3e7596fed19f384fb95634270b8a23d84e59957f5",
+        "5ebabef118ce2ec96483e4a5be656431ba30e868e79ed6d86228fb5d5658bf4c",
     "12_expression_service/expression_runtime_adapter_001/neutral_expression_profile.v1.yaml":
         "30d8ce76fa49ebfad79634cbaa19f69e8d8ad5bbc09c958403dcc8847d3025c6",
     "12_expression_service/expression_runtime_adapter_001/service_manifest.v1.yaml":
-        "ca354c12a30990ac84e2267bc22b427450804c18ff44b6cb50a71a79ff56c172",
+        "1a8f36b5e831481ce0c48fc32c31789789ce9ed9b7e8e72c308631aefd48ac15",
     "15_brand_retrieval/brand_fact_retrieval_001/brand_fact_retrieval.py":
         "33ae09df9abb63aa796913338568e63edc6096b410a1e27670e9a378ecdef6e8",
     "15_brand_retrieval/brand_fact_retrieval_001/retrieval_manifest.v1.json":
@@ -262,7 +270,7 @@ def validate_manifest(
         "internal_content_product_count": 20,
         "evidence_backed_plan_case_count": 10,
         "honest_action_card_case_count": 10,
-        "unit_test_count": 15,
+        "unit_test_count": 16,
     }
     if not isinstance(coverage, dict) or any(
         coverage.get(key) != value for key, value in expected_coverage.items()
@@ -276,6 +284,17 @@ def validate_manifest(
         and expression.get("high_level_modes_are_soft_guidance_only") is True
     ):
         errors.append("expression authority boundary mismatch")
+    successor = manifest.get("authorized_package7_successor_extension")
+    if not isinstance(successor, dict) or not (
+        successor.get("task_id") == "DIYU_DIFY_END_TO_END_001"
+        and successor.get("historical_review_remains_as_built") is True
+        and successor.get("current_extension_review_owned_by_package7") is True
+        and successor.get("trusted_context_factory_is_server_only") is True
+        and successor.get("expression_profile_resolver_is_server_only") is True
+        and successor.get("package2_plan_and_action_card_ownership_preserved") is True
+        and successor.get("second_plan_or_context_created") is False
+    ):
+        errors.append("Package 7 successor compatibility contract mismatch")
     validate_closed_boundaries(manifest, errors, "manifest")
     return manifest
 
@@ -407,6 +426,13 @@ def validate_source(package_root: Path, errors: list[str]) -> None:
     text = source_path.read_text(encoding="utf-8")
     if "approved_example_refs\": []" not in text:
         errors.append("Package 5 candidate examples are not forced empty")
+    for token in (
+        "trusted_context_factory",
+        "expression_profile_resolver",
+        "self.expression_service.action_card(",
+    ):
+        if token not in text:
+            errors.append(f"Package 7 successor injection point missing: {token}")
 
 
 def validate_result_and_delivery(
@@ -513,7 +539,10 @@ def validate_reviews(
             errors.append(str(exc))
             continue
         path = package_root / relative
-        if not path.is_file() or path.read_bytes() != expected_bytes:
+        if (
+            relative not in PACKAGE7_SUCCESSOR_EXTENSION_PATHS
+            and (not path.is_file() or path.read_bytes() != expected_bytes)
+        ):
             errors.append(f"frozen Package 6 candidate changed: {relative}")
 
     reviews: list[JsonObject] = []

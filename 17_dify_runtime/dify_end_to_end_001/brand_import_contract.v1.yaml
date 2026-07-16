@@ -1,0 +1,32 @@
+brand_import_contract:
+  schema_version: v1.0
+  contract_id: DIYU-PKG7-BRAND-IMPORT-V1
+  brand_specific_constants_allowed_in_runtime_logic: false
+  required_sections:
+  - identity
+  - narrative_fragments
+  - precise_facts
+  - expression_profile
+  identity_required_collections:
+  - organizations
+  - stores
+  - work_roles
+  - login_principals
+  - content_accounts
+  - authorization_grants
+  - subject_confirmation_records
+  preflight_states:
+    CAN_IMPORT: 结构、范围、来源和配置可形成隔离运行数据
+    NEEDS_INPUT: 缺少可补充的账号、授权、资料或软配置
+    CANNOT_IMPORT: 标识冲突、跨品牌引用或结构不可信
+  transaction_policy:
+    all_or_nothing: true
+    idempotent_upsert: true
+    partial_brand_left_after_failure: false
+  isolation_policy:
+    cross_tenant_reference_allowed: false
+    cross_brand_profile_fallback_allowed: false
+    neutral_default_when_profile_missing: true
+  readiness:
+    DIFY_ready: false
+    production_ready: false

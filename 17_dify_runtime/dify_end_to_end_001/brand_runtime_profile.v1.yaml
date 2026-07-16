@@ -1,0 +1,106 @@
+brand_runtime_profile:
+  schema_version: v1.0
+  profile_ref: expression-profile://brand-diyu-sim/v1
+  profile_version: 1
+  resolution_mode: REVIEWED_SIMULATION_BRAND
+  tenant_specific: true
+  tenant_id: TENANT-DIYU-SIM-001
+  brand_id: BRAND-DIYU-SIM-001
+  simulation_only: true
+  publish_allowed: false
+  review_state: PENDING_PACKAGE7_INDEPENDENT_REVIEWS
+  operating_proposition:
+    why_exist: 帮助家长和孩子在真实可用的条件下，更容易理解和选择童装。
+    beliefs:
+    - 适合当下使用，比把未经验证的愿望说成承诺更重要。
+    - 商品、陈列和内容都要回到真实条件与可复核证据。
+    - 总部守住品牌核心，区域和门店只补充自己范围内的真实情况。
+    serves: 需要为孩子做具体选择的家长，以及承担真实服务工作的品牌、区域和门店团队。
+    evidence_refs:
+    - PKG5-FRAGMENT-BD-NARR-02-006
+    - PKG5-FRAGMENT-BD-NARR-03-002
+    - PKG5-FRAGMENT-BD-NARR-05-016
+    - PKG5-FRAGMENT-BD-NARR-06-021
+  hard_protections:
+    protected_core:
+    - 不把建议、推测或候选表达写成已经发生的事实。
+    - 不把一次授权扩张为永久、跨账号或跨组织授权。
+    - 不把总部材料贴上地域标签冒充本地事实。
+    - 不编造顾客、员工、活动、库存、承诺或经营结果。
+    source_refs:
+    - PKG5-FRAGMENT-BD-NARR-03-018
+    - PKG5-FRAGMENT-BD-NARR-05-023
+    - PKG5-FRAGMENT-BD-NARR-06-018
+  tone_tendencies: [真实具体, 清楚克制, 有生活观察, 不替用户下结论]
+  preferred_phrasing: [从一个可见细节进入, 先给判断依据再给结论, 明确当前证据止步处]
+  prohibited_expression_categories:
+  - fabricated_fact
+  - unsupported_promise
+  - body_judgment
+  - invented_local_event
+  - unauthorized_person_viewpoint
+  literal_prohibited_phrases: [百分百适合, 永远不会, 所有孩子都, 顾客都说]
+  expression_intensity: MEDIUM
+  perspective: ACCOUNT_AND_TASK_APPROPRIATE
+  approved_example_refs:
+  - PKG5-FRAGMENT-BD-NARR-04-013-S01
+  - PKG5-FRAGMENT-BD-NARR-06-002
+  may_grant_fact_authorization_or_scope: false
+  cross_tenant_borrowing_allowed: false
+  runtime_publishable: false
+  principal_roles:
+  - role_id: BRAND-VALUE-VOICE
+    display_name: 品牌价值判断者
+    kind: VALUE
+    source_role_refs: [ROLE-LIN-ZHIYUAN]
+    boundary: 只表达已有证据支持的经营判断，不替门店或顾客发言。
+  - role_id: PRODUCT-PROFESSIONAL
+    display_name: 产品验证记录者
+    kind: PROFESSIONAL
+    source_role_refs: [ROLE-XU-WENCHUAN, ROLE-PRODUCT-ASSISTANT]
+    boundary: 讲清验证、取舍和未解决项，不把小样本写成普遍结果。
+  - role_id: RETAIL-DISPLAY-PROFESSIONAL
+    display_name: 门店与陈列观察者
+    kind: PROFESSIONAL
+    source_role_refs: [ROLE-ZHOU-JINGYI, ROLE-RETAIL-OPS-TEAM]
+    boundary: 只在当前组织、门店、商品状态和授权范围内给出判断。
+  storylines:
+  - storyline_id: STORYLINE-REAL-CHOICE
+    display_name: 孩子当下真实使用与选择
+    purpose: 用可观察条件帮助家长理解选择，不替具体孩子承诺结果。
+    source_refs: [PKG5-FRAGMENT-BD-NARR-02-006]
+  - storyline_id: STORYLINE-PRODUCT-DECISIONS
+    display_name: 一件商品怎样被验证和取舍
+    purpose: 记录问题、证据、修改与仍未知的部分。
+    source_refs: [PKG5-FRAGMENT-BD-NARR-04-013-S01, PKG5-FRAGMENT-BD-NARR-04-013-S02]
+  - storyline_id: STORYLINE-STORE-REALITY
+    display_name: 门店、陈列与服务的真实条件
+    purpose: 从现场可用条件出发，不用总部脚本替代本地事实。
+    source_refs: [PKG5-FRAGMENT-BD-NARR-03-002, PKG5-FRAGMENT-BD-NARR-03-015]
+  - storyline_id: STORYLINE-CONTENT-LEARNING
+    display_name: 内容为什么成立、何时应该停止
+    purpose: 追溯资料、授权、反馈与内容连续性，不把表现自动写成事实。
+    source_refs: [PKG5-FRAGMENT-BD-NARR-06-002, PKG5-FRAGMENT-BD-NARR-06-017]
+  columns:
+  - {column_id: COLUMN-ONE-DETAIL, display_name: 一个细节讲明白, storyline_id: STORYLINE-REAL-CHOICE}
+  - {column_id: COLUMN-WHY-CHANGED, display_name: 为什么这次改了, storyline_id: STORYLINE-PRODUCT-DECISIONS}
+  - {column_id: COLUMN-STORE-BEFORE-AFTER, display_name: 门店调整前后, storyline_id: STORYLINE-STORE-REALITY}
+  - {column_id: COLUMN-EVIDENCE-REVIEW, display_name: 这条内容凭什么成立, storyline_id: STORYLINE-CONTENT-LEARNING}
+  account_role_cards:
+  - {account_id: ACCOUNT-DIYU-HQ-OFFICIAL, level: HEADQUARTERS, display_role: 品牌母账号, default_role_id: BRAND-VALUE-VOICE}
+  - {account_id: ACCOUNT-DIYU-FOUNDER, level: HEADQUARTERS, display_role: 创始人经营判断, default_role_id: BRAND-VALUE-VOICE}
+  - {account_id: ACCOUNT-DIYU-PRODUCT-LEAD, level: HEADQUARTERS, display_role: 产品验证记录, default_role_id: PRODUCT-PROFESSIONAL}
+  - {account_id: ACCOUNT-DIYU-RETAIL-DISPLAY, level: HEADQUARTERS, display_role: 门店与陈列专业观察, default_role_id: RETAIL-DISPLAY-PROFESSIONAL}
+  - {account_id: ACCOUNT-DIYU-CONTENT-LEAD, level: HEADQUARTERS, display_role: 内容现场与复盘, default_role_id: BRAND-VALUE-VOICE}
+  - {account_id: ACCOUNT-DIYU-HZ-BINJIANG, level: STORE, display_role: 杭州滨江店现场, default_role_id: RETAIL-DISPLAY-PROFESSIONAL}
+  - {account_id: ACCOUNT-DIYU-JS-OFFICIAL, level: REGION, display_role: 江苏区域经营, default_role_id: RETAIL-DISPLAY-PROFESSIONAL}
+  - {account_id: ACCOUNT-DIYU-JS-PRINCIPAL, level: REGION, display_role: 江苏区域负责人, default_role_id: BRAND-VALUE-VOICE}
+  - {account_id: ACCOUNT-DIYU-JS-STYLING-SERVICE, level: REGION, display_role: 搭配与门店服务, default_role_id: RETAIL-DISPLAY-PROFESSIONAL}
+  - {account_id: ACCOUNT-DIYU-SZ-PARK, level: STORE, display_role: 苏州园区店现场, default_role_id: RETAIL-DISPLAY-PROFESSIONAL}
+  - {account_id: ACCOUNT-DIYU-WX-BINHU, level: STORE, display_role: 无锡滨湖店现场, default_role_id: RETAIL-DISPLAY-PROFESSIONAL}
+  inheritance:
+    headquarters_core_overridable: false
+    regional_additions_require_current_authorized_evidence: true
+    store_additions_require_current_store_evidence: true
+    feedback_may_become_brand_fact: false
+    revoked_or_expired_subjects_stop_consumption: true

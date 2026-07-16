@@ -1,0 +1,174 @@
+{
+  "schema": "diyu.package7.external_runtime_evidence.v1",
+  "environment": {
+    "dify_version": "1.15.0",
+    "dify_image": "langgenius/dify-api:1.15.0",
+    "lifecycle": "NON_PRODUCTION_INTERNAL_ACCEPTANCE",
+    "single_candidate_namespace": "DIYU Package 7 End-to-End",
+    "production_ready": false,
+    "simulation_only": true
+  },
+  "approved_workspace_and_owner": {
+    "binding_source": "LOCKED_PACKAGE7_STATE",
+    "tenant_id_sha256": "45b8eb9a22734cd2e22c6e24ee2dc4c395b433548f0a264f7f0470949079d4fe",
+    "owner_account_id_sha256": "c3493188dc65f8daabc259b33c6c413fa643d7ecdabf87474738b8aee9f8af17",
+    "oldest_preexisting_app_used_for_owner_inference": false,
+    "identity_drift_fails_closed": true
+  },
+  "dify_objects": {
+    "total_app_count": 3,
+    "preexisting_app_count_preserved": 2,
+    "package7_app_name_count": 1,
+    "package7_app_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "package7_app_mode": "advanced-chat",
+    "package7_api_enabled": true,
+    "package7_public_site_enabled": false,
+    "package7_workflow_id_present": true,
+    "total_dataset_count": 1,
+    "package7_dataset_name_count": 1,
+    "package7_dataset_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b",
+    "package7_dataset_permission": "only_me",
+    "package7_dataset_api_enabled": true,
+    "package7_document_count": 29,
+    "package7_segment_count": 29,
+    "repeated_provision_preserved_object_ids": true
+  },
+  "runtime_database": {
+    "engine_reused": "existing PostgreSQL engine",
+    "database_name": "diyu_pkg7_runtime",
+    "role_name": "diyu_pkg7_runtime",
+    "isolated_namespace": true,
+    "row_counts": {
+      "tenants": 1,
+      "brands": 1,
+      "organizations": 5,
+      "stores": 3,
+      "principals": 1,
+      "content_accounts": 11,
+      "authorizations": 28,
+      "subject_confirmations": 1,
+      "narrative_fragments": 29,
+      "sources": 6,
+      "precise_facts": 16,
+      "settings": 5,
+      "requirements": 30,
+      "plans": 24,
+      "candidates": 24,
+      "validations": 24,
+      "feedback": 1,
+      "model_runs": 39,
+      "dify_invocations": 79,
+      "dify_conversations": 5
+    },
+    "empty_initialization_pass": true,
+    "repeat_initialization_idempotent": true,
+    "transaction_rollback_pass": true,
+    "bridge_restart_persistence_pass": true
+  },
+  "bridge_isolation": {
+    "container_name": "diyu-package7-bridge",
+    "container_user": "1001:1001",
+    "read_only_root_filesystem": true,
+    "capabilities_dropped": [
+      "ALL"
+    ],
+    "no_new_privileges": true,
+    "host_bindings": [
+      "127.0.0.1:18471"
+    ],
+    "networks": [
+      "dify-staging_default",
+      "diyu-package7-runtime"
+    ],
+    "shared_business_network_attached": false,
+    "source_mount_read_only": true,
+    "state_mount_read_only": true,
+    "source_directory_mode": "500",
+    "source_file_mode": "400",
+    "state_directory_mode": "500",
+    "state_file_mode": "400",
+    "health_after_restart": true
+  },
+  "retrieval": {
+    "single_narrative_truth": "current Package 7 Dify dataset",
+    "trusted_prefilter_before_ranking": true,
+    "authoritative_metadata_postcheck": true,
+    "headquarters": {
+      "accepted_fragment_count": 2,
+      "gap_codes": []
+    },
+    "region": {
+      "accepted_fragment_count": 0,
+      "gap_codes": [
+        "MATERIAL_MISSING_FOR_SCOPE"
+      ]
+    },
+    "store": {
+      "accepted_fragment_count": 0,
+      "gap_codes": [
+        "MATERIAL_MISSING_FOR_SCOPE"
+      ]
+    },
+    "authorized_current_record_accepted": true,
+    "expired_record_rejected": true,
+    "revoked_record_rejected": true,
+    "index_content_drift_rejected": true,
+    "probe_mutations_persisted": false
+  },
+  "portal_and_scope": {
+    "trusted_login_success": true,
+    "wrong_password_rejected": true,
+    "missing_session_rejected": true,
+    "session_cookie_http_only": true,
+    "login_response_has_no_token_fields": true,
+    "content_account_option_count": 11,
+    "forged_account_rejected": true,
+    "forged_account_model_budget_unchanged": true,
+    "invalid_bridge_secret_rejected": true,
+    "public_network_portal_rejected": true
+  },
+  "continuous_dialogue": {
+    "binding_scope": "principal plus content account",
+    "binding_count": 5,
+    "distinct_scope_count": 5,
+    "distinct_conversation_id_count": 5,
+    "accepted_proof_account": "笛语无锡滨湖店",
+    "accepted_proof_message_count": 2,
+    "first_user_marker": "木雨",
+    "second_turn_recalled_marker": true,
+    "marker_declared_not_brand_fact": true,
+    "dify_conversation_id_reused": true,
+    "sanitized_runtime_context_used": true,
+    "raw_provider_reasoning_reused_as_context": false,
+    "cross_account_context_visible": false,
+    "publish_allowed": false,
+    "failed_preceding_attempts_retained_in_model_audit": true
+  },
+  "capacity": {
+    "disk_available_bytes_at_validation": 12817788928,
+    "disk_above_10gb": true,
+    "memory_available_kb_at_validation": 3287880,
+    "memory_above_1gb": true
+  },
+  "legacy_objects": {
+    "compatibility_research_stopped": true,
+    "old_apps_databases_vector_collections_and_business_containers": "READ_ONLY_INVENTORY_FOR_PACKAGE_9",
+    "old_object_mutation_count": 0,
+    "old_object_deletion_count": 0,
+    "parallel_package7_app_created": false,
+    "parallel_package7_dataset_created": false,
+    "parallel_package7_database_created": false,
+    "parallel_package7_bridge_created": false
+  },
+  "boundaries": {
+    "core_300_changed": false,
+    "core_120_changed": false,
+    "core_86_changed": false,
+    "public_release_performed": false,
+    "domain_or_proxy_changed": false,
+    "package8_or_later_action_performed": false,
+    "readiness_transition_count": 0,
+    "model_calls_frozen": true,
+    "additional_remote_deployment_after_founder_stop": false
+  }
+}

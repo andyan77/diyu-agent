@@ -1,0 +1,96 @@
+{
+  "schema": "diyu.package7.dify_end_to_end_manifest.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_001",
+  "package_number": 7,
+  "baseline_master_commit": "a8fe258b8f8693247a46f1dbba3c2553b778bfaa",
+  "package_root": "17_dify_runtime/dify_end_to_end_001",
+  "single_candidate": {
+    "dify_app_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "dataset_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b",
+    "runtime_database": "diyu_pkg7_runtime",
+    "runtime_bridge": "diyu-package7-bridge",
+    "api_only": true,
+    "simulation_only": true,
+    "production_ready": false
+  },
+  "ownership": {
+    "package2_owns_light_content_plan_and_validation": true,
+    "package5_owns_retrieval_contract_and_scope_filtering": true,
+    "package6_owns_fact_aware_plan_adaptation": true,
+    "package7_owns_only_runtime_persistence_dify_bridge_and_portal": true,
+    "second_plan_created": false,
+    "second_retrieval_truth_created": false,
+    "second_bridge_created": false
+  },
+  "entrypoints": {
+    "bridge": "bridge_app.py",
+    "runtime": "runtime_service.py",
+    "generic_brand_import": "brand_import.py",
+    "dify_provisioner": "provision_dify.py",
+    "deployment": "deploy_remote.sh",
+    "package_checker": "check_dify_end_to_end.py"
+  },
+  "contracts": {
+    "generic_brand_import": "brand_import_contract.v1.yaml",
+    "runtime_brand_profile": "brand_runtime_profile.v1.yaml",
+    "dify_graph": "dify_app.v1.yaml",
+    "user_visible_formats": [
+      "短视频",
+      "图文",
+      "陈列搭配"
+    ],
+    "content_product_count": 20,
+    "topic_count": 8,
+    "action_card_count": 8,
+    "content_account_count": 11,
+    "storyline_count": 4,
+    "candidate_count_policy": "2_TO_3"
+  },
+  "retrieval_decision": {
+    "single_truth": "DIFY_DATASET_WITH_SERVER_OWNED_PREFILTER_AND_AUTHORITATIVE_POSTCHECK",
+    "reason": "Dify stores the approved narrative segments; the bridge supplies server-owned scope filters before ranking and rechecks current relational metadata after retrieval.",
+    "parallel_vector_truth": false
+  },
+  "continuous_dialogue": {
+    "dify_conversation_id_persisted": true,
+    "scope": "PRINCIPAL_PLUS_CONTENT_ACCOUNT",
+    "sanitized_context_window": 6,
+    "raw_dify_memory_enabled": false,
+    "raw_provider_reasoning_reused": false,
+    "history_may_not_grant_fact_or_authorization": true
+  },
+  "model_budget": {
+    "model_name": "deepseek-v4-flash",
+    "provider_path": "existing Dify provider configuration",
+    "original_request_upper_bound": 40,
+    "founder_additional_request_upper_bound": 60,
+    "effective_request_upper_bound": 100,
+    "cost_cny_upper_bound": 50,
+    "content_quality_reroll_allowed": false
+  },
+  "legacy_boundary": {
+    "old_apps_databases_vector_collections_and_business_containers": "READ_ONLY_FOR_PACKAGE_9",
+    "compatibility_research_stopped": true,
+    "old_object_mutation_allowed": false
+  },
+  "core_numbers": {
+    "target_total": 300,
+    "reference_inventory": 120,
+    "historical_component_inventory": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

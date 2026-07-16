@@ -1,0 +1,4416 @@
+{
+  "continuous_dialogue": {
+    "accepted_sanitized_turns": [
+      {
+        "assistant_reply": "已记住，“木雨”为本账号本次内部对话的临时代号，且明确它不是品牌事实。",
+        "user_message": "把木雨作为本账号这次内部对话的临时代号。只确认已记住，并明确它不是品牌事实。"
+      },
+      {
+        "assistant_reply": "木雨，且它不是品牌事实。",
+        "user_message": "继续上一轮：刚才约定的临时代号是什么？只回答代号，并说明它不是品牌事实。"
+      }
+    ],
+    "account_display_name": "笛语无锡滨湖店",
+    "conversation_binding_reused": true,
+    "dify_conversation_id_sha256": "aea0f18985f11cb663531db89997fefb393fdbcc55348432008bb931352378c0",
+    "dify_message_count_for_binding": 2,
+    "dify_user_identity_digest": "972ba3aaa0b8bc90ee2b446ffd939d2539d51ea65d3278e4b89d47eba7e50d1e",
+    "marker_is_brand_fact": false,
+    "publish_allowed": false,
+    "raw_provider_reasoning_used_as_continuity_context": false,
+    "second_turn_recalled_marker": true
+  },
+  "duplicate_prompt_groups_retained": [],
+  "evidence_limits": {
+    "all_provider_private_reasoning_excluded_from_repository_evidence": true,
+    "free_text_truth_requires_independent_review": true,
+    "production_or_publish_approval": false,
+    "model_calls_frozen_after_founder_stop": true,
+    "no_additional_sample_or_scenario_after_freeze": true
+  },
+  "founder_budget_authorization": {
+    "additional_request_upper_bound": 60,
+    "cost_cny_upper_bound": 50,
+    "effective_request_upper_bound": 100,
+    "original_request_upper_bound": 40
+  },
+  "founder_budget_authorization_confirmation": {
+    "confirmation_date": "2026-07-16",
+    "confirmation_source": "execution_prompt.addendum_v2",
+    "new_content_model_calls_after_existing_stop": 0,
+    "new_remote_deployments_after_existing_stop": 0,
+    "confirmed_additional_request_upper_bound": 60,
+    "confirmed_effective_request_upper_bound": 100
+  },
+  "generated_from": "isolated Package 7 PostgreSQL and current Dify application",
+  "invocation_audit": {
+    "failed_or_unknown_billing_count": 3,
+    "invocation_count": 79,
+    "known_completion_tokens": 131489,
+    "known_cost_rmb": "0.405101",
+    "known_cost_within_authorization": true,
+    "known_prompt_tokens": 142123,
+    "known_total_tokens": 273612,
+    "model_call_upper_bound": 83,
+    "request_upper_bound_within_authorization": true
+  },
+  "model": {
+    "configuration_frozen_during_formal_evidence": true,
+    "content_reroll_for_quality_count": 0,
+    "model_name": "deepseek-v4-flash",
+    "provider_type": "DeepSeek via existing Dify provider configuration"
+  },
+  "representative_first_outputs": {
+    "article": {
+      "account_display_name": "笛语江苏",
+      "candidates": [
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏：区域账号能做什么、不能做什么",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。因此，我们能整理区域共同问题与跨店协作思路，但不能冒充某家门店日常，也不能编地方习惯。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏只代表江苏区域组织范围，当前缺少区域和门店事实，不展开具体故事。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "了解账号边界，避免误用。",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏：区域账号能做什么、不能做什么",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。因此，我们能整理区域共同问题与跨店协作思路，但不能冒充某家门店日常，也不能编地方习惯。",
+                "source_refs": [],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "了解账号边界，避免误用。",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "内部测试不可发布",
+                "source_refs": [],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏只代表江苏区域组织范围。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[0].accompanying_copy"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[1].accompanying_copy"
+              }
+            ],
+            "candidate_id": "CAND-0BA437924A299BB4-1",
+            "candidate_user_visible_surfaces": {
+              "CTA": "了解账号边界，避免误用。",
+              "body": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。因此，我们能整理区域共同问题与跨店协作思路，但不能冒充某家门店日常，也不能编地方习惯。",
+              "execution_payload": {
+                "article": {
+                  "cover_brief": "待补拍：一张简洁的账号身份说明卡片图片",
+                  "frames": [
+                    {
+                      "accompanying_copy": "笛语江苏只代表江苏区域组织范围。",
+                      "image_brief": "待补拍：一张展示笛语江苏账号主页截图的图片，突出“江苏区域”标识",
+                      "order": 1
+                    },
+                    {
+                      "accompanying_copy": "当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。",
+                      "image_brief": "待补拍：一张空白文档或核对清单的图片，文字说明“当前事实：账号身份依据；缺失：区域事件、门店资料、商品事实”",
+                      "order": 2
+                    }
+                  ],
+                  "layout_notes": [
+                    "第一帧居中显示账号名称和代表范围",
+                    "第二帧使用清单形式列出已知和缺失项"
+                  ]
+                },
+                "content_direction": "从现有账号身份依据出发，说明可讲范围与停止条件",
+                "core_idea": "区域账号只代表组织层级，缺少事实时不编故事",
+                "cover_or_first_screen_copy": "笛语江苏：区域账号能做什么、不能做什么",
+                "display": null,
+                "duration_label": "1至3分钟",
+                "ending_and_action": "了解账号边界，避免误用。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。",
+                "production_format": "图文",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。因此，我们能整理区域共同问题与跨店协作思路，但不能冒充某家门店日常，也不能编地方习惯。",
+                "target_platform": "公众号或图文",
+                "task_summary": "制作一份区域账号说明图文，明确身份与资料不足边界",
+                "video": null
+              },
+              "spoken_lines": [
+                "笛语江苏只代表江苏区域组织范围，当前缺少区域和门店事实，不展开具体故事。"
+              ],
+              "surface_units": [],
+              "title": "笛语江苏：区域账号能做什么、不能做什么"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "了解账号边界，避免误用。",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。因此，我们能整理区域共同问题与跨店协作思路，但不能冒充某家门店日常，也不能编地方习惯。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张简洁的账号身份说明卡片图片",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.cover_brief"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏只代表江苏区域组织范围。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[0].accompanying_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张展示笛语江苏账号主页截图的图片，突出“江苏区域”标识",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[0].image_brief"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[1].accompanying_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张空白文档或核对清单的图片，文字说明“当前事实：账号身份依据；缺失：区域事件、门店资料、商品事实”",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[1].image_brief"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "第一帧居中显示账号名称和代表范围",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.layout_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "第二帧使用清单形式列出已知和缺失项",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.layout_notes[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从现有账号身份依据出发，说明可讲范围与停止条件",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "区域账号只代表组织层级，缺少事实时不编故事",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏：区域账号能做什么、不能做什么",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "1至3分钟",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "了解账号边界，避免误用。",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "图文",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "内部测试不可发布",
+                "source_refs": [],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是代表江苏区域组织范围的内容账号。当前我们只持有账号身份依据，没有区域事件、门店资料或商品事实。因此，我们能整理区域共同问题与跨店协作思路，但不能冒充某家门店日常，也不能编地方习惯。",
+                "source_refs": [],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "公众号或图文",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "制作一份区域账号说明图文，明确身份与资料不足边界",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏只代表江苏区域组织范围，当前缺少区域和门店事实，不展开具体故事。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏：区域账号能做什么、不能做什么",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "从来源证据进入，围绕账号身份依据说明可讲范围",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 11,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 14,
+              "surface_claim_binding_count": 25,
+              "used_fact_count": 1,
+              "used_material_count": 0
+            },
+            "narrative_architecture": "EVIDENCE_FIRST",
+            "used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+            ],
+            "used_material_refs": []
+          },
+          "ordinal": 1,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+            ],
+            "actually_used_material_refs": [],
+            "composition_plan_ref": "plan://PLAN-51BCA2E1C39EE3D8/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-12CCFEF4F240D0C0",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏可以发门店日常吗？",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。我们可以在有依据时整理区域共同问题与跨店协作，但不能冒充某家门店日常。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏能发门店日常吗？不能——当前没有门店资料，只能做区域层面的共同话题。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "明确你的需求是否属于区域协作范围。",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏可以发门店日常吗？",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。我们可以在有依据时整理区域共同问题与跨店协作，但不能冒充某家门店日常。",
+                "source_refs": [],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "明确你的需求是否属于区域协作范围。",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "内部测试不可发布",
+                "source_refs": [],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏可以发门店日常吗？",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[0].accompanying_copy"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有门店资料。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[1].accompanying_copy"
+              }
+            ],
+            "candidate_id": "CAND-0BA437924A299BB4-2",
+            "candidate_user_visible_surfaces": {
+              "CTA": "明确你的需求是否属于区域协作范围。",
+              "body": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。我们可以在有依据时整理区域共同问题与跨店协作，但不能冒充某家门店日常。",
+              "execution_payload": {
+                "article": {
+                  "cover_brief": "待补拍：一张含问题气泡的封面图片",
+                  "frames": [
+                    {
+                      "accompanying_copy": "笛语江苏可以发门店日常吗？",
+                      "image_brief": "待补拍：一张问号图标或对话框的图片，配文字“笛语江苏可以发门店日常吗？”",
+                      "order": 1
+                    },
+                    {
+                      "accompanying_copy": "答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有门店资料。",
+                      "image_brief": "待补拍：一张叉号或禁止标识的图片，配文字“不能——当前没有门店资料”",
+                      "order": 2
+                    }
+                  ],
+                  "layout_notes": [
+                    "第一帧突出用户问题",
+                    "第二帧用否定符号直观表示答案"
+                  ]
+                },
+                "content_direction": "以疑问句开头，回答区域账号的职责限制",
+                "core_idea": "没有门店事实时，区域账号不冒充门店",
+                "cover_or_first_screen_copy": "笛语江苏可以发门店日常吗？",
+                "display": null,
+                "duration_label": "1至3分钟",
+                "ending_and_action": "明确你的需求是否属于区域协作范围。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。",
+                "production_format": "图文",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。我们可以在有依据时整理区域共同问题与跨店协作，但不能冒充某家门店日常。",
+                "target_platform": "公众号或图文",
+                "task_summary": "通过用户问题引出区域账号边界说明",
+                "video": null
+              },
+              "spoken_lines": [
+                "笛语江苏能发门店日常吗？不能——当前没有门店资料，只能做区域层面的共同话题。"
+              ],
+              "surface_units": [],
+              "title": "笛语江苏可以发门店日常吗？"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "明确你的需求是否属于区域协作范围。",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。我们可以在有依据时整理区域共同问题与跨店协作，但不能冒充某家门店日常。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张含问题气泡的封面图片",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.cover_brief"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏可以发门店日常吗？",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[0].accompanying_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张问号图标或对话框的图片，配文字“笛语江苏可以发门店日常吗？”",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[0].image_brief"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有门店资料。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[1].accompanying_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张叉号或禁止标识的图片，配文字“不能——当前没有门店资料”",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[1].image_brief"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "第一帧突出用户问题",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.layout_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "第二帧用否定符号直观表示答案",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.layout_notes[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "以疑问句开头，回答区域账号的职责限制",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "没有门店事实时，区域账号不冒充门店",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏可以发门店日常吗？",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "1至3分钟",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "明确你的需求是否属于区域协作范围。",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "图文",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "内部测试不可发布",
+                "source_refs": [],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用户常问：笛语江苏能不能发布某家门店的日常？答案：不能。因为笛语江苏只代表江苏区域组织范围，当前没有区域事件、门店资料或商品事实。我们可以在有依据时整理区域共同问题与跨店协作，但不能冒充某家门店日常。",
+                "source_refs": [],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "公众号或图文",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "通过用户问题引出区域账号边界说明",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏能发门店日常吗？不能——当前没有门店资料，只能做区域层面的共同话题。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏可以发门店日常吗？",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "切入问题或场景",
+              "情绪钩子"
+            ],
+            "difference_label": "以问答形式说明区域账号职责与资料不足边界",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 11,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 14,
+              "surface_claim_binding_count": 25,
+              "used_fact_count": 1,
+              "used_material_count": 0
+            },
+            "narrative_architecture": "QUESTION_ANSWER",
+            "used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+            ],
+            "used_material_refs": []
+          },
+          "ordinal": 2,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+            ],
+            "actually_used_material_refs": [],
+            "composition_plan_ref": "plan://PLAN-51BCA2E1C39EE3D8/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-952463C6EE1CD04F",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "区域账号的成立条件与停止边界",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。它的停止边界是：当缺少区域事件、门店资料或商品事实时，不展开具体故事，也不冒充门店日常。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "区域账号的成立条件：拥有代表江苏区域的账号身份依据。停止边界：缺少区域和门店事实时，不编故事。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "对照你的内容是否在成立条件内。",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "区域账号的成立条件与停止边界",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。它的停止边界是：当缺少区域事件、门店资料或商品事实时，不展开具体故事，也不冒充门店日常。",
+                "source_refs": [],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "对照你的内容是否在成立条件内。",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "内部测试不可发布",
+                "source_refs": [],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "成立条件：拥有代表江苏区域的账号身份依据。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[0].accompanying_copy"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "停止边界：缺少区域和门店事实时，不展开具体故事。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[1].accompanying_copy"
+              }
+            ],
+            "candidate_id": "CAND-0BA437924A299BB4-3",
+            "candidate_user_visible_surfaces": {
+              "CTA": "对照你的内容是否在成立条件内。",
+              "body": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。它的停止边界是：当缺少区域事件、门店资料或商品事实时，不展开具体故事，也不冒充门店日常。",
+              "execution_payload": {
+                "article": {
+                  "cover_brief": "待补拍：一张分为左右两栏的示意图，左栏写“成立条件”，右栏写“停止边界”",
+                  "frames": [
+                    {
+                      "accompanying_copy": "成立条件：拥有代表江苏区域的账号身份依据。",
+                      "image_brief": "待补拍：一张箭头流程图，左边标“成立条件：账号身份依据”，右边标“代表江苏区域组织范围”",
+                      "order": 1
+                    },
+                    {
+                      "accompanying_copy": "停止边界：缺少区域和门店事实时，不展开具体故事。",
+                      "image_brief": "待补拍：一张停止标志图，下面写“停止边界：缺少区域事件、门店资料、商品事实时不编故事”",
+                      "order": 2
+                    }
+                  ],
+                  "layout_notes": [
+                    "第一帧展示成立条件并引用账号身份依据",
+                    "第二帧明确停止边界，防止越界"
+                  ]
+                },
+                "content_direction": "围绕账号的成立条件与停止边界两个状态",
+                "core_idea": "区域账号有清晰的成立与停止条件",
+                "cover_or_first_screen_copy": "区域账号的成立条件与停止边界",
+                "display": null,
+                "duration_label": "1至3分钟",
+                "ending_and_action": "对照你的内容是否在成立条件内。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。",
+                "production_format": "图文",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。它的停止边界是：当缺少区域事件、门店资料或商品事实时，不展开具体故事，也不冒充门店日常。",
+                "target_platform": "公众号或图文",
+                "task_summary": "以对象说明方式呈现区域账号的规则",
+                "video": null
+              },
+              "spoken_lines": [
+                "区域账号的成立条件：拥有代表江苏区域的账号身份依据。停止边界：缺少区域和门店事实时，不编故事。"
+              ],
+              "surface_units": [],
+              "title": "区域账号的成立条件与停止边界"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "对照你的内容是否在成立条件内。",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。它的停止边界是：当缺少区域事件、门店资料或商品事实时，不展开具体故事，也不冒充门店日常。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张分为左右两栏的示意图，左栏写“成立条件”，右栏写“停止边界”",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.cover_brief"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "成立条件：拥有代表江苏区域的账号身份依据。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[0].accompanying_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张箭头流程图，左边标“成立条件：账号身份依据”，右边标“代表江苏区域组织范围”",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[0].image_brief"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "停止边界：缺少区域和门店事实时，不展开具体故事。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "execution_payload.article.frames[1].accompanying_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张停止标志图，下面写“停止边界：缺少区域事件、门店资料、商品事实时不编故事”",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.frames[1].image_brief"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "第一帧展示成立条件并引用账号身份依据",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.layout_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "第二帧明确停止边界，防止越界",
+                "source_refs": [],
+                "surface_path": "execution_payload.article.layout_notes[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "围绕账号的成立条件与停止边界两个状态",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "区域账号有清晰的成立与停止条件",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "区域账号的成立条件与停止边界",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "1至3分钟",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "对照你的内容是否在成立条件内。",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "图文",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "内部测试不可发布",
+                "source_refs": [],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语江苏是一个区域组织级别的内容账号，它的成立基于账号身份依据：代表江苏区域组织范围。它的停止边界是：当缺少区域事件、门店资料或商品事实时，不展开具体故事，也不冒充门店日常。",
+                "source_refs": [],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "公众号或图文",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "以对象说明方式呈现区域账号的规则",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "区域账号的成立条件：拥有代表江苏区域的账号身份依据。停止边界：缺少区域和门店事实时，不编故事。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "区域账号的成立条件与停止边界",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "叙事视角",
+              "事实或证明路径"
+            ],
+            "difference_label": "以“区域账号”为对象，沿其成立条件和停止条件组织内容",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 11,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 14,
+              "surface_claim_binding_count": 25,
+              "used_fact_count": 1,
+              "used_material_count": 0
+            },
+            "narrative_architecture": "OBJECT_OR_TIMELINE",
+            "used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+            ],
+            "used_material_refs": []
+          },
+          "ordinal": 3,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-F4BB6CF2949714A7"
+            ],
+            "actually_used_material_refs": [],
+            "composition_plan_ref": "plan://PLAN-51BCA2E1C39EE3D8/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-35AD801A362A3505",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        }
+      ],
+      "first_output_preserved": true,
+      "model_output_sha256": "2d524c0cb3d9ba42c6f231cbc5b7597afcd3cd2aa7cd518b56faceddb4576960",
+      "run_id": "RUN-7B4731F90BA437924A299BB4",
+      "state": "FIRST_OUTPUT_ACCEPTED"
+    },
+    "display": {
+      "account_display_name": "笛语童装",
+      "batch_acceptance": false,
+      "candidates": [
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换陈记录指南：从原则出发",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "总部要求换陈，但我们需要记录真实依据。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "如果只是听令换陈，也要写下来，不能编顾客需求。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "填写换陈依据",
+                "source_refs": [],
+                "surface_path": "CTA"
+              }
+            ],
+            "candidate_id": "CAND-2C610710698878AF-1",
+            "candidate_user_visible_surfaces": {
+              "CTA": "填写换陈依据",
+              "body": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "从笛语陈列记录原则出发，强调真实条件与可复核证据",
+                "core_idea": "记录卡用于采集与复核，不代表门店已换陈或已有结果",
+                "cover_or_first_screen_copy": "换陈记录指南：从原则出发",
+                "display": {
+                  "arrangement_relationship": "各字段按时间顺序从上至下排列",
+                  "availability_caution": "此卡片仅用于内部记录，不代表门店已执行调整",
+                  "color_relationship": "黑白灰基调，待填写区域留白",
+                  "referenced_items_or_facts": [
+                    "记录字段：调整原因、原问题、移动商品、撤下商品、改善目标、新问题、顾客行为支持"
+                  ],
+                  "shooting_angles": [
+                    "俯拍卡片正面（待拍摄）"
+                  ],
+                  "spatial_layers": "单页卡片，分为标题区、填写区、提示区"
+                },
+                "duration_label": "由系统建议",
+                "ending_and_action": "填写换陈依据",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "总部要求换陈，但我们需要记录真实依据。",
+                "production_format": "陈列搭配",
+                "publishing_copy": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "story_or_full_script": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "target_platform": "其他",
+                "task_summary": "制作待填写的换陈记录卡，结合陈列原则提示门店记录真实依据",
+                "video": null
+              },
+              "spoken_lines": [
+                "总部要求换陈，但我们需要记录真实依据。",
+                "如果只是听令换陈，也要写下来，不能编顾客需求。"
+              ],
+              "surface_units": [],
+              "title": "换陈记录指南：从原则出发"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "填写换陈依据",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从笛语陈列记录原则出发，强调真实条件与可复核证据",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "记录卡用于采集与复核，不代表门店已换陈或已有结果",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换陈记录指南：从原则出发",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "各字段按时间顺序从上至下排列",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.arrangement_relationship"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "此卡片仅用于内部记录，不代表门店已执行调整",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.availability_caution"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "黑白灰基调，待填写区域留白",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.color_relationship"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "记录字段：调整原因、原问题、移动商品、撤下商品、改善目标、新问题、顾客行为支持",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "execution_payload.display.referenced_items_or_facts[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "俯拍卡片正面（待拍摄）",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.shooting_angles[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "单页卡片，分为标题区、填写区、提示区",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.spatial_layers"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "由系统建议",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "填写换陈依据",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "总部要求换陈，但我们需要记录真实依据。",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "陈列搭配",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语要求门店保留调整前后照片，调整记录应说明：为什么要调整、原来存在什么问题、移动了哪些商品、哪些商品因为缺货或暂停被撤下、调整后希望改善什么、现场是否出现新的问题、这个判断是否已经得到顾客行为支持。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "其他",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "制作待填写的换陈记录卡，结合陈列原则提示门店记录真实依据",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "总部要求换陈，但我们需要记录真实依据。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "如果只是听令换陈，也要写下来，不能编顾客需求。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换陈记录指南：从原则出发",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "证据先行 | 从原则切入",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 5,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 20,
+              "surface_claim_binding_count": 25,
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "narrative_architecture": "EVIDENCE_FIRST",
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-015"
+            ]
+          },
+          "ordinal": 1,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-015"
+            ],
+            "composition_plan_ref": "plan://PLAN-198D0DB0EBB7549E/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-DB79AEA94C58CAA5",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换陈记录问答：这些字段为什么重要",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "调整记录为什么不能只拍照片？",
+                "source_refs": [],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "因为照片看不出顾客拿取是否方便、缺货问题、通道拥堵和补货难度。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用这些问题核对换陈",
+                "source_refs": [],
+                "surface_path": "CTA"
+              }
+            ],
+            "candidate_id": "CAND-2C610710698878AF-2",
+            "candidate_user_visible_surfaces": {
+              "CTA": "用这些问题核对换陈",
+              "body": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "从问题出发，帮助门店理解为何需要记录完整信息而非仅照片",
+                "core_idea": "记录卡用于采集与复核，不代表门店已换陈或已有结果",
+                "cover_or_first_screen_copy": "换陈记录问答：这些字段为什么重要",
+                "display": {
+                  "arrangement_relationship": "每个问题独立一行，后跟填写区域",
+                  "availability_caution": "此卡片仅用于内部记录，不代表门店已执行调整",
+                  "color_relationship": "问题用品牌蓝色，填写区灰色边框",
+                  "referenced_items_or_facts": [
+                    "七个问题列表：调整原因、原问题、移动商品、撤下商品、改善目标、新问题、顾客行为支持"
+                  ],
+                  "shooting_angles": [
+                    "拍摄问题列表卡片（待拍摄）"
+                  ],
+                  "spatial_layers": "分两栏：左侧问题，右侧填写区"
+                },
+                "duration_label": "由系统建议",
+                "ending_and_action": "用这些问题核对换陈",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "调整记录为什么不能只拍照片？",
+                "production_format": "陈列搭配",
+                "publishing_copy": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "story_or_full_script": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "target_platform": "其他",
+                "task_summary": "制作待填写的换陈记录卡，以问答形式引导门店发现关键记录字段",
+                "video": null
+              },
+              "spoken_lines": [
+                "调整记录为什么不能只拍照片？",
+                "因为照片看不出顾客拿取是否方便、缺货问题、通道拥堵和补货难度。"
+              ],
+              "surface_units": [],
+              "title": "换陈记录问答：这些字段为什么重要"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用这些问题核对换陈",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从问题出发，帮助门店理解为何需要记录完整信息而非仅照片",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "记录卡用于采集与复核，不代表门店已换陈或已有结果",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换陈记录问答：这些字段为什么重要",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "每个问题独立一行，后跟填写区域",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.arrangement_relationship"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "此卡片仅用于内部记录，不代表门店已执行调整",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.availability_caution"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "问题用品牌蓝色，填写区灰色边框",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.color_relationship"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "七个问题列表：调整原因、原问题、移动商品、撤下商品、改善目标、新问题、顾客行为支持",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "execution_payload.display.referenced_items_or_facts[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "拍摄问题列表卡片（待拍摄）",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.shooting_angles[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "分两栏：左侧问题，右侧填写区",
+                "source_refs": [],
+                "surface_path": "execution_payload.display.spatial_layers"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "由系统建议",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用这些问题核对换陈",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "调整记录为什么不能只拍照片？",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "陈列搭配",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "为什么要调整？原来存在什么问题？移动了哪些商品？哪些商品因为缺货或暂停被撤下？调整后希望改善什么？现场是否出现新的问题？这个判断是否已经得到顾客行为支持？笛语要求门店在每次换陈后回答这些问题，而不是只用照片证明换陈完成。如果只是因为总部要求在某天换陈，也要如实说明，不能事后虚构顾客需求。陈列效果也不能只靠照片判断，照片可能显示画面整洁，但没有反映顾客是否容易拿取商品、是否频繁询问缺货款、儿童是否堵住通道、店员补货是否困难。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "其他",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "制作待填写的换陈记录卡，以问答形式引导门店发现关键记录字段",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "调整记录为什么不能只拍照片？",
+                "source_refs": [],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "因为照片看不出顾客拿取是否方便、缺货问题、通道拥堵和补货难度。",
+                "source_refs": [
+                  "PKG5-FRAGMENT-BD-NARR-03-015"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换陈记录问答：这些字段为什么重要",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "切入问题或场景",
+              "叙事视角"
+            ],
+            "difference_label": "问答切入 | 从问题列表进入",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 5,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 20,
+              "surface_claim_binding_count": 25,
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "narrative_architecture": "QUESTION_ANSWER",
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-015"
+            ]
+          },
+          "ordinal": 2,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-015"
+            ],
+            "composition_plan_ref": "plan://PLAN-198D0DB0EBB7549E/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-6C3DF7AD246E5AB3",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        }
+      ],
+      "first_output_preserved": true,
+      "model_call_count_increment": 0,
+      "model_output_sha256": "d7b725ccc918704b98867d00ddd50111546bdd37f44317e098f93d069c1522cc",
+      "representative_scope": "TWO_INDIVIDUALLY_VALID_CANDIDATES_FROM_RETAINED_FIRST_OUTPUT",
+      "run_id": "RUN-442CF00C2C610710698878AF",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "third_candidate_retained_as_failed_in_run_audit": true
+    },
+    "short_video": {
+      "account_display_name": "笛语苏州园区店",
+      "candidates": [
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语苏州园区店，内容边界看这里",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "没有本地事实依据的内容，我不会发。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[2]"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[3]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注我，后续有依据时会持续更新。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[4]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待本地真实内容",
+                "source_refs": [],
+                "surface_path": "CTA"
+              }
+            ],
+            "candidate_id": "CAND-F3E859D4CD319923-1",
+            "candidate_user_visible_surfaces": {
+              "CTA": "关注笛语苏州园区店，等待本地真实内容",
+              "body": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "从账号名称这一证据出发，说明代表范围和内容边界",
+                "core_idea": "以‘我是笛语苏州园区店的账号’为引，明确内容只依赖本地事实",
+                "cover_or_first_screen_copy": "笛语苏州园区店，内容边界看这里",
+                "display": null,
+                "duration_label": "30秒左右",
+                "ending_and_action": "关注笛语苏州园区店，等待本地真实内容",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "我是笛语苏州园区店的账号。",
+                "production_format": "短视频",
+                "publishing_copy": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。内部测试不可发布。",
+                "story_or_full_script": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。",
+                "target_platform": "抖音",
+                "task_summary": "制作一条门店账号边界介绍短视频，从来源证据进入",
+                "video": {
+                  "editing_notes": [
+                    "剪辑节奏平稳，每段口播与视觉对应，结尾留关注提示"
+                  ],
+                  "shooting_notes": [
+                    "待补拍：门店门头、店内陈列、收银台标识、全景，不拍人物"
+                  ],
+                  "shots": [
+                    {
+                      "action": "镜头缓缓推进门头",
+                      "audio": "画外音：我是笛语苏州园区店的账号。",
+                      "camera": "手持运镜，由远及近",
+                      "edit_note": "无",
+                      "scene_product_props": "门店外景",
+                      "subtitle": "笛语苏州园区店",
+                      "time_range": "0-5秒",
+                      "visual": "待补拍：门店门头或招牌，清晰显示‘笛语苏州园区店’字样"
+                    },
+                    {
+                      "action": "环视店内，展示货架和陈列",
+                      "audio": "画外音：我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。",
+                      "camera": "平稳横移",
+                      "edit_note": "无",
+                      "scene_product_props": "店内陈列",
+                      "subtitle": "内容边界：本门店真实情况",
+                      "time_range": "5-15秒",
+                      "visual": "待补拍：店内陈列区域，只拍环境不拍人物"
+                    },
+                    {
+                      "action": "镜头聚焦标识",
+                      "audio": "画外音：没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。",
+                      "camera": "推进特写",
+                      "edit_note": "无",
+                      "scene_product_props": "门店标识",
+                      "subtitle": "无本地事实依据不发",
+                      "time_range": "15-25秒",
+                      "visual": "待补拍：收银台或展示柜上的门店标识细节"
+                    },
+                    {
+                      "action": "拉远镜头",
+                      "audio": "画外音：关注我，后续有依据时会持续更新。",
+                      "camera": "后退全景",
+                      "edit_note": "无",
+                      "scene_product_props": "门店全景",
+                      "subtitle": "关注笛语苏州园区店",
+                      "time_range": "25-30秒",
+                      "visual": "待补拍：门店全景"
+                    }
+                  ]
+                }
+              },
+              "spoken_lines": [
+                "我是笛语苏州园区店的账号。",
+                "我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。",
+                "没有本地事实依据的内容，我不会发。",
+                "目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。",
+                "关注我，后续有依据时会持续更新。"
+              ],
+              "surface_units": [],
+              "title": "笛语苏州园区店，内容边界看这里"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待本地真实内容",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从账号名称这一证据出发，说明代表范围和内容边界",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "以‘我是笛语苏州园区店的账号’为引，明确内容只依赖本地事实",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语苏州园区店，内容边界看这里",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "30秒左右",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待本地真实内容",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "短视频",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。内部测试不可发布。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。关注我，后续有依据时会持续更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "抖音",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "制作一条门店账号边界介绍短视频，从来源证据进入",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "剪辑节奏平稳，每段口播与视觉对应，结尾留关注提示",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.editing_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店门头、店内陈列、收银台标识、全景，不拍人物",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shooting_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "镜头缓缓推进门头",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：我是笛语苏州园区店的账号。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[0].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "手持运镜，由远及近",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店外景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语苏州园区店",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[0].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "0-5秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店门头或招牌，清晰显示‘笛语苏州园区店’字样",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "环视店内，展示货架和陈列",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[1].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "平稳横移",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "店内陈列",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "内容边界：本门店真实情况",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[1].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "5-15秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：店内陈列区域，只拍环境不拍人物",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "镜头聚焦标识",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：没有本地事实依据的内容，我不会发。目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[2].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "推进特写",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店标识",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "无本地事实依据不发",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[2].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "15-25秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：收银台或展示柜上的门店标识细节",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "拉远镜头",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：关注我，后续有依据时会持续更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[3].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "后退全景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店全景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "关注笛语苏州园区店",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[3].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "25-30秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店全景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].visual"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店的账号。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我只发布跟本门店真实情况相关的内容——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "没有本地事实依据的内容，我不会发。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[2]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "目前这里只有账号身份依据，还没有收集到具体的本地商品或活动资料，所以暂时不展开。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[3]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注我，后续有依据时会持续更新。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[4]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "笛语苏州园区店，内容边界看这里",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "从证据进入的叙事",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 8,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 48,
+              "surface_claim_binding_count": 56,
+              "used_fact_count": 1,
+              "used_material_count": 0
+            },
+            "narrative_architecture": "EVIDENCE_FIRST",
+            "used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+            ],
+            "used_material_refs": []
+          },
+          "ordinal": 1,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+            ],
+            "actually_used_material_refs": [],
+            "composition_plan_ref": "plan://PLAN-111A3825218F2394/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-51483A6D53A27BB3",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "你可能想问：这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[2]"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "如果还没有本地事实依据，我就先不展开。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[3]"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "目前只有账号身份依据，没有其他资料，所以先介绍到这里。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[4]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注我，有内容时我会发。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[5]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待真实内容",
+                "source_refs": [],
+                "surface_path": "CTA"
+              }
+            ],
+            "candidate_id": "CAND-F3E859D4CD319923-2",
+            "candidate_user_visible_surfaces": {
+              "CTA": "关注笛语苏州园区店，等待真实内容",
+              "body": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "以用户问题开场，明确回答账号身份和内容范围",
+                "core_idea": "从‘发什么’切入，引出只能发有本地事实的内容",
+                "cover_or_first_screen_copy": "这个账号发什么？",
+                "display": null,
+                "duration_label": "30秒左右",
+                "ending_and_action": "关注笛语苏州园区店，等待真实内容",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "你可能想问：这个账号发什么？",
+                "production_format": "短视频",
+                "publishing_copy": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。内部测试不可发布。",
+                "story_or_full_script": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。",
+                "target_platform": "抖音",
+                "task_summary": "制作回答用户疑问的账号边界介绍短视频",
+                "video": {
+                  "editing_notes": [
+                    "开场模拟提问互动，整体节奏轻快，结尾引导关注"
+                  ],
+                  "shooting_notes": [
+                    "待补拍：手机录屏（可后期制作）、门头、店内环境、标识、空白文档卡片、全景"
+                  ],
+                  "shots": [
+                    {
+                      "action": "手指点击提问框动画（后期制作）",
+                      "audio": "画外音：你可能想问：这个账号发什么？",
+                      "camera": "固定镜头，屏幕录屏效果",
+                      "edit_note": "无",
+                      "scene_product_props": "手机屏幕",
+                      "subtitle": "这个账号发什么？",
+                      "time_range": "0-6秒",
+                      "visual": "待补拍：手机屏幕显示账号主页，模糊露出用户名"
+                    },
+                    {
+                      "action": "快速切换两个环境镜头",
+                      "audio": "画外音：我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。",
+                      "camera": "固定机位剪辑",
+                      "edit_note": "无",
+                      "scene_product_props": "门店环境",
+                      "subtitle": "笛语苏州园区店 内容围绕门店真实情况",
+                      "time_range": "6-15秒",
+                      "visual": "待补拍：门店招牌与店内环境快切"
+                    },
+                    {
+                      "action": "从标识拉出，展示标注‘暂无新内容’的卡片",
+                      "audio": "画外音：如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。",
+                      "camera": "特写后拉远",
+                      "edit_note": "无",
+                      "scene_product_props": "门店标识、空白文档",
+                      "subtitle": "无本地事实时不展开",
+                      "time_range": "15-25秒",
+                      "visual": "待补拍：门店标识特写加一张空白文档（代表暂无资料）"
+                    },
+                    {
+                      "action": "镜头缓慢后退，叠加关注按钮",
+                      "audio": "画外音：关注我，有内容时我会发。",
+                      "camera": "全景固定",
+                      "edit_note": "无",
+                      "scene_product_props": "门店全景",
+                      "subtitle": "关注笛语苏州园区店",
+                      "time_range": "25-30秒",
+                      "visual": "待补拍：门店全景，最终出现关注按钮动画"
+                    }
+                  ]
+                }
+              },
+              "spoken_lines": [
+                "你可能想问：这个账号发什么？",
+                "我是笛语苏州园区店。",
+                "我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。",
+                "如果还没有本地事实依据，我就先不展开。",
+                "目前只有账号身份依据，没有其他资料，所以先介绍到这里。",
+                "关注我，有内容时我会发。"
+              ],
+              "surface_units": [],
+              "title": "这个账号发什么？"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待真实内容",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "以用户问题开场，明确回答账号身份和内容范围",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从‘发什么’切入，引出只能发有本地事实的内容",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "30秒左右",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待真实内容",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "你可能想问：这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "短视频",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。内部测试不可发布。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "你可能想问：这个账号发什么？我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。关注我，有内容时我会发。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "抖音",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "制作回答用户疑问的账号边界介绍短视频",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "开场模拟提问互动，整体节奏轻快，结尾引导关注",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.editing_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：手机录屏（可后期制作）、门头、店内环境、标识、空白文档卡片、全景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shooting_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "手指点击提问框动画（后期制作）",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：你可能想问：这个账号发什么？",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[0].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "固定镜头，屏幕录屏效果",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "手机屏幕",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].scene_product_props"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "0-6秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：手机屏幕显示账号主页，模糊露出用户名",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "快速切换两个环境镜头",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：我是笛语苏州园区店。我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[1].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "固定机位剪辑",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店环境",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "笛语苏州园区店 内容围绕门店真实情况",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[1].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "6-15秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店招牌与店内环境快切",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从标识拉出，展示标注‘暂无新内容’的卡片",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：如果还没有本地事实依据，我就先不展开。目前只有账号身份依据，没有其他资料，所以先介绍到这里。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[2].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "特写后拉远",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店标识、空白文档",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "无本地事实时不展开",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[2].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "15-25秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店标识特写加一张空白文档（代表暂无资料）",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "镜头缓慢后退，叠加关注按钮",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：关注我，有内容时我会发。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[3].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "全景固定",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店全景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "关注笛语苏州园区店",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[3].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "25-30秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店全景，最终出现关注按钮动画",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].visual"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "你可能想问：这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我是笛语苏州园区店。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我的内容只围绕我所在门店的真实情况——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[2]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "如果还没有本地事实依据，我就先不展开。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[3]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "目前只有账号身份依据，没有其他资料，所以先介绍到这里。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[4]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注我，有内容时我会发。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[5]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "这个账号发什么？",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "切入问题或场景",
+              "情绪钩子"
+            ],
+            "difference_label": "问答式叙事",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 9,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 48,
+              "surface_claim_binding_count": 57,
+              "used_fact_count": 1,
+              "used_material_count": 0
+            },
+            "narrative_architecture": "QUESTION_ANSWER",
+            "used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+            ],
+            "used_material_refs": []
+          },
+          "ordinal": 2,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+            ],
+            "actually_used_material_refs": [],
+            "composition_plan_ref": "plan://PLAN-111A3825218F2394/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-093173083628AE54",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "author_declared_claim_bindings": [
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "账号身份依据：笛语苏州园区店",
+                "source_refs": [],
+                "surface_path": "title"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "它代表这家门店，不包含其他区域或总部的信息。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[2]"
+              },
+              {
+                "claim_class": "DISCLOSURE",
+                "exact_text": "目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[3]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注我，有了依据再更新。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[4]"
+              },
+              {
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待本地事实更新",
+                "source_refs": [],
+                "surface_path": "CTA"
+              }
+            ],
+            "candidate_id": "CAND-F3E859D4CD319923-3",
+            "candidate_user_visible_surfaces": {
+              "CTA": "关注笛语苏州园区店，等待本地事实更新",
+              "body": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "将‘账号身份依据’作为核心物件，围绕它展开说明",
+                "core_idea": "用‘身份依据’这个证明材料贯穿，强调内容必须基于真实事实",
+                "cover_or_first_screen_copy": "账号身份依据：笛语苏州园区店",
+                "display": null,
+                "duration_label": "30秒左右",
+                "ending_and_action": "关注笛语苏州园区店，等待本地事实更新",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "这个账号的身份依据在这里：笛语苏州园区店。",
+                "production_format": "短视频",
+                "publishing_copy": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。内部测试不可发布。",
+                "story_or_full_script": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。",
+                "target_platform": "抖音",
+                "task_summary": "以账号身份依据这个物件为主线，介绍内容和边界",
+                "video": {
+                  "editing_notes": [
+                    "以卡片作为贯穿物件，首尾呼应，强化身份依据概念"
+                  ],
+                  "shooting_notes": [
+                    "待补拍：身份依据卡片（自制道具）、门店外景、店内环境"
+                  ],
+                  "shots": [
+                    {
+                      "action": "用手拿起卡片，展示",
+                      "audio": "画外音：这个账号的身份依据在这里：笛语苏州园区店。",
+                      "camera": "特写镜头",
+                      "edit_note": "无",
+                      "scene_product_props": "身份依据卡片",
+                      "subtitle": "身份依据：笛语苏州园区店",
+                      "time_range": "0-6秒",
+                      "visual": "待补拍：一张写有‘身份依据’字样的卡片或文档，上面列出门店名称"
+                    },
+                    {
+                      "action": "从卡片切到门店全景",
+                      "audio": "画外音：它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。",
+                      "camera": "固定机位",
+                      "edit_note": "无",
+                      "scene_product_props": "门店外景",
+                      "subtitle": "代表门店 不包含其他区域",
+                      "time_range": "6-15秒",
+                      "visual": "待补拍：门店外景，象征独立代表"
+                    },
+                    {
+                      "action": "缓慢扫视店内",
+                      "audio": "画外音：目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。",
+                      "camera": "平移镜头",
+                      "edit_note": "无",
+                      "scene_product_props": "门店内部",
+                      "subtitle": "暂无新事实 暂停更新",
+                      "time_range": "15-25秒",
+                      "visual": "待补拍：店内环境，强调安静无人物"
+                    },
+                    {
+                      "action": "卡片从画面外移入中心",
+                      "audio": "画外音：关注我，有了依据再更新。",
+                      "camera": "特写",
+                      "edit_note": "无",
+                      "scene_product_props": "身份依据卡片",
+                      "subtitle": "关注 等待更新",
+                      "time_range": "25-30秒",
+                      "visual": "待补拍：身份依据卡片再次出现，叠加‘关注’文字"
+                    }
+                  ]
+                }
+              },
+              "spoken_lines": [
+                "这个账号的身份依据在这里：笛语苏州园区店。",
+                "它代表这家门店，不包含其他区域或总部的信息。",
+                "我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。",
+                "目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。",
+                "关注我，有了依据再更新。"
+              ],
+              "surface_units": [],
+              "title": "账号身份依据：笛语苏州园区店"
+            },
+            "candidate_version": 1,
+            "claim_bindings": [
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待本地事实更新",
+                "source_refs": [],
+                "surface_path": "CTA"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "body"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "将‘账号身份依据’作为核心物件，围绕它展开说明",
+                "source_refs": [],
+                "surface_path": "execution_payload.content_direction"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用‘身份依据’这个证明材料贯穿，强调内容必须基于真实事实",
+                "source_refs": [],
+                "surface_path": "execution_payload.core_idea"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "账号身份依据：笛语苏州园区店",
+                "source_refs": [],
+                "surface_path": "execution_payload.cover_or_first_screen_copy"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "30秒左右",
+                "source_refs": [],
+                "surface_path": "execution_payload.duration_label"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注笛语苏州园区店，等待本地事实更新",
+                "source_refs": [],
+                "surface_path": "execution_payload.ending_and_action"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "换开头",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缩短",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[1]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "提交审核",
+                "source_refs": [],
+                "surface_path": "execution_payload.next_actions[2]"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.opening_hook"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "短视频",
+                "source_refs": [],
+                "surface_path": "execution_payload.production_format"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。内部测试不可发布。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.publishing_copy"
+              },
+              {
+                "binding_origin": "EXACT_TEXT_INHERITED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。关注我，有了依据再更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.story_or_full_script"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "抖音",
+                "source_refs": [],
+                "surface_path": "execution_payload.target_platform"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "以账号身份依据这个物件为主线，介绍内容和边界",
+                "source_refs": [],
+                "surface_path": "execution_payload.task_summary"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "以卡片作为贯穿物件，首尾呼应，强化身份依据概念",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.editing_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：身份依据卡片（自制道具）、门店外景、店内环境",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shooting_notes[0]"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "用手拿起卡片，展示",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：这个账号的身份依据在这里：笛语苏州园区店。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[0].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "特写镜头",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "身份依据卡片",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "身份依据：笛语苏州园区店",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[0].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "0-6秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：一张写有‘身份依据’字样的卡片或文档，上面列出门店名称",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[0].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "从卡片切到门店全景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：它代表这家门店，不包含其他区域或总部的信息。我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[1].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "固定机位",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店外景",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "代表门店 不包含其他区域",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[1].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "6-15秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：门店外景，象征独立代表",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[1].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "缓慢扫视店内",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[2].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "平移镜头",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "门店内部",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "暂无新事实 暂停更新",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[2].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "15-25秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：店内环境，强调安静无人物",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[2].visual"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "卡片从画面外移入中心",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].action"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "画外音：关注我，有了依据再更新。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[3].audio"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "特写",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].camera"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "无",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].edit_note"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "身份依据卡片",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].scene_product_props"
+              },
+              {
+                "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "关注 等待更新",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "execution_payload.video.shots[3].subtitle"
+              },
+              {
+                "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "25-30秒",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].time_range"
+              },
+              {
+                "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "待补拍：身份依据卡片再次出现，叠加‘关注’文字",
+                "source_refs": [],
+                "surface_path": "execution_payload.video.shots[3].visual"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "这个账号的身份依据在这里：笛语苏州园区店。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[0]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "它代表这家门店，不包含其他区域或总部的信息。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[1]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "SOURCE_CLAIM",
+                "exact_text": "我的内容更新会跟随门店的真实情况——商品、服务、陈列、生活。",
+                "source_refs": [
+                  "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+                ],
+                "surface_path": "spoken_lines[2]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "DISCLOSURE",
+                "exact_text": "目前只有这份身份依据，还没有新的本地事实，所以暂时不发布其他内容。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[3]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "关注我，有了依据再更新。",
+                "source_refs": [],
+                "surface_path": "spoken_lines[4]"
+              },
+              {
+                "binding_origin": "AUTHOR_DECLARED",
+                "claim_class": "CREATIVE_DIRECTION",
+                "exact_text": "账号身份依据：笛语苏州园区店",
+                "source_refs": [],
+                "surface_path": "title"
+              }
+            ],
+            "difference_dimensions": [
+              "叙事视角",
+              "事实或证明路径"
+            ],
+            "difference_label": "物件与时间线叙事",
+            "evidence_panel": {
+              "author_declared_claim_binding_count": 8,
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "server_derived_claim_binding_count": 48,
+              "surface_claim_binding_count": 56,
+              "used_fact_count": 1,
+              "used_material_count": 0
+            },
+            "narrative_architecture": "OBJECT_OR_TIMELINE",
+            "used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+            ],
+            "used_material_refs": []
+          },
+          "ordinal": 3,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [
+              "PKG7-ACCOUNT-SCOPE-BD859C61BADB41AD"
+            ],
+            "actually_used_material_refs": [],
+            "composition_plan_ref": "plan://PLAN-111A3825218F2394/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-1011C8DB794B31CC",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        }
+      ],
+      "first_output_preserved": true,
+      "model_output_sha256": "1722c982d794a9824dedfa787ca8851919b7afe9178b1c2886c702a772ca33e0",
+      "run_id": "RUN-50E2CADCF3E859D4CD319923",
+      "state": "FIRST_OUTPUT_ACCEPTED"
+    }
+  },
+  "run_count": 39,
+  "run_index": [
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "8354de5c26d53911f8a33d1617b795ad948a8a82b936e5714e9537569bb62fa9",
+      "operation": "普通聊天",
+      "parse_error": true,
+      "plan_bound": false,
+      "prompt_sha256": "0dd3cb643f1beffc0fe796bccecd014b1d361dc3ca339b1452ac07c205b881a8",
+      "run_id": "RUN-BC539FFBC1D61EF940AFB1C7",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "f10fe29ba0daff58ed3f47939f38dee2ff7adebe0c23bc921ac0297fed653650",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "e17cf11c2484dc922ef25e381d69ef397089dcf8a783de8fc7091c1bf6b29482",
+      "run_id": "RUN-898B3F9B4863DAFAB8C0466A",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "9145e75cdd9779ead5f0598da87c4aa2cb51bc1a8c0b73060e4e65e7bcd75035",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "ff05f97729eede6aabab7670cd240327e125cdd02c8f7651477e493bff444a3d",
+      "run_id": "RUN-30FD7948C882F0F1617FF92E",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "dbb65f7d53602bf635cba4fb21101f84c07d9ced5de87d1d9f71fa9c2c19a239",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "cee65d61ffaf5a36f0c98f334bc2815c5d7e8cfb86cc42e48188261c0b82129d",
+      "run_id": "RUN-CA2548322BAE812272F8A891",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "8b31de5537b65d72adbef4d7008951caa7c046204ee871af8773aedb38ed990f",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "bf9bb08636ead16aa11cc4ac1ddbcabb1c024a23bfc9c348fd1a76c414649d02",
+      "run_id": "RUN-F1A902187C54775FB0368280",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "bf152d9fb047246ed19ce4ba74b9dfdfaae408a4c95f20ac26b2ed2069cab372",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "08db103507388f0aff9dcde1a9af0c88df12505e3586bc5cc0ffa64da765420a",
+      "run_id": "RUN-7E40C66D6AA97B9D93374937",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "d12a4d5bd00188faa1b928bf1c12b38c070d003a387f7f8dc02aa70fc3cfddc4",
+      "operation": "局部修改",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "7fc09924ca1f2e56533fb2372ad5f3834829d9350e0ea96ec01c4d88a427cce3",
+      "run_id": "RUN-3F7B5E1E79E34922DA091762",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "dd584b3a1c48064450f3422ba13321a5edc1fe81d235257817b0483e9a6acbc1",
+      "operation": "找灵感",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "8466f834915480e9814661c9551cb6a54cd596c9a158f7c869b97c1d55715038",
+      "run_id": "RUN-949D9B79E4B650F6C64C1720",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "c979371d496415b37f4c95e441664414bbeb13282e6370655f9be1457d81dfa1",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "6e430b8b98739d3510beb5492009fc4edb4b8887b49aa37b83191c956b6d3cfb",
+      "run_id": "RUN-1FAA8F6AAFEB7DCFE405A1E1",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": {
+        "model_call_count_increment": 0,
+        "model_output_unchanged": true,
+        "repair_id": "PKG7-DIVERGENCE-CATEGORY-FALSE-REJECT-001"
+      },
+      "first_output_preserved": true,
+      "model_output_sha256": "a98dfb1b4824ea0a2acce7c003ec0dd483650eae19e3cb10bb23161de3c44665",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "e4650ad7b2c5299baea34daddcac040bdb6e3d9da8c5f3ed4832c9bc764699d0",
+      "run_id": "RUN-F7646E1569D351DADD7EEEB6",
+      "state": "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "05df45ae456fbdd888dbfcdd374b86efba5b02a4a45067fedc9a2f5466b066f6",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "3a7f5027dbc32de96ff23b81af6d4864b1e82e7983ae2a10ed2e7a756c927b88",
+      "run_id": "RUN-961FF9E2A02FE34B4D11024B",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "4d995f50effd6e3195d26fd5a05cd1d0e820efca5666c1e1f23706ac27e64d06",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "dbb448a4a1e9dfec5452efebe8ad5e7a09458656e96650e2ce5c644200408daf",
+      "run_id": "RUN-3152BAF3B00DDC04889B6BD5",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": {
+        "model_call_count_increment": 0,
+        "model_output_unchanged": true,
+        "repair_id": "PKG7-NARROW-MODEL-CONTRACT-NORMALIZATION-001"
+      },
+      "first_output_preserved": true,
+      "model_output_sha256": "d43605f9493f0f48ac50f493818845318d27000046a4e05c1361de65703c9ce5",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "9c43f1e5d4a44a990f78629aab2a936c6c3d37e668eb2d95f13f7e5a7f4680e9",
+      "run_id": "RUN-1A1E9FCBC8D08EA838F5F8F2",
+      "state": "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "c9c6d3f4ceaccd4c8fbb0a8475f73b0e84d1a3623d88d1b691d941a3ca63efa1",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "38d932c61654f947e249b3d025a292843d8b3c7b867b3f4746a13a11b23c883c",
+      "run_id": "RUN-A8F160440CA944E958E2B906",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "50b8d49de51a2d96b54b0c9124c189369cec761081ac56c8336e16ee1d59b838",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "28066244ccf42a8d18f96479022c0e86048f0cb76d4756c6bc55989f16b73194",
+      "run_id": "RUN-260AC3C2E35105C9BB68D557",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "a5737a01cea6c866422f8ba5f4a04dc856b93792cf4efda831a001d46ef926c3",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "828c5409942886c9e5893ae5ffdbf6f22e80454b83009dc1ee836d2211c3ae47",
+      "run_id": "RUN-8B0C9621CCC919A12CC03734",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "2a764c85102ad2cad94d915b42e0efdb0134a112cc3a6576897ea3e225d0063f",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "199f5fb253d6ab4c19534b78b0f90623d14c6ada6327c4d50ad8a639518b9bf2",
+      "run_id": "RUN-9920A984BB7B8DE7A62A1AA6",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "bb56bff8be8089be7c4b0b3b1d2366c55a41e45351944cc14478770d5225c503",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "11101b08cbf7d89f9b8fb815a31c9926e0fafe82b04701cb44acee834f471c5d",
+      "run_id": "RUN-2C2DA724EE7698DDA25DB937",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "7dbbf40478cdd9f45871b9bf9fe10740011d2c7ff8c245eb2e2e18406a8d631d",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "a93057590a61d10697c77703913b0dbc4a45a67270cb3a648c12fa783d084e10",
+      "run_id": "RUN-CA170336467F49F47BBAD0E9",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语杭州滨江店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "5aaac0db3c11c6cb5888e7fcdf2db221e98d7280845078bafa37c0adbf0ca361",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "af8a4d46747504876b7182349d0e7fcc1a90b5b2c867358f3dad66ecfb27582e",
+      "run_id": "RUN-94C57A3EFC0F3F7C429148BE",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语杭州滨江店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "05837402af19a63eaf03e6b5fee2f7e1a59161c0fa635c987eb956175fee27ef",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "87efa52cbb33ad0c531c74a46104a02e6238f8e2d65644cc0194fce6b269934d",
+      "run_id": "RUN-61719A27336BD64DC5232FDF",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语无锡滨湖店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "4f5c1f7e05ab086b6eb3db4e756be39cc28449b887eb3aa6f88938c785877902",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "0975490d8fee9bdbbab9293b61a726def169176bd6e3bd7b27d4936b54fb72d1",
+      "run_id": "RUN-B72E3DA4A39592B461C5DDAD",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语无锡滨湖店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "78910e69cbbf0c381867741e1d42b92dda36cdc8f9f993304f625d4af06b61cc",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "1b9e3cf14504536a4967e833c3ee6f7f305538acb309b52865a9e1dd491e15b3",
+      "run_id": "RUN-E760FB100E1323D6BDEDE35C",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "林知远｜笛语",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "d6d3a9a52a5f1e8a3c593245e6192dc4bb240d67bdc2ae46ba0ce517a2fa0360",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "635271397c90ebe23cccb8a671ed5caf8fd95a8edde16d565631189e7da0a3fc",
+      "run_id": "RUN-E8B229CECB55922E554A6507",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "林知远｜笛语",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "bd860cbac210dd48f4cd7dc5fa15a3a370b4cf021c01cbacc4e187aa57baf4e9",
+      "operation": "找灵感",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "e54aad31ddf9fffb413e82cb2451b527c289af5d4ed566747d7dad07d8aa0418",
+      "run_id": "RUN-4F7BAEB16DA09FCAD1A3EB83",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "af56e12887fb3183a2ea97762619b23893a3fb9a8310684412952b7c17ecc471",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "4a26f7e183719121ef6dc18d4fc2695e6817cb1dfb14aac6f459b774e4a4d078",
+      "run_id": "RUN-090D4C38C2353807726051B5",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "1c711a3ad65136f5d267f4ab6c8d7ecef4219228abd27e1d2c46c00fc9e6464d",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "234a7de99d9f617ad69b48cd586772c4230889082ec1faddf1a8cf94f8ce2d1e",
+      "run_id": "RUN-FEE9EE8B8DE2FF715E3442AE",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "26dd29e90c587b807cc2666cc7490dc04e7020884e8ee84687ac685285ef1791",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "a9c528a498227e6ba11d24cdad5c81dfe886fd0a525ade76fac1a0e225dec2e0",
+      "run_id": "RUN-DD4C25B3B282DD36D166F7DD",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "1c103724da1f78c592d1d7d9a80ef58e36113c62bc5c5f800e0752a8f4d30c71",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "4143d6d1f85bcbb21b61dffa760a463feae69c9d0c3c70e6412c14f72950806b",
+      "run_id": "RUN-571245EEE9744DC1954258F8",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语江苏",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "69cb4f2b28b1a75a879f7ac1109d4977411c98d139dbb515f66a72ee6513a7fc",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "eff641969f5b6d28a87ee8dde8f33cb33677d06471af6242a10f24d32a8733d5",
+      "run_id": "RUN-18B410AE4F7088FE2895C43D",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "01366339fa0b2c7218b8be9ee4f5f09f9853f705305929bf8d671f72ee3c17a0",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "6bcfd73eb52c5e912a67ad151f01afe678e8307d1e6e7dd4458afd3af645f331",
+      "run_id": "RUN-B7DFD7F4357B775ED55386C0",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 2,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "c6d3d36aa116412da77becef1917bba79635b177a5f9c73ea7edf40b942c409b",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "0dc2bc624724e709cd864c1b0b61100acd14f1a56b9aed3a5c4ba2d0ef9362ea",
+      "run_id": "RUN-0E5B491B9E532934682BCC64",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "1722c982d794a9824dedfa787ca8851919b7afe9178b1c2886c702a772ca33e0",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "0ce5d7138e9f9cf8ff6743c7ecd0ed4576b41e7c8de39bfe0fccdeb5595f5f8c",
+      "run_id": "RUN-50E2CADCF3E859D4CD319923",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "顾知夏｜江苏笛语",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "7c323fa25b17c670cb650f4db032c15f879aa3c0cb89f49475d7bd7959f0ffe8",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "b6de1193544dc4cd473b162bf3a2241121e722911e405333657cb1cf41c359d1",
+      "run_id": "RUN-C67A80A998D8129769D3A927",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语江苏",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "2d524c0cb3d9ba42c6f231cbc5b7597afcd3cd2aa7cd518b56faceddb4576960",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "9eda0b38d12547157b85f41c89c35cf0a60f31403961f92d6002ac411c05ff4d",
+      "run_id": "RUN-7B4731F90BA437924A299BB4",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "59bdc48a28982c31e1d55daf3fddd31247ec4e91312996e4b19b502b7e6d71c8",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "27a57e6b295f346aa095647dc82601514f1f8e72e7a05022fe8628d4331392a5",
+      "run_id": "RUN-FA8C23F9CAE8CDF2010F7BB4",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "54c60c4a45a587934c6e0593439d445a9c87c952d538496ddb81d9adddc33c20",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "617451deb33db39d32a4a724d1e1a19f426374c79ea9df28b609d62a60fcc590",
+      "run_id": "RUN-8A03860680D19A213A50AC86",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "5078b39104853b043a5433f3758688dc174b781dd1c53d517284755e580b2569",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "ad0a69e85316512854f0dcb3dac1aee89d2dcbfe0b012bf703058657f46bf39b",
+      "run_id": "RUN-F6A6BA02454C986AA8B5B538",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "d7b725ccc918704b98867d00ddd50111546bdd37f44317e098f93d069c1522cc",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "585624646ed21f38c7b0adc410dc718611494482e8300c9156b70198a5de9961",
+      "run_id": "RUN-442CF00C2C610710698878AF",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    }
+  ],
+  "run_state_distribution": {
+    "FIRST_OUTPUT_ACCEPTED": 22,
+    "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION": 2,
+    "FIRST_OUTPUT_REJECTED": 15
+  },
+  "schema": "diyu.package7.model_run_evidence.v1"
+}

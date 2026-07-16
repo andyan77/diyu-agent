@@ -1,0 +1,54 @@
+review:
+  review_id: DIYU-PKG7-TRUST-ADDENDUM-V2-F2DCBB26-CODEX-05
+  review_type: TRUST_FACT_AUTHORIZATION_PRIVACY_AND_RUNTIME
+  task_id: DIYU_DIFY_END_TO_END_001
+  review_scope: ADDENDUM_V2_TARGETED_FACT_AUTHORIZATION_PRIVACY_RUNTIME
+  candidate_commit: f2dcbb268527d71da2d10ae8c001fd786cd6fc54
+  candidate_snapshot_digest: 611c9c86426145ba84770a40330475f86c147f40
+  reviewer_identity: codex-independent-trust-runtime-reviewer
+  reviewer_session_id: codex-session-pkg7-addendum-v2-f2dcbb26-20260716-080536
+  reviewer_run_id: codex-run-pkg7-addendum-v2-f2dcbb26-05
+  signed_at: "2026-07-16T08:05:36-07:00"
+  independence_confirmed: true
+  independent_from_executor_and_other_reviewer: true
+  previous_blockers_closed: true
+  score: 97
+  verdict: PASS
+  hard_blockers: []
+  content_model_calls: 0
+  remote_deployments: 0
+  readiness_transition_count: 0
+  evidence:
+    - evidence_id: E-01
+      measurement: "冻结身份与工作树"
+      result: "审查前后 HEAD=f2dcbb268527d71da2d10ae8c001fd786cd6fc54、tree=611c9c86426145ba84770a40330475f86c147f40，工作树洁净。"
+    - evidence_id: E-02
+      measurement: "明确事实、关键数值、授权、真实事件、既有素材真实链路反例"
+      result: "纯棉商品事实、本店库存三件、儿童获准出镜、企业已承诺、已有样衣五类无绑定输入均经真实临时数据库、检索、Package 6 校验和 Package 7 最终化落为 REJECT。"
+    - evidence_id: E-03
+      measurement: "条件授权与创意路径"
+      result: "纯条件授权拍摄建议为 ACCEPT；同句追加纯棉商品事实为 REJECT；创意路径‘镜头展示本店库存充足’为 REJECT；普通未来拍摄建议为 ACCEPT。"
+    - evidence_id: E-04
+      measurement: "数值格式等价与篡改"
+      result: "100厘米/100cm 及‘100 cm ～ 150 cm’/‘100厘米至150厘米’等价成立；真实链路等价范围 ACCEPT。110cm-150cm、100cm-160cm、100米-150米均 REJECT。"
+    - evidence_id: E-05
+      measurement: "租户、账号、会话隔离"
+      result: "租户错配和账号越权均返回 DIRECT 阻断卡；HQ 会话对苏州账号查询为 null，两个账号随后保持不同 user key 与 conversation ID。"
+    - evidence_id: E-06
+      measurement: "Founder 预算与调用历史"
+      result: "40+60=100；invocation_count=79；保守 model_call_upper_bound=83 且不超过100；停止后新增内容模型调用=0、新远程部署=0。"
+    - evidence_id: E-07
+      measurement: "历史 evidence 完整性"
+      result: "model evidence 相对7ae81794仅增加8行、删除0行；移除 addendum_v2 确认对象后与前驱历史 JSON 完全相同；run_index=39，状态分布合计39。"
+    - evidence_id: E-08
+      measurement: "必要回归与 checker selftest"
+      result: "事实门、创意表面、数值等价、跨品牌/租户、账号、会话和预算共11项定向测试全部通过；checker selftest PASS，negative_case_count=23。"
+  two_stage_binding:
+    ordinary_package7_checker_run: false
+    reason: "独立结论完成前 review/result/delivery 仍机械绑定旧7ae81794；按两阶段协议留给主执行方最小重绑定后运行。"
+    treated_as_implementation_defect: false
+  reviewer_activity:
+    repository_writes: []
+    external_runtime_calls: []
+    content_model_calls: 0
+    remote_deployments: 0

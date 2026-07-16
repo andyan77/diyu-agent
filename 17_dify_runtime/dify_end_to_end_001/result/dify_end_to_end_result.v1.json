@@ -1,0 +1,69 @@
+{
+  "schema": "diyu.package7.dify_end_to_end_result.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_001",
+  "state": "PASS_DIFY_END_TO_END_PENDING_PACKAGE_8",
+  "success_claim": "PACKAGE7_ACCEPTANCE_COMPLETE_NOT_PRODUCTION_READY",
+  "reviewed_candidate_commit": "f2dcbb268527d71da2d10ae8c001fd786cd6fc54",
+  "reviewed_snapshot_sha256": "611c9c86426145ba84770a40330475f86c147f40",
+  "blocking_items": [],
+  "external_objects": {
+    "dify_app_count": 1,
+    "dataset_count": 1,
+    "runtime_database_count": 1,
+    "runtime_bridge_count": 1,
+    "parallel_object_count": 0,
+    "production_ready": false
+  },
+  "coverage": {
+    "content_products_deterministic": 20,
+    "topics_deterministic": 8,
+    "action_cards_deterministic": 8,
+    "content_accounts": 11,
+    "storylines": 4,
+    "formats_with_real_model_outputs": 3,
+    "representative_continuous_dialogue_pass": true,
+    "representative_missing_material_degrade_pass": true,
+    "representative_scope_rejection_pass": true
+  },
+  "model_audit": {
+    "invocation_record_count": 79,
+    "model_call_upper_bound": 83,
+    "known_prompt_tokens": 142123,
+    "known_completion_tokens": 131489,
+    "known_total_tokens": 273612,
+    "failed_or_unknown_billing_count": 3,
+    "known_cost_rmb": "0.405101",
+    "original_authorized_request_upper_bound": 40,
+    "founder_additional_authorized_request_upper_bound": 60,
+    "effective_authorized_request_upper_bound": 100,
+    "authorized_cost_cny_upper_bound": 50,
+    "content_quality_reroll_count": 0,
+    "new_content_model_calls_after_existing_stop": 0,
+    "new_remote_deployments_after_existing_stop": 0
+  },
+  "checks": {
+    "package7_unit_tests": "PASS_52",
+    "package2_regression": "PASS_48_TESTS_AND_CHECKER",
+    "package6_regression": "PASS_16_TESTS_AND_CHECKER",
+    "package7_checker": "PASS_EVIDENCE_AND_SELFTEST",
+    "gate1_current_checker": "PASS_CURRENT_SUCCESSOR_AND_SELFTEST",
+    "remote_required_checks": "PENDING_PUSH"
+  },
+  "independent_reviews": [
+    {
+      "review_id": "DIYU_DIFY_END_TO_END_001_P7_CONTENT_ADDENDUM_V2_F2DCBB2_20260716T080433_05",
+      "review_type": "CONTENT_EXPERIENCE_AND_ORGANIZATION"
+    },
+    {
+      "review_id": "DIYU-PKG7-TRUST-ADDENDUM-V2-F2DCBB26-CODEX-05",
+      "review_type": "TRUST_FACT_AUTHORIZATION_PRIVACY_AND_RUNTIME"
+    }
+  ],
+  "core_numbers": {
+    "300_changed": false,
+    "120_changed": false,
+    "86_changed": false
+  },
+  "readiness_transition_count": 0,
+  "merge_allowed": false
+}

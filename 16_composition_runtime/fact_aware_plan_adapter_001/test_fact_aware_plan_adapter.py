@@ -183,6 +183,36 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
         )
         self.assertFalse(record["package2"]["second_plan_or_context_created"])
 
+    def test_runtime_expression_profile_resolver_is_injected_without_a_second_plan(self) -> None:
+        calls: list[str] = []
+
+        def resolve_profile(
+            task: ServerConfirmedProductionTask,
+            retrieval: dict[str, Any],
+        ) -> dict[str, Any]:
+            calls.append(str(task.server_task_ref))
+            scope = retrieval["resolved_scope"]
+            profile = self.adapter.expression_service.neutral_profile
+            return {
+                "resolution_authority": "SERVER_TRUSTED_UPSTREAM",
+                "requested_profile_ref": None,
+                "resolved_profile_ref": profile["profile_ref"],
+                "resolution_mode": profile["resolution_mode"],
+                "tenant_id": scope["tenant_id"],
+                "content_account_id": scope["content_account_id"],
+            }
+
+        adapter = FactAwarePlanAdapter(
+            self.adapter.retrieval_service,
+            self.adapter.expression_service,
+            self.adapter.identity_path,
+            expression_profile_resolver=resolve_profile,
+        )
+        result = adapter.prepare(self.task_for_case(self.case("CP03")))
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(adapter.call_audit["package2_prepare"], 1)
+
     def test_narrative_only_plan_does_not_require_a_precise_fact(self) -> None:
         result = self.adapter.prepare(self.task_for_case(self.case("CP17")))
         self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")

@@ -59,6 +59,14 @@ REQUIRED_PACKAGE_PATHS = frozenset(
     }
 )
 OPTIONAL_REVIEW_PATHS = frozenset({ARCH_REVIEW_PATH, TRUST_REVIEW_PATH})
+PACKAGE7_SUCCESSOR_EXTENSION_PATHS = frozenset(
+    {
+        PACKAGE_ROOT / "light_expression_service.py",
+        PACKAGE_ROOT / "test_light_expression_service.py",
+        PACKAGE_ROOT / "check_light_expression_service.py",
+        MANIFEST_PATH,
+    }
+)
 EXPECTED_ENDPOINTS = (
     ("POST", "/v1/content/prepare"),
     ("POST", "/v1/content/validate"),
@@ -165,6 +173,8 @@ REQUIRED_TEST_METHODS = frozenset(
         "test_four_http_endpoints_run_locally",
         "test_http_body_cannot_register_a_fabricated_fact",
         "test_simulation_context_cannot_bind_non_loopback_host",
+        "test_injected_plan_store_preserves_package2_ownership_and_default_behavior",
+        "test_server_injected_brand_profile_cannot_grant_scope",
     }
 )
 
@@ -242,6 +252,20 @@ def validate_manifest(manifest: dict[str, Any]) -> None:
         "audience_body_generation_count",
     ):
         require(runtime.get(key) == 0, f"E_RUNTIME_BOUNDARY:{key}")
+    successor = manifest.get("authorized_package7_successor_extension", {})
+    require(successor.get("task_id") == "DIYU_DIFY_END_TO_END_001", "E_SUCCESSOR_TASK")
+    for key in (
+        "historical_review_remains_as_built",
+        "current_extension_review_owned_by_package7",
+        "injectable_plan_store_preserves_package2_plan_ownership",
+        "injectable_expression_profile_is_server_resolved",
+        "default_in_memory_and_neutral_behavior_preserved",
+    ):
+        require(successor.get(key) is True, f"E_SUCCESSOR_CONTRACT:{key}")
+    require(
+        successor.get("injected_profile_may_grant_fact_or_scope") is False,
+        "E_SUCCESSOR_SCOPE_GRANT",
+    )
     numbers = manifest.get("core_numbers", {})
     require(numbers.get("target_case_baseline") == 300, "E_CORE_300")
     require(numbers.get("frozen_reference_inventory") == 120, "E_CORE_120")
@@ -305,7 +329,15 @@ def validate_source_shape(root: Path) -> None:
     tests = (root / TEST_PATH).read_text(encoding="utf-8")
     validate_implementation_source(core, SOURCE_PATHS[0])
     validate_implementation_source(http, SOURCE_PATHS[1])
-    for token in ("class LightExpressionService", "def prepare(", "def validate(", "PENDING_EXTERNAL_REVIEW"):
+    for token in (
+        "class LightExpressionService",
+        "class PlanStore(Protocol)",
+        "def action_card(",
+        "expression_profile_resolver",
+        "def prepare(",
+        "def validate(",
+        "PENDING_EXTERNAL_REVIEW",
+    ):
         require(token in core, f"E_CORE_SHAPE:{token}")
     require("int(digest_object(key)" not in core, "E_DIGEST_PRODUCT_INFERENCE")
     require("与该题材相关的普通用户" not in core, "E_HARDCODED_AUDIENCE")
@@ -390,7 +422,11 @@ def validate_reviews(root: Path, result: dict[str, Any]) -> None:
             declared_sha = artifact.get("sha256")
             require(artifact_path.startswith(PACKAGE_ROOT.as_posix() + "/"), f"E_REVIEW_ARTIFACT_SCOPE:{artifact_path}")
             require(git_file_digest(root, candidate, artifact_path) == declared_sha, f"E_REVIEW_ARTIFACT_SHA:{artifact_path}")
-            require(sha256_file(root / artifact_path) == declared_sha, f"E_REVIEWED_ARTIFACT_DRIFT:{artifact_path}")
+            if Path(artifact_path) not in PACKAGE7_SUCCESSOR_EXTENSION_PATHS:
+                require(
+                    sha256_file(root / artifact_path) == declared_sha,
+                    f"E_REVIEWED_ARTIFACT_DRIFT:{artifact_path}",
+                )
         reviews.append(review)
     identities = {review["reviewer_identity"] for review in reviews}
     sessions = {review["reviewer_session_id"] for review in reviews}
@@ -480,6 +516,12 @@ def run_selftest(root: Path) -> dict[str, Any]:
     mutated_manifest["trust_boundary"]["request_body_may_register_fact_or_fragment"] = True
     expect_failure(lambda: validate_manifest(mutated_manifest), "E_CLIENT_EVIDENCE_REGISTRATION")
 
+    mutated_manifest = copy.deepcopy(manifest)
+    mutated_manifest["authorized_package7_successor_extension"][
+        "injected_profile_may_grant_fact_or_scope"
+    ] = True
+    expect_failure(lambda: validate_manifest(mutated_manifest), "E_SUCCESSOR_SCOPE_GRANT")
+
     mutated_result = copy.deepcopy(result)
     mutated_result["core_numbers"]["target_case_baseline"] = 301
     expect_failure(lambda: validate_result(mutated_result), "E_RESULT_CORE_NUMBERS")
@@ -510,7 +552,7 @@ def run_selftest(root: Path) -> dict[str, Any]:
         lambda: validate_review(review, "LIGHT_EXPRESSION_ARCHITECTURE_REVIEW"),
         "E_REVIEW_SCORE",
     )
-    return {"task_id": TASK_ID, "selftest": "PASS", "negative_case_count": 7}
+    return {"task_id": TASK_ID, "selftest": "PASS", "negative_case_count": 8}
 
 
 def parse_args() -> argparse.Namespace:

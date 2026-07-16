@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "f25fa89e4c46345089934650a3b04471a56000c78e8261f8530237a04b10b3dd"
+    "4b0ea162138179a470aefad11f7600ba8a717f395234833f3edd2dd4d96a6c9c"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -149,9 +149,19 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_fact_aware_plan_adapter.py"
         ),
     ),
+    (
+        Path("17_dify_runtime/dify_end_to_end_001"),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/"
+            "check_dify_end_to_end.py"
+        ),
+    ),
 )
 MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
-    {Path("16_composition_runtime/fact_aware_plan_adapter_001")}
+    {
+        Path("16_composition_runtime/fact_aware_plan_adapter_001"),
+        Path("17_dify_runtime/dify_end_to_end_001"),
+    }
 )
 DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
     Path(

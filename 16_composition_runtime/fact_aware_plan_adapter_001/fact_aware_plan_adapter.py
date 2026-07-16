@@ -9,7 +9,7 @@ import json
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Mapping, cast
+from typing import Any, Callable, Mapping, cast
 
 
 JsonObject = dict[str, Any]
@@ -38,7 +38,6 @@ from brand_fact_retrieval import (  # type: ignore[import-not-found]  # noqa: E4
 )
 from light_expression_service import (  # type: ignore[import-not-found]  # noqa: E402
     LightExpressionService,
-    PreparationIssue,
     TrustedUpstreamContext,
     digest_object as digest_plan_object,
     parse_time,
@@ -49,6 +48,8 @@ START_CREATION = "START_CREATION"
 SERVER_TASK_AUTHORITY = "SERVER_CONFIRMED_TASK_REGISTRY"
 SERVER_ACCESS_AUTHORITY = "SERVER_SESSION_SCOPE"
 NEUTRAL_PROFILE_MODE = "NEUTRAL_DEFAULT"
+TrustedContextFactory = Callable[[JsonObject], TrustedUpstreamContext]
+ExpressionProfileResolver = Callable[["ServerConfirmedProductionTask", JsonObject], JsonObject]
 
 
 def canonical_json_bytes(value: Any) -> bytes:
@@ -117,10 +118,15 @@ class FactAwarePlanAdapter:
         retrieval_service: BrandFactRetrievalService,
         expression_service: LightExpressionService,
         identity_path: Path,
+        *,
+        trusted_context_factory: TrustedContextFactory | None = None,
+        expression_profile_resolver: ExpressionProfileResolver | None = None,
     ) -> None:
         self.retrieval_service = retrieval_service
         self.expression_service = expression_service
         self.identity_path = identity_path
+        self._trusted_context_factory = trusted_context_factory
+        self._expression_profile_resolver = expression_profile_resolver
         self._integration_records: list[JsonObject] = []
         self._entrypoint_calls = {
             "package5_retrieve": 0,
@@ -363,7 +369,7 @@ class FactAwarePlanAdapter:
         expression_partition = copy_mapping(
             retrieval["expression_candidate_partition"]
         )
-        profile_ref = str(self.expression_service.neutral_profile["profile_ref"])
+        expression_profile = self._resolve_expression_profile(task, retrieval)
         return {
             "api_version": "v1",
             "request_id": task.request_id,
@@ -378,14 +384,7 @@ class FactAwarePlanAdapter:
             "verified_precise_facts": copy.deepcopy(
                 retrieval["verified_precise_facts"]
             ),
-            "server_expression_profile": {
-                "resolution_authority": "SERVER_TRUSTED_UPSTREAM",
-                "requested_profile_ref": None,
-                "resolved_profile_ref": profile_ref,
-                "resolution_mode": NEUTRAL_PROFILE_MODE,
-                "tenant_id": scope["tenant_id"],
-                "content_account_id": scope["content_account_id"],
-            },
+            "server_expression_profile": expression_profile,
             "requested_high_level_mode_refs": copy.deepcopy(
                 expression_partition["requested_high_level_mode_refs"]
             ),
@@ -404,12 +403,32 @@ class FactAwarePlanAdapter:
         }
 
     def _trusted_context(self, request: JsonObject) -> TrustedUpstreamContext:
+        if self._trusted_context_factory is not None:
+            return self._trusted_context_factory(copy.deepcopy(request))
         return TrustedUpstreamContext.from_simulation_identity(
             self.identity_path,
             (copy.deepcopy(request["confirmed_requirement"]),),
             tuple(copy.deepcopy(request["scoped_retrieval_fragments"])),
             tuple(copy.deepcopy(request["verified_precise_facts"])),
         )
+
+    def _resolve_expression_profile(
+        self,
+        task: ServerConfirmedProductionTask,
+        retrieval: JsonObject,
+    ) -> JsonObject:
+        if self._expression_profile_resolver is not None:
+            return copy.deepcopy(self._expression_profile_resolver(task, retrieval))
+        scope = copy_mapping(retrieval["resolved_scope"])
+        profile_ref = str(self.expression_service.neutral_profile["profile_ref"])
+        return {
+            "resolution_authority": "SERVER_TRUSTED_UPSTREAM",
+            "requested_profile_ref": None,
+            "resolved_profile_ref": profile_ref,
+            "resolution_mode": NEUTRAL_PROFILE_MODE,
+            "tenant_id": scope["tenant_id"],
+            "content_account_id": scope["content_account_id"],
+        }
 
     def _plan_record_for_access(
         self,
@@ -472,10 +491,7 @@ class FactAwarePlanAdapter:
         # Package 2 owns the action-card materializer; this adapter does not copy it.
         return cast(
             JsonObject,
-            self.expression_service._action_card(  # noqa: SLF001
-                request,
-                PreparationIssue(action_type, reason, refs),
-            ),
+            self.expression_service.action_card(request, action_type, reason, refs),
         )
 
     def _append_record(
