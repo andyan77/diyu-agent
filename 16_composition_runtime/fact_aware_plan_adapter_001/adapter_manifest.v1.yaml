@@ -1,0 +1,80 @@
+fact_aware_plan_adapter_manifest:
+  schema_version: v1.0
+  task_id: DIYU_FACT_AWARE_PLAN_ADAPTER_001
+  package_number: 6
+  baseline_master_commit: 012b72136d5c73730c504c3255ae3867bba81c8d
+  package_root: 16_composition_runtime/fact_aware_plan_adapter_001
+  upstream_anchors:
+    11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml: a3aec92fdcc22635bb07bc5d2595ebaa5cfa1f1c9d5fad42cc39481808bbc1af
+    11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml: 65b8242b9b760e64f8e441c4334c68fa76f6dc3a11e2fe2f8f62ad6a887c3cbc
+    11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml: e51f46635b6c3312e0626bc5aca448c91d20b0d71cae6a8de793ba5b603e2b95
+    12_expression_service/expression_runtime_adapter_001/light_expression_service.py: bb57ac6d356fd81b3f2da8e3e7596fed19f384fb95634270b8a23d84e59957f5
+    12_expression_service/expression_runtime_adapter_001/neutral_expression_profile.v1.yaml: 30d8ce76fa49ebfad79634cbaa19f69e8d8ad5bbc09c958403dcc8847d3025c6
+    12_expression_service/expression_runtime_adapter_001/service_manifest.v1.yaml: ca354c12a30990ac84e2267bc22b427450804c18ff44b6cb50a71a79ff56c172
+    15_brand_retrieval/brand_fact_retrieval_001/brand_fact_retrieval.py: 33ae09df9abb63aa796913338568e63edc6096b410a1e27670e9a378ecdef6e8
+    15_brand_retrieval/brand_fact_retrieval_001/retrieval_manifest.v1.json: bc93d0c4ac4e11f6ec9c8ce18c6d830adb6334f2f8dab20a26a1f75aa3d25d3a
+    15_brand_retrieval/brand_fact_retrieval_001/result/brand_fact_retrieval_result.v1.json: 5bf0866935a2ce73400fbacc5ae4072b4736ce10562b6886a23f50dfa21fcbe8
+  entrypoints:
+    integration: fact_aware_plan_adapter.py
+    test: test_fact_aware_plan_adapter.py
+    checker: check_fact_aware_plan_adapter.py
+    package5_called: BrandFactRetrievalService.retrieve
+    package2_prepare_called: LightExpressionService.prepare
+    package2_validate_called: LightExpressionService.validate
+  ownership:
+    package2_owns_light_content_plan: true
+    package2_owns_action_card: true
+    package2_owns_plan_store: true
+    package5_owns_retrieval_and_scope_filtering: true
+    second_plan_contract_created: false
+    second_fact_or_context_bundle_created: false
+    second_http_service_created: false
+  material_access:
+    process_local: true
+    source_is_package2_plan_record_original_request: true
+    exact_plan_reference_sets_only: true
+    current_server_scope_rechecked: true
+    editable: false
+    persisted: false
+  coverage:
+    capability_case_count: 20
+    topic_category_count: 8
+    internal_content_product_count: 20
+    evidence_backed_plan_case_count: 10
+    honest_action_card_case_count: 10
+    unit_test_count: 15
+  expression_boundary:
+    formal_enterprise_profile_created: false
+    neutral_default_profile_used: true
+    approved_package5_example_count_passed_to_package2: 0
+    high_level_modes_are_soft_guidance_only: true
+  external_calls:
+    model: 0
+    dify: 0
+    database: 0
+    vector_service: 0
+    network: 0
+    production: 0
+  generated_content:
+    audience_candidate_generation_count: 0
+    fixed_structural_validation_candidate_count: 1
+    semantic_fact_quality_proven: false
+    aesthetic_quality_proven: false
+  core_numbers:
+    target_300: 300
+    frozen_reference_120: 120
+    historical_component_inventory_86: 86
+    changed_or_harmed: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false

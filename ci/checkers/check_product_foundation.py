@@ -76,8 +76,26 @@ SERIAL_SUCCESSOR_PACKAGES = (
         ),
         "PACKAGE_5_ONLY",
     ),
+    (
+        "PACKAGE_6_FACT_AWARE_PLAN_ADAPTER",
+        Path("16_composition_runtime/fact_aware_plan_adapter_001"),
+        Path(
+            "16_composition_runtime/fact_aware_plan_adapter_001/"
+            "check_fact_aware_plan_adapter.py"
+        ),
+        "PACKAGE_6_ONLY",
+    ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
+MANDATORY_SUCCESSOR_ROOTS = frozenset(
+    {Path("16_composition_runtime/fact_aware_plan_adapter_001")}
+)
+REFERENCE_SAFE_SUCCESSOR_COMMITS = {
+    Path(
+        "15_brand_retrieval/brand_fact_retrieval_001/"
+        "check_brand_fact_retrieval.py"
+    ): "24cd9888f38f2f22b22aa6c5a23f388b39fa1469",
+}
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
 SUCCESSOR_OPTIMIZED_STEP_NAME = "Verify reserved downstream package fail-closed optimized mode"
 SUCCESSOR_NORMAL_RUN_LINES = (
@@ -85,16 +103,40 @@ SUCCESSOR_NORMAL_RUN_LINES = (
     "run_downstream_package_checker() {",
     '  package_root="$1"',
     '  checker="$2"',
+    '  required="${3:-false}"',
+    '  reference_commit="${4:-}"',
+    '  test "$required" = "true" || test "$required" = "false"',
     '  if [ ! -e "$package_root" ]; then',
+    '    test "$required" = "false"',
     "    return 0",
     "  fi",
     '  test -d "$package_root"',
     '  test -f "$checker"',
-    '  python3 "$checker"',
-    '  python3 "$checker" --selftest',
+    '  run_root="."',
+    '  temporary_parent=""',
+    '  if [ -n "$reference_commit" ]; then',
+    '    temporary_parent="$(mktemp -d)"',
+    '    run_root="$temporary_parent/snapshot"',
+    '    git worktree add --detach "$run_root" "$reference_commit" >/dev/null',
+    '  fi',
+    '  set +e',
+    '  (cd "$run_root" && python3 "$checker" && python3 "$checker" --selftest)',
+    '  code=$?',
+    '  set -e',
+    '  if [ -n "$temporary_parent" ]; then',
+    '    git worktree remove --force "$run_root" >/dev/null',
+    '    rmdir "$temporary_parent"',
+    '  fi',
+    '  test "$code" -eq 0',
     "}",
     *(
         f'run_downstream_package_checker "{package_root.as_posix()}" "{checker.as_posix()}"'
+        f' "{"true" if package_root in MANDATORY_SUCCESSOR_ROOTS else "false"}"'
+        + (
+            f' "{REFERENCE_SAFE_SUCCESSOR_COMMITS[checker]}"'
+            if checker in REFERENCE_SAFE_SUCCESSOR_COMMITS
+            else ""
+        )
         for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
 )
@@ -103,24 +145,45 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     "run_downstream_package_checker_optimized() {",
     '  package_root="$1"',
     '  checker="$2"',
+    '  required="${3:-false}"',
+    '  reference_commit="${4:-}"',
+    '  test "$required" = "true" || test "$required" = "false"',
     '  if [ ! -e "$package_root" ]; then',
+    '    test "$required" = "false"',
     "    return 0",
     "  fi",
     '  test -d "$package_root"',
     '  test -f "$checker"',
+    '  run_root="."',
+    '  temporary_parent=""',
+    '  if [ -n "$reference_commit" ]; then',
+    '    temporary_parent="$(mktemp -d)"',
+    '    run_root="$temporary_parent/snapshot"',
+    '    git worktree add --detach "$run_root" "$reference_commit" >/dev/null',
+    '  fi',
     "  set +e",
-    '  python3 -O "$checker"',
+    '  (cd "$run_root" && python3 -O "$checker")',
     "  code=$?",
     "  set -e",
     '  test "$code" -eq 2',
     "  set +e",
-    '  python3 -O "$checker" --selftest',
+    '  (cd "$run_root" && python3 -O "$checker" --selftest)',
     "  code=$?",
     "  set -e",
     '  test "$code" -eq 2',
+    '  if [ -n "$temporary_parent" ]; then',
+    '    git worktree remove --force "$run_root" >/dev/null',
+    '    rmdir "$temporary_parent"',
+    '  fi',
     "}",
     *(
         f'run_downstream_package_checker_optimized "{package_root.as_posix()}" "{checker.as_posix()}"'
+        f' "{"true" if package_root in MANDATORY_SUCCESSOR_ROOTS else "false"}"'
+        + (
+            f' "{REFERENCE_SAFE_SUCCESSOR_COMMITS[checker]}"'
+            if checker in REFERENCE_SAFE_SUCCESSOR_COMMITS
+            else ""
+        )
         for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
 )
@@ -647,6 +710,37 @@ def validate_post_candidate_paths(paths: set[str]) -> None:
 
 
 def run_successor_checker(root: Path, checker: Path) -> None:
+    reference_commit = REFERENCE_SAFE_SUCCESSOR_COMMITS.get(checker)
+    execution_root = root
+    temporary: tempfile.TemporaryDirectory[str] | None = None
+    if reference_commit is not None and root.resolve() == ROOT.resolve():
+        package_root = next(
+            package
+            for _, package, candidate_checker, _ in CHECKED_DOWNSTREAM_PACKAGES
+            if candidate_checker == checker
+        )
+        validate_reference_safe_successor_bytes(root, package_root, reference_commit)
+        temporary = tempfile.TemporaryDirectory(prefix="reference-safe-successor-")
+        execution_root = Path(temporary.name) / "snapshot"
+        completed = subprocess.run(
+            [
+                "git",
+                "worktree",
+                "add",
+                "--detach",
+                execution_root.as_posix(),
+                reference_commit,
+            ],
+            cwd=ROOT,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        require(
+            completed.returncode == 0,
+            f"E_SUCCESSOR_REFERENCE_WORKTREE:{checker}:{completed.returncode}",
+        )
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     invocations = (
@@ -659,19 +753,82 @@ def run_successor_checker(root: Path, checker: Path) -> None:
             "OPTIMIZED_SELFTEST",
         ),
     )
-    for command, expected_code, mode in invocations:
-        completed = subprocess.run(
-            command,
-            cwd=root,
-            check=False,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            env=environment,
-        )
+    try:
+        for command, expected_code, mode in invocations:
+            completed = subprocess.run(
+                command,
+                cwd=execution_root,
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                env=environment,
+            )
+            require(
+                completed.returncode == expected_code,
+                f"E_SUCCESSOR_CHECKER_{mode}:{checker}:{completed.returncode}",
+            )
+    finally:
+        if temporary is not None:
+            subprocess.run(
+                ["git", "worktree", "remove", "--force", execution_root.as_posix()],
+                cwd=ROOT,
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+            )
+            temporary.cleanup()
+
+
+def git_tree_paths(commit: str, package_root: Path) -> set[Path]:
+    completed = subprocess.run(
+        [
+            "git",
+            "ls-tree",
+            "-r",
+            "--name-only",
+            commit,
+            package_root.as_posix(),
+        ],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+    )
+    require(completed.returncode == 0, f"E_SUCCESSOR_REFERENCE_TREE:{package_root}")
+    return {Path(line) for line in completed.stdout.splitlines() if line.strip()}
+
+
+def git_object_bytes(commit: str, path: Path) -> bytes:
+    completed = subprocess.run(
+        ["git", "show", f"{commit}:{path.as_posix()}"],
+        cwd=ROOT,
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    require(completed.returncode == 0, f"E_SUCCESSOR_REFERENCE_OBJECT:{path}")
+    return completed.stdout
+
+
+def validate_reference_safe_successor_bytes(
+    root: Path, package_root: Path, reference_commit: str
+) -> None:
+    expected_paths = git_tree_paths(reference_commit, package_root)
+    actual_paths = {
+        path.relative_to(root)
+        for path in (root / package_root).rglob("*")
+        if path.is_file() and "__pycache__" not in path.parts
+    }
+    require(
+        actual_paths == expected_paths,
+        f"E_SUCCESSOR_REFERENCE_FILE_SET:{package_root}",
+    )
+    for relative in sorted(expected_paths):
         require(
-            completed.returncode == expected_code,
-            f"E_SUCCESSOR_CHECKER_{mode}:{checker}:{completed.returncode}",
+            (root / relative).read_bytes() == git_object_bytes(reference_commit, relative),
+            f"E_SUCCESSOR_REFERENCE_BYTES:{relative}",
         )
 
 
@@ -679,6 +836,10 @@ def validate_successor_packages(root: Path) -> None:
     for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES:
         package_path = root / package_root
         if not package_path.exists():
+            require(
+                package_root not in MANDATORY_SUCCESSOR_ROOTS,
+                f"E_SUCCESSOR_ROOT_MISSING:{package_root}",
+            )
             continue
         require(package_path.is_dir(), f"E_SUCCESSOR_ROOT_NOT_DIRECTORY:{package_root}")
         require((root / checker).is_file(), f"E_SUCCESSOR_CHECKER_MISSING:{checker}")
@@ -4417,6 +4578,42 @@ raise SystemExit(0)
         expect_failure(
             lambda: validate_successor_packages(temp_root),
             "E_SUCCESSOR_CHECKER_NORMAL",
+        )
+
+        failing_checker.write_text(passing_checker, encoding="utf-8")
+        mandatory_root = next(iter(MANDATORY_SUCCESSOR_ROOTS))
+        shutil.rmtree(temp_root / mandatory_root)
+        expect_failure(
+            lambda: validate_successor_packages(temp_root),
+            "E_SUCCESSOR_ROOT_MISSING",
+        )
+
+    with tempfile.TemporaryDirectory(
+        prefix="product-foundation-reference-safe-successor-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        package_root = Path("15_brand_retrieval/brand_fact_retrieval_001")
+        reference_commit = REFERENCE_SAFE_SUCCESSOR_COMMITS[
+            package_root / "check_brand_fact_retrieval.py"
+        ]
+        reference_paths = git_tree_paths(reference_commit, package_root)
+        for relative in reference_paths:
+            destination = temp_root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(git_object_bytes(reference_commit, relative))
+        validate_reference_safe_successor_bytes(
+            temp_root, package_root, reference_commit
+        )
+
+        mutated_path = min(reference_paths, key=lambda path: path.as_posix())
+        (temp_root / mutated_path).write_bytes(
+            (temp_root / mutated_path).read_bytes() + b"\n"
+        )
+        expect_failure(
+            lambda: validate_reference_safe_successor_bytes(
+                temp_root, package_root, reference_commit
+            ),
+            "E_SUCCESSOR_REFERENCE_BYTES",
         )
 
     return {"selftest_cases": SELFTEST_FAILURE_CASES_RUN, "result": "PASS"}

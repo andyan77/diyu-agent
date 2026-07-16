@@ -1,0 +1,61 @@
+fact_aware_plan_adapter_result:
+  schema_version: v1.0
+  task_id: DIYU_FACT_AWARE_PLAN_ADAPTER_001
+  status: PASS_FACT_AWARE_PLAN_ADAPTER_PENDING_PACKAGE_7
+  candidate_commit: a5c99cb545fe57d0df3cb45a071734e5ab0c836b
+  candidate_snapshot_digest: 1d3423b89066f36c9a83279fb98e3eda50418ab3716079849453a99625ecabae
+  counts:
+    capability_cases: 20
+    topic_categories: 8
+    internal_content_products: 20
+    evidence_backed_plan_cases: 10
+    honest_action_card_cases: 10
+    fixed_structural_validation_candidates: 1
+    generated_audience_candidates: 0
+  checks:
+    package5_retrieve_called: true
+    package2_prepare_called: true
+    package2_validate_called: true
+    package5_hold_records_consumed: false
+    second_plan_or_context_created: false
+    server_scope_spoof_blocked: true
+    exact_material_projection_proven: true
+    deterministic_replay_proven: true
+    all_20_products_have_plan_or_action: true
+    all_8_topics_covered: true
+    no_atom_dependency_proven: true
+    semantic_and_aesthetic_review_pending: true
+  independent_reviews:
+    - review_id: PKG6-ARCH-TARGETED-REREVIEW-A-001
+      reviewer_identity: Reviewer-A Architecture and Upstream Reuse Saffron-6C2E
+      score: 96
+      verdict: PASS
+    - review_id: PKG6-FACT-AUTH-REVIEW-B-R2-A5C99CB5
+      reviewer_identity: Codex Independent Reviewer B - Fact Authorization and Enterprise Isolation
+      score: 97
+      verdict: PASS
+  external_calls:
+    model: 0
+    dify: 0
+    database: 0
+    vector_service: 0
+    network: 0
+    production: 0
+  core_numbers:
+    target_300: 300
+    frozen_reference_120: 120
+    historical_component_inventory_86: 86
+    changed_or_harmed: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false

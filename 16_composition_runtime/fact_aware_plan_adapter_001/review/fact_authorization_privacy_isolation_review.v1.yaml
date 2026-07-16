@@ -1,0 +1,32 @@
+review:
+  schema_version: v1.0
+  review_id: PKG6-FACT-AUTH-REVIEW-B-R2-A5C99CB5
+  task_id: DIYU_FACT_AWARE_PLAN_ADAPTER_001
+  review_type: FACT_AUTHORIZATION_PRIVACY_AND_ENTERPRISE_ISOLATION
+  reviewer_identity: Codex Independent Reviewer B - Fact Authorization and Enterprise Isolation
+  reviewer_session_id: reviewer-b-6d935226-4b12-4dd8-9cf8-9f57a2e6fa71
+  reviewer_run_id: pkg6-review-b-postfix-4e8fa2d0-0e66-4f9d-a0a8-4912b2c19cb8
+  candidate_commit: a5c99cb545fe57d0df3cb45a071734e5ab0c836b
+  candidate_snapshot_digest: 1d3423b89066f36c9a83279fb98e3eda50418ab3716079849453a99625ecabae
+  score: 97
+  verdict: PASS
+  hard_blockers: []
+  acceptance_ids:
+    - PKG6-A02
+    - PKG6-A03
+    - PKG6-A05
+    - PKG6-A06
+    - PKG6-A07
+    - PKG6-A08
+    - PKG6-A09
+    - PKG6-A10
+    - PKG6-A12
+  evidence:
+    - The worktree, candidate commit, and independently recomputed snapshot digest match exactly.
+    - Public START_CREATION reaches retrieval and preparation; the unsupported START_CONTENT_PRODUCTION alias returns an action card without either call.
+    - Required precise-fact reconfirmation, missing, and conflict gaps return Package 2-owned COLLECT_FACT action cards and never degrade to a narrative plan.
+    - Client scope claims, expression hints, and candidate examples cannot grant fact authority, scope, or removal of hard rules.
+    - Plan material access rechecks current scope and returns only exact plan-permitted references; action cards and cross-account references are rejected.
+    - All 15 focused tests and the package pre-review checker pass; upstream anchors, readiness flags, and core numbers remain unchanged.
+  nonblocking_findings: []
+  signed_at: 2026-07-15T18:06:43-07:00
