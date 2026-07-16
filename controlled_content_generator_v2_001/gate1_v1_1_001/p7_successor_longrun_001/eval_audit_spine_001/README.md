@@ -30,7 +30,7 @@ external_connectivity_smoke: PASS_NOT_QUALIFICATION
 - `fixtures/` 与 `tests/`：R5 已知风险种子及正反向测试；
 - `evidence/`、`release/` 与 `review/`：只读影子复算、冻结清单和审核交付。
 
-上述实现存在并不改变 M0 状态；它仍须真实独立金标、密封资格运行和预算审批。
+上述实现存在并不改变 M0 状态；它仍须真实独立金标、密封资格运行和完整成本记账（拨付制，不设总体预算阻断门——裁决 #4）。
 
 ## 权威顺序
 

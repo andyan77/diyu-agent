@@ -1,0 +1,36 @@
+{
+  "schema_version": "p7-semantic-sweep-report-v1",
+  "workflow_run_id": "wf_f2827efe-f1b",
+  "method": "四镜头并行只读语义扫描（contracts/code/state/plan-conformance）+ 逐发现对抗复核（试图驳倒）",
+  "agents": 6,
+  "total_subagent_tokens": 493415,
+  "raw_findings": 2,
+  "surviving_findings_at_scan_time": [
+    {
+      "file": "eval_audit_spine_001/README.md",
+      "line": 33,
+      "quote": "……它仍须真实独立金标、密封资格运行和预算审批。",
+      "class": "TRUE_RESIDUE_BLOCKING",
+      "verify": "对抗复核未能驳倒：git blame 证实该行停留在 f7d6619（C0 保全），未被 f03b48b（C2 迁移）触及；与同文件 :54 拨付制表述自相矛盾",
+      "disposition": "已修复：改写为拨付制表述（裁决 #4）；同时给确定性扫描器补入中文模式族 budget_approval_zh"
+    }
+  ],
+  "additional_residue_found_by_new_zh_pattern": [
+    {
+      "file": "eval_audit_spine_001/rubric/formulaic_rubric.v1.md",
+      "line": 99,
+      "quote": "若人工全审在批准预算内，可保留人工路线",
+      "class": "TRUE_RESIDUE（human-only fallback 旧预算判据，23 位点清单之外）",
+      "disposition": "已修复：改为成本模型如实上报+发起人确认拨付（与 stage_and_kill.v2 human_only_fallback 迁移一致）"
+    }
+  ],
+  "refuted_findings": [
+    {
+      "file": "delivery_control_001/ACTIVE_CONTRACT_SET.v1.json",
+      "summary": "measurement_qualification.v1 保留登记被疑为隐蔽残留——复核驳倒：带 verbatim 注记的合法递延登记，无运行时消费方，且有守卫测试",
+      "class": "REFUTED"
+    }
+  ],
+  "post_fix_deterministic_scan": "PASS（2749 tracked files, 17 pattern families 含中文, 0 active violations）",
+  "conclusion": "REPOSITORY_WIDE_RESIDUAL_SCAN_PASS（确定性 + 语义双层，修复后复扫全绿）"
+}

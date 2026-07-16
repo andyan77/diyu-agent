@@ -44,6 +44,10 @@ PATTERNS = {
     "s3_auto_kill": re.compile(r"\bSTOP_S3_NO_CAUSAL_LIFT\b"),
     "locked_no_authorization": re.compile(r"\bLOCKED_NO_AUTHORIZATION\b"),
     "approval_status_key": re.compile(r"\bapproval_status\b"),
+    # 中文旧语义（语义扫描 wf_f2827efe 抓到 README :33 漏迁移后补入——
+    # 确定性扫描不得只覆盖英文符号）
+    "budget_approval_zh": re.compile(
+        r"预算审批|预算获批|批准预算|总体预算上限|预算批准"),
 }
 
 # 封存历史（允许旧语义原样存在——历史文件零改写纪律）

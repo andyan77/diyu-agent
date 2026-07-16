@@ -16,6 +16,10 @@ DEFAULT_PREFIXES = (
     "eval_audit_spine_001",
     "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/"
     "checker/p7_master_check.py",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/"
+    "checker/v25_state_checks.py",
+    "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/"
+    "EVAL_AUDIT_SPINE_PRODUCT_MAP.v1.2.md",
     "controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery",
 )
 

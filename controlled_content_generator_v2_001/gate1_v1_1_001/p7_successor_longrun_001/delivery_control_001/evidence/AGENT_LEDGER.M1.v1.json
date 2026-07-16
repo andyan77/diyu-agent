@@ -1,0 +1,126 @@
+{
+  "schema_version": "p7-agent-ledger-v1",
+  "milestone_id": "M1",
+  "agents": [
+    {
+      "agent_id": "a17ec6fd0f49d5461",
+      "label": "sweep:contracts",
+      "role": "只读现场探查（活跃合同镜头）",
+      "requested_model": "未显式指定（继承 workflow 默认；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8）",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "只读（Read/Grep/Glob/Bash 只读命令）",
+      "write_whitelist": [],
+      "output_schema": "FINDINGS_SCHEMA / VERDICT_SCHEMA（StructuredOutput 强制）",
+      "forbidden_materials": [
+        ".env*",
+        ".runtime/",
+        "密钥",
+        "pkg1 轮次数据（无需读取）"
+      ],
+      "isolation": "全新 workflow 子代理上下文（非 fork/resume；无持久记忆依赖）",
+      "layer": 1,
+      "note": "只读扫描角色，非正式审核人；正式审核另行以全新会话执行"
+    },
+    {
+      "agent_id": "a2c5bee14bb6bd098",
+      "label": "sweep:code",
+      "role": "只读现场探查（活跃代码镜头）",
+      "requested_model": "未显式指定（继承 workflow 默认；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8）",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "只读（Read/Grep/Glob/Bash 只读命令）",
+      "write_whitelist": [],
+      "output_schema": "FINDINGS_SCHEMA / VERDICT_SCHEMA（StructuredOutput 强制）",
+      "forbidden_materials": [
+        ".env*",
+        ".runtime/",
+        "密钥",
+        "pkg1 轮次数据（无需读取）"
+      ],
+      "isolation": "全新 workflow 子代理上下文（非 fork/resume；无持久记忆依赖）",
+      "layer": 1,
+      "note": "只读扫描角色，非正式审核人；正式审核另行以全新会话执行"
+    },
+    {
+      "agent_id": "af2fac52578387a14",
+      "label": "sweep:state",
+      "role": "只读现场探查（状态文件镜头）",
+      "requested_model": "未显式指定（继承 workflow 默认；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8）",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "只读（Read/Grep/Glob/Bash 只读命令）",
+      "write_whitelist": [],
+      "output_schema": "FINDINGS_SCHEMA / VERDICT_SCHEMA（StructuredOutput 强制）",
+      "forbidden_materials": [
+        ".env*",
+        ".runtime/",
+        "密钥",
+        "pkg1 轮次数据（无需读取）"
+      ],
+      "isolation": "全新 workflow 子代理上下文（非 fork/resume；无持久记忆依赖）",
+      "layer": 1,
+      "note": "只读扫描角色，非正式审核人；正式审核另行以全新会话执行"
+    },
+    {
+      "agent_id": "aac572d116f4af8e2",
+      "label": "sweep:plan-conformance",
+      "role": "只读现场探查（迁移方向符合性镜头）",
+      "requested_model": "未显式指定（继承 workflow 默认；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8）",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "只读（Read/Grep/Glob/Bash 只读命令）",
+      "write_whitelist": [],
+      "output_schema": "FINDINGS_SCHEMA / VERDICT_SCHEMA（StructuredOutput 强制）",
+      "forbidden_materials": [
+        ".env*",
+        ".runtime/",
+        "密钥",
+        "pkg1 轮次数据（无需读取）"
+      ],
+      "isolation": "全新 workflow 子代理上下文（非 fork/resume；无持久记忆依赖）",
+      "layer": 1,
+      "note": "只读扫描角色，非正式审核人；正式审核另行以全新会话执行"
+    },
+    {
+      "agent_id": "aa41fe8944886be1c",
+      "label": "verify:contracts",
+      "role": "对抗性审查（内部复核，非正式审核）",
+      "requested_model": "未显式指定（继承 workflow 默认；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8）",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "只读（Read/Grep/Glob/Bash 只读命令）",
+      "write_whitelist": [],
+      "output_schema": "FINDINGS_SCHEMA / VERDICT_SCHEMA（StructuredOutput 强制）",
+      "forbidden_materials": [
+        ".env*",
+        ".runtime/",
+        "密钥",
+        "pkg1 轮次数据（无需读取）"
+      ],
+      "isolation": "全新 workflow 子代理上下文（非 fork/resume；无持久记忆依赖）",
+      "layer": 1,
+      "note": "只读扫描角色，非正式审核人；正式审核另行以全新会话执行"
+    },
+    {
+      "agent_id": "aeea50947f01e83c9",
+      "label": "verify:plan-conformance",
+      "role": "对抗性审查（内部复核，非正式审核）",
+      "requested_model": "未显式指定（继承 workflow 默认；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8）",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "只读（Read/Grep/Glob/Bash 只读命令）",
+      "write_whitelist": [],
+      "output_schema": "FINDINGS_SCHEMA / VERDICT_SCHEMA（StructuredOutput 强制）",
+      "forbidden_materials": [
+        ".env*",
+        ".runtime/",
+        "密钥",
+        "pkg1 轮次数据（无需读取）"
+      ],
+      "isolation": "全新 workflow 子代理上下文（非 fork/resume；无持久记忆依赖）",
+      "layer": 1,
+      "note": "只读扫描角色，非正式审核人；正式审核另行以全新会话执行"
+    }
+  ],
+  "constraints_honored": [
+    "≤2 层代理（全部 1 层）",
+    "同一文件同一时间唯一写入者（全部零写入）",
+    "子代理不是里程碑顶层会话",
+    "作者未兼任正式审核人（本批全部为内部扫描/复核角色）"
+  ]
+}

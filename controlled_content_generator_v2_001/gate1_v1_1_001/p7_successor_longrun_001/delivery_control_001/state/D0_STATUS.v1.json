@@ -12,9 +12,8 @@
       "evidence": "charter_sha256 = d68244dfd0a0d19330ad606b2de0d294565b162f31ec614efabe6468d1b77cb8（C1 冻结；checker 复算比对）"
     },
     "ACTIVE_CONTRACT_DIGEST_FROZEN": {
-      "satisfied": false,
-      "evidence": null,
-      "pending_action": "C2 全部活跃成员物化后由 tools/contract_set.py freeze 生成 state/ACTIVE_CONTRACT_DIGESTS.v1.json"
+      "satisfied": true,
+      "evidence": "state/ACTIVE_CONTRACT_DIGESTS.v1.json 冻结（16 成员，0 pending，集合摘要 cbe5f5f4e65a7766e328c5c676ecad2958fb4fdaacc9d17d44350a60cd46dee9；contract_set verify PASS）"
     },
     "INDEPENDENT_REVIEW_PASS": {
       "satisfied": false,
@@ -28,7 +27,7 @@
     }
   },
   "charter_sha256": "d68244dfd0a0d19330ad606b2de0d294565b162f31ec614efabe6468d1b77cb8",
-  "active_contract_set_digest": null,
+  "active_contract_set_digest": "cbe5f5f4e65a7766e328c5c676ecad2958fb4fdaacc9d17d44350a60cd46dee9",
   "review_receipt_path": null,
   "review_receipt_digest": null,
   "d0_approved": false,

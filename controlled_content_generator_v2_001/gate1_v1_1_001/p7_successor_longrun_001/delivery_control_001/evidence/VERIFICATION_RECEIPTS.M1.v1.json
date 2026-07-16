@@ -1,0 +1,187 @@
+{
+  "schema_version": "p7-verification-receipts-v1",
+  "milestone_id": "M1",
+  "environment": {
+    "python": "Python 3.10.12",
+    "git_head_at_run": "cf5016dd063daece3b952a7e36b56129fcb2ed2d",
+    "cwd": "/home/diyu/worktrees/gate1-longrun-001"
+  },
+  "run_at": "2026-07-16T18:06:52.193739+00:00",
+  "all_green": true,
+  "receipts": [
+    {
+      "name": "eval_spine_full_suite",
+      "command": "python3 -m unittest discover controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/tests -p test_*.py",
+      "exit_code": 0,
+      "expected_marker": "OK",
+      "green": true,
+      "tail": [
+        "Ran 49 tests in 1.638s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "name": "v4_recovery_full_suite",
+      "command": "python3 controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/tests/test_v4_recovery.py",
+      "exit_code": 0,
+      "expected_marker": "OK",
+      "green": true,
+      "tail": [
+        "Ran 49 tests in 0.401s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "name": "delivery_control_suite_incl_migration_futurestate_attackmatrix",
+      "command": "python3 -m unittest discover controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests -p test_*.py",
+      "exit_code": 0,
+      "expected_marker": "OK",
+      "green": true,
+      "tail": [
+        "Ran 53 tests in 0.132s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "name": "p7_master_checker_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/checker/p7_master_check.py --selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_NEGATIVE_CASES_ENFORCED",
+      "green": true,
+      "tail": [
+        "[ok] selftest:b_track_a_dependency_detected",
+        "[ok] selftest:missing_journal_detected",
+        "SELFTEST: ALL_NEGATIVE_CASES_ENFORCED"
+      ]
+    },
+    {
+      "name": "run_journal_crash_recovery_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/run_journal.py selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "[ok] run_journal_selftest:missing_field_refused",
+        "[ok] run_journal_selftest:missing_journal_detected",
+        "RUN_JOURNAL_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "contract_set_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/contract_set.py selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "}",
+        "[ok] contract_set_selftest:verify_fails_on_drift",
+        "CONTRACT_SET_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "ready_set_y_graph_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/ready_set.py --selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "[ok] ready_set_selftest:forged_receipt_digest_detected",
+        "[ok] ready_set_selftest:review_ready_cannot_satisfy_entry",
+        "READY_SET_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "launcher_dryrun_and_fresh_session_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/launcher.py --selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "[ok] launcher_selftest:numbered_serialism_refused_m4",
+        "[ok] launcher_selftest:route_unfrozen_m6_refused",
+        "LAUNCHER_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "qual_order_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/qual_order.py --selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "[ok] qual_order_selftest:qual_b_rebuild_after_reveal_detected",
+        "[ok] qual_order_selftest:backfill_seq_detected",
+        "QUAL_ORDER_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "lift_chain_ab_direction_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/lift_chain.py --selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "[ok] lift_chain_selftest:blocked_rights_row_blocks_delivery",
+        "[ok] lift_chain_selftest:closed_rights_clearance_passes",
+        "LIFT_CHAIN_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "sealed_custody_scan_selftest",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/sealed_scan.py --selftest",
+      "exit_code": 0,
+      "expected_marker": "ALL_PASS",
+      "green": true,
+      "tail": [
+        "[ok] sealed_scan_selftest:customer_marker_in_logs_detected",
+        "[ok] sealed_scan_selftest:customer_marker_clean_dir",
+        "SEALED_SCAN_SELFTEST: ALL_PASS"
+      ]
+    },
+    {
+      "name": "repo_wide_residual_scan",
+      "command": "python3 controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/residual_scan.py",
+      "exit_code": 0,
+      "expected_marker": "\"verdict\": \"PASS\"",
+      "green": true,
+      "tail": [
+        "  \"sealed_history_hits\": 32,",
+        "  \"verdict\": \"PASS\"",
+        "}"
+      ]
+    },
+    {
+      "name": "git_diff_check",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "expected_marker": "(exit 0)",
+      "green": true,
+      "tail": []
+    },
+    {
+      "name": "final_mode_without_signatures_must_fail",
+      "command": "p7_master_check.py --milestone M1 --mode FINAL --section final_receipts",
+      "exit_code": 1,
+      "expected_marker": "exit 1 + typed receipts missing",
+      "green": true,
+      "tail": [
+        "    typed receipts missing under milestones/M1",
+        "MODE: FINAL  MILESTONE: M1",
+        "RESULT[SHARED]: FAILED (1 sections)"
+      ]
+    },
+    {
+      "name": "secret_credential_scan_tracked_files",
+      "command": "git ls-files | grep -lIiE <credential patterns>",
+      "exit_code": 0,
+      "expected_marker": "zero hits",
+      "green": true,
+      "tail": [
+        "no hits"
+      ]
+    }
+  ]
+}
