@@ -1,0 +1,104 @@
+"use strict";
+
+const loginSection = document.querySelector("#login-section");
+const workbench = document.querySelector("#workbench");
+const resultSection = document.querySelector("#result-section");
+const output = document.querySelector("#output");
+const taskForm = document.querySelector("#task-form");
+let options = null;
+
+const operationLabels = [
+  "随便聊聊", "找点灵感", "直接做内容", "把已有内容改好", "继续一个系列",
+  "选择候选", "审核", "导出", "查看来源", "提交反馈"
+];
+
+function fillSelect(name, values, includeBlank = false) {
+  const select = taskForm.elements[name];
+  select.replaceChildren();
+  if (includeBlank) select.add(new Option("由系统建议", ""));
+  for (const value of values) select.add(new Option(value, value));
+}
+
+function updateRoleAndColumn() {
+  const account = taskForm.elements.account_display_name.value;
+  const storyline = taskForm.elements.storyline_name.value;
+  fillSelect("speaker_role_name", options.roles_by_account[account] || [], true);
+  fillSelect("column_name", options.columns_by_storyline[storyline] || [], true);
+}
+
+function activateWorkbench(value) {
+  options = value;
+  fillSelect("operation", operationLabels);
+  fillSelect("account_display_name", value.content_accounts);
+  fillSelect("topic_label", value.topics, true);
+  fillSelect("target_platform", value.platforms);
+  fillSelect("duration_label", value.durations);
+  fillSelect("expression_feeling", value.feelings);
+  fillSelect("content_format", value.content_formats);
+  fillSelect("storyline_name", value.storylines, true);
+  const materials = document.querySelector("#materials");
+  materials.replaceChildren();
+  for (const kind of value.material_kinds) {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "existing_material_kinds";
+    checkbox.value = kind;
+    label.append(checkbox, document.createTextNode(kind));
+    materials.append(label);
+  }
+  updateRoleAndColumn();
+  loginSection.classList.add("hidden");
+  workbench.classList.remove("hidden");
+}
+
+document.querySelector("#login-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const form = new FormData(event.currentTarget);
+  const response = await fetch("/login", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    credentials: "same-origin",
+    body: JSON.stringify({username: form.get("username"), password: form.get("password")})
+  });
+  const value = await response.json();
+  if (!response.ok) { output.textContent = value.user_visible_text; resultSection.classList.remove("hidden"); return; }
+  activateWorkbench(value.options);
+});
+
+taskForm.elements.account_display_name.addEventListener("change", updateRoleAndColumn);
+taskForm.elements.storyline_name.addEventListener("change", updateRoleAndColumn);
+
+taskForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const send = document.querySelector("#send");
+  send.disabled = true;
+  output.textContent = "处理中……";
+  resultSection.classList.remove("hidden");
+  const form = new FormData(taskForm);
+  const body = Object.fromEntries(form.entries());
+  body.candidate_number = body.candidate_number ? Number(body.candidate_number) : null;
+  body.localization_allowed = taskForm.elements.localization_allowed.checked;
+  body.continue_previous = body.operation === "继续一个系列";
+  body.existing_material_kinds = form.getAll("existing_material_kinds");
+  for (const key of ["topic_label", "primary_audience", "content_goal", "key_takeaway", "speaker_role_name", "storyline_name", "column_name"]) {
+    if (!body[key]) body[key] = null;
+  }
+  try {
+    const response = await fetch("/v1/portal/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json", "X-Diyu-Portal": "same-origin-v1"},
+      credentials: "same-origin",
+      body: JSON.stringify(body)
+    });
+    const value = await response.json();
+    output.textContent = response.ok ? value.answer : value.user_visible_text;
+  } finally {
+    send.disabled = false;
+  }
+});
+
+document.querySelector("#logout").addEventListener("click", async () => {
+  await fetch("/logout", {method: "POST", headers: {"X-Diyu-Portal": "same-origin-v1"}, credentials: "same-origin"});
+  window.location.reload();
+});

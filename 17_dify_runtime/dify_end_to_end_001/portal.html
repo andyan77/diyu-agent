@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>笛语内容工作台</title>
+  <link rel="stylesheet" href="/portal.css">
+</head>
+<body>
+  <header><div class="brand">笛语内容工作台</div><div class="state">内部模拟 · 不可发布</div></header>
+  <main>
+    <section id="login-section">
+      <h1>登录</h1>
+      <form id="login-form" class="grid">
+        <label>账号<input name="username" autocomplete="username" required></label>
+        <label>密码<input name="password" type="password" autocomplete="current-password" minlength="12" required></label>
+        <div class="actions"><button class="primary" type="submit">进入工作台</button></div>
+      </form>
+    </section>
+    <section id="workbench" class="hidden">
+      <h2>内容任务</h2>
+      <form id="task-form" class="grid">
+        <label>你现在想做什么<select name="operation"></select></label>
+        <label>用哪个账号来讲<select name="account_display_name"></select></label>
+        <label>今天想讲什么<select name="topic_label"></select></label>
+        <label>准备发到哪里<select name="target_platform"></select></label>
+        <label>大约做多长<select name="duration_label"></select></label>
+        <label>想要什么感觉<select name="expression_feeling"></select></label>
+        <label>成品类型<select name="content_format"></select></label>
+        <label>谁来讲<select name="speaker_role_name"></select></label>
+        <label>长期主线<select name="storyline_name"></select></label>
+        <label>栏目<select name="column_name"></select></label>
+        <label>主要给谁看<input name="primary_audience" maxlength="300"></label>
+        <label>候选编号<input name="candidate_number" type="number" min="1" max="3"></label>
+        <label class="wide">这次想达到什么目的<input name="content_goal" maxlength="500"></label>
+        <label class="wide">最希望用户记住什么<input name="key_takeaway" maxlength="500"></label>
+        <label class="wide">想说什么，或想修改什么<textarea name="message" maxlength="4000" required></textarea></label>
+        <div class="wide"><strong>你已经有什么</strong><div id="materials" class="checks"></div></div>
+        <div class="wide checks"><label><input name="localization_allowed" type="checkbox">允许加入当前区域或门店已经确认的真实条件</label></div>
+        <div class="wide actions"><button id="send" class="primary" type="submit">提交</button><button id="logout" class="secondary" type="button">退出</button></div>
+      </form>
+    </section>
+    <section id="result-section" class="hidden"><h2>结果</h2><div id="output" class="output"></div></section>
+  </main>
+  <script src="/portal.js" defer></script>
+</body>
+</html>

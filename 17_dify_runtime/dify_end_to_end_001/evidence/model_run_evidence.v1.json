@@ -1,0 +1,1855 @@
+{
+  "continuous_dialogue": {
+    "accepted_sanitized_turns": [
+      {
+        "assistant_reply": "已记住，“木雨”为本账号本次内部对话的临时代号，且明确它不是品牌事实。",
+        "user_message": "把木雨作为本账号这次内部对话的临时代号。只确认已记住，并明确它不是品牌事实。"
+      },
+      {
+        "assistant_reply": "木雨，且它不是品牌事实。",
+        "user_message": "继续上一轮：刚才约定的临时代号是什么？只回答代号，并说明它不是品牌事实。"
+      }
+    ],
+    "account_display_name": "笛语无锡滨湖店",
+    "conversation_binding_reused": true,
+    "dify_conversation_id_sha256": "aea0f18985f11cb663531db89997fefb393fdbcc55348432008bb931352378c0",
+    "dify_message_count_for_binding": 2,
+    "dify_user_identity_digest": "972ba3aaa0b8bc90ee2b446ffd939d2539d51ea65d3278e4b89d47eba7e50d1e",
+    "marker_is_brand_fact": false,
+    "publish_allowed": false,
+    "raw_provider_reasoning_used_as_continuity_context": false,
+    "second_turn_recalled_marker": true
+  },
+  "duplicate_prompt_groups_retained": [],
+  "evidence_limits": {
+    "all_provider_private_reasoning_excluded_from_repository_evidence": true,
+    "free_text_truth_requires_independent_review": true,
+    "production_or_publish_approval": false
+  },
+  "founder_budget_authorization": {
+    "additional_request_upper_bound": 60,
+    "cost_cny_upper_bound": 50,
+    "effective_request_upper_bound": 100,
+    "original_request_upper_bound": 40
+  },
+  "generated_from": "isolated Package 7 PostgreSQL and current Dify application",
+  "invocation_audit": {
+    "failed_or_unknown_billing_count": 3,
+    "invocation_count": 46,
+    "known_cost_rmb": "0.160814",
+    "known_cost_within_authorization": true,
+    "known_total_tokens": 116422,
+    "model_call_upper_bound": 50,
+    "request_upper_bound_within_authorization": true
+  },
+  "model": {
+    "configuration_frozen_during_formal_evidence": true,
+    "content_reroll_for_quality_count": 0,
+    "model_name": "deepseek-v4-flash",
+    "provider_type": "DeepSeek via existing Dify provider configuration"
+  },
+  "representative_first_outputs": {
+    "article": {
+      "account_display_name": "笛语童装",
+      "candidates": [
+        {
+          "candidate": {
+            "candidate_id": "CAND-AFEB7DCFE405A1E1-1",
+            "candidate_user_visible_surfaces": {
+              "CTA": "你注意过童装上的这些细节吗？",
+              "body": "设计初稿中，帽口带有装饰抽绳。安全评审时，团队认为儿童颈部附近的外露长绳存在不必要风险。最终版取消了抽绳。这不是因为发生过事故，而是预防性设计判断。",
+              "execution_payload": {
+                "article": {
+                  "cover_brief": "第一帧设计稿作为封面",
+                  "frames": [
+                    {
+                      "accompanying_copy": "设计初稿中的帽口抽绳",
+                      "image_brief": "设计初稿特写，帽口标注有抽绳，用红线圈出",
+                      "order": 1
+                    },
+                    {
+                      "accompanying_copy": "最终版取消抽绳",
+                      "image_brief": "最终样衣领口特写，无抽绳，干净利落",
+                      "order": 2
+                    },
+                    {
+                      "accompanying_copy": "预防性判断",
+                      "image_brief": "文字卡：'这不是因为发生过事故，而是预防性设计判断'，背景为品牌logo",
+                      "order": 3
+                    }
+                  ],
+                  "layout_notes": [
+                    "三帧纵向排列",
+                    "字体使用品牌标准字体",
+                    "整体色调柔和"
+                  ]
+                },
+                "content_direction": "从设计稿到成品的变化，突出预防性思考。",
+                "core_idea": "一件衣服的减法，来自对风险的事前预判。",
+                "cover_or_first_screen_copy": "为什么这件风衣没有抽绳？",
+                "display": null,
+                "duration_label": "短图文",
+                "ending_and_action": "下次看到没有抽绳的童装，也许它就是这么来的。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "翻到这件连帽风衣的设计初稿，帽口有一根抽绳。",
+                "production_format": "图文",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "设计初稿中，帽口带有装饰抽绳。安全评审时，团队认为儿童颈部附近的外露长绳存在不必要风险。最终版取消了抽绳。这不是因为发生过事故，而是预防性设计判断。",
+                "target_platform": "小红书",
+                "task_summary": "以总部账号解释连帽风衣取消外露抽绳的预防性判断，展示设计稿、样衣和文字卡。",
+                "video": null
+              },
+              "spoken_lines": [
+                "预防性设计，不是为了应对已经发生的事故，而是为了让风险不发生。"
+              ],
+              "surface_units": [],
+              "title": "为什么这件风衣没有抽绳？"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "从设计稿到成品的变化切入",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S07"
+            ]
+          },
+          "ordinal": 1,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S07"
+            ],
+            "composition_plan_ref": "plan://PLAN-7FDB3D04EFEEC0EB/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-CC8EE7F7993D79FA",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "candidate_id": "CAND-AFEB7DCFE405A1E1-2",
+            "candidate_user_visible_surfaces": {
+              "CTA": "了解品牌的安全标准",
+              "body": "安全评审结论：儿童颈部附近的外露长绳存在不必要风险。设计团队据此取消了抽绳。这不是事故后的修补，而是产品上市前的主动判断。",
+              "execution_payload": {
+                "article": {
+                  "cover_brief": "安全评审文字卡作为封面",
+                  "frames": [
+                    {
+                      "accompanying_copy": "安全评审结论",
+                      "image_brief": "文字卡：'儿童颈部附近的外露长绳存在不必要风险'，上方有安全评审标签",
+                      "order": 1
+                    },
+                    {
+                      "accompanying_copy": "取消抽绳后的成品",
+                      "image_brief": "样衣领口特写，无抽绳，标注'最终版'",
+                      "order": 2
+                    },
+                    {
+                      "accompanying_copy": "从设计到成品的改变",
+                      "image_brief": "设计稿与样衣并列对比，箭头从抽绳指向'取消'",
+                      "order": 3
+                    }
+                  ],
+                  "layout_notes": [
+                    "文字卡居中，样衣和对比图依次展示",
+                    "使用蓝色调突出专业感"
+                  ]
+                },
+                "content_direction": "以安全评审为起点，展示决策依据。",
+                "core_idea": "安全评审不是走过场，它直接改变了产品。",
+                "cover_or_first_screen_copy": "一件风衣的'减法'决策",
+                "display": null,
+                "duration_label": "短图文",
+                "ending_and_action": "每一个取消的细节背后，都有一道安全底线。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "安全评审会上，团队注意到一个细节。",
+                "production_format": "图文",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "设计初稿的帽口有装饰抽绳。安全评审认为：儿童颈部附近的外露长绳存在不必要风险。最终，抽绳被取消。这不是因为发生过事故，而是预防性设计判断。",
+                "target_platform": "小红书",
+                "task_summary": "以总部账号解释连帽风衣取消外露抽绳的预防性判断，突出安全评审流程。",
+                "video": null
+              },
+              "spoken_lines": [
+                "安全评审是每一件童装上市前的重要关卡。"
+              ],
+              "surface_units": [],
+              "title": "一件风衣的'减法'决策"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "切入问题或场景",
+              "情绪钩子"
+            ],
+            "difference_label": "从安全评审结论切入",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S07"
+            ]
+          },
+          "ordinal": 2,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S07"
+            ],
+            "composition_plan_ref": "plan://PLAN-7FDB3D04EFEEC0EB/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-F7DDA5E92019A78A",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "candidate_id": "CAND-AFEB7DCFE405A1E1-3",
+            "candidate_user_visible_surfaces": {
+              "CTA": "查看更多设计故事",
+              "body": "连帽风衣的抽绳在初稿中存在，但安全评审认为不值得冒险。最终取消，是预防性设计判断，不是纠正事故。",
+              "execution_payload": {
+                "article": {
+                  "cover_brief": "预防性判断文字卡作为封面",
+                  "frames": [
+                    {
+                      "accompanying_copy": "预防性判断",
+                      "image_brief": "文字卡：'这不是因为发生过事故，而是预防性设计判断'，独立展示",
+                      "order": 1
+                    },
+                    {
+                      "accompanying_copy": "抽绳被取消",
+                      "image_brief": "设计稿标注抽绳位置，旁边打叉",
+                      "order": 2
+                    },
+                    {
+                      "accompanying_copy": "最终成品",
+                      "image_brief": "最终样衣正面全貌，领口无抽绳，整体展示",
+                      "order": 3
+                    }
+                  ],
+                  "layout_notes": [
+                    "文字卡引导，然后展示设计稿和成品",
+                    "整体风格简洁，留白较多"
+                  ]
+                },
+                "content_direction": "从品牌价值观出发，展示一次具体的预防性决策。",
+                "core_idea": "品牌在风险发生前主动选择更安全的方案。",
+                "cover_or_first_screen_copy": "看不见的风险，看得见的处理",
+                "display": null,
+                "duration_label": "短图文",
+                "ending_and_action": "有些细节被取消了，但它们代表的是品牌的思考。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "这是一次没有事故记录的设计变更。",
+                "production_format": "图文",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "设计初稿的帽口有抽绳。安全评审团队提出：儿童颈部附近的外露长绳存在不必要风险。最终版本取消了抽绳。这不是因为发生过事故，而是预防性设计判断。",
+                "target_platform": "小红书",
+                "task_summary": "以总部账号解释连帽风衣取消外露抽绳的预防性判断，强调品牌预防性原则。",
+                "video": null
+              },
+              "spoken_lines": [
+                "预防性判断，让风险在发生前就被拦截。"
+              ],
+              "surface_units": [],
+              "title": "看不见的风险，看得见的处理"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "叙事视角",
+              "画面组织方法"
+            ],
+            "difference_label": "从预防性设计理念切入",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S07"
+            ]
+          },
+          "ordinal": 3,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S07"
+            ],
+            "composition_plan_ref": "plan://PLAN-7FDB3D04EFEEC0EB/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-9CFFE7598F5BFD19",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        }
+      ],
+      "first_output_preserved": true,
+      "model_output_sha256": "c979371d496415b37f4c95e441664414bbeb13282e6370655f9be1457d81dfa1",
+      "run_id": "RUN-1FAA8F6AAFEB7DCFE405A1E1",
+      "state": "FIRST_OUTPUT_ACCEPTED"
+    },
+    "display": {
+      "account_display_name": "笛语童装",
+      "candidates": [
+        {
+          "candidate": {
+            "candidate_id": "CAND-69D351DADD7EEEB6-1",
+            "candidate_user_visible_surfaces": {
+              "CTA": "对照门店在售商品，检查厚度与场景",
+              "body": "门店搭配时，两件上衣颜色看起来一样，但一件是灯芯绒衬衫夹克，一件是薄针织。厚度不同导致适用场景完全不同。判断搭配不能只看颜色，还要核对厚度、版型叠加和场景匹配。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "从颜色近似引出厚度差异，强调场景匹配",
+                "core_idea": "颜色接近不构成充分搭配条件，还需核对面料厚度与版型",
+                "cover_or_first_screen_copy": "同样颜色，不同厚度",
+                "display": {
+                  "arrangement_relationship": "两件上衣并排，颜色相近但厚度通过特写对比",
+                  "availability_caution": "本搭配仅用于判断方法说明，不表示门店当前有货",
+                  "color_relationship": "两者色相相同，明度一致，但材质导致视觉反光不同",
+                  "referenced_items_or_facts": [
+                    "灯芯绒衬衫夹克（110-150cm）",
+                    "薄款针织衫（100-150cm）"
+                  ],
+                  "shooting_angles": [
+                    "正前方平拍",
+                    "45度侧拍面料切口",
+                    "微距拍摄纹理"
+                  ],
+                  "spatial_layers": "第一层：并排展示；第二层：翻开面料截面特写"
+                },
+                "duration_label": "1分钟",
+                "ending_and_action": "建议门店在每组搭配旁附上场景标签，帮助顾客快速判断",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "你有没有遇到过两个商品放一起看起来很搭，但实际不能穿在同一场合？",
+                "production_format": "陈列搭配",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "镜头1：平拍两件上衣，颜色几乎一样，标签显示一件是灯芯绒衬衫夹克，一件是薄款针织衫。镜头2：特写面料厚度，灯芯绒明显厚实。画外音：门店不能仅凭颜色对等就组合陈列，还要看厚度、适用季节和版型叠加。",
+                "target_platform": "公众号或图文",
+                "task_summary": "制作一组对比陈列说明，展示颜色接近但厚度不同的两件商品，并说明判断方法",
+                "video": null
+              },
+              "spoken_lines": [
+                "这件和那件颜色一样啊，为什么不能搭？",
+                "因为厚度差一倍，一个是春秋外套，一个是夏季单穿。",
+                "门店陈列要先确认场景是否一致。"
+              ],
+              "surface_units": [],
+              "title": "颜色差不多？厚度差很多"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "从颜色厚度冲突切入，使用并排对比画面",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 2
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-002",
+              "PKG5-FRAGMENT-BD-NARR-02-006"
+            ]
+          },
+          "ordinal": 1,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-002",
+              "PKG5-FRAGMENT-BD-NARR-02-006"
+            ],
+            "composition_plan_ref": "plan://PLAN-EEF31F052CECCD5C/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-A6DFBBC93704AB06",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "candidate_id": "CAND-69D351DADD7EEEB6-2",
+            "candidate_user_visible_surfaces": {
+              "CTA": "翻看本店商品尺码表，逐一核对所有搭配件",
+              "body": "一件灯芯绒衬衫夹克从110cm开始，而同色系的直筒牛仔裤从100cm开始。搭配展示时如果只考虑颜色，忽略了最小尺码差异，小个子孩子可能无法试穿全套。判断搭配必须核对每件商品的尺码范围。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "从尺码范围不一致出发，强调搭配必须支持可售尺码重叠",
+                "core_idea": "颜色匹配后还要确认所有搭配商品的尺码范围有交集",
+                "cover_or_first_screen_copy": "一套搭配，差一个尺码",
+                "display": {
+                  "arrangement_relationship": "模特穿着上衣与裤子，并排放置尺码标签",
+                  "availability_caution": "本搭配仅用于方法示例，不保证门店有货",
+                  "color_relationship": "上衣和裤子颜色相近，但尺码范围不同",
+                  "referenced_items_or_facts": [
+                    "灯芯绒衬衫夹克（110-150cm）",
+                    "直筒牛仔裤（100-150cm）"
+                  ],
+                  "shooting_angles": [
+                    "模特全身正面",
+                    "标签特写平拍"
+                  ],
+                  "spatial_layers": "第一层：完整模特；第二层：分别放大上衣和裤子的尺码标签"
+                },
+                "duration_label": "1分钟",
+                "ending_and_action": "门店陈列前应先列出一组搭配中所有商品的尺码范围，标记最小公共尺码",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "当上衣最小110，裤子最小100，谁穿不了？",
+                "production_format": "陈列搭配",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "镜头1：正面拍摄模特穿搭，上衣和裤子颜色同系；镜头2：特写上衣尺码标签显示110-150，裤子尺码标签显示100-150，画外音指出最小尺码不匹配，适合100-105cm儿童的上装缺失。",
+                "target_platform": "公众号或图文",
+                "task_summary": "制作一组陈列说明，展示因尺码起始不同导致搭配不可执行的案例",
+                "video": null
+              },
+              "spoken_lines": [
+                "这个模特展示的上衣从110码起，裤子从100码起。",
+                "那100码的孩子只能买裤子，上衣没得穿。",
+                "搭配展示前要检查每件的尺码范围，确保有重合的可售尺码。"
+              ],
+              "surface_units": [],
+              "title": "尺码表里的小遗缺"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "从尺码起始范围不同切入，使用尺码标签对比",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-02-006"
+            ]
+          },
+          "ordinal": 2,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-02-006"
+            ],
+            "composition_plan_ref": "plan://PLAN-EEF31F052CECCD5C/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-7EFEA988829F32BF",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "candidate_id": "CAND-69D351DADD7EEEB6-3",
+            "candidate_user_visible_surfaces": {
+              "CTA": "逐件核对模特搭配商品的库存状态",
+              "body": "门店模特身上的搭配会被顾客默认为当前推荐。如果搭配中的某件商品已经暂停销售或售罄，模特应当立即更换。不能为了视觉效果保留不可售的组合。判断搭配是否可行，必须先核实每件商品的当前可售状态。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "从模特使用原则引出可售条件审查",
+                "core_idea": "模特搭配不能只靠视觉，必须保证每件商品当前可售",
+                "cover_or_first_screen_copy": "好看但买不到，等于没用",
+                "display": {
+                  "arrangement_relationship": "模特穿着搭配，旁边附商品库存状态卡片（模拟）",
+                  "availability_caution": "本示例用于说明可售条件审查，非实际库存数据",
+                  "color_relationship": "关注搭配本身，颜色已匹配但库存缺失",
+                  "referenced_items_or_facts": [
+                    "模特搭配展示的商品需真实存在且允许销售"
+                  ],
+                  "shooting_angles": [
+                    "模特正面全景",
+                    "模拟库存卡片平拍"
+                  ],
+                  "spatial_layers": "第一层：模特整体人台；第二层：叠加库存提示标签"
+                },
+                "duration_label": "1分钟",
+                "ending_and_action": "建议门店每周至少检查一次模特商品可售状态",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "如果模特身上的外套已经卖完了，顾客会怎么想？",
+                "production_format": "陈列搭配",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "镜头1：模特正面全景，展示搭配上衣与裤子；镜头2：切换到库存系统界面示意图（仅示意，不展示真实数据），标注上衣已售罄，画外音：模特搭配必须跟随库存变动，一旦关键商品不可售应及时更换。",
+                "target_platform": "公众号或图文",
+                "task_summary": "制作一组陈列说明，强调模特搭配必须以商品可售为前提",
+                "video": null
+              },
+              "spoken_lines": [
+                "这个模特穿的外套已经没货了，但还没换下来。",
+                "顾客试了裤子但找不到上衣，体验很差。",
+                "陈列前要确认每件商品在本店真实存在且允许销售。"
+              ],
+              "surface_units": [],
+              "title": "模特身上的商品还在卖吗？"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "从可售条件验证切入，使用模特搭配与库存说明",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-012"
+            ]
+          },
+          "ordinal": 3,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-012"
+            ],
+            "composition_plan_ref": "plan://PLAN-EEF31F052CECCD5C/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-B3338591CA0DD312",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        }
+      ],
+      "first_output_preserved": true,
+      "model_output_sha256": "a98dfb1b4824ea0a2acce7c003ec0dd483650eae19e3cb10bb23161de3c44665",
+      "run_id": "RUN-F7646E1569D351DADD7EEEB6",
+      "state": "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION"
+    },
+    "short_video": {
+      "account_display_name": "笛语童装",
+      "candidates": [
+        {
+          "candidate": {
+            "candidate_id": "CAND-C8D08EA838F5F8F2-1",
+            "candidate_user_visible_surfaces": {
+              "CTA": "展示软质拉片，文字卡点明取舍。",
+              "body": "一件轻薄外套的拉链头从金属质感改为软质拉片的设计取舍。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "克制的设计讲述，不夸大。",
+                "core_idea": "一个设计取舍的故事：从金属到软片，降低晃动。",
+                "cover_or_first_screen_copy": "为什么换掉这个拉链头？",
+                "display": null,
+                "duration_label": "30秒",
+                "ending_and_action": "展示软质拉片，文字卡点明取舍。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "第一版用了较重的金属质感拉链头",
+                "production_format": "短视频",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "镜头1：样衣拉链头特写（金属质感），搭配文字卡“第一版拉链头”。镜头2：文字卡“儿童跑动时反复碰到胸前”，无人物画面。镜头3：切换至当前样衣软质拉片特写，文字卡“改为软质拉片”。镜头4：文字卡“降低了明显晃动，不是重大技术创新”。",
+                "target_platform": "视频号",
+                "task_summary": "用静物细节和文字卡，以对比方式呈现拉链头修改的原因，不出现人物动作。",
+                "video": {
+                  "editing_notes": [
+                    "文字卡字体使用无衬线体，黑色底白色字",
+                    "片尾加简洁品牌标识（不新增未授权元素）",
+                    "总时长控制在30秒"
+                  ],
+                  "shooting_notes": [
+                    "拍摄样衣需在标准灯光下，确保拉链头金属质感可见",
+                    "第一版和当前版样衣需分别准备，注意标签标识",
+                    "不使用任何人物或运动镜头"
+                  ],
+                  "shots": [
+                    {
+                      "action": "镜头缓慢推进，展示细节",
+                      "audio": "环境音（轻微衣物布料摩擦声）",
+                      "camera": "微距，固定机位",
+                      "edit_note": "裁剪背景，保留拉链头区域",
+                      "scene_product_props": "样衣平铺在浅色桌面上",
+                      "subtitle": "第一版拉链头",
+                      "time_range": "0-8秒",
+                      "visual": "第一版样衣拉链头静物特写，金属质感"
+                    },
+                    {
+                      "action": "无",
+                      "audio": "无声",
+                      "camera": "固定",
+                      "edit_note": "文字卡保持居中，字体清晰",
+                      "scene_product_props": "无",
+                      "subtitle": "儿童跑动时，拉链头反复碰到胸前",
+                      "time_range": "8-16秒",
+                      "visual": "纯色背景上出现文字卡：儿童跑动时，拉链头反复碰到胸前"
+                    },
+                    {
+                      "action": "镜头从左到右缓慢平移，显示差异",
+                      "audio": "同第一段环境音",
+                      "camera": "微距，平移",
+                      "edit_note": "光线保持一致，避免色差",
+                      "scene_product_props": "两件样衣并排",
+                      "subtitle": "改用更轻的软质拉片",
+                      "time_range": "16-24秒",
+                      "visual": "当前样衣软质拉片特写，与第一版拉链头并排展示（同一物件不同版本）"
+                    },
+                    {
+                      "action": "无",
+                      "audio": "无声",
+                      "camera": "固定",
+                      "edit_note": "文字卡停留3秒后淡出",
+                      "scene_product_props": "无",
+                      "subtitle": "降低了明显晃动，不是重大技术创新",
+                      "time_range": "24-30秒",
+                      "visual": "文字卡：降低了明显晃动，不是重大技术创新"
+                    }
+                  ]
+                }
+              },
+              "spoken_lines": [
+                "第一版用了较重的金属质感拉链头",
+                "儿童跑动时它反复碰到胸前",
+                "所以团队换成了更轻的软质拉片",
+                "不是大创新，只是一次实在调整"
+              ],
+              "surface_units": [],
+              "title": "为什么换掉了这个拉链头"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "核心创意",
+              "画面组织方法"
+            ],
+            "difference_label": "候选1-对比叙事",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ]
+          },
+          "ordinal": 1,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ],
+            "composition_plan_ref": "plan://PLAN-4D38E36C164A4214/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-8DA328B44075C99B",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "candidate_id": "CAND-C8D08EA838F5F8F2-2",
+            "candidate_user_visible_surfaces": {
+              "CTA": "展示软质拉片，文字卡点明感受。",
+              "body": "从使用感受出发，讲述为什么换掉拉链头。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "真实、克制、有生活观察。",
+                "core_idea": "从使用感受出发的改进：让家长回忆起孩子跑动时拉链头拍打的情况。",
+                "cover_or_first_screen_copy": "跑动时它会拍打胸前",
+                "display": null,
+                "duration_label": "30秒",
+                "ending_and_action": "展示软质拉片，文字卡点明感受。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "这个拉链头有点重",
+                "production_format": "短视频",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "镜头1：样衣拉链头特写（金属质感），配合音效（轻拍桌面的声音），文字卡“有点重”。镜头2：文字卡“孩子跑起来它会拍打胸前”，音效模拟拍打节奏。镜头3：切换至软质拉片特写，文字卡“换成软质拉片”。镜头4：文字卡“降低了明显晃动，不是什么大发明”。",
+                "target_platform": "视频号",
+                "task_summary": "通过静物细节和文字卡，暗示使用场景，让家长联想到拍打感。",
+                "video": {
+                  "editing_notes": [
+                    "音效与文字卡同步出现",
+                    "整体节奏平缓，与拍打音效形成对比",
+                    "总时长30秒"
+                  ],
+                  "shooting_notes": [
+                    "手指碰触镜头需提前拍摄多次，选取自然动作",
+                    "音效可从免费素材库选用，避免版权风险",
+                    "不得出现儿童或跑步画面"
+                  ],
+                  "shots": [
+                    {
+                      "action": "镜头固定，手指轻轻碰触拉链头（只展示手部不露脸）",
+                      "audio": "手指碰触衣物声 + 一声轻拍音效",
+                      "camera": "微距，固定",
+                      "edit_note": "手指动作仅用于展示触感，不出现演员面容",
+                      "scene_product_props": "样衣平铺",
+                      "subtitle": "有点重",
+                      "time_range": "0-8秒",
+                      "visual": "样衣拉链头静物特写，金属质感"
+                    },
+                    {
+                      "action": "无",
+                      "audio": "一声轻拍音效（重复两次），模拟拍打节奏",
+                      "camera": "固定",
+                      "edit_note": "音效音量适中，不过度",
+                      "scene_product_props": "无",
+                      "subtitle": "孩子跑起来它会拍打胸前",
+                      "time_range": "8-16秒",
+                      "visual": "纯色背景，文字卡：孩子跑起来它会拍打胸前"
+                    },
+                    {
+                      "action": "用指尖轻轻捏起软质拉片，展示柔软度",
+                      "audio": "衣物轻微摩擦声",
+                      "camera": "微距，缓慢放大",
+                      "edit_note": "注意手指不遮挡关键细节",
+                      "scene_product_props": "两件样衣",
+                      "subtitle": "换成软质拉片",
+                      "time_range": "16-24秒",
+                      "visual": "软质拉片特写，与第一版拉链头对比"
+                    },
+                    {
+                      "action": "无",
+                      "audio": "无声",
+                      "camera": "固定",
+                      "edit_note": "文字卡淡入淡出",
+                      "scene_product_props": "无",
+                      "subtitle": "降低了明显晃动，不是什么大发明",
+                      "time_range": "24-30秒",
+                      "visual": "文字卡：降低了明显晃动，不是什么大发明"
+                    }
+                  ]
+                }
+              },
+              "spoken_lines": [
+                "这个拉链头有点重",
+                "孩子跑起来它会拍打胸前",
+                "所以我们换了更轻的软质拉片",
+                "不是什么大发明，就是舒服了点"
+              ],
+              "surface_units": [],
+              "title": "跑动时它会拍打胸前"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "切入问题或场景",
+              "情绪钩子"
+            ],
+            "difference_label": "候选2-场景暗示",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ]
+          },
+          "ordinal": 2,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ],
+            "composition_plan_ref": "plan://PLAN-4D38E36C164A4214/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-E78104E8FF45833E",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        },
+        {
+          "candidate": {
+            "candidate_id": "CAND-C8D08EA838F5F8F2-3",
+            "candidate_user_visible_surfaces": {
+              "CTA": "展示软片，切到品牌价值观文字卡。",
+              "body": "从品牌视角讲述拉链头修改的决策过程。",
+              "execution_payload": {
+                "article": null,
+                "content_direction": "诚实克制，不替用户下结论。",
+                "core_idea": "一个克制的改进：品牌主动放弃重拉链头换轻拉片，不夸大。",
+                "cover_or_first_screen_copy": "为什么改？",
+                "display": null,
+                "duration_label": "30秒",
+                "ending_and_action": "展示软片，切到品牌价值观文字卡。",
+                "next_actions": [
+                  "换开头",
+                  "缩短",
+                  "提交审核"
+                ],
+                "opening_hook": "第一版拉链头有金属质感",
+                "production_format": "短视频",
+                "publishing_copy": "内部测试不可发布",
+                "story_or_full_script": "镜头1：样衣拉链头特写（金属质感），文字卡“第一版”。镜头2：文字卡“问题：跑动时反复碰到胸前”。镜头3：切换至软质拉片特写，文字卡“方案：改用更轻的软质拉片”。镜头4：文字卡“结论：降低了明显晃动，不是重大技术创新”。",
+                "target_platform": "视频号",
+                "task_summary": "以品牌价值判断者视角，用静物证据展示一次克制的设计调整。",
+                "video": {
+                  "editing_notes": [
+                    "文字卡使用统一排版",
+                    "音频保持干净",
+                    "总时长30秒"
+                  ],
+                  "shooting_notes": [
+                    "环绕镜头需使用滑轨或转盘确保稳定",
+                    "背景单一避免干扰",
+                    "不出现任何人物或授权商标"
+                  ],
+                  "shots": [
+                    {
+                      "action": "镜头围绕拉链头缓慢旋转",
+                      "audio": "环境白噪音",
+                      "camera": "微距，环绕",
+                      "edit_note": "旋转速度缓慢，突出金属质感",
+                      "scene_product_props": "样衣平铺在暗色背景上",
+                      "subtitle": "第一版拉链头",
+                      "time_range": "0-8秒",
+                      "visual": "第一版样衣拉链头静物特写，金属质感"
+                    },
+                    {
+                      "action": "无",
+                      "audio": "无声",
+                      "camera": "固定",
+                      "edit_note": "文字卡显示6秒后渐隐",
+                      "scene_product_props": "无",
+                      "subtitle": "儿童跑动时，拉链头反复碰到胸前",
+                      "time_range": "8-16秒",
+                      "visual": "纯色背景文字卡：儿童跑动时，拉链头反复碰到胸前"
+                    },
+                    {
+                      "action": "镜头从拉链根部慢慢移动到拉片末端",
+                      "audio": "衣物摩擦声",
+                      "camera": "微距，移动",
+                      "edit_note": "展示拉片整体形态",
+                      "scene_product_props": "样衣平铺",
+                      "subtitle": "改用更轻的软质拉片",
+                      "time_range": "16-24秒",
+                      "visual": "当前样衣软质拉片特写"
+                    },
+                    {
+                      "action": "无",
+                      "audio": "无声",
+                      "camera": "固定",
+                      "edit_note": "最后留2秒空场",
+                      "scene_product_props": "无",
+                      "subtitle": "降低了明显晃动，不是重大技术创新",
+                      "time_range": "24-30秒",
+                      "visual": "文字卡：降低了明显晃动，不是重大技术创新"
+                    }
+                  ]
+                }
+              },
+              "spoken_lines": [
+                "第一版拉链头有金属质感",
+                "但跑动时它反复碰到胸前",
+                "团队决定改用更轻的软质拉片",
+                "这次修改降低了明显晃动，不是重大技术创新"
+              ],
+              "surface_units": [],
+              "title": "一次克制的调整"
+            },
+            "candidate_version": 1,
+            "difference_dimensions": [
+              "叙事视角",
+              "事实或证明路径"
+            ],
+            "difference_label": "候选3-克制成因",
+            "evidence_panel": {
+              "pending_confirmation": [],
+              "publishable": false,
+              "scope_and_authorization_checked": true,
+              "semantic_fact_review": "待人工确认",
+              "used_fact_count": 0,
+              "used_material_count": 1
+            },
+            "used_fact_refs": [],
+            "used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ]
+          },
+          "ordinal": 3,
+          "selected": false,
+          "validation": {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ],
+            "composition_plan_ref": "plan://PLAN-4D38E36C164A4214/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-02D6F189EDD7F736",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        }
+      ],
+      "first_output_preserved": true,
+      "model_output_sha256": "d43605f9493f0f48ac50f493818845318d27000046a4e05c1361de65703c9ce5",
+      "run_id": "RUN-1A1E9FCBC8D08EA838F5F8F2",
+      "state": "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION"
+    }
+  },
+  "run_count": 23,
+  "run_index": [
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "8354de5c26d53911f8a33d1617b795ad948a8a82b936e5714e9537569bb62fa9",
+      "operation": "普通聊天",
+      "parse_error": true,
+      "plan_bound": false,
+      "prompt_sha256": "0dd3cb643f1beffc0fe796bccecd014b1d361dc3ca339b1452ac07c205b881a8",
+      "run_id": "RUN-BC539FFBC1D61EF940AFB1C7",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "f10fe29ba0daff58ed3f47939f38dee2ff7adebe0c23bc921ac0297fed653650",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "e17cf11c2484dc922ef25e381d69ef397089dcf8a783de8fc7091c1bf6b29482",
+      "run_id": "RUN-898B3F9B4863DAFAB8C0466A",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "9145e75cdd9779ead5f0598da87c4aa2cb51bc1a8c0b73060e4e65e7bcd75035",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "ff05f97729eede6aabab7670cd240327e125cdd02c8f7651477e493bff444a3d",
+      "run_id": "RUN-30FD7948C882F0F1617FF92E",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "dbb65f7d53602bf635cba4fb21101f84c07d9ced5de87d1d9f71fa9c2c19a239",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "cee65d61ffaf5a36f0c98f334bc2815c5d7e8cfb86cc42e48188261c0b82129d",
+      "run_id": "RUN-CA2548322BAE812272F8A891",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "8b31de5537b65d72adbef4d7008951caa7c046204ee871af8773aedb38ed990f",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "bf9bb08636ead16aa11cc4ac1ddbcabb1c024a23bfc9c348fd1a76c414649d02",
+      "run_id": "RUN-F1A902187C54775FB0368280",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "bf152d9fb047246ed19ce4ba74b9dfdfaae408a4c95f20ac26b2ed2069cab372",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "08db103507388f0aff9dcde1a9af0c88df12505e3586bc5cc0ffa64da765420a",
+      "run_id": "RUN-7E40C66D6AA97B9D93374937",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "d12a4d5bd00188faa1b928bf1c12b38c070d003a387f7f8dc02aa70fc3cfddc4",
+      "operation": "局部修改",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "7fc09924ca1f2e56533fb2372ad5f3834829d9350e0ea96ec01c4d88a427cce3",
+      "run_id": "RUN-3F7B5E1E79E34922DA091762",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "dd584b3a1c48064450f3422ba13321a5edc1fe81d235257817b0483e9a6acbc1",
+      "operation": "找灵感",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "8466f834915480e9814661c9551cb6a54cd596c9a158f7c869b97c1d55715038",
+      "run_id": "RUN-949D9B79E4B650F6C64C1720",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "我想从一件衣服为什么改版开始，给我三个不使用品牌私有事实的内容方向。"
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "c979371d496415b37f4c95e441664414bbeb13282e6370655f9be1457d81dfa1",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "6e430b8b98739d3510beb5492009fc4edb4b8887b49aa37b83191c956b6d3cfb",
+      "run_id": "RUN-1FAA8F6AAFEB7DCFE405A1E1",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": {
+        "model_call_count_increment": 0,
+        "model_output_unchanged": true,
+        "normalization": "PRESERVED_FIRST_OUTPUT_DETERMINISTIC_REVALIDATION",
+        "repair_id": "PKG7-DIVERGENCE-CATEGORY-FALSE-REJECT-001",
+        "validations": [
+          {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-002",
+              "PKG5-FRAGMENT-BD-NARR-02-006"
+            ],
+            "composition_plan_ref": "plan://PLAN-EEF31F052CECCD5C/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-A6DFBBC93704AB06",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          },
+          {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-02-006"
+            ],
+            "composition_plan_ref": "plan://PLAN-EEF31F052CECCD5C/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-7EFEA988829F32BF",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          },
+          {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-03-012"
+            ],
+            "composition_plan_ref": "plan://PLAN-EEF31F052CECCD5C/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-B3338591CA0DD312",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        ]
+      },
+      "first_output_preserved": true,
+      "model_output_sha256": "a98dfb1b4824ea0a2acce7c003ec0dd483650eae19e3cb10bb23161de3c44665",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "e4650ad7b2c5299baea34daddcac040bdb6e3d9da8c5f3ed4832c9bc764699d0",
+      "run_id": "RUN-F7646E1569D351DADD7EEEB6",
+      "state": "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "05df45ae456fbdd888dbfcdd374b86efba5b02a4a45067fedc9a2f5466b066f6",
+      "operation": "确认制作",
+      "parse_error": false,
+      "plan_bound": true,
+      "prompt_sha256": "3a7f5027dbc32de96ff23b81af6d4864b1e82e7983ae2a10ed2e7a756c927b88",
+      "run_id": "RUN-961FF9E2A02FE34B4D11024B",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "4d995f50effd6e3195d26fd5a05cd1d0e820efca5666c1e1f23706ac27e64d06",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "dbb448a4a1e9dfec5452efebe8ad5e7a09458656e96650e2ce5c644200408daf",
+      "run_id": "RUN-3152BAF3B00DDC04889B6BD5",
+      "state": "FIRST_OUTPUT_REJECTED",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 3,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": {
+        "contract_normalizations": [
+          "NORMALIZED_EXACT_DIFFERENCE_DIMENSION_ALIAS",
+          "REMOVED_DUPLICATE_MATERIAL_REF_FROM_FACT_REFS",
+          "COPIED_EXISTING_ENDING_AND_ACTION_TO_EMPTY_CTA"
+        ],
+        "model_call_count_increment": 0,
+        "model_output_unchanged": true,
+        "normalization": "STRIPPED_LEADING_REASONING_WRAPPER+NORMALIZED_EXACT_DIFFERENCE_DIMENSION_ALIAS+REMOVED_DUPLICATE_MATERIAL_REF_FROM_FACT_REFS+COPIED_EXISTING_ENDING_AND_ACTION_TO_EMPTY_CTA",
+        "private_reasoning_retained": false,
+        "provider_output_digest_unchanged": true,
+        "provider_response_sha256": "df3f07c613f769ad925c63e00e885cc407e3c644b7f3ee9f41a9ac6478b526ea",
+        "repair_id": "PKG7-NARROW-MODEL-CONTRACT-NORMALIZATION-001",
+        "user_visible_content_unchanged": true,
+        "validations": [
+          {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ],
+            "composition_plan_ref": "plan://PLAN-4D38E36C164A4214/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-8DA328B44075C99B",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          },
+          {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ],
+            "composition_plan_ref": "plan://PLAN-4D38E36C164A4214/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-E78104E8FF45833E",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          },
+          {
+            "actually_used_fact_refs": [],
+            "actually_used_material_refs": [
+              "PKG5-FRAGMENT-BD-NARR-04-013-S04"
+            ],
+            "composition_plan_ref": "plan://PLAN-4D38E36C164A4214/revisions/1",
+            "decision": "PASS",
+            "decision_id": "DECISION-02D6F189EDD7F736",
+            "hard_issues": [],
+            "object_type": "VALIDATION_DECISION",
+            "plain_language_reason": "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。",
+            "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+            "soft_evaluation_tasks": [
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "task_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "brand_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "naturalness"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "platform_fit"
+              },
+              {
+                "score": null,
+                "status": "PENDING_EXTERNAL_EVALUATION",
+                "task_id": "candidate_difference"
+              }
+            ],
+            "structured_hard_checks_prove_candidate_semantics": false
+          }
+        ]
+      },
+      "first_output_preserved": true,
+      "model_output_sha256": "d43605f9493f0f48ac50f493818845318d27000046a4e05c1361de65703c9ce5",
+      "operation": "确认制作",
+      "parse_error": true,
+      "plan_bound": true,
+      "prompt_sha256": "9c43f1e5d4a44a990f78629aab2a936c6c3d37e668eb2d95f13f7e5a7f4680e9",
+      "run_id": "RUN-1A1E9FCBC8D08EA838F5F8F2",
+      "state": "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION",
+      "user_message": null
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "c9c6d3f4ceaccd4c8fbb0a8475f73b0e84d1a3623d88d1b691d941a3ca63efa1",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "38d932c61654f947e249b3d025a292843d8b3c7b867b3f4746a13a11b23c883c",
+      "run_id": "RUN-A8F160440CA944E958E2B906",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "在这次内部测试里，请记住我给这次讨论起的临时代号是青禾。只确认收到，不要把它当品牌事实。"
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "50b8d49de51a2d96b54b0c9124c189369cec761081ac56c8336e16ee1d59b838",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "28066244ccf42a8d18f96479022c0e86048f0cb76d4756c6bc55989f16b73194",
+      "run_id": "RUN-260AC3C2E35105C9BB68D557",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "继续刚才的话题：我给这次讨论起的临时代号是什么？只回答代号，并说明这不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "a5737a01cea6c866422f8ba5f4a04dc856b93792cf4efda831a001d46ef926c3",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "828c5409942886c9e5893ae5ffdbf6f22e80454b83009dc1ee836d2211c3ae47",
+      "run_id": "RUN-8B0C9621CCC919A12CC03734",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "把星桥作为本次内部对话的临时代号。请只确认已记住，并明确它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语童装",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "2a764c85102ad2cad94d915b42e0efdb0134a112cc3a6576897ea3e225d0063f",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "199f5fb253d6ab4c19534b78b0f90623d14c6ada6327c4d50ad8a639518b9bf2",
+      "run_id": "RUN-9920A984BB7B8DE7A62A1AA6",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "继续上一轮：刚才约定的临时代号是什么？只回答代号，并说明它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "bb56bff8be8089be7c4b0b3b1d2366c55a41e45351944cc14478770d5225c503",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "11101b08cbf7d89f9b8fb815a31c9926e0fafe82b04701cb44acee834f471c5d",
+      "run_id": "RUN-2C2DA724EE7698DDA25DB937",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "把月窗作为本账号这次内部对话的临时代号。只确认已记住，并明确它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语苏州园区店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "7dbbf40478cdd9f45871b9bf9fe10740011d2c7ff8c245eb2e2e18406a8d631d",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "a93057590a61d10697c77703913b0dbc4a45a67270cb3a648c12fa783d084e10",
+      "run_id": "RUN-CA170336467F49F47BBAD0E9",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "继续上一轮：刚才约定的临时代号是什么？只回答代号，并说明它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语杭州滨江店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "5aaac0db3c11c6cb5888e7fcdf2db221e98d7280845078bafa37c0adbf0ca361",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "af8a4d46747504876b7182349d0e7fcc1a90b5b2c867358f3dad66ecfb27582e",
+      "run_id": "RUN-94C57A3EFC0F3F7C429148BE",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "把云尺作为本账号这次内部对话的临时代号。只确认已记住，并明确它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语杭州滨江店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "05837402af19a63eaf03e6b5fee2f7e1a59161c0fa635c987eb956175fee27ef",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "87efa52cbb33ad0c531c74a46104a02e6238f8e2d65644cc0194fce6b269934d",
+      "run_id": "RUN-61719A27336BD64DC5232FDF",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "继续上一轮：刚才约定的临时代号是什么？只回答代号，并说明它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语无锡滨湖店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 0,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "4f5c1f7e05ab086b6eb3db4e756be39cc28449b887eb3aa6f88938c785877902",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "0975490d8fee9bdbbab9293b61a726def169176bd6e3bd7b27d4936b54fb72d1",
+      "run_id": "RUN-B72E3DA4A39592B461C5DDAD",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "把木雨作为本账号这次内部对话的临时代号。只确认已记住，并明确它不是品牌事实。"
+    },
+    {
+      "account_display_name": "笛语无锡滨湖店",
+      "candidate_count": 0,
+      "conversation_context_turn_count": 1,
+      "deterministic_revalidation": null,
+      "first_output_preserved": true,
+      "model_output_sha256": "78910e69cbbf0c381867741e1d42b92dda36cdc8f9f993304f625d4af06b61cc",
+      "operation": "普通聊天",
+      "parse_error": false,
+      "plan_bound": false,
+      "prompt_sha256": "1b9e3cf14504536a4967e833c3ee6f7f305538acb309b52865a9e1dd491e15b3",
+      "run_id": "RUN-E760FB100E1323D6BDEDE35C",
+      "state": "FIRST_OUTPUT_ACCEPTED",
+      "user_message": "继续上一轮：刚才约定的临时代号是什么？只回答代号，并说明它不是品牌事实。"
+    }
+  ],
+  "run_state_distribution": {
+    "FIRST_OUTPUT_ACCEPTED": 16,
+    "FIRST_OUTPUT_ACCEPTED_AFTER_DETERMINISTIC_REVALIDATION": 2,
+    "FIRST_OUTPUT_REJECTED": 5
+  },
+  "schema": "diyu.package7.model_run_evidence.v1"
+}

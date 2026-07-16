@@ -11,7 +11,7 @@ import threading
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Protocol
 
 import yaml  # type: ignore[import-untyped]
 
@@ -375,6 +375,28 @@ class PlanRecord:
     source_request: JsonObject
 
 
+PlanFactory = Callable[[int], JsonObject]
+ExpressionProfileResolver = Callable[
+    [JsonObject, TrustedUpstreamContext, JsonObject],
+    JsonObject,
+]
+
+
+class PlanStore(Protocol):
+    """Storage boundary owned by Package 2 and implemented by its runtime host."""
+
+    def materialize(
+        self,
+        key: tuple[str, str, str, int],
+        input_digest: str,
+        factory: PlanFactory,
+    ) -> JsonObject: ...
+
+    def attach_source(self, plan_ref: str, source_request: JsonObject) -> None: ...
+
+    def get(self, plan_ref: str) -> PlanRecord | None: ...
+
+
 class InMemoryPlanStore:
     """One-process store for the non-production vertical slice."""
 
@@ -387,7 +409,7 @@ class InMemoryPlanStore:
         self,
         key: tuple[str, str, str, int],
         input_digest: str,
-        factory: Any,
+        factory: PlanFactory,
     ) -> JsonObject:
         with self._lock:
             existing = self._by_key.get(key)
@@ -415,7 +437,12 @@ class InMemoryPlanStore:
 class LightExpressionService:
     """Public-contract implementation without model, database, or Dify calls."""
 
-    def __init__(self, repository_root: Path = REPOSITORY_ROOT) -> None:
+    def __init__(
+        self,
+        repository_root: Path = REPOSITORY_ROOT,
+        plan_store: PlanStore | None = None,
+        expression_profile_resolver: ExpressionProfileResolver | None = None,
+    ) -> None:
         self.repository_root = repository_root
         foundation = repository_root / "11_product_foundation/public_foundation_001"
         self.contract_path = foundation / "contract/public_foundation_contract.v1.yaml"
@@ -435,7 +462,22 @@ class LightExpressionService:
             str(row["topic_category_id"]): tuple(str(value) for value in row["internal_product_ids"])
             for row in self.topic_mapping["categories"]
         }
-        self.store = InMemoryPlanStore()
+        self.store: PlanStore = plan_store or InMemoryPlanStore()
+        self._expression_profile_resolver = expression_profile_resolver
+
+    def action_card(
+        self,
+        request: JsonObject,
+        action_type: str,
+        reason: str,
+        refs: list[str] | None = None,
+    ) -> JsonObject:
+        """Materialize the Package 2 action-card contract for upstream adapters."""
+
+        return self._action_card(
+            request,
+            PreparationIssue(action_type, reason, refs or []),
+        )
 
     def local_simulation_request(self) -> JsonObject:
         """Return the public example with the package-owned confirmed-task extension."""
@@ -614,7 +656,10 @@ class LightExpressionService:
                 hard_issues.append(
                     {"category": "source_provenance", "reason": "候选声明使用了计划未授权的资料引用。"}
                 )
-            literal_prohibitions = self.neutral_profile.get("literal_prohibited_phrases", [])
+            literal_prohibitions = plan["expression_guidance"].get(
+                "literal_prohibited_phrases",
+                [],
+            )
             surface_text = canonical_json(surfaces)
             if any(str(value) and str(value) in surface_text for value in literal_prohibitions):
                 hard_issues.append(
@@ -826,13 +871,44 @@ class LightExpressionService:
             raise PreparationIssue("BLOCK", "表达配置必须由服务端解析。", ["resolution_authority"])
         if supplied["tenant_id"] != context.tenant_id or supplied["content_account_id"] != scope["content_account_id"]:
             raise PreparationIssue("BLOCK", "表达配置与当前企业或账号不一致。", ["server_expression_profile"])
+        if self._expression_profile_resolver is None:
+            if (
+                supplied["resolved_profile_ref"] != self.neutral_profile["profile_ref"]
+                or supplied["resolution_mode"] != "NEUTRAL_DEFAULT"
+                or supplied["requested_profile_ref"] not in (None, self.neutral_profile["profile_ref"])
+            ):
+                raise PreparationIssue(
+                    "BLOCK",
+                    "企业专属表达配置尚未由后续品牌模块载入。",
+                    ["resolved_profile_ref"],
+                )
+            return copy.deepcopy(self.neutral_profile)
+        profile = self._expression_profile_resolver(
+            copy.deepcopy(supplied),
+            context,
+            copy.deepcopy(self.neutral_profile),
+        )
+        required_profile_fields = {
+            "profile_ref",
+            "resolution_mode",
+            "tone_tendencies",
+            "prohibited_expression_categories",
+            "literal_prohibited_phrases",
+            "may_grant_fact_authorization_or_scope",
+            "cross_tenant_borrowing_allowed",
+            "runtime_publishable",
+        }
+        if not isinstance(profile, dict) or not required_profile_fields.issubset(profile):
+            raise PreparationIssue("BLOCK", "服务端表达配置内容不完整。", ["server_expression_profile"])
         if (
-            supplied["resolved_profile_ref"] != self.neutral_profile["profile_ref"]
-            or supplied["resolution_mode"] != "NEUTRAL_DEFAULT"
-            or supplied["requested_profile_ref"] not in (None, self.neutral_profile["profile_ref"])
+            profile["profile_ref"] != supplied["resolved_profile_ref"]
+            or profile["resolution_mode"] != supplied["resolution_mode"]
+            or profile["may_grant_fact_authorization_or_scope"] is not False
+            or profile["cross_tenant_borrowing_allowed"] is not False
+            or profile["runtime_publishable"] is not False
         ):
-            raise PreparationIssue("BLOCK", "企业专属表达配置尚未由后续品牌模块载入。", ["resolved_profile_ref"])
-        return copy.deepcopy(self.neutral_profile)
+            raise PreparationIssue("BLOCK", "服务端表达配置越过了事实或范围边界。", ["server_expression_profile"])
+        return copy.deepcopy(profile)
 
     def _validate_expression_hints(self, request: JsonObject) -> tuple[list[str], JsonObject, list[str]]:
         modes = self._string_list(request.get("requested_high_level_mode_refs", []), "高层表达模式")
@@ -1113,6 +1189,9 @@ class LightExpressionService:
                     "tone_tendencies": copy.deepcopy(profile["tone_tendencies"]),
                     "prohibited_expression_categories": copy.deepcopy(
                         profile["prohibited_expression_categories"]
+                    ),
+                    "literal_prohibited_phrases": copy.deepcopy(
+                        profile["literal_prohibited_phrases"]
                     ),
                     "high_level_mode_refs": modes,
                     "approved_example_refs": copy.deepcopy(request.get("approved_example_refs", [])),

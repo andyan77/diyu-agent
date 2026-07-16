@@ -149,9 +149,19 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_fact_aware_plan_adapter.py"
         ),
     ),
+    (
+        Path("17_dify_runtime/dify_end_to_end_001"),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/"
+            "check_dify_end_to_end.py"
+        ),
+    ),
 )
 MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
-    {Path("16_composition_runtime/fact_aware_plan_adapter_001")}
+    {
+        Path("16_composition_runtime/fact_aware_plan_adapter_001"),
+        Path("17_dify_runtime/dify_end_to_end_001"),
+    }
 )
 DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
     Path(

@@ -14,6 +14,7 @@ from typing import Any, Callable
 
 from http_entrypoint import build_server
 from light_expression_service import (
+    InMemoryPlanStore,
     LightExpressionService,
     TrustedUpstreamContext,
     parse_time,
@@ -123,6 +124,54 @@ class PrepareTests(unittest.TestCase):
         self.assertEqual(result["references"]["experimental_diagnostics"], {})
         self.assertFalse(result["authoring_boundary"]["audience_body_in_plan"])
         self.assertNotIn("body", result)
+
+    def test_injected_plan_store_preserves_package2_ownership_and_default_behavior(self) -> None:
+        injected_store = InMemoryPlanStore()
+        injected = LightExpressionService(REPOSITORY_ROOT, plan_store=injected_store)
+        result = injected.prepare(self.request, self.context, FIXED_TIME)
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertIs(injected.store, injected_store)
+        self.assertIsNotNone(injected_store.get(result["composition_plan_ref"]))
+        default_service = LightExpressionService(REPOSITORY_ROOT)
+        self.assertIsInstance(default_service.store, InMemoryPlanStore)
+
+    def test_server_injected_brand_profile_cannot_grant_scope(self) -> None:
+        def resolve_profile(
+            supplied: dict[str, Any],
+            context: TrustedUpstreamContext,
+            neutral: dict[str, Any],
+        ) -> dict[str, Any]:
+            self.assertEqual(context.tenant_id, "TENANT-DIYU-SIM-001")
+            profile = copy.deepcopy(neutral)
+            profile.update(
+                {
+                    "profile_ref": supplied["resolved_profile_ref"],
+                    "resolution_mode": supplied["resolution_mode"],
+                    "literal_prohibited_phrases": ["禁止测试短语"],
+                }
+            )
+            return profile
+
+        service = LightExpressionService(
+            REPOSITORY_ROOT,
+            expression_profile_resolver=resolve_profile,
+        )
+        changed = copy.deepcopy(self.request)
+        changed["server_expression_profile"].update(
+            {
+                "resolved_profile_ref": "expression-profile://package7-test/v1",
+                "resolution_mode": "REVIEWED_SIMULATION_BRAND",
+            }
+        )
+        result = service.prepare(changed, trusted_context_for_request(changed), FIXED_TIME)
+        self.assertEqual(
+            result["expression_guidance"]["brand_expression_profile_ref"],
+            "expression-profile://package7-test/v1",
+        )
+        self.assertEqual(
+            result["expression_guidance"]["literal_prohibited_phrases"],
+            ["禁止测试短语"],
+        )
 
     def test_request_id_does_not_change_deterministic_plan(self) -> None:
         first = self.prepare()

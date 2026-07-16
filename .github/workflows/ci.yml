@@ -115,6 +115,7 @@ jobs:
           run_downstream_package_checker "14_dify_shell/dify_content_shell_001" "14_dify_shell/dify_content_shell_001/check_dify_content_shell.py" "false"
           run_downstream_package_checker "15_brand_retrieval/brand_fact_retrieval_001" "15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py" "false" "24cd9888f38f2f22b22aa6c5a23f388b39fa1469"
           run_downstream_package_checker "16_composition_runtime/fact_aware_plan_adapter_001" "16_composition_runtime/fact_aware_plan_adapter_001/check_fact_aware_plan_adapter.py" "true"
+          run_downstream_package_checker "17_dify_runtime/dify_end_to_end_001" "17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"
       - name: Verify fail-closed optimized mode
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -207,6 +208,7 @@ jobs:
           run_downstream_package_checker_optimized "14_dify_shell/dify_content_shell_001" "14_dify_shell/dify_content_shell_001/check_dify_content_shell.py" "false"
           run_downstream_package_checker_optimized "15_brand_retrieval/brand_fact_retrieval_001" "15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py" "false" "24cd9888f38f2f22b22aa6c5a23f388b39fa1469"
           run_downstream_package_checker_optimized "16_composition_runtime/fact_aware_plan_adapter_001" "16_composition_runtime/fact_aware_plan_adapter_001/check_fact_aware_plan_adapter.py" "true"
+          run_downstream_package_checker_optimized "17_dify_runtime/dify_end_to_end_001" "17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"
 
   secret-scan:
     name: secret-scan
