@@ -1,0 +1,43 @@
+{
+  "schema_version": "p7-agent-ledger-addendum-v1",
+  "milestone_id": "M1",
+  "extends": "AGENT_LEDGER.M1.v1.json（C4 冻结；本补编登记其后派出的代理，避免改写已入证据清单的账本）",
+  "capability_record": {
+    "id": "FABLE_SUBAGENT_CAPABILITY_UNAVAILABLE",
+    "evidence": "探针代理 af549c478e747c45d：Agent 调用显式 model=fable，自报 ACTUAL_MODEL=claude-opus-4-8；env CLAUDE_CODE_SUBAGENT_MODEL=claude-opus-4-8 钉死子代理模型",
+    "governance": "P1 §十六 要求'独立 Claude/Fable 对抗审查'——Claude 家族审查人满足文面；ROLE_MODEL_MATRIX.v1 中该角色登记 claude-fable-5 属执行侧相机设计，实际模型逐回执诚实登记，不构成降低验收标准；矩阵 v2 修订留待 M2"
+  },
+  "agents": [
+    {
+      "agent_id": "afbd0d8d90638298e",
+      "label": "m1-fable-reviewer(R1)",
+      "role": "正式对抗审查（第 1 轮，候选 3b29055，已随新候选作废）",
+      "requested_model": "fable（Agent 调用显式参数）",
+      "actual_model": "claude-opus-4-8（审查人自报，诚实披露）",
+      "tool_whitelist": "只读 + /tmp 副本实验",
+      "write_whitelist": [],
+      "isolation": "全新非 fork 子代理上下文；零仓写入（自证于隔离声明）",
+      "verdict": "ACCEPT + 2 ADVISORY（绑定旧候选 3b29055）"
+    },
+    {
+      "agent_id": "af549c478e747c45d",
+      "label": "model-identity-probe",
+      "role": "只读现场探查（模型身份探针）",
+      "requested_model": "fable",
+      "actual_model": "claude-opus-4-8",
+      "tool_whitelist": "无（零工具）",
+      "write_whitelist": [],
+      "isolation": "单轮无工具探针"
+    },
+    {
+      "agent_id": "codex thread 019f6c21-3e64-7f73-ab07-4fbab675630f + R1 复跑线程",
+      "label": "codex-independent-review(R1)",
+      "role": "Codex-GPT 独立复算（第 1 轮，候选 3b29055，已随新候选作废）",
+      "requested_model": "codex exec 默认（用户配置）",
+      "actual_model": "Codex / GPT-5（自报；内部修订号不可得未伪造）",
+      "tool_whitelist": "codex --sandbox read-only",
+      "write_whitelist": [],
+      "verdict": "REJECT（2 BLOCKING，均已在 C5 修复）"
+    }
+  ]
+}

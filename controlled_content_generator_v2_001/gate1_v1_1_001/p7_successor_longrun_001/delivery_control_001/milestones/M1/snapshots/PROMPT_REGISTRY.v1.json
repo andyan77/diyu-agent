@@ -51,10 +51,9 @@
       ],
       "stop_lines": "v2.5 §七全集 + P1 §二十五全集 + FORMAL_MODEL_RUN_CONTRACT §7 + 模板专属停止线",
       "session_requirements": "全新、非 fork、非 resume 的 Fable 5 顶层会话；由会话外监督器启动；CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；关闭即退出，同会话跨里程碑续跑=停",
-      "status": "CLOSED_PASS",
+      "status": "ACTIVE",
       "launch_record": "prompts/P1.M1.prompt.md + evidence/SESSION_IDENTITY.M1.v1.json（P1 由发起人直发，先于监督器存在）",
-      "session_id": "f719e24e-7b51-48c0-9c24-9655a6525be8",
-      "closeout": "milestones/M1/CLOSEOUT_RECEIPT.v1.json"
+      "session_id": "f719e24e-7b51-48c0-9c24-9655a6525be8"
     },
     {
       "prompt_id": "P2",
@@ -100,10 +99,9 @@
       ],
       "stop_lines": "v2.5 §七全集 + P1 §二十五全集 + FORMAL_MODEL_RUN_CONTRACT §7 + 模板专属停止线",
       "session_requirements": "全新、非 fork、非 resume 的 Fable 5 顶层会话；由会话外监督器启动；CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；关闭即退出，同会话跨里程碑续跑=停",
-      "status": "READY_TO_START",
+      "status": "WAITING_PREDECESSOR",
       "launch_record": null,
-      "session_id": null,
-      "ready_evidence": "milestones/M1/READY_SET_RESULT.v1.json（M2=READY）"
+      "session_id": null
     },
     {
       "prompt_id": "P3",

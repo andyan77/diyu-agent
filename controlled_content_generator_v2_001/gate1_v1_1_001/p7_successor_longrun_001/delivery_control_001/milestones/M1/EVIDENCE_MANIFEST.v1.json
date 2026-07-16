@@ -1,0 +1,62 @@
+{
+ "schema_version": "p7-manifest-v1",
+ "note": "M1 证据包（v3 回执于 R3 候选头签发；v1/v2 为诚实历史；journal 以 frozen_snapshot 锚定）。有界闭包：不含自身、不含审核签字与 typed 回执",
+ "bound_candidate_commit": "11b71e9bed9078c2483dc27ae94a807689ff5528",
+ "entry_count": 13,
+ "entries": [
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/AGENT_LEDGER.M1.v1.json",
+   "sha256": "603a715fead67d4787fbb47b3071669112b28bdd3e611a2a067849c0909e4afe"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/AGENT_LEDGER_ADDENDUM.M1.v1.json",
+   "sha256": "5edc50af896ccefbf4c0d1ce4a6301d4b8bf26f18e237a72307a032caa0809d0"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.v1.json",
+   "sha256": "8ba45e2b41ba64b4aec7f121a07b2fb5be4f3e10536ffbd1a0bec702d948be72"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/SEMANTIC_SWEEP_REPORT.v1.json",
+   "sha256": "461d1ef8eedadd8c35fc3615cc0ba27bcf0608c31de752bdd56580cbea0d622d"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/SESSION_IDENTITY.M1.v1.json",
+   "sha256": "787765a0957851b97658c660c4fda058d5a0b8809f6e6a630f274795b17db450"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/VERIFICATION_RECEIPTS.M1.v1.json",
+   "sha256": "1ef4fbfe665695455b51912c94cc5fc62c073a355af83378aac13f9b8d5d41a0"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/VERIFICATION_RECEIPTS.M1.v2.json",
+   "sha256": "ac2343380630668fddb4f89fefd6f4db897e382cedfc75acec5641dfe7b98119"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/VERIFICATION_RECEIPTS.M1.v3.json",
+   "sha256": "913726250a3b7b44af41eaec50c7557da7170fa51bd8313f270fb1465db2815a"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/WORKTREE_INVENTORY_DISPOSITION.M1.v1.md",
+   "sha256": "70c6149d569df66b5414fb093ed389a102158e075e627f8ff372ab22a0250d0c"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/WORKTREE_INVENTORY_INITIAL.v1.tsv",
+   "sha256": "9d1cfd7f70b542dfbb71e01dfc19134095e2862fb1069cc7f2d4a062dc0957ed"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/journal/RUN_JOURNAL.v1.jsonl",
+   "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/snapshots/RUN_JOURNAL.v1.jsonl",
+   "sha256": "b9041dc3cf29f97901390534f1ee7144918884277029f1d4102cb5bd4ecf3b91"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/state/ACTIVE_CONTRACT_DIGESTS.v1.json",
+   "sha256": "1fd3a4107e54c37f5f9531d9cbed62b77cb23d7766c5aa123bbfe76bf5e9f71a"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/release/candidate_manifest.v1.json",
+   "sha256": "a16f9296f36999065830adae732cbf228d568bbb9ed205d8d9f80e296e93477d"
+  }
+ ],
+ "manifest_digest": "347c7fe38f338a7f189b33664022e8f7de5045868ce92b1acb3ec695eb1587be"
+}

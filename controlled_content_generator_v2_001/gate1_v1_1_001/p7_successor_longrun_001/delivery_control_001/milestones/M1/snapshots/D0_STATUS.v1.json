@@ -16,19 +16,21 @@
       "evidence": "state/ACTIVE_CONTRACT_DIGESTS.v1.json 冻结（16 成员，0 pending，集合摘要 cbe5f5f4e65a7766e328c5c676ecad2958fb4fdaacc9d17d44350a60cd46dee9；contract_set verify PASS）"
     },
     "INDEPENDENT_REVIEW_PASS": {
-      "satisfied": true,
-      "evidence": "Fable R3 对抗审查 verdict=ACCEPT 且 d0_verdict=ACCEPT；signer receipt controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.8f812c89b959.signer_receipt.json（sha256 8f812c89b9597b92…）"
+      "satisfied": false,
+      "evidence": null,
+      "pending_action": "M1 独立审核阶段：全新非 fork 只读审核者对 D0 章程出具 verdict=ACCEPT 的签字回执（signer_receipt.v1 schema），回执路径与摘要回填于此"
     },
     "REVIEWER_ISOLATION_VALID": {
-      "satisfied": true,
-      "evidence": "同回执 session_isolation_attestation 全 true（schema 校验通过；checker validate_signer_receipt 复核）"
+      "satisfied": false,
+      "evidence": null,
+      "pending_action": "同上回执中的 session_isolation_attestation 校验通过"
     }
   },
   "charter_sha256": "d68244dfd0a0d19330ad606b2de0d294565b162f31ec614efabe6468d1b77cb8",
   "active_contract_set_digest": "cbe5f5f4e65a7766e328c5c676ecad2958fb4fdaacc9d17d44350a60cd46dee9",
-  "review_receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.8f812c89b959.signer_receipt.json",
-  "review_receipt_digest": "8f812c89b9597b929c33a260bc2a5aa27762b4a902e0ab096124ebd8f19c32c3",
-  "d0_approved": true,
+  "review_receipt_path": null,
+  "review_receipt_digest": null,
+  "d0_approved": false,
   "d0_approved_derivation": "d0_approved 仅可由 checker 从五条件复算得出；本字段为缓存值，与复算不一致时以复算为准",
-  "updated_at": "2026-07-16T19:19:35.062887+00:00"
+  "updated_at": "2026-07-16T16:46:44+00:00"
 }

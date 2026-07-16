@@ -1,0 +1,79 @@
+{
+  "verdict": "ACCEPT",
+  "d0_verdict": "ACCEPT",
+  "candidate_commit_verified": "11b71e9bed9078c2483dc27ae94a807689ff5528",
+  "input_manifest_digest_verified": "e118930818cdbcbf7e50e19cad98ca7e8faaa0207d23b65557f31e4ccaf16679",
+  "output_manifest_digest_verified": "16a8f322a7e5bc83f26646a2afad34a185ec8256444511a56a36ab1af890a197",
+  "evidence_manifest_digest_verified": "347c7fe38f338a7f189b33664022e8f7de5045868ce92b1acb3ec695eb1587be",
+  "round2_fixes_verified": [
+    {
+      "fix": "1",
+      "verified": true,
+      "method": "读 V11_STATUS.v1.json（诚实 NOT_QUALIFIED / 6 reason_codes / evidence 空 / decided_by 与 decision_digest null）+ 读 v25.check_m0_state_integrity 源码确认消费 STATE_EXPECTATION.v11_status + 10 例 /tmp 合成根直呼实测",
+      "notes": "合成根实测全部符合期望：T1 v11=QUALIFIED@M1（即便全 B 轨执行）→FAIL（越 M1 期望 [NOT_QUALIFIED]）；T2 v11=QUALIFIED@M6 全 6 B 轨执行+证据+decided_by/digest→PASS；T3 v11=QUALIFIED 无 B 轨执行→FAIL（missing S2..S7）。附加 T4 无 evidence→FAIL、T5 无 decided_by→FAIL、T7 部分 B 轨→FAIL、T6 NOT_QUALIFIED 丢 READY_FOR_300→FAIL、T8 非法状态→FAIL、T9 缺文件→FAIL。m0_state_integrity 属 A 域 PRE_REVIEW 实跑节（RESULT[A]:PASS 含之），且真实态 v11=NOT_QUALIFIED 时 PASS——V1_1_REMAINS_HONESTLY_NOT_QUALIFIED 可机械复算并被强制。"
+    },
+    {
+      "fix": "2",
+      "verified": true,
+      "method": "读 closeout.py _verify_manifest（resolve()+is_relative_to(milestone/snapshots)）+ /tmp 副本重放 R2 攻击矩阵",
+      "notes": "正常快照 mst/M1/snapshots/live.json 接受且零错误；ATTACK1 snapshots/../../secret、ATTACK3 深层 ../../../、ATTACK2 非 snapshots 路径、ATTACK4 前缀碰撞目录 snapshots_evil（子串旁路）全部被拒为 'frozen_snapshot escapes snapshots/ dir'。resolve 消解 .. 后 is_relative_to 精确容器判定，子串旁路失效。"
+    },
+    {
+      "fix": "3",
+      "verified": true,
+      "method": "独立复算 git diff --check 23f5fea..HEAD + 逐条核对每个 whitespace hit 归属豁免类",
+      "notes": "区间产出恰 8 个 hit：6 个为 P1.M1.prompt.md L3-8 行尾恰两空格（cat -A 证实 '  $'），系 markdown 硬换行的逐字 Prompt 内容；2 个为 EOF 空行，位于 dev_manifest.v1.json 与 disclosure_obligation_matrix.v1.json——两者均 f7d6619(C0) 引入且末次修改亦为 C0，属 C0 字节保全用户工件。8 全豁免、非豁免违规=0，与 VERIFICATION_RECEIPTS.M1.v3 记录 exempt_hits=8/non_exempt_violations=0 一致。豁免仅覆盖此两类，任何作者代码文件的空白缺陷都会显为非豁免（区间无此类 hit）。"
+    }
+  ],
+  "checks_performed": [
+    "HEAD==candidate 11b71e9 复核通过",
+    "master_check PRE_REVIEW: RESULT[SHARED]:PASS(10) / RESULT[A]:PASS(5) / RESULT[B]:PASS(6) / ARTIFACT_INTEGRITY:PASS / M0:NOT_QUALIFIED / exit0",
+    "eval_spine 套件 49 OK；v4_recovery 49 OK；delivery_control 55 OK",
+    "8 工具 selftest 全 ALL_PASS（master --selftest ALL_NEGATIVE_CASES_ENFORCED / ready_set / launcher / qual_order / lift_chain / sealed_scan / run_journal / contract_set）",
+    "residual_scan verdict=PASS（active_violations=[]）",
+    "contract_set verify=PASS drift=[]；集合摘要独立复算 cbe5f5f4...=文件=REVIEW_REQUEST，16 成员 0 pending 无漂移",
+    "三 manifest manifest_digest 逐条复算全 MATCH；entry 逐条 sha256 vs 磁盘 zero drift",
+    "frozen_snapshot 三方一致：快照-on-disk==manifest 记录==候选 HEAD 活体文件（6/6 全 MATCH）",
+    "D0 8 项边界逐字源自 v2.4 §四 4.1；生效五条件由 checker 从磁盘复算、明文禁布尔速记；charter_sha256 冻结匹配；d0_approved=false 诚实待独立审核",
+    "M0_STATUS=NOT_QUALIFIED 且 V11_STATUS=NOT_QUALIFIED（双诚实基线）",
+    "negative 攻击套件 30 方法 51 断言 无 skip/xfail/pass-only/空断言；positive_future 10；migration_sites 15",
+    "cost_budget: required_cost_event_fields=24 保留；DeepSeek 每日预算保留；cost_accounting 节 PRE_REVIEW PASS",
+    "product_core_staging_001 目录不存在；无 EXTRACTION_MANIFEST/产品仓；git 索引零暂存",
+    "M2 未执行；无真实 S0 运行；executed_stages=[]"
+  ],
+  "adversarial_probes": [
+    "合成根 v11=QUALIFIED@M1 → 必 FAIL（实测 FAIL）",
+    "合成根 v11=QUALIFIED@M6 全 B 轨+证据 → 必 PASS（实测 PASS）",
+    "合成根 v11=QUALIFIED 无 B 轨执行 → 必 FAIL（实测 FAIL）",
+    "路径遍历 snapshots/../../、../../../、非 snapshots 路径、前缀碰撞 snapshots_evil → 全被拒",
+    "manifest 三方一致性反查（若快照被篡改脱离候选提交则暴露）→ 6/6 一致",
+    "history 反查：git diff --name-status 23f5fea..HEAD 仅 1 M(checker 活体代码)+148 A，无 v2.3/v2.4/v1.x 冻结文档改写；23f5fea 为 HEAD 祖先；C0 父提交=23f5fea",
+    "D0 布尔速记探测：check_d0_status 显式 'boolean shortcut forbidden'，d0_approved 与五条件复算一致时才过"
+  ],
+  "findings": [
+    {
+      "severity": "INFO",
+      "area": "milestones/M1 未跟踪",
+      "detail": "milestones/M1 全目录（含三 manifest、snapshots、REVIEW_REQUEST）为工作树未跟踪文件，非候选提交 11b71e9 内容。此为送审就绪期正常形态：关闭八件套须在两份独立审核之后才落盘；审核者从磁盘复算且 frozen_snapshot 字节==候选提交活体文件，机制自洽。非阻断。"
+    },
+    {
+      "severity": "INFO",
+      "area": "C0 保全 74 工件含 1 M",
+      "detail": "C0(f7d6619) 相对 23f5fea 为 73 A + 1 M；被改文件为 checker/p7_master_check.py，系会话启动时工作树既有的未提交脏改动被 C0 逐字提交保全（活体代码文件，非冻结历史工件），非内容改写。与 REVIEW_REQUEST '74 工件逐字保全' 口径一致。非阻断。"
+    },
+    {
+      "severity": "INFO",
+      "area": "Codex R3 进行中",
+      "detail": "codex_review_r3_events.jsonl 存在且绑定 11b71e9，但未见 r3_last_message 终裁；Codex 侧独立审核可能仍在跑。不影响本 Fable/Claude 侧独立裁决；M1 最终 PASS 的双审汇合属作者关闭职责。"
+    }
+  ],
+  "history_tamper_check": "PASS — 23f5fea 为 HEAD 严格祖先；候选区间 23f5fea..HEAD 仅 checker 1 处修改(活体代码)+148 新增，无任何冻结历史计划文档(v2.3/v2.4/v1.x)或原始数据被改/删；C0 父提交严格为 23f5fea 且仅追加用户工件+保全既有脏改动；无 rebase/历史改写迹象。",
+  "actual_model_self_report": "claude-opus-4-8",
+  "isolation_attestation": {
+    "fresh_session_not_fork_not_resume": true,
+    "did_not_author_reviewed_scope": true,
+    "auto_memory_disabled_or_not_applicable": true,
+    "read_only_no_repo_writes": true,
+    "isolation_evidence": "全新非 fork/非 resume 会话；未参与 M1 实现；一切结论从磁盘独立复算（三 manifest 摘要、合同集摘要、快照三方一致、检查器/测试/扫描实跑）；所有实验写在 $TMPDIR 合成根/副本，仓库零写——会话末 git status 与起始逐字相同（仅作者预置的 AGENT_LEDGER_ADDENDUM / VERIFICATION_RECEIPTS.v2/v3 / milestones/ 未跟踪项），无我引入的任何跟踪/未跟踪改动，无 git 写动作；加载的自动记忆为 diyu 项目通用画像，与本审查范围无著作关系，隔离不受影响。"
+  }
+}

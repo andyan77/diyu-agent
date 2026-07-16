@@ -1,0 +1,26 @@
+{
+  "schema_version": "p7-ready-to-start-v1",
+  "milestone": "M2",
+  "status": "M2_READY_TO_START",
+  "launch_capability": "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE_FROM_WITHIN_M1_SESSION",
+  "reason": "P1 §二/§十五：M1 会话禁止启动 M2（同会话跨里程碑=停线）；launcher.py 的同会话防护也会拒绝会话内 --start。会话外监督器（人或 cron shell）须在确认本会话退出后运行：python3 delivery_control_001/tools/launcher.py --dry-run M2 && python3 delivery_control_001/tools/launcher.py --start M2",
+  "frozen_prompt_path": "delivery_control_001/milestones/M2/RENDERED_PROMPT.v1.md",
+  "frozen_prompt_digest": "e8d036f8dd542514e1d1d18936d880aca5f0851e4140ecf6b484603851173030",
+  "template_digest": "9a3e2333b49a635e0e82ea7d2a00850e397e1c1b0ec8c418c5250f1a25c54c69",
+  "bindings": {
+    "ACTIVE_CONTRACT_SET_DIGEST": "cbe5f5f4e65a7766e328c5c676ecad2958fb4fdaacc9d17d44350a60cd46dee9",
+    "CONTROL_PLANE_COMMIT": "11b71e9bed9078c2483dc27ae94a807689ff5528",
+    "HANDOFF_DIGEST": "b7231da61af4b0c0a1c6ecb0d3a0c077ad386e38699a57e723322fe695803cf0",
+    "INPUT_COMMIT": "11b71e9bed9078c2483dc27ae94a807689ff5528",
+    "MILESTONE_ID": "M2",
+    "PREDECESSOR_MILESTONE": "M1",
+    "PREDECESSOR_RECEIPT_DIGEST": "79dac75144bff9e8df0c13abd1646cae267e3a9a73bf03b8016c7237014e9851",
+    "PREDECESSOR_RESULT": "PASS",
+    "PROMPT_ID": "P2",
+    "ROUTE": "UNFROZEN",
+    "SESSION_REQUIREMENTS": "全新、非 fork、非 resume 的 Fable 5 顶层会话；由会话外监督器启动；CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；关闭即退出，同会话跨里程碑续跑=停",
+    "WRITE_SURFACE_ALLOWLIST": "- `controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/**`\n- `controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/**`",
+    "WRITE_SURFACE_DENYLIST": "- 顶层产品 core 暂存（product_core_staging_001/** 直至 M3 依 D0 解锁）\n- 历史 P1–P6、R1–R5 证据；p5_p6_300_baseline_scale_and_freeze_001/**\n- 旧 120 原文、86 历史候选、路线 60 黄金答案、组件基座\n- 真实 QUAL、隐藏材料、客户数据目录（按里程碑合同揭示的除外）\n- 其他 worktree、主分支、全局检查器、.github/workflows/**\n- .env*、密钥、凭据、生产配置、外部服务"
+  },
+  "issued_at": "2026-07-16T19:20:55.753497+00:00"
+}
