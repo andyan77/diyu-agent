@@ -150,15 +150,33 @@ CREATIVE_INSTRUCTION_SURFACE_PATH = re.compile(
     r"display\.(?:arrangement_relationship|spatial_layers|color_relationship|availability_caution|"
     r"shooting_angles\[[0-9]+\]))$"
 )
-AUTHORIZATION_OR_REAL_EVENT_PATTERN = re.compile(
-    r"(?:已|已经|曾经|此前|目前).{0,24}(?:授权|获准|批准|发生|完成|发布|上线|售出|到店|调整|承诺|决定)"
+KEY_NUMBER_PATTERN = re.compile(
+    r"(?:尺码|售价|价格|库存|数量|比例|折扣|身高|年龄|日期|截至).{0,12}"
+    r"(?:\d|[零〇一二两三四五六七八九十百千万])"
+    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)"
+    r"(?:厘米|cm|元|折|%|件|款|天|月|年|号|码)"
+)
+PRODUCT_FACT_ASSERTION_PATTERN = re.compile(
+    r"(?:这款|该款|本款|商品|产品|上衣|童装|面料|材质|尺码|颜色|厚度|售价|价格|库存)"
+    r".{0,20}(?:采用|使用|为|是|具有|具备|包含|支持|适合|来自|属于|可售|备有)"
+    r"|(?:上衣|商品|产品).{0,12}(?:纯棉|亚麻|针织|羊毛|涤纶|棉质)"
+)
+AUTHORIZATION_CLAIM_PATTERN = re.compile(
+    r"(?:已|已经|此前|目前).{0,24}(?:授权|获准|批准|允许|有权|代表)"
+    r"|(?:总部|区域|门店|品牌|账号).{0,18}(?:批准|授权|获准|允许|有权|代表)"
     r"|(?:代表当前|有权|获准|已授权|经授权|官方账号)"
+)
+REAL_EVENT_CLAIM_PATTERN = re.compile(
+    r"(?:昨天|今天|上周|本周|上月|本月|去年|今年|日前|近期|此前).{0,24}"
+    r"(?:发生|举办|完成|发布|上线|售出|到店|调整|拍摄|反馈|决定|承诺)"
     r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|选择|购买|试穿|完成|决定|承诺)"
 )
 EXISTING_ASSET_CLAIM_PATTERN = re.compile(
     r"(?:已有|现有|已经|已提供|已拍摄|可直接使用).{0,18}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
     r"|(?:照片|视频|样衣|设计稿|截图|工作台|库存).{0,18}(?:已有|现有|已经|已提供|可用|存在|确认)"
+    r"|(?:门店|现场|当前)?.{0,6}(?:备有|备着|提供了|准备了).{0,12}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
 )
+CLAUSE_SPLIT_PATTERN = re.compile(r"[，,。；;！？!?：:\n]+")
 NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
     r"(?:不代表|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
 )
@@ -196,17 +214,23 @@ def require_fields(
 
 
 def surface_requires_evidence_binding(path: str, text: str) -> bool:
-    if any(cue in text for cue in SAFE_UNVERIFIED_ASSET_CUES):
-        return False
-    if NON_ASSERTIVE_BOUNDARY_PATTERN.search(text):
-        return False
-    if AUTHORIZATION_OR_REAL_EVENT_PATTERN.search(text):
-        return True
-    if EXISTING_ASSET_CLAIM_PATTERN.search(text):
-        return True
-    if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
-        return False
-    return any(character.isdigit() for character in text)
+    for clause in filter(None, (part.strip() for part in CLAUSE_SPLIT_PATTERN.split(text))):
+        if (
+            KEY_NUMBER_PATTERN.search(clause)
+            or EXISTING_ASSET_CLAIM_PATTERN.search(clause)
+        ):
+            return True
+        if NON_ASSERTIVE_BOUNDARY_PATTERN.search(clause) or any(
+            cue in clause for cue in SAFE_UNVERIFIED_ASSET_CUES
+        ):
+            continue
+        if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
+            continue
+        if PRODUCT_FACT_ASSERTION_PATTERN.search(clause):
+            return True
+        if AUTHORIZATION_CLAIM_PATTERN.search(clause) or REAL_EVENT_CLAIM_PATTERN.search(clause):
+            return True
+    return False
 
 
 def surface_text_map(surfaces: Mapping[str, Any]) -> dict[str, str]:
@@ -869,7 +893,21 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     changed = copy.deepcopy(sparse)
     changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
     changed_candidate = changed_record["candidate"]
-    changed_candidate["candidate_user_visible_surfaces"]["title"] = "现有样衣已经确认100厘米"
+    changed_candidate["candidate_user_visible_surfaces"]["title"] = "待补拍；现有样衣已经确认100厘米"
+    changed_candidate["claim_bindings"] = [
+        row for row in changed_candidate["claim_bindings"] if row["surface_path"] != "title"
+    ]
+    changed_candidate["author_declared_claim_bindings"] = [
+        row
+        for row in changed_candidate["author_declared_claim_bindings"]
+        if row["surface_path"] != "title"
+    ]
+    expect_failure(lambda: validate_model_evidence(changed), "E_CLAIM_HIGH_RISK_COVERAGE")
+
+    changed = copy.deepcopy(sparse)
+    changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
+    changed_candidate = changed_record["candidate"]
+    changed_candidate["candidate_user_visible_surfaces"]["title"] = "这件上衣采用纯棉面料"
     changed_candidate["claim_bindings"] = [
         row for row in changed_candidate["claim_bindings"] if row["surface_path"] != "title"
     ]
@@ -919,7 +957,7 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     return {
         "task_id": TASK_ID,
         "selftest": "PASS",
-        "negative_case_count": 12,
+        "negative_case_count": 13,
         "optimized_mode_fail_closed": True,
     }
 

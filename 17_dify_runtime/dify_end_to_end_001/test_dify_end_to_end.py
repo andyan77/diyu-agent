@@ -387,6 +387,7 @@ class Package7Tests(unittest.TestCase):
                 ["切入问题或场景", "画面组织方法"],
             ),
         ]
+        candidates[0]["surfaces"]["title"] = "待补拍照片"
         for candidate in candidates:
             candidate["claim_bindings"] = [
                 row
@@ -437,6 +438,58 @@ class Package7Tests(unittest.TestCase):
         self.assertTrue(result.get("action_card"))
         run = self.repository.model_run(prepared["run_id"])
         self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
+
+    def test_unbound_factual_claim_patterns_and_mixed_disclosures_fail_closed(self) -> None:
+        claims = (
+            "这件上衣采用纯棉面料",
+            "这件上衣采用亚麻面料",
+            "这款商品采用薄针织",
+            "这款商品售价九十九元",
+            "总部批准本账号发布新品信息",
+            "门店上周举办了春季活动",
+            "门店备有样衣可供拍摄",
+            "尺码100cm-150cm，细节待确认",
+            "现有库存100件，细节待确认",
+            "已授权发布，当前内容不可发布",
+            "已有顾客照片，库存待确认",
+            "待补拍；现有样衣已经确认100厘米",
+        )
+        for claim in claims:
+            with self.subTest(claim=claim):
+                prepared = self.runtime.prepare(self.request(), self.principal_id)
+                refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+                candidates = [
+                    self._candidate(
+                        "事实探针甲",
+                        "只使用当前资料支持的观察。",
+                        refs,
+                        ["核心创意", "事实或证明路径"],
+                    ),
+                    self._candidate(
+                        "事实探针乙",
+                        "只回答当前资料支持的问题。",
+                        refs,
+                        ["切入问题或场景", "画面组织方法"],
+                    ),
+                ]
+                candidates[0]["surfaces"]["title"] = claim
+                candidates[0]["claim_bindings"] = [
+                    row
+                    for row in candidates[0]["claim_bindings"]
+                    if row["surface_path"] != "title"
+                ]
+                encoded = base64.b64encode(
+                    json.dumps(
+                        {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                        ensure_ascii=False,
+                    ).encode()
+                ).decode()
+
+                result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+
+                self.assertTrue(result.get("action_card"))
+                run = self.repository.model_run(prepared["run_id"])
+                self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
 
     def test_similarity_and_narrative_skeleton_are_review_hints_not_runtime_blocks(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
