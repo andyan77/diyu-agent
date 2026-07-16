@@ -27,6 +27,12 @@ REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
 PACKAGE_RELATIVE_ROOT = Path("18_deployment/hosted_operations_001")
 BASELINE_COMMIT = "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031"
 TASK_ID = "DIYU_HOSTED_OPERATIONS_001"
+EXPECTED_ACCEPTANCE_RUN_DIGEST = (
+    "bca3baf62605877bfbe4e89da173174fb6e84d164c5e438840e79c1ece81b06d"
+)
+EXPECTED_BACKUP_DUMP_SHA256 = (
+    "de91ec92223de4e32186806f4e113914f47276d747dfb4f2554fa7c4fb60784c"
+)
 RESULT_PATH = Path("result/hosted_operations_result.v1.json")
 DELIVERY_PATH = Path("delivery/execution_review_request.v1.yaml")
 REVIEW_PATHS = (
@@ -108,6 +114,17 @@ def read_yaml(path: Path) -> JsonObject:
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def digest_json(value: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            separators=(",", ":"),
+            sort_keys=True,
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 def command(args: list[str], *, expected: int = 0) -> str:
@@ -352,6 +369,7 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
         "concurrent_import_serialized",
         "failed_import_rolled_back",
         "same_display_name_scope_safe",
+        "bidirectional_brand_isolation",
         "revocation_immediate",
         "stale_candidate_rejected",
         "bundle_rollback_restored",
@@ -360,9 +378,12 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
         "schema_upgrade_changed_structure",
         "successful_upgrade_and_rollback",
         "fresh_namespace_restore_equal",
+        "full_database_snapshot_equal",
+        "snapshot_mismatch_rejected",
         "corrupt_backup_rejected",
         "incompatible_backup_rejected",
         "failed_restore_left_target_empty",
+        "unknown_restore_objects_cleaned",
         "selected_candidate_rechecked_after_revocation",
     }
     require(evidence.get("task_id") == TASK_ID, "E_EVIDENCE_TASK")
@@ -373,6 +394,17 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
     require(
         evidence.get("local_task_database_count_after_cleanup") == 0,
         "E_EVIDENCE_CLEANUP",
+    )
+    database_names = evidence.get("database_names")
+    require(
+        isinstance(database_names, list)
+        and len(database_names) == 3
+        and len(set(database_names)) == 3
+        and all(
+            isinstance(name, str) and name.startswith("diyu-pkg8-")
+            for name in database_names
+        ),
+        "E_EVIDENCE_DATABASE_NAMES",
     )
     command_contract = evidence.get("acceptance_command_contract", {})
     require(
@@ -412,6 +444,10 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
         "E_EVIDENCE_BACKUP_SECURITY",
     )
     require(
+        evidence.get("backup_dump_sha256") == EXPECTED_BACKUP_DUMP_SHA256,
+        "E_EVIDENCE_BACKUP_DIGEST",
+    )
+    require(
         evidence.get("database_isolation")
         == {
             "database_rls_enabled": False,
@@ -431,6 +467,26 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
     require(
         counts.get("candidates", 0) >= 4 and counts.get("feedback", 0) >= 2,
         "E_EVIDENCE_RUNTIME_COUNTS",
+    )
+    source_health = evidence.get("source_health", {})
+    require(
+        source_health.get("object_counts") == counts
+        and source_health.get("database_table_count") == 23
+        and isinstance(source_health.get("database_snapshot_digest"), str)
+        and len(source_health["database_snapshot_digest"]) == 64,
+        "E_EVIDENCE_DATABASE_SNAPSHOT",
+    )
+    recorded_run_digest = evidence.get("acceptance_run_digest")
+    require(
+        isinstance(recorded_run_digest, str)
+        and recorded_run_digest == EXPECTED_ACCEPTANCE_RUN_DIGEST,
+        "E_EVIDENCE_RUN_DIGEST_PIN",
+    )
+    digest_payload = copy.deepcopy(dict(evidence))
+    digest_payload.pop("acceptance_run_digest", None)
+    require(
+        digest_json(digest_payload) == recorded_run_digest,
+        "E_EVIDENCE_RUN_DIGEST_REPLAY",
     )
 
 
@@ -624,6 +680,37 @@ def run_selftest() -> None:
     changed["backup_security"]["contains_credential_verifiers"] = False
     expect_failure(
         "E_EVIDENCE_BACKUP_SECURITY",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed["backup_dump_sha256"] = "0" * 64
+    expect_failure(
+        "E_EVIDENCE_BACKUP_DIGEST",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed["source_health"]["database_snapshot_digest"] = "0" * 63
+    expect_failure(
+        "E_EVIDENCE_DATABASE_SNAPSHOT",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed.pop("acceptance_run_digest")
+    expect_failure(
+        "E_EVIDENCE_RUN_DIGEST_PIN",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed["acceptance_run_digest"] = "0" * 64
+    expect_failure(
+        "E_EVIDENCE_RUN_DIGEST_PIN",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed["first_initialization_state"] = "FORGED"
+    changed["acceptance_run_digest"] = EXPECTED_ACCEPTANCE_RUN_DIGEST
+    expect_failure(
+        "E_EVIDENCE_RUN_DIGEST_REPLAY",
         lambda: validate_acceptance_evidence(changed),
     )
     invalid_item = {

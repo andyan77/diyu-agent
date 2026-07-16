@@ -5,17 +5,18 @@
     "local_only": true,
     "remote_ci_database_replay_allowed": false,
     "report_env": "DIYU_PKG8_ACCEPTANCE_REPORT",
-    "test_file_sha256": "845b41e64b2af6d5cbe3c6ee27fd2ee1c47f56cb7c7c029268733afa58c78c61",
+    "test_file_sha256": "95aa6864ad91c7413c06556ea54da353edc47c692a29c0c486ac3423b5218fa3",
     "test_path": "18_deployment/hosted_operations_001/test_hosted_operations.py"
   },
-  "acceptance_run_digest": "2d35a3661cb807b6364b01cfc8559cfae6585ea280ce4702c46ebda504278390",
-  "backup_dump_sha256": "da0fffd3050b6c249d1ec8961a95d5809851ee27ad5cd9b24b367fdcad56bbd3",
+  "acceptance_run_digest": "bca3baf62605877bfbe4e89da173174fb6e84d164c5e438840e79c1ece81b06d",
+  "backup_dump_sha256": "de91ec92223de4e32186806f4e113914f47276d747dfb4f2554fa7c4fb60784c",
   "backup_security": {
     "contains_credential_verifiers": true,
     "contains_plaintext_secrets": false,
     "repository_commit_allowed": false,
     "restricted_storage_required": true
   },
+  "bidirectional_brand_isolation": true,
   "brand_import_idempotent": true,
   "bundle_omission_removed": true,
   "bundle_rollback_restored": true,
@@ -27,23 +28,52 @@
     "production_ready": false
   },
   "database_kind": "POSTGRESQL_14",
+  "database_names": [
+    "diyu-pkg8-acceptance-9fa06a44",
+    "diyu-pkg8-restore-9fa06a44",
+    "diyu-pkg8-corrupt-9fa06a44"
+  ],
   "external_model_calls": 0,
   "failed_import_rolled_back": true,
   "failed_restore_left_target_empty": true,
   "failed_upgrade_rolled_back": true,
+  "first_initialization_state": "INITIALIZED",
   "fresh_namespace_restore_equal": true,
+  "full_database_snapshot_equal": true,
   "incompatible_backup_rejected": true,
   "install_idempotent": true,
   "local_task_database_count_after_cleanup": 0,
   "pg_dump_version": "pg_dump (PostgreSQL) 14.23 (Ubuntu 14.23-0ubuntu0.22.04.1)",
   "pg_restore_version": "pg_restore (PostgreSQL) 14.23 (Ubuntu 14.23-0ubuntu0.22.04.1)",
   "postgresql_server_version_num": 140023,
+  "preflight": {
+    "credentials_included": false,
+    "database_connect_privilege": true,
+    "database_create_privilege": true,
+    "database_name": "diyu-pkg8-acceptance-9fa06a44",
+    "dify_community_version": "1.15.0",
+    "free_space_sufficient": true,
+    "namespace": "diyu-pkg8-acceptance-9fa06a44",
+    "pg_dump_version": "pg_dump (PostgreSQL) 14.23 (Ubuntu 14.23-0ubuntu0.22.04.1)",
+    "pg_restore_version": "pg_restore (PostgreSQL) 14.23 (Ubuntu 14.23-0ubuntu0.22.04.1)",
+    "postgresql_server_version_num": 140023,
+    "required_object_digests": {
+      "materialization_manifest": "f6d0a2ec53f17b13f4f162d452e5155ee0bc4b57674622944ff3e8da776ef0f7",
+      "package7_app": "39734bce3ad23e1c8fd85c378cd892692d6267a4635593b5687f74c7f5d91600",
+      "package7_bridge": "311254f5aa5a775f96c78d8821d0a72d1bf71e5dd5b9498cfcece73326597a6b",
+      "package7_manifest": "1f0935727f448b7ae70167d4dd07e18f4b46e0b830b7bfcca9c3d770f39bfd2d",
+      "package8_manifest": "cf8c89650b9c486d265636e0de219ffbc3b18e9e418722984252aa358d8ffd0e"
+    },
+    "secret_file_checked": false,
+    "state": "CAN_PROCEED"
+  },
   "real_cloud_mutations": 0,
   "revocation_immediate": true,
   "runtime": {
     "cross_tenant_attacks_rejected": 2,
     "feedback_brand_count": 2,
     "prepared_and_validated_brand_count": 2,
+    "retrieval_request_count": 2,
     "run_account_ids": [
       "ACCOUNT-DIYU-HQ-OFFICIAL",
       "ACCOUNT-QINGHE-LAB--BRAND-ACCOUNT"
@@ -52,6 +82,37 @@
   "same_display_name_scope_safe": true,
   "schema_upgrade_changed_structure": true,
   "selected_candidate_rechecked_after_revocation": true,
+  "snapshot_mismatch_rejected": true,
+  "source_health": {
+    "application_version": "package8-v1",
+    "brand_revision_digest": "e916b297d10d41d612b94ac2965587386bd9314f32b2015c18faae391551893d",
+    "credential_verifiers_included": true,
+    "database_snapshot_digest": "11c810017645e0f98e0dce607fe005ca77e1596b26d9044d0503b5d754a5946a",
+    "database_table_count": 23,
+    "namespace": "diyu-pkg8-acceptance-9fa06a44",
+    "object_counts": {
+      "accounts": 13,
+      "authorizations": 34,
+      "brands": 2,
+      "candidates": 4,
+      "feedback": 2,
+      "narrative_fragments": 31,
+      "organizations": 7,
+      "precise_facts": 20,
+      "principals": 2,
+      "sources": 12,
+      "stores": 4,
+      "tenants": 2
+    },
+    "plaintext_secrets_included": false,
+    "private_content_included": false,
+    "production_ready": false,
+    "schema_features": {
+      "revision_lookup_index": false
+    },
+    "schema_version": 1,
+    "state": "HEALTHY"
+  },
   "source_object_counts": {
     "accounts": 13,
     "authorizations": 34,
@@ -68,5 +129,6 @@
   },
   "stale_candidate_rejected": true,
   "successful_upgrade_and_rollback": true,
-  "task_id": "DIYU_HOSTED_OPERATIONS_001"
+  "task_id": "DIYU_HOSTED_OPERATIONS_001",
+  "unknown_restore_objects_cleaned": true
 }

@@ -273,10 +273,35 @@ class Package8PostgresAcceptance(unittest.TestCase):
         restore_url = str(admin_url.set(database=restore_name))
         corrupt_url = str(admin_url.set(database=corrupt_name))
         report: JsonObject = {
-            "database_kind": "POSTGRESQL",
+            "task_id": "DIYU_HOSTED_OPERATIONS_001",
+            "database_kind": "POSTGRESQL_14",
             "database_names": list(names),
             "external_model_calls": 0,
             "real_cloud_mutations": 0,
+            "acceptance_command_contract": {
+                "test_path": (
+                    "18_deployment/hosted_operations_001/test_hosted_operations.py"
+                ),
+                "test_file_sha256": hashlib.sha256(
+                    Path(__file__).read_bytes()
+                ).hexdigest(),
+                "database_url_env": "DIYU_PKG8_ADMIN_DATABASE_URL",
+                "report_env": "DIYU_PKG8_ACCEPTANCE_REPORT",
+                "local_only": True,
+                "remote_ci_database_replay_allowed": False,
+                "exit_code": 0,
+            },
+            "backup_security": {
+                "contains_credential_verifiers": True,
+                "contains_plaintext_secrets": False,
+                "repository_commit_allowed": False,
+                "restricted_storage_required": True,
+            },
+            "database_isolation": {
+                "database_rls_enabled": False,
+                "enforcement": "APPLICATION_SCOPE_AND_CURRENT_STATE_POSTCHECK",
+                "production_ready": False,
+            },
         }
         temporary = tempfile.mkdtemp(prefix="diyu-pkg8-acceptance-")
         source_engine = create_runtime_engine(source_url)
@@ -287,6 +312,13 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 database_url=source_url,
                 namespace=source_name,
             )
+            report["postgresql_server_version_num"] = report["preflight"][
+                "postgresql_server_version_num"
+            ]
+            report["pg_dump_version"] = report["preflight"]["pg_dump_version"]
+            report["pg_restore_version"] = report["preflight"][
+                "pg_restore_version"
+            ]
             first_install = operations.install()
             second_install = operations.install()
             self.assertEqual(first_install["state"], "INSTALLED")
@@ -533,6 +565,10 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 manifest_path=manifest_path,
             )
             self.assertEqual(restore["state"], "RESTORED")
+            self.assertEqual(
+                backup["database_snapshot_digest"],
+                restore["actual_database_snapshot_digest"],
+            )
             restore_engine = create_runtime_engine(restore_url)
             try:
                 restore_sessions = create_session_factory(restore_engine)
@@ -568,6 +604,37 @@ class Package8PostgresAcceptance(unittest.TestCase):
                     target_database_url=corrupt_url,
                     manifest_path=incompatible_manifest,
                 )
+            snapshot_directory = Path(temporary) / "snapshot-mismatch"
+            shutil.copytree(manifest_path.parent, snapshot_directory)
+            snapshot_manifest_path = snapshot_directory / "backup_manifest.v1.json"
+            snapshot_manifest = json.loads(
+                snapshot_manifest_path.read_text(encoding="utf-8")
+            )
+            snapshot = snapshot_manifest["database_snapshot"]
+            snapshot["tables"]["runtime_brands"]["row_content_digest"] = "0" * 64
+            snapshot_without_digest = dict(snapshot)
+            snapshot_without_digest.pop("snapshot_digest")
+            snapshot["snapshot_digest"] = digest_object(snapshot_without_digest)
+            snapshot_manifest["database_snapshot_digest"] = snapshot[
+                "snapshot_digest"
+            ]
+            snapshot_manifest_path.write_text(
+                json.dumps(snapshot_manifest, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "健康状态不等价"):
+                HostedOperations.restore(
+                    target_database_url=corrupt_url,
+                    manifest_path=snapshot_manifest_path,
+                )
+            snapshot_failure_engine = create_runtime_engine(corrupt_url)
+            try:
+                self.assertEqual(
+                    inspect(snapshot_failure_engine).get_table_names(schema="public"),
+                    [],
+                )
+            finally:
+                snapshot_failure_engine.dispose()
             corrupt_directory = Path(temporary) / "corrupt"
             shutil.copytree(manifest_path.parent, corrupt_directory)
             corrupt_dump = corrupt_directory / "runtime.pgdump"
@@ -599,6 +666,43 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 self.assertEqual(inspect(corrupt_engine).get_table_names(), [])
             finally:
                 corrupt_engine.dispose()
+            unknown_engine = create_runtime_engine(corrupt_url)
+            try:
+                with unknown_engine.begin() as connection:
+                    connection.exec_driver_sql(
+                        "CREATE TABLE package8_unknown_restore_residue (value integer)"
+                    )
+                    connection.exec_driver_sql(
+                        "CREATE SEQUENCE package8_unknown_restore_sequence"
+                    )
+                    connection.exec_driver_sql(
+                        "CREATE VIEW package8_unknown_restore_view AS "
+                        "SELECT value FROM package8_unknown_restore_residue"
+                    )
+            finally:
+                unknown_engine.dispose()
+            HostedOperations._clear_restored_database(corrupt_url)
+            cleared_engine = create_runtime_engine(corrupt_url)
+            try:
+                self.assertEqual(
+                    inspect(cleared_engine).get_table_names(schema="public"), []
+                )
+                with cleared_engine.connect() as connection:
+                    self.assertEqual(
+                        int(
+                            connection.exec_driver_sql(
+                                "SELECT count(*) FROM pg_catalog.pg_class AS c "
+                                "JOIN pg_catalog.pg_namespace AS n "
+                                "ON n.oid = c.relnamespace "
+                                "WHERE n.nspname = 'public' "
+                                "AND c.relkind IN "
+                                "('r', 'p', 'v', 'm', 'S', 'f')"
+                            ).scalar_one()
+                        ),
+                        0,
+                    )
+            finally:
+                cleared_engine.dispose()
             report.update(
                 {
                     "install_idempotent": True,
@@ -615,27 +719,34 @@ class Package8PostgresAcceptance(unittest.TestCase):
                     "schema_upgrade_changed_structure": True,
                     "successful_upgrade_and_rollback": True,
                     "fresh_namespace_restore_equal": True,
+                    "full_database_snapshot_equal": True,
+                    "snapshot_mismatch_rejected": True,
                     "corrupt_backup_rejected": True,
                     "incompatible_backup_rejected": True,
                     "failed_restore_left_target_empty": True,
+                    "unknown_restore_objects_cleaned": True,
                     "selected_candidate_rechecked_after_revocation": True,
                     "source_health": before_backup,
+                    "source_object_counts": before_backup["object_counts"],
                     "backup_dump_sha256": backup["dump_sha256"],
                     "first_initialization_state": first_init["state"],
                 }
             )
-            report["acceptance_digest"] = digest_object(report)
-            report_path = os.environ.get("DIYU_PKG8_ACCEPTANCE_REPORT")
-            if report_path:
-                Path(report_path).write_text(
-                    json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True)
-                    + "\n",
-                    encoding="utf-8",
-                )
         finally:
             source_engine.dispose()
             shutil.rmtree(temporary, ignore_errors=True)
             self._drop_databases(admin_url, names)
+        report["local_task_database_count_after_cleanup"] = (
+            self._task_database_count(admin_url, names)
+        )
+        self.assertEqual(report["local_task_database_count_after_cleanup"], 0)
+        report["acceptance_run_digest"] = digest_object(report)
+        report_path = os.environ.get("DIYU_PKG8_ACCEPTANCE_REPORT")
+        if report_path:
+            Path(report_path).write_text(
+                json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
 
     @staticmethod
     def _connection_string(url: Any) -> str:
@@ -670,6 +781,19 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 connection.execute(
                     sql.SQL("DROP DATABASE IF EXISTS {}").format(sql.Identifier(name))
                 )
+
+    @classmethod
+    def _task_database_count(cls, admin_url: Any, names: tuple[str, ...]) -> int:
+        with psycopg.connect(
+            cls._connection_string(admin_url), autocommit=True
+        ) as connection:
+            row = connection.execute(
+                "SELECT count(*) FROM pg_database WHERE datname = ANY(%s)",
+                (list(names),),
+            ).fetchone()
+        if row is None:
+            raise AssertionError("task database cleanup count unavailable")
+        return int(row[0])
 
     @staticmethod
     def _assert_same_label_is_scoped(sessions: Any) -> None:

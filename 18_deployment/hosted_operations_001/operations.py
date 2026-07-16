@@ -38,7 +38,6 @@ from persistence import (  # noqa: E402
     digest_object,
 )
 from runtime_models import (  # noqa: E402
-    Base,
     RuntimeAccount,
     RuntimeAuthorization,
     RuntimeBrand,
@@ -172,6 +171,109 @@ def _health_digest(health: JsonObject) -> str:
             "brand_revision_digest": health["brand_revision_digest"],
         }
     )
+
+
+def _canonicalize_database_value(value: Any, namespace_aliases: set[str]) -> Any:
+    """Normalize only the operational namespace while preserving all row content."""
+
+    if isinstance(value, str):
+        return "__DIYU_TASK_NAMESPACE__" if value in namespace_aliases else value
+    if isinstance(value, dict):
+        return {
+            str(key): _canonicalize_database_value(item, namespace_aliases)
+            for key, item in value.items()
+        }
+    if isinstance(value, (list, tuple)):
+        return [
+            _canonicalize_database_value(item, namespace_aliases) for item in value
+        ]
+    return value
+
+
+def _database_snapshot(engine: Engine, namespace_aliases: set[str]) -> JsonObject:
+    """Digest every user table schema and row without exposing sensitive values."""
+
+    inspector = inspect(engine)
+    table_names = sorted(inspector.get_table_names(schema="public"))
+    tables: JsonObject = {}
+    with engine.connect() as connection:
+        for table_name in table_names:
+            metadata = MetaData()
+            table = Table(
+                table_name,
+                metadata,
+                schema="public",
+                autoload_with=connection,
+            )
+            columns = [
+                {
+                    "name": column.name,
+                    "type": str(column.type),
+                    "nullable": column.nullable,
+                    "primary_key": column.primary_key,
+                }
+                for column in table.columns
+            ]
+            row_digests = sorted(
+                digest_object(
+                    {
+                        column.name: _canonicalize_database_value(
+                            row[column.name], namespace_aliases
+                        )
+                        for column in table.columns
+                    }
+                )
+                for row in connection.execute(select(table)).mappings()
+            )
+            indexes = sorted(
+                (
+                    {
+                        "name": str(index.get("name")),
+                        "columns": list(index.get("column_names") or []),
+                        "unique": bool(index.get("unique")),
+                    }
+                    for index in inspector.get_indexes(table_name, schema="public")
+                ),
+                key=lambda item: (item["name"], item["columns"]),
+            )
+            tables[table_name] = {
+                "columns": columns,
+                "indexes": indexes,
+                "row_count": len(row_digests),
+                "row_content_digest": digest_object(row_digests),
+            }
+        sequence_rows = connection.exec_driver_sql(
+            "SELECT sequencename, data_type, start_value, min_value, max_value, "
+            "increment_by, cycle, cache_size, last_value "
+            "FROM pg_catalog.pg_sequences WHERE schemaname = 'public' "
+            "ORDER BY sequencename"
+        ).mappings()
+        sequences = [
+            {
+                "name": str(row["sequencename"]),
+                "data_type": str(row["data_type"]),
+                "start_value": int(row["start_value"]),
+                "min_value": int(row["min_value"]),
+                "max_value": int(row["max_value"]),
+                "increment_by": int(row["increment_by"]),
+                "cycle": bool(row["cycle"]),
+                "cache_size": int(row["cache_size"]),
+                "last_value": (
+                    int(row["last_value"])
+                    if row["last_value"] is not None
+                    else None
+                ),
+            }
+            for row in sequence_rows
+        ]
+    snapshot = {
+        "schema": "public",
+        "table_names": table_names,
+        "tables": tables,
+        "sequences": sequences,
+    }
+    snapshot["snapshot_digest"] = digest_object(snapshot)
+    return snapshot
 
 
 class HostedOperations:
@@ -556,6 +658,7 @@ class HostedOperations:
         output_directory.mkdir(mode=0o700, parents=True, exist_ok=True)
         os.chmod(output_directory, 0o700)
         dump_path = output_directory / "runtime.pgdump"
+        snapshot_before = _database_snapshot(self.engine, {self.namespace})
         subprocess.run(
             [
                 "pg_dump",
@@ -572,7 +675,12 @@ class HostedOperations:
             env=env,
         )
         dump_digest = hashlib.sha256(dump_path.read_bytes()).hexdigest()
+        snapshot_after = _database_snapshot(self.engine, {self.namespace})
+        if snapshot_before != snapshot_after:
+            raise RuntimeError("备份期间数据库发生变化，拒绝生成不一致清单")
         health = self.health()
+        if health["database_snapshot_digest"] != snapshot_after["snapshot_digest"]:
+            raise RuntimeError("备份健康状态与全库快照不一致")
         manifest = {
             "manifest_version": "v1.0",
             "namespace": self.namespace,
@@ -586,6 +694,8 @@ class HostedOperations:
             "brand_revision_digest": health["brand_revision_digest"],
             "schema_features": health["schema_features"],
             "health_digest": _health_digest(health),
+            "database_snapshot": snapshot_after,
+            "database_snapshot_digest": snapshot_after["snapshot_digest"],
             "contains_plaintext_secrets": False,
             "contains_credential_verifiers": True,
             "contains_sensitive_runtime_state": True,
@@ -607,6 +717,7 @@ class HostedOperations:
             "dump_sha256": dump_digest,
             "object_counts": health["object_counts"],
             "health_digest": manifest["health_digest"],
+            "database_snapshot_digest": manifest["database_snapshot_digest"],
         }
 
     @staticmethod
@@ -634,10 +745,22 @@ class HostedOperations:
             raise ValueError("备份归属或版本无效")
         if target_database == manifest.get("source_database"):
             raise ValueError("恢复必须使用新的隔离数据库")
-        if not isinstance(manifest.get("object_counts"), dict) or not isinstance(
-            manifest.get("health_digest"), str
+        snapshot_raw = manifest.get("database_snapshot")
+        if (
+            not isinstance(manifest.get("object_counts"), dict)
+            or not isinstance(manifest.get("health_digest"), str)
+            or not isinstance(snapshot_raw, dict)
+            or not isinstance(manifest.get("database_snapshot_digest"), str)
         ):
             raise ValueError("备份健康清单无效")
+        expected_snapshot = dict(snapshot_raw)
+        expected_snapshot_digest = expected_snapshot.pop("snapshot_digest", None)
+        if (
+            not isinstance(expected_snapshot_digest, str)
+            or digest_object(expected_snapshot) != expected_snapshot_digest
+            or manifest["database_snapshot_digest"] != expected_snapshot_digest
+        ):
+            raise ValueError("备份全库快照摘要无效")
         dump_path = manifest_path.parent / str(manifest.get("dump_file"))
         if not dump_path.is_file():
             raise ValueError("备份文件缺失")
@@ -698,11 +821,16 @@ class HostedOperations:
                 target_database,
             )
             health = restored.health()
+            restored_snapshot = _database_snapshot(
+                target_engine,
+                {source_namespace, target_database},
+            )
             if (
                 health["object_counts"] != manifest["object_counts"]
                 or health["brand_revision_digest"] != manifest["brand_revision_digest"]
                 or health["schema_features"] != manifest["schema_features"]
                 or _health_digest(health) != manifest["health_digest"]
+                or restored_snapshot != snapshot_raw
             ):
                 raise ValueError("恢复后的对象健康状态不等价")
         except Exception:
@@ -718,6 +846,7 @@ class HostedOperations:
             "actual_object_counts": health["object_counts"],
             "actual_brand_revision_digest": health["brand_revision_digest"],
             "actual_health_digest": _health_digest(health),
+            "actual_database_snapshot_digest": restored_snapshot["snapshot_digest"],
             "pg_restore_version": _tool_version("pg_restore"),
         }
 
@@ -725,20 +854,27 @@ class HostedOperations:
     def _clear_restored_database(target_database_url: str) -> None:
         engine = create_runtime_engine(target_database_url)
         try:
-            HostedBase.metadata.drop_all(engine)
-            Base.metadata.drop_all(engine)
-            remaining = [
-                name
-                for name in inspect(engine).get_table_names()
-                if not name.startswith("pg_")
-            ]
-            if remaining:
+            with engine.begin() as connection:
+                connection.exec_driver_sql("DROP SCHEMA IF EXISTS public CASCADE")
+                connection.exec_driver_sql("CREATE SCHEMA public")
+            remaining = inspect(engine).get_table_names(schema="public")
+            with engine.connect() as connection:
+                remaining_objects = int(
+                    connection.exec_driver_sql(
+                        "SELECT count(*) FROM pg_catalog.pg_class AS c "
+                        "JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace "
+                        "WHERE n.nspname = 'public' "
+                        "AND c.relkind IN ('r', 'p', 'v', 'm', 'S', 'f')"
+                    ).scalar_one()
+                )
+            if remaining or remaining_objects:
                 raise RuntimeError("失败恢复的目标无法清空")
         finally:
             engine.dispose()
 
     def health(self) -> JsonObject:
         self._require_installed()
+        database_snapshot = _database_snapshot(self.engine, {self.namespace})
         models = {
             "tenants": RuntimeTenant,
             "brands": RuntimeBrand,
@@ -786,6 +922,8 @@ class HostedOperations:
             "schema_features": {
                 "revision_lookup_index": self._revision_index_exists(self.engine),
             },
+            "database_snapshot_digest": database_snapshot["snapshot_digest"],
+            "database_table_count": len(database_snapshot["table_names"]),
             "plaintext_secrets_included": False,
             "credential_verifiers_included": True,
             "private_content_included": False,
