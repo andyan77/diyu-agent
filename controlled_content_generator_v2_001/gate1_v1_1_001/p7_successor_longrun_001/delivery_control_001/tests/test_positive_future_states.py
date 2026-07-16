@@ -93,6 +93,28 @@ def _manifest(materialized: bool, sealed: bool) -> dict:
     }
 
 
+def _v11(status: str, qualified_evidence: bool = False) -> dict:
+    return {
+        "schema_version": "eval-spine-stage-decision-v1",
+        "decision_id": "EAS-V11-STATUS-V1",
+        "stage_id": "B_TRACK_V11_QUALIFICATION",
+        "status": status,
+        "reason_codes": [] if status == "QUALIFIED" else ["NO_OPEN_120_QUALIFICATION_RUN"],
+        "evidence_manifest_digests": [HEX] if qualified_evidence else [],
+        "next_allowed_stage": None,
+        "claims_allowed": [],
+        "claims_forbidden": ([] if status == "QUALIFIED"
+                             else ["V11_FIRST_GATE_PASSED", "READY_FOR_300"]),
+        "decided_by": "INDEPENDENT_AUDITOR" if qualified_evidence else None,
+        "decision_digest": HEX if qualified_evidence else None,
+    }
+
+
+B_TRACK_ALL = ["S2_FEASIBILITY_AND_COST_TELEMETRY", "S3_CAUSAL_PILOT_60",
+               "S4_OPEN_REGRESSION_120", "S5_HIDDEN_QUALIFICATION_40",
+               "S6_BASELINE_240_PLUS_60", "S7_INDEPENDENT_FINAL_AUDIT"]
+
+
 def _stage_actual(executed: list[str], real_run: bool) -> dict:
     return {
         "schema_version": "eval-spine-stage-actual-state-v1",
@@ -119,6 +141,8 @@ class PositiveFutureStates(unittest.TestCase):
             root = _base_future_root(Path(tmp))
             _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json",
                    _m0("NOT_QUALIFIED"))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("NOT_QUALIFIED"))
             _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
                    _manifest(materialized=True, sealed=True))
             _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
@@ -133,6 +157,8 @@ class PositiveFutureStates(unittest.TestCase):
             root = _base_future_root(Path(tmp))
             _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json",
                    _m0("QUALIFIED", qualified_evidence=True))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("NOT_QUALIFIED"))
             _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
                    _manifest(True, True))
             _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
@@ -148,6 +174,8 @@ class PositiveFutureStates(unittest.TestCase):
             root = _base_future_root(Path(tmp))
             m0 = _m0("DIAGNOSTIC_FINAL")
             _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json", m0)
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("NOT_QUALIFIED"))
             _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
                    _manifest(True, True))
             _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
@@ -165,6 +193,8 @@ class PositiveFutureStates(unittest.TestCase):
             root = _base_future_root(Path(tmp))
             _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json",
                    _m0("NOT_QUALIFIED"))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("NOT_QUALIFIED"))
             _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
                    _manifest(False, True))
             _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
@@ -183,6 +213,8 @@ class PositiveFutureStates(unittest.TestCase):
             root = _base_future_root(Path(tmp))
             _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json",
                    _m0("NOT_QUALIFIED"))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("NOT_QUALIFIED"))
             _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
                    _manifest(False, True))
             _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
@@ -217,6 +249,41 @@ class PositiveFutureStates(unittest.TestCase):
             ok, details = V25.check_cost_accounting_contract(
                 root, {"milestone": "M3"})
             self.assertTrue(ok, details)
+
+    def test_m6_v11_qualified_with_full_b_track_passes(self) -> None:
+        """V1.1 合法资格化（全 B 轨执行 + 独立终验证据）在 M6 期望下必须 PASS。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _base_future_root(Path(tmp))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json",
+                   _m0("NOT_QUALIFIED"))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("QUALIFIED", qualified_evidence=True))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
+                   _manifest(False, True))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
+                   _manifest(False, False))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/stage_actual_state.v1.json",
+                   _stage_actual(["S0_DETERMINISTIC_HYGIENE"] + B_TRACK_ALL, True))
+            ok, details = self._check(root, "M6")
+            self.assertTrue(ok, details)
+
+    def test_v11_qualified_without_b_track_execution_fails(self) -> None:
+        """护栏：v11 QUALIFIED 但 B 轨从未执行 = 实际态自相矛盾，必须 FAIL。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _base_future_root(Path(tmp))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/M0_STATUS.v1.json",
+                   _m0("NOT_QUALIFIED"))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/V11_STATUS.v1.json",
+                   _v11("QUALIFIED", qualified_evidence=True))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/qualification_manifest.v1.json",
+                   _manifest(False, True))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/dev_manifest.v1.json",
+                   _manifest(False, False))
+            _write(root, f"{EVAL_SPINE_REL}/calibration/stage_actual_state.v1.json",
+                   _stage_actual(["S0_DETERMINISTIC_HYGIENE"], True))
+            ok, details = self._check(root, "M6")
+            self.assertFalse(ok)
+            self.assertTrue(any("never executed" in d for d in details), details)
 
     def test_s3_no_lift_with_safety_green_not_killed(self) -> None:
         sys.path.insert(0, str(ES))

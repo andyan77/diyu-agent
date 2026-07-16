@@ -371,12 +371,28 @@ class NegativeAttackMatrix(unittest.TestCase):
                             es_dst / "calibration" / name)
             shutil.copy(ES / "calibration/stage_actual_state.v1.json",
                         es_dst / "calibration/stage_actual_state.v1.json")
+            shutil.copy(ES / "calibration/V11_STATUS.v1.json",
+                        es_dst / "calibration/V11_STATUS.v1.json")
             ok, details = V25.check_m0_state_integrity(
                 root, {"milestone": "M1"})
             self.assertFalse(ok)
             self.assertTrue(any("QUALIFIED without evidence" in d
                                 for d in details))
             self.assertTrue(any("outside expectation" in d for d in details))
+            # 同一攻击的 V1.1 面：把 V11 实际态改写成期望值 QUALIFIED（无 B 轨执行）
+            forged_v11 = json.loads(
+                (ES / "calibration/V11_STATUS.v1.json").read_text(
+                    encoding="utf-8"))
+            forged_v11["status"] = "QUALIFIED"
+            (es_dst / "calibration/V11_STATUS.v1.json").write_text(
+                json.dumps(forged_v11), encoding="utf-8")
+            ok2, details2 = V25.check_m0_state_integrity(
+                root, {"milestone": "M1"})
+            self.assertFalse(ok2)
+            self.assertTrue(any("v11" in d and ("outside expectation" in d
+                                                or "never executed" in d
+                                                or "without evidence" in d)
+                                for d in details2), details2)
 
     def test_attack_20_m1_creates_top_level_a_core_staging(self) -> None:
         staging = (ROOT / "controlled_content_generator_v2_001"

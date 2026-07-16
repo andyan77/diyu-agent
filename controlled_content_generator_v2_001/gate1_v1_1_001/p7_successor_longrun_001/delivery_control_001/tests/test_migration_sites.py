@@ -218,6 +218,13 @@ class FamilyDContractStateSites(unittest.TestCase):
         sa = _j(ES / "calibration/stage_actual_state.v1.json")
         self.assertEqual(sa["executed_stages"], [])
         self.assertFalse(sa["real_run_executed"])
+        v11 = _j(ES / "calibration/V11_STATUS.v1.json")
+        self.assertEqual(v11["status"], "NOT_QUALIFIED")   # V1.1 诚实维持
+        self.assertIn("READY_FOR_300", v11["claims_forbidden"])
+        # 期望映射的 v11_status 已被 checker 消费（Codex R2 BLOCKING 回归护栏）
+        checker_source = (P7 / "checker/v25_state_checks.py").read_text(
+            encoding="utf-8")
+        self.assertIn('exp.get("v11_status"', checker_source)
 
     def test_sealed_v1_history_untouched_since_preservation(self) -> None:
         for rel in ("eval_audit_spine_001/contract/stage_and_kill.v1.json",

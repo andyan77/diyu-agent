@@ -1,0 +1,32 @@
+{
+  "schema_version": "eval-spine-stage-decision-v1",
+  "decision_id": "EAS-V11-STATUS-V1",
+  "stage_id": "B_TRACK_V11_QUALIFICATION",
+  "status": "NOT_QUALIFIED",
+  "reason_codes": [
+    "NO_S2_FEASIBILITY_RUN",
+    "NO_S3_CAUSAL_PILOT",
+    "NO_OPEN_120_QUALIFICATION_RUN",
+    "NO_HIDDEN_40_SEALED_RUN",
+    "NO_240_PLUS_60_BASELINE",
+    "NO_INDEPENDENT_FINAL_AUDIT"
+  ],
+  "evidence_manifest_digests": [],
+  "next_allowed_stage": null,
+  "claims_allowed": [
+    "V4_RECOVERY_CANDIDATE_MATERIALIZED_AND_SELFTESTED"
+  ],
+  "claims_forbidden": [
+    "V11_FIRST_GATE_PASSED",
+    "READY_FOR_DELIVERY",
+    "READY_FOR_300",
+    "INDUSTRY_GOLD_SET"
+  ],
+  "decided_by": null,
+  "decision_digest": null,
+  "notes": [
+    "V1.1 实际资格状态唯一磁盘真源（与 M0_STATUS.v1.json 平行；Codex R2 BLOCKING 修复，M1-C6）。",
+    "B 轨 S2–S7 全部未执行（见 stage_actual_state.v1.json）；v4_recovery 候选存在仅证契约被强制，不构成任何 V1.1 资格。",
+    "本文件只记录真实结果；期望映射见 delivery_control_001/state/STATE_EXPECTATION.v1.json 的 v11_status。"
+  ]
+}

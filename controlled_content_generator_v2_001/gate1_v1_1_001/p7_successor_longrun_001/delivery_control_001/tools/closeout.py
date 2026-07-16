@@ -76,11 +76,18 @@ def _verify_manifest(root: Path, path: Path, self_rel: str) -> list[str]:
         # 原路径继续演进不构成漂移（快照必须位于本里程碑 snapshots/ 下）。
         snapshot_rel = entry.get("frozen_snapshot")
         if snapshot_rel:
-            if "/snapshots/" not in str(snapshot_rel):
-                errors.append(f"{path.name}: frozen_snapshot outside "
+            # 路径遍历加固（Fable R2 ADVISORY）：解析后必须落在本里程碑
+            # snapshots/ 目录内，子串判断不作数
+            allowed_dir = (path.parent / "snapshots").resolve()
+            target = (root / str(snapshot_rel)).resolve()
+            try:
+                contained = target.is_relative_to(allowed_dir)
+            except AttributeError:  # <py3.9 回退
+                contained = str(target).startswith(str(allowed_dir) + "/")
+            if not contained:
+                errors.append(f"{path.name}: frozen_snapshot escapes "
                               f"snapshots/ dir: {snapshot_rel}")
                 continue
-            target = root / str(snapshot_rel)
             if not (root / rel).exists():
                 errors.append(f"{path.name}: live file missing for "
                               f"snapshotted entry {rel}")

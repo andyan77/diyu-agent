@@ -85,6 +85,7 @@ def check_m0_state_integrity(root: Path, ctx: dict) -> tuple[bool, list[str]]:
     es = root / EVAL_SPINE
     paths = {
         "m0": es / "calibration/M0_STATUS.v1.json",
+        "v11": es / "calibration/V11_STATUS.v1.json",
         "qm": es / "calibration/qualification_manifest.v1.json",
         "dm": es / "calibration/dev_manifest.v1.json",
         "stage_actual": es / "calibration/stage_actual_state.v1.json",
@@ -92,7 +93,8 @@ def check_m0_state_integrity(root: Path, ctx: dict) -> tuple[bool, list[str]]:
     missing = [k for k, p in paths.items() if not p.is_file()]
     if missing:
         return False, [f"missing actual-state files: {missing}"]
-    m0, qm, dm, sa = (_j(paths[k]) for k in ("m0", "qm", "dm", "stage_actual"))
+    m0, v11, qm, dm, sa = (_j(paths[k])
+                           for k in ("m0", "v11", "qm", "dm", "stage_actual"))
     errors: list[str] = []
 
     status = m0.get("status")
@@ -109,6 +111,27 @@ def check_m0_state_integrity(root: Path, ctx: dict) -> tuple[bool, list[str]]:
             errors.append("NOT_QUALIFIED but forbidden-claims discipline dropped")
     if "BUDGET_UNAPPROVED" in m0.get("reason_codes", []):
         errors.append("m0 reason_codes still carries removed budget-approval concept")
+
+    # V1.1 实际资格态（Codex R2 BLOCKING 修复）：磁盘真源 + 一致性 + 期望比较
+    v11_status = v11.get("status")
+    if v11_status not in {"NOT_QUALIFIED", "QUALIFIED"}:
+        errors.append(f"v11 status illegal: {v11_status}")
+    b_track_all = ["S2_FEASIBILITY_AND_COST_TELEMETRY", "S3_CAUSAL_PILOT_60",
+                   "S4_OPEN_REGRESSION_120", "S5_HIDDEN_QUALIFICATION_40",
+                   "S6_BASELINE_240_PLUS_60", "S7_INDEPENDENT_FINAL_AUDIT"]
+    if v11_status == "QUALIFIED":
+        if not v11.get("evidence_manifest_digests"):
+            errors.append("v11 QUALIFIED without evidence_manifest_digests")
+        if not v11.get("decided_by") or not v11.get("decision_digest"):
+            errors.append("v11 QUALIFIED without decided_by/decision_digest")
+        executed_now = set(sa.get("executed_stages", []))
+        missing_stages = [s for s in b_track_all if s not in executed_now]
+        if missing_stages:
+            errors.append(f"v11 QUALIFIED but B-track stages never executed: "
+                          f"{missing_stages}")
+    if v11_status == "NOT_QUALIFIED":
+        if "READY_FOR_300" not in set(v11.get("claims_forbidden", [])):
+            errors.append("v11 NOT_QUALIFIED but forbidden-claims discipline dropped")
 
     for name, manifest, needs_dataset in (("qm", qm, True), ("dm", dm, False)):
         count = manifest.get("case_count")
@@ -157,6 +180,9 @@ def check_m0_state_integrity(root: Path, ctx: dict) -> tuple[bool, list[str]]:
         if status not in exp.get("m0_status", []):
             errors.append(f"m0 status {status} outside expectation for "
                           f"{ctx.get('milestone')}: {exp.get('m0_status')}")
+        if v11_status not in exp.get("v11_status", []):
+            errors.append(f"v11 status {v11_status} outside expectation for "
+                          f"{ctx.get('milestone')}: {exp.get('v11_status')}")
         if qm.get("content_status") not in exp.get(
                 "qualification_manifest_content_status", []):
             errors.append("qualification manifest status outside expectation")
@@ -172,6 +198,7 @@ def check_m0_state_integrity(root: Path, ctx: dict) -> tuple[bool, list[str]]:
 
     return not errors, ([f"milestone={ctx.get('milestone')}",
                          f"m0_actual_status={status}",
+                         f"v11_actual_status={v11_status}",
                          f"qualification_cases={qm.get('case_count')}",
                          f"executed_stages={len(executed)}"]
                         + errors)
