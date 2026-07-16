@@ -18,6 +18,12 @@ input:focus, select:focus, textarea:focus { outline:3px solid #cfe8dc; border-co
 .checks { display:flex; flex-wrap:wrap; gap:12px 18px; padding-top:6px; }
 .checks label { display:flex; align-items:center; gap:7px; font-weight:400; }
 .checks input { width:18px; min-height:18px; }
+.field-band { padding-top:16px; border-top:1px solid var(--line); }
+details { border-top:1px solid var(--line); padding-top:14px; }
+summary { cursor:pointer; color:var(--green); font-weight:700; }
+.detail-grid { margin-top:16px; }
+.suggestion-row { display:flex; flex-wrap:wrap; gap:8px; min-height:42px; }
+.suggestion { min-height:36px; background:#fff; color:var(--green); border-color:#9eb9aa; font-weight:600; }
 button { min-height:42px; border:1px solid var(--green); border-radius:4px; padding:0 18px; font:inherit; font-weight:700; cursor:pointer; }
 button.primary { background:var(--green); color:white; }
 button.secondary { background:white; color:var(--green); }

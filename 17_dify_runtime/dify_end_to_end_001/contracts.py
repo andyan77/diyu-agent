@@ -56,6 +56,12 @@ PortalOperation = Literal[
 ]
 
 ContentFormat = Literal["短视频", "图文", "陈列搭配"]
+NarrativeArchitecture = Literal[
+    "EVIDENCE_FIRST",
+    "QUESTION_ANSWER",
+    "OBJECT_OR_TIMELINE",
+]
+ClaimClass = Literal["SOURCE_CLAIM", "CREATIVE_DIRECTION", "DISCLOSURE"]
 DurationLabel = Literal["15秒左右", "30秒左右", "60秒左右", "1至3分钟", "由系统建议"]
 ExpressionFeeling = Literal[
     "真实记录",
@@ -250,7 +256,7 @@ class BridgeFinalizeRequest(StrictModel):
 class VideoShot(StrictModel):
     time_range: str = Field(min_length=1, max_length=80)
     visual: str = Field(min_length=1, max_length=800)
-    action: str = Field(min_length=1, max_length=500)
+    action: str = Field(default="", max_length=500)
     camera: str = Field(min_length=1, max_length=300)
     audio: str = Field(min_length=1, max_length=800)
     subtitle: str = Field(default="", max_length=500)
@@ -328,12 +334,51 @@ class CandidateSurfaces(StrictModel):
         return [item.strip() for item in value]
 
 
+class ClaimBinding(StrictModel):
+    surface_path: str = Field(
+        min_length=1,
+        max_length=240,
+        pattern=r"^[a-zA-Z_][a-zA-Z0-9_]*(?:\[[0-9]+\]|\.[a-zA-Z_][a-zA-Z0-9_]*)*$",
+    )
+    exact_text: str = Field(min_length=1, max_length=12_000)
+    claim_class: ClaimClass
+    source_refs: list[str] = Field(default_factory=list, max_length=30)
+
+    @field_validator("exact_text")
+    @classmethod
+    def normalize_exact_text(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("claim binding text must not be blank")
+        return normalized
+
+    @field_validator("source_refs")
+    @classmethod
+    def validate_source_refs(cls, value: list[str]) -> list[str]:
+        normalized = [item.strip() for item in value]
+        if any(not item or len(item) > 240 for item in normalized):
+            raise ValueError("claim source refs must be short non-empty strings")
+        if len(normalized) != len(set(normalized)):
+            raise ValueError("claim source refs must not repeat")
+        return normalized
+
+    @model_validator(mode="after")
+    def validate_claim_sources(self) -> ClaimBinding:
+        if self.claim_class == "SOURCE_CLAIM" and not self.source_refs:
+            raise ValueError("source claims need at least one source ref")
+        if self.claim_class != "SOURCE_CLAIM" and self.source_refs:
+            raise ValueError("creative directions and disclosures cannot cite source refs")
+        return self
+
+
 class ModelCandidate(StrictModel):
     difference_label: str = Field(min_length=1, max_length=120)
+    narrative_architecture: NarrativeArchitecture
     difference_dimensions: list[
         Literal["核心创意", "切入问题或场景", "情绪钩子", "叙事视角", "事实或证明路径", "画面组织方法"]
     ] = Field(min_length=2, max_length=6)
     surfaces: CandidateSurfaces
+    claim_bindings: list[ClaimBinding] = Field(min_length=1, max_length=120)
     used_fact_refs: list[str] = Field(default_factory=list, max_length=30)
     used_material_refs: list[str] = Field(default_factory=list, max_length=30)
 

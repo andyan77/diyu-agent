@@ -51,14 +51,14 @@
       "sources": 6,
       "precise_facts": 16,
       "settings": 5,
-      "requirements": 15,
-      "plans": 9,
-      "candidates": 18,
-      "validations": 18,
+      "requirements": 30,
+      "plans": 24,
+      "candidates": 24,
+      "validations": 24,
       "feedback": 1,
-      "model_runs": 23,
-      "dify_invocations": 46,
-      "dify_conversations": 4
+      "model_runs": 39,
+      "dify_invocations": 79,
+      "dify_conversations": 5
     },
     "empty_initialization_pass": true,
     "repeat_initialization_idempotent": true,
@@ -129,9 +129,9 @@
   },
   "continuous_dialogue": {
     "binding_scope": "principal plus content account",
-    "binding_count": 4,
-    "distinct_scope_count": 4,
-    "distinct_conversation_id_count": 4,
+    "binding_count": 5,
+    "distinct_scope_count": 5,
+    "distinct_conversation_id_count": 5,
     "accepted_proof_account": "笛语无锡滨湖店",
     "accepted_proof_message_count": 2,
     "first_user_marker": "木雨",
@@ -167,6 +167,8 @@
     "public_release_performed": false,
     "domain_or_proxy_changed": false,
     "package8_or_later_action_performed": false,
-    "readiness_transition_count": 0
+    "readiness_transition_count": 0,
+    "model_calls_frozen": true,
+    "additional_remote_deployment_after_founder_stop": false
   }
 }

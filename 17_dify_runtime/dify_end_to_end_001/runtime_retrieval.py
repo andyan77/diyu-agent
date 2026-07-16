@@ -206,7 +206,17 @@ class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):
         if not isinstance(raw_content, str):
             return "MISSING_CONTENT"
         normalized_content = raw_content.replace("\r\n", "\n").replace("\r", "\n").strip()
-        if hashlib.sha256(normalized_content.encode("utf-8")).hexdigest() != row.content_digest:
+        canonical_text = payload.get("text")
+        if not isinstance(canonical_text, str):
+            return "SOURCE_CONTENT_MISSING"
+        normalized_canonical = canonical_text.replace("\r\n", "\n").replace("\r", "\n").strip()
+        if hashlib.sha256(normalized_canonical.encode("utf-8")).hexdigest() != row.content_digest:
+            return "SOURCE_CONTENT_DRIFT"
+        if (
+            row.index_content_digest is None
+            or hashlib.sha256(normalized_content.encode("utf-8")).hexdigest()
+            != row.index_content_digest
+        ):
             return "INDEX_CONTENT_DRIFT"
         if (
             row.tenant_id != scope["tenant_id"]

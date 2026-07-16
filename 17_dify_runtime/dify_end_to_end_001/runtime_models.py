@@ -125,6 +125,7 @@ class RuntimeNarrativeFragment(Base):
     revocation_ref: Mapped[str | None] = mapped_column(String(160), nullable=True)
     content_digest: Mapped[str] = mapped_column(String(64), nullable=False)
     dify_document_id: Mapped[str | None] = mapped_column(String(64), nullable=True, unique=True)
+    index_content_digest: Mapped[str | None] = mapped_column(String(64), nullable=True)
     payload: Mapped[JsonObject] = mapped_column(JSON, nullable=False)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 

@@ -115,6 +115,13 @@ class Package7Tests(unittest.TestCase):
         mapping = {
             row["fragment_id"]: {
                 "document_id": f"DOC-{row['fragment_id']}",
+                "source_content_sha256": hashlib.sha256(
+                    str(row["text"])
+                    .replace("\r\n", "\n")
+                    .replace("\r", "\n")
+                    .strip()
+                    .encode("utf-8")
+                ).hexdigest(),
                 "index_content_sha256": hashlib.sha256(
                     str(row["text"])
                     .replace("\r\n", "\n")
@@ -306,6 +313,10 @@ class Package7Tests(unittest.TestCase):
         self.assertIn("历史事件没有现成影像", prepared["author_prompt"]["system"])
         self.assertIn("不得把未提供的照片", prepared["author_prompt"]["system"])
         self.assertIn("陈列资料没有明确商品颜色", prepared["author_prompt"]["system"])
+        self.assertIn("所有文字都不得显示来源编号", prepared["author_prompt"]["system"])
+        self.assertIn("数字、单位和范围写法必须原样保留", prepared["author_prompt"]["system"])
+        self.assertIn("只要求逐条覆盖title、body", prepared["author_prompt"]["system"])
+        self.assertIn("制作字段重复写claim_bindings", prepared["author_prompt"]["system"])
 
     def test_named_storyline_and_column_override_defaults(self) -> None:
         prepared = self.runtime.prepare(
@@ -357,6 +368,113 @@ class Package7Tests(unittest.TestCase):
         self.assertIn("prompt", run.payload if run else {})
         with self.assertRaises(ValueError):
             self.runtime.finalize_model_output(prepared["run_id"], encoded)
+
+    def test_candidate_claim_bindings_must_cover_every_surface_exactly(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        candidates = [
+            self._candidate(
+                "证据路径",
+                "只使用当前资料支持的观察。",
+                refs,
+                ["核心创意", "事实或证明路径"],
+            ),
+            self._candidate(
+                "问题路径",
+                "只回答当前资料支持的问题。",
+                refs,
+                ["切入问题或场景", "画面组织方法"],
+            ),
+        ]
+        candidates[0]["claim_bindings"] = [
+            row for row in candidates[0]["claim_bindings"] if row["surface_path"] != "CTA"
+        ]
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertTrue(result.get("action_card"))
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
+
+    def test_non_root_surfaces_receive_explicit_auditable_bindings(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        candidates = [
+            self._candidate(
+                "证据路径",
+                "只使用当前资料支持的观察。",
+                refs,
+                ["核心创意", "事实或证明路径"],
+            ),
+            self._candidate(
+                "问题路径",
+                "只回答当前资料支持的问题。",
+                refs,
+                ["切入问题或场景", "画面组织方法"],
+            ),
+        ]
+        for candidate in candidates:
+            candidate["claim_bindings"] = [
+                row
+                for row in candidate["claim_bindings"]
+                if not row["surface_path"].startswith("execution_payload.")
+            ]
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertIn("推荐候选", result["user_visible_text"])
+        from runtime_models import RuntimeCandidate
+
+        with self.sessions() as session:
+            rows = session.query(RuntimeCandidate).filter_by(run_id=prepared["run_id"]).all()
+            self.assertEqual(len(rows), 2)
+            for row in rows:
+                payload = row.candidate_payload
+                self.assertGreater(
+                    len(payload["claim_bindings"]),
+                    len(payload["author_declared_claim_bindings"]),
+                )
+                self.assertTrue(
+                    any(
+                        binding["binding_origin"]
+                        in {"EXACT_TEXT_INHERITED", "SERVER_PENDING_SOURCE_REVIEW"}
+                        for binding in payload["claim_bindings"]
+                    )
+                )
+
+    def test_candidate_architectures_must_not_be_near_duplicate(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        first = self._candidate(
+            "证据路径甲",
+            "只使用当前资料支持的观察。",
+            refs,
+            ["核心创意", "事实或证明路径"],
+            architecture="EVIDENCE_FIRST",
+        )
+        second = copy.deepcopy(first)
+        second["difference_label"] = "问题路径乙"
+        second["narrative_architecture"] = "QUESTION_ANSWER"
+        second["surfaces"]["title"] = "问题路径乙"
+        next(
+            row for row in second["claim_bindings"] if row["surface_path"] == "title"
+        )["exact_text"] = "问题路径乙"
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": [first, second]},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertTrue(result.get("action_card"))
 
     def test_fixed_candidate_envelope_normalization_does_not_change_content(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
@@ -442,6 +560,7 @@ class Package7Tests(unittest.TestCase):
             ),
         ]
         candidates[0]["difference_dimensions"][0] = "切入问题"
+        candidates[1]["difference_dimensions"][0] = "核心创意：从证据进入"
         candidates[0]["surfaces"]["CTA"] = ""
         for candidate in candidates:
             candidate["used_fact_refs"] = list(refs)
@@ -456,6 +575,7 @@ class Package7Tests(unittest.TestCase):
         run = self.repository.model_run(prepared["run_id"])
         normalization = run.payload["model_wrapper_normalization"] if run else ""
         self.assertIn("NORMALIZED_EXACT_DIFFERENCE_DIMENSION_ALIAS", normalization)
+        self.assertIn("REMOVED_DIFFERENCE_DIMENSION_DETAIL_SUFFIX", normalization)
         self.assertIn("REMOVED_DUPLICATE_MATERIAL_REF_FROM_FACT_REFS", normalization)
         self.assertIn("COPIED_EXISTING_ENDING_AND_ACTION_TO_EMPTY_CTA", normalization)
         from runtime_models import RuntimeCandidate
@@ -463,6 +583,54 @@ class Package7Tests(unittest.TestCase):
         with self.sessions() as session:
             rows = session.query(RuntimeCandidate).filter_by(run_id=prepared["run_id"]).all()
             self.assertEqual([row.used_fact_refs for row in rows], [[], []])
+
+    def test_execution_payload_claim_path_prefix_is_narrowly_normalized(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        candidates = [
+            self._candidate(
+                "证据路径",
+                "从当前证据进入。",
+                refs,
+                ["核心创意", "事实或证明路径"],
+            ),
+            self._candidate(
+                "问题路径",
+                "从当前问题进入。",
+                refs,
+                ["切入问题或场景", "画面组织方法"],
+            ),
+        ]
+        for candidate in candidates:
+            binding = next(
+                row
+                for row in candidate["claim_bindings"]
+                if row["surface_path"] == "execution_payload.story_or_full_script"
+            )
+            binding["surface_path"] = "story_or_full_script"
+            spoken = next(
+                row
+                for row in candidate["claim_bindings"]
+                if row["surface_path"] == "spoken_lines[0]"
+            )
+            spoken["surface_path"] = "spoken_lines"
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertIn("推荐候选", result["user_visible_text"])
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertIn(
+            "PREFIXED_EXECUTION_PAYLOAD_CLAIM_PATH",
+            run.payload["model_wrapper_normalization"] if run else "",
+        )
+        self.assertIn(
+            "INDEXED_SINGLETON_SPOKEN_LINE_CLAIM_PATH",
+            run.payload["model_wrapper_normalization"] if run else "",
+        )
 
     def test_parse_rejected_output_revalidation_keeps_exact_provider_evidence(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
@@ -928,6 +1096,96 @@ class Package7Tests(unittest.TestCase):
         )
         self.assertIsNone(_selected_product('{"selected_content_product_id":"CP6"}'))
 
+    def test_portal_uses_progressive_fields_and_one_click_suggestions(self) -> None:
+        html = (PACKAGE_ROOT / "portal.html").read_text(encoding="utf-8")
+        script = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        self.assertIn('id="production-fields"', html)
+        self.assertIn('id="candidate-fields"', html)
+        self.assertIn('id="advanced-fields"', html)
+        self.assertIn("更多偏好", html)
+        self.assertIn("updateTaskMode", script)
+        self.assertIn("从一个真实细节开始", script)
+        self.assertIn("讲清一个选择问题", script)
+        self.assertNotIn("access_token", html + script)
+
+    def test_previous_candidate_context_continues_creative_direction_only(self) -> None:
+        from runtime_models import RuntimeCandidate
+
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        envelope = {
+            "kind": "CANDIDATE_SET",
+            "reply": None,
+            "candidates": [
+                self._candidate(
+                    "证据路径",
+                    "只使用当前资料支持的观察。",
+                    refs,
+                    ["核心创意", "事实或证明路径"],
+                ),
+                self._candidate(
+                    "问题路径",
+                    "只回答当前资料支持的问题。",
+                    refs,
+                    ["切入问题或场景", "画面组织方法"],
+                ),
+            ],
+        }
+        encoded = base64.b64encode(json.dumps(envelope, ensure_ascii=False).encode()).decode()
+        self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        with self.sessions() as session:
+            first = session.query(RuntimeCandidate).order_by(RuntimeCandidate.ordinal).first()
+            self.assertIsNotNone(first)
+            previous_ref = first.candidate_id if first is not None else ""
+        continued = self.runtime.prepare(
+            self.request(
+                message="继续这个系列，但不要从上一条补任何事实",
+                previous_content_ref=previous_ref,
+            ),
+            self.principal_id,
+        )
+        context = continued["author_prompt"]["task_brief"]["previous_content_context"]
+        self.assertEqual(context["title"], "证据路径")
+        self.assertTrue(context["continuity_only_not_a_fact_source"])
+        self.assertNotIn(previous_ref, json.dumps(context, ensure_ascii=False))
+
+    def test_review_export_and_source_lookup_are_user_friendly(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        envelope = {
+            "kind": "CANDIDATE_SET",
+            "reply": None,
+            "candidates": [
+                self._candidate(
+                    "证据路径",
+                    "只使用当前资料支持的观察。",
+                    refs,
+                    ["核心创意", "事实或证明路径"],
+                ),
+                self._candidate(
+                    "问题路径",
+                    "只回答当前资料支持的问题。",
+                    refs,
+                    ["切入问题或场景", "画面组织方法"],
+                ),
+            ],
+        }
+        encoded = base64.b64encode(json.dumps(envelope, ensure_ascii=False).encode()).decode()
+        self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.runtime.prepare(
+            self.request(operation="选择候选", candidate_number=1),
+            self.principal_id,
+        )
+        review = self.runtime.prepare(self.request(operation="审核"), self.principal_id)
+        exported = self.runtime.prepare(self.request(operation="导出"), self.principal_id)
+        sources = self.runtime.prepare(self.request(operation="查看来源"), self.principal_id)
+        self.assertIn("事实与来源语义：待人工确认", review["user_visible_text"])
+        self.assertIn("制作安排", exported["user_visible_text"])
+        self.assertIn("分镜", exported["user_visible_text"])
+        self.assertNotIn('"production_format"', exported["user_visible_text"])
+        self.assertIn("当前范围可用", sources["user_visible_text"])
+        self.assertNotIn("PKG5-", sources["user_visible_text"])
+
     def test_public_network_cannot_open_portal_or_login(self) -> None:
         app = create_app(self.runtime, self.repository, FakeDifyChatClient())  # type: ignore[arg-type]
         client = app.test_client()
@@ -1023,6 +1281,46 @@ class Package7Tests(unittest.TestCase):
                 "ACCOUNT-DIYU-HQ-OFFICIAL",
             ),
             ("pkg7-stable-user", "CONVERSATION-PKG7-001"),
+        )
+
+    def test_classification_and_authoring_can_use_fresh_dify_conversations(self) -> None:
+        requests: list[dict[str, Any]] = []
+
+        def fake_open(request: Any, timeout: int) -> BytesIO:
+            self.assertGreater(timeout, 0)
+            requests.append(json.loads(request.data.decode("utf-8")))
+            return BytesIO(
+                json.dumps(
+                    {
+                        "answer": "受控回复",
+                        "conversation_id": f"CONVERSATION-FRESH-{len(requests)}",
+                        "metadata": {"usage": {"total_tokens": 3}},
+                    }
+                ).encode("utf-8")
+            )
+
+        client = DifyChatClient(
+            base_url="https://dify.internal/v1",
+            app_api_token="app-" + "x" * 32,
+            repository=self.repository,
+        )
+        with patch("urllib.request.urlopen", side_effect=fake_open):
+            for ordinal in (1, 2):
+                client.invoke(
+                    invocation_id=f"DIFY-FRESH-{ordinal:03d}",
+                    principal_id=self.principal_id,
+                    conversation_scope="ACCOUNT-DIYU-HQ-OFFICIAL",
+                    user_key="pkg7-stable-user",
+                    query="本次冻结任务",
+                    inputs={"ordinal": ordinal},
+                    reuse_conversation=False,
+                )
+        self.assertEqual([row["conversation_id"] for row in requests], ["", ""])
+        self.assertIsNone(
+            self.repository.dify_conversation(
+                self.principal_id,
+                "ACCOUNT-DIYU-HQ-OFFICIAL",
+            )
         )
 
     def test_dify_conversation_history_is_isolated_between_content_accounts(self) -> None:
@@ -1129,6 +1427,259 @@ class Package7Tests(unittest.TestCase):
         self.assertNotIn(first_id, [row["fragment_id"] for row in result["scoped_retrieval_fragments"]])
         self.assertTrue(result["retrieval_audit"]["postcheck"]["authoritative_metadata_recheck"])
 
+    def test_dify_index_binding_cannot_replace_the_frozen_source_digest(self) -> None:
+        row = self._fragment_rows()[0]
+        original_digest = row.content_digest
+        original_index_digest = row.index_content_digest
+        with self.assertRaises(ValueError):
+            self.repository.bind_dify_documents(
+                {
+                    row.payload["fragment_id"]: {
+                        "document_id": row.dify_document_id,
+                        "source_content_sha256": "0" * 64,
+                        "index_content_sha256": "1" * 64,
+                    }
+                }
+            )
+        refreshed = next(
+            item for item in self._fragment_rows() if item.payload["fragment_id"] == row.payload["fragment_id"]
+        )
+        self.assertEqual(refreshed.content_digest, original_digest)
+        self.assertEqual(refreshed.index_content_digest, original_index_digest)
+
+    def test_revoked_principal_is_rechecked_before_portal_model_invocation(self) -> None:
+        from runtime_models import RuntimePrincipal
+
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)  # type: ignore[arg-type]
+        client = app.test_client()
+        login = client.post(
+            "/login",
+            json={"username": "package7-test-owner", "password": "package7-test-password"},
+        )
+        self.assertEqual(login.status_code, 200)
+        with self.sessions.begin() as session:
+            principal = session.get(RuntimePrincipal, self.principal_id)
+            self.assertIsNotNone(principal)
+            if principal is not None:
+                principal.status = "REVOKED"
+        response = client.post(
+            "/v1/portal/chat",
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "随便聊聊",
+                "topic_label": None,
+                "primary_audience": None,
+                "message": "聊聊今天的内容方向",
+                "target_platform": "其他",
+                "candidate_number": None,
+                "content_goal": None,
+                "key_takeaway": None,
+                "speaker_role_name": None,
+                "storyline_name": None,
+                "column_name": None,
+                "continue_previous": False,
+                "localization_allowed": False,
+                "duration_label": "由系统建议",
+                "expression_feeling": "由系统建议",
+                "content_format": "短视频",
+                "existing_material_kinds": [],
+            },
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(fake_chat.calls, [])
+
+    def test_account_scope_is_rechecked_before_candidate_persistence(self) -> None:
+        from runtime_models import RuntimeCandidate, RuntimePrincipal
+
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        envelope = {
+            "kind": "CANDIDATE_SET",
+            "reply": None,
+            "candidates": [
+                self._candidate(
+                    "证据路径",
+                    "只使用当前资料支持的观察。",
+                    refs,
+                    ["核心创意", "事实或证明路径"],
+                ),
+                self._candidate(
+                    "问题路径",
+                    "只回答当前资料支持的问题。",
+                    refs,
+                    ["切入问题或场景", "画面组织方法"],
+                ),
+            ],
+        }
+        with self.sessions.begin() as session:
+            principal = session.get(RuntimePrincipal, self.principal_id)
+            self.assertIsNotNone(principal)
+            if principal is not None:
+                principal.allowed_account_ids = []
+        encoded = base64.b64encode(json.dumps(envelope, ensure_ascii=False).encode()).decode()
+        with self.assertRaises(ValueError):
+            self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        with self.sessions() as session:
+            self.assertEqual(session.query(RuntimeCandidate).count(), 0)
+
+    def test_region_and_store_can_author_only_their_verified_account_scope(self) -> None:
+        for display_name in ("笛语江苏", "笛语苏州园区店"):
+            result = self.runtime.prepare(
+                self.request(
+                    account_display_name=display_name,
+                    message="做一份区域账号说明，只说明账号身份，不展开具体事件",
+                    content_goal="说明账号定位",
+                    key_takeaway="没有本地材料就不补写本地事实",
+                ),
+                self.principal_id,
+            )
+            self.assertEqual(result["response_kind"], "MODEL_REQUIRED")
+            prompt = result["author_prompt"]
+            self.assertTrue(prompt["task_brief"]["scope_identity_only_authoring_allowed"])
+            self.assertEqual(prompt["author_materials"]["scoped_retrieval_fragments"], [])
+            facts = prompt["author_materials"]["verified_precise_facts"]
+            self.assertEqual(len(facts), 1)
+            self.assertEqual(facts[0]["fact_kind"], "ACCOUNT_SCOPE_IDENTITY")
+
+    def test_verified_store_scope_fact_can_support_a_narrow_candidate_set(self) -> None:
+        prepared = self.runtime.prepare(
+            self.request(
+                account_display_name="笛语苏州园区店",
+                message="做一份账号介绍，只说明这个账号可以讲什么和内容边界",
+                content_goal="说明账号范围",
+                key_takeaway="没有本地材料就不补写本地事实",
+            ),
+            self.principal_id,
+        )
+        fact_ref = prepared["author_prompt"]["author_materials"]["precise_fact_refs"][0]
+        candidates = [
+            self._candidate(
+                "账号证据先行",
+                "笛语苏州园区店代表当前门店范围。",
+                [fact_ref],
+                ["核心创意", "事实或证明路径"],
+                architecture="EVIDENCE_FIRST",
+            ),
+            self._candidate(
+                "边界问题先行",
+                "这个账号能讲什么？只讲当前门店范围内已确认的内容。",
+                [fact_ref],
+                ["切入问题或场景", "画面组织方法"],
+                architecture="QUESTION_ANSWER",
+            ),
+        ]
+        for candidate in candidates:
+            candidate["used_fact_refs"] = [fact_ref]
+            candidate["used_material_refs"] = []
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertIn("推荐候选", result["user_visible_text"])
+
+    def test_unseen_high_risk_product_detail_is_rejected_even_with_a_valid_ref(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        candidates = [
+            self._candidate(
+                "证据路径",
+                "现有样衣已经确认双重厚度。",
+                refs,
+                ["核心创意", "事实或证明路径"],
+            ),
+            self._candidate(
+                "问题路径",
+                "只回答当前资料能够回答的问题。",
+                refs,
+                ["切入问题或场景", "画面组织方法"],
+            ),
+        ]
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertTrue(result.get("action_card"))
+
+    def test_numeric_unit_and_range_spelling_must_match_the_source(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"]
+        size_ref = next(
+            ref
+            for ref in refs
+            if ref == "PKG5-FRAGMENT-BD-NARR-02-006"
+        )
+        candidates = [
+            self._candidate(
+                "尺码范围",
+                "笛语商品使用100-150cm的常用尺码范围。",
+                [size_ref],
+                ["核心创意", "事实或证明路径"],
+                architecture="EVIDENCE_FIRST",
+            ),
+            self._candidate(
+                "尺码问题",
+                "尺码不能只看身高。",
+                [size_ref],
+                ["切入问题或场景", "画面组织方法"],
+                architecture="QUESTION_ANSWER",
+            ),
+        ]
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+
+        self.assertTrue(result.get("action_card"))
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
+
+        exact_prepared = self.runtime.prepare(self.request(), self.principal_id)
+        exact_candidates = [
+            self._candidate(
+                "原样尺码范围",
+                "笛语商品使用100厘米至150厘米的常用尺码范围。",
+                [size_ref],
+                ["核心创意", "事实或证明路径"],
+                architecture="EVIDENCE_FIRST",
+            ),
+            self._candidate(
+                "原样尺码问题",
+                "尺码不能只看身高。",
+                [size_ref],
+                ["切入问题或场景", "画面组织方法"],
+                architecture="QUESTION_ANSWER",
+            ),
+        ]
+        exact_encoded = base64.b64encode(
+            json.dumps(
+                {
+                    "kind": "CANDIDATE_SET",
+                    "reply": None,
+                    "candidates": exact_candidates,
+                },
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+
+        exact_result = self.runtime.finalize_model_output(
+            exact_prepared["run_id"],
+            exact_encoded,
+        )
+
+        self.assertIn("推荐候选", exact_result["user_visible_text"])
+
     def test_twenty_products_eight_topics_and_eight_action_cards_remain_covered(self) -> None:
         cases = [json.loads(line) for line in P6_CASES.read_text(encoding="utf-8").splitlines()]
         self.assertEqual({row["content_product_id"] for row in cases}, {f"CP{i:02d}" for i in range(1, 21)})
@@ -1164,6 +1715,33 @@ class Package7Tests(unittest.TestCase):
         self.assertNotIn("order_by(App.created_at)", provisioner)
         self.assertIn("LOCKED_PACKAGE7_STATE", provisioner)
         self.assertIn("PACKAGE7_APPROVED_DIFY_OWNER_ACCOUNT_ID", provisioner)
+        self.assertIn("The locked Package 7 Dify application owner drifted", provisioner)
+        self.assertIn("The Package 7 Dify application is not unique", provisioner)
+        self.assertIn("The locked Package 7 Dify dataset drifted", provisioner)
+        self.assertIn("The Package 7 Dify dataset is not unique", provisioner)
+
+    def test_static_evidence_shot_does_not_require_an_invented_action(self) -> None:
+        candidate = self._candidate(
+            "静态证据",
+            "现有资料只支持这一项判断。",
+            ["PKG5-FRAGMENT-BD-NARR-04-013-S01"],
+            ["事实或证明路径", "画面组织方法"],
+        )
+        second = self._candidate(
+            "问题回答",
+            "先问清问题，再停在资料能够回答的位置。",
+            ["PKG5-FRAGMENT-BD-NARR-04-013-S01"],
+            ["切入问题或场景", "情绪钩子"],
+            architecture="QUESTION_ANSWER",
+        )
+        candidate["surfaces"]["execution_payload"]["video"]["shots"][0]["action"] = ""
+        envelope = ModelEnvelope.model_validate(
+            {"kind": "CANDIDATE_SET", "reply": None, "candidates": [candidate, second]}
+        )
+        self.assertEqual(
+            envelope.candidates[0].surfaces.execution_payload.video.shots[0].action,
+            "",
+        )
 
     @staticmethod
     def _candidate(
@@ -1173,7 +1751,19 @@ class Package7Tests(unittest.TestCase):
         dimensions: list[str],
         *,
         content_format: str = "短视频",
+        architecture: str | None = None,
     ) -> JsonObject:
+        if architecture is None:
+            if "切入问题或场景" in dimensions or "切入问题" in dimensions:
+                architecture = "QUESTION_ANSWER"
+            elif "叙事视角" in dimensions or any(
+                token in label for token in ("空间", "厚度", "观察", "动作")
+            ):
+                architecture = "OBJECT_OR_TIMELINE"
+            elif any(token in label for token in ("可售", "尺码")):
+                architecture = "QUESTION_ANSWER"
+            else:
+                architecture = "EVIDENCE_FIRST"
         format_payload: JsonObject
         if content_format == "短视频":
             format_payload = {
@@ -1232,31 +1822,108 @@ class Package7Tests(unittest.TestCase):
                     "shooting_angles": ["入口全景", "主展示中景", "细节近景"],
                 },
             }
+        if architecture == "QUESTION_ANSWER":
+            if content_format == "短视频":
+                format_payload["video"]["shots"][0].update(
+                    {
+                        "visual": "先呈现一个待回答的问题，不补充问题之外的事实。",
+                        "action": "画面停留在问题文字与现有资料上。",
+                        "camera": "先固定全景，再切资料近景。",
+                        "audio": "先提出问题，再用当前资料回答。",
+                    }
+                )
+                format_payload["video"]["shots"][1].update(
+                    {
+                        "visual": "答案与尚待确认的边界并列出现。",
+                        "action": "依次显示可回答项与待确认项。",
+                        "camera": "静态分栏画面。",
+                        "audio": "答案止步于来源能够支持的位置。",
+                    }
+                )
+            elif content_format == "图文":
+                format_payload["article"]["frames"] = [
+                    {"order": 1, "image_brief": "问题作为首屏。", "accompanying_copy": body},
+                    {"order": 2, "image_brief": "答案和边界并列。", "accompanying_copy": "只回答已有资料支持的部分。"},
+                ]
+            else:
+                format_payload["display"]["arrangement_relationship"] = "先列待确认问题，再按已确认事实安排可执行部分。"
+                format_payload["display"]["spatial_layers"] = "问题、证据和待确认项分成三个清楚区域。"
+        elif architecture == "OBJECT_OR_TIMELINE":
+            if content_format == "短视频":
+                format_payload["video"]["shots"][0].update(
+                    {
+                        "visual": "镜头沿一个已确认对象的可见状态移动。",
+                        "action": "只记录对象当前可见部分。",
+                        "camera": "固定锚点近景。",
+                        "audio": "以对象状态串联内容，不补事件。",
+                    }
+                )
+                format_payload["video"]["shots"][1].update(
+                    {
+                        "visual": "同一对象停在当前证据边界。",
+                        "action": "保持对象位置不变。",
+                        "camera": "回到固定锚点全景。",
+                        "audio": "用状态变化或未变化收束。",
+                    }
+                )
+            elif content_format == "图文":
+                format_payload["article"]["frames"] = [
+                    {"order": 1, "image_brief": "同一对象的整体状态。", "accompanying_copy": body},
+                    {"order": 2, "image_brief": "同一对象的证据细节。", "accompanying_copy": "停在当前可确认状态。"},
+                ]
+            else:
+                format_payload["display"]["arrangement_relationship"] = "沿同一对象的状态证据组织，不借其他对象补足叙事。"
+                format_payload["display"]["spatial_layers"] = "整体状态、局部证据和未知项依次展开。"
+        surfaces = {
+            "title": label,
+            "body": body,
+            "spoken_lines": [body],
+            "CTA": "先核对现有资料。",
+            "execution_payload": {
+                "production_format": content_format,
+                "task_summary": "用当前材料完成一份内部测试内容。",
+                "content_direction": label,
+                "core_idea": f"{label}的独立创意",
+                "cover_or_first_screen_copy": label,
+                "opening_hook": body,
+                "story_or_full_script": body,
+                "target_platform": "内部测试",
+                "duration_label": "15秒左右",
+                "ending_and_action": "请先核对来源再进入审核。",
+                "publishing_copy": body,
+                "next_actions": ["换开头", "缩短", "提交审核"],
+                **format_payload,
+            },
+            "surface_units": [],
+        }
+        claim_bindings: list[JsonObject] = []
+
+        def bind(value: object, path: str) -> None:
+            if isinstance(value, str) and value.strip():
+                source_bound = path == "body"
+                claim_bindings.append(
+                    {
+                        "surface_path": path,
+                        "exact_text": value.strip(),
+                        "claim_class": "SOURCE_CLAIM" if source_bound else "CREATIVE_DIRECTION",
+                        "source_refs": list(refs) if source_bound else [],
+                    }
+                )
+            elif isinstance(value, list):
+                for index, child in enumerate(value):
+                    bind(child, f"{path}[{index}]")
+            elif isinstance(value, dict):
+                for key, child in value.items():
+                    if key != "surface_units":
+                        bind(child, f"{path}.{key}" if path else key)
+
+        bind(surfaces, "")
         return {
             "difference_label": label,
+            "narrative_architecture": architecture,
             "difference_dimensions": dimensions,
-            "surfaces": {
-                "title": label,
-                "body": body,
-                "spoken_lines": [body],
-                "CTA": "先核对现有资料。",
-                "execution_payload": {
-                    "production_format": content_format,
-                    "task_summary": "用当前材料完成一份内部测试内容。",
-                    "content_direction": label,
-                    "core_idea": f"{label}的独立创意",
-                    "cover_or_first_screen_copy": label,
-                    "opening_hook": body,
-                    "story_or_full_script": body,
-                    "target_platform": "内部测试",
-                    "duration_label": "15秒左右",
-                    "ending_and_action": "请先核对来源再进入审核。",
-                    "publishing_copy": body,
-                    "next_actions": ["换开头", "缩短", "提交审核"],
-                    **format_payload,
-                },
-                "surface_units": [],
-            },
+            "surfaces": surfaces,
+            "claim_bindings": claim_bindings,
             "used_fact_refs": [],
             "used_material_refs": refs,
         }

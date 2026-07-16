@@ -85,10 +85,22 @@ SERIAL_SUCCESSOR_PACKAGES = (
         ),
         "PACKAGE_6_ONLY",
     ),
+    (
+        "PACKAGE_7_DIFY_END_TO_END",
+        Path("17_dify_runtime/dify_end_to_end_001"),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/"
+            "check_dify_end_to_end.py"
+        ),
+        "PACKAGE_7_ONLY",
+    ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
 MANDATORY_SUCCESSOR_ROOTS = frozenset(
-    {Path("16_composition_runtime/fact_aware_plan_adapter_001")}
+    {
+        Path("16_composition_runtime/fact_aware_plan_adapter_001"),
+        Path("17_dify_runtime/dify_end_to_end_001"),
+    }
 )
 REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(

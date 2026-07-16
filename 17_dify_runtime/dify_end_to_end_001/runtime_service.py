@@ -7,14 +7,16 @@ import base64
 import copy
 import hashlib
 import json
+import re
 import sys
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
 
 import yaml  # type: ignore[import-untyped]
 
-from contracts import BridgePrepareRequest, ModelEnvelope, normalize_model_json_text
+from contracts import BridgePrepareRequest, ModelCandidate, ModelEnvelope, normalize_model_json_text
 from persistence import RuntimeRepository, SqlAlchemyPlanStore, digest_object
 from runtime_models import RuntimeModelRun
 from runtime_retrieval import RuntimeBrandFactRetrievalService
@@ -48,6 +50,56 @@ from light_expression_service import (  # type: ignore[import-not-found]  # noqa
 
 TOPIC_PATH = REPOSITORY_ROOT / "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml"
 ACTION_PATH = REPOSITORY_ROOT / "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json"
+NARRATIVE_ARCHITECTURES = (
+    "EVIDENCE_FIRST",
+    "QUESTION_ANSWER",
+    "OBJECT_OR_TIMELINE",
+)
+PROTECTED_SOURCE_DETAIL_PATTERN = re.compile(
+    r"\d+(?:\.\d+)?(?:厘米|cm|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"\s*(?:至|到|[-–—~～])\s*"
+    r"\d+(?:\.\d+)?(?:厘米|cm|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"|\d+(?:\.\d+)?(?:厘米|cm|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"|薄针织|同色|双重厚度|春季|夏季|秋季|冬季|设计稿|样衣|照片|视频|"
+    r"截图|工作台|品牌色|品牌字体|logo|Logo|库存|售价|价格|折扣|顾客|家长|员工|儿童|孩子|人物|模特|"
+    r"更自在|更舒服|更轻松|永久解决|彻底解决|解决了|不再|所有"
+)
+FACT_BEARING_SURFACE_PATH = re.compile(
+    r"^(?:title|body|CTA|spoken_lines\[[0-9]+\]|"
+    r"execution_payload\.(?:cover_or_first_screen_copy|opening_hook|story_or_full_script|"
+    r"ending_and_action|publishing_copy)|"
+    r"execution_payload\.video\.shots\[[0-9]+\]\.(?:audio|subtitle)|"
+    r"execution_payload\.article\.frames\[[0-9]+\]\.accompanying_copy|"
+    r"execution_payload\.display\.referenced_items_or_facts\[[0-9]+\])$"
+)
+AUTHOR_DECLARED_ROOT_PATH = re.compile(r"^(?:title|body|CTA|spoken_lines\[[0-9]+\])$")
+SAFE_UNVERIFIED_ASSET_CUES = (
+    "待补",
+    "待设计",
+    "待取得",
+    "需要取得",
+    "需取得",
+    "若能取得",
+    "如能取得",
+    "拍摄前",
+    "不得使用",
+    "不使用",
+    "未提供",
+    "没有现成",
+    "不可假设",
+)
+
+
+def normalize_support_text(value: str) -> str:
+    return value.lower().replace("cm", "厘米").replace("孩子", "儿童")
+
+
+def protected_detail_is_supported(detail: str, corpus: str) -> bool:
+    if any(character.isdigit() for character in detail):
+        compact_detail = re.sub(r"\s+", "", detail.lower())
+        compact_corpus = re.sub(r"\s+", "", corpus.lower())
+        return compact_detail in compact_corpus
+    return normalize_support_text(detail) in normalize_support_text(corpus)
 
 
 class RuntimeContractError(ValueError):
@@ -183,8 +235,12 @@ class Package7Runtime:
         account = self.repository.account_by_display_name(request.account_display_name)
         if account is None or account.status != "ACTIVE":
             return self._plain_action("BLOCK")
-        principal = self.repository.principal_by_id(principal_id)
-        if principal is None or account.account_id not in principal.allowed_account_ids:
+        try:
+            principal, account = self.repository.require_active_scope(
+                principal_id,
+                account.account_id,
+            )
+        except ValueError:
             return self._plain_action("REQUEST_AUTHORIZATION")
 
         if request.operation == "普通聊天":
@@ -192,6 +248,13 @@ class Package7Runtime:
         if request.operation == "找灵感":
             return self._start_chat_run(request, principal_id, account.account_id, inspiration=True)
         if request.operation == "确认制作":
+            if request.topic_label is None or request.selected_content_product_id is None:
+                return self._start_chat_run(
+                    request,
+                    principal_id,
+                    account.account_id,
+                    inspiration=True,
+                )
             account_payload = {
                 **copy.deepcopy(account.payload),
                 "tenant_id": account.tenant_id,
@@ -329,7 +392,8 @@ class Package7Runtime:
         inspiration: bool,
     ) -> JsonObject:
         instruction = (
-            "给出三种通俗内容方向，每种只说方向和需要补充的一项信息，不使用任何品牌私有事实。"
+            "给出三种可以直接选择的通俗内容方向；每种只说方向，不使用任何品牌私有事实。"
+            "最后只追问一个真正影响下一步的关键问题，不要一次抛出整张表单。"
             if inspiration
             else "自然回应用户；不要声称任何企业事实，不读取或猜测品牌私有信息。"
         )
@@ -463,8 +527,14 @@ class Package7Runtime:
             return self._plain_action(str(result.get("action_type", "BLOCK")))
         plan_ref = str(result["composition_plan_ref"])
         materials = self.adapter.author_materials(plan_ref, self._access(principal_id, str(account["account_id"])))
-        if not materials.get("scoped_retrieval_fragments"):
+        scope_identity_only = self._scope_identity_only_request(request)
+        if not materials.get("scoped_retrieval_fragments") and not scope_identity_only:
             return self._plain_action("COLLECT_MATERIAL")
+        if scope_identity_only and not any(
+            isinstance(row, dict) and row.get("fact_kind") == "AUTHORIZATION"
+            for row in materials.get("verified_precise_facts", [])
+        ):
+            return self._plain_action("COLLECT_FACT")
         return self._start_author_run(
             request,
             principal_id,
@@ -507,7 +577,11 @@ class Package7Runtime:
             operation=request.operation,
             plan_ref=selected.plan_ref,
             prompt_digest=digest_object(prompt),
-            payload={"prompt": prompt, "source_candidate_id": selected.candidate_id},
+            payload={
+                "prompt": prompt,
+                "source_candidate_id": selected.candidate_id,
+                "task_brief": task_brief,
+            },
         )
         return {"response_kind": "MODEL_REQUIRED", "run_id": run_id, "author_prompt": prompt}
 
@@ -532,6 +606,14 @@ class Package7Runtime:
             "storyline_purpose": storyline["purpose"],
             "column": column["display_name"],
             "previous_content_ref_present": request.previous_content_ref is not None,
+            "previous_content_context": (
+                None
+                if request.previous_content_ref is None
+                else self.repository.candidate_context(
+                    request.previous_content_ref,
+                    account_id,
+                )
+            ),
             "localization_allowed": request.localization_allowed,
             "target_platform": request.target_platform,
             "duration_label": request.duration_label,
@@ -539,6 +621,7 @@ class Package7Runtime:
             "content_format": request.content_format,
             "primary_audience": request.primary_audience,
             "existing_material_kinds": list(request.existing_material_kinds),
+            "scope_identity_only_authoring_allowed": self._scope_identity_only_request(request),
             "brand_guidance": self._public_brand_guidance(profile),
         }
         prompt = self._author_prompt(plan, materials, task_brief=task_brief)
@@ -569,11 +652,36 @@ class Package7Runtime:
         author_materials = copy.deepcopy(materials)
         precise_facts = author_materials.get("verified_precise_facts", [])
         if isinstance(precise_facts, list):
-            author_materials["verified_precise_facts"] = [
-                row
-                for row in precise_facts
-                if isinstance(row, dict) and row.get("fact_kind") != "AUTHORIZATION"
-            ]
+            scope_identity_only = bool(
+                task_brief.get("scope_identity_only_authoring_allowed")
+            )
+            projected_facts: list[JsonObject] = []
+            for row in precise_facts:
+                if not isinstance(row, dict):
+                    continue
+                if row.get("fact_kind") != "AUTHORIZATION":
+                    projected_facts.append(copy.deepcopy(row))
+                    continue
+                if not scope_identity_only:
+                    continue
+                value = row.get("value", {})
+                if not isinstance(value, dict):
+                    continue
+                projected_facts.append(
+                    {
+                        "fact_id": row.get("fact_id"),
+                        "fact_kind": "ACCOUNT_SCOPE_IDENTITY",
+                        "value": {
+                            "display_name": value.get("display_name"),
+                            "represented_scope": value.get("represented_scope"),
+                        },
+                        "use_boundary": (
+                            "只支持说明当前内容账号的名称和所代表的组织层级；"
+                            "不支持任何本地商品、库存、活动、人员、顾客或已发生事件。"
+                        ),
+                    }
+                )
+            author_materials["verified_precise_facts"] = projected_facts
             author_materials["precise_fact_refs"] = [
                 str(row["fact_id"])
                 for row in author_materials["verified_precise_facts"]
@@ -585,7 +693,10 @@ class Package7Runtime:
                 "返回严格JSON，不要Markdown。输出2至3份候选，每份至少在核心创意、切入问题或场景、情绪钩子、"
                 "叙事视角、事实或证明路径、画面组织方法中的两项真正不同；换标题、换词或调段落不算差异。"
                 "每份候选分别列出实际使用的事实引用和资料引用；没使用就留空。引用只能从允许列表选择。"
-                "每份生产候选必须至少使用一条资料引用；资料不足时不要生成候选。"
+                "任何内部来源编号只能出现在used_fact_refs、used_material_refs和claim_bindings.source_refs中；"
+                "标题、正文、口播、结尾和execution_payload的所有文字都不得显示来源编号。"
+                "来源中的数字、单位和范围写法必须原样保留，不得改用连字符、缩写或近义单位。"
+                "每份生产候选必须至少使用一条允许的资料或精确事实引用；资料不足且任务不属于明确允许的账号范围说明时不要生成候选。"
                 "不要输出任何内部编号、字段名或授权术语。所有合同中的string都必须填写非空文字，"
                 "图文必须至少给出两帧，短视频必须至少给出两个镜头。publishing_copy须明确写内部测试不可发布。"
                 "根对象必须且只能包含kind、reply、candidates三个键；kind固定为CANDIDATE_SET，reply固定为null。"
@@ -596,6 +707,28 @@ class Package7Runtime:
                 "陈列资料没有明确商品颜色、厚度、尺码交集、库存或空间关系时，不得自行配对或推断；"
                 "可以用证据卡和核对清单说明方法，并把未知项明确列为待确认。"
                 "短视频、图文、陈列搭配必须分别按合同给出可直接拍摄或制作的细节。"
+                "三份候选必须依次使用EVIDENCE_FIRST、QUESTION_ANSWER、OBJECT_OR_TIMELINE三种叙事骨架："
+                "第一份由来源证据进入，第二份由用户问题和边界内回答进入，第三份沿同一物件或时间状态组织；"
+                "正文、开头、镜头或图片顺序、声音主体与结尾都要体现结构差异，不能只改标签。"
+                "claim_bindings只要求逐条覆盖title、body、每条spoken_lines和非空CTA，"
+                "surface_path和exact_text须逐字对应；不要为减少绑定工作而把正文缩成边界提示。"
+                "execution_payload中的文字由服务端逐项独立闭合，作者可以不为这些制作字段重复写claim_bindings。"
+                "只有来源直接支持的陈述可标SOURCE_CLAIM并绑定来源；拍摄、剪辑和表达安排标CREATIVE_DIRECTION且不得绑定来源；"
+                "内部测试、不可发布、待确认等边界提示标DISCLOSURE且不得绑定来源。不得把事实误标成创作安排。"
+                "title、body、每条spoken_lines和非空CTA必须逐条写claim_bindings。"
+                "difference_dimensions只能逐项填写六个既有枚举之一，不得在枚举后加冒号、解释或例子。"
+                "execution_payload中的事实性文案不得另写新句：cover_or_first_screen_copy须逐字复用title，"
+                "opening_hook、story_or_full_script、每条audio、每条非空subtitle及图文accompanying_copy"
+                "须逐字复用body或某一条spoken_lines，ending_and_action须逐字复用CTA，publishing_copy须逐字复用body。"
+                "visual、camera、action、image_brief等制作指令可以新写，但只能描述将来如何拍摄或排版；"
+                "不得暗示照片、视频、样衣、设计稿、截图、工作台、库存、颜色或人物已经存在，除非本次允许来源逐字支持。"
+                "如果来源没有明确提供这些素材，相关制作字段必须逐字写明‘待补拍’或‘待取得’，不能写‘一张照片’、"
+                "‘使用截图’、‘可能有设计稿’等模糊假设。如作者仍为execution_payload提供claim_bindings，"
+                "其路径必须以execution_payload.开头，例如execution_payload.story_or_full_script。"
+                "来源使用‘厘米’时不得改成cm。"
+                "单条口播的路径也必须写spoken_lines[0]而不是spoken_lines。不得使用‘账号身份证据’这组连续文字，"
+                "应改写为‘账号身份依据’，避免被误读为身份证信息。"
+                "previous_content_context只用于延续上一次的创意方向，不是事实来源，不得从中新增事实。"
             ),
             "plan": plan,
             "author_materials": author_materials,
@@ -608,6 +741,7 @@ class Package7Runtime:
                 "candidates": [
                     {
                         "difference_label": "string",
+                        "narrative_architecture": "EVIDENCE_FIRST|QUESTION_ANSWER|OBJECT_OR_TIMELINE（按候选顺序）",
                         "difference_dimensions": ["核心创意", "画面组织方法"],
                         "surfaces": {
                             "title": "string",
@@ -631,6 +765,14 @@ class Package7Runtime:
                             },
                             "surface_units": [],
                         },
+                        "claim_bindings": [
+                            {
+                                "surface_path": "title",
+                                "exact_text": "与title逐字一致",
+                                "claim_class": "SOURCE_CLAIM|CREATIVE_DIRECTION|DISCLOSURE",
+                                "source_refs": ["仅SOURCE_CLAIM填写允许的fact或material ref"],
+                            }
+                        ],
                         "used_fact_refs": ["allowed fact ref"],
                         "used_material_refs": ["allowed material ref"],
                     }
@@ -703,6 +845,10 @@ class Package7Runtime:
         run = self.repository.model_run(run_id)
         if run is None or run.first_output_preserved:
             raise RuntimeContractError("Unknown or already completed run")
+        try:
+            self.repository.require_active_scope(run.principal_id, run.account_id)
+        except ValueError as exc:
+            raise RuntimeContractError("Run authority is no longer active") from exc
         try:
             raw = base64.b64decode(model_output_b64, validate=True).decode("utf-8")
             raw_output_digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()
@@ -883,8 +1029,28 @@ class Package7Runtime:
         if not isinstance(parsed, dict) or not isinstance(parsed.get("candidates"), list):
             return []
         dimension_alias_count = 0
+        dimension_detail_suffix_count = 0
         material_fact_ref_count = 0
         empty_cta_mapping_count = 0
+        execution_path_prefix_count = 0
+        singleton_spoken_path_count = 0
+        execution_roots = {
+            "production_format",
+            "task_summary",
+            "content_direction",
+            "core_idea",
+            "cover_or_first_screen_copy",
+            "opening_hook",
+            "story_or_full_script",
+            "target_platform",
+            "duration_label",
+            "ending_and_action",
+            "publishing_copy",
+            "next_actions",
+            "video",
+            "article",
+            "display",
+        }
         for candidate in parsed["candidates"]:
             if not isinstance(candidate, dict):
                 continue
@@ -894,6 +1060,19 @@ class Package7Runtime:
                     if value == "切入问题":
                         dimensions[index] = "切入问题或场景"
                         dimension_alias_count += 1
+                        continue
+                    if isinstance(value, str) and "：" in value:
+                        category = value.split("：", 1)[0].strip()
+                        if category in {
+                            "核心创意",
+                            "切入问题或场景",
+                            "情绪钩子",
+                            "叙事视角",
+                            "事实或证明路径",
+                            "画面组织方法",
+                        }:
+                            dimensions[index] = category
+                            dimension_detail_suffix_count += 1
             fact_refs = candidate.get("used_fact_refs")
             material_refs = candidate.get("used_material_refs")
             if isinstance(fact_refs, list) and isinstance(material_refs, list):
@@ -925,15 +1104,294 @@ class Package7Runtime:
                 and ending_and_action.strip()
             ):
                 surfaces["CTA"] = ending_and_action.strip()
+                bindings = candidate.get("claim_bindings")
+                if isinstance(bindings, list):
+                    bindings[:] = [
+                        row
+                        for row in bindings
+                        if not isinstance(row, dict) or row.get("surface_path") != "CTA"
+                    ]
+                    ending_binding = next(
+                        (
+                            row
+                            for row in bindings
+                            if isinstance(row, dict)
+                            and row.get("surface_path") == "execution_payload.ending_and_action"
+                            and row.get("exact_text") == ending_and_action.strip()
+                        ),
+                        None,
+                    )
+                    if ending_binding is not None:
+                        bindings.append({**copy.deepcopy(ending_binding), "surface_path": "CTA"})
                 empty_cta_mapping_count += 1
+            bindings = candidate.get("claim_bindings")
+            if isinstance(bindings, list):
+                for binding in bindings:
+                    if not isinstance(binding, dict):
+                        continue
+                    path = binding.get("surface_path")
+                    if (
+                        isinstance(path, str)
+                        and path
+                        and path.split(".", 1)[0].split("[", 1)[0]
+                        in execution_roots
+                    ):
+                        binding["surface_path"] = f"execution_payload.{path}"
+                        execution_path_prefix_count += 1
+                    elif (
+                        path == "spoken_lines"
+                        and isinstance(surfaces, dict)
+                        and isinstance(surfaces.get("spoken_lines"), list)
+                        and len(surfaces["spoken_lines"]) == 1
+                        and binding.get("exact_text") == surfaces["spoken_lines"][0]
+                    ):
+                        binding["surface_path"] = "spoken_lines[0]"
+                        singleton_spoken_path_count += 1
         markers = []
         if dimension_alias_count:
             markers.append("NORMALIZED_EXACT_DIFFERENCE_DIMENSION_ALIAS")
+        if dimension_detail_suffix_count:
+            markers.append("REMOVED_DIFFERENCE_DIMENSION_DETAIL_SUFFIX")
         if material_fact_ref_count:
             markers.append("REMOVED_DUPLICATE_MATERIAL_REF_FROM_FACT_REFS")
         if empty_cta_mapping_count:
             markers.append("COPIED_EXISTING_ENDING_AND_ACTION_TO_EMPTY_CTA")
+        if execution_path_prefix_count:
+            markers.append("PREFIXED_EXECUTION_PAYLOAD_CLAIM_PATH")
+        if singleton_spoken_path_count:
+            markers.append("INDEXED_SINGLETON_SPOKEN_LINE_CLAIM_PATH")
         return markers
+
+    @staticmethod
+    def _surface_text_map(candidate: ModelCandidate) -> dict[str, str]:
+        """Enumerate every non-empty audience-facing text leaf exactly once."""
+
+        result: dict[str, str] = {}
+
+        def visit(value: object, path: str) -> None:
+            if isinstance(value, str):
+                normalized = value.strip()
+                if normalized:
+                    result[path] = normalized
+                return
+            if isinstance(value, list):
+                for index, child in enumerate(value):
+                    visit(child, f"{path}[{index}]")
+                return
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    if key == "surface_units":
+                        continue
+                    visit(child, f"{path}.{key}" if path else str(key))
+
+        visit(candidate.surfaces.model_dump(), "")
+        return result
+
+    @staticmethod
+    def _source_corpus_by_ref(materials: JsonObject) -> dict[str, str]:
+        corpus: dict[str, str] = {}
+        for row in materials.get("scoped_retrieval_fragments", []):
+            if isinstance(row, dict) and isinstance(row.get("fragment_id"), str):
+                corpus[str(row["fragment_id"])] = json.dumps(
+                    row,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+        for row in materials.get("verified_precise_facts", []):
+            if isinstance(row, dict) and isinstance(row.get("fact_id"), str):
+                corpus[str(row["fact_id"])] = json.dumps(
+                    row,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+        return corpus
+
+    @staticmethod
+    def _resolve_claim_bindings(
+        candidate: ModelCandidate,
+        *,
+        allowed_fact_refs: set[str],
+        allowed_material_refs: set[str],
+        source_corpus: dict[str, str],
+        trusted_task_text: str = "",
+    ) -> list[JsonObject] | None:
+        text_by_path = Package7Runtime._surface_text_map(candidate)
+        bindings = candidate.claim_bindings
+        binding_paths = [binding.surface_path for binding in bindings]
+        if (
+            len(binding_paths) != len(set(binding_paths))
+            or not set(binding_paths).issubset(text_by_path)
+            or any(
+                path not in binding_paths
+                for path in text_by_path
+                if AUTHOR_DECLARED_ROOT_PATH.fullmatch(path)
+            )
+        ):
+            return None
+        cited_refs: set[str] = set()
+        allowed_refs = allowed_fact_refs | allowed_material_refs
+        effective: list[JsonObject] = []
+        signatures_by_text: dict[str, set[tuple[str, tuple[str, ...]]]] = {}
+        for binding in bindings:
+            if text_by_path.get(binding.surface_path) != binding.exact_text:
+                return None
+            if not set(binding.source_refs).issubset(allowed_refs):
+                return None
+            signature = (binding.claim_class, tuple(binding.source_refs))
+            signatures_by_text.setdefault(binding.exact_text, set()).add(signature)
+            if binding.claim_class == "SOURCE_CLAIM":
+                cited_refs.update(binding.source_refs)
+                support_text = "\n".join(source_corpus[ref] for ref in binding.source_refs)
+                if any(
+                    not protected_detail_is_supported(token, support_text)
+                    for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(binding.exact_text)
+                ):
+                    return None
+            effective.append(
+                {**binding.model_dump(), "binding_origin": "AUTHOR_DECLARED"}
+            )
+
+        declared_paths = set(binding_paths)
+        declared_ref_corpus = "\n".join(
+            source_corpus[ref]
+            for ref in sorted(set(candidate.used_fact_refs) | set(candidate.used_material_refs))
+            if ref in source_corpus
+        )
+        trusted_creative_corpus = f"{declared_ref_corpus}\n{trusted_task_text}"
+        for path, exact_text in text_by_path.items():
+            if path in declared_paths:
+                continue
+            signatures = signatures_by_text.get(exact_text, set())
+            if len(signatures) == 1:
+                claim_class, source_refs = next(iter(signatures))
+                effective.append(
+                    {
+                        "surface_path": path,
+                        "exact_text": exact_text,
+                        "claim_class": claim_class,
+                        "source_refs": list(source_refs),
+                        "binding_origin": "EXACT_TEXT_INHERITED",
+                    }
+                )
+                continue
+            if FACT_BEARING_SURFACE_PATH.fullmatch(path):
+                unsupported_tokens = [
+                    token
+                    for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(exact_text)
+                    if not protected_detail_is_supported(token, declared_ref_corpus)
+                ]
+                if unsupported_tokens and not any(
+                    cue in exact_text for cue in SAFE_UNVERIFIED_ASSET_CUES
+                ):
+                    return None
+                if unsupported_tokens:
+                    effective.append(
+                        {
+                            "surface_path": path,
+                            "exact_text": exact_text,
+                            "claim_class": "DISCLOSURE",
+                            "source_refs": [],
+                            "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                        }
+                    )
+                    continue
+                source_refs = sorted(
+                    set(candidate.used_fact_refs) | set(candidate.used_material_refs)
+                )
+                if not source_refs:
+                    return None
+                cited_refs.update(source_refs)
+                effective.append(
+                    {
+                        "surface_path": path,
+                        "exact_text": exact_text,
+                        "claim_class": "SOURCE_CLAIM",
+                        "source_refs": source_refs,
+                        "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
+                    }
+                )
+                continue
+            if path in {
+                "execution_payload.production_format",
+                "execution_payload.target_platform",
+                "execution_payload.duration_label",
+            } or path.endswith(".time_range"):
+                effective.append(
+                    {
+                        "surface_path": path,
+                        "exact_text": exact_text,
+                        "claim_class": "CREATIVE_DIRECTION",
+                        "source_refs": [],
+                        "binding_origin": "SERVER_STRUCTURAL_FIELD",
+                    }
+                )
+                continue
+            unsupported_tokens = [
+                token
+                for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(exact_text)
+                if not protected_detail_is_supported(token, trusted_creative_corpus)
+            ]
+            if unsupported_tokens and not any(
+                cue in exact_text for cue in SAFE_UNVERIFIED_ASSET_CUES
+            ):
+                return None
+            claim_class = (
+                "DISCLOSURE"
+                if any(
+                    cue in exact_text
+                    for cue in ("不可发布", "内部测试", "待确认", "不能确认")
+                )
+                else "CREATIVE_DIRECTION"
+            )
+            effective.append(
+                {
+                    "surface_path": path,
+                    "exact_text": exact_text,
+                    "claim_class": claim_class,
+                    "source_refs": [],
+                    "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                }
+            )
+        declared_refs = set(candidate.used_fact_refs) | set(candidate.used_material_refs)
+        if cited_refs != declared_refs:
+            return None
+        return sorted(effective, key=lambda row: str(row["surface_path"]))
+
+    @staticmethod
+    def _claim_bindings_are_closed(
+        candidate: ModelCandidate,
+        *,
+        allowed_fact_refs: set[str],
+        allowed_material_refs: set[str],
+        source_corpus: dict[str, str],
+    ) -> bool:
+        return (
+            Package7Runtime._resolve_claim_bindings(
+                candidate,
+                allowed_fact_refs=allowed_fact_refs,
+                allowed_material_refs=allowed_material_refs,
+                source_corpus=source_corpus,
+                trusted_task_text="",
+            )
+            is not None
+        )
+
+    @staticmethod
+    def _candidate_comparison_text(candidate: ModelCandidate) -> str:
+        production = candidate.surfaces.execution_payload
+        selected = {
+            "body": candidate.surfaces.body,
+            "spoken_lines": candidate.surfaces.spoken_lines,
+            "opening_hook": production.opening_hook,
+            "story_or_full_script": production.story_or_full_script,
+            "ending_and_action": production.ending_and_action,
+            "format_payload": {
+                "video": None if production.video is None else production.video.model_dump(),
+                "article": None if production.article is None else production.article.model_dump(),
+                "display": None if production.display is None else production.display.model_dump(),
+            },
+        }
+        return re.sub(r"\s+", "", json.dumps(selected, ensure_ascii=False, sort_keys=True))
 
     def _finalize_candidate_envelope(
         self,
@@ -961,25 +1419,35 @@ class Package7Runtime:
 
         access = self._access(run.principal_id, run.account_id)
         materials = self.adapter.author_materials(run.plan_ref, access)
+        task_brief = run.payload.get("task_brief", {})
+        scope_identity_only = bool(
+            isinstance(task_brief, dict)
+            and task_brief.get("scope_identity_only_authoring_allowed")
+        )
         allowed_fact_refs = {
             str(row["fact_id"])
             for row in materials.get("verified_precise_facts", [])
             if isinstance(row, dict)
-            and row.get("fact_kind") != "AUTHORIZATION"
+            and (row.get("fact_kind") != "AUTHORIZATION" or scope_identity_only)
             and isinstance(row.get("fact_id"), str)
         }
         allowed_material_refs = set(materials["retrieval_fragment_refs"])
-        task_brief = run.payload.get("task_brief", {})
+        source_corpus = self._source_corpus_by_ref(materials)
         expected_format = task_brief.get("content_format") if isinstance(task_brief, dict) else None
         candidates: list[JsonObject] = []
         validations: list[JsonObject] = []
         labels: set[str] = set()
+        architectures: set[str] = set()
         core_ideas: set[str] = set()
         creative_signatures: set[str] = set()
+        comparison_texts: list[str] = []
         for ordinal, candidate in enumerate(envelope.candidates, 1):
             if candidate.difference_label in labels:
                 return reject(output)
             labels.add(candidate.difference_label)
+            if candidate.narrative_architecture in architectures:
+                return reject(output)
+            architectures.add(candidate.narrative_architecture)
             production = candidate.surfaces.execution_payload
             core_ideas.add(production.core_idea.strip())
             creative_signatures.add(
@@ -1005,20 +1473,42 @@ class Package7Runtime:
                 candidate.used_material_refs
             ).issubset(allowed_material_refs):
                 return reject(output)
-            if not candidate.used_material_refs:
+            if not candidate.used_material_refs and not candidate.used_fact_refs:
                 return reject(output)
+            if not candidate.used_material_refs and not scope_identity_only:
+                return reject(output)
+            effective_claim_bindings = self._resolve_claim_bindings(
+                candidate,
+                allowed_fact_refs=allowed_fact_refs,
+                allowed_material_refs=allowed_material_refs,
+                source_corpus=source_corpus,
+                trusted_task_text=json.dumps(task_brief, ensure_ascii=False, sort_keys=True),
+            )
+            if effective_claim_bindings is None:
+                return reject(output)
+            comparison_texts.append(self._candidate_comparison_text(candidate))
             candidate_id = f"CAND-{run.run_id[-16:]}-{ordinal}"
             payload = {
                 "candidate_id": candidate_id,
                 "candidate_version": 1,
                 "difference_label": candidate.difference_label,
+                "narrative_architecture": candidate.narrative_architecture,
                 "difference_dimensions": list(candidate.difference_dimensions),
                 "candidate_user_visible_surfaces": candidate.surfaces.model_dump(),
+                "claim_bindings": effective_claim_bindings,
+                "author_declared_claim_bindings": [
+                    row.model_dump() for row in candidate.claim_bindings
+                ],
                 "used_fact_refs": list(candidate.used_fact_refs),
                 "used_material_refs": list(candidate.used_material_refs),
                 "evidence_panel": {
                     "used_fact_count": len(candidate.used_fact_refs),
                     "used_material_count": len(candidate.used_material_refs),
+                    "surface_claim_binding_count": len(effective_claim_bindings),
+                    "author_declared_claim_binding_count": len(candidate.claim_bindings),
+                    "server_derived_claim_binding_count": (
+                        len(effective_claim_bindings) - len(candidate.claim_bindings)
+                    ),
                     "scope_and_authorization_checked": True,
                     "semantic_fact_review": "待人工确认",
                     "pending_confirmation": [],
@@ -1043,6 +1533,12 @@ class Package7Runtime:
         if (
             len(core_ideas) != len(envelope.candidates)
             or len(creative_signatures) != len(envelope.candidates)
+        ):
+            return reject(output)
+        if any(
+            SequenceMatcher(None, left, right, autojunk=False).ratio() >= 0.90
+            for index, left in enumerate(comparison_texts)
+            for right in comparison_texts[index + 1 :]
         ):
             return reject(output)
         if any(row.get("decision") != "PASS" for row in validations):
@@ -1094,10 +1590,42 @@ class Package7Runtime:
             prefix = "推荐候选" if ordinal == 1 else f"备选{ordinal - 1}"
             blocks.append(
                 f"\n【{prefix}】\n{surfaces['title']}\n{surfaces['body']}\n"
-                f"方向：{package['content_direction']}\n核心创意：{package['core_idea']}"
+                f"方向：{package['content_direction']}\n核心创意：{package['core_idea']}\n"
+                f"{Package7Runtime._format_production_package(package)}\n"
+                f"依据：{candidate['evidence_panel']['used_material_count']}份资料、"
+                f"{candidate['evidence_panel']['used_fact_count']}项精确事实；"
+                "范围已检查，正文语义待人工确认。"
             )
         blocks.append("\n可以选择第1、2或3份，也可以说明想局部修改哪里。")
         return "\n".join(blocks)
+
+    @staticmethod
+    def _format_production_package(package: JsonObject) -> str:
+        if package.get("production_format") == "短视频":
+            shots = package.get("video", {}).get("shots", [])
+            lines = ["分镜："]
+            for index, shot in enumerate(shots, 1):
+                lines.append(
+                    f"{index}. {shot['time_range']}｜{shot['visual']}｜{shot['camera']}｜"
+                    f"声音：{shot['audio']}"
+                )
+            return "\n".join(lines)
+        if package.get("production_format") == "图文":
+            frames = package.get("article", {}).get("frames", [])
+            lines = ["图片顺序与配文："]
+            for frame in frames:
+                lines.append(
+                    f"{frame['order']}. {frame['image_brief']}｜{frame['accompanying_copy']}"
+                )
+            return "\n".join(lines)
+        display = package.get("display", {})
+        return (
+            "陈列执行：\n"
+            f"关系：{display.get('arrangement_relationship', '')}\n"
+            f"层次：{display.get('spatial_layers', '')}\n"
+            f"颜色：{display.get('color_relationship', '')}\n"
+            f"待核对：{display.get('availability_caution', '')}"
+        )
 
     def _review_selected(self, account_id: str) -> JsonObject:
         selected = self.repository.selected_candidate(account_id)
@@ -1105,7 +1633,11 @@ class Package7Runtime:
             return self._plain_action("BLOCK")
         return {
             "response_kind": "DIRECT",
-            "user_visible_text": "结构、范围和引用检查已通过；正文事实语义仍需人工确认，当前不可直接发布。",
+            "user_visible_text": (
+                f"审核状态\n已核对范围和引用结构。使用"
+                f"{len(selected.used_material_refs)}份资料、{len(selected.used_fact_refs)}项精确事实。\n"
+                "事实与来源语义：待人工确认。\n发布状态：内部测试，不可直接发布。"
+            ),
         }
 
     def _export_selected(self, account_id: str) -> JsonObject:
@@ -1114,11 +1646,15 @@ class Package7Runtime:
             return self._plain_action("BLOCK")
         surfaces = selected.candidate_payload["candidate_user_visible_surfaces"]
         package = surfaces["execution_payload"]
+        spoken = "\n".join(f"- {line}" for line in surfaces.get("spoken_lines", []))
         return {
             "response_kind": "DIRECT",
             "user_visible_text": (
-                f"{surfaces['title']}\n\n{surfaces['body']}\n\n"
-                f"制作包：\n{json.dumps(package, ensure_ascii=False, indent=2)}\n\n"
+                f"标题\n{surfaces['title']}\n\n正文\n{surfaces['body']}\n\n"
+                f"口播\n{spoken or '无单独口播'}\n\n"
+                f"结尾\n{surfaces.get('CTA') or package['ending_and_action']}\n\n"
+                f"制作安排\n{self._format_production_package(package)}\n\n"
+                f"发布辅助文案\n{package['publishing_copy']}\n\n"
                 "内部测试稿，不可直接发布。"
             ),
         }
@@ -1129,9 +1665,22 @@ class Package7Runtime:
             return self._plain_action("BLOCK")
         rows = self.repository.narrative_fragments(list(selected.used_material_refs))
         facts = {row["fact_id"]: row for row in self.repository.precise_facts()}
-        labels = [f"资料记录时间：{row['observed_at'][:10]}" for row in rows]
+        labels = [
+            f"资料{index}｜品牌资料｜记录于 {str(row.get('observed_at', ''))[:10]}｜当前范围可用"
+            for index, row in enumerate(rows, 1)
+        ]
+        fact_labels = {
+            "SKU": "商品编号",
+            "SPECIFICATION": "商品规格",
+            "PRICE": "价格",
+            "STOCK": "库存",
+            "TIME_POINT": "时间点",
+            "AUTHORIZATION": "账号身份与范围",
+            "REVOCATION": "撤回状态",
+        }
         labels.extend(
-            f"精确事实：{facts[ref]['fact_kind']}，生效时间 {facts[ref]['effective_at'][:10]}"
+            f"精确事实｜{fact_labels.get(str(facts[ref]['fact_kind']), '已确认记录')}｜"
+            f"生效于 {str(facts[ref]['effective_at'])[:10]}｜当前范围可用"
             for ref in selected.used_fact_refs
             if ref in facts
         )
@@ -1294,6 +1843,29 @@ class Package7Runtime:
         ]
         queries.extend(row.model_dump() for row in request.precise_fact_requests)
         return queries
+
+    @staticmethod
+    def _scope_identity_only_request(request: BridgePrepareRequest) -> bool:
+        """Allow a narrow account-introduction task without narrative material."""
+
+        text = " ".join(
+            value
+            for value in (request.message, request.content_goal, request.key_takeaway)
+            if isinstance(value, str)
+        )
+        return any(
+            phrase in text
+            for phrase in (
+                "账号介绍",
+                "账号说明",
+                "账号身份",
+                "账号范围",
+                "内容边界",
+                "能讲什么",
+                "可以讲什么",
+                "内容原则",
+            )
+        )
 
     @staticmethod
     def _rhythm_for_duration(duration_label: str) -> str:

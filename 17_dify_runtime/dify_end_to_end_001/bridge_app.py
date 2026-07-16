@@ -81,10 +81,14 @@ def build_runtime() -> tuple[Package7Runtime, RuntimeRepository, DifyChatClient]
         not isinstance(key, str)
         or not isinstance(value, dict)
         or not isinstance(value.get("document_id"), str)
+        or not isinstance(value.get("source_content_sha256"), str)
         or not isinstance(value.get("index_content_sha256"), str)
         for key, value in document_mapping.items()
     ):
         raise RuntimeError("The Dify fragment mapping is invalid")
+    mapping_digest = state.get("fragment_document_mapping_digest") if isinstance(state, dict) else None
+    if not isinstance(mapping_digest, str) or mapping_digest != digest_object(document_mapping):
+        raise RuntimeError("The Dify fragment mapping digest is invalid")
     dataset_api_token = state.get("dataset_api_token") if isinstance(state, dict) else None
     app_api_token = state.get("app_api_token") if isinstance(state, dict) else None
     if not isinstance(dataset_api_token, str) or len(dataset_api_token) < 16:
@@ -232,10 +236,11 @@ def create_app(
             session = _portal_session(signing_key)
             payload = PortalTaskRequest.model_validate(request.get_json(force=True, silent=False))
             principal_id = str(session["principal_id"])
-            runtime_request = _portal_inputs(payload, session, active_repository)
-            account = active_repository.account_by_display_name(payload.account_display_name)
-            if account is None:
-                raise RuntimeContractError("Portal account disappeared after scope validation")
+            runtime_request = _portal_inputs(payload, principal_id, active_repository)
+            _, account = active_repository.require_active_scope_by_display_name(
+                principal_id,
+                payload.account_display_name,
+            )
             conversation_scope = account.account_id
             user_key = hashlib.sha256(
                 f"package7-dify-user:{principal_id}:{conversation_scope}".encode("utf-8")
@@ -259,6 +264,7 @@ def create_app(
                         ),
                         "author_prompt": "",
                     },
+                    reuse_conversation=False,
                 )
                 runtime_request["selected_content_product_id"] = _selected_product(
                     classifier["answer"]
@@ -302,6 +308,8 @@ def create_app(
                         separators=(",", ":"),
                     ),
                 },
+                reuse_conversation=runtime_request["operation"]
+                in {"普通聊天", "找灵感"},
             )
             finalized = active_runtime.finalize_model_output(
                 run_id,
@@ -366,13 +374,16 @@ def _portal_session(signing_key: str) -> JsonObject:
 
 def _portal_inputs(
     payload: PortalTaskRequest,
-    session: JsonObject,
+    principal_id: str,
     repository: RuntimeRepository,
 ) -> JsonObject:
-    account = repository.account_by_display_name(payload.account_display_name)
-    allowed = set(str(value) for value in session["allowed_account_ids"])
-    if account is None or account.status != "ACTIVE" or account.account_id not in allowed:
-        raise RuntimeContractError("Portal account is outside the session scope")
+    try:
+        _, account = repository.require_active_scope_by_display_name(
+            principal_id,
+            payload.account_display_name,
+        )
+    except ValueError as exc:
+        raise RuntimeContractError("Portal account is outside the current scope") from exc
     previous_ref = None
     if payload.continue_previous or payload.operation == "继续一个系列":
         previous = repository.latest_candidate(account.account_id)

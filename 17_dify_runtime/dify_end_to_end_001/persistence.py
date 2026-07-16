@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from sqlalchemy import Engine, create_engine, select
+from sqlalchemy import Engine, create_engine, inspect, select, text
 from sqlalchemy.orm import Session, sessionmaker
 
 
@@ -165,6 +165,18 @@ class RuntimeRepository:
 
     def initialize_schema(self, engine: Engine) -> None:
         Base.metadata.create_all(engine)
+        fragment_columns = {
+            str(column["name"])
+            for column in inspect(engine).get_columns("runtime_narrative_fragments")
+        }
+        if "index_content_digest" not in fragment_columns:
+            with engine.begin() as connection:
+                connection.execute(
+                    text(
+                        "ALTER TABLE runtime_narrative_fragments "
+                        "ADD COLUMN index_content_digest VARCHAR(64)"
+                    )
+                )
 
     def principal_by_username(self, username: str) -> RuntimePrincipal | None:
         with self.sessions() as session:
@@ -181,6 +193,50 @@ class RuntimeRepository:
     def account_by_id(self, account_id: str) -> RuntimeAccount | None:
         with self.sessions() as session:
             return session.get(RuntimeAccount, account_id)
+
+    def require_active_scope(
+        self,
+        principal_id: str,
+        account_id: str,
+    ) -> tuple[RuntimePrincipal, RuntimeAccount]:
+        """Revalidate server-owned identity and account scope in one transaction."""
+
+        with self.sessions() as session:
+            principal = session.get(RuntimePrincipal, principal_id)
+            account = session.get(RuntimeAccount, account_id)
+            if (
+                principal is None
+                or principal.status != "ACTIVE"
+                or account is None
+                or account.status != "ACTIVE"
+                or principal.tenant_id != account.tenant_id
+                or account_id not in principal.allowed_account_ids
+            ):
+                raise ValueError("Current principal and account scope is not active")
+            return principal, account
+
+    def require_active_scope_by_display_name(
+        self,
+        principal_id: str,
+        display_name: str,
+    ) -> tuple[RuntimePrincipal, RuntimeAccount]:
+        """Resolve an account label and revalidate it against current authority."""
+
+        with self.sessions() as session:
+            principal = session.get(RuntimePrincipal, principal_id)
+            account = session.scalar(
+                select(RuntimeAccount).where(RuntimeAccount.display_name == display_name)
+            )
+            if (
+                principal is None
+                or principal.status != "ACTIVE"
+                or account is None
+                or account.status != "ACTIVE"
+                or principal.tenant_id != account.tenant_id
+                or account.account_id not in principal.allowed_account_ids
+            ):
+                raise ValueError("Current principal and account scope is not active")
+            return principal, account
 
     def all_accounts(self) -> tuple[RuntimeAccount, ...]:
         with self.sessions() as session:
@@ -228,15 +284,22 @@ class RuntimeRepository:
                 if row is None:
                     raise RuntimeError("unreachable")
                 document_id = binding.get("document_id")
+                source_digest = binding.get("source_content_sha256")
                 index_digest = binding.get("index_content_sha256")
                 if (
                     not isinstance(document_id, str)
+                    or not isinstance(source_digest, str)
                     or not isinstance(index_digest, str)
+                    or len(source_digest) != 64
                     or len(index_digest) != 64
+                    or any(character not in "0123456789abcdef" for character in source_digest)
+                    or any(character not in "0123456789abcdef" for character in index_digest)
                 ):
                     raise ValueError("Dify document binding is invalid")
+                if source_digest != row.content_digest:
+                    raise ValueError("Dify document binding does not match the frozen source text")
                 row.dify_document_id = document_id
-                row.content_digest = index_digest
+                row.index_content_digest = index_digest
                 row.updated_at = utc_now()
 
     def set_fragment_state(
@@ -311,6 +374,7 @@ class RuntimeRepository:
         response_digest: str,
         dify_user_key: str,
         conversation_id: str,
+        persist_conversation: bool = True,
     ) -> None:
         if not dify_user_key or not conversation_id:
             raise ValueError("Dify conversation binding is incomplete")
@@ -326,31 +390,32 @@ class RuntimeRepository:
                 or account_id not in principal.allowed_account_ids
             ):
                 raise ValueError("Dify conversation account is outside the principal scope")
-            binding = session.scalar(
-                select(RuntimeDifyConversation)
-                .where(
-                    RuntimeDifyConversation.principal_id == row.principal_id,
-                    RuntimeDifyConversation.account_id == account_id,
-                )
-                .with_for_update()
-            )
-            if binding is None:
-                now = utc_now()
-                session.add(
-                    RuntimeDifyConversation(
-                        principal_id=row.principal_id,
-                        account_id=account_id,
-                        dify_user_key=dify_user_key,
-                        conversation_id=conversation_id,
-                        created_at=now,
-                        updated_at=now,
+            if persist_conversation:
+                binding = session.scalar(
+                    select(RuntimeDifyConversation)
+                    .where(
+                        RuntimeDifyConversation.principal_id == row.principal_id,
+                        RuntimeDifyConversation.account_id == account_id,
                     )
+                    .with_for_update()
                 )
-            elif (
-                binding.dify_user_key != dify_user_key
-                or binding.conversation_id != conversation_id
-            ):
-                raise ValueError("Dify conversation identity changed unexpectedly")
+                if binding is None:
+                    now = utc_now()
+                    session.add(
+                        RuntimeDifyConversation(
+                            principal_id=row.principal_id,
+                            account_id=account_id,
+                            dify_user_key=dify_user_key,
+                            conversation_id=conversation_id,
+                            created_at=now,
+                            updated_at=now,
+                        )
+                    )
+                elif (
+                    binding.dify_user_key != dify_user_key
+                    or binding.conversation_id != conversation_id
+                ):
+                    raise ValueError("Dify conversation identity changed unexpectedly")
             row.state = "SUCCEEDED"
             row.prompt_tokens = int(usage.get("prompt_tokens", 0))
             row.completion_tokens = int(usage.get("completion_tokens", 0))
@@ -691,6 +756,31 @@ class RuntimeRepository:
         with self.sessions() as session:
             row = session.get(RuntimeCandidate, candidate_id)
             return row is not None and row.account_id == account_id
+
+    def candidate_context(self, candidate_id: str, account_id: str) -> JsonObject:
+        """Return a minimal continuity projection, never a new fact source."""
+
+        with self.sessions() as session:
+            row = session.get(RuntimeCandidate, candidate_id)
+            if row is None or row.account_id != account_id:
+                raise ValueError("Previous candidate is outside the current account")
+            surfaces = row.candidate_payload.get("candidate_user_visible_surfaces", {})
+            production = surfaces.get("execution_payload", {}) if isinstance(surfaces, dict) else {}
+            return {
+                "title": str(surfaces.get("title", "")) if isinstance(surfaces, dict) else "",
+                "core_idea": str(production.get("core_idea", "")) if isinstance(production, dict) else "",
+                "content_direction": (
+                    str(production.get("content_direction", ""))
+                    if isinstance(production, dict)
+                    else ""
+                ),
+                "ending_and_action": (
+                    str(production.get("ending_and_action", ""))
+                    if isinstance(production, dict)
+                    else ""
+                ),
+                "continuity_only_not_a_fact_source": True,
+            }
 
     def latest_candidate(self, account_id: str) -> RuntimeCandidate | None:
         with self.sessions() as session:

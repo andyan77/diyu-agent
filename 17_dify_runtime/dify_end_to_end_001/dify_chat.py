@@ -50,6 +50,7 @@ class DifyChatClient:
         user_key: str,
         query: str,
         inputs: JsonObject,
+        reuse_conversation: bool = True,
     ) -> JsonObject:
         self.repository.reserve_dify_invocation(
             invocation_id=invocation_id,
@@ -57,7 +58,11 @@ class DifyChatClient:
             model_call_upper_bound=1,
             maximum_model_calls=self.maximum_model_calls,
         )
-        binding = self.repository.dify_conversation(principal_id, conversation_scope)
+        binding = (
+            self.repository.dify_conversation(principal_id, conversation_scope)
+            if reuse_conversation
+            else None
+        )
         effective_user_key = user_key if binding is None else binding[0]
         conversation_id = "" if binding is None else binding[1]
         payload = {
@@ -115,6 +120,7 @@ class DifyChatClient:
             response_digest=digest_object(public_result),
             dify_user_key=effective_user_key,
             conversation_id=response_conversation_id,
+            persist_conversation=reuse_conversation,
         )
         return public_result
 

@@ -303,8 +303,8 @@ def validate_external_evidence(evidence: JsonObject) -> None:
     counts = cast(Mapping[str, Any], database.get("row_counts", {}))
     require(counts.get("content_accounts") == 11, "E_ACCOUNT_ROWS")
     require(counts.get("narrative_fragments") == 29, "E_FRAGMENT_ROWS")
-    require(counts.get("dify_invocations") == 46, "E_INVOCATION_ROWS")
-    require(counts.get("dify_conversations") == 4, "E_CONVERSATION_ROWS")
+    require(counts.get("dify_invocations") == 79, "E_INVOCATION_ROWS")
+    require(counts.get("dify_conversations") == 5, "E_CONVERSATION_ROWS")
     isolation = cast(Mapping[str, Any], evidence.get("bridge_isolation", {}))
     require(isolation.get("container_name") == "diyu-package7-bridge", "E_CONTAINER")
     require(isolation.get("container_user") == "1001:1001", "E_CONTAINER_USER")
@@ -326,7 +326,7 @@ def validate_external_evidence(evidence: JsonObject) -> None:
     require(portal.get("content_account_option_count") == 11, "E_PORTAL_ACCOUNTS")
     continuity = cast(Mapping[str, Any], evidence.get("continuous_dialogue", {}))
     require(continuity.get("binding_scope") == "principal plus content account", "E_EXTERNAL_CONTINUITY_SCOPE")
-    require(continuity.get("binding_count") == continuity.get("distinct_scope_count") == continuity.get("distinct_conversation_id_count") == 4, "E_CONVERSATION_UNIQUENESS")
+    require(continuity.get("binding_count") == continuity.get("distinct_scope_count") == continuity.get("distinct_conversation_id_count") == 5, "E_CONVERSATION_UNIQUENESS")
     for key in ("second_turn_recalled_marker", "marker_declared_not_brand_fact", "dify_conversation_id_reused", "sanitized_runtime_context_used", "failed_preceding_attempts_retained_in_model_audit"):
         require(continuity.get(key) is True, f"E_CONTINUITY:{key}")
     for key in ("raw_provider_reasoning_reused_as_context", "cross_account_context_visible", "publish_allowed"):
@@ -349,6 +349,11 @@ def validate_candidate_record(record: JsonObject, expected_format: str, payload_
     validation = cast(Mapping[str, Any], record.get("validation", {}))
     require(isinstance(record.get("ordinal"), int), "E_CANDIDATE_ORDINAL")
     require(record.get("selected") is False, "E_CANDIDATE_PRESELECTED")
+    require(
+        candidate.get("narrative_architecture")
+        in {"EVIDENCE_FIRST", "QUESTION_ANSWER", "OBJECT_OR_TIMELINE"},
+        "E_CANDIDATE_ARCHITECTURE",
+    )
     require(isinstance(candidate.get("difference_dimensions"), list) and len(candidate["difference_dimensions"]) >= 2, "E_CANDIDATE_DIFFERENCE")
     fact_refs = candidate.get("used_fact_refs")
     material_refs = candidate.get("used_material_refs")
@@ -363,6 +368,75 @@ def validate_candidate_record(record: JsonObject, expected_format: str, payload_
     require(isinstance(surfaces.get("title"), str) and bool(surfaces["title"].strip()), "E_TITLE")
     require(isinstance(surfaces.get("body"), str) and bool(surfaces["body"].strip()), "E_BODY")
     require(isinstance(surfaces.get("spoken_lines"), list), "E_SPOKEN_LINES")
+    bindings = candidate.get("claim_bindings")
+    require(isinstance(bindings, list) and bool(bindings), "E_CLAIM_BINDINGS")
+    author_bindings = candidate.get("author_declared_claim_bindings")
+    require(
+        isinstance(author_bindings, list) and bool(author_bindings),
+        "E_AUTHOR_CLAIM_BINDINGS",
+    )
+
+    surface_text: dict[str, str] = {}
+
+    def visit_surface(value: object, path: str) -> None:
+        if isinstance(value, str):
+            normalized = value.strip()
+            if normalized:
+                surface_text[path] = normalized
+            return
+        if isinstance(value, list):
+            for index, child in enumerate(value):
+                visit_surface(child, f"{path}[{index}]")
+            return
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if key != "surface_units":
+                    visit_surface(child, f"{path}.{key}" if path else str(key))
+
+    visit_surface(surfaces, "")
+    binding_paths = [
+        row.get("surface_path") for row in bindings if isinstance(row, dict)
+    ]
+    require(len(binding_paths) == len(bindings) == len(set(binding_paths)), "E_CLAIM_BINDING_PATHS")
+    require(set(binding_paths) == set(surface_text), "E_CLAIM_SURFACE_COVERAGE")
+    for row in bindings:
+        require(isinstance(row, dict), "E_CLAIM_BINDING_ROW")
+        path = row.get("surface_path")
+        require(
+            isinstance(path, str) and row.get("exact_text") == surface_text.get(path),
+            "E_CLAIM_BINDING_EXACT_TEXT",
+        )
+        require(
+            row.get("binding_origin")
+            in {
+                "AUTHOR_DECLARED",
+                "EXACT_TEXT_INHERITED",
+                "SERVER_STRUCTURAL_FIELD",
+                "SERVER_PATH_CLASSIFICATION",
+                "SERVER_PENDING_SOURCE_REVIEW",
+            },
+            "E_CLAIM_BINDING_ORIGIN",
+        )
+    declared_paths = {
+        row.get("surface_path") for row in author_bindings if isinstance(row, dict)
+    }
+    required_declared_paths = {
+        path
+        for path in surface_text
+        if path in {"title", "body", "CTA"} or path.startswith("spoken_lines[")
+    }
+    require(
+        required_declared_paths.issubset(declared_paths),
+        "E_AUTHOR_ROOT_CLAIM_COVERAGE",
+    )
+    cited_refs = {
+        ref
+        for row in bindings
+        if isinstance(row, dict) and row.get("claim_class") == "SOURCE_CLAIM"
+        for ref in cast(list[Any], row.get("source_refs", []))
+        if isinstance(ref, str)
+    }
+    require(cited_refs == set(fact_refs) | set(material_refs), "E_CLAIM_REF_CLOSURE")
     payload = cast(Mapping[str, Any], surfaces.get("execution_payload", {}))
     require(payload.get("production_format") == expected_format, "E_PRODUCTION_FORMAT")
     require(isinstance(payload.get(payload_key), dict), f"E_FORMAT_PAYLOAD:{payload_key}")
@@ -380,7 +454,7 @@ def validate_model_evidence(evidence: JsonObject) -> None:
     budget = cast(Mapping[str, Any], evidence.get("founder_budget_authorization", {}))
     require(budget == {"additional_request_upper_bound": 60, "cost_cny_upper_bound": 50, "effective_request_upper_bound": 100, "original_request_upper_bound": 40}, "E_MODEL_AUTHORIZATION")
     audit = cast(Mapping[str, Any], evidence.get("invocation_audit", {}))
-    require(audit.get("invocation_count") == 46, "E_MODEL_INVOCATIONS")
+    require(audit.get("invocation_count") == 79, "E_MODEL_INVOCATIONS")
     require(isinstance(audit.get("model_call_upper_bound"), int) and 0 < audit["model_call_upper_bound"] <= 100, "E_MODEL_CALL_BOUND")
     require(audit.get("request_upper_bound_within_authorization") is True, "E_MODEL_BUDGET_CLAIM")
     try:
@@ -389,11 +463,11 @@ def validate_model_evidence(evidence: JsonObject) -> None:
         raise CheckFailure("E_MODEL_COST") from exc
     require(known_cost <= Decimal("50"), "E_MODEL_COST_BOUND")
     require(audit.get("known_cost_within_authorization") is True, "E_MODEL_COST_CLAIM")
-    require(evidence.get("run_count") == 23, "E_RUN_COUNT")
+    require(evidence.get("run_count") == 39, "E_RUN_COUNT")
     distribution = cast(Mapping[str, Any], evidence.get("run_state_distribution", {}))
-    require(sum(int(value) for value in distribution.values()) == 23, "E_RUN_DISTRIBUTION")
+    require(sum(int(value) for value in distribution.values()) == 39, "E_RUN_DISTRIBUTION")
     require(int(distribution.get("FIRST_OUTPUT_REJECTED", 0)) >= 1, "E_FAILED_OUTPUTS_NOT_RETAINED")
-    require(isinstance(evidence.get("run_index"), list) and len(evidence["run_index"]) == 23, "E_RUN_INDEX")
+    require(isinstance(evidence.get("run_index"), list) and len(evidence["run_index"]) == 39, "E_RUN_INDEX")
     representative = cast(Mapping[str, Any], evidence.get("representative_first_outputs", {}))
     require(set(representative) == set(EXPECTED_FORMATS), "E_REPRESENTATIVE_FORMATS")
     for key, (expected_format, payload_key) in EXPECTED_FORMATS.items():
@@ -460,8 +534,19 @@ def validate_dify_graph(root: Path) -> None:
     require(workflow.get("environment_variables") == [], "E_DIFY_SECRET_VARIABLE")
 
 
-def validate_source_boundaries(root: Path) -> None:
-    source = {path.name: path.read_text(encoding="utf-8") for path in root.glob("*.py")}
+def validate_source_boundaries(
+    root: Path,
+    source_override: Mapping[str, str] | None = None,
+) -> None:
+    source = (
+        dict(source_override)
+        if source_override is not None
+        else {
+            path.name: path.read_text(encoding="utf-8")
+            for path in root.glob("*.py")
+            if path.name != Path(__file__).name
+        }
+    )
     all_source = "\n".join(source.values())
     require("order_by(App.created_at" not in source["provision_dify.py"], "E_OLDEST_APP_OWNER_INFERENCE")
     for token in ("PACKAGE7_APPROVED_DIFY_TENANT_ID", "PACKAGE7_APPROVED_DIFY_OWNER_ACCOUNT_ID"):
@@ -470,17 +555,46 @@ def validate_source_boundaries(root: Path) -> None:
     for token in ("UniqueConstraint(", '"principal_id"', '"account_id"', "uq_runtime_dify_conversation_scope"):
         require(token in models, f"E_CONVERSATION_MODEL:{token}")
     persistence = source["persistence.py"]
-    for token in ("def dify_conversation(self, principal_id: str, account_id: str)", "def recent_chat_turns(", "RuntimeDifyConversation.account_id == account_id"):
+    for token in (
+        "def dify_conversation(self, principal_id: str, account_id: str)",
+        "def recent_chat_turns(",
+        "RuntimeDifyConversation.account_id == account_id",
+        "def require_active_scope(",
+        "if source_digest != row.content_digest",
+        "row.index_content_digest = index_digest",
+        "continuity_only_not_a_fact_source",
+    ):
         require(token in persistence, f"E_CONVERSATION_PERSISTENCE:{token}")
     runtime = source["runtime_service.py"]
-    for token in ("conversation_context", "recent_chat_turns", "不能增加任何品牌事实"):
+    for token in (
+        "conversation_context",
+        "recent_chat_turns",
+        "previous_content_context",
+        "claim_bindings",
+        "_claim_bindings_are_closed",
+    ):
         require(token in runtime, f"E_SANITIZED_CONTINUITY:{token}")
     chat = source["dify_chat.py"]
     require("maximum_model_calls > 100" in chat, "E_MODEL_BUDGET_HARD_CAP")
     require("dify_conversation(principal_id, conversation_scope)" in chat, "E_DIFY_CONVERSATION_SCOPE")
+    require("if reuse_conversation" in chat, "E_DIFY_TASK_CONVERSATION_ISOLATION")
     bridge = source["bridge_app.py"]
     require("package7-dify-user:{principal_id}:{conversation_scope}" in bridge, "E_DIFY_USER_SCOPE")
     require("query=payload.message" in bridge, "E_CHAT_QUERY_NOT_REAL")
+    require("require_active_scope_by_display_name" in bridge, "E_PORTAL_CURRENT_AUTHORITY")
+    require(bridge.count("reuse_conversation=False") == 1, "E_CLASSIFIER_FRESH_CONVERSATION")
+    require(
+        'in {"普通聊天", "找灵感"}' in bridge,
+        "E_CHAT_ONLY_CONTINUOUS_CONVERSATION",
+    )
+    provision = source["provision_dify.py"]
+    for token in (
+        "The locked Package 7 Dify application owner drifted",
+        "The Package 7 Dify application is not unique",
+        "The locked Package 7 Dify dataset drifted",
+        "The Package 7 Dify dataset is not unique",
+    ):
+        require(token in provision, f"E_SINGLE_OBJECT_LOCK:{token}")
     for forbidden in ("import openai", "from openai", "import anthropic", "from anthropic", "api.deepseek.com"):
         require(forbidden not in all_source, f"E_DIRECT_PROVIDER:{forbidden}")
     for path in root.rglob("*"):
@@ -672,8 +786,7 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     expect_failure(lambda: validate_model_evidence(changed), "E_MODEL_CALL_BOUND")
 
     changed = copy.deepcopy(model)
-    first_format = next(iter(EXPECTED_FORMATS))
-    changed["representative_first_outputs"][first_format]["candidates"][0]["candidate"]["used_material_refs"] = []
+    changed["representative_first_outputs"]["display"]["candidates"][0]["candidate"]["used_material_refs"] = []
     expect_failure(lambda: validate_model_evidence(changed), "E_MATERIAL_REF_MISMATCH")
 
     changed = copy.deepcopy(result)
@@ -698,10 +811,24 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
         "E_OLDEST_APP_OWNER_INFERENCE",
     )
 
+    source_map = {
+        path.name: path.read_text(encoding="utf-8")
+        for path in root.glob("*.py")
+        if path.name != Path(__file__).name
+    }
+    source_map["persistence.py"] = source_map["persistence.py"].replace(
+        "continuity_only_not_a_fact_source",
+        "continuity_boundary_removed",
+    )
+    expect_failure(
+        lambda: validate_source_boundaries(root, source_map),
+        "E_CONVERSATION_PERSISTENCE:continuity_only_not_a_fact_source",
+    )
+
     return {
         "task_id": TASK_ID,
         "selftest": "PASS",
-        "negative_case_count": 10,
+        "negative_case_count": 11,
         "optimized_mode_fail_closed": True,
     }
 

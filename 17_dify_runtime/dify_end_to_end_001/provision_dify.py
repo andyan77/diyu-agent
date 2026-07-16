@@ -132,14 +132,21 @@ def main() -> int:
                 if isinstance(locked_owner_id, str)
                 else "CURRENT_PACKAGE7_APP_ONE_TIME_LOCK"
             )
+            if str(existing_app.created_by) != str(owner_account_id):
+                raise RuntimeError("The locked Package 7 Dify application owner drifted")
         else:
             tenant_id = os.environ.get("PACKAGE7_APPROVED_DIFY_TENANT_ID")
             owner_account_id = os.environ.get("PACKAGE7_APPROVED_DIFY_OWNER_ACCOUNT_ID")
             if not tenant_id or not owner_account_id:
                 raise RuntimeError("An explicit Package 7 Dify workspace and owner are required")
-            existing_app = db.session.scalar(
-                select(App).where(App.tenant_id == tenant_id, App.name == APP_NAME).limit(1)
+            matching_apps = list(
+                db.session.scalars(
+                    select(App).where(App.tenant_id == tenant_id, App.name == APP_NAME)
+                ).all()
             )
+            if len(matching_apps) > 1:
+                raise RuntimeError("Multiple Package 7 Dify applications exist")
+            existing_app = matching_apps[0] if matching_apps else None
             if existing_app is not None and str(existing_app.created_by) != owner_account_id:
                 raise RuntimeError("The approved Package 7 Dify owner does not own the existing app")
             owner_binding_source = "EXPLICIT_OPERATOR_APPROVAL"
@@ -163,6 +170,13 @@ def main() -> int:
             raise RuntimeError("Imported Dify app is missing")
         if locked_app_id is not None and str(app_model.id) != locked_app_id:
             raise RuntimeError("The Package 7 Dify application identity changed")
+        app_name_matches = list(
+            db.session.scalars(
+                select(App).where(App.tenant_id == tenant_id, App.name == APP_NAME)
+            ).all()
+        )
+        if len(app_name_matches) != 1 or str(app_name_matches[0].id) != str(app_model.id):
+            raise RuntimeError("The Package 7 Dify application is not unique")
         if not hasattr(app_model, "enable_site") or not hasattr(app_model, "enable_api"):
             raise RuntimeError("This Dify version cannot enforce an API-only Package 7 app")
         app_model.enable_site = False
@@ -195,9 +209,30 @@ def main() -> int:
         if published_workflow is None or app_model.workflow_id != published_workflow.id:
             raise RuntimeError("Published Package 7 workflow is not active")
 
-        dataset = db.session.scalar(
-            select(Dataset).where(Dataset.tenant_id == tenant_id, Dataset.name == DATASET_NAME).limit(1)
+        locked_dataset_id = locked_state.get("dataset_id")
+        dataset = (
+            db.session.get(Dataset, locked_dataset_id)
+            if isinstance(locked_dataset_id, str)
+            else None
         )
+        if locked_dataset_id is not None and (
+            dataset is None
+            or dataset.name != DATASET_NAME
+            or str(dataset.tenant_id) != str(tenant_id)
+        ):
+            raise RuntimeError("The locked Package 7 Dify dataset drifted")
+        if dataset is None:
+            matching_datasets = list(
+                db.session.scalars(
+                    select(Dataset).where(
+                        Dataset.tenant_id == tenant_id,
+                        Dataset.name == DATASET_NAME,
+                    )
+                ).all()
+            )
+            if len(matching_datasets) > 1:
+                raise RuntimeError("Multiple Package 7 Dify datasets exist")
+            dataset = matching_datasets[0] if matching_datasets else None
         if dataset is None:
             dataset = DatasetService.create_empty_dataset(
                 tenant_id=tenant_id,
@@ -219,6 +254,16 @@ def main() -> int:
             db.session.commit()
         if not hasattr(dataset, "enable_api"):
             raise RuntimeError("This Dify version cannot enable the Package 7 dataset API")
+        dataset_name_matches = list(
+            db.session.scalars(
+                select(Dataset).where(
+                    Dataset.tenant_id == tenant_id,
+                    Dataset.name == DATASET_NAME,
+                )
+            ).all()
+        )
+        if len(dataset_name_matches) != 1 or str(dataset_name_matches[0].id) != str(dataset.id):
+            raise RuntimeError("The Package 7 Dify dataset is not unique")
         dataset.enable_api = True
         db.session.commit()
 
@@ -239,6 +284,9 @@ def main() -> int:
                 )
 
         fragments = _read_fragments(fragments_path)
+        fragment_by_id = {str(fragment["fragment_id"]): fragment for fragment in fragments}
+        if len(fragment_by_id) != len(fragments):
+            raise RuntimeError("Package 7 narrative fragments contain duplicate IDs")
         document_ids: dict[str, str] = {}
         for fragment in fragments:
             fragment_id = str(fragment["fragment_id"])
@@ -357,6 +405,13 @@ def main() -> int:
         mapping = {
             fragment_id: {
                 "document_id": document_id,
+                "source_content_sha256": hashlib.sha256(
+                    str(fragment_by_id[fragment_id]["text"])
+                    .replace("\r\n", "\n")
+                    .replace("\r", "\n")
+                    .strip()
+                    .encode("utf-8")
+                ).hexdigest(),
                 "index_content_sha256": hashlib.sha256(
                     str(segment_by_document[document_id].content)
                     .replace("\r\n", "\n")
@@ -406,6 +461,9 @@ def main() -> int:
             "app_api_token": token.token,
             "dataset_api_token": dataset_token.token,
             "fragment_document_ids": mapping,
+            "fragment_document_mapping_digest": hashlib.sha256(
+                _canonical_json(mapping).encode("utf-8")
+            ).hexdigest(),
             "app_name": APP_NAME,
             "dataset_name": DATASET_NAME,
             "simulation_only": True,

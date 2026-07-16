@@ -5,11 +5,21 @@ const workbench = document.querySelector("#workbench");
 const resultSection = document.querySelector("#result-section");
 const output = document.querySelector("#output");
 const taskForm = document.querySelector("#task-form");
+const productionFields = document.querySelector("#production-fields");
+const candidateFields = document.querySelector("#candidate-fields");
+const advancedFields = document.querySelector("#advanced-fields");
+const quickPrompts = document.querySelector("#quick-prompts");
 let options = null;
 
 const operationLabels = [
   "随便聊聊", "找点灵感", "直接做内容", "把已有内容改好", "继续一个系列",
   "选择候选", "审核", "导出", "查看来源", "提交反馈"
+];
+
+const promptSuggestions = [
+  {label: "从一个真实细节开始", text: "我只有一个细节，请先帮我找到最适合的内容方向。"},
+  {label: "讲清一个选择问题", text: "我想讲清一个用户选择问题，请先问我最关键的一项材料。"},
+  {label: "做账号范围介绍", text: "做一份账号介绍，只说明这个账号可以讲什么和内容边界。"}
 ];
 
 function fillSelect(name, values, includeBlank = false) {
@@ -24,6 +34,29 @@ function updateRoleAndColumn() {
   const storyline = taskForm.elements.storyline_name.value;
   fillSelect("speaker_role_name", options.roles_by_account[account] || [], true);
   fillSelect("column_name", options.columns_by_storyline[storyline] || [], true);
+}
+
+function updateTaskMode() {
+  const operation = taskForm.elements.operation.value;
+  const makesContent = ["直接做内容", "把已有内容改好", "继续一个系列"].includes(operation);
+  const needsCandidate = ["选择候选", "把已有内容改好"].includes(operation);
+  productionFields.classList.toggle("hidden", !makesContent);
+  advancedFields.classList.toggle("hidden", !makesContent);
+  candidateFields.classList.toggle("hidden", !needsCandidate);
+  quickPrompts.replaceChildren();
+  if (!["找点灵感", "直接做内容", "继续一个系列"].includes(operation)) return;
+  for (const suggestion of promptSuggestions) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "suggestion";
+    button.textContent = suggestion.label;
+    button.title = suggestion.text;
+    button.addEventListener("click", () => {
+      taskForm.elements.message.value = suggestion.text;
+      taskForm.elements.message.focus();
+    });
+    quickPrompts.append(button);
+  }
 }
 
 function activateWorkbench(value) {
@@ -48,6 +81,7 @@ function activateWorkbench(value) {
     materials.append(label);
   }
   updateRoleAndColumn();
+  updateTaskMode();
   loginSection.classList.add("hidden");
   workbench.classList.remove("hidden");
 }
@@ -68,6 +102,7 @@ document.querySelector("#login-form").addEventListener("submit", async (event) =
 
 taskForm.elements.account_display_name.addEventListener("change", updateRoleAndColumn);
 taskForm.elements.storyline_name.addEventListener("change", updateRoleAndColumn);
+taskForm.elements.operation.addEventListener("change", updateTaskMode);
 
 taskForm.addEventListener("submit", async (event) => {
   event.preventDefault();

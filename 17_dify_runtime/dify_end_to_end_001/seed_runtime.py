@@ -394,6 +394,11 @@ def seed_database(
                     dify_document_id=(
                         None if existing_fragment is None else existing_fragment.dify_document_id
                     ),
+                    index_content_digest=(
+                        None
+                        if existing_fragment is None
+                        else existing_fragment.index_content_digest
+                    ),
                     payload=copy.deepcopy(row),
                     updated_at=now,
                 ),
