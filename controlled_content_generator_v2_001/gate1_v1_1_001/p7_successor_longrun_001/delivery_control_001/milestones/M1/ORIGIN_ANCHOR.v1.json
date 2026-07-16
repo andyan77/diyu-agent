@@ -1,0 +1,22 @@
+{
+  "schema_version": "p7-origin-anchor-v1",
+  "milestone_id": "M1",
+  "remote": "origin = https://github.com/andyan77/diyu-agent.git",
+  "branch": "agent/gate1-v1-1-successor-longrun",
+  "anchors": {
+    "plan_v2_3_commit": "bbe4d111fb1c696950eda38d2ad973abdad2b4a1",
+    "plan_v2_4_commit": "4328194ac269b85b1ab2e998428b2d6bc703d8fe",
+    "plan_v2_5_commit_and_m1_input": "23f5fea355ef4904043c98187ba2a82c846772be",
+    "preservation_commit_c0": "f7d661995165f4d7a6559c40482e296b43781bd2",
+    "final_m1_candidate": "11b71e9bed9078c2483dc27ae94a807689ff5528",
+    "control_plane_closeout_commit": "5cf3ea2f17de7ba183da81ab9d8f4cc03de7a136",
+    "initial_dirty_worktree_inventory_sha256": "9d1cfd7f70b542dfbb71e01dfc19134095e2862fb1069cc7f2d4a062dc0957ed"
+  },
+  "remote_verification": {
+    "method": "git ls-remote origin agent/gate1-v1-1-successor-longrun（推送后独立查询）",
+    "remote_head": "5cf3ea2f17de7ba183da81ab9d8f4cc03de7a136",
+    "matches_closeout_commit": true,
+    "verified_at": "2026-07-16T19:25:43.297365+00:00"
+  },
+  "forbidden_actions_honored": "零 tag / 零 force-push / 零 rebase / 零 merge-master / 零新产品 remote / 零发布部署"
+}
