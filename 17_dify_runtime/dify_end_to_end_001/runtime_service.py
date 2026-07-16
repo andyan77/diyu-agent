@@ -10,6 +10,7 @@ import json
 import re
 import sys
 from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any
@@ -56,10 +57,10 @@ NARRATIVE_ARCHITECTURES = (
     "OBJECT_OR_TIMELINE",
 )
 PROTECTED_SOURCE_DETAIL_PATTERN = re.compile(
-    r"\d+(?:\.\d+)?(?:厘米|cm|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"\d+(?:\.\d+)?\s*(?:厘米|cm|毫米|mm|米|m|元|折|%|件|款|次|天|月|年|号|码)?"
     r"\s*(?:至|到|[-–—~～])\s*"
-    r"\d+(?:\.\d+)?(?:厘米|cm|元|折|%|件|款|次|天|月|年|号|码)?"
-    r"|\d+(?:\.\d+)?(?:厘米|cm|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"\d+(?:\.\d+)?\s*(?:厘米|cm|毫米|mm|米|m|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"|\d+(?:\.\d+)?\s*(?:厘米|cm|毫米|mm|米|m|元|折|%|件|款|次|天|月|年|号|码)?"
     r"|薄针织|同色|双重厚度|春季|夏季|秋季|冬季|设计稿|样衣|照片|视频|"
     r"截图|工作台|品牌色|品牌字体|logo|Logo|库存|售价|价格|折扣|顾客|家长|员工|儿童|孩子|人物|模特|"
     r"更自在|更舒服|更轻松|永久解决|彻底解决|解决了|不再|所有"
@@ -77,8 +78,10 @@ CREATIVE_INSTRUCTION_SURFACE_PATH = re.compile(
 KEY_NUMBER_PATTERN = re.compile(
     r"(?:尺码|售价|价格|库存|数量|比例|折扣|身高|年龄|日期|截至).{0,12}"
     r"(?:\d|[零〇一二两三四五六七八九十百千万])"
-    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)"
-    r"(?:厘米|cm|元|折|%|件|款|天|月|年|号|码)"
+    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)\s*"
+    r"(?:厘米|cm|毫米|mm|米|m|元|折|%|天|月|年|号|码)"
+    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)\s*"
+    r"(?:件|款).{0,8}(?:库存|现货|可售|售罄|剩余)"
 )
 PRODUCT_FACT_ASSERTION_PATTERN = re.compile(
     r"(?:这款|该款|本款|这件|该件|商品|产品|上衣|童装|样衣|面料|材质|尺码|颜色|厚度|售价|价格|库存)"
@@ -94,9 +97,10 @@ AUTHORIZATION_CLAIM_PATTERN = re.compile(
     r"|(?:代表当前|有权|获准|已授权|经授权|官方账号)"
 )
 REAL_EVENT_CLAIM_PATTERN = re.compile(
-    r"(?:昨天|今天|上周|本周|上月|本月|去年|今年|日前|近期|此前).{0,24}"
-    r"(?:发生|举办|完成|发布|上线|售出|到店|调整|拍摄|反馈|决定|承诺)"
-    r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|选择|购买|试穿|完成|决定|承诺)"
+    r"(?:已|已经|昨天|今天|上周|本周|上月|本月|去年|今年|日前|近期|此前).{0,24}"
+    r"(?:发生|举办|完成|发布|上线|售出|到店|调整|拍摄|反馈|决定|承诺|购买|选择|试穿)"
+    r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|购买|完成|决定|承诺)"
+    r"|(?:企业|品牌|公司|总部|门店).{0,18}(?:决定|承诺|保证)"
 )
 EXISTING_ASSET_CLAIM_PATTERN = re.compile(
     r"(?:已有|现有|已经|已提供|已拍摄|可直接使用).{0,18}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
@@ -107,20 +111,15 @@ CLAUSE_SPLIT_PATTERN = re.compile(r"[，,。；;！？!?：:\n]+")
 NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
     r"(?:不代表|只代表组织层级|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
 )
-SAFE_UNVERIFIED_ASSET_CUES = (
-    "待补",
-    "待设计",
-    "待取得",
-    "需要取得",
-    "需取得",
-    "若能取得",
-    "如能取得",
-    "拍摄前",
-    "不得使用",
-    "不使用",
-    "未提供",
-    "没有现成",
-    "不可假设",
+CONDITIONAL_AUTHORIZATION_PATTERN = re.compile(
+    r"^(?:建议|计划)?(?:如有|若有|如果有|假如有|仅在有).{0,24}(?:已授权|经授权|获准|批准|允许)"
+)
+NUMERIC_DETAIL_PATTERN = re.compile(
+    r"^(?P<first>\d+(?:\.\d+)?)"
+    r"(?P<first_unit>厘米|cm|毫米|mm|米|m|元|折|%|件|款|次|天|月|年|号|码)?"
+    r"(?:\s*(?:至|到|[-–—~～])\s*(?P<second>\d+(?:\.\d+)?)"
+    r"(?P<second_unit>厘米|cm|毫米|mm|米|m|元|折|%|件|款|次|天|月|年|号|码)?)?$",
+    re.IGNORECASE,
 )
 
 
@@ -128,11 +127,55 @@ def normalize_support_text(value: str) -> str:
     return value.lower().replace("cm", "厘米").replace("孩子", "儿童")
 
 
+def normalize_numeric_detail(value: str) -> str | None:
+    """Normalize only finite number, unit, and range spelling equivalents."""
+
+    compact = re.sub(r"\s+", "", value).lower()
+    match = NUMERIC_DETAIL_PATTERN.fullmatch(compact)
+    if match is None:
+        return None
+
+    def number(raw: str) -> str:
+        try:
+            normalized = Decimal(raw).normalize()
+        except InvalidOperation:
+            return raw
+        return format(normalized, "f")
+
+    def unit(raw: str | None) -> str:
+        if raw is None:
+            return ""
+        return {
+            "厘米": "cm",
+            "cm": "cm",
+            "毫米": "mm",
+            "mm": "mm",
+            "米": "m",
+            "m": "m",
+        }.get(raw.lower(), raw.lower())
+
+    first_unit = unit(match.group("first_unit"))
+    second = match.group("second")
+    if second is None:
+        return f"{number(match.group('first'))}{first_unit}"
+    second_unit = unit(match.group("second_unit"))
+    shared_unit = first_unit or second_unit
+    return (
+        f"{number(match.group('first'))}{first_unit or shared_unit}~"
+        f"{number(second)}{second_unit or shared_unit}"
+    )
+
+
 def protected_detail_is_supported(detail: str, corpus: str) -> bool:
     if any(character.isdigit() for character in detail):
-        compact_detail = re.sub(r"\s+", "", detail.lower())
-        compact_corpus = re.sub(r"\s+", "", corpus.lower())
-        return compact_detail in compact_corpus
+        normalized_detail = normalize_numeric_detail(detail)
+        if normalized_detail is None:
+            return False
+        return normalized_detail in {
+            normalized
+            for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(corpus)
+            if (normalized := normalize_numeric_detail(token)) is not None
+        }
     return normalize_support_text(detail) in normalize_support_text(corpus)
 
 
@@ -140,21 +183,19 @@ def surface_requires_evidence_binding(path: str, text: str) -> bool:
     """Require bindings only for high-risk factual assertions, not creative prose."""
 
     for clause in filter(None, (part.strip() for part in CLAUSE_SPLIT_PATTERN.split(text))):
-        if (
-            KEY_NUMBER_PATTERN.search(clause)
-            or EXISTING_ASSET_CLAIM_PATTERN.search(clause)
-        ):
+        if EXISTING_ASSET_CLAIM_PATTERN.search(clause):
             return True
-        if NON_ASSERTIVE_BOUNDARY_PATTERN.search(clause) or any(
-            cue in clause for cue in SAFE_UNVERIFIED_ASSET_CUES
-        ):
+        if NON_ASSERTIVE_BOUNDARY_PATTERN.search(clause):
             continue
+        if KEY_NUMBER_PATTERN.search(clause):
+            return True
+        if AUTHORIZATION_CLAIM_PATTERN.search(clause):
+            if CONDITIONAL_AUTHORIZATION_PATTERN.search(clause) is None:
+                return True
         if PRODUCT_FACT_ASSERTION_PATTERN.search(clause):
             return True
-        if AUTHORIZATION_CLAIM_PATTERN.search(clause) or REAL_EVENT_CLAIM_PATTERN.search(clause):
+        if REAL_EVENT_CLAIM_PATTERN.search(clause):
             return True
-        if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
-            continue
     return False
 
 
@@ -745,21 +786,25 @@ class Package7Runtime:
             ]
         return {
             "system": (
-                "你是受控内容作者。只能使用所给事实和资料，不得补写数字、人物、动作、因果、结果、承诺或授权。"
+                "你是受控内容作者。不得把未提供的信息写成已经存在、已经发生或已经获得授权的事实。"
+                "标题、文案、口播、分镜、人物动作、拍摄和剪辑建议可以创意新写，但不得借创意补造品牌事实。"
                 "返回严格JSON，不要Markdown。输出2至3份候选，每份至少在核心创意、切入问题或场景、情绪钩子、"
                 "叙事视角、事实或证明路径、画面组织方法中的两项真正不同；换标题、换词或调段落不算差异。"
                 "每份候选分别列出实际使用的事实引用和资料引用；没使用就留空。引用只能从允许列表选择。"
                 "任何内部来源编号只能出现在used_fact_refs、used_material_refs和claim_bindings.source_refs中；"
                 "标题、正文、口播、结尾和execution_payload的所有文字都不得显示来源编号。"
-                "来源中的数字、单位和范围写法必须原样保留，不得改用连字符、缩写或近义单位。"
+                "来源中的关键数值必须保持数值、单位含义和上下限不变；厘米/cm、合法范围连接符、空格和大小写"
+                "可以作有限等价格式转换，不得改值、换单位含义或扩大范围。"
                 "每份生产候选必须至少使用一条允许的资料或精确事实引用；资料不足且任务不属于明确允许的账号范围说明时不要生成候选。"
                 "不要输出任何内部编号、字段名或授权术语。所有合同中的string都必须填写非空文字，"
                 "图文必须至少给出两帧，短视频必须至少给出两个镜头。publishing_copy须明确写内部测试不可发布。"
                 "根对象必须且只能包含kind、reply、candidates三个键；kind固定为CANDIDATE_SET，reply固定为null。"
                 "短视频的shooting_notes和editing_notes必须写在video对象内，不能写在execution_payload同级。"
-                "历史事件没有现成影像时，只能拍当前物件、文档或静态证据；不得新增孩子、家长、员工、台词或动作来摆拍重演。"
+                "历史事件没有现成影像时，不得把新设计的孩子、家长、员工、台词或动作冒充历史重演；"
+                "可以提出明确标为未来、条件性或示意性的拍摄方案。"
                 "资料只说感受存在差异时，不得改写成某人说了具体话或某个动作成功、失败。"
-                "不得把未提供的照片、视频、样衣、设计稿或记录写成已经存在；需要这些材料时只能写成待补拍或待取得。"
+                "不得把未提供的照片、视频、样衣、设计稿或记录写成已经存在；未来方案可用建议拍摄、计划拍摄、"
+                "可拍摄、如有条件、需准备、示意画面或假设方案等清楚状态表达。"
                 "陈列资料没有明确商品颜色、厚度、尺码交集、库存或空间关系时，不得自行配对或推断；"
                 "可以用证据卡和核对清单说明方法，并把未知项明确列为待确认。"
                 "短视频、图文、陈列搭配必须分别按合同给出可直接拍摄或制作的细节。"
@@ -772,10 +817,9 @@ class Package7Runtime:
                 "difference_dimensions只能逐项填写六个既有枚举之一，不得在枚举后加冒号、解释或例子。"
                 "visual、camera、action、image_brief等制作指令可以新写，但只能描述将来如何拍摄或排版；"
                 "不得暗示照片、视频、样衣、设计稿、截图、工作台、库存、颜色或人物已经存在，除非本次允许来源逐字支持。"
-                "如果来源没有明确提供这些素材，相关制作字段必须逐字写明‘待补拍’或‘待取得’，不能写‘一张照片’、"
-                "‘使用截图’、‘可能有设计稿’等模糊假设。如作者仍为execution_payload提供claim_bindings，"
+                "如果来源没有明确提供这些素材，相关制作字段必须清楚表达未来、条件或示意状态，不能暗示素材已经存在。"
+                "如作者仍为execution_payload提供claim_bindings，"
                 "其路径必须以execution_payload.开头，例如execution_payload.story_or_full_script。"
-                "来源使用‘厘米’时不得改成cm。"
                 "单条口播的路径也必须写spoken_lines[0]而不是spoken_lines。不得使用‘账号身份证据’这组连续文字，"
                 "应改写为‘账号身份依据’，避免被误读为身份证信息。"
                 "previous_content_context只用于延续上一次的创意方向，不是事实来源，不得从中新增事实。"
@@ -815,14 +859,7 @@ class Package7Runtime:
                             },
                             "surface_units": [],
                         },
-                        "claim_bindings": [
-                            {
-                                "surface_path": "title",
-                                "exact_text": "与title逐字一致",
-                                "claim_class": "SOURCE_CLAIM|CREATIVE_DIRECTION|DISCLOSURE",
-                                "source_refs": ["仅SOURCE_CLAIM填写允许的fact或material ref"],
-                            }
-                        ],
+                        "claim_bindings": [],
                         "used_fact_refs": ["allowed fact ref"],
                         "used_material_refs": ["allowed material ref"],
                     }

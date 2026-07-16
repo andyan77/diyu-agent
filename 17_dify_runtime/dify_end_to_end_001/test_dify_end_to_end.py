@@ -27,7 +27,7 @@ from persistence import (
     create_session_factory,
 )
 from runtime_retrieval import RuntimeBrandFactRetrievalService
-from runtime_service import Package7Runtime
+from runtime_service import Package7Runtime, protected_detail_is_supported
 from security import hash_password, issue_session, verify_password, verify_session
 from seed_runtime import seed_database
 
@@ -314,10 +314,18 @@ class Package7Tests(unittest.TestCase):
         self.assertIn("不得把未提供的照片", prepared["author_prompt"]["system"])
         self.assertIn("陈列资料没有明确商品颜色", prepared["author_prompt"]["system"])
         self.assertIn("所有文字都不得显示来源编号", prepared["author_prompt"]["system"])
-        self.assertIn("数字、单位和范围写法必须原样保留", prepared["author_prompt"]["system"])
+        self.assertIn("不得把未提供的信息写成已经存在", prepared["author_prompt"]["system"])
+        self.assertIn("人物动作、拍摄和剪辑建议可以创意新写", prepared["author_prompt"]["system"])
+        self.assertIn("有限等价格式转换", prepared["author_prompt"]["system"])
         self.assertIn("普通标题、正文、口播、分镜和拍摄建议不需要逐项绑定", prepared["author_prompt"]["system"])
         self.assertIn("只作为可选创作建议", prepared["author_prompt"]["system"])
         self.assertNotIn("三份候选必须依次使用", prepared["author_prompt"]["system"])
+        self.assertNotIn("不得补写数字、人物、动作、因果、结果", prepared["author_prompt"]["system"])
+        self.assertNotIn("必须逐字写明‘待补拍’或‘待取得’", prepared["author_prompt"]["system"])
+        self.assertEqual(
+            prepared["author_prompt"]["output_contract"]["candidates"][0]["claim_bindings"],
+            [],
+        )
 
     def test_named_storyline_and_column_override_defaults(self) -> None:
         prepared = self.runtime.prepare(
@@ -371,39 +379,82 @@ class Package7Tests(unittest.TestCase):
             self.runtime.finalize_model_output(prepared["run_id"], encoded)
 
     def test_ordinary_creative_surfaces_do_not_require_claim_bindings(self) -> None:
-        prepared = self.runtime.prepare(self.request(), self.principal_id)
-        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
-        candidates = [
-            self._candidate(
-                "证据路径",
-                "只使用当前资料支持的观察。",
-                refs,
-                ["核心创意", "事实或证明路径"],
+        creative_cases = (
+            ("title", "三件衣服，拍出一个春天"),
+            (
+                "execution_payload.video.shots[0].visual",
+                "建议拍一件红色上衣放在画面中央",
             ),
-            self._candidate(
-                "问题路径",
-                "只回答当前资料支持的问题。",
-                refs,
-                ["切入问题或场景", "画面组织方法"],
+            (
+                "execution_payload.video.shots[0].action",
+                "如有已授权出镜的孩子，可以试穿后在镜头前转身",
             ),
-        ]
-        candidates[0]["surfaces"]["title"] = "待补拍照片"
-        for candidate in candidates:
-            candidate["claim_bindings"] = [
-                row
-                for row in candidate["claim_bindings"]
-                if row["claim_class"] == "SOURCE_CLAIM"
-            ]
-        encoded = base64.b64encode(
-            json.dumps(
-                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
-                ensure_ascii=False,
-            ).encode()
-        ).decode()
-        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
-        self.assertIn("推荐候选", result["user_visible_text"])
-        run = self.repository.model_run(prepared["run_id"])
-        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_ACCEPTED")
+            (
+                "execution_payload.video.shots[0].camera",
+                "镜头从左向右缓慢移动",
+            ),
+            (
+                "execution_payload.video.shooting_notes[0]",
+                "如有条件，可拍摄一幅示意画面",
+            ),
+        )
+        for surface_path, creative_text in creative_cases:
+            with self.subTest(surface_path=surface_path, creative_text=creative_text):
+                prepared = self.runtime.prepare(self.request(), self.principal_id)
+                refs = prepared["author_prompt"]["author_materials"][
+                    "retrieval_fragment_refs"
+                ][:1]
+                candidates = [
+                    self._candidate(
+                        "证据路径",
+                        "只使用当前资料支持的观察。",
+                        refs,
+                        ["核心创意", "事实或证明路径"],
+                    ),
+                    self._candidate(
+                        "问题路径",
+                        "只回答当前资料支持的问题。",
+                        refs,
+                        ["切入问题或场景", "画面组织方法"],
+                    ),
+                ]
+                if surface_path == "title":
+                    candidates[0]["surfaces"]["title"] = creative_text
+                elif surface_path.endswith("visual"):
+                    candidates[0]["surfaces"]["execution_payload"]["video"]["shots"][0][
+                        "visual"
+                    ] = creative_text
+                elif surface_path.endswith("action"):
+                    candidates[0]["surfaces"]["execution_payload"]["video"]["shots"][0][
+                        "action"
+                    ] = creative_text
+                elif surface_path.endswith("camera"):
+                    candidates[0]["surfaces"]["execution_payload"]["video"]["shots"][0][
+                        "camera"
+                    ] = creative_text
+                else:
+                    candidates[0]["surfaces"]["execution_payload"]["video"][
+                        "shooting_notes"
+                    ][0] = creative_text
+                candidates[0]["claim_bindings"] = [
+                    row
+                    for row in candidates[0]["claim_bindings"]
+                    if row["surface_path"] != surface_path
+                ]
+                encoded = base64.b64encode(
+                    json.dumps(
+                        {
+                            "kind": "CANDIDATE_SET",
+                            "reply": None,
+                            "candidates": candidates,
+                        },
+                        ensure_ascii=False,
+                    ).encode()
+                ).decode()
+                result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+                self.assertIn("推荐候选", result["user_visible_text"])
+                run = self.repository.model_run(prepared["run_id"])
+                self.assertEqual(run.state if run else None, "FIRST_OUTPUT_ACCEPTED")
 
     def test_unbound_key_number_on_a_spoken_surface_is_rejected(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
@@ -453,7 +504,12 @@ class Package7Tests(unittest.TestCase):
             "尺码100cm-150cm，细节待确认",
             "现有库存100件，细节待确认",
             "已授权发布，当前内容不可发布",
+            "这名儿童已经获准出镜",
+            "企业已经承诺本月完成调整",
             "已有顾客照片，库存待确认",
+            "已有视频可直接使用",
+            "镜头展示本店库存充足",
+            "如有已授权出镜人员这款上衣采用纯棉面料",
             "待补拍；现有样衣已经确认100厘米",
         )
         for claim in claims:
@@ -512,7 +568,7 @@ class Package7Tests(unittest.TestCase):
         fact_path = "execution_payload.video.shots[0].visual"
         candidates[0]["surfaces"]["execution_payload"]["video"]["shots"][0][
             "visual"
-        ] = "拍摄采用薄针织的商品"
+        ] = "拍摄时使用已有样衣"
         candidates[0]["claim_bindings"] = [
             row
             for row in candidates[0]["claim_bindings"]
@@ -1696,7 +1752,23 @@ class Package7Tests(unittest.TestCase):
         result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
         self.assertTrue(result.get("action_card"))
 
-    def test_numeric_unit_and_range_spelling_must_match_the_source(self) -> None:
+    def test_numeric_unit_and_range_equivalence_preserves_semantics(self) -> None:
+        self.assertTrue(protected_detail_is_supported("100cm", "规格为100厘米"))
+        self.assertTrue(
+            protected_detail_is_supported(
+                "100 cm ～ 150 cm",
+                "尺码为100厘米至150厘米",
+            )
+        )
+        self.assertFalse(protected_detail_is_supported("110厘米", "规格为100厘米"))
+        self.assertFalse(protected_detail_is_supported("100米", "规格为100厘米"))
+        self.assertFalse(
+            protected_detail_is_supported(
+                "100厘米至160厘米",
+                "尺码为100厘米至150厘米",
+            )
+        )
+
         prepared = self.runtime.prepare(self.request(), self.principal_id)
         refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"]
         size_ref = next(
@@ -1707,7 +1779,7 @@ class Package7Tests(unittest.TestCase):
         candidates = [
             self._candidate(
                 "尺码范围",
-                "笛语商品使用100-150cm的常用尺码范围。",
+                "笛语商品使用100 cm ～ 150 cm的常用尺码范围。",
                 [size_ref],
                 ["核心创意", "事实或证明路径"],
                 architecture="EVIDENCE_FIRST",
@@ -1729,44 +1801,49 @@ class Package7Tests(unittest.TestCase):
 
         result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
 
-        self.assertTrue(result.get("action_card"))
+        self.assertIn("推荐候选", result["user_visible_text"])
         run = self.repository.model_run(prepared["run_id"])
-        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
+        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_ACCEPTED")
 
-        exact_prepared = self.runtime.prepare(self.request(), self.principal_id)
-        exact_candidates = [
-            self._candidate(
-                "原样尺码范围",
-                "笛语商品使用100厘米至150厘米的常用尺码范围。",
-                [size_ref],
-                ["核心创意", "事实或证明路径"],
-                architecture="EVIDENCE_FIRST",
-            ),
-            self._candidate(
-                "原样尺码问题",
-                "尺码不能只看身高。",
-                [size_ref],
-                ["切入问题或场景", "画面组织方法"],
-                architecture="QUESTION_ANSWER",
-            ),
-        ]
-        exact_encoded = base64.b64encode(
-            json.dumps(
-                {
-                    "kind": "CANDIDATE_SET",
-                    "reply": None,
-                    "candidates": exact_candidates,
-                },
-                ensure_ascii=False,
-            ).encode()
-        ).decode()
-
-        exact_result = self.runtime.finalize_model_output(
-            exact_prepared["run_id"],
-            exact_encoded,
-        )
-
-        self.assertIn("推荐候选", exact_result["user_visible_text"])
+        for changed_range in ("100cm-160cm", "100米-150米"):
+            with self.subTest(changed_range=changed_range):
+                changed_prepared = self.runtime.prepare(self.request(), self.principal_id)
+                changed_candidates = [
+                    self._candidate(
+                        "篡改尺码范围",
+                        f"笛语商品使用{changed_range}的常用尺码范围。",
+                        [size_ref],
+                        ["核心创意", "事实或证明路径"],
+                        architecture="EVIDENCE_FIRST",
+                    ),
+                    self._candidate(
+                        "尺码问题",
+                        "尺码不能只看身高。",
+                        [size_ref],
+                        ["切入问题或场景", "画面组织方法"],
+                        architecture="QUESTION_ANSWER",
+                    ),
+                ]
+                changed_encoded = base64.b64encode(
+                    json.dumps(
+                        {
+                            "kind": "CANDIDATE_SET",
+                            "reply": None,
+                            "candidates": changed_candidates,
+                        },
+                        ensure_ascii=False,
+                    ).encode()
+                ).decode()
+                changed_result = self.runtime.finalize_model_output(
+                    changed_prepared["run_id"],
+                    changed_encoded,
+                )
+                self.assertTrue(changed_result.get("action_card"))
+                changed_run = self.repository.model_run(changed_prepared["run_id"])
+                self.assertEqual(
+                    changed_run.state if changed_run else None,
+                    "FIRST_OUTPUT_REJECTED",
+                )
 
     def test_twenty_products_eight_topics_and_eight_action_cards_remain_covered(self) -> None:
         cases = [json.loads(line) for line in P6_CASES.read_text(encoding="utf-8").splitlines()]

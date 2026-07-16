@@ -154,8 +154,10 @@ CREATIVE_INSTRUCTION_SURFACE_PATH = re.compile(
 KEY_NUMBER_PATTERN = re.compile(
     r"(?:尺码|售价|价格|库存|数量|比例|折扣|身高|年龄|日期|截至).{0,12}"
     r"(?:\d|[零〇一二两三四五六七八九十百千万])"
-    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)"
-    r"(?:厘米|cm|元|折|%|件|款|天|月|年|号|码)"
+    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)\s*"
+    r"(?:厘米|cm|毫米|mm|米|m|元|折|%|天|月|年|号|码)"
+    r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)\s*"
+    r"(?:件|款).{0,8}(?:库存|现货|可售|售罄|剩余)"
 )
 PRODUCT_FACT_ASSERTION_PATTERN = re.compile(
     r"(?:这款|该款|本款|这件|该件|商品|产品|上衣|童装|样衣|面料|材质|尺码|颜色|厚度|售价|价格|库存)"
@@ -171,9 +173,10 @@ AUTHORIZATION_CLAIM_PATTERN = re.compile(
     r"|(?:代表当前|有权|获准|已授权|经授权|官方账号)"
 )
 REAL_EVENT_CLAIM_PATTERN = re.compile(
-    r"(?:昨天|今天|上周|本周|上月|本月|去年|今年|日前|近期|此前).{0,24}"
-    r"(?:发生|举办|完成|发布|上线|售出|到店|调整|拍摄|反馈|决定|承诺)"
-    r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|选择|购买|试穿|完成|决定|承诺)"
+    r"(?:已|已经|昨天|今天|上周|本周|上月|本月|去年|今年|日前|近期|此前).{0,24}"
+    r"(?:发生|举办|完成|发布|上线|售出|到店|调整|拍摄|反馈|决定|承诺|购买|选择|试穿)"
+    r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|购买|完成|决定|承诺)"
+    r"|(?:企业|品牌|公司|总部|门店).{0,18}(?:决定|承诺|保证)"
 )
 EXISTING_ASSET_CLAIM_PATTERN = re.compile(
     r"(?:已有|现有|已经|已提供|已拍摄|可直接使用).{0,18}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
@@ -184,20 +187,8 @@ CLAUSE_SPLIT_PATTERN = re.compile(r"[，,。；;！？!?：:\n]+")
 NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
     r"(?:不代表|只代表组织层级|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
 )
-SAFE_UNVERIFIED_ASSET_CUES = (
-    "待补",
-    "待设计",
-    "待取得",
-    "需要取得",
-    "需取得",
-    "若能取得",
-    "如能取得",
-    "拍摄前",
-    "不得使用",
-    "不使用",
-    "未提供",
-    "没有现成",
-    "不可假设",
+CONDITIONAL_AUTHORIZATION_PATTERN = re.compile(
+    r"^(?:建议|计划)?(?:如有|若有|如果有|假如有|仅在有).{0,24}(?:已授权|经授权|获准|批准|允许)"
 )
 
 
@@ -219,21 +210,19 @@ def require_fields(
 
 def surface_requires_evidence_binding(path: str, text: str) -> bool:
     for clause in filter(None, (part.strip() for part in CLAUSE_SPLIT_PATTERN.split(text))):
-        if (
-            KEY_NUMBER_PATTERN.search(clause)
-            or EXISTING_ASSET_CLAIM_PATTERN.search(clause)
-        ):
+        if EXISTING_ASSET_CLAIM_PATTERN.search(clause):
             return True
-        if NON_ASSERTIVE_BOUNDARY_PATTERN.search(clause) or any(
-            cue in clause for cue in SAFE_UNVERIFIED_ASSET_CUES
-        ):
+        if NON_ASSERTIVE_BOUNDARY_PATTERN.search(clause):
             continue
+        if KEY_NUMBER_PATTERN.search(clause):
+            return True
+        if AUTHORIZATION_CLAIM_PATTERN.search(clause):
+            if CONDITIONAL_AUTHORIZATION_PATTERN.search(clause) is None:
+                return True
         if PRODUCT_FACT_ASSERTION_PATTERN.search(clause):
             return True
-        if AUTHORIZATION_CLAIM_PATTERN.search(clause) or REAL_EVENT_CLAIM_PATTERN.search(clause):
+        if REAL_EVENT_CLAIM_PATTERN.search(clause):
             return True
-        if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
-            continue
     return False
 
 
@@ -544,6 +533,22 @@ def validate_model_evidence(evidence: JsonObject) -> None:
     require(model.get("content_reroll_for_quality_count") == 0, "E_MODEL_REROLL")
     budget = cast(Mapping[str, Any], evidence.get("founder_budget_authorization", {}))
     require(budget == {"additional_request_upper_bound": 60, "cost_cny_upper_bound": 50, "effective_request_upper_bound": 100, "original_request_upper_bound": 40}, "E_MODEL_AUTHORIZATION")
+    confirmation = cast(
+        Mapping[str, Any],
+        evidence.get("founder_budget_authorization_confirmation", {}),
+    )
+    require(
+        confirmation
+        == {
+            "confirmation_date": "2026-07-16",
+            "confirmation_source": "execution_prompt.addendum_v2",
+            "new_content_model_calls_after_existing_stop": 0,
+            "new_remote_deployments_after_existing_stop": 0,
+            "confirmed_additional_request_upper_bound": 60,
+            "confirmed_effective_request_upper_bound": 100,
+        },
+        "E_MODEL_AUTHORIZATION_CONFIRMATION",
+    )
     audit = cast(Mapping[str, Any], evidence.get("invocation_audit", {}))
     require(audit.get("invocation_count") == 79, "E_MODEL_INVOCATIONS")
     require(isinstance(audit.get("model_call_upper_bound"), int) and 0 < audit["model_call_upper_bound"] <= 100, "E_MODEL_CALL_BOUND")
@@ -663,8 +668,19 @@ def validate_source_boundaries(
         "previous_content_context",
         "claim_bindings",
         "_claim_bindings_are_closed",
+        "normalize_numeric_detail",
+        "不得把未提供的信息写成已经存在、已经发生或已经获得授权的事实",
+        "标题、文案、口播、分镜、人物动作、拍摄和剪辑建议可以创意新写",
+        "有限等价格式转换",
+        '"claim_bindings": []',
     ):
         require(token in runtime, f"E_SANITIZED_CONTINUITY:{token}")
+    for forbidden in (
+        "不得补写数字、人物、动作、因果、结果",
+        "必须逐字写明‘待补拍’或‘待取得’",
+        "来源使用‘厘米’时不得改成cm",
+    ):
+        require(forbidden not in runtime, f"E_AUTHOR_CONTRACT_CONTRADICTION:{forbidden}")
     chat = source["dify_chat.py"]
     require("maximum_model_calls > 100" in chat, "E_MODEL_BUDGET_HARD_CAP")
     require("dify_conversation(principal_id, conversation_scope)" in chat, "E_DIFY_CONVERSATION_SCOPE")
@@ -877,6 +893,15 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     expect_failure(lambda: validate_model_evidence(changed), "E_MODEL_CALL_BOUND")
 
     changed = copy.deepcopy(model)
+    changed["founder_budget_authorization_confirmation"][
+        "new_content_model_calls_after_existing_stop"
+    ] = 1
+    expect_failure(
+        lambda: validate_model_evidence(changed),
+        "E_MODEL_AUTHORIZATION_CONFIRMATION",
+    )
+
+    changed = copy.deepcopy(model)
     changed["representative_first_outputs"]["display"]["candidates"][0]["candidate"]["used_material_refs"] = []
     expect_failure(lambda: validate_model_evidence(changed), "E_MATERIAL_REF_MISMATCH")
 
@@ -911,19 +936,52 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     changed = copy.deepcopy(sparse)
     changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
     changed_candidate = changed_record["candidate"]
-    fact_path = "execution_payload.video.shots[0].visual"
+    creative_path = "execution_payload.video.shots[0].visual"
     changed_candidate["candidate_user_visible_surfaces"]["execution_payload"]["video"]["shots"][0][
         "visual"
-    ] = "拍摄采用薄针织的商品"
+    ] = "建议拍一件红色上衣放在画面中央"
     changed_candidate["claim_bindings"] = [
-        row for row in changed_candidate["claim_bindings"] if row["surface_path"] != fact_path
+        row
+        for row in changed_candidate["claim_bindings"]
+        if row["surface_path"] != creative_path
     ]
     changed_candidate["author_declared_claim_bindings"] = [
         row
         for row in changed_candidate["author_declared_claim_bindings"]
-        if row["surface_path"] != fact_path
+        if row["surface_path"] != creative_path
     ]
-    expect_failure(lambda: validate_model_evidence(changed), "E_CLAIM_HIGH_RISK_COVERAGE")
+    validate_model_evidence(changed)
+
+    creative_cases = (
+        ("title", "三件衣服，拍出一个春天"),
+        (creative_path, "建议拍一件红色上衣放在画面中央"),
+        (
+            "execution_payload.video.shots[0].action",
+            "如有已授权出镜的孩子，可以试穿后在镜头前转身",
+        ),
+        (creative_path, "镜头从左向右缓慢移动"),
+    )
+    for path, text in creative_cases:
+        require(
+            not surface_requires_evidence_binding(path, text),
+            f"E_CREATIVE_FALSE_POSITIVE:{text}",
+        )
+
+    factual_cases = (
+        ("title", "本店库存还有三件"),
+        ("title", "这款上衣采用纯棉面料"),
+        ("title", "这名儿童已经获准出镜"),
+        ("title", "门店上周举办了春季活动"),
+        ("title", "企业已经承诺本月完成调整"),
+        ("title", "已有照片可直接使用"),
+        (creative_path, "镜头展示本店库存充足"),
+        (creative_path, "如有已授权出镜人员这款上衣采用纯棉面料"),
+    )
+    for path, text in factual_cases:
+        require(
+            surface_requires_evidence_binding(path, text),
+            f"E_FACT_FALSE_NEGATIVE:{text}",
+        )
 
     changed = copy.deepcopy(sparse)
     changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
@@ -992,7 +1050,7 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     return {
         "task_id": TASK_ID,
         "selftest": "PASS",
-        "negative_case_count": 15,
+        "negative_case_count": 23,
         "optimized_mode_fail_closed": True,
     }
 
