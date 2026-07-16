@@ -443,6 +443,8 @@ class Package7Tests(unittest.TestCase):
         claims = (
             "这件上衣采用纯棉面料",
             "这件上衣采用亚麻面料",
+            "本店库存充足",
+            "这件样衣采用双重厚度",
             "这款商品采用薄针织",
             "这款商品售价九十九元",
             "总部批准本账号发布新品信息",
@@ -490,6 +492,44 @@ class Package7Tests(unittest.TestCase):
                 self.assertTrue(result.get("action_card"))
                 run = self.repository.model_run(prepared["run_id"])
                 self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
+
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
+        candidates = [
+            self._candidate(
+                "普通拍摄建议",
+                "只使用当前资料支持的观察。",
+                refs,
+                ["核心创意", "画面组织方法"],
+            ),
+            self._candidate(
+                "普通问题建议",
+                "只回答当前资料支持的问题。",
+                refs,
+                ["切入问题或场景", "叙事视角"],
+            ),
+        ]
+        fact_path = "execution_payload.video.shots[0].visual"
+        candidates[0]["surfaces"]["execution_payload"]["video"]["shots"][0][
+            "visual"
+        ] = "拍摄采用薄针织的商品"
+        candidates[0]["claim_bindings"] = [
+            row
+            for row in candidates[0]["claim_bindings"]
+            if row["surface_path"] != fact_path
+        ]
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+
+        self.assertTrue(result.get("action_card"))
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
 
     def test_similarity_and_narrative_skeleton_are_review_hints_not_runtime_blocks(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)

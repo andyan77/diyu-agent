@@ -157,13 +157,16 @@ KEY_NUMBER_PATTERN = re.compile(
     r"(?:厘米|cm|元|折|%|件|款|天|月|年|号|码)"
 )
 PRODUCT_FACT_ASSERTION_PATTERN = re.compile(
-    r"(?:这款|该款|本款|商品|产品|上衣|童装|面料|材质|尺码|颜色|厚度|售价|价格|库存)"
+    r"(?:这款|该款|本款|这件|该件|商品|产品|上衣|童装|样衣|面料|材质|尺码|颜色|厚度|售价|价格|库存)"
     r".{0,20}(?:采用|使用|为|是|具有|具备|包含|支持|适合|来自|属于|可售|备有)"
     r"|(?:上衣|商品|产品).{0,12}(?:纯棉|亚麻|针织|羊毛|涤纶|棉质)"
+    r"|(?:采用|使用|具备|包含).{0,16}(?:薄针织|双重厚度|纯棉|亚麻|羊毛|涤纶|棉质|面料|材质)"
+    r"|(?:本店|门店|当前)?.{0,6}库存.{0,10}(?:充足|不足|有货|缺货|可售|售罄|剩余|紧张)"
 )
 AUTHORIZATION_CLAIM_PATTERN = re.compile(
     r"(?:已|已经|此前|目前).{0,24}(?:授权|获准|批准|允许|有权|代表)"
-    r"|(?:总部|区域|门店|品牌|账号).{0,18}(?:批准|授权|获准|允许|有权|代表)"
+    r"|(?:总部|区域|门店|品牌|本账号|该账号|这个账号).{0,18}(?:批准|授权|获准|允许|有权)"
+    r"|(?:本账号|该账号|这个账号|区域账号|门店账号).{0,12}代表(?:当前|总部|区域|门店|组织)"
     r"|(?:代表当前|有权|获准|已授权|经授权|官方账号)"
 )
 REAL_EVENT_CLAIM_PATTERN = re.compile(
@@ -178,7 +181,7 @@ EXISTING_ASSET_CLAIM_PATTERN = re.compile(
 )
 CLAUSE_SPLIT_PATTERN = re.compile(r"[，,。；;！？!?：:\n]+")
 NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
-    r"(?:不代表|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
+    r"(?:不代表|只代表组织层级|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
 )
 SAFE_UNVERIFIED_ASSET_CUES = (
     "待补",
@@ -224,12 +227,12 @@ def surface_requires_evidence_binding(path: str, text: str) -> bool:
             cue in clause for cue in SAFE_UNVERIFIED_ASSET_CUES
         ):
             continue
-        if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
-            continue
         if PRODUCT_FACT_ASSERTION_PATTERN.search(clause):
             return True
         if AUTHORIZATION_CLAIM_PATTERN.search(clause) or REAL_EVENT_CLAIM_PATTERN.search(clause):
             return True
+        if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
+            continue
     return False
 
 
@@ -907,6 +910,37 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     changed = copy.deepcopy(sparse)
     changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
     changed_candidate = changed_record["candidate"]
+    fact_path = "execution_payload.video.shots[0].visual"
+    changed_candidate["candidate_user_visible_surfaces"]["execution_payload"]["video"]["shots"][0][
+        "visual"
+    ] = "拍摄采用薄针织的商品"
+    changed_candidate["claim_bindings"] = [
+        row for row in changed_candidate["claim_bindings"] if row["surface_path"] != fact_path
+    ]
+    changed_candidate["author_declared_claim_bindings"] = [
+        row
+        for row in changed_candidate["author_declared_claim_bindings"]
+        if row["surface_path"] != fact_path
+    ]
+    expect_failure(lambda: validate_model_evidence(changed), "E_CLAIM_HIGH_RISK_COVERAGE")
+
+    changed = copy.deepcopy(sparse)
+    changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
+    changed_candidate = changed_record["candidate"]
+    changed_candidate["candidate_user_visible_surfaces"]["title"] = "本店库存充足"
+    changed_candidate["claim_bindings"] = [
+        row for row in changed_candidate["claim_bindings"] if row["surface_path"] != "title"
+    ]
+    changed_candidate["author_declared_claim_bindings"] = [
+        row
+        for row in changed_candidate["author_declared_claim_bindings"]
+        if row["surface_path"] != "title"
+    ]
+    expect_failure(lambda: validate_model_evidence(changed), "E_CLAIM_HIGH_RISK_COVERAGE")
+
+    changed = copy.deepcopy(sparse)
+    changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
+    changed_candidate = changed_record["candidate"]
     changed_candidate["candidate_user_visible_surfaces"]["title"] = "这件上衣采用纯棉面料"
     changed_candidate["claim_bindings"] = [
         row for row in changed_candidate["claim_bindings"] if row["surface_path"] != "title"
@@ -957,7 +991,7 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     return {
         "task_id": TASK_ID,
         "selftest": "PASS",
-        "negative_case_count": 13,
+        "negative_case_count": 15,
         "optimized_mode_fail_closed": True,
     }
 
