@@ -792,13 +792,102 @@ class RuntimeRepository:
             )
             if latest_run is None:
                 return ()
+            rows = session.scalars(
+                select(RuntimeCandidate)
+                .where(RuntimeCandidate.run_id == latest_run)
+                .order_by(RuntimeCandidate.ordinal)
+            ).all()
             return tuple(
-                session.scalars(
-                    select(RuntimeCandidate)
-                    .where(RuntimeCandidate.run_id == latest_run)
-                    .order_by(RuntimeCandidate.ordinal)
-                ).all()
+                row for row in rows if self._candidate_is_current(session, row)
             )
+
+    @staticmethod
+    def _aware(value: datetime) -> datetime:
+        return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
+
+    @classmethod
+    def _authorization_allows(
+        cls,
+        session: Session,
+        authorization_ref: str,
+        account: RuntimeAccount,
+        now: datetime,
+    ) -> bool:
+        authorization = session.get(RuntimeAuthorization, authorization_ref)
+        if (
+            authorization is None
+            or authorization.tenant_id != account.tenant_id
+            or authorization.status != "GRANTED"
+            or cls._aware(authorization.valid_from) > now
+            or cls._aware(authorization.valid_until) < now
+        ):
+            return False
+        payload = authorization.payload
+        return bool(
+            payload.get("brand_id") == account.brand_id
+            and account.account_id
+            in payload.get("permitted_content_account_ids", [])
+            and account.organization_id
+            in payload.get("permitted_organization_ids", [])
+            and account.store_id in payload.get("permitted_store_ids", [])
+        )
+
+    @classmethod
+    def _candidate_is_current(
+        cls,
+        session: Session,
+        candidate: RuntimeCandidate,
+    ) -> bool:
+        account = session.get(RuntimeAccount, candidate.account_id)
+        if account is None or account.status != "ACTIVE":
+            return False
+        now = utc_now()
+        for reference in candidate.used_material_refs:
+            material = session.get(RuntimeNarrativeFragment, reference)
+            if (
+                material is None
+                or material.tenant_id != account.tenant_id
+                or material.brand_id != account.brand_id
+                or material.status != "ACTIVE"
+                or material.authorization_state != "GRANTED"
+                or material.revocation_ref is not None
+                or cls._aware(material.valid_from) > now
+                or cls._aware(material.valid_until) < now
+                or account.account_id
+                not in material.payload.get("applicable_content_account_ids", [])
+                or account.organization_id
+                not in material.payload.get("applicable_organization_ids", [])
+                or account.store_id
+                not in material.payload.get("applicable_store_ids", [])
+                or not cls._authorization_allows(
+                    session,
+                    material.authorization_ref,
+                    account,
+                    now,
+                )
+            ):
+                return False
+        for reference in candidate.used_fact_refs:
+            fact = session.get(RuntimePreciseFact, reference)
+            if (
+                fact is None
+                or fact.tenant_id != account.tenant_id
+                or fact.brand_id != account.brand_id
+                or fact.status != "ACTIVE"
+                or fact.revocation_ref is not None
+                or cls._aware(fact.valid_from) > now
+                or cls._aware(fact.valid_until) < now
+                or account.account_id
+                not in fact.payload.get("applicable_content_account_ids", [])
+                or not cls._authorization_allows(
+                    session,
+                    fact.authorization_ref,
+                    account,
+                    now,
+                )
+            ):
+                return False
+        return True
 
     def select_candidate(self, account_id: str, ordinal: int) -> RuntimeCandidate:
         with self.sessions.begin() as session:
@@ -816,6 +905,8 @@ class RuntimeRepository:
             chosen = next((row for row in current if row.ordinal == ordinal), None)
             if chosen is None:
                 raise KeyError("Candidate number is unavailable")
+            if not self._candidate_is_current(session, chosen):
+                raise ValueError("Candidate references are no longer current")
             for row in current:
                 row.selected = row.candidate_id == chosen.candidate_id
             session.flush()
@@ -823,17 +914,22 @@ class RuntimeRepository:
 
     def selected_candidate(self, account_id: str) -> RuntimeCandidate | None:
         with self.sessions() as session:
-            return session.scalar(
+            row = session.scalar(
                 select(RuntimeCandidate)
                 .where(RuntimeCandidate.account_id == account_id, RuntimeCandidate.selected.is_(True))
                 .order_by(RuntimeCandidate.created_at.desc())
                 .limit(1)
             )
+            return row if row is not None and self._candidate_is_current(session, row) else None
 
     def candidate_belongs_to_account(self, candidate_id: str, account_id: str) -> bool:
         with self.sessions() as session:
             row = session.get(RuntimeCandidate, candidate_id)
-            return row is not None and row.account_id == account_id
+            return bool(
+                row is not None
+                and row.account_id == account_id
+                and self._candidate_is_current(session, row)
+            )
 
     def candidate_context(self, candidate_id: str, account_id: str) -> JsonObject:
         """Return a minimal continuity projection, never a new fact source."""
@@ -842,6 +938,8 @@ class RuntimeRepository:
             row = session.get(RuntimeCandidate, candidate_id)
             if row is None or row.account_id != account_id:
                 raise ValueError("Previous candidate is outside the current account")
+            if not self._candidate_is_current(session, row):
+                raise ValueError("Previous candidate references are no longer current")
             surfaces = row.candidate_payload.get("candidate_user_visible_surfaces", {})
             production = surfaces.get("execution_payload", {}) if isinstance(surfaces, dict) else {}
             return {
@@ -862,12 +960,13 @@ class RuntimeRepository:
 
     def latest_candidate(self, account_id: str) -> RuntimeCandidate | None:
         with self.sessions() as session:
-            return session.scalar(
+            row = session.scalar(
                 select(RuntimeCandidate)
                 .where(RuntimeCandidate.account_id == account_id)
                 .order_by(RuntimeCandidate.created_at.desc(), RuntimeCandidate.ordinal)
                 .limit(1)
             )
+            return row if row is not None and self._candidate_is_current(session, row) else None
 
     def requirement_id_for_run(self, run_id: str) -> str | None:
         with self.sessions() as session:

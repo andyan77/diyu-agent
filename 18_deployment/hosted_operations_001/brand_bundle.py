@@ -13,7 +13,14 @@ from pathlib import Path
 from typing import Annotated, Any, Literal
 
 import yaml  # type: ignore[import-untyped]
-from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+from pydantic import (
+    AfterValidator,
+    BaseModel,
+    ConfigDict,
+    Field,
+    StringConstraints,
+    model_validator,
+)
 
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
@@ -27,9 +34,18 @@ from persistence import canonical_json, digest_object  # noqa: E402
 
 
 JsonObject = dict[str, Any]
+
+
+def _canonical_code(value: str) -> str:
+    if "--" in value or value.endswith("-"):
+        raise ValueError("code must already be in canonical form")
+    return value
+
+
 Code = Annotated[
     str,
     StringConstraints(pattern=r"^[a-z][a-z0-9-]{1,31}$", strip_whitespace=True),
+    AfterValidator(_canonical_code),
 ]
 NonEmpty = Annotated[str, StringConstraints(min_length=1, strip_whitespace=True)]
 
@@ -109,6 +125,14 @@ class MaterialInput(StrictModel):
     valid_until: datetime
     status: Literal["ACTIVE", "REVOKED"] = "ACTIVE"
 
+    @model_validator(mode="after")
+    def validate_window(self) -> MaterialInput:
+        if self.observed_at.tzinfo is None or self.valid_until.tzinfo is None:
+            raise ValueError("material times require a timezone")
+        if self.observed_at >= self.valid_until:
+            raise ValueError("material validity window is empty")
+        return self
+
 
 class FactInput(StrictModel):
     code: Code
@@ -129,6 +153,14 @@ class FactInput(StrictModel):
     effective_at: datetime
     valid_until: datetime
     status: Literal["ACTIVE", "REVOKED", "EXPIRED"] = "ACTIVE"
+
+    @model_validator(mode="after")
+    def validate_window(self) -> FactInput:
+        if self.effective_at.tzinfo is None or self.valid_until.tzinfo is None:
+            raise ValueError("fact times require a timezone")
+        if self.effective_at >= self.valid_until:
+            raise ValueError("fact validity window is empty")
+        return self
 
 
 class StorylineInput(StrictModel):
@@ -189,6 +221,9 @@ class BrandInputDocument(StrictModel):
             [row.code for row in self.expression.storylines], "storyline"
         )
         unique([row.code for row in self.expression.columns], "column")
+        stores_by_code = {row.code: row for row in self.stores}
+        accounts_by_code = {row.code: row for row in self.accounts}
+        authorizations_by_code = {row.code: row for row in self.authorizations}
         for store in self.stores:
             if store.organization_code not in organizations:
                 raise ValueError("store organization is unknown")
@@ -197,6 +232,12 @@ class BrandInputDocument(StrictModel):
                 raise ValueError("account organization is unknown")
             if account.store_code is not None and account.store_code not in stores:
                 raise ValueError("account store is unknown")
+            if (
+                account.store_code is not None
+                and stores_by_code[account.store_code].organization_code
+                != account.organization_code
+            ):
+                raise ValueError("account store is outside its organization")
             if account.role_code not in roles:
                 raise ValueError("account role is unknown")
             if not set(account.allowed_source_organization_codes) <= organizations:
@@ -211,16 +252,50 @@ class BrandInputDocument(StrictModel):
                 raise ValueError("authorization store is unknown")
             if not set(authorization.account_codes) <= accounts:
                 raise ValueError("authorization account is unknown")
+            for store_code in filter(None, authorization.store_codes):
+                if (
+                    stores_by_code[store_code].organization_code
+                    not in authorization.organization_codes
+                ):
+                    raise ValueError("authorization store is outside its organization")
+            for account_code in authorization.account_codes:
+                account = accounts_by_code[account_code]
+                if account.organization_code not in authorization.organization_codes:
+                    raise ValueError(
+                        "authorization does not cover account organization"
+                    )
+                if account.store_code not in authorization.store_codes:
+                    raise ValueError("authorization does not cover account store")
         for material in self.materials:
             if material.authorization_code not in authorizations:
                 raise ValueError("content authorization is unknown")
             if not set(material.account_codes) <= accounts:
                 raise ValueError("content account is unknown")
+            authorization = authorizations_by_code[material.authorization_code]
+            if not set(material.account_codes) <= set(authorization.account_codes):
+                raise ValueError("content account is outside authorization scope")
+            if material.status == "ACTIVE" and authorization.status != "GRANTED":
+                raise ValueError("active content requires a granted authorization")
+            if (
+                material.observed_at < authorization.valid_from
+                or material.valid_until > authorization.valid_until
+            ):
+                raise ValueError("content validity is outside authorization window")
         for fact in self.facts:
             if fact.authorization_code not in authorizations:
                 raise ValueError("content authorization is unknown")
             if not set(fact.account_codes) <= accounts:
                 raise ValueError("content account is unknown")
+            authorization = authorizations_by_code[fact.authorization_code]
+            if not set(fact.account_codes) <= set(authorization.account_codes):
+                raise ValueError("content account is outside authorization scope")
+            if fact.status == "ACTIVE" and authorization.status != "GRANTED":
+                raise ValueError("active fact requires a granted authorization")
+            if (
+                fact.effective_at < authorization.valid_from
+                or fact.valid_until > authorization.valid_until
+            ):
+                raise ValueError("fact validity is outside authorization window")
         for column in self.expression.columns:
             if column.storyline_code not in storylines:
                 raise ValueError("column storyline is unknown")
@@ -228,10 +303,14 @@ class BrandInputDocument(StrictModel):
 
 
 def _identifier(prefix: str, *parts: str) -> str:
-    normalized = "-".join(parts).upper()
-    normalized = re.sub(r"[^A-Z0-9-]", "-", normalized)
-    normalized = re.sub(r"-+", "-", normalized).strip("-")
-    return f"{prefix}-{normalized}"
+    normalized_parts = []
+    for part in parts:
+        normalized = re.sub(r"[^A-Z0-9-]", "-", part.upper())
+        normalized = re.sub(r"-+", "-", normalized).strip("-")
+        if not normalized:
+            raise ValueError("identifier part is empty")
+        normalized_parts.append(normalized)
+    return f"{prefix}-{'--'.join(normalized_parts)}"
 
 
 def _iso(value: datetime) -> str:
@@ -248,7 +327,7 @@ def load_brand_input(path: Path) -> BrandInputDocument:
 def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
     enterprise = document.enterprise
     tenant_id = _identifier("TENANT", enterprise.enterprise_code)
-    brand_id = _identifier("BRAND", enterprise.brand_code)
+    brand_id = _identifier("BRAND", enterprise.enterprise_code, enterprise.brand_code)
     input_digest = hashlib.sha256(
         canonical_json(document.model_dump(mode="json")).encode("utf-8")
     ).hexdigest()

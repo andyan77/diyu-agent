@@ -18,7 +18,7 @@ from typing import Any
 
 import psycopg
 from psycopg import sql
-from sqlalchemy import select
+from sqlalchemy import inspect, select
 from sqlalchemy.engine import make_url
 
 
@@ -44,6 +44,7 @@ from runtime_models import (  # type: ignore[import-not-found]  # noqa: E402
     RuntimeNarrativeFragment,
     RuntimeOrganization,
     RuntimePreciseFact,
+    RuntimeSource,
 )
 from runtime_retrieval import (  # type: ignore[import-not-found]  # noqa: E402
     RuntimeBrandFactRetrievalService,
@@ -54,6 +55,7 @@ from test_dify_end_to_end import (  # type: ignore[import-not-found]  # noqa: E4
 )
 
 from brand_bundle import (  # noqa: E402
+    BrandInputDocument,
     bundle_from_payload,
     bundle_to_payload,
     compile_brand_bundle,
@@ -183,13 +185,17 @@ class Package8UnitTests(unittest.TestCase):
         self.assertTrue(document.fictional_test_data)
         self.assertEqual(bundle.identity["tenant"]["tenant_id"], "TENANT-QINGHE-LAB")
         self.assertEqual(
+            bundle.identity["tenant"]["brand_id"],
+            "BRAND-QINGHE-LAB--QINGHE-HOME",
+        )
+        self.assertEqual(
             bundle.identity["content_accounts"][0]["display_name"], "笛语童装"
         )
         self.assertNotIn("route_migration", FIXTURE_PATH.read_text(encoding="utf-8"))
         self.assertNotIn("component_id", FIXTURE_PATH.read_text(encoding="utf-8"))
 
     def test_preflight_rejects_wrong_namespace_database_and_secret_mode(self) -> None:
-        valid_url = "postgresql://test@localhost/diyu-pkg8-unit"
+        valid_url = "postgresql://test@127.0.0.1:1/diyu-pkg8-unit?connect_timeout=1"
         with self.assertRaisesRegex(ValueError, "目标命名空间"):
             preflight_environment(database_url=valid_url, namespace="shared")
         with self.assertRaisesRegex(ValueError, "数据库不属于"):
@@ -207,6 +213,44 @@ class Package8UnitTests(unittest.TestCase):
                     namespace="diyu-pkg8-unit",
                     secret_file=secret,
                 )
+        with self.assertRaisesRegex(ValueError, "不一致"):
+            preflight_environment(
+                database_url=valid_url,
+                namespace="diyu-pkg8-other",
+            )
+        with self.assertRaisesRegex(ValueError, "不可连接"):
+            preflight_environment(
+                database_url=valid_url,
+                namespace="diyu-pkg8-unit",
+            )
+
+    def test_codes_and_authorization_scope_are_closed_before_compile(self) -> None:
+        document = load_brand_input(FIXTURE_PATH)
+        payload = document.model_dump(mode="json")
+        invalid_code = copy.deepcopy(payload)
+        invalid_code["enterprise"]["enterprise_code"] = "alpha--corp"
+        with self.assertRaisesRegex(ValueError, "canonical"):
+            BrandInputDocument.model_validate(invalid_code)
+
+        invalid_scope = copy.deepcopy(payload)
+        invalid_scope["authorizations"][0]["account_codes"] = ["brand-account"]
+        with self.assertRaisesRegex(ValueError, "outside authorization scope"):
+            BrandInputDocument.model_validate(invalid_scope)
+
+        ambiguous_first = copy.deepcopy(payload)
+        ambiguous_first["enterprise"]["enterprise_code"] = "alpha-b"
+        ambiguous_first["enterprise"]["brand_code"] = "cc"
+        ambiguous_second = copy.deepcopy(payload)
+        ambiguous_second["enterprise"]["enterprise_code"] = "alpha"
+        ambiguous_second["enterprise"]["brand_code"] = "b-cc"
+        first = compile_brand_bundle(BrandInputDocument.model_validate(ambiguous_first))
+        second = compile_brand_bundle(
+            BrandInputDocument.model_validate(ambiguous_second)
+        )
+        self.assertNotEqual(
+            first.identity["tenant"]["brand_id"],
+            second.identity["tenant"]["brand_id"],
+        )
 
 
 @unittest.skipUnless(
@@ -267,6 +311,46 @@ class Package8PostgresAcceptance(unittest.TestCase):
             updated_payload["precise_facts"][0]["value"]["product_name"] = (
                 "青禾实验收纳篮修订版"
             )
+            updated_value_digest = digest_object(
+                updated_payload["precise_facts"][0]["value"]
+            )
+            updated_payload["precise_facts"][0]["source_sha256"] = updated_value_digest
+            updated_payload["precise_facts"][0]["source_excerpt_sha256"] = (
+                updated_value_digest
+            )
+            transient_material = copy.deepcopy(
+                updated_payload["narrative_fragments"][0]
+            )
+            transient_material.update(
+                {
+                    "fragment_id": "FRAGMENT-QINGHE-LAB--TRANSIENT",
+                    "unit_id": "transient",
+                    "source_id": "SOURCE-QINGHE-LAB--MATERIAL--TRANSIENT",
+                    "source_ref": "fixture://SOURCE-QINGHE-LAB--MATERIAL--TRANSIENT",
+                    "title": "稍后应被完整替换移除的资料",
+                    "text": "这是一条只用于验证完整替换语义的虚构临时资料。",
+                }
+            )
+            transient_digest = hashlib.sha256(
+                transient_material["text"].encode("utf-8")
+            ).hexdigest()
+            transient_material["source_sha256"] = transient_digest
+            transient_material["fragment_sha256"] = transient_digest
+            updated_payload["narrative_fragments"].append(transient_material)
+            later_only_fact = copy.deepcopy(updated_payload["precise_facts"][0])
+            later_only_fact.update(
+                {
+                    "fact_id": "FACT-QINGHE-LAB--LATER-ONLY",
+                    "source_id": "SOURCE-QINGHE-LAB--FACT--LATER-ONLY",
+                    "source_ref": "fixture://SOURCE-QINGHE-LAB--FACT--LATER-ONLY",
+                    "label": "稍后应由整包回滚移除的字段",
+                    "value": {"test_marker": "later-only"},
+                }
+            )
+            later_only_digest = digest_object(later_only_fact["value"])
+            later_only_fact["source_sha256"] = later_only_digest
+            later_only_fact["source_excerpt_sha256"] = later_only_digest
+            updated_payload["precise_facts"].append(later_only_fact)
             updated = bundle_from_payload(updated_payload)
             concurrent_results: list[JsonObject] = []
             concurrent_errors: list[str] = []
@@ -305,8 +389,37 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 first_brand_fact_digest,
                 self._first_brand_fact_digest(sessions),
             )
+            contracted_payload = bundle_to_payload(updated)
+            contracted_payload["narrative_fragments"] = [
+                row
+                for row in contracted_payload["narrative_fragments"]
+                if row["fragment_id"] != "FRAGMENT-QINGHE-LAB--TRANSIENT"
+            ]
+            contracted = bundle_from_payload(contracted_payload)
+            contracted_result = operations.import_brand(
+                contracted,
+                principal_password=PASSWORD,
+                reason="UPDATE",
+            )
+            self.assertEqual(contracted_result["state"], "APPLIED")
+            self.assertGreaterEqual(contracted_result["deleted"], 2)
+            with sessions() as session:
+                self.assertIsNone(
+                    session.get(
+                        RuntimeNarrativeFragment,
+                        "FRAGMENT-QINGHE-LAB--TRANSIENT",
+                    )
+                )
+                self.assertIsNone(
+                    session.get(
+                        RuntimeSource,
+                        "SOURCE-QINGHE-LAB--MATERIAL--TRANSIENT",
+                    )
+                )
             revisions_before_failure = self._revision_count(sessions)
-            organization_before = self._organization_name(sessions, "ORG-QINGHE-LAB-HQ")
+            organization_before = self._organization_name(
+                sessions, "ORG-QINGHE-LAB--HQ"
+            )
             failure_payload = bundle_to_payload(updated)
             failure_payload["identity"]["organizations"][0]["display_name"] = (
                 "不应提交的半套资料"
@@ -321,12 +434,12 @@ class Package8PostgresAcceptance(unittest.TestCase):
             self.assertEqual(revisions_before_failure, self._revision_count(sessions))
             self.assertEqual(
                 organization_before,
-                self._organization_name(sessions, "ORG-QINGHE-LAB-HQ"),
+                self._organization_name(sessions, "ORG-QINGHE-LAB--HQ"),
             )
             runtime_report = self._exercise_both_brands(sessions)
             report["runtime"] = runtime_report
-            second_principal = "PRINCIPAL-QINGHE-LAB-ACCEPTANCE-OWNER"
-            second_account = "ACCOUNT-QINGHE-LAB-BRAND-ACCOUNT"
+            second_principal = "PRINCIPAL-QINGHE-LAB--ACCEPTANCE-OWNER"
+            second_account = "ACCOUNT-QINGHE-LAB--BRAND-ACCOUNT"
             runtime, knowledge = self._runtime(sessions)
             prepared_before_revoke = runtime.prepare(
                 _request("整理物品时先保留日常会反复使用的部分"),
@@ -339,9 +452,18 @@ class Package8PostgresAcceptance(unittest.TestCase):
             operations.revoke(
                 tenant_id="TENANT-QINGHE-LAB",
                 object_kind="authorization",
-                object_id="AUTH-QINGHE-LAB-CURRENT-MATERIAL",
+                object_id="AUTH-QINGHE-LAB--CURRENT-MATERIAL",
                 reason_ref="revoke://package8-acceptance",
             )
+            for operation_name in ("审核", "导出", "查看来源"):
+                stale_operation = runtime.prepare(
+                    _request("当前候选必须重新核对").model_copy(
+                        update={"operation": operation_name}
+                    ),
+                    second_principal,
+                )
+                self.assertTrue(stale_operation.get("action_card"))
+                self.assertNotIn("当前范围可用", stale_operation["user_visible_text"])
             rejected = runtime.finalize_model_output(
                 prepared_before_revoke["run_id"],
                 _encoded_envelope(material_refs),
@@ -372,6 +494,16 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 principal_password=PASSWORD,
             )
             self.assertEqual(rolled_back["state"], "APPLIED")
+            with sessions() as session:
+                self.assertIsNone(
+                    session.get(RuntimePreciseFact, "FACT-QINGHE-LAB--LATER-ONLY")
+                )
+                self.assertIsNone(
+                    session.get(
+                        RuntimeSource,
+                        "SOURCE-QINGHE-LAB--FACT--LATER-ONLY",
+                    )
+                )
             restored_prepare = runtime.prepare(
                 _request("整理物品时先保留日常会反复使用的部分"),
                 second_principal,
@@ -384,8 +516,11 @@ class Package8PostgresAcceptance(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "intentional"):
                 operations.upgrade(target_version=2, fail_after_write=True)
             self.assertEqual(operations.health()["schema_version"], 1)
+            self.assertFalse(self._has_revision_index(source_engine))
             self.assertEqual(operations.upgrade(target_version=2)["schema_version"], 2)
+            self.assertTrue(self._has_revision_index(source_engine))
             self.assertEqual(operations.rollback_schema()["schema_version"], 1)
+            self.assertFalse(self._has_revision_index(source_engine))
             before_backup = operations.health()
             state_before_backup = self._runtime_state(sessions)
             backup = operations.backup(
@@ -404,7 +539,7 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 restored_operations = HostedOperations(
                     restore_engine,
                     restore_sessions,
-                    source_name,
+                    restore_name,
                 )
                 after_restore = restored_operations.health()
                 self.assertEqual(
@@ -421,15 +556,49 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 self._assert_same_label_is_scoped(restore_sessions)
             finally:
                 restore_engine.dispose()
+            incompatible_manifest = Path(temporary) / "backup" / "incompatible.json"
+            incompatible_payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+            incompatible_payload["application_version"] = "package8-incompatible"
+            incompatible_manifest.write_text(
+                json.dumps(incompatible_payload, sort_keys=True),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "归属或版本"):
+                HostedOperations.restore(
+                    target_database_url=corrupt_url,
+                    manifest_path=incompatible_manifest,
+                )
             corrupt_directory = Path(temporary) / "corrupt"
             shutil.copytree(manifest_path.parent, corrupt_directory)
             corrupt_dump = corrupt_directory / "runtime.pgdump"
-            corrupt_dump.write_bytes(corrupt_dump.read_bytes() + b"corrupt")
+            corrupt_dump.write_bytes(b"not-a-postgresql-custom-archive")
             with self.assertRaisesRegex(ValueError, "摘要不匹配"):
                 HostedOperations.restore(
                     target_database_url=corrupt_url,
                     manifest_path=corrupt_directory / "backup_manifest.v1.json",
                 )
+            corrupt_manifest = json.loads(
+                (corrupt_directory / "backup_manifest.v1.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            corrupt_manifest["dump_sha256"] = hashlib.sha256(
+                corrupt_dump.read_bytes()
+            ).hexdigest()
+            (corrupt_directory / "backup_manifest.v1.json").write_text(
+                json.dumps(corrupt_manifest, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "恢复执行失败"):
+                HostedOperations.restore(
+                    target_database_url=corrupt_url,
+                    manifest_path=corrupt_directory / "backup_manifest.v1.json",
+                )
+            corrupt_engine = create_runtime_engine(corrupt_url)
+            try:
+                self.assertEqual(inspect(corrupt_engine).get_table_names(), [])
+            finally:
+                corrupt_engine.dispose()
             report.update(
                 {
                     "install_idempotent": True,
@@ -441,10 +610,15 @@ class Package8PostgresAcceptance(unittest.TestCase):
                     "revocation_immediate": True,
                     "stale_candidate_rejected": True,
                     "bundle_rollback_restored": True,
+                    "bundle_omission_removed": True,
                     "failed_upgrade_rolled_back": True,
+                    "schema_upgrade_changed_structure": True,
                     "successful_upgrade_and_rollback": True,
                     "fresh_namespace_restore_equal": True,
                     "corrupt_backup_rejected": True,
+                    "incompatible_backup_rejected": True,
+                    "failed_restore_left_target_empty": True,
+                    "selected_candidate_rechecked_after_revocation": True,
                     "source_health": before_backup,
                     "backup_dump_sha256": backup["dump_sha256"],
                     "first_initialization_state": first_init["state"],
@@ -530,6 +704,13 @@ class Package8PostgresAcceptance(unittest.TestCase):
             return row.display_name
 
     @staticmethod
+    def _has_revision_index(engine: Any) -> bool:
+        return any(
+            row.get("name") == "ix_hosted_brand_revision_tenant_digest"
+            for row in inspect(engine).get_indexes("hosted_brand_revisions")
+        )
+
+    @staticmethod
     def _runtime(sessions: Any) -> tuple[Package7Runtime, LocalKnowledgeClient]:
         repository = RuntimeRepository(sessions)
         knowledge = LocalKnowledgeClient(sessions)
@@ -549,9 +730,9 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 "TENANT-DIYU-SIM-001",
             ),
             (
-                "PRINCIPAL-QINGHE-LAB-ACCEPTANCE-OWNER",
+                "PRINCIPAL-QINGHE-LAB--ACCEPTANCE-OWNER",
                 "整理物品时先保留日常会反复使用的部分",
-                "ACCOUNT-QINGHE-LAB-BRAND-ACCOUNT",
+                "ACCOUNT-QINGHE-LAB--BRAND-ACCOUNT",
                 "TENANT-QINGHE-LAB",
             ),
         )
@@ -597,7 +778,7 @@ class Package8PostgresAcceptance(unittest.TestCase):
         )
         denied_right = runtime.prepare(
             _request("不能跨企业", "林知远｜笛语"),
-            "PRINCIPAL-QINGHE-LAB-ACCEPTANCE-OWNER",
+            "PRINCIPAL-QINGHE-LAB--ACCEPTANCE-OWNER",
         )
         self.assertEqual(denied_left["response_kind"], "DIRECT")
         self.assertEqual(denied_right["response_kind"], "DIRECT")

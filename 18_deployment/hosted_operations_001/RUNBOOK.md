@@ -8,7 +8,8 @@
 - 数据库连接只从 `DIYU_PKG8_DATABASE_URL` 读取。
 - 登录密码只从 `DIYU_PKG8_PRINCIPAL_PASSWORD` 读取，不写进品牌文件或日志。
 - 如使用密钥文件，文件权限必须为当前用户私有。
-- 备份目录须位于仓库外，原始备份不得提交。
+- 备份目录须位于仓库外，原始备份不得提交。备份不含明文密钥，但包含登录凭据校验值和运行状态，必须按受限敏感数据保管。
+- 本包验证的是非生产应用范围隔离和关系库当前状态复核；数据库行级安全策略及真实服务器加固由第9包另行授权。
 
 ## 标准顺序
 
@@ -47,4 +48,4 @@ python3 hosted_operations.py --namespace "$NAMESPACE" upgrade --target-version 2
 python3 hosted_operations.py --namespace "$NAMESPACE" rollback-schema --target-version 1
 ```
 
-第8包只验证一条最小 `v1 -> v2 -> v1` 数据升级路径。真实服务器安装、Dify 导入、域名、证书和流量切换属于第9包。
+第8包用一项品牌版本查询索引验证 `v1 -> v2 -> v1` 的真实结构升级与事务回滚。真实服务器安装、Dify 导入、数据库行级安全、域名、证书和流量切换属于第9包。

@@ -10,6 +10,18 @@
     "current_version": 1,
     "tested_upgrade_version": 2
   },
+  "database_isolation": {
+    "database_rls_enabled": false,
+    "enforcement": "APPLICATION_SCOPE_AND_CURRENT_STATE_POSTCHECK",
+    "package9_production_hardening_required": true,
+    "production_ready": false
+  },
+  "database_backup_security": {
+    "contains_credential_verifiers": true,
+    "contains_plaintext_secrets": false,
+    "repository_commit_allowed": false,
+    "restricted_storage_required": true
+  },
   "external_model_calls_allowed": false,
   "hosted_operations_entrypoint": "18_deployment/hosted_operations_001/hosted_operations.py",
   "package7_merge_commit": "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",

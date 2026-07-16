@@ -1,17 +1,43 @@
 {
-  "acceptance_run_digest": "d3698b68a80ef38f0abec4981185f9fd942dae6cab70a62480b615def163ccc4",
-  "backup_dump_sha256": "d7e4431a36ca28abaa3225a066cbb138a79fad2648e3e75f525aae14636d820f",
+  "acceptance_command_contract": {
+    "database_url_env": "DIYU_PKG8_ADMIN_DATABASE_URL",
+    "exit_code": 0,
+    "local_only": true,
+    "remote_ci_database_replay_allowed": false,
+    "report_env": "DIYU_PKG8_ACCEPTANCE_REPORT",
+    "test_file_sha256": "845b41e64b2af6d5cbe3c6ee27fd2ee1c47f56cb7c7c029268733afa58c78c61",
+    "test_path": "18_deployment/hosted_operations_001/test_hosted_operations.py"
+  },
+  "acceptance_run_digest": "2d35a3661cb807b6364b01cfc8559cfae6585ea280ce4702c46ebda504278390",
+  "backup_dump_sha256": "da0fffd3050b6c249d1ec8961a95d5809851ee27ad5cd9b24b367fdcad56bbd3",
+  "backup_security": {
+    "contains_credential_verifiers": true,
+    "contains_plaintext_secrets": false,
+    "repository_commit_allowed": false,
+    "restricted_storage_required": true
+  },
   "brand_import_idempotent": true,
+  "bundle_omission_removed": true,
   "bundle_rollback_restored": true,
   "concurrent_import_serialized": true,
   "corrupt_backup_rejected": true,
+  "database_isolation": {
+    "database_rls_enabled": false,
+    "enforcement": "APPLICATION_SCOPE_AND_CURRENT_STATE_POSTCHECK",
+    "production_ready": false
+  },
   "database_kind": "POSTGRESQL_14",
   "external_model_calls": 0,
   "failed_import_rolled_back": true,
+  "failed_restore_left_target_empty": true,
   "failed_upgrade_rolled_back": true,
   "fresh_namespace_restore_equal": true,
+  "incompatible_backup_rejected": true,
   "install_idempotent": true,
   "local_task_database_count_after_cleanup": 0,
+  "pg_dump_version": "pg_dump (PostgreSQL) 14.23 (Ubuntu 14.23-0ubuntu0.22.04.1)",
+  "pg_restore_version": "pg_restore (PostgreSQL) 14.23 (Ubuntu 14.23-0ubuntu0.22.04.1)",
+  "postgresql_server_version_num": 140023,
   "real_cloud_mutations": 0,
   "revocation_immediate": true,
   "runtime": {
@@ -20,10 +46,12 @@
     "prepared_and_validated_brand_count": 2,
     "run_account_ids": [
       "ACCOUNT-DIYU-HQ-OFFICIAL",
-      "ACCOUNT-QINGHE-LAB-BRAND-ACCOUNT"
+      "ACCOUNT-QINGHE-LAB--BRAND-ACCOUNT"
     ]
   },
   "same_display_name_scope_safe": true,
+  "schema_upgrade_changed_structure": true,
+  "selected_candidate_rechecked_after_revocation": true,
   "source_object_counts": {
     "accounts": 13,
     "authorizations": 34,

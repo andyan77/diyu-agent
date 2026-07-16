@@ -14,8 +14,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, TypeVar
 
-from sqlalchemy import Engine, func, inspect, select
-from sqlalchemy.engine import URL, make_url
+from sqlalchemy import Index, MetaData, Table, delete, func, inspect, select
+from sqlalchemy.engine import Connection, Engine, URL, make_url
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
 
 
@@ -32,9 +33,12 @@ from brand_import import (  # noqa: E402
 )
 from persistence import (  # noqa: E402
     RuntimeRepository,
+    create_runtime_engine,
+    create_session_factory,
     digest_object,
 )
 from runtime_models import (  # noqa: E402
+    Base,
     RuntimeAccount,
     RuntimeAuthorization,
     RuntimeBrand,
@@ -75,6 +79,8 @@ ModelType = TypeVar("ModelType")
 APPLICATION_VERSION = "package8-v1"
 SCHEMA_VERSION = 1
 TASK_PREFIX = "diyu-pkg8-"
+BRAND_REVISION_INDEX = "ix_hosted_brand_revision_tenant_digest"
+SUPPORTED_RESTORE_SCHEMA_VERSIONS = {1, 2}
 
 
 def utc_now() -> datetime:
@@ -141,6 +147,31 @@ def _database_args(url: URL) -> tuple[list[str], dict[str, str]]:
     if url.password:
         env["PGPASSWORD"] = str(url.password)
     return args, env
+
+
+def _tool_version(executable: str) -> str:
+    path = shutil.which(executable)
+    if path is None:
+        raise ValueError(f"缺少 {executable} 工具")
+    completed = subprocess.run(
+        [path, "--version"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return completed.stdout.strip()
+
+
+def _health_digest(health: JsonObject) -> str:
+    return digest_object(
+        {
+            "application_version": health["application_version"],
+            "schema_version": health["schema_version"],
+            "schema_features": health["schema_features"],
+            "object_counts": health["object_counts"],
+            "brand_revision_digest": health["brand_revision_digest"],
+        }
+    )
 
 
 class HostedOperations:
@@ -322,15 +353,15 @@ class HostedOperations:
         self._require_installed()
         with self.sessions.begin() as session:
             if object_kind == "fragment":
-                row = session.get(
+                fragment = session.get(
                     RuntimeNarrativeFragment, object_id, with_for_update=True
                 )
-                if row is None or row.tenant_id != tenant_id:
+                if fragment is None or fragment.tenant_id != tenant_id:
                     raise KeyError(object_id)
-                row.status = "REVOKED"
-                row.authorization_state = "REVOKED"
-                row.revocation_ref = reason_ref
-                payload = copy.deepcopy(row.payload)
+                fragment.status = "REVOKED"
+                fragment.authorization_state = "REVOKED"
+                fragment.revocation_ref = reason_ref
+                payload = copy.deepcopy(fragment.payload)
                 payload.update(
                     {
                         "status": "REVOKED",
@@ -338,28 +369,30 @@ class HostedOperations:
                         "revocation_ref": reason_ref,
                     }
                 )
-                row.payload = payload
-                row.updated_at = utc_now()
+                fragment.payload = payload
+                fragment.updated_at = utc_now()
             elif object_kind == "fact":
-                row = session.get(RuntimePreciseFact, object_id, with_for_update=True)
-                if row is None or row.tenant_id != tenant_id:
+                fact = session.get(RuntimePreciseFact, object_id, with_for_update=True)
+                if fact is None or fact.tenant_id != tenant_id:
                     raise KeyError(object_id)
-                row.status = "REVOKED"
-                row.revocation_ref = reason_ref
-                payload = copy.deepcopy(row.payload)
+                fact.status = "REVOKED"
+                fact.revocation_ref = reason_ref
+                payload = copy.deepcopy(fact.payload)
                 payload.update({"status": "REVOKED", "revocation_ref": reason_ref})
-                row.payload = payload
-                row.updated_at = utc_now()
+                fact.payload = payload
+                fact.updated_at = utc_now()
             elif object_kind == "authorization":
-                row = session.get(RuntimeAuthorization, object_id, with_for_update=True)
-                if row is None or row.tenant_id != tenant_id:
+                authorization = session.get(
+                    RuntimeAuthorization, object_id, with_for_update=True
+                )
+                if authorization is None or authorization.tenant_id != tenant_id:
                     raise KeyError(object_id)
-                row.status = "REVOKED"
-                payload = copy.deepcopy(row.payload)
+                authorization.status = "REVOKED"
+                payload = copy.deepcopy(authorization.payload)
                 payload["status"] = "REVOKED"
                 payload["revocation_ref"] = reason_ref
-                row.payload = payload
-                row.updated_at = utc_now()
+                authorization.payload = payload
+                authorization.updated_at = utc_now()
                 self._sync_identity_authorization(
                     session, tenant_id, object_id, reason_ref
                 )
@@ -400,64 +433,126 @@ class HostedOperations:
         result["rolled_back_to_revision"] = target_revision
         return result
 
+    @staticmethod
+    def _revision_index_exists(bind: Engine | Connection) -> bool:
+        return any(
+            row.get("name") == BRAND_REVISION_INDEX
+            for row in inspect(bind).get_indexes(HostedBrandRevision.__tablename__)
+        )
+
+    @staticmethod
+    def _revision_index(bind: Connection) -> Index:
+        metadata = MetaData()
+        revisions = Table(
+            HostedBrandRevision.__tablename__,
+            metadata,
+            autoload_with=bind,
+        )
+        return Index(
+            BRAND_REVISION_INDEX,
+            revisions.c.tenant_id,
+            revisions.c.bundle_digest,
+        )
+
     def upgrade(
         self, *, target_version: int, fail_after_write: bool = False
     ) -> JsonObject:
         self._require_installed()
         if target_version != 2:
             raise ValueError("只允许已声明的 v1 到 v2 升级")
-        with self.sessions.begin() as session:
-            row = session.get(HostedSchemaState, self.namespace, with_for_update=True)
-            if row is None:
-                raise RuntimeError("运维状态未安装")
-            if row.schema_version == target_version:
-                return {"state": "UNCHANGED", "schema_version": target_version}
-            if row.schema_version != 1:
-                raise ValueError("升级来源版本不兼容")
-            row.schema_version = target_version
-            metadata = copy.deepcopy(row.metadata_payload)
-            metadata["brand_import_transaction_version"] = 2
-            metadata["upgrade_marker"] = "PKG8_SCHEMA_V2"
-            row.metadata_payload = metadata
-            row.updated_at = utc_now()
-            if fail_after_write:
-                raise RuntimeError("intentional package8 upgrade failure")
-            self._audit(
-                session,
-                "upgrade",
-                "APPLIED",
-                self.namespace,
-                {"from": 1, "to": 2},
-            )
-        return {"state": "UPGRADED", "schema_version": target_version}
+        with self.engine.begin() as connection:
+            with Session(bind=connection, expire_on_commit=False) as session:
+                row = session.get(
+                    HostedSchemaState,
+                    self.namespace,
+                    with_for_update=True,
+                )
+                if row is None:
+                    raise RuntimeError("运维状态未安装")
+                index_exists = self._revision_index_exists(connection)
+                if row.schema_version == target_version:
+                    if not index_exists:
+                        raise RuntimeError("v2 结构索引缺失")
+                    return {"state": "UNCHANGED", "schema_version": target_version}
+                if row.schema_version != 1 or index_exists:
+                    raise ValueError("升级来源版本不兼容或结构已漂移")
+                self._revision_index(connection).create(connection)
+                row.schema_version = target_version
+                metadata = copy.deepcopy(row.metadata_payload)
+                metadata["brand_import_transaction_version"] = 2
+                metadata["upgrade_marker"] = "PKG8_SCHEMA_V2"
+                metadata["revision_lookup_index"] = BRAND_REVISION_INDEX
+                row.metadata_payload = metadata
+                row.updated_at = utc_now()
+                session.flush()
+                if fail_after_write:
+                    raise RuntimeError("intentional package8 upgrade failure")
+                self._audit(
+                    session,
+                    "upgrade",
+                    "APPLIED",
+                    self.namespace,
+                    {
+                        "from": 1,
+                        "to": 2,
+                        "created_index": BRAND_REVISION_INDEX,
+                    },
+                )
+                session.flush()
+        return {
+            "state": "UPGRADED",
+            "schema_version": target_version,
+            "created_index": BRAND_REVISION_INDEX,
+        }
 
     def rollback_schema(self, *, target_version: int = 1) -> JsonObject:
         self._require_installed()
         if target_version != 1:
             raise ValueError("只能回滚到已知良好 v1")
-        with self.sessions.begin() as session:
-            row = session.get(HostedSchemaState, self.namespace, with_for_update=True)
-            if row is None:
-                raise RuntimeError("运维状态未安装")
-            row.schema_version = 1
-            metadata = copy.deepcopy(row.metadata_payload)
-            metadata["brand_import_transaction_version"] = 1
-            metadata.pop("upgrade_marker", None)
-            row.metadata_payload = metadata
-            row.updated_at = utc_now()
-            self._audit(
-                session,
-                "rollback-schema",
-                "APPLIED",
-                self.namespace,
-                {"to": 1},
-            )
-        return {"state": "ROLLED_BACK", "schema_version": 1}
+        with self.engine.begin() as connection:
+            with Session(bind=connection, expire_on_commit=False) as session:
+                row = session.get(
+                    HostedSchemaState,
+                    self.namespace,
+                    with_for_update=True,
+                )
+                if row is None:
+                    raise RuntimeError("运维状态未安装")
+                index_exists = self._revision_index_exists(connection)
+                if row.schema_version == 1:
+                    if index_exists:
+                        raise RuntimeError("v1 结构意外包含 v2 索引")
+                    return {"state": "UNCHANGED", "schema_version": 1}
+                if row.schema_version != 2 or not index_exists:
+                    raise ValueError("回滚来源版本不兼容或结构已漂移")
+                self._revision_index(connection).drop(connection)
+                row.schema_version = 1
+                metadata = copy.deepcopy(row.metadata_payload)
+                metadata["brand_import_transaction_version"] = 1
+                metadata.pop("upgrade_marker", None)
+                metadata.pop("revision_lookup_index", None)
+                row.metadata_payload = metadata
+                row.updated_at = utc_now()
+                self._audit(
+                    session,
+                    "rollback-schema",
+                    "APPLIED",
+                    self.namespace,
+                    {"to": 1, "dropped_index": BRAND_REVISION_INDEX},
+                )
+                session.flush()
+        return {
+            "state": "ROLLED_BACK",
+            "schema_version": 1,
+            "dropped_index": BRAND_REVISION_INDEX,
+        }
 
     def backup(self, *, database_url: str, output_directory: Path) -> JsonObject:
         self._require_installed()
         url = make_url(database_url)
         args, env = _database_args(url)
+        if url.database != self.namespace:
+            raise ValueError("备份数据库与当前命名空间不一致")
         output_directory.mkdir(mode=0o700, parents=True, exist_ok=True)
         os.chmod(output_directory, 0o700)
         dump_path = output_directory / "runtime.pgdump"
@@ -489,8 +584,15 @@ class HostedOperations:
             "dump_sha256": dump_digest,
             "object_counts": health["object_counts"],
             "brand_revision_digest": health["brand_revision_digest"],
-            "contains_secrets": False,
+            "schema_features": health["schema_features"],
+            "health_digest": _health_digest(health),
+            "contains_plaintext_secrets": False,
+            "contains_credential_verifiers": True,
+            "contains_sensitive_runtime_state": True,
+            "requires_restricted_storage": True,
+            "repository_commit_allowed": False,
             "contains_real_customer_data": False,
+            "pg_dump_version": _tool_version("pg_dump"),
         }
         manifest_path = output_directory / "backup_manifest.v1.json"
         manifest_path.write_text(
@@ -504,12 +606,14 @@ class HostedOperations:
             "manifest_path": str(manifest_path),
             "dump_sha256": dump_digest,
             "object_counts": health["object_counts"],
+            "health_digest": manifest["health_digest"],
         }
 
     @staticmethod
     def restore(*, target_database_url: str, manifest_path: Path) -> JsonObject:
         url = make_url(target_database_url)
         args, env = _database_args(url)
+        target_database = str(url.database)
         manifest_raw = json.loads(manifest_path.read_text(encoding="utf-8"))
         if not isinstance(manifest_raw, dict):
             raise ValueError("备份清单无效")
@@ -517,18 +621,29 @@ class HostedOperations:
         if (
             manifest.get("manifest_version") != "v1.0"
             or not str(manifest.get("namespace", "")).startswith(TASK_PREFIX)
-            or manifest.get("contains_secrets") is not False
+            or manifest.get("source_database") != manifest.get("namespace")
+            or manifest.get("application_version") != APPLICATION_VERSION
+            or manifest.get("schema_version") not in SUPPORTED_RESTORE_SCHEMA_VERSIONS
+            or manifest.get("contains_plaintext_secrets") is not False
+            or manifest.get("contains_credential_verifiers") is not True
+            or manifest.get("contains_sensitive_runtime_state") is not True
+            or manifest.get("requires_restricted_storage") is not True
+            or manifest.get("repository_commit_allowed") is not False
             or manifest.get("contains_real_customer_data") is not False
         ):
             raise ValueError("备份归属或版本无效")
+        if target_database == manifest.get("source_database"):
+            raise ValueError("恢复必须使用新的隔离数据库")
+        if not isinstance(manifest.get("object_counts"), dict) or not isinstance(
+            manifest.get("health_digest"), str
+        ):
+            raise ValueError("备份健康清单无效")
         dump_path = manifest_path.parent / str(manifest.get("dump_file"))
         if not dump_path.is_file():
             raise ValueError("备份文件缺失")
         digest = hashlib.sha256(dump_path.read_bytes()).hexdigest()
         if digest != manifest.get("dump_sha256"):
             raise ValueError("备份摘要不匹配")
-        from persistence import create_runtime_engine
-
         target_engine = create_runtime_engine(target_database_url)
         try:
             existing = [
@@ -540,20 +655,87 @@ class HostedOperations:
             target_engine.dispose()
         if existing:
             raise ValueError("恢复目标不是空命名空间")
-        subprocess.run(
-            ["pg_restore", *args, "--no-owner", "--no-acl", str(dump_path)],
-            check=True,
-            capture_output=True,
-            text=True,
-            env=env,
-        )
+        try:
+            subprocess.run(
+                [
+                    "pg_restore",
+                    *args,
+                    "--single-transaction",
+                    "--exit-on-error",
+                    "--no-owner",
+                    "--no-acl",
+                    str(dump_path),
+                ],
+                check=True,
+                capture_output=True,
+                text=True,
+                env=env,
+            )
+        except subprocess.CalledProcessError as exc:
+            HostedOperations._clear_restored_database(target_database_url)
+            raise ValueError("恢复执行失败且目标已清理") from exc
+
+        target_engine = create_runtime_engine(target_database_url)
+        try:
+            target_sessions = create_session_factory(target_engine)
+            source_namespace = str(manifest["namespace"])
+            with target_sessions.begin() as session:
+                state = session.get(HostedSchemaState, source_namespace)
+                if state is None or state.application_version != APPLICATION_VERSION:
+                    raise ValueError("恢复后的应用版本状态无效")
+                if state.schema_version != manifest["schema_version"]:
+                    raise ValueError("恢复后的结构版本不一致")
+                state.namespace = target_database
+                for audit in session.scalars(
+                    select(HostedOperationAudit).where(
+                        HostedOperationAudit.namespace == source_namespace
+                    )
+                ).all():
+                    audit.namespace = target_database
+            restored = HostedOperations(
+                target_engine,
+                target_sessions,
+                target_database,
+            )
+            health = restored.health()
+            if (
+                health["object_counts"] != manifest["object_counts"]
+                or health["brand_revision_digest"] != manifest["brand_revision_digest"]
+                or health["schema_features"] != manifest["schema_features"]
+                or _health_digest(health) != manifest["health_digest"]
+            ):
+                raise ValueError("恢复后的对象健康状态不等价")
+        except Exception:
+            target_engine.dispose()
+            HostedOperations._clear_restored_database(target_database_url)
+            raise
+        finally:
+            target_engine.dispose()
         return {
             "state": "RESTORED",
-            "target_database": url.database,
+            "target_database": target_database,
             "dump_sha256": digest,
-            "expected_object_counts": manifest["object_counts"],
-            "expected_brand_revision_digest": manifest["brand_revision_digest"],
+            "actual_object_counts": health["object_counts"],
+            "actual_brand_revision_digest": health["brand_revision_digest"],
+            "actual_health_digest": _health_digest(health),
+            "pg_restore_version": _tool_version("pg_restore"),
         }
+
+    @staticmethod
+    def _clear_restored_database(target_database_url: str) -> None:
+        engine = create_runtime_engine(target_database_url)
+        try:
+            HostedBase.metadata.drop_all(engine)
+            Base.metadata.drop_all(engine)
+            remaining = [
+                name
+                for name in inspect(engine).get_table_names()
+                if not name.startswith("pg_")
+            ]
+            if remaining:
+                raise RuntimeError("失败恢复的目标无法清空")
+        finally:
+            engine.dispose()
 
     def health(self) -> JsonObject:
         self._require_installed()
@@ -601,7 +783,11 @@ class HostedOperations:
             "application_version": state.application_version,
             "object_counts": counts,
             "brand_revision_digest": digest_object(revisions),
-            "secrets_included": False,
+            "schema_features": {
+                "revision_lookup_index": self._revision_index_exists(self.engine),
+            },
+            "plaintext_secrets_included": False,
+            "credential_verifiers_included": True,
             "private_content_included": False,
             "production_ready": False,
         }
@@ -664,6 +850,154 @@ class HostedOperations:
         if brand is not None and brand.tenant_id != tenant_id:
             raise ValueError("品牌标识已经属于另一个企业")
 
+    @staticmethod
+    def _delete_omitted_bundle_rows(
+        session: Session,
+        bundle: BrandImportBundle,
+        tenant_id: str,
+    ) -> int:
+        """Apply full-bundle replacement semantics inside the import transaction."""
+
+        identity = bundle.identity
+        desired_organizations = {
+            str(row["organization_id"]) for row in identity["organizations"]
+        }
+        desired_stores = {str(row["store_id"]) for row in identity["stores"]}
+        desired_principals = {
+            str(row["principal_id"]) for row in identity["login_principals"]
+        }
+        desired_accounts = {
+            str(row["account_id"]) for row in identity["content_accounts"]
+        }
+        desired_authorizations = {
+            str(row["authorization_id"]) for row in identity["authorization_grants"]
+        }
+        desired_confirmations = {
+            str(row["subject_confirmation_id"])
+            for row in identity["subject_confirmation_records"]
+        }
+        desired_fragments = {
+            str(row["fragment_id"]) for row in bundle.narrative_fragments
+        }
+        desired_facts = {str(row["fact_id"]) for row in bundle.precise_facts}
+        desired_sources = {
+            str(row["source_id"])
+            for row in (*bundle.narrative_fragments, *bundle.precise_facts)
+        }
+
+        current_organizations = set(
+            session.scalars(
+                select(RuntimeOrganization.organization_id).where(
+                    RuntimeOrganization.tenant_id == tenant_id
+                )
+            ).all()
+        )
+        current_sources: set[str] = set()
+        for material in session.scalars(
+            select(RuntimeNarrativeFragment).where(
+                RuntimeNarrativeFragment.tenant_id == tenant_id
+            )
+        ).all():
+            source_id = material.payload.get("source_id")
+            if isinstance(source_id, str):
+                current_sources.add(source_id)
+        for fact in session.scalars(
+            select(RuntimePreciseFact).where(RuntimePreciseFact.tenant_id == tenant_id)
+        ).all():
+            source_id = fact.payload.get("source_id")
+            if isinstance(source_id, str):
+                current_sources.add(source_id)
+
+        deleted_count = 0
+
+        def delete_missing(
+            model: type[Any],
+            key_column: Any,
+            current_ids: set[str],
+            desired_ids: set[str],
+        ) -> None:
+            nonlocal deleted_count
+            stale = current_ids - desired_ids
+            if not stale:
+                return
+            result = session.execute(delete(model).where(key_column.in_(stale)))
+            deleted_count += int(result.rowcount or 0)
+
+        delete_missing(
+            RuntimeStore,
+            RuntimeStore.store_id,
+            set(
+                session.scalars(
+                    select(RuntimeStore.store_id).where(
+                        RuntimeStore.organization_id.in_(current_organizations)
+                    )
+                ).all()
+            ),
+            desired_stores,
+        )
+        scoped_models = (
+            (
+                RuntimePrincipal,
+                RuntimePrincipal.principal_id,
+                RuntimePrincipal.tenant_id,
+                desired_principals,
+            ),
+            (
+                RuntimeAccount,
+                RuntimeAccount.account_id,
+                RuntimeAccount.tenant_id,
+                desired_accounts,
+            ),
+            (
+                RuntimeAuthorization,
+                RuntimeAuthorization.authorization_id,
+                RuntimeAuthorization.tenant_id,
+                desired_authorizations,
+            ),
+            (
+                RuntimeSubjectConfirmation,
+                RuntimeSubjectConfirmation.confirmation_id,
+                RuntimeSubjectConfirmation.tenant_id,
+                desired_confirmations,
+            ),
+            (
+                RuntimeNarrativeFragment,
+                RuntimeNarrativeFragment.fragment_id,
+                RuntimeNarrativeFragment.tenant_id,
+                desired_fragments,
+            ),
+            (
+                RuntimePreciseFact,
+                RuntimePreciseFact.fact_id,
+                RuntimePreciseFact.tenant_id,
+                desired_facts,
+            ),
+        )
+        for model, key_column, tenant_column, desired_ids in scoped_models:
+            delete_missing(
+                model,
+                key_column,
+                set(
+                    session.scalars(
+                        select(key_column).where(tenant_column == tenant_id)
+                    ).all()
+                ),
+                desired_ids,
+            )
+        delete_missing(
+            RuntimeOrganization,
+            RuntimeOrganization.organization_id,
+            current_organizations,
+            desired_organizations,
+        )
+        delete_missing(
+            RuntimeSource,
+            RuntimeSource.source_id,
+            current_sources,
+            desired_sources,
+        )
+        return deleted_count
+
     def _apply_bundle_rows(
         self,
         session: Session,
@@ -677,7 +1011,15 @@ class HostedOperations:
         tenant_id = str(tenant["tenant_id"])
         brand_id = str(tenant["brand_id"])
         now = utc_now()
-        counts = {"created_or_updated": 0, "unchanged": 0}
+        counts = {
+            "created_or_updated": 0,
+            "unchanged": 0,
+            "deleted": self._delete_omitted_bundle_rows(
+                session,
+                bundle,
+                tenant_id,
+            ),
+        }
 
         def apply(model: type[ModelType], key: str, row: ModelType) -> None:
             changed = _upsert(session, model, key, row)
@@ -997,10 +1339,14 @@ def preflight_environment(
     _safe_namespace(namespace)
     url = make_url(database_url)
     _database_args(url)
+    if url.database != namespace:
+        raise ValueError("目标命名空间与数据库名称不一致")
     free_bytes = shutil.disk_usage(PACKAGE_ROOT).free
     if free_bytes < minimum_free_bytes:
         raise ValueError("磁盘空间不足")
     if secret_file is not None:
+        if not secret_file.is_file() or secret_file.is_symlink():
+            raise ValueError("密钥文件必须是受限的普通文件")
         mode = secret_file.stat().st_mode & 0o777
         if mode & 0o077:
             raise ValueError("密钥文件权限过宽")
@@ -1008,15 +1354,86 @@ def preflight_environment(
         "package7_app": PACKAGE_7_ROOT / "dify_app.v1.yaml",
         "package7_bridge": PACKAGE_7_ROOT / "bridge_app.py",
         "package7_manifest": PACKAGE_7_ROOT / "dify_end_to_end_manifest.v1.json",
+        "package8_manifest": PACKAGE_ROOT / "hosted_operations_manifest.v1.json",
+        "materialization_manifest": PACKAGE_ROOT
+        / "dify_materialization_manifest.v1.json",
     }
     missing = [label for label, path in required.items() if not path.is_file()]
     if missing:
         raise ValueError(f"前置对象缺失：{','.join(missing)}")
+    hosted_manifest = json.loads(
+        required["package8_manifest"].read_text(encoding="utf-8")
+    )
+    materialization = json.loads(
+        required["materialization_manifest"].read_text(encoding="utf-8")
+    )
+    if (
+        not isinstance(hosted_manifest, dict)
+        or hosted_manifest.get("preconditions", {}).get("dify_community_version")
+        != "1.15.0"
+        or not isinstance(materialization, dict)
+        or materialization.get("dify_platform_version") != "1.15.0"
+    ):
+        raise ValueError("Dify 前置版本未被清单精确锁定")
+    for key in ("application_definition", "bridge", "package7_manifest"):
+        item = materialization.get(key)
+        if not isinstance(item, dict):
+            raise ValueError("Dify 对象清单不完整")
+        path = item.get("path")
+        expected_digest = item.get("sha256")
+        if not isinstance(path, str) or not isinstance(expected_digest, str):
+            raise ValueError("Dify 对象清单字段无效")
+        target = REPOSITORY_ROOT / path
+        if (
+            not target.is_file()
+            or hashlib.sha256(target.read_bytes()).hexdigest() != expected_digest
+        ):
+            raise ValueError("Dify 前置对象摘要不匹配")
+    pg_dump_version = _tool_version("pg_dump")
+    pg_restore_version = _tool_version("pg_restore")
+    engine = create_runtime_engine(database_url)
+    try:
+        with engine.connect() as connection:
+            row = (
+                connection.execute(
+                    select(
+                        func.current_database().label("database_name"),
+                        func.current_setting("server_version_num").label(
+                            "server_version_num"
+                        ),
+                        func.has_database_privilege(
+                            func.current_database(), "CONNECT"
+                        ).label("can_connect"),
+                        func.has_database_privilege(
+                            func.current_database(), "CREATE"
+                        ).label("can_create"),
+                    )
+                )
+                .mappings()
+                .one()
+            )
+    except (OSError, SQLAlchemyError) as exc:
+        raise ValueError("目标 PostgreSQL 不可连接或权限检查失败") from exc
+    finally:
+        engine.dispose()
+    if (
+        row["database_name"] != namespace
+        or int(row["server_version_num"]) < 140000
+        or row["can_connect"] is not True
+        or row["can_create"] is not True
+    ):
+        raise ValueError("目标 PostgreSQL 版本、归属或权限不满足要求")
     return {
         "state": "CAN_PROCEED",
         "namespace": namespace,
         "database_name": url.database,
         "free_space_sufficient": True,
+        "postgresql_server_version_num": int(row["server_version_num"]),
+        "database_connect_privilege": True,
+        "database_create_privilege": True,
+        "pg_dump_version": pg_dump_version,
+        "pg_restore_version": pg_restore_version,
+        "dify_community_version": "1.15.0",
         "secret_file_checked": secret_file is not None,
         "required_object_digests": {
             label: hashlib.sha256(path.read_bytes()).hexdigest()

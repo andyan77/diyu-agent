@@ -167,6 +167,26 @@ def validate_manifests(root: Path) -> None:
         },
         "E_MANIFEST_CORE_NUMBERS",
     )
+    require(
+        hosted.get("database_isolation")
+        == {
+            "database_rls_enabled": False,
+            "enforcement": "APPLICATION_SCOPE_AND_CURRENT_STATE_POSTCHECK",
+            "package9_production_hardening_required": True,
+            "production_ready": False,
+        },
+        "E_MANIFEST_DATABASE_ISOLATION",
+    )
+    require(
+        hosted.get("database_backup_security")
+        == {
+            "contains_credential_verifiers": True,
+            "contains_plaintext_secrets": False,
+            "repository_commit_allowed": False,
+            "restricted_storage_required": True,
+        },
+        "E_MANIFEST_BACKUP_SECURITY",
+    )
     validate_readiness(hosted.get("readiness", {}))
     validate_manifest_hash(root, hosted.get("second_brand_fixture", {}), "E_FIXTURE")
     validate_manifest_hash(root, hosted.get("template", {}), "E_TEMPLATE")
@@ -230,7 +250,10 @@ def validate_brand_fixture() -> None:
     require(preflight.get("account_count") == 2, "E_BRAND_ACCOUNT_COUNT")
     tenant = bundle.identity.get("tenant", {})
     require(tenant.get("tenant_id") == "TENANT-QINGHE-LAB", "E_BRAND_TENANT")
-    require(tenant.get("brand_id") == "BRAND-QINGHE-HOME", "E_BRAND_ID")
+    require(
+        tenant.get("brand_id") == "BRAND-QINGHE-LAB--QINGHE-HOME",
+        "E_BRAND_ID",
+    )
     require(tenant.get("simulation_only") is True, "E_BRAND_SIMULATION")
     require(tenant.get("publish_allowed") is False, "E_BRAND_PUBLISH")
     accounts = bundle.identity.get("content_accounts", [])
@@ -287,6 +310,15 @@ def validate_source_and_files() -> None:
         "E_PG_BACKUP",
     )
     require("pg_advisory_xact_lock" in operations_source, "E_PG_CONCURRENCY")
+    require(
+        "--single-transaction" in operations_source
+        and "--exit-on-error" in operations_source,
+        "E_PG_RESTORE_ATOMIC",
+    )
+    require(
+        "ix_hosted_brand_revision_tenant_digest" in operations_source,
+        "E_PG_SCHEMA_MIGRATION",
+    )
     require("sqlite" not in operations_source.casefold(), "E_SQLITE_ACCEPTANCE")
     require(
         "active_runtime_brand"
@@ -323,10 +355,15 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
         "revocation_immediate",
         "stale_candidate_rejected",
         "bundle_rollback_restored",
+        "bundle_omission_removed",
         "failed_upgrade_rolled_back",
+        "schema_upgrade_changed_structure",
         "successful_upgrade_and_rollback",
         "fresh_namespace_restore_equal",
         "corrupt_backup_rejected",
+        "incompatible_backup_rejected",
+        "failed_restore_left_target_empty",
+        "selected_candidate_rechecked_after_revocation",
     }
     require(evidence.get("task_id") == TASK_ID, "E_EVIDENCE_TASK")
     require(evidence.get("database_kind") == "POSTGRESQL_14", "E_EVIDENCE_DB")
@@ -336,6 +373,52 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
     require(
         evidence.get("local_task_database_count_after_cleanup") == 0,
         "E_EVIDENCE_CLEANUP",
+    )
+    command_contract = evidence.get("acceptance_command_contract", {})
+    require(
+        command_contract.get("test_path")
+        == "18_deployment/hosted_operations_001/test_hosted_operations.py"
+        and command_contract.get("database_url_env") == "DIYU_PKG8_ADMIN_DATABASE_URL"
+        and command_contract.get("report_env") == "DIYU_PKG8_ACCEPTANCE_REPORT"
+        and command_contract.get("local_only") is True
+        and command_contract.get("remote_ci_database_replay_allowed") is False
+        and command_contract.get("exit_code") == 0,
+        "E_EVIDENCE_COMMAND_CONTRACT",
+    )
+    require(
+        command_contract.get("test_file_sha256")
+        == sha256_file(PACKAGE_ROOT / "test_hosted_operations.py"),
+        "E_EVIDENCE_TEST_DIGEST",
+    )
+    require(
+        evidence.get("postgresql_server_version_num", 0) >= 140000,
+        "E_EVIDENCE_PG_VERSION",
+    )
+    require(
+        str(evidence.get("pg_dump_version", "")).startswith("pg_dump (PostgreSQL) 14")
+        and str(evidence.get("pg_restore_version", "")).startswith(
+            "pg_restore (PostgreSQL) 14"
+        ),
+        "E_EVIDENCE_PG_TOOLS",
+    )
+    require(
+        evidence.get("backup_security")
+        == {
+            "contains_credential_verifiers": True,
+            "contains_plaintext_secrets": False,
+            "repository_commit_allowed": False,
+            "restricted_storage_required": True,
+        },
+        "E_EVIDENCE_BACKUP_SECURITY",
+    )
+    require(
+        evidence.get("database_isolation")
+        == {
+            "database_rls_enabled": False,
+            "enforcement": "APPLICATION_SCOPE_AND_CURRENT_STATE_POSTCHECK",
+            "production_ready": False,
+        },
+        "E_EVIDENCE_DATABASE_ISOLATION",
     )
     runtime = evidence.get("runtime", {})
     require(runtime.get("prepared_and_validated_brand_count") == 2, "E_RUNTIME_BRANDS")
@@ -531,6 +614,18 @@ def run_selftest() -> None:
     changed = copy.deepcopy(evidence)
     changed["runtime"]["cross_tenant_attacks_rejected"] = 0
     expect_failure("E_RUNTIME_ATTACKS", lambda: validate_acceptance_evidence(changed))
+    changed = copy.deepcopy(evidence)
+    changed["acceptance_command_contract"]["test_file_sha256"] = "0" * 64
+    expect_failure(
+        "E_EVIDENCE_TEST_DIGEST",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed["backup_security"]["contains_credential_verifiers"] = False
+    expect_failure(
+        "E_EVIDENCE_BACKUP_SECURITY",
+        lambda: validate_acceptance_evidence(changed),
+    )
     invalid_item = {
         "path": "18_deployment/hosted_operations_001/brand_input_template.v1.yaml",
         "sha256": "0" * 64,
