@@ -1,0 +1,59 @@
+# GATE1_V11_SUCCESSOR_LONGRUN_001 · 执行授权记录 v2（v2.5-native）
+# 取代关系：supersede contract/execution_authorization.v1.1.yaml 中与 v2.5 §壹-9 冲突的授权姿态；
+# v1.1 原文封存不改（历史证据）。登记见 delivery_control_001/SUPERSESSION_LEDGER.v1.md §2。
+schema: execution_authorization.v2
+task_id: GATE1_V11_SUCCESSOR_LONGRUN_001
+status: AUTHORIZED_ACTIVE
+authorization_model: v2.5 §壹-9 全程自主授权（宽义默认授权）
+authorization_source:
+  - 发起人 2026-07-16 第九项裁决（AskUserQuestion 知情选择，风险已提示）
+  - AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.5.md @ 23f5fea355ef4904043c98187ba2a82c846772be（落盘提交即授权记录）
+  - P1/M1 里程碑启动记录（delivery_control_001/prompts/P1.M1.prompt.md，
+    sha256 58c63864d7a4471aaeee933a1a479e4e37023802d6b158f3bbca345f32fd68de）
+authorized_executor:
+  platform: Claude Code
+  model_display_name: Fable 5
+  model_id: claude-fable-5
+  session_evidence: delivery_control_001/evidence/SESSION_IDENTITY.M1.v1.json
+
+default_authorized_in_pipeline:        # 执行侧自启并登记留痕，不再逐次请示
+  - 里程碑启动（M1–M7，P1–P7 为启动记录非授权令牌）
+  - 真实 S0 运行（M2 流水线内）
+  - D0 章程落盘与生效（落盘+独立审核，见 D0_STATUS 五条件合取）
+  - 授权回执文书的起草与登记
+  - 到达 M5/M7 后：新产品仓与新私有远程创建（D0 管辖边界内）
+  - 新写面登记（逐里程碑启动记录冻结）
+
+milestone_launch_record_must_freeze:   # 默认授权 ≠ 无限权限（P1 §三）
+  - 精确工作区
+  - 输入提交
+  - 允许/禁止写入路径
+  - 允许创建的仓库和远程
+  - 允许使用的 Git 动作
+  - 当前阶段允许调用的模型和材料
+  - 入口 typed 回执
+
+not_covered_by_default_authorization:  # 唯一升级通道 = 停止线触发 + 未分类新事项 → 停+报发起人
+  - 部署 / 正式发布 / Release / tag
+  - 合并主分支 / 强推 / 重写历史
+  - 使用真实客户数据
+  - 降低 V1.1 或阶段验收标准
+  - 重开已冻结的九项裁决
+  - 自行处理停止线
+  - 擅自解释未分类新事项
+
+founder_override: 发起人可随时叫停或收回授权
+
+inherited_unchanged_from_v1_1:         # 红线承继（v1.1 原文为准，此处登记不改写）
+  allowed_write_surface:
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/**
+    - controlled_content_generator_v2_001/generator_v3_successor_001/**
+  m1_narrowed_write_surface:           # P1 §八 对本里程碑的再收窄
+    - controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/**
+    - controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/**
+  forbidden_surface: 沿 v1.1 forbidden_surface_summary 全部条目 + P1 §八 禁面
+  remote_permissions:
+    push_task_branch: allowed
+    draft_pr: allowed_stacked_only
+    merge_or_release: forbidden
+    new_product_remote: forbidden_until_M5_or_M7

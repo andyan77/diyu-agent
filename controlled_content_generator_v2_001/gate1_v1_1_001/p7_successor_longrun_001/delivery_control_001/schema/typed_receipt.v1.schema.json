@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-typed-receipt-v1",
+  "title": "里程碑 typed 状态与关闭回执 schema（STAGE_DECISION / CLOSEOUT_RECEIPT / 中间态）",
+  "description": "真源：v2.5 §三 3.9-1 与 P1 §十六。最终结果只有四个枚举值；REVIEW_READY 只是运行中间态，不满足任何下游入口。下游入口校验必须按具体状态值匹配，'已关闭'不构成通过。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "receipt_kind",
+    "milestone_id",
+    "product_scope",
+    "result",
+    "candidate_commit",
+    "output_manifest_digest",
+    "evidence_manifest_digest",
+    "review_bindings",
+    "issued_at",
+    "issued_by_role",
+    "receipt_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-typed-receipt-v1" },
+    "receipt_kind": {
+      "enum": ["STAGE_DECISION", "CLOSEOUT_RECEIPT", "MILESTONE_STATE"]
+    },
+    "milestone_id": {
+      "enum": ["M1", "M2", "M3", "M4", "M5", "M6", "M7"]
+    },
+    "product_scope": {
+      "enum": ["SHARED", "A", "B"]
+    },
+    "result": {
+      "description": "终态枚举（仅 STAGE_DECISION/CLOSEOUT_RECEIPT 可用前四值收尾）；中间态仅 MILESTONE_STATE 可持有，且永不满足下游入口",
+      "enum": [
+        "PASS",
+        "DIAGNOSTIC_FINAL",
+        "FAIL",
+        "HONEST_STOP",
+        "ACTIVE",
+        "IMPLEMENTATION_COMPLETE_REVIEW_READY",
+        "INTERRUPTED_RESUMABLE"
+      ]
+    },
+    "terminal": {
+      "type": "boolean",
+      "description": "true 仅当 result ∈ {PASS, DIAGNOSTIC_FINAL, FAIL, HONEST_STOP}"
+    },
+    "qualification_flags": {
+      "type": "object",
+      "description": "资格类具名旗标；下游入口按键值精确匹配，不接受宽泛关闭回执。缺键 = 该资格未声明 = 不满足任何需要该键的入口。",
+      "properties": {
+        "A2_QUALIFIED": { "type": "boolean" },
+        "A2_DIAGNOSTIC_FINAL": { "type": "boolean" },
+        "A_LIFT_READY": { "type": "boolean" },
+        "B_LIFT_READY": { "type": "boolean" },
+        "LOGICAL_CORE_SEPARATED": { "type": "boolean" },
+        "B_EVAL_ROUTE_FROZEN": { "enum": ["a", "b", null] }
+      },
+      "additionalProperties": false
+    },
+    "candidate_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "output_manifest_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidence_manifest_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "review_bindings": {
+      "type": "array",
+      "description": "终态 PASS 至少绑定两份独立审核签字回执（同一候选）；每项为 signer_receipt 的路径+摘要",
+      "items": {
+        "type": "object",
+        "required": ["receipt_path", "receipt_digest", "reviewer_kind", "verdict"],
+        "properties": {
+          "receipt_path": { "type": "string" },
+          "receipt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "reviewer_kind": { "type": "string" },
+          "verdict": { "type": "string" }
+        }
+      }
+    },
+    "session_id": { "type": "string" },
+    "issued_at": { "type": "string" },
+    "issued_by_role": { "type": "string" },
+    "stop_code": { "type": ["string", "null"] },
+    "notes": { "type": "array", "items": { "type": "string" } },
+    "receipt_digest": {
+      "type": "string",
+      "description": "sha256(canonical_json(去 receipt_digest 后的全对象))",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "receipt_kind": { "enum": ["STAGE_DECISION", "CLOSEOUT_RECEIPT"] } } },
+      "then": {
+        "properties": {
+          "result": { "enum": ["PASS", "DIAGNOSTIC_FINAL", "FAIL", "HONEST_STOP"] },
+          "terminal": { "const": true }
+        },
+        "required": ["terminal"]
+      }
+    },
+    {
+      "if": { "properties": { "result": { "const": "PASS" }, "receipt_kind": { "enum": ["STAGE_DECISION", "CLOSEOUT_RECEIPT"] } } },
+      "then": {
+        "properties": {
+          "review_bindings": { "minItems": 2 }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

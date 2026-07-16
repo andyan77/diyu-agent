@@ -1,0 +1,115 @@
+{
+  "schema_version": "p7-active-contract-set-v1",
+  "definition": "ACTIVE_CONTRACT_SET = v2.5 @ 23f5fea355ef4904043c98187ba2a82c846772be",
+  "active_plan": {
+    "id": "AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.5",
+    "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.5.md",
+    "commit": "23f5fea355ef4904043c98187ba2a82c846772be",
+    "sha256": "de7068865b6d0584dcf18ba9aee061ef9f5fbc1e2bb5a95047df2835b5fab37f"
+  },
+  "active_members": [
+    {
+      "id": "P1_MILESTONE_LAUNCH_RECORD",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/prompts/P1.M1.prompt.md",
+      "layer": "founder_ruling_and_launch_record"
+    },
+    {
+      "id": "LONGRUN_EXECUTION_CONTRACT_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/contract/longrun_execution_contract.v2.md",
+      "layer": "upper_execution_contract",
+      "supersedes": "contract/longrun_execution_contract.v1.1.md"
+    },
+    {
+      "id": "EXECUTION_AUTHORIZATION_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/contract/execution_authorization.v2.yaml",
+      "layer": "execution_authorization",
+      "supersedes": "contract/execution_authorization.v1.1.yaml"
+    },
+    {
+      "id": "SPINE_IMPLEMENTATION_AUTHORIZATION_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/contract/implementation_authorization_record.v2.md",
+      "layer": "implementation_authorization",
+      "supersedes": "eval_audit_spine_001/contract/implementation_authorization_record.v1.md"
+    },
+    {
+      "id": "GPT_CODEX_SCOPE_CONTRACT_V1",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/contracts/GPT_CODEX_SCOPE_CONTRACT.v1.md",
+      "layer": "role_contract"
+    },
+    {
+      "id": "ROLE_MODEL_MATRIX_V1",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/ROLE_MODEL_MATRIX.v1.json",
+      "layer": "role_contract"
+    },
+    {
+      "id": "D0_PRODUCT_DECOUPLING_CHARTER_V1",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/contracts/D0_PRODUCT_DECOUPLING_CHARTER.v1.md",
+      "layer": "decoupling_charter",
+      "effectiveness_gate": "delivery_control_001/state/D0_STATUS.v1.json（五条件合取，见 P1 §十-C1）"
+    },
+    {
+      "id": "TYPED_RECEIPT_SCHEMA_V1",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/schema/typed_receipt.v1.schema.json",
+      "layer": "schema"
+    },
+    {
+      "id": "SIGNER_RECEIPT_SCHEMA_V1",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/schema/signer_receipt.v1.schema.json",
+      "layer": "schema"
+    },
+    {
+      "id": "STAGE_AND_KILL_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/contract/stage_and_kill.v2.json",
+      "layer": "stage_contract",
+      "supersedes": "eval_audit_spine_001/contract/stage_and_kill.v1.json",
+      "materializes_in": "C2"
+    },
+    {
+      "id": "COST_ACCOUNTING_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/contract/cost_accounting.v2.json",
+      "layer": "cost_contract",
+      "supersedes": "eval_audit_spine_001/contract/cost_budget.v1.json",
+      "materializes_in": "C2"
+    },
+    {
+      "id": "PRODUCT_MAP_V1_2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/EVAL_AUDIT_SPINE_PRODUCT_MAP.v1.2.md",
+      "layer": "product_map",
+      "supersedes": "EVAL_AUDIT_SPINE_PRODUCT_MAP.v1.1.md",
+      "materializes_in": "C2"
+    },
+    {
+      "id": "SPINE_IMPLEMENTATION_CHARTER_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/contract/implementation_charter.v2.md",
+      "layer": "implementation_charter",
+      "supersedes": "eval_audit_spine_001/contract/implementation_charter.v1.md",
+      "materializes_in": "C2"
+    },
+    {
+      "id": "MEASUREMENT_QUALIFICATION_V1_RETAINED",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/contract/measurement_qualification.v1.json",
+      "layer": "qualification_contract",
+      "note": "模块门与最小量全部保留；仅 cost 子门中的总体预算 ceiling-stop 两规则随 v2.5 §五-12 D 家族在 C2 修订（DeepSeek 30 元/日与记账完整性保留）",
+      "materializes_in": "C2_amendment"
+    },
+    {
+      "id": "EXTERNAL_LLM_BUDGET_V1_RETAINED_UNCHANGED",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/contract/external_llm_budget.v1.json",
+      "layer": "narrow_authorization",
+      "note": "DeepSeek 30 元人民币/UTC 日窄授权：保留面，零改动"
+    }
+  ],
+  "sealed_superseded": [
+    "AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.4.md（4328194，封存）",
+    "AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.3.md（bbe4d11，封存；其 §壹 八项裁决原文与 §〇 真源优先表经 v2.5 引用继续有效）",
+    "contract/longrun_execution_contract.v1.1.md（红线由 v2 承继）",
+    "contract/execution_authorization.v1.1.yaml",
+    "eval_audit_spine_001/contract/implementation_authorization_record.v1.md",
+    "eval_audit_spine_001/contract/cost_budget.v1.json（C2 起由 cost_accounting.v2 取代）",
+    "eval_audit_spine_001/contract/stage_and_kill.v1.json（C2 起由 v2 取代）",
+    "EVAL_AUDIT_SPINE_PRODUCT_MAP.v1.md 与 v1.1（v1.2 生效后）"
+  ],
+  "digest_manifest": "delivery_control_001/state/ACTIVE_CONTRACT_DIGESTS.v1.json（由 tools/contract_set.py 复算生成；冻结活跃合同集合摘要）",
+  "conflict_rule": "成员间冲突按 SOURCE_LOCK.truth_precedence 解释；任何成员不得静默加严或放宽上位真源",
+  "recorded_at": "2026-07-16T16:46:44+00:00"
+}

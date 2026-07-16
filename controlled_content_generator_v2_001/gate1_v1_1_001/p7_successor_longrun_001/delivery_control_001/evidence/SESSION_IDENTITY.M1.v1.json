@@ -1,0 +1,59 @@
+{
+  "schema_version": "p7-session-identity-v1",
+  "milestone_id": "M1",
+  "prompt_id": "P1",
+  "session_kind": "TOP_LEVEL_FRESH",
+  "fork_or_resume": false,
+  "fork_or_resume_evidence": "会话以 P1/M1 启动记录为首条输入开启；无 resume/fork/summary 标记；上下文中无任何先前里程碑会话残留",
+  "requested_model": "fable[1m]",
+  "requested_model_evidence": "用户会话内 /model fable[1m] 指令回执：Set model to Fable 5 for this session only",
+  "actual_model_id": "claude-fable-5",
+  "actual_model_display_name": "Fable 5",
+  "actual_model_evidence": "平台运行时 system 环境自报（You are powered by the model named Fable 5. The exact model ID is claude-fable-5）；/model 回显 Current model: Fable 5 (effort: xhigh)",
+  "model_family_confirmed_fable5": true,
+  "undeclared_model_fallback_detected": false,
+  "claude_code_version_cli": "2.1.197",
+  "claude_code_version_extension_binary": "2.1.210 (anthropic.claude-code-2.1.210-linux-x64)",
+  "entrypoint": "claude-vscode",
+  "session_id": "f719e24e-7b51-48c0-9c24-9655a6525be8",
+  "session_id_evidence": "env CLAUDE_CODE_SESSION_ID 与 scratchpad 路径一致",
+  "run_id": "UNAVAILABLE",
+  "run_id_unavailable_reason": "Claude Code 未向会话暴露独立于 session_id 的 run 标识；会话可寻址身份即 session_id",
+  "run_id_evidence_ref": "env 全量清单（本文件 environment_observations）",
+  "environment_observations": {
+    "CLAUDE_CODE_CHILD_SESSION": "1 — 指 Bash 工具 shell 为 Claude Code 宿主的子进程，非会话 fork 证据（entrypoint=claude-vscode 下工具 shell 恒为 child）",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-opus-4-8 — 子代理默认模型为 Opus 4.8；本里程碑派工时逐个显式指定并登记 requested/actual model",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "会话启动时未设置（自动记忆已在 SessionStart 注入）；本会话内所有后续命令显式 export =1；launcher 启动未来里程碑会话时强制注入"
+  },
+  "auto_memory_status": {
+    "loaded_at_session_start": true,
+    "registered_sources": [
+      "/home/faye/.claude/CLAUDE.md（用户级全局指令 v4.2）",
+      "/home/faye/.claude/projects/-home-diyu----------/memory/MEMORY.md（GKB 项目记忆索引）",
+      "SessionStart hook: /home/faye/.claude/claude-error-patterns-core.md（防幻觉/防假绿/防旧快照纠偏）"
+    ],
+    "old_rule_injection_review": "三个来源内容已逐一核阅：为用户画像、GKB 知识库项目事实与通用错误模式纠偏；零条 v2.3/v2.4 里程碑授权语义（等待发起人点火/S0 专项/D0 待批）注入；不构成停止线『未登记持久记忆源持续注入旧规则』",
+    "unregistered_persistent_sources_detected": false,
+    "mitigation": "主会话命令级 export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；子代理 prompt 显式禁用记忆写入且不依赖记忆内容；正式审核者使用全新非 fork 会话并要求隔离声明"
+  },
+  "workspace": {
+    "repo_root": "/home/diyu/worktrees/gate1-longrun-001",
+    "branch": "agent/gate1-v1-1-successor-longrun",
+    "upstream": "origin/agent/gate1-v1-1-successor-longrun",
+    "origin_url": "https://github.com/andyan77/diyu-agent.git",
+    "head_at_start": "23f5fea355ef4904043c98187ba2a82c846772be",
+    "expected_frozen_baseline": "23f5fea",
+    "baseline_match": true
+  },
+  "plan_lineage_commits": {
+    "v2.3": "bbe4d11",
+    "v2.4": "4328194",
+    "v2.5": "23f5fea355ef4904043c98187ba2a82c846772be"
+  },
+  "plan_file_digests_at_start": {
+    "AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.5.md": "de7068865b6d0584dcf18ba9aee061ef9f5fbc1e2bb5a95047df2835b5fab37f"
+  },
+  "context_isolation_note": "M1 不读取真实密封载荷；本会话未读取 QUAL/隐藏材料/密封摘要/客户数据/.env* 任何一项",
+  "recorded_at": "2026-07-16T16:46:44+00:00",
+  "recorded_by_role": "M1_PRINCIPAL_ORCHESTRATOR"
+}

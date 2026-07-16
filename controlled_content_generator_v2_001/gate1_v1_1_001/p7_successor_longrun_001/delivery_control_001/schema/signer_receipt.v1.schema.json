@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-signer-receipt-v1",
+  "title": "通用签字回执 schema（一切签字动作必录；缺任一必填字段 = 该签字无效 = 视为未签）",
+  "description": "真源：v2.5 §三 3.9-2 与 P1 §十六。适用于 Codex-GPT 裁决/终验、独立 Claude/Fable 对抗审查、模型复审。提供方不公开的字段必须写 {value: UNAVAILABLE, unavailable_reason, evidence_ref}，禁止伪造内部模型修订号或调用 ID。",
+  "$defs": {
+    "maybe_unavailable": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "not": { "const": "UNAVAILABLE" } },
+        {
+          "type": "object",
+          "required": ["value", "unavailable_reason", "evidence_ref"],
+          "properties": {
+            "value": { "const": "UNAVAILABLE" },
+            "unavailable_reason": { "type": "string", "minLength": 1 },
+            "evidence_ref": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "required": [
+    "schema_version",
+    "reviewer_kind",
+    "provider",
+    "actual_model_id",
+    "model_version",
+    "task_thread_session_id",
+    "input_commit",
+    "input_manifest_digest",
+    "prompt_digest",
+    "config_digest",
+    "tool_summary",
+    "output_report_digest",
+    "call_receipt",
+    "exit_status",
+    "signed_at",
+    "session_isolation_attestation",
+    "verdict",
+    "receipt_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-signer-receipt-v1" },
+    "reviewer_kind": {
+      "description": "审核者种类；作者不得兼任（与作者 session/agent 同一 = 无效签字）",
+      "enum": [
+        "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+        "CODEX_GPT_INDEPENDENT_ADJUDICATOR",
+        "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+        "MODEL_SECONDARY_REVIEWER"
+      ]
+    },
+    "provider": { "type": "string", "minLength": 1 },
+    "actual_model_id": { "$ref": "#/$defs/maybe_unavailable" },
+    "model_version": { "$ref": "#/$defs/maybe_unavailable" },
+    "task_thread_session_id": { "$ref": "#/$defs/maybe_unavailable" },
+    "input_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "input_manifest_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "prompt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "config_digest": { "$ref": "#/$defs/maybe_unavailable" },
+    "tool_summary": { "type": "string", "minLength": 1 },
+    "output_report_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "call_receipt": {
+      "description": "调用回执（provider 侧可核验的调用证据：CLI 退出记录/事件文件/线程 ID 等）",
+      "$ref": "#/$defs/maybe_unavailable"
+    },
+    "exit_status": { "type": ["integer", "string"] },
+    "signed_at": { "type": "string", "minLength": 1 },
+    "session_isolation_attestation": {
+      "type": "object",
+      "required": [
+        "fresh_session_not_fork_not_resume",
+        "did_not_author_reviewed_scope",
+        "auto_memory_disabled_or_not_applicable",
+        "isolation_evidence"
+      ],
+      "properties": {
+        "fresh_session_not_fork_not_resume": { "const": true },
+        "did_not_author_reviewed_scope": { "const": true },
+        "auto_memory_disabled_or_not_applicable": { "const": true },
+        "isolation_evidence": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "verdict": {
+      "enum": ["ACCEPT", "REJECT", "CONDITIONAL_REJECT"]
+    },
+    "findings_summary": { "type": "array", "items": { "type": "string" } },
+    "receipt_digest": {
+      "type": "string",
+      "description": "sha256(canonical_json(去 receipt_digest 后的全对象))",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

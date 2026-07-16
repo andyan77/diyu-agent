@@ -1,0 +1,34 @@
+{
+  "schema_version": "p7-capsule-ledger-v1",
+  "milestone_id": "M1",
+  "entries": [
+    {
+      "capsule_id": "M1-C0",
+      "title": "现场保全",
+      "status": "DONE",
+      "commit": "f7d661995165f4d7a6559c40482e296b43781bd2",
+      "summary": "74 个用户既有 dirty 工件逐字保全入库；盘点 93 条（sha256 锚 9d1cfd7f…）；基线绿 47/47+49/49"
+    },
+    {
+      "capsule_id": "M1-C1",
+      "title": "真源、授权、D0、supersession",
+      "status": "IN_PROGRESS",
+      "commit": null,
+      "summary": "SOURCE_LOCK / ACTIVE_CONTRACT_SET / SUPERSESSION_LEDGER / D0 章程与状态 / GPT scope / 角色矩阵 / typed+signer schema / 上位合同 v2 / RUN_JOURNAL / 会话身份"
+    },
+    {
+      "capsule_id": "M1-C2",
+      "title": "三层旧规则迁移、checker 与测试",
+      "status": "PENDING",
+      "commit": null,
+      "summary": "23 位点四家族迁移；实际态/期望态分离；正向未来态+负向攻击测试；全仓残留扫描"
+    },
+    {
+      "capsule_id": "M1-C3",
+      "title": "控制面、自主接力、产品边界与关闭",
+      "status": "PENDING",
+      "commit": null,
+      "summary": "P1–P7 注册表；Y 图 ready-set；renderer；会话外 launcher；产品边界/密封/清权/QUAL 全序/B_LIFT 链合同；关闭八件套"
+    }
+  ]
+}

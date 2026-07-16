@@ -1,0 +1,91 @@
+{
+  "schema_version": "p7-role-model-matrix-v1",
+  "authority": "v2.3 §壹-1/2/3（角色四硬前提：上下文隔离、材料密封、盲锚测试、可追溯签字）+ v2.4 §三 3.5 代理拓扑 + v2.5 §三 3.7′",
+  "agent_layer_cap": 2,
+  "same_file_single_writer_rule": true,
+  "author_may_not_sign_own_work": true,
+  "formal_review_forbids_resume_or_fork_of_author_session": true,
+  "subagent_default_model_env_observed": "claude-opus-4-8（CLAUDE_CODE_SUBAGENT_MODEL）——派工时必须显式覆盖并逐 agent 登记 requested/actual",
+  "roles": [
+    {
+      "role_id": "M1_PRINCIPAL_ORCHESTRATOR",
+      "model": "claude-fable-5 (Fable 5)",
+      "carrier": "本顶层会话 f719e24e-7b51-48c0-9c24-9655a6525be8",
+      "duties": ["探查", "计划", "派工", "实现", "验证", "修复", "收口"],
+      "may_sign_own_work": false,
+      "visible_materials": "M1 写面 + 真源文件；禁读密封载荷/.env*/客户数据",
+      "isolation": "P1 全新非 fork 顶层会话；命令级 CLAUDE_CODE_DISABLE_AUTO_MEMORY=1"
+    },
+    {
+      "role_id": "IMPLEMENTATION_AGENT",
+      "model": "claude-fable-5（派工时显式 model=fable 并登记 actual）",
+      "carrier": "子代理（≤2 层）",
+      "duties": ["受托实现单一模块"],
+      "write_whitelist": "逐次派工登记（同一文件同一时间唯一写入者）",
+      "visible_materials": "派工登记的输入清单",
+      "isolation": "全新子代理上下文；prompt 禁用持久记忆依赖"
+    },
+    {
+      "role_id": "DETERMINISTIC_VERIFICATION_AGENT",
+      "model": "claude-fable-5",
+      "carrier": "子代理",
+      "duties": ["只读运行确定性脚本/测试并回报原始输出"],
+      "write_whitelist": [],
+      "isolation": "只读派工"
+    },
+    {
+      "role_id": "ADVERSARIAL_REVIEWER_INTERNAL",
+      "model": "claude-fable-5",
+      "carrier": "子代理（开发内审，不构成正式审核）",
+      "duties": ["对实现做对抗性挑刺"],
+      "note": "正式审核见 FORMAL_INDEPENDENT_FABLE_REVIEWER"
+    },
+    {
+      "role_id": "EVIDENCE_AUDITOR",
+      "model": "claude-fable-5",
+      "carrier": "子代理",
+      "duties": ["证据包完整性与摘要复核"],
+      "write_whitelist": []
+    },
+    {
+      "role_id": "FORMAL_INDEPENDENT_FABLE_REVIEWER",
+      "model": "claude-fable-5",
+      "carrier": "全新、只读、非 fork、非 resume 会话/代理（非作者上下文）",
+      "duties": ["M1 候选对抗审查（含 D0 章程审查）", "出具 signer_receipt"],
+      "receipt_schema": "schema/signer_receipt.v1.schema.json",
+      "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+      "isolation": "隔离声明必填；auto-memory 禁用；未读作者过程叙述，只读磁盘工件"
+    },
+    {
+      "role_id": "INDEPENDENT_ADJUDICATOR_AND_SIGNER",
+      "model": "OpenAI GPT via Codex CLI（actual model ID 以调用回执为准，不得杜撰）",
+      "carrier": "全新 Codex 会话",
+      "duties": ["独立复算", "接受/拒绝签字"],
+      "scope_contract": "contracts/GPT_CODEX_SCOPE_CONTRACT.v1.md",
+      "reviewer_kind": "CODEX_GPT_INDEPENDENT_ADJUDICATOR",
+      "signature_authority_source": "Sponsor authorization (2026-07-16)"
+    },
+    {
+      "role_id": "FORMULAIC_SEMANTIC_JUDGE",
+      "model": "DeepSeek",
+      "carrier": "eval_audit_spine_001/scripts/run_deepseek_formulaic_judge.py",
+      "duties": ["套路语义评审（开发反馈轨）"],
+      "hard_guardrail": "30 元人民币/UTC 日（external_llm_budget.v1.json，保留面零改动）；不构成 M0 或规模阶段入口",
+      "m1_usage": "禁止（M1 无外部模型调用需求）"
+    },
+    {
+      "role_id": "NARRATIVE_FACT_REVIEW_CAPABILITY",
+      "model": "登记占位（M2+ 资格化后启用；S2 硬入口 NARRATIVE_FACT_REVIEW_CAPABILITY_READY 的承载角色）",
+      "carrier": "待 M2+ 里程碑合同指定",
+      "m1_usage": "禁止执行，仅登记"
+    },
+    {
+      "role_id": "SEALED_DATA_CUSTODIAN",
+      "model": "待 M3 里程碑合同指定",
+      "duties": ["QUAL-A/B 密封保全；只见数量/摘要/回执"],
+      "isolation": "目录/工作树级物理隔离（E11 纪律：禁提示词软约束）",
+      "m1_usage": "禁止（M1 不接触密封材料）"
+    }
+  ],
+  "recorded_at": "2026-07-16T16:46:44+00:00"
+}
