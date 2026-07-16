@@ -141,6 +141,42 @@ SECRET_PATTERNS = (
     re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----"),
     re.compile(r"Bearer [A-Za-z0-9._-]{20,}"),
 )
+CREATIVE_INSTRUCTION_SURFACE_PATH = re.compile(
+    r"^execution_payload\.(?:production_format|task_summary|content_direction|core_idea|"
+    r"target_platform|duration_label|next_actions\[[0-9]+\]|"
+    r"video\.shots\[[0-9]+\]\.(?:time_range|visual|action|camera|scene_product_props|edit_note)|"
+    r"video\.(?:shooting_notes|editing_notes)\[[0-9]+\]|"
+    r"article\.frames\[[0-9]+\]\.image_brief|article\.(?:cover_brief|layout_notes\[[0-9]+\])|"
+    r"display\.(?:arrangement_relationship|spatial_layers|color_relationship|availability_caution|"
+    r"shooting_angles\[[0-9]+\]))$"
+)
+AUTHORIZATION_OR_REAL_EVENT_PATTERN = re.compile(
+    r"(?:已|已经|曾经|此前|目前).{0,24}(?:授权|获准|批准|发生|完成|发布|上线|售出|到店|调整|承诺|决定)"
+    r"|(?:代表当前|有权|获准|已授权|经授权|官方账号)"
+    r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|选择|购买|试穿|完成|决定|承诺)"
+)
+EXISTING_ASSET_CLAIM_PATTERN = re.compile(
+    r"(?:已有|现有|已经|已提供|已拍摄|可直接使用).{0,18}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
+    r"|(?:照片|视频|样衣|设计稿|截图|工作台|库存).{0,18}(?:已有|现有|已经|已提供|可用|存在|确认)"
+)
+NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
+    r"(?:不代表|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
+)
+SAFE_UNVERIFIED_ASSET_CUES = (
+    "待补",
+    "待设计",
+    "待取得",
+    "需要取得",
+    "需取得",
+    "若能取得",
+    "如能取得",
+    "拍摄前",
+    "不得使用",
+    "不使用",
+    "未提供",
+    "没有现成",
+    "不可假设",
+)
 
 
 class CheckFailure(RuntimeError):
@@ -157,6 +193,42 @@ def require_fields(
 ) -> None:
     missing = sorted(set(required) - set(value))
     require(not missing, f"{code}:{missing}")
+
+
+def surface_requires_evidence_binding(path: str, text: str) -> bool:
+    if any(cue in text for cue in SAFE_UNVERIFIED_ASSET_CUES):
+        return False
+    if NON_ASSERTIVE_BOUNDARY_PATTERN.search(text):
+        return False
+    if AUTHORIZATION_OR_REAL_EVENT_PATTERN.search(text):
+        return True
+    if EXISTING_ASSET_CLAIM_PATTERN.search(text):
+        return True
+    if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
+        return False
+    return any(character.isdigit() for character in text)
+
+
+def surface_text_map(surfaces: Mapping[str, Any]) -> dict[str, str]:
+    result: dict[str, str] = {}
+
+    def visit(value: object, path: str) -> None:
+        if isinstance(value, str):
+            normalized = value.strip()
+            if normalized:
+                result[path] = normalized
+            return
+        if isinstance(value, list):
+            for index, child in enumerate(value):
+                visit(child, f"{path}[{index}]")
+            return
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if key != "surface_units":
+                    visit(child, f"{path}.{key}" if path else str(key))
+
+    visit(surfaces, "")
+    return result
 
 
 def load_json(path: Path) -> JsonObject:
@@ -351,7 +423,7 @@ def validate_candidate_record(record: JsonObject, expected_format: str, payload_
     require(record.get("selected") is False, "E_CANDIDATE_PRESELECTED")
     require(
         candidate.get("narrative_architecture")
-        in {"EVIDENCE_FIRST", "QUESTION_ANSWER", "OBJECT_OR_TIMELINE"},
+        in {None, "EVIDENCE_FIRST", "QUESTION_ANSWER", "OBJECT_OR_TIMELINE"},
         "E_CANDIDATE_ARCHITECTURE",
     )
     require(isinstance(candidate.get("difference_dimensions"), list) and len(candidate["difference_dimensions"]) >= 2, "E_CANDIDATE_DIFFERENCE")
@@ -369,36 +441,17 @@ def validate_candidate_record(record: JsonObject, expected_format: str, payload_
     require(isinstance(surfaces.get("body"), str) and bool(surfaces["body"].strip()), "E_BODY")
     require(isinstance(surfaces.get("spoken_lines"), list), "E_SPOKEN_LINES")
     bindings = candidate.get("claim_bindings")
-    require(isinstance(bindings, list) and bool(bindings), "E_CLAIM_BINDINGS")
+    require(isinstance(bindings, list), "E_CLAIM_BINDINGS")
     author_bindings = candidate.get("author_declared_claim_bindings")
-    require(
-        isinstance(author_bindings, list) and bool(author_bindings),
-        "E_AUTHOR_CLAIM_BINDINGS",
-    )
+    require(isinstance(author_bindings, list), "E_AUTHOR_CLAIM_BINDINGS")
 
-    surface_text: dict[str, str] = {}
-
-    def visit_surface(value: object, path: str) -> None:
-        if isinstance(value, str):
-            normalized = value.strip()
-            if normalized:
-                surface_text[path] = normalized
-            return
-        if isinstance(value, list):
-            for index, child in enumerate(value):
-                visit_surface(child, f"{path}[{index}]")
-            return
-        if isinstance(value, dict):
-            for key, child in value.items():
-                if key != "surface_units":
-                    visit_surface(child, f"{path}.{key}" if path else str(key))
-
-    visit_surface(surfaces, "")
+    surface_text = surface_text_map(surfaces)
     binding_paths = [
         row.get("surface_path") for row in bindings if isinstance(row, dict)
     ]
     require(len(binding_paths) == len(bindings) == len(set(binding_paths)), "E_CLAIM_BINDING_PATHS")
-    require(set(binding_paths) == set(surface_text), "E_CLAIM_SURFACE_COVERAGE")
+    require(set(binding_paths).issubset(surface_text), "E_CLAIM_SURFACE_COVERAGE")
+    binding_by_path: dict[str, Mapping[str, Any]] = {}
     for row in bindings:
         require(isinstance(row, dict), "E_CLAIM_BINDING_ROW")
         path = row.get("surface_path")
@@ -417,18 +470,28 @@ def validate_candidate_record(record: JsonObject, expected_format: str, payload_
             },
             "E_CLAIM_BINDING_ORIGIN",
         )
-    declared_paths = {
+        if isinstance(path, str):
+            binding_by_path[path] = row
+    for path, text in surface_text.items():
+        if not surface_requires_evidence_binding(path, text):
+            continue
+        row = binding_by_path.get(path)
+        require(row is not None, "E_CLAIM_HIGH_RISK_COVERAGE")
+        require(
+            row.get("claim_class") == "SOURCE_CLAIM"
+            and isinstance(row.get("source_refs"), list)
+            and bool(row["source_refs"]),
+            "E_CLAIM_HIGH_RISK_SOURCE",
+        )
+    author_paths = [
         row.get("surface_path") for row in author_bindings if isinstance(row, dict)
-    }
-    required_declared_paths = {
-        path
-        for path in surface_text
-        if path in {"title", "body", "CTA"} or path.startswith("spoken_lines[")
-    }
+    ]
     require(
-        required_declared_paths.issubset(declared_paths),
-        "E_AUTHOR_ROOT_CLAIM_COVERAGE",
+        len(author_paths) == len(author_bindings) == len(set(author_paths))
+        and set(author_paths).issubset(binding_by_path),
+        "E_AUTHOR_CLAIM_BINDING_PATHS",
     )
+    declared_refs = set(fact_refs) | set(material_refs)
     cited_refs = {
         ref
         for row in bindings
@@ -436,7 +499,7 @@ def validate_candidate_record(record: JsonObject, expected_format: str, payload_
         for ref in cast(list[Any], row.get("source_refs", []))
         if isinstance(ref, str)
     }
-    require(cited_refs == set(fact_refs) | set(material_refs), "E_CLAIM_REF_CLOSURE")
+    require(cited_refs.issubset(declared_refs), "E_CLAIM_REF_CLOSURE")
     payload = cast(Mapping[str, Any], surfaces.get("execution_payload", {}))
     require(payload.get("production_format") == expected_format, "E_PRODUCTION_FORMAT")
     require(isinstance(payload.get(payload_key), dict), f"E_FORMAT_PAYLOAD:{payload_key}")
@@ -789,6 +852,34 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     changed["representative_first_outputs"]["display"]["candidates"][0]["candidate"]["used_material_refs"] = []
     expect_failure(lambda: validate_model_evidence(changed), "E_MATERIAL_REF_MISMATCH")
 
+    sparse = copy.deepcopy(model)
+    sparse_record = sparse["representative_first_outputs"]["short_video"]["candidates"][0]
+    sparse_candidate = sparse_record["candidate"]
+    sparse_path = "execution_payload.content_direction"
+    sparse_candidate["claim_bindings"] = [
+        row for row in sparse_candidate["claim_bindings"] if row["surface_path"] != sparse_path
+    ]
+    sparse_candidate["author_declared_claim_bindings"] = [
+        row
+        for row in sparse_candidate["author_declared_claim_bindings"]
+        if row["surface_path"] != sparse_path
+    ]
+    validate_model_evidence(sparse)
+
+    changed = copy.deepcopy(sparse)
+    changed_record = changed["representative_first_outputs"]["short_video"]["candidates"][0]
+    changed_candidate = changed_record["candidate"]
+    changed_candidate["candidate_user_visible_surfaces"]["title"] = "现有样衣已经确认100厘米"
+    changed_candidate["claim_bindings"] = [
+        row for row in changed_candidate["claim_bindings"] if row["surface_path"] != "title"
+    ]
+    changed_candidate["author_declared_claim_bindings"] = [
+        row
+        for row in changed_candidate["author_declared_claim_bindings"]
+        if row["surface_path"] != "title"
+    ]
+    expect_failure(lambda: validate_model_evidence(changed), "E_CLAIM_HIGH_RISK_COVERAGE")
+
     changed = copy.deepcopy(result)
     changed["core_numbers"]["300_changed"] = True
     expect_failure(
@@ -828,7 +919,7 @@ def run_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     return {
         "task_id": TASK_ID,
         "selftest": "PASS",
-        "negative_case_count": 11,
+        "negative_case_count": 12,
         "optimized_mode_fail_closed": True,
     }
 

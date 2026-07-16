@@ -315,8 +315,9 @@ class Package7Tests(unittest.TestCase):
         self.assertIn("陈列资料没有明确商品颜色", prepared["author_prompt"]["system"])
         self.assertIn("所有文字都不得显示来源编号", prepared["author_prompt"]["system"])
         self.assertIn("数字、单位和范围写法必须原样保留", prepared["author_prompt"]["system"])
-        self.assertIn("只要求逐条覆盖title、body", prepared["author_prompt"]["system"])
-        self.assertIn("制作字段重复写claim_bindings", prepared["author_prompt"]["system"])
+        self.assertIn("普通标题、正文、口播、分镜和拍摄建议不需要逐项绑定", prepared["author_prompt"]["system"])
+        self.assertIn("只作为可选创作建议", prepared["author_prompt"]["system"])
+        self.assertNotIn("三份候选必须依次使用", prepared["author_prompt"]["system"])
 
     def test_named_storyline_and_column_override_defaults(self) -> None:
         prepared = self.runtime.prepare(
@@ -369,38 +370,7 @@ class Package7Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.runtime.finalize_model_output(prepared["run_id"], encoded)
 
-    def test_candidate_claim_bindings_must_cover_every_surface_exactly(self) -> None:
-        prepared = self.runtime.prepare(self.request(), self.principal_id)
-        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
-        candidates = [
-            self._candidate(
-                "证据路径",
-                "只使用当前资料支持的观察。",
-                refs,
-                ["核心创意", "事实或证明路径"],
-            ),
-            self._candidate(
-                "问题路径",
-                "只回答当前资料支持的问题。",
-                refs,
-                ["切入问题或场景", "画面组织方法"],
-            ),
-        ]
-        candidates[0]["claim_bindings"] = [
-            row for row in candidates[0]["claim_bindings"] if row["surface_path"] != "CTA"
-        ]
-        encoded = base64.b64encode(
-            json.dumps(
-                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
-                ensure_ascii=False,
-            ).encode()
-        ).decode()
-        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
-        self.assertTrue(result.get("action_card"))
-        run = self.repository.model_run(prepared["run_id"])
-        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
-
-    def test_non_root_surfaces_receive_explicit_auditable_bindings(self) -> None:
+    def test_ordinary_creative_surfaces_do_not_require_claim_bindings(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
         refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
         candidates = [
@@ -421,7 +391,7 @@ class Package7Tests(unittest.TestCase):
             candidate["claim_bindings"] = [
                 row
                 for row in candidate["claim_bindings"]
-                if not row["surface_path"].startswith("execution_payload.")
+                if row["claim_class"] == "SOURCE_CLAIM"
             ]
         encoded = base64.b64encode(
             json.dumps(
@@ -431,26 +401,44 @@ class Package7Tests(unittest.TestCase):
         ).decode()
         result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
         self.assertIn("推荐候选", result["user_visible_text"])
-        from runtime_models import RuntimeCandidate
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_ACCEPTED")
 
-        with self.sessions() as session:
-            rows = session.query(RuntimeCandidate).filter_by(run_id=prepared["run_id"]).all()
-            self.assertEqual(len(rows), 2)
-            for row in rows:
-                payload = row.candidate_payload
-                self.assertGreater(
-                    len(payload["claim_bindings"]),
-                    len(payload["author_declared_claim_bindings"]),
-                )
-                self.assertTrue(
-                    any(
-                        binding["binding_origin"]
-                        in {"EXACT_TEXT_INHERITED", "SERVER_PENDING_SOURCE_REVIEW"}
-                        for binding in payload["claim_bindings"]
-                    )
-                )
+    def test_unbound_key_number_on_a_spoken_surface_is_rejected(self) -> None:
+        prepared = self.runtime.prepare(self.request(), self.principal_id)
+        refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"]
+        size_ref = next(ref for ref in refs if ref == "PKG5-FRAGMENT-BD-NARR-02-006")
+        candidates = [
+            self._candidate(
+                "尺码证据",
+                "笛语商品使用100厘米至150厘米的常用尺码范围。",
+                [size_ref],
+                ["核心创意", "事实或证明路径"],
+            ),
+            self._candidate(
+                "问题路径",
+                "只回答当前资料支持的问题。",
+                [size_ref],
+                ["切入问题或场景", "画面组织方法"],
+            ),
+        ]
+        candidates[0]["claim_bindings"] = [
+            row
+            for row in candidates[0]["claim_bindings"]
+            if row["surface_path"] != "spoken_lines[0]"
+        ]
+        encoded = base64.b64encode(
+            json.dumps(
+                {"kind": "CANDIDATE_SET", "reply": None, "candidates": candidates},
+                ensure_ascii=False,
+            ).encode()
+        ).decode()
+        result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
+        self.assertTrue(result.get("action_card"))
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertEqual(run.state if run else None, "FIRST_OUTPUT_REJECTED")
 
-    def test_candidate_architectures_must_not_be_near_duplicate(self) -> None:
+    def test_similarity_and_narrative_skeleton_are_review_hints_not_runtime_blocks(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
         refs = prepared["author_prompt"]["author_materials"]["retrieval_fragment_refs"][:1]
         first = self._candidate(
@@ -467,6 +455,8 @@ class Package7Tests(unittest.TestCase):
         next(
             row for row in second["claim_bindings"] if row["surface_path"] == "title"
         )["exact_text"] = "问题路径乙"
+        first.pop("narrative_architecture")
+        second.pop("narrative_architecture")
         encoded = base64.b64encode(
             json.dumps(
                 {"kind": "CANDIDATE_SET", "reply": None, "candidates": [first, second]},
@@ -474,7 +464,12 @@ class Package7Tests(unittest.TestCase):
             ).encode()
         ).decode()
         result = self.runtime.finalize_model_output(prepared["run_id"], encoded)
-        self.assertTrue(result.get("action_card"))
+        self.assertIn("推荐候选", result["user_visible_text"])
+        run = self.repository.model_run(prepared["run_id"])
+        hints = run.payload["similarity_review_hints"] if run else []
+        self.assertTrue(hints)
+        self.assertTrue(hints[0]["review_required"])
+        self.assertFalse(hints[0]["runtime_rejection"])
 
     def test_fixed_candidate_envelope_normalization_does_not_change_content(self) -> None:
         prepared = self.runtime.prepare(self.request(), self.principal_id)
@@ -1900,7 +1895,7 @@ class Package7Tests(unittest.TestCase):
 
         def bind(value: object, path: str) -> None:
             if isinstance(value, str) and value.strip():
-                source_bound = path == "body"
+                source_bound = value.strip() == body.strip()
                 claim_bindings.append(
                     {
                         "surface_path": path,

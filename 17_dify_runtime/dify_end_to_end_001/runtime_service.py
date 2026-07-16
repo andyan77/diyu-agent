@@ -64,15 +64,27 @@ PROTECTED_SOURCE_DETAIL_PATTERN = re.compile(
     r"截图|工作台|品牌色|品牌字体|logo|Logo|库存|售价|价格|折扣|顾客|家长|员工|儿童|孩子|人物|模特|"
     r"更自在|更舒服|更轻松|永久解决|彻底解决|解决了|不再|所有"
 )
-FACT_BEARING_SURFACE_PATH = re.compile(
-    r"^(?:title|body|CTA|spoken_lines\[[0-9]+\]|"
-    r"execution_payload\.(?:cover_or_first_screen_copy|opening_hook|story_or_full_script|"
-    r"ending_and_action|publishing_copy)|"
-    r"execution_payload\.video\.shots\[[0-9]+\]\.(?:audio|subtitle)|"
-    r"execution_payload\.article\.frames\[[0-9]+\]\.accompanying_copy|"
-    r"execution_payload\.display\.referenced_items_or_facts\[[0-9]+\])$"
+CREATIVE_INSTRUCTION_SURFACE_PATH = re.compile(
+    r"^execution_payload\.(?:production_format|task_summary|content_direction|core_idea|"
+    r"target_platform|duration_label|next_actions\[[0-9]+\]|"
+    r"video\.shots\[[0-9]+\]\.(?:time_range|visual|action|camera|scene_product_props|edit_note)|"
+    r"video\.(?:shooting_notes|editing_notes)\[[0-9]+\]|"
+    r"article\.frames\[[0-9]+\]\.image_brief|article\.(?:cover_brief|layout_notes\[[0-9]+\])|"
+    r"display\.(?:arrangement_relationship|spatial_layers|color_relationship|availability_caution|"
+    r"shooting_angles\[[0-9]+\]))$"
 )
-AUTHOR_DECLARED_ROOT_PATH = re.compile(r"^(?:title|body|CTA|spoken_lines\[[0-9]+\])$")
+AUTHORIZATION_OR_REAL_EVENT_PATTERN = re.compile(
+    r"(?:已|已经|曾经|此前|目前).{0,24}(?:授权|获准|批准|发生|完成|发布|上线|售出|到店|调整|承诺|决定)"
+    r"|(?:代表当前|有权|获准|已授权|经授权|官方账号)"
+    r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|选择|购买|试穿|完成|决定|承诺)"
+)
+EXISTING_ASSET_CLAIM_PATTERN = re.compile(
+    r"(?:已有|现有|已经|已提供|已拍摄|可直接使用).{0,18}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
+    r"|(?:照片|视频|样衣|设计稿|截图|工作台|库存).{0,18}(?:已有|现有|已经|已提供|可用|存在|确认)"
+)
+NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
+    r"(?:不代表|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
+)
 SAFE_UNVERIFIED_ASSET_CUES = (
     "待补",
     "待设计",
@@ -100,6 +112,22 @@ def protected_detail_is_supported(detail: str, corpus: str) -> bool:
         compact_corpus = re.sub(r"\s+", "", corpus.lower())
         return compact_detail in compact_corpus
     return normalize_support_text(detail) in normalize_support_text(corpus)
+
+
+def surface_requires_evidence_binding(path: str, text: str) -> bool:
+    """Require bindings only for high-risk factual assertions, not creative prose."""
+
+    if any(cue in text for cue in SAFE_UNVERIFIED_ASSET_CUES):
+        return False
+    if NON_ASSERTIVE_BOUNDARY_PATTERN.search(text):
+        return False
+    if AUTHORIZATION_OR_REAL_EVENT_PATTERN.search(text):
+        return True
+    if EXISTING_ASSET_CLAIM_PATTERN.search(text):
+        return True
+    if CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path):
+        return False
+    return any(character.isdigit() for character in text)
 
 
 class RuntimeContractError(ValueError):
@@ -707,19 +735,13 @@ class Package7Runtime:
                 "陈列资料没有明确商品颜色、厚度、尺码交集、库存或空间关系时，不得自行配对或推断；"
                 "可以用证据卡和核对清单说明方法，并把未知项明确列为待确认。"
                 "短视频、图文、陈列搭配必须分别按合同给出可直接拍摄或制作的细节。"
-                "三份候选必须依次使用EVIDENCE_FIRST、QUESTION_ANSWER、OBJECT_OR_TIMELINE三种叙事骨架："
-                "第一份由来源证据进入，第二份由用户问题和边界内回答进入，第三份沿同一物件或时间状态组织；"
-                "正文、开头、镜头或图片顺序、声音主体与结尾都要体现结构差异，不能只改标签。"
-                "claim_bindings只要求逐条覆盖title、body、每条spoken_lines和非空CTA，"
-                "surface_path和exact_text须逐字对应；不要为减少绑定工作而把正文缩成边界提示。"
-                "execution_payload中的文字由服务端逐项独立闭合，作者可以不为这些制作字段重复写claim_bindings。"
+                "EVIDENCE_FIRST、QUESTION_ANSWER、OBJECT_OR_TIMELINE只作为可选创作建议，不按候选顺序固定，"
+                "也不要求每份候选必须使用不同骨架；真正差异由核心创意、问题、视角、信息顺序和视听组织体现。"
+                "claim_bindings只登记明确事实主张、关键数字、授权状态或真实事件；"
+                "普通标题、正文、口播、分镜和拍摄建议不需要逐项绑定。已登记项的surface_path和exact_text须逐字对应。"
                 "只有来源直接支持的陈述可标SOURCE_CLAIM并绑定来源；拍摄、剪辑和表达安排标CREATIVE_DIRECTION且不得绑定来源；"
                 "内部测试、不可发布、待确认等边界提示标DISCLOSURE且不得绑定来源。不得把事实误标成创作安排。"
-                "title、body、每条spoken_lines和非空CTA必须逐条写claim_bindings。"
                 "difference_dimensions只能逐项填写六个既有枚举之一，不得在枚举后加冒号、解释或例子。"
-                "execution_payload中的事实性文案不得另写新句：cover_or_first_screen_copy须逐字复用title，"
-                "opening_hook、story_or_full_script、每条audio、每条非空subtitle及图文accompanying_copy"
-                "须逐字复用body或某一条spoken_lines，ending_and_action须逐字复用CTA，publishing_copy须逐字复用body。"
                 "visual、camera、action、image_brief等制作指令可以新写，但只能描述将来如何拍摄或排版；"
                 "不得暗示照片、视频、样衣、设计稿、截图、工作台、库存、颜色或人物已经存在，除非本次允许来源逐字支持。"
                 "如果来源没有明确提供这些素材，相关制作字段必须逐字写明‘待补拍’或‘待取得’，不能写‘一张照片’、"
@@ -741,7 +763,7 @@ class Package7Runtime:
                 "candidates": [
                     {
                         "difference_label": "string",
-                        "narrative_architecture": "EVIDENCE_FIRST|QUESTION_ANSWER|OBJECT_OR_TIMELINE（按候选顺序）",
+                        "narrative_architecture": "EVIDENCE_FIRST|QUESTION_ANSWER|OBJECT_OR_TIMELINE|null（可选建议）",
                         "difference_dimensions": ["核心创意", "画面组织方法"],
                         "surfaces": {
                             "title": "string",
@@ -1218,27 +1240,23 @@ class Package7Runtime:
         text_by_path = Package7Runtime._surface_text_map(candidate)
         bindings = candidate.claim_bindings
         binding_paths = [binding.surface_path for binding in bindings]
-        if (
-            len(binding_paths) != len(set(binding_paths))
-            or not set(binding_paths).issubset(text_by_path)
-            or any(
-                path not in binding_paths
-                for path in text_by_path
-                if AUTHOR_DECLARED_ROOT_PATH.fullmatch(path)
-            )
-        ):
+        if len(binding_paths) != len(set(binding_paths)) or not set(
+            binding_paths
+        ).issubset(text_by_path):
             return None
         cited_refs: set[str] = set()
         allowed_refs = allowed_fact_refs | allowed_material_refs
         effective: list[JsonObject] = []
-        signatures_by_text: dict[str, set[tuple[str, tuple[str, ...]]]] = {}
         for binding in bindings:
             if text_by_path.get(binding.surface_path) != binding.exact_text:
                 return None
             if not set(binding.source_refs).issubset(allowed_refs):
                 return None
-            signature = (binding.claim_class, tuple(binding.source_refs))
-            signatures_by_text.setdefault(binding.exact_text, set()).add(signature)
+            declared_refs = set(candidate.used_fact_refs) | set(
+                candidate.used_material_refs
+            )
+            if not set(binding.source_refs).issubset(declared_refs):
+                return None
             if binding.claim_class == "SOURCE_CLAIM":
                 cited_refs.update(binding.source_refs)
                 support_text = "\n".join(source_corpus[ref] for ref in binding.source_refs)
@@ -1247,113 +1265,23 @@ class Package7Runtime:
                     for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(binding.exact_text)
                 ):
                     return None
+            elif surface_requires_evidence_binding(
+                binding.surface_path,
+                binding.exact_text,
+            ):
+                return None
             effective.append(
                 {**binding.model_dump(), "binding_origin": "AUTHOR_DECLARED"}
             )
 
         declared_paths = set(binding_paths)
-        declared_ref_corpus = "\n".join(
-            source_corpus[ref]
-            for ref in sorted(set(candidate.used_fact_refs) | set(candidate.used_material_refs))
-            if ref in source_corpus
-        )
-        trusted_creative_corpus = f"{declared_ref_corpus}\n{trusted_task_text}"
         for path, exact_text in text_by_path.items():
             if path in declared_paths:
                 continue
-            signatures = signatures_by_text.get(exact_text, set())
-            if len(signatures) == 1:
-                claim_class, source_refs = next(iter(signatures))
-                effective.append(
-                    {
-                        "surface_path": path,
-                        "exact_text": exact_text,
-                        "claim_class": claim_class,
-                        "source_refs": list(source_refs),
-                        "binding_origin": "EXACT_TEXT_INHERITED",
-                    }
-                )
-                continue
-            if FACT_BEARING_SURFACE_PATH.fullmatch(path):
-                unsupported_tokens = [
-                    token
-                    for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(exact_text)
-                    if not protected_detail_is_supported(token, declared_ref_corpus)
-                ]
-                if unsupported_tokens and not any(
-                    cue in exact_text for cue in SAFE_UNVERIFIED_ASSET_CUES
-                ):
-                    return None
-                if unsupported_tokens:
-                    effective.append(
-                        {
-                            "surface_path": path,
-                            "exact_text": exact_text,
-                            "claim_class": "DISCLOSURE",
-                            "source_refs": [],
-                            "binding_origin": "SERVER_PATH_CLASSIFICATION",
-                        }
-                    )
-                    continue
-                source_refs = sorted(
-                    set(candidate.used_fact_refs) | set(candidate.used_material_refs)
-                )
-                if not source_refs:
-                    return None
-                cited_refs.update(source_refs)
-                effective.append(
-                    {
-                        "surface_path": path,
-                        "exact_text": exact_text,
-                        "claim_class": "SOURCE_CLAIM",
-                        "source_refs": source_refs,
-                        "binding_origin": "SERVER_PENDING_SOURCE_REVIEW",
-                    }
-                )
-                continue
-            if path in {
-                "execution_payload.production_format",
-                "execution_payload.target_platform",
-                "execution_payload.duration_label",
-            } or path.endswith(".time_range"):
-                effective.append(
-                    {
-                        "surface_path": path,
-                        "exact_text": exact_text,
-                        "claim_class": "CREATIVE_DIRECTION",
-                        "source_refs": [],
-                        "binding_origin": "SERVER_STRUCTURAL_FIELD",
-                    }
-                )
-                continue
-            unsupported_tokens = [
-                token
-                for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(exact_text)
-                if not protected_detail_is_supported(token, trusted_creative_corpus)
-            ]
-            if unsupported_tokens and not any(
-                cue in exact_text for cue in SAFE_UNVERIFIED_ASSET_CUES
-            ):
+            if surface_requires_evidence_binding(path, exact_text):
                 return None
-            claim_class = (
-                "DISCLOSURE"
-                if any(
-                    cue in exact_text
-                    for cue in ("不可发布", "内部测试", "待确认", "不能确认")
-                )
-                else "CREATIVE_DIRECTION"
-            )
-            effective.append(
-                {
-                    "surface_path": path,
-                    "exact_text": exact_text,
-                    "claim_class": claim_class,
-                    "source_refs": [],
-                    "binding_origin": "SERVER_PATH_CLASSIFICATION",
-                }
-            )
         declared_refs = set(candidate.used_fact_refs) | set(candidate.used_material_refs)
-        if cited_refs != declared_refs:
+        if not cited_refs.issubset(declared_refs):
             return None
         return sorted(effective, key=lambda row: str(row["surface_path"]))
 
@@ -1436,34 +1364,9 @@ class Package7Runtime:
         expected_format = task_brief.get("content_format") if isinstance(task_brief, dict) else None
         candidates: list[JsonObject] = []
         validations: list[JsonObject] = []
-        labels: set[str] = set()
-        architectures: set[str] = set()
-        core_ideas: set[str] = set()
-        creative_signatures: set[str] = set()
         comparison_texts: list[str] = []
         for ordinal, candidate in enumerate(envelope.candidates, 1):
-            if candidate.difference_label in labels:
-                return reject(output)
-            labels.add(candidate.difference_label)
-            if candidate.narrative_architecture in architectures:
-                return reject(output)
-            architectures.add(candidate.narrative_architecture)
             production = candidate.surfaces.execution_payload
-            core_ideas.add(production.core_idea.strip())
-            creative_signatures.add(
-                digest_object(
-                    {
-                        "content_direction": production.content_direction,
-                        "core_idea": production.core_idea,
-                        "opening_hook": production.opening_hook,
-                        "format_payload": {
-                            "video": None if production.video is None else production.video.model_dump(),
-                            "article": None if production.article is None else production.article.model_dump(),
-                            "display": None if production.display is None else production.display.model_dump(),
-                        },
-                    }
-                )
-            )
             if (
                 expected_format is not None
                 and production.production_format != expected_format
@@ -1530,17 +1433,34 @@ class Package7Runtime:
             )
             candidates.append(payload)
             validations.append(validation)
-        if (
-            len(core_ideas) != len(envelope.candidates)
-            or len(creative_signatures) != len(envelope.candidates)
-        ):
-            return reject(output)
-        if any(
-            SequenceMatcher(None, left, right, autojunk=False).ratio() >= 0.90
+        similarity_review_hints = [
+            {
+                "candidate_ordinals": [index + 1, other_index + 1],
+                "similarity_ratio": round(
+                    SequenceMatcher(None, left, right, autojunk=False).ratio(),
+                    4,
+                ),
+                "review_required": SequenceMatcher(
+                    None,
+                    left,
+                    right,
+                    autojunk=False,
+                ).ratio()
+                >= 0.90,
+                "runtime_rejection": False,
+            }
             for index, left in enumerate(comparison_texts)
-            for right in comparison_texts[index + 1 :]
-        ):
-            return reject(output)
+            for other_index, right in enumerate(
+                comparison_texts[index + 1 :],
+                start=index + 1,
+            )
+        ]
+        for ordinal, payload in enumerate(candidates, 1):
+            payload["evidence_panel"]["similarity_review_hints"] = [
+                row
+                for row in similarity_review_hints
+                if ordinal in row["candidate_ordinals"]
+            ]
         if any(row.get("decision") != "PASS" for row in validations):
             return reject({"envelope": output, "validations": validations})
         self.repository.save_candidate_set(
@@ -1574,6 +1494,7 @@ class Package7Runtime:
                     "envelope": output,
                     "validations": validations,
                     "model_wrapper_normalization": normalization,
+                    "similarity_review_hints": similarity_review_hints,
                 },
             )
         return {

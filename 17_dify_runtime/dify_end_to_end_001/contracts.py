@@ -373,12 +373,12 @@ class ClaimBinding(StrictModel):
 
 class ModelCandidate(StrictModel):
     difference_label: str = Field(min_length=1, max_length=120)
-    narrative_architecture: NarrativeArchitecture
+    narrative_architecture: NarrativeArchitecture | None = None
     difference_dimensions: list[
         Literal["核心创意", "切入问题或场景", "情绪钩子", "叙事视角", "事实或证明路径", "画面组织方法"]
     ] = Field(min_length=2, max_length=6)
     surfaces: CandidateSurfaces
-    claim_bindings: list[ClaimBinding] = Field(min_length=1, max_length=120)
+    claim_bindings: list[ClaimBinding] = Field(default_factory=list, max_length=120)
     used_fact_refs: list[str] = Field(default_factory=list, max_length=30)
     used_material_refs: list[str] = Field(default_factory=list, max_length=30)
 
