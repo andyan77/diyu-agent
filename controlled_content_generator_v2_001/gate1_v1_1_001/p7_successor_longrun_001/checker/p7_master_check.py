@@ -165,7 +165,32 @@ def check_write_surface(root: Path) -> tuple[bool, list[str]]:
     details = [f"files_changed_since_baseline={len(changed)}"]
     if offenders:
         details += [f"OUT_OF_SURFACE {p}" for p in offenders]
-    # 未提交改动同样必须在面内
+    # 未提交改动同样必须在面内。
+    # 环境工件过滤（审查可移植性，Fable 审查 R1 ADVISORY）：
+    #   - 设备节点/空目录等 git 物理上无法提交的沙箱遮蔽物不算越界；
+    #   - 未跟踪 .claude/** 属 P1 §八 允许的最小运行时写面，不算越界。
+    # 已提交面（上方 offenders）保持全严——过滤只作用于 untracked 环境层。
+    import stat as _stat
+
+    def _committable(rel: str) -> bool:
+        p = root / rel.rstrip("/")
+        try:
+            mode = p.lstat().st_mode
+        except OSError:
+            return True  # 读不到就从严
+        if _stat.S_ISREG(mode) or _stat.S_ISLNK(mode):
+            return True
+        if _stat.S_ISDIR(mode):
+            for child in p.rglob("*"):
+                try:
+                    cmode = child.lstat().st_mode
+                except OSError:
+                    return True
+                if _stat.S_ISREG(cmode) or _stat.S_ISLNK(cmode):
+                    return True
+            return False  # 只含设备节点/空的目录
+        return False  # 字符/块设备等，git 不可提交
+
     r2 = subprocess.run(["git", "-C", str(root), "status", "--porcelain"],
                         capture_output=True, text=True, check=True)
     dirty = [l[3:].strip() for l in r2.stdout.splitlines() if l.strip()]
@@ -173,6 +198,13 @@ def check_write_surface(root: Path) -> tuple[bool, list[str]]:
                  if not (p.startswith(ALLOWED_WRITE_PREFIXES)
                          or (p.endswith("/") and p.rstrip("/").startswith(ALLOWED_WRITE_PREFIXES[0].rstrip("/"))
                          ) or any(p.rstrip("/") + "/" == a or p.startswith(a) for a in ALLOWED_WRITE_PREFIXES))]
+    env_filtered = [p for p in dirty_off
+                    if p == ".claude/" or p.startswith(".claude/")
+                    or not _committable(p)]
+    dirty_off = [p for p in dirty_off if p not in env_filtered]
+    if env_filtered:
+        details.append(f"env_artifacts_ignored={len(env_filtered)} "
+                       "(non-committable device nodes / P1-allowed .claude)")
     if dirty_off:
         details += [f"DIRTY_OUT_OF_SURFACE {p}" for p in dirty_off]
     return not offenders and not dirty_off, details
@@ -723,16 +755,34 @@ def check_pkg1_reviews(root: Path) -> tuple[bool, list[str]]:
                    and len(metrics["failed_ids_retained_in_denominator"])
                    == metrics["output_count"] - metrics["first_acceptable_count"])
     if n == latest_freeze_round:
-        before = metrics_file.read_bytes()
-        env = dict(_os.environ, PKG1_ROUND=str(n))
-        r = subprocess.run(
-            ["python3", str(pkg1 / "run_pkg1.py"), "metrics"],
-            capture_output=True, text=True, cwd=str(root), env=env)
-        after = metrics_file.read_bytes()
-        recompute_identical = (r.returncode == 0 and after == before)
-        if after != before:
-            metrics_file.write_bytes(before)
-        recompute_note = f"metrics_recompute_identical={recompute_identical}"
+        # 只读审核环境兼容（Codex 审查 R1 BLOCKING-1）：run_pkg1.py metrics 会
+        # 覆写 tracked 指标文件；合同要求审核者只读。可写环境执行完整重算
+        # （真门，先快照错则还原）；只读环境降级为"对 HEAD 字节锚定"——
+        # 未提交篡改仍被抓，完整重算由可写侧执行并入 VERIFICATION_RECEIPTS。
+        writable = (_os.access(metrics_file, _os.W_OK)
+                    and _os.access(metrics_file.parent, _os.W_OK))
+        if writable:
+            before = metrics_file.read_bytes()
+            env = dict(_os.environ, PKG1_ROUND=str(n))
+            r = subprocess.run(
+                ["python3", str(pkg1 / "run_pkg1.py"), "metrics"],
+                capture_output=True, text=True, cwd=str(root), env=env)
+            after = metrics_file.read_bytes()
+            recompute_identical = (r.returncode == 0 and after == before)
+            if after != before:
+                metrics_file.write_bytes(before)
+            recompute_note = f"metrics_recompute_identical={recompute_identical}"
+        else:
+            head_diff = subprocess.run(
+                ["git", "-C", str(root), "diff", "HEAD", "--",
+                 str(metrics_file.relative_to(root))],
+                capture_output=True, text=True)
+            recompute_identical = (head_diff.returncode == 0
+                                   and head_diff.stdout == "")
+            recompute_note = ("metrics_recompute=READ_ONLY_ENV_BYTE_ANCHORED_TO_HEAD"
+                              f"(uncommitted_tamper={not recompute_identical};"
+                              " full recompute receipted in"
+                              " VERIFICATION_RECEIPTS by writable side)")
     else:
         recompute_identical = True
         recompute_note = (f"round{n} metrics anchored to freeze commit"

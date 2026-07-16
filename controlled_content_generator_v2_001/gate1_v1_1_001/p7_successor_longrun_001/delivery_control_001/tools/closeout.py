@@ -72,7 +72,20 @@ def _verify_manifest(root: Path, path: Path, self_rel: str) -> list[str]:
             errors.append(f"{path.name}: includes later-generated signature/"
                           f"receipt {rel} (bounded closure breach)")
             continue
-        target = root / rel
+        # 活体演进文件（journal/状态/注册表）：manifest 锚定候选时点冻结快照，
+        # 原路径继续演进不构成漂移（快照必须位于本里程碑 snapshots/ 下）。
+        snapshot_rel = entry.get("frozen_snapshot")
+        if snapshot_rel:
+            if "/snapshots/" not in str(snapshot_rel):
+                errors.append(f"{path.name}: frozen_snapshot outside "
+                              f"snapshots/ dir: {snapshot_rel}")
+                continue
+            target = root / str(snapshot_rel)
+            if not (root / rel).exists():
+                errors.append(f"{path.name}: live file missing for "
+                              f"snapshotted entry {rel}")
+        else:
+            target = root / rel
         if not target.is_file():
             errors.append(f"{path.name}: missing file {rel}")
             continue
