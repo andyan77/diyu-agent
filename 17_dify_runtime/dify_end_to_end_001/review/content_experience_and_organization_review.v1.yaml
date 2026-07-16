@@ -1,0 +1,43 @@
+review:
+  review_id: DIYU-DIFY-END-TO-END-001-CONTENT-FINAL-BINDING-04
+  review_type: CONTENT_EXPERIENCE_AND_ORGANIZATION
+  task_id: DIYU_DIFY_END_TO_END_001
+  candidate_commit: 7ae81794ecae2529cea643842adcdbdac692bbfd
+  candidate_snapshot_digest: 6ac918bdd21f8ac6edf99856000a7b68c6351ddf
+  reviewer_identity: codex_gpt5_independent_content_reviewer
+  reviewer_session_id: codex-pkg7-content-session-20260716-03
+  reviewer_run_id: codex-pkg7-content-final-binding-04
+  signed_at: "2026-07-16T07:10:00-07:00"
+  independent_from_executor_and_other_reviewer: true
+  review_scope: TARGETED_FOUNDER_CORRECTIONS_AND_NECESSARY_REGRESSION
+  score: 96
+  verdict: PASS
+  hard_blockers: []
+  founder_contracts:
+    selective_evidence_binding: PASS
+    ordinary_creative_surfaces_without_itemized_binding: PASS
+    narrative_skeleton_optional: PASS
+    similarity_review_hint_only: PASS
+  evidence:
+    - type: measured
+      subject: frozen_candidate_identity
+      result: "Commit 7ae81794 and tree 6ac918b match the final frozen candidate."
+    - type: measured
+      subject: unbound_inventory_title
+      result: "The unbound title '本店库存充足' was rejected with FIRST_OUTPUT_REJECTED."
+    - type: measured
+      subject: unbound_sample_garment_attribute
+      result: "The unbound title '这件样衣采用双重厚度' was rejected with FIRST_OUTPUT_REJECTED."
+    - type: measured
+      subject: mixed_safety_cue_regression
+      result: "The unbound mixed title '待补拍；现有样衣已经确认100厘米' remained rejected."
+    - type: measured
+      subject: targeted_contract_regression
+      result: "Selective binding, optional narrative structure, and review-only similarity tests passed."
+    - type: static_repository_review
+      subject: final_binding_delta
+      result: "The final one-line allowlist correction changed no business behavior, samples, or result schema."
+  nonblocking_observations: []
+  content_model_calls: 0
+  remote_deployments: 0
+  readiness_transition_count: 0

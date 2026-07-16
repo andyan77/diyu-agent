@@ -1,13 +1,11 @@
 {
   "schema": "diyu.package7.dify_end_to_end_result.v1",
   "task_id": "DIYU_DIFY_END_TO_END_001",
-  "state": "PENDING_INDEPENDENT_REVIEWS",
-  "success_claim": null,
-  "reviewed_candidate_commit": null,
-  "reviewed_snapshot_sha256": null,
-  "blocking_items": [
-    "PENDING_INDEPENDENT_REVIEWS"
-  ],
+  "state": "PASS_DIFY_END_TO_END_PENDING_PACKAGE_8",
+  "success_claim": "PACKAGE7_ACCEPTANCE_COMPLETE_NOT_PRODUCTION_READY",
+  "reviewed_candidate_commit": "7ae81794ecae2529cea643842adcdbdac692bbfd",
+  "reviewed_snapshot_sha256": "6ac918bdd21f8ac6edf99856000a7b68c6351ddf",
+  "blocking_items": [],
   "external_objects": {
     "dify_app_count": 1,
     "dataset_count": 1,
@@ -40,14 +38,23 @@
     "content_quality_reroll_count": 0
   },
   "checks": {
-    "package7_unit_tests": "PASS_51",
+    "package7_unit_tests": "PASS_52",
     "package2_regression": "PASS_48_TESTS_AND_CHECKER",
     "package6_regression": "PASS_16_TESTS_AND_CHECKER",
-    "package7_checker": "PASS_EVIDENCE_AND_SELFTEST_PENDING_REVIEWS",
-    "gate1_current_checker": "PASS_SELFTEST_PENDING_FINAL_SUCCESSOR_RUN",
+    "package7_checker": "PASS_EVIDENCE_AND_SELFTEST",
+    "gate1_current_checker": "PASS_CURRENT_SUCCESSOR_AND_SELFTEST",
     "remote_required_checks": "PENDING_PUSH"
   },
-  "independent_reviews": [],
+  "independent_reviews": [
+    {
+      "review_id": "DIYU-DIFY-END-TO-END-001-CONTENT-FINAL-BINDING-04",
+      "review_type": "CONTENT_EXPERIENCE_AND_ORGANIZATION"
+    },
+    {
+      "review_id": "DIYU-PKG7-TRUST-FINAL-BINDING-04-7AE81794",
+      "review_type": "TRUST_FACT_AUTHORIZATION_PRIVACY_AND_RUNTIME"
+    }
+  ],
   "core_numbers": {
     "300_changed": false,
     "120_changed": false,

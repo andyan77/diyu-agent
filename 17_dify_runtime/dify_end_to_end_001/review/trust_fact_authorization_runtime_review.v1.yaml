@@ -1,0 +1,53 @@
+review:
+  review_id: DIYU-PKG7-TRUST-FINAL-BINDING-04-7AE81794
+  review_type: TRUST_FACT_AUTHORIZATION_PRIVACY_AND_RUNTIME
+  task_id: DIYU_DIFY_END_TO_END_001
+  candidate_commit: 7ae81794ecae2529cea643842adcdbdac692bbfd
+  candidate_snapshot_digest: 6ac918bdd21f8ac6edf99856000a7b68c6351ddf
+  reviewer_identity: codex-independent-trust-runtime-reviewer
+  reviewer_session_id: codex-session-20260716-36794272-6f21c8d4
+  reviewer_run_id: codex-run-pkg7-final-binding-04-20260716-c84a390e
+  signed_at: "2026-07-16"
+  independent_from_executor_and_other_reviewer: true
+  review_scope: TARGETED_FOUNDER_CORRECTIONS_AND_NECESSARY_REGRESSION
+  score: 96
+  verdict: PASS
+  hard_blockers: []
+  contract_results:
+    explicit_fact_number_authorization_event_binding: PASS
+    ordinary_creative_surfaces_without_per_item_binding: PASS
+    optional_narrative_skeleton: PASS
+    similarity_review_hint_only: PASS
+  evidence:
+    - evidence_id: E-01
+      classification: measured
+      subject: frozen_candidate_identity
+      result: "Commit 7ae81794 and tree 6ac918b match the final frozen candidate."
+    - evidence_id: E-02
+      classification: static_repository_review
+      subject: factual_gate_order
+      result: "Product facts, authorization, and real-event checks run before the creative-instruction exemption."
+    - evidence_id: E-03
+      classification: measured
+      subject: creative_path_blocker
+      result: "The unbound visual instruction '拍摄采用薄针织的商品' was rejected with FIRST_OUTPUT_REJECTED."
+    - evidence_id: E-04
+      classification: measured
+      subject: mixed_safety_cue_regression
+      result: "The unbound mixed title '待补拍；现有样衣已经确认100厘米' remained rejected."
+    - evidence_id: E-05
+      classification: measured
+      subject: ordinary_creative_surface
+      result: "The unbound visual instruction '镜头从左向右缓慢移动' was accepted as ordinary creative guidance."
+    - evidence_id: E-06
+      classification: measured
+      subject: targeted_contract_regression
+      result: "Selective binding, optional narrative structure, and review-only similarity tests passed."
+    - evidence_id: E-07
+      classification: static_repository_review
+      subject: final_binding_delta
+      result: "The final one-line allowlist correction changed no business behavior, samples, or result schema."
+  nonblocking_observations: []
+  content_model_calls: 0
+  remote_deployments: 0
+  readiness_transition_count: 0
