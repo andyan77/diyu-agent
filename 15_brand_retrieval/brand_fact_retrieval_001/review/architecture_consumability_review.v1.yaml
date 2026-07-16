@@ -1,0 +1,62 @@
+review:
+  schema_version: v1.0
+  review_id: PKG5-ARCH-DOWNSTREAM-REVIEW-001
+  task_id: DIYU_BRAND_FACT_RETRIEVAL_001
+  review_type: ARCHITECTURE_AND_DOWNSTREAM_CONSUMABILITY
+  reviewer_identity: PKG5_ARCH_DOWNSTREAM_CODEX_7B6F5D91
+  reviewer_session_id: codex-main-agent-7b6f5d91
+  reviewer_run_id: pkg5-arch-6ba0e9a-a8e29014-r1
+  targeted_confirmation_run_id: pkg5-arch-b01-f4083f0f-d63ac3e6-tc1
+  binding_confirmation_run_id: pkg5-checker-binding-2f408e48-cdc1689b-bc1
+  candidate_commit: 2f408e48b5fe48df0195a37d015c4e4b6c55b335
+  candidate_snapshot_digest: cdc1689bbbec4ae69ffbad882c2f4761aaf4ea2bdee4b0a429f34c8122d24a8b
+  score: 96
+  verdict: PASS
+  hard_blockers: []
+  acceptance_ids:
+    - PKG5-A01
+    - PKG5-A02
+    - PKG5-A03
+    - PKG5-A04
+    - PKG5-A05
+    - PKG5-A06
+    - PKG5-A07
+    - PKG5-A08
+    - PKG5-A09
+    - PKG5-A10
+    - PKG5-A11
+    - PKG5-A12
+    - PKG5-A13
+  initial_review:
+    candidate_commit: 6ba0e9a2acbc172acd70005067b215e26548116e
+    score: 88
+    verdict: FAIL
+    blocker_id: PKG5-ARCH-B01
+    issue: Materialization policy changed without changing data_version_digest.
+  findings:
+    - finding_id: PKG5-ARCH-B01
+      status: RESOLVED
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/materialize_retrieval.py:28
+        - 15_brand_retrieval/brand_fact_retrieval_001/retrieval_manifest.v1.json:55
+        - 15_brand_retrieval/brand_fact_retrieval_001/retrieval_manifest.v1.json:151
+      conclusion: Policy v2 now participates in data_version_digest, so Package 6 can distinguish the new materialization.
+    - finding_id: PKG5-ARCH-CONSUMABILITY
+      status: PASS
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/brand_fact_retrieval.py:310
+        - 15_brand_retrieval/brand_fact_retrieval_001/brand_fact_retrieval.py:350
+        - 15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py:308
+      conclusion: Filtering precedes ranking and outputs retain the live Package 2 fragment and fact shapes without a parallel context or plan model.
+    - finding_id: PKG5-ARCH-TRACEABILITY
+      status: PASS
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/materialize_retrieval.py:317
+        - 15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py:343
+      conclusion: The eight product subfragments are deterministic, source-exact, and closed over their parent disposition.
+    - finding_id: PKG5-CHECKER-SELFTEST-ORACLE
+      status: RESOLVED
+      evidence:
+        - 15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py:734
+      conclusion: Review tamper selftests now read the supplied temporary package root without weakening live review validation.
+  signed_at: 2026-07-15T00:00:00Z

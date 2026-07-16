@@ -1,0 +1,61 @@
+{
+  "candidate_commit": "2f408e48b5fe48df0195a37d015c4e4b6c55b335",
+  "candidate_snapshot_digest": "cdc1689bbbec4ae69ffbad882c2f4761aaf4ea2bdee4b0a429f34c8122d24a8b",
+  "checks": {
+    "deterministic_materialization": true,
+    "expression_partition_non_authoritative": true,
+    "filter_before_ranking": true,
+    "package2_output_shape_compatible": true,
+    "precise_fact_channel_independent": true,
+    "source_and_authorization_closure": true
+  },
+  "core_numbers": {
+    "changed": false,
+    "historical_86": 86,
+    "reference_120": 120,
+    "target_300": 300
+  },
+  "counts": {
+    "active_retrieval_fragments": 29,
+    "active_verified_precise_facts": 5,
+    "fixture_cases": 32,
+    "hold_records": 179
+  },
+  "external_calls": {
+    "database": 0,
+    "dify": 0,
+    "model": 0,
+    "network": 0,
+    "production": 0
+  },
+  "independent_reviews": [
+    {
+      "review_id": "PKG5-ARCH-DOWNSTREAM-REVIEW-001",
+      "reviewer_identity": "PKG5_ARCH_DOWNSTREAM_CODEX_7B6F5D91",
+      "score": 96,
+      "verdict": "PASS"
+    },
+    {
+      "review_id": "PKG5-FACT-AUTH-ISOLATION-REVIEW-001",
+      "reviewer_identity": "codex-pkg5-fact-auth-privacy-isolation-e4453184",
+      "score": 100,
+      "verdict": "PASS"
+    }
+  ],
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "database_imported": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false,
+    "retrieval_ready": false
+  },
+  "schema_version": "v1.0",
+  "status": "PASS_BRAND_FACT_RETRIEVAL_PENDING_PACKAGE_6",
+  "task_id": "DIYU_BRAND_FACT_RETRIEVAL_001"
+}

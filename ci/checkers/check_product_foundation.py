@@ -66,6 +66,18 @@ SUCCESSOR_PACKAGES = (
         "PACKAGE_4_ONLY",
     ),
 )
+SERIAL_SUCCESSOR_PACKAGES = (
+    (
+        "PACKAGE_5_BRAND_FACT_RETRIEVAL",
+        Path("15_brand_retrieval/brand_fact_retrieval_001"),
+        Path(
+            "15_brand_retrieval/brand_fact_retrieval_001/"
+            "check_brand_fact_retrieval.py"
+        ),
+        "PACKAGE_5_ONLY",
+    ),
+)
+CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
 SUCCESSOR_OPTIMIZED_STEP_NAME = "Verify reserved downstream package fail-closed optimized mode"
 SUCCESSOR_NORMAL_RUN_LINES = (
@@ -83,7 +95,7 @@ SUCCESSOR_NORMAL_RUN_LINES = (
     "}",
     *(
         f'run_downstream_package_checker "{package_root.as_posix()}" "{checker.as_posix()}"'
-        for _, package_root, checker, _ in SUCCESSOR_PACKAGES
+        for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
 )
 SUCCESSOR_OPTIMIZED_RUN_LINES = (
@@ -109,7 +121,7 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     "}",
     *(
         f'run_downstream_package_checker_optimized "{package_root.as_posix()}" "{checker.as_posix()}"'
-        for _, package_root, checker, _ in SUCCESSOR_PACKAGES
+        for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
 )
 
@@ -614,7 +626,7 @@ def validate_workflow_registration(root: Path) -> None:
 def path_is_in_successor_root(path: str) -> bool:
     return any(
         path.startswith(f"{package_root.as_posix()}/")
-        for _, package_root, _, _ in SUCCESSOR_PACKAGES
+        for _, package_root, _, _ in CHECKED_DOWNSTREAM_PACKAGES
     )
 
 
@@ -664,7 +676,7 @@ def run_successor_checker(root: Path, checker: Path) -> None:
 
 
 def validate_successor_packages(root: Path) -> None:
-    for _, package_root, checker, _ in SUCCESSOR_PACKAGES:
+    for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES:
         package_path = root / package_root
         if not package_path.exists():
             continue
@@ -4386,13 +4398,13 @@ if not __debug__:
     raise SystemExit(2)
 raise SystemExit(0)
 """
-        for _, package_root, checker, _ in SUCCESSOR_PACKAGES:
+        for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES:
             (temp_root / package_root).mkdir(parents=True, exist_ok=True)
             checker_path = temp_root / checker
             checker_path.write_text(passing_checker, encoding="utf-8")
         validate_successor_packages(temp_root)
 
-        missing_checker = temp_root / SUCCESSOR_PACKAGES[1][2]
+        missing_checker = temp_root / CHECKED_DOWNSTREAM_PACKAGES[1][2]
         missing_checker.unlink()
         expect_failure(
             lambda: validate_successor_packages(temp_root),
@@ -4400,7 +4412,7 @@ raise SystemExit(0)
         )
 
         missing_checker.write_text(passing_checker, encoding="utf-8")
-        failing_checker = temp_root / SUCCESSOR_PACKAGES[0][2]
+        failing_checker = temp_root / CHECKED_DOWNSTREAM_PACKAGES[0][2]
         failing_checker.write_text("raise SystemExit(1)\n", encoding="utf-8")
         expect_failure(
             lambda: validate_successor_packages(temp_root),
