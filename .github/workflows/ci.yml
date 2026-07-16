@@ -21,6 +21,8 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 0
+      - name: Install checker-only PostgreSQL compatibility driver
+        run: python3 -m pip install --disable-pip-version-check --no-input "psycopg2-binary==2.9.10"
       - name: Run governance checkers
         env:
           PYTHONDONTWRITEBYTECODE: "1"
