@@ -10,6 +10,7 @@ import hashlib
 import http.cookiejar
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -27,6 +28,11 @@ REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
 PACKAGE_7_ROOT = REPOSITORY_ROOT / "17_dify_runtime/dify_end_to_end_001"
 PLAN_PATH = PACKAGE_ROOT / "evaluation_plan.v1.json"
 CAPABILITY_MAPPING_PATH = PACKAGE_7_ROOT / "content_capability_mapping.v1.yaml"
+SOURCE_8_PATH = (
+    REPOSITORY_ROOT
+    / "13_brand_data/brand_data_import_001/source_snapshots/source-08.md"
+)
+SOURCE_8_REF = re.compile(r"^snapshot://SOURCE-08/L([1-9][0-9]*)-L([1-9][0-9]*)$")
 
 
 def canonical_json(value: object) -> str:
@@ -58,6 +64,31 @@ def load_capability_mapping() -> JsonObject:
     if not isinstance(value, dict):
         raise ValueError("The public capability mapping must be one object")
     return value
+
+
+def source_material_anchor(source_ref: object) -> str:
+    match = SOURCE_8_REF.fullmatch(str(source_ref))
+    if match is None:
+        raise ValueError("A Package 10 task has an invalid Source 08 reference")
+    start, end = (int(value) for value in match.groups())
+    lines = SOURCE_8_PATH.read_text(encoding="utf-8").splitlines()
+    if start > end or end > len(lines):
+        raise ValueError("A Package 10 Source 08 reference is out of range")
+    material_lines = [
+        line.strip()
+        for line in lines[start - 1 : end]
+        if line.strip() and not line.lstrip().startswith("#") and line.strip() != "---"
+    ]
+    if not material_lines:
+        raise ValueError("A Package 10 Source 08 reference has no material")
+    return " ".join(material_lines[:2])
+
+
+def evaluation_message(task: JsonObject) -> str:
+    return (
+        f"已有资料摘录：{source_material_anchor(task.get('source_ref'))}\n"
+        f"制作要求：{task['message']}"
+    )
 
 
 def validate_plan(plan: JsonObject) -> JsonObject:
@@ -112,6 +143,8 @@ def validate_plan(plan: JsonObject) -> JsonObject:
             "Public topic and internal product are incompatible: "
             + ", ".join(incompatible_tasks)
         )
+    for task in tasks:
+        source_material_anchor(task.get("source_ref"))
     formats = dimensions["content_formats"]
     expected_formats = {
         "短视频",
@@ -145,6 +178,7 @@ def validate_plan(plan: JsonObject) -> JsonObject:
         "state": "PLAN_VALID",
         "plan_sha256": file_sha256(PLAN_PATH),
         "capability_mapping_sha256": file_sha256(CAPABILITY_MAPPING_PATH),
+        "source_8_sha256": file_sha256(SOURCE_8_PATH),
         "task_count": len(tasks),
         "reference_count": len(references),
         "coverage_counts": {name: len(values) for name, values in dimensions.items()},
@@ -189,6 +223,7 @@ def _prepare_payload(task: JsonObject, defaults: JsonObject) -> JsonObject:
         {
             "session_token": "package10-preflight-session-token-0001",
             "operation": "确认制作",
+            "message": evaluation_message(task),
             "selected_content_product_id": task["expected_internal_product_id"],
             "speaker_role_id": None,
             "storyline_id": None,
@@ -360,7 +395,7 @@ def _run_formal_task(
             task,
             defaults,
             operation="直接做内容",
-            message=str(task["message"]),
+            message=evaluation_message(task),
         )
     ]
     answer = str(steps[0]["answer"])
@@ -592,12 +627,23 @@ def selftest() -> JsonObject:
         topic_product_tamper_rejected = True
     else:
         topic_product_tamper_rejected = False
+    invalid_source_ref = copy.deepcopy(plan)
+    invalid_source_ref["chronological_tasks"][0]["source_ref"] = (
+        "snapshot://SOURCE-08/L999999-L1000000"
+    )
+    try:
+        validate_plan(invalid_source_ref)
+    except ValueError:
+        source_ref_tamper_rejected = True
+    else:
+        source_ref_tamper_rejected = False
     if not all(
         (
             budget_tamper_rejected,
             format_tamper_rejected,
             readiness_tamper_rejected,
             topic_product_tamper_rejected,
+            source_ref_tamper_rejected,
         )
     ):
         raise RuntimeError("Package 10 selftest did not fail closed")
@@ -608,6 +654,7 @@ def selftest() -> JsonObject:
         "format_tamper_rejected": format_tamper_rejected,
         "readiness_tamper_rejected": readiness_tamper_rejected,
         "topic_product_tamper_rejected": topic_product_tamper_rejected,
+        "source_ref_tamper_rejected": source_ref_tamper_rejected,
     }
 
 
