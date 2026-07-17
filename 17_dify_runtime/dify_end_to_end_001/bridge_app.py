@@ -231,11 +231,18 @@ def create_app(
             allowed_account_ids=principal.allowed_account_ids,
             signing_key=signing_key,
         )
+        with trusted_database_scope(
+            TrustedDatabaseScope(
+                tenant_id=trusted_tenant_id,
+                principal_id=principal.principal_id,
+            )
+        ):
+            options = active_runtime.portal_options(principal.principal_id)
         response = jsonify(
             {
                 "simulation_only": True,
                 "notice": "仅用于内部非生产测试，不可发布。",
-                "options": active_runtime.portal_options(principal.principal_id),
+                "options": options,
             }
         )
         response.set_cookie(

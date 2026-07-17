@@ -109,8 +109,20 @@ TABLE_POLICIES: dict[str, str] = {
     "runtime_settings": (
         "setting_key = 'neutral_expression_profile' "
         f"OR setting_key = 'identity_authority:' || {TENANT} "
-        f"OR ({BRAND} IS NOT NULL "
-        f"AND setting_key = 'brand_expression_profile:' || {BRAND})"
+        "OR (setting_key LIKE 'brand_expression_profile:%' AND ("
+        f"({BRAND} IS NOT NULL "
+        f"AND setting_key = 'brand_expression_profile:' || {BRAND}) "
+        f"OR ({PRINCIPAL} IS NOT NULL AND EXISTS ("
+        "SELECT 1 FROM runtime_content_accounts AS setting_account "
+        "WHERE setting_key = 'brand_expression_profile:' || "
+        "setting_account.brand_id "
+        f"AND setting_account.tenant_id = {TENANT} "
+        "AND setting_account.account_id IN ("
+        "SELECT jsonb_array_elements_text("
+        "setting_principal.allowed_account_ids::jsonb) "
+        "FROM runtime_principals AS setting_principal "
+        f"WHERE setting_principal.principal_id = {PRINCIPAL} "
+        f"AND setting_principal.tenant_id = {TENANT})))))"
     ),
     "runtime_requirements": (
         _principal_scope("runtime_requirements", "principal_id")

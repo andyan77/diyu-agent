@@ -70,6 +70,8 @@ class Package9Tests(unittest.TestCase):
             "app.principal_id",
         ):
             self.assertIn(dimension, combined)
+        self.assertIn("setting_principal.allowed_account_ids", combined)
+        self.assertIn("brand_expression_profile:", combined)
         rollback = render_rollback_sql()
         self.assertEqual(
             rollback.count("DISABLE ROW LEVEL SECURITY"),
