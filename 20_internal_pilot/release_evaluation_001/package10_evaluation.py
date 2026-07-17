@@ -153,6 +153,7 @@ def _task_payload(task: JsonObject, defaults: JsonObject) -> JsonObject:
 
 def _prepare_payload(task: JsonObject, defaults: JsonObject) -> JsonObject:
     value = _task_payload(task, defaults)
+    value.pop("continue_previous", None)
     value.update(
         {
             "session_token": "package10-preflight-session-token-0001",
