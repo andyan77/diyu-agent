@@ -368,6 +368,22 @@ class Package7Tests(unittest.TestCase):
             [],
         )
 
+    def test_key_takeaway_focuses_retrieval_without_replacing_creation_message(self) -> None:
+        prepared = self.runtime.prepare(
+            self.request(
+                message="请按完整任务要求形成一份内部内容。",
+                key_takeaway="尺码不能只看身高",
+            ),
+            self.principal_id,
+        )
+        self.assertEqual(prepared["response_kind"], "MODEL_REQUIRED")
+        self.assertEqual(self.knowledge.requests[-1]["query"], "尺码不能只看身高")
+        run = self.repository.model_run(prepared["run_id"])
+        self.assertEqual(
+            run.payload["requirement_summary"] if run else None,
+            "请按完整任务要求形成一份内部内容。",
+        )
+
     def test_named_storyline_and_column_override_defaults(self) -> None:
         prepared = self.runtime.prepare(
             self.request(

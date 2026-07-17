@@ -730,7 +730,7 @@ class Package7Runtime:
                 "authorization_refs": [account["runtime_confirmation_authorization_ref"]],
                 "subject_confirmation_ref": None,
             },
-            retrieval_query_text=request.message,
+            retrieval_query_text=request.key_takeaway or request.message,
             precise_fact_queries=tuple(precise_queries),
             requested_high_level_mode_refs=("expression-mode://documentary-observation/v1",),
             client_soft_preferences={

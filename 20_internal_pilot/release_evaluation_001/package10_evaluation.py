@@ -195,7 +195,7 @@ def _task_payload(task: JsonObject, defaults: JsonObject) -> JsonObject:
         "target_platform": task["target_platform"],
         "candidate_number": None,
         "content_goal": task["business_goal"],
-        "key_takeaway": "只在当前账号资料和授权范围内形成可执行内容",
+        "key_takeaway": source_material_anchor(task.get("source_ref")),
         "speaker_role_name": None,
         "storyline_name": None,
         "column_name": None,
