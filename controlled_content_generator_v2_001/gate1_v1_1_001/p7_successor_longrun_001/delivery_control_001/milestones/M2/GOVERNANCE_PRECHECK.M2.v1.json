@@ -1,0 +1,43 @@
+{
+  "schema_version": "p7-governance-precheck-v1",
+  "milestone_id": "M2",
+  "purpose": "M2-C1 治理预检（v2.4 §三 3.2 M2 行①）：真实 S0 之前，从磁盘复算全部治理面并留痕；任何一面不绿则 S0 不启动。",
+  "checked_at": "2026-07-17T04:25:00+00:00",
+  "session_id": "4d7e088b-945e-4903-844a-790379e740d2",
+  "checks": {
+    "checker_pre_review": {
+      "command": "python3 checker/p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "result": "PASS（SHARED 10 节 / A 5 节 / B 6 节；ARTIFACT_INTEGRITY PASS；M0_QUALIFICATION NOT_QUALIFIED）",
+      "exit_code": 0
+    },
+    "state_expectation_entry_face": {
+      "m0_status": "NOT_QUALIFIED（期望 [NOT_QUALIFIED] ✓）",
+      "v11_status": "NOT_QUALIFIED（期望 [NOT_QUALIFIED] ✓）",
+      "qualification_manifest": "NOT_MATERIALIZED / case_count=0 ✓",
+      "dev_manifest": "NOT_MATERIALIZED ✓",
+      "executed_stages": "[]（S0 尚未执行；M2 允许集 [S0_DETERMINISTIC_HYGIENE]）",
+      "real_run_executed": false
+    },
+    "active_contract_set": {
+      "command": "python3 delivery_control_001/tools/contract_set.py verify",
+      "result": "PASS drift=[]（17 成员摘要与 ACTIVE_CONTRACT_DIGESTS 冻结值一致，集合摘要 d7265a18…）"
+    },
+    "d0_status": "五条件合取全 true（state/D0_STATUS.v1.json；checker d0 节复算 PASS）",
+    "run_journal": "VALID 20 条（seq18 开场 / seq19 launcher 加固 / seq20 本胶囊）；哈希链完整",
+    "write_surface": "M2 冻结写面 = p7_successor_longrun_001/** + generator_v3_successor_001/v4_recovery/**；checker write_surface 节 PASS；本里程碑至今全部提交路径均在面内",
+    "milestone_exit_contract": "M2 行 definition_status=FROZEN；S0 六项镜像与 stage_and_kill.v2 逐字一致（checker/attack39 双护）；required_exit_keys 10 键",
+    "s0_entry_requires": {
+      "IMPLEMENTATION_AUTHORIZATION": "满足（见 S0_REAL_RUN_AUTHORIZATION.v1.json authorized_by_chain）",
+      "APPROVED_WRITE_SURFACE": "满足（M2 冻结写面）"
+    },
+    "external_call_governance": {
+      "budget_contract": "external_llm_budget.v1.json APPROVED，30 元/UTC 日，allowed_scope 含 FORMULAIC_SEMANTIC_JUDGE_DEVELOPMENT",
+      "rate_card": "deepseek_rate_card.v1.json digest 473f2279…（budget 内 rate_card_digest 一致）",
+      "spend_ledger": ".runtime/deepseek_spend.jsonl 在盘（不追踪入 Git）",
+      "key_injection_ruling": "发起人 2026-07-17（journal seq 20 / SUPERSESSION_LEDGER §7）"
+    },
+    "sealed_isolation": "本会话未读取任何密封载荷/隐藏材料/客户数据/.env*；S0 材料 = 全新合成控制材料"
+  },
+  "s0_stage_receipt_mechanism_note": "递延项『S0 阶段专用回执』落点确认：不新建平行 schema（R6 教训），复用既有 typed_receipt.v1（receipt_kind=STAGE_DECISION，milestone_id=M2，PASS 需 ≥2 审核绑定）+ stage_actual_state.stage_receipts 摘要钉死登记；checker _check_milestone_exits 已机械消费该形态（tests: test_m2_real_s0_proof_green / attack 38 / attack 39）。回执在候选冻结与双审后落盘。",
+  "verdict": "ALL_GREEN_S0_MAY_START"
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "p7-s0-real-run-authorization-v1",
+  "milestone_id": "M2",
+  "stage_id": "S0_DETERMINISTIC_HYGIENE",
+  "authorization_model": "v2.5 §〇 + §壹-9：执行流水线内一切授权仪式（含 S0 真实运行专项授权）默认授权；执行侧自启并登记留痕。本文件即该留痕（授权回执文书本身亦属默认授权范畴）。",
+  "authorized_by_chain": [
+    "发起人 2026-07-16 宽义裁决 #9（v2.5 @ 23f5fea，AskUserQuestion 知情选择，风险已提示）",
+    "发起人 2026-07-17 M2 会话内裁决：M2 手动启动形态登记后继续（journal seq 18；SUPERSESSION_LEDGER §7）",
+    "发起人 2026-07-17 M2 会话内裁决：DeepSeek 密钥经 sanctioned 脚本进程内读取 .env.deepseek，仅限本次 M2-S0（journal seq 20；SUPERSESSION_LEDGER §7）"
+  ],
+  "stage_entry_requires_evidence": {
+    "IMPLEMENTATION_AUTHORIZATION": "v2.5 §〇 默认授权行 + eval_audit_spine_001/contract/implementation_authorization_record.v2.md（活跃合同集成员 SPINE_IMPLEMENTATION_AUTHORIZATION_V2，digest 冻结于 ACTIVE_CONTRACT_DIGESTS）",
+    "APPROVED_WRITE_SURFACE": "M2 冻结写面（RENDERED_PROMPT.v2 §写面 = PROMPT_REGISTRY P2 行）：p7_successor_longrun_001/** + generator_v3_successor_001/v4_recovery/**；denylist 逐字承继"
+  },
+  "run_scope": {
+    "run_kind": "S0_DETERMINISTIC_HYGIENE_REAL_RUN",
+    "qualification_semantics": false,
+    "qualification_note": "本运行不构成 M0/V1.1 任何资格声明；M0/V1.1 双 NOT_QUALIFIED 期望面不变（STATE_EXPECTATION[M2]）",
+    "batch_objects": "全新合成的 gate1_test_assignment 控制对象与行业通用合成材料（不触及密封载荷/隐藏材料/真实客户数据/旧 120/86/路线 60）",
+    "external_calls": {
+      "provider": "DEEPSEEK",
+      "scope": "FORMULAIC_SEMANTIC_JUDGE_DEVELOPMENT（external_llm_budget.v1.json allowed_scope 成员）",
+      "planned_call_count": "2-6",
+      "daily_hard_ceiling_cny": 30.0,
+      "discipline": "全局唯一预算代理预占→调用→结算（失败也结算留回执）；回执内容寻址落盘禁覆盖",
+      "key_injection": "仅 sanctioned 脚本进程内读 .env.deepseek（发起人 2026-07-17 裁决，journal seq 20）；主会话/子代理零直读"
+    },
+    "author_generation": "生成器角色由本会话模型承担（claude-fable-5）；每请求恰好一次首次尝试，内容寻址不可变保全；会话内推理无独立计费回执，其 v4 遥测事件以显式 unavailable 理由登记 usage，不进入 eval-spine 成本账（成本账范围 = 外部调用 + 模型角色评审工时）"
+  },
+  "stop_lines_in_force": [
+    "S0 真实运行触及任何密封/隐藏材料 = 停（RENDERED_PROMPT.v2 里程碑专属停止线）",
+    "遥测数据被用作阻断门（预算门复辟）= 停",
+    "S0 失败按 STOP_S0_DETERMINISTIC_INTEGRITY 诚实关闭（FAIL/HONEST_STOP），不得重试洗绿",
+    "STOP_EXTERNAL_LLM_DAILY_BUDGET（30 元/UTC 日）",
+    "记账缺失 = 停（STOP_COST_ACCOUNTING_MISSING）"
+  ],
+  "issued_at": "2026-07-17T04:20:00+00:00",
+  "issued_by_role": "M2_PRINCIPAL_ORCHESTRATOR",
+  "session_id": "4d7e088b-945e-4903-844a-790379e740d2"
+}
