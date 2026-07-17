@@ -26,8 +26,10 @@
       "pattern": "^[0-9a-f]{64}$"
     },
     "launch_capability": {
+      "description": "AUTO_LAUNCHED_SESSION_EXIT_NONZERO：会话确已 spawn（顶层全新）但进程以非零码退出——诚实登记退出码，禁止重试洗绿（发起人递延指令，M2 开场落地）",
       "enum": [
         "AUTO_LAUNCHED",
+        "AUTO_LAUNCHED_SESSION_EXIT_NONZERO",
         "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE",
         "REFUSED_SUBAGENT_IMPERSONATION",
         "REFUSED_SESSION_REUSE"
@@ -62,8 +64,12 @@
   "additionalProperties": false,
   "allOf": [
     {
-      "if": { "properties": { "launch_capability": { "const": "AUTO_LAUNCHED" } } },
+      "if": { "properties": { "launch_capability": { "enum": ["AUTO_LAUNCHED", "AUTO_LAUNCHED_SESSION_EXIT_NONZERO"] } } },
       "then": { "properties": { "session_kind": { "const": "TOP_LEVEL_FRESH" } } }
+    },
+    {
+      "if": { "properties": { "launch_capability": { "const": "AUTO_LAUNCHED_SESSION_EXIT_NONZERO" } } },
+      "then": { "properties": { "exit_status": { "type": "integer", "not": { "const": 0 } } } }
     }
   ]
 }

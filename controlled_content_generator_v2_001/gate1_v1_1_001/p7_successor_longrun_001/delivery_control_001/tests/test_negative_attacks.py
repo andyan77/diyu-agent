@@ -497,7 +497,7 @@ class NegativeAttackMatrix(unittest.TestCase):
     def test_attack_29_launcher_subagent_impersonates_session(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             dc = fh.build_launch_fixture(Path(tmp))
-            fake_subagent_spawn = lambda path: {
+            fake_subagent_spawn = lambda path, cwd=None: {
                 "capability": "AUTO_LAUNCHED", "session_id": "sub-1",
                 "session_kind": "SUBAGENT", "actual_model": "claude-fable-5",
                 "exit_status": 0, "auto_memory_disabled": True}
@@ -681,7 +681,7 @@ class NegativeAttackMatrix(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_root = Path(tmp)
             dc = fh.build_launch_fixture(tmp_root)
-            spawn = lambda path: {
+            spawn = lambda path, cwd=None: {
                 "capability": "AUTO_LAUNCHED", "session_id": "fresh-41",
                 "session_kind": "TOP_LEVEL_FRESH",
                 "actual_model": "claude-fable-5",

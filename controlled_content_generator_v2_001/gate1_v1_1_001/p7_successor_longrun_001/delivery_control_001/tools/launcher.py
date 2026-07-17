@@ -217,8 +217,16 @@ def verify_launch_binding(root: Path, milestone: str,
     return errors
 
 
-def spawn_via_claude_cli(rendered_path: Path, model: str = "fable") -> dict:
-    """默认 spawn：claude CLI 全新顶层会话。返回会话身份回执（best-effort）。"""
+def spawn_via_claude_cli(rendered_path: Path, model: str = "fable",
+                         cwd: Path | None = None) -> dict:
+    """默认 spawn：claude CLI 全新顶层会话。返回会话身份回执（best-effort）。
+
+    发起人递延加固（seq17 → M2 开场）：
+    ①cwd 固定——被 spawn 会话的工作目录显式钉在工作区根，不继承监督器进程
+      的偶然 cwd（否则会话内相对路径/写面判断全部错位）；
+    ②非零退出诚实登记——returncode != 0 时能力值为
+      AUTO_LAUNCHED_SESSION_EXIT_NONZERO（会话确已启动但异常退出），
+      不得伪装成功、不得静默重试洗绿。"""
     if shutil.which("claude") is None:
         return {"capability": "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE",
                 "reason": "claude CLI not on PATH"}
@@ -228,7 +236,7 @@ def spawn_via_claude_cli(rendered_path: Path, model: str = "fable") -> dict:
     result = subprocess.run(
         ["claude", "-p", "--model", model, "--output-format", "json"],
         stdin=open(rendered_path, "rb"), capture_output=True, text=True,
-        env=env)
+        env=env, cwd=str(cwd) if cwd is not None else None)
     session_id: object = {"value": "UNAVAILABLE",
                           "unavailable_reason": "claude CLI output not parseable",
                           "evidence_ref": "launcher stdout capture"}
@@ -239,7 +247,9 @@ def spawn_via_claude_cli(rendered_path: Path, model: str = "fable") -> dict:
         actual_model = payload.get("model") or actual_model
     except ValueError:
         pass
-    return {"capability": "AUTO_LAUNCHED", "session_id": session_id,
+    capability = ("AUTO_LAUNCHED" if result.returncode == 0
+                  else "AUTO_LAUNCHED_SESSION_EXIT_NONZERO")
+    return {"capability": capability, "session_id": session_id,
             "session_kind": "TOP_LEVEL_FRESH", "actual_model": actual_model,
             "exit_status": result.returncode,
             "auto_memory_disabled": True}
@@ -339,10 +349,10 @@ def start(root: Path, milestone: str, dc: Path | None = None,
         "launch_record_digest": record["record_digest"],
     }, str(root))
 
-    spawn_result = spawn(rendered_path)
+    spawn_result = spawn(rendered_path, cwd=root)
     capability = spawn_result.get("capability")
     refusal: tuple[str, str] | None = None
-    if capability == "AUTO_LAUNCHED":
+    if capability in ("AUTO_LAUNCHED", "AUTO_LAUNCHED_SESSION_EXIT_NONZERO"):
         if spawn_result.get("session_kind") != "TOP_LEVEL_FRESH":
             refusal = ("REFUSED_SUBAGENT_IMPERSONATION",
                        f"spawn returned session_kind="
@@ -385,7 +395,9 @@ def start(root: Path, milestone: str, dc: Path | None = None,
     if outcome_errors:
         raise LaunchRefused(f"launch outcome invalid: {outcome_errors}")
 
-    if capability != "AUTO_LAUNCHED":
+    # READY_TO_START 只属于「能力不可用→手动启动」路径；非零退出的会话
+    # 确已启动过，落 READY_TO_START 会伪装成"从未启动"（洗绿面），禁止。
+    if capability == "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE":
         _atomic_write(out_dir / "READY_TO_START.v1.json", json.dumps({
             "milestone": milestone,
             "status": "READY_TO_START",
@@ -424,10 +436,12 @@ def selftest() -> int:
     make_fixture = fh.build_launch_fixture
 
     def spawn_ok_factory(dc: Path, seen: dict):
-        def fake_spawn_ok(path: Path) -> dict:
+        def fake_spawn_ok(path: Path, cwd: Path | None = None) -> dict:
             # 指令第 6 条的顺序证明：spawn 时启动记录必须已在盘
             seen["record_on_disk_before_spawn"] = (
                 dc / "milestones/M2/LAUNCH_RECORD.v2.json").is_file()
+            # 递延加固①：start() 必须把工作区根作为 cwd 显式传给 spawn
+            seen["cwd"] = cwd
             return {"capability": "AUTO_LAUNCHED",
                     "session_id": "fresh-new-session-0001",
                     "session_kind": "TOP_LEVEL_FRESH",
@@ -435,13 +449,18 @@ def selftest() -> int:
                     "exit_status": 0, "auto_memory_disabled": True}
         return fake_spawn_ok
 
-    fake_spawn_subagent = lambda path: {
+    fake_spawn_subagent = lambda path, cwd=None: {
         "capability": "AUTO_LAUNCHED", "session_id": "subagent-77",
         "session_kind": "SUBAGENT", "actual_model": "claude-fable-5",
         "exit_status": 0, "auto_memory_disabled": True}
-    fake_spawn_unavailable = lambda path: {
+    fake_spawn_unavailable = lambda path, cwd=None: {
         "capability": "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE",
         "reason": "no claude CLI in test"}
+    fake_spawn_nonzero = lambda path, cwd=None: {
+        "capability": "AUTO_LAUNCHED_SESSION_EXIT_NONZERO",
+        "session_id": "fresh-new-session-0002",
+        "session_kind": "TOP_LEVEL_FRESH", "actual_model": "claude-fable-5",
+        "exit_status": 3, "auto_memory_disabled": True}
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_root = Path(tmp)
@@ -455,6 +474,8 @@ def selftest() -> int:
         record, outcome = result["record"], result["outcome"]
         expect("record_written_before_spawn",
                seen.get("record_on_disk_before_spawn") is True)
+        expect("spawn_cwd_pinned_to_workspace_root",
+               seen.get("cwd") == tmp_root)
         expect("record_bound_to_actual_head",
                record["launched_at_head"] == head)
         expect("fresh_session_identity_in_outcome",
@@ -592,6 +613,60 @@ def selftest() -> int:
         except LaunchRefused:
             expect("route_unfrozen_m6_refused", True)
 
+    with tempfile.TemporaryDirectory() as tmp:
+        # 递延加固②（start 级）：会话非零退出 → outcome 诚实登记新能力值，
+        # 不落 READY_TO_START（不得伪装"从未启动"），outcome 校验通过
+        tmp_root = Path(tmp)
+        dc = make_fixture(tmp_root)
+        result = start(tmp_root, "M2", dc=dc, env={},
+                       spawn=fake_spawn_nonzero)
+        outcome = result["outcome"]
+        expect("nonzero_exit_honestly_registered",
+               outcome["launch_capability"]
+               == "AUTO_LAUNCHED_SESSION_EXIT_NONZERO"
+               and outcome["exit_status"] == 3
+               and not receipts.validate_launch_outcome(outcome,
+                                                        result["record"]))
+        expect("nonzero_exit_does_not_write_ready_to_start",
+               not (dc / "milestones/M2/READY_TO_START.v1.json").is_file())
+        # 伪装面：exit_status=0 却登记非零能力值 → schema 拒绝
+        forged_outcome = receipts.close_record(
+            {k: v for k, v in outcome.items() if k != "outcome_digest"}
+            | {"exit_status": 0, "outcome_digest": ""}, "outcome_digest")
+        expect("nonzero_capability_with_zero_exit_rejected",
+               bool(receipts.validate_launch_outcome(forged_outcome,
+                                                     result["record"])))
+
+    with tempfile.TemporaryDirectory() as tmp:
+        # 递延加固①②（真实 spawn 函数级）：假 claude CLI 记录 pwd 并退出 3
+        # → capability 映射诚实、cwd 钉在工作区根
+        tmp_root = Path(tmp)
+        fake_bin = tmp_root / "fakebin"
+        fake_bin.mkdir()
+        pwd_file = tmp_root / "spawn_pwd.txt"
+        stub = fake_bin / "claude"
+        stub.write_text("#!/bin/sh\npwd > " + str(pwd_file)
+                        + "\necho '{\"session_id\": \"sess-x\", "
+                        "\"model\": \"claude-fable-5\"}'\nexit 3\n",
+                        encoding="utf-8")
+        stub.chmod(0o755)
+        prompt_file = tmp_root / "prompt.md"
+        prompt_file.write_text("noop", encoding="utf-8")
+        old_path = os.environ.get("PATH", "")
+        os.environ["PATH"] = f"{fake_bin}:{old_path}"
+        try:
+            sr = spawn_via_claude_cli(prompt_file, cwd=tmp_root)
+        finally:
+            os.environ["PATH"] = old_path
+        expect("real_spawn_nonzero_maps_to_honest_capability",
+               sr["capability"] == "AUTO_LAUNCHED_SESSION_EXIT_NONZERO"
+               and sr["exit_status"] == 3
+               and sr["session_id"] == "sess-x")
+        expect("real_spawn_cwd_pinned",
+               pwd_file.is_file()
+               and pwd_file.read_text(encoding="utf-8").strip()
+               == str(tmp_root.resolve()))
+
     print("LAUNCHER_SELFTEST:", "ALL_PASS" if not failures
           else f"FAILED {failures}")
     return 0 if not failures else 1
@@ -654,6 +729,16 @@ def main() -> int:
         if args.start:
             result = start(root, args.start)
             print(json.dumps(result["record"], ensure_ascii=False, indent=2))
+            outcome = result["outcome"]
+            if (outcome["launch_capability"]
+                    == "AUTO_LAUNCHED_SESSION_EXIT_NONZERO"):
+                # 非零退出诚实登记：outcome 已落盘，监督器进程以非零码收尾，
+                # 让 cron/人类看到失败；禁止在此自动重试（重试洗绿=停止线）。
+                print(json.dumps(
+                    {"launch_session_exit_nonzero":
+                     outcome.get("exit_status")},
+                    ensure_ascii=False), file=sys.stderr)
+                return 1
             return 0
     except (LaunchRefused, receipts.ReceiptError) as exc:
         print(json.dumps({"refused": True, "reason": str(exc)},

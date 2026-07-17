@@ -300,7 +300,8 @@ def validate_launch_outcome(value: dict, record: dict | None = None) -> list[str
     if record is not None and value.get("launch_record_digest") != record.get(
             "record_digest"):
         errors.append("outcome not bound to launch record digest")
-    if (value.get("launch_capability") == "AUTO_LAUNCHED"
+    if (value.get("launch_capability") in (
+            "AUTO_LAUNCHED", "AUTO_LAUNCHED_SESSION_EXIT_NONZERO")
             and value.get("session_kind") != "TOP_LEVEL_FRESH"):
         errors.append("spawned session is not a fresh top-level session "
                       "(subagent impersonation rejected)")

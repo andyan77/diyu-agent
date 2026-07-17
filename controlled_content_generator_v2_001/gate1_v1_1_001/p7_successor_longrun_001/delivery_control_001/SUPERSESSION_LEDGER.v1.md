@@ -42,6 +42,7 @@
 | `schema/launch_record.v1.schema.json` | `schema/launch_record.v2.schema.json` + `schema/launch_outcome.v1.schema.json` | 记录/结果分离：记录只承载 spawn 前事实，必须先于 spawn 原子落盘（tmp+fsync+rename）并绑定实际 HEAD（`launched_at_head`）；会话结果落 LAUNCH_OUTCOME 且经 `launch_record_digest` 回绑 | 生效 |
 | M1 关闭工件 R3 集（`HANDOFF.v1.json`、R3 `STAGE_DECISION`/`CLOSEOUT_RECEIPT`/`READY_SET_RESULT.v1`/`ORIGIN_ANCHOR.v1.json`、R3 两份签字回执） | R4 重生成集（HANDOFF.v2 / 新 typed 回执 / MILESTONE_EXIT_EVIDENCE.v1 / READY_SET_RESULT.v2 / ORIGIN_ANCHOR.v2 / 新签字回执 ×2） | 指令第 8 条：新候选产生 → 两份审核全部作废重跑 → PASS/HANDOFF/P2 Prompt/origin anchor 全部重生成；R3 工件封存于 git 历史（5cf3ea2/4ddbd1f），工作树留存仅作历史证据、不再满足任何入口（版本解析 v2 优先） | 生效 |
 | （新增，无被取代者）`contracts/MILESTONE_EXIT_CONTRACT.v1.json` + `schema/milestone_exit_evidence.v1.schema.json` + `schema/origin_anchor.v2.schema.json` + `tools/closure.py` | — | 里程碑专属出口逐键强制（M1/M2 冻结；M2 = S0 六项镜像 + BOUNDARY_SMOKE_PASS + 遥测模型落盘 + 双审；未冻结里程碑 FINAL fail-closed）；candidate/closeout/anchor 可重建闭包验证器 | 生效 |
+| `schema/launch_outcome.v1.schema.json`（原地增补，非取代）+ `tools/launcher.py` / `tools/receipts.py` | — | 发起人递延指令落地（journal seq17 → M2 开场）：①spawn cwd 显式钉工作区根；②会话非零退出诚实登记——launch_capability 枚举增 `AUTO_LAUNCHED_SESSION_EXIT_NONZERO`（须 TOP_LEVEL_FRESH + 非零 exit_status，伪装 exit 0 被 schema 拒），launcher --start 对该态以非零码收尾且不落 READY_TO_START、不自动重试 | 生效（M2 开场，commit 见 journal seq19 后首个绿色提交） |
 
 ## 6. 登记纪律
 
