@@ -135,8 +135,10 @@ class PositiveFutureStates(unittest.TestCase):
     def _check(self, root: Path, milestone: str):
         return V25.check_m0_state_integrity(root, {"milestone": milestone})
 
-    def test_m1_honest_baseline_passes(self) -> None:
-        ok, details = V25.check_m0_state_integrity(ROOT, {"milestone": "M1"})
+    def test_current_milestone_honest_baseline_passes(self) -> None:
+        # 活树按当前里程碑期望面检查；里程碑推进时本绑定随之演进
+        # （M1 基线：seq1-17；M2 真实 S0 后 real_run_executed=true 属 M2 合法面）
+        ok, details = V25.check_m0_state_integrity(ROOT, {"milestone": "M2"})
         self.assertTrue(ok, details)
 
     def test_m3_gold_materialized_passes(self) -> None:

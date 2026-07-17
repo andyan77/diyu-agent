@@ -50,8 +50,9 @@ class FamilyACheckerSites(unittest.TestCase):
             self.assertIn(section, self.master.SECTIONS)
 
     def test_m0_state_section_is_expectation_aware_not_pinned(self) -> None:
+        # 活树按当前里程碑（M2，真实 S0 已执行）期望面检查；随里程碑推进演进
         ok, details = self.v25.check_m0_state_integrity(
-            ROOT, {"milestone": "M1"})
+            ROOT, {"milestone": "M2"})
         self.assertTrue(ok, details)
         # 同一实际状态在错误里程碑期望下必须能区分（参数化生效的证据）
         spec = _j(DC / "state/STATE_EXPECTATION.v1.json")
@@ -216,8 +217,15 @@ class FamilyDContractStateSites(unittest.TestCase):
         dm = _j(ES / "calibration/dev_manifest.v1.json")
         self.assertEqual(dm["content_status"], "NOT_MATERIALIZED")  # 位点 :5
         sa = _j(ES / "calibration/stage_actual_state.v1.json")
-        self.assertEqual(sa["executed_stages"], [])
-        self.assertFalse(sa["real_run_executed"])
+        # M2 合法面：executed_stages ⊆ {S0}（登记者必须带摘要钉死回执），
+        # real_run_executed 为布尔诚实值（M2 真实 S0 后为 true）
+        self.assertLessEqual(set(sa["executed_stages"]),
+                             {"S0_DETERMINISTIC_HYGIENE"})
+        for stage in sa["executed_stages"]:
+            row = sa["stage_receipts"][stage]
+            self.assertTrue((ROOT / row["receipt_path"]).is_file())
+            self.assertRegex(row["receipt_digest"], r"^[0-9a-f]{64}$")
+        self.assertIsInstance(sa["real_run_executed"], bool)
         v11 = _j(ES / "calibration/V11_STATUS.v1.json")
         self.assertEqual(v11["status"], "NOT_QUALIFIED")   # V1.1 诚实维持
         self.assertIn("READY_FOR_300", v11["claims_forbidden"])
