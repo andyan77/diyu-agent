@@ -1,0 +1,52 @@
+{
+  "actual_model_id": "claude-opus-4-8",
+  "adversarial_probe_outcomes": [
+    "锚内容篡改（title 追加字符）→ anchor equal=False + E_V4_RAW_SURFACE_EXACT_JOIN",
+    "stage gate 翻转 first_response_retained=false → verify-all six-gate recompute mismatch",
+    "注入第 13 条伪造成本事件 → cost events + metering recompute mismatch",
+    "journal seq10 篡改 → record_digest recompute mismatch（链 25 条独立复算 VALID）",
+    "密钥形态字符串全域 grep → 零命中",
+    "S0 材料真实品牌/人物/密封扫描 → 干净（合成披露 16 处）"
+  ],
+  "adversarial_probes_count": 6,
+  "candidate_commit_verified": "0065887d0b2f8424d32d235707f2afc35ed258fc",
+  "carrier": "全新非 fork 子代理 ae7e5c6a5859f3ce0（发起人载体豁免裁决，signer_receipt.v2.1）",
+  "checks_performed_count": 13,
+  "evidence_manifest_digest_verified": "e9a60ac80d458223a48ec3336a0f5208aeec35ac6ec7e7710e209ad8a99b4942",
+  "findings": [
+    {
+      "description": "冒烟报告冻结于 C2（67eeb71），其 negative_attack_battery tail 记 68 passed，而候选 v4 电池为 73（v3 新增 5 条 v2.1 测试晚于该报告）。良性过时：5 子检查现场重跑全部 PASS，漂移方向为覆盖增加，无门消费该计数；建议在最终候选处重生成。",
+      "evidence": "git log 单提交 67eeb71；重跑电池 73 passed",
+      "file": "delivery_control_001/milestones/M2/BOUNDARY_SMOKE_REPORT.v1.json",
+      "severity": "ADVISORY"
+    },
+    {
+      "description": "0b 项把 codex 输出 schema 隔离声明说成『五键』，实为 6 必填键 + 条件披露；schema 本体自洽，仅请求书描述差一。",
+      "evidence": "schema required 6 项 vs 请求书行文",
+      "file": "delivery_control_001/milestones/M2/REVIEW_REQUEST.v2.md",
+      "severity": "ADVISORY"
+    }
+  ],
+  "input_manifest_digest_verified": "493a1841d55f7f131353f0d9efa92e8cf626e6cd5504079daac0ec6e77eb4ad6",
+  "isolation_attestation": {
+    "auto_memory_disabled_before_launch": false,
+    "auto_memory_disabled_or_not_applicable": true,
+    "auto_memory_injection_disclosure": "Harness 于启动时注入：(1) 用户级 /home/faye/.claude/CLAUDE.md（Faye v4.2——通用工作风格、Zero-Guess/大白话偏好、diyu 基础设施速查、execution-mode 与 ontology 裁决先例、错误模式指针）；(2) 项目自动记忆索引 /home/faye/.claude/projects/-home-diyu----------/memory/MEMORY.md（GKB 行业通用知识库主题：蒸馏路线、2026-07-07 审计、取材清点、KE 流水线审计、资格探针评审）。来源：SessionStart harness 注入（启动前未禁用）。与被审对象关系：切向——同属 diyu 计划但无一涉及本 M2 gate1_v1_1/p7_successor_longrun 交付控制/评测脊柱/v4_recovery 候选；记忆属另一子项目（GKB 内容生成知识库）。是否采用：否——裁决完全从候选树 0065887 磁盘工件与独立复算得出，任何注入记忆内容未影响任何检查或结论。另：requested_model=fable 但 actual_model_id=claude-opus-4-8（如实自报）。",
+    "did_not_author_reviewed_scope": true,
+    "fresh_session_not_fork_not_resume": true,
+    "isolation_evidence": "仓库只读；全部执行于 /tmp 副本（git archive 提取 + local clone），PYTHONDONTWRITEBYTECODE=1；未读 .env*/密封材料/客户数据/nine_tables/pkg1 原始数据；开==闭 porcelain sha 证零仓库写入；未读作者过程叙述——只读磁盘工件并独立复算。"
+  },
+  "launch_exception_registration_verified": "COMPLETE_AND_CONSISTENT（三处登记一致；范围限 M2；launch_record.v2 常量使诚实补录不可能=schema 强制诚实；载体豁免另于 §7 第三行 + seq25 一致登记）",
+  "output_manifest_digest_verified": "1d8e09036b36f64e8d7273e20f6fef45b32dae7e545c188bdbf65cd6b5549270",
+  "r1_blocking_fixes_verified": {
+    "B1_anchor_semantic_diff": "equal=True；恰 4 处差异且全为 attempts[i].schema_version；豁免面=1 标签字段；门已接线（first_response_retained 依赖 anchor_ok；verify-all 复算）；stage_decision gate_notes 登记锚证据",
+    "B2_codex_output_schema_v2": "六键 + 条件披露自洽（false+无披露 INVALID / false+披露 VALID）；additionalProperties 双层 false",
+    "C_carrier_exemption": "v2.1 诚实分层确认：仅放宽 before_launch 为布尔且 false 强制 ≥20 字披露；其余三键仍常量 true；v2 原样仍拒 false；v1 不入 FINAL 集；receipts/checker 分发一致；5/5 测试真实非 skip"
+  },
+  "requested_model": "fable",
+  "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+  "round": "R2",
+  "verdict": "ACCEPT",
+  "wall_clock_ms": 1522831,
+  "worktree_state_attestation": "ZERO_REPO_WRITES——开/闭 porcelain sha 一致（8f95d3d3…），HEAD 4d36204 不变，git diff HEAD 空；全部实验在 /tmp git-archive 提取与 --local clone 中进行"
+}

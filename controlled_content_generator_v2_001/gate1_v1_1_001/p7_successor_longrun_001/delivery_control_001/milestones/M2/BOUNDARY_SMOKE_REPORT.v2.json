@@ -1,0 +1,70 @@
+{
+  "checked_at": "2026-07-17T06:44:57+00:00",
+  "checks": {
+    "checker_pre_review": {
+      "command": "python3 checker/p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "exit_code": 0,
+      "passed": true,
+      "tail": [
+        "RESULT[SHARED]: PASS (10 sections)",
+        "RESULT[A]: PASS (5 sections)",
+        "RESULT[B]: PASS (6 sections)",
+        "ARTIFACT_INTEGRITY: PASS",
+        "M0_QUALIFICATION: NOT_QUALIFIED"
+      ]
+    },
+    "negative_attack_battery": {
+      "command": "python3 -m pytest delivery_control_001/tests -q",
+      "passed": true,
+      "tail": [
+        "73 passed in 0.83s"
+      ]
+    },
+    "product_boundary_probes": {
+      "branch": "agent/gate1-v1-1-successor-longrun",
+      "github_workflows_untouched": true,
+      "no_staging_imports_in_spine_or_v4": true,
+      "on_task_branch": true,
+      "passed": true,
+      "product_core_staging_absent_until_M3": true,
+      "remotes": [
+        "origin"
+      ],
+      "single_origin_remote": true
+    },
+    "residual_scan": {
+      "active_violations": [],
+      "passed": true,
+      "report": "delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.M2.v2.json",
+      "report_sha256": "b8408a3e9596b89ead37dfc4c2a6c1feced9fef106c82b4b1020d461eac309fe",
+      "tracked_files_scanned": 2893
+    },
+    "sealed_denylist_and_marker_scan": {
+      "denylist_size": 1,
+      "git_history_digest_hits": [],
+      "marker_data_hits": [],
+      "marker_literal_context_rule": "仅限：合成标记的定义工具/攻击测试源码、其 __pycache__、M1/M2 codex 评审事件转录（转录逐字引用测试源码）；此外任何命中一律违规",
+      "marker_literal_self_references": [
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/sealed_scan.py",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/__pycache__/sealed_scan.cpython-310.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r4_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r2_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r5_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r3_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/codex_review_r1_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/test_negative_attacks.py",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/__pycache__/test_negative_attacks.cpython-310.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/__pycache__/test_negative_attacks.cpython-310-pytest-8.4.2.pyc"
+      ],
+      "passed": true,
+      "worktree_digest_hits": []
+    }
+  },
+  "definition_note": "BOUNDARY_SMOKE_PASS 为 M2 里程碑级出口键（v2.4 §四：不进冻结 S0 六键）；本报告每项子检查即时实跑。",
+  "milestone_id": "M2",
+  "record_digest": "710be008dd757f33e180fbeb18b7f9862cc5d8a9914c852c1a42f408a4049f45",
+  "schema_version": "p7-boundary-smoke-report-v1",
+  "supersedes": "BOUNDARY_SMOKE_REPORT.v1.json（冻结于 C2/67eeb71；Fable R2 ADVISORY：其电池计数 68 早于 v3 新增的 5 条 v2.1 测试。本 v2 于最终候选树现场重跑全部子检查；v1 原文保留不改写）",
+  "verdict": "BOUNDARY_SMOKE_PASS"
+}

@@ -1,0 +1,181 @@
+{
+  "verdict": "REJECT",
+  "candidate_commit_verified": "0065887d0b2f8424d32d235707f2afc35ed258fc",
+  "input_manifest_digest_verified": "493a1841d55f7f131353f0d9efa92e8cf626e6cd5504079daac0ec6e77eb4ad6",
+  "output_manifest_digest_verified": "1d8e09036b36f64e8d7273e20f6fef45b32dae7e545c188bdbf65cd6b5549270",
+  "evidence_manifest_digest_verified": "e9a60ac80d458223a48ec3336a0f5208aeec35ac6ec7e7710e209ad8a99b4942",
+  "checks_performed": [
+    {
+      "name": "candidate_tree_and_ancestry",
+      "command_or_method": "git log --format=%H -1; git merge-base --is-ancestor candidate HEAD; detached local clone checkout",
+      "result": "PASS: workspace HEAD 4d36204b7651666ce22ac73463b377592572628d descends from the candidate; all recomputation used detached candidate HEAD.",
+      "exit_code": 0
+    },
+    {
+      "name": "m2_pre_review_master_check",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 checker/p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "result": "PASS: SHARED 10, A 5, B 6, ARTIFACT_INTEGRITY PASS.",
+      "exit_code": 0
+    },
+    {
+      "name": "eval_audit_spine_tests",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s eval_audit_spine_001/tests -v",
+      "result": "PASS: 49 tests.",
+      "exit_code": 0
+    },
+    {
+      "name": "v4_recovery_tests",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s generator_v3_successor_001/v4_recovery/tests -v",
+      "result": "PASS: 49 tests.",
+      "exit_code": 0
+    },
+    {
+      "name": "delivery_control_tests",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s delivery_control_001/tests -v",
+      "result": "PASS: 73 tests, including five signer-receipt v2.1 cases.",
+      "exit_code": 0
+    },
+    {
+      "name": "s0_full_chain_recompute",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 eval_audit_spine_001/evidence/s0_m2_real_run_001/tools/s0_run.py verify-all",
+      "result": "PASS: verify_all, S0 and accounting PASS; telemetry_complete=false retained.",
+      "exit_code": 0
+    },
+    {
+      "name": "contract_set_verify",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 delivery_control_001/tools/contract_set.py verify",
+      "result": "PASS: drift=[]",
+      "exit_code": 0
+    },
+    {
+      "name": "manifest_independent_recompute",
+      "command_or_method": "Independent canonical-JSON SHA-256 script excluding manifest_digest; candidate blobs and frozen snapshots checked entry by entry",
+      "result": "PASS for advertised active v2 package: INPUT 11/11, OUTPUT 46/46 with 2 snapshots, EVIDENCE 17/17 with 1 snapshot; bindings, counts, uniqueness, hashes and digests match. The request's v1 pointer is stale; see advisory.",
+      "exit_code": 0
+    },
+    {
+      "name": "r2_anchor_and_history_proof",
+      "command_or_method": "git log/ancestry; git-show anchor blob parse; independent recursive JSON comparison; direct _anchor_semantic_diff",
+      "result": "PASS on candidate: 1c4f81530ba1 precedes 4fcb568; exactly four differences, all attempts[0..3].schema_version; text and fact_ids values match despite formatting reflow; gate_notes bind the anchor.",
+      "exit_code": 0
+    },
+    {
+      "name": "deepseek_arithmetic_and_ledger",
+      "command_or_method": "Independent Decimal usage-times-rate recomputation and settlement lookup in .runtime/deepseek_spend.jsonl",
+      "result": "PASS: provider calls 37cdc..., 5c341..., 06df... recompute to USD 0.00013510, 0.00012544, 0.00011634 and CNY 0.00108080, 0.00100352, 0.00093072; each has exactly one settlement.",
+      "exit_code": 0
+    },
+    {
+      "name": "startup_exception_consistency",
+      "command_or_method": "Three-way field comparison of SUPERSESSION_LEDGER section 7, journal seq18 and SESSION_IDENTITY.M2; launch_record.v2 constants inspected",
+      "result": "PASS: founder-manual exception is consistently disclosed, M2-only, and not retroactively recordable under the supervisor/pre-spawn constants; M3+ remains launcher-required.",
+      "exit_code": 0
+    },
+    {
+      "name": "r2_output_schema_fix",
+      "command_or_method": "jsonschema inspection of codex_review_output.schema.v2.json",
+      "result": "PASS: six isolation keys and conditional disclosure are coherent. R1 BLOCKING-2 is fixed.",
+      "exit_code": 0
+    },
+    {
+      "name": "r2_signer_v2_1_layering",
+      "command_or_method": "Machine diff v2/v2.1; receipts/checker dispatch; test_signer_receipt_v2_1.py",
+      "result": "PASS: only before-launch truthfulness becomes boolean with disclosure required when false; other core constraints remain; v1 excluded; ledger section 7 and journal seq25 agree.",
+      "exit_code": 0
+    },
+    {
+      "name": "honest_baseline_and_telemetry_semantics",
+      "command_or_method": "Recomputed metrics/reviews; compared stage exit_requires and cost model; residual_scan.py",
+      "result": "PASS: acceptance rate 0.0 and formulaic rate 1.0 remain unwashed; all four reviews remain unapproved grade C. S0 hygiene does not impersonate quality; cost telemetry is NONE_DIAGNOSTIC_ONLY; no active residual violation.",
+      "exit_code": 0
+    },
+    {
+      "name": "boundary_smoke_candidate_binding",
+      "command_or_method": "Re-ran five child checks; audited every candidate SYNTH-CUSTOMER-MARKER-0000 hit against BOUNDARY_SMOKE_REPORT.v1 marker_literal_context_rule",
+      "result": "FAIL: child executables and payload scan pass, but candidate M2/codex_review_r1_events.jsonl is an extra tracked literal hit outside the report's M1-only transcript whitelist, so the frozen report cannot prove BOUNDARY_SMOKE_PASS for this candidate.",
+      "exit_code": 1
+    },
+    {
+      "name": "m1_binding_evolution",
+      "command_or_method": "Compared e2e81cd..candidate against STATE_EXPECTATION; verified spine candidate manifest",
+      "result": "PASS: three test bindings preserve M1 fixtures and legally bind M2 without threshold relaxation; candidate manifest count 79, digest 0b0776da8469135a5758651711f5df2bb7f92e702eeb0ea641846050dee911bb.",
+      "exit_code": 0
+    },
+    {
+      "name": "security_architecture_diff_guards",
+      "command_or_method": "Security, layer, port and Python static review; git diff --check e2e81cd..candidate",
+      "result": "PASS: no secret/raw-SQL/direct-LLM/eval/pickle addition, no port or cross-layer source change, no whitespace error.",
+      "exit_code": 0
+    },
+    {
+      "name": "workspace_and_readiness_audit",
+      "command_or_method": "git diff --exit-code; git diff --cached --exit-code; final rev-parse/status",
+      "result": "PASS: original tracked/index diffs remained empty; pre-existing untracked artifacts were untouched and not used as candidate evidence. No transition authorized: all nine readiness flags remain false.",
+      "exit_code": 0
+    },
+    {
+      "name": "final_json_schema_validation",
+      "command_or_method": "jsonschema.validate(final output, candidate codex_review_output.schema.v2.json)",
+      "result": "PASS",
+      "exit_code": 0
+    }
+  ],
+  "adversarial_probes": [
+    {
+      "probe": "Injected forged thirteenth cost event in isolated candidate copy.",
+      "outcome": "Expected rejection: verify-all exit 1; cost-event and metering recompute mismatches."
+    },
+    {
+      "probe": "Changed assignment_material_match to false in isolated stage_decision.",
+      "outcome": "Expected rejection: verify-all exit 1; six-gate recompute mismatch."
+    },
+    {
+      "probe": "Tampered journal seq18 without closing the hash chain.",
+      "outcome": "Expected rejection: INVALID at line 18 record_digest recompute; exit 1."
+    },
+    {
+      "probe": "Scanned S0 run files and parsed material/output natural-language fields for key shapes, sampled real brands/people and sealed markers.",
+      "outcome": "PASS: zero hits across 56 parsed strings; exit 0."
+    },
+    {
+      "probe": "Reverted one of four exempt schema labels, regenerated stage_decision, then ran verify-all.",
+      "outcome": "stage-gate locally reported PASS with three changes, but full chain rejected E_V4_RAW_SCHEMA with exit 1; end-to-end fail-closed, local-defense advisory."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "BLOCKING",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/BOUNDARY_SMOKE_REPORT.v1.json",
+      "description": "Candidate-bound BOUNDARY_SMOKE_PASS evidence is stale and false under its own literal-marker whitelist.",
+      "evidence": "Report commit 67eeb711 predates R1 transcript commit 19a5d623. Its rule allows only tool/test, pycache and M1 review transcripts and declares every other hit a violation. Exact candidate grep finds eight tracked hit files including milestones/M2/codex_review_r1_events.jsonl; explicit audit exit 1. It is a review-command self-reference, not sealed payload, but the exit report must be regenerated or narrowly revalidated before BOUNDARY_SMOKE_PASS can count."
+    },
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/REVIEW_REQUEST.v2.md",
+      "description": "The request points to *_MANIFEST.v1.json although advertised digests and resolver select v2.",
+      "evidence": "Active v2 manifests pass. V1 remains bound to e2e81cd: INPUT binding stale; OUTPUT only 36/41 candidate hashes; EVIDENCE only 11/13. Correct the pointer."
+    },
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/tools/s0_run.py",
+      "description": "_anchor_semantic_diff reports but does not locally require exactly four label changes.",
+      "evidence": "With one label reverted, stage-gate wrote PASS at count three; full verify-all still rejected through raw-schema validation. Require label_changes==4 in the anchor gate for local fail-closed proof."
+    },
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/telemetry/telemetry_summary.v1.json",
+      "description": "Telemetry remains incomplete.",
+      "evidence": "verify-all reports telemetry_complete=false. This is contractually nonblocking, but must not be presented as complete."
+    }
+  ],
+  "history_tamper_check": "PASS: candidate ancestry and 1c4f81530ba1 -> 4fcb568 order verified; historical raw blob independently parsed and differs only in four declared labels. Candidate journal chain parses valid; a seq18 mutation is detected INVALID. No history rewrite or candidate-tree substitution used.",
+  "actual_model_self_report": "OpenAI Codex based on GPT-5; exact serving snapshot/build identifier is not exposed.",
+  "isolation_attestation": {
+    "fresh_session_not_fork_not_resume": true,
+    "did_not_author_reviewed_scope": true,
+    "read_only_no_repo_writes": true,
+    "auto_memory_disabled_or_not_applicable": true,
+    "auto_memory_disabled_before_launch": true,
+    "isolation_evidence": "Fresh top-level Codex session; no fork, resume or subagent. Managed workspace was read-only; tracked/index diffs stayed empty. Candidate ran in detached /dev/shm copies because /tmp was read-only; mutations were confined to probe copies. No automatic-memory facility or injected memory was available before launch or during review."
+  }
+}

@@ -91,10 +91,20 @@ def _anchor_semantic_diff() -> tuple[bool, list[str]]:
         if a.get("schema_version") != c.get("schema_version"):
             label_changes += 1
     equal = anchor_cmp == current_cmp
+    # 本地硬门控（Codex R2 ADVISORY）：豁免面 = 恰好 4 处标签修正且修正后
+    # 全部等于合同标签；少改/多改/改错标签在本门即失败，不依赖下游
+    # E_V4_RAW_SCHEMA 兜底。
+    expected_label = "gate1-v4-author-raw-v1"
+    current_labels_ok = bool(current.get("attempts")) and all(
+        a.get("schema_version") == expected_label
+        for a in current.get("attempts", []))
+    label_gate = label_changes == 4 and current_labels_ok
+    ok = equal and label_gate
     notes.append(f"anchor_commit={FIRST_ATTEMPT_ANCHOR_COMMIT[:12]}")
-    notes.append(f"schema_version_label_changes={label_changes}")
+    notes.append(f"schema_version_label_changes={label_changes} (required==4)")
+    notes.append(f"current_labels_all_contract={current_labels_ok}")
     notes.append(f"semantic_equal_except_label={equal}")
-    return equal, notes
+    return ok, notes
 
 
 def _read(rel: str):

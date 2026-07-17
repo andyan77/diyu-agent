@@ -1,0 +1,81 @@
+{
+  "checked_at": "2026-07-17T08:04:11+00:00",
+  "checks": {
+    "checker_pre_review": {
+      "command": "python3 checker/p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "exit_code": 0,
+      "passed": true,
+      "tail": [
+        "RESULT[SHARED]: PASS (10 sections)",
+        "RESULT[A]: PASS (5 sections)",
+        "RESULT[B]: PASS (6 sections)",
+        "ARTIFACT_INTEGRITY: PASS",
+        "M0_QUALIFICATION: NOT_QUALIFIED"
+      ]
+    },
+    "negative_attack_battery": {
+      "command": "python3 -m pytest delivery_control_001/tests -q",
+      "passed": true,
+      "tail": [
+        "73 passed in 0.87s"
+      ]
+    },
+    "product_boundary_probes": {
+      "branch": "agent/gate1-v1-1-successor-longrun",
+      "github_workflows_untouched": true,
+      "no_staging_imports_in_spine_or_v4": true,
+      "on_task_branch": true,
+      "passed": true,
+      "product_core_staging_absent_until_M3": true,
+      "remotes": [
+        "origin"
+      ],
+      "single_origin_remote": true
+    },
+    "residual_scan": {
+      "active_violations": [],
+      "passed": true,
+      "report": "delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.M2.v3.json",
+      "report_sha256": "b8408a3e9596b89ead37dfc4c2a6c1feced9fef106c82b4b1020d461eac309fe",
+      "tracked_files_scanned": 2893
+    },
+    "sealed_denylist_and_marker_scan": {
+      "denylist_size": 1,
+      "git_history_digest_hits": [],
+      "marker_data_hits": [],
+      "marker_literal_allowed_patterns": [
+        "delivery_control_001/tools/sealed_scan.py",
+        "delivery_control_001/tools/__pycache__/sealed_scan.*.pyc",
+        "delivery_control_001/tests/test_negative_attacks.py",
+        "delivery_control_001/tests/__pycache__/test_negative_attacks.*.pyc",
+        "delivery_control_001/milestones/M1/codex_review*events.jsonl",
+        "delivery_control_001/milestones/M2/codex_review_r*_events.jsonl",
+        "delivery_control_001/milestones/M2/codex_review_r*_last_message.json"
+      ],
+      "marker_literal_context_rule": "模式级白名单，仅限：合成标记的定义工具/攻击测试源码、其 __pycache__、M1/M2 codex 评审转录（codex_review*events.jsonl 与 codex_review_r*_last_message.json——转录逐字引用测试源码与扫描命令）；此外任何命中一律违规",
+      "marker_literal_self_references": [
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r2_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r3_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r4_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r5_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/codex_review_r1_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/codex_review_r2_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/codex_review_r2_last_message.json",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/__pycache__/test_negative_attacks.cpython-310-pytest-8.4.2.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/__pycache__/test_negative_attacks.cpython-310.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/test_negative_attacks.py",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/__pycache__/sealed_scan.cpython-310.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/sealed_scan.py"
+      ],
+      "passed": true,
+      "worktree_digest_hits": []
+    }
+  },
+  "definition_note": "BOUNDARY_SMOKE_PASS 为 M2 里程碑级出口键（v2.4 §四：不进冻结 S0 六键）；本报告每项子检查即时实跑。",
+  "milestone_id": "M2",
+  "record_digest": "20b4e7351394b44e0d4c6672262cc95772af261acf7b13a7a068a1d7976a54f8",
+  "schema_version": "p7-boundary-smoke-report-v1",
+  "supersedes": "BOUNDARY_SMOKE_REPORT.v2.json（未入候选的工作产物）与 v1（冻结于 C2/67eeb71；Codex R2 BLOCKING-1：其白名单仅限 M1 转录，无法为 19a5d62 起入候选的 M2 R1 转录作证）。本 v3 于候选 v5 最终树现场重跑全部子检查，白名单升级为模式级（含 M2 events/last_message）；v1/v2 原文保留不改写",
+  "verdict": "BOUNDARY_SMOKE_PASS"
+}

@@ -1,0 +1,39 @@
+{
+  "actual_model_id": "claude-opus-4-8",
+  "call_receipt": "{\"agent_id\": \"ae7e5c6a5859f3ce0\", \"subagent_tokens\": 201477, \"tool_uses\": 63, \"wall_clock_ms\": 1522831}",
+  "config_digest": "Agent dispatch: subagent_type=general-purpose, requested model=fable (actual claude-opus-4-8), read-only discipline, /tmp experiments; carrier exemption per SUPERSESSION_LEDGER §7 row3",
+  "evidence_manifest_digest": "e9a60ac80d458223a48ec3336a0f5208aeec35ac6ec7e7710e209ad8a99b4942",
+  "exit_status": 0,
+  "findings_summary": [
+    "ADVISORY:boundary_smoke_report_benign_staleness_68_vs_73",
+    "ADVISORY:review_request_isolation_key_count_prose"
+  ],
+  "input_commit": "0065887d0b2f8424d32d235707f2afc35ed258fc",
+  "input_manifest_digest": "493a1841d55f7f131353f0d9efa92e8cf626e6cd5504079daac0ec6e77eb4ad6",
+  "milestone_id": "M2",
+  "model_version": {
+    "evidence_ref": "FABLE_R2_REVIEW.v1.json",
+    "unavailable_reason": "provider does not expose internal revision to agent runtime",
+    "value": "UNAVAILABLE"
+  },
+  "output_manifest_digest": "1d8e09036b36f64e8d7273e20f6fef45b32dae7e545c188bdbf65cd6b5549270",
+  "output_report_digest": "955e43b1765e45f4e5d1fd0561576e26e086739a1afd2d9ce0c9f4bc5bea44d6",
+  "product_scope": "SHARED",
+  "prompt_digest": "4a53ce477ff76e2b93818f179d720483277b42d3722fab520b9eadf57b7c3e4d",
+  "provider": "anthropic",
+  "receipt_digest": "e31b0010774b1ec81525bace83d12ac3bdd84e151698ce52a9968c9b513f36b7",
+  "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+  "schema_version": "p7-signer-receipt-v2.1",
+  "session_isolation_attestation": {
+    "auto_memory_disabled_before_launch": false,
+    "auto_memory_disabled_or_not_applicable": true,
+    "auto_memory_injection_disclosure": "Harness 于启动时注入：(1) 用户级 /home/faye/.claude/CLAUDE.md（Faye v4.2——通用工作风格、Zero-Guess/大白话偏好、diyu 基础设施速查、execution-mode 与 ontology 裁决先例、错误模式指针）；(2) 项目自动记忆索引 /home/faye/.claude/projects/-home-diyu----------/memory/MEMORY.md（GKB 行业通用知识库主题：蒸馏路线、2026-07-07 审计、取材清点、KE 流水线审计、资格探针评审）。来源：SessionStart harness 注入（启动前未禁用）。与被审对象关系：切向——同属 diyu 计划但无一涉及本 M2 gate1_v1_1/p7_successor_longrun 交付控制/评测脊柱/v4_recovery 候选；记忆属另一子项目（GKB 内容生成知识库）。是否采用：否——裁决完全从候选树 0065887 磁盘工件与独立复算得出，任何注入记忆内容未影响任何检查或结论。另：requested_model=fable 但 actual_model_id=claude-opus-4-8（如实自报）。",
+    "did_not_author_reviewed_scope": true,
+    "fresh_session_not_fork_not_resume": true,
+    "isolation_evidence": "仓库只读；全部执行于 /tmp 副本（git archive 提取 + local clone），PYTHONDONTWRITEBYTECODE=1；未读 .env*/密封材料/客户数据/nine_tables/pkg1 原始数据；开==闭 porcelain sha 证零仓库写入；未读作者过程叙述——只读磁盘工件并独立复算。"
+  },
+  "signed_at": "2026-07-17T06:42:30.524479+00:00",
+  "task_thread_session_id": "ae7e5c6a5859f3ce0",
+  "tool_summary": "read-only recompute + adversarial probes in /tmp copies (zero repo writes attested by porcelain sha equality)",
+  "verdict": "ACCEPT"
+}
