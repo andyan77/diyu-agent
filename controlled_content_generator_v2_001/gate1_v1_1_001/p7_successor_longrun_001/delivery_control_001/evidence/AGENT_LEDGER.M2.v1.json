@@ -1,0 +1,61 @@
+{
+  "schema_version": "p7-agent-ledger-v1",
+  "milestone_id": "M2",
+  "principal_session": "4d7e088b-945e-4903-844a-790379e740d2（claude-fable-5）",
+  "redline_discipline": "全部子代理只读、显式路径白名单（仅本里程碑全新合成运行工件）、零 forbidden 资源触碰（九表/密封/.env*/客户数据/pkg1 历史零读取）；E11 分层字段如实登记。",
+  "agents": [
+    {
+      "agent_id": "a370b130bf2c97f14",
+      "role": "M2-S0-CONTENT-REVIEWER",
+      "requested_model": "opus",
+      "actual_model": "claude-opus-4-8",
+      "dispatched_at": "2026-07-17T04:34:59+00:00",
+      "wall_clock_ms": 171381,
+      "read_paths": [
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/bundle/request_bundle.v1.json",
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/outputs/sealed_outputs.v1.json"
+      ],
+      "write_paths": [],
+      "forbidden_resource_touched_by_subagent": false,
+      "output_used_as_final_evidence": "reviews/content_reviews.v1.json + reviews/reviewer_reports.v1.json",
+      "verdict_summary": "4/4 grade C，formulaic_or_near_duplicate=true，零硬否决"
+    },
+    {
+      "agent_id": "abe850980cf58de3f",
+      "role": "M2-S0-FACT-REVIEWER",
+      "requested_model": "opus",
+      "actual_model": "claude-opus-4-8",
+      "dispatched_at": "2026-07-17T04:34:59+00:00",
+      "wall_clock_ms": 81022,
+      "read_paths": [
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/bundle/request_bundle.v1.json",
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/outputs/sealed_outputs.v1.json"
+      ],
+      "write_paths": [],
+      "forbidden_resource_touched_by_subagent": false,
+      "output_used_as_final_evidence": "reviews/fact_reviews.v1.json + reviews/reviewer_reports.v1.json",
+      "verdict_summary": "4/4 fact_approved=true，零硬否决"
+    },
+    {
+      "agent_id": "a431e193d2380c11b",
+      "role": "M2-S0-METRICS-AUDITOR",
+      "requested_model": "opus",
+      "actual_model": "claude-opus-4-8",
+      "dispatched_at": "2026-07-17T04:40:28+00:00",
+      "wall_clock_ms": 39398,
+      "read_paths": [
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/gates/gate_report.v1.json",
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/gates/batch_metrics.v1.json",
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/reviews/content_reviews.v1.json",
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/reviews/fact_reviews.v1.json",
+        "eval_audit_spine_001/evidence/s0_m2_real_run_001/outputs/sealed_outputs.v1.json"
+      ],
+      "write_paths": [],
+      "forbidden_resource_touched_by_subagent": false,
+      "output_used_as_final_evidence": "telemetry/run_log.v1.json#metrics_audit_window",
+      "verdict_summary": "六项自洽检查全 true，verdict=CONSISTENT"
+    }
+  ],
+  "formal_reviewers_note": "正式双审（INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER + CODEX_GPT_EXTERNAL_REVIEW_SIGNER）不在本台账——其登记面为 signer_receipt.v2 + review_bindings；台账仅覆盖开发/评审子代理派工。",
+  "external_model_calls": "DEEPSEEK ×3（M2-S0-FORMULAIC-JUDGE，回执 eval_audit_spine_001/evidence/s0_m2_real_run_001/external/），经预算代理，非子代理。"
+}

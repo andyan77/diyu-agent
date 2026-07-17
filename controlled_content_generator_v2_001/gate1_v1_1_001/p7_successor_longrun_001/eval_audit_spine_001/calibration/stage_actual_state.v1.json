@@ -4,10 +4,11 @@
   "executed_stages": [],
   "stage_receipts": {},
   "reference_implementation_selftested": true,
-  "real_run_executed": false,
+  "real_run_executed": true,
   "notes": [
-    "没有任何阶段（S0–S7）真实执行过；仅存在参考实现与本地反向自测。",
+    "S0_DETERMINISTIC_HYGIENE 已于 M2 真实执行（run S0M2-RUN-001，证据 eval_audit_spine_001/evidence/s0_m2_real_run_001/，stage_decision PASS 六门全真、accounting PASS、verify-all PASS）。",
+    "executed_stages 的 S0 登记与摘要钉死回执在两份独立审核签字后随关闭提交落盘（typed STAGE_DECISION PASS 需 ≥2 审核绑定；先登记后签字会产生无回执登记的中间违规态）。",
     "取代 stage_and_kill.v1.json 内嵌的 current_state 字段（实际态/期望态分离，v2.5 §五）。",
-    "未来每个阶段真实执行后，在 executed_stages 追加 stage_id 并在 stage_receipts 登记 typed 回执路径与摘要。"
+    "本文件永不预写期望值；期望见 delivery_control_001/state/STATE_EXPECTATION.v1.json。"
   ]
 }
