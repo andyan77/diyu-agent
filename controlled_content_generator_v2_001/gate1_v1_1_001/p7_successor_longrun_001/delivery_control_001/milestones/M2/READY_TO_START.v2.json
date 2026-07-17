@@ -1,0 +1,10 @@
+{
+  "milestone": "M2",
+  "status": "READY_TO_START",
+  "launch_capability": "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE_FROM_WITHIN_M1_SESSION（同会话跨里程碑续跑=停止线）",
+  "frozen_prompt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/RENDERED_PROMPT.v2.md",
+  "frozen_prompt_digest": "666f3bfbe4096c9637b0bea0cc9e09a571939e16164bf99f73d2d73997b52be1",
+  "template_digest": "9a3e2333b49a635e0e82ea7d2a00850e397e1c1b0ec8c418c5250f1a25c54c69",
+  "control_plane_commit": "caa489f9cd6616d7a2066caea1cd21e11e50939f",
+  "instruction": "本会话退出后，由会话外监督器执行 launcher.py --dry-run M2 && launcher.py --start M2（launcher 将按 launch_record.v2 先原子落盘启动记录、绑定实际 HEAD，再 spawn 全新无记忆 Fable 顶层会话）"
+}
