@@ -1609,6 +1609,28 @@ class Package7Tests(unittest.TestCase):
         self.assertEqual(refreshed.content_digest, original_digest)
         self.assertEqual(refreshed.index_content_digest, original_index_digest)
 
+    def test_dify_binding_clears_fragments_outside_the_current_projection(self) -> None:
+        first, second = self._fragment_rows()[:2]
+        self.repository.bind_dify_documents(
+            {
+                first.payload["fragment_id"]: {
+                    "document_id": first.dify_document_id,
+                    "source_content_sha256": first.content_digest,
+                    "index_content_sha256": first.index_content_digest,
+                }
+            }
+        )
+        refreshed = {
+            row.payload["fragment_id"]: row for row in self._fragment_rows()
+        }
+        self.assertIsNotNone(
+            refreshed[first.payload["fragment_id"]].dify_document_id
+        )
+        self.assertIsNone(refreshed[second.payload["fragment_id"]].dify_document_id)
+        self.assertIsNone(
+            refreshed[second.payload["fragment_id"]].index_content_digest
+        )
+
     def test_revoked_principal_is_rechecked_before_portal_model_invocation(self) -> None:
         from runtime_models import RuntimePrincipal
 

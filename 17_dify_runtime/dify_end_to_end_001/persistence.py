@@ -435,6 +435,15 @@ class RuntimeRepository:
             )
             if known_ids != set(mapping):
                 raise ValueError("Dify document mapping contains an unknown fragment")
+            stale_rows = session.scalars(
+                select(RuntimeNarrativeFragment).where(
+                    RuntimeNarrativeFragment.fragment_id.not_in(mapping)
+                )
+            ).all()
+            for stale_row in stale_rows:
+                stale_row.dify_document_id = None
+                stale_row.index_content_digest = None
+                stale_row.updated_at = utc_now()
             for fragment_id, binding in mapping.items():
                 row = session.get(RuntimeNarrativeFragment, fragment_id)
                 if row is None:
