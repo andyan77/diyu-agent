@@ -1,0 +1,52 @@
+{
+  "bridge": {
+    "cap_drop": [
+      "ALL"
+    ],
+    "image": "langgenius/dify-api:1.15.0",
+    "no_new_privileges": true,
+    "production_ready": false,
+    "readonly_rootfs": true,
+    "simulation_only": true,
+    "status": "healthy",
+    "user": "1001:1001"
+  },
+  "bridge_absolute_model_call_limit": 1096,
+  "call_limit_pass": true,
+  "capacity_or_recovery_claim_allowed": false,
+  "cost_limit_pass": true,
+  "cumulative_calls": {
+    "failed_or_unknown_billing_count": 3,
+    "invocation_count": 153,
+    "known_price_by_currency": {
+      "RMB": "0.862938"
+    },
+    "known_total_tokens": 580807,
+    "model_call_upper_bound": 157
+  },
+  "current_cloud_safe": true,
+  "formal_calls": {
+    "failed_or_unknown_billing_count": 0,
+    "invocation_count": 61,
+    "known_price_by_currency": {
+      "RMB": "0.386041"
+    },
+    "known_total_tokens": 258387,
+    "model_call_upper_bound": 61
+  },
+  "frozen_commit": "82b253c2b0ac362f1c5397bafb789ee400453944",
+  "host": {
+    "memory_available_mb": 3333,
+    "memory_total_mb": 7267,
+    "memory_used_mb": 3505,
+    "root_disk_used_percent": 79
+  },
+  "package10_cost_limit_cny": 5,
+  "package10_incremental_model_call_limit": 1000,
+  "package10_restart_backup_restore_rollback_executed": false,
+  "package9_initial_backup_manifest_sha256": "2281cee2add4c103428e37be57cf98293d478319bcbbb4633a27acff1a633f85",
+  "package9_post_repair_backup_manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e",
+  "package9_rollback_checkpoint_present": true,
+  "reason_not_executed": "FORMAL_PRODUCT_GATE_FAILED_BEFORE_PHASE_F",
+  "schema": "diyu.package10.operations_cost_recovery.v1"
+}

@@ -1,0 +1,59 @@
+{
+  "bound_snapshot": {
+    "formal_evidence_sha256": "46147ee16d9ae70a1d93d0f0689ae5e8de229608978d299fc0d312998e991cea",
+    "frozen_commit": "82b253c2b0ac362f1c5397bafb789ee400453944",
+    "remote_dify_app_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "remote_dify_dataset_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b"
+  },
+  "blockers": [
+    {
+      "acceptance_clauses": ["PKG10-A03", "PKG10-A04", "PKG10-A05", "PKG10-A11"],
+      "evidence": "The formal run returned zero candidates. All 28 confirmed-generation runs were rejected: 20 parse errors and eight deterministic validation failures.",
+      "id": "B_ZERO_VALIDATED_OUTPUT",
+      "impact": "Shooting readiness, seven-format coverage, competitive comparison, and internal pilot release cannot be accepted."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A07"],
+      "evidence": "The three browser sessions used one login identity and continuity is keyed by principal plus account rather than an independent browser-session identifier.",
+      "id": "B_SESSION_LEVEL_ISOLATION_NOT_PROVEN",
+      "impact": "Tenant and account controls exist, but the formal evidence does not prove zero same-account cross-session conversation mixing."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A06"],
+      "evidence": "Package 10 did not run the second-brand import, update, withdrawal, rematerialization, retrieval, representative generation, rollback, or AUTHORIZED_REAL positive and negative cycle.",
+      "id": "B_SECOND_BRAND_CYCLE_NOT_REACHED",
+      "impact": "Current-snapshot second-brand and authorized-real import readiness is not closed."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A08"],
+      "evidence": "Call and cost accounting closed at 61 invocations and RMB 0.386041, but zero usable outputs make per-effective-output cost unavailable; root disk usage was 79 percent and successful concurrent generation was not demonstrated.",
+      "id": "B_CAPACITY_AND_EFFECTIVE_COST_NOT_PROVEN",
+      "impact": "A safe internal-production concurrency and effective-output cost cannot be claimed."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A09"],
+      "evidence": "Package 9 off-host backups and rollback anchors remain, but Package 10 did not execute a current-candidate backup, isolated restore, restart, or rollback verification after the product gate failed.",
+      "id": "B_CURRENT_RECOVERY_NOT_REVERIFIED",
+      "impact": "Predecessor recovery evidence is retained, but current-candidate recovery is not proven."
+    }
+  ],
+  "hard_veto": true,
+  "independence": {
+    "changed_files": [],
+    "participated_in_authoring": false,
+    "participated_in_migration": false,
+    "read_only_review": true
+  },
+  "nonblocking_observations": [
+    "The bridge retained read-only rootfs, uid 1001, cap-drop ALL, no-new-privileges, simulation-only, and production-ready false.",
+    "No real customer data, credential, automatic publication, or user-visible accepted hard-fact error was observed.",
+    "All nine readiness flags and the 300, 120, and 86 baselines remain unchanged."
+  ],
+  "recommended_route": "DIYU_DIFY_END_TO_END_001",
+  "review_scope": "trust, authorization, isolation, operations, cost, recovery, and minimal competitive review",
+  "reviewer_identity": "PACKAGE10_INDEPENDENT_REVIEW_B_TRUST_OPERATIONS",
+  "reviewer_session": "019f70bc-81ce-7832-a256-c0d79e9860d2",
+  "schema": "diyu.package10.independent_review.v1",
+  "score_0_to_100": 52,
+  "verdict": "FAIL"
+}

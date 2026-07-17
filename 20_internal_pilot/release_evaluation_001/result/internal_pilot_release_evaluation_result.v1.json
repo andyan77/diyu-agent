@@ -1,0 +1,63 @@
+{
+  "acceptance_clauses": {
+    "PKG10-A01": "PASS",
+    "PKG10-A02": "FAIL",
+    "PKG10-A03": "FAIL",
+    "PKG10-A04": "NOT_PERFORMED_PRODUCT_GATE_FAILED",
+    "PKG10-A05": "FAIL",
+    "PKG10-A06": "NOT_REACHED_PRODUCT_GATE_FAILED",
+    "PKG10-A07": "PARTIAL_NOT_PROVEN",
+    "PKG10-A08": "FAIL",
+    "PKG10-A09": "PARTIAL_PREDECESSOR_RECOVERY_ONLY",
+    "PKG10-A10": "FAIL",
+    "PKG10-A11": "FAIL",
+    "PKG10-A12": "PARTIAL_TWO_TRUE_GAPS_TWENTY_EIGHT_PRODUCT_FAILURES",
+    "PKG10-A13": "STATIC_PASS_RUNTIME_FAIL"
+  },
+  "automatic_publish_enabled": false,
+  "core_numbers": {
+    "120": "UNCHANGED",
+    "300": "UNCHANGED",
+    "86": "UNCHANGED"
+  },
+  "current_cloud_safe": true,
+  "execution_integrity": "PASS_HONEST_STOP",
+  "formal_chat_or_inspiration_accepted_count": 3,
+  "formal_model_candidate_count": 0,
+  "formal_non_parse_rejected_count": 8,
+  "formal_parse_error_count": 20,
+  "formal_rerun_allowed": false,
+  "independent_review_count": 2,
+  "merge_requested": false,
+  "model_accounting": {
+    "absolute_bridge_limit": 1096,
+    "cumulative_failed_or_unknown_billing_count": 3,
+    "cumulative_invocation_count": 153,
+    "cumulative_model_call_upper_bound": 157,
+    "formal_failed_or_unknown_billing_count": 0,
+    "formal_invocation_count": 61,
+    "formal_known_cost_currency": "RMB",
+    "formal_known_cost_value": "0.386041",
+    "formal_known_total_tokens": 258387,
+    "formal_model_call_upper_bound": 61,
+    "incremental_authorized_limit": 1000
+  },
+  "next_existing_package": "DIYU_DIFY_END_TO_END_001",
+  "product_gate_pass": false,
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false
+  },
+  "real_customer_data_used": false,
+  "review_scores": [12, 52],
+  "schema": "diyu.package10.internal_pilot_release_evaluation_result.v1",
+  "state": "STOPPED_RETURN_TO_PACKAGE7",
+  "task_id": "DIYU_INTERNAL_PILOT_RELEASE_EVALUATION_001"
+}

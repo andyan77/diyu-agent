@@ -1,0 +1,100 @@
+{
+  "schema": "diyu.package10.formal_freeze_manifest.v1",
+  "task_id": "DIYU_INTERNAL_PILOT_RELEASE_EVALUATION_001",
+  "state": "FROZEN_BEFORE_FORMAL_RUN",
+  "frozen_at_utc": "2026-07-17T14:50:35Z",
+  "implementation": {
+    "base_commit": "0f066c6ee2e871ad67be3ae07ed80df1153b4df1",
+    "frozen_commit": "82b253c2b0ac362f1c5397bafb789ee400453944",
+    "release_source": "/opt/diyu/package10/releases/82b253c2b0ac362f1c5397bafb789ee400453944/source",
+    "package10_evaluation_sha256": "73c3187ed053098fd70b70e2e13731fa4005e4dd244d8b4d73a8cb1ed4737678",
+    "package10_material_alignment_sha256": "3d041adcace61017efde7e6f679351147ffa6bbaacd789db808cce3e74da89c3",
+    "runtime_service_sha256": "4a5231a16251f33333292dad5dadb2e9aeef6f58034e189ae1d0ebf207b690ac",
+    "dify_chat_sha256": "9c033b2cb150c85eb01ed9dfaae7e1d346ad15e856b2deb54a89ae529e650681",
+    "dify_app_definition_sha256": "4739f284df5e99d79e657312335777faa4ecbefce02217ef43fe5d3fb3cdb25a",
+    "content_capability_mapping_sha256": "d3882635ffdf7140f1960102b8bee071e5b6268e86f6e3715868f1ae397445b4"
+  },
+  "remote_candidate": {
+    "public_url": "https://dify.diyuai.cc/apps/",
+    "bridge_container": "diyu-package7-bridge",
+    "bridge_status": "healthy",
+    "bridge_image": "langgenius/dify-api:1.15.0",
+    "bridge_image_digest": "sha256:c1712c50f27c9dfd31c5be77a9a03f30c464fc6983287eefd4a6a98376c70c24",
+    "bridge_user": "1001:1001",
+    "readonly_rootfs": true,
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "source_mount_readonly": true,
+    "network_attachment_digest": "24788fbf21f4601350b40bd9788b4a93c5d94cf022142d4608ebfb3c7122ab03",
+    "dify_app_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "dify_dataset_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b",
+    "dify_state_sha256": "cabeff9c678a22d7a0e4c5df40ede87391bfc4e0c423b1fe34b2f6ce187325ac",
+    "dify_document_mapping_count": 110,
+    "dify_document_mapping_digest": "ddaf9612552493da7bb0ec0987579dd7db85076a3830e84802e25c0b061d665c",
+    "model_provider": "langgenius/deepseek/deepseek",
+    "model_name": "deepseek-v4-flash",
+    "temperature": 0.2
+  },
+  "material_and_runtime": {
+    "source_08_sha256": "3b4577c411ea34ce46db5e8fe13b0af3ce751dcc443a4db95f59a32a1ca923f9",
+    "materialization_manifest_sha256": "52d0d08364a4e2a42fc199180629904192b314b265b2095d755337a1e70b4e0c",
+    "materialization_documents_sha256": "eb853f615337a9260ed0e7313b05fb527ff16b1351af152ca0afbedc47dc1835",
+    "materialization_digest": "a22d3df0f9d7ae23a949af850d52202d755d1b1c3e0bb2f00dddaa8c58530b78",
+    "materialized_document_count": 110,
+    "tenant_count": 2,
+    "brand_count": 2,
+    "organization_count": 7,
+    "store_count": 4,
+    "principal_count": 2,
+    "content_account_count": 13,
+    "diyu_content_account_scope_count": 11,
+    "narrative_fragment_count": 111,
+    "bound_narrative_fragment_count": 110,
+    "precise_fact_count": 20
+  },
+  "evaluation": {
+    "evaluation_plan_sha256": "d91b113bcac71913769c35a7a82285c4518647e6d21c07c51f80e8e166bf0363",
+    "chronological_task_count": 30,
+    "public_reference_count": 8,
+    "active_session_count": 3,
+    "concurrent_generation_count": 2,
+    "preflight_model_required_count": 28,
+    "preflight_action_card_count": 2,
+    "preflight_unexpected_count": 0,
+    "formal_run_count_allowed": 1
+  },
+  "budget_before_formal_run": {
+    "historical_invocation_count": 92,
+    "historical_model_call_upper_bound": 96,
+    "historical_known_total_tokens": 322420,
+    "historical_failed_or_unknown_billing_count": 3,
+    "historical_known_price": "0.476897",
+    "historical_known_price_currency": "RMB",
+    "package10_incremental_model_call_limit": 1000,
+    "bridge_absolute_model_call_limit": 1096,
+    "package10_cost_limit_cny": 5
+  },
+  "recovery_anchors": {
+    "package9_initial_backup_manifest_sha256": "2281cee2add4c103428e37be57cf98293d478319bcbbb4633a27acff1a633f85",
+    "package9_post_repair_backup_manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e",
+    "package9_off_host_backup_retained": true
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "boundaries": {
+    "simulation_only": true,
+    "publish_allowed": false,
+    "real_customer_data_used": false,
+    "full_private_bodies_committed_to_repository": false,
+    "frozen_candidate_may_not_change_after_first_formal_call": true
+  }
+}

@@ -1,0 +1,103 @@
+schema: diyu.package10.execution_review_request.v1
+task_id: DIYU_INTERNAL_PILOT_RELEASE_EVALUATION_001
+state: STOPPED_RETURN_TO_PACKAGE7
+execution_integrity: PASS_HONEST_STOP
+frozen_commit: 82b253c2b0ac362f1c5397bafb789ee400453944
+formal_evidence_sha256: 46147ee16d9ae70a1d93d0f0689ae5e8de229608978d299fc0d312998e991cea
+product_gate_pass: false
+package9_closeout:
+  merged_commit: 0f066c6ee2e871ad67be3ae07ed80df1153b4df1
+  protected_merge_used: true
+  post_merge_required_checks_passed: true
+package10_workspace:
+  branch: agent/diyu-internal-pilot-release-evaluation-001
+  worktree: /home/diyu/worktrees/diyu-internal-pilot-release-evaluation-001
+  base_commit: 0f066c6ee2e871ad67be3ae07ed80df1153b4df1
+  reviewed_implementation_commit: 82b253c2b0ac362f1c5397bafb789ee400453944
+  evidence_commit: THIS_COMMIT
+frozen_runtime:
+  public_url: https://dify.diyuai.cc/apps/
+  dify_app_id: 98eb36f1-50b7-42ca-8184-976512fbef9d
+  dify_dataset_id: 3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b
+  dify_document_mapping_count: 110
+  model_provider: langgenius/deepseek/deepseek
+  model_name: deepseek-v4-flash
+  model_temperature: 0.2
+  materialization_digest: a22d3df0f9d7ae23a949af850d52202d755d1b1c3e0bb2f00dddaa8c58530b78
+  task_plan_sha256: d91b113bcac71913769c35a7a82285c4518647e6d21c07c51f80e8e166bf0363
+novice_and_chronological_run:
+  browser_session_count: 3
+  novice_chat_or_inspiration_accepted_count: 3
+  chronological_task_count: 30
+  planned_model_route_count: 28
+  true_material_gap_task_ids: [DAY-09, DAY-13]
+  action_card_count: 30
+  shooting_ready_count: 0
+  seven_required_formats_with_candidate: 0
+formal_model_candidate_count: 0
+formal_parse_error_count: 20
+formal_non_parse_rejected_count: 8
+formal_rerun_allowed: false
+public_reference_comparison:
+  frozen_reference_count: 8
+  anonymous_comparison_performed: false
+  competitive_quality_claim_allowed: false
+  reason: No accepted candidate existed for comparison.
+second_brand_and_authorized_real:
+  predecessor_evidence_retained: true
+  package10_full_cycle_executed: false
+  reason: Product gate failed before this phase.
+security_and_operations:
+  bridge_healthy: true
+  readonly_rootfs: true
+  cap_drop_all: true
+  no_new_privileges: true
+  simulation_only: true
+  production_ready: false
+  root_disk_used_percent: 79
+  memory_available_mb: 3333
+  package9_off_host_backups_retained: true
+  package10_restart_restore_rollback_executed: false
+  reason_recovery_not_executed: Product gate failed before the recovery phase.
+independent_reviews:
+  - identity: PACKAGE10_INDEPENDENT_REVIEW_A_CONTENT_NOVICE
+    session: 019f70bc-51b1-7d31-b0aa-197286982128
+    score_0_to_100: 12
+    verdict: FAIL
+    hard_veto: true
+  - identity: PACKAGE10_INDEPENDENT_REVIEW_B_TRUST_OPERATIONS
+    session: 019f70bc-81ce-7832-a256-c0d79e9860d2
+    score_0_to_100: 52
+    verdict: FAIL
+    hard_veto: true
+model_accounting:
+  formal_invocation_count: 61
+  formal_model_call_upper_bound: 61
+  formal_known_total_tokens: 258387
+  formal_known_cost_rmb: "0.386041"
+  cumulative_invocation_count: 153
+  cumulative_model_call_upper_bound: 157
+  absolute_bridge_limit: 1096
+boundaries:
+  real_customer_data_used: false
+  automatic_publish_enabled: false
+  current_cloud_safe: true
+  all_readiness_flags_false: true
+  core_numbers_300_120_86_unchanged: true
+known_limitations:
+  - Twenty confirmed generations could not be parsed into the required content envelope.
+  - Eight parsed generations failed deterministic claim-binding validation.
+  - Same-account browser-session isolation was not independently proven.
+  - Current-candidate second-brand and recovery cycles were not reached.
+  - Competitive content quality is not assessable because accepted candidate count is zero.
+sustained_operation_requirements:
+  - Maintain fresh organization and product facts.
+  - Maintain role, account, and long-term content-line ownership.
+  - Keep authorization, withdrawal, and validity records current.
+  - Require human selection, modification, and final approval before publication.
+  - Recalibrate content judgment against current platform references.
+route:
+  existing_package: DIYU_DIFY_END_TO_END_001
+  reason: Frozen formal generation produced zero candidates; repair output parsing, claim binding, and user-visible failure classification in Package 7.
+merge_requested: false
+requested_founder_decision: ACKNOWLEDGE_PACKAGE10_STOP_AND_AUTHORIZE_PACKAGE7_REPAIR

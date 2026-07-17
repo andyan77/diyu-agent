@@ -104,6 +104,15 @@ SERIAL_SUCCESSOR_PACKAGES = (
         Path("19_cloud_cutover/ecs_migration_001/check_ecs_cutover.py"),
         "PACKAGE_9_ONLY",
     ),
+    (
+        "PACKAGE_10_INTERNAL_PILOT_RELEASE_EVALUATION",
+        Path("20_internal_pilot/release_evaluation_001"),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "check_internal_pilot_release_evaluation.py"
+        ),
+        "PACKAGE_10_ONLY",
+    ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
 MANDATORY_SUCCESSOR_ROOTS = frozenset(
@@ -112,6 +121,7 @@ MANDATORY_SUCCESSOR_ROOTS = frozenset(
         Path("17_dify_runtime/dify_end_to_end_001"),
         Path("18_deployment/hosted_operations_001"),
         Path("19_cloud_cutover/ecs_migration_001"),
+        Path("20_internal_pilot/release_evaluation_001"),
     }
 )
 REFERENCE_SAFE_SUCCESSOR_COMMITS = {
@@ -124,13 +134,23 @@ REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(
         "18_deployment/hosted_operations_001/check_hosted_operations.py"
     ): "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
+    Path(
+        "19_cloud_cutover/ecs_migration_001/check_ecs_cutover.py"
+    ): "0f066c6ee2e871ad67be3ae07ed80df1153b4df1",
 }
 REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
     Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
         Path("17_dify_runtime/dify_end_to_end_001/brand_import.py"),
         Path("17_dify_runtime/dify_end_to_end_001/brand_import_contract.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/bridge_app.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/contracts.py"),
         Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
+        Path("17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml"),
+        Path("17_dify_runtime/dify_end_to_end_001/dify_chat.py"),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/"
+            "dify_end_to_end_manifest.v1.json"
+        ),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.js"),
@@ -139,6 +159,26 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
         Path("17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py"),
+    },
+    Path("18_deployment/hosted_operations_001/check_hosted_operations.py"): {
+        Path(
+            "18_deployment/hosted_operations_001/"
+            "dify_materialization_manifest.v1.json"
+        ),
+        Path(
+            "18_deployment/hosted_operations_001/"
+            "hosted_operations_manifest.v1.json"
+        ),
+        Path("18_deployment/hosted_operations_001/operations.py"),
+        Path("18_deployment/hosted_operations_001/test_hosted_operations.py"),
+    },
+}
+REFERENCE_SAFE_SUCCESSOR_ADDED_FILES = {
+    Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/"
+            "content_capability_mapping.v1.yaml"
+        ): "d3882635ffdf7140f1960102b8bee071e5b6268e86f6e3715868f1ae397445b4",
     },
 }
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
@@ -865,20 +905,30 @@ def validate_reference_safe_successor_bytes(
     root: Path, package_root: Path, reference_commit: str
 ) -> None:
     expected_paths = git_tree_paths(reference_commit, package_root)
+    checker = next(
+        candidate_checker
+        for _, candidate_root, candidate_checker, _ in CHECKED_DOWNSTREAM_PACKAGES
+        if candidate_root == package_root
+    )
+    added_files = REFERENCE_SAFE_SUCCESSOR_ADDED_FILES.get(checker, {})
+    require(
+        not (set(added_files) & expected_paths),
+        f"E_SUCCESSOR_ADDED_ALREADY_IN_REFERENCE:{package_root}",
+    )
     actual_paths = {
         path.relative_to(root)
         for path in (root / package_root).rglob("*")
         if path.is_file() and "__pycache__" not in path.parts
     }
     require(
-        actual_paths == expected_paths,
+        actual_paths == expected_paths | set(added_files),
         f"E_SUCCESSOR_REFERENCE_FILE_SET:{package_root}",
     )
-    checker = next(
-        candidate_checker
-        for _, candidate_root, candidate_checker, _ in CHECKED_DOWNSTREAM_PACKAGES
-        if candidate_root == package_root
-    )
+    for relative, expected_sha256 in added_files.items():
+        require(
+            sha256_file(root / relative) == expected_sha256,
+            f"E_SUCCESSOR_ADDED_BYTES:{relative}",
+        )
     mutable_paths = REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS.get(checker, set())
     require(
         mutable_paths <= expected_paths, f"E_SUCCESSOR_MUTABLE_PATHS:{package_root}"
@@ -4679,6 +4729,11 @@ raise SystemExit(0)
             destination = temp_root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(git_object_bytes(reference_commit, relative))
+        added_files = REFERENCE_SAFE_SUCCESSOR_ADDED_FILES[checker]
+        for relative in added_files:
+            destination = temp_root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes((ROOT / relative).read_bytes())
         mutable_path = min(
             REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS[checker],
             key=lambda path: path.as_posix(),
@@ -4689,6 +4744,17 @@ raise SystemExit(0)
         validate_reference_safe_successor_bytes(
             temp_root, package_root, reference_commit
         )
+
+        added_path = next(iter(added_files))
+        original_added_bytes = (temp_root / added_path).read_bytes()
+        (temp_root / added_path).write_bytes(original_added_bytes + b"\n")
+        expect_failure(
+            lambda: validate_reference_safe_successor_bytes(
+                temp_root, package_root, reference_commit
+            ),
+            "E_SUCCESSOR_ADDED_BYTES",
+        )
+        (temp_root / added_path).write_bytes(original_added_bytes)
 
         frozen_path = min(
             reference_paths - REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS[checker],

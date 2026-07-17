@@ -1,0 +1,51 @@
+{
+  "bound_snapshot": {
+    "evaluation_plan_sha256": "d91b113bcac71913769c35a7a82285c4518647e6d21c07c51f80e8e166bf0363",
+    "formal_evidence_sha256": "46147ee16d9ae70a1d93d0f0689ae5e8de229608978d299fc0d312998e991cea",
+    "frozen_commit": "82b253c2b0ac362f1c5397bafb789ee400453944"
+  },
+  "blockers": [
+    {
+      "acceptance_clauses": ["PKG10-A02"],
+      "evidence": "The formal run produced three accepted chat or inspiration responses but no content candidate, selection, edit, review, export, or source-trace journey.",
+      "id": "A_NEWCOMER_CONTENT_JOURNEY_FAILED",
+      "impact": "HTTP success does not prove that a newcomer can complete content production."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A03", "PKG10-A11"],
+      "evidence": "Preflight expected 28 model routes and two material-gap cards; the frozen run produced zero candidates and 30 action cards. Twenty generations failed parsing and eight parsed outputs failed deterministic validation.",
+      "id": "A_ZERO_CANDIDATE_CONTINUITY_AND_COVERAGE",
+      "impact": "No task entered shooting preparation and no product format has a positive runtime result."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A04", "PKG10-A05"],
+      "evidence": "All seven required output formats have candidate_count=0, so no anonymous comparison or complete content-package review can be performed.",
+      "id": "A_CONTENT_QUALITY_NOT_REVIEWABLE",
+      "impact": "Competitive quality and practical output completeness are unproven."
+    },
+    {
+      "acceptance_clauses": ["PKG10-A12"],
+      "evidence": "Only DAY-09 and DAY-13 are genuine material gaps; the other 28 action cards are product output-contract failures.",
+      "id": "A_FAILURE_MISCLASSIFIED_AS_ACTION_CARD",
+      "impact": "A user cannot repair a parser or claim-binding failure by supplying brand material."
+    }
+  ],
+  "hard_veto": true,
+  "independence": {
+    "changed_files": [],
+    "participated_in_authoring": false,
+    "participated_in_migration": false,
+    "read_only_review": true
+  },
+  "nonblocking_observations": [
+    "The pre-dispatch Secure-cookie transport attempt consumed zero model calls and is not a second formal content batch.",
+    "The single-task-book and single-main-chain direction is statically present, but it cannot offset the runtime product failure."
+  ],
+  "recommended_route": "DIYU_DIFY_END_TO_END_001",
+  "review_scope": "newcomer experience, content completeness, sustained coverage, public-reference comparability",
+  "reviewer_identity": "PACKAGE10_INDEPENDENT_REVIEW_A_CONTENT_NOVICE",
+  "reviewer_session": "019f70bc-51b1-7d31-b0aa-197286982128",
+  "schema": "diyu.package10.independent_review.v1",
+  "score_0_to_100": 12,
+  "verdict": "FAIL"
+}

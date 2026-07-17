@@ -1,0 +1,70 @@
+{
+  "active_session_count": 3,
+  "concurrent_generation_count": 2,
+  "content_creation_candidate_count": 0,
+  "frozen_commit": "82b253c2b0ac362f1c5397bafb789ee400453944",
+  "login_records": [
+    {
+      "elapsed_seconds": 0.434,
+      "http_status": 200,
+      "options_sha256": "81966d63df004e51ff35f3a362be9b3ec17d8ddf25389ed1338bc726266ac314",
+      "session_id": "PILOT-SESSION-1"
+    },
+    {
+      "elapsed_seconds": 0.396,
+      "http_status": 200,
+      "options_sha256": "81966d63df004e51ff35f3a362be9b3ec17d8ddf25389ed1338bc726266ac314",
+      "session_id": "PILOT-SESSION-2"
+    },
+    {
+      "elapsed_seconds": 0.417,
+      "http_status": 200,
+      "options_sha256": "81966d63df004e51ff35f3a362be9b3ec17d8ddf25389ed1338bc726266ac314",
+      "session_id": "PILOT-SESSION-3"
+    }
+  ],
+  "novice_chat_or_inspiration_accepted_count": 3,
+  "novice_steps": [
+    {
+      "answer_length": 68,
+      "answer_sha256": "453fde8787313c6d9caefed00bf11d651b02e9c8d0b64b31202494a20b63b382",
+      "elapsed_seconds": 3.135,
+      "http_status": 200,
+      "operation": "随便聊聊",
+      "private_answer_committed": false,
+      "publish_allowed": false,
+      "request_sha256": "b0aaa5bec2309fe850de35ba3f578058750ea18c03a2830ef38ce681d91c80e2",
+      "response_sha256": "f32b1488563b83e5cb2345588e0233e351ba3f74a53aed8f812ad50a4d8947a4",
+      "simulation_only": true,
+      "step_id": "DAY-01:随便聊聊"
+    },
+    {
+      "answer_length": 75,
+      "answer_sha256": "f08d4fca4d8f11013f5f8243073025d477604538d36922eb08bd110931068a2b",
+      "elapsed_seconds": 7.557,
+      "http_status": 200,
+      "operation": "找点灵感",
+      "private_answer_committed": false,
+      "publish_allowed": false,
+      "request_sha256": "ec8ab5211db7c9cddde8364e5bd123600dbaca5726f0f040c51850a015620fa7",
+      "response_sha256": "41d69143df24eacc81b5c84cc8f0bc29b253539804318ebfe132d99e511d53f3",
+      "simulation_only": true,
+      "step_id": "DAY-01:找点灵感"
+    },
+    {
+      "answer_length": 79,
+      "answer_sha256": "d953d6eeaf9ce5a8fe3fc07dbf571a34fab98e4f1b37525c6683763bbd41b73b",
+      "elapsed_seconds": 3.746,
+      "http_status": 200,
+      "operation": "随便聊聊",
+      "private_answer_committed": false,
+      "publish_allowed": false,
+      "request_sha256": "bede232b7ffa25f0b4fbc74f2c0304ccacb4a5a217e92b5bb6d5ab5314c84d41",
+      "response_sha256": "e319687c712a66ff77391d4ae8a282e909e1c516d001242088899442685e8468",
+      "simulation_only": true,
+      "step_id": "DAY-02:随便聊聊"
+    }
+  ],
+  "schema": "diyu.package10.novice_session_summary.v1",
+  "verdict": "PARTIAL_INTERACTION_ONLY_CONTENT_GATE_FAILED"
+}
