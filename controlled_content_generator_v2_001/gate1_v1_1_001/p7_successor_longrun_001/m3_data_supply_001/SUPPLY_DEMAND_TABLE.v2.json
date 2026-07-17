@@ -1,0 +1,139 @@
+{
+ "schema_version": "p7-m3-supply-demand-table-v2",
+ "supersedes": {
+  "path": "SUPPLY_DEMAND_TABLE.v1.json",
+  "reason": "v1 将 fact_chain 锚记为整件（ITEM）；机器真源 spine/calibration.py CHAIN_ROLES 证明链锚为单条 claim_atom 的六角色摘要闭包。v1 的『双卷/单卷整件锚硬缺口』判定随之作废；v1 其余供给计数（480/1356/5546/1200 对）与抽样框不变，仍为真源。",
+  "v1_supply_counts_carried": true
+ },
+ "milestone_id": "M3",
+ "capsule": "M3_C1B_FOUNDER_SUPPLY_EXPANSION_RULING",
+ "chain_anchor_evidence": {
+  "path": "eval_audit_spine_001/spine/calibration.py",
+  "symbol": "CHAIN_ROLES",
+  "value": [
+   "source_evidence",
+   "reference_assertion",
+   "claim_atom",
+   "risk_classification",
+   "entailment",
+   "final_action"
+  ]
+ },
+ "family_coverage_minimums_per_module": {
+  "reference_extraction": 20,
+  "claim_atomization": 20,
+  "risk_classification": 40,
+  "entailment_or_chain": 40,
+  "disclosure_and_omission": 20,
+  "formulaic_construct": 16
+ },
+ "per_set_claim_anchor_demand_reuse": {
+  "natural_label_claim_demand_reuse": 300,
+  "challenge_variant_claim_demand_reuse": 400,
+  "atomization_positive": 100
+ },
+ "partition_projection": {
+  "QUAL_A_groups": 45,
+  "QUAL_B_groups": 45,
+  "DEV_groups": 30
+ },
+ "per_family_projection": [
+  {
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "groups": 30,
+   "claims_total": 363,
+   "QUAL_A_claims_projected": 136.1,
+   "QUAL_A_capacity_with_k2_variants": 408.4,
+   "QUAL_B_claims_projected": 136.1,
+   "QUAL_B_capacity_with_k2_variants": 408.4
+  },
+  {
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "groups": 30,
+   "claims_total": 333,
+   "QUAL_A_claims_projected": 124.9,
+   "QUAL_A_capacity_with_k2_variants": 374.6,
+   "QUAL_B_claims_projected": 124.9,
+   "QUAL_B_capacity_with_k2_variants": 374.6
+  },
+  {
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "groups": 24,
+   "claims_total": 264,
+   "QUAL_A_claims_projected": 99.0,
+   "QUAL_A_capacity_with_k2_variants": 297.0,
+   "QUAL_B_claims_projected": 99.0,
+   "QUAL_B_capacity_with_k2_variants": 297.0
+  },
+  {
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "groups": 24,
+   "claims_total": 267,
+   "QUAL_A_claims_projected": 100.1,
+   "QUAL_A_capacity_with_k2_variants": 300.4,
+   "QUAL_B_claims_projected": 100.1,
+   "QUAL_B_capacity_with_k2_variants": 300.4
+  },
+  {
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "groups": 12,
+   "claims_total": 129,
+   "QUAL_A_claims_projected": 48.4,
+   "QUAL_A_capacity_with_k2_variants": 145.1,
+   "QUAL_B_claims_projected": 48.4,
+   "QUAL_B_capacity_with_k2_variants": 145.1
+  }
+ ],
+ "family_binding_notes": [
+  "无族级即时红线；F5 为最紧族，Tier1 预案覆盖"
+ ],
+ "set_feasibility": {
+  "QUAL_A": {
+   "claims_projected": 508.5,
+   "natural_demand_reuse": 300,
+   "natural_condition": "自然标签分布中 supported/legal 占比 ≥ 0.59（300/508）——UNKNOWN_UNTIL_LABELED，胶囊② 小试实测",
+   "challenge_capacity_k2": 1017.0,
+   "challenge_demand_reuse": 400,
+   "challenge_ok_count_wise": true
+  },
+  "QUAL_B": {
+   "claims_projected": 508.5,
+   "natural_demand_reuse": 300,
+   "natural_condition": "自然标签分布中 supported/legal 占比 ≥ 0.59（300/508）——UNKNOWN_UNTIL_LABELED，胶囊② 小试实测",
+   "challenge_capacity_k2": 1017.0,
+   "challenge_demand_reuse": 400,
+   "challenge_ok_count_wise": true
+  }
+ },
+ "verdict": {
+  "dual_sets_count_wise": "CONDITIONALLY_FEASIBLE（claim 锚 + k=2 变体扩增下计数可行）",
+  "unknowns": [
+   "自然标签分布（supported/legal/contradicted 占比）——胶囊② 小试实测",
+   "F5 族薄供给的逐族门余量"
+  ],
+  "expansion_tiers": [
+   {
+    "tier": "TIER0_CHALLENGE_VARIANTS",
+    "what": "对既入格 claim 做受控扰动变体（矛盾注入/降类诱饵/省略注入/合并拆分负对照），变体随源组入格",
+    "adds": "CHALLENGE 格用例容量 ×k（k=每 claim 扰动类数，预设 2）与全部负对照类需求",
+    "new_whole_items": 0,
+    "trigger": "默认执行（②协议冻结后、⑤题面冻结前，由建标流程按协议构造）"
+   },
+   {
+    "tier": "TIER1_F5_TARGETED_TOPUP",
+    "what": "F5（企业长期信任族，12 组/129 claims）定向新增场景组+整件",
+    "adds": "F5 族级余量（当前逐族门最紧）",
+    "new_whole_items": "~48（12 新组 × 4 件）",
+    "trigger": "小试实测 F5 自然标签分布不足以同时喂饱双卷逐族门（≥40/族/卷）时"
+   },
+   {
+    "tier": "TIER2_FULL_NEW_ROUNDS",
+    "what": "全族新增生成轮（新场景组，走 pkg1 轮次机制）",
+    "adds": "全局 claim 供给",
+    "new_whole_items": "120/轮",
+    "trigger": "小试实测自然 supported/legal 占比 < 需求占比（任一卷 natural_condition 失败）时，按缺口轮数触发"
+   }
+  ],
+  "honest_note": "v1 的硬缺口结论在整件锚口径下为真；口径修正后计数缺口消失，但可行性仍悬于标签分布——在小试实测前不得宣布任何『供给已足』结论（E1 纪律）。"
+ }
+}
