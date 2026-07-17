@@ -33,6 +33,7 @@ from persistence import (
     digest_object,
     trusted_database_scope,
 )
+from runtime_models import RuntimeAccount
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import Package7Runtime, RuntimeContractError
 from security import issue_session, verify_bridge_secret, verify_password, verify_session
@@ -62,6 +63,26 @@ def required_env(name: str, *, minimum_length: int = 1) -> str:
     if len(value) < minimum_length:
         raise RuntimeError(f"Required configuration is missing: {name}")
     return value
+
+
+def selected_account_database_scope(
+    *,
+    trusted_tenant_id: str,
+    principal_id: str,
+    account: RuntimeAccount,
+) -> TrustedDatabaseScope:
+    """Build the complete server-owned scope for one selected content account."""
+
+    if account.tenant_id != trusted_tenant_id or not principal_id.strip():
+        raise ValueError("Selected account is outside the trusted tenant scope")
+    return TrustedDatabaseScope(
+        tenant_id=trusted_tenant_id,
+        brand_id=account.brand_id,
+        organization_id=account.organization_id,
+        store_id=account.store_id,
+        account_id=account.account_id,
+        principal_id=principal_id,
+    )
 
 
 def build_runtime() -> tuple[Package7Runtime, RuntimeRepository, DifyChatClient]:
@@ -114,7 +135,7 @@ def build_runtime() -> tuple[Package7Runtime, RuntimeRepository, DifyChatClient]
         base_url=required_env("DIYU_DIFY_SERVICE_API_URL"),
         app_api_token=app_api_token,
         repository=repository,
-        maximum_model_calls=int(os.environ.get("DIYU_PKG7_MAX_MODEL_CALLS", "40")),
+        maximum_model_calls=int(os.environ.get("DIYU_PKG7_MAX_MODEL_CALLS", "12")),
     )
     return runtime, repository, chat
 
@@ -135,6 +156,23 @@ def create_app(
     if not trusted_tenant_id.strip():
         raise RuntimeError("The trusted simulation tenant is missing")
     secure_cookie = os.environ.get("DIYU_COOKIE_SECURE", "false").lower() == "true"
+
+    def install_selected_account_scope(
+        principal_id: str,
+        account: RuntimeAccount,
+    ) -> None:
+        scope = selected_account_database_scope(
+            trusted_tenant_id=trusted_tenant_id,
+            principal_id=principal_id,
+            account=account,
+        )
+        current_manager = getattr(g, "diyu_database_scope_manager", None)
+        if current_manager is None:
+            raise RuntimeError("Trusted request database scope is missing")
+        current_manager.__exit__(None, None, None)
+        manager = trusted_database_scope(scope)
+        manager.__enter__()
+        g.diyu_database_scope_manager = manager
 
     @app.before_request
     def establish_database_scope() -> None:
@@ -287,6 +325,7 @@ def create_app(
                 principal_id,
                 payload.account_display_name,
             )
+            install_selected_account_scope(principal_id, account)
             conversation_scope = account.account_id
             user_key = hashlib.sha256(
                 f"package7-dify-user:{principal_id}:{conversation_scope}".encode("utf-8")
@@ -385,13 +424,13 @@ def create_app(
         try:
             payload = BridgePrepareRequest.model_validate(request.get_json(force=True, silent=False))
             session = verify_session(payload.session_token, signing_key)
-            with trusted_database_scope(
-                TrustedDatabaseScope(
-                    tenant_id=trusted_tenant_id,
-                    principal_id=str(session["principal_id"]),
-                )
-            ):
-                result = active_runtime.prepare(payload, str(session["principal_id"]))
+            principal_id = str(session["principal_id"])
+            _, account = active_repository.require_active_scope_by_display_name(
+                principal_id,
+                payload.account_display_name,
+            )
+            install_selected_account_scope(principal_id, account)
+            result = active_runtime.prepare(payload, principal_id)
             return jsonify(result)
         except (
             ValidationError,
@@ -409,21 +448,21 @@ def create_app(
         try:
             payload = BridgeFinalizeRequest.model_validate(request.get_json(force=True, silent=False))
             session = verify_session(payload.session_token, signing_key)
-            with trusted_database_scope(
-                TrustedDatabaseScope(
-                    tenant_id=trusted_tenant_id,
-                    principal_id=str(session["principal_id"]),
+            principal_id = str(session["principal_id"])
+            run = active_repository.model_run(payload.run_id)
+            if run is None or run.principal_id != session["principal_id"]:
+                raise RuntimeContractError("Run scope mismatch")
+            _, account = active_repository.require_active_scope(
+                principal_id,
+                run.account_id,
+            )
+            install_selected_account_scope(principal_id, account)
+            return jsonify(
+                active_runtime.finalize_model_output(
+                    payload.run_id,
+                    payload.model_output_b64,
                 )
-            ):
-                run = active_repository.model_run(payload.run_id)
-                if run is None or run.principal_id != session["principal_id"]:
-                    raise RuntimeContractError("Run scope mismatch")
-                return jsonify(
-                    active_runtime.finalize_model_output(
-                        payload.run_id,
-                        payload.model_output_b64,
-                    )
-                )
+            )
         except (ValidationError, RuntimeContractError, ValueError, KeyError):
             return _plain_error("模型结果未通过当前检查，已保留首次结果并停止。"), 400
 

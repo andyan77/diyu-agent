@@ -23,6 +23,21 @@ from database_security import (
 PACKAGE_ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
 TASK_ID = "DIYU_ECS_CUTOVER_001"
+ROLLBACK_ACTIONS = (
+    "RESTORE_PRE_CUTOVER_NGINX",
+    "ROLLBACK_DATABASE_SECURITY",
+    "START_LEGACY_BRIDGE_FROM_BACKUP_IDENTITY",
+    "VERIFY_LEGACY_BRIDGE_HEALTH",
+    "VERIFY_DIFY_ROOT_HEALTH",
+)
+FORWARD_ACTIONS = (
+    "APPLY_DATABASE_SECURITY",
+    "DEPLOY_FROZEN_RELEASE",
+    "START_CURRENT_BRIDGE",
+    "INSTALL_APPS_NGINX_ROUTE",
+    "VERIFY_ROOT_AND_APPS_HEALTH",
+    "VERIFY_FORCED_RLS_AND_RUNTIME_ROLE",
+)
 SECRET_PATTERN = re.compile(
     r"(?:sk-[A-Za-z0-9_-]{16,}|-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----|"
     r"postgresql(?:\+\w+)?://[^\s'\"]+:[^@\s'\"]+@|Bearer [A-Za-z0-9._-]{20,})"
@@ -63,10 +78,94 @@ def verify_encrypted_backup_manifest(path: Path) -> dict[str, Any]:
         )
     ):
         raise ValueError("The external encrypted backup manifest is incomplete")
+    verified_artifacts: list[dict[str, Any]] = []
+    for row in artifacts:
+        artifact_name = row.get("artifact")
+        if not isinstance(artifact_name, str):
+            raise ValueError("The external encrypted backup manifest is incomplete")
+        relative = Path(artifact_name)
+        if relative.is_absolute() or ".." in relative.parts or len(relative.parts) != 1:
+            raise ValueError("The external backup artifact path is unsafe")
+        artifact = path.parent / relative
+        if (
+            not artifact.is_file()
+            or artifact.is_symlink()
+            or artifact.stat().st_size != int(row["encrypted_size_bytes"])
+            or _sha256(artifact) != row["encrypted_sha256"]
+        ):
+            raise ValueError("The external encrypted backup artifact is missing or corrupt")
+        verified_artifacts.append(
+            {
+                "artifact": artifact_name,
+                "encrypted_sha256": row["encrypted_sha256"],
+                "encrypted_size_bytes": row["encrypted_size_bytes"],
+            }
+        )
     return {
         "state": "BACKUP_MANIFEST_VERIFIED",
         "artifact_count": len(artifacts),
         "manifest_sha256": _sha256(path),
+        "artifacts": verified_artifacts,
+    }
+
+
+def verify_transition_record(path: Path) -> dict[str, Any]:
+    """Verify the sanitized record emitted by the actual rollback/forward run."""
+
+    value = _read_json(path)
+    record = value.get("transition_record")
+    if not isinstance(record, dict):
+        raise ValueError("The cutover transition record is missing")
+    if (
+        record.get("task_id") != TASK_ID
+        or record.get("actual_execution") is not True
+        or record.get("final_state") != "PACKAGE9_CANDIDATE"
+        or record.get("rollback_and_forward_pass") is not True
+    ):
+        raise ValueError("The cutover transition identity is invalid")
+    bindings = record.get("bindings")
+    if not isinstance(bindings, dict) or any(
+        not isinstance(bindings.get(name), str)
+        or re.fullmatch(r"[0-9a-f]{64}", str(bindings.get(name))) is None
+        for name in (
+            "release_archive_sha256",
+            "pre_cutover_backup_manifest_sha256",
+            "post_cutover_backup_manifest_sha256",
+            "rollback_checkpoint_sha256",
+            "forward_result_sha256",
+        )
+    ):
+        raise ValueError("The cutover transition bindings are incomplete")
+    for phase_name, expected_actions in (
+        ("rollback_phase", ROLLBACK_ACTIONS),
+        ("forward_phase", FORWARD_ACTIONS),
+    ):
+        phase = record.get(phase_name)
+        if not isinstance(phase, dict):
+            raise ValueError("The cutover transition phase is missing")
+        actions = phase.get("actions")
+        if (
+            not isinstance(actions, list)
+            or tuple(row.get("action") for row in actions if isinstance(row, dict))
+            != expected_actions
+            or any(
+                not isinstance(row, dict)
+                or row.get("status") != "PASS"
+                or not isinstance(row.get("evidence_ref"), str)
+                for row in actions
+            )
+        ):
+            raise ValueError("The cutover transition actions are incomplete")
+    return {
+        "state": "CUTOVER_TRANSITION_RECORD_VERIFIED",
+        "transition_record_sha256": hashlib.sha256(
+            json.dumps(
+                record,
+                ensure_ascii=False,
+                separators=(",", ":"),
+                sort_keys=True,
+            ).encode("utf-8")
+        ).hexdigest(),
     }
 
 
@@ -110,6 +209,8 @@ def _parser() -> argparse.ArgumentParser:
     subparsers.add_parser("rollback-database-security")
     backup = subparsers.add_parser("verify-backup-manifest")
     backup.add_argument("--manifest", type=Path, required=True)
+    transition = subparsers.add_parser("verify-transition-record")
+    transition.add_argument("--record", type=Path, required=True)
     nginx = subparsers.add_parser("render-nginx")
     nginx.add_argument(
         "--template",
@@ -139,6 +240,8 @@ def execute(arguments: argparse.Namespace) -> dict[str, Any]:
         )
     if arguments.command == "verify-backup-manifest":
         return verify_encrypted_backup_manifest(arguments.manifest)
+    if arguments.command == "verify-transition-record":
+        return verify_transition_record(arguments.record)
     if arguments.command == "render-nginx":
         return render_nginx(arguments.template)
     if arguments.command == "verify-secret-surface":
@@ -163,4 +266,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

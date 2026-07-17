@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import sys
 import tempfile
 import unittest
@@ -31,6 +32,7 @@ from ecs_cutover import (  # noqa: E402
     render_nginx,
     verify_encrypted_backup_manifest,
     verify_repository_has_no_secret_surface,
+    verify_transition_record,
 )
 from persistence import TrustedDatabaseScope, trusted_database_scope  # noqa: E402
 
@@ -127,6 +129,7 @@ class Package9Tests(unittest.TestCase):
             self.assertIn(f'endpoint("{route}")', javascript)
 
     def test_external_backup_manifest_requires_encryption_and_verification(self) -> None:
+        artifact_bytes = b"encrypted-test-artifact"
         document = {
             "task_id": "DIYU_ECS_CUTOVER_001",
             "location_class": "SERVER_EXTERNAL_RESTRICTED_LOCAL_STORAGE",
@@ -137,14 +140,16 @@ class Package9Tests(unittest.TestCase):
             "artifacts": [
                 {
                     "artifact": "database.pgdump.gpg",
-                    "encrypted_sha256": "a" * 64,
-                    "encrypted_size_bytes": 1,
+                    "encrypted_sha256": hashlib.sha256(artifact_bytes).hexdigest(),
+                    "encrypted_size_bytes": len(artifact_bytes),
                     "decryption_verified": True,
                 }
             ],
         }
         with tempfile.TemporaryDirectory() as raw:
             path = Path(raw) / "manifest.json"
+            artifact = Path(raw) / "database.pgdump.gpg"
+            artifact.write_bytes(artifact_bytes)
             path.write_text(json.dumps(document), encoding="utf-8")
             self.assertEqual(
                 verify_encrypted_backup_manifest(path)["state"],
@@ -154,10 +159,27 @@ class Package9Tests(unittest.TestCase):
             path.write_text(json.dumps(document), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "incomplete"):
                 verify_encrypted_backup_manifest(path)
+            document["artifacts"][0]["decryption_verified"] = True
+            path.write_text(json.dumps(document), encoding="utf-8")
+            artifact.unlink()
+            with self.assertRaisesRegex(ValueError, "missing or corrupt"):
+                verify_encrypted_backup_manifest(path)
 
     def test_package_files_contain_no_secret_like_surface(self) -> None:
         result = verify_repository_has_no_secret_surface()
         self.assertEqual(result["state"], "SECRET_SURFACE_CLEAR")
+
+    def test_actual_rollback_and_forward_record_is_action_closed(self) -> None:
+        source = PACKAGE_ROOT / "evidence/remote_cutover_evidence.v1.json"
+        result = verify_transition_record(source)
+        self.assertEqual(result["state"], "CUTOVER_TRANSITION_RECORD_VERIFIED")
+        document = json.loads(source.read_text(encoding="utf-8"))
+        document["transition_record"]["forward_phase"]["actions"][1]["status"] = "SKIPPED"
+        with tempfile.TemporaryDirectory() as raw:
+            path = Path(raw) / "transition.json"
+            path.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "actions are incomplete"):
+                verify_transition_record(path)
 
 
 if __name__ == "__main__":

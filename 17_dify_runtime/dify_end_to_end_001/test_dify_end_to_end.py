@@ -16,7 +16,7 @@ from typing import Any
 from unittest.mock import patch
 
 from contracts import BridgePrepareRequest, ModelEnvelope, PortalTaskRequest
-from bridge_app import _selected_product, create_app
+from bridge_app import _selected_product, create_app, selected_account_database_scope
 from brand_import import BrandImportBundle, load_simulation_bundle, preflight_brand_bundle
 from dify_chat import DifyChatClient
 from dify_knowledge import DifyKnowledgeClient
@@ -194,6 +194,29 @@ class Package7Tests(unittest.TestCase):
         self.assertEqual(second["created_or_updated"], 0)
         self.assertEqual(second["content_account_count"], 11)
         self.assertTrue(all(row.dify_document_id for row in self._fragment_rows()))
+
+    def test_selected_account_installs_all_database_scope_dimensions(self) -> None:
+        _, account = self.repository.require_active_scope(
+            self.principal_id,
+            "ACCOUNT-DIYU-HQ-OFFICIAL",
+        )
+        scope = selected_account_database_scope(
+            trusted_tenant_id="TENANT-DIYU-SIM-001",
+            principal_id=self.principal_id,
+            account=account,
+        )
+        self.assertEqual(scope.tenant_id, account.tenant_id)
+        self.assertEqual(scope.brand_id, account.brand_id)
+        self.assertEqual(scope.organization_id, account.organization_id)
+        self.assertEqual(scope.store_id, account.store_id)
+        self.assertEqual(scope.account_id, account.account_id)
+        self.assertEqual(scope.principal_id, self.principal_id)
+        with self.assertRaisesRegex(ValueError, "outside the trusted tenant"):
+            selected_account_database_scope(
+                trusted_tenant_id="TENANT-OTHER",
+                principal_id=self.principal_id,
+                account=account,
+            )
 
     def test_password_and_signed_session_fail_closed(self) -> None:
         encoded = hash_password("a-secure-package7-password", salt=b"fixed-test-salt-01")
