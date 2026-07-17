@@ -1,0 +1,25 @@
+{
+ "schema_version": "p7-m3-exclusion-log-v1",
+ "status": "PREREGISTERED",
+ "exclusions": [
+  {
+   "rule_id": "EXC-01",
+   "rule": "命中 r5_known_veto_regression 夹具 output_id/required_markers 的条目不入 NATURAL 密封抽样框",
+   "reason": "已知否决样本属 CHALLENGE 回归锚（known_r5_hard_veto_cases_and_registered_variants_recall=1.0 由 CHALLENGE 格承载），入 NATURAL 会污染自然分布估计",
+   "affected_fixture_rows": 5
+  },
+  {
+   "rule_id": "EXC-02",
+   "rule": "synthetic_qualification_only=false 或 publishable=true 的条目（如出现）排除出资格抽样框",
+   "reason": "资格材料必须全部处于合成资格边界内；当前四轮全部 synthetic_qualification_only=true、publishable=false，命中 0 条",
+   "affected_rows_current": 0
+  },
+  {
+   "rule_id": "EXC-03",
+   "rule": "同一源组跨可见性分区拆分 = 禁止（组级整体入格）",
+   "reason": "data_isolation.source_group_is_indivisible_across_visibility_partitions",
+   "affected_rows_current": 0
+  }
+ ],
+ "no_other_exclusions_preregistered": true
+}

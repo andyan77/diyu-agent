@@ -1,0 +1,215 @@
+{
+ "schema_version": "p7-m3-supply-demand-table-v1",
+ "milestone_id": "M3",
+ "capsule": "M3_C1_SUPPLY_DEMAND_AUDIT",
+ "demand_source": {
+  "path": "eval_audit_spine_001/contract/measurement_qualification.v2.json",
+  "sha256": "b914c95dc4c119a7d0bf10b8b1fadfcb2322c002123a398ccfd9ccf51df35d4f",
+  "qualification_set_minimums_verbatim": {
+   "reference_extraction_positive_cases": 100,
+   "reference_extraction_negative_controls": 100,
+   "claim_atomization_positive_cases": 100,
+   "claim_atomization_negative_controls": 100,
+   "risk_classification_high_risk_cases": 300,
+   "risk_classification_legal_controls": 300,
+   "high_risk_contradicted_cases": 300,
+   "high_risk_unknown_cases": 100,
+   "natural_legal_supported_cases": 300,
+   "fact_chain_high_risk_unsafe_cases": 300,
+   "fact_chain_natural_legal_cases": 300,
+   "known_r5_hard_veto_cases_and_registered_variants_recall": 1.0,
+   "formulaic_double_reviewed_pairs_total": 300,
+   "formulaic_positive_pairs_minimum": 100,
+   "formulaic_negative_pairs_minimum": 100,
+   "formulaic_necessary_grammar_pairs_minimum": 20,
+   "deterministic_disclosure_cases_total": 100,
+   "deterministic_disclosure_obligation_types_required": 4,
+   "omission_misleading_high_risk_cases": 100,
+   "omission_nonmisleading_controls": 100,
+   "review_double_reviewed_items": 40,
+   "review_judgment_records": 80,
+   "cost_events": 12,
+   "cost_expected_event_manifests": 1,
+   "cost_source_event_manifests": 1,
+   "cost_rate_cards": 1,
+   "required_content_families": [
+    "F1_PEOPLE_AND_REAL_SCENE",
+    "F2_PROFESSIONAL_AND_SEARCH",
+    "F3_PRODUCT_RELATION_AND_AESTHETIC",
+    "F4_STORE_LOCAL_AND_RETAIL",
+    "F5_ENTERPRISE_LONG_TERM_TRUST"
+   ]
+  }
+ },
+ "partition_axes_source": {
+  "path": "eval_audit_spine_001/contract/data_isolation.v1.json",
+  "six_cells": [
+   "NATURAL_DEVELOPMENT",
+   "NATURAL_VALIDATION",
+   "NATURAL_HIDDEN",
+   "CHALLENGE_DEVELOPMENT",
+   "CHALLENGE_VALIDATION",
+   "CHALLENGE_HIDDEN"
+  ],
+  "source_group_is_indivisible": true
+ },
+ "supply_inventory": {
+  "rounds": {
+   "round1_top": {
+    "scenario_file": "pkg1_open_regression/inputs/scenarios.g3.v1.jsonl",
+    "scenario_file_sha256": "4a714d04dbcf6d63d75493e505e474b428dc4e6431d6117b4447285714b661a4",
+    "output_file": "pkg1_open_regression/outputs/first_outputs.g3.v1.jsonl",
+    "output_file_sha256": "314d42d336336e03e6207216e03ef5e38e55117741ad6bee547dec2c62b10329",
+    "items": 120,
+    "claims": 348,
+    "surface_units": 1369
+   },
+   "round2": {
+    "scenario_file": "NONE_SHARED_CANONICAL（round2 无本地场景文件，四轮共享 120 场景）",
+    "scenario_file_sha256": null,
+    "output_file": "pkg1_open_regression/round2/outputs/first_outputs.g3.v1.jsonl",
+    "output_file_sha256": "7fab17bf6f23d70075994026379d76abd7839da2fff58dbbb56c1c143662e235",
+    "items": 120,
+    "claims": 330,
+    "surface_units": 1357
+   },
+   "round3": {
+    "scenario_file": "pkg1_open_regression/round3/inputs/scenarios.g3.v2.jsonl",
+    "scenario_file_sha256": "fbb7691d66e1470a92da3876588b016ed65b9631b7f8b9f2216c9d80fbf969e8",
+    "output_file": "pkg1_open_regression/round3/outputs/first_outputs.g3.v1.jsonl",
+    "output_file_sha256": "bcf4d3ccdb6d0dfdfa3291fd1c848c6c79600fb922fdaf7dca9d82ab6ad3e25f",
+    "items": 120,
+    "claims": 348,
+    "surface_units": 1426
+   },
+   "round5": {
+    "scenario_file": "pkg1_open_regression/round5/inputs/scenarios.g3.v2.jsonl",
+    "scenario_file_sha256": "fbb7691d66e1470a92da3876588b016ed65b9631b7f8b9f2216c9d80fbf969e8",
+    "output_file": "pkg1_open_regression/round5/outputs/first_outputs.g3.v1.jsonl",
+    "output_file_sha256": "c45a187eddda1ddf18cf8141b181d87f218cf0a653a4b4e1c29d39bc0579fa15",
+    "items": 120,
+    "claims": 330,
+    "surface_units": 1394
+   }
+  },
+  "distinct_source_groups": 120,
+  "distinct_items": 480,
+  "distinct_claims": 1356,
+  "distinct_surface_units": 5546,
+  "source_summaries": 240,
+  "formulaic_pair_capacity_within_profile_round": 1200,
+  "per_family": {
+   "F1_PEOPLE_AND_REAL_SCENE": {
+    "groups": 30,
+    "items": 120,
+    "claims": 363,
+    "surface_units": 1431,
+    "lanes": {
+     "A": 14,
+     "B": 16
+    }
+   },
+   "F2_PROFESSIONAL_AND_SEARCH": {
+    "groups": 30,
+    "items": 120,
+    "claims": 333,
+    "surface_units": 1376,
+    "lanes": {
+     "A": 17,
+     "B": 13
+    }
+   },
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": {
+    "groups": 24,
+    "items": 96,
+    "claims": 264,
+    "surface_units": 1112,
+    "lanes": {
+     "A": 13,
+     "B": 11
+    }
+   },
+   "F4_STORE_LOCAL_AND_RETAIL": {
+    "groups": 24,
+    "items": 96,
+    "claims": 267,
+    "surface_units": 1092,
+    "lanes": {
+     "A": 15,
+     "B": 9
+    }
+   },
+   "F5_ENTERPRISE_LONG_TERM_TRUST": {
+    "groups": 12,
+    "items": 48,
+    "claims": 129,
+    "surface_units": 535,
+    "lanes": {
+     "A": 8,
+     "B": 4
+    }
+   }
+  },
+  "known_veto_regression_rows": 5,
+  "cross_round_item_overlap": 0,
+  "rounds_share_same_120_scenarios": true
+ },
+ "per_set_anchor_demand": {
+  "claim_anchor_demand_reuse_max": 700,
+  "claim_anchor_demand_exclusive": 1400,
+  "item_anchor_demand_fact_chain": 600,
+  "pair_anchor_demand": 300
+ },
+ "allocation_scenarios": {
+  "dual_sealed_sets_QUAL_A_plus_B": {
+   "note": "QUAL-A 与 QUAL-B 互斥（P0-f 双密封）；上界口径=480 件全部给资格集且不留 G1/G2（实际还须再扣不相交开发集）",
+   "item_anchor": {
+    "demand": 1200,
+    "supply_upper_bound": 480,
+    "gap": 720,
+    "hard_gap": true
+   },
+   "claim_anchor_reuse_max": {
+    "demand": 1400,
+    "supply_upper_bound": 1356,
+    "gap": 44,
+    "hard_gap": true
+   },
+   "claim_anchor_exclusive": {
+    "demand": 2800,
+    "supply_upper_bound": 1356,
+    "gap": 1444,
+    "hard_gap": true
+   }
+  },
+  "single_set_QUAL_A_only": {
+   "note": "QUAL-B 供给不足默认取消第二次尝试（v2.3 §壹-6 冻结默认）；上界口径=480 件全部给资格集且不留 G1/G2（实际还须再扣不相交开发集）",
+   "item_anchor": {
+    "demand": 600,
+    "supply_upper_bound": 480,
+    "gap": 120,
+    "hard_gap": true
+   },
+   "claim_anchor_reuse_max": {
+    "demand": 700,
+    "supply_upper_bound": 1356,
+    "gap": -656,
+    "hard_gap": false
+   },
+   "claim_anchor_exclusive": {
+    "demand": 1400,
+    "supply_upper_bound": 1356,
+    "gap": 44,
+    "hard_gap": true
+   }
+  }
+ },
+ "capacity_gap_confirmed": true,
+ "decisive_arithmetic": "fact_chain 需求为整件锚：单集 600 件、双集 1200 件；全部轮次可用整件供给上界=480 件（尚未扣除必须与资格金标不相交的 G1/G2 开发集与不可分源组约束）——480 < 600 ⇒ 与标签分布无关的硬缺口成立（runtime_verified 算术）。蕴含类主张锚在双集独占口径需求 2×1100=2200 > 1356 同为硬缺口；单集复用口径 700 ≤ 1356 仅在标签分布配合且不留开发集时才可能，属 UNKNOWN_UNTIL_LABELED。",
+ "curation_owner": {
+  "role": "M3_PRINCIPAL_ORCHESTRATOR",
+  "session_id": "374b677b-6537-465f-bab1-993e8a9d75aa",
+  "scope": "抽样框元数据级策展（scenario/profile/family/lane/digest）；不建金标、不读密封明文"
+ },
+ "sampling_frame_digest": "b20a9ae3fe6d8f45bd7f13aa8b00aa92fdba9f61de0cdd72b93e5cf3829f77d8"
+}

@@ -1,0 +1,343 @@
+{
+ "schema_version": "p7-m3-vector-capacity-table-v1",
+ "milestone_id": "M3",
+ "status": "INITIAL_PROJECTION（P0-e：记账与排期用，非阻断门）",
+ "cost_basis": {
+  "source": "eval_audit_spine_001/evidence/s0_m2_real_run_001/telemetry/cost_throughput_model.v1.json",
+  "record_digest": "250e2aa65ba7b6cd907b4c5ad2a328b64abf1c34c86bad6677ecde59eeb42176",
+  "external_judge_cny_per_call": 0.001005,
+  "p95_single_item_wall_clock_seconds": 63.102,
+  "daily_external_ceiling_cny": 30.0
+ },
+ "modules": [
+  {
+   "module_case_class": "reference_extraction_positive",
+   "demand_per_qual_set": 100,
+   "anchor_type": "SOURCE_ASSERTION",
+   "anchor_note": "源摘要中的参考断言（正例）",
+   "supply_upper_bound_all_rounds": 720,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 100,
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": 0.098,
+   "model_label_path_cost": {
+    "double_blind_judgments": 200,
+    "external_judge_cny_estimate": 0.201,
+    "wall_clock_hours_estimate_p95": 3.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  },
+  {
+   "module_case_class": "reference_extraction_negative",
+   "demand_per_qual_set": 100,
+   "anchor_type": "SOURCE_ASSERTION_SYNTH",
+   "anchor_note": "扰动构造负对照（需授权 CHALLENGE 合成）",
+   "supply_upper_bound_all_rounds": null,
+   "gap_per_single_set_upper_bound": "N_A_CONSTRUCTED",
+   "achievable_n_upper_bound_single_set": "REQUIRES_CONSTRUCTION_OR_RUN",
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": null,
+   "model_label_path_cost": {
+    "double_blind_judgments": null,
+    "external_judge_cny_estimate": null,
+    "wall_clock_hours_estimate_p95": null
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  },
+  {
+   "module_case_class": "claim_atomization_positive",
+   "demand_per_qual_set": 100,
+   "anchor_type": "CLAIM",
+   "anchor_note": "既有 claims 正例",
+   "supply_upper_bound_all_rounds": 1356,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 100,
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": 0.098,
+   "model_label_path_cost": {
+    "double_blind_judgments": 200,
+    "external_judge_cny_estimate": 0.201,
+    "wall_clock_hours_estimate_p95": 3.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "claim_atomization_negative",
+   "demand_per_qual_set": 100,
+   "anchor_type": "CLAIM_SYNTH",
+   "anchor_note": "合并/拆分扰动负对照（需授权 CHALLENGE 合成）",
+   "supply_upper_bound_all_rounds": null,
+   "gap_per_single_set_upper_bound": "N_A_CONSTRUCTED",
+   "achievable_n_upper_bound_single_set": "REQUIRES_CONSTRUCTION_OR_RUN",
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": null,
+   "model_label_path_cost": {
+    "double_blind_judgments": null,
+    "external_judge_cny_estimate": null,
+    "wall_clock_hours_estimate_p95": null
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  },
+  {
+   "module_case_class": "risk_classification_high_risk",
+   "demand_per_qual_set": 300,
+   "anchor_type": "CLAIM",
+   "anchor_note": "高危主张（真标签分布未知）",
+   "supply_upper_bound_all_rounds": 1356,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "risk_classification_legal",
+   "demand_per_qual_set": 300,
+   "anchor_type": "CLAIM",
+   "anchor_note": "合法对照主张",
+   "supply_upper_bound_all_rounds": 1356,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "entailment_contradicted",
+   "demand_per_qual_set": 300,
+   "anchor_type": "CLAIM",
+   "anchor_note": "与源矛盾主张（过闸内容中天然稀缺）",
+   "supply_upper_bound_all_rounds": 1356,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "entailment_unknown",
+   "demand_per_qual_set": 100,
+   "anchor_type": "CLAIM",
+   "anchor_note": "源不可判主张",
+   "supply_upper_bound_all_rounds": 1356,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 100,
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": 0.098,
+   "model_label_path_cost": {
+    "double_blind_judgments": 200,
+    "external_judge_cny_estimate": 0.201,
+    "wall_clock_hours_estimate_p95": 3.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "entailment_supported",
+   "demand_per_qual_set": 300,
+   "anchor_type": "CLAIM",
+   "anchor_note": "源支持主张",
+   "supply_upper_bound_all_rounds": 1356,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "fact_chain_high_risk_unsafe",
+   "demand_per_qual_set": 300,
+   "anchor_type": "ITEM",
+   "anchor_note": "端到端事实链（整件）",
+   "supply_upper_bound_all_rounds": 480,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "fact_chain_natural_legal",
+   "demand_per_qual_set": 300,
+   "anchor_type": "ITEM",
+   "anchor_note": "端到端事实链（整件）",
+   "supply_upper_bound_all_rounds": 480,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "formulaic_pairs_total",
+   "demand_per_qual_set": 300,
+   "anchor_type": "PAIR",
+   "anchor_note": "双评审套路成对",
+   "supply_upper_bound_all_rounds": 1200,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 300,
+   "ci95_halfwidth_at_demand_n": 0.0566,
+   "ci95_halfwidth_at_achievable_n": 0.0566,
+   "model_label_path_cost": {
+    "double_blind_judgments": 600,
+    "external_judge_cny_estimate": 0.603,
+    "wall_clock_hours_estimate_p95": 10.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "deterministic_disclosure",
+   "demand_per_qual_set": 100,
+   "anchor_type": "DETERMINISTIC",
+   "anchor_note": "披露义务确定性用例（4 义务型）",
+   "supply_upper_bound_all_rounds": 5546,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 100,
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": 0.098,
+   "model_label_path_cost": {
+    "double_blind_judgments": 200,
+    "external_judge_cny_estimate": 0.201,
+    "wall_clock_hours_estimate_p95": 3.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  },
+  {
+   "module_case_class": "omission_misleading",
+   "demand_per_qual_set": 100,
+   "anchor_type": "ITEM_OR_SU_SYNTH",
+   "anchor_note": "误导性省略（多需 CHALLENGE 合成）",
+   "supply_upper_bound_all_rounds": null,
+   "gap_per_single_set_upper_bound": "N_A_CONSTRUCTED",
+   "achievable_n_upper_bound_single_set": "REQUIRES_CONSTRUCTION_OR_RUN",
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": null,
+   "model_label_path_cost": {
+    "double_blind_judgments": null,
+    "external_judge_cny_estimate": null,
+    "wall_clock_hours_estimate_p95": null
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  },
+  {
+   "module_case_class": "omission_nonmisleading",
+   "demand_per_qual_set": 100,
+   "anchor_type": "ITEM_OR_SU",
+   "anchor_note": "非误导对照",
+   "supply_upper_bound_all_rounds": 5546,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 100,
+   "ci95_halfwidth_at_demand_n": 0.098,
+   "ci95_halfwidth_at_achievable_n": 0.098,
+   "model_label_path_cost": {
+    "double_blind_judgments": 200,
+    "external_judge_cny_estimate": 0.201,
+    "wall_clock_hours_estimate_p95": 3.5
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "review_double_reviewed_items",
+   "demand_per_qual_set": 40,
+   "anchor_type": "ITEM",
+   "anchor_note": "双评审条目",
+   "supply_upper_bound_all_rounds": 480,
+   "gap_per_single_set_upper_bound": 0,
+   "achievable_n_upper_bound_single_set": 40,
+   "ci95_halfwidth_at_demand_n": 0.155,
+   "ci95_halfwidth_at_achievable_n": 0.155,
+   "model_label_path_cost": {
+    "double_blind_judgments": 80,
+    "external_judge_cny_estimate": 0.08,
+    "wall_clock_hours_estimate_p95": 1.4
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "UNKNOWN_UNTIL_LABELED"
+  },
+  {
+   "module_case_class": "review_judgment_records",
+   "demand_per_qual_set": 80,
+   "anchor_type": "EVENT",
+   "anchor_note": "评审判定记录",
+   "supply_upper_bound_all_rounds": null,
+   "gap_per_single_set_upper_bound": "N_A_CONSTRUCTED",
+   "achievable_n_upper_bound_single_set": "REQUIRES_CONSTRUCTION_OR_RUN",
+   "ci95_halfwidth_at_demand_n": 0.1096,
+   "ci95_halfwidth_at_achievable_n": null,
+   "model_label_path_cost": {
+    "double_blind_judgments": null,
+    "external_judge_cny_estimate": null,
+    "wall_clock_hours_estimate_p95": null
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  },
+  {
+   "module_case_class": "cost_events",
+   "demand_per_qual_set": 12,
+   "anchor_type": "EVENT",
+   "anchor_note": "成本事件",
+   "supply_upper_bound_all_rounds": null,
+   "gap_per_single_set_upper_bound": "N_A_CONSTRUCTED",
+   "achievable_n_upper_bound_single_set": "REQUIRES_CONSTRUCTION_OR_RUN",
+   "ci95_halfwidth_at_demand_n": 0.2829,
+   "ci95_halfwidth_at_achievable_n": null,
+   "model_label_path_cost": {
+    "double_blind_judgments": null,
+    "external_judge_cny_estimate": null,
+    "wall_clock_hours_estimate_p95": null
+   },
+   "human_only_path": "UNAVAILABLE（v2.3 冻结更新⑤：纯人工路线不可用维持）",
+   "label_distribution_status": "CONSTRUCTED_BY_DESIGN"
+  }
+ ],
+ "totals_single_set": {
+  "labeled_case_demand_sum_exclusive": 2640,
+  "double_blind_judgment_sum_exclusive": 5280,
+  "wall_clock_hours_p95_sum_exclusive": 92.5
+ }
+}

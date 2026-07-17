@@ -1,0 +1,5536 @@
+{
+ "schema_version": "p7-m3-sampling-frame-v1",
+ "status": "PREREGISTERED（题面冻结前不抽签；抽签种子于胶囊⑤冻结回执中登记）",
+ "frame_unit": "scenario 源组（source_group_is_indivisible_across_visibility_partitions=true）",
+ "frame_size_groups": 120,
+ "frame_size_items": 480,
+ "strata_keys": [
+  "family_id",
+  "lane_id",
+  "profile_id"
+ ],
+ "origin_axis_rule": "默认 NATURAL；命中 r5_known_veto 夹具 required_markers 的输出与任何后续授权合成负对照为 CHALLENGE；两格指标不得混池（data_isolation）",
+ "frame_digest": "b20a9ae3fe6d8f45bd7f13aa8b00aa92fdba9f61de0cdd72b93e5cf3829f77d8",
+ "groups": [
+  {
+   "scenario_id": "G3-CUR-CP01-001",
+   "profile_id": "CP01",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "版师修正夹克袖山样片",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP01-001",
+     "output_digest": "c129af1bd2f21659ecffb293840f0d3e526fda9f2f7cb317665b13d478f608b6",
+     "claims_n": 5,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP01-001",
+     "output_digest": "fa9d1132ce11095b679fdf9e939d02025fc9f81fbd6d08dde685fcde1c53c8a7",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP01-001",
+     "output_digest": "8862956aa4d580a6e8fe1719b89ee1afc356776ab0c6539d89ed997713f42168",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP01-001",
+     "output_digest": "2e4c2860ac2eaa79957e917155ccf513c19a0627f58daa58cc6f52e7b14cb860",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP01-003",
+   "profile_id": "CP01",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "陈列师调整长裙人台比例",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP01-003",
+     "output_digest": "ec7f6070cc8747b102ec8df714f745f77a91ca7852583b623f3dff9607e40164",
+     "claims_n": 5,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP01-003",
+     "output_digest": "e486788c6d11b6ff0d536c26c302d4009fb9de6184ec5ef44762a87ffbb1ad6d",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP01-003",
+     "output_digest": "9f6fa8a3ef3485b2c5dfdd36a3a4b676a417c41eb0b0f196304af42fa2012245",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP01-003",
+     "output_digest": "6e4961fef033d0cbf919b0ef10fc8eb51dc251e1b2a164d24db21c4f7154a1bc",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP01-004",
+   "profile_id": "CP01",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "质检员复查半裙隐形拉链",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP01-004",
+     "output_digest": "58964550362ffd49f8d1a251a4f96497250a42fb4669238eb8e31665b60f7fe4",
+     "claims_n": 5,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP01-004",
+     "output_digest": "5e9ce1e5e6a2dc1e912fbb20b64f8bf526beacba0e8e0cb824c8049973c6a829",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP01-004",
+     "output_digest": "ec4526a9fa726f4b0927b5d53bf37413a1bb09ef9d7e7735e8efde1492124bde",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP01-004",
+     "output_digest": "c6ba2fed72822ced13726fb1889e4007063de31aecf8e57a7757caa5c8931a35",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP01-005",
+   "profile_id": "CP01",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "电商搭配师完成衬衫平铺组图",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP01-005",
+     "output_digest": "199b0d329525e40423948fcdaf60b9fd6cd71fbc62aaf4a9a587302b6d0496d4",
+     "claims_n": 5,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP01-005",
+     "output_digest": "c79d5bc66c2ac089a32881c780c1e791edaf759ed992dfd7a86fc802668eba44",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP01-005",
+     "output_digest": "b7905d5e7ac07415010206b868943e89299d85535a854b05d45f3a86e2d46c38",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP01-005",
+     "output_digest": "2889954ff2abb5f308b221629d79fd966889fbbfc072c69f6fb5261ed4a0cc65",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP01-007",
+   "profile_id": "CP01",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "改衣师缩短西裤并保留原脚口",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP01-007",
+     "output_digest": "32e5c881a117e0d1792ac109ae4933e6b9a34123319a204f64ee1d752caa8b3a",
+     "claims_n": 5,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP01-007",
+     "output_digest": "ae7ebba2308a97e54caedef670083fba0d9399b5f2bcaf73b38c919809d3bb8d",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP01-007",
+     "output_digest": "6f0360fcfa7996d28a5163256d7ac6a0a55e2fcb8e3ac39950b9b72c32b90ac5",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP01-007",
+     "output_digest": "b17b86002c38def03c3f1d47d783df9390e528cace73eaa72ebaad7925a75d74",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP01-011",
+   "profile_id": "CP01",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "整烫员恢复百褶裙折线",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP01-011",
+     "output_digest": "e9c4f6799fa3b8577eee2a0389fd9ee45f1c9bd8684d4eac7918fe7ee5996aab",
+     "claims_n": 5,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP01-011",
+     "output_digest": "f417494a588e5248b93b3463ff2bd28b0460a60c8dee7c19cdfa4939845632b5",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP01-011",
+     "output_digest": "48cefa6205bf7ffc6d96c38ff9affcbfb2382815edb4a331a8c3280b0d392641",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP01-011",
+     "output_digest": "d81a7ba8f94698ee9b022db8e3599b36b90b1ed421b99dc4d45dc1dc539ad473",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP02-001",
+   "profile_id": "CP02",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "开店前二十分钟的雨天入口",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP02-001",
+     "output_digest": "6a1d10d21c8ee495741820b308a620711e8e7834ef818318d289acd8ff314ffc",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP02-001",
+     "output_digest": "790a0b380b1c3546a4013b054a1cc19c33d8f3bc8d02b09cfbe8cd9ecf219885",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP02-001",
+     "output_digest": "d73e45f1d97782ef18881979698495bb6dc714ee232e983e25f4734c70a0aa35",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP02-001",
+     "output_digest": "ca47b1cdbda43951aa1ec1e6a5a4c4eb7327c8201df143e352a8910030a6e48e",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP02-004",
+   "profile_id": "CP02",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "闭店前试衣间逐格复位",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP02-004",
+     "output_digest": "dabfb68781543f0c5762519ecc0f78655f20c3c9f3f85cea0d28765202977f2d",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP02-004",
+     "output_digest": "b966d9903fe8f4ba820b6879edb0f42c36741f031903166a74df147347e47268",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP02-004",
+     "output_digest": "c3d1cf03673ba3f21087e9f4b7df9b7fb136f572a87a6d99e060af1594f437cf",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP02-004",
+     "output_digest": "64a2c05cbf7f09f250505389b965369767d513d14798e8830e173be261070583",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP02-006",
+   "profile_id": "CP02",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "午后蒸汽台与待上架外套",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP02-006",
+     "output_digest": "5cfcf29ab8960f99f16e7e248d381dcddca5343e16d098061109f210a676d5fb",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP02-006",
+     "output_digest": "f28b85fe88bbda8654d7a6b8984a17c7daa7563f28946187bf4e7f87c2eabffc",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP02-006",
+     "output_digest": "71c3d07d2be5ff263545ffa66134f949eaee3a733e22962004978bb5c9399262",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP02-006",
+     "output_digest": "a53d13237be419d8b2f3a55d8e867ef967b28d20dbba468b239611adc704fe89",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP02-008",
+   "profile_id": "CP02",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "退换接待台的八分钟空档",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP02-008",
+     "output_digest": "0ba53305d4e49badc657a62f75a08031f52963049413f8993795ab85082c0c7d",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP02-008",
+     "output_digest": "bdf572baa890a958d2c672f71a5e207b565bdf5c62cd2bc7a53d136580ab32ad",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP02-008",
+     "output_digest": "d017af5b6da6cd2c6442ec4e258edf31adb958df8746065e5eb5ac7a6cf6015b",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP02-008",
+     "output_digest": "081ad60984e2d70d338b965a1f7a20f48540e017dca0bbdb768d8c1a2ac8db50",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP02-010",
+   "profile_id": "CP02",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "周末自提架的半小时",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP02-010",
+     "output_digest": "25841291513e50699853c6230d03ba5af97c1e1703bd3f74d2deaa01eb35bb5c",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP02-010",
+     "output_digest": "cd8aedce77c7dc712ae9c64a8cdbd58f59d0e07aa29768edf996e55617f2653a",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP02-010",
+     "output_digest": "6d7b712f37c575c0c3ba0ddaa96f8b0daffa78f114c155c6d1418958a0ee0612",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP02-010",
+     "output_digest": "13c8b720b0e1d8977b03654091b7256267006c0db2789511f1918006c9a8707e",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP02-011",
+   "profile_id": "CP02",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "降温通知后的外套前移",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP02-011",
+     "output_digest": "7b708a6a296ae571796a81925485b1ae9577f54dec88d2de6783fef74307d658",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP02-011",
+     "output_digest": "c4a03ca314147cccce447681b9124c7bb7b4351a1826900bf0fe0a1468220c3d",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP02-011",
+     "output_digest": "b784e5bb6aa80d2e686032ee51aa537ba45c1c03e50c1aa49cdca8e3b64b97d3",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP02-011",
+     "output_digest": "98ce1afb077f07c452bff4de9723477d13228a137088106237df6bda9c58f8c5",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP03-001",
+   "profile_id": "CP03",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "更换半裙隐形拉链",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP03-001",
+     "output_digest": "9aa84ff6b240bd26cad4c1d6833d6811e2183b8037399384506708764a7c46e5",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP03-001",
+     "output_digest": "b361e4cf820e43fa0a28901963c852d43b89e4511033dcbd31be22f670f4c324",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP03-001",
+     "output_digest": "7b1152af24597112387b2f90c40a574fb40d5cf2063a76adfeb97d025471f11e",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP03-001",
+     "output_digest": "ddd2fd4dcd6ff27c1b0ab4a2c85a354636665d2a84ddc04139de69e07a702381",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP03-002",
+   "profile_id": "CP03",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "盲缝缩短羊毛西裤",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP03-002",
+     "output_digest": "e9d78c87a1ad903e7be485f88ae930960596650faa1bc0d0637a510a822f1928",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP03-002",
+     "output_digest": "e101de8d0f262f4144c979a75db4d5f61833a9f631d49ab66913171e4a91b509",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP03-002",
+     "output_digest": "18ad74d80c4fb7a4afaa2420b97356f2d24fb301b72dc250ea9ffc9f13d3f32c",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP03-002",
+     "output_digest": "1e80edf471b14ca7a258d450bf4196808b087c30b2249c85c8d3c4f4d94fa318",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP03-003",
+   "profile_id": "CP03",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "修复针织衫单处勾丝",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP03-003",
+     "output_digest": "37358e5f68c0fa2180a3d7fc2760c2f2489e19ec9b6210b2037c79f71f17eff7",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP03-003",
+     "output_digest": "21070cc333e1a335ddc2e4fa30f6f1d6f32144c5f434e28f1d488f3a3e0051a3",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP03-003",
+     "output_digest": "b9047105a7074a9b67933596905699d5895cc6d9c1c5a221dd17c3b1f15c7f79",
+     "claims_n": 4,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP03-003",
+     "output_digest": "adc58093799ebb7f4649fab07f20870d9f6cf8fa251677dc6e2c8492a17a1dec",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP03-004",
+   "profile_id": "CP03",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "重塑衬衫领尖",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP03-004",
+     "output_digest": "5922120c45ee41dd5969f02dcf5b60af1e45fe2a2cc25ed4251da349f9d917d2",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP03-004",
+     "output_digest": "1001f8e1b897b40dbfd071f5a66a07fd72f3204227994193203f19d0bbd37567",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP03-004",
+     "output_digest": "6c4561e6e1bb75468f28381bff7bc68e3241bd5d32f0fc69fbe104d0eca528af",
+     "claims_n": 4,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP03-004",
+     "output_digest": "6e46dce9d966c8ad21af84b0401c9b5f91b59c2dee346dda734eb792bfdfb32f",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP03-005",
+   "profile_id": "CP03",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "给大衣纽扣做绕脚加固",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP03-005",
+     "output_digest": "fb582456c1ceebb320aa32727edfa1061495ba07df18a8f543f163204f486533",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP03-005",
+     "output_digest": "88ab384c89e1d3c2423e6509e9085abfd04c35cde6b3a6685372b2b0d67bc111",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP03-005",
+     "output_digest": "eede0defc5489a0797ad2add1197cd7d5288052c10784895b4274ccfce4f20fc",
+     "claims_n": 4,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP03-005",
+     "output_digest": "43dde130a1310f53902cb68b4a3a20dae3c152ea8bc24c48b5c28a34f391fb5c",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP03-012",
+   "profile_id": "CP03",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "重压风衣防水贴条一小段",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP03-012",
+     "output_digest": "6da4247a4cec2102ba737cf341f2aa50fa67316ec34500fc492e0c2c9ac060ae",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP03-012",
+     "output_digest": "4250173581961a664c41a7cd55ba87018473c97e25eaa659134f973710fceca2",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP03-012",
+     "output_digest": "c4a2c5749f0621517d305d99a185c303bccbf26f30667a6e7faec748aabd03ad",
+     "claims_n": 4,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP03-012",
+     "output_digest": "40264c275a6268290b1e62dc6946b4d28c4767821e60938b713bcb56807b2591",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP04-001",
+   "profile_id": "CP04",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "补齐西装套码的楼面接力",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP04-001",
+     "output_digest": "dd6f4bb2609641e5d9ab9b18310147d60e3e1052c6c6294f39ee12852f32b858",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP04-001",
+     "output_digest": "6fc563bb0cd347580c4e500ef2dafbad67ac1527be5909448ecaafbe987ed310",
+     "claims_n": 3,
+     "surface_units_n": 17,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP04-001",
+     "output_digest": "b191cd2aff5f78cd1bba559a852974fb6fe658cfbbc8ec57e690b5a258689d90",
+     "claims_n": 3,
+     "surface_units_n": 15,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP04-001",
+     "output_digest": "f7e08f9e668dd1d609ee38fe095775ba4a07f1ef0429abf2bd5fbec7c7bae76c",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP04-002",
+   "profile_id": "CP04",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "舞台衬衫临时改袖的三方协作",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP04-002",
+     "output_digest": "f6dc4d38399280e21c3edb445c8b94300d4f28f8066daec9b51899ceba5e585a",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP04-002",
+     "output_digest": "d0ef31871bb6e53a16f8e7c1b2b67c397b8ad0ce69cc9557e420af9eb767e97e",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP04-002",
+     "output_digest": "dc3290195bf7c45913a38893f7180253c993faf4a1446ad70a11eae7a3648930",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP04-002",
+     "output_digest": "9752957a1d510a6bd0e12f29b7ef282f30559883233270621b9724c1131ec6c8",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP04-003",
+   "profile_id": "CP04",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "网店退回大衣的跨岗判别",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP04-003",
+     "output_digest": "c156012c91eef88e648b797690400b5d13bd5e69240066e354d3f7dd6c020e6c",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP04-003",
+     "output_digest": "32bcd02e6998e96d3d0f4c912a6ab6a77bb8f70101329557ac4d9e39277ba206",
+     "claims_n": 3,
+     "surface_units_n": 16,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP04-003",
+     "output_digest": "8216fb2cffe6014db2b10be3a2fd4cd43eee6a3eaa2f5509927a99cdb72f128f",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP04-003",
+     "output_digest": "0b614244d7729c746551acdbf928a8bf9ae160c947b97f165920434a01c8168b",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP04-004",
+   "profile_id": "CP04",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "样衣腰围改动前的版缝协商",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP04-004",
+     "output_digest": "3a757a0b63821505d407a154b0d9c87857516c4a961942d56e0bacb250df0251",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP04-004",
+     "output_digest": "36d7ef12859f974f638f0bd5de57cc94e7fbe317c04445f8608926c12502cd09",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP04-004",
+     "output_digest": "2e482dc5eae41ea979d5a7ccd081d39c738f7b8c94ea08f35a88f0ba0ff5fe3b",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP04-004",
+     "output_digest": "f534184333ec0b7126d32a307ee662c3a74a25dd76f8bcc7a354fad3824584c5",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP04-005",
+   "profile_id": "CP04",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "直播前套装库存与造型核对",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP04-005",
+     "output_digest": "2b5d53e981171e0380edaab0969733007edbffa84e941a973b1d34fae172df36",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP04-005",
+     "output_digest": "844b87ccc1805ad8f75c1e3ed7918093cdc94f1739185f5ec4c656f446fa941a",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP04-005",
+     "output_digest": "41665758818feca1453e3bddbf835f41fbae59796a3bca6aecea9278382f82bb",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP04-005",
+     "output_digest": "84d56bb009d287d4f7a7b61d9ebfb8ccfe9b6af759905fee0ef7c8f5655899b9",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP04-006",
+   "profile_id": "CP04",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "橱窗换季中的陈列与安全复核",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP04-006",
+     "output_digest": "ca636e7c85ea2e4e4bc514a22d458d5e3c0b1d382bb9e1054bc563e4de799f59",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP04-006",
+     "output_digest": "40ebca498d6a0d3b0bfeb9c08a591bbc5233876c871034d7564c9b879ce72d87",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP04-006",
+     "output_digest": "5ac5533ccc0f178e714b49bfd330a3416c4d1b95a80e99e621bbb6f02e4ffe63",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP04-006",
+     "output_digest": "0ed4c33639d01310a664a2a6ae57717ec906c775dce4dc8444cbd439c760e659",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP05-002",
+   "profile_id": "CP05",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "陆枝陈列按三视角复盘",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP05-002",
+     "output_digest": "481d245cde4954d7318b92a01360e6833c0090a958330d6e891af4206a5a2317",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP05-002",
+     "output_digest": "618d303505758dbfe221d42deacf9e9ea60a0b1ea92b407d9ca03ec2b88b4593",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP05-002",
+     "output_digest": "75435506d034e9c255cc070a33f9ecd0ba60cff2235ab15f1e488e55f484bfaf",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP05-002",
+     "output_digest": "44bcc61ee97c0401c3b0a694d18382f31ed740253c483381af08f460f3a551e5",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP05-003",
+   "profile_id": "CP05",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "闻库仓管从记位到记批",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP05-003",
+     "output_digest": "ec09fe34de0b0702f74cfd686aa354fa7d6c62861cc00aaf01813809eb454298",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP05-003",
+     "output_digest": "d05f158deedf9da971a71a37f4b13506a53ff7c697b7e43d7564ff41d656f96b",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP05-003",
+     "output_digest": "25d92b7b6acea8e942133af1c51bb6153f40ec8bec012c212dbb6276e4963acb",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP05-003",
+     "output_digest": "3e6bbc49ef3eccfb4b5302370511e18f947048791b59ce4b6492d4105aa7c2dd",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP05-005",
+   "profile_id": "CP05",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "A",
+   "scenario_label": "苏槐从直缝到独立绱袖",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP05-005",
+     "output_digest": "1f78bb8fbfb2e5c478a7c2d267fee2bd780d0c66117ce17242c19bf775a22302",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP05-005",
+     "output_digest": "f09802c7410533b54c9474d935137deb72280db8ed49455c097d658f839e7c3f",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP05-005",
+     "output_digest": "4497075add5f69f0a6f5ab6e1b2b72d851062d86fe9176c9fb18c406f65eb122",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP05-005",
+     "output_digest": "b9dc5415c6c75ea66c4f338604620658ebf41ea7a8162acbd6b3649863cadf1c",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP05-007",
+   "profile_id": "CP05",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "叶柯从抄记录到列尺寸",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP05-007",
+     "output_digest": "50e30b93c50a78c8fed395b8799d0fb69d101f96697a9e6a1b45f8a80423b0db",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP05-007",
+     "output_digest": "3bfabeb32a7dd649bbb06499bad5d6e7fd306cf741ec5b736c93086c4f6ad517",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP05-007",
+     "output_digest": "46fc109c1061a493f4926e8bc755a8ba773eea7579be3e47661ededab926bc21",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP05-007",
+     "output_digest": "fa332b65dd66d106aaf1eef75f3e75a1f7b49acc850fe3942ca814c2f63169ea",
+     "claims_n": 5,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP05-008",
+   "profile_id": "CP05",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "林砚改袖先看结构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP05-008",
+     "output_digest": "411aa107c64be51d54a265246778744a28ca1db0f7462b20672f71b7a8f042b0",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP05-008",
+     "output_digest": "005c314fa7e2d4e0b1364ec6aff6f6d523747c8786958c295d79aac7adcc46fd",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP05-008",
+     "output_digest": "086188c59174aa19cd18268abc22b3bcaae60b32a95410650be90d9240b7914d",
+     "claims_n": 4,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP05-008",
+     "output_digest": "6f017a6f0205adf713864684b90e0832c808c17dd976cccf921073560ff250c5",
+     "claims_n": 5,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP05-012",
+   "profile_id": "CP05",
+   "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+   "lane_id": "B",
+   "scenario_label": "周墨文案转向可见细节",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP05-012",
+     "output_digest": "621574d75a4984718f0334cc845b95bb3f8cda1cea9a74b9da7a156d6732d465",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP05-012",
+     "output_digest": "96d7eaf835c12a2194f922318ad0707b0f6664c3677f07d05f17ceeafa7ab4c8",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP05-012",
+     "output_digest": "c6ebdac003d41d83576af181a529c186bebd4733c869412abc4b0d6e1b7a39a8",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP05-012",
+     "output_digest": "4de250baa62a4a3ae47d9014f0e3d4999ac84390cfaa7ba0e233058a09b6f884",
+     "claims_n": 5,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP06-004",
+   "profile_id": "CP06",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "污渍处理顺序判断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP06-004",
+     "output_digest": "ee9e6d6951ba9dbc1a381746758453703837ef7576374938a8c50620bb1a5c86",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP06-004",
+     "output_digest": "301e9c63664444df20cea08ffff82be27d13e153a459aa2a70f136efb0c3a884",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP06-004",
+     "output_digest": "72eff8faebd068d136fe4939c4245cbbe70be6585b39f7f0318f70550ffea9eb",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP06-004",
+     "output_digest": "b01f6c72f6384fa3c75c3bfc48e6b51a0d24bee9214d27ea25dedc515266d9c8",
+     "claims_n": 4,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP06-006",
+   "profile_id": "CP06",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "拉链门襟波浪判断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP06-006",
+     "output_digest": "8674c9735a791699049072e213f258fc6886566ec243de8bb5e3d0e5c0d04d9c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP06-006",
+     "output_digest": "195fb02ee34ec5985bb6be1980b067a8dc96d19af2ac0ae7e3670ab86b4fd659",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP06-006",
+     "output_digest": "6a32e8cebd7b24f423959dd74d170062e176689833b962cec5b734f5cbfe3c33",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP06-006",
+     "output_digest": "abde17eeeeb90eea9a3f0ea0c42fafdb6c6d699623f2c25c5dd79d6d7c869f27",
+     "claims_n": 4,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP06-008",
+   "profile_id": "CP06",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "衬衫领型塌落判断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP06-008",
+     "output_digest": "fca0e27f3bee8f14b850423f8eca828b9846d6aca535e7ed9e9ac0c125a90eb6",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP06-008",
+     "output_digest": "647238d6d77f10ef9572425c7ebcf857fe22511cbe4530e977b9b059225f8b13",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP06-008",
+     "output_digest": "01b99c2e3bd492ce3a48188134fd0132b70f8bfd2b6193522e37bf396190757e",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP06-008",
+     "output_digest": "7ef53606883cfa26c4bee744cc3805f67677be4b7a32cf1567719e7dfb98f333",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP06-009",
+   "profile_id": "CP06",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "大衣口袋角磨损判断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP06-009",
+     "output_digest": "67da8da4d43551aa8df7cc6184eb175b996b25e74b25be4448a3013613a68225",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP06-009",
+     "output_digest": "13461b81c6c9054e36f3d5d06645136f17bfcac4f3dd8e894f629e6f1b721d1e",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP06-009",
+     "output_digest": "081b7ae1a38e8c1d625977c5f9c56e69968d6482aa2380467659c0281465817b",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP06-009",
+     "output_digest": "341dc593e3e3052ad512f0e7349827888708a9cc729beee468409ae179caace9",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP06-010",
+   "profile_id": "CP06",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "夹克抬臂受限判断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP06-010",
+     "output_digest": "ec40164c2b0df479c5e57647e2405f1e07fd77f75cf914537fa1510ad6263b9e",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP06-010",
+     "output_digest": "ae3b1acc18f769b284e24c857ebcc2bb3e4a04003ea02fcffd196c982f1deeaf",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP06-010",
+     "output_digest": "04deac4fea7e15cda4973f5bd1c41b8093240dd2d9f52700b0947cc0eebb547c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP06-010",
+     "output_digest": "82761511b93e67dbaa7e32f666aa23565cf0f894a031cdbbdfa1a86e868e21e5",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP06-011",
+   "profile_id": "CP06",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "刺绣边缘起皱判断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP06-011",
+     "output_digest": "a67a0a2d61be17a31f0d99a486e8cbf816eefa4269aabb6476b051f7f33001b7",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP06-011",
+     "output_digest": "111f748faa22c7988936fcca23c7c7ed82131c0b4398f8376ce4cd41874ce4f4",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP06-011",
+     "output_digest": "5c9aec7bf706183f1cb637ac5c6d63c716b42630d09514ecc22771758aa3563b",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP06-011",
+     "output_digest": "c67fcac1cc80a8daedf8b87ca483e08c4ed40f0aae6e376732c1aa8841ef868a",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP07-001",
+   "profile_id": "CP07",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "三天差旅一包穿搭诊断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP07-001",
+     "output_digest": "8f929715f22d4b503768cc1b6a1b4177b9b468771ea1463c47c9dff740e56b9d",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP07-001",
+     "output_digest": "0cdd64f8be08d6f113af6c0f13b41ec044f673a6d666dac98087ccc7d8b28f00",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP07-001",
+     "output_digest": "b1546f2a73eb8680bef38a3d5dacf10dc8b03a2175be81c4277d63776e79820c",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP07-001",
+     "output_digest": "a39e32ada06674c36d5ced8a74def470cfbb4363a0fce375b3eb3d1d69671055",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP07-004",
+   "profile_id": "CP07",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "网购裤腰合适臀部紧诊断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP07-004",
+     "output_digest": "8ddb761848df6b8ba95fca765a8c76e239f7c8c5d6fab0a8c9c434cf2cfef22c",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP07-004",
+     "output_digest": "1de099a9bf91466d499b4eb22e9502a208d260379a19e60bff0723704cfad733",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP07-004",
+     "output_digest": "d72435ba4c311c75d05631be34588cf8e55702b3329e1b3b7ba51d1e355554b6",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP07-004",
+     "output_digest": "e6fb7c38bdc189e56d41249a483df896c421b527831e2653f8d298ead1f87418",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP07-006",
+   "profile_id": "CP07",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "八度通勤外套诊断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP07-006",
+     "output_digest": "4475c8861e926564281cc0eaee442c06e17f39d2e68a59d40667f80e21def3ef",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP07-006",
+     "output_digest": "d529db920b40dfdbc0a438890d06e9a8232e5447737b00d7eccb284dc02afb1c",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP07-006",
+     "output_digest": "b82174d6488a0abdb794fb51b77630b33514a8017c673c08b673006b737806a6",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP07-006",
+     "output_digest": "d7be0431d5a09f631fa46b8b4df3cd1b4e951d50d9d009f1c7bfdff5a7f0b1d9",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP07-007",
+   "profile_id": "CP07",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "针织连衣裙收纳诊断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP07-007",
+     "output_digest": "39cd19c33b607f91fb06a3f52fffedf782083f2bb895ca8d1fe8fd3a1c5d4368",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP07-007",
+     "output_digest": "ee17a1645a2d51f5a450a7a34a08ed19ae2e1bf637ea62b5797690150ed92bb6",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP07-007",
+     "output_digest": "7f1c3bf5fb6a3891a0a03d553a32bddfdfccd2aa653474800f909ce04ce5d5c7",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP07-007",
+     "output_digest": "bd7c98c40602ca215de00f4b7742ab234edaaf845dd33c420e2189c6a85dc22b",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP07-008",
+   "profile_id": "CP07",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "面试着装正式度诊断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP07-008",
+     "output_digest": "041728b342e9c04625e797eaa1688d56902c65a3c38c46752152b46f4cb67a66",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP07-008",
+     "output_digest": "8460f3f811e27750bb58acbec9a2bc0487119b177af1c020262d2ec00d2b1bf9",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP07-008",
+     "output_digest": "c60c2f1e2cddc6f921a4fc3fad3ba13328bfcc4058abf42bb6aa8618bb24a95b",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP07-008",
+     "output_digest": "06e84552c6756132ef5a4915a2e3c54cbe225252217a922f2ae3aac0f61d25e4",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP07-010",
+   "profile_id": "CP07",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "乐福鞋袜色选择诊断",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP07-010",
+     "output_digest": "23f83611767c85a0efa2acea7f046beb40aa75f0c4b1d5c493380c8a3e8b5ab7",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP07-010",
+     "output_digest": "34ddb50ce0f2790c89691c6f3abdb12f7db355e3f284ef9e9cf731b584a790fd",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP07-010",
+     "output_digest": "b8ba54cb8cbbff5bc0d4eb443e7f3c4ebe36663de1e7bebe40fc21260cbd09cf",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP07-010",
+     "output_digest": "f3858cdd07856567cdb947e7991135ed0bef9e30bf76744029eeba1f83e12c43",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP08-001",
+   "profile_id": "CP08",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "雪纺衬衫法式缝解构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP08-001",
+     "output_digest": "c1442a425df8c46a7166cbe22347daa85d77d680970f477b8a016e32a147167e",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP08-001",
+     "output_digest": "98f788bdd9bb9fb359449f0700e93d77bfdfab9354ee8901bb5610d29dead673",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP08-001",
+     "output_digest": "ddb0ead87f3d4fa8f499ec22668bdf15ed36424a2fe4046936786398f2e23f62",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP08-001",
+     "output_digest": "7e12a7de043720cc99d88e75f49d4f3a6c9ad6332dca27ba3b124ba26b22ad32",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP08-002",
+   "profile_id": "CP08",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "西装前身粘合结构解构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP08-002",
+     "output_digest": "b3f87622bf2a34430304cbd6667c1d512c2f4206c80dc339577e00c0f2c688da",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP08-002",
+     "output_digest": "4c25df9714d34f22e9f3d34ec5a8d4fccbaede859dbbbfdb823e2b0fd90b7fc7",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP08-002",
+     "output_digest": "db85e8a26196dddfb21d4bcbd69481ae83e698aa6bdf898f7b268ef5a4c4c7a6",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP08-002",
+     "output_digest": "0d167d6fdff9e929bebca3364be5cc4e670a54479300066da7e28e1a6c393402",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP08-003",
+   "profile_id": "CP08",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "牛仔口袋套结解构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP08-003",
+     "output_digest": "70d5ff7b7f0dd428a66419292e58c2535074e4126123aae2c97e4b319f35ddb8",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP08-003",
+     "output_digest": "6f5287f9f948471f562524d309ff23113cb14cc5c5c7c470f056c21ba9cfa054",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP08-003",
+     "output_digest": "1d244a8249d5b978c122d71b7bd1688edb977e10e3d3a1c295c87dcc7043915c",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP08-003",
+     "output_digest": "35f89a15a1d646c57e6624df951b51874541d40064a8b3a432893c19173f5cc7",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP08-004",
+   "profile_id": "CP08",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "针织罗纹下摆解构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP08-004",
+     "output_digest": "28c116b4656f072a8f49fdfe21c8675bae5b1d6358134b60c7ed53fb66acc5c6",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP08-004",
+     "output_digest": "b076185d60090f75dfdc165b33d7904ec9c3cc2723d98b40c7a2eb28a930939b",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP08-004",
+     "output_digest": "30b1c0b9090236c7bfae2401a34780b7a77d24fcd0bd1ba10492e8082c7660ee",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP08-004",
+     "output_digest": "159dd1ca03dffd4b80e3c580add4b533baaec12836e0823703edb2406cb1a132",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP08-005",
+   "profile_id": "CP08",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "风衣过肩双层解构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP08-005",
+     "output_digest": "adfc72b084ed5e64971ba2b571f131753b739f546ae80a1bae87bbefc86c5540",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP08-005",
+     "output_digest": "ce1615b81726c52d3a73518b0c5c8331819edf06b277560774dcee56cc7d9d90",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP08-005",
+     "output_digest": "d3228e09869b33af6ebfbbfad9aed8058c4cba573077eebf4b43cb27d6df4434",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP08-005",
+     "output_digest": "e2f66acad7aff5c08e8c867b9192c858e8b27e28d07399c1dedf041a38510b42",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP08-006",
+   "profile_id": "CP08",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "百褶裙定位缝解构",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP08-006",
+     "output_digest": "094ba865d738be2aa0031f3aa51e496702ae805d6acd23b73f08ec6e0aed5663",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP08-006",
+     "output_digest": "d4262ac8b9bdf4802aa5b7d144161077cfdfbab830f2b6825c4e85c6cd6f773c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP08-006",
+     "output_digest": "ba14b72d133f48ad2a92a44c26f646203f1705c31897725e80409a65aa50a724",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP08-006",
+     "output_digest": "e638668033eeab5396827c60af38a59e8d3ba5cc3900743e8537d23abc03098c",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP09-001",
+   "profile_id": "CP09",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "斜裁半裙骑行反选",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP09-001",
+     "output_digest": "25be82d95ecf35385a4a3b3d743f86f002fecd46858ccf46f880674c4b29d4df",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP09-001",
+     "output_digest": "b4faeff0fa3cc5af69c12f449afba8ebb9b88f5060289991900d3aeff8778b11",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP09-001",
+     "output_digest": "8a2a3f90bbe413b50735ca15a8e391b44c80d9a48cdd184d7598a62b3b0bc7e6",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP09-001",
+     "output_digest": "41d871adab02741c9d62209b415a52aa811e59be37dbe9f88dfdfb9438debbe2",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP09-002",
+   "profile_id": "CP09",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "箱型短夹克背包反选",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP09-002",
+     "output_digest": "d3363099b9ccc7339916e81f76dfba99b80ca86db41a86b4ae027eb8c4b49d76",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP09-002",
+     "output_digest": "047c9f092fb836b34da16e0b406007bbed0ad2c9e5efd0b676b42f0191453c63",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP09-002",
+     "output_digest": "8230bf274b0840ef00beffb6053db2076f6c714f8295443021c79d86399ec220",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP09-002",
+     "output_digest": "5fbc43e7985633c997e8f992109401729085af90a40d7173fcac0ec5031f8061",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP09-006",
+   "profile_id": "CP09",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "拖地阔腿裤雨天反选",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP09-006",
+     "output_digest": "137a2cf140d2ea845792195a6c4b7d170dda5954d1052504804862ade1c9515b",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP09-006",
+     "output_digest": "243ce98a2a14c28043793c83106c4c6f5ef2a83323f9584f70dfbe093c9b428b",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP09-006",
+     "output_digest": "49c9f67651360942b7566e97e0e1400237884e7da246073972214b61f859e99f",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP09-006",
+     "output_digest": "cb4bb4134070b1057297159ea892408be217f9c4e57bb4286b8cfd596dac9e43",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP09-008",
+   "profile_id": "CP09",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "厚罗纹开衫暖气房反选",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP09-008",
+     "output_digest": "0157ef40300680c11109d78ec340e344fa5f1f1deb2a8b6000005314b00646ab",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP09-008",
+     "output_digest": "50ca1868c2a0365657fa4df8c64f3b6d18d617724f3495ed3787bbd504fb1385",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP09-008",
+     "output_digest": "7a60f1f08067de93f4b9b5fa001b419d167e75fd9dbd2e5437e3b40d33d048ba",
+     "claims_n": 2,
+     "surface_units_n": 15,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP09-008",
+     "output_digest": "a2f142db9203b99832b0e127f2e8f015ac65595e29fe37168af8ad149b5dad6a",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP09-011",
+   "profile_id": "CP09",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "缎面裙养宠家庭反选",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP09-011",
+     "output_digest": "e1a2cafb5417e9c7b314d2fd2526f05d01b917a8c0c4910f799fe0a6ac12ff07",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP09-011",
+     "output_digest": "3aacd06ab7172c53a9ace95553131638355b77eb6ab644bb9d636bd00f006183",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP09-011",
+     "output_digest": "867a922ef2423c8b25ea0711a0d1edc5797d23fd28674288c840e6b6791460be",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP09-011",
+     "output_digest": "464af9b6c550fb63fd5151c045a5881a11507c94d9e08f897b67ef45b1f38d17",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP09-012",
+   "profile_id": "CP09",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "无帽风衣骑行反选",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP09-012",
+     "output_digest": "d5b6637a53134c11982c4ea0241da822048099d4289b652ed0f089f699770f07",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP09-012",
+     "output_digest": "3502d043ff62f53a6735150ca451b96cdc1cedc7e04cc6110077efc66ba61510",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP09-012",
+     "output_digest": "620316c94fa1adb6d44a1a7c900c538204bf345d3daaffb4cf7afe10ece6ec80",
+     "claims_n": 2,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP09-012",
+     "output_digest": "4bc39280d34d6125eeba4d10926de63e5e7d8e6195d8ef453d2a7fe78f8cfc84",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP10-001",
+   "profile_id": "CP10",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "黑色T恤十次洗涤档案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP10-001",
+     "output_digest": "5989c09166ad1d639179b197b59a603ee5e3732707c0b52b740889b184912e11",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP10-001",
+     "output_digest": "53652e993f7402992f467acf6abbc4a824cf0417c35e0a98ac654e48e6be5fb4",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP10-001",
+     "output_digest": "c1ee7ab38b4554b4baf9c3ca026cc6851d65cd14ad43262bcae4156fd7643376",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP10-001",
+     "output_digest": "25553552487c6e52f9f83c60080e9f1bf7db87a04583226147cc154a49866d18",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP10-002",
+   "profile_id": "CP10",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "托特包提手循环档案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP10-002",
+     "output_digest": "29bfc1bb8a133b6ce00a037398a71af16110fd29acc5cd1404f0f8d61ea30b1a",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP10-002",
+     "output_digest": "04f4f48ec664084e19be2a1547a3930d64c4c55c294884ac614aca04178da93a",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP10-002",
+     "output_digest": "1dc203919aeae8f8fcfecefb2d0fcbb2472631bd5f29ade070917d430df58c08",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP10-002",
+     "output_digest": "096b04c5a253e84861149522da001d05d06eef4fa2899843df6c5cd47073cd59",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP10-003",
+   "profile_id": "CP10",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "针织肘部恢复档案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP10-003",
+     "output_digest": "105fb70596bbde7e2721a654c5722ddaef927287bccaf1f0a0e572ffc53bd8f2",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP10-003",
+     "output_digest": "3de0247253513c2bf3c634f5d73375b2c4f95b65a34a1b4deafa2c89a4424b35",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP10-003",
+     "output_digest": "1f2ebb698f28edd5c2a85bb9147365ea070a10c8e91f818906689aac5a2dfe70",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP10-003",
+     "output_digest": "344ddce4eb5f264e3e28b48165921e67b132c1575df210ebe392f09c180f7a07",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP10-004",
+   "profile_id": "CP10",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "B",
+   "scenario_label": "衬衫领口六周期档案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP10-004",
+     "output_digest": "9fa3473a41a96dfc0ef27c400091eb96bf332ef1817c6f589c7f8e1c0095c599",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP10-004",
+     "output_digest": "3ad0d6a1aa8467a2315f849b205c3315f0980f580dd33c2d98318f47dc5f4ae7",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP10-004",
+     "output_digest": "4a866ba57d59bae68e3ca25ff2fc942e02d1a0afe0aef8699970a7cb3ce1cfa5",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP10-004",
+     "output_digest": "eaa013b19fcf718bc0959e5654602f7fedf756286edaeac0677d74abcc6b6868",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP10-005",
+   "profile_id": "CP10",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "夹克拉链五百次档案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP10-005",
+     "output_digest": "da7a50afd8681b8bbb016e50a2a24e2ae949c14d71dea365a5eca34f3d8e94d4",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP10-005",
+     "output_digest": "d050cbdb76bcddccd3bb5ddbb89c7028cd12bb6c9c4ff7d42a23f2b448d0283f",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP10-005",
+     "output_digest": "0b0e3c4a5ad08bb236cb02fe7d593f232ef18d8292e8adb986d19f5ce4687d06",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP10-005",
+     "output_digest": "b57599b93565056205c922f81f8e1de77d4e99f32b61b3e70d5ef4fb981a319f",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP10-006",
+   "profile_id": "CP10",
+   "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+   "lane_id": "A",
+   "scenario_label": "防泼水外套五洗档案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP10-006",
+     "output_digest": "efbbd5e88ef6a2100e91b045b54656d3378e0dc8f041358375d13ea6a96c1499",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP10-006",
+     "output_digest": "6b31c35c41123199f02e58858e48a38379c2a9bc1c8d82f1a49af5aca69a0fe7",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP10-006",
+     "output_digest": "4fd2bae4504c5dc0d4058639d897d48e5f67f2bf192a24e5e1ec8e7650048783",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP10-006",
+     "output_digest": "c897085cc7a682dbd1713bd11b41094907fe3de2e08cc37231e38abe839aa283",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP11-001",
+   "profile_id": "CP11",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "雨披下摆的排水取舍",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP11-001",
+     "output_digest": "7ba85788ef90ce4fdaf6d62d212c853ae63e22dd96fb4abeb0ba3d55ae5867e3",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP11-001",
+     "output_digest": "1da0f450b767d77d73bef618050586519a2ea6e0fbbc5321aee83dab86f3fe1c",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP11-001",
+     "output_digest": "8235529395363f1f1189caf19eb6348f1db2545483e50cbfed96fec17093681b",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP11-001",
+     "output_digest": "65cef270670ee5cd4749e571f51ae422ae9ab4e51f9a03521cde3d195a7f21b7",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP11-002",
+   "profile_id": "CP11",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "针织开衫门襟的扣合选择",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP11-002",
+     "output_digest": "ca5f760306de3d42fd3eab2d6ba3f38ac1b7f4a1ad4f47fe5c4310a01d5bcf8f",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP11-002",
+     "output_digest": "bb148c65a80a1a6f286fb04b1a8e0ea8c6c19268c5ac250a4340ac91dec82c5b",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP11-002",
+     "output_digest": "29b3fccd6275ece8a9983e89e505f4b539860fc2f39b44b3131e511581af3465",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP11-002",
+     "output_digest": "c0ced6d6bd1807633ba2c8d5de4a1b66006339db611fd1628cf43d894b72c01a",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP11-003",
+   "profile_id": "CP11",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "通勤半裙后开衩的放弃方案",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP11-003",
+     "output_digest": "c02348e134ce70736dfcc3100c69ad728acb67ef49a653c32274cd577ca3b5a6",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP11-003",
+     "output_digest": "0b0dc65e96b5d3e37f058da61e3b5040ad17e1aeaa5afea770a6aed08e0c7c50",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP11-003",
+     "output_digest": "2d0cc32e80201d97769e9d5a3a382cbf1f994c7bb7808130760fed4eeac093f3",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP11-003",
+     "output_digest": "a9b1f26dd3677e1e49c8f2bedf608fb7712602565bd7b9768cee98275aedfe3d",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP11-004",
+   "profile_id": "CP11",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "双面马甲口袋的结构代价",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP11-004",
+     "output_digest": "b39e0a04119ce0e9043043d94bc6f32d584177d8a5187c632aef87fde0b40f08",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP11-004",
+     "output_digest": "82e48c70f347e39014667a2cac0452d34b7c40b834743dd55e4cd6ec5db9eac7",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP11-004",
+     "output_digest": "2f3b1f314a1e3b257f65a3da8a6326a6de0b86fd54734f808d05eb4ce60cfd79",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP11-004",
+     "output_digest": "ded2fbcd8c6d5e7983b6d77e5fae613b430b5e8744f3cb65e490d72d1dca6dce",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP11-005",
+   "profile_id": "CP11",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "条纹衬衫袖口的对格取舍",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP11-005",
+     "output_digest": "30cfcee172c6ad22c6163be8f92fd06319f4c96cf621fb47863357e21180e8e9",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP11-005",
+     "output_digest": "dc69b081cf740c5dbe1d45945350a9879073cc137aa3c0be048261f24aa55a47",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP11-005",
+     "output_digest": "6030870cb02ec99cbae3134b5b71b5c4b1edf57103dcd485149cef94ffdfcc38",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP11-005",
+     "output_digest": "148963dd8659cc3fdab11376ff7921b2661c2f3d3914d63592de3f11569798cf",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP11-006",
+   "profile_id": "CP11",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "轻量夹棉衬里的分格决定",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP11-006",
+     "output_digest": "e74eaf765ca10d55436659e4504298c8fcdc09c96748e2049f7e9df87e69faa2",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP11-006",
+     "output_digest": "31674b415d96d3e6a8cacc94e15eac627060fefdcc9154e9df4174f56e1216fb",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP11-006",
+     "output_digest": "c7f4ed0b9ec13705c6ef4661f7c147d7c326bbbcbe1237c2580af872c74fdf71",
+     "claims_n": 3,
+     "surface_units_n": 15,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP11-006",
+     "output_digest": "d85ef2a4eacc27762020c57712ef9fb1dd8630166cbf9882112a6a86d631a725",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP12-001",
+   "profile_id": "CP12",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "衬衫袖口扣距从零点二到零点三",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP12-001",
+     "output_digest": "b59e167434ee1bb69cf36ec0d575f57f7df19d697429b50962b4e109fd275168",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP12-001",
+     "output_digest": "5646a76481d7092183c73d2037a89315d3e8ed98c85589d600d03d6b3aae4742",
+     "claims_n": 4,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP12-001",
+     "output_digest": "c4017a77f3097bf0f0c22bd59cd81239289434c3a825d87fb62398c0b51981a8",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP12-001",
+     "output_digest": "89a0d38e9244f5e6f40003bb8d0f0c406388c7602498f241b4933b6a7884a59e",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP12-002",
+   "profile_id": "CP12",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "长裤斜插袋口的一点二版",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP12-002",
+     "output_digest": "3eedf4e1ea7a7d3bead5210d212fa2707dcffbac154e4f11bc5220e8614e0703",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP12-002",
+     "output_digest": "9979f21620bd618b3c99d45aaf953d30b4eb4bffe1ba3b335eed2afab43d2b0b",
+     "claims_n": 4,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP12-002",
+     "output_digest": "009b9563d4b7a7dad2f9486924e7ada4267b8f0aac3778b5a86b49690f09c010",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP12-002",
+     "output_digest": "8f18932c14045e9985e00a30b06a8cb3c1d967d3f92689969fcd2f8256415381",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP12-003",
+   "profile_id": "CP12",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "圆领针织衫罗纹二点零版",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP12-003",
+     "output_digest": "2a7dd50a3c2553bdc2659486acab839fc230ccc83968f6656e31baef907509a3",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP12-003",
+     "output_digest": "b5e4c1fd8894919bc4fabf3828e9d291d93d4a802413fd552b3740f92328f6bb",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP12-003",
+     "output_digest": "358be6585a86d5723c90ea95f896315e3881d7de8506396a55d7c6243bd7b843",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP12-003",
+     "output_digest": "e1981bcff9b9209a1ecece13df56b680c8999fae2f215b082ff212ab947ca903",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP12-004",
+   "profile_id": "CP12",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "大衣挂袢零点八版加固",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP12-004",
+     "output_digest": "48591777562f8e913f45dcc4e65a10bdd5b49244ced0af428f2bba59476a9dfe",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP12-004",
+     "output_digest": "067685a3c3430e96bb9f983930a0e35e90ac0aff249ed8f5093192cbf36ee469",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP12-004",
+     "output_digest": "4dd1e22a3193415f80dddbd33f6a3693a472e49e7513037ff60f2df92907db89",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP12-004",
+     "output_digest": "7eebf5e5e1121837725877ed410c784331c0b13337a501c655fd141c35a5865b",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP12-005",
+   "profile_id": "CP12",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "半裙侧拉链一点五版移位",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP12-005",
+     "output_digest": "892211267787ed12d13b791bc163b268135f955ed61e0a9c2924bca8d27e40fd",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP12-005",
+     "output_digest": "5fd9018390edb51cd71d9a77c65af58eda1f2f1708ff414e81c33c455fa2169e",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP12-005",
+     "output_digest": "2c0714986d43532f0c248f47d511eb9fbd5ae9ab74ffa8b312344bd4299b80e4",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP12-005",
+     "output_digest": "3f96ba1773992f474d75590ac1bed407a92ac247eca917f1196500a31809d2ca",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP12-006",
+   "profile_id": "CP12",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "连帽卫衣抽绳零点九版取消",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP12-006",
+     "output_digest": "f0e564cd80931fb4cd02829d9254ae6e8724b2f6e7d297bac7fd29c55804a3ef",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP12-006",
+     "output_digest": "6658600818b1033a765cd46c91cb2b4d1a94c5abe1e6d487580a48fa7660a8fc",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP12-006",
+     "output_digest": "7787d02e11a3793eed58be05d8a37459e1a47624486108d2735b134de305da69",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP12-006",
+     "output_digest": "d5bf70f6d740a5ab3830a52829563a395b35fa65d25f1d42ccb3b3db99901631",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP13-001",
+   "profile_id": "CP13",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "短罩衫在通勤与周末采购之间",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP13-001",
+     "output_digest": "898637ed4dbe08ffdb481ba1df67b996066bd6ace728de2a00ac6052cf9f48c3",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP13-001",
+     "output_digest": "e31198bbed620b0a44ca3ea3762cf84d7062296f35ff4f0eca7473c61140300b",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP13-001",
+     "output_digest": "45873d5c1d3714d4d7db182c72fc70c496eeb7dc001294925e75c78780b8e1c1",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP13-001",
+     "output_digest": "e30169c87726c46027fad2516ad28bf6578babc09a3a99cd84043e333c367a44",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP13-002",
+   "profile_id": "CP13",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "褶裙在久坐与站立看展中的位置",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP13-002",
+     "output_digest": "0f2474ded616122156374203ecf9fac5fef7ba51a0746b6ff8941945dc069a24",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP13-002",
+     "output_digest": "fbd7ee3dc6fb6f20fc1eec00c9702619596c83ede4ba5a3c160e7d3e0335b831",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP13-002",
+     "output_digest": "5ec2bb57d140a71a81a7701fb0be041be757a7d77556c685f9168914310ddd9f",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP13-002",
+     "output_digest": "a588a04adbbfb0f174c834b8d20d307449cbdd848351250bf423d44c94ae9700",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP13-003",
+   "profile_id": "CP13",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "针织背心的换季叠穿角色",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP13-003",
+     "output_digest": "afc8bfcdc12b03b55abfdc05cde1804690867feeed1a8c0096ee41cea2340cfc",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP13-003",
+     "output_digest": "6b43b67aaaa60270e672f398f85e41c19c179b3cae1e5c70854a824109bdea41",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP13-003",
+     "output_digest": "6177ccb43bfdf9d05576be67660f250380ad979a5b91a4e2c2d1aa9ff9510548",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP13-003",
+     "output_digest": "36795dd236bf058505a8acc4eafbdbe3032c4279e26034e6aa36ddef040e657f",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP13-004",
+   "profile_id": "CP13",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "窄幅围巾的室内外角色地图",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP13-004",
+     "output_digest": "e8e28050b5192fca7d4fde01623a227b1304cc96b03ccbf966dafcfff5b8a18a",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP13-004",
+     "output_digest": "f1ea34bd8d9b9ae6467fc1dc80546503770fceaed0f4de56b2b201577fdaeebc",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP13-004",
+     "output_digest": "d7940a87eb9eb04b0800fd1d868bf4c55d5b1d58db82840bbfa2e12150d24077",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP13-004",
+     "output_digest": "5673d09f76aeab9dc4321bcf04a3ed75b1b6d62858e873cefc12da4b7133a35e",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP13-005",
+   "profile_id": "CP13",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "工装外套在出差与走店之间",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP13-005",
+     "output_digest": "4a3f8e55f902482f1ab3e1bfb301bfada0b953b6f136e9e47ad10fe0a8d7986d",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP13-005",
+     "output_digest": "f6c675d9aab66776370b8313436ace618388747e5b71ce2510d994dedce63375",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP13-005",
+     "output_digest": "64d2ecee6040b35156aab05434f5be94083dbef502e520c182405428ebaf372f",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP13-005",
+     "output_digest": "4916429dd03f9d57385cb61517c18301577ff0243b6d7b448b2c1ef4c118b0d5",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP13-006",
+   "profile_id": "CP13",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "连帽卫衣在周末与家里之间",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP13-006",
+     "output_digest": "2372b1380dee474866b09ee9d60ed3bcbb27e59e01e0024a5c2857aba16ef24d",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP13-006",
+     "output_digest": "e7481bf5f51f4d0b9a3d468530939efec6140caeac29a99eaceb6d8ddaedb061",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP13-006",
+     "output_digest": "68728b4c341b5aa4a4aa1f5b3292907342218fb8e8f4f92b9f44201a50f90d06",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP13-006",
+     "output_digest": "00b8ad9d36c1a6dd4370486862914d9358600fe14aeca25fc333ece3f6c37679",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP14-001",
+   "profile_id": "CP14",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "蜡感棉布上的水珠路径",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP14-001",
+     "output_digest": "34f2f9a839ab4531bc2e4bb998256f8bbe774d7527f1623f4e10088e49546d7d",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP14-001",
+     "output_digest": "61a630def4c33c3e6314d5e3011991e34add5e2f070bcf0a3d3fcf964e0527ff",
+     "claims_n": 4,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP14-001",
+     "output_digest": "517590c2beb40d7e0bd403cf4dccd02acde32d8a74147e8db6c77d0fa7e50d25",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP14-001",
+     "output_digest": "7db90bd6a03ee509ba858863dd209901937a15c5cedb27c007286f5a752f7d8d",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP14-002",
+   "profile_id": "CP14",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "斜纹棉布折起与摊平",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP14-002",
+     "output_digest": "8cd57e6e738f999619dc5668fa5003b9e5ba93071452dc95b2647ed397dbe8df",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP14-002",
+     "output_digest": "2b44b82ce0028e1b25727df5f50091361de4df20f6df058a2438ba8a6ce10be7",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP14-002",
+     "output_digest": "eb47d439aa8b4875d61cb55b7eeea20f451109dced3e8cd78b5a3eab3adf33ab",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP14-002",
+     "output_digest": "a300eb7728c8526f1162436dddb2508ce5247071d50665577deaed34e6a7b351",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP14-003",
+   "profile_id": "CP14",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "灯芯绒顺逆毛的明暗",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP14-003",
+     "output_digest": "5f68b73ff835bf2d6b98c6e5603535824a5359b950f51e86f86fc16b1fe88ac9",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP14-003",
+     "output_digest": "fe898cd01a1f2846d995ef76d403be5846ce1009908cce53b0edb98b8987cdfc",
+     "claims_n": 4,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP14-003",
+     "output_digest": "7c1ff9aa20fa1471a683f25ed1fbe9d8ffd6b94bd4b696126ade3df2a41a9ce0",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP14-003",
+     "output_digest": "c50aba0724b4ddcdce937edabebc487762e0220b278a3d8aa4922a44a2b1269c",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP14-004",
+   "profile_id": "CP14",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "金属拉链越过弧形门襟",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP14-004",
+     "output_digest": "a89f15ec8d1c7fb2f973bc7061ac3f73c48d5f1632fae90d2babd75587ed81e7",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP14-004",
+     "output_digest": "8e9072cd66135e1b0ffa25de57e5fab197f1a9fe9d16730bca8fa925f269f247",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP14-004",
+     "output_digest": "4f1716bef1ea00200a7fc2dfe3a5fe018078ddbe41f7265d43b3dca51a829f69",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP14-004",
+     "output_digest": "480dda96c74f08170693301cb4caf0ea21544fa506a9cb286e2350c20a1ac66b",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP14-005",
+   "profile_id": "CP14",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "B",
+   "scenario_label": "绗缝面板按压后的光影回位",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP14-005",
+     "output_digest": "1fd23b335ef8c7bbffc683e8a31fd04bfc4d7c7afec517aef48886f4f0a45acd",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP14-005",
+     "output_digest": "bae8ac0cffbb49120203249edfdebe8f8534947dd107255313381616c874c6a5",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP14-005",
+     "output_digest": "1eb4363d7e3106a2d7120c3e85d45829f61d4ccdc2a3f7f60f2a69d32b45f406",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP14-005",
+     "output_digest": "e5e73f52197281814bd395a40f5baad2f1ec4fa351cd3e763da0980c95e71042",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP14-006",
+   "profile_id": "CP14",
+   "family_id": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "lane_id": "A",
+   "scenario_label": "亚麻薄片迎着窗光展开",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP14-006",
+     "output_digest": "ed79b2b5fa950ed7339ea17c1c9cc8ef48b5507f3ce550ceca4759d882afb8a6",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP14-006",
+     "output_digest": "e83ea3fe44cf300951c8e8bf71dd6399ac4abca057ff1557243de96e2c2b4109",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP14-006",
+     "output_digest": "16ce3ae18d68caed4a4b7646b4e01e9dfe6a4bad8ba4cb9d11e14758596d7145",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP14-006",
+     "output_digest": "cd0c6d4059bed39ca0dfb9d811c4f156295d59195595bbfbad551f6e0f7a2df9",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP15-001",
+   "profile_id": "CP15",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "十八件条纹衬衫的到货差异",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP15-001",
+     "output_digest": "5ec3a820a912b3c54b98ed23fb88a8e4cd9356b02a07ab6609ffb9a1c707e928",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP15-001",
+     "output_digest": "ce4d096a7df2ca5eeaa674fa3226ecf910c652999c82afcf7046b936e5e75037",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP15-001",
+     "output_digest": "4b5a7c84ec110c3c0d14276e3e0674d8a705edf54b91d2310c431ffc1894eb69",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP15-001",
+     "output_digest": "642997e4a66bac51ac8c63d1e2757d82a0660a04c5e312eb9120e0187cb307fe",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP15-002",
+   "profile_id": "CP15",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "十二件短大衣先停在后场",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP15-002",
+     "output_digest": "e8215d8446ce91f9c52f5b251c3cb0521e0a52358ae86f27c816aa0f0709c596",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP15-002",
+     "output_digest": "d33cde34cc009ab17f0f0ec16593a5288a9977ac0635736dcf48e4c3d6a87ab2",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP15-002",
+     "output_digest": "9527c3a9fbbcdaa53c690d6f3557b8aedd9f077fa4e86cfeca779b6f26dfbfbc",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP15-002",
+     "output_digest": "76ffb1d0f33028d45cca66481eb4c09977eb1ec725f89b67fc8818ad764782fd",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP15-003",
+   "profile_id": "CP15",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "二十四条围巾的折叠上架",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP15-003",
+     "output_digest": "42410264ac3df2e85af041496e51608fdaddecfda43dbf2342e07c164101228a",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP15-003",
+     "output_digest": "122c6dc693fdff7e5e79b130b470cd6a4d369939d0d16f247da41599cf13db4b",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP15-003",
+     "output_digest": "b2e15bbcbaabd41951238809e3dce3112f350265ab24e64b704537bf1f445083",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP15-003",
+     "output_digest": "becde67c15d0aa58ad0d67ab09b3c97ced87451159c3609477e82324e5a7c86c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP15-004",
+   "profile_id": "CP15",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "十六条长裤的线头返修接力",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP15-004",
+     "output_digest": "7754da3e8faa8dbe99fd8e5df936253d1cd0a50132b2400b0ed9ba40b3e59d4f",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP15-004",
+     "output_digest": "7ebdff987fbb1216c1ac665290185122af7fc67960fc6bb13f232dcb1cc73c0c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP15-004",
+     "output_digest": "6db6aceb58a5e5cfd883f4670d03e28bb4c497d3620334ce898304b4f729b8a0",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP15-004",
+     "output_digest": "9c5787dbdc116287e597ea27048d2accfd95287fcdf5d510af9c985cf9a5ca25",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP15-008",
+   "profile_id": "CP15",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "九条褶裙从箱到两种陈列",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP15-008",
+     "output_digest": "6a22bf414e71e295d5dc6fe71a1835aee79b90ad4943a55c43b09a73a64a3997",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP15-008",
+     "output_digest": "16dc294d2669977f65e898a75c8e201754e3dc1dc77fa5d201b19d357909453c",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP15-008",
+     "output_digest": "af8db73f51d23ea1193d00f063ff6c1bf4333112bfbcc0574ec0d5d28e17f28f",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP15-008",
+     "output_digest": "42e3bc9f48920cb3cafbd657c15a9c3950272d674e342d8a7c84d3a0542a106f",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP15-011",
+   "profile_id": "CP15",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "八条连衣裙中的一处勾丝",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP15-011",
+     "output_digest": "5137efd57c7d59e1c5fc5e529cdb034ccde1681229350d0a03bae3db899a1285",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP15-011",
+     "output_digest": "12f3051dede44521b274a798f1cbcbd876def11450f9c4552a38c7e105667f66",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP15-011",
+     "output_digest": "f7994181f8c673d5b552449b701c83eadd7b90709a033e8f9907dc44e8b8a910",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP15-011",
+     "output_digest": "a0e8402b674b460b0850cda157c70edaab9bc6878519727581bd44a203e4addf",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP16-001",
+   "profile_id": "CP16",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "面试套装的袖口取舍",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP16-001",
+     "output_digest": "43401ffecef2fca543c52907f4fa6a39b527502ed56452646e8b94bc3ccfd311",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP16-001",
+     "output_digest": "9ad29c4528b1afd283bac9ad5979fe83f889ba790829fd2b4ffc8bc6b8a79da8",
+     "claims_n": 4,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP16-001",
+     "output_digest": "93978ddb6da6f1ef10f70ffe7e213c5dc78930056e2c9f2c67ca4eedffa4713e",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP16-001",
+     "output_digest": "5b2db8f1ad4ead598df6b4b49bdbd711846885971c555c657633498b7572e771",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP16-002",
+   "profile_id": "CP16",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "雨天通勤裤的临时处理",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP16-002",
+     "output_digest": "4f52667742a9d803c889752d004d7ecb4a3b9c23a4beb4dbf408db724733fe70",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP16-002",
+     "output_digest": "78b43413b9bb31cb75d6521408ed701964cd6f90e5dfe853a42b2377e550bfc0",
+     "claims_n": 4,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP16-002",
+     "output_digest": "ef0963d93f3e5fc0bde84954ba0c874aca23a3d38d66ca86a38d99342670f9cf",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP16-002",
+     "output_digest": "f5009849bddc9b81154ef77d69ba389a813405cee72f9fc082a469bb38139da9",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP16-003",
+   "profile_id": "CP16",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "提琴演出服的抬臂复核",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP16-003",
+     "output_digest": "6f60bce01d13eccc12c73e31186fe38c4b3b05b19c8040b0dfd026f190bec269",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP16-003",
+     "output_digest": "3855a5ca3ed55ebe1fec9ed493c62b011a5071a7408d80eae136d0961701058c",
+     "claims_n": 4,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP16-003",
+     "output_digest": "39ddd14140817a2f4ea695a8cfcf74acfcb6db9b9140bb64ba761e87bb969cd9",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP16-003",
+     "output_digest": "7ea7bc3fb8a281aa73e5f9a257187c3827518b64bd4550b770cc23178ccd6700",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP16-004",
+   "profile_id": "CP16",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "后厨围裙的分层冲突",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP16-004",
+     "output_digest": "0b6a9143caa089020e2df7a5a07c3a1260a21265903d4cba8ae996f2c26bd7f3",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP16-004",
+     "output_digest": "d93d17b4b0a9ba5835ad999a195e7225f1e1578723b3508ef042463786940e5e",
+     "claims_n": 3,
+     "surface_units_n": 14,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP16-004",
+     "output_digest": "efaafade34fd7097bac75ca929576bb70f2d7e653bed5ab8b00b7765c29ec9aa",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP16-004",
+     "output_digest": "24c247a59a6ec43506f3e54afa52146ea34427f0f38056eb65b84d4e500f611b",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP16-005",
+   "profile_id": "CP16",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "坐姿外套的拉链可及性",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP16-005",
+     "output_digest": "4e9b02633f4a9a22fc286dba899ae4965a02e39f9764afa34279e6ec4f494553",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP16-005",
+     "output_digest": "a100ede498fd8d3581355ffac62cc2f804fa51fe773585690fbf9d99206a8211",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP16-005",
+     "output_digest": "b9a5d4720a0f742c611e7752bacca556b48257a91fb904a6ae027ec79a7fc291",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP16-005",
+     "output_digest": "14f8924ba30e7986270060a52d654b4a9eb5215450a3cff07f09016615534f3f",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP16-012",
+   "profile_id": "CP16",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "骑行外壳的背包遮挡",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP16-012",
+     "output_digest": "827095b73604e8d82e3687036123ba8b86e5214e0cff68c90318c98979ad1be1",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP16-012",
+     "output_digest": "0eaad166f9d4b858c9fd7cebf923bc242ce96e85a1b16386bc9c9d3229dc7898",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP16-012",
+     "output_digest": "7b0a0ceb1d4bf87d2f065b8f8ca8dc75a0cbf57dc25928b33d525948ed678828",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP16-012",
+     "output_digest": "781a3e69a43c1c661b5911cbacc8a70e2336596364041be64f2145702288d604",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP17-001",
+   "profile_id": "CP17",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "西晒橱窗的冷暖色块",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP17-001",
+     "output_digest": "36ba57e4193ab7743ae972ab369cbe1033cd01825633beae94f7eff186b52a8a",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP17-001",
+     "output_digest": "5ffb36390f0886693faf19f51feac59be0b4bdbc2179cd1fd42816c3c838f6a5",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP17-001",
+     "output_digest": "366e3753e4ba9e146d59d76094eba7750d68dd6a882d05da322e6360809c47da",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP17-001",
+     "output_digest": "fb6fc363d08954d603c2ca304c1d5e7838da44b7060fcef0a178b8a5eee927b9",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP17-002",
+   "profile_id": "CP17",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "试衣区出口排队线",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP17-002",
+     "output_digest": "d8c87ff2079317a2395bd0d34fe5cf06de0339202ea1558c68ee63e8340e250c",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP17-002",
+     "output_digest": "7f139c607f32c01edbb31370094fb8c1315b5469b0c373d7ad7b9d90be9dad89",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP17-002",
+     "output_digest": "a879a3287cd7875db047df1027a3391cb446e9da7803e54748cdc065b0069893",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP17-002",
+     "output_digest": "a039303b9ce43c68b0eb43712533069a0901b14043a6a617da6247cddcf329c0",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP17-003",
+   "profile_id": "CP17",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "针织叠装高度",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP17-003",
+     "output_digest": "0291f4f1ffe492d46c4719918cd34ace2bc70027c1be9c1a287c14c5bd7eb7e0",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP17-003",
+     "output_digest": "9e7aa2a01d89d5cf706988cccbe3dee3f71e115f6b6b1b244bc3a928610e04ea",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP17-003",
+     "output_digest": "475ba11446af381c6e9dd84f6d855942c66fbb989f3704c4248966a1332025f7",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP17-003",
+     "output_digest": "3b790a39e44177e3ce1ae929b73551c40ab1e4b04559a11182d625a6858563dc",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP17-004",
+   "profile_id": "CP17",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "配饰墙的密度减法",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP17-004",
+     "output_digest": "c23315bd8b973a7e133634ec0b01d32d89935f7a0dce8e701c560cf3e5ba2c1a",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP17-004",
+     "output_digest": "13d9efb1f1b7a35d967597660222eacb60c97f320c75690cadd2699a685ac9a0",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP17-004",
+     "output_digest": "825ef15a4f0e974f8a4bd722cde062316027595d1ba49ea19f94d6322751f045",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP17-004",
+     "output_digest": "413ff64db67773fe22b2744854c5070a0db154f283bc5c68b4fb16b04a6c8e63",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP17-005",
+   "profile_id": "CP17",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "雨具入口的湿干分线",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP17-005",
+     "output_digest": "1dec086313f97b3e6e66d6ebfe47f7ec73bc33f230121bf48cbfe3aa32809281",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP17-005",
+     "output_digest": "b1e4644bd2c37427a29e19ece5cf84cd95fe4e4741f7e3a4ca2fa827a0ab8b03",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP17-005",
+     "output_digest": "2cad252589f556dead95f8b049c9410b3370af9d480c3c12908bde5482be96d6",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP17-005",
+     "output_digest": "2b6fe83d09caa2bf2859725b1468674a5040c4cd3d2be49b0b3314ec83fb86ba",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP17-006",
+   "profile_id": "CP17",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "人台成套关系重建",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP17-006",
+     "output_digest": "22796f6a2fe7f37429d38c8379e08da242d47385828d7d88beaad4c1757ba3f4",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP17-006",
+     "output_digest": "c68dc91cc271e60145d9dc35e5e0d2d6f890910af4d445cec78db78dac14b4a8",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP17-006",
+     "output_digest": "1f7b8fb8d7eff0228fee0478df42d54eb6d7222e31c077a95f197d6e2c2bafc1",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP17-006",
+     "output_digest": "9c3169615ef366249ca1319ea051b86038c7f35ce36bac74f147964a069353da",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP18-001",
+   "profile_id": "CP18",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "潮汀雾晨的渡口店",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP18-001",
+     "output_digest": "252da5c2dbf556548645368701b0dedada0498fa0dfa97c9b2b66232443cdc7f",
+     "claims_n": 3,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP18-001",
+     "output_digest": "e59bf10fbc27565e1d831f60181e5351f45148469b4dce2857abe803ef472789",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP18-001",
+     "output_digest": "0c403d4e4084c977b14c8845126110a394c374270022f804981897b8d05a85ab",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP18-001",
+     "output_digest": "7689fa768501c574434b01371ffff1fe99179685d58c6fcfd8aaaa55da207605",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP18-002",
+   "profile_id": "CP18",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "栖岭寒潮前的坡街",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP18-002",
+     "output_digest": "f5d2b924a35c86807eb520e69a51dbd0d61d1a37a9f0daef9e308d6655682060",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP18-002",
+     "output_digest": "57ff2c261f6f7cd38f534d7f6d573a4fccb537fb53e27f844d809bdb9d2a8ec7",
+     "claims_n": 2,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP18-002",
+     "output_digest": "1b85072fad6ccbeefe1cfe6487d215d387e6d9c2956c915f98416768a4a0a67f",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP18-002",
+     "output_digest": "3c0c42e632a7ec69417b9e10351a69dc91702765c5d90ed6f542a25709ce226d",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP18-006",
+   "profile_id": "CP18",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "炉湾闷热午班的拆箱",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP18-006",
+     "output_digest": "4aa048a6871a5ec3a9db1506728f845f7a18e12c190d6cd3d605448ebc99de66",
+     "claims_n": 3,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP18-006",
+     "output_digest": "f05c60d359ff06e4945fe0416044db02ef29a42cfb1119a5bda2bb94a49c615e",
+     "claims_n": 2,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP18-006",
+     "output_digest": "e658c9e344a49ca5d5b06ff234e38bdc0d0ae3c8ee7a3104f8e13956a0b75d6e",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP18-006",
+     "output_digest": "129f3e570e1f870be0e9734072e12ba02a488f4f91cd2753131aa19c53170f67",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP18-008",
+   "profile_id": "CP18",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "石渠早课前的粉笔袖口",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP18-008",
+     "output_digest": "c9f31208c74f95c4a132aec0fa8faaa61ad718ea5409de80607b5fd942b73482",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP18-008",
+     "output_digest": "812dea921e56c9fe3d0fe136f31e4f3832784119610543d9c7a982e147767df4",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP18-008",
+     "output_digest": "4605cab99c62ff42c721a9d214a347bec401d82db7576e732bf4a4521506430e",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP18-008",
+     "output_digest": "77674b56a8fba3ce69bfbb5cdeab52a161f375492d4b44db2ebca189b62337bc",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP18-009",
+   "profile_id": "CP18",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "A",
+   "scenario_label": "砂岬干风里的围巾",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP18-009",
+     "output_digest": "3d466148d8f028cdc88ec8a9261bc74d5a023f95e158a589f74ee689fca19f26",
+     "claims_n": 3,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP18-009",
+     "output_digest": "09147af3a9da2d9439a0eb9b941662bd9b4e19a37f644176129c134f3001359d",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP18-009",
+     "output_digest": "25544138bc7962b7df254d84c10ea86114d370b2422898ebc1e953f44eca8941",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP18-009",
+     "output_digest": "76e3a2de76f963cbfde235e2c75a27bc2952a7e0994a4b2d5fe85fe52eb4d487",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP18-011",
+   "profile_id": "CP18",
+   "family_id": "F4_STORE_LOCAL_AND_RETAIL",
+   "lane_id": "B",
+   "scenario_label": "稻湾收割季的袖口询问",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP18-011",
+     "output_digest": "4234053d560c5814677399f520967bbc57be419d22e2f0dfe400e76395e97ed7",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP18-011",
+     "output_digest": "1e75c33b467c5a5f93bf2853c42ba7c99caf822ed9d00c97f74d78c005b7a4dc",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP18-011",
+     "output_digest": "74be6bdb63938d1cad12f0e693b5e98a8bccee1b830a2307585dde731888a846",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP18-011",
+     "output_digest": "b8a7866b7a345ae933b02fc02827177519f7131c728ddabc7e9a9907e8eeef35",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP19-001",
+   "profile_id": "CP19",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "缩色换补码深度",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP19-001",
+     "output_digest": "4971d22f650e7e2876ec9ef64ba8b002f017e1a32fb35e18639f8b14f4c14515",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP19-001",
+     "output_digest": "fa525d03449cbb1929e5c37d332be813044be7775bad9c133295d242de7e35c9",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP19-001",
+     "output_digest": "17adaedc38d351ffc0f07ba6cc4e8d14ccf7644f0672996e6c7e9e6610146b21",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP19-001",
+     "output_digest": "395106e890f590d0f9a9b9e6f2931825f9fd11e52877b9b5ef562e20e3fa4de3",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP19-002",
+   "profile_id": "CP19",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "取消形象片改做样衣",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP19-002",
+     "output_digest": "e0392ad3e1a657ebceafa302298eb02b8ff7b3a6d298c7038406a0659a1ad2c9",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP19-002",
+     "output_digest": "4657a84ee4707c5f29530f6ec3da669dee76e9054c1890ea7ab63c771be1b5de",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP19-002",
+     "output_digest": "74aae021a82494ed501d004f0b15a2b7686d6799c481d4a72ba4663b79914148",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP19-002",
+     "output_digest": "00d481624c77cf97f2c021ed56c8a3e08b1c8156ee823acda1e320303fa661e1",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP19-003",
+   "profile_id": "CP19",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "B",
+   "scenario_label": "推迟开店先改排风",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP19-003",
+     "output_digest": "a8ba44e718c2ad3ef1cdcb0d5f0c534571e56b04a913d890c045612242a1ebc5",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP19-003",
+     "output_digest": "13d5f1796532f52409e5b91ceea8f3753b217f5a400892e237538df2aa1fa9ea",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP19-003",
+     "output_digest": "20c5f8c5076699dd3a9c6a221367559136b8b90dc83a18966292bfafeca7431f",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP19-003",
+     "output_digest": "9d3f52ef528fd7a9ecea5cc4754d71db631f6bed0ab0410228053ff3ed34f3ec",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP19-004",
+   "profile_id": "CP19",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "B",
+   "scenario_label": "放弃低价面料接受延期",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP19-004",
+     "output_digest": "3c7e8ca8b1a5ccd6ce310bc9fca894b0978f7f46ecffb9145ab8ad37aa054ee8",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP19-004",
+     "output_digest": "1780907f044385e7bd7e22d80ba96b20786b3dede1d943f94f4da131ea9b55a1",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP19-004",
+     "output_digest": "4d1bd3a33ac8b0fdebbdbed62a7561c76b0191d9f317207f7d98ec3c6ae0dd7f",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP19-004",
+     "output_digest": "66ad9a8caff988933501776b8999308f298e7965cd75be2c672e810699af1fb6",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP19-005",
+   "profile_id": "CP19",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "保留维修台放弃销售墙",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP19-005",
+     "output_digest": "7e24b58f47485a93c3586afe901996c54c767e6779ac8f66858475413cbf885c",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP19-005",
+     "output_digest": "3f0bd786220c856b32ffee4c9247ef1fcea25fbea21eabd483832f945f6aef66",
+     "claims_n": 2,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP19-005",
+     "output_digest": "c3a53c187a5f3bf834ecf7d8db80196354ea4c780a7778c75a405560352ba0a8",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP19-005",
+     "output_digest": "2a1e77b64474af6ed676f38eba113ac53551d23b4ef008583f6b87c4ba6c78fa",
+     "claims_n": 3,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP19-006",
+   "profile_id": "CP19",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "限预售避免交期扩张",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP19-006",
+     "output_digest": "83a03d82e247b03095739a61254ef5b8988944750f0094867dabd634e71155a7",
+     "claims_n": 2,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP19-006",
+     "output_digest": "5481387bca6c11dd23de81ea10ebaabcfe9dc0f3f694fd7f1f5f6a8ca24a4db5",
+     "claims_n": 2,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP19-006",
+     "output_digest": "315c70052ae5226c8d74c7ff1922bdc6e912ae7aaf020e837141b0df24ee98e7",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP19-006",
+     "output_digest": "a3944641500b0079e6ba1d23819e5b4e2c4673335c65652427d3adfbd1b735a0",
+     "claims_n": 3,
+     "surface_units_n": 8,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP20-001",
+   "profile_id": "CP20",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "洗护标签更正追踪",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP20-001",
+     "output_digest": "19f56ff8d62b827f65632225ca2c25587a34eb2e81c0e0699580773cb5b623e0",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP20-001",
+     "output_digest": "c886916d9f240b2b361c467a4782a5bd92b20d18de089ee253516aa7a3a99287",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP20-001",
+     "output_digest": "3ce9d011cbd411eb51ce1959782b02ae24132e5cdef4e6de043c4a059e123632",
+     "claims_n": 3,
+     "surface_units_n": 10,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP20-001",
+     "output_digest": "3ca73c8c5058c596208168c96af518eb466b3cae9b18f41c4ae20b862815d0a7",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP20-002",
+   "profile_id": "CP20",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "无障碍试衣间清障",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP20-002",
+     "output_digest": "64dbc0a82b46095852365847f1a651553d79393bccd0c959e1a09da2fd1250c1",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP20-002",
+     "output_digest": "29af9c0ea615b82884ff7d9aec60bc7ba88a1ae4dcd2e61ea900af5509bece1c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP20-002",
+     "output_digest": "25c2cf90aecb8b7b09fdb2038bef32e1ec5218cbe6480bcb86952cb662451440",
+     "claims_n": 3,
+     "surface_units_n": 9,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP20-002",
+     "output_digest": "5b08c2c6797e15421c01039387c6d2c49e32d6b76963bb575bf0ccf8c358ee7c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP20-003",
+   "profile_id": "CP20",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "B",
+   "scenario_label": "维修十日回复偏差",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP20-003",
+     "output_digest": "ba82d7f4d8d30c3fd0c46c62327064a196f5f963540e0c7710aef3865d0db4fb",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP20-003",
+     "output_digest": "f720d1c5558eb902768552bcd0bc1346934e9dcb8cf85573b7afc179faec9f52",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP20-003",
+     "output_digest": "3c0fc665c1328f95fc7638264e018529deba9e3483b11ba0cd942cd20dd54cb7",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP20-003",
+     "output_digest": "98ea9c336dd9f7622c9b946097a8bf0af3b968628f99e1629ef548208271f44c",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP20-004",
+   "profile_id": "CP20",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "B",
+   "scenario_label": "尺码表逐款复测",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP20-004",
+     "output_digest": "65b4f7ed92ff61c6c7d2f92857e517a136826121096a806bf6cec57c78d9dbb1",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP20-004",
+     "output_digest": "639f712094795256fba64837615ef2719128dd56bcdbf5a33ad29f8c9f40b4a0",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP20-004",
+     "output_digest": "b1443d7c85eb1aed84d865b21fd16dcae02fc4cb21c682858bedebe3a8c2ec78",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP20-004",
+     "output_digest": "ffb960c436e35bf8a97be6dbf7554535f3e58461dda449c3dc412fa3bd1cdbd5",
+     "claims_n": 3,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP20-005",
+   "profile_id": "CP20",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "纸包装减量承诺",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP20-005",
+     "output_digest": "0f5723ffd982ad1842d8d4a30c92165a1b2993f6331566b55c0dfc3dc0378479",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP20-005",
+     "output_digest": "2d551f1e2a05c0b13af0c71063c823ddfb6d8beacccd91650c89b932bf86a249",
+     "claims_n": 2,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP20-005",
+     "output_digest": "7c0436fde4c78ce9d14ff4531eb7eda2ddb24523dff4716bcb47ad3189578d69",
+     "claims_n": 4,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP20-005",
+     "output_digest": "0614d0db0e1c2ab4eeed39e55e6d9af44da9617f5cd89f3bde3d60476d9942b7",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  },
+  {
+   "scenario_id": "G3-CUR-CP20-010",
+   "profile_id": "CP20",
+   "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "lane_id": "A",
+   "scenario_label": "员工产品培训覆盖",
+   "source_summaries": 2,
+   "items": [
+    {
+     "round": "round1_top",
+     "request_id": "G3-POS-CP20-010",
+     "output_digest": "0988f85d6f786d1cca1c369fe8a5fcae6e361e1bcde32b639f37b1a9e466bb65",
+     "claims_n": 3,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round2",
+     "request_id": "G3-POS-CP20-010",
+     "output_digest": "727c334771e34a8435b116e21a51e49d8577571410ac1c25998be6cd77dc4f1c",
+     "claims_n": 2,
+     "surface_units_n": 11,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round3",
+     "request_id": "G3-POS-CP20-010",
+     "output_digest": "51cddf5e9a35ac73427a0d9fa8a0796969cbeccc16431be7570ac5ffe65f573e",
+     "claims_n": 4,
+     "surface_units_n": 13,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    },
+    {
+     "round": "round5",
+     "request_id": "G3-POS-CP20-010",
+     "output_digest": "ceafa6d9edb747b1bd9e977ad1152230a502179e9cb6bf089b76675e06c79d17",
+     "claims_n": 3,
+     "surface_units_n": 12,
+     "publishable": false,
+     "synthetic_qualification_only": true
+    }
+   ]
+  }
+ ]
+}
