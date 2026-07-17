@@ -32,7 +32,12 @@ from brand_import import (  # noqa: E402
     preflight_brand_bundle,
 )
 from operations import HostedOperations  # noqa: E402
-from persistence import create_runtime_engine, create_session_factory, digest_object  # noqa: E402
+from persistence import (  # noqa: E402
+    RuntimeRepository,
+    create_runtime_engine,
+    create_session_factory,
+    digest_object,
+)
 from runtime_models import (  # noqa: E402
     RuntimeNarrativeFragment,
     RuntimePreciseFact,
@@ -526,6 +531,43 @@ def apply_alignment(database_url: str, namespace: str, password: str) -> JsonObj
     return {**report, "import_result": result}
 
 
+def bind_dify_state(database_url: str, state_path: Path) -> JsonObject:
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    if not isinstance(state, dict):
+        raise RuntimeError("The Dify state must be one object")
+    mapping = state.get("fragment_document_ids")
+    mapping_digest = state.get("fragment_document_mapping_digest")
+    if (
+        not isinstance(mapping, dict)
+        or not isinstance(mapping_digest, str)
+        or mapping_digest != digest_object(mapping)
+    ):
+        raise RuntimeError("The Dify document mapping digest is invalid")
+    engine = create_runtime_engine(database_url)
+    sessions = create_session_factory(engine)
+    try:
+        repository = RuntimeRepository(sessions)
+        repository.bind_dify_documents(mapping)
+        with sessions() as session:
+            bound_count = len(
+                session.scalars(
+                    select(RuntimeNarrativeFragment).where(
+                        RuntimeNarrativeFragment.dify_document_id.is_not(None),
+                        RuntimeNarrativeFragment.index_content_digest.is_not(None),
+                    )
+                ).all()
+            )
+    finally:
+        engine.dispose()
+    if bound_count != len(mapping):
+        raise RuntimeError("The runtime document binding did not converge")
+    return {
+        "state": "DIFY_DOCUMENT_BINDING_COMPLETE",
+        "mapping_count": len(mapping),
+        "mapping_digest": mapping_digest,
+    }
+
+
 def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -533,10 +575,13 @@ def main(argv: Iterable[str] | None = None) -> int:
     )
     parser.add_argument("--namespace", default="diyu-pkg8-package10")
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--bind-dify-state", type=Path)
     arguments = parser.parse_args(argv)
     if not arguments.database_url:
         raise SystemExit("DIYU_PKG9_ADMIN_DATABASE_URL is required")
-    if arguments.apply:
+    if arguments.bind_dify_state is not None:
+        result = bind_dify_state(arguments.database_url, arguments.bind_dify_state)
+    elif arguments.apply:
         password = os.environ.get("DIYU_SIM_PASSWORD")
         if not password:
             raise SystemExit(
