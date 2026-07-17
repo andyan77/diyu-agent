@@ -1,0 +1,173 @@
+{
+  "type": "object",
+  "required": [
+    "verdict",
+    "candidate_commit_verified",
+    "input_manifest_digest_verified",
+    "output_manifest_digest_verified",
+    "evidence_manifest_digest_verified",
+    "checks_performed",
+    "adversarial_probes",
+    "findings",
+    "history_tamper_check",
+    "actual_model_self_report",
+    "isolation_attestation"
+  ],
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "ACCEPT",
+        "REJECT",
+        "CONDITIONAL_REJECT"
+      ]
+    },
+    "candidate_commit_verified": {
+      "type": "string"
+    },
+    "input_manifest_digest_verified": {
+      "type": "string"
+    },
+    "output_manifest_digest_verified": {
+      "type": "string"
+    },
+    "evidence_manifest_digest_verified": {
+      "type": "string"
+    },
+    "checks_performed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "command_or_method",
+          "result",
+          "exit_code"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "command_or_method": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "adversarial_probes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "probe",
+          "outcome"
+        ],
+        "properties": {
+          "probe": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "severity",
+          "file",
+          "description",
+          "evidence"
+        ],
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "BLOCKING",
+              "ADVISORY"
+            ]
+          },
+          "file": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "history_tamper_check": {
+      "type": "string"
+    },
+    "actual_model_self_report": {
+      "type": "string"
+    },
+    "isolation_attestation": {
+      "type": "object",
+      "required": [
+        "fresh_session_not_fork_not_resume",
+        "did_not_author_reviewed_scope",
+        "read_only_no_repo_writes",
+        "auto_memory_disabled_or_not_applicable",
+        "auto_memory_disabled_before_launch",
+        "isolation_evidence"
+      ],
+      "properties": {
+        "fresh_session_not_fork_not_resume": {
+          "type": "boolean"
+        },
+        "did_not_author_reviewed_scope": {
+          "type": "boolean"
+        },
+        "read_only_no_repo_writes": {
+          "type": "boolean"
+        },
+        "auto_memory_disabled_or_not_applicable": {
+          "type": "boolean"
+        },
+        "auto_memory_disabled_before_launch": {
+          "type": "boolean"
+        },
+        "auto_memory_injection_disclosure": {
+          "type": "string"
+        },
+        "isolation_evidence": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "auto_memory_disabled_before_launch": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "auto_memory_injection_disclosure"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

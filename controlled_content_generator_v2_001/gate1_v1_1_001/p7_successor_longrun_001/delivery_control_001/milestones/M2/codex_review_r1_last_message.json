@@ -1,0 +1,176 @@
+{
+  "verdict": "REJECT",
+  "candidate_commit_verified": "PASS: HEAD a7c51d48f35560a15768bf0be62092b45d468a54 是候选 e2e81cdc5d0e4b4d68690b2f96a7cca5c9f8ae89 的后代；全部实质复算均在检出精确候选提交的隔离 clone 中完成。",
+  "input_manifest_digest_verified": "PASS: e38f83835db3d02f15ba3dd4d19712f43d7b59e7e8787a5e6796e1e8f7b04f5a；11/11 条目、计数、候选绑定及 canonical digest 全匹配。",
+  "output_manifest_digest_verified": "PASS: 6b526c910d7ed64992a157435d39facf1f4cc34dad126c29e59f7c5056cccebc；41/41 条目及两个 frozen_snapshot 全匹配。",
+  "evidence_manifest_digest_verified": "PASS: 95abebfbc9bf9a5da960c57258f108acd43b639dacd5e59c2f279daef006d11c；13/13 条目及 frozen_snapshot 全匹配；VERIFICATION_RECEIPTS.M2 为声明明确的候选后审查证据。",
+  "checks_performed": [
+    {
+      "name": "候选祖先与工作树预检",
+      "command_or_method": "git log --format=%H -1；git merge-base --is-ancestor e2e81cdc... HEAD；git status --short --branch",
+      "result": "祖先校验 PASS。tracked/staged 零差异；审查期未跟踪文件未作为候选证据。",
+      "exit_code": 0
+    },
+    {
+      "name": "请求的 /tmp 隔离介质预检",
+      "command_or_method": "mktemp -d /tmp/codex-m2-e2e81c.XXXXXX",
+      "result": "沙箱将 /tmp 挂载为只读；改用调用结束即自动清理的 /dev/shm 精确候选 clone，仓库零写入。",
+      "exit_code": 2
+    },
+    {
+      "name": "M2 PRE_REVIEW 原始入口",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/dev/shm python3 .../p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "result": "精确候选 clone 中 PASS：SHARED 10、A 5、B 6 节全过，ARTIFACT_INTEGRITY PASS，M0/V1.1 均 NOT_QUALIFIED。",
+      "exit_code": 0
+    },
+    {
+      "name": "eval_audit_spine 测试",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/dev/shm python3 -m unittest discover .../eval_audit_spine_001/tests -p test_*.py",
+      "result": "49 tests，OK。",
+      "exit_code": 0
+    },
+    {
+      "name": "v4_recovery 测试",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/dev/shm python3 -m unittest discover controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/tests -p test_*.py",
+      "result": "49 tests，OK。",
+      "exit_code": 0
+    },
+    {
+      "name": "delivery_control 测试",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/dev/shm python3 -m unittest discover .../delivery_control_001/tests -p test_*.py",
+      "result": "精确候选 clone 中 68 tests，OK。archive-only 首跑因缺少 .git/origin 产生的夹具失败已由完整 clone 排除。",
+      "exit_code": 0
+    },
+    {
+      "name": "S0 全链复算",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/dev/shm python3 .../s0_m2_real_run_001/tools/s0_run.py verify-all",
+      "result": "verify_all PASS、s0_status PASS、accounting_status PASS；同时如实返回 telemetry_complete=false。",
+      "exit_code": 0
+    },
+    {
+      "name": "活跃合同集合",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 .../delivery_control_001/tools/contract_set.py verify",
+      "result": "PASS，drift=[]。",
+      "exit_code": 0
+    },
+    {
+      "name": "三份 Manifest 独立复算",
+      "command_or_method": "自写只读 Python：逐条 SHA-256；canonical JSON 排除 manifest_digest；frozen_snapshot 按快照文件核验；普通条目回指候选 blob",
+      "result": "INPUT 11/11、OUTPUT 41/41、EVIDENCE 13/13 全匹配，无重复、缺失或候选 blob 漂移。",
+      "exit_code": 0
+    },
+    {
+      "name": "首次尝试历史不可洗绿",
+      "command_or_method": "git log --reverse --ancestry-path 1c4f815^..e2e81cd；git diff 1c4f815..e2e81cd -- raw_first_attempts.v1.json；canonical JSON 对比",
+      "result": "提交顺序正确，但强制证明 FAIL：文件 SHA-256 从 91afd9ae... 变为 b6e8e8cb...，diff 为 +46/-16，除四个 schema_version 标签外还重排了 fact_ids 数组。去除尝试级 schema_version 后语义对象相等，但不满足逐字仅标签行变化。",
+      "exit_code": 0
+    },
+    {
+      "name": "DeepSeek 三回执算术与结算账",
+      "command_or_method": "Decimal 独立计算 cached/input/output token × rate_card_snapshot；按 provider_call_id 关联 cost_events 与 .runtime/deepseek_spend.jsonl",
+      "result": "三笔分别为 0.0001351、0.00012544、0.00011634 USD；回执与 cost_events 全匹配，每笔恰有一条 SETTLEMENT，CNY 分别为 0.0010808、0.00100352、0.00093072。",
+      "exit_code": 0
+    },
+    {
+      "name": "启动例外三处一致性",
+      "command_or_method": "交叉核对 SUPERSESSION_LEDGER §7、journal seq18、SESSION_IDENTITY.M2.launch_provenance 与 launch_record.v2 schema 常量",
+      "result": "三处一致登记：发起人手动启动、launcher 未运行、不得事后伪造记录、仅豁免 M2、M3+ 恢复 launcher。schema 的 record_written_before_spawn、auto_memory_disabled_before_spawn、launched_by 常量确使诚实补录不可能。",
+      "exit_code": 0
+    },
+    {
+      "name": "M1 启动入口历史复算",
+      "command_or_method": "在 journal seq18 的启动前 HEAD 6b213487... 调用 launcher.validate_entry(root, M2)",
+      "result": "PASS：上一会话 CLOSED_PASS、M1 八件套有效、typed PASS、两份独立签字有效、ready_set[M2]=READY。",
+      "exit_code": 0
+    },
+    {
+      "name": "M1 时代绑定演进与 spine 候选清单",
+      "command_or_method": "审阅 e2e81cd^..e2e81cd 的三个测试绑定变更；调用 verify_candidate_manifest",
+      "result": "三个测试从 M1 活树面重绑至 M2 期望面；fixture 型 M1 测试未改。spine 候选清单 79 项、digest c00404a5...，双向 verify passed=true。",
+      "exit_code": 0
+    },
+    {
+      "name": "诚实质量基线与遥测非阻断",
+      "command_or_method": "独立读取 batch_metrics、stage_and_kill.v2 与 cost_throughput_model",
+      "result": "first_acceptance_rate=0.0、formulaic_rate=1.0、四项失败均保留；S0 六键不含批质量门；blocking_semantics=NONE_DIAGNOSTIC_ONLY，残余扫描 active_violations=[]。",
+      "exit_code": 0
+    },
+    {
+      "name": "BOUNDARY_SMOKE 五子检查复跑",
+      "command_or_method": "PRE_REVIEW；delivery_control 68 测试；residual_scan；sealed_scan --selftest；独立产品边界、denylist、marker 扫描",
+      "result": "全部通过。候选树残余扫描 2868 tracked files、零 active violation；denylist 工作树与全历史零命中；干净候选有 7 个标记自引用，报告额外 3 个为当时 __pycache__，均属于定义源码、攻击测试或 M1 审查转录，未放宽真实密封摘要扫描。",
+      "exit_code": 0
+    },
+    {
+      "name": "S0 密钥、品牌人物与密封标记抽查",
+      "command_or_method": "只读扫描 S0 run 全目录的常见密钥形态；解析材料与输出的 56 个自然语言字段并抽查品牌、人物、QUAL/HIDDEN/SEALED 标记",
+      "result": "密钥形态、抽样真实品牌/人物及密封标记均零命中。",
+      "exit_code": 0
+    },
+    {
+      "name": "审查输出 schema 兼容性",
+      "command_or_method": "机读比较 milestones/M1/codex_review_output.schema.json 与 signer_receipt.v2.schema.json 的隔离声明 required/properties/additionalProperties",
+      "result": "FAIL：M1 schema 强制 read_only_no_repo_writes 且禁止 auto-memory 两键；M2 signer/request 强制 auto-memory 两键且不允许 read_only_no_repo_writes。两者 additionalProperties 均为 false，不存在同时满足的对象。",
+      "exit_code": 1
+    },
+    {
+      "name": "最终只读状态确认",
+      "command_or_method": "git log --format=%H -1；git diff --exit-code；git diff --cached --exit-code；git status --short --branch",
+      "result": "HEAD 仍为 a7c51d48...，tracked/staged 零差异。审查期间外部进程新增未跟踪 M2/Fable 文件，未读取为候选证据。",
+      "exit_code": 0
+    }
+  ],
+  "adversarial_probes": [
+    {
+      "probe": "向 cost_events 注入伪造第 13 条事件后运行 verify-all",
+      "outcome": "被拒绝，exit 1；报告 cost events recompute mismatch 与 metering report recompute mismatch。"
+    },
+    {
+      "probe": "将 stage_decision 的 assignment_material_match 改为 false 后运行 verify-all",
+      "outcome": "被拒绝，exit 1；报告 six-gate recompute mismatch。"
+    },
+    {
+      "probe": "篡改 RUN_JOURNAL 第 18 行 capsule 而不重算摘要",
+      "outcome": "被拒绝，exit 1；parse 状态 INVALID，明确报告 line 18 record_digest recompute mismatch。"
+    },
+    {
+      "probe": "扫描 S0 材料与输出中的密钥形态、抽样真实品牌/人物和密封标记",
+      "outcome": "exit 0；56 个自然语言字段及 run 全目录均零命中。"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "BLOCKING",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/outputs/raw_first_attempts.v1.json",
+      "description": "首次尝试不可洗绿的规定证明不成立：1c4f815 到候选的字节 diff 并非仅 schema_version 标签行，门运行提交还重新序列化了 fact_ids 数组。当前 S0 first_response_retained 门也未校验 1c4f815 的原始 blob。",
+      "evidence": "原始/候选 SHA-256 为 91afd9ae.../b6e8e8cb...，git diff --numstat 为 46/16；完整 diff 含四个标签替换及十二处数组排版变化。s0_run.py:573-582 只核 attempt_index、attempt_id、回执摘要和数量，不核历史 blob。语义对象除标签外相等不能满足请求书的逐字证明要求。"
+    },
+    {
+      "severity": "BLOCKING",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_output.schema.json",
+      "description": "本次要求的五键隔离声明与指定 review-output schema 互斥，无法产生同时严格合规的签字输出。",
+      "evidence": "M1 schema 必须且仅允许 fresh_session_not_fork_not_resume、did_not_author_reviewed_scope、read_only_no_repo_writes、isolation_evidence；signer_receipt.v2 与本请求必须且仅允许 fresh_session_not_fork_not_resume、did_not_author_reviewed_scope、auto_memory_disabled_or_not_applicable、auto_memory_disabled_before_launch、isolation_evidence。机读兼容检查 exit 1。"
+    },
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/telemetry/telemetry_summary.v1.json",
+      "description": "verify-all 虽 PASS，但明确返回 telemetry_complete=false；关闭文书应避免将其表述为无保留的完整遥测。",
+      "evidence": "summary 含 17 个事件及大量诚实 unavailable_paths；cost_throughput_model 已落盘、可复算且 blocking_semantics=NONE_DIAGNOSTIC_ONLY，因此按当前 M2 出口不另作阻断。"
+    },
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/OUTPUT_MANIFEST.v2.json",
+      "description": "M1 八件套验证器针对当前 M2 活树重放时会将合法跨里程碑演进误报为九项摘要漂移；历史入口必须固定到启动前 HEAD 复算。",
+      "evidence": "候选活树 validate_eight_pieces(M1) exit 1；在 journal 记录的启动前 HEAD 6b213487... 上执行 launcher.validate_entry(M2) exit 0，八件套、typed 双签和 ready-set 全部有效。"
+    }
+  ],
+  "history_tamper_check": "FAIL：1c4f815 确实早于 4fcb568，且去除尝试级 schema_version 后 JSON 语义相等；但当前 raw 文件的字节 diff 还包含 fact_ids 数组重新排版，原始与候选摘要不同，不满足规定的仅标签行变化证明。",
+  "actual_model_self_report": "OpenAI Codex / GPT-5；精确内部模型修订号、提供方调用 ID及任务线程 ID对本会话不可得，未伪造。",
+  "isolation_attestation": {
+    "fresh_session_not_fork_not_resume": true,
+    "did_not_author_reviewed_scope": true,
+    "auto_memory_disabled_or_not_applicable": true,
+    "auto_memory_disabled_before_launch": true,
+    "isolation_evidence": "全新独立 Codex 审查会话；未参与候选创作，未使用或委派子代理；当前运行面未提供自动记忆设施，启动上下文无 resume/fork/旧会话摘要或自动记忆注入。仓库为只读，未调用 apply_patch；所有可变实验位于自动清理的 /dev/shm 精确候选 clone。最终 HEAD、tracked 与 staged 内容未变。"
+  }
+}

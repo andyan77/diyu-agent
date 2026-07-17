@@ -28,6 +28,9 @@ HANDOFF_SCHEMAS = {
 SIGNER_SCHEMAS = {
     "p7-signer-receipt-v1": "signer_receipt.v1.schema.json",
     "p7-signer-receipt-v2": "signer_receipt.v2.schema.json",
+    # v2.1：发起人 2026-07-17 载体豁免裁决（SUPERSESSION_LEDGER §7）——
+    # before_launch 可为 false 但必须携带注入披露；其余约束逐字承继 v2
+    "p7-signer-receipt-v2.1": "signer_receipt.v2.1.schema.json",
 }
 LAUNCH_RECORD_SCHEMAS = {
     "p7-launch-record-v1": "launch_record.v1.schema.json",

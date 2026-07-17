@@ -1,0 +1,40 @@
+{
+  "record_kind": "INTERNAL_ADVERSARIAL_PREREVIEW（开发内审，不构成正式签字；正式双签见 review_bindings）",
+  "carrier": "子代理 a0ed34153d6efa798（requested=fable，actual=claude-opus-4-8 诚实自报）",
+  "disqualification_note": "子代理上下文含 harness 注入的用户级 CLAUDE.md 与 GKB 项目记忆索引（与被审对象无关且未使用，已在其隔离声明诚实披露 auto_memory_disabled_before_launch=false）→ 按 signer_receipt.v2 常量该披露 = 未签；本报告仅作开发内审证据留存。",
+  "wall_clock_ms": 1383109,
+  "report": {
+    "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+    "requested_model": "fable",
+    "actual_model_id": "claude-opus-4-8",
+    "verdict": "ACCEPT",
+    "candidate_commit_verified": "e2e81cdc5d0e4b4d68690b2f96a7cca5c9f8ae89",
+    "input_manifest_digest_verified": "e38f83835db3d02f15ba3dd4d19712f43d7b59e7e8787a5e6796e1e8f7b04f5a",
+    "output_manifest_digest_verified": "6b526c910d7ed64992a157435d39facf1f4cc34dad126c29e59f7c5056cccebc",
+    "evidence_manifest_digest_verified": "95abebfbc9bf9a5da960c57258f108acd43b639dacd5e59c2f279daef006d11c",
+    "checks_performed_count": 20,
+    "adversarial_probes_count": 15,
+    "key_probe_outcomes": [
+      "flip stage gate → verify-all FAIL（six-gate recompute mismatch）",
+      "inject 13th cost event → 记账门 FAIL",
+      "launder first-attempt text → ContractError E_V4_RAW_SURFACE_EXACT_JOIN",
+      "wash content review approved=true → ContractError E_V4_CONTENT_APPROVAL_GRADE",
+      "journal seq10 mutation → record_digest recompute mismatch",
+      "M0 QUALIFIED washing → 3 errors detected",
+      "M1-face vs M2-face rebinding necessity → M1 face FAIL / M2 face PASS（证明重绑定跟随真实状态演进而非放宽）"
+    ],
+    "findings": [
+      {"severity": "ADVISORY", "file": "delivery_control_001/milestones/M2/REVIEW_REQUEST.v1.md", "description": "维度3表述『仅 schema_version 标签行』低估了 raw 文件 git diff（另含 fact_ids 数组换行重排，内容中性）；解析级语义 diff 恰 4 处 schema_version 变更、正文与绑定逐字节一致，防洗绿性质完全成立；仅文档精度问题。"},
+      {"severity": "ADVISORY", "file": "delivery_control_001/ROLE_MODEL_MATRIX.v1.json", "description": "本内审执行体为 claude-opus-4-8 而非角色请求的 fable（诚实自报）；涉及审查者身份出处而非候选工件本身。"},
+      {"severity": "ADVISORY", "file": "delivery_control_001/evidence/SESSION_IDENTITY.M2.v1.json", "description": "子代理上下文存在 auto-memory 注入（GKB 域，与候选正交、未使用）；与 M2 已公开登记的会话条件一致镜像。"}
+    ],
+    "launch_exception_registration_verified": "三处登记（SUPERSESSION_LEDGER §7 / journal seq18 / SESSION_IDENTITY.M2）交叉一致；launch_record.v2 常量证明诚实补录不可能；例外范围确限 M2。",
+    "isolation_attestation": {
+      "fresh_session_not_fork_not_resume": true,
+      "did_not_author_reviewed_scope": true,
+      "auto_memory_disabled_or_not_applicable": true,
+      "auto_memory_disabled_before_launch": false,
+      "isolation_evidence": "全新非 fork 子代理；上下文=任务提示+磁盘只读自读；实验全在 /tmp 副本、仓库零写入；未读 .env*/密封/nine_tables/客户数据/pkg1 原始数据。诚实披露：harness 向子代理注入了用户级 CLAUDE.md 与 GKB 记忆索引（与本候选无关、未采用），裁决完全立足独立磁盘复算。"
+    }
+  }
+}

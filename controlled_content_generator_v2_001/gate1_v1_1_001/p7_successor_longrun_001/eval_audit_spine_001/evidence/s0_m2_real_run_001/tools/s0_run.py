@@ -18,7 +18,9 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -55,6 +57,44 @@ REVIEWERS = {
 }
 FORBIDDEN_PLAN_FIELD_NAMES = {"content_composition_plan", "expression_plan",
                               "runtime_plan"}
+# 首次尝试不可变锚：raw 文件在任何确定性门运行之前的提交（Codex R1 BLOCKING-1 加固）。
+# 锚后唯一允许的差异 = attempts[*].schema_version 标签修正（合同解析所需，非内容），
+# 逐字段机械证明；任何其他字段（含文本、fact_ids 值）与锚 blob 语义不等 = 洗绿 = 门失败。
+FIRST_ATTEMPT_ANCHOR_COMMIT = "1c4f81530ba13e952e132202634f5aa6368ec695"
+RAW_ATTEMPTS_REPO_REL = ("controlled_content_generator_v2_001/gate1_v1_1_001/"
+                         "p7_successor_longrun_001/eval_audit_spine_001/"
+                         "evidence/s0_m2_real_run_001/outputs/"
+                         "raw_first_attempts.v1.json")
+
+
+def _anchor_semantic_diff() -> tuple[bool, list[str]]:
+    """当前 raw 首次尝试 vs 锚提交 blob 的逐字段语义比对。
+
+    返回 (semantic_equal_except_schema_label, 差异说明)。"""
+    proc = subprocess.run(
+        ["git", "-C", str(RUN_DIR.parents[4]), "show",
+         f"{FIRST_ATTEMPT_ANCHOR_COMMIT}:{RAW_ATTEMPTS_REPO_REL}"],
+        capture_output=True, text=True)
+    if proc.returncode != 0:
+        return False, [f"anchor blob unreadable: {proc.stderr[:120]}"]
+    anchor = json.loads(proc.stdout)
+    current = _read("outputs/raw_first_attempts.v1.json")
+    notes: list[str] = []
+    anchor_cmp = copy.deepcopy(anchor)
+    current_cmp = copy.deepcopy(current)
+    label_changes = 0
+    for doc in (anchor_cmp, current_cmp):
+        for attempt in doc.get("attempts", []):
+            if "schema_version" in attempt:
+                attempt["schema_version"] = "<LABEL_EXEMPT>"
+    for a, c in zip(anchor.get("attempts", []), current.get("attempts", [])):
+        if a.get("schema_version") != c.get("schema_version"):
+            label_changes += 1
+    equal = anchor_cmp == current_cmp
+    notes.append(f"anchor_commit={FIRST_ATTEMPT_ANCHOR_COMMIT[:12]}")
+    notes.append(f"schema_version_label_changes={label_changes}")
+    notes.append(f"semantic_equal_except_label={equal}")
+    return equal, notes
 
 
 def _read(rel: str):
@@ -577,11 +617,13 @@ def _six_gates() -> tuple[dict, list[str]]:
     receipts = _receipts()
     receipt_ok = all(len(r.get("response_digest", "")) == 64
                      and r.get("receipt_digest") for r in receipts)
-    first_response_retained = bool(first_ok and receipt_ok
+    anchor_ok, anchor_notes = _anchor_semantic_diff()
+    first_response_retained = bool(first_ok and receipt_ok and anchor_ok
                                    and len(outputs) == 4
                                    and len(receipts) == len(PAIRS))
     notes.append(f"first_response_retained: outputs一次尝试={first_ok}, "
-                 f"外部回执内容寻址={receipt_ok}")
+                 f"外部回执内容寻址={receipt_ok}, "
+                 f"锚blob语义一致={anchor_ok}({'; '.join(anchor_notes)})")
 
     cost_provenance = decision["status"] == "PASS"
     notes.append(f"cost_provenance: accounting={decision['status']}")

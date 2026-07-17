@@ -1,0 +1,20 @@
+{
+  "agents": [
+    {
+      "actual_model": "claude-opus-4-8（诚实自报；FABLE_SUBAGENT_CAPABILITY_UNAVAILABLE 与 M1 一致）",
+      "agent_id": "a0ed34153d6efa798",
+      "disqualification_from_formal_signature": "子代理上下文含 harness 注入的用户级 CLAUDE.md 与 GKB 记忆索引（与被审对象无关且未使用，已诚实披露）→ auto_memory_disabled_before_launch=false → 按 signer_receipt.v2 常量 = 未签；正式 Fable 审查改由 CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 预注入的全新 headless 顶层会话承载",
+      "forbidden_resource_touched_by_subagent": false,
+      "read_scope": "仓库只读 + /tmp 实验副本；零仓库写入（自证）",
+      "report_file": "delivery_control_001/milestones/M2/FABLE_INTERNAL_PREREVIEW.v1.json",
+      "requested_model": "fable",
+      "role": "ADVERSARIAL_REVIEWER_INTERNAL（开发内审预检，不构成正式签字）",
+      "verdict_summary": "ACCEPT + 3 ADVISORY（20 项复核 + 15 项对抗探针全部按预期拦截）",
+      "wall_clock_ms": 1383109
+    }
+  ],
+  "kind": "ADDENDUM",
+  "milestone_id": "M2",
+  "note": "候选 e2e81cd 冻结后的评审期派工补遗；基表 AGENT_LEDGER.M2.v1.json 已随候选冻结不改写。",
+  "schema_version": "p7-agent-ledger-v1"
+}

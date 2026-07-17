@@ -466,7 +466,11 @@ def check_run_journal(root: Path, ctx: dict) -> tuple[bool, list[str]]:
 SIGNER_SCHEMA_FILES = {
     "p7-signer-receipt-v1": "signer_receipt.v1.schema.json",
     "p7-signer-receipt-v2": "signer_receipt.v2.schema.json",
+    # v2.1：发起人 2026-07-17 载体豁免裁决（SUPERSESSION_LEDGER §7）
+    "p7-signer-receipt-v2.1": "signer_receipt.v2.1.schema.json",
 }
+# FINAL 接受的签字 schema 版本（v1 = 缺绑定 = 不满足关闭）
+FINAL_SIGNER_SCHEMA_VERSIONS = {"p7-signer-receipt-v2", "p7-signer-receipt-v2.1"}
 
 
 def validate_signer_receipt(root: Path, receipt_path: Path) -> list[str]:
@@ -719,8 +723,8 @@ def check_final_receipts(root: Path, ctx: dict) -> tuple[bool, list[str]]:
                               f"{receipt_errors[:2]}")
                 continue
             receipt = _j(rp)
-            if receipt.get("schema_version") != "p7-signer-receipt-v2":
-                errors.append(f"review receipt lacks v2 milestone/product/"
+            if receipt.get("schema_version") not in FINAL_SIGNER_SCHEMA_VERSIONS:
+                errors.append(f"review receipt lacks v2/v2.1 milestone/product/"
                               f"manifest binding: {rp.name}")
                 continue
             if receipt.get("input_commit") != closeout.get("candidate_commit"):

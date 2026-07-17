@@ -1,0 +1,12 @@
+{
+  "record_kind": "FORMAL_FABLE_HEADLESS_REVIEW_R1_BLOCKED（环境阻塞诚实拒判，非裁决）",
+  "session_id": "a9b54478-3d6b-4b71-94c3-665d52cbcec2",
+  "model_usage_keys": [
+    "claude-fable-5",
+    "claude-opus-4-8"
+  ],
+  "num_turns": 10,
+  "is_error": false,
+  "refusal_text": "## 审查被硬阻塞：无法出具裁决（既不 ACCEPT 也不 REJECT）\n\n**结论先说**：本次 M2 独立对抗审查在第一步就被**执行环境故障**挡死——本会话的 Bash 工具完全不可用，所有必做命令（checker、三套 pytest、verify-all、manifest 复算、git 祖先证明、对抗抽查）一条都跑不了。按「宁 REJECT 不假绿」的同一诚实纪律，我**拒绝伪造任何 exit code 或裁决 JSON**：REJECT 会冤枉候选（缺陷在我的环境、不在候选树），ACCEPT 则是假绿。因此本会话**不出具裁决**，需要修好环境后另起全新会话重审。\n\n### 故障事实（已三重复现）\n\n每次调用 Bash（前台 / 后台 / 沙箱 / 显式关沙箱 / 子代理内）都在**命令执行之前**失败于同一处：\n\n```\nEROFS: read-only file system, mkdir '/home/faye/.claude/session-env/a9b54478-3d6b-4b71-94c3-665d52cbcec2'\n```\n\n大白话：Claude Code 的运行框架（harness）在跑任何命令前，要先在 `/home/faye/.claude/session-env/` 下建一个本会话的工作目录，但这个路径所在文件系统当前是**只读挂载**，目录建不出来，于是所有命令连启动的机会都没有。我用 `dangerouslyDisableSandbox` 复测仍然同样报错，证明这不是权限沙箱拦截，而是文件系统层面真的只读；派出的探测子代理也得到逐字相同的错误，证明子代理路径同样不通。\n\n### 对必做清单的影响\n\n| 必做项 | 状态 |\n|---|---|\n| 1. p7_master_check.py --milestone M2 | ❌ 无法执行 |\n| 2. 三套 pytest（spine / v4_recovery / delivery_control） | ❌ 无法执行 |\n| 3. s0_run.py verify-all | ❌ 无法执行 |\n| 4. 三 manifest 自写脚本复算（sha256 + canonical digest） | ❌ 无法执行（需 python） |\n| 5. 防洗绿 git 祖先证明 + 逐字节 diff | ❌ 无法执行（需 git） |\n| 6. 启动例外三处登记交叉核对 | ⚠️ 仅能纯读文本比对，但孤证不足以支撑维度 PASS |\n| 7. 对抗抽查 ≥3（/tmp 副本实验） | ❌ 无法执行 |\n\n只读工具（Read/Grep/Glob）仍正常——我已读取 `REVIEW_REQUEST.v1.md` 确认 8 个必核维度，并列出了 M2 目录与 delivery_control 根目录的工件清单。但 8 个维度里除第 6 项外全部依赖命令复算，纯读文本无法构成有效审查证据，所以不值得在残废环境里做半吊子审查再声称覆盖。\n\n### 仓库状态声明\n\n本会话对仓库**零写入**：只做了 Read/Glob（读 REVIEW_REQUEST、列目录）和从未成功启动的命令调用。工作树状态与开场时一致（我连 `git status` 都无法运行，正因为如此才更不可能改动任何文件）。\n\n### 需要你（操作者）做的事\n\n1. **修复挂载**：让 `/home/faye/.claude/session-env/` 可写（WSL 环境下常见原因是该挂载点变成 read-only，通常 `sudo mount -o remount,rw <挂载点>` 或重启 WSL 实例可解；也可检查磁盘错误导致 ext4 自动转只读）。\n2. **另起全新顶层会话重跑本审查 Prompt**——隔离纪律本来就要求 fresh session，本会话读过的内容不复用、不影响重审独立性。",
+  "blocking_cause": "嵌套 headless 顶层会话继承母会话 OS 沙箱 → 其 Bash 工具不可用（shell snapshot 目录被沙箱拒写）→ 必做复算无法执行 → 按「宁拒不假绿」拒绝出具裁决"
+}
