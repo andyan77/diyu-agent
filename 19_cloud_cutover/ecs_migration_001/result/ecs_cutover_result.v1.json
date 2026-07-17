@@ -1,15 +1,13 @@
 {
   "schema": "diyu.package9.ecs_cutover_result.v1",
   "task_id": "DIYU_ECS_CUTOVER_001",
-  "state": "PENDING_INDEPENDENT_REVIEW",
+  "state": "PASS_REMOTE_CANDIDATE_PENDING_PACKAGE_10",
   "success_claim": "REMOTE_CANDIDATE_IMPLEMENTED_NOT_PRODUCTION_READY",
-  "implementation_candidate_commit": "PENDING_CANDIDATE_FREEZE",
-  "implementation_candidate_tree": "PENDING_CANDIDATE_FREEZE",
-  "remote_environment_snapshot_digest": "PENDING_CANDIDATE_FREEZE",
+  "implementation_candidate_commit": "ef9c26a26bfd0a12d988f8cb5c8d71fc17fe836f",
+  "implementation_candidate_tree": "941a35bf446e7db90a11914d051650ed885b6c0b",
+  "remote_environment_snapshot_digest": "3266979e36e0f8e70f7206406f15f87492d1866b77394e7e55f23c72a91e55fe",
   "remote_deployed_code_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
-  "blocking_items": [
-    "INDEPENDENT_REVIEWS_PENDING"
-  ],
+  "blocking_items": [],
   "acceptance": {
     "PKG9-A01": "PASS",
     "PKG9-A02": "PASS",
@@ -20,7 +18,7 @@
     "PKG9-A07": "PASS",
     "PKG9-A08": "PASS",
     "PKG9-A09": "PASS",
-    "PKG9-A10": "PENDING_INDEPENDENT_REVIEW_AND_REMOTE_CI"
+    "PKG9-A10": "PASS"
   },
   "local_verification": {
     "package7_test_count": 56,
@@ -38,13 +36,29 @@
     "primary_content_account_count": 11,
     "dify_document_count": 30,
     "journey_group_count": 6,
-    "journey_action_count": 15,
+    "journey_action_count": 16,
     "package9_model_call_count": 13,
     "package9_model_cost_cny": 0.071796,
+    "effective_model_call_limit": 40,
     "rollback_and_forward_pass": true,
     "post_restart_health_pass": true
   },
-  "independent_reviews": [],
+  "independent_reviews": [
+    {
+      "review_id": "DIYU_ECS_CUTOVER_001_DCR_BINDING_EF9C26A_20260717_01",
+      "review_type": "DEPLOYMENT_CUTOVER_RECOVERY",
+      "score": 97,
+      "verdict": "PASS",
+      "blocking_items": []
+    },
+    {
+      "review_id": "PKG9-TIUJ-BINDING-EF9C26A-20260717",
+      "review_type": "TRUST_ISOLATION_USER_JOURNEY",
+      "score": 97,
+      "verdict": "PASS",
+      "blocking_items": []
+    }
+  ],
   "core_numbers_changed": false,
   "core_numbers": {
     "300": "UNCHANGED_NOT_FROZEN",
@@ -54,7 +68,7 @@
   "real_customer_data_imported": false,
   "automatic_publication_count": 0,
   "merge_allowed": false,
-  "package10_allowed": false,
+  "package10_allowed": true,
   "readiness": {
     "candidatepack_ready": false,
     "KE_ready": false,

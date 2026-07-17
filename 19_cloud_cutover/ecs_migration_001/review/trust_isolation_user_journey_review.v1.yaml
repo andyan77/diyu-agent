@@ -1,0 +1,45 @@
+schema: diyu.package9.trust_isolation_user_journey_review.v1
+review_id: PKG9-TIUJ-BINDING-EF9C26A-20260717
+task_id: DIYU_ECS_CUTOVER_001
+review_type: TRUST_ISOLATION_USER_JOURNEY
+review_scope: BINDING_ONLY_LIFECYCLE_SELFTEST_CONTINUATION
+candidate_commit: ef9c26a26bfd0a12d988f8cb5c8d71fc17fe836f
+candidate_tree: 941a35bf446e7db90a11914d051650ed885b6c0b
+parent_reviewed_candidate: 2d7c624b69eaaca20ea339ef422b630814795a8b
+remote_environment_snapshot_digest: 3266979e36e0f8e70f7206406f15f87492d1866b77394e7e55f23c72a91e55fe
+reviewer:
+  identity: Codex independent Package 9 trust-isolation-user-journey reviewer
+  session_id: codex-pkg9-tiuj-r2-93b66ea-20260717-cont-ef9c26a
+  model_class: GPT-5 Codex
+independence:
+  not_author_or_migration_executor: true
+  separate_session: true
+  independent_from_other_reviewer: true
+  independent_read_only: true
+reviewed_acceptance_ids: [PKG9-A04, PKG9-A05, PKG9-A06, PKG9-A07, PKG9-A09, PKG9-A10]
+score: 97
+verdict: PASS
+blocking_items: []
+blocker_dispositions:
+  - blocker_id: B1_PKG9_A07_A09_A10_ACTION_AND_MODEL_AUDIT_NOT_TRUTHFULLY_RECOMPUTABLE
+    disposition: RESOLVED_PRESERVED
+    evidence: Journey and model-audit evidence is identical to the reviewed passing parent.
+  - blocker_id: B2_PKG9_A07_A10_REMOTE_EXPLICIT_40_LIMIT_NOT_SNAPSHOT_BOUND
+    disposition: RESOLVED_PRESERVED
+    evidence: Remote snapshot digest remains identical to the reviewed passing parent.
+findings:
+  - severity: INFO
+    evidence: check_ecs_cutover.py lifecycle selftest and final validation
+    impact: The selftest now selects the opposite package10_allowed value for the baseline state and expects the matching failure code.
+nonblocking_observations:
+  - Parent-to-candidate diff is confined to the Package 9 checker.
+  - No journey evidence, model audit, runtime role or limit, readiness state, business implementation or remote snapshot changed.
+  - No remote inspection, remote write, model call or broad trust review was performed for this binding continuation.
+checks_reperformed:
+  - Exact candidate and tree binding passed.
+  - Parent delta and git diff check passed.
+  - Pending checker and 21 lifecycle selftests passed.
+  - Pending and final package10 fail-closed invariants passed source inspection.
+  - Snapshot digest independently recomputed and matched.
+  - Worktree remained clean.
+conclusion: PASS. The lifecycle selftest correction is valid and preserves all previously accepted trust, isolation, journey, audit, runtime and readiness evidence.

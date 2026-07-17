@@ -1,0 +1,40 @@
+schema: diyu.package9.deployment_cutover_recovery_review.v1
+review_id: DIYU_ECS_CUTOVER_001_DCR_BINDING_EF9C26A_20260717_01
+task_id: DIYU_ECS_CUTOVER_001
+review_type: DEPLOYMENT_CUTOVER_RECOVERY
+candidate_commit: ef9c26a26bfd0a12d988f8cb5c8d71fc17fe836f
+candidate_tree: 941a35bf446e7db90a11914d051650ed885b6c0b
+remote_environment_snapshot_digest: 3266979e36e0f8e70f7206406f15f87492d1866b77394e7e55f23c72a91e55fe
+prior_passed_candidate: 2d7c624b69eaaca20ea339ef422b630814795a8b
+reviewer:
+  identity: codex_pkg9_deployment_cutover_recovery_independent_reviewer
+  session_id: codex-pkg9-dcr-ef9c26a-binding-20260717-01
+  model_class: GPT-5 Codex
+independence:
+  not_author_or_migration_executor: true
+  separate_session: true
+  independent_from_other_reviewer: true
+reviewed_acceptance_ids: [PKG9-A03, PKG9-A04, PKG9-A08, PKG9-A09, PKG9-A10]
+score: 97
+verdict: PASS
+blocking_items: []
+checks_reperformed:
+  - Exact HEAD, tree, clean worktree and one-file parent delta verified.
+  - Pending validation still requires package10_allowed false.
+  - Final validation still requires package10_allowed true.
+  - The selftest flips the lifecycle value and expects the matching failure code.
+  - Pending Package 9 checker and 21 selftests passed.
+  - Remote snapshot digest independently recomputed and remained unchanged.
+  - Ruff and git diff check passed.
+  - No evidence, remote state, implementation, backup, role, model-usage, contract or readiness file changed.
+  - No remote or model calls were made by the reviewer.
+finding_dispositions:
+  - acceptance_ids: [PKG9-A10]
+    finding: Lifecycle selftest false negative after legitimate finalization
+    disposition: RESOLVED
+    current_impact: NONE
+  - acceptance_ids: [PKG9-A03, PKG9-A04, PKG9-A08, PKG9-A09, PKG9-A10]
+    finding: Prior deployment, recovery, release, bridge, role, health, invocation, backup and frozen-evidence conclusions
+    disposition: UNCHANGED_AND_VALID
+    current_impact: NONE
+conclusion: PASS. The lifecycle selftest fix preserves both pending and final requirements and all prior recovery conclusions.
