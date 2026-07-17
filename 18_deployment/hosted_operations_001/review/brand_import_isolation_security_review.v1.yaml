@@ -1,44 +1,45 @@
 task_id: DIYU_HOSTED_OPERATIONS_001
 review_type: BRAND_IMPORT_ISOLATION_SECURITY
-review_id: DIYU_HOSTED_OPERATIONS_001_BIIS_8E3BB33_20260716_01
-candidate_commit: 8e3bb33257669602eaea4a9256ee86919cfa7837
-implementation_tree_digest: a4c77f7f52e17f4963c55776244bc8dced8c36173a309f3c723455e9a4e1d436
-reviewer_identity: 执行包8第二名独立只读定向复审 B
-reviewer_agent_id: /root
-reviewer_session_id: codex-root-biis-b-20260716
-review_run_id: BRAND_IMPORT_ISOLATION_SECURITY-B-8e3bb332-a4c77f7f
+review_id: DIYU_HOSTED_OPERATIONS_001_BIIS_171215F_20260716_02
+candidate_commit: 171215f1898a640f7a9368e47127f7f49ef5170f
+git_tree: 6aa7fbfa1ec9a6fb0fd7b11d5c70736bab346392
+implementation_tree_digest: 69d5575e1c475f5f08c4fb32da7e4003201dad59ff6b069acbebdf5313498fdf
+reviewer_identity: Codex independent targeted reviewer B - trust/authorization/isolation
+reviewer_agent_id: 019f6bf4-ce1f-7a90-b5de-097d95f0be12
+reviewer_session_id: package8-targeted-review-b-20260716
+review_run_id: DIYU-PKG8-B-171215f-20260716-R2
 independent_read_only: true
-review_scope: TARGETED_INITIAL_BLOCKERS_AND_NECESSARY_ISOLATION_RECOVERY_REGRESSION
+review_scope: TARGETED_THREE_DELTA_CLOSEOUT_AND_NECESSARY_REGRESSION
 score: 96
 verdict: PASS
 blocking_items: []
-resolved_initial_blockers:
-  - id: BIIS-B-001
+review_cycle:
+  initial_candidate: 39b86230bdda0cdfd5bdcd701cf5337b39824494
+  initial_score: 72
+  initial_verdict: FAIL
+  full_architecture_review_reopened: false
+  correction_scope_only: true
+resolved_targeted_blockers:
+  - id: STALE_DIFY_DOCUMENTS_REMAIN_RETRIEVABLE
     status: RESOLVED
-    evidence: Canonical code validation and collision-free composite identifiers are enforced.
-  - id: BIIS-B-002
+    evidence: Changed same-ID content is replaced, omitted content is deleted, and source/index digests plus exact namespace convergence fail closed.
+  - id: AUTHORIZATION_SCOPE_NOT_BOUND_TO_FRAGMENT
     status: RESOLVED
-    evidence: Full-bundle replacement is serialized and transactional, including removal of omitted objects and sources.
-  - id: BIIS-B-003
-    status: RESOLVED
-    evidence: Selection, review, export, and source access revalidate current account, material, fact, and authorization state.
-  - id: BIIS-B-004
-    status: RESOLVED
-    evidence: Account, organization, store, brand, and validity-window authorization scopes are closed.
-  - id: BIIS-B-006
-    status: RESOLVED
-    evidence: Backup sensitivity and restricted-storage requirements are declared truthfully.
+    evidence: Every materialized account, organization and store must be a subset of the referenced current grant; wrong-grant scope has a negative test.
 evidence:
-  in_memory_tamper_probes: PASS_19_OF_19
-  postgresql_acceptance: PASS_4_OF_4
-  task_database_count_after_cleanup: 0
-  package7_regression: PASS_52_OF_52
-  package6_regression: PASS_16_OF_16
-  checker_and_evidence_binding: PASS
-prompt_bound_exceptions:
-  database_rls_deferred_to_package_9: true
-  application_scope_and_current_state_isolation_checked: true
-  remote_ci_database_and_container_disabled: true
-  independence_from_review_a: true
-  architecture_full_review_reopened: false
+  simulation_and_authorized_real_modes_distinct: true
+  real_mode_source_authorization_time_revocation_operator_required: true
+  real_import_never_grants_publication_or_readiness: true
+  authorization_scope_mismatch_excluded: true
+  second_simulated_brand_materialized: true
+  stale_document_delete_and_replace: true
+  indexed_content_digest_must_match: true
+  release_object_count: 39
+  safe_fixture_only_no_real_customer_data: true
+  external_model_calls: 0
+  real_cloud_mutations: 0
+  package8_checker_and_selftest: PASS
+nonblocking_notes:
+  - The update and delete calls match the pinned official Dify 1.15 service API; real Dify was not operated in Package 8.
+  - Reviewer A was not consulted and no repository files were modified by this reviewer.
 repository_writes_by_reviewer: []

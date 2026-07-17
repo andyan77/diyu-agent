@@ -3,8 +3,9 @@
   "task_id": "DIYU_HOSTED_OPERATIONS_001",
   "state": "PASS_HOSTED_OPERATIONS_PENDING_PACKAGE_9",
   "success_claim": "PACKAGE8_ACCEPTANCE_COMPLETE_NOT_PRODUCTION_READY",
-  "implementation_candidate_commit": "8e3bb33257669602eaea4a9256ee86919cfa7837",
-  "implementation_tree_digest": "a4c77f7f52e17f4963c55776244bc8dced8c36173a309f3c723455e9a4e1d436",
+  "implementation_candidate_commit": "171215f1898a640f7a9368e47127f7f49ef5170f",
+  "git_tree": "6aa7fbfa1ec9a6fb0fd7b11d5c70736bab346392",
+  "implementation_tree_digest": "69d5575e1c475f5f08c4fb32da7e4003201dad59ff6b069acbebdf5313498fdf",
   "blocking_items": [],
   "external_model_calls": 0,
   "real_cloud_mutations": 0,
@@ -16,17 +17,38 @@
   },
   "postgresql_acceptance": {
     "database_kind": "POSTGRESQL_14",
-    "result": "PASS_4_OF_4",
-    "acceptance_run_digest": "bca3baf62605877bfbe4e89da173174fb6e84d164c5e438840e79c1ece81b06d",
-    "backup_dump_sha256": "de91ec92223de4e32186806f4e113914f47276d747dfb4f2554fa7c4fb60784c",
-    "source_database_snapshot_digest": "11c810017645e0f98e0dce607fe005ca77e1596b26d9044d0503b5d754a5946a",
+    "result": "PASS_6_OF_6",
+    "acceptance_run_digest": "3e106f9f409ded6de59cb1cde232a215e7a73ad448e2481d1945d1ba4aa36ed8",
+    "backup_dump_sha256": "64541bf1dc2cf4252c7f792bd66379d1f0b32b3fe12458aa6e7ded1a2325f6ad",
+    "source_database_snapshot_digest": "463b1d51905036372aedc0ab6a937124dbffd476fb8814e3b394f313a5b31dfb",
     "database_table_count": 23,
     "task_database_count_after_cleanup": 0
+  },
+  "release_recovery": {
+    "release_object_count": 39,
+    "release_bundle_digest": "9c57204b1aa71d52bb0e6a72907db87781acbcb5e85ec744fc208e9a0da465d7",
+    "isolated_restore_equal": true,
+    "missing_corrupt_or_version_mismatch_rejected": true,
+    "restored_materialization_equal": true
+  },
+  "runtime_materialization": {
+    "document_count": 31,
+    "document_sha256": "a825e4675f576c61c7d0017d104ea50277a3997860b64cd50a44ee03c068564f",
+    "materialization_digest": "8aacaa050a611f422dbf436d2cf5a425c9135c83a065dde28df2a6256164b4a5",
+    "second_simulated_brand_present": true,
+    "authorization_scope_mismatch_excluded": true,
+    "dify_reconciliation_convergent": true
+  },
+  "brand_import_modes": {
+    "simulation": "PASS",
+    "authorized_real_safe_fixture": "PASS",
+    "missing_authorization_or_source": "REJECTED",
+    "grants_publication_or_readiness": false
   },
   "independent_reviews": [
     {
       "review_type": "DEPLOYMENT_RECOVERY_OPERATIONS",
-      "score": 95,
+      "score": 96,
       "verdict": "PASS"
     },
     {
