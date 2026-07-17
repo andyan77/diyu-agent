@@ -26,8 +26,11 @@ for root in (PACKAGE_7_ROOT, PACKAGE_8_ROOT):
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
-from brand_import import BrandImportBundle, preflight_brand_bundle  # noqa: E402
-from hosted_models import HostedBrandRevision  # noqa: E402
+from brand_import import (  # noqa: E402
+    BrandImportBundle,
+    load_simulation_bundle,
+    preflight_brand_bundle,
+)
 from operations import HostedOperations  # noqa: E402
 from persistence import create_runtime_engine, create_session_factory, digest_object  # noqa: E402
 from runtime_models import (  # noqa: E402
@@ -353,14 +356,6 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
     source_sha256 = hashlib.sha256(SOURCE_PATH.read_bytes()).hexdigest()
     try:
         with sessions() as session:
-            revision = session.scalar(
-                select(HostedBrandRevision).where(
-                    HostedBrandRevision.tenant_id == TENANT_ID,
-                    HostedBrandRevision.state == "ACTIVE",
-                )
-            )
-            if revision is None:
-                raise RuntimeError("Active Diyu hosted revision is missing")
             identity = _setting(session, f"identity_authority:{TENANT_ID}")
             profile = _setting(
                 session,
@@ -370,7 +365,9 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
                 _payloads(session, RuntimeNarrativeFragment, TENANT_ID)
             )
             current_facts = _payloads(session, RuntimePreciseFact, TENANT_ID)
-            source_manifest = copy.deepcopy(revision.bundle_payload["source_manifest"])
+            source_manifest = copy.deepcopy(
+                load_simulation_bundle(REPOSITORY_ROOT).source_manifest
+            )
         existing_ids = {str(row["fragment_id"]) for row in current_fragments}
         additions = [
             fragment_from_block(
