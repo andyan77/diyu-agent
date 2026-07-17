@@ -4,7 +4,7 @@
   "authoring_discipline": "每请求恰好一次首次尝试；本文件在任何确定性门运行之前提交（Git 不可变锚）；门结果不回流改稿。",
   "attempts": [
     {
-      "schema_version": "gate1-v4-raw-output-v1",
+      "schema_version": "gate1-v4-author-raw-v1",
       "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001",
       "run_id": "S0M2-RUN-001",
       "attempt_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001:attempt:1",
@@ -29,17 +29,24 @@
         {
           "surface_kind": "title",
           "text": "交接前，先看这份领口对位检查记录",
-          "fact_ids": ["CASE-S0M2-CP01-001-F1"]
+          "fact_ids": [
+            "CASE-S0M2-CP01-001-F1"
+          ]
         },
         {
           "surface_kind": "body",
           "text": "接班的人先看记录：熨烫台记录一件衬衫样衣已完成领口对位检查，对位使用了定位夹片。这份记录写明的动作到领口对位为止，交接后的下一步检查，以各自的记录为准。",
-          "fact_ids": ["CASE-S0M2-CP01-001-F1", "CASE-S0M2-CP01-001-F2"]
+          "fact_ids": [
+            "CASE-S0M2-CP01-001-F1",
+            "CASE-S0M2-CP01-001-F2"
+          ]
         },
         {
           "surface_kind": "visual_execution",
           "text": "镜头只拍熨烫台、衬衫样衣和检查记录本身。",
-          "fact_ids": ["CASE-S0M2-CP01-001-F1"]
+          "fact_ids": [
+            "CASE-S0M2-CP01-001-F1"
+          ]
         }
       ],
       "author_attestation": {
@@ -52,7 +59,7 @@
       }
     },
     {
-      "schema_version": "gate1-v4-raw-output-v1",
+      "schema_version": "gate1-v4-author-raw-v1",
       "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001",
       "run_id": "S0M2-RUN-001",
       "attempt_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001:attempt:1",
@@ -77,17 +84,24 @@
         {
           "surface_kind": "title",
           "text": "这一段整理时间里，陈列台发生了什么",
-          "fact_ids": ["CASE-S0M2-CP02-001-F1"]
+          "fact_ids": [
+            "CASE-S0M2-CP02-001-F1"
+          ]
         },
         {
           "surface_kind": "body",
           "text": "在这段整理时间窗内，陈列台记录一组上装已按色号完成分组挂放；分组时使用了色卡对照。记录覆盖的只是这一组上装的挂放；记录之外的位置，本条不做描述。",
-          "fact_ids": ["CASE-S0M2-CP02-001-F1", "CASE-S0M2-CP02-001-F2"]
+          "fact_ids": [
+            "CASE-S0M2-CP02-001-F1",
+            "CASE-S0M2-CP02-001-F2"
+          ]
         },
         {
           "surface_kind": "visual_execution",
           "text": "画面停在按色号分组挂放的这一组上装上。",
-          "fact_ids": ["CASE-S0M2-CP02-001-F1"]
+          "fact_ids": [
+            "CASE-S0M2-CP02-001-F1"
+          ]
         }
       ],
       "author_attestation": {
@@ -100,7 +114,7 @@
       }
     },
     {
-      "schema_version": "gate1-v4-raw-output-v1",
+      "schema_version": "gate1-v4-author-raw-v1",
       "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001",
       "run_id": "S0M2-RUN-001",
       "attempt_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001:attempt:1",
@@ -125,17 +139,25 @@
         {
           "surface_kind": "title",
           "text": "两个人的清点台账：秋季外套分箱记录",
-          "fact_ids": ["CASE-S0M2-CP04-001-F1", "CASE-S0M2-CP04-001-F2"]
+          "fact_ids": [
+            "CASE-S0M2-CP04-001-F1",
+            "CASE-S0M2-CP04-001-F2"
+          ]
         },
         {
           "surface_kind": "body",
           "text": "按台账看分工：库房记录一批秋季外套已完成尺码分箱清点，清点采用双人交叉复核。台账写到哪，本条就说到哪——目前写明的状态，是这批外套的尺码分箱清点已完成。",
-          "fact_ids": ["CASE-S0M2-CP04-001-F1", "CASE-S0M2-CP04-001-F2"]
+          "fact_ids": [
+            "CASE-S0M2-CP04-001-F1",
+            "CASE-S0M2-CP04-001-F2"
+          ]
         },
         {
           "surface_kind": "visual_execution",
           "text": "镜头对着库房的分箱与清点台账。",
-          "fact_ids": ["CASE-S0M2-CP04-001-F1"]
+          "fact_ids": [
+            "CASE-S0M2-CP04-001-F1"
+          ]
         }
       ],
       "author_attestation": {
@@ -148,7 +170,7 @@
       }
     },
     {
-      "schema_version": "gate1-v4-raw-output-v1",
+      "schema_version": "gate1-v4-author-raw-v1",
       "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001",
       "run_id": "S0M2-RUN-001",
       "attempt_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001:attempt:1",
@@ -173,17 +195,25 @@
         {
           "surface_kind": "title",
           "text": "封装之前的那一步判断",
-          "fact_ids": ["CASE-S0M2-CP07-001-F1", "CASE-S0M2-CP07-001-F2"]
+          "fact_ids": [
+            "CASE-S0M2-CP07-001-F1",
+            "CASE-S0M2-CP07-001-F2"
+          ]
         },
         {
           "surface_kind": "body",
           "text": "封装不是直接套袋：打包台记录一件网单商品已完成防尘袋封装，而封装前做了外观目视检查。判断动作写在记录里——先做外观目视检查，再进行防尘袋封装。要核对这件商品的封装情况，就以这份记录写明的这两个动作为准。",
-          "fact_ids": ["CASE-S0M2-CP07-001-F1", "CASE-S0M2-CP07-001-F2"]
+          "fact_ids": [
+            "CASE-S0M2-CP07-001-F1",
+            "CASE-S0M2-CP07-001-F2"
+          ]
         },
         {
           "surface_kind": "visual_execution",
           "text": "画面只给到打包台、防尘袋和这份打包记录。",
-          "fact_ids": ["CASE-S0M2-CP07-001-F1"]
+          "fact_ids": [
+            "CASE-S0M2-CP07-001-F1"
+          ]
         }
       ],
       "author_attestation": {

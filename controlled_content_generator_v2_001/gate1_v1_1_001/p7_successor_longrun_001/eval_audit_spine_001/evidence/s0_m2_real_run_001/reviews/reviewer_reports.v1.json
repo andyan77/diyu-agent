@@ -1,0 +1,35 @@
+{
+  "content_review": {
+    "carrier": "全新只读子代理 a370b130bf2c97f14",
+    "dispatched_at": "2026-07-17T04:34:59+00:00",
+    "rationales": {
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001": "干净安全且命中 ROLE_HANDOFF/OPEN_TASK_CHECK 取向、MUST 覆盖 CONTROL 未越界，但与批内其余三条同构（框架句+单句事实+'以记录为准'边界句+同款镜头式样），套路化封顶 C。",
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001": "安全合规且 TIME_WINDOW/OPEN_SPOT 有体现，但 evidence_route=MULTI_SPOT_SEQUENCE 实际只写单一点位、未做多点巡列，且沿用与全批一致的模板与边界修辞，判 C。",
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001": "四条中与 test_dna（ROLE_LEDGER/CURRENT_STATE/OBSERVED_SCOPE）契合最紧、行文清楚，但仍是同一骨架与'台账为准'边界句的槽位填充，套路化封顶 C。",
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001": "安全合规，但 evidence_route=CRITERIA_WALK 未真正走判据、只是把两动作时序包装成'判断'，DECISION_POINT/CONDITIONAL_DECISION 契合最弱，加之与全批同构，判 C。"
+    },
+    "reviewer_identity": "M2-S0-CONTENT-REVIEWER",
+    "reviewer_model_actual": "claude-opus-4-8",
+    "reviewer_model_requested": "opus",
+    "verdict_summary": "四条全部安全干净（MUST 覆盖/CONTROL 未越界/零硬否决），但批内强同构：同一框架句+单句事实+『以记录为准』边界句+同款镜头式样；test_dna 结构意图未在行文中真正实现（CP02 MULTI_SPOT_SEQUENCE 只写单点、CP07 CRITERIA_WALK 未走判据）。套路化判定封顶 C，4/4 formulaic=true，approved=false。",
+    "wall_clock_ms": 171381
+  },
+  "fact_review": {
+    "carrier": "全新只读子代理 abe850980cf58de3f",
+    "dispatched_at": "2026-07-17T04:34:59+00:00",
+    "rationales": {
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001": "标题/正文/画面仅呈现 F1、F2 verbatim，元话语不引入新事实，全程未触及袖长或禁用词'袖长准确'，无违禁推断。",
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001": "F1、F2 忠实呈现，时间窗为视角框架非新事实，未面化吊牌 CONTROL_ONLY，无'吊牌信息无误'及其外推。",
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001": "'两个人'如实对应双人交叉复核且已绑定，台账为记录同义框架，未提配件数量、无'配件齐全'及外推。",
+      "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001": "F1、F2 verbatim，'先目视后封装'的顺序由 F2'封装前做了外观目视检查'直接支撑，未触及洗涤标签或'标签信息完整'，无违禁推断。"
+    },
+    "reviewer_identity": "M2-S0-FACT-REVIEWER",
+    "reviewer_model_actual": "claude-opus-4-8",
+    "reviewer_model_requested": "opus",
+    "verdict_summary": "四条全部通过：受众面断言全部落在绑定事实的 fact_value/quote 上，无未绑定新事实；CONTROL_ONLY 零面化、prohibited_surface_terms 零出现、forbidden_inferences 零违反；MUST_SURFACE 忠实无夸大。",
+    "wall_clock_ms": 81022
+  },
+  "first_attempt_discipline_note": "内容评审判全批套路化（4/4 C/不批准）——按资格模式纪律不重写、不出第二候选；批度量诚实记录 first_acceptance_rate=0.0、formulaic_rate=1.0。该结果不影响 S0 六项卫生出口（S0 非批质量门），并作为后续里程碑作者多样性改进的真实基线证据。",
+  "note": "机器可消费评审行在 content_reviews.v1.json / fact_reviews.v1.json（exact-fields）；本文件保存评审员完整报告（模型身份、理由、墙钟）。",
+  "schema_version": "s0m2-reviewer-reports-v1"
+}

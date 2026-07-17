@@ -1,0 +1,50 @@
+{
+  "budget_digest": "2a05483dab4eb95fdd83ba79825528089a500d32883040ef5d1644b1e8cea98f",
+  "call_status": "VALID",
+  "cost_cny_budget_basis": 0.0010808,
+  "cost_usd": 0.0001351,
+  "formulaic_result": {
+    "axes": {
+      "argument_spine": "DIFFERENT",
+      "closing_function": "SAME",
+      "evidence_progression": "DIFFERENT",
+      "limitation_function": "SAME",
+      "transformation_depth": "SURFACE_ONLY",
+      "viewpoint_anchor": "DIFFERENT"
+    },
+    "derived_verdict": "NOT_FORMULAIC",
+    "evidence_notes": [
+      "argument_spine: 左文本聚焦'领口对位检查记录'，右文本聚焦'陈列台色号分组记录'，实体不同。",
+      "evidence_progression: 左文本指明交接后下一步检查；右文本无交接描述，只归档。",
+      "limitation_function: 两文本均使用范围限定（'到领口对位为止' vs '记录覆盖的只是这一组'）。",
+      "viewpoint_anchor: 左文本从交接者视角；右文本从整理归档视角。",
+      "closing_function: 两文本末句均收束于画面/动作终点。",
+      "transformation_depth: 仅替换实体和场景，结构（记录→动作→限定→收束）相同。"
+    ],
+    "necessary_grammar_exception_id": null
+  },
+  "model_revision": "deepseek-v4-flash",
+  "prompt_digest": "0dd8e5da6860a25520a468fcb1798f53e7d114eedb1e1d97a374638a526e885c",
+  "prompt_revision": "FORMULAIC-RUBRIC-V1.1",
+  "provider": "DEEPSEEK",
+  "provider_call_id": "37cdc04b-7061-4721-99e7-3ae9c2f7ad84",
+  "rate_card_digest": "473f2279ef84587364f462c4b9c024069852aaf57cba81235f1674fd316d3d7d",
+  "receipt_digest": "8c03822f22c003ad31052afdab6155c482da5fd80e28e47f11ee5cff69319c0c",
+  "request_digest": "650cf1c489ecd66a3517b24641b445195ad7fb17819d8a9795250c5c80622f35",
+  "reservation_id": "7514448f-881e-48e6-833a-c624acdcaa62",
+  "response_digest": "102bf35e78e7b830da87a8010063c74a373ed846790bd8cc90f27677c37bafcc",
+  "reviewer_identity": "M2-S0-FORMULAIC-JUDGE",
+  "schema_version": "eval-spine-external-judge-receipt-v1",
+  "usage": {
+    "completion_tokens": 261,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 443,
+    "prompt_tokens": 443,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 704
+  },
+  "validation_errors": [],
+  "wall_clock_seconds": 7.718944
+}

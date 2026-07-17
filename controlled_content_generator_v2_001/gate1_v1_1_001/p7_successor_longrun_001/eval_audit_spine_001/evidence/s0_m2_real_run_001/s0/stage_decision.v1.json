@@ -1,0 +1,41 @@
+{
+  "batch_id": "S0M2-BATCH-001",
+  "decision": {
+    "gate_type": "CONJUNCTIVE",
+    "gates": {
+      "assignment_material_match": true,
+      "cost_provenance": true,
+      "first_response_retained": true,
+      "no_plan_impersonation": true,
+      "single_assignment": true,
+      "whole_batch_hard_veto_metric": true
+    },
+    "invalid_gate_value_keys": [],
+    "max_revisions": 1,
+    "missing_gate_keys": [],
+    "required_gate_keys": [
+      "assignment_material_match",
+      "cost_provenance",
+      "first_response_retained",
+      "no_plan_impersonation",
+      "single_assignment",
+      "whole_batch_hard_veto_metric"
+    ],
+    "revision_count": 0,
+    "stage": "S0",
+    "status": "PASS",
+    "unknown_gate_keys": []
+  },
+  "gate_notes": [
+    "single_assignment: bundle 复建摘要一致=True",
+    "assignment_material_mismatch_count=0",
+    "veto_metric_present=True (gate=0, metrics=0)",
+    "first_response_retained: outputs一次尝试=True, 外部回执内容寻址=True",
+    "cost_provenance: accounting=PASS",
+    "gate1_plan_impersonation_count=0"
+  ],
+  "record_digest": "a6ea03e272388189cafda787a5d5d57acd61ee140bc4c5cc99b1e5cb274810b8",
+  "run_id": "S0M2-RUN-001",
+  "schema_version": "s0m2-stage-decision-v1",
+  "stage_id": "S0_DETERMINISTIC_HYGIENE"
+}

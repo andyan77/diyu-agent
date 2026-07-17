@@ -1,0 +1,94 @@
+{
+  "author_model_config": {
+    "model_family": "claude-fable",
+    "model_revision": "claude-fable-5",
+    "provider": "ANTHROPIC_CLAUDE_CODE",
+    "reasoning_effort": "xhigh",
+    "seed": {
+      "availability": "unavailable",
+      "reason": "Claude Code 会话不暴露采样参数"
+    },
+    "temperature": {
+      "availability": "unavailable",
+      "reason": "Claude Code 会话不暴露采样参数"
+    },
+    "top_p": {
+      "availability": "unavailable",
+      "reason": "Claude Code 会话不暴露采样参数"
+    }
+  },
+  "author_windows": {
+    "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001": {
+      "completed_at": "2026-07-17T04:33:46+00:00",
+      "started_at": "2026-07-17T04:31:53+00:00"
+    },
+    "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001": {
+      "completed_at": "2026-07-17T04:33:46+00:00",
+      "started_at": "2026-07-17T04:31:53+00:00"
+    },
+    "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001": {
+      "completed_at": "2026-07-17T04:33:46+00:00",
+      "started_at": "2026-07-17T04:31:53+00:00"
+    },
+    "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001": {
+      "completed_at": "2026-07-17T04:33:46+00:00",
+      "started_at": "2026-07-17T04:31:53+00:00"
+    }
+  },
+  "gate_window": {
+    "completed_at": "2026-07-17T04:34:33+00:00",
+    "started_at": "2026-07-17T04:34:01+00:00"
+  },
+  "metrics_audit_window": {
+    "auditor_carrier": "子代理 a431e193d2380c11b (claude-opus-4-8)",
+    "auditor_verdict": "CONSISTENT",
+    "completed_at": "2026-07-17T04:41:07.398000+00:00",
+    "reviewer_minutes": 0.6566,
+    "started_at": "2026-07-17T04:40:28+00:00"
+  },
+  "metrics_window": {
+    "completed_at": "2026-07-17T04:39:38+00:00",
+    "started_at": "2026-07-17T04:39:38+00:00"
+  },
+  "review_windows": {
+    "CONTENT_REVIEW": {
+      "completed_at": "2026-07-17T04:37:50.381000+00:00",
+      "reviewer_minutes_per_item": 0.7141,
+      "started_at": "2026-07-17T04:34:59+00:00",
+      "track_wall_clock_ms": 171381
+    },
+    "FACT_REVIEW": {
+      "completed_at": "2026-07-17T04:36:20.022000+00:00",
+      "reviewer_minutes_per_item": 0.3376,
+      "started_at": "2026-07-17T04:34:59+00:00",
+      "track_wall_clock_ms": 81022
+    }
+  },
+  "reviewer_model_config": {
+    "model_family": "claude-opus",
+    "model_revision": "claude-opus-4-8",
+    "provider": "ANTHROPIC_CLAUDE_CODE",
+    "reasoning_effort": {
+      "availability": "unavailable",
+      "reason": "子代理派工不暴露推理档位"
+    },
+    "seed": {
+      "availability": "unavailable",
+      "reason": "子代理派工不暴露采样参数"
+    },
+    "temperature": {
+      "availability": "unavailable",
+      "reason": "子代理派工不暴露采样参数"
+    },
+    "top_p": {
+      "availability": "unavailable",
+      "reason": "子代理派工不暴露采样参数"
+    }
+  },
+  "run_window": {
+    "completed_at": "2026-07-17T04:44:18.108324+00:00",
+    "started_at": "2026-07-17T04:31:53+00:00"
+  },
+  "schema_version": "s0m2-run-log-v1",
+  "timestamp_scheme": "作者四条首次尝试在同一撰写块内完成，四个 AUTHOR_GENERATION 事件共享整块时间窗；评审窗为子代理派工墙钟（每条目工时=轨墙钟/4 均摊）；门/度量为本地确定性计算点事件；DeepSeek 窗见 external/call_windows.v1.json 与回执 wall_clock_seconds。"
+}

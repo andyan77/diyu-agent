@@ -1,0 +1,50 @@
+{
+  "budget_digest": "2a05483dab4eb95fdd83ba79825528089a500d32883040ef5d1644b1e8cea98f",
+  "call_status": "VALID",
+  "cost_cny_budget_basis": 0.00100352,
+  "cost_usd": 0.00012544,
+  "formulaic_result": {
+    "axes": {
+      "argument_spine": "DIFFERENT",
+      "closing_function": "SAME",
+      "evidence_progression": "DIFFERENT",
+      "limitation_function": "SAME",
+      "transformation_depth": "STRUCTURAL_CHANGE",
+      "viewpoint_anchor": "SAME"
+    },
+    "derived_verdict": "NOT_FORMULAIC",
+    "evidence_notes": [
+      "left聚焦清点台账，right聚焦封装判断；动作链不同。",
+      "left强调双人复核完成，right强调先检查后封装；证据推进结构不同。",
+      "两条均声明仅依据记录，限制范围一致。",
+      "两条均以操作记录为锚点锚定叙述视角。",
+      "两条均在末尾用‘画面只给到…’限定场景。",
+      "left是‘按台账写到哪说到哪’，right是‘先外观再封装’——核心动作从分箱清点变为检查封装，是结构层级转换。"
+    ],
+    "necessary_grammar_exception_id": null
+  },
+  "model_revision": "deepseek-v4-flash",
+  "prompt_digest": "63baf1c77a5a7988d23e6151ca3c890f513aeaf17927a91fc9dfe14bc120eadd",
+  "prompt_revision": "FORMULAIC-RUBRIC-V1.1",
+  "provider": "DEEPSEEK",
+  "provider_call_id": "5c341cc0-ef00-48d6-9b5c-0491150405b4",
+  "rate_card_digest": "473f2279ef84587364f462c4b9c024069852aaf57cba81235f1674fd316d3d7d",
+  "receipt_digest": "0705e3a96e235b4cb1a9322ff31c59ee2dff2b065d62fc0e54c52481f9e90be4",
+  "request_digest": "5669b101d33d03ad2374f2e8c5aa53a3d075c9c9a47cb8335d318e8a5b21803b",
+  "reservation_id": "2e05b8f7-96dc-47ae-82bb-d6cc25583608",
+  "response_digest": "450add7282213a2774181e57ceeb3834d2adc95eb8d0cde8663307715d8de66d",
+  "reviewer_identity": "M2-S0-FORMULAIC-JUDGE",
+  "schema_version": "eval-spine-external-judge-receipt-v1",
+  "usage": {
+    "completion_tokens": 220,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 456,
+    "prompt_tokens": 456,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 676
+  },
+  "validation_errors": [],
+  "wall_clock_seconds": 7.120159
+}
