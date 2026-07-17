@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 129207,
+ "duration_api_ms": 129097,
+ "ttft_ms": 121471,
+ "ttft_stream_ms": 2620,
+ "time_to_request_ms": 66,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round2-G3-POS-CP18-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"源载只问不试、全程无任何测试记录，免责表述与事实框一致\"},\n {\"case_id\":\"G2-round2-G3-POS-CP18-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"分两次两箱移至中部工作台有据，抱系搬运的等义表述\"},\n {\"case_id\":\"G2-round2-G3-POS-CP18-009-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"每五条装一防尘袋有源，码齐为分装的自然描述无新增事实\"},\n {\"case_id\":\"G2-round2-G3-POS-CP18-009-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"动作链完整且无防风测试，免责表述与claim_boundary一致\"},\n {\"case_id\":\"G2-round2-G3-POS-CP20-005-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三月67克、42单补纸均有源；包装承诺数据失实属误导信任非性能承诺\"},\n {\"case_id\":\"G2-round2-G3-POS-CP20-005-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"四月64克、3单压折及回退披露均有源；风险同属误导层级\"},\n {\"case_id\":\"G2-round3-G3-POS-CP03-012-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"试片对比与选参有源；纯工艺过程描述，无性能承诺载荷\"},\n {\"case_id\":\"G2-round3-G3-POS-CP03-012-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"选无压亮参数与全程不加胶均有源；工艺叙述不涉购买误导\"},\n {\"case_id\":\"G2-round3-G3-POS-CP03-012-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"30秒喷淋无渗有源且已限定；含防渗暗示可误导但非防水承诺\"},\n {\"case_id\":\"G2-round3-G3-POS-CP03-012-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"宽度、翘起与两次3秒均有源；纯尺寸数据未涉温度与性能\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "b15bb7af-790a-4ee2-854a-0c4c811b37fd",
+ "total_cost_usd": 0.997474,
+ "usage": {
+  "input_tokens": 3444,
+  "cache_creation_input_tokens": 23486,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9512,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23486,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3444,
+    "output_tokens": 9512,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23486,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23486
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3444,
+   "outputTokens": 9512,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23486,
+   "webSearchRequests": 0,
+   "costUSD": 0.997474,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "5572b641-72f2-4657-bcae-cbcc4e59cc62"
+}

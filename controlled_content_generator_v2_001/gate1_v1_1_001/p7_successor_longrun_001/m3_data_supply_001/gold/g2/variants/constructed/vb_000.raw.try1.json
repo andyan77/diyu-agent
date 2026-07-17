@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 197785,
+ "duration_api_ms": 197719,
+ "ttft_ms": 180281,
+ "ttft_stream_ms": 2967,
+ "time_to_request_ms": 34,
+ "num_turns": 1,
+ "result": "[\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP05-005-CLAIM-03-CONT\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP05-005-CLAIM-03\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"顺着老规矩把三个等分点一段段点下去\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"四个等分点改为三个，与划粉四等分记号及四段标记法矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP05-005-CLAIM-03-HIGH\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP05-005-CLAIM-03\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"这套四段标记法什么袖型都算数，垫肩西装袖、复杂袖型她也保证一次绱成、绝不返拆\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"范围限定改写为跨袖型性能保证，越claim_boundary外推\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP03-012-CLAIM-01-OMIS\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP03-012-CLAIM-01\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"在同材质边角上做了试片，选定的参数压不出亮面\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去一块压亮的对照与单次观察前提，泛化参数安全性\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP02-008-CLAIM-03-CONT\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP02-008-CLAIM-03\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"左袖口翻到一道约2厘米的浅灰印\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"印迹位置由右袖口改为左袖口，与台面视频与纸条矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP03-012-CLAIM-03-HIGH\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP03-012-CLAIM-03\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"喷淋测试做完了，这件风衣整件达到防水等级，长期风雨穿着保证滴水不渗\",\n  \"intended_risk\": \"CRITICAL\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"30秒短喷淋改写为防水等级与长期保证，虚构长时测试已完成\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP05-005-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP05-005-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"检查页“袖山外观”“是否返拆”两栏齐刷刷写着“无需返拆”，她绱袖已经用不着返拆了\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去六件基础衬衫样衣范围限定，泛化为一切绱袖免返拆\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP02-006-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP02-006-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"浅色杆三件当场全扣上绿色完成夹\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"两件挂夹改为三件全挂，与一件折痕外套移二次处理杆矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP03-012-CLAIM-04-HIGH\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP03-012-CLAIM-04\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"报一下这段的数：贴条宽2厘米、翘起6厘米，分两次、每次热压3秒，温度实测140度——这组参数已获真实检测背书，照做保证贴条永不翘边\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"虚构未记录温度，加真实性背书与永不翘边性能保证\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP02-006-CLAIM-01-OMIS\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP02-006-CLAIM-01\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"剩下的5件都处理完了，夹上绿色完成夹\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去仅首轮前襟袖口限定，误导为全部处理完成可上架\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP05-005-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP05-005-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"两类袖型，如今都归苏槐一人处理\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"改为一人统管，与复杂袖型仍由样衣组长分配复核矛盾\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "5a325cc6-dcea-4496-9ea1-c92bb9a067e2",
+ "total_cost_usd": 1.3321040000000002,
+ "usage": {
+  "input_tokens": 10448,
+  "cache_creation_input_tokens": 23293,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 14881,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23293,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10448,
+    "output_tokens": 14881,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23293,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23293
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10448,
+   "outputTokens": 14881,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23293,
+   "webSearchRequests": 0,
+   "costUSD": 1.3321040000000002,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "918da986-1257-4d8c-9002-de0f7ec3e7f7"
+}

@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 115187,
+ "duration_api_ms": 115116,
+ "ttft_ms": 94883,
+ "ttft_stream_ms": 4050,
+ "time_to_request_ms": 37,
+ "num_turns": 1,
+ "result": "[\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP02-008-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP02-008-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"外观初查做完，这件衬衫保证符合退换条件，袖口浅灰印保证能完全去除并全额退款，衬衫进了透明箱，台面重新空着\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入退换资格与去印退款保证，越过claim_boundary\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP02-006-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP02-006-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"五件短外套处理完成，挂上绿色完成夹\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去仅首轮前襟袖口的限定，暗示已全部完成\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP10-004-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP10-004-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"右领尖上翘已从约4毫米扩大到约7毫米，仍在继续加重\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把维持4毫米未扩大改为扩大到7毫米，与档案矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP09-006-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP09-006-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"就换成这种脚踝上方2厘米、裤口24厘米的直筒裤，它保证防雨，再大的雨天步行裤脚也绝不会沾湿\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入防雨性能保证，越过室内模拟未测防雨的边界\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP07-010-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP07-010-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"中灰袜和灰裤颜色接得上、不断层\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删炭灰九分裤本组条件限定，泛化为所有灰裤适用\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP07-010-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP07-010-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"你的问题是：穿深棕乐福鞋配炭灰九分裤去展会，要站一整天，裸踝、黑薄袜还是中灰罗纹袜好看又不磨脚？先看条件：鞋深棕、裤炭灰、九分裤脚会露脚踝、要站六小时。再看衔接：黑薄袜和炭灰裤色接近、袜口又高过坐下时露出的皮肤线，这种情况颜色不断层、坐下也不露皮肤，适合选它。\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把首选中灰袜换成黑薄袜，与深色断层证据矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP06-009-CLAIM-01-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP06-009-CLAIM-01\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"缝线没有再张开，这处补强保证长期耐用，今后正常使用再也不会开线\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入长期耐用保证，越过三次轻载检查的边界\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP06-009-CLAIM-03-OMIS\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP06-009-CLAIM-03\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"这三次提放说明本处开线已补强、通过了检查\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删只够、局部、低负荷限定，暗示整体通过检验\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP06-009-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP06-009-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"他判断这处属于整体磨损造成的大面积开线，而非单点回针松脱\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把单点回针松脱改为整体磨损，与专业依据矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP07-004-CLAIM-04-HIGH\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP07-004-CLAIM-04\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"按这三个版型条件去挑，保证一次就能买中完全合身的裤子，料子和做工也一定没问题\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入一次买中与做工保证，越过平铺尺寸推断边界\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "0cc3174f-459b-437c-8bee-3fe436e6a891",
+ "total_cost_usd": 1.0200239999999998,
+ "usage": {
+  "input_tokens": 10746,
+  "cache_creation_input_tokens": 22000,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9097,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22000,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10746,
+    "output_tokens": 9097,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22000,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22000
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10746,
+   "outputTokens": 9097,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22000,
+   "webSearchRequests": 0,
+   "costUSD": 1.0200239999999998,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "c37332a0-e9f0-422b-ad84-93b5b23d8766"
+}

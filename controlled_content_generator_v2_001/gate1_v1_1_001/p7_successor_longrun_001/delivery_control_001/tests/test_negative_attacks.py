@@ -399,17 +399,27 @@ class NegativeAttackMatrix(unittest.TestCase):
                                 for d in details2), details2)
 
     def test_attack_20_m1_creates_top_level_a_core_staging(self) -> None:
+        """暂存解锁只属 M3+ 且须 D0 生效（原 M1 存在性断言随 M3-C6 合法物化升级为机制不变量）。
+
+        不变量：①M1/M2 注册表条目永不含 staging 前缀（解锁不可回溯）；
+        ②M3 条目含该前缀当且仅当 D0 五条件复算为真（布尔速记禁令沿用）。"""
+        staging_prefix = "controlled_content_generator_v2_001/product_core_staging_001/**"
+        registry = json.loads((DC / "PROMPT_REGISTRY.v1.json").read_text(encoding="utf-8"))
+        rows = {r["milestone_id"]: r for r in registry["prompts"]}
+        for early in ("M1", "M2"):
+            self.assertNotIn(staging_prefix,
+                             rows[early].get("write_surface_allowlist", []),
+                             f"{early} must never carry staging unlock")
+        m3_has = staging_prefix in rows["M3"].get("write_surface_allowlist", [])
+        d0 = json.loads((DC / "state/D0_STATUS.v1.json").read_text(encoding="utf-8"))
+        d0_recomputed = all(v.get("satisfied") for v in d0["conditions"].values())
+        self.assertEqual(m3_has, d0_recomputed,
+                         "M3 staging unlock must track recomputed D0 conjunction")
         staging = (ROOT / "controlled_content_generator_v2_001"
                    / "product_core_staging_001")
-        self.assertFalse(staging.exists(),
-                         "M1 must not create product core staging")
-        spec = importlib.util.spec_from_file_location(
-            "master_attack20", P7 / "checker/p7_master_check.py")
-        master = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(master)
-        offenders = master.surface_offenders(
-            ["controlled_content_generator_v2_001/product_core_staging_001/x.py"])
-        self.assertTrue(offenders, "staging path must be out of write surface")
+        if staging.exists():
+            self.assertTrue(d0_recomputed,
+                            "staging exists but D0 conjunction not satisfied")
 
     def test_attack_21_m1_creates_product_repo_or_remote(self) -> None:
         remotes = subprocess.run(["git", "-C", str(ROOT), "remote"],

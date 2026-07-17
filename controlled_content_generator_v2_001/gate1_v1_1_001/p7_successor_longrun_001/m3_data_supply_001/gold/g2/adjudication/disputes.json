@@ -1,0 +1,3236 @@
+[
+ {
+  "case_id": "G2-round1_top-G3-POS-CP02-008-CLAIM-03",
+  "claim_text": "算不算退换、会不会退款，台面上都没有答案",
+  "claim_boundary": "不能说明印迹来源、是否符合退换条件、是否会退款或来访者身份与陈述。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "actor_task_identity": "时段里只有接待店员一人在台面做外观初查，画面锁定这8分钟空档里台面上的状态变化，不聚焦她整段任务。",
+   "anchor_identity": "点位集中在退换接待台面：检查垫、旁边的透明待判断箱两处。",
+   "context_or_time_labels": "这是一个傍晚前的短空档，点位标出16:32、16:37、16:40几个时刻，字幕写“退换接待台”。",
+   "event_or_stage_state": "这是16:32至16:40的8分钟空档，门店“合页店”的退换接待台上，一件条纹衬衫被逐项看过。",
+   "handled_object": "一件条纹衬衫，连带它的吊牌、未拆的备用扣袋，以及右袖口一道约2厘米的浅灰印。",
+   "observed_action_chain": "店员先确认吊牌仍在，再依次检查领口、袖口和纽扣，随后发现右袖口约2厘米浅灰印、备用扣袋未拆，16:37把衬衫放进透明待判断箱，16:40台面恢复空置。",
+   "state_evidence_at_each_anchor": "检查垫点吊牌在、备用扣袋未拆、右袖口浅灰印被翻出对着镜头；待判断箱点衬衫放进去、箱子透明可见衣物。",
+   "time_anchor_evidence": "台面固定视频连续记录，从16:32到16:40每步都能对到时刻，8分钟边界清楚。",
+   "visible_context": "退换接待台面、固定镜头只拍台面不拍来访者，画面里没有人脸、票据或个人信息。",
+   "visible_result_or_unfinished_state": "8分钟里外观初查做完、衬衫进了待判断箱；印迹哪来的、算不算退换、会不会退款，这些台面上都没有答案。",
+   "visible_states": "画面直接可见：吊牌完整、备用扣袋未拆、右袖口2厘米浅灰印、透明箱里的衬衫、恢复空置的台面。"
+  },
+  "source_summary_a": "台面固定视频记录检查垫、吊牌、袖口近景和透明待判断箱，不含人脸、票据或个人信息。",
+  "source_summary_b": "初查纸条仅列吊牌、备用扣袋、右袖口浅灰印与转主管状态，没有退换结论。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及退换退款判断，但仅称现场无结论"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "源载无退换结论，主张仅陈述未决状态，失实伤害轻"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP02-008-CLAIM-04",
+  "claim_text": "从16:32到16:40每步对得上时刻",
+  "claim_boundary": "不能说明印迹来源、是否符合退换条件、是否会退款或来访者身份与陈述。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "actor_task_identity": "时段里只有接待店员一人在台面做外观初查，画面锁定这8分钟空档里台面上的状态变化，不聚焦她整段任务。",
+   "anchor_identity": "点位集中在退换接待台面：检查垫、旁边的透明待判断箱两处。",
+   "context_or_time_labels": "这是一个傍晚前的短空档，点位标出16:32、16:37、16:40几个时刻，字幕写“退换接待台”。",
+   "event_or_stage_state": "这是16:32至16:40的8分钟空档，门店“合页店”的退换接待台上，一件条纹衬衫被逐项看过。",
+   "handled_object": "一件条纹衬衫，连带它的吊牌、未拆的备用扣袋，以及右袖口一道约2厘米的浅灰印。",
+   "observed_action_chain": "店员先确认吊牌仍在，再依次检查领口、袖口和纽扣，随后发现右袖口约2厘米浅灰印、备用扣袋未拆，16:37把衬衫放进透明待判断箱，16:40台面恢复空置。",
+   "state_evidence_at_each_anchor": "检查垫点吊牌在、备用扣袋未拆、右袖口浅灰印被翻出对着镜头；待判断箱点衬衫放进去、箱子透明可见衣物。",
+   "time_anchor_evidence": "台面固定视频连续记录，从16:32到16:40每步都能对到时刻，8分钟边界清楚。",
+   "visible_context": "退换接待台面、固定镜头只拍台面不拍来访者，画面里没有人脸、票据或个人信息。",
+   "visible_result_or_unfinished_state": "8分钟里外观初查做完、衬衫进了待判断箱；印迹哪来的、算不算退换、会不会退款，这些台面上都没有答案。",
+   "visible_states": "画面直接可见：吊牌完整、备用扣袋未拆、右袖口2厘米浅灰印、透明箱里的衬衫、恢复空置的台面。"
+  },
+  "source_summary_a": "台面固定视频记录检查垫、吊牌、袖口近景和透明待判断箱，不含人脸、票据或个人信息。",
+  "source_summary_b": "初查纸条仅列吊牌、备用扣袋、右袖口浅灰印与转主管状态，没有退换结论。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "仅陈述录像时间对应性，时间证据明确支持"
+  },
+  "label_yi": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属记录可核验的真实性背书，时间锚证据逐字支持"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP03-012-CLAIM-01",
+  "claim_text": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及热压工序方法，失实可能误导处理判断"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "工序清单槽逐字载4步及无加胶，属过程描述"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP03-012-CLAIM-02",
+  "claim_text": "两块边角一块被压出亮面、一块没有，季枢选没压亮的那组参数",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及参数对比与效果选择，材料明确支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "判断点槽逐字载试片对比与选参，未涉性能承诺"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP03-012-CLAIM-03",
+  "claim_text": "更久的喷淋和整件风衣防不防水，这一段都还没测",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "长时及整件防水均未测试，属性能边界"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "涉防水性能预期，失实可误导购买；源明写长时喷淋与整件测试均未做"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP05-003-CLAIM-02",
+  "claim_text": "库位卡是他自己填、自己维护的",
+  "claim_boundary": "不能宣称整个仓库零差错、40分钟返查造成经营损失、方法适用于鞋包仓或他具备仓储管理全权限。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "四次抽查全部在针织区进行，没有一条延伸到鞋包仓或全仓规则，能证明的范围只到针织区库位管理。",
+   "career_stage_record": "仓管台账从2020年“纸条记位置、一次40分钟返查”，到2022年“四次抽查可按批分开”，记录他的方法演进。",
+   "current_stage_or_open_question": "如今他填卡先写染批尾码；还没验证的是这套分隔法搬到鞋包仓成不成立，档案里只有针织区数据。",
+   "document_field_evidence": "库位卡有“颜色”“染批尾码”“入库日”三个字段，对比2020年只写位置的旧纸条，字段从一项增加到三项。",
+   "field_scope_evidence": "这些卡和抽查只覆盖针织区，鞋包仓的堆放规则不在档案里，他也没有那部分经验。",
+   "object_action_evidence": "画面拍他给一格针织衫贴库位卡，卡上颜色、染批尾码、入库日三行都填好，中间插一片分隔片区分两个染批。",
+   "prior_stage": "2020年他只用纸条记货架在哪，曾把同色不同染批的针织衫放进同一格，盘点时花了40分钟重新分组。",
+   "record_field_evidence": "四次月度抽查页每次抽一格同色针织，“能否按卡分开”一栏四次都打勾，镜头可翻这四页。",
+   "recorded_change": "2021年开始他在库位卡上同时写颜色、染批尾码和入库日，并用分隔片把两批隔开，不再让同色混在一格。",
+   "relation_evidence": "库位卡由闻库填写维护，全仓规则和人员分工的调整栏则标注“主管”，两类事分属不同角色。",
+   "role_or_skill_state": "他现在能维护针织区库位卡、按染批分隔并参与盘点；调整全仓规则不在他这一层。",
+   "time_marker": "2020年闻库用纸条记货架位置，2021年改用库位卡，2022年做四次月度抽查，三个年份标出他记录方式的升级。"
+  },
+  "source_summary_a": "合成口述记录他对混批返查的回忆，以及后来填写库位卡时优先看的三项信息。",
+  "source_summary_b": "纸条旧样、带染批尾码的新库位卡和四次抽查页构成阶段证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "材料明确库位卡由闻库填写维护"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "角色过程描述失实伤害轻；源明写库位卡由闻库填写维护"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP05-003-CLAIM-03",
+  "claim_text": "四次抽查只圈在针织区，谈不上整仓零差错",
+  "claim_boundary": "不能宣称整个仓库零差错、40分钟返查造成经营损失、方法适用于鞋包仓或他具备仓储管理全权限。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "四次抽查全部在针织区进行，没有一条延伸到鞋包仓或全仓规则，能证明的范围只到针织区库位管理。",
+   "career_stage_record": "仓管台账从2020年“纸条记位置、一次40分钟返查”，到2022年“四次抽查可按批分开”，记录他的方法演进。",
+   "current_stage_or_open_question": "如今他填卡先写染批尾码；还没验证的是这套分隔法搬到鞋包仓成不成立，档案里只有针织区数据。",
+   "document_field_evidence": "库位卡有“颜色”“染批尾码”“入库日”三个字段，对比2020年只写位置的旧纸条，字段从一项增加到三项。",
+   "field_scope_evidence": "这些卡和抽查只覆盖针织区，鞋包仓的堆放规则不在档案里，他也没有那部分经验。",
+   "object_action_evidence": "画面拍他给一格针织衫贴库位卡，卡上颜色、染批尾码、入库日三行都填好，中间插一片分隔片区分两个染批。",
+   "prior_stage": "2020年他只用纸条记货架在哪，曾把同色不同染批的针织衫放进同一格，盘点时花了40分钟重新分组。",
+   "record_field_evidence": "四次月度抽查页每次抽一格同色针织，“能否按卡分开”一栏四次都打勾，镜头可翻这四页。",
+   "recorded_change": "2021年开始他在库位卡上同时写颜色、染批尾码和入库日，并用分隔片把两批隔开，不再让同色混在一格。",
+   "relation_evidence": "库位卡由闻库填写维护，全仓规则和人员分工的调整栏则标注“主管”，两类事分属不同角色。",
+   "role_or_skill_state": "他现在能维护针织区库位卡、按染批分隔并参与盘点；调整全仓规则不在他这一层。",
+   "time_marker": "2020年闻库用纸条记货架位置，2021年改用库位卡，2022年做四次月度抽查，三个年份标出他记录方式的升级。"
+  },
+  "source_summary_a": "合成口述记录他对混批返查的回忆，以及后来填写库位卡时优先看的三项信息。",
+  "source_summary_b": "纸条旧样、带染批尾码的新库位卡和四次抽查页构成阶段证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "抽查仅覆盖针织区，不支持整仓结论"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "范围限定陈述；源明写四次抽查全在针织区、不及全仓"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP05-005-CLAIM-01",
+  "claim_text": "袖子绱上去一次到位，拆缝表那一格空着",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "六件基础衬衫袖均记录无需返拆"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "技能过程描述；六件无需返拆、后段拆缝格归零有据"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP05-005-CLAIM-02",
+  "claim_text": "“袖山外观”“是否返拆”两栏，六件齐刷刷写着“无需返拆”",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "检查页两栏及六件记录直接支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "记录描述；两栏六件均写无需返拆与源逐字一致"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP06-009-CLAIM-01",
+  "claim_text": "线只在原来回针收尾的那一点松开，周围面料没破、袋口衬条也整",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "开线位置及面料、衬条状态均有记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "状态观感描述；开线单点、面料衬条完好均有源支持"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP06-009-CLAIM-03",
+  "claim_text": "它也只对着这一处6毫米开线成立",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "判断范围明确仅限该处6毫米开线"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "适用范围限定；源明写判断仅针对此处6毫米开线"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP07-004-CLAIM-01",
+  "claim_text": "所以现在的判断是不优先大一码，改按三个条件筛版型：臀围接近旧裤、前裆不低于旧裤、腰部可调。两条路里，证据把换版型排前、大一码排后；真正的方向就是换版型。",
+  "claim_boundary": "不能保证给出的版型条件一次购买成功，也不能由平铺尺寸推断所有穿着舒适度；面料、做工和个体动作仍会影响结果。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是这条无弹锥形裤“该放大尺码还是换版型”这个问题。",
+   "alternative_basis_evidence": "支撑换版型的证据是目标裤与旧裤叠放对齐裆点、量出臀围差4厘米前裆差2厘米的画面。",
+   "claim_boundary": "这些条件只从平铺尺寸推，不能保证一次买中，面料、做工和个体动作仍会影响实际穿着。",
+   "condition_evidence": "目标裤平铺腰围74厘米、臀围96厘米、前裆27厘米，旧裤平铺臀围100厘米、前裆29厘米，大一码腰围加4厘米、臀围只加2厘米，这些是判断依据。",
+   "decision_state": "现在的判断是不优先大一码，改按“臀围接近旧裤、前裆不低于旧裤、腰部可调”这三个条件去筛版型。",
+   "exclusion_basis_evidence": "把大一码往后排的证据是尺码表上大一码只增臀围2厘米却增腰围4厘米的对照。",
+   "fit_conditions": "取决于臀围和前裆：要找臀围至少接近旧裤100厘米、前裆不低于29厘米、腰部还能调的版型，这种情况才对得上坐姿需求。",
+   "missing_condition_request": "顾问请用户按同一方法平铺量出旧裤和目标裤，并说明是不是经常久坐。",
+   "missing_conditions": "还缺的是用户实际身体臀围和坐姿动作幅度，平铺尺寸推不出。",
+   "nonfit_conditions": "如果只是大一码，臀围才加2厘米、腰围反而多加4厘米，这种情况腰更松、臀裆还是紧，并不合适。",
+   "question_or_decision_context": "用户原话：“网购的无弹锥形裤，站着腰能插进两根手指，可一坐下前面口袋就张开、裆部全是横纹，我该换大一码还是干脆换版型？”顾问用尺寸来回答。",
+   "supported_alternative": "被支撑的方向是换版型：优先臀围接近100厘米、前裆不低于29厘米、腰部可调。",
+   "supported_alternatives": "可比的两条路是大一码和换版型，证据把换版型排在前、大一码排在后。",
+   "trigger_condition": "触发问题的是同一条裤子站立腰部有余、坐下却前袋张开、裆部横纹这组矛盾表现。"
+  },
+  "source_summary_a": "目标裤与旧裤叠放、腰臀前裆尺量和坐姿口袋状态照片提供可比较的视觉依据。",
+  "source_summary_b": "商品尺码表与远程问答记录包含大一码增量、旧裤舒适状态和顾问建议的筛选条件。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及坐姿适配与版型购买决策，证据支持"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "排序建议影响购买判断；与decision_state及排序证据一致"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP07-004-CLAIM-02",
+  "claim_text": "你问的是：该换大一码还是干脆换版型？用尺寸回答。把两条裤子平铺量：目标裤腰围74厘米、臀围96厘米、前裆27厘米，旧裤臀围100厘米、前裆29厘米。取决于臀围和前裆——要找臀围接近旧裤100厘米、前裆不低于29厘米、腰部还能调的版型，才对得上你坐下的需求。",
+  "claim_boundary": "不能保证给出的版型条件一次购买成功，也不能由平铺尺寸推断所有穿着舒适度；面料、做工和个体动作仍会影响结果。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是这条无弹锥形裤“该放大尺码还是换版型”这个问题。",
+   "alternative_basis_evidence": "支撑换版型的证据是目标裤与旧裤叠放对齐裆点、量出臀围差4厘米前裆差2厘米的画面。",
+   "claim_boundary": "这些条件只从平铺尺寸推，不能保证一次买中，面料、做工和个体动作仍会影响实际穿着。",
+   "condition_evidence": "目标裤平铺腰围74厘米、臀围96厘米、前裆27厘米，旧裤平铺臀围100厘米、前裆29厘米，大一码腰围加4厘米、臀围只加2厘米，这些是判断依据。",
+   "decision_state": "现在的判断是不优先大一码，改按“臀围接近旧裤、前裆不低于旧裤、腰部可调”这三个条件去筛版型。",
+   "exclusion_basis_evidence": "把大一码往后排的证据是尺码表上大一码只增臀围2厘米却增腰围4厘米的对照。",
+   "fit_conditions": "取决于臀围和前裆：要找臀围至少接近旧裤100厘米、前裆不低于29厘米、腰部还能调的版型，这种情况才对得上坐姿需求。",
+   "missing_condition_request": "顾问请用户按同一方法平铺量出旧裤和目标裤，并说明是不是经常久坐。",
+   "missing_conditions": "还缺的是用户实际身体臀围和坐姿动作幅度，平铺尺寸推不出。",
+   "nonfit_conditions": "如果只是大一码，臀围才加2厘米、腰围反而多加4厘米，这种情况腰更松、臀裆还是紧，并不合适。",
+   "question_or_decision_context": "用户原话：“网购的无弹锥形裤，站着腰能插进两根手指，可一坐下前面口袋就张开、裆部全是横纹，我该换大一码还是干脆换版型？”顾问用尺寸来回答。",
+   "supported_alternative": "被支撑的方向是换版型：优先臀围接近100厘米、前裆不低于29厘米、腰部可调。",
+   "supported_alternatives": "可比的两条路是大一码和换版型，证据把换版型排在前、大一码排在后。",
+   "trigger_condition": "触发问题的是同一条裤子站立腰部有余、坐下却前袋张开、裆部横纹这组矛盾表现。"
+  },
+  "source_summary_a": "目标裤与旧裤叠放、腰臀前裆尺量和坐姿口袋状态照片提供可比较的视觉依据。",
+  "source_summary_b": "商品尺码表与远程问答记录包含大一码增量、旧裤舒适状态和顾问建议的筛选条件。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及身体穿着适配，尺寸与筛选条件均有依据"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "尺寸与筛选条件逐项吻合；条件式合身建议属购买引导"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP09-006-CLAIM-01",
+  "claim_text": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "可影响通勤选购，模拟记录支持沾湿与提裤动作"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "模拟测试的过程观察，与exclusion_basis_evidence逐字一致"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP10-004-CLAIM-01",
+  "claim_text": "到第6周期，上翘约4毫米没有扩大；整形后约2毫米。",
+  "claim_boundary": "不能推断灰线成因、后续是否加深或蒸汽效果能维持多久，也不能外推同批其他衬衫。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "一件合成白色府绸衬衫的领口，以及“六次穿洗里它何时开始变化、有没有扩大”这个待查看的问题。",
+   "cause_or_decision_trace_evidence": "档案只登记右领尖何时开始上翘、有没有扩大，没有推断浅灰线成因，也没把蒸汽整形后的暂时状态当作修复完成。",
+   "field_scope_evidence": "记录只限于这一件、这六个穿洗周期；灰线是否加深、蒸汽能维持多久和同批其他衬衫都不在范围。",
+   "record_field_evidence": "穿洗周期表逐次记录办公穿着一天、按洗标洗涤一次、领尖毫米数和灰线状态，六个周期同一条件。",
+   "result_state_evidence": "到第6周期，右领尖上翘仍约4毫米没有扩大，领座内侧一条浅灰摩擦线但无破损；蒸汽整形后上翘约2毫米。",
+   "state_evidence_at_each_anchor": "第0、1、3周期在同一领围扣合状态拍领尖、领座内侧和后领折线；第3周期起右领尖上翘约4毫米；第6周期加拍整形前后对照。",
+   "time_anchor_evidence": "记录节点定在第0、1、3、6周期，第6周期另有蒸汽整形前后两拍。",
+   "trigger_condition": "每完成一次“穿一天、洗一次”就记录一个周期，满六周期后作为当前节点。"
+  },
+  "source_summary_a": "四个周期的领尖、领座和折线固定机位照片，以及第6周期整形前后尺标近景构成档案。",
+  "source_summary_b": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及穿洗与整形性能数据，周期记录直接支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "单件档案数值记录，与result_state_evidence一致"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP10-004-CLAIM-03",
+  "claim_text": "蒸汽整形后上翘降到约2毫米也只是当时状态，能维持多久没测",
+  "claim_boundary": "不能推断灰线成因、后续是否加深或蒸汽效果能维持多久，也不能外推同批其他衬衫。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "一件合成白色府绸衬衫的领口，以及“六次穿洗里它何时开始变化、有没有扩大”这个待查看的问题。",
+   "cause_or_decision_trace_evidence": "档案只登记右领尖何时开始上翘、有没有扩大，没有推断浅灰线成因，也没把蒸汽整形后的暂时状态当作修复完成。",
+   "field_scope_evidence": "记录只限于这一件、这六个穿洗周期；灰线是否加深、蒸汽能维持多久和同批其他衬衫都不在范围。",
+   "record_field_evidence": "穿洗周期表逐次记录办公穿着一天、按洗标洗涤一次、领尖毫米数和灰线状态，六个周期同一条件。",
+   "result_state_evidence": "到第6周期，右领尖上翘仍约4毫米没有扩大，领座内侧一条浅灰摩擦线但无破损；蒸汽整形后上翘约2毫米。",
+   "state_evidence_at_each_anchor": "第0、1、3周期在同一领围扣合状态拍领尖、领座内侧和后领折线；第3周期起右领尖上翘约4毫米；第6周期加拍整形前后对照。",
+   "time_anchor_evidence": "记录节点定在第0、1、3、6周期，第6周期另有蒸汽整形前后两拍。",
+   "trigger_condition": "每完成一次“穿一天、洗一次”就记录一个周期，满六周期后作为当前节点。"
+  },
+  "source_summary_a": "四个周期的领尖、领座和折线固定机位照片，以及第6周期整形前后尺标近景构成档案。",
+  "source_summary_b": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "陈述单次整形状态并明确耐久性未测"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "陈述暂时状态并声明未测，与档案记录及范围证据一致"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP11-006-CLAIM-03",
+  "claim_text": "保暖值、填充能稳几年、洗过怎样、人穿着舒不舒服，这次一样都没测",
+  "claim_boundary": "不涉及保暖值、填充稳定年限、洗涤表现或人体舒适度；硬折和偏角仅是这组三块样片在指定折叠与垂挂动作下的可见状态。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "abandoned_option": "放弃十二厘米菱格方案，因为样片垂挂时下角偏向一侧。",
+   "authorization_scope_evidence": "绗缝工只按图车线，样衣师只执行同样的折叠与垂挂，设计负责人只确认分格与移线；没有人做材料性能认证。",
+   "constraint_or_cost": "选八厘米方格的代价是单片车缝路径增加。",
+   "current_evidence_boundary": "硬折和偏角只是这组三块样片在指定折叠与垂挂动作下的可见状态，不涉及保暖值、填充稳定年限、洗涤或人体舒适。",
+   "decision_context": "轻量夹棉衬里用十厘米方格时折叠后肘部出现一条明显硬折，要决定分格怎么改。",
+   "decision_domain": "夹棉衬里的绗线分格大小与肘部线位。",
+   "decision_problem": "十厘米方格折叠后肘部硬折，改小格增加车缝、改菱格垂挂偏角，要在线迹密度和垂挂状态间取舍。",
+   "document_field_evidence": "绗缝实验表记录十厘米方格、八厘米方格、十二厘米菱格三种格型、肘线位置和观察结果，最终纸样以箭头标明横线向上三厘米。",
+   "field_scope_evidence": "评估只覆盖三块样片在指定折叠和垂挂动作下的结构观察，不含保暖、耐久或洗涤。",
+   "object_action_evidence": "在光台和挂架上对三块样片做同样的折叠和垂挂，比对折痕阴影与下角偏移。",
+   "options_considered": "考虑过三种格型：十厘米方格、八厘米方格、十二厘米菱格。",
+   "record_field_evidence": "记录了三种格型使用同批夹棉材料、八厘米方格需更多车缝线、十二厘米菱格下角偏移，最终八厘米方格并把肘部横向绗线上移三厘米。",
+   "relation_evidence": "八厘米方格更平整却要更多车缝线，十二厘米菱格垂挂时下角偏向一侧；换成八厘米方格就把肘部横向绗线上移三厘米。",
+   "selected_option": "最终采用八厘米方格，并把肘部一条横向绗线向上移三厘米。"
+  },
+  "source_summary_a": "绗缝实验表记录三种格型、肘线位置和观察结果，最终纸样上以箭头标明横线向上三厘米。",
+  "source_summary_b": "光台和挂架素材拍到三块样片的折痕阴影、下角偏移及最终车线过程，原声含压脚起落和均匀机针声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "材料性能与人体感受均明确不在评估范围"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "与证据边界声明逐项一致；属未测声明，风险载荷低。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP13-002-CLAIM-01",
+  "claim_text": "静止时裙摆离地28厘米",
+  "claim_boundary": "不得把演绎写成真实看展经历，不评价显瘦、身材或久坐舒适度；一小时与四十分钟是场景设定，不是使用测试结果。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位要坐一天再去看展的人的衣橱，主角是那条墨绿中长褶裙，跟着这个人从久坐桌前到站立展厅反复出场。",
+   "context_or_time_labels": "时间标签是同一天的两段：白天连续坐桌1小时，晚间在小型展厅站立40分钟。",
+   "event_or_stage_state": "白天坐桌时把裙身前片整理成向两侧分开的褶束，晚间起身抖开裙褶、在展厅慢步停顿，同一条裙被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是墨绿中长褶裙，24道固定褶、侧拉链、静止时裙摆离地28厘米；坐桌搭配短针织开衫，看展换上长到胯下的无袖马甲，两段都穿同一双低跟鞋。它的角色是需要手动整理坐姿、但能在站立时给下身节奏的裙装。",
+   "runtime supplies contexts and product facts": "场景上下文是坐桌工位与小型展厅；产品事实是同一条24褶裙，坐时褶束分向两侧避免压在椅轮下，站时褶片随步行停顿摆动。",
+   "visible_context": "可见环境从桌前椅轮旁切到展厅步道，画面里有椅轮、褶束和低跟鞋，声音是布褶轻响和鞋底声。",
+   "visible_states": "可见状态包括前片褶束分向两侧、起身后褶面自然展开、上装从短开衫换上长马甲、鞋履始终不变。"
+  },
+  "source_summary_a": "场景搭配单列出裙褶数量、离地高度、两套上装、同一鞋履和坐姿整理步骤，明确不包含身材评价。",
+  "source_summary_b": "低机位素材拍褶束与椅轮距离、手整理褶片、起身后自然展开和展厅式慢步停顿，原声突出布褶轻响与鞋底声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "衣物事实明确记载静止时裙摆离地28厘米"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "slot_facts与搭配单均载离地28厘米；客观尺寸描述。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP13-005-CLAIM-01",
+  "claim_text": "衣长70厘米、前襟4个明袋",
+  "claim_boundary": "这些是合成场景演绎，不得表述为真人已经发生的出差经历；不声称防风、保暖或适合所有出行方式。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位需要出差走店的人的衣橱，主角是那件藏青斜纹棉工装外套，跟着这个人从高铁座位到门店走访反复出场。",
+   "context_or_time_labels": "时间线是同一天：早班高铁出差约2小时，到站后步行去合作门店做陈列走访。",
+   "event_or_stage_state": "高铁上落座后把帽子取下折进下明袋、双手端咖啡，到站后重新扣上帽子、站着在门店走动看陈列，同一件外套被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是藏青斜纹棉工装外套，衣长70厘米、前襟4个明袋、帽子可脱卸；它套在灰色薄卫衣外，高铁段搭配束脚运动裤、走店段换上直筒休闲裤。它的角色是陪人从长途座位到站立走动的同一件外层，不是防风层也不是保暖层。",
+   "runtime supplies contexts and product facts": "场景上下文是高铁车厢与合作门店卖场；产品事实是同一件工装外套，高铁上帽子折进最大的下明袋、上明袋分放车票和充电线，走店时明袋只留1支笔。",
+   "visible_context": "可见环境从高铁座位切到门店货架前，画面里有折进明袋的帽子、咖啡杯和1支笔，声音是到站提示音和衣料摩擦声。",
+   "visible_states": "可见状态包括帽子从取下到重新扣上、明袋里物件从满到只留1支笔、下装从束脚运动裤换上直筒休闲裤、卫衣内搭始终不变。"
+  },
+  "source_summary_a": "衣橱任务卡记录工装外套衣长70厘米、4个明袋和可脱卸帽，两段场景的内搭、下装与明袋内容，并把防风、保暖排除在本次角色之外。",
+  "source_summary_b": "可用素材围绕同一件外套拍帽子折进明袋、双手端咖啡、到站扣帽和门店走动看陈列，环境声来自到站提示与衣料摩擦。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "任务卡明确记载衣长及明袋数量"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "衣长70厘米与4明袋原文一致；客观规格描述。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP14-006-CLAIM-02",
+  "claim_text": "3条窗框线和纱线的疏密都在，黑卡也停在稀疏处不再动",
+  "claim_boundary": "不得把画面写成固定透光率、遮挡能力或成衣透视结论；结果只适用于该样布、该层数和该窗光。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "材料助理按4层、2层、单层顺序展开，灯光记录员确认自然光机位未变，演示者移动一次黑卡，任务是记录不同层数的透光样子。",
+   "contact_action_evidence": "手指捏住薄片上角逐层展开，特写里能看到布层从4层松到单层、纱线之间的疏密显出来。",
+   "event_or_stage_state": "本白亚麻薄片先以4层折叠放在窗台，再逐层展开到单层，最后用黑卡从布后横移一次。",
+   "handled_object": "被操作的是一块宽30厘米的本白亚麻薄片，表面能看到纱线疏密的纹理，放在东向窗台上。",
+   "object_contact_evidence": "接触点是薄片的上角和背后的黑卡，贴近看单层处可辨3条窗框线，黑卡边缘经过稀疏处时更清楚。",
+   "observed_action_chain": "动作链是4层时窗框线不可见、2层时出现模糊竖线、单层时可辨3条窗框线、黑卡从布后横移、稀疏处黑卡边缘更清楚。",
+   "source_sound_evidence": "现场声只有布层展开的窸窣声和黑卡划过窗台的声音，没有旁白。",
+   "visible_context": "上午11点的东向窗光固定，镜头贴近布面逆光拍，光透过亚麻在不同层数下亮度不同。",
+   "visible_result_or_unfinished_state": "结尾停在单层薄片上，3条窗框线和纱线疏密都可见，黑卡停在稀疏处不再移动。"
+  },
+  "source_summary_a": "样布记录包含三十厘米宽度、拍摄时刻、东向窗位、四层至单层顺序和可见窗框线数量。",
+  "source_summary_b": "逆光原始素材连续拍逐层展开、纱线微距与黑卡横移，曝光锁定，音轨只有布层和卡片接触窗台声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "结尾状态明确包含窗框线、纱线和黑卡"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "结尾可见状态原文一致；画面收尾观感描述。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP15-011-CLAIM-01",
+  "claim_text": "第2条右侧裙摆上，有一处约7毫米的浮纱",
+  "claim_boundary": "不得称浮纱为破损、可修复或质量责任，也不得声称七条没有其他问题或已售；维修结果尚不存在。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "收货员拆外袋按顺序挂裙，商品员识别并保护浮纱区域，整烫员处理通过初检的裙子，陈列员安排挂位；这是一条从到店到上架的后台动线。",
+   "event_or_stage_state": "8条雾蓝连衣裙从外袋取出挂起、逐条初检，第2条因浮纱进入维修评估位，其余7条继续整烫和陈列。",
+   "handled_object": "被处理的是8条雾蓝连衣裙，第2条右侧裙摆有一处约7毫米的浮纱，周围织面没有破洞。",
+   "local_state_evidence": "第2条右侧裙摆那处浮纱约7毫米长，贴近用标尺量，周围织面完整、没有破洞。",
+   "mapping_evidence": "8条里第2条进维修评估位，7条通过初检，其中3条整烫后2条正挂、1条侧挂到模特旁，4条进后备。",
+   "observed_action_chain": "动作链是拆外袋、按顺序挂起、初检、发现第2条浮纱、套入灰色保护袋移到评估位、7条查拉链和里布、3条整烫、2正挂1侧挂上架。",
+   "overview_state_evidence": "整批共8条，1条待维修评估，7条通过初检，3条已整烫陈列，4条在后备。",
+   "state_at_anchor_evidence": "10点40分这个节点上，2条已正挂、1条已侧挂到模特旁，第2条仍在保护袋里的评估位。",
+   "time_anchor_evidence": "时间锚点是周四9点到店8条连衣裙，10点40分完成3条陈列。",
+   "visible_context": "画面从验收挂杆走到维修评估位再到模特旁，能看到7毫米标尺、灰色保护袋和整烫蒸汽，声音是拉链和袋料摩擦声。",
+   "visible_result_or_unfinished_state": "结尾是那处浮纱未剪、未拉回，第2条停在保护袋里，维修结果还不存在。"
+  },
+  "source_summary_a": "验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检和三条陈列位置，维修栏未填写。",
+  "source_summary_b": "微距拍浮纱但不触碰，随后跟随保护袋套入与移位，再拍三条蒸汽整理和两种挂法，保留拉链与袋料声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "浮纱位置与约7毫米均有明确记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "槽位与验收记录均载明第2条右裙摆约7毫米浮纱，纯观察描述"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP18-009-CLAIM-01",
+  "claim_text": "店员只报了围巾尺寸，没说它能不能防风",
+  "claim_boundary": "不能宣称职业装备、防风效果或全年气候。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市砂岬市平码头门店，开在本地码头边，是这段素材的固定取景框。",
+   "context_or_time_labels": "大风日的收货时段，本地码头正刮干风。",
+   "local_climate_or_season": "砂岬平码头的大风日，干风顺着码头灌进后门，是这一带的常见天气。",
+   "local_routine_actor": "一名本地票务员，日常穿制服在附近码头值岗，进店只问领口折叠厚度。",
+   "local_routine_object": "票务员制服的领口内折叠厚度，是这次询问的核心；门店的轻薄围巾是待整理商品。",
+   "neighborhood_or_professional_crowd": "平码头一带的票务与码头人员是街坊常客，穿制服顺路进店问尺寸是这里的日常。",
+   "observed_local_action_state": "后门被风吹开时两条样巾滑落，店员关门后用夹具把围巾固定在内侧展示绳，待上架围巾每五条装一防尘袋。",
+   "real_city_and_store": "这是合成的砂岬市平码头门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货陈列日志记录两条滑落、关门、夹具固定和五条一袋的分装。",
+   "sound_source_evidence": "近景收风压推门、夹具扣合和纸袋声，都来自本地码头的大风日。",
+   "time_relation_evidence": "后门开、样巾滑落在先，关门用夹具固定、分装在后，一次询问穿插其间，由日志对上。",
+   "visible_states": "被风吹开的后门、两条滑落样巾、内侧展示绳夹具与五条一袋的防尘袋都能拍清。",
+   "visible_store_context": "门店对着平码头，后门迎着干风，店内是内侧展示绳与分装围巾；人员不出镜。"
+  },
+  "source_summary_a": "收货陈列日志记录滑落、关门和分装。",
+  "source_summary_b": "近景收风压门、夹具和纸袋声，拍展示变化。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "仅有顾客询问厚度，未载明店员答复"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "UNKNOWN",
+   "rationale": "触及防风效果边界；源材料未载店员答复内容，无法验证"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP18-011-CLAIM-01",
+  "claim_text": "普通衬衫不是劳保服",
+  "claim_boundary": "不能宣称适合维修作业或概括季节普遍需求。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市稻湾市仓前门店，紧邻农机维修街，是这段素材的固定取景框。",
+   "context_or_time_labels": "收割季的清晨时段，本地农机维修街刚开门。",
+   "local_climate_or_season": "稻湾仓前的收割季清晨，附近是忙着农机维修的街坊，是这一带这个季节的节奏。",
+   "local_routine_actor": "收割季来问衬衫的本地工作者，日常在附近维修街干活，进店关注袖口和胸袋。",
+   "local_routine_object": "深色衬衫的袖口、衣摆和胸袋，对应扣紧、塞进工装裤、放纸工单三种日常动作。",
+   "neighborhood_or_professional_crowd": "农机维修街一带的收割季工作者是街坊常客，清晨顺路问耐用衬衫是这里的日常。",
+   "observed_local_action_state": "店员明确普通衬衫不是劳保服，用两件样衣做空工单、抬臂和塞衣摆三种演示，回应三次询问。",
+   "real_city_and_store": "这是合成的稻湾市仓前门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "询问记录分列袖口扣紧、衣摆塞入、胸袋放工单三种问题，以及胸袋款缺码只登记补货、无销售。",
+   "sound_source_evidence": "门外只收本地农机、卷帘和推车声，近景拍空白工单与演示动作。",
+   "time_relation_evidence": "三次询问按清晨先后到店，演示与缺码登记随每次询问依次发生，由记录对上。",
+   "visible_states": "两件深色衬衫样衣、空白工单、抬臂与塞衣摆动作、胸袋展示码都能近景拍清。",
+   "visible_store_context": "门店挨着农机维修街，橱窗外是收割季清晨的街景，店内是样衣与演示台。"
+  },
+  "source_summary_a": "询问记录分列袖口、衣摆、胸袋与缺码。",
+  "source_summary_b": "近景拍空工单与动作，门外只收农机、卷帘和推车声。",
+  "label_jia": {
+   "risk": "CRITICAL",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及劳保属性及作业安全边界，且有明示"
+  },
+  "label_yi": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉劳保适用性安全边界，载荷高；店员明确表述见槽位记录"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP18-011-CLAIM-02",
+  "claim_text": "合适的胸袋款还缺码，只登记了补货、没有销售",
+  "claim_boundary": "不能宣称适合维修作业或概括季节普遍需求。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市稻湾市仓前门店，紧邻农机维修街，是这段素材的固定取景框。",
+   "context_or_time_labels": "收割季的清晨时段，本地农机维修街刚开门。",
+   "local_climate_or_season": "稻湾仓前的收割季清晨，附近是忙着农机维修的街坊，是这一带这个季节的节奏。",
+   "local_routine_actor": "收割季来问衬衫的本地工作者，日常在附近维修街干活，进店关注袖口和胸袋。",
+   "local_routine_object": "深色衬衫的袖口、衣摆和胸袋，对应扣紧、塞进工装裤、放纸工单三种日常动作。",
+   "neighborhood_or_professional_crowd": "农机维修街一带的收割季工作者是街坊常客，清晨顺路问耐用衬衫是这里的日常。",
+   "observed_local_action_state": "店员明确普通衬衫不是劳保服，用两件样衣做空工单、抬臂和塞衣摆三种演示，回应三次询问。",
+   "real_city_and_store": "这是合成的稻湾市仓前门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "询问记录分列袖口扣紧、衣摆塞入、胸袋放工单三种问题，以及胸袋款缺码只登记补货、无销售。",
+   "sound_source_evidence": "门外只收本地农机、卷帘和推车声，近景拍空白工单与演示动作。",
+   "time_relation_evidence": "三次询问按清晨先后到店，演示与缺码登记随每次询问依次发生，由记录对上。",
+   "visible_states": "两件深色衬衫样衣、空白工单、抬臂与塞衣摆动作、胸袋展示码都能近景拍清。",
+   "visible_store_context": "门店挨着农机维修街，橱窗外是收割季清晨的街景，店内是样衣与演示台。"
+  },
+  "source_summary_a": "询问记录分列袖口、衣摆、胸袋与缺码。",
+  "source_summary_b": "近景拍空工单与动作，门外只收农机、卷帘和推车声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "缺码与无销售有记录，“合适”会影响选购"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "scene_state_evidence 原文载明缺码只登记补货、无销售，过程性陈述失实伤害轻。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP20-005-CLAIM-01",
+  "claim_text": "把默认硬纸卡撤掉，单件订单的纸包装从86克压到65克以下",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属明确包装减重承诺，承诺原文支持"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "承诺原文即86克降至65克以下，四月均值64克支持；减重对比暗示可影响购买判断。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP20-005-CLAIM-02",
+  "claim_text": "三月那200单，均值67克，42单还得塞护形纸；四月又称200单，均值降到64克，可有3单衣领被压出了折",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "两轮称重及压折数据均有记录，影响质量判断"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "两轮各200单、67/64克、42单护形纸、3单压折与称重表记录逐项吻合，含瑕疵披露。"
+  }
+ },
+ {
+  "case_id": "G2-round1_top-G3-POS-CP20-005-CLAIM-03",
+  "claim_text": "这只是三月200单均值67克、四月降到64克的两轮称重，四月还有3单衣领压折",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "两轮均值和三单压折均有记录支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "限定为两轮称重并披露3单压折，与记录及字段范围一致，边界自限。"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP03-012-CLAIM-01",
+  "claim_text": "接缝背面做过一次短喷淋，没见水珠",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及局部防渗性能，短喷淋结果有记录"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "30秒低压喷淋无水珠有源支撑，但结果暗示防渗效果影响判断"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP03-012-CLAIM-02",
+  "claim_text": "整件风衣防不防水，这次没测",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及防水验证边界，材料明确仅测局部"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "源明示仅短时喷淋、整件防水未测，属限定性否认陈述"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP05-003-CLAIM-01",
+  "claim_text": "是一回盘点耗时，跟经营账算不到一起",
+  "claim_boundary": "不能宣称整个仓库零差错、40分钟返查造成经营损失、方法适用于鞋包仓或他具备仓储管理全权限。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "四次抽查全部在针织区进行，没有一条延伸到鞋包仓或全仓规则，能证明的范围只到针织区库位管理。",
+   "career_stage_record": "仓管台账从2020年“纸条记位置、一次40分钟返查”，到2022年“四次抽查可按批分开”，记录他的方法演进。",
+   "current_stage_or_open_question": "如今他填卡先写染批尾码；还没验证的是这套分隔法搬到鞋包仓成不成立，档案里只有针织区数据。",
+   "document_field_evidence": "库位卡有“颜色”“染批尾码”“入库日”三个字段，对比2020年只写位置的旧纸条，字段从一项增加到三项。",
+   "field_scope_evidence": "这些卡和抽查只覆盖针织区，鞋包仓的堆放规则不在档案里，他也没有那部分经验。",
+   "object_action_evidence": "画面拍他给一格针织衫贴库位卡，卡上颜色、染批尾码、入库日三行都填好，中间插一片分隔片区分两个染批。",
+   "prior_stage": "2020年他只用纸条记货架在哪，曾把同色不同染批的针织衫放进同一格，盘点时花了40分钟重新分组。",
+   "record_field_evidence": "四次月度抽查页每次抽一格同色针织，“能否按卡分开”一栏四次都打勾，镜头可翻这四页。",
+   "recorded_change": "2021年开始他在库位卡上同时写颜色、染批尾码和入库日，并用分隔片把两批隔开，不再让同色混在一格。",
+   "relation_evidence": "库位卡由闻库填写维护，全仓规则和人员分工的调整栏则标注“主管”，两类事分属不同角色。",
+   "role_or_skill_state": "他现在能维护针织区库位卡、按染批分隔并参与盘点；调整全仓规则不在他这一层。",
+   "time_marker": "2020年闻库用纸条记货架位置，2021年改用库位卡，2022年做四次月度抽查，三个年份标出他记录方式的升级。"
+  },
+  "source_summary_a": "合成口述记录他对混批返查的回忆，以及后来填写库位卡时优先看的三项信息。",
+  "source_summary_b": "纸条旧样、带染批尾码的新库位卡和四次抽查页构成阶段证据。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及经营影响判断，材料仅记单次返查"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "40分钟系盘点返查耗时，档案无经营损失记载，定性相符"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP05-005-CLAIM-01",
+  "claim_text": "六件不返拆只说明基础衬衫袖这一档做稳了",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及技能表现背书，证据仅覆盖基础袖型"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "六件无返拆有检查页支撑，'做稳了'含能力稳定暗示影响信任"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP05-005-CLAIM-02",
+  "claim_text": "复杂袖型分配那栏仍写着样衣组长",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及岗位授权边界，检查页字段直接支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "relation证据明写复杂袖型分配栏标样衣组长，字段描述属实"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP06-009-CLAIM-01",
+  "claim_text": "缝线没有再张开",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及修补性能结果，三次提放均未张开"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "三次300克提放后缝线未张开有源，暗示修补有效影响判断"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP06-009-CLAIM-02",
+  "claim_text": "他判断这处属于单点回针松脱",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及专业缺陷判断，观察依据完整支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "归因判断有依据：面料未破、衬条完整、左袋无开线，属实"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP09-006-CLAIM-03",
+  "claim_text": "雨天通勤改用那条直筒裤，或者出门前做一次能恢复的临时收边",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "材料支持两种方案，但涉及通勤性能"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "雨天替代建议影响使用选择；decision_state两路一致"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP13-002-CLAIM-02",
+  "claim_text": "白天连续坐桌1小时，晚间在小型展厅站立40分钟",
+  "claim_boundary": "不得把演绎写成真实看展经历，不评价显瘦、身材或久坐舒适度；一小时与四十分钟是场景设定，不是使用测试结果。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位要坐一天再去看展的人的衣橱，主角是那条墨绿中长褶裙，跟着这个人从久坐桌前到站立展厅反复出场。",
+   "context_or_time_labels": "时间标签是同一天的两段：白天连续坐桌1小时，晚间在小型展厅站立40分钟。",
+   "event_or_stage_state": "白天坐桌时把裙身前片整理成向两侧分开的褶束，晚间起身抖开裙褶、在展厅慢步停顿，同一条裙被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是墨绿中长褶裙，24道固定褶、侧拉链、静止时裙摆离地28厘米；坐桌搭配短针织开衫，看展换上长到胯下的无袖马甲，两段都穿同一双低跟鞋。它的角色是需要手动整理坐姿、但能在站立时给下身节奏的裙装。",
+   "runtime supplies contexts and product facts": "场景上下文是坐桌工位与小型展厅；产品事实是同一条24褶裙，坐时褶束分向两侧避免压在椅轮下，站时褶片随步行停顿摆动。",
+   "visible_context": "可见环境从桌前椅轮旁切到展厅步道，画面里有椅轮、褶束和低跟鞋，声音是布褶轻响和鞋底声。",
+   "visible_states": "可见状态包括前片褶束分向两侧、起身后褶面自然展开、上装从短开衫换上长马甲、鞋履始终不变。"
+  },
+  "source_summary_a": "场景搭配单列出裙褶数量、离地高度、两套上装、同一鞋履和坐姿整理步骤，明确不包含身材评价。",
+  "source_summary_b": "低机位素材拍褶束与椅轮距离、手整理褶片、起身后自然展开和展厅式慢步停顿，原声突出布褶轻响与鞋底声。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "两段时长均为明确的场景设定"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "时间标签逐字一致；时长为场景设定，易被读作使用测试暗示"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP13-005-CLAIM-01",
+  "claim_text": "从座位一路陪到卖场",
+  "claim_boundary": "这些是合成场景演绎，不得表述为真人已经发生的出差经历；不声称防风、保暖或适合所有出行方式。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位需要出差走店的人的衣橱，主角是那件藏青斜纹棉工装外套，跟着这个人从高铁座位到门店走访反复出场。",
+   "context_or_time_labels": "时间线是同一天：早班高铁出差约2小时，到站后步行去合作门店做陈列走访。",
+   "event_or_stage_state": "高铁上落座后把帽子取下折进下明袋、双手端咖啡，到站后重新扣上帽子、站着在门店走动看陈列，同一件外套被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是藏青斜纹棉工装外套，衣长70厘米、前襟4个明袋、帽子可脱卸；它套在灰色薄卫衣外，高铁段搭配束脚运动裤、走店段换上直筒休闲裤。它的角色是陪人从长途座位到站立走动的同一件外层，不是防风层也不是保暖层。",
+   "runtime supplies contexts and product facts": "场景上下文是高铁车厢与合作门店卖场；产品事实是同一件工装外套，高铁上帽子折进最大的下明袋、上明袋分放车票和充电线，走店时明袋只留1支笔。",
+   "visible_context": "可见环境从高铁座位切到门店货架前，画面里有折进明袋的帽子、咖啡杯和1支笔，声音是到站提示音和衣料摩擦声。",
+   "visible_states": "可见状态包括帽子从取下到重新扣上、明袋里物件从满到只留1支笔、下装从束脚运动裤换上直筒休闲裤、卫衣内搭始终不变。"
+  },
+  "source_summary_a": "衣橱任务卡记录工装外套衣长70厘米、4个明袋和可脱卸帽，两段场景的内搭、下装与明袋内容，并把防风、保暖排除在本次角色之外。",
+  "source_summary_b": "可用素材围绕同一件外套拍帽子折进明袋、双手端咖啡、到站扣帽和门店走动看陈列，环境声来自到站提示与衣料摩擦。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "两场景均有同一外套，含轻度适用暗示"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "场景载同一外套从高铁座位到门店；陪伴叙述，风险低"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP13-005-CLAIM-02",
+  "claim_text": "从长途座位跟到站立走动的外层",
+  "claim_boundary": "这些是合成场景演绎，不得表述为真人已经发生的出差经历；不声称防风、保暖或适合所有出行方式。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位需要出差走店的人的衣橱，主角是那件藏青斜纹棉工装外套，跟着这个人从高铁座位到门店走访反复出场。",
+   "context_or_time_labels": "时间线是同一天：早班高铁出差约2小时，到站后步行去合作门店做陈列走访。",
+   "event_or_stage_state": "高铁上落座后把帽子取下折进下明袋、双手端咖啡，到站后重新扣上帽子、站着在门店走动看陈列，同一件外套被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是藏青斜纹棉工装外套，衣长70厘米、前襟4个明袋、帽子可脱卸；它套在灰色薄卫衣外，高铁段搭配束脚运动裤、走店段换上直筒休闲裤。它的角色是陪人从长途座位到站立走动的同一件外层，不是防风层也不是保暖层。",
+   "runtime supplies contexts and product facts": "场景上下文是高铁车厢与合作门店卖场；产品事实是同一件工装外套，高铁上帽子折进最大的下明袋、上明袋分放车票和充电线，走店时明袋只留1支笔。",
+   "visible_context": "可见环境从高铁座位切到门店货架前，画面里有折进明袋的帽子、咖啡杯和1支笔，声音是到站提示音和衣料摩擦声。",
+   "visible_states": "可见状态包括帽子从取下到重新扣上、明袋里物件从满到只留1支笔、下装从束脚运动裤换上直筒休闲裤、卫衣内搭始终不变。"
+  },
+  "source_summary_a": "衣橱任务卡记录工装外套衣长70厘米、4个明袋和可脱卸帽，两段场景的内搭、下装与明袋内容，并把防风、保暖排除在本次角色之外。",
+  "source_summary_b": "可用素材围绕同一件外套拍帽子折进明袋、双手端咖啡、到站扣帽和门店走动看陈列，环境声来自到站提示与衣料摩擦。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "材料明确赋予跨两场景的外层角色"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "槽位明载其为座位到走动的同一外层；角色描述，风险低"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP15-011-CLAIM-01",
+  "claim_text": "右侧裙摆有一处浮纱，用标尺量约7毫米",
+  "claim_boundary": "不得称浮纱为破损、可修复或质量责任，也不得声称七条没有其他问题或已售；维修结果尚不存在。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "收货员拆外袋按顺序挂裙，商品员识别并保护浮纱区域，整烫员处理通过初检的裙子，陈列员安排挂位；这是一条从到店到上架的后台动线。",
+   "event_or_stage_state": "8条雾蓝连衣裙从外袋取出挂起、逐条初检，第2条因浮纱进入维修评估位，其余7条继续整烫和陈列。",
+   "handled_object": "被处理的是8条雾蓝连衣裙，第2条右侧裙摆有一处约7毫米的浮纱，周围织面没有破洞。",
+   "local_state_evidence": "第2条右侧裙摆那处浮纱约7毫米长，贴近用标尺量，周围织面完整、没有破洞。",
+   "mapping_evidence": "8条里第2条进维修评估位，7条通过初检，其中3条整烫后2条正挂、1条侧挂到模特旁，4条进后备。",
+   "observed_action_chain": "动作链是拆外袋、按顺序挂起、初检、发现第2条浮纱、套入灰色保护袋移到评估位、7条查拉链和里布、3条整烫、2正挂1侧挂上架。",
+   "overview_state_evidence": "整批共8条，1条待维修评估，7条通过初检，3条已整烫陈列，4条在后备。",
+   "state_at_anchor_evidence": "10点40分这个节点上，2条已正挂、1条已侧挂到模特旁，第2条仍在保护袋里的评估位。",
+   "time_anchor_evidence": "时间锚点是周四9点到店8条连衣裙，10点40分完成3条陈列。",
+   "visible_context": "画面从验收挂杆走到维修评估位再到模特旁，能看到7毫米标尺、灰色保护袋和整烫蒸汽，声音是拉链和袋料摩擦声。",
+   "visible_result_or_unfinished_state": "结尾是那处浮纱未剪、未拉回，第2条停在保护袋里，维修结果还不存在。"
+  },
+  "source_summary_a": "验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检和三条陈列位置，维修栏未填写。",
+  "source_summary_b": "微距拍浮纱但不触碰，随后跟随保护袋套入与移位，再拍三条蒸汽整理和两种挂法，保留拉链与袋料声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "标尺图及局部事实明确，可能影响购买判断"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "单件质检观察；源载标尺量约7毫米浮纱且织面完整"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP15-011-CLAIM-03",
+  "claim_text": "浮纱保持原样、无人经手",
+  "claim_boundary": "不得称浮纱为破损、可修复或质量责任，也不得声称七条没有其他问题或已售；维修结果尚不存在。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "收货员拆外袋按顺序挂裙，商品员识别并保护浮纱区域，整烫员处理通过初检的裙子，陈列员安排挂位；这是一条从到店到上架的后台动线。",
+   "event_or_stage_state": "8条雾蓝连衣裙从外袋取出挂起、逐条初检，第2条因浮纱进入维修评估位，其余7条继续整烫和陈列。",
+   "handled_object": "被处理的是8条雾蓝连衣裙，第2条右侧裙摆有一处约7毫米的浮纱，周围织面没有破洞。",
+   "local_state_evidence": "第2条右侧裙摆那处浮纱约7毫米长，贴近用标尺量，周围织面完整、没有破洞。",
+   "mapping_evidence": "8条里第2条进维修评估位，7条通过初检，其中3条整烫后2条正挂、1条侧挂到模特旁，4条进后备。",
+   "observed_action_chain": "动作链是拆外袋、按顺序挂起、初检、发现第2条浮纱、套入灰色保护袋移到评估位、7条查拉链和里布、3条整烫、2正挂1侧挂上架。",
+   "overview_state_evidence": "整批共8条，1条待维修评估，7条通过初检，3条已整烫陈列，4条在后备。",
+   "state_at_anchor_evidence": "10点40分这个节点上，2条已正挂、1条已侧挂到模特旁，第2条仍在保护袋里的评估位。",
+   "time_anchor_evidence": "时间锚点是周四9点到店8条连衣裙，10点40分完成3条陈列。",
+   "visible_context": "画面从验收挂杆走到维修评估位再到模特旁，能看到7毫米标尺、灰色保护袋和整烫蒸汽，声音是拉链和袋料摩擦声。",
+   "visible_result_or_unfinished_state": "结尾是那处浮纱未剪、未拉回，第2条停在保护袋里，维修结果还不存在。"
+  },
+  "source_summary_a": "验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检和三条陈列位置，维修栏未填写。",
+  "source_summary_b": "微距拍浮纱但不触碰，随后跟随保护袋套入与移位，再拍三条蒸汽整理和两种挂法，保留拉链与袋料声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "素材明确未触碰、未剪未拉，属原样背书"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "状态描述；源载浮纱未剪未拉回、微距拍摄不触碰"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP18-006-CLAIM-01",
+  "claim_text": "没试穿，也没测过棉麻在作坊里到底凉不凉",
+  "claim_boundary": "不能声称棉麻凉爽或适合作坊，也不能概括街区偏好。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市炉湾市窑街门店，紧邻印染作坊，是这段素材的固定取景框。",
+   "context_or_time_labels": "盛夏午班时段，本地后巷正刮热风。",
+   "local_climate_or_season": "炉湾老城盛夏，后巷热风闷热，是这一带夏季午后的常态。",
+   "local_routine_actor": "一名穿染色围裙的本地成年工人，来自附近印染作坊，是窑街常见身影。",
+   "local_routine_object": "工人围裙沾着染色、日常抬臂的宽袖口，是这次只问不试的话题。",
+   "neighborhood_or_professional_crowd": "窑街一带的印染作坊工人是街坊常客，穿染色围裙进店问款是这条街的日常。",
+   "observed_local_action_state": "店员不在后门热区拆箱，而是分两次把两箱棉麻衬衫移到中部工作台，开风扇后核吊牌与褶皱，十五分钟上架。",
+   "real_city_and_store": "这是合成的炉湾市窑街门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货单记录两箱、分两次的搬运路径、开风扇的整理和十五分钟完成时点。",
+   "sound_source_evidence": "近景收录风扇、拆胶带、纸箱声，远处是本地作坊的下班铃。",
+   "time_relation_evidence": "两箱送到在先、移台开风扇整理在中、十五分钟后上架在后，由收货单按序对上。",
+   "visible_states": "两只纸箱、中部工作台、风扇、棉麻衬衫吊牌与褶皱都能近景拍清。",
+   "visible_store_context": "门店挨着印染作坊，后门对着窑街热风，店内是工作台与待上架衬衫；人员不出镜。"
+  },
+  "source_summary_a": "收货单记录箱数、顺序、风扇和完成时点。",
+  "source_summary_b": "近景收录风扇、胶带、纸箱和远处下班铃。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "只问不试可证，是否做过凉感测试未交代"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "自认未验证的免责表述；源载只问不试、无任何测试记录"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP18-006-CLAIM-02",
+  "claim_text": "分两次把两箱棉麻衬衫抱到中部工作台",
+  "claim_boundary": "不能声称棉麻凉爽或适合作坊，也不能概括街区偏好。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市炉湾市窑街门店，紧邻印染作坊，是这段素材的固定取景框。",
+   "context_or_time_labels": "盛夏午班时段，本地后巷正刮热风。",
+   "local_climate_or_season": "炉湾老城盛夏，后巷热风闷热，是这一带夏季午后的常态。",
+   "local_routine_actor": "一名穿染色围裙的本地成年工人，来自附近印染作坊，是窑街常见身影。",
+   "local_routine_object": "工人围裙沾着染色、日常抬臂的宽袖口，是这次只问不试的话题。",
+   "neighborhood_or_professional_crowd": "窑街一带的印染作坊工人是街坊常客，穿染色围裙进店问款是这条街的日常。",
+   "observed_local_action_state": "店员不在后门热区拆箱，而是分两次把两箱棉麻衬衫移到中部工作台，开风扇后核吊牌与褶皱，十五分钟上架。",
+   "real_city_and_store": "这是合成的炉湾市窑街门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货单记录两箱、分两次的搬运路径、开风扇的整理和十五分钟完成时点。",
+   "sound_source_evidence": "近景收录风扇、拆胶带、纸箱声，远处是本地作坊的下班铃。",
+   "time_relation_evidence": "两箱送到在先、移台开风扇整理在中、十五分钟后上架在后，由收货单按序对上。",
+   "visible_states": "两只纸箱、中部工作台、风扇、棉麻衬衫吊牌与褶皱都能近景拍清。",
+   "visible_store_context": "门店挨着印染作坊，后门对着窑街热风，店内是工作台与待上架衬衫；人员不出镜。"
+  },
+  "source_summary_a": "收货单记录箱数、顺序、风扇和完成时点。",
+  "source_summary_b": "近景收录风扇、胶带、纸箱和远处下班铃。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "分两次移台有据，但抱运方式未获支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "搬运过程描述；源载分两次移两箱至中部工作台"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP18-009-CLAIM-01",
+  "claim_text": "围巾五条一袋码齐",
+  "claim_boundary": "不能宣称职业装备、防风效果或全年气候。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市砂岬市平码头门店，开在本地码头边，是这段素材的固定取景框。",
+   "context_or_time_labels": "大风日的收货时段，本地码头正刮干风。",
+   "local_climate_or_season": "砂岬平码头的大风日，干风顺着码头灌进后门，是这一带的常见天气。",
+   "local_routine_actor": "一名本地票务员，日常穿制服在附近码头值岗，进店只问领口折叠厚度。",
+   "local_routine_object": "票务员制服的领口内折叠厚度，是这次询问的核心；门店的轻薄围巾是待整理商品。",
+   "neighborhood_or_professional_crowd": "平码头一带的票务与码头人员是街坊常客，穿制服顺路进店问尺寸是这里的日常。",
+   "observed_local_action_state": "后门被风吹开时两条样巾滑落，店员关门后用夹具把围巾固定在内侧展示绳，待上架围巾每五条装一防尘袋。",
+   "real_city_and_store": "这是合成的砂岬市平码头门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货陈列日志记录两条滑落、关门、夹具固定和五条一袋的分装。",
+   "sound_source_evidence": "近景收风压推门、夹具扣合和纸袋声，都来自本地码头的大风日。",
+   "time_relation_evidence": "后门开、样巾滑落在先，关门用夹具固定、分装在后，一次询问穿插其间，由日志对上。",
+   "visible_states": "被风吹开的后门、两条滑落样巾、内侧展示绳夹具与五条一袋的防尘袋都能拍清。",
+   "visible_store_context": "门店对着平码头，后门迎着干风，店内是内侧展示绳与分装围巾；人员不出镜。"
+  },
+  "source_summary_a": "收货陈列日志记录滑落、关门和分装。",
+  "source_summary_b": "近景收风压门、夹具和纸袋声，拍展示变化。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "五条一袋有据，是否码齐未明确"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "分装过程描述；源载每五条装一防尘袋"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP18-009-CLAIM-03",
+  "claim_text": "围巾挡不挡得住风没测过",
+  "claim_boundary": "不能宣称职业装备、防风效果或全年气候。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市砂岬市平码头门店，开在本地码头边，是这段素材的固定取景框。",
+   "context_or_time_labels": "大风日的收货时段，本地码头正刮干风。",
+   "local_climate_or_season": "砂岬平码头的大风日，干风顺着码头灌进后门，是这一带的常见天气。",
+   "local_routine_actor": "一名本地票务员，日常穿制服在附近码头值岗，进店只问领口折叠厚度。",
+   "local_routine_object": "票务员制服的领口内折叠厚度，是这次询问的核心；门店的轻薄围巾是待整理商品。",
+   "neighborhood_or_professional_crowd": "平码头一带的票务与码头人员是街坊常客，穿制服顺路进店问尺寸是这里的日常。",
+   "observed_local_action_state": "后门被风吹开时两条样巾滑落，店员关门后用夹具把围巾固定在内侧展示绳，待上架围巾每五条装一防尘袋。",
+   "real_city_and_store": "这是合成的砂岬市平码头门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货陈列日志记录两条滑落、关门、夹具固定和五条一袋的分装。",
+   "sound_source_evidence": "近景收风压推门、夹具扣合和纸袋声，都来自本地码头的大风日。",
+   "time_relation_evidence": "后门开、样巾滑落在先，关门用夹具固定、分装在后，一次询问穿插其间，由日志对上。",
+   "visible_states": "被风吹开的后门、两条滑落样巾、内侧展示绳夹具与五条一袋的防尘袋都能拍清。",
+   "visible_store_context": "门店对着平码头，后门迎着干风，店内是内侧展示绳与分装围巾；人员不出镜。"
+  },
+  "source_summary_a": "收货陈列日志记录滑落、关门和分装。",
+  "source_summary_b": "近景收风压门、夹具和纸袋声，拍展示变化。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "素材未展示测试，不足以证明从未测过"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "免责表述；源载动作链完整且无防风测试"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP20-005-CLAIM-01",
+  "claim_text": "三月那张称重表摊开：200单纸包装，均值停在67克，离65克还差一截，42单额外补了护形纸。这一轮离目标有明显差距，试验记录和称重表里，67克这个数一栏栏都对得上。",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及承诺兑现数据，称重与试验记录支持"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "承诺兑现数据失实会误导信任；源载三月200单67克、42单补纸"
+  }
+ },
+ {
+  "case_id": "G2-round2-G3-POS-CP20-005-CLAIM-02",
+  "claim_text": "四月的表换了数字：200单均值降到64克，看着够到了目标，可有3单衣领被压出折痕，那三类衬衫只好又夹回两张护形纸。要核对减重做到没有，翻的就是每一单纸包装的称重，看它稳不稳在65克以下。",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及性能目标及回退，记录逐项支持"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "承诺兑现与回退披露；源载四月64克、3单压折、恢复护形纸"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP03-012-CLAIM-01",
+  "claim_text": "两块边角，一块压出亮面一块没有——正式热压只按没压亮的来",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "试片对比及采用未压亮参数均有记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "试片选参为工艺过程描述，judgment_point逐点对应"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP03-012-CLAIM-02",
+  "claim_text": "修的路子是这样定下来的。在同料的边角上试压两块，一块被压出发亮的印子、一块没有，就挑没压亮的那组温度和力道，免得正式热压时把贴条也压出亮面。全程不加胶，靠的是热和压本身。",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "试片选参、避免压亮及未加胶均获支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "试片对比、选无压亮参数、全程不加胶均见于素材与工艺记录"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP03-012-CLAIM-03",
+  "claim_text": "冷却之后做一次低压喷淋，计时30秒。水打在接缝上，背面看过去没见水珠渗出来——记到本子上，这一格是这段6厘米贴条、一次30秒短喷淋，没见渗水。",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "材料支持局部贴条30秒喷淋未见渗水"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "含防渗效果暗示，失实可误导；30秒喷淋无水珠有源且已限定"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP03-012-CLAIM-04",
+  "claim_text": "报一下这段的数：贴条宽2厘米、翘起6厘米，分两次、每次热压3秒。",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "宽度、翘起长度及两次三秒均有记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "纯尺寸与次数数据，2厘米宽、翘6厘米、两次各3秒均有源"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP05-003-CLAIM-03",
+  "claim_text": "两类事，落在不同角色手里",
+  "claim_boundary": "不能宣称整个仓库零差错、40分钟返查造成经营损失、方法适用于鞋包仓或他具备仓储管理全权限。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "四次抽查全部在针织区进行，没有一条延伸到鞋包仓或全仓规则，能证明的范围只到针织区库位管理。",
+   "career_stage_record": "仓管台账从2020年“纸条记位置、一次40分钟返查”，到2022年“四次抽查可按批分开”，记录他的方法演进。",
+   "current_stage_or_open_question": "如今他填卡先写染批尾码；还没验证的是这套分隔法搬到鞋包仓成不成立，档案里只有针织区数据。",
+   "document_field_evidence": "库位卡有“颜色”“染批尾码”“入库日”三个字段，对比2020年只写位置的旧纸条，字段从一项增加到三项。",
+   "field_scope_evidence": "这些卡和抽查只覆盖针织区，鞋包仓的堆放规则不在档案里，他也没有那部分经验。",
+   "object_action_evidence": "画面拍他给一格针织衫贴库位卡，卡上颜色、染批尾码、入库日三行都填好，中间插一片分隔片区分两个染批。",
+   "prior_stage": "2020年他只用纸条记货架在哪，曾把同色不同染批的针织衫放进同一格，盘点时花了40分钟重新分组。",
+   "record_field_evidence": "四次月度抽查页每次抽一格同色针织，“能否按卡分开”一栏四次都打勾，镜头可翻这四页。",
+   "recorded_change": "2021年开始他在库位卡上同时写颜色、染批尾码和入库日，并用分隔片把两批隔开，不再让同色混在一格。",
+   "relation_evidence": "库位卡由闻库填写维护，全仓规则和人员分工的调整栏则标注“主管”，两类事分属不同角色。",
+   "role_or_skill_state": "他现在能维护针织区库位卡、按染批分隔并参与盘点；调整全仓规则不在他这一层。",
+   "time_marker": "2020年闻库用纸条记货架位置，2021年改用库位卡，2022年做四次月度抽查，三个年份标出他记录方式的升级。"
+  },
+  "source_summary_a": "合成口述记录他对混批返查的回忆，以及后来填写库位卡时优先看的三项信息。",
+  "source_summary_b": "纸条旧样、带染批尾码的新库位卡和四次抽查页构成阶段证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "库位卡维护与全仓调整明确分属不同角色"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "职责分工描述，relation_evidence明写两类事分属不同角色"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP05-005-CLAIM-01",
+  "claim_text": "西装袖那一栏，一直空着",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属技能档案与能力边界，档案确无西装袖成品"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "档案明示无一件西装袖成品，空缺属实；记录性描述失实伤害轻"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP05-005-CLAIM-02",
+  "claim_text": "两类袖型，分在不同人手里",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及复杂袖型责任归属，检查页明确分属不同人"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "完成人签苏槐、复杂袖型仍标组长，直接支持；分工过程描述"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP05-005-CLAIM-03",
+  "claim_text": "能算数的范围，就到基础袖型这里",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属能力证明边界，现有证据只覆盖基础袖型"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "与'能证明的范围只到基础袖型'逐字吻合；自限声明风险低"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP06-009-CLAIM-01",
+  "claim_text": "那道缝一直没有再张开",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属修补性能主张，三次轻载中缝线确未再张开"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "三次提放缝线未再张开，观察窗内成立；含修补效果暗示"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP06-009-CLAIM-02",
+  "claim_text": "这套补法只认右袋这一道六毫米开线",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属补法适用边界，材料明确仅限该处开线"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "判断范围明示仅限右袋6毫米开线；范围自限声明"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP06-009-CLAIM-03",
+  "claim_text": "长期穿用这行数字一直空着",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属长期性能验证边界，材料明确未做长期验证"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "工单记录未做长期验证，空缺属实；诚实缺口描述"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP07-004-CLAIM-01",
+  "claim_text": "站着松、坐下紧",
+  "claim_boundary": "不能保证给出的版型条件一次购买成功，也不能由平铺尺寸推断所有穿着舒适度；面料、做工和个体动作仍会影响结果。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是这条无弹锥形裤“该放大尺码还是换版型”这个问题。",
+   "alternative_basis_evidence": "支撑换版型的证据是目标裤与旧裤叠放对齐裆点、量出臀围差4厘米前裆差2厘米的画面。",
+   "claim_boundary": "这些条件只从平铺尺寸推，不能保证一次买中，面料、做工和个体动作仍会影响实际穿着。",
+   "condition_evidence": "目标裤平铺腰围74厘米、臀围96厘米、前裆27厘米，旧裤平铺臀围100厘米、前裆29厘米，大一码腰围加4厘米、臀围只加2厘米，这些是判断依据。",
+   "decision_state": "现在的判断是不优先大一码，改按“臀围接近旧裤、前裆不低于旧裤、腰部可调”这三个条件去筛版型。",
+   "exclusion_basis_evidence": "把大一码往后排的证据是尺码表上大一码只增臀围2厘米却增腰围4厘米的对照。",
+   "fit_conditions": "取决于臀围和前裆：要找臀围至少接近旧裤100厘米、前裆不低于29厘米、腰部还能调的版型，这种情况才对得上坐姿需求。",
+   "missing_condition_request": "顾问请用户按同一方法平铺量出旧裤和目标裤，并说明是不是经常久坐。",
+   "missing_conditions": "还缺的是用户实际身体臀围和坐姿动作幅度，平铺尺寸推不出。",
+   "nonfit_conditions": "如果只是大一码，臀围才加2厘米、腰围反而多加4厘米，这种情况腰更松、臀裆还是紧，并不合适。",
+   "question_or_decision_context": "用户原话：“网购的无弹锥形裤，站着腰能插进两根手指，可一坐下前面口袋就张开、裆部全是横纹，我该换大一码还是干脆换版型？”顾问用尺寸来回答。",
+   "supported_alternative": "被支撑的方向是换版型：优先臀围接近100厘米、前裆不低于29厘米、腰部可调。",
+   "supported_alternatives": "可比的两条路是大一码和换版型，证据把换版型排在前、大一码排在后。",
+   "trigger_condition": "触发问题的是同一条裤子站立腰部有余、坐下却前袋张开、裆部横纹这组矛盾表现。"
+  },
+  "source_summary_a": "目标裤与旧裤叠放、腰臀前裆尺量和坐姿口袋状态照片提供可比较的视觉依据。",
+  "source_summary_b": "商品尺码表与远程问答记录包含大一码增量、旧裤舒适状态和顾问建议的筛选条件。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属穿着身体效果，用户描述与坐姿照片均支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "用户原话与触发条件一致；现象描述失实伤害轻微"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP07-010-CLAIM-01",
+  "claim_text": "后跟就磨出一道红印",
+  "claim_boundary": "不能由15分钟试走预测六小时舒适度，也不能把中灰视为所有深棕鞋和灰裤的固定答案。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是袜色选择这件事，以及“裸踝、黑薄袜、中灰袜哪个合适”这个问题。",
+   "alternative_basis_evidence": "支撑中灰袜的证据是站立、坐下、步行三种状态下裤脚与袜口关系的同机位画面。",
+   "claim_boundary": "这只解决颜色衔接和袜口覆盖，15分钟试走不能预测六小时舒适度，中灰也不是所有深棕鞋配灰裤的固定答案。",
+   "condition_evidence": "鞋色深棕、裤色炭灰、九分裤脚会露脚踝、站立六小时，这些是比较袜色的条件依据。",
+   "decision_state": "现在的判断是选中灰罗纹袜、备一双同厚度替换，颜色问题已定，长时间脚感留给用户自己观察。",
+   "exclusion_basis_evidence": "排除裸踝的证据是鞋口试走15分钟后后跟已有摩擦红印的近景。",
+   "fit_conditions": "先看衔接：中灰罗纹袜与炭灰裤色接近、袜口高于坐下时露出的皮肤线，这种情况下颜色不断层、坐下也不露皮肤，适合选它。",
+   "missing_condition_request": "顾问提醒用户额外带一双同厚度的替换袜，好在中途按脚感自己换。",
+   "missing_conditions": "还缺一个条件：六小时下来脚会不会闷或磨，15分钟试走看不出。",
+   "nonfit_conditions": "黑薄袜在炭灰裤脚和鞋之间形成明显深色断层，这种情况在意色彩连贯就不合适。",
+   "question_or_decision_context": "用户原话：“我穿深棕乐福鞋配炭灰九分裤去展会，要站一整天，到底光脚踝、黑薄袜还是中灰罗纹袜好看又不磨脚？”顾问按这三个选项逐一比。",
+   "supported_alternative": "被支撑的首选是中灰罗纹袜，画面拍到它与裤色接近、袜口盖住坐下露出的皮肤线。",
+   "supported_alternatives": "留下的可选项是中灰罗纹袜为主、同厚度替换袜为辅；裸踝已被排除。",
+   "trigger_condition": "触发问题的是深棕乐福鞋、炭灰九分西裤、白天室内展会、需要站立六小时这组固定条件。"
+  },
+  "source_summary_a": "三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异。",
+  "source_summary_b": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "属身体摩擦结果，十五分钟试走已见后跟红印"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "15分钟试走红印近景为证；作排除裸踝依据含对比暗示"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP07-010-CLAIM-02",
+  "claim_text": "颜色这栏填中灰罗纹袜",
+  "claim_boundary": "不能由15分钟试走预测六小时舒适度，也不能把中灰视为所有深棕鞋和灰裤的固定答案。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是袜色选择这件事，以及“裸踝、黑薄袜、中灰袜哪个合适”这个问题。",
+   "alternative_basis_evidence": "支撑中灰袜的证据是站立、坐下、步行三种状态下裤脚与袜口关系的同机位画面。",
+   "claim_boundary": "这只解决颜色衔接和袜口覆盖，15分钟试走不能预测六小时舒适度，中灰也不是所有深棕鞋配灰裤的固定答案。",
+   "condition_evidence": "鞋色深棕、裤色炭灰、九分裤脚会露脚踝、站立六小时，这些是比较袜色的条件依据。",
+   "decision_state": "现在的判断是选中灰罗纹袜、备一双同厚度替换，颜色问题已定，长时间脚感留给用户自己观察。",
+   "exclusion_basis_evidence": "排除裸踝的证据是鞋口试走15分钟后后跟已有摩擦红印的近景。",
+   "fit_conditions": "先看衔接：中灰罗纹袜与炭灰裤色接近、袜口高于坐下时露出的皮肤线，这种情况下颜色不断层、坐下也不露皮肤，适合选它。",
+   "missing_condition_request": "顾问提醒用户额外带一双同厚度的替换袜，好在中途按脚感自己换。",
+   "missing_conditions": "还缺一个条件：六小时下来脚会不会闷或磨，15分钟试走看不出。",
+   "nonfit_conditions": "黑薄袜在炭灰裤脚和鞋之间形成明显深色断层，这种情况在意色彩连贯就不合适。",
+   "question_or_decision_context": "用户原话：“我穿深棕乐福鞋配炭灰九分裤去展会，要站一整天，到底光脚踝、黑薄袜还是中灰罗纹袜好看又不磨脚？”顾问按这三个选项逐一比。",
+   "supported_alternative": "被支撑的首选是中灰罗纹袜，画面拍到它与裤色接近、袜口盖住坐下露出的皮肤线。",
+   "supported_alternatives": "留下的可选项是中灰罗纹袜为主、同厚度替换袜为辅；裸踝已被排除。",
+   "trigger_condition": "触发问题的是深棕乐福鞋、炭灰九分西裤、白天室内展会、需要站立六小时这组固定条件。"
+  },
+  "source_summary_a": "三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异。",
+  "source_summary_b": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "首选中灰袜与决策状态一致"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "袜色决策记录，失实伤害轻微；decision_state明载选中灰罗纹袜"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP09-006-CLAIM-01",
+  "claim_text": "后裤脚沾湿高度到4厘米",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "六步测试明确记录沾湿4厘米"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "沾湿4厘米属性能观测，失实会误导雨天使用判断；排除证据原文一致"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP09-006-CLAIM-02",
+  "claim_text": "真实降雨和户外湿滑台阶排在后面工位，眼下没轮到",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "仅知尚未实测，无工位排期证据"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "未测条件的范围披露，工位为修辞；源载未在真实降雨下试过"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP09-006-CLAIM-03",
+  "claim_text": "顾问把这条阔腿裤保留给干燥室内和可控路面",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "与适用条件及顾问决策一致"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "限制性使用场景决策记录；decision_state原文一致"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP09-006-CLAIM-04",
+  "claim_text": "裤口宽24厘米、下摆在脚踝上方2厘米的直筒裤",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "替代直筒裤尺寸有明确记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "替代裤尺寸描述；与alternative_basis证据数值一致"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP10-004-CLAIM-01",
+  "claim_text": "右领尖上翘仍约4毫米、没有再扩大",
+  "claim_boundary": "不能推断灰线成因、后续是否加深或蒸汽效果能维持多久，也不能外推同批其他衬衫。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "一件合成白色府绸衬衫的领口，以及“六次穿洗里它何时开始变化、有没有扩大”这个待查看的问题。",
+   "cause_or_decision_trace_evidence": "档案只登记右领尖何时开始上翘、有没有扩大，没有推断浅灰线成因，也没把蒸汽整形后的暂时状态当作修复完成。",
+   "field_scope_evidence": "记录只限于这一件、这六个穿洗周期；灰线是否加深、蒸汽能维持多久和同批其他衬衫都不在范围。",
+   "record_field_evidence": "穿洗周期表逐次记录办公穿着一天、按洗标洗涤一次、领尖毫米数和灰线状态，六个周期同一条件。",
+   "result_state_evidence": "到第6周期，右领尖上翘仍约4毫米没有扩大，领座内侧一条浅灰摩擦线但无破损；蒸汽整形后上翘约2毫米。",
+   "state_evidence_at_each_anchor": "第0、1、3周期在同一领围扣合状态拍领尖、领座内侧和后领折线；第3周期起右领尖上翘约4毫米；第6周期加拍整形前后对照。",
+   "time_anchor_evidence": "记录节点定在第0、1、3、6周期，第6周期另有蒸汽整形前后两拍。",
+   "trigger_condition": "每完成一次“穿一天、洗一次”就记录一个周期，满六周期后作为当前节点。"
+  },
+  "source_summary_a": "四个周期的领尖、领座和折线固定机位照片，以及第6周期整形前后尺标近景构成档案。",
+  "source_summary_b": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "第6周期结果明确为约4毫米未扩大"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "未扩大含耐久稳定暗示，失实误导品质判断；第6周期记录一致"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP10-004-CLAIM-02",
+  "claim_text": "蒸汽整形压过之后，上翘落到约2毫米",
+  "claim_boundary": "不能推断灰线成因、后续是否加深或蒸汽效果能维持多久，也不能外推同批其他衬衫。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "一件合成白色府绸衬衫的领口，以及“六次穿洗里它何时开始变化、有没有扩大”这个待查看的问题。",
+   "cause_or_decision_trace_evidence": "档案只登记右领尖何时开始上翘、有没有扩大，没有推断浅灰线成因，也没把蒸汽整形后的暂时状态当作修复完成。",
+   "field_scope_evidence": "记录只限于这一件、这六个穿洗周期；灰线是否加深、蒸汽能维持多久和同批其他衬衫都不在范围。",
+   "record_field_evidence": "穿洗周期表逐次记录办公穿着一天、按洗标洗涤一次、领尖毫米数和灰线状态，六个周期同一条件。",
+   "result_state_evidence": "到第6周期，右领尖上翘仍约4毫米没有扩大，领座内侧一条浅灰摩擦线但无破损；蒸汽整形后上翘约2毫米。",
+   "state_evidence_at_each_anchor": "第0、1、3周期在同一领围扣合状态拍领尖、领座内侧和后领折线；第3周期起右领尖上翘约4毫米；第6周期加拍整形前后对照。",
+   "time_anchor_evidence": "记录节点定在第0、1、3、6周期，第6周期另有蒸汽整形前后两拍。",
+   "trigger_condition": "每完成一次“穿一天、洗一次”就记录一个周期，满六周期后作为当前节点。"
+  },
+  "source_summary_a": "四个周期的领尖、领座和折线固定机位照片，以及第6周期整形前后尺标近景构成档案。",
+  "source_summary_b": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "整形前后尺标记录支持约2毫米"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "整形前后数值含处理效果暗示；源载整形后上翘约2毫米"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP11-006-CLAIM-02",
+  "claim_text": "平整，是拿更多车缝换来的",
+  "claim_boundary": "不涉及保暖值、填充稳定年限、洗涤表现或人体舒适度；硬折和偏角仅是这组三块样片在指定折叠与垂挂动作下的可见状态。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "abandoned_option": "放弃十二厘米菱格方案，因为样片垂挂时下角偏向一侧。",
+   "authorization_scope_evidence": "绗缝工只按图车线，样衣师只执行同样的折叠与垂挂，设计负责人只确认分格与移线；没有人做材料性能认证。",
+   "constraint_or_cost": "选八厘米方格的代价是单片车缝路径增加。",
+   "current_evidence_boundary": "硬折和偏角只是这组三块样片在指定折叠与垂挂动作下的可见状态，不涉及保暖值、填充稳定年限、洗涤或人体舒适。",
+   "decision_context": "轻量夹棉衬里用十厘米方格时折叠后肘部出现一条明显硬折，要决定分格怎么改。",
+   "decision_domain": "夹棉衬里的绗线分格大小与肘部线位。",
+   "decision_problem": "十厘米方格折叠后肘部硬折，改小格增加车缝、改菱格垂挂偏角，要在线迹密度和垂挂状态间取舍。",
+   "document_field_evidence": "绗缝实验表记录十厘米方格、八厘米方格、十二厘米菱格三种格型、肘线位置和观察结果，最终纸样以箭头标明横线向上三厘米。",
+   "field_scope_evidence": "评估只覆盖三块样片在指定折叠和垂挂动作下的结构观察，不含保暖、耐久或洗涤。",
+   "object_action_evidence": "在光台和挂架上对三块样片做同样的折叠和垂挂，比对折痕阴影与下角偏移。",
+   "options_considered": "考虑过三种格型：十厘米方格、八厘米方格、十二厘米菱格。",
+   "record_field_evidence": "记录了三种格型使用同批夹棉材料、八厘米方格需更多车缝线、十二厘米菱格下角偏移，最终八厘米方格并把肘部横向绗线上移三厘米。",
+   "relation_evidence": "八厘米方格更平整却要更多车缝线，十二厘米菱格垂挂时下角偏向一侧；换成八厘米方格就把肘部横向绗线上移三厘米。",
+   "selected_option": "最终采用八厘米方格，并把肘部一条横向绗线向上移三厘米。"
+  },
+  "source_summary_a": "绗缝实验表记录三种格型、肘线位置和观察结果，最终纸样上以箭头标明横线向上三厘米。",
+  "source_summary_b": "光台和挂架素材拍到三块样片的折痕阴影、下角偏移及最终车线过程，原声含压脚起落和均匀机针声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "八厘米方格更平整但车缝路径增加"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "工艺取舍描述；源载八厘米更平整但需更多车缝线"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP11-006-CLAIM-03",
+  "claim_text": "这几栏，一律空着没填",
+  "claim_boundary": "不涉及保暖值、填充稳定年限、洗涤表现或人体舒适度；硬折和偏角仅是这组三块样片在指定折叠与垂挂动作下的可见状态。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "abandoned_option": "放弃十二厘米菱格方案，因为样片垂挂时下角偏向一侧。",
+   "authorization_scope_evidence": "绗缝工只按图车线，样衣师只执行同样的折叠与垂挂，设计负责人只确认分格与移线；没有人做材料性能认证。",
+   "constraint_or_cost": "选八厘米方格的代价是单片车缝路径增加。",
+   "current_evidence_boundary": "硬折和偏角只是这组三块样片在指定折叠与垂挂动作下的可见状态，不涉及保暖值、填充稳定年限、洗涤或人体舒适。",
+   "decision_context": "轻量夹棉衬里用十厘米方格时折叠后肘部出现一条明显硬折，要决定分格怎么改。",
+   "decision_domain": "夹棉衬里的绗线分格大小与肘部线位。",
+   "decision_problem": "十厘米方格折叠后肘部硬折，改小格增加车缝、改菱格垂挂偏角，要在线迹密度和垂挂状态间取舍。",
+   "document_field_evidence": "绗缝实验表记录十厘米方格、八厘米方格、十二厘米菱格三种格型、肘线位置和观察结果，最终纸样以箭头标明横线向上三厘米。",
+   "field_scope_evidence": "评估只覆盖三块样片在指定折叠和垂挂动作下的结构观察，不含保暖、耐久或洗涤。",
+   "object_action_evidence": "在光台和挂架上对三块样片做同样的折叠和垂挂，比对折痕阴影与下角偏移。",
+   "options_considered": "考虑过三种格型：十厘米方格、八厘米方格、十二厘米菱格。",
+   "record_field_evidence": "记录了三种格型使用同批夹棉材料、八厘米方格需更多车缝线、十二厘米菱格下角偏移，最终八厘米方格并把肘部横向绗线上移三厘米。",
+   "relation_evidence": "八厘米方格更平整却要更多车缝线，十二厘米菱格垂挂时下角偏向一侧；换成八厘米方格就把肘部横向绗线上移三厘米。",
+   "selected_option": "最终采用八厘米方格，并把肘部一条横向绗线向上移三厘米。"
+  },
+  "source_summary_a": "绗缝实验表记录三种格型、肘线位置和观察结果，最终纸样上以箭头标明横线向上三厘米。",
+  "source_summary_b": "光台和挂架素材拍到三块样片的折痕阴影、下角偏移及最终车线过程，原声含压脚起落和均匀机针声。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "材料说明评估范围，但未说明相关栏位均为空"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "诚实留空表述，源证明确保暖耐久洗涤未评估，失实伤害轻微"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP13-002-CLAIM-02",
+  "claim_text": "白天连续坐桌1小时，晚间在小型展厅站立40分钟",
+  "claim_boundary": "不得把演绎写成真实看展经历，不评价显瘦、身材或久坐舒适度；一小时与四十分钟是场景设定，不是使用测试结果。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位要坐一天再去看展的人的衣橱，主角是那条墨绿中长褶裙，跟着这个人从久坐桌前到站立展厅反复出场。",
+   "context_or_time_labels": "时间标签是同一天的两段：白天连续坐桌1小时，晚间在小型展厅站立40分钟。",
+   "event_or_stage_state": "白天坐桌时把裙身前片整理成向两侧分开的褶束，晚间起身抖开裙褶、在展厅慢步停顿，同一条裙被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是墨绿中长褶裙，24道固定褶、侧拉链、静止时裙摆离地28厘米；坐桌搭配短针织开衫，看展换上长到胯下的无袖马甲，两段都穿同一双低跟鞋。它的角色是需要手动整理坐姿、但能在站立时给下身节奏的裙装。",
+   "runtime supplies contexts and product facts": "场景上下文是坐桌工位与小型展厅；产品事实是同一条24褶裙，坐时褶束分向两侧避免压在椅轮下，站时褶片随步行停顿摆动。",
+   "visible_context": "可见环境从桌前椅轮旁切到展厅步道，画面里有椅轮、褶束和低跟鞋，声音是布褶轻响和鞋底声。",
+   "visible_states": "可见状态包括前片褶束分向两侧、起身后褶面自然展开、上装从短开衫换上长马甲、鞋履始终不变。"
+  },
+  "source_summary_a": "场景搭配单列出裙褶数量、离地高度、两套上装、同一鞋履和坐姿整理步骤，明确不包含身材评价。",
+  "source_summary_b": "低机位素材拍褶束与椅轮距离、手整理褶片、起身后自然展开和展厅式慢步停顿，原声突出布褶轻响与鞋底声。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "两段场景及一小时、四十分钟均有明确设定"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "与时间标签逐字一致；时长设定易被读作耐穿效果暗示"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP13-005-CLAIM-02",
+  "claim_text": "够不够挡风，还得把取景推到那儿",
+  "claim_boundary": "这些是合成场景演绎，不得表述为真人已经发生的出差经历；不声称防风、保暖或适合所有出行方式。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位需要出差走店的人的衣橱，主角是那件藏青斜纹棉工装外套，跟着这个人从高铁座位到门店走访反复出场。",
+   "context_or_time_labels": "时间线是同一天：早班高铁出差约2小时，到站后步行去合作门店做陈列走访。",
+   "event_or_stage_state": "高铁上落座后把帽子取下折进下明袋、双手端咖啡，到站后重新扣上帽子、站着在门店走动看陈列，同一件外套被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是藏青斜纹棉工装外套，衣长70厘米、前襟4个明袋、帽子可脱卸；它套在灰色薄卫衣外，高铁段搭配束脚运动裤、走店段换上直筒休闲裤。它的角色是陪人从长途座位到站立走动的同一件外层，不是防风层也不是保暖层。",
+   "runtime supplies contexts and product facts": "场景上下文是高铁车厢与合作门店卖场；产品事实是同一件工装外套，高铁上帽子折进最大的下明袋、上明袋分放车票和充电线，走店时明袋只留1支笔。",
+   "visible_context": "可见环境从高铁座位切到门店货架前，画面里有折进明袋的帽子、咖啡杯和1支笔，声音是到站提示音和衣料摩擦声。",
+   "visible_states": "可见状态包括帽子从取下到重新扣上、明袋里物件从满到只留1支笔、下装从束脚运动裤换上直筒休闲裤、卫衣内搭始终不变。"
+  },
+  "source_summary_a": "衣橱任务卡记录工装外套衣长70厘米、4个明袋和可脱卸帽，两段场景的内搭、下装与明袋内容，并把防风、保暖排除在本次角色之外。",
+  "source_summary_b": "可用素材围绕同一件外套拍帽子折进明袋、双手端咖啡、到站扣帽和门店走动看陈列，环境声来自到站提示与衣料摩擦。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "现有材料明确未覆盖挡风性能判断"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "源明确防风排除在角色外，主张仅悬置；涉性能有暗示风险"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP15-011-CLAIM-02",
+  "claim_text": "另一边是通过初检的七条。到店那批雾蓝连衣裙查过拉链和里布，整烫上三条，两条正挂上杆、一条侧挂到模特旁，剩下四条收进后备。十点四十这一档，模特旁那条的裙摆正微微晃着。",
+  "claim_boundary": "不得称浮纱为破损、可修复或质量责任，也不得声称七条没有其他问题或已售；维修结果尚不存在。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "收货员拆外袋按顺序挂裙，商品员识别并保护浮纱区域，整烫员处理通过初检的裙子，陈列员安排挂位；这是一条从到店到上架的后台动线。",
+   "event_or_stage_state": "8条雾蓝连衣裙从外袋取出挂起、逐条初检，第2条因浮纱进入维修评估位，其余7条继续整烫和陈列。",
+   "handled_object": "被处理的是8条雾蓝连衣裙，第2条右侧裙摆有一处约7毫米的浮纱，周围织面没有破洞。",
+   "local_state_evidence": "第2条右侧裙摆那处浮纱约7毫米长，贴近用标尺量，周围织面完整、没有破洞。",
+   "mapping_evidence": "8条里第2条进维修评估位，7条通过初检，其中3条整烫后2条正挂、1条侧挂到模特旁，4条进后备。",
+   "observed_action_chain": "动作链是拆外袋、按顺序挂起、初检、发现第2条浮纱、套入灰色保护袋移到评估位、7条查拉链和里布、3条整烫、2正挂1侧挂上架。",
+   "overview_state_evidence": "整批共8条，1条待维修评估，7条通过初检，3条已整烫陈列，4条在后备。",
+   "state_at_anchor_evidence": "10点40分这个节点上，2条已正挂、1条已侧挂到模特旁，第2条仍在保护袋里的评估位。",
+   "time_anchor_evidence": "时间锚点是周四9点到店8条连衣裙，10点40分完成3条陈列。",
+   "visible_context": "画面从验收挂杆走到维修评估位再到模特旁，能看到7毫米标尺、灰色保护袋和整烫蒸汽，声音是拉链和袋料摩擦声。",
+   "visible_result_or_unfinished_state": "结尾是那处浮纱未剪、未拉回，第2条停在保护袋里，维修结果还不存在。"
+  },
+  "source_summary_a": "验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检和三条陈列位置，维修栏未填写。",
+  "source_summary_b": "微距拍浮纱但不触碰，随后跟随保护袋套入与移位，再拍三条蒸汽整理和两种挂法，保留拉链与袋料声。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "流程与数量有据，但裙摆晃动无明确材料"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "七条初检、三条陈列与10:40挂位均与映射及锚点证据一致，属流程描述"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP15-011-CLAIM-03",
+  "claim_text": "这处先不动，等评估，别为赶陈列自己上手。",
+  "claim_boundary": "不得称浮纱为破损、可修复或质量责任，也不得声称七条没有其他问题或已售；维修结果尚不存在。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "收货员拆外袋按顺序挂裙，商品员识别并保护浮纱区域，整烫员处理通过初检的裙子，陈列员安排挂位；这是一条从到店到上架的后台动线。",
+   "event_or_stage_state": "8条雾蓝连衣裙从外袋取出挂起、逐条初检，第2条因浮纱进入维修评估位，其余7条继续整烫和陈列。",
+   "handled_object": "被处理的是8条雾蓝连衣裙，第2条右侧裙摆有一处约7毫米的浮纱，周围织面没有破洞。",
+   "local_state_evidence": "第2条右侧裙摆那处浮纱约7毫米长，贴近用标尺量，周围织面完整、没有破洞。",
+   "mapping_evidence": "8条里第2条进维修评估位，7条通过初检，其中3条整烫后2条正挂、1条侧挂到模特旁，4条进后备。",
+   "observed_action_chain": "动作链是拆外袋、按顺序挂起、初检、发现第2条浮纱、套入灰色保护袋移到评估位、7条查拉链和里布、3条整烫、2正挂1侧挂上架。",
+   "overview_state_evidence": "整批共8条，1条待维修评估，7条通过初检，3条已整烫陈列，4条在后备。",
+   "state_at_anchor_evidence": "10点40分这个节点上，2条已正挂、1条已侧挂到模特旁，第2条仍在保护袋里的评估位。",
+   "time_anchor_evidence": "时间锚点是周四9点到店8条连衣裙，10点40分完成3条陈列。",
+   "visible_context": "画面从验收挂杆走到维修评估位再到模特旁，能看到7毫米标尺、灰色保护袋和整烫蒸汽，声音是拉链和袋料摩擦声。",
+   "visible_result_or_unfinished_state": "结尾是那处浮纱未剪、未拉回，第2条停在保护袋里，维修结果还不存在。"
+  },
+  "source_summary_a": "验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检和三条陈列位置，维修栏未填写。",
+  "source_summary_b": "微距拍浮纱但不触碰，随后跟随保护袋套入与移位，再拍三条蒸汽整理和两种挂法，保留拉链与袋料声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "未触碰并转入评估位，支持暂缓处理"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "浮纱未动、停保护袋等评估与源一致；仅操作叮嘱，风险轻"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP18-011-CLAIM-02",
+  "claim_text": "合适的胸袋款还缺码，单子上只落了补货一项",
+  "claim_boundary": "不能宣称适合维修作业或概括季节普遍需求。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市稻湾市仓前门店，紧邻农机维修街，是这段素材的固定取景框。",
+   "context_or_time_labels": "收割季的清晨时段，本地农机维修街刚开门。",
+   "local_climate_or_season": "稻湾仓前的收割季清晨，附近是忙着农机维修的街坊，是这一带这个季节的节奏。",
+   "local_routine_actor": "收割季来问衬衫的本地工作者，日常在附近维修街干活，进店关注袖口和胸袋。",
+   "local_routine_object": "深色衬衫的袖口、衣摆和胸袋，对应扣紧、塞进工装裤、放纸工单三种日常动作。",
+   "neighborhood_or_professional_crowd": "农机维修街一带的收割季工作者是街坊常客，清晨顺路问耐用衬衫是这里的日常。",
+   "observed_local_action_state": "店员明确普通衬衫不是劳保服，用两件样衣做空工单、抬臂和塞衣摆三种演示，回应三次询问。",
+   "real_city_and_store": "这是合成的稻湾市仓前门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "询问记录分列袖口扣紧、衣摆塞入、胸袋放工单三种问题，以及胸袋款缺码只登记补货、无销售。",
+   "sound_source_evidence": "门外只收本地农机、卷帘和推车声，近景拍空白工单与演示动作。",
+   "time_relation_evidence": "三次询问按清晨先后到店，演示与缺码登记随每次询问依次发生，由记录对上。",
+   "visible_states": "两件深色衬衫样衣、空白工单、抬臂与塞衣摆动作、胸袋展示码都能近景拍清。",
+   "visible_store_context": "门店挨着农机维修街，橱窗外是收割季清晨的街景，店内是样衣与演示台。"
+  },
+  "source_summary_a": "询问记录分列袖口、衣摆、胸袋与缺码。",
+  "source_summary_b": "近景拍空工单与动作，门外只收农机、卷帘和推车声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "胸袋款缺码且仅登记补货均有记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "缺码仅登记补货无销售与记录一致；「合适」限于演示范围"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP18-011-CLAIM-03",
+  "claim_text": "现场没有真正下田的人可问",
+  "claim_boundary": "不能宣称适合维修作业或概括季节普遍需求。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市稻湾市仓前门店，紧邻农机维修街，是这段素材的固定取景框。",
+   "context_or_time_labels": "收割季的清晨时段，本地农机维修街刚开门。",
+   "local_climate_or_season": "稻湾仓前的收割季清晨，附近是忙着农机维修的街坊，是这一带这个季节的节奏。",
+   "local_routine_actor": "收割季来问衬衫的本地工作者，日常在附近维修街干活，进店关注袖口和胸袋。",
+   "local_routine_object": "深色衬衫的袖口、衣摆和胸袋，对应扣紧、塞进工装裤、放纸工单三种日常动作。",
+   "neighborhood_or_professional_crowd": "农机维修街一带的收割季工作者是街坊常客，清晨顺路问耐用衬衫是这里的日常。",
+   "observed_local_action_state": "店员明确普通衬衫不是劳保服，用两件样衣做空工单、抬臂和塞衣摆三种演示，回应三次询问。",
+   "real_city_and_store": "这是合成的稻湾市仓前门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "询问记录分列袖口扣紧、衣摆塞入、胸袋放工单三种问题，以及胸袋款缺码只登记补货、无销售。",
+   "sound_source_evidence": "门外只收本地农机、卷帘和推车声，近景拍空白工单与演示动作。",
+   "time_relation_evidence": "三次询问按清晨先后到店，演示与缺码登记随每次询问依次发生，由记录对上。",
+   "visible_states": "两件深色衬衫样衣、空白工单、抬臂与塞衣摆动作、胸袋展示码都能近景拍清。",
+   "visible_store_context": "门店挨着农机维修街，橱窗外是收割季清晨的街景，店内是样衣与演示台。"
+  },
+  "source_summary_a": "询问记录分列袖口、衣摆、胸袋与缺码。",
+  "source_summary_b": "近景拍空工单与动作，门外只收农机、卷帘和推车声。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "材料未说明现场人员是否真正下田"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "场景人物均为维修街工作者，无下田者，属诚实局限描述"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP20-005-CLAIM-01",
+  "claim_text": "单件纸包装从86克降到65克以下",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "四月均值64克，支持降至65克以下"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "承诺原文与四月64克达标支持；数字改善暗示涉购买判断"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP20-005-CLAIM-02",
+  "claim_text": "三月200单均值67克没够65克目标，42单加了护形纸",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "三月样本、均值及加纸单数均有记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "称重表逐字记录67克与42单，诚实披露未达标"
+  }
+ },
+ {
+  "case_id": "G2-round3-G3-POS-CP20-005-CLAIM-03",
+  "claim_text": "不宣称环境效益，也不推算碳排",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "授权证据明确限定不作两类宣称"
+  },
+  "label_yi": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "授权范围证据逐字支持；属授权边界声明，失实即无据环境宣称"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP03-012-CLAIM-01",
+  "claim_text": "一块被热压机压出了亮面，一块没有",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "试片对比明确为一块压亮、一块未压亮"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "判断点与试片状态记录一块压亮一块未亮，属过程描述"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP03-012-CLAIM-02",
+  "claim_text": "填着一次30秒的低压喷淋，接缝背面那格写着未见水珠",
+  "claim_boundary": "不能把30秒喷淋表述为防水等级、长期耐久或整件风衣无渗漏，也不能公开未记录的热压温度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这段6厘米贴条：现在边缘贴合、短喷淋没见水珠；能看到的只到这一小段短时观察没渗，整件风衣防不防水这段不涉及。",
+   "continuity_breaks": "工序里有一处停顿：热压后要等贴条冷却才能做喷淋，冷却这段是画面里自然的中断。",
+   "craft_input": "用到的是低档热压设备、同材质边角试片、硅胶滚轮和低压喷淋，全程不加胶。",
+   "judgment_point": "关键判断在试片这一步——两块边角试片里一块被压出亮面、一块没有，季枢选没压亮的那组参数，避免正式热压时把贴条压亮。",
+   "ordered_step": "第一步量贴条宽度2厘米、清除翘起段下方浮尘；第二步在同材质边角上做两次试片、选没有压亮的一次参数；第三步把翘起段分两次各热压3秒、用硅胶轮滚平定型；第四步冷却后做30秒低压喷淋观察。",
+   "ordered_step_inventory": "整条工序共4步：清尘量宽、边角试片、分次热压滚平定型、冷却喷淋观察；没有加胶这一步。",
+   "per_step_visible_action": "量宽和擦尘看得到手指沿贴条移动；试片时热压机在边角上压两下；热压时贴条被分两次各压3秒；滚平时硅胶轮来回滚；喷淋时水打在冷却后的接缝上。",
+   "per_step_visible_input": "每步的可见用料：软尺与2厘米贴条、两块同材质边角、低档热压机、硅胶滚轮、喷淋水，全程没有胶。",
+   "per_step_visible_state": "擦尘后贴条下方干净；两块试片一块压亮、一块没压亮；热压后贴条压向接缝；滚平后边缘更服帖；喷淋后接缝背面没看到水珠。",
+   "process_end_or_unfinished_state": "终点停在冷却后边缘贴合、30秒低压喷淋接缝背面没见水珠；长时间的喷淋测试还没做。",
+   "process_start_state": "起点是贴条从接缝翘起6厘米、边缘下方有浮尘、还没有做任何压合。",
+   "step_to_capture_segment_map": "拍摄可分4段对上4步——第一段近景擦尘量宽、第二段两块试片对比、第三段分次热压加滚轮、第四段冷却后喷淋；声音有热压机、滚轮和水声。",
+   "trigger_condition": "触发这道活的，是后背接缝那段2厘米宽的热封贴条翘起了6厘米，需要重新压合。",
+   "unfinished_step_state": "没做的是长时测试——只做过30秒低压喷淋这一次，更久的喷淋和背面渗漏观察都还没排。",
+   "visible_step_state": "前4步清尘量宽、试片、热压滚平定型、短喷淋都做完可见；长时测试这一步在画面里没有出现。",
+   "work_object": "一件测试风衣，重点在后背接缝处一段6厘米翘起的热封贴条。"
+  },
+  "source_summary_a": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "source_summary_b": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "记录支持30秒喷淋后背面未见水珠"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "记录确有一次30秒喷淋未见水珠；含防渗效果暗示"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP05-003-CLAIM-03",
+  "claim_text": "换谁来盘，照着卡就能把这两批点开",
+  "claim_boundary": "不能宣称整个仓库零差错、40分钟返查造成经营损失、方法适用于鞋包仓或他具备仓储管理全权限。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "四次抽查全部在针织区进行，没有一条延伸到鞋包仓或全仓规则，能证明的范围只到针织区库位管理。",
+   "career_stage_record": "仓管台账从2020年“纸条记位置、一次40分钟返查”，到2022年“四次抽查可按批分开”，记录他的方法演进。",
+   "current_stage_or_open_question": "如今他填卡先写染批尾码；还没验证的是这套分隔法搬到鞋包仓成不成立，档案里只有针织区数据。",
+   "document_field_evidence": "库位卡有“颜色”“染批尾码”“入库日”三个字段，对比2020年只写位置的旧纸条，字段从一项增加到三项。",
+   "field_scope_evidence": "这些卡和抽查只覆盖针织区，鞋包仓的堆放规则不在档案里，他也没有那部分经验。",
+   "object_action_evidence": "画面拍他给一格针织衫贴库位卡，卡上颜色、染批尾码、入库日三行都填好，中间插一片分隔片区分两个染批。",
+   "prior_stage": "2020年他只用纸条记货架在哪，曾把同色不同染批的针织衫放进同一格，盘点时花了40分钟重新分组。",
+   "record_field_evidence": "四次月度抽查页每次抽一格同色针织，“能否按卡分开”一栏四次都打勾，镜头可翻这四页。",
+   "recorded_change": "2021年开始他在库位卡上同时写颜色、染批尾码和入库日，并用分隔片把两批隔开，不再让同色混在一格。",
+   "relation_evidence": "库位卡由闻库填写维护，全仓规则和人员分工的调整栏则标注“主管”，两类事分属不同角色。",
+   "role_or_skill_state": "他现在能维护针织区库位卡、按染批分隔并参与盘点；调整全仓规则不在他这一层。",
+   "time_marker": "2020年闻库用纸条记货架位置，2021年改用库位卡，2022年做四次月度抽查，三个年份标出他记录方式的升级。"
+  },
+  "source_summary_a": "合成口述记录他对混批返查的回忆，以及后来填写库位卡时优先看的三项信息。",
+  "source_summary_b": "纸条旧样、带染批尾码的新库位卡和四次抽查页构成阶段证据。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "四次抽查均显示可按卡分开同色批次"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "四次抽查按卡分开均打勾，支持卡自足可分批"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP05-005-CLAIM-01",
+  "claim_text": "六件全写着“无需返拆”",
+  "claim_boundary": "不能把基础衬衫绱袖能力外推到西装袖，不能把无需返拆说成完美，也不能抹去前三件问题。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "authorization_scope_evidence": "六件独立完成的都是基础衬衫袖，档案里没有一件西装袖成品，能证明的范围只到基础袖型。",
+   "career_stage_record": "样衣工记录从2021年初“仅直缝锁边”，到2022年2月“独立完成六件基础衬衫绱袖”，记录她的阶段推进。",
+   "current_stage_or_open_question": "如今她绱基础袖不再需要返拆；还没解决的是同样的四段标记法用到弧度更大的西装袖还灵不灵，胚布练习里没有这类样本。",
+   "document_field_evidence": "拆缝表每件一行，四段各一格记拆缝次数；前五件里三行有多次拆缝记录，后面六件对应格逐渐归零。",
+   "field_scope_evidence": "这些记录只覆盖基础衬衫袖，垫肩西装袖和复杂袖型没有在档案里出现过。",
+   "object_action_evidence": "画面拍她在袖山上用划粉打四个等分记号，绱缝后逐段检查吃势，遇到不均就在对应段拆开重来，旁边摊着拆缝次数表。",
+   "prior_stage": "2021年初她的样衣任务只有直线缝和锁边，没有独立绱过袖子。",
+   "record_field_evidence": "六件基础衬衫样衣的检查页“袖山外观”“是否返拆”两栏，六件都写“无需返拆”，镜头可逐页翻检查栏。",
+   "recorded_change": "同年9月她开始在练习胚布上绱基础袖，前五件里有三件袖山吃势不均，于是把每个袖山分成四段标记，记录每段拆了几次。",
+   "relation_evidence": "检查页“完成人”栏签苏槐，但“复杂袖型分配”一栏仍标样衣组长，说明两类袖型分属不同人处理。",
+   "role_or_skill_state": "她现在能独立完成基础衬衫绱袖；复杂袖型仍要样衣组长分配和复核。",
+   "time_marker": "2021年初苏槐只做直线缝，同年9月开始练绱袖，到2022年2月完成六件衬衫袖，几个时间点标出这道工序的形成。"
+  },
+  "source_summary_a": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "source_summary_b": "五件练习拆缝表、四段袖山标记样和六件衬衫样衣检查页构成证据。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "六件检查页均明确写无需返拆"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "六件检查页是否返拆栏均写无需返拆，可逐页核对"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP06-009-CLAIM-02",
+  "claim_text": "缝线没有再张开",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "三次低负荷提放均未见缝线张开"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "三次提放缝线未张开有源支撑；效果暗示影响修补判断"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP06-009-CLAIM-03",
+  "claim_text": "这三次提放只够说明本处开线已局部补强、通过了低负荷检查",
+  "claim_boundary": "不能由三次轻载提放推断长期耐用性，也不能保证其他破洞、衬条断裂或大面积磨损适用同一修补法。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "claim support state supplied by runtime": "现有三次提放只支撑“本处开线已局部补强并通过低负荷检查”，不支撑整件大衣寿命的承诺。",
+   "event_or_stage_state": "修补师拆掉松脱线头、内侧加一小片同色薄衬、沿原针孔补缝1.5厘米，补完放入300克布袋做三次提放，缝线没有继续张开。",
+   "judgment_scope": "这次判断只针对右袋这处6毫米开线，其他破洞、衬条断裂或大面积磨损不适用同一补法。",
+   "observable_signal": "大衣右侧贴袋上角有一处6毫米开线，周围面料没破洞、袋口衬条还完整；修补师用低张力轻拉，看出开线集中在原来回针结束的那一点。",
+   "professional_basis": "他判断这是局部受力开线而非整体磨损的依据是：面料未破、衬条完整、左侧同位置无开线，说明只是单点回针松脱。",
+   "runtime supplies visible details and available view path": "镜头可从开线定位到内侧衬片，再拍沿原针孔补缝和300克布袋三次提放，声音以剪线和针脚声为主。",
+   "unresolved_condition": "只做了三次轻载提放，除非再经长期使用，否则不能确认这处补强能耐多久。",
+   "visible detail supplied by runtime": "6毫米开线的微距、内侧薄衬贴合、沿原针孔落针和三次提放时缝线的状态，都是能拍到的细节。",
+   "visible_context": "画面是一件大衣平放，右贴袋上角开线、拆下的松脱线头和一小片同色薄衬同框。"
+  },
+  "source_summary_a": "开线微距、内外侧补强过程和三次低负荷提放的连续镜头支持局部状态描述。",
+  "source_summary_b": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "材料明确仅支持局部低负荷检查结果"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "与runtime支撑状态一致，属结论边界限定，伤害轻"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP07-004-CLAIM-01",
+  "claim_text": "光升一码，腰更松、臀裆照旧紧",
+  "claim_boundary": "不能保证给出的版型条件一次购买成功，也不能由平铺尺寸推断所有穿着舒适度；面料、做工和个体动作仍会影响结果。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是这条无弹锥形裤“该放大尺码还是换版型”这个问题。",
+   "alternative_basis_evidence": "支撑换版型的证据是目标裤与旧裤叠放对齐裆点、量出臀围差4厘米前裆差2厘米的画面。",
+   "claim_boundary": "这些条件只从平铺尺寸推，不能保证一次买中，面料、做工和个体动作仍会影响实际穿着。",
+   "condition_evidence": "目标裤平铺腰围74厘米、臀围96厘米、前裆27厘米，旧裤平铺臀围100厘米、前裆29厘米，大一码腰围加4厘米、臀围只加2厘米，这些是判断依据。",
+   "decision_state": "现在的判断是不优先大一码，改按“臀围接近旧裤、前裆不低于旧裤、腰部可调”这三个条件去筛版型。",
+   "exclusion_basis_evidence": "把大一码往后排的证据是尺码表上大一码只增臀围2厘米却增腰围4厘米的对照。",
+   "fit_conditions": "取决于臀围和前裆：要找臀围至少接近旧裤100厘米、前裆不低于29厘米、腰部还能调的版型，这种情况才对得上坐姿需求。",
+   "missing_condition_request": "顾问请用户按同一方法平铺量出旧裤和目标裤，并说明是不是经常久坐。",
+   "missing_conditions": "还缺的是用户实际身体臀围和坐姿动作幅度，平铺尺寸推不出。",
+   "nonfit_conditions": "如果只是大一码，臀围才加2厘米、腰围反而多加4厘米，这种情况腰更松、臀裆还是紧，并不合适。",
+   "question_or_decision_context": "用户原话：“网购的无弹锥形裤，站着腰能插进两根手指，可一坐下前面口袋就张开、裆部全是横纹，我该换大一码还是干脆换版型？”顾问用尺寸来回答。",
+   "supported_alternative": "被支撑的方向是换版型：优先臀围接近100厘米、前裆不低于29厘米、腰部可调。",
+   "supported_alternatives": "可比的两条路是大一码和换版型，证据把换版型排在前、大一码排在后。",
+   "trigger_condition": "触发问题的是同一条裤子站立腰部有余、坐下却前袋张开、裆部横纹这组矛盾表现。"
+  },
+  "source_summary_a": "目标裤与旧裤叠放、腰臀前裆尺量和坐姿口袋状态照片提供可比较的视觉依据。",
+  "source_summary_b": "商品尺码表与远程问答记录包含大一码增量、旧裤舒适状态和顾问建议的筛选条件。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "尺码增量支持腰松而臀裆仍紧"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "与nonfit_conditions一致；合身预测影响购买选择"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP07-010-CLAIM-02",
+  "claim_text": "袜子定在中灰罗纹",
+  "claim_boundary": "不能由15分钟试走预测六小时舒适度，也不能把中灰视为所有深棕鞋和灰裤的固定答案。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是袜色选择这件事，以及“裸踝、黑薄袜、中灰袜哪个合适”这个问题。",
+   "alternative_basis_evidence": "支撑中灰袜的证据是站立、坐下、步行三种状态下裤脚与袜口关系的同机位画面。",
+   "claim_boundary": "这只解决颜色衔接和袜口覆盖，15分钟试走不能预测六小时舒适度，中灰也不是所有深棕鞋配灰裤的固定答案。",
+   "condition_evidence": "鞋色深棕、裤色炭灰、九分裤脚会露脚踝、站立六小时，这些是比较袜色的条件依据。",
+   "decision_state": "现在的判断是选中灰罗纹袜、备一双同厚度替换，颜色问题已定，长时间脚感留给用户自己观察。",
+   "exclusion_basis_evidence": "排除裸踝的证据是鞋口试走15分钟后后跟已有摩擦红印的近景。",
+   "fit_conditions": "先看衔接：中灰罗纹袜与炭灰裤色接近、袜口高于坐下时露出的皮肤线，这种情况下颜色不断层、坐下也不露皮肤，适合选它。",
+   "missing_condition_request": "顾问提醒用户额外带一双同厚度的替换袜，好在中途按脚感自己换。",
+   "missing_conditions": "还缺一个条件：六小时下来脚会不会闷或磨，15分钟试走看不出。",
+   "nonfit_conditions": "黑薄袜在炭灰裤脚和鞋之间形成明显深色断层，这种情况在意色彩连贯就不合适。",
+   "question_or_decision_context": "用户原话：“我穿深棕乐福鞋配炭灰九分裤去展会，要站一整天，到底光脚踝、黑薄袜还是中灰罗纹袜好看又不磨脚？”顾问按这三个选项逐一比。",
+   "supported_alternative": "被支撑的首选是中灰罗纹袜，画面拍到它与裤色接近、袜口盖住坐下露出的皮肤线。",
+   "supported_alternatives": "留下的可选项是中灰罗纹袜为主、同厚度替换袜为辅；裸踝已被排除。",
+   "trigger_condition": "触发问题的是深棕乐福鞋、炭灰九分西裤、白天室内展会、需要站立六小时这组固定条件。"
+  },
+  "source_summary_a": "三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异。",
+  "source_summary_b": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "多状态画面支持中灰罗纹为首选"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "选中灰罗纹袜有decision_state支撑；袜色失实伤害轻"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP07-010-CLAIM-03",
+  "claim_text": "把一双同厚度的替换袜塞进她展会包的侧袋",
+  "claim_boundary": "不能由15分钟试走预测六小时舒适度，也不能把中灰视为所有深棕鞋和灰裤的固定答案。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是袜色选择这件事，以及“裸踝、黑薄袜、中灰袜哪个合适”这个问题。",
+   "alternative_basis_evidence": "支撑中灰袜的证据是站立、坐下、步行三种状态下裤脚与袜口关系的同机位画面。",
+   "claim_boundary": "这只解决颜色衔接和袜口覆盖，15分钟试走不能预测六小时舒适度，中灰也不是所有深棕鞋配灰裤的固定答案。",
+   "condition_evidence": "鞋色深棕、裤色炭灰、九分裤脚会露脚踝、站立六小时，这些是比较袜色的条件依据。",
+   "decision_state": "现在的判断是选中灰罗纹袜、备一双同厚度替换，颜色问题已定，长时间脚感留给用户自己观察。",
+   "exclusion_basis_evidence": "排除裸踝的证据是鞋口试走15分钟后后跟已有摩擦红印的近景。",
+   "fit_conditions": "先看衔接：中灰罗纹袜与炭灰裤色接近、袜口高于坐下时露出的皮肤线，这种情况下颜色不断层、坐下也不露皮肤，适合选它。",
+   "missing_condition_request": "顾问提醒用户额外带一双同厚度的替换袜，好在中途按脚感自己换。",
+   "missing_conditions": "还缺一个条件：六小时下来脚会不会闷或磨，15分钟试走看不出。",
+   "nonfit_conditions": "黑薄袜在炭灰裤脚和鞋之间形成明显深色断层，这种情况在意色彩连贯就不合适。",
+   "question_or_decision_context": "用户原话：“我穿深棕乐福鞋配炭灰九分裤去展会，要站一整天，到底光脚踝、黑薄袜还是中灰罗纹袜好看又不磨脚？”顾问按这三个选项逐一比。",
+   "supported_alternative": "被支撑的首选是中灰罗纹袜，画面拍到它与裤色接近、袜口盖住坐下露出的皮肤线。",
+   "supported_alternatives": "留下的可选项是中灰罗纹袜为主、同厚度替换袜为辅；裸踝已被排除。",
+   "trigger_condition": "触发问题的是深棕乐福鞋、炭灰九分西裤、白天室内展会、需要站立六小时这组固定条件。"
+  },
+  "source_summary_a": "三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异。",
+  "source_summary_b": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "材料明确建议携带同厚度替换袜"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "源仅证备同厚度替换袜，塞包侧袋属无源情节细节；动作描述失实伤害轻"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP09-006-CLAIM-01",
+  "claim_text": "裤口宽34厘米",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "尺寸影响选购，材料明确裤口为34厘米"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "slot事实与尺寸表明载阔腿裤裤口宽34厘米；纯尺寸描述"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP09-006-CLAIM-02",
+  "claim_text": "裤口宽24厘米",
+  "claim_boundary": "模拟不代表真实雨量、路面和交通风险，也不能称替代裤防雨；临时收边是否可行取决于面料与固定方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "这条合成拖地阔腿裤，配3厘米厚底鞋时后裤脚刚好触地、裤口宽34厘米；要判断的是它能不能应付雨天步行加上下公交台阶。",
+   "alternative_basis_evidence": "替代直筒裤裤口宽24厘米、下摆在脚踝上方2厘米，同样室内湿布地面走六步时裤脚离湿面更远，上台阶不用提裤脚。",
+   "claim_boundary": "这次只在室内湿布地面走了六步，没有真实雨量、路面和交通条件；替代直筒裤没做过防雨测试，临时收边行不行要看面料和固定方式。",
+   "condition_evidence": "记录的条件是：配3厘米厚底鞋、室内湿布地面、连续走六步、再上一级公交台阶高度。",
+   "decision_state": "顾问把这条阔腿裤保留给干燥室内和可控路面，雨天通勤改用直筒裤或出门前临时收边，不建议只靠换更高的鞋临时解决。",
+   "exclusion_basis_evidence": "湿布地面走六步后后裤脚沾湿高度到4厘米，上一级台阶时前裤脚要用手提起。",
+   "fit_conditions": "适合干燥室内、路面可控、以坐席和短距步行为主的场合。",
+   "missing_condition_request": "还需要用户补充真实通勤的雨量大小、步行分钟数，以及是否常走户外湿滑台阶。",
+   "missing_conditions": "没有在真实降雨、户外湿滑台阶和十分钟以上连续步行下试过。",
+   "nonfit_conditions": "如果任务包含雨天步行十分钟、频繁上下公交台阶或要快速通过湿滑路面，就不适合。",
+   "question_or_decision_context": "用户要判断这条拖地阔腿裤在雨天步行加乘公交时的管理负担，是否已经超过它的造型收益。",
+   "supported_alternative": "换成脚踝上方2厘米、裤口宽24厘米的直筒裤。",
+   "supported_alternatives": "两条路可选：换成裤口24厘米的直筒裤，或出门前完成一次可恢复的临时收边；不建议只换更高的鞋。",
+   "trigger_condition": "如果这次出门要雨天步行并上下公交台阶，就该重新考虑这条拖地阔腿裤。"
+  },
+  "source_summary_a": "裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面，以及替代裤对照可视化差异。",
+  "source_summary_b": "产品尺寸表、合成通勤任务卡和顾问对干燥场景、雨天替代及临时收边的条件记录。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "尺寸影响替代选择，材料明确为24厘米"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "替代直筒裤裤口宽24厘米有源明载；纯尺寸描述"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP10-004-CLAIM-01",
+  "claim_text": "到第3周期，右领尖开始上翘约4毫米",
+  "claim_boundary": "不能推断灰线成因、后续是否加深或蒸汽效果能维持多久，也不能外推同批其他衬衫。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "一件合成白色府绸衬衫的领口，以及“六次穿洗里它何时开始变化、有没有扩大”这个待查看的问题。",
+   "cause_or_decision_trace_evidence": "档案只登记右领尖何时开始上翘、有没有扩大，没有推断浅灰线成因，也没把蒸汽整形后的暂时状态当作修复完成。",
+   "field_scope_evidence": "记录只限于这一件、这六个穿洗周期；灰线是否加深、蒸汽能维持多久和同批其他衬衫都不在范围。",
+   "record_field_evidence": "穿洗周期表逐次记录办公穿着一天、按洗标洗涤一次、领尖毫米数和灰线状态，六个周期同一条件。",
+   "result_state_evidence": "到第6周期，右领尖上翘仍约4毫米没有扩大，领座内侧一条浅灰摩擦线但无破损；蒸汽整形后上翘约2毫米。",
+   "state_evidence_at_each_anchor": "第0、1、3周期在同一领围扣合状态拍领尖、领座内侧和后领折线；第3周期起右领尖上翘约4毫米；第6周期加拍整形前后对照。",
+   "time_anchor_evidence": "记录节点定在第0、1、3、6周期，第6周期另有蒸汽整形前后两拍。",
+   "trigger_condition": "每完成一次“穿一天、洗一次”就记录一个周期，满六周期后作为当前节点。"
+  },
+  "source_summary_a": "四个周期的领尖、领座和折线固定机位照片，以及第6周期整形前后尺标近景构成档案。",
+  "source_summary_b": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "材料记录第3周期起上翘约4毫米"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "锚点证据载第3周期起右领尖上翘约4毫米；单件外观观察记录"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP10-004-CLAIM-02",
+  "claim_text": "右领尖上翘仍约4毫米没有扩大",
+  "claim_boundary": "不能推断灰线成因、后续是否加深或蒸汽效果能维持多久，也不能外推同批其他衬衫。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "一件合成白色府绸衬衫的领口，以及“六次穿洗里它何时开始变化、有没有扩大”这个待查看的问题。",
+   "cause_or_decision_trace_evidence": "档案只登记右领尖何时开始上翘、有没有扩大，没有推断浅灰线成因，也没把蒸汽整形后的暂时状态当作修复完成。",
+   "field_scope_evidence": "记录只限于这一件、这六个穿洗周期；灰线是否加深、蒸汽能维持多久和同批其他衬衫都不在范围。",
+   "record_field_evidence": "穿洗周期表逐次记录办公穿着一天、按洗标洗涤一次、领尖毫米数和灰线状态，六个周期同一条件。",
+   "result_state_evidence": "到第6周期，右领尖上翘仍约4毫米没有扩大，领座内侧一条浅灰摩擦线但无破损；蒸汽整形后上翘约2毫米。",
+   "state_evidence_at_each_anchor": "第0、1、3周期在同一领围扣合状态拍领尖、领座内侧和后领折线；第3周期起右领尖上翘约4毫米；第6周期加拍整形前后对照。",
+   "time_anchor_evidence": "记录节点定在第0、1、3、6周期，第6周期另有蒸汽整形前后两拍。",
+   "trigger_condition": "每完成一次“穿一天、洗一次”就记录一个周期，满六周期后作为当前节点。"
+  },
+  "source_summary_a": "四个周期的领尖、领座和折线固定机位照片，以及第6周期整形前后尺标近景构成档案。",
+  "source_summary_b": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "第6周期记录仍约4毫米且未扩大"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "第6周期结果证据载仍约4毫米未扩大；外观观察记录"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP11-006-CLAIM-01",
+  "claim_text": "这件轻量夹棉衬里最后用八厘米方格",
+  "claim_boundary": "不涉及保暖值、填充稳定年限、洗涤表现或人体舒适度；硬折和偏角仅是这组三块样片在指定折叠与垂挂动作下的可见状态。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "abandoned_option": "放弃十二厘米菱格方案，因为样片垂挂时下角偏向一侧。",
+   "authorization_scope_evidence": "绗缝工只按图车线，样衣师只执行同样的折叠与垂挂，设计负责人只确认分格与移线；没有人做材料性能认证。",
+   "constraint_or_cost": "选八厘米方格的代价是单片车缝路径增加。",
+   "current_evidence_boundary": "硬折和偏角只是这组三块样片在指定折叠与垂挂动作下的可见状态，不涉及保暖值、填充稳定年限、洗涤或人体舒适。",
+   "decision_context": "轻量夹棉衬里用十厘米方格时折叠后肘部出现一条明显硬折，要决定分格怎么改。",
+   "decision_domain": "夹棉衬里的绗线分格大小与肘部线位。",
+   "decision_problem": "十厘米方格折叠后肘部硬折，改小格增加车缝、改菱格垂挂偏角，要在线迹密度和垂挂状态间取舍。",
+   "document_field_evidence": "绗缝实验表记录十厘米方格、八厘米方格、十二厘米菱格三种格型、肘线位置和观察结果，最终纸样以箭头标明横线向上三厘米。",
+   "field_scope_evidence": "评估只覆盖三块样片在指定折叠和垂挂动作下的结构观察，不含保暖、耐久或洗涤。",
+   "object_action_evidence": "在光台和挂架上对三块样片做同样的折叠和垂挂，比对折痕阴影与下角偏移。",
+   "options_considered": "考虑过三种格型：十厘米方格、八厘米方格、十二厘米菱格。",
+   "record_field_evidence": "记录了三种格型使用同批夹棉材料、八厘米方格需更多车缝线、十二厘米菱格下角偏移，最终八厘米方格并把肘部横向绗线上移三厘米。",
+   "relation_evidence": "八厘米方格更平整却要更多车缝线，十二厘米菱格垂挂时下角偏向一侧；换成八厘米方格就把肘部横向绗线上移三厘米。",
+   "selected_option": "最终采用八厘米方格，并把肘部一条横向绗线向上移三厘米。"
+  },
+  "source_summary_a": "绗缝实验表记录三种格型、肘线位置和观察结果，最终纸样上以箭头标明横线向上三厘米。",
+  "source_summary_b": "光台和挂架素材拍到三块样片的折痕阴影、下角偏移及最终车线过程，原声含压脚起落和均匀机针声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "材料明确最终采用八厘米方格"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "实验表与选定方案载最终采用八厘米方格；工艺决策过程描述"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP13-002-CLAIM-01",
+  "claim_text": "坐时靠手理褶管住坐姿，站起来靠褶片给下身一点走路的节奏",
+  "claim_boundary": "不得把演绎写成真实看展经历，不评价显瘦、身材或久坐舒适度；一小时与四十分钟是场景设定，不是使用测试结果。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位要坐一天再去看展的人的衣橱，主角是那条墨绿中长褶裙，跟着这个人从久坐桌前到站立展厅反复出场。",
+   "context_or_time_labels": "时间标签是同一天的两段：白天连续坐桌1小时，晚间在小型展厅站立40分钟。",
+   "event_or_stage_state": "白天坐桌时把裙身前片整理成向两侧分开的褶束，晚间起身抖开裙褶、在展厅慢步停顿，同一条裙被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是墨绿中长褶裙，24道固定褶、侧拉链、静止时裙摆离地28厘米；坐桌搭配短针织开衫，看展换上长到胯下的无袖马甲，两段都穿同一双低跟鞋。它的角色是需要手动整理坐姿、但能在站立时给下身节奏的裙装。",
+   "runtime supplies contexts and product facts": "场景上下文是坐桌工位与小型展厅；产品事实是同一条24褶裙，坐时褶束分向两侧避免压在椅轮下，站时褶片随步行停顿摆动。",
+   "visible_context": "可见环境从桌前椅轮旁切到展厅步道，画面里有椅轮、褶束和低跟鞋，声音是布褶轻响和鞋底声。",
+   "visible_states": "可见状态包括前片褶束分向两侧、起身后褶面自然展开、上装从短开衫换上长马甲、鞋履始终不变。"
+  },
+  "source_summary_a": "场景搭配单列出裙褶数量、离地高度、两套上装、同一鞋履和坐姿整理步骤，明确不包含身材评价。",
+  "source_summary_b": "低机位素材拍褶束与椅轮距离、手整理褶片、起身后自然展开和展厅式慢步停顿，原声突出布褶轻响与鞋底声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "材料支持坐时理褶及站时随步摆动"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "角色与可见状态证据支持坐理褶、站时褶片给节奏；观感描述"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP13-005-CLAIM-02",
+  "claim_text": "结果先摆在这儿：一整天下来，从早班高铁出差的座位到门店货架前，她身上始终只有这一件藏青斜纹棉工装外套，没有中途另换外层。约2小时的车程，加上到站后的门店走访，它一路都在。",
+  "claim_boundary": "这些是合成场景演绎，不得表述为真人已经发生的出差经历；不声称防风、保暖或适合所有出行方式。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位需要出差走店的人的衣橱，主角是那件藏青斜纹棉工装外套，跟着这个人从高铁座位到门店走访反复出场。",
+   "context_or_time_labels": "时间线是同一天：早班高铁出差约2小时，到站后步行去合作门店做陈列走访。",
+   "event_or_stage_state": "高铁上落座后把帽子取下折进下明袋、双手端咖啡，到站后重新扣上帽子、站着在门店走动看陈列，同一件外套被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是藏青斜纹棉工装外套，衣长70厘米、前襟4个明袋、帽子可脱卸；它套在灰色薄卫衣外，高铁段搭配束脚运动裤、走店段换上直筒休闲裤。它的角色是陪人从长途座位到站立走动的同一件外层，不是防风层也不是保暖层。",
+   "runtime supplies contexts and product facts": "场景上下文是高铁车厢与合作门店卖场；产品事实是同一件工装外套，高铁上帽子折进最大的下明袋、上明袋分放车票和充电线，走店时明袋只留1支笔。",
+   "visible_context": "可见环境从高铁座位切到门店货架前，画面里有折进明袋的帽子、咖啡杯和1支笔，声音是到站提示音和衣料摩擦声。",
+   "visible_states": "可见状态包括帽子从取下到重新扣上、明袋里物件从满到只留1支笔、下装从束脚运动裤换上直筒休闲裤、卫衣内搭始终不变。"
+  },
+  "source_summary_a": "衣橱任务卡记录工装外套衣长70厘米、4个明袋和可脱卸帽，两段场景的内搭、下装与明袋内容，并把防风、保暖排除在本次角色之外。",
+  "source_summary_b": "可用素材围绕同一件外套拍帽子折进明袋、双手端咖啡、到站扣帽和门店走动看陈列，环境声来自到站提示与衣料摩擦。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "CONTRADICTED",
+   "rationale": "将合成动线写成真人全天出差结果"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "全天仅此一件外层与时间线素材一致；耐穿叙事暗示影响购买判断"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP13-005-CLAIM-03",
+  "claim_text": "这趟出差，这件外套只随这2段路挪了一程：车厢的座位，和门店的卖场。高铁上帽子折进最大的下明袋，上明袋放着车票和充电线，走店时明袋里只留下1支笔。真正刮风的那个路口、站得更久的那种走访，这条动线这次没往那边走，取景停在货架这一排就落了地。",
+  "claim_boundary": "这些是合成场景演绎，不得表述为真人已经发生的出差经历；不声称防风、保暖或适合所有出行方式。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "anchor_identity": "合成设定里一位需要出差走店的人的衣橱，主角是那件藏青斜纹棉工装外套，跟着这个人从高铁座位到门店走访反复出场。",
+   "context_or_time_labels": "时间线是同一天：早班高铁出差约2小时，到站后步行去合作门店做陈列走访。",
+   "event_or_stage_state": "高铁上落座后把帽子取下折进下明袋、双手端咖啡，到站后重新扣上帽子、站着在门店走动看陈列，同一件外套被带着走过这两段。",
+   "runtime supplies actual garment set and role relation": "实际衣物是藏青斜纹棉工装外套，衣长70厘米、前襟4个明袋、帽子可脱卸；它套在灰色薄卫衣外，高铁段搭配束脚运动裤、走店段换上直筒休闲裤。它的角色是陪人从长途座位到站立走动的同一件外层，不是防风层也不是保暖层。",
+   "runtime supplies contexts and product facts": "场景上下文是高铁车厢与合作门店卖场；产品事实是同一件工装外套，高铁上帽子折进最大的下明袋、上明袋分放车票和充电线，走店时明袋只留1支笔。",
+   "visible_context": "可见环境从高铁座位切到门店货架前，画面里有折进明袋的帽子、咖啡杯和1支笔，声音是到站提示音和衣料摩擦声。",
+   "visible_states": "可见状态包括帽子从取下到重新扣上、明袋里物件从满到只留1支笔、下装从束脚运动裤换上直筒休闲裤、卫衣内搭始终不变。"
+  },
+  "source_summary_a": "衣橱任务卡记录工装外套衣长70厘米、4个明袋和可脱卸帽，两段场景的内搭、下装与明袋内容，并把防风、保暖排除在本次角色之外。",
+  "source_summary_b": "可用素材围绕同一件外套拍帽子折进明袋、双手端咖啡、到站扣帽和门店走动看陈列，环境声来自到站提示与衣料摩擦。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "两段取景、袋内物件及未覆盖情境相符"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "两段动线与口袋细节对齐素材，并诚实声明未覆盖刮风久站场景"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP14-006-CLAIM-01",
+  "claim_text": "单层摊平，能数出3条清晰的窗框线",
+  "claim_boundary": "不得把画面写成固定透光率、遮挡能力或成衣透视结论；结果只适用于该样布、该层数和该窗光。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "材料助理按4层、2层、单层顺序展开，灯光记录员确认自然光机位未变，演示者移动一次黑卡，任务是记录不同层数的透光样子。",
+   "contact_action_evidence": "手指捏住薄片上角逐层展开，特写里能看到布层从4层松到单层、纱线之间的疏密显出来。",
+   "event_or_stage_state": "本白亚麻薄片先以4层折叠放在窗台，再逐层展开到单层，最后用黑卡从布后横移一次。",
+   "handled_object": "被操作的是一块宽30厘米的本白亚麻薄片，表面能看到纱线疏密的纹理，放在东向窗台上。",
+   "object_contact_evidence": "接触点是薄片的上角和背后的黑卡，贴近看单层处可辨3条窗框线，黑卡边缘经过稀疏处时更清楚。",
+   "observed_action_chain": "动作链是4层时窗框线不可见、2层时出现模糊竖线、单层时可辨3条窗框线、黑卡从布后横移、稀疏处黑卡边缘更清楚。",
+   "source_sound_evidence": "现场声只有布层展开的窸窣声和黑卡划过窗台的声音，没有旁白。",
+   "visible_context": "上午11点的东向窗光固定，镜头贴近布面逆光拍，光透过亚麻在不同层数下亮度不同。",
+   "visible_result_or_unfinished_state": "结尾停在单层薄片上，3条窗框线和纱线疏密都可见，黑卡停在稀疏处不再移动。"
+  },
+  "source_summary_a": "样布记录包含三十厘米宽度、拍摄时刻、东向窗位、四层至单层顺序和可见窗框线数量。",
+  "source_summary_b": "逆光原始素材连续拍逐层展开、纱线微距与黑卡横移，曝光锁定，音轨只有布层和卡片接触窗台声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "单层可辨3条窗框线有直接观察记录"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "单层可辨3条窗框线见动作链，限定该布该光的观感描述"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP14-006-CLAIM-02",
+  "claim_text": "3条窗框线和纱线的疏密都摊在光里",
+  "claim_boundary": "不得把画面写成固定透光率、遮挡能力或成衣透视结论；结果只适用于该样布、该层数和该窗光。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "actor_task_identity": "材料助理按4层、2层、单层顺序展开，灯光记录员确认自然光机位未变，演示者移动一次黑卡，任务是记录不同层数的透光样子。",
+   "contact_action_evidence": "手指捏住薄片上角逐层展开，特写里能看到布层从4层松到单层、纱线之间的疏密显出来。",
+   "event_or_stage_state": "本白亚麻薄片先以4层折叠放在窗台，再逐层展开到单层，最后用黑卡从布后横移一次。",
+   "handled_object": "被操作的是一块宽30厘米的本白亚麻薄片，表面能看到纱线疏密的纹理，放在东向窗台上。",
+   "object_contact_evidence": "接触点是薄片的上角和背后的黑卡，贴近看单层处可辨3条窗框线，黑卡边缘经过稀疏处时更清楚。",
+   "observed_action_chain": "动作链是4层时窗框线不可见、2层时出现模糊竖线、单层时可辨3条窗框线、黑卡从布后横移、稀疏处黑卡边缘更清楚。",
+   "source_sound_evidence": "现场声只有布层展开的窸窣声和黑卡划过窗台的声音，没有旁白。",
+   "visible_context": "上午11点的东向窗光固定，镜头贴近布面逆光拍，光透过亚麻在不同层数下亮度不同。",
+   "visible_result_or_unfinished_state": "结尾停在单层薄片上，3条窗框线和纱线疏密都可见，黑卡停在稀疏处不再移动。"
+  },
+  "source_summary_a": "样布记录包含三十厘米宽度、拍摄时刻、东向窗位、四层至单层顺序和可见窗框线数量。",
+  "source_summary_b": "逆光原始素材连续拍逐层展开、纱线微距与黑卡横移，曝光锁定，音轨只有布层和卡片接触窗台声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "结尾明确可见窗框线与纱线疏密"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "与结尾可见状态逐字一致，条件内观感描述失实伤害轻微"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP18-006-CLAIM-01",
+  "claim_text": "分两次从后门被搬进来",
+  "claim_boundary": "不能声称棉麻凉爽或适合作坊，也不能概括街区偏好。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市炉湾市窑街门店，紧邻印染作坊，是这段素材的固定取景框。",
+   "context_or_time_labels": "盛夏午班时段，本地后巷正刮热风。",
+   "local_climate_or_season": "炉湾老城盛夏，后巷热风闷热，是这一带夏季午后的常态。",
+   "local_routine_actor": "一名穿染色围裙的本地成年工人，来自附近印染作坊，是窑街常见身影。",
+   "local_routine_object": "工人围裙沾着染色、日常抬臂的宽袖口，是这次只问不试的话题。",
+   "neighborhood_or_professional_crowd": "窑街一带的印染作坊工人是街坊常客，穿染色围裙进店问款是这条街的日常。",
+   "observed_local_action_state": "店员不在后门热区拆箱，而是分两次把两箱棉麻衬衫移到中部工作台，开风扇后核吊牌与褶皱，十五分钟上架。",
+   "real_city_and_store": "这是合成的炉湾市窑街门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货单记录两箱、分两次的搬运路径、开风扇的整理和十五分钟完成时点。",
+   "sound_source_evidence": "近景收录风扇、拆胶带、纸箱声，远处是本地作坊的下班铃。",
+   "time_relation_evidence": "两箱送到在先、移台开风扇整理在中、十五分钟后上架在后，由收货单按序对上。",
+   "visible_states": "两只纸箱、中部工作台、风扇、棉麻衬衫吊牌与褶皱都能近景拍清。",
+   "visible_store_context": "门店挨着印染作坊，后门对着窑街热风，店内是工作台与待上架衬衫；人员不出镜。"
+  },
+  "source_summary_a": "收货单记录箱数、顺序、风扇和完成时点。",
+  "source_summary_b": "近景收录风扇、胶带、纸箱和远处下班铃。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "UNKNOWN",
+   "rationale": "分两次有据，但从后门搬入未明确"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "收货单记录两箱分两次搬运路径，属过程描述，失实伤害轻微。"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP18-006-CLAIM-02",
+  "claim_text": "棉麻在作坊热里凉不凉、扛不扛得住抬臂，要等下一班借到样衣上身才拍得到",
+  "claim_boundary": "不能声称棉麻凉爽或适合作坊，也不能概括街区偏好。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市炉湾市窑街门店，紧邻印染作坊，是这段素材的固定取景框。",
+   "context_or_time_labels": "盛夏午班时段，本地后巷正刮热风。",
+   "local_climate_or_season": "炉湾老城盛夏，后巷热风闷热，是这一带夏季午后的常态。",
+   "local_routine_actor": "一名穿染色围裙的本地成年工人，来自附近印染作坊，是窑街常见身影。",
+   "local_routine_object": "工人围裙沾着染色、日常抬臂的宽袖口，是这次只问不试的话题。",
+   "neighborhood_or_professional_crowd": "窑街一带的印染作坊工人是街坊常客，穿染色围裙进店问款是这条街的日常。",
+   "observed_local_action_state": "店员不在后门热区拆箱，而是分两次把两箱棉麻衬衫移到中部工作台，开风扇后核吊牌与褶皱，十五分钟上架。",
+   "real_city_and_store": "这是合成的炉湾市窑街门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "收货单记录两箱、分两次的搬运路径、开风扇的整理和十五分钟完成时点。",
+   "sound_source_evidence": "近景收录风扇、拆胶带、纸箱声，远处是本地作坊的下班铃。",
+   "time_relation_evidence": "两箱送到在先、移台开风扇整理在中、十五分钟后上架在后，由收货单按序对上。",
+   "visible_states": "两只纸箱、中部工作台、风扇、棉麻衬衫吊牌与褶皱都能近景拍清。",
+   "visible_store_context": "门店挨着印染作坊，后门对着窑街热风，店内是工作台与待上架衬衫；人员不出镜。"
+  },
+  "source_summary_a": "收货单记录箱数、顺序、风扇和完成时点。",
+  "source_summary_b": "近景收录风扇、胶带、纸箱和远处下班铃。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "UNKNOWN",
+   "rationale": "效果尚待试穿，但借样衣及班次无据"
+  },
+  "label_yi": {
+   "risk": "HIGH",
+   "entailment": "UNKNOWN",
+   "rationale": "载荷涉身体凉感与抬臂性能；下一班借样衣拍摄计划源材料未载。"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP18-011-CLAIM-01",
+  "claim_text": "普通衬衫不是劳保服",
+  "claim_boundary": "不能宣称适合维修作业或概括季节普遍需求。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市稻湾市仓前门店，紧邻农机维修街，是这段素材的固定取景框。",
+   "context_or_time_labels": "收割季的清晨时段，本地农机维修街刚开门。",
+   "local_climate_or_season": "稻湾仓前的收割季清晨，附近是忙着农机维修的街坊，是这一带这个季节的节奏。",
+   "local_routine_actor": "收割季来问衬衫的本地工作者，日常在附近维修街干活，进店关注袖口和胸袋。",
+   "local_routine_object": "深色衬衫的袖口、衣摆和胸袋，对应扣紧、塞进工装裤、放纸工单三种日常动作。",
+   "neighborhood_or_professional_crowd": "农机维修街一带的收割季工作者是街坊常客，清晨顺路问耐用衬衫是这里的日常。",
+   "observed_local_action_state": "店员明确普通衬衫不是劳保服，用两件样衣做空工单、抬臂和塞衣摆三种演示，回应三次询问。",
+   "real_city_and_store": "这是合成的稻湾市仓前门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "询问记录分列袖口扣紧、衣摆塞入、胸袋放工单三种问题，以及胸袋款缺码只登记补货、无销售。",
+   "sound_source_evidence": "门外只收本地农机、卷帘和推车声，近景拍空白工单与演示动作。",
+   "time_relation_evidence": "三次询问按清晨先后到店，演示与缺码登记随每次询问依次发生，由记录对上。",
+   "visible_states": "两件深色衬衫样衣、空白工单、抬臂与塞衣摆动作、胸袋展示码都能近景拍清。",
+   "visible_store_context": "门店挨着农机维修街，橱窗外是收割季清晨的街景，店内是样衣与演示台。"
+  },
+  "source_summary_a": "询问记录分列袖口、衣摆、胸袋与缺码。",
+  "source_summary_b": "近景拍空工单与动作，门外只收农机、卷帘和推车声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉及劳保属性，且店员已明确说明"
+  },
+  "label_yi": {
+   "risk": "CRITICAL",
+   "entailment": "SUPPORTED",
+   "rationale": "劳保服属安全资质界定，越权将致安全伤害；店员声明有明确记录。"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP18-011-CLAIM-03",
+  "claim_text": "合适的胸袋款还缺码，单上只落了补货一项",
+  "claim_boundary": "不能宣称适合维修作业或概括季节普遍需求。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "anchor_identity": "合成城市稻湾市仓前门店，紧邻农机维修街，是这段素材的固定取景框。",
+   "context_or_time_labels": "收割季的清晨时段，本地农机维修街刚开门。",
+   "local_climate_or_season": "稻湾仓前的收割季清晨，附近是忙着农机维修的街坊，是这一带这个季节的节奏。",
+   "local_routine_actor": "收割季来问衬衫的本地工作者，日常在附近维修街干活，进店关注袖口和胸袋。",
+   "local_routine_object": "深色衬衫的袖口、衣摆和胸袋，对应扣紧、塞进工装裤、放纸工单三种日常动作。",
+   "neighborhood_or_professional_crowd": "农机维修街一带的收割季工作者是街坊常客，清晨顺路问耐用衬衫是这里的日常。",
+   "observed_local_action_state": "店员明确普通衬衫不是劳保服，用两件样衣做空工单、抬臂和塞衣摆三种演示，回应三次询问。",
+   "real_city_and_store": "这是合成的稻湾市仓前门店，非真实城市门店，仅供合成取景。",
+   "scene_state_evidence": "询问记录分列袖口扣紧、衣摆塞入、胸袋放工单三种问题，以及胸袋款缺码只登记补货、无销售。",
+   "sound_source_evidence": "门外只收本地农机、卷帘和推车声，近景拍空白工单与演示动作。",
+   "time_relation_evidence": "三次询问按清晨先后到店，演示与缺码登记随每次询问依次发生，由记录对上。",
+   "visible_states": "两件深色衬衫样衣、空白工单、抬臂与塞衣摆动作、胸袋展示码都能近景拍清。",
+   "visible_store_context": "门店挨着农机维修街，橱窗外是收割季清晨的街景，店内是样衣与演示台。"
+  },
+  "source_summary_a": "询问记录分列袖口、衣摆、胸袋与缺码。",
+  "source_summary_b": "近景拍空工单与动作，门外只收农机、卷帘和推车声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "UNKNOWN",
+   "rationale": "缺码补货有据，但合适性判断无据"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "记录载胸袋款缺码、只登记补货无销售，与主张一致。"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP20-005-CLAIM-01",
+  "claim_text": "均值停在67克",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "三月200单称重均值为67克"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "称重表载三月均值67克未达65克，属过程数据陈述且自认未达标"
+  }
+ },
+ {
+  "case_id": "G2-round5-G3-POS-CP20-005-CLAIM-03",
+  "claim_text": "从86克压到65克以下",
+  "claim_boundary": "不能宣称环境效益、持续64克或隐去局部回退。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "authorization_scope_evidence": "对外只出示称重均值与压折分类，不宣称环境效益、也不推算碳排。",
+   "commitment_owner": "承诺由企业给出，包装负责人读称重数据，客服给匿名的压折分类。",
+   "commitment_record": "承诺原文是取消默认硬纸卡，并把单件订单纸包装从86克降到65克以下。",
+   "current_fulfillment_or_deviation_state": "三月均值67克未达65克目标、42单加护形纸，属未达标的差距；四月降到64克但3单压折，相关三类衬衫恢复两张护形纸。",
+   "document_field_evidence": "承诺、称重表、试验记录和反馈分类分别列出86克、65克、67与64克字段。",
+   "expected_evidence": "兑现该看到的是每单纸包装的称重记录，以及是否稳定降到65克以下。",
+   "field_scope_evidence": "这些字段只覆盖这两轮各200单的称重与压折，不涉环境或碳排推算。",
+   "object_action_evidence": "可拍电子秤、硬纸卡与单双护形纸，配称重和包装声。",
+   "record_field_evidence": "称重表记录三月200单均值67克、42单加护形纸；四月200单均值64克、3单衣领压折。",
+   "relation_evidence": "3单衣领压折与三类衬衫恢复两张护形纸直接对应，反馈分类把两者关联起来。",
+   "review_node": "四月一轮后仍有局部回退，六月再称重核对一次。"
+  },
+  "source_summary_a": "承诺、称重表、试验和反馈分类支持。",
+  "source_summary_b": "电子秤、纸卡与单双护形纸配称重和包装声。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "四月均值64克，达到65克以下"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "承诺原文即86克降到65克以下；减量目标有效果暗示，涉购买判断"
+  }
+ }
+]

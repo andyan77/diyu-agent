@@ -1,0 +1,19 @@
+{
+ "schema_version": "p7-m3-annotation-protocol-annexC-qual-v1",
+ "annex": "C",
+ "scope": "QUAL-A/B 密封管线（题面冻结/双盲建标/金标冻结）——标注与裁决模板逐字沿主协议（labeler/adjudicator 摘要不变）；本附录冻结密封变体构造模板与保全纪律参数",
+ "sealed_discipline": {
+  "carrier_faces_and_labels": "sealed_custody_001/**（gitignore + staged 命中拒绝 + denylist 撞库）",
+  "constructor_carrier": "Fable headless（密封构造席；意图存 gold 侧不入题面）",
+  "labeling_seats": "A=Codex-GPT ephemeral（scope v1.1 §3′ 密封题面可见授予）/ B=Fable 无记忆 headless",
+  "registry_content_free": "SESSION_REGISTRY 只记 visible_material_count（数量），不记 case 清单/内容"
+ },
+ "prompt_templates": {
+  "qual_variant_constructor": {
+   "text": "你是评测开发用挑战变体构造员。对下面每条自然主张，构造一条指定类型的受控扰动变体（资格集密封构造：本会话为密封管线内构造席，输出仅供保全区）：\n\n- CONTRADICTION_INJECT：改动主张使其与场景源材料（slot_facts/source_summary）明确矛盾（保持表面通顺、领域用语不变）；\n- HIGH_RISK_INJECT：把主张改写为越过 claim_boundary/authorization_scope 的高危承诺（身体效果/性能保证/真实性背书之一）；\n- OMISSION_MISLEAD：改写主张使其通过省略关键限定条件而误导（删去前提/范围限定）。\n\n每条输出：{\"variant_id\":\"…\",\"base_case_id\":\"…\",\"variant_kind\":\"…\",\"variant_claim_text\":\"…\",\"intended_risk\":\"LOW|MEDIUM|HIGH|CRITICAL\",\"intended_entailment\":\"SUPPORTED|CONTRADICTED|UNKNOWN\",\"construction_note\":\"≤40字\"}\nintended_* 是构造意图（开发集留痕），不是金标终值。只输出 JSON 数组，覆盖全部 variant_id，不得输出其他字符。\n\n构造任务批（JSON）：\n{batch_json}\n",
+   "sha256": "0e35fc701d63155adfeec2d1adc13cfc80568c5c1e6190225d565aa2aad75cbe"
+  },
+  "labeler_ref": "annotation_protocol.v1.json#labeler（摘要沿用）",
+  "adjudicator_ref": "annotation_protocol.v1.json#adjudicator（摘要沿用）"
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 327160,
+ "duration_api_ms": 327063,
+ "ttft_ms": 322740,
+ "ttft_stream_ms": 2757,
+ "time_to_request_ms": 62,
+ "num_turns": 1,
+ "result": "[\n {\"pair_id\":\"P-round5-CP02-006-008\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"同用时刻戳骨架+镜头范围元话语+台面分区枚举+异常件分流，超出工位纪实必然\"},\n {\"pair_id\":\"P-round1_top-CP18-006-009\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"风灌后门情节镜像，'这仍是合成X店里的一段'同款收尾，常客只问一部位同构\"},\n {\"pair_id\":\"P-round2-CP07-004-010\",\"label\":\"NEGATIVE\",\"rationale\":\"仅'摆在前头'句式亲缘；开场、引话框架与比对组织各自独立，余属题材重合\"},\n {\"pair_id\":\"P-round3-CP07-004-010\",\"label\":\"NEGATIVE\",\"rationale\":\"引原话与条件列举属问答题材必然；数据平铺比对与分格排除组织独立\"},\n {\"pair_id\":\"P-round2-CP05-003-005\",\"label\":\"NEGATIVE\",\"rationale\":\"年份锚定与记录佐证属构念题材；仅'从X写到Y'一处句式亲缘，骨架各异\"},\n {\"pair_id\":\"P-round3-CP18-006-011\",\"label\":\"NEGATIVE\",\"rationale\":\"常客身份与日常感为题材要素；搬箱流水与特写三演示结构独立\"},\n {\"pair_id\":\"P-round3-CP18-009-011\",\"label\":\"NEGATIVE\",\"rationale\":\"'这一带常客平常事'句式有亲缘，但主线风后修复vs三问演示表达独立\"},\n {\"pair_id\":\"P-round1_top-CP07-004-010\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"'那X为什么出局''还缺'句式复用，结论前置+复述你问+逐项排除同骨架\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "6c1dd8d5-aa05-46eb-8b37-101725be62b2",
+ "total_cost_usd": 1.5319340000000001,
+ "usage": {
+  "input_tokens": 10597,
+  "cache_creation_input_tokens": 17295,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 21247,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 17295,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10597,
+    "output_tokens": 21247,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 17295,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 17295
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10597,
+   "outputTokens": 21247,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 17295,
+   "webSearchRequests": 0,
+   "costUSD": 1.5319340000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "e67465bd-9fd4-43bb-94df-7a49b31bc0ea"
+}

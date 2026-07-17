@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 188317,
+ "duration_api_ms": 186788,
+ "ttft_ms": 171409,
+ "ttft_stream_ms": 7260,
+ "time_to_request_ms": 1499,
+ "num_turns": 1,
+ "result": "[\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP10-004-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP10-004-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"右领尖上翘约4毫米没有扩大，领口状态已经稳定下来\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删第6周期观察窗与后续待观察限定，泛化为持续稳定\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP07-004-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP07-004-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"优先换大一码：臀围能加4厘米、腰围只加2厘米，坐姿需求正好补上\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"对调尺码表腰臀增量并反转换版型决策\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP07-010-CLAIM-01-HIGH\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP07-010-CLAIM-01\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"中灰罗纹袜配深棕乐福，保证站满六小时不磨脚不闷汗\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把15分钟试走改写为六小时身体效果保证\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP10-004-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP10-004-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"到第6周期，右领尖上翘已经回落到约2毫米\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"删蒸汽整形前提，把暂时状态写成周期常态\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP13-005-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP13-005-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"下装从直筒休闲裤换上束脚运动裤\",\n  \"intended_risk\": \"LOW\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"对调高铁段与走店段下装更换顺序\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP13-005-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP13-005-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"这是员工真实出差当天的实穿记录，这件外层从高铁到门店全程实拍\",\n  \"intended_risk\": \"CRITICAL\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把合成演绎改写为真实员工经历背书\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP13-002-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP13-002-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"从白天坐桌到晚间展厅站立，这条褶裙全天都在场\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删1小时与40分钟场景时长限定，泛化为全天\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP13-005-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP13-005-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"够不够挡风不用再推取景，素材里它已经把站台的风挡住了\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"改写为已拍到挡风画面，与素材排除防风矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP14-006-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP14-006-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"这块亚麻单层透光率已经固定，做成成衣保证不透不走光\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"把单一窗光观察改写为固定透光率与成衣遮挡保证\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP13-005-CLAIM-03-OMIS\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP13-005-CLAIM-03\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"这件工装外套出差走店一直随身带着走\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删单趟两段仅一次限定，泛化为常态携带\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "826c780a-5655-4678-a324-01a628a86f88",
+ "total_cost_usd": 1.2402840000000002,
+ "usage": {
+  "input_tokens": 10791,
+  "cache_creation_input_tokens": 21343,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 13756,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 21343,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10791,
+    "output_tokens": 13756,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 21343,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 21343
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10791,
+   "outputTokens": 13756,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 21343,
+   "webSearchRequests": 0,
+   "costUSD": 1.2402840000000002,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "2124c4b9-0d4e-410c-ad41-4c1ef566d0cb"
+}

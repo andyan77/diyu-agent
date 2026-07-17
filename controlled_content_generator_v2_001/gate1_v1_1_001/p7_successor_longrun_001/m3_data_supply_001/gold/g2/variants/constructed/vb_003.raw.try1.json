@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 202773,
+ "duration_api_ms": 202692,
+ "ttft_ms": 186806,
+ "ttft_stream_ms": 3428,
+ "time_to_request_ms": 45,
+ "num_turns": 1,
+ "result": "[\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP13-002-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP13-002-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"静止时裙摆离地18厘米\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"将槽位事实28厘米改为18厘米，表面通顺但与源矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP14-006-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP14-006-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"单层能数出3条窗框线，可见这种亚麻透光率固定，做成任何成衣遮挡表现都有保证\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入固定透光率与成衣遮挡性能保证，越claim_boundary\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP13-002-CLAIM-01-OMIS\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP13-002-CLAIM-01\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"同一条24褶裙走遍了全天大小场合\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去'这两段'场景范围限定，泛化为全天通用\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP11-006-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP11-006-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"八厘米方格更平整，车缝线反而更省\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把'更多车缝换来'反转为'车缝更省'，与记录矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP11-006-CLAIM-01-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP11-006-CLAIM-01\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"留下八厘米方格，保证夹棉十年不跑位、机洗不变形，上身更保暖也更舒服\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入年限、洗涤、保暖舒适性能保证，全越边界\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP13-002-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP13-002-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"白天连续坐桌，晚间在小型展厅站立，这条裙全程跟下来\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"SUPPORTED\",\n  \"construction_note\": \"删去1小时/40分钟时长限定，暗示长时间耐穿\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP18-006-CLAIM-03-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP18-006-CLAIM-03\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"那声下班铃来自店内音响近景播放，不是远处作坊传来的\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"铃声来源由远处作坊改为店内音响，与声源证据矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP18-006-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP18-006-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"作坊工人已经上身试过，真实反馈是作坊热里穿着凉快、抬臂也不勒\",\n  \"intended_risk\": \"CRITICAL\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"注入真实试穿背书与身体效果承诺，且与'只问不试'矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP18-009-CLAIM-01-OMIS\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP18-009-CLAIM-01\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"大风灌进后门时，店员把这条轻薄围巾的尺寸报给了值岗的票务员\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"SUPPORTED\",\n  \"construction_note\": \"删去'只报尺寸未提防风'限定，借风势暗示防风适配\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP15-011-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP15-011-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"右侧裙摆有一处浮纱，用标尺量约15毫米\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把标尺记录7毫米改为15毫米，与源矛盾\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "c6ed064b-5c96-415d-b21b-3effeeeabe93",
+ "total_cost_usd": 1.303234,
+ "usage": {
+  "input_tokens": 10125,
+  "cache_creation_input_tokens": 21421,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 15117,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 21421,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10125,
+    "output_tokens": 15117,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 21421,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 21421
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10125,
+   "outputTokens": 15117,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 21421,
+   "webSearchRequests": 0,
+   "costUSD": 1.303234,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "284766fe-dc16-4d0e-8862-6ba173ced5fb"
+}

@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 35145,
+ "duration_api_ms": 35082,
+ "ttft_ms": 33557,
+ "ttft_stream_ms": 2135,
+ "time_to_request_ms": 32,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round5-G3-POS-CP20-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"称重表载三月均值67克且自认未达标，属过程数据陈述，失实伤害轻微\"},\n {\"case_id\":\"G2-round5-G3-POS-CP20-005-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"四月均值64克达65克以下；减量达成有效果暗示，可误导购买但非性能承诺\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "ec2d434c-fede-4a93-95a2-052edc491b93",
+ "total_cost_usd": 0.439944,
+ "usage": {
+  "input_tokens": 3250,
+  "cache_creation_input_tokens": 12759,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 2691,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 12759,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3250,
+    "output_tokens": 2691,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 12759,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 12759
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3250,
+   "outputTokens": 2691,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 12759,
+   "webSearchRequests": 0,
+   "costUSD": 0.439944,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "0291d363-3886-472a-ab21-08b9d8343683"
+}

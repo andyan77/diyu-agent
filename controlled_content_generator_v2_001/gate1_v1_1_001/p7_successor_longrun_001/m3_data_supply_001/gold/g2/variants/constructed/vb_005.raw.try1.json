@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 155105,
+ "duration_api_ms": 155039,
+ "ttft_ms": 138020,
+ "ttft_stream_ms": 6831,
+ "time_to_request_ms": 35,
+ "num_turns": 1,
+ "result": "[\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP20-005-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP20-005-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"三月那200单，均值67克；四月又称200单，均值降到64克，减重一步步落了地\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"SUPPORTED\",\n  \"construction_note\": \"删42单护形纸与3单压折回退限定，数字保真\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP19-005-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP19-005-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"团队保留2米维修台，照样增了24个挂位。\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"14挂位改24，与保留维修台只增14位矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP19-005-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP19-005-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"让出这10个挂位换维修台，我们保证新客量翻倍，这就是门店长期主义的铁证\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入获客翻倍性能保证与长期主义证明，越界\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP20-005-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP20-005-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"四月的表换了数字：200单均值降到64克，够到了目标。要核对减重做到没有，翻的就是每一单纸包装的称重。\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"SUPPORTED\",\n  \"construction_note\": \"删3单压折回退与稳不稳限定，保留达标表述\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP19-005-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP19-005-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"新品这头一个挂位也没少，原来的灯箱原样沿用，没花一分钱\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"反转少10挂位与1.2万灯箱重做，双点矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP19-005-CLAIM-01-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP19-005-CLAIM-01\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"维修台八周里实打实带来一批新客，笔笔有账可查，真实性由我们背书\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"空账改实账并加真实性背书，逆无销售证据\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP20-005-CLAIM-01-OMIS\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP20-005-CLAIM-01\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"单件纸包装从86克降到65克以下，这项承诺已经兑现\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删局部回退与六月复核前提，宣称已兑现\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP20-005-CLAIM-04-CONT\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP20-005-CLAIM-04\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"四月这轮之后再无任何回退，六月不必再上秤核对\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"否定仍有局部回退与六月复核，逆review_node\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP19-005-CLAIM-02-HIGH\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP19-005-CLAIM-02\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"少掉10个挂位换来的修补服务，用的衬料亲肤透气，保证不伤皮肤不过敏\",\n  \"intended_risk\": \"CRITICAL\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"注入身体效果保证，无源承诺越授权边界\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP20-005-CLAIM-03-OMIS\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP20-005-CLAIM-03\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"每一单纸包装都从86克压到了65克以下\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删均值口径限定，全称化到每单皆达标\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "be6e6c06-5318-4c05-87f3-2bcd957c6466",
+ "total_cost_usd": 1.124694,
+ "usage": {
+  "input_tokens": 11070,
+  "cache_creation_input_tokens": 19624,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 12076,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 19624,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 11070,
+    "output_tokens": 12076,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 19624,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 19624
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 11070,
+   "outputTokens": 12076,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 19624,
+   "webSearchRequests": 0,
+   "costUSD": 1.124694,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "1a965fe1-bbb5-4049-ba11-29ca57aee492"
+}

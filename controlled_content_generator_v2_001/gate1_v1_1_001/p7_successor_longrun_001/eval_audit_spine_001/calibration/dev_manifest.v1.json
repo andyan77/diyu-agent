@@ -1,28 +1,32 @@
 {
-  "schema_version": "eval-spine-calibration-manifest-v1",
-  "manifest_id": "EAS-M0-DEV-V1",
-  "data_grid": "G2_MEASUREMENT_DEV",
-  "content_status": "NOT_MATERIALIZED",
-  "sealed": false,
-  "case_count": 0,
-  "class_counts": {},
-  "source_manifest_digest": null,
-  "gold_manifest_digest": null,
-  "allowed_consumers": [
-    "DATA_CUSTODIAN",
-    "DEVELOPMENT_REVIEWER",
-    "EVALUATOR_DEVELOPER",
-    "RUBRIC_DEVELOPER"
-  ],
-  "prohibited_consumers": [
-    "GENERATOR_AUTHOR"
-  ],
-  "leakage_status": "NOT_EVALUATED",
-  "notes": [
-    "No development cases or gold labels exist in this manifest version.",
-    "Materialized development cases may tune measurement methods but may not prove M0 qualification.",
-    "R1-R5 evidence may be referenced as known regression only and remains non-sealed."
-  ],
-  "manifest_digest": null
+ "schema_version": "eval-spine-calibration-manifest-v1",
+ "manifest_id": "EAS-M0-DEV-V1",
+ "data_grid": "G2_MEASUREMENT_DEV",
+ "content_status": "MATERIALIZED",
+ "sealed": false,
+ "case_count": 493,
+ "class_counts": {
+  "risk_entailment_gold": 335,
+  "challenge_variants_dev": 57,
+  "formulaic_pairs_dev": 21,
+  "deterministic_disclosure_dev": 80
+ },
+ "source_manifest_digest": "e7722382f74ccd67cb793447b464b47762df0a6147c32151dbd432b616fef915",
+ "gold_manifest_digest": "701a39b5d9dccee7a15839ccb7f9140dd672b80d35ab5b957c0b8c60b5df904d",
+ "allowed_consumers": [
+  "DATA_CUSTODIAN",
+  "DEVELOPMENT_REVIEWER",
+  "EVALUATOR_DEVELOPER",
+  "RUBRIC_DEVELOPER"
+ ],
+ "prohibited_consumers": [
+  "GENERATOR_AUTHOR"
+ ],
+ "leakage_status": "DEV_ONLY_NOT_FOR_QUALIFICATION",
+ "notes": [
+  "M3-C4 物化：risk/entailment 金标（小试 111 全 Fable 段 + 新段跨模型 A=Codex/B=Fable）+ 开发变体 + 套路对 + 确定性披露用例",
+  "开发集只可调方法，不可证 M0 资格（allowed/prohibited consumers 沿 v1 原文）",
+  "机器真源：m3_data_supply_001/gold/g2/（G2_GOLD/G2_RECEIPT/SESSION_REGISTRY）"
+ ],
+ "manifest_digest": "fd00d9b3473d401cf73d05f0fb58c4be0b19da490b2ba680882d0c1572cc0868"
 }
-

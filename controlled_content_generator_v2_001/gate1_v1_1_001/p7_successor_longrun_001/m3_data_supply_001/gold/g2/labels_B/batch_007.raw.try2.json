@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 76829,
+ "duration_api_ms": 76765,
+ "ttft_ms": 68161,
+ "ttft_stream_ms": 4637,
+ "time_to_request_ms": 33,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"G2-round2-G3-POS-CP06-009-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"限定判断范围的收敛表述，judgment_scope逐字支持\"},{\"case_id\":\"G2-round2-G3-POS-CP07-004-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"尺寸对比影响放码决策；100-96与29-27与实测吻合\"},{\"case_id\":\"G2-round2-G3-POS-CP07-004-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"尺码表对比暗示影响购买；condition_evidence一致\"},{\"case_id\":\"G2-round2-G3-POS-CP07-004-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"坦承缺测数据的限定声明，missing_conditions支持\"},{\"case_id\":\"G2-round2-G3-POS-CP07-010-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三选一推荐引导选购；decision_state明载此选择\"},{\"case_id\":\"G2-round2-G3-POS-CP07-010-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"颜色衔接效果暗示；fit_conditions记录色近不断层\"},{\"case_id\":\"G2-round2-G3-POS-CP09-006-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"适用场景判断影响使用决策；fit_conditions逐字支持\"},{\"case_id\":\"G2-round2-G3-POS-CP09-006-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"替代品对比推荐；supported_alternative尺寸一致\"},{\"case_id\":\"G2-round2-G3-POS-CP09-006-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"雨天替代建议影响使用选择；decision_state两路一致\"},{\"case_id\":\"G2-round2-G3-POS-CP10-004-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"状态记录描述；第6周期仍约4毫米有据\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "88edc1d4-c183-416c-b5ac-256c7a94c51c",
+ "total_cost_usd": 0.7925340000000001,
+ "usage": {
+  "input_tokens": 3312,
+  "cache_creation_input_tokens": 22610,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 5790,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22610,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3312,
+    "output_tokens": 5790,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22610,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22610
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3312,
+   "outputTokens": 5790,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22610,
+   "webSearchRequests": 0,
+   "costUSD": 0.7925340000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "36837fee-b193-433a-95a6-5e746c911a38"
+}

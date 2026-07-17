@@ -116,7 +116,8 @@
       "input_commit": "BOUND_AT_RENDER（取 predecessor HANDOFF.accepted_candidate_commit）",
       "write_surface_allowlist": [
         "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/**",
-        "controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/**"
+        "controlled_content_generator_v2_001/generator_v3_successor_001/v4_recovery/**",
+        "controlled_content_generator_v2_001/product_core_staging_001/**"
       ],
       "write_surface_denylist": [
         "顶层产品 core 暂存（product_core_staging_001/** 直至 M3 依 D0 解锁）",
@@ -151,7 +152,8 @@
       "session_requirements": "全新、非 fork、非 resume 的 Fable 5 顶层会话；由会话外监督器启动；CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；关闭即退出，同会话跨里程碑续跑=停",
       "status": "WAITING_PREDECESSOR",
       "launch_record": null,
-      "session_id": null
+      "session_id": null,
+      "write_surface_note_m3_unlock": "D0 五条件合取 d0_approved=true → 冻结 Prompt denylist 行『product_core_staging_001/** 直至 M3 依 D0 解锁』的解锁生效（MILESTONE_CONTRACT.v1.md 写面段 + journal seq31/36；仅限接口/schema/非密封开发样例/自含验证套件）"
     },
     {
       "prompt_id": "P4",

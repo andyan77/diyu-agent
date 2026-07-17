@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 104908,
+ "duration_api_ms": 104841,
+ "ttft_ms": 97329,
+ "ttft_stream_ms": 3836,
+ "time_to_request_ms": 38,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"G2-round5-G3-POS-CP02-008-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"行动链与时刻锚点均记录16:37衬衫入透明待判断箱\"},{\"case_id\":\"G2-round5-G3-POS-CP02-008-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"anchor_identity明确点位仅检查垫与待判断箱两处\"},{\"case_id\":\"G2-round5-G3-POS-CP02-008-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"槽位与两份摘要均记右袖口约2厘米浅灰印，纯观察描述\"},{\"case_id\":\"G2-round5-G3-POS-CP03-012-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"判断点与试片状态记录一块压亮一块未亮，属过程描述\"},{\"case_id\":\"G2-round5-G3-POS-CP03-012-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"记录确有一次30秒喷淋未见水珠；含防渗效果暗示\"},{\"case_id\":\"G2-round5-G3-POS-CP05-003-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"recorded_change载明2021年起同写三项信息\"},{\"case_id\":\"G2-round5-G3-POS-CP05-003-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"字段证据明确从旧纸条一项增至库位卡三项\"},{\"case_id\":\"G2-round5-G3-POS-CP05-003-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"四次抽查按卡分开均打勾，支持卡自足可分批\"},{\"case_id\":\"G2-round5-G3-POS-CP05-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"六件检查页是否返拆栏均写无需返拆，可逐页核对\"},{\"case_id\":\"G2-round5-G3-POS-CP05-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"行动与变化记录均载袖山四等分标记法\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "6f79fd2f-8790-4224-8cd7-fa7a765f6a5e",
+ "total_cost_usd": 0.879154,
+ "usage": {
+  "input_tokens": 3452,
+  "cache_creation_input_tokens": 22561,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 7514,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22561,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3452,
+    "output_tokens": 7514,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22561,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22561
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3452,
+   "outputTokens": 7514,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22561,
+   "webSearchRequests": 0,
+   "costUSD": 0.879154,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "ddfaa172-eb36-4b5d-8853-c371e38f5e15"
+}

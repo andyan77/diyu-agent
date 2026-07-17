@@ -1,0 +1,15 @@
+{
+ "session_id": "019f70c3-93e6-7833-af50-e7e846b737f2",
+ "result": "[\n  {\n    \"variant_id\": \"V-G2-round5-G3-POS-CP10-004-CLAIM-02-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"仅六周期未扩大，不能推出此后持续稳定\"\n  },\n  {\n    \"variant_id\": \"V-G2-round3-G3-POS-CP07-004-CLAIM-02-CONT\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"腰臀增量被对调，且结论应优先换版型\"\n  },\n  {\n    \"variant_id\": \"V-G2-round5-G3-POS-CP07-010-CLAIM-01-HIGH\",\n    \"risk\": \"HIGH\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"15分钟试走不能保证六小时不磨不闷\"\n  },\n  {\n    \"variant_id\": \"V-G2-round3-G3-POS-CP10-004-CLAIM-02-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"第6周期常态为4毫米，2毫米仅在蒸汽后\"\n  },\n  {\n    \"variant_id\": \"V-G2-round1_top-G3-POS-CP13-005-CLAIM-02-CONT\",\n    \"risk\": \"LOW\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"实际顺序是束脚运动裤换直筒休闲裤\"\n  },\n  {\n    \"variant_id\": \"V-G2-round2-G3-POS-CP13-005-CLAIM-02-HIGH\",\n    \"risk\": \"CRITICAL\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"材料明确为合成演绎，并非员工真实经历\"\n  },\n  {\n    \"variant_id\": \"V-G2-round2-G3-POS-CP13-002-CLAIM-02-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"只设定1小时和40分钟，无法外推全天\"\n  },\n  {\n    \"variant_id\": \"V-G2-round3-G3-POS-CP13-005-CLAIM-02-CONT\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"素材无站台挡风画面，且明确排除防风\"\n  },\n  {\n    \"variant_id\": \"V-G2-round5-G3-POS-CP14-006-CLAIM-02-HIGH\",\n    \"risk\": \"HIGH\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"单次窗光观察不能确定透光率或成衣遮挡\"\n  },\n  {\n    \"variant_id\": \"V-G2-round1_top-G3-POS-CP13-005-CLAIM-03-OMIS\",\n    \"risk\": \"LOW\",\n    \"entailment\": \"SUPPORTED\",\n    \"construction_valid\": false,\n    \"rationale\": \"措辞可指本次两段行程，未明确泛化为常态\"\n  }\n]",
+ "total_cost_usd": 0.0,
+ "provider": "codex-gpt",
+ "model_config": "gpt-5.6-sol",
+ "usage": {
+  "input_tokens": 20678,
+  "cached_input_tokens": 8960,
+  "output_tokens": 1661,
+  "reasoning_output_tokens": 849
+ },
+ "duration_ms": 44934,
+ "num_turns": 1
+}

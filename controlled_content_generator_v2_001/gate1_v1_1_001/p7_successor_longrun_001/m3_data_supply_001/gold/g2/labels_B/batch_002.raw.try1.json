@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 68999,
+ "duration_api_ms": 68935,
+ "ttft_ms": 60881,
+ "ttft_stream_ms": 5361,
+ "time_to_request_ms": 34,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round1_top-G3-POS-CP07-004-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"排序建议影响购买判断；与decision_state及排序证据一致\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP07-004-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"尺寸与筛选条件逐项吻合；条件式合身建议属购买引导\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP07-010-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"定案与排除裸踝均有画面及试走证据；对比推荐影响选择\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP07-010-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"条件与衔接描述同fit_conditions一致；'适合选它'为购买暗示\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP09-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"模拟测试的过程观察，与exclusion_basis_evidence逐字一致\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP09-006-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"换品建议影响购买；与supported_alternative逐字一致\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP10-004-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"单件档案数值记录，与result_state_evidence一致\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP10-004-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"范围限定声明，与field_scope_evidence逐字一致\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP10-004-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"陈述暂时状态并声明未测，与档案记录及范围证据一致\"},\n {\"case_id\":\"G2-round1_top-G3-POS-CP11-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"内部工艺决策事实，与abandoned_option记录一致\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "973fc191-aae0-4bc9-b176-aeddbd2e3000",
+ "total_cost_usd": 0.756894,
+ "usage": {
+  "input_tokens": 3303,
+  "cache_creation_input_tokens": 22675,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 5053,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22675,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3303,
+    "output_tokens": 5053,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22675,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22675
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3303,
+   "outputTokens": 5053,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22675,
+   "webSearchRequests": 0,
+   "costUSD": 0.756894,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "5334e79f-67d6-4ab7-bf15-991333d7e593"
+}

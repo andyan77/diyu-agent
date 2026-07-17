@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 148713,
+ "duration_api_ms": 148638,
+ "ttft_ms": 141649,
+ "ttft_stream_ms": 9901,
+ "time_to_request_ms": 65,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round5-G3-POS-CP18-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"收货单记录两箱分两次搬运路径，属过程描述，失实伤害轻微。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-006-CLAIM-02\",\"risk\":\"HIGH\",\"entailment\":\"UNKNOWN\",\"rationale\":\"载荷涉身体凉感与抬臂性能；下一班借样衣拍摄计划源材料未载。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-009-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"日志与近景均载夹具固定围巾于内侧展示绳，过程描述。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-009-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"UNKNOWN\",\"rationale\":\"源材料未记录店员答复内容，'只报尺寸'的排他性无从验证。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-009-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"后门被风吹开时样巾滑落，先后顺序与时序证据一致。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-011-CLAIM-01\",\"risk\":\"CRITICAL\",\"entailment\":\"SUPPORTED\",\"rationale\":\"劳保服属安全资质界定，越权将致安全伤害；店员声明有明确记录。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-011-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"时序证据原文即'三次询问按清晨先后到店'。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP18-011-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"记录载胸袋款缺码、只登记补货无销售，与主张一致。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP19-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"选定方案即保留2米维修台、只增14挂位，经营过程描述。\"},\n {\"case_id\":\"G2-round5-G3-POS-CP19-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"代价字段载少10个挂位，与24减14挂位口径一致。\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "db8f0144-a9f4-42bc-9bce-f38fe27df82b",
+ "total_cost_usd": 0.9708939999999999,
+ "usage": {
+  "input_tokens": 3477,
+  "cache_creation_input_tokens": 20408,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 10205,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 20408,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3477,
+    "output_tokens": 10205,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 20408,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 20408
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3477,
+   "outputTokens": 10205,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 20408,
+   "webSearchRequests": 0,
+   "costUSD": 0.9708939999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "d9ff3ce3-3ce3-42fd-9d77-aa09d8e09035"
+}

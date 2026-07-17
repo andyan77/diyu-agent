@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 188162,
+ "duration_api_ms": 188072,
+ "ttft_ms": 183940,
+ "ttft_stream_ms": 2223,
+ "time_to_request_ms": 54,
+ "num_turns": 1,
+ "result": "[\n {\"pair_id\":\"P-round1_top-CP18-006-011\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"「X是街坊常客…是日常」与合成披露句同版复用，超出题材必然\"},\n {\"pair_id\":\"P-round1_top-CP18-009-011\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"「X一带的Y是街坊常客，顺路问Z是日常」近逐字同构，披露句亦同版\"},\n {\"pair_id\":\"P-round3-CP18-006-009\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"三物列举+「都能拍清」、「这在…是常态」、常客句多模板并行复用\"},\n {\"pair_id\":\"P-round5-CP18-009-011\",\"label\":\"NEGATIVE\",\"rationale\":\"常客等要素同源，开篇与组织手法（对照枢纽vs两处枚举）各自独立\"},\n {\"pair_id\":\"P-round5-CP18-006-009\",\"label\":\"NEGATIVE\",\"rationale\":\"同风灌后门题材，一随物叙事一引语开场，句式无同构\"},\n {\"pair_id\":\"P-round2-CP18-006-009\",\"label\":\"NEGATIVE\",\"rationale\":\"题材同型（天气常客处置），开场、段落结构、句式互异，表达独立\"},\n {\"pair_id\":\"P-round2-CP02-006-008\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"首段镜头限定句、「这头/那头」收尾、时间戳节奏三重同构，题材不同仍同版\"},\n {\"pair_id\":\"P-round5-CP18-006-011\",\"label\":\"NEGATIVE\",\"rationale\":\"仅地域氛围与常客题材相近，叙事装置与句式各自成体\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "c00a673c-cb6e-481c-a085-05a1bed076ec",
+ "total_cost_usd": 1.163904,
+ "usage": {
+  "input_tokens": 10746,
+  "cache_creation_input_tokens": 17159,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 13911,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 17159,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10746,
+    "output_tokens": 13911,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 17159,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 17159
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10746,
+   "outputTokens": 13911,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 17159,
+   "webSearchRequests": 0,
+   "costUSD": 1.163904,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "51dfe4cc-1243-48ae-8dc1-069879e0f488"
+}

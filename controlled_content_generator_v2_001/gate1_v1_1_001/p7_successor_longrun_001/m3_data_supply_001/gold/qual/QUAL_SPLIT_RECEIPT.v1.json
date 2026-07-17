@@ -1,0 +1,34 @@
+{
+ "schema_version": "p7-m3-qual-split-receipt-v1",
+ "rule": "共同抽样框（SAMPLING_FRAME b20a9ae3）扣除 DEV 30 组后的 90 组池；族内分层 + 难度平衡贪心（难度代理=组 claims 数）+ 确定性平局哈希；两集互不相交",
+ "at": "2026-07-17T16:47:50.813820+00:00",
+ "QUAL_A": {
+  "groups": 46,
+  "claims": 519,
+  "per_family": {
+   "F1_PEOPLE_AND_REAL_SCENE": 12,
+   "F2_PROFESSIONAL_AND_SEARCH": 12,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 9,
+   "F4_STORE_LOCAL_AND_RETAIL": 9,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 4
+  }
+ },
+ "QUAL_B": {
+  "groups": 44,
+  "claims": 502,
+  "per_family": {
+   "F1_PEOPLE_AND_REAL_SCENE": 11,
+   "F2_PROFESSIONAL_AND_SEARCH": 11,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 9,
+   "F4_STORE_LOCAL_AND_RETAIL": 9,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 4
+  }
+ },
+ "disjoint": true,
+ "balance_proof": {
+  "claims_delta_abs": 17,
+  "per_family_group_delta_max": 1
+ },
+ "membership_sha256": "0ecc9f15e1f71b87d09b2f36f14980d8a2281734d5a2726cd10bee741f219ccb",
+ "membership_location": "sealed_custody_001/membership.json（保全区；本回执只载数量/摘要）"
+}

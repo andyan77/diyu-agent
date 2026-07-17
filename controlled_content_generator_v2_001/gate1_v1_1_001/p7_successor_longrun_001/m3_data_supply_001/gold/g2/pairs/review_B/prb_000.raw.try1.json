@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 226173,
+ "duration_api_ms": 226073,
+ "ttft_ms": 221306,
+ "ttft_stream_ms": 3296,
+ "time_to_request_ms": 63,
+ "num_turns": 1,
+ "result": "[\n {\"pair_id\":\"P-round1_top-CP18-006-011\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"共用「X是街坊常客…是日常」+「门店是合成」双句槽位模板，超出题材必然\"},\n {\"pair_id\":\"P-round1_top-CP18-009-011\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"「X一带的Y是街坊常客…顺路…是日常。这家X门店是合成的」近逐字槽位复用\"},\n {\"pair_id\":\"P-round3-CP18-006-009\",\"label\":\"FORMULAIC_POSITIVE\",\"rationale\":\"标题「X风灌进后门+疑问」同模，「都能拍清」枚举、地方常态句等修辞动作成套复现\"},\n {\"pair_id\":\"P-round5-CP18-009-011\",\"label\":\"NEGATIVE\",\"rationale\":\"引语开场双线 vs 答案先行两点演示，骨架独立；仅街坊常客等档位要素词汇相近\"},\n {\"pair_id\":\"P-round5-CP18-006-009\",\"label\":\"NEGATIVE\",\"rationale\":\"跟物叙事 vs 双线结构，句式独立；后门灌风属题材设定，常态句表述各异\"},\n {\"pair_id\":\"P-round2-CP18-006-009\",\"label\":\"NEGATIVE\",\"rationale\":\"引语+澄清开场 vs 动作切入，段落逻辑独立；常客、只问未试属题材要素且表述不同\"},\n {\"pair_id\":\"P-round2-CP02-006-008\",\"label\":\"NEGATIVE\",\"rationale\":\"时段切片与镜头范围声明系档位格式；开场、正文逻辑与句式各自独立，仅轻微词汇回声\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "b08b0834-b21c-40cd-9179-35ab0b3c1b25",
+ "total_cost_usd": 1.285194,
+ "usage": {
+  "input_tokens": 10746,
+  "cache_creation_input_tokens": 17161,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 16336,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 17161,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10746,
+    "output_tokens": 16336,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 17161,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 17161
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10746,
+   "outputTokens": 16336,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 17161,
+   "webSearchRequests": 0,
+   "costUSD": 1.285194,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "d0cdafe3-5e03-41f1-b821-256bb3a519a7"
+}

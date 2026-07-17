@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 128614,
+ "duration_api_ms": 128550,
+ "ttft_ms": 121408,
+ "ttft_stream_ms": 6190,
+ "time_to_request_ms": 37,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"G2-round5-G3-POS-CP07-010-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"UNKNOWN\",\"rationale\":\"源仅证备同厚度替换袜，塞包侧袋属无源情节细节；动作描述失实伤害轻\"},{\"case_id\":\"G2-round5-G3-POS-CP09-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"slot事实与尺寸表明载阔腿裤裤口宽34厘米；纯尺寸描述\"},{\"case_id\":\"G2-round5-G3-POS-CP09-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"替代直筒裤裤口宽24厘米有源明载；纯尺寸描述\"},{\"case_id\":\"G2-round5-G3-POS-CP09-006-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与nonfit条件逐字一致；适用性判断暗示，失实可误导购买使用决策\"},{\"case_id\":\"G2-round5-G3-POS-CP10-004-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"锚点证据载第3周期起右领尖上翘约4毫米；单件外观观察记录\"},{\"case_id\":\"G2-round5-G3-POS-CP10-004-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"第6周期结果证据载仍约4毫米未扩大；外观观察记录\"},{\"case_id\":\"G2-round5-G3-POS-CP10-004-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"范围证据明载仅限这一件六周期；记录范围说明，失实伤害轻\"},{\"case_id\":\"G2-round5-G3-POS-CP11-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"实验表与选定方案载最终采用八厘米方格；工艺决策过程描述\"},{\"case_id\":\"G2-round5-G3-POS-CP11-006-CLAIM-02\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"授权证据证无人做材料性能认证；主张载荷涉性能承诺与背书边界\"},{\"case_id\":\"G2-round5-G3-POS-CP13-002-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"角色与可见状态证据支持坐理褶、站时褶片给节奏；观感描述\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "4879d6f2-34a2-48ea-8846-dab6de1b9b19",
+ "total_cost_usd": 0.951654,
+ "usage": {
+  "input_tokens": 3452,
+  "cache_creation_input_tokens": 21956,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9206,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 21956,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3452,
+    "output_tokens": 9206,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 21956,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 21956
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3452,
+   "outputTokens": 9206,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 21956,
+   "webSearchRequests": 0,
+   "costUSD": 0.951654,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "22bb59eb-a909-4744-9527-678fa38435b2"
+}

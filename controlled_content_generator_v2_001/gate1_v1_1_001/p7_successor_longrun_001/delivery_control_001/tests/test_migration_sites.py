@@ -50,9 +50,9 @@ class FamilyACheckerSites(unittest.TestCase):
             self.assertIn(section, self.master.SECTIONS)
 
     def test_m0_state_section_is_expectation_aware_not_pinned(self) -> None:
-        # 活树按当前里程碑（M2，真实 S0 已执行）期望面检查；随里程碑推进演进
+        # 活树按当前里程碑（M3，dev/qualification manifest 物化属合法产出）期望面检查；随里程碑推进演进
         ok, details = self.v25.check_m0_state_integrity(
-            ROOT, {"milestone": "M2"})
+            ROOT, {"milestone": "M3"})
         self.assertTrue(ok, details)
         # 同一实际状态在错误里程碑期望下必须能区分（参数化生效的证据）
         spec = _j(DC / "state/STATE_EXPECTATION.v1.json")
@@ -211,11 +211,18 @@ class FamilyDContractStateSites(unittest.TestCase):
         m0 = _j(ES / "calibration/M0_STATUS.v1.json")
         self.assertEqual(m0["status"], "NOT_QUALIFIED")             # 诚实维持
         self.assertNotIn("BUDGET_UNAPPROVED", m0["reason_codes"])   # 位点 :12
-        qm = _j(ES / "calibration/qualification_manifest.v1.json")
-        self.assertEqual(qm["case_count"], 0)                       # 位点 :5-7（真实空集）
-        self.assertEqual(qm["content_status"], "NOT_MATERIALIZED")
-        dm = _j(ES / "calibration/dev_manifest.v1.json")
-        self.assertEqual(dm["content_status"], "NOT_MATERIALIZED")  # 位点 :5
+        # 位点 :5-7 演进（M3 起物化属合法产出）：钉死状态改为一致性不变量
+        # case_count==0 ⟺ NOT_MATERIALIZED ⟺ 空摘要；>0 ⟹ MATERIALIZED + 64 位 hex 摘要
+        def _manifest_consistent(m: dict) -> None:
+            if m["case_count"] == 0:
+                self.assertEqual(m["content_status"], "NOT_MATERIALIZED")
+                self.assertIsNone(m["gold_manifest_digest"])
+            else:
+                self.assertEqual(m["content_status"], "MATERIALIZED")
+                for key in ("source_manifest_digest", "gold_manifest_digest"):
+                    self.assertRegex(str(m[key]), r"^[0-9a-f]{64}$")
+        _manifest_consistent(_j(ES / "calibration/qualification_manifest.v1.json"))
+        _manifest_consistent(_j(ES / "calibration/dev_manifest.v1.json"))
         sa = _j(ES / "calibration/stage_actual_state.v1.json")
         # M2 合法面：executed_stages ⊆ {S0}（登记者必须带摘要钉死回执），
         # real_run_executed 为布尔诚实值（M2 真实 S0 后为 true）

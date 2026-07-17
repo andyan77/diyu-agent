@@ -1,0 +1,15 @@
+{
+ "session_id": "019f70d7-2910-7da0-9515-a84b9163d553",
+ "result": "[\n  {\n    \"variant_id\": \"V-G2-round1_top-G3-POS-CP20-005-CLAIM-02-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"SUPPORTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"均值数字有据，但隐去护形纸与压折回退\"\n  },\n  {\n    \"variant_id\": \"V-G2-round1_top-G3-POS-CP19-005-CLAIM-01-CONT\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"保留维修台只能增14位，并非24位\"\n  },\n  {\n    \"variant_id\": \"V-G2-round3-G3-POS-CP19-005-CLAIM-02-HIGH\",\n    \"risk\": \"HIGH\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"无新增销售数据，翻倍保证与铁证均无据\"\n  },\n  {\n    \"variant_id\": \"V-G2-round2-G3-POS-CP20-005-CLAIM-02-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"SUPPORTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"四月均值达标有据，但隐去压折及稳定性\"\n  },\n  {\n    \"variant_id\": \"V-G2-round2-G3-POS-CP19-005-CLAIM-02-CONT\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"实为少10位且花1.2万元重做灯箱\"\n  },\n  {\n    \"variant_id\": \"V-G2-round2-G3-POS-CP19-005-CLAIM-01-HIGH\",\n    \"risk\": \"HIGH\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"材料明确新客无数据，并非笔笔有账\"\n  },\n  {\n    \"variant_id\": \"V-G2-round3-G3-POS-CP20-005-CLAIM-01-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"仅一轮均值达标，尚有回退且待六月复核\"\n  },\n  {\n    \"variant_id\": \"V-G2-round3-G3-POS-CP20-005-CLAIM-04-CONT\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"CONTRADICTED\",\n    \"construction_valid\": true,\n    \"rationale\": \"材料明确仍有局部回退并须六月复核\"\n  },\n  {\n    \"variant_id\": \"V-G2-round5-G3-POS-CP19-005-CLAIM-02-HIGH\",\n    \"risk\": \"CRITICAL\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"亲肤及不过敏保证无材料支持且涉身体安全\"\n  },\n  {\n    \"variant_id\": \"V-G2-round5-G3-POS-CP20-005-CLAIM-03-OMIS\",\n    \"risk\": \"MEDIUM\",\n    \"entailment\": \"UNKNOWN\",\n    \"construction_valid\": true,\n    \"rationale\": \"材料仅载均值，不能推出每单均低于65克\"\n  }\n]",
+ "total_cost_usd": 0.0,
+ "provider": "codex-gpt",
+ "model_config": "gpt-5.6-sol",
+ "usage": {
+  "input_tokens": 19375,
+  "cached_input_tokens": 8960,
+  "output_tokens": 1317,
+  "reasoning_output_tokens": 516
+ },
+ "duration_ms": 34465,
+ "num_turns": 1
+}

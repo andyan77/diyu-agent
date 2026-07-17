@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 170170,
+ "duration_api_ms": 170081,
+ "ttft_ms": 163891,
+ "ttft_stream_ms": 4190,
+ "time_to_request_ms": 55,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round5-G3-POS-CP13-002-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"承认无真实全程穿着者，契合合成设定的诚实限定，失实伤害轻微\"},\n {\"case_id\":\"G2-round5-G3-POS-CP13-002-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"离地28厘米为槽位事实原文；具体尺寸失实会误导长度预期\"},\n {\"case_id\":\"G2-round5-G3-POS-CP13-005-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"规格与角色逐项对齐素材并明示排除防风保暖；规格失实误导购买\"},\n {\"case_id\":\"G2-round5-G3-POS-CP13-005-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"全天仅此一件外层与时间线素材一致；耐穿叙事暗示影响购买判断\"},\n {\"case_id\":\"G2-round5-G3-POS-CP13-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"两段动线与口袋细节对齐素材，并诚实声明未覆盖刮风久站场景\"},\n {\"case_id\":\"G2-round5-G3-POS-CP14-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"单层可辨3条窗框线见动作链，限定该布该光的观感描述\"},\n {\"case_id\":\"G2-round5-G3-POS-CP14-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与结尾可见状态逐字一致，条件内观感描述失实伤害轻微\"},\n {\"case_id\":\"G2-round5-G3-POS-CP15-011-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"周四9点到店8条为时间锚点原文，属过程事实\"},\n {\"case_id\":\"G2-round5-G3-POS-CP15-011-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"7毫米与无破洞有标尺实测记录；品相描述失实会误导购买判断\"},\n {\"case_id\":\"G2-round5-G3-POS-CP15-011-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"套灰色保护袋移评估位为动作链原文，过程描述\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "29def2f2-23ae-4b39-bd35-2fce28f07b2a",
+ "total_cost_usd": 1.076894,
+ "usage": {
+  "input_tokens": 3468,
+  "cache_creation_input_tokens": 21525,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 11880,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 21525,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3468,
+    "output_tokens": 11880,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 21525,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 21525
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3468,
+   "outputTokens": 11880,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 21525,
+   "webSearchRequests": 0,
+   "costUSD": 1.076894,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "ef7ce35f-9cbf-42f0-a81e-f02ba3927fab"
+}

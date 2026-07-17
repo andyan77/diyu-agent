@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 86533,
+ "duration_api_ms": 86474,
+ "ttft_ms": 80294,
+ "ttft_stream_ms": 10930,
+ "time_to_request_ms": 29,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round5-G3-POS-CP05-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"四段等分标记与画面及练习记录一致，属过程描述\"},\n {\"case_id\":\"G2-round5-G3-POS-CP06-009-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与judgment_scope一致，限定范围的过程性声明\"},\n {\"case_id\":\"G2-round5-G3-POS-CP06-009-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三次提放缝线未张开有源支撑；效果暗示影响修补判断\"},\n {\"case_id\":\"G2-round5-G3-POS-CP06-009-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与runtime支撑状态一致，属结论边界限定，伤害轻\"},\n {\"case_id\":\"G2-round5-G3-POS-CP07-004-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与nonfit_conditions一致；合身预测影响购买选择\"},\n {\"case_id\":\"G2-round5-G3-POS-CP07-004-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"证据排序换版型在前有源；建议方向影响购买判断\"},\n {\"case_id\":\"G2-round5-G3-POS-CP07-004-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"增量与condition_evidence一致；对比数据引导选码\"},\n {\"case_id\":\"G2-round5-G3-POS-CP07-004-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"复述claim_boundary限定，免责性质，伤害轻微\"},\n {\"case_id\":\"G2-round5-G3-POS-CP07-010-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"鞋裤颜色款式与trigger_condition一致，纯场景描述\"},\n {\"case_id\":\"G2-round5-G3-POS-CP07-010-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"选中灰罗纹袜有decision_state支撑；袜色失实伤害轻\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "040bfd27-548a-413e-b1ac-3716dcd63c5f",
+ "total_cost_usd": 0.800524,
+ "usage": {
+  "input_tokens": 3250,
+  "cache_creation_input_tokens": 22318,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 6079,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22318,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3250,
+    "output_tokens": 6079,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22318,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22318
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3250,
+   "outputTokens": 6079,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22318,
+   "webSearchRequests": 0,
+   "costUSD": 0.800524,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "84523029-d1c4-45c4-a115-2a8baf2c55ae"
+}

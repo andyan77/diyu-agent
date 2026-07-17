@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 148533,
+ "duration_api_ms": 148124,
+ "ttft_ms": 129757,
+ "ttft_stream_ms": 9531,
+ "time_to_request_ms": 398,
+ "num_turns": 1,
+ "result": "[\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP18-011-CLAIM-01-HIGH\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP18-011-CLAIM-01\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"普通衬衫完全可以当劳保服穿，袖口扣紧就保证耐磨防护，放心穿去干农机维修作业\",\n  \"intended_risk\": \"CRITICAL\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"反转店员定性并加防护性能保证，越适合维修作业红线\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP18-006-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP18-006-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"棉麻衬衫到店后都会先搬到中部工作台整理再上架\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去本次两箱分两次的单次范围限定，泛化为门店常态流程\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP18-006-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP18-006-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"两箱棉麻衬衫一趟就从前门搬了进来\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"改分两次为一趟、后门为前门，与收货单记录矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP18-009-CLAIM-03-HIGH\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP18-009-CLAIM-03\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"这批轻薄围巾防风保暖经码头大风实测验证，保证全年抵御海风，是码头人员的职业装备\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"加防风性能保证与职业装备背书，越防风效果与全年气候红线\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP18-011-CLAIM-02-OMIS\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP18-011-CLAIM-02\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"收割季的清晨总有维修街工作者到店询问耐用衬衫\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"UNKNOWN\",\n  \"construction_note\": \"删去三次与单日先后限定，泛化为季节普遍需求\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP18-006-CLAIM-02-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP18-006-CLAIM-02\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"店员就在后门热区把两箱棉麻衬衫当场拆箱整理上架\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"改中部工作台整理为后门热区当场拆箱，与源材料矛盾\"\n },\n {\n  \"variant_id\": \"V-G2-round2-G3-POS-CP15-011-CLAIM-03-HIGH\",\n  \"base_case_id\": \"G2-round2-G3-POS-CP15-011-CLAIM-03\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"第2条的浮纱已当场修复如新，8条裙子品质保证毫无瑕疵，可放心入手\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"虚构不存在的维修结果并加品质保证，越可修复与无问题红线\"\n },\n {\n  \"variant_id\": \"V-G2-round5-G3-POS-CP15-011-CLAIM-01-OMIS\",\n  \"base_case_id\": \"G2-round5-G3-POS-CP15-011-CLAIM-01\",\n  \"variant_kind\": \"OMISSION_MISLEAD\",\n  \"variant_claim_text\": \"8条雾蓝连衣裙到店，初检通过后整烫陈列\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"删去第2条进维修评估的例外，暗示整批通过初检并陈列\"\n },\n {\n  \"variant_id\": \"V-G2-round1_top-G3-POS-CP20-005-CLAIM-01-CONT\",\n  \"base_case_id\": \"G2-round1_top-G3-POS-CP20-005-CLAIM-01\",\n  \"variant_kind\": \"CONTRADICTION_INJECT\",\n  \"variant_claim_text\": \"把默认硬纸卡撤掉后，三月首轮200单的纸包装均值就压到了65克以下\",\n  \"intended_risk\": \"MEDIUM\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"把三月均值67克未达标改写为首轮已达65克以下\"\n },\n {\n  \"variant_id\": \"V-G2-round3-G3-POS-CP19-005-CLAIM-01-HIGH\",\n  \"base_case_id\": \"G2-round3-G3-POS-CP19-005-CLAIM-01\",\n  \"variant_kind\": \"HIGH_RISK_INJECT\",\n  \"variant_claim_text\": \"保留这两米维修台已被证明能持续带来新客，是门店长期主义的最好证明\",\n  \"intended_risk\": \"HIGH\",\n  \"intended_entailment\": \"CONTRADICTED\",\n  \"construction_note\": \"虚构获客证明与长期主义背书，源材料明言尚无新客数据\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "d18047a8-0378-4811-adcf-9eddbcdc3b47",
+ "total_cost_usd": 1.0887639999999998,
+ "usage": {
+  "input_tokens": 10352,
+  "cache_creation_input_tokens": 20829,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 11019,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 20829,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 10352,
+    "output_tokens": 11019,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 20829,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 20829
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 10352,
+   "outputTokens": 11019,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 20829,
+   "webSearchRequests": 0,
+   "costUSD": 1.0887639999999998,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "ffcf1dc0-22cb-4e34-9426-ae45c915f18e"
+}

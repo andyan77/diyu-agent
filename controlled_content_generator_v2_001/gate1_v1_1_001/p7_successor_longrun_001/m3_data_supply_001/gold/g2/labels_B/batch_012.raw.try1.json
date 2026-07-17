@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 140401,
+ "duration_api_ms": 140340,
+ "ttft_ms": 133387,
+ "ttft_stream_ms": 14094,
+ "time_to_request_ms": 31,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round3-G3-POS-CP05-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"档案明示无一件西装袖成品，空缺属实；记录性描述失实伤害轻\"},\n {\"case_id\":\"G2-round3-G3-POS-CP05-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"完成人签苏槐、复杂袖型仍标组长，直接支持；分工过程描述\"},\n {\"case_id\":\"G2-round3-G3-POS-CP05-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与'能证明的范围只到基础袖型'逐字吻合；自限声明风险低\"},\n {\"case_id\":\"G2-round3-G3-POS-CP06-009-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三次提放缝线未再张开，观察窗内成立；含修补效果暗示\"},\n {\"case_id\":\"G2-round3-G3-POS-CP06-009-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"判断范围明示仅限右袋6毫米开线；范围自限声明\"},\n {\"case_id\":\"G2-round3-G3-POS-CP06-009-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工单记录未做长期验证，空缺属实；诚实缺口描述\"},\n {\"case_id\":\"G2-round3-G3-POS-CP07-004-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"用户原话与触发条件一致；现象描述失实伤害轻微\"},\n {\"case_id\":\"G2-round3-G3-POS-CP07-004-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三条件与顾问判断及尺量证据一致；购买建议可影响选购\"},\n {\"case_id\":\"G2-round3-G3-POS-CP07-004-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"证据仅平铺尺寸与照片，面料做工未涉及；缺口声明属实\"},\n {\"case_id\":\"G2-round3-G3-POS-CP07-010-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"15分钟试走红印近景为证；作排除裸踝依据含对比暗示\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "94b9717b-a426-43b9-9312-083700025c83",
+ "total_cost_usd": 0.9611940000000001,
+ "usage": {
+  "input_tokens": 3458,
+  "cache_creation_input_tokens": 22040,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9362,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22040,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3458,
+    "output_tokens": 9362,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22040,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22040
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3458,
+   "outputTokens": 9362,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22040,
+   "webSearchRequests": 0,
+   "costUSD": 0.9611940000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "15072461-55df-43e4-8157-a561bb0aad70"
+}

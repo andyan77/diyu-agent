@@ -45,7 +45,11 @@ _v25_spec.loader.exec_module(v25)
 CTX: dict[str, object] = {"milestone": "M1", "mode": "PRE_REVIEW",
                           "state_file": None}
 
-ALLOWED_WRITE_PREFIXES = (P7 + "/", G3 + "/")
+# M3 起第三前缀生效：product_core_staging_001（D0 五条件合取 d0_approved=true 后，
+# 冻结 Prompt denylist 行「直至 M3 依 D0 解锁」的解锁；PROMPT_REGISTRY M3 条目同步登记；
+# 仅限接口/schema/非密封开发样例/自含验证套件——内容边界由 M3-C6 EXTRACTION_MANIFEST 承载）
+PRODUCT_CORE_STAGING = "controlled_content_generator_v2_001/product_core_staging_001"
+ALLOWED_WRITE_PREFIXES = (P7 + "/", G3 + "/", PRODUCT_CORE_STAGING + "/")
 
 BASELINE_COMMIT = "b4c40beb509d81db30b497abf38af1da6dc797da"
 

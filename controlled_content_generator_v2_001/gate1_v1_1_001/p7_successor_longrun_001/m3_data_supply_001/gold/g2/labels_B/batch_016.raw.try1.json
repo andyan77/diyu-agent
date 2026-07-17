@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 142198,
+ "duration_api_ms": 142134,
+ "ttft_ms": 135771,
+ "ttft_stream_ms": 4190,
+ "time_to_request_ms": 32,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"G2-round3-G3-POS-CP18-011-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"场景人物均为维修街工作者，无下田者，属诚实局限描述\"},\n {\"case_id\":\"G2-round3-G3-POS-CP19-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与selected_option记录一致，门店内部决策过程描述\"},\n {\"case_id\":\"G2-round3-G3-POS-CP19-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与abandoned_option及24减14差10的记录一致\"},\n {\"case_id\":\"G2-round3-G3-POS-CP20-005-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"承诺原文与四月64克达标支持；数字改善暗示涉购买判断\"},\n {\"case_id\":\"G2-round3-G3-POS-CP20-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"称重表逐字记录67克与42单，诚实披露未达标\"},\n {\"case_id\":\"G2-round3-G3-POS-CP20-005-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"授权范围证据逐字支持；属授权边界声明，失实即无据环境宣称\"},\n {\"case_id\":\"G2-round3-G3-POS-CP20-005-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"review_node明确六月再称重核对局部回退\"},\n {\"case_id\":\"G2-round5-G3-POS-CP02-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"动作链与时间锚均记录15:07补水暂停两分钟\"},\n {\"case_id\":\"G2-round5-G3-POS-CP02-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"结果状态载明六件均过首轮前襟袖口处理，未越界\"},\n {\"case_id\":\"G2-round5-G3-POS-CP02-006-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"动作链与可见状态均支持5件挂绿色完成夹\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "686bccdf-656c-4d69-8774-1bee08a2c82b",
+ "total_cost_usd": 0.967454,
+ "usage": {
+  "input_tokens": 3452,
+  "cache_creation_input_tokens": 20196,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 10226,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 20196,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3452,
+    "output_tokens": 10226,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 20196,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 20196
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3452,
+   "outputTokens": 10226,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 20196,
+   "webSearchRequests": 0,
+   "costUSD": 0.967454,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "7cae6bbd-1fce-455a-937c-6f19404f23e5"
+}

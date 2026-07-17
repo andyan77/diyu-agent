@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 128730,
+ "duration_api_ms": 128620,
+ "ttft_ms": 119446,
+ "ttft_stream_ms": 4224,
+ "time_to_request_ms": 79,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"G2-round3-G3-POS-CP07-010-CLAIM-010-CLAIM-02\".replace ? [] : []},{}]\n\n抱歉，上面是错误输出，忽略。重新输出：\n\n[\n{\"case_id\":\"G2-round3-G3-POS-CP07-010-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"decision_state明确选中灰罗纹袜，观感搭配类记录\"},\n{\"case_id\":\"G2-round3-G3-POS-CP09-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"排除证据原文即沾湿4厘米，试验过程观察\"},\n{\"case_id\":\"G2-round3-G3-POS-CP09-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"missing_conditions证实未测，属边界披露\"},\n{\"case_id\":\"G2-round3-G3-POS-CP09-006-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"decision_state逐字一致，使用范围建议\"},\n{\"case_id\":\"G2-round3-G3-POS-CP09-006-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"替代裤尺寸与alternative_basis逐字吻合\"},\n{\"case_id\":\"G2-round3-G3-POS-CP10-004-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"result_state记录4毫米未扩大，档案观察\"},\n{\"case_id\":\"G2-round3-G3-POS-CP10-004-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"整形后约2毫米有记录，但属干预效果暗示\"},\n{\"case_id\":\"G2-round3-G3-POS-CP10-004-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"field_scope明示仅此一件六周期\"},\n{\"case_id\":\"G2-round3-G3-POS-CP11-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"菱格因下角偏移被弃，过程决策记录\"},\n{\"case_id\":\"G2-round3-G3-POS-CP11-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"relation_evidence载明平整换更多车缝线\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "1b37e9c0-6507-4f66-b40b-658ba8de4d61",
+ "total_cost_usd": 0.9603339999999999,
+ "usage": {
+  "input_tokens": 3617,
+  "cache_creation_input_tokens": 22195,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9251,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22195,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3617,
+    "output_tokens": 9251,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22195,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22195
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3617,
+   "outputTokens": 9251,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22195,
+   "webSearchRequests": 0,
+   "costUSD": 0.9603339999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "ed570cd9-b9e7-48a4-8c21-0b8a7dcdc316"
+}
