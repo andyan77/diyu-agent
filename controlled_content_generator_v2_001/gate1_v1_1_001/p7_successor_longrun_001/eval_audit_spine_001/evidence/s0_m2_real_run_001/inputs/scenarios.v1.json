@@ -1,0 +1,30 @@
+{
+  "schema_version": "s0m2-scenarios-v1",
+  "note": "全新合成资格测试场景（gate1_test_assignment 语义）；非正式内容编排计划；零真实品牌/门店/人物/客户事实。",
+  "scenarios": [
+    {
+      "scenario_id": "CASE-S0M2-CP01-001",
+      "profile_id": "CP01",
+      "user_goal": "帮助读者看懂一次衬衫样衣的领口对位检查记录。",
+      "forbidden_inferences": ["不得外推袖长准确"]
+    },
+    {
+      "scenario_id": "CASE-S0M2-CP02-001",
+      "profile_id": "CP02",
+      "user_goal": "帮助读者看懂一次上装按色号分组挂放的陈列整理记录。",
+      "forbidden_inferences": ["不得外推吊牌信息无误"]
+    },
+    {
+      "scenario_id": "CASE-S0M2-CP04-001",
+      "profile_id": "CP04",
+      "user_goal": "帮助读者看懂一次秋季外套尺码分箱清点的库房记录。",
+      "forbidden_inferences": ["不得外推配件齐全"]
+    },
+    {
+      "scenario_id": "CASE-S0M2-CP07-001",
+      "profile_id": "CP07",
+      "user_goal": "帮助读者看懂一次网单商品防尘袋封装的打包记录。",
+      "forbidden_inferences": ["不得外推标签信息完整"]
+    }
+  ]
+}

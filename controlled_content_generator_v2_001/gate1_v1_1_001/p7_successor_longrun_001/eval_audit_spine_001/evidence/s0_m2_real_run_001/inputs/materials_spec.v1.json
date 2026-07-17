@@ -1,0 +1,186 @@
+{
+  "schema_version": "s0m2-materials-spec-v1",
+  "note": "材料规格：evidence_spans 由 tools/s0_run.py build-bundle 依 quote 在 source_text 中的精确 UTF-8 字节位置确定计算；本文件为字节位置的唯一上游真源。",
+  "materials": [
+    {
+      "scenario_id": "CASE-S0M2-CP01-001",
+      "profile_id": "CP01",
+      "sources": [
+        {
+          "source_id": "CASE-S0M2-CP01-001-SRC-1",
+          "source_text": "熨烫台记录一件衬衫样衣已完成领口对位检查；对位使用了定位夹片；袖长数值未复核。"
+        }
+      ],
+      "authorizations": [
+        {
+          "authorization_id": "CASE-S0M2-CP01-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的熨烫台工作记录。"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "CASE-S0M2-CP01-001-F1",
+          "slot_id": "observed_action",
+          "fact_value": "熨烫台记录一件衬衫样衣已完成领口对位检查。",
+          "quote": "熨烫台记录一件衬衫样衣已完成领口对位检查",
+          "surface_policy": "MUST_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP01-001-F2",
+          "slot_id": "optional_context",
+          "fact_value": "对位使用了定位夹片。",
+          "quote": "对位使用了定位夹片",
+          "surface_policy": "MAY_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP01-001-F3",
+          "slot_id": "control_boundary",
+          "fact_value": "袖长数值未复核，禁止称袖长准确。",
+          "quote": "袖长数值未复核",
+          "surface_policy": "CONTROL_ONLY",
+          "conditions": ["袖长数值未复核"],
+          "prohibited_surface_terms": ["袖长准确"]
+        }
+      ]
+    },
+    {
+      "scenario_id": "CASE-S0M2-CP02-001",
+      "profile_id": "CP02",
+      "sources": [
+        {
+          "source_id": "CASE-S0M2-CP02-001-SRC-1",
+          "source_text": "陈列台记录一组上装已按色号完成分组挂放；分组时使用了色卡对照；吊牌信息未逐一核对。"
+        }
+      ],
+      "authorizations": [
+        {
+          "authorization_id": "CASE-S0M2-CP02-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的陈列台工作记录。"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "CASE-S0M2-CP02-001-F1",
+          "slot_id": "observed_action",
+          "fact_value": "陈列台记录一组上装已按色号完成分组挂放。",
+          "quote": "陈列台记录一组上装已按色号完成分组挂放",
+          "surface_policy": "MUST_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP02-001-F2",
+          "slot_id": "optional_context",
+          "fact_value": "分组时使用了色卡对照。",
+          "quote": "分组时使用了色卡对照",
+          "surface_policy": "MAY_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP02-001-F3",
+          "slot_id": "control_boundary",
+          "fact_value": "吊牌信息未逐一核对，禁止称吊牌信息无误。",
+          "quote": "吊牌信息未逐一核对",
+          "surface_policy": "CONTROL_ONLY",
+          "conditions": ["吊牌信息未逐一核对"],
+          "prohibited_surface_terms": ["吊牌信息无误"]
+        }
+      ]
+    },
+    {
+      "scenario_id": "CASE-S0M2-CP04-001",
+      "profile_id": "CP04",
+      "sources": [
+        {
+          "source_id": "CASE-S0M2-CP04-001-SRC-1",
+          "source_text": "库房记录一批秋季外套已完成尺码分箱清点；清点采用双人交叉复核；箱内配件数量未清点。"
+        }
+      ],
+      "authorizations": [
+        {
+          "authorization_id": "CASE-S0M2-CP04-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的库房清点记录。"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "CASE-S0M2-CP04-001-F1",
+          "slot_id": "observed_action",
+          "fact_value": "库房记录一批秋季外套已完成尺码分箱清点。",
+          "quote": "库房记录一批秋季外套已完成尺码分箱清点",
+          "surface_policy": "MUST_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP04-001-F2",
+          "slot_id": "optional_context",
+          "fact_value": "清点采用双人交叉复核。",
+          "quote": "清点采用双人交叉复核",
+          "surface_policy": "MAY_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP04-001-F3",
+          "slot_id": "control_boundary",
+          "fact_value": "箱内配件数量未清点，禁止称配件齐全。",
+          "quote": "箱内配件数量未清点",
+          "surface_policy": "CONTROL_ONLY",
+          "conditions": ["箱内配件数量未清点"],
+          "prohibited_surface_terms": ["配件齐全"]
+        }
+      ]
+    },
+    {
+      "scenario_id": "CASE-S0M2-CP07-001",
+      "profile_id": "CP07",
+      "sources": [
+        {
+          "source_id": "CASE-S0M2-CP07-001-SRC-1",
+          "source_text": "打包台记录一件网单商品已完成防尘袋封装；封装前做了外观目视检查；内衬洗涤标签未翻检。"
+        }
+      ],
+      "authorizations": [
+        {
+          "authorization_id": "CASE-S0M2-CP07-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的打包台工作记录。"
+        }
+      ],
+      "facts": [
+        {
+          "fact_id": "CASE-S0M2-CP07-001-F1",
+          "slot_id": "observed_action",
+          "fact_value": "打包台记录一件网单商品已完成防尘袋封装。",
+          "quote": "打包台记录一件网单商品已完成防尘袋封装",
+          "surface_policy": "MUST_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP07-001-F2",
+          "slot_id": "optional_context",
+          "fact_value": "封装前做了外观目视检查。",
+          "quote": "封装前做了外观目视检查",
+          "surface_policy": "MAY_SURFACE",
+          "conditions": [],
+          "prohibited_surface_terms": []
+        },
+        {
+          "fact_id": "CASE-S0M2-CP07-001-F3",
+          "slot_id": "control_boundary",
+          "fact_value": "内衬洗涤标签未翻检，禁止称标签信息完整。",
+          "quote": "内衬洗涤标签未翻检",
+          "surface_policy": "CONTROL_ONLY",
+          "conditions": ["内衬洗涤标签未翻检"],
+          "prohibited_surface_terms": ["标签信息完整"]
+        }
+      ]
+    }
+  ]
+}

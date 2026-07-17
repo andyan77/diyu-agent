@@ -1,0 +1,108 @@
+{
+  "approved_at": "2026-07-17T04:45:00+00:00",
+  "approved_by": "v2.5 §〇 流水线内默认授权 + S0_REAL_RUN_AUTHORIZATION.v1.json",
+  "custodian_identity": "M2_PRINCIPAL_ORCHESTRATOR",
+  "expected_events": [
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-CR-01",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "CONTENT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-CR-02",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "CONTENT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-CR-03",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "CONTENT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-CR-04",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "CONTENT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-FR-01",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FACT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-FR-02",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FACT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-FR-03",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FACT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-FR-04",
+      "object_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FACT_REVIEW"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-DS-01",
+      "object_id": "PAIR-S0M2-01",
+      "resource_kind": "MODEL_CALL",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FORMULAIC_PAIR_SCREEN"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-DS-02",
+      "object_id": "PAIR-S0M2-02",
+      "resource_kind": "MODEL_CALL",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FORMULAIC_PAIR_SCREEN"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-DS-03",
+      "object_id": "PAIR-S0M2-03",
+      "resource_kind": "MODEL_CALL",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "FORMULAIC_PAIR_SCREEN"
+    },
+    {
+      "budget_category": "one_time_gold_and_measurement_usd",
+      "event_id": "EV-S0M2-MA-01",
+      "object_id": "BATCH::S0M2-BATCH-001",
+      "resource_kind": "HUMAN_REVIEW",
+      "stage_id": "S0_DETERMINISTIC_HYGIENE",
+      "task_kind": "METRICS_AUDIT"
+    }
+  ],
+  "manifest_digest": "3e043867a4a1c49cb7bf47ae1b57835cf66ce3458886729f5732a6c7789befe3",
+  "registered_before_run": true,
+  "schema_version": "eval-spine-expected-cost-events-v1",
+  "source_run_manifest_digest": "5e2e7895012a29c9b038bac955e9db9e7e8970a813f255ba42e15a669d2c802c",
+  "stage_scope": "S0_DETERMINISTIC_HYGIENE"
+}

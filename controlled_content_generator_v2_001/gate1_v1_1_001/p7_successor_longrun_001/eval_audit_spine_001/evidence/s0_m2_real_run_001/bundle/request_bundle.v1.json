@@ -1,0 +1,1481 @@
+{
+  "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+  "assignments": [
+    {
+      "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+      "argument_spine": [
+        "ROLE_HANDOFF",
+        "TASK_ACTION_CHAIN"
+      ],
+      "assignment_digest": "f19693195776371e52344943f1e49779556d6e7ebc4e7feae35d7f8aaa0bd20f",
+      "assignment_id": "G1TA-d2b47bc3d85c5105",
+      "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+      "binds_enterprise_runtime_input": false,
+      "case_id": "CASE-S0M2-CP01-001",
+      "closing_function": "OPEN_TASK_CHECK",
+      "counts_toward_300": false,
+      "evidence_surface_policy": [
+        {
+          "policy": "MUST_SURFACE",
+          "reason_code": "EXPLICIT_MUST_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP01-001-F1"
+        },
+        {
+          "policy": "MAY_SURFACE",
+          "reason_code": "EXPLICIT_MAY_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP01-001-F2"
+        },
+        {
+          "policy": "CONTROL_ONLY",
+          "reason_code": "EXPLICIT_CONTROL_ONLY",
+          "reference_assertion_id": "CASE-S0M2-CP01-001-F3"
+        }
+      ],
+      "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+      "forbidden_inferences": [
+        "不得外推袖长准确"
+      ],
+      "limitation_carrier": "UNTESTED_TASK_BRANCH",
+      "material_packet_digest": "c2e2aff280b289b623be716c5cfa38101562ac00acd4c50520f7cf3aa05f4a36",
+      "not_formal_content_composition_plan": true,
+      "object_type": "gate1_test_assignment",
+      "paired_assignment_id": null,
+      "perspective_anchor": "ROLE_HANDOFF",
+      "profile_id": "CP01",
+      "publishable": false,
+      "runtime_consumable": false,
+      "scenario_digest": "e4ae381e17112c060c7f8ad557aef2641f19a2e0f93bf51bb0b786ca1aefb9c6",
+      "scenario_id": "CASE-S0M2-CP01-001",
+      "schema_version": "gate1-test-assignment-v1",
+      "stage_scope": "GATE1_QUALIFICATION_ONLY",
+      "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+      "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+      "test_dna": {
+        "boundary_carrier": "UNTESTED_TASK_BRANCH",
+        "closing_function": "OPEN_TASK_CHECK",
+        "entry_lens": "ROLE_HANDOFF",
+        "evidence_route": "TASK_ACTION_CHAIN",
+        "strategy_frozen": true,
+        "strategy_id": "CP01_FROZEN_LINEAR_PROCESS_V1",
+        "strategy_source": "PROFILE_OVERRIDE"
+      }
+    },
+    {
+      "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+      "argument_spine": [
+        "TIME_WINDOW",
+        "MULTI_SPOT_SEQUENCE"
+      ],
+      "assignment_digest": "51297926d1fb5d1e469dc9ce276f4c46944e068e2e40e989de282d3cac99a279",
+      "assignment_id": "G1TA-b0d779bc4645e477",
+      "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+      "binds_enterprise_runtime_input": false,
+      "case_id": "CASE-S0M2-CP02-001",
+      "closing_function": "OPEN_SPOT",
+      "counts_toward_300": false,
+      "evidence_surface_policy": [
+        {
+          "policy": "MUST_SURFACE",
+          "reason_code": "EXPLICIT_MUST_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP02-001-F1"
+        },
+        {
+          "policy": "MAY_SURFACE",
+          "reason_code": "EXPLICIT_MAY_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP02-001-F2"
+        },
+        {
+          "policy": "CONTROL_ONLY",
+          "reason_code": "EXPLICIT_CONTROL_ONLY",
+          "reference_assertion_id": "CASE-S0M2-CP02-001-F3"
+        }
+      ],
+      "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+      "forbidden_inferences": [
+        "不得外推吊牌信息无误"
+      ],
+      "limitation_carrier": "OBSERVATION_SCOPE",
+      "material_packet_digest": "790d54937107b9c46f6dd519abf3228b0c66356c98d80fa492b6bc0dcb849c12",
+      "not_formal_content_composition_plan": true,
+      "object_type": "gate1_test_assignment",
+      "paired_assignment_id": null,
+      "perspective_anchor": "TIME_WINDOW",
+      "profile_id": "CP02",
+      "publishable": false,
+      "runtime_consumable": false,
+      "scenario_digest": "69ec5b7c2e1213e6b900803d8acbd2ed5992bd95445aa66c6d6704e255cb0d3b",
+      "scenario_id": "CASE-S0M2-CP02-001",
+      "schema_version": "gate1-test-assignment-v1",
+      "stage_scope": "GATE1_QUALIFICATION_ONLY",
+      "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+      "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+      "test_dna": {
+        "boundary_carrier": "OBSERVATION_SCOPE",
+        "closing_function": "OPEN_SPOT",
+        "entry_lens": "TIME_WINDOW",
+        "evidence_route": "MULTI_SPOT_SEQUENCE",
+        "strategy_frozen": true,
+        "strategy_id": "CP02_FROZEN_LINEAR_PROCESS_V1",
+        "strategy_source": "PROFILE_OVERRIDE"
+      }
+    },
+    {
+      "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+      "argument_spine": [
+        "ROLE_ENTRY",
+        "ROLE_LEDGER"
+      ],
+      "assignment_digest": "954236329a241b4ea9801e22652f718e3cd5786036c65115b97592431da26974",
+      "assignment_id": "G1TA-d0e2556f8406e36e",
+      "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+      "binds_enterprise_runtime_input": false,
+      "case_id": "CASE-S0M2-CP04-001",
+      "closing_function": "CURRENT_STATE",
+      "counts_toward_300": false,
+      "evidence_surface_policy": [
+        {
+          "policy": "MUST_SURFACE",
+          "reason_code": "EXPLICIT_MUST_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP04-001-F1"
+        },
+        {
+          "policy": "MAY_SURFACE",
+          "reason_code": "EXPLICIT_MAY_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP04-001-F2"
+        },
+        {
+          "policy": "CONTROL_ONLY",
+          "reason_code": "EXPLICIT_CONTROL_ONLY",
+          "reference_assertion_id": "CASE-S0M2-CP04-001-F3"
+        }
+      ],
+      "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+      "forbidden_inferences": [
+        "不得外推配件齐全"
+      ],
+      "limitation_carrier": "OBSERVED_SCOPE",
+      "material_packet_digest": "96fc1e9cfe00c737a7ca2843c82863af1c085d5a200d20e9010e86400962275b",
+      "not_formal_content_composition_plan": true,
+      "object_type": "gate1_test_assignment",
+      "paired_assignment_id": null,
+      "perspective_anchor": "ROLE_ENTRY",
+      "profile_id": "CP04",
+      "publishable": false,
+      "runtime_consumable": false,
+      "scenario_digest": "1bd716bb22b2c8ba302cd4d537f1659efb049c69354ce11d4976168f02a7c20d",
+      "scenario_id": "CASE-S0M2-CP04-001",
+      "schema_version": "gate1-test-assignment-v1",
+      "stage_scope": "GATE1_QUALIFICATION_ONLY",
+      "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+      "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+      "test_dna": {
+        "boundary_carrier": "OBSERVED_SCOPE",
+        "closing_function": "CURRENT_STATE",
+        "entry_lens": "ROLE_ENTRY",
+        "evidence_route": "ROLE_LEDGER",
+        "strategy_frozen": false,
+        "strategy_id": "F1_PEOPLE_AND_REAL_SCENE_FAMILY_DEFAULT_V1",
+        "strategy_source": "FAMILY_DEFAULT"
+      }
+    },
+    {
+      "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+      "argument_spine": [
+        "DECISION_POINT",
+        "CRITERIA_WALK"
+      ],
+      "assignment_digest": "11b3a22f96039596bbd875cc7ca73065b66c4b4b971b3055673c51724d719897",
+      "assignment_id": "G1TA-c744d50dedb2a299",
+      "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+      "binds_enterprise_runtime_input": false,
+      "case_id": "CASE-S0M2-CP07-001",
+      "closing_function": "CONDITIONAL_DECISION",
+      "counts_toward_300": false,
+      "evidence_surface_policy": [
+        {
+          "policy": "MUST_SURFACE",
+          "reason_code": "EXPLICIT_MUST_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP07-001-F1"
+        },
+        {
+          "policy": "MAY_SURFACE",
+          "reason_code": "EXPLICIT_MAY_SURFACE",
+          "reference_assertion_id": "CASE-S0M2-CP07-001-F2"
+        },
+        {
+          "policy": "CONTROL_ONLY",
+          "reason_code": "EXPLICIT_CONTROL_ONLY",
+          "reference_assertion_id": "CASE-S0M2-CP07-001-F3"
+        }
+      ],
+      "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+      "forbidden_inferences": [
+        "不得外推标签信息完整"
+      ],
+      "limitation_carrier": "SCOPE_CONDITION",
+      "material_packet_digest": "7ee6c86214b96aa4b2df94a0e1566b2bf355623d8d7e544a821dc82f36b6ba28",
+      "not_formal_content_composition_plan": true,
+      "object_type": "gate1_test_assignment",
+      "paired_assignment_id": null,
+      "perspective_anchor": "DECISION_POINT",
+      "profile_id": "CP07",
+      "publishable": false,
+      "runtime_consumable": false,
+      "scenario_digest": "b9f45b178e552895f1cd808ff75c06e004487c6cdecd8d6e84ef1e4479d10963",
+      "scenario_id": "CASE-S0M2-CP07-001",
+      "schema_version": "gate1-test-assignment-v1",
+      "stage_scope": "GATE1_QUALIFICATION_ONLY",
+      "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+      "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+      "test_dna": {
+        "boundary_carrier": "SCOPE_CONDITION",
+        "closing_function": "CONDITIONAL_DECISION",
+        "entry_lens": "DECISION_POINT",
+        "evidence_route": "CRITERIA_WALK",
+        "strategy_frozen": false,
+        "strategy_id": "F2_PROFESSIONAL_AND_SEARCH_FAMILY_DEFAULT_V1",
+        "strategy_source": "FAMILY_DEFAULT"
+      }
+    }
+  ],
+  "batch_id": "S0M2-BATCH-001",
+  "bundle_digest": "5e2e7895012a29c9b038bac955e9db9e7e8970a813f255ba42e15a669d2c802c",
+  "materials": [
+    {
+      "authorizations": [
+        {
+          "authorization_digest": "e9173cb0402fce6c2e307411c1fb6f248cdf13914c3666c9fc3c2a74cfb60bd3",
+          "authorization_id": "CASE-S0M2-CP01-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的熨烫台工作记录。"
+        }
+      ],
+      "facts": [
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP01-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 60,
+              "byte_start": 0,
+              "quote": "熨烫台记录一件衬衫样衣已完成领口对位检查",
+              "source_id": "CASE-S0M2-CP01-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP01-001-F1",
+          "fact_value": "熨烫台记录一件衬衫样衣已完成领口对位检查。",
+          "fact_value_digest": "0bb24604aa9d8d844296c4cfd50cf957a394152ab692fd9984fbcad434eacef0",
+          "prohibited_surface_terms": [],
+          "slot_id": "observed_action",
+          "source_ids": [
+            "CASE-S0M2-CP01-001-SRC-1"
+          ],
+          "surface_policy": "MUST_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP01-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 90,
+              "byte_start": 63,
+              "quote": "对位使用了定位夹片",
+              "source_id": "CASE-S0M2-CP01-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP01-001-F2",
+          "fact_value": "对位使用了定位夹片。",
+          "fact_value_digest": "5c1f551352ea10b88cf312dcb6d3f29e8ca083a8f7447edbe764e1fb87f6d5ba",
+          "prohibited_surface_terms": [],
+          "slot_id": "optional_context",
+          "source_ids": [
+            "CASE-S0M2-CP01-001-SRC-1"
+          ],
+          "surface_policy": "MAY_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP01-001-AUTH-1"
+          ],
+          "conditions": [
+            "袖长数值未复核"
+          ],
+          "evidence_spans": [
+            {
+              "byte_end": 114,
+              "byte_start": 93,
+              "quote": "袖长数值未复核",
+              "source_id": "CASE-S0M2-CP01-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP01-001-F3",
+          "fact_value": "袖长数值未复核，禁止称袖长准确。",
+          "fact_value_digest": "4502375fbeca832dc62a571e527723f9aeae185c40b3f9b7a1e1c04f66873bc6",
+          "prohibited_surface_terms": [
+            "袖长准确"
+          ],
+          "slot_id": "control_boundary",
+          "source_ids": [
+            "CASE-S0M2-CP01-001-SRC-1"
+          ],
+          "surface_policy": "CONTROL_ONLY"
+        }
+      ],
+      "material_digest": "c2e2aff280b289b623be716c5cfa38101562ac00acd4c50520f7cf3aa05f4a36",
+      "profile_id": "CP01",
+      "scenario_id": "CASE-S0M2-CP01-001",
+      "schema_version": "gate1-v4-material-v1",
+      "sources": [
+        {
+          "source_digest": "503c601e551df32aa060678c60179279d58ac59b50db9aa58091974920768684",
+          "source_id": "CASE-S0M2-CP01-001-SRC-1",
+          "source_text": "熨烫台记录一件衬衫样衣已完成领口对位检查；对位使用了定位夹片；袖长数值未复核。"
+        }
+      ]
+    },
+    {
+      "authorizations": [
+        {
+          "authorization_digest": "337338598a5ce9a8581e81d43cb0971682231335b4115717765679fe5cdd50fe",
+          "authorization_id": "CASE-S0M2-CP02-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的陈列台工作记录。"
+        }
+      ],
+      "facts": [
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP02-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 57,
+              "byte_start": 0,
+              "quote": "陈列台记录一组上装已按色号完成分组挂放",
+              "source_id": "CASE-S0M2-CP02-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP02-001-F1",
+          "fact_value": "陈列台记录一组上装已按色号完成分组挂放。",
+          "fact_value_digest": "1df917c9f8b48124bdaf649c2efb0f106abd4825b4381ed273d271cb55f6fb74",
+          "prohibited_surface_terms": [],
+          "slot_id": "observed_action",
+          "source_ids": [
+            "CASE-S0M2-CP02-001-SRC-1"
+          ],
+          "surface_policy": "MUST_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP02-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 90,
+              "byte_start": 60,
+              "quote": "分组时使用了色卡对照",
+              "source_id": "CASE-S0M2-CP02-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP02-001-F2",
+          "fact_value": "分组时使用了色卡对照。",
+          "fact_value_digest": "8b6800ec981b6798a3175a1df4ba277b37a90a0316f645e99fdbe5aade421f1c",
+          "prohibited_surface_terms": [],
+          "slot_id": "optional_context",
+          "source_ids": [
+            "CASE-S0M2-CP02-001-SRC-1"
+          ],
+          "surface_policy": "MAY_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP02-001-AUTH-1"
+          ],
+          "conditions": [
+            "吊牌信息未逐一核对"
+          ],
+          "evidence_spans": [
+            {
+              "byte_end": 120,
+              "byte_start": 93,
+              "quote": "吊牌信息未逐一核对",
+              "source_id": "CASE-S0M2-CP02-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP02-001-F3",
+          "fact_value": "吊牌信息未逐一核对，禁止称吊牌信息无误。",
+          "fact_value_digest": "e787789cb2aedae84a402b7031c46df5967e0372f86575000b42110dcfc05038",
+          "prohibited_surface_terms": [
+            "吊牌信息无误"
+          ],
+          "slot_id": "control_boundary",
+          "source_ids": [
+            "CASE-S0M2-CP02-001-SRC-1"
+          ],
+          "surface_policy": "CONTROL_ONLY"
+        }
+      ],
+      "material_digest": "790d54937107b9c46f6dd519abf3228b0c66356c98d80fa492b6bc0dcb849c12",
+      "profile_id": "CP02",
+      "scenario_id": "CASE-S0M2-CP02-001",
+      "schema_version": "gate1-v4-material-v1",
+      "sources": [
+        {
+          "source_digest": "ffb897f767e5c03559ab1a104cabd94b201a093a03fec06bc0fe9e637fef4f57",
+          "source_id": "CASE-S0M2-CP02-001-SRC-1",
+          "source_text": "陈列台记录一组上装已按色号完成分组挂放；分组时使用了色卡对照；吊牌信息未逐一核对。"
+        }
+      ]
+    },
+    {
+      "authorizations": [
+        {
+          "authorization_digest": "7745d422fd5b51debce6ac760778f4279146a4768b057869961bc12ed74b4bb5",
+          "authorization_id": "CASE-S0M2-CP04-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的库房清点记录。"
+        }
+      ],
+      "facts": [
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP04-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 57,
+              "byte_start": 0,
+              "quote": "库房记录一批秋季外套已完成尺码分箱清点",
+              "source_id": "CASE-S0M2-CP04-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP04-001-F1",
+          "fact_value": "库房记录一批秋季外套已完成尺码分箱清点。",
+          "fact_value_digest": "5d2596a796811f23832809f331978c59400999ad3825b7dd1e696ad6b40f3e0a",
+          "prohibited_surface_terms": [],
+          "slot_id": "observed_action",
+          "source_ids": [
+            "CASE-S0M2-CP04-001-SRC-1"
+          ],
+          "surface_policy": "MUST_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP04-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 90,
+              "byte_start": 60,
+              "quote": "清点采用双人交叉复核",
+              "source_id": "CASE-S0M2-CP04-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP04-001-F2",
+          "fact_value": "清点采用双人交叉复核。",
+          "fact_value_digest": "55331fff6d1f05891fa6c3dad9113349cefb4230383ec4d8e5ee2f87d2a4bf9e",
+          "prohibited_surface_terms": [],
+          "slot_id": "optional_context",
+          "source_ids": [
+            "CASE-S0M2-CP04-001-SRC-1"
+          ],
+          "surface_policy": "MAY_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP04-001-AUTH-1"
+          ],
+          "conditions": [
+            "箱内配件数量未清点"
+          ],
+          "evidence_spans": [
+            {
+              "byte_end": 120,
+              "byte_start": 93,
+              "quote": "箱内配件数量未清点",
+              "source_id": "CASE-S0M2-CP04-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP04-001-F3",
+          "fact_value": "箱内配件数量未清点，禁止称配件齐全。",
+          "fact_value_digest": "00b54de786a3990ec2e90b7ddc20e9e6f3ea96d5d3d14c84069404da4d972c9e",
+          "prohibited_surface_terms": [
+            "配件齐全"
+          ],
+          "slot_id": "control_boundary",
+          "source_ids": [
+            "CASE-S0M2-CP04-001-SRC-1"
+          ],
+          "surface_policy": "CONTROL_ONLY"
+        }
+      ],
+      "material_digest": "96fc1e9cfe00c737a7ca2843c82863af1c085d5a200d20e9010e86400962275b",
+      "profile_id": "CP04",
+      "scenario_id": "CASE-S0M2-CP04-001",
+      "schema_version": "gate1-v4-material-v1",
+      "sources": [
+        {
+          "source_digest": "1b6a9a2a053276dfa2e52a4726e110e7b6d619ab8c54887cc65638c36ef94276",
+          "source_id": "CASE-S0M2-CP04-001-SRC-1",
+          "source_text": "库房记录一批秋季外套已完成尺码分箱清点；清点采用双人交叉复核；箱内配件数量未清点。"
+        }
+      ]
+    },
+    {
+      "authorizations": [
+        {
+          "authorization_digest": "48dae19a0b1cda1be8827bd6f1c5954b0660def5f3cb0261a36b65af22eff612",
+          "authorization_id": "CASE-S0M2-CP07-001-AUTH-1",
+          "scope": "仅限合成资格测试，可公开去身份的打包台工作记录。"
+        }
+      ],
+      "facts": [
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP07-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 57,
+              "byte_start": 0,
+              "quote": "打包台记录一件网单商品已完成防尘袋封装",
+              "source_id": "CASE-S0M2-CP07-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP07-001-F1",
+          "fact_value": "打包台记录一件网单商品已完成防尘袋封装。",
+          "fact_value_digest": "8e9077e59d9ed2347697aae8622f21c1fd02b7b5b80a7bc487a40223864f65ca",
+          "prohibited_surface_terms": [],
+          "slot_id": "observed_action",
+          "source_ids": [
+            "CASE-S0M2-CP07-001-SRC-1"
+          ],
+          "surface_policy": "MUST_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP07-001-AUTH-1"
+          ],
+          "conditions": [],
+          "evidence_spans": [
+            {
+              "byte_end": 93,
+              "byte_start": 60,
+              "quote": "封装前做了外观目视检查",
+              "source_id": "CASE-S0M2-CP07-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP07-001-F2",
+          "fact_value": "封装前做了外观目视检查。",
+          "fact_value_digest": "31679448ba623b8e8ccc99bd4b5a70b6bf747bbad0d751c536e5aa43ca8c7c82",
+          "prohibited_surface_terms": [],
+          "slot_id": "optional_context",
+          "source_ids": [
+            "CASE-S0M2-CP07-001-SRC-1"
+          ],
+          "surface_policy": "MAY_SURFACE"
+        },
+        {
+          "authorization_ids": [
+            "CASE-S0M2-CP07-001-AUTH-1"
+          ],
+          "conditions": [
+            "内衬洗涤标签未翻检"
+          ],
+          "evidence_spans": [
+            {
+              "byte_end": 123,
+              "byte_start": 96,
+              "quote": "内衬洗涤标签未翻检",
+              "source_id": "CASE-S0M2-CP07-001-SRC-1"
+            }
+          ],
+          "fact_id": "CASE-S0M2-CP07-001-F3",
+          "fact_value": "内衬洗涤标签未翻检，禁止称标签信息完整。",
+          "fact_value_digest": "3f79dad93ab22b87d3a4eaf42a56a0b4ffa421481f9c6ba4676d0f4227e6958b",
+          "prohibited_surface_terms": [
+            "标签信息完整"
+          ],
+          "slot_id": "control_boundary",
+          "source_ids": [
+            "CASE-S0M2-CP07-001-SRC-1"
+          ],
+          "surface_policy": "CONTROL_ONLY"
+        }
+      ],
+      "material_digest": "7ee6c86214b96aa4b2df94a0e1566b2bf355623d8d7e544a821dc82f36b6ba28",
+      "profile_id": "CP07",
+      "scenario_id": "CASE-S0M2-CP07-001",
+      "schema_version": "gate1-v4-material-v1",
+      "sources": [
+        {
+          "source_digest": "200cfbe0b0eaba1b90d02d427f5643c7b661eead7fc3c652081a6054da9877c3",
+          "source_id": "CASE-S0M2-CP07-001-SRC-1",
+          "source_text": "打包台记录一件网单商品已完成防尘袋封装；封装前做了外观目视检查；内衬洗涤标签未翻检。"
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "assignment_digest": "f19693195776371e52344943f1e49779556d6e7ebc4e7feae35d7f8aaa0bd20f",
+      "attempt_policy": {
+        "failed_attempt_retained_in_denominator": true,
+        "feedback_before_submission_forbidden": true,
+        "first_attempt_only": true,
+        "max_attempts": 1,
+        "replacement_candidates_forbidden": true
+      },
+      "author_identity": "M2-S0-AUTHOR-FABLE5",
+      "author_output_contract": {
+        "author_claim_list_is_not_safety_evidence": true,
+        "control_only_surface_forbidden": true,
+        "counts_toward_300": false,
+        "independent_claim_extraction_required_downstream": true,
+        "must_surface_coverage_required": true,
+        "publishable": false,
+        "runtime_consumable": false,
+        "surface_fact_ids_must_exist": true,
+        "synthetic_disclosure_required": true
+      },
+      "batch_id": "S0M2-BATCH-001",
+      "gate1_test_assignment": {
+        "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+        "argument_spine": [
+          "ROLE_HANDOFF",
+          "TASK_ACTION_CHAIN"
+        ],
+        "assignment_digest": "f19693195776371e52344943f1e49779556d6e7ebc4e7feae35d7f8aaa0bd20f",
+        "assignment_id": "G1TA-d2b47bc3d85c5105",
+        "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+        "binds_enterprise_runtime_input": false,
+        "case_id": "CASE-S0M2-CP01-001",
+        "closing_function": "OPEN_TASK_CHECK",
+        "counts_toward_300": false,
+        "evidence_surface_policy": [
+          {
+            "policy": "MUST_SURFACE",
+            "reason_code": "EXPLICIT_MUST_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP01-001-F1"
+          },
+          {
+            "policy": "MAY_SURFACE",
+            "reason_code": "EXPLICIT_MAY_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP01-001-F2"
+          },
+          {
+            "policy": "CONTROL_ONLY",
+            "reason_code": "EXPLICIT_CONTROL_ONLY",
+            "reference_assertion_id": "CASE-S0M2-CP01-001-F3"
+          }
+        ],
+        "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+        "forbidden_inferences": [
+          "不得外推袖长准确"
+        ],
+        "limitation_carrier": "UNTESTED_TASK_BRANCH",
+        "material_packet_digest": "c2e2aff280b289b623be716c5cfa38101562ac00acd4c50520f7cf3aa05f4a36",
+        "not_formal_content_composition_plan": true,
+        "object_type": "gate1_test_assignment",
+        "paired_assignment_id": null,
+        "perspective_anchor": "ROLE_HANDOFF",
+        "profile_id": "CP01",
+        "publishable": false,
+        "runtime_consumable": false,
+        "scenario_digest": "e4ae381e17112c060c7f8ad557aef2641f19a2e0f93bf51bb0b786ca1aefb9c6",
+        "scenario_id": "CASE-S0M2-CP01-001",
+        "schema_version": "gate1-test-assignment-v1",
+        "stage_scope": "GATE1_QUALIFICATION_ONLY",
+        "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+        "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+        "test_dna": {
+          "boundary_carrier": "UNTESTED_TASK_BRANCH",
+          "closing_function": "OPEN_TASK_CHECK",
+          "entry_lens": "ROLE_HANDOFF",
+          "evidence_route": "TASK_ACTION_CHAIN",
+          "strategy_frozen": true,
+          "strategy_id": "CP01_FROZEN_LINEAR_PROCESS_V1",
+          "strategy_source": "PROFILE_OVERRIDE"
+        }
+      },
+      "generator_version": "gate1-v1.1-v4-recovery-v0.1",
+      "material_digest": "c2e2aff280b289b623be716c5cfa38101562ac00acd4c50520f7cf3aa05f4a36",
+      "model_config_ref": "MODEL-CONFIG-S0M2-001",
+      "policy_digest": "38d7c0e0c00de181fc8801b221530f6636888568ab1365e71107bc8d9dea38ac",
+      "prior_feedback": [],
+      "profile_id": "CP01",
+      "qualification_mode": true,
+      "request_digest": "46cb11a9dbc3e483e8c77d5311951845a45e09cd75cdc0e5edf2523da1a46deb",
+      "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP01-001",
+      "rule_version": "gate1-v1.1-v4-recovery-rules-v0.2",
+      "run_id": "S0M2-RUN-001",
+      "scenario_digest": "e4ae381e17112c060c7f8ad557aef2641f19a2e0f93bf51bb0b786ca1aefb9c6",
+      "scenario_id": "CASE-S0M2-CP01-001",
+      "schema_version": "gate1-v4-author-request-v1",
+      "surface_policy": {
+        "author_visible_fact_ids": [
+          "CASE-S0M2-CP01-001-F1",
+          "CASE-S0M2-CP01-001-F2",
+          "CASE-S0M2-CP01-001-F3"
+        ],
+        "control_only_fact_ids": [
+          "CASE-S0M2-CP01-001-F3"
+        ],
+        "material_digest": "c2e2aff280b289b623be716c5cfa38101562ac00acd4c50520f7cf3aa05f4a36",
+        "may_surface_fact_ids": [
+          "CASE-S0M2-CP01-001-F2"
+        ],
+        "must_surface_fact_ids": [
+          "CASE-S0M2-CP01-001-F1"
+        ],
+        "policy_digest": "38d7c0e0c00de181fc8801b221530f6636888568ab1365e71107bc8d9dea38ac",
+        "profile_id": "CP01",
+        "scenario_id": "CASE-S0M2-CP01-001",
+        "schema_version": "gate1-v4-material-policy-v1"
+      },
+      "task_id": "GATE1_V11_V4_RECOVERY_001",
+      "typed_material": {
+        "authorizations": [
+          {
+            "authorization_digest": "e9173cb0402fce6c2e307411c1fb6f248cdf13914c3666c9fc3c2a74cfb60bd3",
+            "authorization_id": "CASE-S0M2-CP01-001-AUTH-1",
+            "scope": "仅限合成资格测试，可公开去身份的熨烫台工作记录。"
+          }
+        ],
+        "facts": [
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP01-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 60,
+                "byte_start": 0,
+                "quote": "熨烫台记录一件衬衫样衣已完成领口对位检查",
+                "source_id": "CASE-S0M2-CP01-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP01-001-F1",
+            "fact_value": "熨烫台记录一件衬衫样衣已完成领口对位检查。",
+            "fact_value_digest": "0bb24604aa9d8d844296c4cfd50cf957a394152ab692fd9984fbcad434eacef0",
+            "prohibited_surface_terms": [],
+            "slot_id": "observed_action",
+            "source_ids": [
+              "CASE-S0M2-CP01-001-SRC-1"
+            ],
+            "surface_policy": "MUST_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP01-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 90,
+                "byte_start": 63,
+                "quote": "对位使用了定位夹片",
+                "source_id": "CASE-S0M2-CP01-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP01-001-F2",
+            "fact_value": "对位使用了定位夹片。",
+            "fact_value_digest": "5c1f551352ea10b88cf312dcb6d3f29e8ca083a8f7447edbe764e1fb87f6d5ba",
+            "prohibited_surface_terms": [],
+            "slot_id": "optional_context",
+            "source_ids": [
+              "CASE-S0M2-CP01-001-SRC-1"
+            ],
+            "surface_policy": "MAY_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP01-001-AUTH-1"
+            ],
+            "conditions": [
+              "袖长数值未复核"
+            ],
+            "evidence_spans": [
+              {
+                "byte_end": 114,
+                "byte_start": 93,
+                "quote": "袖长数值未复核",
+                "source_id": "CASE-S0M2-CP01-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP01-001-F3",
+            "fact_value": "袖长数值未复核，禁止称袖长准确。",
+            "fact_value_digest": "4502375fbeca832dc62a571e527723f9aeae185c40b3f9b7a1e1c04f66873bc6",
+            "prohibited_surface_terms": [
+              "袖长准确"
+            ],
+            "slot_id": "control_boundary",
+            "source_ids": [
+              "CASE-S0M2-CP01-001-SRC-1"
+            ],
+            "surface_policy": "CONTROL_ONLY"
+          }
+        ],
+        "material_digest": "c2e2aff280b289b623be716c5cfa38101562ac00acd4c50520f7cf3aa05f4a36",
+        "profile_id": "CP01",
+        "scenario_id": "CASE-S0M2-CP01-001",
+        "schema_version": "gate1-v4-material-v1",
+        "sources": [
+          {
+            "source_digest": "503c601e551df32aa060678c60179279d58ac59b50db9aa58091974920768684",
+            "source_id": "CASE-S0M2-CP01-001-SRC-1",
+            "source_text": "熨烫台记录一件衬衫样衣已完成领口对位检查；对位使用了定位夹片；袖长数值未复核。"
+          }
+        ]
+      }
+    },
+    {
+      "assignment_digest": "51297926d1fb5d1e469dc9ce276f4c46944e068e2e40e989de282d3cac99a279",
+      "attempt_policy": {
+        "failed_attempt_retained_in_denominator": true,
+        "feedback_before_submission_forbidden": true,
+        "first_attempt_only": true,
+        "max_attempts": 1,
+        "replacement_candidates_forbidden": true
+      },
+      "author_identity": "M2-S0-AUTHOR-FABLE5",
+      "author_output_contract": {
+        "author_claim_list_is_not_safety_evidence": true,
+        "control_only_surface_forbidden": true,
+        "counts_toward_300": false,
+        "independent_claim_extraction_required_downstream": true,
+        "must_surface_coverage_required": true,
+        "publishable": false,
+        "runtime_consumable": false,
+        "surface_fact_ids_must_exist": true,
+        "synthetic_disclosure_required": true
+      },
+      "batch_id": "S0M2-BATCH-001",
+      "gate1_test_assignment": {
+        "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+        "argument_spine": [
+          "TIME_WINDOW",
+          "MULTI_SPOT_SEQUENCE"
+        ],
+        "assignment_digest": "51297926d1fb5d1e469dc9ce276f4c46944e068e2e40e989de282d3cac99a279",
+        "assignment_id": "G1TA-b0d779bc4645e477",
+        "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+        "binds_enterprise_runtime_input": false,
+        "case_id": "CASE-S0M2-CP02-001",
+        "closing_function": "OPEN_SPOT",
+        "counts_toward_300": false,
+        "evidence_surface_policy": [
+          {
+            "policy": "MUST_SURFACE",
+            "reason_code": "EXPLICIT_MUST_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP02-001-F1"
+          },
+          {
+            "policy": "MAY_SURFACE",
+            "reason_code": "EXPLICIT_MAY_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP02-001-F2"
+          },
+          {
+            "policy": "CONTROL_ONLY",
+            "reason_code": "EXPLICIT_CONTROL_ONLY",
+            "reference_assertion_id": "CASE-S0M2-CP02-001-F3"
+          }
+        ],
+        "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+        "forbidden_inferences": [
+          "不得外推吊牌信息无误"
+        ],
+        "limitation_carrier": "OBSERVATION_SCOPE",
+        "material_packet_digest": "790d54937107b9c46f6dd519abf3228b0c66356c98d80fa492b6bc0dcb849c12",
+        "not_formal_content_composition_plan": true,
+        "object_type": "gate1_test_assignment",
+        "paired_assignment_id": null,
+        "perspective_anchor": "TIME_WINDOW",
+        "profile_id": "CP02",
+        "publishable": false,
+        "runtime_consumable": false,
+        "scenario_digest": "69ec5b7c2e1213e6b900803d8acbd2ed5992bd95445aa66c6d6704e255cb0d3b",
+        "scenario_id": "CASE-S0M2-CP02-001",
+        "schema_version": "gate1-test-assignment-v1",
+        "stage_scope": "GATE1_QUALIFICATION_ONLY",
+        "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+        "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+        "test_dna": {
+          "boundary_carrier": "OBSERVATION_SCOPE",
+          "closing_function": "OPEN_SPOT",
+          "entry_lens": "TIME_WINDOW",
+          "evidence_route": "MULTI_SPOT_SEQUENCE",
+          "strategy_frozen": true,
+          "strategy_id": "CP02_FROZEN_LINEAR_PROCESS_V1",
+          "strategy_source": "PROFILE_OVERRIDE"
+        }
+      },
+      "generator_version": "gate1-v1.1-v4-recovery-v0.1",
+      "material_digest": "790d54937107b9c46f6dd519abf3228b0c66356c98d80fa492b6bc0dcb849c12",
+      "model_config_ref": "MODEL-CONFIG-S0M2-001",
+      "policy_digest": "478cb9df67b1b76a2d2707a5d4c76e82499c60a301c2efc6fd4f2e50f0620af1",
+      "prior_feedback": [],
+      "profile_id": "CP02",
+      "qualification_mode": true,
+      "request_digest": "4275207c8179a7234917ec7175bee2201a788b7a8d065cac52f22623359d237e",
+      "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP02-001",
+      "rule_version": "gate1-v1.1-v4-recovery-rules-v0.2",
+      "run_id": "S0M2-RUN-001",
+      "scenario_digest": "69ec5b7c2e1213e6b900803d8acbd2ed5992bd95445aa66c6d6704e255cb0d3b",
+      "scenario_id": "CASE-S0M2-CP02-001",
+      "schema_version": "gate1-v4-author-request-v1",
+      "surface_policy": {
+        "author_visible_fact_ids": [
+          "CASE-S0M2-CP02-001-F1",
+          "CASE-S0M2-CP02-001-F2",
+          "CASE-S0M2-CP02-001-F3"
+        ],
+        "control_only_fact_ids": [
+          "CASE-S0M2-CP02-001-F3"
+        ],
+        "material_digest": "790d54937107b9c46f6dd519abf3228b0c66356c98d80fa492b6bc0dcb849c12",
+        "may_surface_fact_ids": [
+          "CASE-S0M2-CP02-001-F2"
+        ],
+        "must_surface_fact_ids": [
+          "CASE-S0M2-CP02-001-F1"
+        ],
+        "policy_digest": "478cb9df67b1b76a2d2707a5d4c76e82499c60a301c2efc6fd4f2e50f0620af1",
+        "profile_id": "CP02",
+        "scenario_id": "CASE-S0M2-CP02-001",
+        "schema_version": "gate1-v4-material-policy-v1"
+      },
+      "task_id": "GATE1_V11_V4_RECOVERY_001",
+      "typed_material": {
+        "authorizations": [
+          {
+            "authorization_digest": "337338598a5ce9a8581e81d43cb0971682231335b4115717765679fe5cdd50fe",
+            "authorization_id": "CASE-S0M2-CP02-001-AUTH-1",
+            "scope": "仅限合成资格测试，可公开去身份的陈列台工作记录。"
+          }
+        ],
+        "facts": [
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP02-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 57,
+                "byte_start": 0,
+                "quote": "陈列台记录一组上装已按色号完成分组挂放",
+                "source_id": "CASE-S0M2-CP02-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP02-001-F1",
+            "fact_value": "陈列台记录一组上装已按色号完成分组挂放。",
+            "fact_value_digest": "1df917c9f8b48124bdaf649c2efb0f106abd4825b4381ed273d271cb55f6fb74",
+            "prohibited_surface_terms": [],
+            "slot_id": "observed_action",
+            "source_ids": [
+              "CASE-S0M2-CP02-001-SRC-1"
+            ],
+            "surface_policy": "MUST_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP02-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 90,
+                "byte_start": 60,
+                "quote": "分组时使用了色卡对照",
+                "source_id": "CASE-S0M2-CP02-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP02-001-F2",
+            "fact_value": "分组时使用了色卡对照。",
+            "fact_value_digest": "8b6800ec981b6798a3175a1df4ba277b37a90a0316f645e99fdbe5aade421f1c",
+            "prohibited_surface_terms": [],
+            "slot_id": "optional_context",
+            "source_ids": [
+              "CASE-S0M2-CP02-001-SRC-1"
+            ],
+            "surface_policy": "MAY_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP02-001-AUTH-1"
+            ],
+            "conditions": [
+              "吊牌信息未逐一核对"
+            ],
+            "evidence_spans": [
+              {
+                "byte_end": 120,
+                "byte_start": 93,
+                "quote": "吊牌信息未逐一核对",
+                "source_id": "CASE-S0M2-CP02-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP02-001-F3",
+            "fact_value": "吊牌信息未逐一核对，禁止称吊牌信息无误。",
+            "fact_value_digest": "e787789cb2aedae84a402b7031c46df5967e0372f86575000b42110dcfc05038",
+            "prohibited_surface_terms": [
+              "吊牌信息无误"
+            ],
+            "slot_id": "control_boundary",
+            "source_ids": [
+              "CASE-S0M2-CP02-001-SRC-1"
+            ],
+            "surface_policy": "CONTROL_ONLY"
+          }
+        ],
+        "material_digest": "790d54937107b9c46f6dd519abf3228b0c66356c98d80fa492b6bc0dcb849c12",
+        "profile_id": "CP02",
+        "scenario_id": "CASE-S0M2-CP02-001",
+        "schema_version": "gate1-v4-material-v1",
+        "sources": [
+          {
+            "source_digest": "ffb897f767e5c03559ab1a104cabd94b201a093a03fec06bc0fe9e637fef4f57",
+            "source_id": "CASE-S0M2-CP02-001-SRC-1",
+            "source_text": "陈列台记录一组上装已按色号完成分组挂放；分组时使用了色卡对照；吊牌信息未逐一核对。"
+          }
+        ]
+      }
+    },
+    {
+      "assignment_digest": "954236329a241b4ea9801e22652f718e3cd5786036c65115b97592431da26974",
+      "attempt_policy": {
+        "failed_attempt_retained_in_denominator": true,
+        "feedback_before_submission_forbidden": true,
+        "first_attempt_only": true,
+        "max_attempts": 1,
+        "replacement_candidates_forbidden": true
+      },
+      "author_identity": "M2-S0-AUTHOR-FABLE5",
+      "author_output_contract": {
+        "author_claim_list_is_not_safety_evidence": true,
+        "control_only_surface_forbidden": true,
+        "counts_toward_300": false,
+        "independent_claim_extraction_required_downstream": true,
+        "must_surface_coverage_required": true,
+        "publishable": false,
+        "runtime_consumable": false,
+        "surface_fact_ids_must_exist": true,
+        "synthetic_disclosure_required": true
+      },
+      "batch_id": "S0M2-BATCH-001",
+      "gate1_test_assignment": {
+        "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+        "argument_spine": [
+          "ROLE_ENTRY",
+          "ROLE_LEDGER"
+        ],
+        "assignment_digest": "954236329a241b4ea9801e22652f718e3cd5786036c65115b97592431da26974",
+        "assignment_id": "G1TA-d0e2556f8406e36e",
+        "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+        "binds_enterprise_runtime_input": false,
+        "case_id": "CASE-S0M2-CP04-001",
+        "closing_function": "CURRENT_STATE",
+        "counts_toward_300": false,
+        "evidence_surface_policy": [
+          {
+            "policy": "MUST_SURFACE",
+            "reason_code": "EXPLICIT_MUST_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP04-001-F1"
+          },
+          {
+            "policy": "MAY_SURFACE",
+            "reason_code": "EXPLICIT_MAY_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP04-001-F2"
+          },
+          {
+            "policy": "CONTROL_ONLY",
+            "reason_code": "EXPLICIT_CONTROL_ONLY",
+            "reference_assertion_id": "CASE-S0M2-CP04-001-F3"
+          }
+        ],
+        "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+        "forbidden_inferences": [
+          "不得外推配件齐全"
+        ],
+        "limitation_carrier": "OBSERVED_SCOPE",
+        "material_packet_digest": "96fc1e9cfe00c737a7ca2843c82863af1c085d5a200d20e9010e86400962275b",
+        "not_formal_content_composition_plan": true,
+        "object_type": "gate1_test_assignment",
+        "paired_assignment_id": null,
+        "perspective_anchor": "ROLE_ENTRY",
+        "profile_id": "CP04",
+        "publishable": false,
+        "runtime_consumable": false,
+        "scenario_digest": "1bd716bb22b2c8ba302cd4d537f1659efb049c69354ce11d4976168f02a7c20d",
+        "scenario_id": "CASE-S0M2-CP04-001",
+        "schema_version": "gate1-test-assignment-v1",
+        "stage_scope": "GATE1_QUALIFICATION_ONLY",
+        "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+        "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+        "test_dna": {
+          "boundary_carrier": "OBSERVED_SCOPE",
+          "closing_function": "CURRENT_STATE",
+          "entry_lens": "ROLE_ENTRY",
+          "evidence_route": "ROLE_LEDGER",
+          "strategy_frozen": false,
+          "strategy_id": "F1_PEOPLE_AND_REAL_SCENE_FAMILY_DEFAULT_V1",
+          "strategy_source": "FAMILY_DEFAULT"
+        }
+      },
+      "generator_version": "gate1-v1.1-v4-recovery-v0.1",
+      "material_digest": "96fc1e9cfe00c737a7ca2843c82863af1c085d5a200d20e9010e86400962275b",
+      "model_config_ref": "MODEL-CONFIG-S0M2-001",
+      "policy_digest": "b9874a330ec4451aab0b2a009fc2d8962f6497b531cfd4f63024274512b10217",
+      "prior_feedback": [],
+      "profile_id": "CP04",
+      "qualification_mode": true,
+      "request_digest": "68d333bbf0c0b5427defec2aa2f139a7c44e60de25d8b97d64b154612a0b3af8",
+      "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP04-001",
+      "rule_version": "gate1-v1.1-v4-recovery-rules-v0.2",
+      "run_id": "S0M2-RUN-001",
+      "scenario_digest": "1bd716bb22b2c8ba302cd4d537f1659efb049c69354ce11d4976168f02a7c20d",
+      "scenario_id": "CASE-S0M2-CP04-001",
+      "schema_version": "gate1-v4-author-request-v1",
+      "surface_policy": {
+        "author_visible_fact_ids": [
+          "CASE-S0M2-CP04-001-F1",
+          "CASE-S0M2-CP04-001-F2",
+          "CASE-S0M2-CP04-001-F3"
+        ],
+        "control_only_fact_ids": [
+          "CASE-S0M2-CP04-001-F3"
+        ],
+        "material_digest": "96fc1e9cfe00c737a7ca2843c82863af1c085d5a200d20e9010e86400962275b",
+        "may_surface_fact_ids": [
+          "CASE-S0M2-CP04-001-F2"
+        ],
+        "must_surface_fact_ids": [
+          "CASE-S0M2-CP04-001-F1"
+        ],
+        "policy_digest": "b9874a330ec4451aab0b2a009fc2d8962f6497b531cfd4f63024274512b10217",
+        "profile_id": "CP04",
+        "scenario_id": "CASE-S0M2-CP04-001",
+        "schema_version": "gate1-v4-material-policy-v1"
+      },
+      "task_id": "GATE1_V11_V4_RECOVERY_001",
+      "typed_material": {
+        "authorizations": [
+          {
+            "authorization_digest": "7745d422fd5b51debce6ac760778f4279146a4768b057869961bc12ed74b4bb5",
+            "authorization_id": "CASE-S0M2-CP04-001-AUTH-1",
+            "scope": "仅限合成资格测试，可公开去身份的库房清点记录。"
+          }
+        ],
+        "facts": [
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP04-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 57,
+                "byte_start": 0,
+                "quote": "库房记录一批秋季外套已完成尺码分箱清点",
+                "source_id": "CASE-S0M2-CP04-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP04-001-F1",
+            "fact_value": "库房记录一批秋季外套已完成尺码分箱清点。",
+            "fact_value_digest": "5d2596a796811f23832809f331978c59400999ad3825b7dd1e696ad6b40f3e0a",
+            "prohibited_surface_terms": [],
+            "slot_id": "observed_action",
+            "source_ids": [
+              "CASE-S0M2-CP04-001-SRC-1"
+            ],
+            "surface_policy": "MUST_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP04-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 90,
+                "byte_start": 60,
+                "quote": "清点采用双人交叉复核",
+                "source_id": "CASE-S0M2-CP04-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP04-001-F2",
+            "fact_value": "清点采用双人交叉复核。",
+            "fact_value_digest": "55331fff6d1f05891fa6c3dad9113349cefb4230383ec4d8e5ee2f87d2a4bf9e",
+            "prohibited_surface_terms": [],
+            "slot_id": "optional_context",
+            "source_ids": [
+              "CASE-S0M2-CP04-001-SRC-1"
+            ],
+            "surface_policy": "MAY_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP04-001-AUTH-1"
+            ],
+            "conditions": [
+              "箱内配件数量未清点"
+            ],
+            "evidence_spans": [
+              {
+                "byte_end": 120,
+                "byte_start": 93,
+                "quote": "箱内配件数量未清点",
+                "source_id": "CASE-S0M2-CP04-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP04-001-F3",
+            "fact_value": "箱内配件数量未清点，禁止称配件齐全。",
+            "fact_value_digest": "00b54de786a3990ec2e90b7ddc20e9e6f3ea96d5d3d14c84069404da4d972c9e",
+            "prohibited_surface_terms": [
+              "配件齐全"
+            ],
+            "slot_id": "control_boundary",
+            "source_ids": [
+              "CASE-S0M2-CP04-001-SRC-1"
+            ],
+            "surface_policy": "CONTROL_ONLY"
+          }
+        ],
+        "material_digest": "96fc1e9cfe00c737a7ca2843c82863af1c085d5a200d20e9010e86400962275b",
+        "profile_id": "CP04",
+        "scenario_id": "CASE-S0M2-CP04-001",
+        "schema_version": "gate1-v4-material-v1",
+        "sources": [
+          {
+            "source_digest": "1b6a9a2a053276dfa2e52a4726e110e7b6d619ab8c54887cc65638c36ef94276",
+            "source_id": "CASE-S0M2-CP04-001-SRC-1",
+            "source_text": "库房记录一批秋季外套已完成尺码分箱清点；清点采用双人交叉复核；箱内配件数量未清点。"
+          }
+        ]
+      }
+    },
+    {
+      "assignment_digest": "11b3a22f96039596bbd875cc7ca73065b66c4b4b971b3055673c51724d719897",
+      "attempt_policy": {
+        "failed_attempt_retained_in_denominator": true,
+        "feedback_before_submission_forbidden": true,
+        "first_attempt_only": true,
+        "max_attempts": 1,
+        "replacement_candidates_forbidden": true
+      },
+      "author_identity": "M2-S0-AUTHOR-FABLE5",
+      "author_output_contract": {
+        "author_claim_list_is_not_safety_evidence": true,
+        "control_only_surface_forbidden": true,
+        "counts_toward_300": false,
+        "independent_claim_extraction_required_downstream": true,
+        "must_surface_coverage_required": true,
+        "publishable": false,
+        "runtime_consumable": false,
+        "surface_fact_ids_must_exist": true,
+        "synthetic_disclosure_required": true
+      },
+      "batch_id": "S0M2-BATCH-001",
+      "gate1_test_assignment": {
+        "allocation_version": "gate1-v4-family-strategies-2026-07-16",
+        "argument_spine": [
+          "DECISION_POINT",
+          "CRITERIA_WALK"
+        ],
+        "assignment_digest": "11b3a22f96039596bbd875cc7ca73065b66c4b4b971b3055673c51724d719897",
+        "assignment_id": "G1TA-c744d50dedb2a299",
+        "assignment_set_id": "S0M2-ASSIGNMENT-SET-001",
+        "binds_enterprise_runtime_input": false,
+        "case_id": "CASE-S0M2-CP07-001",
+        "closing_function": "CONDITIONAL_DECISION",
+        "counts_toward_300": false,
+        "evidence_surface_policy": [
+          {
+            "policy": "MUST_SURFACE",
+            "reason_code": "EXPLICIT_MUST_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP07-001-F1"
+          },
+          {
+            "policy": "MAY_SURFACE",
+            "reason_code": "EXPLICIT_MAY_SURFACE",
+            "reference_assertion_id": "CASE-S0M2-CP07-001-F2"
+          },
+          {
+            "policy": "CONTROL_ONLY",
+            "reason_code": "EXPLICIT_CONTROL_ONLY",
+            "reference_assertion_id": "CASE-S0M2-CP07-001-F3"
+          }
+        ],
+        "family_id": "F2_PROFESSIONAL_AND_SEARCH",
+        "forbidden_inferences": [
+          "不得外推标签信息完整"
+        ],
+        "limitation_carrier": "SCOPE_CONDITION",
+        "material_packet_digest": "7ee6c86214b96aa4b2df94a0e1566b2bf355623d8d7e544a821dc82f36b6ba28",
+        "not_formal_content_composition_plan": true,
+        "object_type": "gate1_test_assignment",
+        "paired_assignment_id": null,
+        "perspective_anchor": "DECISION_POINT",
+        "profile_id": "CP07",
+        "publishable": false,
+        "runtime_consumable": false,
+        "scenario_digest": "b9f45b178e552895f1cd808ff75c06e004487c6cdecd8d6e84ef1e4479d10963",
+        "scenario_id": "CASE-S0M2-CP07-001",
+        "schema_version": "gate1-test-assignment-v1",
+        "stage_scope": "GATE1_QUALIFICATION_ONLY",
+        "strategy_digest": "7bbb3cf964622bcc757c3de0c594448aa4e0eb7691134f5eb7c34c3b478c0d97",
+        "strategy_version": "gate1-v4-family-strategies-2026-07-16",
+        "test_dna": {
+          "boundary_carrier": "SCOPE_CONDITION",
+          "closing_function": "CONDITIONAL_DECISION",
+          "entry_lens": "DECISION_POINT",
+          "evidence_route": "CRITERIA_WALK",
+          "strategy_frozen": false,
+          "strategy_id": "F2_PROFESSIONAL_AND_SEARCH_FAMILY_DEFAULT_V1",
+          "strategy_source": "FAMILY_DEFAULT"
+        }
+      },
+      "generator_version": "gate1-v1.1-v4-recovery-v0.1",
+      "material_digest": "7ee6c86214b96aa4b2df94a0e1566b2bf355623d8d7e544a821dc82f36b6ba28",
+      "model_config_ref": "MODEL-CONFIG-S0M2-001",
+      "policy_digest": "22e694b0734b23ddd35171fa0fc77f493d652ace47ebbe68cc59129d2ae498db",
+      "prior_feedback": [],
+      "profile_id": "CP07",
+      "qualification_mode": true,
+      "request_digest": "76cf31579ee3191d22cdaca6e74e39dc00a3d1aee83acb2cc17e625840a34e8f",
+      "request_id": "V4REQ-S0M2-BATCH-001-CASE-S0M2-CP07-001",
+      "rule_version": "gate1-v1.1-v4-recovery-rules-v0.2",
+      "run_id": "S0M2-RUN-001",
+      "scenario_digest": "b9f45b178e552895f1cd808ff75c06e004487c6cdecd8d6e84ef1e4479d10963",
+      "scenario_id": "CASE-S0M2-CP07-001",
+      "schema_version": "gate1-v4-author-request-v1",
+      "surface_policy": {
+        "author_visible_fact_ids": [
+          "CASE-S0M2-CP07-001-F1",
+          "CASE-S0M2-CP07-001-F2",
+          "CASE-S0M2-CP07-001-F3"
+        ],
+        "control_only_fact_ids": [
+          "CASE-S0M2-CP07-001-F3"
+        ],
+        "material_digest": "7ee6c86214b96aa4b2df94a0e1566b2bf355623d8d7e544a821dc82f36b6ba28",
+        "may_surface_fact_ids": [
+          "CASE-S0M2-CP07-001-F2"
+        ],
+        "must_surface_fact_ids": [
+          "CASE-S0M2-CP07-001-F1"
+        ],
+        "policy_digest": "22e694b0734b23ddd35171fa0fc77f493d652ace47ebbe68cc59129d2ae498db",
+        "profile_id": "CP07",
+        "scenario_id": "CASE-S0M2-CP07-001",
+        "schema_version": "gate1-v4-material-policy-v1"
+      },
+      "task_id": "GATE1_V11_V4_RECOVERY_001",
+      "typed_material": {
+        "authorizations": [
+          {
+            "authorization_digest": "48dae19a0b1cda1be8827bd6f1c5954b0660def5f3cb0261a36b65af22eff612",
+            "authorization_id": "CASE-S0M2-CP07-001-AUTH-1",
+            "scope": "仅限合成资格测试，可公开去身份的打包台工作记录。"
+          }
+        ],
+        "facts": [
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP07-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 57,
+                "byte_start": 0,
+                "quote": "打包台记录一件网单商品已完成防尘袋封装",
+                "source_id": "CASE-S0M2-CP07-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP07-001-F1",
+            "fact_value": "打包台记录一件网单商品已完成防尘袋封装。",
+            "fact_value_digest": "8e9077e59d9ed2347697aae8622f21c1fd02b7b5b80a7bc487a40223864f65ca",
+            "prohibited_surface_terms": [],
+            "slot_id": "observed_action",
+            "source_ids": [
+              "CASE-S0M2-CP07-001-SRC-1"
+            ],
+            "surface_policy": "MUST_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP07-001-AUTH-1"
+            ],
+            "conditions": [],
+            "evidence_spans": [
+              {
+                "byte_end": 93,
+                "byte_start": 60,
+                "quote": "封装前做了外观目视检查",
+                "source_id": "CASE-S0M2-CP07-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP07-001-F2",
+            "fact_value": "封装前做了外观目视检查。",
+            "fact_value_digest": "31679448ba623b8e8ccc99bd4b5a70b6bf747bbad0d751c536e5aa43ca8c7c82",
+            "prohibited_surface_terms": [],
+            "slot_id": "optional_context",
+            "source_ids": [
+              "CASE-S0M2-CP07-001-SRC-1"
+            ],
+            "surface_policy": "MAY_SURFACE"
+          },
+          {
+            "authorization_ids": [
+              "CASE-S0M2-CP07-001-AUTH-1"
+            ],
+            "conditions": [
+              "内衬洗涤标签未翻检"
+            ],
+            "evidence_spans": [
+              {
+                "byte_end": 123,
+                "byte_start": 96,
+                "quote": "内衬洗涤标签未翻检",
+                "source_id": "CASE-S0M2-CP07-001-SRC-1"
+              }
+            ],
+            "fact_id": "CASE-S0M2-CP07-001-F3",
+            "fact_value": "内衬洗涤标签未翻检，禁止称标签信息完整。",
+            "fact_value_digest": "3f79dad93ab22b87d3a4eaf42a56a0b4ffa421481f9c6ba4676d0f4227e6958b",
+            "prohibited_surface_terms": [
+              "标签信息完整"
+            ],
+            "slot_id": "control_boundary",
+            "source_ids": [
+              "CASE-S0M2-CP07-001-SRC-1"
+            ],
+            "surface_policy": "CONTROL_ONLY"
+          }
+        ],
+        "material_digest": "7ee6c86214b96aa4b2df94a0e1566b2bf355623d8d7e544a821dc82f36b6ba28",
+        "profile_id": "CP07",
+        "scenario_id": "CASE-S0M2-CP07-001",
+        "schema_version": "gate1-v4-material-v1",
+        "sources": [
+          {
+            "source_digest": "200cfbe0b0eaba1b90d02d427f5643c7b661eead7fc3c652081a6054da9877c3",
+            "source_id": "CASE-S0M2-CP07-001-SRC-1",
+            "source_text": "打包台记录一件网单商品已完成防尘袋封装；封装前做了外观目视检查；内衬洗涤标签未翻检。"
+          }
+        ]
+      }
+    }
+  ],
+  "run_id": "S0M2-RUN-001",
+  "schema_version": "s0m2-request-bundle-v1"
+}
