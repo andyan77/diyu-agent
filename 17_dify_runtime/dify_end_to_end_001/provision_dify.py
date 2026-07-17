@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import time
 from datetime import datetime
 from pathlib import Path
@@ -82,6 +83,50 @@ def _content_sha256(value: object) -> str:
     return hashlib.sha256(_normalized_text(value).encode("utf-8")).hexdigest()
 
 
+def _dify_115_markdown_index_text(value: object) -> str:
+    """Reproduce Dify 1.15's deterministic Markdown-to-segment transform."""
+    markdown_tuples: list[tuple[str | None, str]] = []
+    current_header: str | None = None
+    current_text = ""
+    code_block = False
+    for line in _normalized_text(value).split("\n"):
+        if line.startswith("```"):
+            code_block = not code_block
+            current_text += f"{line}\n"
+            continue
+        if code_block:
+            current_text += f"{line}\n"
+            continue
+        if re.match(r"^#+\s", line):
+            markdown_tuples.append((current_header, current_text))
+            current_header = line
+            current_text = ""
+        else:
+            current_text += f"{line}\n"
+    markdown_tuples.append((current_header, current_text))
+
+    indexed_segments: list[str] = []
+    for header, text in markdown_tuples:
+        normalized_header = re.sub(r"#", "", header).strip() if header else None
+        normalized_body = re.sub(r"<.*?>", "", text).strip()
+        page = (
+            normalized_body
+            if normalized_header is None
+            else f"\n\n{normalized_header}\n{normalized_body}"
+        )
+        page = re.sub(r"<\|", "<", page)
+        page = re.sub(r"\|>", ">", page)
+        page = re.sub(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\xEF\xBF\xBE]", "", page)
+        page = re.sub("\ufffe", "", page)
+        if page.strip():
+            indexed_segments.append(_normalized_text(page))
+    if len(indexed_segments) != 1:
+        raise RuntimeError(
+            "Package 7 Markdown must deterministically produce one Dify segment"
+        )
+    return indexed_segments[0]
+
+
 def plan_document_reconciliation(
     existing_documents: list[dict[str, Any]],
     fragments: list[dict[str, Any]],
@@ -112,7 +157,10 @@ def plan_document_reconciliation(
     upserts: list[ReconciliationOperation] = []
     for name in sorted(desired_by_name):
         fragment = desired_by_name[name]
-        desired_digest = _content_sha256(fragment.get("text", ""))
+        desired_digest = _content_sha256(
+            _dify_115_markdown_index_text(fragment.get("text", ""))
+        )
+        source_digest = _content_sha256(fragment.get("text", ""))
         existing = existing_by_name.get(name)
         if existing is None:
             action = "CREATE"
@@ -129,7 +177,7 @@ def plan_document_reconciliation(
                 "document_id": document_id,
                 "fragment_id": fragment["fragment_id"],
                 "name": name,
-                "source_content_sha256": desired_digest,
+                "source_content_sha256": source_digest,
             }
         )
 
@@ -681,8 +729,11 @@ def main() -> int:
             for fragment_id, document_id in document_ids.items()
         }
         if any(
-            row["source_content_sha256"] != row["index_content_sha256"]
-            for row in mapping.values()
+            _content_sha256(
+                _dify_115_markdown_index_text(fragment_by_id[fragment_id]["text"])
+            )
+            != row["index_content_sha256"]
+            for fragment_id, row in mapping.items()
         ):
             raise RuntimeError(
                 "The Dify index content does not match runtime materialization"

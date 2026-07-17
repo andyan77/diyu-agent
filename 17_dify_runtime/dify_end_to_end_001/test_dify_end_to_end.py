@@ -26,6 +26,7 @@ from persistence import (
     create_runtime_engine,
     create_session_factory,
 )
+from provision_dify import _content_sha256, _dify_115_markdown_index_text
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import Package7Runtime, protected_detail_is_supported
 from security import hash_password, issue_session, verify_password, verify_session
@@ -40,6 +41,23 @@ P6_CASES = (
     / "16_composition_runtime/fact_aware_plan_adapter_001/fixtures/integration_cases.v1.jsonl"
 )
 DSL_PATH = PACKAGE_ROOT / "dify_app.v1.yaml"
+
+
+class DifyMaterializationCompatibilityTests(unittest.TestCase):
+    def test_dify_markdown_transform_matches_declared_115_behavior(self) -> None:
+        source = "# 资料范围\r\n字段A：保留。\r\n字段B：<b>已授权</b>。"
+        self.assertEqual(
+            _dify_115_markdown_index_text(source),
+            "资料范围\n字段A：保留。\n字段B：已授权。",
+        )
+
+    def test_dify_markdown_transform_does_not_hide_semantic_mutation(self) -> None:
+        source = "# 资料范围\n字段A：保留。"
+        mutated = "# 资料范围\n字段A：改变。"
+        self.assertNotEqual(
+            _content_sha256(_dify_115_markdown_index_text(source)),
+            _content_sha256(_dify_115_markdown_index_text(mutated)),
+        )
 
 
 class FakeKnowledgeClient:
