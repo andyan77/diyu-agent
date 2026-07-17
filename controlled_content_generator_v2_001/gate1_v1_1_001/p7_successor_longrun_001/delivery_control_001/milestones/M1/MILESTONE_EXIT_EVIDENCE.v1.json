@@ -1,0 +1,50 @@
+{
+ "schema_version": "p7-milestone-exit-evidence-v1",
+ "milestone_id": "M1",
+ "candidate_commit": "de83d92cac695cd3e8c603e8817e875f3d567bfa",
+ "closeout_receipt_digest": "ecff2dcfc87cedfe335a74073093d6027e9dd971e8835abace7bd13816419d15",
+ "exit_keys": {
+  "INDEPENDENT_CLAUDE_FABLE_REVIEW_ACCEPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.bf75def209d8.signer_receipt.json",
+   "evidence_sha256": "cb6bae7b94c81dac7808f76a202af601d52805ae1aa4b6332da23a662b39ccf5"
+  },
+  "CODEX_GPT_REVIEW_ACCEPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.c8e0f3eb2104.signer_receipt.json",
+   "evidence_sha256": "2470247e7804e7304b44df3e1320a1989efcd2adb38b982ac09a61485a6b78ed"
+  },
+  "D0_TEXT_AND_INDEPENDENT_REVIEW_VALID": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/state/D0_STATUS.v1.json",
+   "evidence_sha256": "4133d16332c0d6716f54ba6d918543455f52d5fba72ed6cc1d924139347d3717"
+  },
+  "M0_REMAINS_HONESTLY_NOT_QUALIFIED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/calibration/M0_STATUS.v1.json",
+   "evidence_sha256": "e0bec3fdbc37b6c53f71666ce2da74a61e92fdcafa7ef11bf8b71f2a46ae8e7f"
+  },
+  "V1_1_REMAINS_HONESTLY_NOT_QUALIFIED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/calibration/V11_STATUS.v1.json",
+   "evidence_sha256": "4c5cefd1f9355bdf67f3556db8731cbd999db326f8508538c3caae0b1d1c9d5f"
+  },
+  "RUN_JOURNAL_CHAIN_VALID": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/snapshots/r5_close/RUN_JOURNAL.v1.jsonl",
+   "evidence_sha256": "ed02b0e884a320402ccb7eb1c79cd16f848f9e6f783f1ca2b074419ad8851243"
+  },
+  "FULL_TEST_SUITE_GREEN": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/VERIFICATION_RECEIPTS.M1.v5.json",
+   "evidence_sha256": "a6376e93fe90b1e696cd803f19718c3d5e9ad701b21a7faad480ce910670e861"
+  },
+  "REPOSITORY_WIDE_RESIDUAL_SCAN_PASS": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.v2.json",
+   "evidence_sha256": "57a8b0b44cf1b35b49327d55b79d00c035ecc821c9d63b16dfd149346adcba85"
+  }
+ },
+ "issued_at": "2026-07-17T02:18:30.230730+00:00",
+ "record_digest": "a634643af4aa75f26db52993f51cc2c6a0e0294bc3a19778a8d26d04dbc7bb7f"
+}

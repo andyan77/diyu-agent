@@ -1,0 +1,90 @@
+{
+ "schema_version": "p7-verification-receipts-v5",
+ "milestone_id": "M1",
+ "issued_at_head": "de83d92cac695cd3e8c603e8817e875f3d567bfa",
+ "issued_at": "2026-07-17T01:55:26.488429+00:00",
+ "note": "R5（R4 审核回路修复后）候选头全套验证；全部检查在 HEAD==candidate 时实跑",
+ "entries": [
+  {
+   "check": "eval_spine_suite",
+   "status": "PASS",
+   "detail": "Ran 49 tests in 1.708s /  / OK"
+  },
+  {
+   "check": "v4_recovery_suite",
+   "status": "PASS",
+   "detail": "Ran 49 tests in 0.382s /  / OK"
+  },
+  {
+   "check": "delivery_control_suite",
+   "status": "PASS",
+   "detail": "Ran 68 tests in 0.868s /  / OK"
+  },
+  {
+   "check": "master_selftest",
+   "status": "PASS",
+   "detail": "SELFTEST: ALL_NEGATIVE_CASES_ENFORCED"
+  },
+  {
+   "check": "ready_set_selftest",
+   "status": "PASS",
+   "detail": "READY_SET_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "launcher_selftest",
+   "status": "PASS",
+   "detail": "LAUNCHER_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "closure_selftest",
+   "status": "PASS",
+   "detail": "CLOSURE_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "qual_order_selftest",
+   "status": "PASS",
+   "detail": "QUAL_ORDER_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "lift_chain_selftest",
+   "status": "PASS",
+   "detail": "LIFT_CHAIN_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "sealed_scan_selftest",
+   "status": "PASS",
+   "detail": "SEALED_SCAN_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "run_journal_selftest",
+   "status": "PASS",
+   "detail": "RUN_JOURNAL_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "contract_set_selftest",
+   "status": "PASS",
+   "detail": "CONTRACT_SET_SELFTEST: ALL_PASS"
+  },
+  {
+   "check": "master_pre_review_three_domain",
+   "status": "PASS",
+   "detail": "RESULT[SHARED]: PASS (10 sections) | RESULT[A]: PASS (5 sections) | RESULT[B]: PASS (6 sections) | ARTIFACT_INTEGRITY: PASS | M0_QUALIFICATION: NOT_QUALIFIED"
+  },
+  {
+   "check": "contract_set_verify",
+   "status": "PASS",
+   "detail": "{   \"verify\": \"PASS\",   \"drift\": [] }"
+  },
+  {
+   "check": "residual_scan",
+   "status": "PASS",
+   "detail": "active=0 doc=509 sealed=32"
+  },
+  {
+   "check": "ranged_whitespace_exemption_discipline",
+   "status": "PASS",
+   "detail": "exempt_hits=8 non_exempt=0"
+  }
+ ],
+ "all_green": true
+}

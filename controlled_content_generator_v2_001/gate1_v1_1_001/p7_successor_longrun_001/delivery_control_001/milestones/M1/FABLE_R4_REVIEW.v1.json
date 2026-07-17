@@ -1,0 +1,142 @@
+{
+ "verdict": "ACCEPT",
+ "d0_verdict": "ACCEPT",
+ "candidate_commit_verified": "ccf27017c973a5359b2f7d0accfbb78851e43b32",
+ "input_manifest_digest_verified": "26f65629be3e6a6d4900049312e447bc1e7e9b6b8f0377c209db2bf95f93c117",
+ "output_manifest_digest_verified": "01cc3bae432e6dfea14c38f0d7c6c12200c37caac9169762bf7f3e6cad4f2f22",
+ "evidence_manifest_digest_verified": "cdcb8178f498fbcf26aefec5d6f09b39d8facb1ef27b95048b5d0a72ef813178",
+ "milestone_id": "M1",
+ "product_scope": "SHARED",
+ "directive_verification": [
+  {
+   "directive": 1,
+   "verified": true,
+   "method": "读 closure.py::validate_handoff_full 全文 + 合成根探针 G0(基线0错)/G1(模板过期拒)/G2(ready-set 漂移拒)/G3(合同成员内容漂移拒) + closure --selftest ALL_PASS 独立重跑",
+   "notes": "每个摘要字段有唯一复算对象；候选祖先关系、三 manifest、出口证据、签字逐份、模板、ready-set 全部逐项复算实证"
+  },
+  {
+   "directive": 2,
+   "verified": true,
+   "method": "合成 git 仓探针 A0-A3：合法链接受；锚提交与 closeout 分离（第一父边断裂）拒；锚工件摘要篡改（record_digest 重闭合、几何完好）拒；锚候选伪造（handoff/closeout 候选分裂+未知提交）拒",
+   "notes": "origin_anchor.v2 schema 将 anchor_rule 冻结为 const 全文（我的探针初版自编文本被 schema 拒绝，反证绑定严格）；第一父闭包规则解决提交不能自指问题"
+  },
+  {
+   "directive": 3,
+   "verified": true,
+   "method": "schema 检查（22 必填键、additionalProperties=false、隔离声明 5 键含 auto_memory_disabled_before_launch）+ FINAL 探针 C1(v1 回执拒)/C2(milestone 移植拒)/C3(product_scope 失配拒)/C4(manifest 摘要失配拒)，全部攻击回执 receipt_digest 重闭合仍被拒",
+   "notes": "对应负向攻击 32-35 亦在 40 测试套内实测通过"
+  },
+  {
+   "directive": 4,
+   "verified": true,
+   "method": "读 receipts.py::compare_typed_pair(8 字段+旗标+绑定集合) + 探针 G4(stop_code 分叉拒)/B1(出口键移除+重闭拒)/B2(证据字节篡改拒)/G5(M3 未冻结 fail-closed) + MILESTONE_EXIT_CONTRACT 全文核读(M1/M2 FROZEN, M3-M7 TO_BE_FROZEN)",
+   "notes": "攻击 31/36/37/40 在测试套内同证"
+  },
+  {
+   "directive": 5,
+   "verified": true,
+   "method": "探针 E0-E4：M2 合法形态零错误；real_run_executed=false 拒；executed_stages 缺 S0 拒；S0 六项镜像相对 stage_and_kill.v2 漂移拒；阶段回执字节篡改（摘要钉死）拒",
+   "notes": "文档在场≠执行的语义在错误文案中显式（document presence is not execution）"
+  },
+  {
+   "directive": 6,
+   "verified": true,
+   "method": "spy spawn 探针 D0：spawn 时点断言 LAUNCH_RECORD.v2 已在盘且 launched_at_head==实际 git HEAD；D1 伪造 head 经 record_digest 复算拒；D2 深层变体（伪造+重闭合）由 LAUNCH_OUTCOME.launch_record_digest 回绑拒",
+   "notes": "validate_launch_record 本身只验内部自洽（无仓库对照），单层可被重签名绕过——纵深防御由 outcome 回绑与 git 历史承载，见 ADVISORY"
+  },
+  {
+   "directive": 7,
+   "verified": true,
+   "method": "signer_receipt.v2.schema 隔离声明 required 含 auto_memory_disabled_before_launch（缺=schema 无效=未签，receipts.py 与 v25_state_checks 双入口一致）；本会话自身即按该纪律启动",
+   "notes": "本会话为全新非 fork/非 resume 顶层会话，CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 于 spawn 前注入"
+  },
+  {
+   "directive": 8,
+   "verified": true,
+   "method": "SUPERSESSION_LEDGER §5 核读（R3 关闭工件集显式声明被 R4 v2 集取代、封存于 5cf3ea2/4ddbd1f）；D0_STATUS 条件 4/5 重置为 false 待 R4 重签（与复算一致）；活体 FINAL 模式实跑证明 R3 v1 工件现在无法满足关闭（v1 签字拒/v1 handoff 拒/出口证据缺）",
+   "notes": "本审查即 R4 Fable 侧重跑"
+  }
+ ],
+ "checks_performed": [
+  "HEAD==候选 ccf27017；23f5fea 严格祖先（merge-base --is-ancestor + 不相等）",
+  "INPUT(9)/OUTPUT(157)/EVIDENCE(15) manifest 全部 181 条 sha256 自写脚本逐条复算一致；manifest_digest canonical 复算（去字段 sort_keys 紧凑 JSON sha256）三值与 REVIEW_REQUEST 一致；无重复路径、entry_count 一致、bound_candidate_commit 一致",
+  "电池回执 v4 文件 sha256==e871679e…；issued_at_head==候选；16 项逐项独立重跑比对",
+  "三测试套独立重跑：eval_audit_spine 49 通过 / v4_recovery 49 通过（pytest 与 unittest 双跑）/ delivery_control 67 通过（40+12+15），0 失败 0 跳过",
+  "9 项自测：master --selftest ALL_NEGATIVE_CASES_ENFORCED + ready_set/launcher/closure/qual_order/lift_chain/sealed_scan/run_journal/contract_set 全 ALL_PASS",
+  "PRE_REVIEW 三域：SHARED PASS(10 节，含 d0_status/run_journal/write_surface/freeze_integrity 等) / A PASS(5 节) / B PASS(6 节)；SHARED 复跑 3 次稳定",
+  "contract_set verify PASS drift=[]；活跃合同集合摘要 d7265a18… 与 REVIEW_REQUEST/D0_STATUS/冻结清单三处一致（17 成员 0 pending）",
+  "residual_scan 独立重跑：active=0 doc=509 sealed=32 PASS，与电池及 RESIDUAL_SCAN_REPORT.v2 一致",
+  "区间空白豁免纪律：git diff --check 23f5fea..候选 恰 8 hits（6=P1.M1.prompt.md L3-8 markdown 硬换行行尾双空格；2=EOF 空行且经 git log --follow 证实两文件均 f7d6619(C0) 引入后零修改），非豁免=0",
+  "D0 五条件独立复算：章程 sha256 复算==d68244df…、合同集摘要冻结一致、review_receipt_path=null→条件4/5=false、d0_approved=false 与复算一致（check_d0_status 活体 PASS）；D0 章程 70 行全文通读并独立裁决",
+  "历史完整性：23f5fea..候选 189A+1M（唯一 M=checker/p7_master_check.py 属加固面）；4ddbd1f..候选 8A+20M 全为加固面，R3 关闭工件（CLOSEOUT/HANDOFF/ORIGIN_ANCHOR/READY_SET/STAGE_DECISION/两份签字回执）零触碰；v2.3/v2.4/v2.5/v1.x 计划合同文档零改写",
+  "snapshots/r4 五文件与活体文件逐字节一致（sha256 对比）；OUTPUT manifest 直接钉死活体文件",
+  "保留面：DeepSeek 30 元/UTC 日窄门在 external_llm_budget.v1(daily_hard_ceiling_cny=30.0)/cost_accounting.v2 STOP 行/stage_and_kill kill 条件三处保留；24 字段成本事件 cost_accounting.v2 与 cost_budget.v1 逐字一致（24==24 identical）；M0/V11 双诚实 NOT_QUALIFIED；journal 链 verify VALID 10 记录、头记录 git_head=4ddbd1f 在仓（state=ACTIVE 属 R4 关闭前诚实中间态）",
+  "活体 fail-closed 实证：当前盘面 FINAL 模式 M1 必然失败（R3 v1 签字/handoff 被 v2 硬门拒、MILESTONE_EXIT_EVIDENCE 未在盘）——关闭必须等两份 R4 ACCEPT 后重生成 v2 工件",
+  "零写入终验：git status --porcelain 与开场快照逐行一致；实验全部落 $TMPDIR/scratchpad；本会话产生的 3 个 .pytest_cache 已清除恢复原状"
+ ],
+ "adversarial_probes": [
+  "A0 合成闭包链基线 → 接受 → 接受（初版因自编 anchor_rule 文本被 schema const 拒，反证 schema 绑定严）",
+  "A1 锚提交与 closeout 间插入无关提交（第一父分离）→ 拒 → 拒（anchor commit first parent != anchor.closeout_commit）",
+  "A2 锚内工件摘要篡改+record_digest 重闭合+提交几何完好 → 拒 → 拒（closeout artifact digest mismatch）",
+  "A3 锚候选伪造为未知提交（handoff 仍绑真候选）→ 拒 → 拒（handoff candidate != anchor candidate + closeout receipt candidate != anchor candidate）",
+  "B0 FINAL 合法形态基线 → 接受 → 接受（exit_keys_verified=8, handoff_full_recompute=PASS）",
+  "B1 移除必需出口键 RUN_JOURNAL_CHAIN_VALID 并重闭 record_digest → 拒 → 拒（required exit key unsatisfied/absent）",
+  "B2 出口键证据文件字节篡改 → 拒 → 拒（exit key evidence digest mismatch: FULL_TEST_SUITE_GREEN）",
+  "C1 v1 签字回执进 FINAL → 拒 → 拒（lacks v2 milestone/product/manifest binding ×2）",
+  "C2 签字 milestone_id=M2 移植（摘要重闭）→ 拒 → 拒（transplant ×2）",
+  "C3 签字 product_scope=A vs closeout SHARED → 拒 → 拒（product_scope mismatch ×2）",
+  "C4 签字 output_manifest_digest 失配 → 拒 → 拒（!= on-disk manifest ×2）",
+  "D0 spy spawn 时点断言 → LAUNCH_RECORD.v2 spawn 前已在盘且绑实际 HEAD → 实证 True（record_head_at_spawn==git HEAD）",
+  "D1 伪造 launched_at_head（不重闭摘要）→ 拒 → 拒（record_digest recompute mismatch）",
+  "D2 伪造 head+摘要重闭合 → validate_launch_record 单层无法拒（[]），LAUNCH_OUTCOME 回绑拒 → 实证（outcome not bound to launch record digest）；单层边界记 ADVISORY",
+  "E0 M2 真实 S0+回执钉死+10 键基线 → 零错误 → 零错误",
+  "E1 real_run_executed=false → 拒 → 拒（document presence is not execution）",
+  "E2 executed_stages 缺 S0 → 拒 → 拒（required stage never actually executed）",
+  "E3 S0 六项镜像漂移（stage_and_kill 删一项）→ 拒 → 拒（S0 exit key mirror drifted）",
+  "E4 S0 阶段回执字节篡改 → 拒 → 拒（stage receipt digest mismatch）",
+  "F0 D0 五条件活体复算（真仓只读）→ 3真+4/5假+d0_approved=false 一致 → 一致",
+  "G1 下一 Prompt 模板过期 → 拒 → 拒（next_prompt_template_digest != registry template file bytes）",
+  "G2 ready-set 结果漂移 → 拒 → 拒（ready_set_result_digest != file bytes）",
+  "G3 活跃合同成员内容漂移 → 拒 → 拒（active contract set digest drifted from frozen value）",
+  "G4 typed 对 stop_code 分叉（重闭摘要）→ 拒 → 拒（typed pair diverges on stop_code，FINAL 与 handoff_full 双路径）",
+  "G5 M3 出口定义未冻结即 FINAL → 拒 → 拒（not FROZEN fail-closed）",
+  "活体 FINAL 探针：当前盘面（R3 v1 工件在场、R4 v2 关闭工件未生成）→ 必须拒 → 拒（v1 签字/v1 handoff/出口证据缺三重拦截）"
+ ],
+ "findings": [
+  {
+   "severity": "ADVISORY",
+   "area": "checker/check_external_workspaces",
+   "detail": "original_main 的破口判据是『该工作区存在任何 tracked diff』，无法区分本任务越界写与其他并行 agent 会话的自有改动；实测一次瞬态 RESULT[SHARED] FAILED（并行会话在 /home/diyu/笛语领域通用数据库 的 tracked 改动窗口），前后 4 次复跑均 PASS、当前 tracked diff=0。方向为 fail-closed（不产生假绿），但降低并行环境下审查复现性；建议未来将判据限定到本任务写面路径或记录快照时刻"
+  },
+  {
+   "severity": "ADVISORY",
+   "area": "tools/receipts.py::validate_launch_record",
+   "detail": "该校验只验内部自洽（schema+record_digest 复算+固定字段），不对照仓库；伪造 launched_at_head 并重闭 record_digest 的记录单层通过（探针 D2 实证 record_errors=[]）。纵深防御由 LAUNCH_OUTCOME.launch_record_digest 回绑（实证拒绝）与 git 历史承载；建议未来 FINAL 侧增加 launched_at_head 必须为仓内真实提交且与祖先关系一致的检查"
+  },
+  {
+   "severity": "ADVISORY",
+   "area": "checker A 域 candidate_manifest",
+   "detail": "spine.manifest 磁盘枚举会拾取 pytest 默认缓存（.pytest_cache），审查者在 eval_audit_spine_001/v4_recovery 目录用默认 pytest 跑套件后 A 域即 FAIL（本审查实测：先 FAIL，删除本会话产生的缓存后 PASS）；电池用 unittest 故作者面干净。属操作性 footgun 非机制缺陷；建议枚举排除 .pytest_cache 或文档要求 -p no:cacheprovider"
+  },
+  {
+   "severity": "INFO",
+   "area": "checker freeze_integrity metrics 真门",
+   "detail": "可写环境下最新冻结轮 metrics 重算会原地覆写 tracked 的 round5_metrics.v1.json（先快照、不一致才还原；Codex R1 修复引入的只读/可写双路径设计）。本审查电池运行触发一次重写，事后 git diff HEAD 证实字节与 HEAD 完全一致、git status 零变化；如实披露以维护零写入账目"
+  },
+  {
+   "severity": "INFO",
+   "area": "工作树环境层",
+   "detail": "开场即存在的未跟踪环境工件（根目录 dotfiles、.claude/、.mcp.json、顶层 .pytest_cache 03:49 先于本会话）由 write_surface 检查的环境过滤层如实分类（env_artifacts_ignored=16），已提交面保持全严；journal 头记录 state=ACTIVE（C7_HARDENING_R4）为关闭工件待双审的诚实中间态，与送审面形态声明一致"
+  }
+ ],
+ "history_tamper_check": "23f5fea..ccf27017 全区间 190 条：189 新增 + 1 修改（唯一修改=checker/p7_master_check.py，属声明的加固面），0 删除；v2.3/v2.4/v2.5 计划与 v1.x 合同文档在区间内零改写（不在任何 M/D 列表且 INPUT manifest sha256 与磁盘一致）；R3 已提交关闭工件（CLOSEOUT_RECEIPT/REPORT、HANDOFF.v1、ORIGIN_ANCHOR.v1、READY_SET_RESULT.v1、STAGE_DECISION、两份签字回执）在 4ddbd1f..ccf27017 中零触碰，仅经 SUPERSESSION_LEDGER §5 声明性取代（新账本行，不改历史文件）；23f5fea 经 merge-base --is-ancestor 证实为候选严格祖先；区间空白检查恰 8 hits 全豁免类（6 硬换行 + 2 个 C0 f7d6619 字节保全工件 EOF 空行，git log --follow 证实 C0 引入后零修改）；无篡改证据",
+ "actual_model_self_report": "claude-fable-5",
+ "session_isolation_attestation": {
+  "fresh_session_not_fork_not_resume": true,
+  "did_not_author_reviewed_scope": true,
+  "auto_memory_disabled_or_not_applicable": true,
+  "auto_memory_disabled_before_launch": true,
+  "isolation_evidence": "全新顶层会话（非 fork/非 resume），CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 于 spawn 前注入（启动 Prompt 声明+本会话无任何自动记忆注入痕迹，SessionStart 仅注入全局错误模式文档）；被审范围作者为另一会话（journal 记录 session_id=f719e24e-7b51-…，非本会话）；零写入核验：开场/收尾 git status --porcelain 逐行一致，HEAD 始终为候选提交；一切实验（合成 git 仓、攻击重放、探针脚本）落于会话 scratchpad（/tmp/claude-1000/...）与 $TMPDIR 临时目录；python 全程 PYTHONDONTWRITEBYTECODE=1；本会话跑 pytest 曾产生 3 个 .pytest_cache 目录，发现后立即删除并复跑确认恢复原状；作者 checker 的 metrics 真门在电池重跑中对 round5_metrics.v1.json 做了一次设计内的字节等价重写（git diff HEAD 为空，已在 findings INFO 披露）"
+ },
+ "_round_note": "R4 历史：对候选 ccf27017 的 Fable 审查（verdict ACCEPT/d0 ACCEPT，session 0e6ddfdc-69d0-4418-96ac-6fb8a40b5767，actual claude-fable-5，auto-memory 启动前禁用）；因 Codex R4 REJECT（launched_at_head 自证洞）候选作废，依 §22 本审查随之失效，R5 重跑"
+}

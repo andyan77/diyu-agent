@@ -54,23 +54,9 @@
     {
       "capsule_id": "M1-C7",
       "title": "八项加固指令实现（R4）",
-      "status": "DONE",
-      "commit": "ccf27017c973a5359b2f7d0accfbb78851e43b32",
+      "status": "ACTIVE",
+      "commit": "PENDING_C7_COMMIT",
       "summary": "signer v2（绑 milestone/产品域/三 manifest）；HANDOFF v2 全引用复算；candidate/closeout/anchor 可重建闭包（closure.py）；FINAL 双 typed 逐字段比对 + 里程碑专属出口 + M2 真实 S0 机械证明；launcher 记录先于 spawn 原子落盘并绑实际 HEAD；攻击矩阵 30→40"
-    },
-    {
-      "capsule_id": "M1-C8",
-      "title": "R4 审核回路修复（launch HEAD 三重锚 + 缓存排除）",
-      "status": "DONE",
-      "commit": "de83d92cac695cd3e8c603e8817e875f3d567bfa",
-      "summary": "Codex R4 BLOCKING#1（launched_at_head 伪造+重算摘要可过）修复：现场比对+仓库态复核+journal 交叉绑定；攻击矩阵 41；spine.manifest 排除审核会话缓存（Fable R4 ADVISORY）"
-    },
-    {
-      "capsule_id": "M1-C9",
-      "title": "R5 候选冻结 + 双审核重跑 + 关闭工件重生成",
-      "status": "DONE",
-      "commit": "PENDING_CLOSEOUT_COMMIT_SEE_ORIGIN_ANCHOR_V2",
-      "summary": "电池 v5 16/16 于候选头 de83d92；三 manifest v2 重冻结；Fable(claude-fable-5 全新无记忆顶层会话)+Codex(workspace-write) 双 ACCEPT；signer v2；出口证据 8 键；HANDOFF v2 全引用复算 PASS"
     }
   ]
 }

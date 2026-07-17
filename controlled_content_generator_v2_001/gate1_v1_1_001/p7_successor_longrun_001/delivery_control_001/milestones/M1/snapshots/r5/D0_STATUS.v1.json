@@ -16,19 +16,19 @@
       "evidence": "state/ACTIVE_CONTRACT_DIGESTS.v1.json 重冻结（R4：17 成员含 signer v2 + 里程碑出口合同，0 pending，集合摘要 d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4；contract_set verify PASS）"
     },
     "INDEPENDENT_REVIEW_PASS": {
-      "satisfied": true,
-      "evidence": "Fable R5 对抗审查 verdict=ACCEPT 且 d0_verdict=ACCEPT（signer v2）；receipt controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.bf75def209d8.signer_receipt.json（sha256 cb6bae7b94c81dac…）"
+      "satisfied": false,
+      "evidence": "R4 重签进行中（发起人 2026-07-16 八项加固指令第 7/8 条：新候选产生 → 两份审核全部作废重跑，用启动前即关闭自动记忆的全新审核会话按 signer v2 重新签字）；R3 受理回执 8f812c89… 随候选作废，封存于 git 历史"
     },
     "REVIEWER_ISOLATION_VALID": {
-      "satisfied": true,
-      "evidence": "同回执 session_isolation_attestation 五键全 true（含 auto_memory_disabled_before_launch；schema v2 校验 + checker validate_signer_receipt 复核）"
+      "satisfied": false,
+      "evidence": "随 INDEPENDENT_REVIEW_PASS 一并待 R4 重签回执"
     }
   },
   "charter_sha256": "d68244dfd0a0d19330ad606b2de0d294565b162f31ec614efabe6468d1b77cb8",
   "active_contract_set_digest": "d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4",
-  "review_receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.bf75def209d8.signer_receipt.json",
-  "review_receipt_digest": "cb6bae7b94c81dac7808f76a202af601d52805ae1aa4b6332da23a662b39ccf5",
-  "d0_approved": true,
+  "review_receipt_path": null,
+  "review_receipt_digest": null,
+  "d0_approved": false,
   "d0_approved_derivation": "d0_approved 仅可由 checker 从五条件复算得出；本字段为缓存值，与复算不一致时以复算为准",
-  "updated_at": "2026-07-17T02:18:30.200773+00:00"
+  "updated_at": "2026-07-16T20:30:00+00:00"
 }

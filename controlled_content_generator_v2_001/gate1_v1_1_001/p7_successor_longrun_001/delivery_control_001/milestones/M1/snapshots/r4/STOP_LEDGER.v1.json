@@ -1,0 +1,16 @@
+{
+  "schema_version": "p7-stop-ledger-v1",
+  "description": "停止线触发登记册。任何停止线触发必须在此登记后才可停止上报；空条目 = 迄今零触发。",
+  "entry_required_fields": [
+    "stop_code",
+    "milestone_id",
+    "capsule",
+    "triggered_at",
+    "git_head_at_stop",
+    "last_green_commit",
+    "evidence_paths",
+    "typed_receipt_path",
+    "reported_to_founder"
+  ],
+  "entries": []
+}

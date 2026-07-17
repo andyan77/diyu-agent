@@ -1,0 +1,37 @@
+{
+ "schema_version": "p7-typed-receipt-v1",
+ "receipt_kind": "CLOSEOUT_RECEIPT",
+ "milestone_id": "M1",
+ "product_scope": "SHARED",
+ "result": "PASS",
+ "terminal": true,
+ "qualification_flags": {},
+ "candidate_commit": "de83d92cac695cd3e8c603e8817e875f3d567bfa",
+ "output_manifest_digest": "283c1fce90af37a5dacad0cf4855b3a7f80cb88b868934265742b238aca11ed2",
+ "evidence_manifest_digest": "d10b9f5ddd57fdfd2df51017ad7d77edc5ed514adaecbfab2478186ac74d402c",
+ "review_bindings": [
+  {
+   "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.bf75def209d8.signer_receipt.json",
+   "receipt_digest": "cb6bae7b94c81dac7808f76a202af601d52805ae1aa4b6332da23a662b39ccf5",
+   "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+   "verdict": "ACCEPT"
+  },
+  {
+   "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.c8e0f3eb2104.signer_receipt.json",
+   "receipt_digest": "2470247e7804e7304b44df3e1320a1989efcd2adb38b982ac09a61485a6b78ed",
+   "reviewer_kind": "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+   "verdict": "ACCEPT"
+  }
+ ],
+ "session_id": "f719e24e-7b51-48c0-9c24-9655a6525be8",
+ "issued_at": "2026-07-17T02:18:30.199540+00:00",
+ "issued_by_role": "M1_PRINCIPAL_ORCHESTRATOR",
+ "stop_code": null,
+ "notes": [
+  "R4/R5（发起人 2026-07-16 八项加固指令回合）：R3 接受候选 11b71e9 之后全链重跑；R4 Codex REJECT 修复后 R5 双 ACCEPT",
+  "审核轮次：R1(F-A/C-R)→R2(F-A/C-R)→R3(双A@11b71e9)→R4(F-A/C-R@ccf27017: launch-head 洞)→R5(双A@de83d92)",
+  "M0_REMAINS_HONESTLY_NOT_QUALIFIED=true；V1_1_REMAINS_HONESTLY_NOT_QUALIFIED=true",
+  "M2_NOT_EXECUTED_IN_M1_SESSION=true"
+ ],
+ "receipt_digest": "ecff2dcfc87cedfe335a74073093d6027e9dd971e8835abace7bd13816419d15"
+}

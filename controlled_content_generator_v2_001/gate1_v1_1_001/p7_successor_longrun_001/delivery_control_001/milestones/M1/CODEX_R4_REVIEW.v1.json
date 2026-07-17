@@ -1,0 +1,133 @@
+{
+ "verdict": "REJECT",
+ "candidate_commit_verified": "ccf27017c973a5359b2f7d0accfbb78851e43b32",
+ "input_manifest_digest_verified": "26f65629be3e6a6d4900049312e447bc1e7e9b6b8f0377c209db2bf95f93c117",
+ "output_manifest_digest_verified": "01cc3bae432e6dfea14c38f0d7c6c12200c37caac9169762bf7f3e6cad4f2f22",
+ "evidence_manifest_digest_verified": "cdcb8178f498fbcf26aefec5d6f09b39d8facb1ef27b95048b5d0a72ef813178",
+ "milestone_id": "M1",
+ "product_scope": "SHARED",
+ "directive_verification": [
+  {
+   "directive": 1,
+   "verified": true,
+   "method": "Inspected handoff.v2 schema and validate_handoff_full; independently recomputed all three manifests and the 17-member active contract set.",
+   "notes": "Eight cross-file/cross-commit recomputation groups are implemented. Mutation-backed selftest could not use TemporaryDirectory in this read-only sandbox."
+  },
+  {
+   "directive": 2,
+   "verified": true,
+   "method": "Executed actual verify_closure logic against an in-memory synthetic git model.",
+   "notes": "Valid closure passed; detached anchor parent and closeout artifact-byte tamper were both rejected."
+  },
+  {
+   "directive": 3,
+   "verified": true,
+   "method": "Executed actual check_final_receipts binding logic with in-memory signer records.",
+   "notes": "Signer v1, milestone M2 transplant, product-scope mismatch, and evidence-manifest mismatch were rejected."
+  },
+  {
+   "directive": 4,
+   "verified": true,
+   "method": "Executed the milestone-exit verification path used by check_final_receipts.",
+   "notes": "Required-key removal and referenced evidence-byte tamper were rejected."
+  },
+  {
+   "directive": 5,
+   "verified": true,
+   "method": "Executed actual M2 milestone-exit validation with synthetic in-memory state.",
+   "notes": "real_run_executed=false, missing executed S0, and six-key S0 mirror drift were rejected."
+  },
+  {
+   "directive": 6,
+   "verified": false,
+   "method": "Called validate_launch_record with a valid v2 record, then forged launched_at_head both with a stale digest and with a recomputed canonical digest.",
+   "notes": "Stale-digest tamper was rejected, but the reclosed forged HEAD was accepted with zero errors. The validator never compares launched_at_head to repository state."
+  },
+  {
+   "directive": 7,
+   "verified": true,
+   "method": "Inspected signer v2 schema and launcher spawn path; attested this fresh top-level Codex session.",
+   "notes": "The schema requires auto_memory_disabled_before_launch=true and the launcher injects the disable flag before spawning. Codex auto-memory is not applicable/exposed in this session."
+  },
+  {
+   "directive": 8,
+   "verified": false,
+   "method": "Checked SUPERSESSION_LEDGER §5, R4 state, and current review outcome.",
+   "notes": "Supersession is registered correctly, but R4 cannot produce accepted PASS/HANDOFF/P2/anchor artifacts because this review rejects the candidate."
+  }
+ ],
+ "checks_performed": [
+  "Read REVIEW_REQUEST.v2.md first and then the full P1/M1 execution brief and applicable review evidence protocol.",
+  "Verified HEAD exactly ccf27017c973a5359b2f7d0accfbb78851e43b32; verified 23f5fea355ef4904043c98187ba2a82c846772be is a strict ancestor.",
+  "Verified tracked and staged worktree diffs were zero at start and finish.",
+  "Recomputed INPUT_MANIFEST v2: 9/9 entries, no duplicates, candidate binding and canonical digest all matched.",
+  "Recomputed OUTPUT_MANIFEST v2: 157/157 entries including five frozen snapshots, no duplicates, candidate binding and canonical digest all matched.",
+  "Recomputed EVIDENCE_MANIFEST v2: 15/15 entries including one frozen snapshot, no duplicates, candidate binding and canonical digest all matched.",
+  "Verified VERIFICATION_RECEIPTS.M1.v4.json byte digest e871679ea67f5596938926e591aa4e307e55a96549d24add67d3857d220c48f6.",
+  "Ran contract_set.py verify: PASS with drift=[]; active contract digest d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4 and 17 members.",
+  "Ran eval-spine suite: 49 tests discovered; 45 passed and 4 errored because no writable temporary directory exists.",
+  "Ran v4-recovery suite: 49/49 passed.",
+  "Ran delivery-control suite: 67 tests discovered; 29 passed and 38 errored because no writable temporary directory exists.",
+  "Ran all eight discoverable tool selftests: qual_order and lift_chain passed; ready_set, launcher, closure, sealed_scan, run_journal, and contract_set aborted at TemporaryDirectory creation.",
+  "Ran checker --selftest: aborted at TemporaryDirectory creation.",
+  "Ran checker --milestone M1 --product ALL --mode PRE_REVIEW: exit 1; it did not produce SHARED/A/B all PASS.",
+  "Independently reran residual_scan without output writes: PASS, 2796 tracked files, 17 pattern families, zero active violations, 509 documentation hits, 32 sealed-history hits.",
+  "Recomputed ranged whitespace discipline: exactly 8 declared verbatim exemptions and zero non-exempt violations.",
+  "Verified DeepSeek 30 CNY/UTC-day gate, verbatim 24-field cost-event list, no budget-blocking resurrection, and B-track independence.",
+  "Verified M0=NOT_QUALIFIED, V1.1=NOT_QUALIFIED, zero executed stages, and no real run.",
+  "Ran check_d0_status: PASS consistency; conditions 1-3 true, conditions 4-5 false, d0_approved recomputed false.",
+  "Classified 23f5fea..candidate: 190 files, 189 added and 1 modified, all within authorized P7/v4-recovery surfaces.",
+  "Classified R4 delta 4ddbd1f..candidate: 28 files, 8 added and 20 modified.",
+  "Verified ten sealed v2.3/v2.4/v1.x files byte-identical from R3 anchor to candidate and zero R4 delta under committed M1 R3 closure artifacts.",
+  "Verified SUPERSESSION_LEDGER §5 correctly registers R4 replacement and invalidation of R3 receipts.",
+  "Scanned R4 Python additions for secrets, unsafe dynamic execution, pickle, direct LLM SDK use, and cross-layer/src/ports imports; no applicable guard violation found.",
+  "No readiness transition was authorized or performed; production, generation, KE, RAG, DIFY, serving, and release surfaces were not entered.",
+  "Final git status contained only the same pre-existing untracked R4 review/snapshot artifacts; HEAD and tracked/staged state remained unchanged."
+ ],
+ "adversarial_probes": [
+  "verify_closure anchor-detach -> reject -> rejected with first-parent mismatch",
+  "verify_closure closeout artifact tamper -> reject -> rejected with artifact digest mismatch",
+  "M1 required exit key removal -> reject -> rejected as required exit key absent",
+  "M1 referenced evidence-byte tamper -> reject -> rejected with evidence digest mismatch",
+  "signer v2 milestone_id=M2 transplant in FINAL -> reject -> rejected",
+  "signer v2 product_scope=A against SHARED closeout -> reject -> rejected",
+  "signer v2 evidence manifest digest mismatch -> reject -> rejected",
+  "signer v1 receipts in FINAL -> reject -> rejected for lacking v2 bindings",
+  "M2 real_run_executed=false and S0 absent -> reject -> rejected for both missing real run and unexecuted S0",
+  "M2 S0 six-key mirror drift -> reject -> rejected with mirror-drift error",
+  "launch record forged HEAD with stale digest -> reject -> rejected by digest mismatch",
+  "launch record forged HEAD with recomputed record_digest -> reject -> ACCEPTED with zero validation errors"
+ ],
+ "findings": [
+  {
+   "severity": "BLOCKING",
+   "area": "launch_record_actual_head_binding",
+   "detail": "tools/receipts.py:236-259 validates schema and a self-recomputable digest but accepts a forged launched_at_head after the attacker recomputes record_digest. launcher.py:419-423 tests only stale-digest tampering. Directive 6 is therefore not mechanically enforced."
+  },
+  {
+   "severity": "BLOCKING",
+   "area": "mandatory_signing_battery",
+   "detail": "The required current-worktree PRE_REVIEW command exited 1 and never showed SHARED/A/B all PASS. The read-only sandbox also prevented independent completion of mutation-backed suites and selftests because /tmp and other temporary roots were unwritable. Regardless of cause, the required green recomputation needed for ACCEPT is absent."
+  },
+  {
+   "severity": "ADVISORY",
+   "area": "battery_definition",
+   "detail": "REVIEW_REQUEST.v2 says nine tool selftests plus checker selftest, but only eight tool selftests are discoverable and VERIFICATION_RECEIPTS.M1.v4 also enumerates eight."
+  },
+  {
+   "severity": "INFO",
+   "area": "retention_d0_history",
+   "detail": "Retention gates, D0 false-state consistency, residual scan, sealed-history integrity, R3 artifact preservation, and R4 supersession registration all passed."
+  }
+ ],
+ "history_tamper_check": "PASS: 23f5fea..candidate was classified; all 190 paths are within authorized surfaces. Ten sealed v2.3/v2.4/v1.x artifacts are byte-identical from 4ddbd1f to the candidate, committed R3 M1 closure artifacts have zero delta, and SUPERSESSION_LEDGER §5 correctly registers R4 supersession.",
+ "actual_model_self_report": "GPT-5 (Codex)",
+ "session_isolation_attestation": {
+  "fresh_session_not_fork_not_resume": true,
+  "did_not_author_reviewed_scope": true,
+  "auto_memory_disabled_or_not_applicable": true,
+  "auto_memory_disabled_before_launch": true,
+  "isolation_evidence": "Fresh top-level /root Codex session with no prior/resumed review context and no subagents spawned. The mandated REVIEW_REQUEST was the first repository read. No auto-memory facility or memory content was exposed. Initial and final HEAD matched; tracked/staged diffs remained zero. Because /tmp was sandbox-read-only, adversarial mutations used in-memory synthetic objects only and created no experiment files."
+ },
+ "_round_note": "R4 历史：对候选 ccf27017 的 Codex 审查（verdict REJECT：BLOCKING#1 launched_at_head 伪造+重算摘要可过=真缺陷，已由 C8 de83d92 三重锚修复；BLOCKING#2 read-only 沙箱无可写 /tmp 致电池无法独立复跑=环境因，R5 改 workspace-write 沙箱重跑）"
+}
