@@ -50,7 +50,9 @@ SUCCESSOR_PACKAGES = (
     (
         "PACKAGE_2_LIGHT_EXPRESSION_SERVICE",
         Path("12_expression_service/expression_runtime_adapter_001"),
-        Path("12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py"),
+        Path(
+            "12_expression_service/expression_runtime_adapter_001/check_light_expression_service.py"
+        ),
         "PACKAGE_2_ONLY",
     ),
     (
@@ -71,8 +73,7 @@ SERIAL_SUCCESSOR_PACKAGES = (
         "PACKAGE_5_BRAND_FACT_RETRIEVAL",
         Path("15_brand_retrieval/brand_fact_retrieval_001"),
         Path(
-            "15_brand_retrieval/brand_fact_retrieval_001/"
-            "check_brand_fact_retrieval.py"
+            "15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py"
         ),
         "PACKAGE_5_ONLY",
     ),
@@ -88,11 +89,14 @@ SERIAL_SUCCESSOR_PACKAGES = (
     (
         "PACKAGE_7_DIFY_END_TO_END",
         Path("17_dify_runtime/dify_end_to_end_001"),
-        Path(
-            "17_dify_runtime/dify_end_to_end_001/"
-            "check_dify_end_to_end.py"
-        ),
+        Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"),
         "PACKAGE_7_ONLY",
+    ),
+    (
+        "PACKAGE_8_HOSTED_OPERATIONS",
+        Path("18_deployment/hosted_operations_001"),
+        Path("18_deployment/hosted_operations_001/check_hosted_operations.py"),
+        "PACKAGE_8_ONLY",
     ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
@@ -100,16 +104,33 @@ MANDATORY_SUCCESSOR_ROOTS = frozenset(
     {
         Path("16_composition_runtime/fact_aware_plan_adapter_001"),
         Path("17_dify_runtime/dify_end_to_end_001"),
+        Path("18_deployment/hosted_operations_001"),
     }
 )
 REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(
-        "15_brand_retrieval/brand_fact_retrieval_001/"
-        "check_brand_fact_retrieval.py"
+        "15_brand_retrieval/brand_fact_retrieval_001/check_brand_fact_retrieval.py"
     ): "24cd9888f38f2f22b22aa6c5a23f388b39fa1469",
+    Path(
+        "17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"
+    ): "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
+}
+REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
+    Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
+        Path("17_dify_runtime/dify_end_to_end_001/brand_import.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/brand_import_contract.v1.yaml"),
+        Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
+        Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/provision_dify.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/runtime_models.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
+    },
 }
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
-SUCCESSOR_OPTIMIZED_STEP_NAME = "Verify reserved downstream package fail-closed optimized mode"
+SUCCESSOR_OPTIMIZED_STEP_NAME = (
+    "Verify reserved downstream package fail-closed optimized mode"
+)
 SUCCESSOR_NORMAL_RUN_LINES = (
     "set -euo pipefail",
     "run_downstream_package_checker() {",
@@ -130,15 +151,15 @@ SUCCESSOR_NORMAL_RUN_LINES = (
     '    temporary_parent="$(mktemp -d)"',
     '    run_root="$temporary_parent/snapshot"',
     '    git worktree add --detach "$run_root" "$reference_commit" >/dev/null',
-    '  fi',
-    '  set +e',
+    "  fi",
+    "  set +e",
     '  (cd "$run_root" && python3 "$checker" && python3 "$checker" --selftest)',
-    '  code=$?',
-    '  set -e',
+    "  code=$?",
+    "  set -e",
     '  if [ -n "$temporary_parent" ]; then',
     '    git worktree remove --force "$run_root" >/dev/null',
     '    rmdir "$temporary_parent"',
-    '  fi',
+    "  fi",
     '  test "$code" -eq 0',
     "}",
     *(
@@ -172,7 +193,7 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     '    temporary_parent="$(mktemp -d)"',
     '    run_root="$temporary_parent/snapshot"',
     '    git worktree add --detach "$run_root" "$reference_commit" >/dev/null',
-    '  fi',
+    "  fi",
     "  set +e",
     '  (cd "$run_root" && python3 -O "$checker")',
     "  code=$?",
@@ -186,7 +207,7 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     '  if [ -n "$temporary_parent" ]; then',
     '    git worktree remove --force "$run_root" >/dev/null',
     '    rmdir "$temporary_parent"',
-    '  fi',
+    "  fi",
     "}",
     *(
         f'run_downstream_package_checker_optimized "{package_root.as_posix()}" "{checker.as_posix()}"'
@@ -776,9 +797,11 @@ def run_successor_checker(root: Path, checker: Path) -> None:
                 text=True,
                 env=environment,
             )
+            output_tail = completed.stdout[-2000:].strip().replace("\n", " | ")
             require(
                 completed.returncode == expected_code,
-                f"E_SUCCESSOR_CHECKER_{mode}:{checker}:{completed.returncode}",
+                f"E_SUCCESSOR_CHECKER_{mode}:{checker}:"
+                f"{completed.returncode}:{output_tail}",
             )
     finally:
         if temporary is not None:
@@ -837,9 +860,19 @@ def validate_reference_safe_successor_bytes(
         actual_paths == expected_paths,
         f"E_SUCCESSOR_REFERENCE_FILE_SET:{package_root}",
     )
-    for relative in sorted(expected_paths):
+    checker = next(
+        candidate_checker
+        for _, candidate_root, candidate_checker, _ in CHECKED_DOWNSTREAM_PACKAGES
+        if candidate_root == package_root
+    )
+    mutable_paths = REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS.get(checker, set())
+    require(
+        mutable_paths <= expected_paths, f"E_SUCCESSOR_MUTABLE_PATHS:{package_root}"
+    )
+    for relative in sorted(expected_paths - mutable_paths):
         require(
-            (root / relative).read_bytes() == git_object_bytes(reference_commit, relative),
+            (root / relative).read_bytes()
+            == git_object_bytes(reference_commit, relative),
             f"E_SUCCESSOR_REFERENCE_BYTES:{relative}",
         )
 
@@ -866,9 +899,7 @@ def validate_foundation_files(root: Path, review_state: str) -> None:
     }
     expected = set(BASE_FOUNDATION_FILES)
     if review_state in {"PENDING_ROOT_MERGE_APPROVAL", "PASS_TO_MERGE"}:
-        expected.update(
-            REVIEW_FILES - {COORDINATOR_PATH.relative_to(FOUNDATION_ROOT)}
-        )
+        expected.update(REVIEW_FILES - {COORDINATOR_PATH.relative_to(FOUNDATION_ROOT)})
     if review_state == "PASS_TO_MERGE":
         expected.add(COORDINATOR_PATH.relative_to(FOUNDATION_ROOT))
     require(
@@ -4453,10 +4484,7 @@ def run_selftest() -> dict[str, Any]:
 
     validate_post_candidate_paths(
         {
-            (
-                package_root
-                / f"selftest-{package_id.lower()}.txt"
-            ).as_posix()
+            (package_root / f"selftest-{package_id.lower()}.txt").as_posix()
             for package_id, package_root, _, _ in SUCCESSOR_PACKAGES
         }
     )
@@ -4468,10 +4496,7 @@ def run_selftest() -> dict[str, Any]:
     )
     expect_failure(
         lambda: validate_post_candidate_paths(
-            {
-                "12_expression_service/"
-                "expression_runtime_adapter_001_extra/file.txt"
-            }
+            {"12_expression_service/expression_runtime_adapter_001_extra/file.txt"}
         ),
         "E_REVIEW_POST_CANDIDATE_SCOPE",
     )
@@ -4620,6 +4645,43 @@ raise SystemExit(0)
         mutated_path = min(reference_paths, key=lambda path: path.as_posix())
         (temp_root / mutated_path).write_bytes(
             (temp_root / mutated_path).read_bytes() + b"\n"
+        )
+        expect_failure(
+            lambda: validate_reference_safe_successor_bytes(
+                temp_root, package_root, reference_commit
+            ),
+            "E_SUCCESSOR_REFERENCE_BYTES",
+        )
+
+    with tempfile.TemporaryDirectory(
+        prefix="product-foundation-p7-reference-safe-successor-"
+    ) as temporary:
+        temp_root = Path(temporary)
+        package_root = Path("17_dify_runtime/dify_end_to_end_001")
+        checker = package_root / "check_dify_end_to_end.py"
+        reference_commit = REFERENCE_SAFE_SUCCESSOR_COMMITS[checker]
+        reference_paths = git_tree_paths(reference_commit, package_root)
+        for relative in reference_paths:
+            destination = temp_root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(git_object_bytes(reference_commit, relative))
+        mutable_path = min(
+            REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS[checker],
+            key=lambda path: path.as_posix(),
+        )
+        (temp_root / mutable_path).write_bytes(
+            (temp_root / mutable_path).read_bytes() + b"\n# package-8-live-change\n"
+        )
+        validate_reference_safe_successor_bytes(
+            temp_root, package_root, reference_commit
+        )
+
+        frozen_path = min(
+            reference_paths - REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS[checker],
+            key=lambda path: path.as_posix(),
+        )
+        (temp_root / frozen_path).write_bytes(
+            (temp_root / frozen_path).read_bytes() + b"\n"
         )
         expect_failure(
             lambda: validate_reference_safe_successor_bytes(

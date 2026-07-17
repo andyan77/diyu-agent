@@ -29,8 +29,26 @@ from brand_fact_retrieval import (  # type: ignore[import-not-found]  # noqa: E4
     IdentityAuthority,
     RetrievalContractError,
     RetrievalIndex,
+    TrustedScope,
     parse_timestamp,
 )
+
+
+class RepositoryIdentityAuthority:
+    """Resolve every access from the current tenant-owned identity document."""
+
+    def __init__(self, repository: RuntimeRepository) -> None:
+        self.repository = repository
+
+    def resolve_scope(self, principal_id: str, account_id: str) -> TrustedScope:
+        principal, account = self.repository.require_active_scope(principal_id, account_id)
+        authority = RuntimeBrandFactRetrievalService._identity_authority(
+            self.repository.setting(f"identity_authority:{principal.tenant_id}")
+        )
+        scope = authority.resolve_scope(principal_id, account_id)
+        if scope.brand_id != account.brand_id:
+            raise RetrievalContractError("SCOPE_MISMATCH", "brand_id")
+        return scope
 
 
 class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):
@@ -43,22 +61,11 @@ class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):
     ) -> None:
         self.repository = repository
         self.knowledge_client = knowledge_client
-        active = repository.setting("active_runtime_brand")
-        identity = self._identity_authority(
-            repository.setting(str(active["identity_setting_key"]))
-        )
+        self.authority = RepositoryIdentityAuthority(repository)
         package_index = RetrievalIndex.from_package(PACKAGE_5_ROOT)
-        runtime_index = RetrievalIndex(
-            fragments=(),
-            facts=repository.precise_facts(),
-            dispositions=package_index.dispositions,
-            expression_candidates=package_index.expression_candidates,
-            data_version_digest=package_index.data_version_digest,
-        )
         self._dispositions = package_index.dispositions
         self._expression_candidates = package_index.expression_candidates
         self._data_version_digest = package_index.data_version_digest
-        super().__init__(identity, runtime_index)
 
     @staticmethod
     def _identity_authority(root: JsonObject) -> IdentityAuthority:
@@ -112,16 +119,25 @@ class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):
         )
         fragments, postcheck = self._postcheck_results(knowledge["results"], scope_payload, query_at)
 
-        self.index = RetrievalIndex(
+        runtime_index = RetrievalIndex(
             fragments=(),
-            facts=self.repository.precise_facts(),
+            facts=self.repository.precise_facts(
+                tenant_id=scope.tenant_id,
+                brand_id=scope.brand_id,
+            ),
             dispositions=self._dispositions,
             expression_candidates=self._expression_candidates,
             data_version_digest=self._data_version_digest,
         )
+        scoped_retrieval = BrandFactRetrievalService(
+            self._identity_authority(
+                self.repository.setting(f"identity_authority:{scope.tenant_id}")
+            ),
+            runtime_index,
+        )
         request_copy["query_text"] = ""
         request_copy["max_fragments"] = limit
-        base = super().retrieve(
+        base = scoped_retrieval.retrieve(
             request_copy,
             principal_id=principal_id,
             content_account_id=content_account_id,

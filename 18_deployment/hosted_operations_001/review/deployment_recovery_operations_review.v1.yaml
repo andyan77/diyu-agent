@@ -1,0 +1,48 @@
+task_id: DIYU_HOSTED_OPERATIONS_001
+review_type: DEPLOYMENT_RECOVERY_OPERATIONS
+review_id: DIYU_HOSTED_OPERATIONS_001_DRO_171215F_20260716_02
+candidate_commit: 171215f1898a640f7a9368e47127f7f49ef5170f
+git_tree: 6aa7fbfa1ec9a6fb0fd7b11d5c70736bab346392
+implementation_tree_digest: 69d5575e1c475f5f08c4fb32da7e4003201dad59ff6b069acbebdf5313498fdf
+reviewer_identity: Codex Independent Targeted Reviewer A
+reviewer_agent_id: 019f6bf4-cd62-7e21-bb8a-9891282bf03a
+reviewer_session_id: package8-targeted-review-a-20260716
+review_run_id: DIYU_HOSTED_OPERATIONS_001-PKG8-A-171215F-LOCAL-02
+independent_read_only: true
+review_scope: TARGETED_THREE_DELTA_CLOSEOUT_AND_NECESSARY_REGRESSION
+score: 96
+verdict: PASS
+blocking_items: []
+review_cycle:
+  initial_candidate: 39b86230bdda0cdfd5bdcd701cf5337b39824494
+  initial_score: 82
+  initial_verdict: FAIL
+  full_architecture_review_reopened: false
+  correction_scope_only: true
+resolved_targeted_blockers:
+  - id: RELEASE_RUNTIME_CLOSURE_MISSING_PUBLIC_CONTRACT
+    status: RESOLVED
+    evidence: The 39-object offline inventory includes public_foundation_contract.v1.yaml and loads LightExpressionService from an isolated copy.
+  - id: DIFY_IMPORT_NOT_CONVERGENT
+    status: RESOLVED
+    evidence: The importer deterministically keeps, replaces, creates or removes managed documents, then compares source/index digests and exact namespace membership.
+evidence:
+  release_object_count: 39
+  release_object_unique_count: 39
+  public_contract_present: true
+  isolated_runtime_load: PASS
+  reconciliation_actions_tested: [KEEP, REPLACE, CREATE, DELETE]
+  duplicate_document_name_rejected: true
+  indexed_content_digest_must_match: true
+  managed_namespace_must_converge: true
+  postgresql_acceptance: PASS_6_OF_6
+  acceptance_run_digest: 3e106f9f409ded6de59cb1cde232a215e7a73ad448e2481d1945d1ba4aa36ed8
+  restored_materialization_digest_equal: true
+  package8_checker_and_selftest: PASS
+  package7_regression: PASS_52_OF_52
+  package6_regression: PASS_16_OF_16
+  package2_regression: PASS_48_OF_48
+nonblocking_notes:
+  - Recorded PostgreSQL evidence was independently inspected and digest-bound; the reviewer did not operate PostgreSQL or Dify.
+  - Database row-level security and real remote deployment remain Package 9 concerns and no readiness flag changed.
+repository_writes_by_reviewer: []

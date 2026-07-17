@@ -11,7 +11,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from sqlalchemy import Engine, create_engine, inspect, select, text
+from sqlalchemy import Engine, MetaData, Table, UniqueConstraint, create_engine, inspect, select, text
+from sqlalchemy.schema import AddConstraint, DropConstraint
 from sqlalchemy.orm import Session, sessionmaker
 
 
@@ -165,6 +166,8 @@ class RuntimeRepository:
 
     def initialize_schema(self, engine: Engine) -> None:
         Base.metadata.create_all(engine)
+        if engine.dialect.name == "postgresql":
+            self._migrate_account_display_scope(engine)
         fragment_columns = {
             str(column["name"])
             for column in inspect(engine).get_columns("runtime_narrative_fragments")
@@ -178,6 +181,40 @@ class RuntimeRepository:
                     )
                 )
 
+    @staticmethod
+    def _migrate_account_display_scope(engine: Engine) -> None:
+        """Replace the Package 7 global account label key with a tenant key."""
+
+        metadata = MetaData()
+        accounts = Table(RuntimeAccount.__tablename__, metadata, autoload_with=engine)
+        unique_constraints = [
+            constraint
+            for constraint in accounts.constraints
+            if isinstance(constraint, UniqueConstraint)
+        ]
+        global_label_constraints = [
+            constraint
+            for constraint in unique_constraints
+            if [column.name for column in constraint.columns] == ["display_name"]
+        ]
+        composite_exists = any(
+            [column.name for column in constraint.columns] == ["tenant_id", "display_name"]
+            for constraint in unique_constraints
+        )
+        if not global_label_constraints and composite_exists:
+            return
+        with engine.begin() as connection:
+            for constraint in global_label_constraints:
+                connection.execute(DropConstraint(constraint))
+            if not composite_exists:
+                replacement = UniqueConstraint(
+                    accounts.c.tenant_id,
+                    accounts.c.display_name,
+                    name="uq_runtime_account_tenant_display_name",
+                )
+                accounts.append_constraint(replacement)
+                connection.execute(AddConstraint(replacement))
+
     def principal_by_username(self, username: str) -> RuntimePrincipal | None:
         with self.sessions() as session:
             return session.scalar(select(RuntimePrincipal).where(RuntimePrincipal.username == username))
@@ -188,7 +225,12 @@ class RuntimeRepository:
 
     def account_by_display_name(self, display_name: str) -> RuntimeAccount | None:
         with self.sessions() as session:
-            return session.scalar(select(RuntimeAccount).where(RuntimeAccount.display_name == display_name))
+            rows = list(
+                session.scalars(
+                    select(RuntimeAccount).where(RuntimeAccount.display_name == display_name)
+                ).all()
+            )
+            return rows[0] if len(rows) == 1 else None
 
     def account_by_id(self, account_id: str) -> RuntimeAccount | None:
         with self.sessions() as session:
@@ -224,13 +266,20 @@ class RuntimeRepository:
 
         with self.sessions() as session:
             principal = session.get(RuntimePrincipal, principal_id)
-            account = session.scalar(
-                select(RuntimeAccount).where(RuntimeAccount.display_name == display_name)
+            if principal is None or principal.status != "ACTIVE":
+                raise ValueError("Current principal and account scope is not active")
+            accounts = list(
+                session.scalars(
+                    select(RuntimeAccount).where(
+                        RuntimeAccount.display_name == display_name,
+                        RuntimeAccount.tenant_id == principal.tenant_id,
+                        RuntimeAccount.account_id.in_(principal.allowed_account_ids),
+                    )
+                ).all()
             )
+            account = accounts[0] if len(accounts) == 1 else None
             if (
-                principal is None
-                or principal.status != "ACTIVE"
-                or account is None
+                account is None
                 or account.status != "ACTIVE"
                 or principal.tenant_id != account.tenant_id
                 or account.account_id not in principal.allowed_account_ids
@@ -242,30 +291,59 @@ class RuntimeRepository:
         with self.sessions() as session:
             return tuple(session.scalars(select(RuntimeAccount).order_by(RuntimeAccount.account_id)).all())
 
-    def identity_payloads(self) -> JsonObject:
+    def identity_payloads(self, tenant_id: str | None = None) -> JsonObject:
         with self.sessions() as session:
+            principal_statement = select(RuntimePrincipal)
+            account_statement = select(RuntimeAccount)
+            authorization_statement = select(RuntimeAuthorization)
+            confirmation_statement = select(RuntimeSubjectConfirmation)
+            if tenant_id is not None:
+                principal_statement = principal_statement.where(RuntimePrincipal.tenant_id == tenant_id)
+                account_statement = account_statement.where(RuntimeAccount.tenant_id == tenant_id)
+                authorization_statement = authorization_statement.where(RuntimeAuthorization.tenant_id == tenant_id)
+                confirmation_statement = confirmation_statement.where(RuntimeSubjectConfirmation.tenant_id == tenant_id)
             return {
-                "principals": [copy.deepcopy(row.payload) for row in session.scalars(select(RuntimePrincipal)).all()],
-                "accounts": [copy.deepcopy(row.payload) for row in session.scalars(select(RuntimeAccount)).all()],
+                "principals": [copy.deepcopy(row.payload) for row in session.scalars(principal_statement).all()],
+                "accounts": [copy.deepcopy(row.payload) for row in session.scalars(account_statement).all()],
                 "authorizations": [
-                    copy.deepcopy(row.payload) for row in session.scalars(select(RuntimeAuthorization)).all()
+                    copy.deepcopy(row.payload) for row in session.scalars(authorization_statement).all()
                 ],
                 "subject_confirmations": [
-                    copy.deepcopy(row.payload) for row in session.scalars(select(RuntimeSubjectConfirmation)).all()
+                    copy.deepcopy(row.payload) for row in session.scalars(confirmation_statement).all()
                 ],
             }
 
-    def narrative_fragments(self, fragment_ids: list[str] | None = None) -> tuple[JsonObject, ...]:
+    def narrative_fragments(
+        self,
+        fragment_ids: list[str] | None = None,
+        *,
+        tenant_id: str | None = None,
+        brand_id: str | None = None,
+    ) -> tuple[JsonObject, ...]:
         with self.sessions() as session:
             statement = select(RuntimeNarrativeFragment)
             if fragment_ids is not None:
                 statement = statement.where(RuntimeNarrativeFragment.fragment_id.in_(fragment_ids))
+            if tenant_id is not None:
+                statement = statement.where(RuntimeNarrativeFragment.tenant_id == tenant_id)
+            if brand_id is not None:
+                statement = statement.where(RuntimeNarrativeFragment.brand_id == brand_id)
             rows = session.scalars(statement.order_by(RuntimeNarrativeFragment.fragment_id)).all()
             return tuple(copy.deepcopy(row.payload) for row in rows)
 
-    def precise_facts(self) -> tuple[JsonObject, ...]:
+    def precise_facts(
+        self,
+        *,
+        tenant_id: str | None = None,
+        brand_id: str | None = None,
+    ) -> tuple[JsonObject, ...]:
         with self.sessions() as session:
-            rows = session.scalars(select(RuntimePreciseFact).order_by(RuntimePreciseFact.fact_id)).all()
+            statement = select(RuntimePreciseFact)
+            if tenant_id is not None:
+                statement = statement.where(RuntimePreciseFact.tenant_id == tenant_id)
+            if brand_id is not None:
+                statement = statement.where(RuntimePreciseFact.brand_id == brand_id)
+            rows = session.scalars(statement.order_by(RuntimePreciseFact.fact_id)).all()
             return tuple(copy.deepcopy(row.payload) for row in rows)
 
     def bind_dify_documents(self, mapping: dict[str, JsonObject]) -> None:
@@ -714,13 +792,102 @@ class RuntimeRepository:
             )
             if latest_run is None:
                 return ()
+            rows = session.scalars(
+                select(RuntimeCandidate)
+                .where(RuntimeCandidate.run_id == latest_run)
+                .order_by(RuntimeCandidate.ordinal)
+            ).all()
             return tuple(
-                session.scalars(
-                    select(RuntimeCandidate)
-                    .where(RuntimeCandidate.run_id == latest_run)
-                    .order_by(RuntimeCandidate.ordinal)
-                ).all()
+                row for row in rows if self._candidate_is_current(session, row)
             )
+
+    @staticmethod
+    def _aware(value: datetime) -> datetime:
+        return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
+
+    @classmethod
+    def _authorization_allows(
+        cls,
+        session: Session,
+        authorization_ref: str,
+        account: RuntimeAccount,
+        now: datetime,
+    ) -> bool:
+        authorization = session.get(RuntimeAuthorization, authorization_ref)
+        if (
+            authorization is None
+            or authorization.tenant_id != account.tenant_id
+            or authorization.status != "GRANTED"
+            or cls._aware(authorization.valid_from) > now
+            or cls._aware(authorization.valid_until) < now
+        ):
+            return False
+        payload = authorization.payload
+        return bool(
+            payload.get("brand_id") == account.brand_id
+            and account.account_id
+            in payload.get("permitted_content_account_ids", [])
+            and account.organization_id
+            in payload.get("permitted_organization_ids", [])
+            and account.store_id in payload.get("permitted_store_ids", [])
+        )
+
+    @classmethod
+    def _candidate_is_current(
+        cls,
+        session: Session,
+        candidate: RuntimeCandidate,
+    ) -> bool:
+        account = session.get(RuntimeAccount, candidate.account_id)
+        if account is None or account.status != "ACTIVE":
+            return False
+        now = utc_now()
+        for reference in candidate.used_material_refs:
+            material = session.get(RuntimeNarrativeFragment, reference)
+            if (
+                material is None
+                or material.tenant_id != account.tenant_id
+                or material.brand_id != account.brand_id
+                or material.status != "ACTIVE"
+                or material.authorization_state != "GRANTED"
+                or material.revocation_ref is not None
+                or cls._aware(material.valid_from) > now
+                or cls._aware(material.valid_until) < now
+                or account.account_id
+                not in material.payload.get("applicable_content_account_ids", [])
+                or account.organization_id
+                not in material.payload.get("applicable_organization_ids", [])
+                or account.store_id
+                not in material.payload.get("applicable_store_ids", [])
+                or not cls._authorization_allows(
+                    session,
+                    material.authorization_ref,
+                    account,
+                    now,
+                )
+            ):
+                return False
+        for reference in candidate.used_fact_refs:
+            fact = session.get(RuntimePreciseFact, reference)
+            if (
+                fact is None
+                or fact.tenant_id != account.tenant_id
+                or fact.brand_id != account.brand_id
+                or fact.status != "ACTIVE"
+                or fact.revocation_ref is not None
+                or cls._aware(fact.valid_from) > now
+                or cls._aware(fact.valid_until) < now
+                or account.account_id
+                not in fact.payload.get("applicable_content_account_ids", [])
+                or not cls._authorization_allows(
+                    session,
+                    fact.authorization_ref,
+                    account,
+                    now,
+                )
+            ):
+                return False
+        return True
 
     def select_candidate(self, account_id: str, ordinal: int) -> RuntimeCandidate:
         with self.sessions.begin() as session:
@@ -738,6 +905,8 @@ class RuntimeRepository:
             chosen = next((row for row in current if row.ordinal == ordinal), None)
             if chosen is None:
                 raise KeyError("Candidate number is unavailable")
+            if not self._candidate_is_current(session, chosen):
+                raise ValueError("Candidate references are no longer current")
             for row in current:
                 row.selected = row.candidate_id == chosen.candidate_id
             session.flush()
@@ -745,17 +914,22 @@ class RuntimeRepository:
 
     def selected_candidate(self, account_id: str) -> RuntimeCandidate | None:
         with self.sessions() as session:
-            return session.scalar(
+            row = session.scalar(
                 select(RuntimeCandidate)
                 .where(RuntimeCandidate.account_id == account_id, RuntimeCandidate.selected.is_(True))
                 .order_by(RuntimeCandidate.created_at.desc())
                 .limit(1)
             )
+            return row if row is not None and self._candidate_is_current(session, row) else None
 
     def candidate_belongs_to_account(self, candidate_id: str, account_id: str) -> bool:
         with self.sessions() as session:
             row = session.get(RuntimeCandidate, candidate_id)
-            return row is not None and row.account_id == account_id
+            return bool(
+                row is not None
+                and row.account_id == account_id
+                and self._candidate_is_current(session, row)
+            )
 
     def candidate_context(self, candidate_id: str, account_id: str) -> JsonObject:
         """Return a minimal continuity projection, never a new fact source."""
@@ -764,6 +938,8 @@ class RuntimeRepository:
             row = session.get(RuntimeCandidate, candidate_id)
             if row is None or row.account_id != account_id:
                 raise ValueError("Previous candidate is outside the current account")
+            if not self._candidate_is_current(session, row):
+                raise ValueError("Previous candidate references are no longer current")
             surfaces = row.candidate_payload.get("candidate_user_visible_surfaces", {})
             production = surfaces.get("execution_payload", {}) if isinstance(surfaces, dict) else {}
             return {
@@ -784,12 +960,13 @@ class RuntimeRepository:
 
     def latest_candidate(self, account_id: str) -> RuntimeCandidate | None:
         with self.sessions() as session:
-            return session.scalar(
+            row = session.scalar(
                 select(RuntimeCandidate)
                 .where(RuntimeCandidate.account_id == account_id)
                 .order_by(RuntimeCandidate.created_at.desc(), RuntimeCandidate.ordinal)
                 .limit(1)
             )
+            return row if row is not None and self._candidate_is_current(session, row) else None
 
     def requirement_id_for_run(self, run_id: str) -> str | None:
         with self.sessions() as session:

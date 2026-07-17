@@ -1,0 +1,85 @@
+schema_version: v1.0
+data_mode: SIMULATION
+fictional_test_data: true
+safe_fixture_data: true
+# AUTHORIZED_REAL 模式必须另填 real_brand_authorization，且不会自动获得发布权限。
+enterprise:
+  enterprise_code: example-company
+  brand_code: example-brand
+  enterprise_name: 示例企业
+  brand_name: 示例品牌
+organizations:
+  - code: hq
+    name: 示例总部
+    level: HEADQUARTERS
+stores:
+  - code: first-store
+    name: 示例门店
+    organization_code: hq
+roles:
+  - code: brand-editor
+    name: 品牌内容记录者
+    boundary: 只使用当前企业已经提供并允许使用的资料。
+users:
+  - code: owner
+    username: example-owner
+    display_name: 示例负责人
+    allowed_account_codes: [brand-account, store-account]
+accounts:
+  - code: brand-account
+    display_name: 示例品牌
+    organization_code: hq
+    store_code: null
+    level: HEADQUARTERS
+    role_code: brand-editor
+    allowed_source_organization_codes: [hq]
+  - code: store-account
+    display_name: 示例门店记录
+    organization_code: hq
+    store_code: first-store
+    level: STORE
+    role_code: brand-editor
+    allowed_source_organization_codes: [hq]
+authorizations:
+  - code: current-material
+    status: GRANTED
+    valid_from: 2026-01-01T00:00:00Z
+    valid_until: 2027-01-01T00:00:00Z
+    organization_codes: [hq]
+    store_codes: [null, first-store]
+    account_codes: [brand-account, store-account]
+materials:
+  - code: brand-story
+    title: 品牌资料标题
+    text: 请填写已经确认、允许在本次模拟中使用的资料。
+    source_label: 企业提供的模拟资料
+    source_ref: fixture://package8/example/material/brand-story
+    authorization_code: current-material
+    account_codes: [brand-account, store-account]
+    observed_at: 2026-01-01T00:00:00Z
+    valid_until: 2027-01-01T00:00:00Z
+facts:
+  - code: product-record
+    kind: SKU
+    label: 商品记录
+    value: {product_name: 示例商品, sku: EXAMPLE-001}
+    source_label: 企业提供的模拟字段
+    source_ref: fixture://package8/example/fact/product-record
+    authorization_code: current-material
+    account_codes: [brand-account, store-account]
+    effective_at: 2026-01-01T00:00:00Z
+    valid_until: 2027-01-01T00:00:00Z
+expression:
+  why_exist: 帮助用户理解当前资料能够支持的选择。
+  audience: 正在了解示例品牌的用户。
+  tone_tendencies: [清楚, 具体]
+  preferred_phrasing: [从一个可见细节进入]
+  prohibited_categories: [fabricated_fact, unsupported_promise]
+  storylines:
+    - code: current-choice
+      name: 当前选择
+      purpose: 只解释已有资料能够支持的部分。
+  columns:
+    - code: one-detail
+      name: 一个细节
+      storyline_code: current-choice

@@ -1,0 +1,124 @@
+schema_version: v1.0
+data_mode: SIMULATION
+fictional_test_data: true
+safe_fixture_data: true
+enterprise:
+  enterprise_code: qinghe-lab
+  brand_code: qinghe-home
+  enterprise_name: 青禾生活实验企业（虚构）
+  brand_name: 青禾生活实验品牌（虚构）
+organizations:
+  - code: hq
+    name: 青禾实验总部
+    level: HEADQUARTERS
+  - code: east
+    name: 青禾实验东区
+    level: REGION
+stores:
+  - code: riverside
+    name: 青禾实验河畔店
+    organization_code: east
+roles:
+  - code: brand-recorder
+    name: 品牌资料记录者
+    boundary: 只陈述当前虚构测试包中已经给出的品牌资料。
+  - code: store-observer
+    name: 门店现场观察者
+    boundary: 只观察当前虚构门店范围，不代表总部或其他门店。
+users:
+  - code: acceptance-owner
+    username: qinghe-pkg8-owner
+    display_name: 青禾实验负责人
+    allowed_account_codes: [brand-account, store-account]
+accounts:
+  - code: brand-account
+    display_name: 笛语童装
+    organization_code: hq
+    store_code: null
+    level: HEADQUARTERS
+    role_code: brand-recorder
+    allowed_source_organization_codes: [hq, east]
+  - code: store-account
+    display_name: 青禾门店记录
+    organization_code: east
+    store_code: riverside
+    level: STORE
+    role_code: store-observer
+    allowed_source_organization_codes: [hq, east]
+authorizations:
+  - code: current-material
+    status: GRANTED
+    valid_from: 2026-07-01T00:00:00Z
+    valid_until: 2027-07-01T00:00:00Z
+    organization_codes: [hq, east]
+    store_codes: [null, riverside]
+    account_codes: [brand-account, store-account]
+  - code: expired-photo
+    status: EXPIRED
+    valid_from: 2025-01-01T00:00:00Z
+    valid_until: 2025-12-31T23:59:59Z
+    organization_codes: [east]
+    store_codes: [riverside]
+    account_codes: [store-account]
+materials:
+  - code: calm-home-note
+    title: 青禾实验品牌的家居选择记录
+    text: 青禾生活实验品牌是一组完全虚构的测试资料。当前记录只说明：整理物品时先保留日常会反复使用的部分，再决定是否增加新的收纳用品。
+    source_label: 第8包虚构品牌资料
+    source_ref: fixture://package8/qinghe/material/calm-home-note
+    authorization_code: current-material
+    account_codes: [brand-account, store-account]
+    observed_at: 2026-07-15T00:00:00Z
+    valid_until: 2027-07-01T00:00:00Z
+  - code: expired-store-photo
+    title: 已过期的虚构门店照片记录
+    text: 这条虚构照片说明已经过期，不得用于当前内容。
+    source_label: 第8包撤回测试资料
+    source_ref: fixture://package8/qinghe/material/expired-store-photo
+    authorization_code: expired-photo
+    account_codes: [store-account]
+    observed_at: 2025-06-01T00:00:00Z
+    valid_until: 2025-12-31T23:59:59Z
+    status: REVOKED
+facts:
+  - code: basket-record
+    kind: SKU
+    label: 虚构商品记录
+    value: {product_name: 青禾实验收纳篮, sku: QH-LAB-001}
+    source_label: 第8包虚构精确字段
+    source_ref: fixture://package8/qinghe/fact/basket-record
+    authorization_code: current-material
+    account_codes: [brand-account, store-account]
+    effective_at: 2026-07-15T00:00:00Z
+    valid_until: 2027-07-01T00:00:00Z
+  - code: expired-display-date
+    kind: TIME_POINT
+    label: 已过期虚构陈列日期
+    value: {display_date: 2025-06-01, state: expired}
+    source_label: 第8包过期字段
+    source_ref: fixture://package8/qinghe/fact/expired-display-date
+    authorization_code: expired-photo
+    account_codes: [store-account]
+    effective_at: 2025-06-01T00:00:00Z
+    valid_until: 2025-12-31T23:59:59Z
+    status: EXPIRED
+expression:
+  why_exist: 用克制、清楚的方式帮助用户理解日常整理选择。
+  audience: 正在整理日常生活空间的普通用户。
+  tone_tendencies: [安静具体, 不替用户下结论, 保留生活观察]
+  preferred_phrasing: [从眼前物件进入, 先说明当前条件]
+  prohibited_categories: [fabricated_fact, unsupported_promise, invented_local_event]
+  storylines:
+    - code: everyday-order
+      name: 日常秩序怎样形成
+      purpose: 从已有物件和当前使用条件讲清选择。
+    - code: store-observation
+      name: 门店范围内的观察
+      purpose: 只记录当前虚构门店允许使用的资料。
+  columns:
+    - code: one-object
+      name: 从一个物件开始
+      storyline_code: everyday-order
+    - code: current-store
+      name: 当前门店记录
+      storyline_code: store-observation

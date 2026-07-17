@@ -1,0 +1,81 @@
+{
+  "application_version": "package8-v1.1",
+  "brand_import_bundle_version": "v1.1",
+  "brand_import_modes": {
+    "authorized_real_requires_source_authorization_time_revocation_and_operator_confirmation": true,
+    "authorized_real_success_does_not_grant_publication": true,
+    "simulation": true,
+    "authorized_real": true
+  },
+  "core_numbers": {
+    "120": "UNCHANGED_HISTORICAL_SCOPE",
+    "300": "UNCHANGED_NOT_FROZEN",
+    "86": "UNCHANGED_HISTORICAL_SCOPE"
+  },
+  "database_schema": {
+    "current_version": 1,
+    "tested_upgrade_version": 2
+  },
+  "database_isolation": {
+    "database_rls_enabled": false,
+    "enforcement": "APPLICATION_SCOPE_AND_CURRENT_STATE_POSTCHECK",
+    "package9_production_hardening_required": true,
+    "production_ready": false
+  },
+  "database_backup_security": {
+    "contains_credential_verifiers": true,
+    "contains_plaintext_secrets": false,
+    "repository_commit_allowed": false,
+    "restricted_storage_required": true
+  },
+  "external_model_calls_allowed": false,
+  "hosted_operations_entrypoint": "18_deployment/hosted_operations_001/hosted_operations.py",
+  "package7_merge_commit": "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
+  "preconditions": {
+    "dify_community_version": "1.15.0",
+    "postgresql_minimum_major": 14,
+    "python_minimum": "3.10"
+  },
+  "readiness": {
+    "DIFY_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "candidatepack_ready": false,
+    "generation_allowed": false,
+    "generation_eligible": false,
+    "production_ready": false,
+    "production_servable": false,
+    "release_ready": false,
+    "runtime_ready": false
+  },
+  "real_cloud_mutations_allowed": false,
+  "release_recovery": {
+    "database_backup_plus_offline_release_bundle": true,
+    "isolated_restore_rematerialization_verified": true,
+    "minimum_runtime_file_closure_included": true,
+    "offline_release_object_count": 39,
+    "release_object_digest_and_version_required": true
+  },
+  "schema_version": "v1.0",
+  "second_brand_fixture": {
+    "path": "18_deployment/hosted_operations_001/fixtures/second_brand_fixture.v1.yaml",
+    "sha256": "043060d3c398a85bad559840ddca1cedc0bc4feec1e62b41e84aec2093350fd8"
+  },
+  "authorized_real_contract_fixture": {
+    "contains_real_customer_data": false,
+    "path": "18_deployment/hosted_operations_001/fixtures/authorized_real_brand_contract_fixture.v1.yaml",
+    "sha256": "979ac9e0e4ac13f5e261ecdabe48758e673fd9a1c78a1154ca44c2ffa2e3980e"
+  },
+  "status": "NON_PRODUCTION_HOSTED_OPERATIONS_CANDIDATE",
+  "task_id": "DIYU_HOSTED_OPERATIONS_001",
+  "template": {
+    "path": "18_deployment/hosted_operations_001/brand_input_template.v1.yaml",
+    "sha256": "5595d592b20cdeeb56e809e03a9c9c8b754495ba3bb2b06fb320727bbf2c7eb2"
+  },
+  "runtime_dify_materialization": {
+    "deterministic": true,
+    "dify_consumes_database_projection": true,
+    "second_retrieval_truth_created": false,
+    "withdrawn_expired_inactive_or_unauthorized_excluded": true
+  }
+}
