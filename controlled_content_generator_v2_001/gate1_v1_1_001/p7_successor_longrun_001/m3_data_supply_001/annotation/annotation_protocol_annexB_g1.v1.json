@@ -1,0 +1,36 @@
+{
+ "schema_version": "p7-m3-annotation-protocol-annexB-g1-v1",
+ "annex": "B",
+ "scope": "G1 参考断言金标（源证据切分 + 独立双抽取 + 归并 + 独立双复核 + 分歧裁决）",
+ "flow": [
+  "PROPOSE：席位 A/B 双盲抽取断言提案（含逐字 quote 证据锚）",
+  "MERGE：归并员（全新会话）把 A/B 提案去重归并为候选清单（提案阶段争议率由 A/B 提案与归并结果的差异度量）",
+  "CONFIRM：复核席位 A/B（全新会话，身份 G1-CONFIRM-A/B）对每条候选独立 CONFIRM/REJECT——此为进入 review_records 的真实审查事件",
+  "ADJUDICATE：分歧断言由裁决员（全新会话）终裁；双 CONFIRM=DUAL_ADJUDICATED 免裁决；含 REJECT 终态=REJECTED 不入金标（记录保留）",
+  "ASSEMBLE：确定性工具用 quote 定位字节 span → make_source_evidence_unit → 装配 eval-spine-reference-assertion-v1 对象 + digest 闭合 review 记录 → spine.validate_reference_assertions 零错误为出口门"
+ ],
+ "engine_provenance_convention": {
+  "engine_kind": "MODEL",
+  "engine_revision": "claude-fable-5",
+  "prompt_or_rule_digest": "本附录对应模板 sha256",
+  "provider_call_id": "headless session_id"
+ },
+ "prompt_templates": {
+  "g1_proposer": {
+   "text": "你是服装零售内容评测的参考断言抽取员（席位：{seat}）。这是双盲抽取：只依据本消息内材料独立工作。\n\n对下面每个源材料（source），从其 source_text 中抽取全部「参考断言」——原子化的、可核查的事实性断言。要求：\n- 每条断言一个不可再拆的事实（一个主语、一个谓词、一个客体值）；\n- quote 必须是 source_text 中的**逐字连续片段**（一字不改，作为证据锚，尽量短但覆盖断言依据）；\n- 不发明源文没有的内容；数量以忠实覆盖为准（典型 3–8 条/源）。\n\n每条断言输出字段：\n- source_id：所属源\n- subject / predicate / object_value：主语 / 谓词（英文snake_case动词短语）/ 客体值（字符串、数字或布尔）\n- unit：数值单位，无则 null\n- time_scope：时间范围描述，无则 null\n- polarity：\"POSITIVE\" 或 \"NEGATIVE\"\n- modality：\"OBSERVED\"（源中直接观察记录）/ \"REPORTED\"（源中转述）/ \"PLANNED\"（源中计划性表述）\n- preconditions：成立前提的字符串数组，无则 []\n- quote：source_text 的逐字连续片段\n- risk_class：\"LOW\"/\"MEDIUM\"/\"HIGH\"/\"CRITICAL\"（该断言若失实的风险载荷）\n\n只输出一个 JSON 数组（全部源的断言平铺），不得输出数组之外的任何字符。\n\n源材料批（JSON）：\n{batch_json}\n",
+   "sha256": "18fab3edf436990bd36aa64a570547bdbe0876ccfa7a29fdf1ca1e7e39f4dcd2"
+  },
+  "g1_merger": {
+   "text": "你是参考断言归并员。下面每个源有两位匿名抽取员（甲/乙）的断言提案。你的任务：为每个源产出一份**去重归并**的候选断言清单——\n- 语义等同的提案合并为一条（表述取更精确者，quote 取更准确者）；\n- 仅一方提出且忠实于源文的保留；发明源外内容的丢弃；\n- 保持原子性；字段格式与提案相同（source_id/subject/predicate/object_value/unit/time_scope/polarity/modality/preconditions/quote/risk_class）。\n\n只输出一个 JSON 数组（全部源的归并断言平铺），不得输出数组之外的任何字符。\n\n源与双方提案批（JSON）：\n{batch_json}\n",
+   "sha256": "7ed6aecb41bcc02a02b1156e38a3253837878ff020e05e7a24c1c928d9287354"
+  },
+  "g1_confirmer": {
+   "text": "你是服装零售内容评测的参考断言独立复核员（复核席位：{seat}）。这是独立复核：不存在其他复核员的答案可参考。\n\n对下面每条候选参考断言，核对其 quote（在 source_text 中的逐字证据）是否真实支持该断言的 subject/predicate/object_value/polarity/modality，且断言是原子的、未发明源外内容。\n\n逐条输出：{\"assertion_id\":\"…\",\"decision\":\"CONFIRM|REJECT\",\"rationale\":\"不超过30字\"}\n只输出一个 JSON 数组，覆盖全部 assertion_id，不得输出数组之外的任何字符。\n\n候选断言批（含 source_text，JSON）：\n{batch_json}\n",
+   "sha256": "c8a76a39b14334e143647a9af2ba42ba9eef0146f3d27367a86e43fe295e515b"
+  },
+  "g1_adjudicator": {
+   "text": "你是参考断言裁决员。两位匿名复核员对下面断言给出了不一致决定（甲/乙），你独立复核证据后给出最终裁决。\n\n逐条输出：{\"assertion_id\":\"…\",\"decision\":\"CONFIRM|REJECT\",\"rationale\":\"不超过30字\"}\n只输出一个 JSON 数组，覆盖全部 assertion_id，不得输出任何其他字符。\n\n分歧断言批（含 source_text 与双方决定，JSON）：\n{batch_json}\n",
+   "sha256": "fb4a28371a293bfe4ff0f83aadab881a0b0688fb762fffe4c703a281608c9b5b"
+  }
+ }
+}

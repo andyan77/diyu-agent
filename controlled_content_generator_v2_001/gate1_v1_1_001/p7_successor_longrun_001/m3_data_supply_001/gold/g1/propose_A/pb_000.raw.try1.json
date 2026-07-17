@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 180315,
+ "duration_api_ms": 180258,
+ "ttft_ms": 144374,
+ "ttft_stream_ms": 16936,
+ "time_to_request_ms": 29,
+ "num_turns": 1,
+ "result": "[\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n    \"subject\": \"固定侧机位\",\n    \"predicate\": \"covers\",\n    \"object_value\": \"两根分色杆\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"固定侧机位覆盖两根分色杆\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n    \"subject\": \"固定侧机位\",\n    \"predicate\": \"covers\",\n    \"object_value\": \"六次处理\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"覆盖两根分色杆、六次处理\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n    \"subject\": \"固定侧机位\",\n    \"predicate\": \"covers\",\n    \"object_value\": \"补水暂停\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"覆盖两根分色杆、六次处理、补水暂停\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n    \"subject\": \"固定侧机位\",\n    \"predicate\": \"covers\",\n    \"object_value\": \"二次处理杆\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"覆盖两根分色杆、六次处理、补水暂停与二次处理杆\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n    \"subject\": \"固定侧机位记录\",\n    \"predicate\": \"preserves_audio_of\",\n    \"object_value\": \"蒸汽声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"保留蒸汽声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n    \"subject\": \"固定侧机位记录\",\n    \"predicate\": \"preserves_audio_of\",\n    \"object_value\": \"衣架声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"保留蒸汽声和衣架声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n    \"subject\": \"设备旁清单\",\n    \"predicate\": \"records_first_round_processed_count\",\n    \"object_value\": 6,\n    \"unit\": \"件\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"设备旁清单记录六件首轮处理\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n    \"subject\": \"设备旁清单\",\n    \"predicate\": \"records_completion_clip_count\",\n    \"object_value\": 5,\n    \"unit\": \"件\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"五件完成夹\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n    \"subject\": \"设备旁清单\",\n    \"predicate\": \"records_front_placket_crease_count\",\n    \"object_value\": 1,\n    \"unit\": \"件\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"一件前襟折痕\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n    \"subject\": \"设备旁清单\",\n    \"predicate\": \"records_not_redone_state\",\n    \"object_value\": \"未复做\",\n    \"unit\": null,\n    \"time_scope\": \"15:18\",\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"15:18未复做状态\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"records\",\n    \"object_value\": \"检查垫\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"台面固定视频记录检查垫\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"records\",\n    \"object_value\": \"吊牌\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"记录检查垫、吊牌\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"records\",\n    \"object_value\": \"袖口近景\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"记录检查垫、吊牌、袖口近景\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"records\",\n    \"object_value\": \"透明待判断箱\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"记录检查垫、吊牌、袖口近景和透明待判断箱\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"contains\",\n    \"object_value\": \"人脸\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"不含人脸\",\n    \"risk_class\": \"HIGH\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"contains\",\n    \"object_value\": \"票据\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"不含人脸、票据\",\n    \"risk_class\": \"HIGH\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n    \"subject\": \"台面固定视频\",\n    \"predicate\": \"contains\",\n    \"object_value\": \"个人信息\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"不含人脸、票据或个人信息\",\n    \"risk_class\": \"HIGH\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n    \"subject\": \"初查纸条\",\n    \"predicate\": \"lists\",\n    \"object_value\": \"吊牌\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"初查纸条仅列吊牌\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n    \"subject\": \"初查纸条\",\n    \"predicate\": \"lists\",\n    \"object_value\": \"备用扣袋\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"仅列吊牌、备用扣袋\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n    \"subject\": \"初查纸条\",\n    \"predicate\": \"lists\",\n    \"object_value\": \"右袖口浅灰印\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"仅列吊牌、备用扣袋、右袖口浅灰印\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n    \"subject\": \"初查纸条\",\n    \"predicate\": \"lists\",\n    \"object_value\": \"转主管状态\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"仅列吊牌、备用扣袋、右袖口浅灰印与转主管状态\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n    \"subject\": \"初查纸条\",\n    \"predicate\": \"lists_only\",\n    \"object_value\": \"吊牌、备用扣袋、右袖口浅灰印与转主管状态\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"仅列吊牌、备用扣袋、右袖口浅灰印与转主管状态\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n    \"subject\": \"初查纸条\",\n    \"predicate\": \"contains\",\n    \"object_value\": \"退换结论\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"没有退换结论\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n    \"subject\": \"手部近景\",\n    \"predicate\": \"records\",\n    \"object_value\": \"拆旧线\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"手部近景记录拆旧线\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n    \"subject\": \"手部近景\",\n    \"predicate\": \"records\",\n    \"object_value\": \"2毫米定位针\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"记录拆旧线、2毫米定位针\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n    \"subject\": \"定位针\",\n    \"predicate\": \"has_diameter\",\n    \"object_value\": 2,\n    \"unit\": \"毫米\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"2毫米定位针\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n    \"subject\": \"手部近景\",\n    \"predicate\": \"records_piercing_count\",\n    \"object_value\": 6,\n    \"unit\": \"次\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"六次穿孔\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n    \"subject\": \"手部近景\",\n    \"predicate\": \"records_shank_wrap_count\",\n    \"object_value\": 4,\n    \"unit\": \"圈\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"四圈绕脚\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n    \"subject\": \"手部近景\",\n    \"predicate\": \"records\",\n    \"object_value\": \"垫布角\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"记录拆旧线、2毫米定位针、六次穿孔、四圈绕脚与垫布角\",\n    \"risk_class\": \"LOW\"\n  }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "37cdda8b-ae48-49af-8560-245fb84ad835",
+ "total_cost_usd": 1.155214,
+ "usage": {
+  "input_tokens": 3452,
+  "cache_creation_input_tokens": 16029,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 15648,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 16029,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3452,
+    "output_tokens": 15648,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 16029,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 16029
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3452,
+   "outputTokens": 15648,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 16029,
+   "webSearchRequests": 0,
+   "costUSD": 1.155214,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "cb42b8df-bdae-4c24-bb36-7cfc5dc471c5"
+}

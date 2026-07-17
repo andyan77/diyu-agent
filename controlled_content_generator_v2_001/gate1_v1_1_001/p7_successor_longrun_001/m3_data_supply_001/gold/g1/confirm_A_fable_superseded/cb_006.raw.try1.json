@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 55457,
+ "duration_api_ms": 55386,
+ "ttft_ms": 47003,
+ "ttft_stream_ms": 8471,
+ "time_to_request_ms": 41,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-001-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，20升背包容量成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-001-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"三天日程卡逐字在源，时长3天成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-001-B-14\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录场合成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-001-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录重复穿着位置成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-001-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录不能洗衣条件成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-001-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录鞋试走状态成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-004-A-18\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字在源，前提标注共同提供，拆分合规\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-004-A-19\",\"decision\":\"CONFIRM\",\"rationale\":\"连续逐字子串，前提标注共同提供\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-004-A-20\",\"decision\":\"CONFIRM\",\"rationale\":\"连续逐字子串，前提标注共同提供\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-004-B-21\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，包含大一码增量成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-004-B-22\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，包含旧裤舒适状态成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-004-B-23\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，包含筛选条件成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-01\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，画面呈现三件衣物成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-02\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，覆盖三节点成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-03\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字子串，视频支持可执行性可分配成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "46a6d7ee-ff02-4327-9897-4a0af5fdea5e",
+ "total_cost_usd": 0.560464,
+ "usage": {
+  "input_tokens": 3309,
+  "cache_creation_input_tokens": 14853,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 4252,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14853,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3309,
+    "output_tokens": 4252,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14853,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14853
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3309,
+   "outputTokens": 4252,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14853,
+   "webSearchRequests": 0,
+   "costUSD": 0.560464,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "728588a6-a4c8-47d3-97b3-d5cdfcac24a4"
+}

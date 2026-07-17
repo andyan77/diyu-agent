@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 53521,
+ "duration_api_ms": 53447,
+ "ttft_ms": 44550,
+ "ttft_stream_ms": 4291,
+ "time_to_request_ms": 41,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，画面为并列主语之一支持可执行性\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-05\",\"decision\":\"CONFIRM\",\"rationale\":\"源文'三件衣物'直接支持数量3件\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-B-06\",\"decision\":\"CONFIRM\",\"rationale\":\"列表拆分，quote逐字支持记录温度\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-B-07\",\"decision\":\"CONFIRM\",\"rationale\":\"列表拆分，quote逐字支持记录步行时长\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-B-08\",\"decision\":\"CONFIRM\",\"rationale\":\"列表拆分，quote逐字支持记录室内暖气\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"列表拆分，quote逐字支持记录易出汗偏好\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-B-10\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，卡记录外套无填充事实\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-B-11\",\"decision\":\"CONFIRM\",\"rationale\":\"'无填充事实'支持否定断言，卡上记录合REPORTED\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"画面为三种袜法之画面，覆盖关系成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字含站立坐下步行三状态\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-A-14\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，近景展示可见差异直接陈述\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-A-15\",\"decision\":\"CONFIRM\",\"rationale\":\"画面为并列主语之一展示可见差异\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-A-16\",\"decision\":\"CONFIRM\",\"rationale\":\"源文'三种袜法'直接支持数量3种\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"展会时长为并列主语之一支持该顺序\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"鞋袜材质为并列主语之一支持该顺序\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "322dca4a-73f5-4fbf-8ca1-66fabfbee2c5",
+ "total_cost_usd": 0.559184,
+ "usage": {
+  "input_tokens": 3313,
+  "cache_creation_input_tokens": 14582,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 4334,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14582,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3313,
+    "output_tokens": 4334,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14582,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14582
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3313,
+   "outputTokens": 4334,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14582,
+   "webSearchRequests": 0,
+   "costUSD": 0.559184,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "d30715d7-3ca6-43a4-900b-2a921ebb253f"
+}

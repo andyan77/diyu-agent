@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 47793,
+ "duration_api_ms": 47733,
+ "ttft_ms": 37832,
+ "ttft_stream_ms": 3963,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-16\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，支持视频不含票据的否定断言\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-17\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，支持不含个人信息的否定断言\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，纸条列有吊牌成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，列有备用扣袋成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，列有右袖口浅灰印成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-21\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，列有转主管状态成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-22\",\"decision\":\"CONFIRM\",\"rationale\":\"源'仅列'支持穷尽性，lists_only需整组不可拆\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-23\",\"decision\":\"CONFIRM\",\"rationale\":\"引文'没有退换结论'逐字在源，支持否定\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-24\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录拆旧线成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-25\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录2毫米定位针成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-26\",\"decision\":\"REJECT\",\"rationale\":\"源仅称'2毫米定位针'，未指明2毫米为直径，维度系发明\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-27\",\"decision\":\"CONFIRM\",\"rationale\":\"'六次穿孔'支持穿孔次数为6，数字归一化合理\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-28\",\"decision\":\"CONFIRM\",\"rationale\":\"'四圈绕脚'支持绕脚圈数为4\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-29\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，记录垫布角成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-B-01\",\"decision\":\"CONFIRM\",\"rationale\":\"'穿孔和绕脚次数'分配后含穿孔次数，引文逐字在源\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "9f1aa2b7-73e3-404c-a0cd-0300045a2a05",
+ "total_cost_usd": 0.5350440000000001,
+ "usage": {
+  "input_tokens": 3303,
+  "cache_creation_input_tokens": 14485,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 3892,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14485,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3303,
+    "output_tokens": 3892,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14485,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14485
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3303,
+   "outputTokens": 3892,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14485,
+   "webSearchRequests": 0,
+   "costUSD": 0.5350440000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "0eacbac1-4437-424a-a605-1a4da5853ae3"
+}

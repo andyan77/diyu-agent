@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 37941,
+ "duration_api_ms": 37873,
+ "ttft_ms": 29338,
+ "ttft_stream_ms": 4634,
+ "time_to_request_ms": 35,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-B-07\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，随后是…坐姿侧后方对照支持谓词\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-B-08\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，机器声即视频含该音频\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"三十五厘米标线逐字在源，35厘米数值成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-A-10\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，三种格型支持计数3种\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-A-11\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，记录肘线位置成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，记录观察结果成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，箭头标明向上三厘米成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-B-14\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，三块样片支持计数3块\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，拍到样片折痕阴影成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，拍到下角偏移成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，拍到最终车线过程成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，原声含压脚起落成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-006-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，原声含均匀机针声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-002-A-20\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，列出裙褶数量成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-002-A-21\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，列出离地高度成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "8f939427-4971-41b2-8952-3e75eff41735",
+ "total_cost_usd": 0.515494,
+ "usage": {
+  "input_tokens": 3600,
+  "cache_creation_input_tokens": 14679,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 3364,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14679,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3600,
+    "output_tokens": 3364,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14679,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14679
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3600,
+   "outputTokens": 3364,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14679,
+   "webSearchRequests": 0,
+   "costUSD": 0.515494,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "c2cb0d3c-2386-4e26-b864-05805b5fd2ba"
+}

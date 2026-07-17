@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 40872,
+ "duration_api_ms": 40808,
+ "ttft_ms": 31945,
+ "ttft_stream_ms": 3340,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-16\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'不含人脸、票据'支持负极性contains\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-17\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'不含…个人信息'支持负极性contains\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'仅列吊牌'支持lists吊牌\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'仅列吊牌、备用扣袋'支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字含'右袖口浅灰印'，支持lists\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-21\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字含'转主管状态'，支持lists\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-22\",\"decision\":\"CONFIRM\",\"rationale\":\"'仅列'支持lists_only，穷举集不可拆仍属原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-B-23\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'没有退换结论'支持负极性\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-24\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'记录拆旧线'支持records\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-25\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字含'2毫米定位针'，支持records\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-26\",\"decision\":\"REJECT\",\"rationale\":\"源未言明2毫米为直径，维度属源外推断\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-27\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'六次穿孔'支持计数6次\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-28\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字'四圈绕脚'支持计数4圈\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-A-29\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字含'垫布角'，支持records\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-B-01\",\"decision\":\"CONFIRM\",\"rationale\":\"'穿孔和绕脚次数'分配后含穿孔次数\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "020f5c5e-7146-4792-b7b2-c09888a88265",
+ "total_cost_usd": 0.510014,
+ "usage": {
+  "input_tokens": 3313,
+  "cache_creation_input_tokens": 14481,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 3391,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14481,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3313,
+    "output_tokens": 3391,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14481,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14481
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3313,
+   "outputTokens": 3391,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14481,
+   "webSearchRequests": 0,
+   "costUSD": 0.510014,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "9263acd2-8b13-451e-a06d-9f783db9feee"
+}

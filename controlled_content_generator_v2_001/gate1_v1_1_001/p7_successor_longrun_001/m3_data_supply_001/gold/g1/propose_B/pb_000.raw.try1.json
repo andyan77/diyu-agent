@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 192747,
+ "duration_api_ms": 192359,
+ "ttft_ms": 160557,
+ "ttft_stream_ms": 10043,
+ "time_to_request_ms": 358,
+ "num_turns": 1,
+ "result": "[\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n  \"subject\": \"固定侧机位\",\n  \"predicate\": \"covers_color_sorting_rails\",\n  \"object_value\": 2,\n  \"unit\": \"根\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"固定侧机位覆盖两根分色杆\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n  \"subject\": \"固定侧机位\",\n  \"predicate\": \"covers_processing_passes\",\n  \"object_value\": 6,\n  \"unit\": \"次\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"六次处理\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n  \"subject\": \"固定侧机位\",\n  \"predicate\": \"covers_water_refill_pause\",\n  \"object_value\": true,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"补水暂停\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n  \"subject\": \"固定侧机位\",\n  \"predicate\": \"covers_second_pass_rail\",\n  \"object_value\": true,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"二次处理杆\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n  \"subject\": \"固定侧机位\",\n  \"predicate\": \"retains_sound\",\n  \"object_value\": \"蒸汽声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"保留蒸汽声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-A\",\n  \"subject\": \"固定侧机位\",\n  \"predicate\": \"retains_sound\",\n  \"object_value\": \"衣架声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"保留蒸汽声和衣架声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n  \"subject\": \"设备旁清单\",\n  \"predicate\": \"records_first_round_processed_count\",\n  \"object_value\": 6,\n  \"unit\": \"件\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"设备旁清单记录六件首轮处理\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n  \"subject\": \"设备旁清单\",\n  \"predicate\": \"records_completion_clip_count\",\n  \"object_value\": 5,\n  \"unit\": \"件\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"五件完成夹\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n  \"subject\": \"设备旁清单\",\n  \"predicate\": \"records_front_placket_crease_count\",\n  \"object_value\": 1,\n  \"unit\": \"件\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"一件前襟折痕\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-006-B\",\n  \"subject\": \"前襟折痕件\",\n  \"predicate\": \"redo_completed\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": \"15:18\",\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [\"该件已被记录为一件前襟折痕\"],\n  \"quote\": \"15:18未复做状态\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"records\",\n  \"object_value\": \"检查垫\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"台面固定视频记录检查垫\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"records\",\n  \"object_value\": \"吊牌\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"吊牌\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"records\",\n  \"object_value\": \"袖口近景\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"袖口近景\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"records\",\n  \"object_value\": \"透明待判断箱\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"透明待判断箱\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"contains_face\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"不含人脸\",\n  \"risk_class\": \"HIGH\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"contains_receipt\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"不含人脸、票据\",\n  \"risk_class\": \"HIGH\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-A\",\n  \"subject\": \"台面固定视频\",\n  \"predicate\": \"contains_personal_information\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"不含人脸、票据或个人信息\",\n  \"risk_class\": \"HIGH\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n  \"subject\": \"初查纸条\",\n  \"predicate\": \"lists\",\n  \"object_value\": \"吊牌\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"初查纸条仅列吊牌\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n  \"subject\": \"初查纸条\",\n  \"predicate\": \"lists\",\n  \"object_value\": \"备用扣袋\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"备用扣袋\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n  \"subject\": \"初查纸条\",\n  \"predicate\": \"lists\",\n  \"object_value\": \"右袖口浅灰印\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"右袖口浅灰印\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n  \"subject\": \"初查纸条\",\n  \"predicate\": \"lists\",\n  \"object_value\": \"转主管状态\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"转主管状态\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n  \"subject\": \"初查纸条\",\n  \"predicate\": \"lists_only_items\",\n  \"object_value\": \"吊牌、备用扣袋、右袖口浅灰印、转主管状态\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"仅列吊牌、备用扣袋、右袖口浅灰印与转主管状态\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP02-008-B\",\n  \"subject\": \"初查纸条\",\n  \"predicate\": \"contains_return_exchange_conclusion\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"没有退换结论\",\n  \"risk_class\": \"HIGH\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n  \"subject\": \"手部近景\",\n  \"predicate\": \"records\",\n  \"object_value\": \"拆旧线\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"手部近景记录拆旧线\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n  \"subject\": \"手部近景\",\n  \"predicate\": \"records\",\n  \"object_value\": \"2毫米定位针\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"2毫米定位针\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n  \"subject\": \"定位针\",\n  \"predicate\": \"has_diameter\",\n  \"object_value\": 2,\n  \"unit\": \"毫米\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"2毫米定位针\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n  \"subject\": \"手部近景\",\n  \"predicate\": \"records_piercing_pass_count\",\n  \"object_value\": 6,\n  \"unit\": \"次\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"六次穿孔\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n  \"subject\": \"手部近景\",\n  \"predicate\": \"records_shank_wrap_count\",\n  \"object_value\": 4,\n  \"unit\": \"圈\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"四圈绕脚\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-A\",\n  \"subject\": \"手部近景\",\n  \"predicate\": \"records\",\n  \"object_value\": \"垫布角\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"垫布角\",\n  \"risk_class\": \"LOW\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "7020263a-fc06-4f0f-89c2-36c6fba320dc",
+ "total_cost_usd": 1.2121840000000002,
+ "usage": {
+  "input_tokens": 3250,
+  "cache_creation_input_tokens": 16031,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 16827,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 16031,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3250,
+    "output_tokens": 16827,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 16031,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 16031
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3250,
+   "outputTokens": 16827,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 16031,
+   "webSearchRequests": 0,
+   "costUSD": 1.2121840000000002,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "94caa1e8-92d6-4a78-b3c8-1958d93af565"
+}

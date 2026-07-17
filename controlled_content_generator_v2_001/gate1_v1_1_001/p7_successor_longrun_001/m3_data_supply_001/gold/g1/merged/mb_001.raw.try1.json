@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 132552,
+ "duration_api_ms": 132487,
+ "ttft_ms": 107825,
+ "ttft_stream_ms": 6002,
+ "time_to_request_ms": 35,
+ "num_turns": 1,
+ "result": "[\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-B\",\n  \"subject\": \"工序便笺\",\n  \"predicate\": \"lists\",\n  \"object_value\": \"穿孔次数\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"工序便笺列明穿孔和绕脚次数\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-B\",\n  \"subject\": \"工序便笺\",\n  \"predicate\": \"lists\",\n  \"object_value\": \"绕脚次数\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"工序便笺列明穿孔和绕脚次数\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-B\",\n  \"subject\": \"功能试穿\",\n  \"predicate\": \"passed_through\",\n  \"object_value\": \"门襟\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"功能试穿过门襟\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-005-B\",\n  \"subject\": \"收尾工序\",\n  \"predicate\": \"remains_to_be_completed\",\n  \"object_value\": \"补一针\",\n  \"unit\": null,\n  \"time_scope\": \"截至便笺记录时\",\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"PLANNED\",\n  \"preconditions\": [],\n  \"quote\": \"待补一针\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-A\",\n  \"subject\": \"贴条\",\n  \"predicate\": \"has_width\",\n  \"object_value\": 2,\n  \"unit\": \"厘米\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"2厘米贴条\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-A\",\n  \"subject\": \"试片\",\n  \"predicate\": \"has_count\",\n  \"object_value\": 2,\n  \"unit\": \"块\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"两块试片\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-A\",\n  \"subject\": \"热压操作\",\n  \"predicate\": \"was_performed_times\",\n  \"object_value\": 2,\n  \"unit\": \"次\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"两次3秒热压\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-A\",\n  \"subject\": \"单次热压\",\n  \"predicate\": \"has_duration\",\n  \"object_value\": 3,\n  \"unit\": \"秒\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"两次3秒热压\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-A\",\n  \"subject\": \"工位素材\",\n  \"predicate\": \"records_step\",\n  \"object_value\": \"冷却\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"冷却与30秒喷淋\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-A\",\n  \"subject\": \"喷淋\",\n  \"predicate\": \"has_duration\",\n  \"object_value\": 30,\n  \"unit\": \"秒\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"30秒喷淋\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-B\",\n  \"subject\": \"工艺过程\",\n  \"predicate\": \"added_glue\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"工艺记录写明未加胶\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-B\",\n  \"subject\": \"热压\",\n  \"predicate\": \"adopts_parameter_set\",\n  \"object_value\": \"无压亮试片参数\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"采用无压亮试片参数\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-B\",\n  \"subject\": \"喷淋观察\",\n  \"predicate\": \"completed_scope_limited_to\",\n  \"object_value\": \"短时\",\n  \"unit\": null,\n  \"time_scope\": \"截至工艺记录时\",\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"仅完成短时喷淋观察\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP03-012-B\",\n  \"subject\": \"长时喷淋观察\",\n  \"predicate\": \"was_performed\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": \"截至工艺记录时\",\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"仅完成短时喷淋观察\",\n  \"risk_class\": \"HIGH\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-A\",\n  \"subject\": \"口述记录\",\n  \"predicate\": \"is_labeled_as\",\n  \"object_value\": \"合成\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"合成口述记录\",\n  \"risk_class\": \"HIGH\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-A\",\n  \"subject\": \"合成口述记录\",\n  \"predicate\": \"records\",\n  \"object_value\": \"他对混批返查的回忆\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"合成口述记录他对混批返查的回忆\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-A\",\n  \"subject\": \"他\",\n  \"predicate\": \"recalls_experiencing\",\n  \"object_value\": \"混批返查\",\n  \"unit\": null,\n  \"time_scope\": \"过去（回忆所指时期）\",\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"他对混批返查的回忆\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-A\",\n  \"subject\": \"他\",\n  \"predicate\": \"prioritizes_checking_info_items\",\n  \"object_value\": 3,\n  \"unit\": \"项\",\n  \"time_scope\": \"混批返查之后（后来）\",\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [\n   \"填写库位卡时\"\n  ],\n  \"quote\": \"后来填写库位卡时优先看的三项信息\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-B\",\n  \"subject\": \"纸条旧样\",\n  \"predicate\": \"constitutes_part_of\",\n  \"object_value\": \"阶段证据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"纸条旧样、带染批尾码的新库位卡和四次抽查页构成阶段证据\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-B\",\n  \"subject\": \"新库位卡\",\n  \"predicate\": \"constitutes_part_of\",\n  \"object_value\": \"阶段证据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"带染批尾码的新库位卡和四次抽查页构成阶段证据\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-B\",\n  \"subject\": \"抽查页\",\n  \"predicate\": \"constitutes_part_of\",\n  \"object_value\": \"阶段证据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"四次抽查页构成阶段证据\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-B\",\n  \"subject\": \"新库位卡\",\n  \"predicate\": \"carries_field\",\n  \"object_value\": \"染批尾码\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"带染批尾码的新库位卡\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP05-003-B\",\n  \"subject\": \"抽查页\",\n  \"predicate\": \"has_documented_count\",\n  \"object_value\": 4,\n  \"unit\": \"次\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"四次抽查页\",\n  \"risk_class\": \"LOW\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "97522620-4807-4446-b625-793dd01c07c3",
+ "total_cost_usd": 1.037064,
+ "usage": {
+  "input_tokens": 3477,
+  "cache_creation_input_tokens": 18644,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 12234,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 18644,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3477,
+    "output_tokens": 12234,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 18644,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 18644
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3477,
+   "outputTokens": 12234,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 18644,
+   "webSearchRequests": 0,
+   "costUSD": 1.037064,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "ee723868-e31c-4f6f-8640-b0c7dbc1c6d3"
+}

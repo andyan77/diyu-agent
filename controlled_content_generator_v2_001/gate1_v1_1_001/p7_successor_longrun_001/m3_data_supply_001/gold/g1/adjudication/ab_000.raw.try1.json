@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 100785,
+ "duration_api_ms": 100720,
+ "ttft_ms": 90317,
+ "ttft_stream_ms": 9730,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-B-10\",\"decision\":\"REJECT\",\"rationale\":\"清单确记录该状态，记录关系成立应为POSITIVE，极性标错\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-05\",\"decision\":\"REJECT\",\"rationale\":\"原文未指明2厘米为宽度，维度属推断非原文\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-B-14\",\"decision\":\"CONFIRM\",\"rationale\":\"仅字具排他义，支持长时观察未进行\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-A-17\",\"decision\":\"REJECT\",\"rationale\":\"原文仅称回忆，亲历为附加推断\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-03\",\"decision\":\"CONFIRM\",\"rationale\":\"源句按三期回忆，该期在列，组织关系成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"源句按三期回忆，该期在列，组织关系成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP06-009-B-06\",\"decision\":\"CONFIRM\",\"rationale\":\"源句并列记录项含未做长期验证，记录关系成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-03\",\"decision\":\"CONFIRM\",\"rationale\":\"并列主语可分配，视频支持可执行性成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-006-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"并列主语可分配，画面支持可执行性成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-A-15\",\"decision\":\"CONFIRM\",\"rationale\":\"并列主语可分配，画面展示可见差异成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"三项并列各为支持因素，展会时长成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"三项并列各为支持因素，鞋袜材质成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字记录每次办公穿着，周期表语境下每次即每周期\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"领尖数值在记录并列项中，记录关系成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"灰线状态在记录并列项中，记录关系成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "8700c696-166b-4a00-bae2-e99049c92436",
+ "total_cost_usd": 0.761564,
+ "usage": {
+  "input_tokens": 3309,
+  "cache_creation_input_tokens": 17138,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 7360,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 17138,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3309,
+    "output_tokens": 7360,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 17138,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 17138
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3309,
+   "outputTokens": 7360,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 17138,
+   "webSearchRequests": 0,
+   "costUSD": 0.761564,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "26a92493-e8ae-4e47-8eaa-b78a4e3764a2"
+}

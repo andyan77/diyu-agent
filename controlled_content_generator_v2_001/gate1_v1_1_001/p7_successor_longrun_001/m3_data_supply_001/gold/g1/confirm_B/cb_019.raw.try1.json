@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 54812,
+ "duration_api_ms": 54748,
+ "ttft_ms": 45917,
+ "ttft_stream_ms": 6093,
+ "time_to_request_ms": 32,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-B-02\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，灯箱配工具台声成立且原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-B-03\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，拥挤照片配工具台声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-006-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，排产表支持决策成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-006-A-05\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，页面版本支持决策成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-006-A-06\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，候补计数支持决策成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-006-B-07\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，工序板配缝纫声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-006-B-08\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，页面上限配缝纫声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-006-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，候补界面配缝纫声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-A-10\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，并列项承诺提供支持成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-A-11\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，称重表提供支持成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，试验提供支持成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，反馈分类为末项主语成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-B-14\",\"decision\":\"CONFIRM\",\"rationale\":\"称重和包装声并列省略，含称重声\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，电子秤配包装声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP20-005-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"纸卡为并列项，配称重声成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "fe81f344-1e1a-4c1b-9f71-6476cace1ed7",
+ "total_cost_usd": 0.5679639999999999,
+ "usage": {
+  "input_tokens": 3318,
+  "cache_creation_input_tokens": 14146,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 4683,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14146,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3318,
+    "output_tokens": 4683,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14146,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14146
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3318,
+   "outputTokens": 4683,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14146,
+   "webSearchRequests": 0,
+   "costUSD": 0.5679639999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "aa9f2495-949a-4522-bc2e-382ac223964c"
+}

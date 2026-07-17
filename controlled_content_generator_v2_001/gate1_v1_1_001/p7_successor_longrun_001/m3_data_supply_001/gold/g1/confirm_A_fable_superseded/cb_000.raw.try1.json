@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 46649,
+ "duration_api_ms": 46580,
+ "ttft_ms": 38823,
+ "ttft_stream_ms": 8069,
+ "time_to_request_ms": 26,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-A-01\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源中，两根分色杆支持数值2根\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-A-02\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，六次处理支持数值6次\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-A-03\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，覆盖补水暂停支持true\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，覆盖二次处理杆支持true\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-A-05\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，保留蒸汽声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-A-06\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，保留衣架声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-B-07\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，六件首轮处理支持6件\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-B-08\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，五件完成夹支持5件\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，一件前襟折痕支持1件\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-006-B-10\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，15:18未复做状态与负极性一致\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-11\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，记录检查垫成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，记录吊牌成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，记录袖口近景成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-14\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，记录透明待判断箱成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP02-008-A-15\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，不含人脸支持负极性\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "1dd2f94a-4642-4b19-a18f-ce14c25d9684",
+ "total_cost_usd": 0.529914,
+ "usage": {
+  "input_tokens": 3328,
+  "cache_creation_input_tokens": 14536,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 3764,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14536,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3328,
+    "output_tokens": 3764,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14536,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14536
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3328,
+   "outputTokens": 3764,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14536,
+   "webSearchRequests": 0,
+   "costUSD": 0.529914,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "9b42e0bf-d8a7-4ab1-a64e-bebe2908984d"
+}

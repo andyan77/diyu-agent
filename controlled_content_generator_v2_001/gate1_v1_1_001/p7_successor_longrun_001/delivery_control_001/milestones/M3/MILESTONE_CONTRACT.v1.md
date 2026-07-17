@@ -43,7 +43,7 @@ M2 CLOSED_PASS（八件套 8/8 + typed PASS 5eaec1a6 + 双独立签字）；chec
 - **保全角色承载**：`SEALED_DATA_CUSTODIAN = 确定性工具链`（p7 写面内 custody 工具 + 隔离明文承载区），非模型会话；工具结构性只输出数量/摘要/回执（技术强制，非提示词软约束）。
 - **明文承载区**：`controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/sealed_custody_001/`——**gitignore 强制 + 断言门控提交前置扫描（staged 路径命中承载区 = 拒绝提交）**；明文零字节进 Git 历史；目录级隔离为本环境可达上限（单用户环境无独立文件系统边界，如实披露，双审核复核）。
 - **主会话（M3_PRINCIPAL_ORCHESTRATOR）**：零接触 QUAL 明文（启动豁免附带承诺，journal seq30）；主会话只经工具 stdout 读取数量/摘要/回执。
-- **接触明文的会话**（双盲标注/裁决）：全新非 fork 无工具 headless 单次调用（`claude -p`，`CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` 注入，明文由确定性工具在进程内送入、标签回写承载区），逐会话登记（会话标识、可见材料清单、销毁/留存方式）；载体可行性在胶囊②小试中先证，不可行 = 停 + 报发起人。
+- **接触明文的会话**（双盲标注/裁决）：全新非 fork 无工具 headless 单次调用，明文由确定性工具在进程内送入、标签回写承载区，逐会话登记（会话/线程标识、可见材料清单、销毁/留存方式）；载体可行性先证（胶囊②小试 + Codex 探针），不可行 = 停 + 报发起人。**席位承载（发起人 2026-07-17 双裁决，journal seq38）**：席位 A = Codex-GPT（`codex exec --ephemeral -s read-only`，scope v1.1；**本合同显式授予其 QUAL-A/B 题面标注期可见**——scope v1 §3-3 里程碑例外通道的行使；不见另一席位标签与金标终值）；席位 B = Fable（`claude -p` + `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1`）；裁决席 = Fable（披露与 B 同模型，分歧材料匿名化）。
 - **禁止消费方**（qualification_manifest）：主会话兼任 EVALUATOR_DEVELOPER/RUBRIC_DEVELOPER 身位，属 QUAL 金标禁止消费方——与零接触承诺一致。
 
 ## 出口（MILESTONE_EXIT_CONTRACT M3 行，本胶囊冻结）

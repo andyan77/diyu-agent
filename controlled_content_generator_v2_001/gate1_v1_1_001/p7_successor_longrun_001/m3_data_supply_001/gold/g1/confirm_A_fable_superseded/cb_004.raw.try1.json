@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 69100,
+ "duration_api_ms": 69032,
+ "ttft_ms": 60438,
+ "ttft_stream_ms": 4505,
+ "time_to_request_ms": 38,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，「六件衬衫样衣检查页」支持数量6件\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-B-10\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，三类材料共同构成证据，集合断言原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-A-11\",\"decision\":\"CONFIRM\",\"rationale\":\"「合成访谈中」逐字支持材料形态为合成访谈\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字支持她对比新旧方法，前提相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"「早期被退回」逐字支持退回事实与时间域\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-A-14\",\"decision\":\"CONFIRM\",\"rationale\":\"「现在逐项对图」逐字支持现工作方法特征\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"「20条抽查记录」逐字支持数量20条\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"「两次修正」逐字支持修正次数2\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"退回旧稿系证明材料之一，引文逐字\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"拍摄核对表系证明材料之一，引文逐字\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"连续引文支持三材料证明阶段变化，拆分原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-012-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"引文含「与两次修正」，证明对象成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP06-009-A-21\",\"decision\":\"CONFIRM\",\"rationale\":\"「连续镜头」逐字支持镜头连续性\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP06-009-A-22\",\"decision\":\"CONFIRM\",\"rationale\":\"并列结构共享「的连续镜头」，含开线微距\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP06-009-A-23\",\"decision\":\"CONFIRM\",\"rationale\":\"并列结构下补强过程属连续镜头内容\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "7456730e-de07-405d-9925-d0beaca6919c",
+ "total_cost_usd": 0.6178140000000001,
+ "usage": {
+  "input_tokens": 3309,
+  "cache_creation_input_tokens": 14438,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 5565,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14438,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3309,
+    "output_tokens": 5565,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14438,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14438
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3309,
+   "outputTokens": 5565,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14438,
+   "webSearchRequests": 0,
+   "costUSD": 0.6178140000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "db63d838-4fa7-4d20-968f-0d655a823d3b"
+}

@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 109099,
+ "duration_api_ms": 109029,
+ "ttft_ms": 99816,
+ "ttft_stream_ms": 27732,
+ "time_to_request_ms": 35,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-A-17\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，回忆混批返查支持REPORTED断言\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-A-18\",\"decision\":\"CONFIRM\",\"rationale\":\"逐字支持三项/填卡前提/后来时序\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"三项并列构成证据，原子拆分成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"quote连续逐字，新库位卡属证据成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-B-21\",\"decision\":\"CONFIRM\",\"rationale\":\"quote连续逐字，抽查页属证据成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-B-22\",\"decision\":\"CONFIRM\",\"rationale\":\"带染批尾码逐字支持carries_field\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-B-23\",\"decision\":\"CONFIRM\",\"rationale\":\"四次逐字，记录次数4/次成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-01\",\"decision\":\"CONFIRM\",\"rationale\":\"文首自述合成口述，类型元断言成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-02\",\"decision\":\"CONFIRM\",\"rationale\":\"按直缝期逐字，分期组织成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-03\",\"decision\":\"CONFIRM\",\"rationale\":\"胚布练习期逐字在列，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"基础衬衫独立期逐字在列，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-05\",\"decision\":\"CONFIRM\",\"rationale\":\"回忆主题逐字支持，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-A-06\",\"decision\":\"CONFIRM\",\"rationale\":\"标记变化REPORTED+三期时段有据\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-B-07\",\"decision\":\"CONFIRM\",\"rationale\":\"五件逐字，数值5/件绑定该表成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-005-B-08\",\"decision\":\"CONFIRM\",\"rationale\":\"四段逐字，段数4/段成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "b8b5ddf1-eb6c-4623-9e2b-6585ea220b9a",
+ "total_cost_usd": 0.700004,
+ "usage": {
+  "input_tokens": 3447,
+  "cache_creation_input_tokens": 14436,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 7182,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14436,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3447,
+    "output_tokens": 7182,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14436,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14436
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3447,
+   "outputTokens": 7182,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14436,
+   "webSearchRequests": 0,
+   "costUSD": 0.700004,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "1e788a8b-c825-4efe-8177-3333244c9944"
+}

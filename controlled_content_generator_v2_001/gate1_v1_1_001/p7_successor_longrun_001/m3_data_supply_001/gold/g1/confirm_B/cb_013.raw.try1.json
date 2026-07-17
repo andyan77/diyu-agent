@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 69878,
+ "duration_api_ms": 69804,
+ "ttft_ms": 60847,
+ "ttft_stream_ms": 38822,
+ "time_to_request_ms": 38,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，支持记录两段场景下装，原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，支持记录两段场景明袋内容\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-A-14\",\"decision\":\"CONFIRM\",\"rationale\":\"源明言防风排除在本次角色外，负极性成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-A-15\",\"decision\":\"CONFIRM\",\"rationale\":\"源明言保暖排除在本次角色外，负极性成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，围绕同一件外套成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含拍帽子折进明袋，原子成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含双手端咖啡，拍摄内容成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含到站扣帽，拍摄内容成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含门店走动看陈列，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-21\",\"decision\":\"CONFIRM\",\"rationale\":\"源明言环境声来自到站提示，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP13-005-B-22\",\"decision\":\"CONFIRM\",\"rationale\":\"源明言环境声来自衣料摩擦，原子拆分合理\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP14-006-A-23\",\"decision\":\"CONFIRM\",\"rationale\":\"三十厘米=30厘米，宽度值与单位一致\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP14-006-A-24\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含拍摄时刻，记录项成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP14-006-A-25\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含东向窗位，记录项成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP14-006-A-26\",\"decision\":\"CONFIRM\",\"rationale\":\"源逐字含四层至单层顺序，记录项成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "ca28a276-3ae6-40d1-a19f-a1cda4138d23",
+ "total_cost_usd": 0.496224,
+ "usage": {
+  "input_tokens": 3328,
+  "cache_creation_input_tokens": 14749,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 3005,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14749,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3328,
+    "output_tokens": 3005,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14749,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14749
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3328,
+   "outputTokens": 3005,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14749,
+   "webSearchRequests": 0,
+   "costUSD": 0.496224,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "ec7ff931-aa8d-4106-aa2d-b120fb140b77"
+}

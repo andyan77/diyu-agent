@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 55190,
+ "duration_api_ms": 55122,
+ "ttft_ms": 45268,
+ "ttft_stream_ms": 4139,
+ "time_to_request_ms": 33,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-011-B-08\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，卷帘声属所收声音之一，拆分原子成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-011-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，推车声属所收声音之一，拆分原子成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-011-B-10\",\"decision\":\"CONFIRM\",\"rationale\":\"源文'只收'支持限定语义，对象为完整限定集，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-A-11\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，洗样表支持全程由并列拆分直接蕴含\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"引文为源文连续子串，报价支持全程成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"引文为源文连续子串，改期审批支持全程成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-B-14\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，缩水标尺可拍由并列拆分蕴含\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"引文为源文连续子串，两料可拍成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"引文为源文连续子串，改期界面可拍成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-004-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"主语为可拍项的集合指称，配声语义源文直接支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-A-18\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，改造方案构成证据由拆分蕴含\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-A-19\",\"decision\":\"CONFIRM\",\"rationale\":\"引文为源文连续子串，匿名周报构成证据成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-A-20\",\"decision\":\"CONFIRM\",\"rationale\":\"引文为源文连续子串，费用单构成证据成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-A-21\",\"decision\":\"CONFIRM\",\"rationale\":\"定语'匿名'谓词化，指源文该周报，蕴含成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP19-005-B-01\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字在源，维修台配工具台声由拆分蕴含\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "aed49700-a3af-48a2-a742-2b8187d16441",
+ "total_cost_usd": 0.557204,
+ "usage": {
+  "input_tokens": 3231,
+  "cache_creation_input_tokens": 14119,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 4496,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14119,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3231,
+    "output_tokens": 4496,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14119,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14119
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3231,
+   "outputTokens": 4496,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14119,
+   "webSearchRequests": 0,
+   "costUSD": 0.557204,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "f6df79e1-bc61-494a-a8a4-1b7838b0ce08"
+}

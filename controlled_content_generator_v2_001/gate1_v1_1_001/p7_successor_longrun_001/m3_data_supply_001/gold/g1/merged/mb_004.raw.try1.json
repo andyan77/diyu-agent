@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 90088,
+ "duration_api_ms": 90026,
+ "ttft_ms": 55470,
+ "ttft_stream_ms": 3994,
+ "time_to_request_ms": 34,
+ "num_turns": 1,
+ "result": "[\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-A\",\n  \"subject\": \"厚薄与收纳体积画面\",\n  \"predicate\": \"depicts\",\n  \"object_value\": \"三件衣物\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三件衣物的厚薄与收纳体积画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-A\",\n  \"subject\": \"模拟穿脱视频\",\n  \"predicate\": \"covers_nodes\",\n  \"object_value\": \"出门、站台、车厢三节点\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"出门、站台、车厢三节点模拟穿脱视频\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-A\",\n  \"subject\": \"出门、站台、车厢三节点模拟穿脱视频\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"可执行性\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"出门、站台、车厢三节点模拟穿脱视频支持可执行性\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-A\",\n  \"subject\": \"三件衣物的厚薄与收纳体积画面\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"可执行性\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三件衣物的厚薄与收纳体积画面，以及出门、站台、车厢三节点模拟穿脱视频支持可执行性\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-A\",\n  \"subject\": \"衣物\",\n  \"predicate\": \"has_count\",\n  \"object_value\": 3,\n  \"unit\": \"件\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三件衣物\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-B\",\n  \"subject\": \"行程条件卡\",\n  \"predicate\": \"records\",\n  \"object_value\": \"温度\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"行程条件卡记录温度\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-B\",\n  \"subject\": \"行程条件卡\",\n  \"predicate\": \"records\",\n  \"object_value\": \"步行时长\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"行程条件卡记录温度、步行时长\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-B\",\n  \"subject\": \"行程条件卡\",\n  \"predicate\": \"records\",\n  \"object_value\": \"室内暖气\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"行程条件卡记录温度、步行时长、室内暖气\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-B\",\n  \"subject\": \"行程条件卡\",\n  \"predicate\": \"records\",\n  \"object_value\": \"易出汗偏好\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"行程条件卡记录温度、步行时长、室内暖气、易出汗偏好\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-B\",\n  \"subject\": \"行程条件卡\",\n  \"predicate\": \"records\",\n  \"object_value\": \"外套无填充事实\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"行程条件卡记录温度、步行时长、室内暖气、易出汗偏好和外套无填充事实\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-006-B\",\n  \"subject\": \"外套\",\n  \"predicate\": \"has_filling\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"外套无填充事实\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-A\",\n  \"subject\": \"同机位画面\",\n  \"predicate\": \"covers\",\n  \"object_value\": \"三种袜法\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三种袜法在站立、坐下、步行时的同机位画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-A\",\n  \"subject\": \"同机位画面\",\n  \"predicate\": \"covers_states\",\n  \"object_value\": \"站立、坐下、步行\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三种袜法在站立、坐下、步行时的同机位画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-A\",\n  \"subject\": \"后跟摩擦位置近景\",\n  \"predicate\": \"shows\",\n  \"object_value\": \"可见差异\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"后跟摩擦位置近景展示可见差异\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-A\",\n  \"subject\": \"三种袜法在站立、坐下、步行时的同机位画面\",\n  \"predicate\": \"shows\",\n  \"object_value\": \"可见差异\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-A\",\n  \"subject\": \"袜法\",\n  \"predicate\": \"has_count\",\n  \"object_value\": 3,\n  \"unit\": \"种\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"三种袜法\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-B\",\n  \"subject\": \"展会时长\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"顾问的排除与选择顺序\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-B\",\n  \"subject\": \"鞋袜材质\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"顾问的排除与选择顺序\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-B\",\n  \"subject\": \"15分钟试走记录\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"顾问的排除与选择顺序\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"15分钟试走记录支持顾问的排除与选择顺序\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-010-B\",\n  \"subject\": \"试走\",\n  \"predicate\": \"has_duration\",\n  \"object_value\": 15,\n  \"unit\": \"分钟\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"15分钟试走记录\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP09-006-A\",\n  \"subject\": \"连续画面\",\n  \"predicate\": \"records\",\n  \"object_value\": \"裤脚离地\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"裤脚离地、湿布地面六步、沾湿高度和台阶动作的连续画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP09-006-A\",\n  \"subject\": \"连续画面\",\n  \"predicate\": \"records\",\n  \"object_value\": \"湿布地面六步\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"湿布地面六步、沾湿高度和台阶动作的连续画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP09-006-A\",\n  \"subject\": \"连续画面\",\n  \"predicate\": \"records\",\n  \"object_value\": \"沾湿高度\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"沾湿高度和台阶动作的连续画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP09-006-A\",\n  \"subject\": \"连续画面\",\n  \"predicate\": \"records\",\n  \"object_value\": \"台阶动作\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"台阶动作的连续画面\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP09-006-A\",\n  \"subject\": \"湿布地面步行\",\n  \"predicate\": \"has_step_count\",\n  \"object_value\": 6,\n  \"unit\": \"步\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"湿布地面六步\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP09-006-A\",\n  \"subject\": \"替代裤对照\",\n  \"predicate\": \"visualizes\",\n  \"object_value\": \"差异\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"替代裤对照可视化差异\",\n  \"risk_class\": \"MEDIUM\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "1b90d9ca-e120-4fff-a87c-fe937c2d0ca3",
+ "total_cost_usd": 0.921674,
+ "usage": {
+  "input_tokens": 3458,
+  "cache_creation_input_tokens": 19974,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9398,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 19974,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3458,
+    "output_tokens": 9398,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 19974,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 19974
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3458,
+   "outputTokens": 9398,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 19974,
+   "webSearchRequests": 0,
+   "costUSD": 0.921674,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "fe71626b-df98-4be1-915f-db8441593fa8"
+}

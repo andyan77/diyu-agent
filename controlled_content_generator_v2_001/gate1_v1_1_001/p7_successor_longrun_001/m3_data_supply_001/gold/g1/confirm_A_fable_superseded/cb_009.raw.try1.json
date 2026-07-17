@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 31204,
+ "duration_api_ms": 31138,
+ "ttft_ms": 22428,
+ "ttft_stream_ms": 4178,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-08\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，照片确为构成档案的组件\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-09\",\"decision\":\"CONFIRM\",\"rationale\":\"引文明确四个周期，数值单位相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-10\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明领尖为拍摄部位\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-11\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明领座为拍摄部位\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-12\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明折线为拍摄部位\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-13\",\"decision\":\"CONFIRM\",\"rationale\":\"引文支持尺标近景构成档案，第6周期属实\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-A-14\",\"decision\":\"CONFIRM\",\"rationale\":\"引文明确整形前后两个时点\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-15\",\"decision\":\"CONFIRM\",\"rationale\":\"引文支持记录办公穿着，每次属源内表述\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-16\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明洗涤条件为记录字段\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-17\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明领尖数值为记录字段\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-18\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明灰线状态为记录字段\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明后续待观察项为记录字段\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP10-004-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"引文'记录每次'支持每次频率\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-A-21\",\"decision\":\"CONFIRM\",\"rationale\":\"引文明确两套扣合方案，数值相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-A-22\",\"decision\":\"CONFIRM\",\"rationale\":\"引文列明扣距为记录字段\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "e6f375ba-6516-4d1e-91c4-e2246b02ee90",
+ "total_cost_usd": 0.476614,
+ "usage": {
+  "input_tokens": 3328,
+  "cache_creation_input_tokens": 14511,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 2708,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14511,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3328,
+    "output_tokens": 2708,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14511,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14511
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3328,
+   "outputTokens": 2708,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14511,
+   "webSearchRequests": 0,
+   "costUSD": 0.476614,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "f1462adb-988d-40f5-9d4f-11f65229f434"
+}

@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 43414,
+ "duration_api_ms": 43350,
+ "ttft_ms": 35021,
+ "ttft_stream_ms": 4210,
+ "time_to_request_ms": 34,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-B-19\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字，并列支持项拆分成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP07-010-B-20\",\"decision\":\"CONFIRM\",\"rationale\":\"15分钟试走时长逐字支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-A-21\",\"decision\":\"CONFIRM\",\"rationale\":\"连续画面含裤脚离地，逐字成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-A-22\",\"decision\":\"CONFIRM\",\"rationale\":\"画面含湿布地面六步，逐字成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-A-23\",\"decision\":\"CONFIRM\",\"rationale\":\"画面含沾湿高度，逐字成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-A-24\",\"decision\":\"CONFIRM\",\"rationale\":\"画面含台阶动作，逐字成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-A-25\",\"decision\":\"CONFIRM\",\"rationale\":\"六步计数逐字，主体合理对应\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-A-26\",\"decision\":\"CONFIRM\",\"rationale\":\"替代裤对照可视化差异逐字\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-01\",\"decision\":\"CONFIRM\",\"rationale\":\"尺寸表为源列举组件，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-02\",\"decision\":\"CONFIRM\",\"rationale\":\"任务卡为源列举组件，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-03\",\"decision\":\"CONFIRM\",\"rationale\":\"合成即synthetic，逐字支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-04\",\"decision\":\"CONFIRM\",\"rationale\":\"条件记录为源列举组件，成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-05\",\"decision\":\"CONFIRM\",\"rationale\":\"记录覆盖干燥场景，逐字成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-06\",\"decision\":\"CONFIRM\",\"rationale\":\"记录覆盖雨天替代，逐字成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP09-006-B-07\",\"decision\":\"CONFIRM\",\"rationale\":\"记录覆盖临时收边，逐字成立\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "afcbabdf-8269-437e-8033-a8666c58aa7c",
+ "total_cost_usd": 0.523624,
+ "usage": {
+  "input_tokens": 3322,
+  "cache_creation_input_tokens": 14542,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 3637,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14542,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3322,
+    "output_tokens": 3637,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14542,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14542
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3322,
+   "outputTokens": 3637,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14542,
+   "webSearchRequests": 0,
+   "costUSD": 0.523624,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "dfd9265f-03f6-4642-827e-f7c1b2495513"
+}

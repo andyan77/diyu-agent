@@ -1,0 +1,527 @@
+[
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP02-006-B-10",
+  "source_id": "G1SRC-G3-CUR-CP02-006-B",
+  "source_text": "设备旁清单记录六件首轮处理、五件完成夹、一件前襟折痕及15:18未复做状态。",
+  "subject": "设备旁清单",
+  "predicate": "records_not_redone_state",
+  "object_value": "未复做",
+  "unit": null,
+  "time_scope": "15:18",
+  "polarity": "NEGATIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "15:18未复做状态",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP02-006-B-10",
+   "decision": "CONFIRM",
+   "rationale": "引文明确支持时点及未复做状态"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP02-006-B-10",
+   "decision": "REJECT",
+   "rationale": "清单确有记录该状态，polarity应POSITIVE非NEGATIVE"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP03-012-A-05",
+  "source_id": "G1SRC-G3-CUR-CP03-012-A",
+  "source_text": "工位素材记录2厘米贴条、两块试片、两次3秒热压、冷却与30秒喷淋。",
+  "subject": "贴条",
+  "predicate": "has_width",
+  "object_value": 2,
+  "unit": "厘米",
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "2厘米贴条",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP03-012-A-05",
+   "decision": "REJECT",
+   "rationale": "原文未明确2厘米指宽度"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP03-012-A-05",
+   "decision": "CONFIRM",
+   "rationale": "2厘米按贴条规格惯例指宽度，引文支持"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP03-012-B-14",
+  "source_id": "G1SRC-G3-CUR-CP03-012-B",
+  "source_text": "工艺记录写明未加胶、采用无压亮试片参数及仅完成短时喷淋观察。",
+  "subject": "长时喷淋观察",
+  "predicate": "was_performed",
+  "object_value": false,
+  "unit": null,
+  "time_scope": "截至工艺记录时",
+  "polarity": "NEGATIVE",
+  "modality": "REPORTED",
+  "preconditions": [],
+  "quote": "仅完成短时喷淋观察",
+  "risk_class": "HIGH",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP03-012-B-14",
+   "decision": "REJECT",
+   "rationale": "仅完成短时不等于长时未进行"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP03-012-B-14",
+   "decision": "CONFIRM",
+   "rationale": "仅字排他，支持长时观察未进行之否定"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP05-003-A-17",
+  "source_id": "G1SRC-G3-CUR-CP05-003-A",
+  "source_text": "合成口述记录他对混批返查的回忆，以及后来填写库位卡时优先看的三项信息。",
+  "subject": "他",
+  "predicate": "recalls_experiencing",
+  "object_value": "混批返查",
+  "unit": null,
+  "time_scope": "过去（回忆所指时期）",
+  "polarity": "POSITIVE",
+  "modality": "REPORTED",
+  "preconditions": [],
+  "quote": "他对混批返查的回忆",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP05-003-A-17",
+   "decision": "REJECT",
+   "rationale": "仅称对返查的回忆，未称亲历"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP05-003-A-17",
+   "decision": "CONFIRM",
+   "rationale": "quote逐字，回忆混批返查支持REPORTED断言"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP05-005-A-03",
+  "source_id": "G1SRC-G3-CUR-CP05-005-A",
+  "source_text": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "subject": "合成口述",
+  "predicate": "organizes_recall_by_stage",
+  "object_value": "胚布练习期",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "胚布练习期",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP05-005-A-03",
+   "decision": "REJECT",
+   "rationale": "引文仅为阶段名，未支持组织关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP05-005-A-03",
+   "decision": "CONFIRM",
+   "rationale": "胚布练习期逐字在列，成立"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP05-005-A-04",
+  "source_id": "G1SRC-G3-CUR-CP05-005-A",
+  "source_text": "合成口述按直缝期、胚布练习期和基础衬衫独立期回忆她的手部标记变化。",
+  "subject": "合成口述",
+  "predicate": "organizes_recall_by_stage",
+  "object_value": "基础衬衫独立期",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "基础衬衫独立期",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP05-005-A-04",
+   "decision": "REJECT",
+   "rationale": "引文仅为阶段名，未支持组织关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP05-005-A-04",
+   "decision": "CONFIRM",
+   "rationale": "基础衬衫独立期逐字在列，成立"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP06-009-B-06",
+  "source_id": "G1SRC-G3-CUR-CP06-009-B",
+  "source_text": "修补工单记录开线长度、衬条与面料状态、补缝长度、测试负荷和未做长期验证。",
+  "subject": "修补工单",
+  "predicate": "records",
+  "object_value": "未做长期验证",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "未做长期验证",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP06-009-B-06",
+   "decision": "REJECT",
+   "rationale": "引文未包含工单记录关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP06-009-B-06",
+   "decision": "CONFIRM",
+   "rationale": "源并列记录项含未做长期验证，成立"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP07-006-A-03",
+  "source_id": "G1SRC-G3-CUR-CP07-006-A",
+  "source_text": "三件衣物的厚薄与收纳体积画面，以及出门、站台、车厢三节点模拟穿脱视频支持可执行性。",
+  "subject": "出门、站台、车厢三节点模拟穿脱视频",
+  "predicate": "supports",
+  "object_value": "可执行性",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "出门、站台、车厢三节点模拟穿脱视频支持可执行性",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-006-A-03",
+   "decision": "REJECT",
+   "rationale": "原文为两类材料共同支持"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-006-A-03",
+   "decision": "CONFIRM",
+   "rationale": "连续逐字，支持关系可分配至视频"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP07-006-A-04",
+  "source_id": "G1SRC-G3-CUR-CP07-006-A",
+  "source_text": "三件衣物的厚薄与收纳体积画面，以及出门、站台、车厢三节点模拟穿脱视频支持可执行性。",
+  "subject": "三件衣物的厚薄与收纳体积画面",
+  "predicate": "supports",
+  "object_value": "可执行性",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "三件衣物的厚薄与收纳体积画面，以及出门、站台、车厢三节点模拟穿脱视频支持可执行性",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-006-A-04",
+   "decision": "REJECT",
+   "rationale": "原文仅称两类画面共同支持"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-006-A-04",
+   "decision": "CONFIRM",
+   "rationale": "quote逐字，画面为并列主语之一支持可执行性"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-A-15",
+  "source_id": "G1SRC-G3-CUR-CP07-010-A",
+  "source_text": "三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异。",
+  "subject": "三种袜法在站立、坐下、步行时的同机位画面",
+  "predicate": "shows",
+  "object_value": "可见差异",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "三种袜法在站立、坐下、步行时的同机位画面以及后跟摩擦位置近景展示可见差异",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-A-15",
+   "decision": "REJECT",
+   "rationale": "原文仅称两类画面共同展示"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-A-15",
+   "decision": "CONFIRM",
+   "rationale": "画面为并列主语之一展示可见差异"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-B-17",
+  "source_id": "G1SRC-G3-CUR-CP07-010-B",
+  "source_text": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序。",
+  "subject": "展会时长",
+  "predicate": "supports",
+  "object_value": "顾问的排除与选择顺序",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-B-17",
+   "decision": "REJECT",
+   "rationale": "原文仅称三项信息共同支持"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-B-17",
+   "decision": "CONFIRM",
+   "rationale": "展会时长为并列主语之一支持该顺序"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-B-18",
+  "source_id": "G1SRC-G3-CUR-CP07-010-B",
+  "source_text": "展会时长、鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序。",
+  "subject": "鞋袜材质",
+  "predicate": "supports",
+  "object_value": "顾问的排除与选择顺序",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "鞋袜材质和15分钟试走记录支持顾问的排除与选择顺序",
+  "risk_class": "MEDIUM",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-B-18",
+   "decision": "REJECT",
+   "rationale": "原文未称鞋袜材质单独支持"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP07-010-B-18",
+   "decision": "CONFIRM",
+   "rationale": "鞋袜材质为并列主语之一支持该顺序"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-15",
+  "source_id": "G1SRC-G3-CUR-CP10-004-B",
+  "source_text": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "subject": "穿洗周期表",
+  "predicate": "records_field",
+  "object_value": "办公穿着",
+  "unit": null,
+  "time_scope": "每次穿洗周期",
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "穿洗周期表记录每次办公穿着",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-15",
+   "decision": "REJECT",
+   "rationale": "引文仅称每次办公穿着，非穿洗周期"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-15",
+   "decision": "CONFIRM",
+   "rationale": "逐字支持记录办公穿着，每次属实"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-17",
+  "source_id": "G1SRC-G3-CUR-CP10-004-B",
+  "source_text": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "subject": "穿洗周期表",
+  "predicate": "records_field",
+  "object_value": "领尖数值",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "领尖数值",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-17",
+   "decision": "REJECT",
+   "rationale": "引文仅有字段名，未体现记录关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-17",
+   "decision": "CONFIRM",
+   "rationale": "领尖数值为记录字段，引文逐字"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-18",
+  "source_id": "G1SRC-G3-CUR-CP10-004-B",
+  "source_text": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "subject": "穿洗周期表",
+  "predicate": "records_field",
+  "object_value": "灰线状态",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "灰线状态",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-18",
+   "decision": "REJECT",
+   "rationale": "引文仅有字段名，未体现记录关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-18",
+   "decision": "CONFIRM",
+   "rationale": "灰线状态为记录字段，引文逐字"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-19",
+  "source_id": "G1SRC-G3-CUR-CP10-004-B",
+  "source_text": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "subject": "穿洗周期表",
+  "predicate": "records_field",
+  "object_value": "后续待观察项",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "后续待观察项",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-19",
+   "decision": "REJECT",
+   "rationale": "引文仅有字段名，未体现记录关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-19",
+   "decision": "CONFIRM",
+   "rationale": "后续待观察项为记录字段，逐字"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-20",
+  "source_id": "G1SRC-G3-CUR-CP10-004-B",
+  "source_text": "穿洗周期表记录每次办公穿着、洗涤条件、领尖数值、灰线状态和后续待观察项。",
+  "subject": "穿洗周期表",
+  "predicate": "records_at_frequency",
+  "object_value": "每次",
+  "unit": null,
+  "time_scope": "每次穿洗周期",
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "记录每次办公穿着",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-20",
+   "decision": "REJECT",
+   "rationale": "每次仅修饰办公穿着，非记录频率"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP10-004-B-20",
+   "decision": "CONFIRM",
+   "rationale": "「记录每次」支持每次记录频率"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-A-27",
+  "source_id": "G1SRC-G3-CUR-CP14-006-A",
+  "source_text": "样布记录包含三十厘米宽度、拍摄时刻、东向窗位、四层至单层顺序和可见窗框线数量。",
+  "subject": "样布记录",
+  "predicate": "contains_record_item",
+  "object_value": "可见窗框线数量",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "可见窗框线数量",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-A-27",
+   "decision": "REJECT",
+   "rationale": "引文仅为记录项，未体现包含关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-A-27",
+   "decision": "CONFIRM",
+   "rationale": "引文逐字在源中，支持记录含该项"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-B-30",
+  "source_id": "G1SRC-G3-CUR-CP14-006-B",
+  "source_text": "逆光原始素材连续拍逐层展开、纱线微距与黑卡横移，曝光锁定，音轨只有布层和卡片接触窗台声。",
+  "subject": "逆光原始素材",
+  "predicate": "continuously_captures",
+  "object_value": "纱线微距",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "纱线微距",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-B-30",
+   "decision": "REJECT",
+   "rationale": "引文未体现连续拍摄关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-B-30",
+   "decision": "CONFIRM",
+   "rationale": "连续拍宾语并列含纱线微距"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-B-31",
+  "source_id": "G1SRC-G3-CUR-CP14-006-B",
+  "source_text": "逆光原始素材连续拍逐层展开、纱线微距与黑卡横移，曝光锁定，音轨只有布层和卡片接触窗台声。",
+  "subject": "逆光原始素材",
+  "predicate": "continuously_captures",
+  "object_value": "黑卡横移",
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "OBSERVED",
+  "preconditions": [],
+  "quote": "黑卡横移",
+  "risk_class": "LOW",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-B-31",
+   "decision": "REJECT",
+   "rationale": "引文未体现连续拍摄关系"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP14-006-B-31",
+   "decision": "CONFIRM",
+   "rationale": "连续拍宾语并列含黑卡横移"
+  }
+ },
+ {
+  "assertion_id": "RA-G1SRC-G3-CUR-CP16-005-B-24",
+  "source_id": "G1SRC-G3-CUR-CP16-005-B",
+  "source_text": "正面近景连续拍双向拉链与前摆，保留拉链声和获准的动作反馈。",
+  "subject": "动作反馈",
+  "predicate": "is_authorized",
+  "object_value": true,
+  "unit": null,
+  "time_scope": null,
+  "polarity": "POSITIVE",
+  "modality": "PLANNED",
+  "preconditions": [],
+  "quote": "获准的动作反馈",
+  "risk_class": "HIGH",
+  "decision_jia": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP16-005-B-24",
+   "decision": "CONFIRM",
+   "rationale": "原文明确称动作反馈获准"
+  },
+  "decision_yi": {
+   "assertion_id": "RA-G1SRC-G3-CUR-CP16-005-B-24",
+   "decision": "REJECT",
+   "rationale": "获准表既成授权，PLANNED情态不符"
+  }
+ }
+]

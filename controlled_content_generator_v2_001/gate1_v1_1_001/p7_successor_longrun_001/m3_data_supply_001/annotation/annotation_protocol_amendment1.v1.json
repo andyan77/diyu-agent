@@ -1,0 +1,17 @@
+{
+ "schema_version": "p7-m3-annotation-protocol-amendment1-v1",
+ "amends": "annotation_protocol.v1.json（原文与其模板摘要不动，本件只增不改）",
+ "authority": "发起人 2026-07-17 双裁决（journal seq38）+ GPT_CODEX_SCOPE_CONTRACT.v1.1 + ROLE_MODEL_MATRIX_ADDENDUM.M3",
+ "carrier_amendment": {
+  "GOLD_BUILDER_A/GOLD_LABELING_SEAT_A": {
+   "old": "claude -p headless（claude-fable-5）",
+   "new": "codex exec headless（OpenAI GPT，配置 gpt-5.6-sol，--ephemeral --skip-git-repo-check -s read-only，stdin prompt，仓外中性目录，逐叫全新线程）",
+   "probe": "runtime_verified 2026-07-17 thread 019f7071-ae56-73a0-acb9-8fbc6d4e8432 回显正确",
+   "billing": "Codex 订阅制只记账不设门；$1,500 封顶仅约束 Claude 侧"
+  },
+  "GOLD_BUILDER_B": "维持 claude -p headless（协议原文）",
+  "adjudicator": "维持 claude -p headless；新增披露：与 B 席同模型，分歧材料匿名化送裁"
+ },
+ "prompt_templates_note": "提示词模板逐字沿用主协议与附录 B（摘要不变）；席位占位 {seat} 在 A 席渲染为 'A(Codex-GPT)'",
+ "cross_model_disclosure": "双席自此为跨模型双盲（GPT+Fable），席位独立性升至模型层；此前全 Fable 阶段的产物（小试 111 金标、G1 提案/归并、B 席复核）保留并如实登记其载体"
+}

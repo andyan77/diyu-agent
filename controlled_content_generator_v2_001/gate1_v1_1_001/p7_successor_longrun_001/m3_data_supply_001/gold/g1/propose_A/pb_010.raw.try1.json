@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 119536,
+ "duration_api_ms": 119475,
+ "ttft_ms": 93959,
+ "ttft_stream_ms": 2755,
+ "time_to_request_ms": 33,
+ "num_turns": 1,
+ "result": "[\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-A\",\n  \"subject\": \"询问记录\",\n  \"predicate\": \"lists_category\",\n  \"object_value\": \"袖口\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"询问记录分列袖口\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-A\",\n  \"subject\": \"询问记录\",\n  \"predicate\": \"lists_category\",\n  \"object_value\": \"衣摆\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"询问记录分列袖口、衣摆\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-A\",\n  \"subject\": \"询问记录\",\n  \"predicate\": \"lists_category\",\n  \"object_value\": \"胸袋\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"询问记录分列袖口、衣摆、胸袋\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-A\",\n  \"subject\": \"询问记录\",\n  \"predicate\": \"lists_category\",\n  \"object_value\": \"缺码\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"询问记录分列袖口、衣摆、胸袋与缺码\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-B\",\n  \"subject\": \"近景拍摄\",\n  \"predicate\": \"captures_in_closeup\",\n  \"object_value\": \"空工单\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"近景拍空工单\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-B\",\n  \"subject\": \"近景拍摄\",\n  \"predicate\": \"captures_in_closeup\",\n  \"object_value\": \"动作\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"近景拍空工单与动作\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-B\",\n  \"subject\": \"门外收音\",\n  \"predicate\": \"records_exterior_sound_of\",\n  \"object_value\": \"农机声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"门外只收农机、卷帘和推车声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-B\",\n  \"subject\": \"门外收音\",\n  \"predicate\": \"records_exterior_sound_of\",\n  \"object_value\": \"卷帘声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"门外只收农机、卷帘和推车声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-B\",\n  \"subject\": \"门外收音\",\n  \"predicate\": \"records_exterior_sound_of\",\n  \"object_value\": \"推车声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"门外只收农机、卷帘和推车声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP18-011-B\",\n  \"subject\": \"门外收音\",\n  \"predicate\": \"restricts_exterior_sound_to\",\n  \"object_value\": \"农机、卷帘和推车声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"门外只收农机、卷帘和推车声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-A\",\n  \"subject\": \"洗样表\",\n  \"predicate\": \"supports_entire_process\",\n  \"object_value\": \"全程\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"洗样表、报价和改期审批支持全程\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-A\",\n  \"subject\": \"报价\",\n  \"predicate\": \"supports_entire_process\",\n  \"object_value\": \"全程\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"报价和改期审批支持全程\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-A\",\n  \"subject\": \"改期审批\",\n  \"predicate\": \"supports_entire_process\",\n  \"object_value\": \"全程\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"改期审批支持全程\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-B\",\n  \"subject\": \"缩水标尺\",\n  \"predicate\": \"is_filmable\",\n  \"object_value\": true,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"缩水标尺、两料和改期界面可拍\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-B\",\n  \"subject\": \"两料\",\n  \"predicate\": \"is_filmable\",\n  \"object_value\": true,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"两料和改期界面可拍\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-B\",\n  \"subject\": \"改期界面\",\n  \"predicate\": \"is_filmable\",\n  \"object_value\": true,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"改期界面可拍\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-004-B\",\n  \"subject\": \"拍摄素材\",\n  \"predicate\": \"is_accompanied_by_sound\",\n  \"object_value\": \"洗衣结束声\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"配洗衣结束声\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-005-A\",\n  \"subject\": \"改造方案\",\n  \"predicate\": \"constitutes_evidence\",\n  \"object_value\": \"证据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"改造方案、匿名周报和费用单构成证据\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-005-A\",\n  \"subject\": \"匿名周报\",\n  \"predicate\": \"constitutes_evidence\",\n  \"object_value\": \"证据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"匿名周报和费用单构成证据\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-005-A\",\n  \"subject\": \"费用单\",\n  \"predicate\": \"constitutes_evidence\",\n  \"object_value\": \"证据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"费用单构成证据\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP19-005-A\",\n  \"subject\": \"周报\",\n  \"predicate\": \"is_anonymized\",\n  \"object_value\": true,\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"匿名周报\",\n  \"risk_class\": \"MEDIUM\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "e8d92e04-4dde-438b-9aed-fd41490d7f4a",
+ "total_cost_usd": 0.907894,
+ "usage": {
+  "input_tokens": 3461,
+  "cache_creation_input_tokens": 15046,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 11093,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 15046,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3461,
+    "output_tokens": 11093,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 15046,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 15046
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3461,
+   "outputTokens": 11093,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 15046,
+   "webSearchRequests": 0,
+   "costUSD": 0.907894,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "c946d71e-d2b5-4ded-9017-271061453e3e"
+}

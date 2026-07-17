@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 167136,
+ "duration_api_ms": 167076,
+ "ttft_ms": 137168,
+ "ttft_stream_ms": 4044,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-A\",\n    \"subject\": \"验收记录\",\n    \"predicate\": \"includes_attachment\",\n    \"object_value\": \"第二条裙摆标尺图\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"验收记录附第二条裙摆七毫米标尺图\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-A\",\n    \"subject\": \"第二条裙摆标尺图\",\n    \"predicate\": \"shows_measurement_of\",\n    \"object_value\": 7,\n    \"unit\": \"毫米\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"第二条裙摆七毫米标尺图\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-A\",\n    \"subject\": \"验收记录\",\n    \"predicate\": \"includes_attachment\",\n    \"object_value\": \"灰色保护袋状态\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-A\",\n    \"subject\": \"验收记录\",\n    \"predicate\": \"documents_initial_inspection_count\",\n    \"object_value\": 7,\n    \"unit\": \"条\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-A\",\n    \"subject\": \"验收记录\",\n    \"predicate\": \"documents_display_position_count\",\n    \"object_value\": 3,\n    \"unit\": \"条\",\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"验收记录附第二条裙摆七毫米标尺图、灰色保护袋状态、七条初检和三条陈列位置\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-A\",\n    \"subject\": \"验收记录维修栏\",\n    \"predicate\": \"is_filled_in\",\n    \"object_value\": false,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"维修栏未填写\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"films_in_macro\",\n    \"object_value\": \"浮纱\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"微距拍浮纱\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"touches\",\n    \"object_value\": \"浮纱\",\n    \"unit\": null,\n    \"time_scope\": \"微距拍摄浮纱期间\",\n    \"polarity\": \"NEGATIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"微距拍浮纱但不触碰\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"films_follow_shot_of\",\n    \"object_value\": \"保护袋套入与移位\",\n    \"unit\": null,\n    \"time_scope\": \"微距拍浮纱之后\",\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"随后跟随保护袋套入与移位\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"films\",\n    \"object_value\": \"三条蒸汽整理\",\n    \"unit\": null,\n    \"time_scope\": \"保护袋套入与移位之后\",\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"再拍三条蒸汽整理\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"films\",\n    \"object_value\": \"两种挂法\",\n    \"unit\": null,\n    \"time_scope\": \"保护袋套入与移位之后\",\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"再拍三条蒸汽整理和两种挂法\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"retains_audio_of\",\n    \"object_value\": \"拉链声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"保留拉链与袋料声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP15-011-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"retains_audio_of\",\n    \"object_value\": \"袋料声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"保留拉链与袋料声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-A\",\n    \"subject\": \"服务表\",\n    \"predicate\": \"records\",\n    \"object_value\": \"下摆\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"服务表记录下摆\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-A\",\n    \"subject\": \"服务表\",\n    \"predicate\": \"records\",\n    \"object_value\": \"拉链结构\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"服务表记录下摆、拉链结构\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-A\",\n    \"subject\": \"服务表\",\n    \"predicate\": \"records\",\n    \"object_value\": \"动作\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"服务表记录下摆、拉链结构、动作\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-A\",\n    \"subject\": \"服务表\",\n    \"predicate\": \"records\",\n    \"object_value\": \"保留拉链绳要求\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"服务表记录下摆、拉链结构、动作和保留拉链绳要求\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"films_continuous_front_close_up_of\",\n    \"object_value\": \"双向拉链\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"正面近景连续拍双向拉链\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"films_continuous_front_close_up_of\",\n    \"object_value\": \"前摆\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"正面近景连续拍双向拉链与前摆\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"retains_audio_of\",\n    \"object_value\": \"拉链声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"保留拉链声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP16-005-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"retains\",\n    \"object_value\": \"获准的动作反馈\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [\n      \"该动作反馈已获得准许\"\n    ],\n    \"quote\": \"保留拉链声和获准的动作反馈\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-A\",\n    \"subject\": \"时段日志\",\n    \"predicate\": \"corresponds_to\",\n    \"object_value\": \"收棚\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"时段日志对应收棚\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-A\",\n    \"subject\": \"时段日志\",\n    \"predicate\": \"corresponds_to\",\n    \"object_value\": \"补架\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"时段日志对应收棚、补架\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-A\",\n    \"subject\": \"时段日志\",\n    \"predicate\": \"corresponds_to\",\n    \"object_value\": \"询问\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"时段日志对应收棚、补架和询问\",\n    \"risk_class\": \"LOW\"\n  }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "20a73522-7032-4800-a1ef-7c3663ca049f",
+ "total_cost_usd": 1.139184,
+ "usage": {
+  "input_tokens": 3225,
+  "cache_creation_input_tokens": 15401,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 15624,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 15401,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3225,
+    "output_tokens": 15624,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 15401,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 15401
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3225,
+   "outputTokens": 15624,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 15401,
+   "webSearchRequests": 0,
+   "costUSD": 1.139184,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "64bcfa82-f8d2-42fc-9549-8f0c1bb70c6f"
+}

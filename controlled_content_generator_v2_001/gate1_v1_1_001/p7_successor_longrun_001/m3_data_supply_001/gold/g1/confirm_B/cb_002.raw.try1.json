@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 164398,
+ "duration_api_ms": 164331,
+ "ttft_ms": 157915,
+ "ttft_stream_ms": 2813,
+ "time_to_request_ms": 37,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-B-02\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，便笺确列绕脚次数，原子成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-B-03\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字支持试穿过门襟，REPORTED恰当\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-005-B-04\",\"decision\":\"REJECT\",\"rationale\":\"源文仅言待补一针，收尾工序系源外发明主语\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-05\",\"decision\":\"CONFIRM\",\"rationale\":\"2厘米按贴条规格惯例指宽度，引文支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-06\",\"decision\":\"CONFIRM\",\"rationale\":\"两块试片逐字支持数量2块\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-07\",\"decision\":\"CONFIRM\",\"rationale\":\"两次3秒热压逐字支持执行2次\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-08\",\"decision\":\"CONFIRM\",\"rationale\":\"3秒对应单次热压时长，引文支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-09\",\"decision\":\"CONFIRM\",\"rationale\":\"冷却为素材所记步骤，逐字支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-A-10\",\"decision\":\"CONFIRM\",\"rationale\":\"30秒喷淋逐字支持时长30秒\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-B-11\",\"decision\":\"CONFIRM\",\"rationale\":\"未加胶逐字支持否定极性与REPORTED\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-B-12\",\"decision\":\"REJECT\",\"rationale\":\"源文未言明热压为采用主体，属源外归属\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-B-13\",\"decision\":\"CONFIRM\",\"rationale\":\"仅完成短时逐字支持范围限定\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP03-012-B-14\",\"decision\":\"CONFIRM\",\"rationale\":\"仅字排他，支持长时观察未进行之否定\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-A-15\",\"decision\":\"CONFIRM\",\"rationale\":\"合成逐字前缀口述记录，标注成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP05-003-A-16\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字支持记录回忆内容\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "7fedfa89-806b-480b-b75b-025d3961d65a",
+ "total_cost_usd": 0.9405439999999999,
+ "usage": {
+  "input_tokens": 3303,
+  "cache_creation_input_tokens": 14310,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 12072,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14310,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3303,
+    "output_tokens": 12072,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14310,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14310
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3303,
+   "outputTokens": 12072,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14310,
+   "webSearchRequests": 0,
+   "costUSD": 0.9405439999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "6c59c379-f6a3-4957-8f99-4e604be40702"
+}

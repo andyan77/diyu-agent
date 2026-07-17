@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 72744,
+ "duration_api_ms": 72677,
+ "ttft_ms": 52403,
+ "ttft_stream_ms": 3382,
+ "time_to_request_ms": 40,
+ "num_turns": 1,
+ "result": "[\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-005-B\",\n    \"subject\": \"维修台\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"工具台声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"维修台、灯箱和拥挤照片配工具台声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-005-B\",\n    \"subject\": \"灯箱\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"工具台声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"灯箱和拥挤照片配工具台声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-005-B\",\n    \"subject\": \"拥挤照片\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"工具台声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"拥挤照片配工具台声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-006-A\",\n    \"subject\": \"排产表\",\n    \"predicate\": \"supports_decision\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"排产表、页面版本和候补计数支持决策\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-006-A\",\n    \"subject\": \"页面版本\",\n    \"predicate\": \"supports_decision\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"页面版本和候补计数支持决策\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-006-A\",\n    \"subject\": \"候补计数\",\n    \"predicate\": \"supports_decision\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"候补计数支持决策\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-006-B\",\n    \"subject\": \"工序板\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"缝纫声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"工序板、页面上限和候补界面配缝纫声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-006-B\",\n    \"subject\": \"页面上限\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"缝纫声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"页面上限和候补界面配缝纫声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP19-006-B\",\n    \"subject\": \"候补界面\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"缝纫声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"候补界面配缝纫声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-A\",\n    \"subject\": \"承诺\",\n    \"predicate\": \"provides_support\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"承诺、称重表、试验和反馈分类支持\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-A\",\n    \"subject\": \"称重表\",\n    \"predicate\": \"provides_support\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"称重表、试验和反馈分类支持\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-A\",\n    \"subject\": \"试验\",\n    \"predicate\": \"provides_support\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"试验和反馈分类支持\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-A\",\n    \"subject\": \"反馈分类\",\n    \"predicate\": \"provides_support\",\n    \"object_value\": true,\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"反馈分类支持\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-B\",\n    \"subject\": \"电子秤\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"称重和包装声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"电子秤、纸卡与单双护形纸配称重和包装声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-B\",\n    \"subject\": \"纸卡\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"称重和包装声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"纸卡与单双护形纸配称重和包装声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP20-005-B\",\n    \"subject\": \"单双护形纸\",\n    \"predicate\": \"is_paired_with_audio\",\n    \"object_value\": \"称重和包装声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"单双护形纸配称重和包装声\",\n    \"risk_class\": \"LOW\"\n  }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "56b7b5c8-c056-4fc1-984c-52e271156165",
+ "total_cost_usd": 0.682034,
+ "usage": {
+  "input_tokens": 3447,
+  "cache_creation_input_tokens": 14705,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 6715,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14705,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3447,
+    "output_tokens": 6715,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14705,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14705
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3447,
+   "outputTokens": 6715,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14705,
+   "webSearchRequests": 0,
+   "costUSD": 0.682034,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "84636b78-305f-484b-9822-e2f1bbca8266"
+}

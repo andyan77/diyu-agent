@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 76896,
+ "duration_api_ms": 76836,
+ "ttft_ms": 54441,
+ "ttft_stream_ms": 9830,
+ "time_to_request_ms": 28,
+ "num_turns": 1,
+ "result": "```json\n[\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-B\",\n    \"subject\": \"门外录音\",\n    \"predicate\": \"retains_sound_of\",\n    \"object_value\": \"卷布声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"门外录音保留卷布\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-B\",\n    \"subject\": \"门外录音\",\n    \"predicate\": \"retains_sound_of\",\n    \"object_value\": \"金属杆声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"门外录音保留卷布、金属杆\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-B\",\n    \"subject\": \"门外录音\",\n    \"predicate\": \"retains_sound_of\",\n    \"object_value\": \"风声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"门外录音保留卷布、金属杆和风声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-002-B\",\n    \"subject\": \"店内拍摄\",\n    \"predicate\": \"captures_footage_of\",\n    \"object_value\": \"补架\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"店内拍补架\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-A\",\n    \"subject\": \"收货单\",\n    \"predicate\": \"records\",\n    \"object_value\": \"箱数\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货单记录箱数\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-A\",\n    \"subject\": \"收货单\",\n    \"predicate\": \"records\",\n    \"object_value\": \"顺序\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货单记录箱数、顺序\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-A\",\n    \"subject\": \"收货单\",\n    \"predicate\": \"records\",\n    \"object_value\": \"风扇\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货单记录箱数、顺序、风扇\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-A\",\n    \"subject\": \"收货单\",\n    \"predicate\": \"records\",\n    \"object_value\": \"完成时点\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货单记录箱数、顺序、风扇和完成时点\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"风扇声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收录风扇\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"胶带声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收录风扇、胶带\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"纸箱声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收录风扇、胶带、纸箱\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-006-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"远处下班铃声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收录风扇、胶带、纸箱和远处下班铃\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-A\",\n    \"subject\": \"收货陈列日志\",\n    \"predicate\": \"records\",\n    \"object_value\": \"滑落\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货陈列日志记录滑落\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-A\",\n    \"subject\": \"收货陈列日志\",\n    \"predicate\": \"records\",\n    \"object_value\": \"关门\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货陈列日志记录滑落、关门\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-A\",\n    \"subject\": \"收货陈列日志\",\n    \"predicate\": \"records\",\n    \"object_value\": \"分装\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"收货陈列日志记录滑落、关门和分装\",\n    \"risk_class\": \"MEDIUM\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"风压门声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收风压门\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"夹具声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收风压门、夹具\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-B\",\n    \"subject\": \"近景收录\",\n    \"predicate\": \"captures_sound_of\",\n    \"object_value\": \"纸袋声\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"近景收风压门、夹具和纸袋声\",\n    \"risk_class\": \"LOW\"\n  },\n  {\n    \"source_id\": \"G1SRC-G3-CUR-CP18-009-B\",\n    \"subject\": \"拍摄\",\n    \"predicate\": \"captures_footage_of\",\n    \"object_value\": \"展示变化\",\n    \"unit\": null,\n    \"time_scope\": null,\n    \"polarity\": \"POSITIVE\",\n    \"modality\": \"OBSERVED\",\n    \"preconditions\": [],\n    \"quote\": \"拍展示变化\",\n    \"risk_class\": \"LOW\"\n  }\n]\n```",
+ "stop_reason": "end_turn",
+ "session_id": "12268a23-4f98-4035-8083-3a1540334964",
+ "total_cost_usd": 0.711884,
+ "usage": {
+  "input_tokens": 3452,
+  "cache_creation_input_tokens": 15265,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 7087,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 15265,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3452,
+    "output_tokens": 7087,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 15265,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 15265
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3452,
+   "outputTokens": 7087,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 15265,
+   "webSearchRequests": 0,
+   "costUSD": 0.711884,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "c6d9e83c-c781-4fd7-a41e-994521107f04"
+}

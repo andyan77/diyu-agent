@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 98020,
+ "duration_api_ms": 96677,
+ "ttft_ms": 90939,
+ "ttft_stream_ms": 4831,
+ "time_to_request_ms": 1309,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP16-005-B-24\",\"decision\":\"REJECT\",\"rationale\":\"获准表既成授权，PLANNED情态不符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-A-25\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，列举拆分原子，语义相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-A-26\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，支持补架对应，原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-A-27\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，支持询问对应，原子\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-B-01\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，录音保留卷布声成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-B-02\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，金属杆声保留成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-B-03\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，风声保留成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-002-B-04\",\"decision\":\"CONFIRM\",\"rationale\":\"拍即摄录画面，引文支持补架\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-A-05\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，记录箱数成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-A-06\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，记录顺序成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-A-07\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，记录风扇成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-A-08\",\"decision\":\"CONFIRM\",\"rationale\":\"引文逐字，记录完成时点成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-B-09\",\"decision\":\"CONFIRM\",\"rationale\":\"收录属拾音语境，风扇声合理\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-B-10\",\"decision\":\"CONFIRM\",\"rationale\":\"收录属拾音语境，胶带声合理\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP18-006-B-11\",\"decision\":\"CONFIRM\",\"rationale\":\"收录属拾音语境，纸箱声合理\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "f8573632-56a4-4be0-9992-d113fc1c0efc",
+ "total_cost_usd": 0.718744,
+ "usage": {
+  "input_tokens": 3303,
+  "cache_creation_input_tokens": 14125,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 7710,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14125,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3303,
+    "output_tokens": 7710,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14125,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14125
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3303,
+   "outputTokens": 7710,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14125,
+   "webSearchRequests": 0,
+   "costUSD": 0.718744,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "3b8ac309-8b09-4473-b4f3-5ae1c4a5444e"
+}

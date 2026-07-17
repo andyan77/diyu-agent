@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 126225,
+ "duration_api_ms": 126165,
+ "ttft_ms": 97574,
+ "ttft_stream_ms": 2085,
+ "time_to_request_ms": 32,
+ "num_turns": 1,
+ "result": "[\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"修补工单\",\n  \"predicate\": \"records\",\n  \"object_value\": \"开线长度\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"修补工单记录开线长度\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"修补工单\",\n  \"predicate\": \"records\",\n  \"object_value\": \"衬条状态\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"衬条与面料状态\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"修补工单\",\n  \"predicate\": \"records\",\n  \"object_value\": \"面料状态\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"衬条与面料状态\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"修补工单\",\n  \"predicate\": \"records\",\n  \"object_value\": \"补缝长度\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"补缝长度\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"修补工单\",\n  \"predicate\": \"records\",\n  \"object_value\": \"测试负荷\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"测试负荷\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"修补工单\",\n  \"predicate\": \"records\",\n  \"object_value\": \"未做长期验证\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"未做长期验证\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP06-009-B\",\n  \"subject\": \"本次补强\",\n  \"predicate\": \"underwent_long_term_verification\",\n  \"object_value\": false,\n  \"unit\": null,\n  \"time_scope\": \"截至工单记录时点\",\n  \"polarity\": \"NEGATIVE\",\n  \"modality\": \"REPORTED\",\n  \"preconditions\": [],\n  \"quote\": \"未做长期验证\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-A\",\n  \"subject\": \"三天日程卡\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"空间与复用关系\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他证据材料共同构成支持\"],\n  \"quote\": \"三天日程卡、天气条件卡、衣物平铺组合和20升背包实装视频支持空间与复用关系\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-A\",\n  \"subject\": \"天气条件卡\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"空间与复用关系\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他证据材料共同构成支持\"],\n  \"quote\": \"天气条件卡、衣物平铺组合和20升背包实装视频支持空间与复用关系\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-A\",\n  \"subject\": \"衣物平铺组合\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"空间与复用关系\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他证据材料共同构成支持\"],\n  \"quote\": \"衣物平铺组合和20升背包实装视频支持空间与复用关系\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-A\",\n  \"subject\": \"背包实装视频\",\n  \"predicate\": \"supports\",\n  \"object_value\": \"空间与复用关系\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他证据材料共同构成支持\"],\n  \"quote\": \"20升背包实装视频支持空间与复用关系\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-A\",\n  \"subject\": \"实装视频中的背包\",\n  \"predicate\": \"has_capacity\",\n  \"object_value\": 20,\n  \"unit\": \"升\",\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"20升背包实装视频\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-B\",\n  \"subject\": \"顾问组合表\",\n  \"predicate\": \"records\",\n  \"object_value\": \"每件衣物对应的场合\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"顾问组合表记录每件衣物对应的场合\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-B\",\n  \"subject\": \"顾问组合表\",\n  \"predicate\": \"records\",\n  \"object_value\": \"重复穿着位置\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"重复穿着位置\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-B\",\n  \"subject\": \"顾问组合表\",\n  \"predicate\": \"records\",\n  \"object_value\": \"不能洗衣条件\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"不能洗衣条件\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-001-B\",\n  \"subject\": \"顾问组合表\",\n  \"predicate\": \"records\",\n  \"object_value\": \"鞋的既有试走状态\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"鞋的既有试走状态\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-004-A\",\n  \"subject\": \"目标裤与旧裤叠放\",\n  \"predicate\": \"provides\",\n  \"object_value\": \"可比较的视觉依据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他照片材料共同提供依据\"],\n  \"quote\": \"目标裤与旧裤叠放、腰臀前裆尺量和坐姿口袋状态照片提供可比较的视觉依据\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-004-A\",\n  \"subject\": \"腰臀前裆尺量\",\n  \"predicate\": \"provides\",\n  \"object_value\": \"可比较的视觉依据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他照片材料共同提供依据\"],\n  \"quote\": \"腰臀前裆尺量和坐姿口袋状态照片提供可比较的视觉依据\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-004-A\",\n  \"subject\": \"坐姿口袋状态照片\",\n  \"predicate\": \"provides\",\n  \"object_value\": \"可比较的视觉依据\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [\"与源中并列的其他照片材料共同提供依据\"],\n  \"quote\": \"坐姿口袋状态照片提供可比较的视觉依据\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-004-B\",\n  \"subject\": \"商品尺码表与远程问答记录\",\n  \"predicate\": \"contains\",\n  \"object_value\": \"大一码增量\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"商品尺码表与远程问答记录包含大一码增量\",\n  \"risk_class\": \"MEDIUM\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-004-B\",\n  \"subject\": \"商品尺码表与远程问答记录\",\n  \"predicate\": \"contains\",\n  \"object_value\": \"旧裤舒适状态\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"旧裤舒适状态\",\n  \"risk_class\": \"LOW\"\n },\n {\n  \"source_id\": \"G1SRC-G3-CUR-CP07-004-B\",\n  \"subject\": \"商品尺码表与远程问答记录\",\n  \"predicate\": \"contains\",\n  \"object_value\": \"顾问建议的筛选条件\",\n  \"unit\": null,\n  \"time_scope\": null,\n  \"polarity\": \"POSITIVE\",\n  \"modality\": \"OBSERVED\",\n  \"preconditions\": [],\n  \"quote\": \"顾问建议的筛选条件\",\n  \"risk_class\": \"MEDIUM\"\n }\n]",
+ "stop_reason": "end_turn",
+ "session_id": "eeba67f7-715e-4e8f-bdf1-4fde459d2aec",
+ "total_cost_usd": 0.966844,
+ "usage": {
+  "input_tokens": 3468,
+  "cache_creation_input_tokens": 16200,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 11809,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 16200,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3468,
+    "output_tokens": 11809,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 16200,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 16200
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3468,
+   "outputTokens": 11809,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 16200,
+   "webSearchRequests": 0,
+   "costUSD": 0.966844,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "cb66acc4-b002-4d6c-aed4-050d8e4c5ecf"
+}

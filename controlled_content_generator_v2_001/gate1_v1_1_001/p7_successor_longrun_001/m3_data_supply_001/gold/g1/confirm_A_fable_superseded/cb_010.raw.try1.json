@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 30804,
+ "duration_api_ms": 30736,
+ "ttft_ms": 20823,
+ "ttft_stream_ms": 4789,
+ "time_to_request_ms": 36,
+ "num_turns": 1,
+ "result": "[\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-A-23\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，20次开合检查数值单位相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-A-24\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，三轮扣合计时数值单位相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-A-25\",\"decision\":\"CONFIRM\",\"rationale\":\"末页圈定七颗扣方案逐字支持，原子无外加\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-B-26\",\"decision\":\"CONFIRM\",\"rationale\":\"quote逐字在源，粉笔扣位属包括项\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-B-27\",\"decision\":\"CONFIRM\",\"rationale\":\"暗按扣加固贴在源并列包括项中\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-B-28\",\"decision\":\"CONFIRM\",\"rationale\":\"坐姿门襟变化在源并列包括项中\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-B-29\",\"decision\":\"CONFIRM\",\"rationale\":\"手指逐颗扣合在源并列包括项中\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-B-30\",\"decision\":\"CONFIRM\",\"rationale\":\"源称声音以针织摩擦为主，主导音成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-002-B-31\",\"decision\":\"CONFIRM\",\"rationale\":\"源称扣子轻碰为主，主导音拆分成立\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-A-01\",\"decision\":\"CONFIRM\",\"rationale\":\"保留三种开衩尺寸逐字支持，计数相符\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-A-02\",\"decision\":\"CONFIRM\",\"rationale\":\"坐姿遮挡线照片属保留并列项\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-A-03\",\"decision\":\"CONFIRM\",\"rationale\":\"双开衩新增加固步骤属保留并列项\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-A-04\",\"decision\":\"CONFIRM\",\"rationale\":\"源明言三十厘米方案标注放弃\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-B-05\",\"decision\":\"CONFIRM\",\"rationale\":\"视频从红叉废弃样片开始逐字支持\"},\n {\"assertion_id\":\"RA-G1SRC-G3-CUR-CP11-003-B-06\",\"decision\":\"CONFIRM\",\"rationale\":\"随后是脚跨三十五厘米标线逐字支持\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "e6479189-1d78-47b2-af6b-a5911e007f6b",
+ "total_cost_usd": 0.464924,
+ "usage": {
+  "input_tokens": 3312,
+  "cache_creation_input_tokens": 14812,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 2357,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 14812,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3312,
+    "output_tokens": 2357,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 14812,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 14812
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3312,
+   "outputTokens": 2357,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 14812,
+   "webSearchRequests": 0,
+   "costUSD": 0.464924,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "75f5048a-3186-4de1-ba8e-8896bf848207"
+}
