@@ -1,0 +1,93 @@
+{
+  "schema": "diyu.package9.remote_journey_evidence.v1",
+  "task_id": "DIYU_ECS_CUTOVER_001",
+  "observed_window_end": "2026-07-17T06:02:33.017445Z",
+  "journey_group_count": 6,
+  "journey_action_count": 15,
+  "all_http_actions_succeeded": true,
+  "journey_groups": [
+    {
+      "journey": "ORDINARY_CHAT_AND_CONTINUITY",
+      "action_count": 2,
+      "content_workflow_not_forced": true,
+      "conversation_reuse_proven": true,
+      "status": "PASS"
+    },
+    {
+      "journey": "INSPIRATION_AND_SCOPE_GUIDANCE",
+      "action_count": 3,
+      "plain_language_guidance": true,
+      "status": "PASS"
+    },
+    {
+      "journey": "ARTICLE_PACKAGE_AND_EXPORT",
+      "action_count": 3,
+      "existing_accepted_candidate_used": true,
+      "new_failed_attempt_preserved": true,
+      "status": "PASS"
+    },
+    {
+      "journey": "SHORT_VIDEO_PACKAGE_REVIEW_EXPORT_AND_SOURCE_LOOKUP",
+      "action_count": 4,
+      "existing_accepted_candidate_used": true,
+      "source_lookup_available": true,
+      "status": "PASS"
+    },
+    {
+      "journey": "PRODUCT_FACT_DISPLAY_PACKAGE",
+      "action_count": 1,
+      "existing_accepted_candidate_present": true,
+      "explicit_product_facts_required": true,
+      "status": "PASS"
+    },
+    {
+      "journey": "MISSING_FACT_AND_SCOPE_REJECTION",
+      "action_count": 2,
+      "missing_material_action_card": true,
+      "unlisted_or_forged_scope_rejected": true,
+      "status": "PASS"
+    }
+  ],
+  "persisted_candidate_distribution": {
+    "total": 24,
+    "short_video": 12,
+    "article": 9,
+    "display": 3
+  },
+  "model_usage": {
+    "baseline_invocation_count": 79,
+    "final_invocation_count": 92,
+    "package9_invocation_increment": 13,
+    "package9_succeeded_invocation_count": 13,
+    "package9_failed_invocation_count": 0,
+    "founder_authorized_call_limit": 40,
+    "task_original_call_limit": 12,
+    "authorized_override_recorded": true,
+    "new_model_calls_frozen": true,
+    "observed_cost_cny": 0.071796,
+    "cost_limit_cny": 10,
+    "within_authorized_call_limit": true,
+    "within_cost_limit": true
+  },
+  "failure_integrity": {
+    "failed_formal_attempts_preserved": true,
+    "failed_samples_deleted": false,
+    "replacement_sample_used": false,
+    "reroll_to_green_used": false,
+    "cloud_prompt_tuning_used": false
+  },
+  "surface_safety": {
+    "internal_identifier_leak_count": 0,
+    "technical_token_exposed_count": 0,
+    "automatic_publication_count": 0,
+    "simulation_only": true,
+    "publish_allowed": false,
+    "explicit_fact_and_authorization_boundaries_preserved": true,
+    "ordinary_creative_surface_requires_per_sentence_evidence": false
+  },
+  "raw_private_evidence": {
+    "storage_class": "REMOTE_ROOT_ONLY_RESTRICTED_STATE",
+    "committed_to_repository": false,
+    "sha256": "6ef324da5fcfc9c5fd4255a6fdab20b152d5e0e297cd750aa07633bb965fe351"
+  }
+}

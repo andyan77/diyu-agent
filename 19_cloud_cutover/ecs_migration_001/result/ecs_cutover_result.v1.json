@@ -1,0 +1,70 @@
+{
+  "schema": "diyu.package9.ecs_cutover_result.v1",
+  "task_id": "DIYU_ECS_CUTOVER_001",
+  "state": "PENDING_INDEPENDENT_REVIEW",
+  "success_claim": "REMOTE_CANDIDATE_IMPLEMENTED_NOT_PRODUCTION_READY",
+  "implementation_candidate_commit": "PENDING_CANDIDATE_FREEZE",
+  "implementation_candidate_tree": "PENDING_CANDIDATE_FREEZE",
+  "remote_environment_snapshot_digest": "PENDING_CANDIDATE_FREEZE",
+  "remote_deployed_code_commit": "068eac4c9758f8c3e8029eedbe35f4c32d944dc5",
+  "blocking_items": [
+    "INDEPENDENT_REVIEWS_PENDING"
+  ],
+  "acceptance": {
+    "PKG9-A01": "PASS",
+    "PKG9-A02": "PASS",
+    "PKG9-A03": "PASS",
+    "PKG9-A04": "PASS",
+    "PKG9-A05": "PASS",
+    "PKG9-A06": "PASS",
+    "PKG9-A07": "PASS",
+    "PKG9-A08": "PASS",
+    "PKG9-A09": "PASS",
+    "PKG9-A10": "PENDING_INDEPENDENT_REVIEW_AND_REMOTE_CI"
+  },
+  "local_verification": {
+    "package7_test_count": 55,
+    "package9_test_count": 8,
+    "ruff_pass": true,
+    "package9_checker_pass": true,
+    "package9_selftest_pass": true,
+    "optimized_mode_exit_2": true,
+    "central_compatibility_pass": true,
+    "secret_scan_pass": true
+  },
+  "remote_verification": {
+    "single_current_system": true,
+    "forced_rls_table_count": 19,
+    "primary_content_account_count": 11,
+    "dify_document_count": 30,
+    "journey_group_count": 6,
+    "journey_action_count": 15,
+    "package9_model_call_count": 13,
+    "package9_model_cost_cny": 0.071796,
+    "rollback_and_forward_pass": true,
+    "post_restart_health_pass": true
+  },
+  "independent_reviews": [],
+  "core_numbers_changed": false,
+  "core_numbers": {
+    "300": "UNCHANGED_NOT_FROZEN",
+    "120": "UNCHANGED_HISTORICAL_SCOPE",
+    "86": "UNCHANGED_HISTORICAL_SCOPE"
+  },
+  "real_customer_data_imported": false,
+  "automatic_publication_count": 0,
+  "merge_allowed": false,
+  "package10_allowed": false,
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

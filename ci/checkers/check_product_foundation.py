@@ -98,6 +98,12 @@ SERIAL_SUCCESSOR_PACKAGES = (
         Path("18_deployment/hosted_operations_001/check_hosted_operations.py"),
         "PACKAGE_8_ONLY",
     ),
+    (
+        "PACKAGE_9_ECS_CUTOVER",
+        Path("19_cloud_cutover/ecs_migration_001"),
+        Path("19_cloud_cutover/ecs_migration_001/check_ecs_cutover.py"),
+        "PACKAGE_9_ONLY",
+    ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
 MANDATORY_SUCCESSOR_ROOTS = frozenset(
@@ -105,6 +111,7 @@ MANDATORY_SUCCESSOR_ROOTS = frozenset(
         Path("16_composition_runtime/fact_aware_plan_adapter_001"),
         Path("17_dify_runtime/dify_end_to_end_001"),
         Path("18_deployment/hosted_operations_001"),
+        Path("19_cloud_cutover/ecs_migration_001"),
     }
 )
 REFERENCE_SAFE_SUCCESSOR_COMMITS = {
@@ -114,17 +121,24 @@ REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(
         "17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"
     ): "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
+    Path(
+        "18_deployment/hosted_operations_001/check_hosted_operations.py"
+    ): "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
 }
 REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
     Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
         Path("17_dify_runtime/dify_end_to_end_001/brand_import.py"),
         Path("17_dify_runtime/dify_end_to_end_001/brand_import_contract.v1.yaml"),
+        Path("17_dify_runtime/dify_end_to_end_001/bridge_app.py"),
         Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
+        Path("17_dify_runtime/dify_end_to_end_001/portal.js"),
         Path("17_dify_runtime/dify_end_to_end_001/provision_dify.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_models.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py"),
     },
 }
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"

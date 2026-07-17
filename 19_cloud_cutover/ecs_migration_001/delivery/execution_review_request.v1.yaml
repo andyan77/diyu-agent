@@ -1,0 +1,50 @@
+schema: diyu.package9.execution_review_request.v1
+task_id: DIYU_ECS_CUTOVER_001
+request_state: PENDING_INDEPENDENT_REVIEW
+requested_decision: HOLD_UNTIL_TWO_INDEPENDENT_REVIEWS_AND_REMOTE_CI
+implementation_candidate_commit: PENDING_CANDIDATE_FREEZE
+implementation_candidate_tree: PENDING_CANDIDATE_FREEZE
+remote_environment_snapshot_digest: PENDING_CANDIDATE_FREEZE
+package8_merge:
+  reviewed_head: e048790034c9ab20c0e570627f4e4a20d1a48cc6
+  merge_commit: e4ca0b44d5f5b64a8c7840986b716abb3be4f88d
+  master_ci: https://github.com/andyan77/diyu-agent/actions/runs/29550118708
+package9:
+  branch: agent/diyu-ecs-migration-001
+  worktree: /home/diyu/worktrees/diyu-ecs-migration-001
+  remote_deployed_code_commit: 068eac4c9758f8c3e8029eedbe35f4c32d944dc5
+  remote_state: PACKAGE9_CANDIDATE
+  single_dify_application: true
+  single_dify_dataset: true
+  single_runtime_database: true
+  single_runtime_bridge: true
+  forced_rls_table_count: 19
+  primary_content_account_count: 11
+  browser_journey_group_count: 6
+  model_call_count: 13
+  model_cost_cny: 0.071796
+  rollback_and_forward_pass: true
+evidence:
+  object_inventory: 19_cloud_cutover/ecs_migration_001/object_inventory.v1.json
+  backup_restore: 19_cloud_cutover/ecs_migration_001/evidence/backup_restore_evidence.v1.json
+  remote_cutover: 19_cloud_cutover/ecs_migration_001/evidence/remote_cutover_evidence.v1.json
+  remote_journeys: 19_cloud_cutover/ecs_migration_001/evidence/remote_journey_evidence.v1.json
+reviews: []
+assertions:
+  real_customer_data_imported: false
+  automatic_publication_count: 0
+  production_ready_claimed: false
+  package9_merge_performed: false
+  package10_started: false
+  core_numbers_changed: false
+readiness:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  runtime_ready: false
+  release_ready: false
+  production_ready: false

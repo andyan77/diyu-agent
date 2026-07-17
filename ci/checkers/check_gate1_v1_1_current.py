@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "db1fab6a1f0e36ae320b3cd19d60bb9c5c658439eff26b2eaead8e1d26ccbd59"
+    "7f531d09c1508c9bae29986843b9b94b215e59ef7ca6d66663c7a62ddf8e9fab"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -163,12 +163,20 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_hosted_operations.py"
         ),
     ),
+    (
+        Path("19_cloud_cutover/ecs_migration_001"),
+        Path(
+            "19_cloud_cutover/ecs_migration_001/"
+            "check_ecs_cutover.py"
+        ),
+    ),
 )
 MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
     {
         Path("16_composition_runtime/fact_aware_plan_adapter_001"),
         Path("17_dify_runtime/dify_end_to_end_001"),
         Path("18_deployment/hosted_operations_001"),
+        Path("19_cloud_cutover/ecs_migration_001"),
     }
 )
 DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
@@ -180,6 +188,10 @@ DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
         "17_dify_runtime/dify_end_to_end_001/"
         "check_dify_end_to_end.py"
     ): "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
+    Path(
+        "18_deployment/hosted_operations_001/"
+        "check_hosted_operations.py"
+    ): "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
 }
 DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
 DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP = (
