@@ -83,48 +83,9 @@ def _content_sha256(value: object) -> str:
     return hashlib.sha256(_normalized_text(value).encode("utf-8")).hexdigest()
 
 
-def _dify_115_markdown_index_text(value: object) -> str:
-    """Reproduce Dify 1.15's deterministic Markdown-to-segment transform."""
-    markdown_tuples: list[tuple[str | None, str]] = []
-    current_header: str | None = None
-    current_text = ""
-    code_block = False
-    for line in _normalized_text(value).split("\n"):
-        if line.startswith("```"):
-            code_block = not code_block
-            current_text += f"{line}\n"
-            continue
-        if code_block:
-            current_text += f"{line}\n"
-            continue
-        if re.match(r"^#+\s", line):
-            markdown_tuples.append((current_header, current_text))
-            current_header = line
-            current_text = ""
-        else:
-            current_text += f"{line}\n"
-    markdown_tuples.append((current_header, current_text))
-
-    indexed_segments: list[str] = []
-    for header, text in markdown_tuples:
-        normalized_header = re.sub(r"#", "", header).strip() if header else None
-        normalized_body = re.sub(r"<.*?>", "", text).strip()
-        page = (
-            normalized_body
-            if normalized_header is None
-            else f"\n\n{normalized_header}\n{normalized_body}"
-        )
-        page = re.sub(r"<\|", "<", page)
-        page = re.sub(r"\|>", ">", page)
-        page = re.sub(r"[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\xEF\xBF\xBE]", "", page)
-        page = re.sub("\ufffe", "", page)
-        if page.strip():
-            indexed_segments.append(_normalized_text(page))
-    if len(indexed_segments) != 1:
-        raise RuntimeError(
-            "Package 7 Markdown must deterministically produce one Dify segment"
-        )
-    return indexed_segments[0]
+def _dify_import_text(value: object) -> str:
+    """Project one optional outer Markdown heading into a plain-text import."""
+    return re.sub(r"\A# (?=\S)", "", _normalized_text(value), count=1)
 
 
 def plan_document_reconciliation(
@@ -157,15 +118,16 @@ def plan_document_reconciliation(
     upserts: list[ReconciliationOperation] = []
     for name in sorted(desired_by_name):
         fragment = desired_by_name[name]
-        desired_digest = _content_sha256(
-            _dify_115_markdown_index_text(fragment.get("text", ""))
-        )
+        desired_digest = _content_sha256(_dify_import_text(fragment.get("text", "")))
         source_digest = _content_sha256(fragment.get("text", ""))
         existing = existing_by_name.get(name)
         if existing is None:
             action = "CREATE"
             document_id = None
-        elif existing.get("index_content_sha256") == desired_digest:
+        elif (
+            existing.get("index_content_sha256") == desired_digest
+            and existing.get("source_upload_content_sha256") == desired_digest
+        ):
             action = "KEEP"
             document_id = existing["document_id"]
         else:
@@ -278,10 +240,11 @@ def main() -> int:
     app = create_app()[1]
     with app.app_context(), app.test_request_context("/package7-provision"):
         from extensions.ext_database import db
+        from extensions.ext_storage import storage
         from models import Account, App
         from models.dataset import Dataset, DatasetMetadata, Document, DocumentSegment
         from models.enums import ApiTokenType
-        from models.model import ApiToken
+        from models.model import ApiToken, UploadFile
         from services.app_dsl_service import AppDslService
         from services.dataset_service import DatasetService, DocumentService
         from services.entities.knowledge_entities.knowledge_entities import (
@@ -538,10 +501,27 @@ def main() -> int:
             existing_segment_groups.setdefault(str(segment.document_id), []).append(
                 segment
             )
-        existing_inventory = [
-            {
+        existing_inventory: list[dict[str, Any]] = []
+        for document in package_documents:
+            data_source_info = json.loads(str(document.data_source_info))
+            upload_file_id = data_source_info.get("upload_file_id")
+            upload_file = (
+                db.session.get(UploadFile, upload_file_id)
+                if isinstance(upload_file_id, str)
+                else None
+            )
+            if upload_file is None:
+                raise RuntimeError("A managed Dify document lost its source upload")
+            upload_content = storage.load(upload_file.key)
+            if not isinstance(upload_content, bytes):
+                raise RuntimeError("A managed Dify source upload is not byte-readable")
+            existing_inventory.append(
+                {
                 "document_id": str(document.id),
                 "name": str(document.name),
+                "source_upload_content_sha256": _content_sha256(
+                    upload_content.decode("utf-8")
+                ),
                 "index_content_sha256": (
                     _content_sha256(
                         existing_segment_groups[str(document.id)][0].content
@@ -549,9 +529,8 @@ def main() -> int:
                     if len(existing_segment_groups.get(str(document.id), [])) == 1
                     else None
                 ),
-            }
-            for document in package_documents
-        ]
+                }
+            )
         reconciliation = plan_document_reconciliation(existing_inventory, fragments)
         package_documents_by_id = {
             str(document.id): document for document in package_documents
@@ -575,8 +554,15 @@ def main() -> int:
                 if existing_document_id is None
                 else package_documents_by_id.get(str(existing_document_id))
             )
+            if operation["action"] == "REPLACE":
+                if document is None:
+                    raise RuntimeError(
+                        "The Dify replacement target disappeared during reconciliation"
+                    )
+                DocumentService.delete_document(document)
+                document = None
             if operation["action"] != "KEEP":
-                text = _normalized_text(fragment["text"])
+                text = _dify_import_text(fragment["text"])
                 upload = FileService(db.engine).upload_text(
                     text=text,
                     text_name=name,
@@ -729,9 +715,7 @@ def main() -> int:
             for fragment_id, document_id in document_ids.items()
         }
         if any(
-            _content_sha256(
-                _dify_115_markdown_index_text(fragment_by_id[fragment_id]["text"])
-            )
+            _content_sha256(_dify_import_text(fragment_by_id[fragment_id]["text"]))
             != row["index_content_sha256"]
             for fragment_id, row in mapping.items()
         ):

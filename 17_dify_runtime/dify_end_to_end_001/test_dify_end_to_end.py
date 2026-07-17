@@ -26,7 +26,7 @@ from persistence import (
     create_runtime_engine,
     create_session_factory,
 )
-from provision_dify import _content_sha256, _dify_115_markdown_index_text
+from provision_dify import _content_sha256, _dify_import_text
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import Package7Runtime, protected_detail_is_supported
 from security import hash_password, issue_session, verify_password, verify_session
@@ -44,19 +44,19 @@ DSL_PATH = PACKAGE_ROOT / "dify_app.v1.yaml"
 
 
 class DifyMaterializationCompatibilityTests(unittest.TestCase):
-    def test_dify_markdown_transform_matches_declared_115_behavior(self) -> None:
-        source = "# 资料范围\r\n字段A：保留。\r\n字段B：<b>已授权</b>。"
+    def test_dify_import_removes_only_the_outer_presentation_heading(self) -> None:
+        source = "# 资料范围\r\n字段A：保留。\r\n## 内部原文标题"
         self.assertEqual(
-            _dify_115_markdown_index_text(source),
-            "资料范围\n字段A：保留。\n字段B：已授权。",
+            _dify_import_text(source),
+            "资料范围\n字段A：保留。\n## 内部原文标题",
         )
 
-    def test_dify_markdown_transform_does_not_hide_semantic_mutation(self) -> None:
+    def test_dify_import_does_not_hide_semantic_mutation(self) -> None:
         source = "# 资料范围\n字段A：保留。"
         mutated = "# 资料范围\n字段A：改变。"
         self.assertNotEqual(
-            _content_sha256(_dify_115_markdown_index_text(source)),
-            _content_sha256(_dify_115_markdown_index_text(mutated)),
+            _content_sha256(_dify_import_text(source)),
+            _content_sha256(_dify_import_text(mutated)),
         )
 
 
