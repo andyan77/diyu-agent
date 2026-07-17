@@ -13,7 +13,7 @@
     },
     "ACTIVE_CONTRACT_DIGEST_FROZEN": {
       "satisfied": true,
-      "evidence": "state/ACTIVE_CONTRACT_DIGESTS.v1.json 重冻结（R4：17 成员含 signer v2 + 里程碑出口合同，0 pending，集合摘要 d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4；contract_set verify PASS）"
+      "evidence": "state/ACTIVE_CONTRACT_DIGESTS.v1.json 重冻结（M3-C0：MILESTONE_EXIT_CONTRACT M3 行依 TO_BE_FROZEN_AT_MILESTONE_START 冻结后集合摘要 d7265a18…→516fe73bd37a82fc58973c517131da4e53262eec564287c9ea6cff731e30ae8f，17 成员 0 pending，contract_set verify PASS；前值 R4 重冻结见 SUPERSESSION_LEDGER §5/§8）"
     },
     "INDEPENDENT_REVIEW_PASS": {
       "satisfied": true,
@@ -25,10 +25,10 @@
     }
   },
   "charter_sha256": "d68244dfd0a0d19330ad606b2de0d294565b162f31ec614efabe6468d1b77cb8",
-  "active_contract_set_digest": "d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4",
+  "active_contract_set_digest": "516fe73bd37a82fc58973c517131da4e53262eec564287c9ea6cff731e30ae8f",
   "review_receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.bf75def209d8.signer_receipt.json",
   "review_receipt_digest": "cb6bae7b94c81dac7808f76a202af601d52805ae1aa4b6332da23a662b39ccf5",
   "d0_approved": true,
   "d0_approved_derivation": "d0_approved 仅可由 checker 从五条件复算得出；本字段为缓存值，与复算不一致时以复算为准",
-  "updated_at": "2026-07-17T02:18:30.200773+00:00"
+  "updated_at": "2026-07-17T10:35:00+00:00"
 }

@@ -662,15 +662,30 @@ class NegativeAttackMatrix(unittest.TestCase):
             self.assertTrue(any("mirror drifted" in e for e in errors), errors)
 
     def test_attack_40_unfrozen_milestone_exit_fail_closed(self) -> None:
-        """M3 出口定义未冻结 → FINAL 不可关闭（fail-closed）。"""
+        """未冻结出口定义 → FINAL 不可关闭（fail-closed）。
+
+        样例里程碑取活合同中仍为 TO_BE_FROZEN 的最早者（M3 行已依合同预定
+        动作于 M3-C0 冻结，journal seq31；当 M4–M7 全部冻结后本测试必须改用
+        合成未冻结条目，不得删除）。"""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / DC_REL / "contracts").mkdir(parents=True)
             shutil.copy(DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json",
                         root / DC_REL / "contracts/MILESTONE_EXIT_CONTRACT.v1.json")
-            closeout = _mk_receipt("M3", "PASS")
+            live = json.loads(
+                (DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json"
+                 ).read_text(encoding="utf-8"))
+            unfrozen = next(
+                (m for m in ("M3", "M4", "M5", "M6", "M7")
+                 if live["milestones"][m]["definition_status"] != "FROZEN"),
+                None)
+            self.assertIsNotNone(
+                unfrozen,
+                "all milestone exits frozen — rewrite this test with a "
+                "synthetic unfrozen entry instead of deleting it")
+            closeout = _mk_receipt(unfrozen, "PASS")
             errors = V25._check_milestone_exits(
-                root, "M3", closeout, receipts, [])
+                root, unfrozen, closeout, receipts, [])
             self.assertTrue(any("not FROZEN" in e for e in errors), errors)
 
     def test_attack_41_forged_head_binding_survives_digest_reclose(self) -> None:

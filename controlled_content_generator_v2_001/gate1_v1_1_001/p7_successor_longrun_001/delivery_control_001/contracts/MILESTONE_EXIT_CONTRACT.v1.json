@@ -50,9 +50,38 @@
       "real_run_required": true
     },
     "M3": {
-      "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
-      "provisional_source": "v2.4 §六 表 M3 行：v2.3 各步出口 + QUAL 双冻结保全回执 + LOGICAL_CORE_SEPARATED",
-      "note": "未冻结即不可 FINAL 关闭（fail-closed）；冻结动作属 M3 启动会话职责，须经两份独立审核"
+      "definition_status": "FROZEN",
+      "frozen_at": "2026-07-17",
+      "frozen_by": "M3 启动会话（session 374b677b，journal seq31 胶囊 M3_C0_CONTRACT_AND_EXIT_FREEZE）；两份独立审核于关闭时绑定同一候选复核本冻结（v2.4 §六 M3 行具体化，冻结定义本身列入审核范围）",
+      "authority_note": "v2.4 §六 表 M3 行冻结具体化：v2.3 E1-S/D/Q 各步出口 + QUAL 双冻结保全回执（QUAL_ORDER 六步前三步 ×2 集）+ LOGICAL_CORE_SEPARATED；容量缺口 = 合法停止（技术门）→ 该情形以 HONEST_STOP 关闭，required_exit_keys 仅约束 PASS",
+      "required_exit_keys": [
+        "SUPPLY_DEMAND_TABLE_PER_CELL_ON_DISK",
+        "VECTOR_CAPACITY_TABLE_INITIAL_PROJECTION_ON_DISK",
+        "SAMPLING_FRAME_AND_EXCLUSION_LOG_PREREGISTERED",
+        "CURATION_OWNER_REGISTERED",
+        "ANNOTATION_PROTOCOL_FROZEN_WITH_PILOT_RECEIPT",
+        "G1_REFERENCE_GOLD_BUILT_COVERAGE_VERIFIED",
+        "G2_DEV_GOLD_BUILT_COVERAGE_VERIFIED",
+        "DISPUTE_RATE_AND_COST_RECOMPUTABLE",
+        "ROLE_COLLISION_CHECK_RECEIPT",
+        "QUAL_A_FACE_FROZEN_RECEIPT",
+        "QUAL_A_DOUBLE_BLIND_LABELED_RECEIPT",
+        "QUAL_A_GOLD_FROZEN_RECEIPT",
+        "QUAL_B_FACE_FROZEN_RECEIPT",
+        "QUAL_B_DOUBLE_BLIND_LABELED_RECEIPT",
+        "QUAL_B_GOLD_FROZEN_RECEIPT",
+        "QUAL_SETS_DISJOINT_STRATIFIED_BALANCED_PROOF",
+        "FAMILY_WISE_FALSE_PASS_BUDGET_PREREGISTERED",
+        "QUAL_ORDER_EVENTS_VALIDATED",
+        "SEALED_CUSTODY_COUNTS_DIGESTS_RECEIPTS_ONLY",
+        "SEALED_PAYLOAD_DENYLIST_UPDATED_AND_SCAN_CLEAN",
+        "LOGICAL_CORE_SEPARATED",
+        "INDEPENDENT_CLAUDE_FABLE_REVIEW_ACCEPT",
+        "CODEX_GPT_REVIEW_ACCEPT"
+      ],
+      "stage_execution_required": [],
+      "real_run_required": false,
+      "real_run_note": "M3 无新 S0 型真实阶段运行要求（S0 已于 M2 真实执行且 stage_actual_state 保持 real_run_executed=true）；QUAL 双盲建标的模型调用按角色回执与保全协议登记，不走阶段机械"
     },
     "M4": {
       "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
