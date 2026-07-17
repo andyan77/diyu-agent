@@ -3,7 +3,7 @@
 <!-- 渲染绑定（由 tools/renderer.py 在真正启动时填充；模板本体不含启动记录/回执/签字 -->
 执行主体：Claude Code 中的 Fable 5（全新顶层会话）
 当前里程碑：M2　当前 Prompt：P2
-输入提交：`de83d92cac695cd3e8c603e8817e875f3d567bfa`　控制面提交：`caa489f9cd6616d7a2066caea1cd21e11e50939f`
+输入提交：`de83d92cac695cd3e8c603e8817e875f3d567bfa`　控制面提交：`f7250acda663ef007d46ce8f1ee26208659ae86e`
 前序：M1 结果 PASS（回执摘要 `ecff2dcfc87cedfe335a74073093d6027e9dd971e8835abace7bd13816419d15`）
 HANDOFF 摘要：`e3a72ffd778aadd672f09212e9ea907649386df6b749a8b33f1490e0f662840f`　活跃合同集摘要：`d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4`
 B 评测路线：UNFROZEN
