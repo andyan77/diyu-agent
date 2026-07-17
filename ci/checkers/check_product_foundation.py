@@ -117,7 +117,11 @@ REFERENCE_SAFE_SUCCESSOR_COMMITS = {
 }
 REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
     Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
+        Path("17_dify_runtime/dify_end_to_end_001/brand_import.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/brand_import_contract.v1.yaml"),
+        Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/provision_dify.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_models.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),

@@ -13,6 +13,7 @@ import sys
 import tempfile
 import threading
 import unittest
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -53,6 +54,9 @@ from runtime_service import Package7Runtime  # type: ignore[import-not-found]  #
 from test_dify_end_to_end import (  # type: ignore[import-not-found]  # noqa: E402
     Package7Tests as _Package7Tests,
 )
+from provision_dify import (  # type: ignore[import-not-found]  # noqa: E402
+    resolve_materialized_fragments,
+)
 
 from brand_bundle import (  # noqa: E402
     BrandInputDocument,
@@ -67,6 +71,9 @@ from operations import HostedOperations, preflight_environment  # noqa: E402
 
 JsonObject = dict[str, Any]
 FIXTURE_PATH = PACKAGE_ROOT / "fixtures/second_brand_fixture.v1.yaml"
+AUTHORIZED_REAL_FIXTURE_PATH = (
+    PACKAGE_ROOT / "fixtures/authorized_real_brand_contract_fixture.v1.yaml"
+)
 PASSWORD = "package8-local-acceptance-password"
 PACKAGE7_CANDIDATE_FACTORY = _Package7Tests._candidate
 del _Package7Tests
@@ -252,6 +259,36 @@ class Package8UnitTests(unittest.TestCase):
             second.identity["tenant"]["brand_id"],
         )
 
+    def test_authorized_real_mode_requires_source_authorization_and_operator(
+        self,
+    ) -> None:
+        from brand_import import preflight_brand_bundle
+
+        document = load_brand_input(AUTHORIZED_REAL_FIXTURE_PATH)
+        bundle = compile_brand_bundle(document)
+        preflight = preflight_brand_bundle(bundle)
+        self.assertEqual(preflight["state"], "CAN_IMPORT")
+        self.assertEqual(preflight["data_mode"], "AUTHORIZED_REAL")
+        self.assertFalse(preflight["simulation_only"])
+        self.assertTrue(preflight["test_fixture_only"])
+        self.assertFalse(bundle.identity["tenant"]["publish_allowed"])
+
+        payload = document.model_dump(mode="json")
+        missing_authorization = copy.deepcopy(payload)
+        missing_authorization["real_brand_authorization"] = None
+        with self.assertRaisesRegex(ValueError, "requires real brand authorization"):
+            BrandInputDocument.model_validate(missing_authorization)
+        missing_source = copy.deepcopy(payload)
+        missing_source["real_brand_authorization"]["source_refs"] = [
+            "safe-fixture://package8/authorized-real/material/brand-note"
+        ]
+        with self.assertRaisesRegex(ValueError, "outside operator authorization"):
+            BrandInputDocument.model_validate(missing_source)
+        unconfirmed = copy.deepcopy(payload)
+        unconfirmed["real_brand_authorization"]["operator_confirmed"] = False
+        with self.assertRaisesRegex(ValueError, "operator confirmation"):
+            BrandInputDocument.model_validate(unconfirmed)
+
 
 @unittest.skipUnless(
     os.environ.get("DIYU_PKG8_ADMIN_DATABASE_URL"),
@@ -316,9 +353,7 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 "postgresql_server_version_num"
             ]
             report["pg_dump_version"] = report["preflight"]["pg_dump_version"]
-            report["pg_restore_version"] = report["preflight"][
-                "pg_restore_version"
-            ]
+            report["pg_restore_version"] = report["preflight"]["pg_restore_version"]
             first_install = operations.install()
             second_install = operations.install()
             self.assertEqual(first_install["state"], "INSTALLED")
@@ -545,6 +580,133 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 runtime.repository.model_run(restored_prepare["run_id"]).account_id,
                 second_account,
             )
+            real_document = load_brand_input(AUTHORIZED_REAL_FIXTURE_PATH)
+            invalid_real_payload = real_document.model_dump(mode="json")
+            invalid_real_payload["real_brand_authorization"] = None
+            with self.assertRaisesRegex(
+                ValueError, "requires real brand authorization"
+            ):
+                BrandInputDocument.model_validate(invalid_real_payload)
+            real_bundle = compile_brand_bundle(real_document)
+            real_import = operations.import_brand(
+                real_bundle,
+                principal_password=PASSWORD,
+                reason="AUTHORIZED_REAL_CONTRACT_TEST",
+            )
+            self.assertEqual(real_import["state"], "APPLIED")
+            self.assertEqual(
+                operations.import_brand(
+                    real_bundle,
+                    principal_password=PASSWORD,
+                    reason="AUTHORIZED_REAL_CONTRACT_TEST",
+                )["state"],
+                "UNCHANGED",
+            )
+
+            materialization_as_of = datetime(2026, 7, 16, 12, 0, 0, tzinfo=timezone.utc)
+            first_materialization = operations.materialize_dify(
+                output_directory=Path(temporary) / "materialization-a",
+                as_of=materialization_as_of,
+            )
+            second_materialization = operations.materialize_dify(
+                output_directory=Path(temporary) / "materialization-b",
+                as_of=materialization_as_of,
+            )
+            self.assertEqual(
+                first_materialization["document_sha256"],
+                second_materialization["document_sha256"],
+            )
+            self.assertEqual(
+                first_materialization["materialization_digest"],
+                second_materialization["materialization_digest"],
+            )
+            resolved_path, resolved_manifest = resolve_materialized_fragments(
+                Path(first_materialization["manifest_path"])
+            )
+            materialized_rows = [
+                json.loads(line)
+                for line in resolved_path.read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            materialized_brands = {row["brand_id"] for row in materialized_rows}
+            self.assertIn("BRAND-QINGHE-LAB--QINGHE-HOME", materialized_brands)
+            self.assertIn("BRAND-AUTHORIZED-LAB--AUTHORIZED-DEMO", materialized_brands)
+            self.assertEqual(
+                resolved_manifest["document_count"], len(materialized_rows)
+            )
+            corrupt_materialization_directory = (
+                Path(temporary) / "materialization-consumer-corrupt"
+            )
+            shutil.copytree(
+                Path(first_materialization["manifest_path"]).parent,
+                corrupt_materialization_directory,
+            )
+            corrupt_materialization_document = (
+                corrupt_materialization_directory
+                / Path(first_materialization["document_path"]).name
+            )
+            corrupt_materialization_document.write_bytes(
+                corrupt_materialization_document.read_bytes() + b"{}\n"
+            )
+            with self.assertRaisesRegex(RuntimeError, "content is invalid"):
+                resolve_materialized_fragments(
+                    corrupt_materialization_directory
+                    / Path(first_materialization["manifest_path"]).name
+                )
+            self.assertFalse(
+                any(
+                    "EXPIRED-STORE-PHOTO" in row["fragment_id"]
+                    for row in materialized_rows
+                )
+            )
+
+            source_id = "SOURCE-QINGHE-LAB--MATERIAL--CALM-HOME-NOTE"
+            authorization_id = "AUTH-QINGHE-LAB--CURRENT-MATERIAL"
+            account_id = "ACCOUNT-QINGHE-LAB--BRAND-ACCOUNT"
+            negative_cases = (
+                (
+                    RuntimeSource,
+                    source_id,
+                    "status",
+                    "INACTIVE",
+                    "SOURCE_MISSING_OR_INACTIVE",
+                ),
+                (
+                    RuntimeAuthorization,
+                    authorization_id,
+                    "status",
+                    "REVOKED",
+                    "AUTHORIZATION_MISSING_REVOKED_OR_EXPIRED",
+                ),
+                (
+                    RuntimeAccount,
+                    account_id,
+                    "status",
+                    "INACTIVE",
+                    "ACCOUNT_SCOPE_INACTIVE_OR_CROSS_BRAND",
+                ),
+            )
+            for index, (model, key, field, invalid, reason) in enumerate(
+                negative_cases, start=1
+            ):
+                with sessions.begin() as session:
+                    row = session.get(model, key)
+                    self.assertIsNotNone(row)
+                    original = getattr(row, field)
+                    setattr(row, field, invalid)
+                filtered = operations.materialize_dify(
+                    output_directory=Path(temporary)
+                    / f"materialization-negative-{index}",
+                    as_of=materialization_as_of,
+                )
+                self.assertGreaterEqual(filtered["excluded_counts"].get(reason, 0), 1)
+                self.assertLess(
+                    filtered["document_count"], first_materialization["document_count"]
+                )
+                with sessions.begin() as session:
+                    row = session.get(model, key)
+                    self.assertIsNotNone(row)
+                    setattr(row, field, original)
             with self.assertRaisesRegex(RuntimeError, "intentional"):
                 operations.upgrade(target_version=2, fail_after_write=True)
             self.assertEqual(operations.health()["schema_version"], 1)
@@ -565,6 +727,15 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 manifest_path=manifest_path,
             )
             self.assertEqual(restore["state"], "RESTORED")
+            self.assertTrue(restore["release_bundle_verified"])
+            self.assertTrue(restore["materialization_regenerated"])
+            self.assertEqual(
+                backup["release_bundle_digest"], restore["release_bundle_digest"]
+            )
+            self.assertEqual(
+                backup["materialization_digest"],
+                restore["materialization_digest"],
+            )
             self.assertEqual(
                 backup["database_snapshot_digest"],
                 restore["actual_database_snapshot_digest"],
@@ -592,6 +763,87 @@ class Package8PostgresAcceptance(unittest.TestCase):
                 self._assert_same_label_is_scoped(restore_sessions)
             finally:
                 restore_engine.dispose()
+
+            missing_release_directory = Path(temporary) / "missing-release-object"
+            shutil.copytree(manifest_path.parent, missing_release_directory)
+            missing_outer_path = missing_release_directory / "backup_manifest.v1.json"
+            missing_outer = json.loads(missing_outer_path.read_text(encoding="utf-8"))
+            missing_release_path = (
+                missing_release_directory / missing_outer["release_bundle_manifest"]
+            )
+            missing_release = json.loads(
+                missing_release_path.read_text(encoding="utf-8")
+            )
+            first_release_object = missing_release["objects"][0]["release_path"]
+            (missing_release_path.parent / first_release_object).unlink()
+            with self.assertRaisesRegex(ValueError, "发布对象缺失"):
+                HostedOperations.restore(
+                    target_database_url=corrupt_url,
+                    manifest_path=missing_outer_path,
+                )
+
+            damaged_release_directory = Path(temporary) / "damaged-release-object"
+            shutil.copytree(manifest_path.parent, damaged_release_directory)
+            damaged_outer_path = damaged_release_directory / "backup_manifest.v1.json"
+            damaged_outer = json.loads(damaged_outer_path.read_text(encoding="utf-8"))
+            damaged_release_path = (
+                damaged_release_directory / damaged_outer["release_bundle_manifest"]
+            )
+            damaged_release = json.loads(
+                damaged_release_path.read_text(encoding="utf-8")
+            )
+            damaged_object = (
+                damaged_release_path.parent
+                / damaged_release["objects"][0]["release_path"]
+            )
+            damaged_object.write_bytes(damaged_object.read_bytes() + b"\ncorrupt")
+            with self.assertRaisesRegex(ValueError, "发布对象缺失"):
+                HostedOperations.restore(
+                    target_database_url=corrupt_url,
+                    manifest_path=damaged_outer_path,
+                )
+
+            version_release_directory = Path(temporary) / "version-mismatch"
+            shutil.copytree(manifest_path.parent, version_release_directory)
+            version_outer_path = version_release_directory / "backup_manifest.v1.json"
+            version_outer = json.loads(version_outer_path.read_text(encoding="utf-8"))
+            version_release_path = (
+                version_release_directory / version_outer["release_bundle_manifest"]
+            )
+            version_release = json.loads(
+                version_release_path.read_text(encoding="utf-8")
+            )
+            version_release["application_version"] = "package8-incompatible"
+            version_release_without_digest = copy.deepcopy(version_release)
+            version_release_without_digest.pop("release_bundle_digest")
+            version_release["release_bundle_digest"] = digest_object(
+                version_release_without_digest
+            )
+            version_release_path.write_text(
+                json.dumps(
+                    version_release,
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            version_outer["release_bundle_manifest_sha256"] = hashlib.sha256(
+                version_release_path.read_bytes()
+            ).hexdigest()
+            version_outer["release_bundle_digest"] = version_release[
+                "release_bundle_digest"
+            ]
+            version_outer_path.write_text(
+                json.dumps(version_outer, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "发布包版本"):
+                HostedOperations.restore(
+                    target_database_url=corrupt_url,
+                    manifest_path=version_outer_path,
+                )
             incompatible_manifest = Path(temporary) / "backup" / "incompatible.json"
             incompatible_payload = json.loads(manifest_path.read_text(encoding="utf-8"))
             incompatible_payload["application_version"] = "package8-incompatible"
@@ -615,9 +867,7 @@ class Package8PostgresAcceptance(unittest.TestCase):
             snapshot_without_digest = dict(snapshot)
             snapshot_without_digest.pop("snapshot_digest")
             snapshot["snapshot_digest"] = digest_object(snapshot_without_digest)
-            snapshot_manifest["database_snapshot_digest"] = snapshot[
-                "snapshot_digest"
-            ]
+            snapshot_manifest["database_snapshot_digest"] = snapshot["snapshot_digest"]
             snapshot_manifest_path.write_text(
                 json.dumps(snapshot_manifest, indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
@@ -726,9 +976,32 @@ class Package8PostgresAcceptance(unittest.TestCase):
                     "failed_restore_left_target_empty": True,
                     "unknown_restore_objects_cleaned": True,
                     "selected_candidate_rechecked_after_revocation": True,
+                    "authorized_real_brand_contract_imported": True,
+                    "missing_real_brand_authorization_rejected": True,
+                    "runtime_database_materialization_deterministic": True,
+                    "second_simulated_brand_materialized": (
+                        "BRAND-QINGHE-LAB--QINGHE-HOME"
+                        in first_materialization["brand_ids"]
+                    ),
+                    "revoked_expired_inactive_unauthorized_excluded": True,
+                    "dify_import_consumes_runtime_materialization": True,
+                    "release_bundle_inventory_complete": True,
+                    "release_bundle_missing_object_rejected": True,
+                    "release_bundle_damaged_object_rejected": True,
+                    "release_bundle_version_mismatch_rejected": True,
+                    "restored_materialization_digest_equal": True,
                     "source_health": before_backup,
                     "source_object_counts": before_backup["object_counts"],
                     "backup_dump_sha256": backup["dump_sha256"],
+                    "release_bundle_digest": backup["release_bundle_digest"],
+                    "release_object_count": backup["release_object_count"],
+                    "materialization_digest": backup["materialization_digest"],
+                    "materialization_document_sha256": backup[
+                        "materialization_document_sha256"
+                    ],
+                    "materialization_document_count": backup[
+                        "materialization_document_count"
+                    ],
                     "first_initialization_state": first_init["state"],
                 }
             )
@@ -736,8 +1009,8 @@ class Package8PostgresAcceptance(unittest.TestCase):
             source_engine.dispose()
             shutil.rmtree(temporary, ignore_errors=True)
             self._drop_databases(admin_url, names)
-        report["local_task_database_count_after_cleanup"] = (
-            self._task_database_count(admin_url, names)
+        report["local_task_database_count_after_cleanup"] = self._task_database_count(
+            admin_url, names
         )
         self.assertEqual(report["local_task_database_count_after_cleanup"], 0)
         report["acceptance_run_digest"] = digest_object(report)

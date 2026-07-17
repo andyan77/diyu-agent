@@ -28,11 +28,12 @@ PACKAGE_RELATIVE_ROOT = Path("18_deployment/hosted_operations_001")
 BASELINE_COMMIT = "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031"
 TASK_ID = "DIYU_HOSTED_OPERATIONS_001"
 EXPECTED_ACCEPTANCE_RUN_DIGEST = (
-    "bca3baf62605877bfbe4e89da173174fb6e84d164c5e438840e79c1ece81b06d"
+    "91fd614e2c78257bbb1c5398d410dcc4bebc3cd7de3f2ae2b1c270dc606cc435"
 )
 EXPECTED_BACKUP_DUMP_SHA256 = (
-    "de91ec92223de4e32186806f4e113914f47276d747dfb4f2554fa7c4fb60784c"
+    "59c565abdc5c0cfefa1ff385cb27f89e67e31e2c83b6d4be6d4e45d8d2b90391"
 )
+EXPECTED_RELEASE_OBJECT_COUNT = 38
 RESULT_PATH = Path("result/hosted_operations_result.v1.json")
 DELIVERY_PATH = Path("delivery/execution_review_request.v1.yaml")
 REVIEW_PATHS = (
@@ -50,6 +51,7 @@ EXPECTED_FILES = {
     Path("check_hosted_operations.py"),
     Path("dify_materialization_manifest.v1.json"),
     Path("evidence/postgresql_acceptance_evidence.v1.json"),
+    Path("fixtures/authorized_real_brand_contract_fixture.v1.yaml"),
     Path("fixtures/second_brand_fixture.v1.yaml"),
     Path("hosted_models.py"),
     Path("hosted_operations.py"),
@@ -61,7 +63,11 @@ EXPECTED_FILES = {
     *REVIEW_PATHS,
 }
 AUTHORIZED_P7_CHANGES = {
+    Path("17_dify_runtime/dify_end_to_end_001/brand_import.py"),
+    Path("17_dify_runtime/dify_end_to_end_001/brand_import_contract.v1.yaml"),
+    Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
     Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
+    Path("17_dify_runtime/dify_end_to_end_001/provision_dify.py"),
     Path("17_dify_runtime/dify_end_to_end_001/runtime_models.py"),
     Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
     Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
@@ -184,6 +190,18 @@ def validate_manifests(root: Path) -> None:
         },
         "E_MANIFEST_CORE_NUMBERS",
     )
+    require(hosted.get("application_version") == "package8-v1.1", "E_APP_VERSION")
+    modes = hosted.get("brand_import_modes", {})
+    require(
+        modes.get("simulation") is True
+        and modes.get("authorized_real") is True
+        and modes.get(
+            "authorized_real_requires_source_authorization_time_revocation_and_operator_confirmation"
+        )
+        is True
+        and modes.get("authorized_real_success_does_not_grant_publication") is True,
+        "E_BRAND_MODES",
+    )
     require(
         hosted.get("database_isolation")
         == {
@@ -206,7 +224,31 @@ def validate_manifests(root: Path) -> None:
     )
     validate_readiness(hosted.get("readiness", {}))
     validate_manifest_hash(root, hosted.get("second_brand_fixture", {}), "E_FIXTURE")
+    validate_manifest_hash(
+        root,
+        hosted.get("authorized_real_contract_fixture", {}),
+        "E_REAL_FIXTURE",
+    )
     validate_manifest_hash(root, hosted.get("template", {}), "E_TEMPLATE")
+    require(
+        hosted.get("release_recovery")
+        == {
+            "database_backup_plus_offline_release_bundle": True,
+            "isolated_restore_rematerialization_verified": True,
+            "release_object_digest_and_version_required": True,
+        },
+        "E_RELEASE_RECOVERY",
+    )
+    require(
+        hosted.get("runtime_dify_materialization")
+        == {
+            "deterministic": True,
+            "dify_consumes_database_projection": True,
+            "second_retrieval_truth_created": False,
+            "withdrawn_expired_inactive_or_unauthorized_excluded": True,
+        },
+        "E_RUNTIME_MATERIALIZATION",
+    )
     materialization = read_json(PACKAGE_ROOT / "dify_materialization_manifest.v1.json")
     require(materialization.get("task_id") == TASK_ID, "E_DIFY_TASK")
     require(materialization.get("real_dify_import_performed") is False, "E_DIFY_REMOTE")
@@ -218,24 +260,45 @@ def validate_manifests(root: Path) -> None:
     validate_manifest_hash(root, materialization["package7_manifest"], "E_DIFY_P7")
     validate_manifest_hash(
         root,
-        {
-            "path": materialization["formal_narrative_retrieval"]["adapter_path"],
-            "sha256": materialization["formal_narrative_retrieval"]["adapter_sha256"],
-        },
-        "E_DIFY_RETRIEVAL_ADAPTER",
+        materialization["brand_import_contract"],
+        "E_DIFY_BRAND_CONTRACT",
     )
     validate_manifest_hash(
         root,
         {
-            "path": materialization["formal_narrative_retrieval"][
-                "source_projection_path"
-            ],
-            "sha256": materialization["formal_narrative_retrieval"][
-                "source_projection_sha256"
-            ],
+            "path": materialization["runtime_materialization"]["materializer_path"],
+            "sha256": materialization["runtime_materialization"]["materializer_sha256"],
         },
-        "E_DIFY_RETRIEVAL_SOURCE",
+        "E_DIFY_MATERIALIZER",
     )
+    for label, path_key, digest_key, code in (
+        (
+            "dify_import_consumer",
+            "provisioner_path",
+            "provisioner_sha256",
+            "E_DIFY_PROVISIONER",
+        ),
+        (
+            "dify_import_consumer",
+            "deployment_entrypoint_path",
+            "deployment_entrypoint_sha256",
+            "E_DIFY_DEPLOYMENT_ENTRYPOINT",
+        ),
+        (
+            "release_recovery",
+            "backup_entrypoint_path",
+            "backup_entrypoint_sha256",
+            "E_DIFY_BACKUP_ENTRYPOINT",
+        ),
+    ):
+        validate_manifest_hash(
+            root,
+            {
+                "path": materialization[label][path_key],
+                "sha256": materialization[label][digest_key],
+            },
+            code,
+        )
     require(
         materialization["application_definition"].get("singleton") is True,
         "E_DIFY_APP_SINGLETON",
@@ -245,8 +308,23 @@ def validate_manifests(root: Path) -> None:
         "E_DIFY_BRIDGE_SINGLETON",
     )
     require(
-        materialization["formal_narrative_retrieval"].get("truth_count") == 1,
+        materialization["runtime_materialization"].get("truth_count") == 1
+        and materialization["runtime_materialization"].get(
+            "second_retrieval_truth_created"
+        )
+        is False
+        and materialization["dify_import_consumer"].get(
+            "static_package5_fragment_path_allowed"
+        )
+        is False,
         "E_DIFY_RETRIEVAL_SINGLETON",
+    )
+    require(
+        materialization["release_recovery"].get("minimum_runtime_file_closure_included")
+        is True
+        and materialization["release_recovery"].get("offline_release_object_count")
+        == EXPECTED_RELEASE_OBJECT_COUNT,
+        "E_DIFY_RELEASE_INVENTORY",
     )
 
 
@@ -261,6 +339,11 @@ def validate_brand_fixture() -> None:
         )
         bundle = compile_brand_bundle(fixture)
         preflight = preflight_brand_bundle(bundle)
+        real_fixture = load_brand_input(
+            PACKAGE_ROOT / "fixtures/authorized_real_brand_contract_fixture.v1.yaml"
+        )
+        real_bundle = compile_brand_bundle(real_fixture)
+        real_preflight = preflight_brand_bundle(real_bundle)
     finally:
         sys.path.pop(0)
     require(preflight.get("state") == "CAN_IMPORT", "E_BRAND_PREFLIGHT")
@@ -273,6 +356,17 @@ def validate_brand_fixture() -> None:
     )
     require(tenant.get("simulation_only") is True, "E_BRAND_SIMULATION")
     require(tenant.get("publish_allowed") is False, "E_BRAND_PUBLISH")
+    require(
+        real_preflight.get("state") == "CAN_IMPORT"
+        and real_preflight.get("data_mode") == "AUTHORIZED_REAL"
+        and real_preflight.get("simulation_only") is False
+        and real_preflight.get("test_fixture_only") is True,
+        "E_REAL_BRAND_PREFLIGHT",
+    )
+    require(
+        real_bundle.identity.get("tenant", {}).get("publish_allowed") is False,
+        "E_REAL_BRAND_PUBLISH",
+    )
     accounts = bundle.identity.get("content_accounts", [])
     require(
         any(row.get("display_name") == "笛语童装" for row in accounts),
@@ -288,6 +382,11 @@ def validate_brand_fixture() -> None:
     require("（虚构）" in fixture_text, "E_BRAND_FICTION_DISCLOSURE")
     require("route_migration" not in fixture_text, "E_BRAND_INTERNAL_ROUTE")
     require("component_id" not in fixture_text, "E_BRAND_INTERNAL_COMPONENT")
+    real_fixture_text = (
+        PACKAGE_ROOT / "fixtures/authorized_real_brand_contract_fixture.v1.yaml"
+    ).read_text(encoding="utf-8")
+    require("safe_fixture_data: true" in real_fixture_text, "E_REAL_FIXTURE_DISCLOSURE")
+    require("sk-" not in real_fixture_text, "E_REAL_FIXTURE_SECRET")
 
 
 def validate_source_and_files() -> None:
@@ -310,6 +409,7 @@ def validate_source_and_files() -> None:
         "import",
         "update",
         "revoke",
+        "materialize-dify",
         "backup",
         "restore",
         "rollback",
@@ -337,6 +437,25 @@ def validate_source_and_files() -> None:
         "E_PG_SCHEMA_MIGRATION",
     )
     require("sqlite" not in operations_source.casefold(), "E_SQLITE_ACCEPTANCE")
+    provision_source = (
+        REPOSITORY_ROOT / "17_dify_runtime/dify_end_to_end_001/provision_dify.py"
+    ).read_text(encoding="utf-8")
+    deployment_source = (
+        REPOSITORY_ROOT / "17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"
+    ).read_text(encoding="utf-8")
+    require(
+        "PACKAGE8_DIFY_MATERIALIZATION_MANIFEST_PATH" in provision_source
+        and "resolve_materialized_fragments" in provision_source
+        and "PACKAGE7_FRAGMENTS_PATH" not in provision_source,
+        "E_DIFY_RUNTIME_MATERIALIZATION_CONSUMER",
+    )
+    require(
+        "PACKAGE8_DIFY_MATERIALIZATION_MANIFEST_PATH" in deployment_source
+        and "PACKAGE7_FRAGMENTS_PATH" not in deployment_source
+        and "15_brand_retrieval/brand_fact_retrieval_001/data/retrieval_fragments"
+        not in deployment_source,
+        "E_DIFY_STATIC_FRAGMENT_DEPENDENCY",
+    )
     require(
         "active_runtime_brand"
         not in (
@@ -385,6 +504,17 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
         "failed_restore_left_target_empty",
         "unknown_restore_objects_cleaned",
         "selected_candidate_rechecked_after_revocation",
+        "authorized_real_brand_contract_imported",
+        "missing_real_brand_authorization_rejected",
+        "runtime_database_materialization_deterministic",
+        "second_simulated_brand_materialized",
+        "revoked_expired_inactive_unauthorized_excluded",
+        "dify_import_consumes_runtime_materialization",
+        "release_bundle_inventory_complete",
+        "release_bundle_missing_object_rejected",
+        "release_bundle_damaged_object_rejected",
+        "release_bundle_version_mismatch_rejected",
+        "restored_materialization_digest_equal",
     }
     require(evidence.get("task_id") == TASK_ID, "E_EVIDENCE_TASK")
     require(evidence.get("database_kind") == "POSTGRESQL_14", "E_EVIDENCE_DB")
@@ -462,11 +592,23 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
     require(runtime.get("cross_tenant_attacks_rejected") == 2, "E_RUNTIME_ATTACKS")
     counts = evidence.get("source_object_counts", {})
     require(
-        counts.get("brands") == 2 and counts.get("tenants") == 2, "E_EVIDENCE_COUNTS"
+        counts.get("brands") == 3 and counts.get("tenants") == 3,
+        "E_EVIDENCE_COUNTS",
     )
     require(
         counts.get("candidates", 0) >= 4 and counts.get("feedback", 0) >= 2,
         "E_EVIDENCE_RUNTIME_COUNTS",
+    )
+    require(
+        isinstance(evidence.get("release_bundle_digest"), str)
+        and len(evidence["release_bundle_digest"]) == 64
+        and evidence.get("release_object_count") == EXPECTED_RELEASE_OBJECT_COUNT
+        and isinstance(evidence.get("materialization_digest"), str)
+        and len(evidence["materialization_digest"]) == 64
+        and isinstance(evidence.get("materialization_document_sha256"), str)
+        and len(evidence["materialization_document_sha256"]) == 64
+        and evidence.get("materialization_document_count", 0) >= 3,
+        "E_EVIDENCE_RELEASE_MATERIALIZATION",
     )
     source_health = evidence.get("source_health", {})
     require(
@@ -686,6 +828,15 @@ def run_selftest() -> None:
     changed["backup_dump_sha256"] = "0" * 64
     expect_failure(
         "E_EVIDENCE_BACKUP_DIGEST",
+        lambda: validate_acceptance_evidence(changed),
+    )
+    changed = copy.deepcopy(evidence)
+    changed["release_bundle_version_mismatch_rejected"] = False
+    expect_failure("E_EVIDENCE_FLAGS", lambda: validate_acceptance_evidence(changed))
+    changed = copy.deepcopy(evidence)
+    changed["release_object_count"] = EXPECTED_RELEASE_OBJECT_COUNT - 1
+    expect_failure(
+        "E_EVIDENCE_RELEASE_MATERIALIZATION",
         lambda: validate_acceptance_evidence(changed),
     )
     changed = copy.deepcopy(evidence)

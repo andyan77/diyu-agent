@@ -1,6 +1,6 @@
 brand_import_contract:
-  schema_version: v1.0
-  contract_id: DIYU-PKG7-BRAND-IMPORT-V1
+  schema_version: v1.1
+  contract_id: DIYU-PKG7-BRAND-IMPORT-V1-1
   brand_specific_constants_allowed_in_runtime_logic: false
   required_sections:
   - identity
@@ -19,6 +19,34 @@ brand_import_contract:
     CAN_IMPORT: 结构、范围、来源和配置可形成隔离运行数据
     NEEDS_INPUT: 缺少可补充的账号、授权、资料或软配置
     CANNOT_IMPORT: 标识冲突、跨品牌引用或结构不可信
+  data_modes:
+    SIMULATION:
+      simulation_only: true
+      fictional_test_data_required: true
+      safe_fixture_data_required: true
+      real_brand_authorization_forbidden: true
+    AUTHORIZED_REAL:
+      simulation_only: false
+      real_brand_authorization_required: true
+      required_authorization_fields:
+      - authorization_ref
+      - source_refs
+      - status
+      - valid_from
+      - valid_until
+      - revocation_state
+      - operator_ref
+      - operator_confirmed
+      - operator_confirmed_at
+      granted_status_required: true
+      clear_revocation_state_required: true
+      operator_confirmation_required: true
+      every_material_and_fact_source_must_be_authorized: true
+  source_policy:
+    explicit_source_ref_required: true
+    missing_source_fails_closed: true
+    source_outside_real_authorization_fails_closed: true
+    reverse_fill_from_generated_content_forbidden: true
   transaction_policy:
     all_or_nothing: true
     idempotent_upsert: true
@@ -29,4 +57,8 @@ brand_import_contract:
     neutral_default_when_profile_missing: true
   readiness:
     DIFY_ready: false
+    release_ready: false
     production_ready: false
+  publication_boundary:
+    successful_real_brand_import_grants_publication: false
+    successful_real_brand_import_changes_readiness: false

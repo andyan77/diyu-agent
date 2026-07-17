@@ -1,5 +1,8 @@
 schema_version: v1.0
+data_mode: SIMULATION
 fictional_test_data: true
+safe_fixture_data: true
+# AUTHORIZED_REAL 模式必须另填 real_brand_authorization，且不会自动获得发布权限。
 enterprise:
   enterprise_code: example-company
   brand_code: example-brand
@@ -50,6 +53,7 @@ materials:
     title: 品牌资料标题
     text: 请填写已经确认、允许在本次模拟中使用的资料。
     source_label: 企业提供的模拟资料
+    source_ref: fixture://package8/example/material/brand-story
     authorization_code: current-material
     account_codes: [brand-account, store-account]
     observed_at: 2026-01-01T00:00:00Z
@@ -60,6 +64,7 @@ facts:
     label: 商品记录
     value: {product_name: 示例商品, sku: EXAMPLE-001}
     source_label: 企业提供的模拟字段
+    source_ref: fixture://package8/example/fact/product-record
     authorization_code: current-material
     account_codes: [brand-account, store-account]
     effective_at: 2026-01-01T00:00:00Z

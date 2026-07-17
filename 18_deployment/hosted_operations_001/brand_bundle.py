@@ -114,11 +114,44 @@ class AuthorizationInput(StrictModel):
         return self
 
 
+class RealBrandAuthorizationInput(StrictModel):
+    authorization_ref: NonEmpty
+    source_refs: list[NonEmpty] = Field(min_length=1)
+    status: Literal["GRANTED", "REVOKED", "EXPIRED"]
+    valid_from: datetime
+    valid_until: datetime
+    revocation_state: Literal["CLEAR", "REVOKED"]
+    revocation_ref: NonEmpty | None = None
+    operator_ref: NonEmpty
+    operator_confirmed: bool
+    operator_confirmed_at: datetime
+
+    @model_validator(mode="after")
+    def validate_authorization(self) -> RealBrandAuthorizationInput:
+        values = (self.valid_from, self.valid_until, self.operator_confirmed_at)
+        if any(value.tzinfo is None for value in values):
+            raise ValueError("real brand authorization times require a timezone")
+        if self.valid_from >= self.valid_until:
+            raise ValueError("real brand authorization window is empty")
+        if self.status != "GRANTED":
+            raise ValueError("real brand import requires granted authorization")
+        if self.revocation_state != "CLEAR" or self.revocation_ref is not None:
+            raise ValueError("revoked real brand authorization cannot be imported")
+        if not self.operator_confirmed:
+            raise ValueError("real brand import requires operator confirmation")
+        if not self.valid_from <= self.operator_confirmed_at < self.valid_until:
+            raise ValueError("operator confirmation is outside authorization window")
+        if len(set(self.source_refs)) != len(self.source_refs):
+            raise ValueError("real brand authorization source refs must be unique")
+        return self
+
+
 class MaterialInput(StrictModel):
     code: Code
     title: NonEmpty
     text: NonEmpty
     source_label: NonEmpty
+    source_ref: NonEmpty
     authorization_code: Code
     account_codes: list[Code] = Field(min_length=1)
     observed_at: datetime
@@ -148,6 +181,7 @@ class FactInput(StrictModel):
     label: NonEmpty
     value: JsonObject
     source_label: NonEmpty
+    source_ref: NonEmpty
     authorization_code: Code
     account_codes: list[Code] = Field(min_length=1)
     effective_at: datetime
@@ -187,7 +221,10 @@ class ExpressionInput(StrictModel):
 
 class BrandInputDocument(StrictModel):
     schema_version: Literal["v1.0"]
-    fictional_test_data: Literal[True]
+    data_mode: Literal["SIMULATION", "AUTHORIZED_REAL"]
+    fictional_test_data: bool
+    safe_fixture_data: bool
+    real_brand_authorization: RealBrandAuthorizationInput | None = None
     enterprise: EnterpriseInput
     organizations: list[OrganizationInput] = Field(min_length=1)
     stores: list[StoreInput]
@@ -201,6 +238,42 @@ class BrandInputDocument(StrictModel):
 
     @model_validator(mode="after")
     def validate_references(self) -> BrandInputDocument:
+        if self.data_mode == "SIMULATION":
+            if not self.fictional_test_data or not self.safe_fixture_data:
+                raise ValueError("simulation mode requires safe fictional fixture data")
+            if self.real_brand_authorization is not None:
+                raise ValueError(
+                    "simulation mode cannot carry real brand authorization"
+                )
+        else:
+            real_authorization = self.real_brand_authorization
+            if real_authorization is None:
+                raise ValueError(
+                    "authorized real mode requires real brand authorization"
+                )
+            if self.fictional_test_data != self.safe_fixture_data:
+                raise ValueError(
+                    "authorized real test fixtures must disclose both fixture flags"
+                )
+            supplied_source_refs = {
+                *(row.source_ref for row in self.materials),
+                *(row.source_ref for row in self.facts),
+            }
+            if not supplied_source_refs <= set(real_authorization.source_refs):
+                raise ValueError("real brand source is outside operator authorization")
+            if any(
+                row.observed_at < real_authorization.valid_from
+                or row.valid_until > real_authorization.valid_until
+                for row in self.materials
+            ) or any(
+                row.effective_at < real_authorization.valid_from
+                or row.valid_until > real_authorization.valid_until
+                for row in self.facts
+            ):
+                raise ValueError(
+                    "real brand input is outside operator authorization window"
+                )
+
         def unique(values: list[str], label: str) -> set[str]:
             result = set(values)
             if len(result) != len(values):
@@ -245,40 +318,48 @@ class BrandInputDocument(StrictModel):
         for user in self.users:
             if not set(user.allowed_account_codes) <= accounts:
                 raise ValueError("user account is unknown")
-        for authorization in self.authorizations:
-            if not set(authorization.organization_codes) <= organizations:
+        for authorization_input in self.authorizations:
+            if not set(authorization_input.organization_codes) <= organizations:
                 raise ValueError("authorization organization is unknown")
-            if not set(filter(None, authorization.store_codes)) <= stores:
+            if not set(filter(None, authorization_input.store_codes)) <= stores:
                 raise ValueError("authorization store is unknown")
-            if not set(authorization.account_codes) <= accounts:
+            if not set(authorization_input.account_codes) <= accounts:
                 raise ValueError("authorization account is unknown")
-            for store_code in filter(None, authorization.store_codes):
+            for store_code in filter(None, authorization_input.store_codes):
                 if (
                     stores_by_code[store_code].organization_code
-                    not in authorization.organization_codes
+                    not in authorization_input.organization_codes
                 ):
                     raise ValueError("authorization store is outside its organization")
-            for account_code in authorization.account_codes:
+            for account_code in authorization_input.account_codes:
                 account = accounts_by_code[account_code]
-                if account.organization_code not in authorization.organization_codes:
+                if (
+                    account.organization_code
+                    not in authorization_input.organization_codes
+                ):
                     raise ValueError(
                         "authorization does not cover account organization"
                     )
-                if account.store_code not in authorization.store_codes:
+                if account.store_code not in authorization_input.store_codes:
                     raise ValueError("authorization does not cover account store")
         for material in self.materials:
             if material.authorization_code not in authorizations:
                 raise ValueError("content authorization is unknown")
             if not set(material.account_codes) <= accounts:
                 raise ValueError("content account is unknown")
-            authorization = authorizations_by_code[material.authorization_code]
-            if not set(material.account_codes) <= set(authorization.account_codes):
+            material_authorization = authorizations_by_code[material.authorization_code]
+            if not set(material.account_codes) <= set(
+                material_authorization.account_codes
+            ):
                 raise ValueError("content account is outside authorization scope")
-            if material.status == "ACTIVE" and authorization.status != "GRANTED":
+            if (
+                material.status == "ACTIVE"
+                and material_authorization.status != "GRANTED"
+            ):
                 raise ValueError("active content requires a granted authorization")
             if (
-                material.observed_at < authorization.valid_from
-                or material.valid_until > authorization.valid_until
+                material.observed_at < material_authorization.valid_from
+                or material.valid_until > material_authorization.valid_until
             ):
                 raise ValueError("content validity is outside authorization window")
         for fact in self.facts:
@@ -286,14 +367,14 @@ class BrandInputDocument(StrictModel):
                 raise ValueError("content authorization is unknown")
             if not set(fact.account_codes) <= accounts:
                 raise ValueError("content account is unknown")
-            authorization = authorizations_by_code[fact.authorization_code]
-            if not set(fact.account_codes) <= set(authorization.account_codes):
+            fact_authorization = authorizations_by_code[fact.authorization_code]
+            if not set(fact.account_codes) <= set(fact_authorization.account_codes):
                 raise ValueError("content account is outside authorization scope")
-            if fact.status == "ACTIVE" and authorization.status != "GRANTED":
+            if fact.status == "ACTIVE" and fact_authorization.status != "GRANTED":
                 raise ValueError("active fact requires a granted authorization")
             if (
-                fact.effective_at < authorization.valid_from
-                or fact.valid_until > authorization.valid_until
+                fact.effective_at < fact_authorization.valid_from
+                or fact.valid_until > fact_authorization.valid_until
             ):
                 raise ValueError("fact validity is outside authorization window")
         for column in self.expression.columns:
@@ -326,6 +407,8 @@ def load_brand_input(path: Path) -> BrandInputDocument:
 
 def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
     enterprise = document.enterprise
+    simulation_only = document.data_mode == "SIMULATION"
+    test_fixture_only = document.safe_fixture_data
     tenant_id = _identifier("TENANT", enterprise.enterprise_code)
     brand_id = _identifier("BRAND", enterprise.enterprise_code, enterprise.brand_code)
     input_digest = hashlib.sha256(
@@ -358,7 +441,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
             "display_name": row.name,
             "organization_level": row.level,
             "status": "ACTIVE",
-            "simulation_only": True,
+            "simulation_only": simulation_only,
+            "test_fixture_only": test_fixture_only,
         }
         for row in document.organizations
     ]
@@ -368,7 +452,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
             "organization_id": organization_ids[row.organization_code],
             "display_name": row.name,
             "status": "ACTIVE",
-            "simulation_only": True,
+            "simulation_only": simulation_only,
+            "test_fixture_only": test_fixture_only,
         }
         for row in document.stores
     ]
@@ -377,7 +462,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
             "role_id": role_ids[row.code],
             "display_name": row.name,
             "boundary": row.boundary,
-            "simulation_only": True,
+            "simulation_only": simulation_only,
+            "test_fixture_only": test_fixture_only,
         }
         for row in document.roles
     ]
@@ -405,7 +491,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                         "confirmer_role_ids": [role_ids[account_input.role_code]],
                         "approval_mode": "ANY_OF",
                         "subject_confirmation_required": False,
-                        "simulation_only": True,
+                        "simulation_only": simulation_only,
+                        "test_fixture_only": test_fixture_only,
                         "publish_allowed": False,
                     }
                 ],
@@ -417,7 +504,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                     "AUTH", enterprise.enterprise_code, account_input.code, "confirm"
                 ),
                 "status": "ACTIVE",
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
             }
         )
@@ -447,13 +535,15 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                             for account in accounts
                             if account["account_id"] == account_ids[code]
                         ),
-                        "simulation_only": True,
+                        "simulation_only": simulation_only,
+                        "test_fixture_only": test_fixture_only,
                         "publish_allowed": False,
                     }
                     for code in user_input.allowed_account_codes
                 ],
                 "status": "ACTIVE",
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
             }
         )
     authorizations: list[JsonObject] = []
@@ -491,7 +581,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                 "valid_from": _iso(authorization_input.valid_from),
                 "valid_until": _iso(authorization_input.valid_until),
                 "status": authorization_input.status,
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
             }
         )
@@ -531,7 +622,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                 "valid_from": _iso(confirmation_start),
                 "valid_until": _iso(confirmation_end),
                 "status": "GRANTED",
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
             }
         )
@@ -564,7 +656,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                 "valid_from": _iso(confirmation_start),
                 "valid_until": _iso(confirmation_end),
                 "status": "GRANTED",
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
             }
         )
@@ -612,7 +705,7 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                 "text": text,
                 "title": material_input.title,
                 "source_id": source_id,
-                "source_ref": f"fixture://{source_id}",
+                "source_ref": material_input.source_ref,
                 "source_sha256": source_digest,
                 "fragment_sha256": source_digest,
                 "source_organization_id": source_organization_id,
@@ -640,7 +733,8 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                     )
                 ),
                 "data_version_digest": input_digest,
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
                 "runtime_consumable": False,
                 "source_label": material_input.source_label,
@@ -687,13 +781,14 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                     )
                 ),
                 "source_id": source_id,
-                "source_ref": f"fixture://{source_id}",
+                "source_ref": fact_input.source_ref,
                 "source_sha256": value_digest,
                 "source_excerpt_sha256": value_digest,
                 "data_version_digest": input_digest,
                 "value": json_value,
                 "label": fact_input.label,
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
                 "runtime_consumable": False,
                 "source_label": fact_input.source_label,
@@ -738,13 +833,16 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
                 "status": "ACTIVE",
                 "revocation_ref": None,
                 "source_id": source_id,
-                "source_ref": f"fixture://{source_id}",
+                "source_ref": (
+                    f"brand-import-contract://{input_digest}/account/{account_id}"
+                ),
                 "source_sha256": value_digest,
                 "source_excerpt_sha256": value_digest,
                 "data_version_digest": input_digest,
                 "value": value,
                 "label": "内容账号范围",
-                "simulation_only": True,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
                 "runtime_consumable": False,
                 "source_label": "第8包服务端身份范围",
@@ -754,11 +852,16 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
         "schema_version": "v1.0",
         "profile_ref": f"expression-profile://{brand_id.lower()}/v1",
         "profile_version": 1,
-        "resolution_mode": "REVIEWED_SIMULATION_BRAND",
+        "resolution_mode": (
+            "REVIEWED_SIMULATION_BRAND"
+            if simulation_only
+            else "AUTHORIZED_REAL_BRAND_INPUT"
+        ),
         "tenant_specific": True,
         "tenant_id": tenant_id,
         "brand_id": brand_id,
-        "simulation_only": True,
+        "simulation_only": simulation_only,
+        "test_fixture_only": test_fixture_only,
         "publish_allowed": False,
         "operating_proposition": {
             "why_exist": document.expression.why_exist,
@@ -834,8 +937,13 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
             "brand_id": brand_id,
             "display_name": enterprise.enterprise_name,
             "brand_display_name": enterprise.brand_name,
-            "tenant_kind": "SIMULATED_ACCEPTANCE_ENTERPRISE",
-            "simulation_only": True,
+            "tenant_kind": (
+                "SIMULATED_ACCEPTANCE_ENTERPRISE"
+                if simulation_only
+                else "AUTHORIZED_REAL_BRAND_ENTERPRISE"
+            ),
+            "simulation_only": simulation_only,
+            "test_fixture_only": test_fixture_only,
             "publish_allowed": False,
         },
         "organizations": organizations,
@@ -846,7 +954,11 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
         "authorization_grants": authorizations,
         "subject_confirmation_records": [],
         "source": {
-            "source_ref": "fixture://package8-second-brand",
+            "source_ref": (
+                "fixture://package8-brand-input"
+                if simulation_only
+                else f"brand-import-contract://{input_digest}"
+            ),
             "sha256": input_digest,
         },
     }
@@ -858,9 +970,20 @@ def compile_brand_bundle(document: BrandInputDocument) -> BrandImportBundle:
         source_manifest={
             "schema_version": document.schema_version,
             "input_digest": input_digest,
-            "simulation_only": True,
+            "data_mode": document.data_mode,
+            "simulation_only": simulation_only,
+            "test_fixture_only": test_fixture_only,
             "publish_allowed": False,
             "compiler": "DIYU_HOSTED_OPERATIONS_001",
+            "real_brand_authorization": (
+                None
+                if document.real_brand_authorization is None
+                else document.real_brand_authorization.model_dump(mode="json")
+            ),
+            "derived_source_refs": [
+                f"brand-import-contract://{input_digest}/account/{account_ids[row.code]}"
+                for row in document.accounts
+            ],
         },
     )
 

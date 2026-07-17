@@ -1,0 +1,87 @@
+schema_version: v1.0
+data_mode: AUTHORIZED_REAL
+fictional_test_data: true
+safe_fixture_data: true
+real_brand_authorization:
+  authorization_ref: authorization://package8-safe-fixture/operator-approval
+  source_refs:
+    - safe-fixture://package8/authorized-real/material/brand-note
+    - safe-fixture://package8/authorized-real/fact/product-record
+  status: GRANTED
+  valid_from: 2026-07-01T00:00:00Z
+  valid_until: 2027-07-01T00:00:00Z
+  revocation_state: CLEAR
+  revocation_ref: null
+  operator_ref: operator://package8-safe-fixture/reviewer
+  operator_confirmed: true
+  operator_confirmed_at: 2026-07-15T00:00:00Z
+enterprise:
+  enterprise_code: authorized-lab
+  brand_code: authorized-demo
+  enterprise_name: 授权模式合同测试企业（安全夹具）
+  brand_name: 授权模式合同测试品牌（安全夹具）
+organizations:
+  - code: hq
+    name: 授权模式测试总部
+    level: HEADQUARTERS
+stores: []
+roles:
+  - code: brand-recorder
+    name: 授权资料记录者
+    boundary: 只使用明确来源且处于有效授权窗口内的资料。
+users:
+  - code: acceptance-owner
+    username: authorized-pkg8-owner
+    display_name: 授权模式测试负责人
+    allowed_account_codes: [brand-account]
+accounts:
+  - code: brand-account
+    display_name: 授权模式测试账号
+    organization_code: hq
+    store_code: null
+    level: HEADQUARTERS
+    role_code: brand-recorder
+    allowed_source_organization_codes: [hq]
+authorizations:
+  - code: current-material
+    status: GRANTED
+    valid_from: 2026-07-01T00:00:00Z
+    valid_until: 2027-07-01T00:00:00Z
+    organization_codes: [hq]
+    store_codes: [null]
+    account_codes: [brand-account]
+materials:
+  - code: brand-note
+    title: 授权模式合同测试资料
+    text: 这是一条不含真实客户信息的安全夹具，仅验证明确授权的真实品牌导入合同能够闭合。
+    source_label: 第8包授权模式安全夹具
+    source_ref: safe-fixture://package8/authorized-real/material/brand-note
+    authorization_code: current-material
+    account_codes: [brand-account]
+    observed_at: 2026-07-15T00:00:00Z
+    valid_until: 2027-07-01T00:00:00Z
+facts:
+  - code: product-record
+    kind: SKU
+    label: 授权模式安全夹具商品记录
+    value: {product_name: 授权模式测试商品, sku: SAFE-FIXTURE-001}
+    source_label: 第8包授权模式安全夹具
+    source_ref: safe-fixture://package8/authorized-real/fact/product-record
+    authorization_code: current-material
+    account_codes: [brand-account]
+    effective_at: 2026-07-15T00:00:00Z
+    valid_until: 2027-07-01T00:00:00Z
+expression:
+  why_exist: 验证授权品牌资料可在不解锁发布的前提下进入隔离运行库。
+  audience: 第8包本地验收人员。
+  tone_tendencies: [清楚, 克制]
+  preferred_phrasing: [只说明已授权资料]
+  prohibited_categories: [fabricated_fact, unsupported_promise]
+  storylines:
+    - code: authorized-record
+      name: 授权资料记录
+      purpose: 只组织当前授权窗口内的安全夹具资料。
+  columns:
+    - code: one-record
+      name: 一条授权记录
+      storyline_code: authorized-record

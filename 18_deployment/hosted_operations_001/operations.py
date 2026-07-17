@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, TypeVar
@@ -22,6 +23,12 @@ from sqlalchemy.orm import Session, sessionmaker
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
+FOUNDATION_ROOT = REPOSITORY_ROOT / "11_product_foundation/public_foundation_001"
+PACKAGE_2_ROOT = (
+    REPOSITORY_ROOT / "12_expression_service/expression_runtime_adapter_001"
+)
+PACKAGE_5_ROOT = REPOSITORY_ROOT / "15_brand_retrieval/brand_fact_retrieval_001"
+PACKAGE_6_ROOT = REPOSITORY_ROOT / "16_composition_runtime/fact_aware_plan_adapter_001"
 PACKAGE_7_ROOT = REPOSITORY_ROOT / "17_dify_runtime/dify_end_to_end_001"
 if str(PACKAGE_7_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_7_ROOT))
@@ -33,6 +40,7 @@ from brand_import import (  # noqa: E402
 )
 from persistence import (  # noqa: E402
     RuntimeRepository,
+    canonical_json,
     create_runtime_engine,
     create_session_factory,
     digest_object,
@@ -75,15 +83,143 @@ from hosted_models import (  # noqa: E402
 
 JsonObject = dict[str, Any]
 ModelType = TypeVar("ModelType")
-APPLICATION_VERSION = "package8-v1"
+APPLICATION_VERSION = "package8-v1.1"
 SCHEMA_VERSION = 1
 TASK_PREFIX = "diyu-pkg8-"
 BRAND_REVISION_INDEX = "ix_hosted_brand_revision_tenant_digest"
 SUPPORTED_RESTORE_SCHEMA_VERSIONS = {1, 2}
+MATERIALIZATION_SCHEMA_VERSION = "v1.0"
+RELEASE_PACKAGE_SCHEMA_VERSION = "v1.0"
+MATERIALIZATION_FILE_NAME = "dify_narrative_documents.v1.jsonl"
+MATERIALIZATION_MANIFEST_NAME = "dify_materialization_manifest.v1.json"
+RELEASE_MANIFEST_NAME = "release_bundle_manifest.v1.json"
+RELEASE_OBJECT_SPECS: tuple[tuple[str, str, Path], ...] = (
+    ("implementation", APPLICATION_VERSION, PACKAGE_ROOT / "operations.py"),
+    ("implementation", APPLICATION_VERSION, PACKAGE_ROOT / "hosted_operations.py"),
+    ("implementation", APPLICATION_VERSION, PACKAGE_ROOT / "brand_bundle.py"),
+    ("implementation", APPLICATION_VERSION, PACKAGE_ROOT / "hosted_models.py"),
+    (
+        "brand_import_template",
+        "brand-import-v1.1",
+        PACKAGE_ROOT / "brand_input_template.v1.yaml",
+    ),
+    (
+        "retrieval_rebuild_contract",
+        "runtime-materialization-v1",
+        PACKAGE_ROOT / "dify_materialization_manifest.v1.json",
+    ),
+    ("dify_application", "dify-app-v1", PACKAGE_7_ROOT / "dify_app.v1.yaml"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "bridge_app.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "contracts.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "dify_chat.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "dify_knowledge.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "persistence.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "runtime_models.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "runtime_retrieval.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "runtime_service.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "security.py"),
+    ("thin_bridge", "package7-bridge-v1", PACKAGE_7_ROOT / "seed_runtime.py"),
+    ("brand_importer", "brand-import-v1.1", PACKAGE_7_ROOT / "brand_import.py"),
+    (
+        "brand_import_contract",
+        "brand-import-v1.1",
+        PACKAGE_7_ROOT / "brand_import_contract.v1.yaml",
+    ),
+    (
+        "brand_runtime_profile",
+        "package7-brand-profile-v1",
+        PACKAGE_7_ROOT / "brand_runtime_profile.v1.yaml",
+    ),
+    (
+        "dify_importer",
+        "runtime-materialization-v1",
+        PACKAGE_7_ROOT / "provision_dify.py",
+    ),
+    (
+        "deployment_entrypoint",
+        "runtime-materialization-v1",
+        PACKAGE_7_ROOT / "deploy_remote.sh",
+    ),
+    ("portal", "package7-portal-v1", PACKAGE_7_ROOT / "portal.html"),
+    ("portal", "package7-portal-v1", PACKAGE_7_ROOT / "portal.js"),
+    ("portal", "package7-portal-v1", PACKAGE_7_ROOT / "portal.css"),
+    (
+        "expression_runtime_dependency",
+        "package2-light-expression-v1",
+        PACKAGE_2_ROOT / "light_expression_service.py",
+    ),
+    (
+        "expression_runtime_dependency",
+        "package2-light-expression-v1",
+        PACKAGE_2_ROOT / "neutral_expression_profile.v1.yaml",
+    ),
+    (
+        "expression_runtime_dependency",
+        "package2-light-expression-v1",
+        PACKAGE_2_ROOT / "service_manifest.v1.yaml",
+    ),
+    (
+        "retrieval_runtime_dependency",
+        "package5-brand-retrieval-v1",
+        PACKAGE_5_ROOT / "brand_fact_retrieval.py",
+    ),
+    (
+        "retrieval_runtime_dependency",
+        "package5-brand-retrieval-v1",
+        PACKAGE_5_ROOT / "retrieval_manifest.v1.json",
+    ),
+    (
+        "retrieval_runtime_dependency",
+        "package5-brand-retrieval-v1",
+        PACKAGE_5_ROOT / "data/expression_candidates.v1.json",
+    ),
+    (
+        "retrieval_runtime_dependency",
+        "package5-brand-retrieval-v1",
+        PACKAGE_5_ROOT / "data/retrieval_fragments.v1.jsonl",
+    ),
+    (
+        "retrieval_runtime_dependency",
+        "package5-brand-retrieval-v1",
+        PACKAGE_5_ROOT / "data/source_dispositions.v1.jsonl",
+    ),
+    (
+        "retrieval_runtime_dependency",
+        "package5-brand-retrieval-v1",
+        PACKAGE_5_ROOT / "data/verified_precise_facts.v1.jsonl",
+    ),
+    (
+        "composition_runtime_dependency",
+        "package6-fact-aware-plan-v1",
+        PACKAGE_6_ROOT / "fact_aware_plan_adapter.py",
+    ),
+    (
+        "public_contract_dependency",
+        "public-foundation-v1",
+        FOUNDATION_ROOT / "identity/simulation_tenant.v1.yaml",
+    ),
+    (
+        "public_contract_dependency",
+        "public-foundation-v1",
+        FOUNDATION_ROOT / "taxonomy/topic_product_mapping.v1.yaml",
+    ),
+    (
+        "dify_shell_dependency",
+        "dify-shell-v1",
+        REPOSITORY_ROOT
+        / "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json",
+    ),
+)
 
 
 def utc_now() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def _iso(value: datetime) -> str:
+    if value.tzinfo is None:
+        raise ValueError("时间必须包含时区")
+    return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def _safe_namespace(value: str) -> str:
@@ -184,9 +320,7 @@ def _canonicalize_database_value(value: Any, namespace_aliases: set[str]) -> Any
             for key, item in value.items()
         }
     if isinstance(value, (list, tuple)):
-        return [
-            _canonicalize_database_value(item, namespace_aliases) for item in value
-        ]
+        return [_canonicalize_database_value(item, namespace_aliases) for item in value]
     return value
 
 
@@ -259,9 +393,7 @@ def _database_snapshot(engine: Engine, namespace_aliases: set[str]) -> JsonObjec
                 "cycle": bool(row["cycle"]),
                 "cache_size": int(row["cache_size"]),
                 "last_value": (
-                    int(row["last_value"])
-                    if row["last_value"] is not None
-                    else None
+                    int(row["last_value"]) if row["last_value"] is not None else None
                 ),
             }
             for row in sequence_rows
@@ -274,6 +406,29 @@ def _database_snapshot(engine: Engine, namespace_aliases: set[str]) -> JsonObjec
     }
     snapshot["snapshot_digest"] = digest_object(snapshot)
     return snapshot
+
+
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _write_canonical_json(path: Path, value: JsonObject) -> None:
+    path.write_text(canonical_json(value) + "\n", encoding="utf-8")
+
+
+def _safe_relative_path(value: object, *, label: str) -> Path:
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{label} 路径无效")
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts or path == Path("."):
+        raise ValueError(f"{label} 路径越界")
+    return path
+
+
+def _manifest_without_digest(manifest: JsonObject, field: str) -> JsonObject:
+    payload = copy.deepcopy(manifest)
+    payload.pop(field, None)
+    return payload
 
 
 class HostedOperations:
@@ -304,7 +459,10 @@ class HostedOperations:
                         state="KNOWN_GOOD",
                         metadata_payload={
                             "brand_import_transaction_version": 1,
-                            "simulation_only": True,
+                            "supported_data_modes": [
+                                "SIMULATION",
+                                "AUTHORIZED_REAL",
+                            ],
                             "production_ready": False,
                         },
                         updated_at=utc_now(),
@@ -649,6 +807,546 @@ class HostedOperations:
             "dropped_index": BRAND_REVISION_INDEX,
         }
 
+    def materialize_dify(
+        self,
+        *,
+        output_directory: Path,
+        as_of: datetime,
+    ) -> JsonObject:
+        """Project current authorized narrative rows into one Dify import package."""
+
+        self._require_installed()
+        if as_of.tzinfo is None:
+            raise ValueError("资料物化时间必须包含时区")
+        as_of_utc = as_of.astimezone(timezone.utc)
+        output_directory.mkdir(mode=0o700, parents=True, exist_ok=True)
+        os.chmod(output_directory, 0o700)
+        document_path = output_directory / MATERIALIZATION_FILE_NAME
+        manifest_path = output_directory / MATERIALIZATION_MANIFEST_NAME
+
+        with self.sessions() as session:
+            tenants = {
+                row.tenant_id: row
+                for row in session.scalars(select(RuntimeTenant)).all()
+            }
+            brands = {
+                row.brand_id: row for row in session.scalars(select(RuntimeBrand)).all()
+            }
+            organizations = {
+                row.organization_id: row
+                for row in session.scalars(select(RuntimeOrganization)).all()
+            }
+            stores = {
+                row.store_id: row for row in session.scalars(select(RuntimeStore)).all()
+            }
+            accounts = {
+                row.account_id: row
+                for row in session.scalars(select(RuntimeAccount)).all()
+            }
+            authorizations = {
+                row.authorization_id: row
+                for row in session.scalars(select(RuntimeAuthorization)).all()
+            }
+            sources = {
+                row.source_id: row
+                for row in session.scalars(select(RuntimeSource)).all()
+            }
+            fragments = list(
+                session.scalars(
+                    select(RuntimeNarrativeFragment).order_by(
+                        RuntimeNarrativeFragment.fragment_id
+                    )
+                ).all()
+            )
+
+        excluded_counts: dict[str, int] = {}
+
+        def exclude(reason: str) -> None:
+            excluded_counts[reason] = excluded_counts.get(reason, 0) + 1
+
+        documents: list[JsonObject] = []
+        for fragment in fragments:
+            payload = copy.deepcopy(fragment.payload)
+            tenant = tenants.get(fragment.tenant_id)
+            brand = brands.get(fragment.brand_id)
+            if (
+                tenant is None
+                or tenant.status != "ACTIVE"
+                or brand is None
+                or brand.status != "ACTIVE"
+                or brand.tenant_id != fragment.tenant_id
+            ):
+                exclude("TENANT_OR_BRAND_INACTIVE")
+                continue
+            if (
+                fragment.status != "ACTIVE"
+                or fragment.authorization_state != "GRANTED"
+                or fragment.revocation_ref is not None
+                or not fragment.valid_from <= as_of_utc < fragment.valid_until
+            ):
+                exclude("FRAGMENT_REVOKED_EXPIRED_OR_INACTIVE")
+                continue
+            authorization = authorizations.get(fragment.authorization_ref)
+            if (
+                authorization is None
+                or authorization.tenant_id != fragment.tenant_id
+                or authorization.status != "GRANTED"
+                or not authorization.valid_from <= as_of_utc < authorization.valid_until
+            ):
+                exclude("AUTHORIZATION_MISSING_REVOKED_OR_EXPIRED")
+                continue
+            source_id = payload.get("source_id")
+            source = sources.get(source_id) if isinstance(source_id, str) else None
+            if (
+                source is None
+                or source.status != "ACTIVE"
+                or not fragment.source_ref
+                or source.source_digest != payload.get("source_sha256")
+            ):
+                exclude("SOURCE_MISSING_OR_INACTIVE")
+                continue
+            account_ids = payload.get("applicable_content_account_ids")
+            organization_ids = payload.get("applicable_organization_ids")
+            store_ids = payload.get("applicable_store_ids")
+            if (
+                not isinstance(account_ids, list)
+                or not account_ids
+                or not isinstance(organization_ids, list)
+                or not organization_ids
+                or not isinstance(store_ids, list)
+            ):
+                exclude("SCOPE_METADATA_INVALID")
+                continue
+            scoped_accounts = [accounts.get(value) for value in account_ids]
+            if any(
+                row is None
+                or row.status != "ACTIVE"
+                or row.tenant_id != fragment.tenant_id
+                or row.brand_id != fragment.brand_id
+                for row in scoped_accounts
+            ):
+                exclude("ACCOUNT_SCOPE_INACTIVE_OR_CROSS_BRAND")
+                continue
+            if any(
+                not isinstance(value, str)
+                or value not in organizations
+                or organizations[value].status != "ACTIVE"
+                or organizations[value].tenant_id != fragment.tenant_id
+                for value in organization_ids
+            ):
+                exclude("ORGANIZATION_SCOPE_INACTIVE_OR_CROSS_TENANT")
+                continue
+            if any(
+                value is not None
+                and (
+                    not isinstance(value, str)
+                    or value not in stores
+                    or stores[value].status != "ACTIVE"
+                    or stores[value].organization_id not in organization_ids
+                )
+                for value in store_ids
+            ):
+                exclude("STORE_SCOPE_INACTIVE_OR_CROSS_ORGANIZATION")
+                continue
+            if payload.get("publish_allowed") is not False:
+                exclude("PUBLISH_BOUNDARY_INVALID")
+                continue
+            text = normalize_knowledge_text(str(payload.get("text", "")))
+            if not text or hashlib.sha256(text.encode("utf-8")).hexdigest() != (
+                fragment.content_digest
+            ):
+                exclude("CONTENT_DIGEST_INVALID")
+                continue
+            simulation_only = payload.get("simulation_only") is True
+            document = copy.deepcopy(payload)
+            document.update(
+                {
+                    "materialization_id": f"dify-runtime://{fragment.fragment_id}",
+                    "fragment_id": fragment.fragment_id,
+                    "tenant_id": fragment.tenant_id,
+                    "brand_id": fragment.brand_id,
+                    "tenant_status": tenant.status,
+                    "brand_status": brand.status,
+                    "source_id": source.source_id,
+                    "source_ref": source.source_ref,
+                    "source_sha256": source.source_digest,
+                    "fragment_sha256": fragment.content_digest,
+                    "content_digest": fragment.content_digest,
+                    "authorization_ref": fragment.authorization_ref,
+                    "authorization_state": fragment.authorization_state,
+                    "observed_at": _iso(fragment.valid_from),
+                    "valid_until": _iso(fragment.valid_until),
+                    "revocation_ref": fragment.revocation_ref,
+                    "status": fragment.status,
+                    "applicable_content_account_ids": sorted(map(str, account_ids)),
+                    "applicable_organization_ids": sorted(map(str, organization_ids)),
+                    "applicable_store_ids": sorted(
+                        store_ids,
+                        key=lambda value: "" if value is None else str(value),
+                    ),
+                    "data_mode": (
+                        "SIMULATION" if simulation_only else "AUTHORIZED_REAL"
+                    ),
+                    "simulation_only": simulation_only,
+                    "test_fixture_only": payload.get(
+                        "test_fixture_only", simulation_only
+                    ),
+                    "publish_allowed": False,
+                    "runtime_consumable": False,
+                }
+            )
+            documents.append(document)
+
+        documents.sort(key=lambda row: str(row["fragment_id"]))
+        serialized = "".join(f"{canonical_json(row)}\n" for row in documents)
+        document_path.write_text(serialized, encoding="utf-8")
+        os.chmod(document_path, 0o600)
+        document_digest = _sha256_file(document_path)
+        source_state = {
+            "tenants": [
+                {
+                    "tenant_id": row.tenant_id,
+                    "status": row.status,
+                    "payload": row.payload,
+                }
+                for row in sorted(tenants.values(), key=lambda item: item.tenant_id)
+            ],
+            "brands": [
+                {
+                    "brand_id": row.brand_id,
+                    "tenant_id": row.tenant_id,
+                    "status": row.status,
+                    "payload": row.payload,
+                }
+                for row in sorted(brands.values(), key=lambda item: item.brand_id)
+            ],
+            "organizations": [
+                {
+                    "organization_id": row.organization_id,
+                    "tenant_id": row.tenant_id,
+                    "status": row.status,
+                    "payload": row.payload,
+                }
+                for row in sorted(
+                    organizations.values(), key=lambda item: item.organization_id
+                )
+            ],
+            "stores": [
+                {
+                    "store_id": row.store_id,
+                    "organization_id": row.organization_id,
+                    "status": row.status,
+                    "payload": row.payload,
+                }
+                for row in sorted(stores.values(), key=lambda item: item.store_id)
+            ],
+            "accounts": [
+                {
+                    "account_id": row.account_id,
+                    "tenant_id": row.tenant_id,
+                    "brand_id": row.brand_id,
+                    "organization_id": row.organization_id,
+                    "store_id": row.store_id,
+                    "status": row.status,
+                    "payload": row.payload,
+                }
+                for row in sorted(accounts.values(), key=lambda item: item.account_id)
+            ],
+            "authorizations": [
+                {
+                    "authorization_id": row.authorization_id,
+                    "tenant_id": row.tenant_id,
+                    "status": row.status,
+                    "valid_from": row.valid_from,
+                    "valid_until": row.valid_until,
+                    "payload": row.payload,
+                }
+                for row in sorted(
+                    authorizations.values(), key=lambda item: item.authorization_id
+                )
+            ],
+            "sources": [
+                {
+                    "source_id": row.source_id,
+                    "source_ref": row.source_ref,
+                    "source_digest": row.source_digest,
+                    "status": row.status,
+                    "payload": row.payload,
+                }
+                for row in sorted(sources.values(), key=lambda item: item.source_id)
+            ],
+            "fragments": [
+                {
+                    "fragment_id": row.fragment_id,
+                    "source_ref": row.source_ref,
+                    "tenant_id": row.tenant_id,
+                    "brand_id": row.brand_id,
+                    "status": row.status,
+                    "authorization_state": row.authorization_state,
+                    "authorization_ref": row.authorization_ref,
+                    "valid_from": row.valid_from,
+                    "valid_until": row.valid_until,
+                    "revocation_ref": row.revocation_ref,
+                    "content_digest": row.content_digest,
+                    "payload": row.payload,
+                }
+                for row in fragments
+            ],
+        }
+        manifest: JsonObject = {
+            "schema_version": MATERIALIZATION_SCHEMA_VERSION,
+            "materialization_kind": "DIFY_NARRATIVE_IMPORT",
+            "source_kind": "RUNTIME_POSTGRESQL_PROJECTION",
+            "application_version": APPLICATION_VERSION,
+            "database_schema_version": self.health()["schema_version"],
+            "materialized_at": _iso(as_of_utc),
+            "runtime_source_digest": digest_object(source_state),
+            "document_file": document_path.name,
+            "document_sha256": document_digest,
+            "document_count": len(documents),
+            "tenant_ids": sorted({str(row["tenant_id"]) for row in documents}),
+            "brand_ids": sorted({str(row["brand_id"]) for row in documents}),
+            "excluded_counts": dict(sorted(excluded_counts.items())),
+            "scope_metadata_fields": [
+                "tenant_id",
+                "brand_id",
+                "applicable_organization_ids",
+                "applicable_store_ids",
+                "applicable_content_account_ids",
+                "authorization_ref",
+                "authorization_state",
+                "observed_at",
+                "valid_until",
+                "revocation_ref",
+                "source_id",
+                "source_ref",
+                "simulation_only",
+                "test_fixture_only",
+            ],
+            "filter_policy": (
+                "ACTIVE_SCOPE_AND_SOURCE__GRANTED_CURRENT_AUTHORIZATION__"
+                "ACTIVE_CURRENT_UNREVOKED_FRAGMENT"
+            ),
+            "second_retrieval_truth_created": False,
+            "real_dify_import_performed": False,
+            "contains_real_customer_data": False,
+            "readiness": {
+                "DIFY_ready": False,
+                "production_servable": False,
+                "release_ready": False,
+                "production_ready": False,
+            },
+        }
+        manifest["materialization_digest"] = digest_object(manifest)
+        _write_canonical_json(manifest_path, manifest)
+        os.chmod(manifest_path, 0o600)
+        return {
+            "state": "MATERIALIZED",
+            "manifest_path": str(manifest_path),
+            "document_path": str(document_path),
+            "document_count": len(documents),
+            "document_sha256": document_digest,
+            "materialization_digest": manifest["materialization_digest"],
+            "brand_ids": manifest["brand_ids"],
+            "excluded_counts": manifest["excluded_counts"],
+        }
+
+    def _build_release_bundle(
+        self,
+        *,
+        release_directory: Path,
+        materialization: JsonObject,
+    ) -> JsonObject:
+        objects_directory = release_directory / "objects"
+        objects_directory.mkdir(mode=0o700, parents=True, exist_ok=False)
+        records: list[JsonObject] = []
+        for object_type, version, source_path in RELEASE_OBJECT_SPECS:
+            if not source_path.is_file() or not source_path.is_relative_to(
+                REPOSITORY_ROOT
+            ):
+                raise ValueError("发布对象缺失或越界")
+            source_relative = source_path.relative_to(REPOSITORY_ROOT)
+            release_relative = Path("objects") / source_relative
+            target = release_directory / release_relative
+            target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+            shutil.copyfile(source_path, target)
+            os.chmod(target, 0o600)
+            records.append(
+                {
+                    "object_type": object_type,
+                    "version": version,
+                    "source_path": source_relative.as_posix(),
+                    "release_path": release_relative.as_posix(),
+                    "sha256": _sha256_file(target),
+                }
+            )
+        records.sort(key=lambda row: str(row["source_path"]))
+        materialization_manifest = Path(str(materialization["manifest_path"]))
+        materialization_document = Path(str(materialization["document_path"]))
+        release_manifest: JsonObject = {
+            "schema_version": RELEASE_PACKAGE_SCHEMA_VERSION,
+            "application_version": APPLICATION_VERSION,
+            "object_count": len(records),
+            "objects": records,
+            "object_inventory_digest": digest_object(records),
+            "retrieval_rebuild_inputs": {
+                "manifest_path": materialization_manifest.relative_to(
+                    release_directory
+                ).as_posix(),
+                "manifest_sha256": _sha256_file(materialization_manifest),
+                "materialization_digest": materialization["materialization_digest"],
+                "document_path": materialization_document.relative_to(
+                    release_directory
+                ).as_posix(),
+                "document_sha256": materialization["document_sha256"],
+                "document_count": materialization["document_count"],
+            },
+            "contains_plaintext_secrets": False,
+            "contains_real_customer_data": False,
+            "real_dify_import_performed": False,
+            "production_ready": False,
+        }
+        release_manifest["release_bundle_digest"] = digest_object(release_manifest)
+        release_manifest_path = release_directory / RELEASE_MANIFEST_NAME
+        _write_canonical_json(release_manifest_path, release_manifest)
+        os.chmod(release_manifest_path, 0o600)
+        return {
+            "manifest_path": release_manifest_path,
+            "manifest_sha256": _sha256_file(release_manifest_path),
+            "release_bundle_digest": release_manifest["release_bundle_digest"],
+            "object_count": len(records),
+        }
+
+    @staticmethod
+    def _validate_release_bundle(
+        *,
+        backup_directory: Path,
+        backup_manifest: JsonObject,
+    ) -> tuple[JsonObject, JsonObject]:
+        release_relative = _safe_relative_path(
+            backup_manifest.get("release_bundle_manifest"),
+            label="发布包清单",
+        )
+        release_manifest_path = backup_directory / release_relative
+        if not release_manifest_path.is_file():
+            raise ValueError("发布包清单缺失")
+        if _sha256_file(release_manifest_path) != backup_manifest.get(
+            "release_bundle_manifest_sha256"
+        ):
+            raise ValueError("发布包清单摘要不匹配")
+        raw = json.loads(release_manifest_path.read_text(encoding="utf-8"))
+        if not isinstance(raw, dict):
+            raise ValueError("发布包清单无效")
+        release_manifest = dict(raw)
+        recorded_digest = release_manifest.get("release_bundle_digest")
+        if (
+            release_manifest.get("schema_version") != RELEASE_PACKAGE_SCHEMA_VERSION
+            or release_manifest.get("application_version") != APPLICATION_VERSION
+            or release_manifest.get("contains_plaintext_secrets") is not False
+            or release_manifest.get("contains_real_customer_data") is not False
+            or release_manifest.get("real_dify_import_performed") is not False
+            or release_manifest.get("production_ready") is not False
+            or not isinstance(recorded_digest, str)
+            or digest_object(
+                _manifest_without_digest(release_manifest, "release_bundle_digest")
+            )
+            != recorded_digest
+            or backup_manifest.get("release_bundle_digest") != recorded_digest
+        ):
+            raise ValueError("发布包版本或摘要无效")
+        objects = release_manifest.get("objects")
+        if not isinstance(objects, list):
+            raise ValueError("发布对象清单无效")
+        expected = {
+            (
+                object_type,
+                version,
+                source_path.relative_to(REPOSITORY_ROOT).as_posix(),
+            )
+            for object_type, version, source_path in RELEASE_OBJECT_SPECS
+        }
+        actual: set[tuple[str, str, str]] = set()
+        for raw_item in objects:
+            if not isinstance(raw_item, dict):
+                raise ValueError("发布对象条目无效")
+            item = dict(raw_item)
+            key = (
+                str(item.get("object_type", "")),
+                str(item.get("version", "")),
+                str(item.get("source_path", "")),
+            )
+            actual.add(key)
+            release_path = _safe_relative_path(
+                item.get("release_path"), label="发布对象"
+            )
+            target = release_manifest_path.parent / release_path
+            source_path = REPOSITORY_ROOT / key[2]
+            digest = item.get("sha256")
+            if (
+                not target.is_file()
+                or not isinstance(digest, str)
+                or _sha256_file(target) != digest
+                or not source_path.is_file()
+                or _sha256_file(source_path) != digest
+            ):
+                raise ValueError("发布对象缺失、损坏或与实现版本不匹配")
+        if (
+            actual != expected
+            or len(actual) != len(objects)
+            or release_manifest.get("object_count") != len(expected)
+            or release_manifest.get("object_inventory_digest") != digest_object(objects)
+        ):
+            raise ValueError("发布对象清单不完整")
+        rebuild = release_manifest.get("retrieval_rebuild_inputs")
+        if not isinstance(rebuild, dict):
+            raise ValueError("检索资料重建输入缺失")
+        materialization_manifest_path = release_manifest_path.parent / (
+            _safe_relative_path(rebuild.get("manifest_path"), label="资料清单")
+        )
+        materialization_document_path = release_manifest_path.parent / (
+            _safe_relative_path(rebuild.get("document_path"), label="资料文件")
+        )
+        if (
+            not materialization_manifest_path.is_file()
+            or not materialization_document_path.is_file()
+            or _sha256_file(materialization_manifest_path)
+            != rebuild.get("manifest_sha256")
+            or _sha256_file(materialization_document_path)
+            != rebuild.get("document_sha256")
+        ):
+            raise ValueError("检索资料重建输入缺失或损坏")
+        materialization_raw = json.loads(
+            materialization_manifest_path.read_text(encoding="utf-8")
+        )
+        if not isinstance(materialization_raw, dict):
+            raise ValueError("资料物化清单无效")
+        materialization_manifest = dict(materialization_raw)
+        materialization_digest = materialization_manifest.get("materialization_digest")
+        if (
+            materialization_manifest.get("schema_version")
+            != MATERIALIZATION_SCHEMA_VERSION
+            or materialization_manifest.get("application_version")
+            != APPLICATION_VERSION
+            or materialization_manifest.get("source_kind")
+            != "RUNTIME_POSTGRESQL_PROJECTION"
+            or materialization_manifest.get("document_file")
+            != materialization_document_path.name
+            or materialization_manifest.get("document_sha256")
+            != rebuild.get("document_sha256")
+            or materialization_manifest.get("document_count")
+            != rebuild.get("document_count")
+            or materialization_digest != rebuild.get("materialization_digest")
+            or not isinstance(materialization_digest, str)
+            or digest_object(
+                _manifest_without_digest(
+                    materialization_manifest, "materialization_digest"
+                )
+            )
+            != materialization_digest
+        ):
+            raise ValueError("资料物化版本或摘要无效")
+        return release_manifest, materialization_manifest
+
     def backup(self, *, database_url: str, output_directory: Path) -> JsonObject:
         self._require_installed()
         url = make_url(database_url)
@@ -658,7 +1356,20 @@ class HostedOperations:
         output_directory.mkdir(mode=0o700, parents=True, exist_ok=True)
         os.chmod(output_directory, 0o700)
         dump_path = output_directory / "runtime.pgdump"
+        manifest_path = output_directory / "backup_manifest.v1.json"
+        release_directory = output_directory / "release_bundle"
+        if dump_path.exists() or manifest_path.exists() or release_directory.exists():
+            raise ValueError("备份目标已包含第8包备份对象")
+        backup_time = utc_now()
         snapshot_before = _database_snapshot(self.engine, {self.namespace})
+        materialization = self.materialize_dify(
+            output_directory=release_directory / "materialization",
+            as_of=backup_time,
+        )
+        release = self._build_release_bundle(
+            release_directory=release_directory,
+            materialization=materialization,
+        )
         subprocess.run(
             [
                 "pg_dump",
@@ -682,12 +1393,12 @@ class HostedOperations:
         if health["database_snapshot_digest"] != snapshot_after["snapshot_digest"]:
             raise RuntimeError("备份健康状态与全库快照不一致")
         manifest = {
-            "manifest_version": "v1.0",
+            "manifest_version": "v1.1",
             "namespace": self.namespace,
             "source_database": url.database,
             "application_version": APPLICATION_VERSION,
             "schema_version": health["schema_version"],
-            "created_at": utc_now().isoformat(),
+            "created_at": _iso(backup_time),
             "dump_file": dump_path.name,
             "dump_sha256": dump_digest,
             "object_counts": health["object_counts"],
@@ -696,6 +1407,16 @@ class HostedOperations:
             "health_digest": _health_digest(health),
             "database_snapshot": snapshot_after,
             "database_snapshot_digest": snapshot_after["snapshot_digest"],
+            "release_bundle_manifest": Path(str(release["manifest_path"]))
+            .relative_to(output_directory)
+            .as_posix(),
+            "release_bundle_manifest_sha256": release["manifest_sha256"],
+            "release_bundle_digest": release["release_bundle_digest"],
+            "release_object_count": release["object_count"],
+            "materialization_digest": materialization["materialization_digest"],
+            "materialization_document_sha256": materialization["document_sha256"],
+            "materialization_document_count": materialization["document_count"],
+            "materialization_as_of": _iso(backup_time),
             "contains_plaintext_secrets": False,
             "contains_credential_verifiers": True,
             "contains_sensitive_runtime_state": True,
@@ -704,7 +1425,6 @@ class HostedOperations:
             "contains_real_customer_data": False,
             "pg_dump_version": _tool_version("pg_dump"),
         }
-        manifest_path = output_directory / "backup_manifest.v1.json"
         manifest_path.write_text(
             json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
@@ -718,6 +1438,15 @@ class HostedOperations:
             "object_counts": health["object_counts"],
             "health_digest": manifest["health_digest"],
             "database_snapshot_digest": manifest["database_snapshot_digest"],
+            "release_bundle_digest": manifest["release_bundle_digest"],
+            "release_object_count": manifest["release_object_count"],
+            "materialization_digest": manifest["materialization_digest"],
+            "materialization_document_sha256": manifest[
+                "materialization_document_sha256"
+            ],
+            "materialization_document_count": manifest[
+                "materialization_document_count"
+            ],
         }
 
     @staticmethod
@@ -730,7 +1459,7 @@ class HostedOperations:
             raise ValueError("备份清单无效")
         manifest = dict(manifest_raw)
         if (
-            manifest.get("manifest_version") != "v1.0"
+            manifest.get("manifest_version") != "v1.1"
             or not str(manifest.get("namespace", "")).startswith(TASK_PREFIX)
             or manifest.get("source_database") != manifest.get("namespace")
             or manifest.get("application_version") != APPLICATION_VERSION
@@ -741,6 +1470,12 @@ class HostedOperations:
             or manifest.get("requires_restricted_storage") is not True
             or manifest.get("repository_commit_allowed") is not False
             or manifest.get("contains_real_customer_data") is not False
+            or not isinstance(manifest.get("release_bundle_manifest"), str)
+            or not isinstance(manifest.get("release_bundle_manifest_sha256"), str)
+            or not isinstance(manifest.get("release_bundle_digest"), str)
+            or not isinstance(manifest.get("materialization_digest"), str)
+            or not isinstance(manifest.get("materialization_document_sha256"), str)
+            or not isinstance(manifest.get("materialization_as_of"), str)
         ):
             raise ValueError("备份归属或版本无效")
         if target_database == manifest.get("source_database"):
@@ -761,6 +1496,25 @@ class HostedOperations:
             or manifest["database_snapshot_digest"] != expected_snapshot_digest
         ):
             raise ValueError("备份全库快照摘要无效")
+        release_manifest, materialization_manifest = (
+            HostedOperations._validate_release_bundle(
+                backup_directory=manifest_path.parent,
+                backup_manifest=manifest,
+            )
+        )
+        if (
+            manifest.get("release_object_count") != release_manifest.get("object_count")
+            or manifest.get("materialization_digest")
+            != materialization_manifest.get("materialization_digest")
+            or manifest.get("materialization_document_sha256")
+            != materialization_manifest.get("document_sha256")
+            or manifest.get("materialization_document_count")
+            != materialization_manifest.get("document_count")
+            or manifest.get("materialization_as_of")
+            != materialization_manifest.get("materialized_at")
+        ):
+            raise ValueError("备份与发布包绑定不一致")
+        materialization_as_of = parse_time(str(manifest["materialization_as_of"]))
         dump_path = manifest_path.parent / str(manifest.get("dump_file"))
         if not dump_path.is_file():
             raise ValueError("备份文件缺失")
@@ -833,6 +1587,20 @@ class HostedOperations:
                 or restored_snapshot != snapshot_raw
             ):
                 raise ValueError("恢复后的对象健康状态不等价")
+            with tempfile.TemporaryDirectory(prefix="diyu-pkg8-rematerialize-") as raw:
+                regenerated = restored.materialize_dify(
+                    output_directory=Path(raw),
+                    as_of=materialization_as_of,
+                )
+                if (
+                    regenerated["document_sha256"]
+                    != manifest["materialization_document_sha256"]
+                    or regenerated["materialization_digest"]
+                    != manifest["materialization_digest"]
+                    or regenerated["document_count"]
+                    != manifest["materialization_document_count"]
+                ):
+                    raise ValueError("恢复后的 Dify 资料无法确定性重建")
         except Exception:
             target_engine.dispose()
             HostedOperations._clear_restored_database(target_database_url)
@@ -847,6 +1615,17 @@ class HostedOperations:
             "actual_brand_revision_digest": health["brand_revision_digest"],
             "actual_health_digest": _health_digest(health),
             "actual_database_snapshot_digest": restored_snapshot["snapshot_digest"],
+            "release_bundle_verified": True,
+            "release_bundle_digest": release_manifest["release_bundle_digest"],
+            "release_object_count": release_manifest["object_count"],
+            "materialization_regenerated": True,
+            "materialization_digest": manifest["materialization_digest"],
+            "materialization_document_sha256": manifest[
+                "materialization_document_sha256"
+            ],
+            "materialization_document_count": manifest[
+                "materialization_document_count"
+            ],
             "pg_restore_version": _tool_version("pg_restore"),
         }
 
@@ -1148,6 +1927,9 @@ class HostedOperations:
         tenant = dict(identity["tenant"])
         tenant_id = str(tenant["tenant_id"])
         brand_id = str(tenant["brand_id"])
+        simulation_only = bundle.source_manifest.get("simulation_only") is True
+        test_fixture_only = bundle.source_manifest.get("test_fixture_only") is True
+        data_mode = str(bundle.source_manifest.get("data_mode"))
         now = utc_now()
         counts = {
             "created_or_updated": 0,
@@ -1190,7 +1972,9 @@ class HostedOperations:
                     "display_name": tenant.get(
                         "brand_display_name", tenant["display_name"]
                     ),
-                    "simulation_only": True,
+                    "data_mode": data_mode,
+                    "simulation_only": simulation_only,
+                    "test_fixture_only": test_fixture_only,
                     "publish_allowed": False,
                 },
                 updated_at=now,
@@ -1308,7 +2092,9 @@ class HostedOperations:
                 "source_id": str(row["source_id"]),
                 "source_ref": str(row["source_ref"]),
                 "source_sha256": str(row["source_sha256"]),
-                "simulation_only": True,
+                "data_mode": data_mode,
+                "simulation_only": simulation_only,
+                "test_fixture_only": test_fixture_only,
                 "publish_allowed": False,
             }
         for source_id, row in source_rows.items():

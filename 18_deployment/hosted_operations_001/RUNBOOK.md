@@ -18,6 +18,7 @@ python3 hosted_operations.py --namespace "$NAMESPACE" preflight
 python3 hosted_operations.py --namespace "$NAMESPACE" install
 python3 hosted_operations.py --namespace "$NAMESPACE" initialize
 python3 hosted_operations.py --namespace "$NAMESPACE" import --brand-file fixtures/second_brand_fixture.v1.yaml
+python3 hosted_operations.py --namespace "$NAMESPACE" materialize-dify --output-directory "$EXTERNAL_MATERIALIZATION_DIR" --as-of 2026-07-16T00:00:00Z
 python3 hosted_operations.py --namespace "$NAMESPACE" health
 ```
 
@@ -39,7 +40,11 @@ python3 hosted_operations.py --namespace "$NAMESPACE" backup --output-directory 
 python3 hosted_operations.py --namespace "$NAMESPACE" restore --manifest "$EXTERNAL_BACKUP_DIR/backup_manifest.v1.json"
 ```
 
-恢复目标必须是另一个全新、空白且以 `diyu-pkg8-` 开头的 PostgreSQL 数据库。损坏、归属不符、版本不符或摘要不符时恢复失败关闭。
+备份同时生成离线发布包。发布包只收纳当前应用的最小可运行文件闭包，包括运维实现、Dify 应用、薄桥接、品牌导入合同、运行依赖和检索资料重建输入；不包含整个仓库、密钥或真实客户资料。
+
+恢复目标必须是另一个全新、空白且以 `diyu-pkg8-` 开头的 PostgreSQL 数据库。恢复会先验证发布对象清单、版本和逐文件摘要，数据库恢复后再用同一时间点重新物化 Dify 资料并比较摘要。对象缺失、损坏、版本不符或资料无法重建时均失败关闭。
+
+品牌文件必须显式选择 `SIMULATION` 或 `AUTHORIZED_REAL`。真实品牌模式还须提供来源、有效授权、时效与撤回状态、操作者确认；导入成功仍不授予发布或生产就绪。仓库测试只使用无真实客户资料的安全夹具。
 
 ## 升级
 

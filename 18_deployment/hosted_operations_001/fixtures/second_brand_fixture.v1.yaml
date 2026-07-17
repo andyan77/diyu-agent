@@ -1,5 +1,7 @@
 schema_version: v1.0
+data_mode: SIMULATION
 fictional_test_data: true
+safe_fixture_data: true
 enterprise:
   enterprise_code: qinghe-lab
   brand_code: qinghe-home
@@ -63,6 +65,7 @@ materials:
     title: 青禾实验品牌的家居选择记录
     text: 青禾生活实验品牌是一组完全虚构的测试资料。当前记录只说明：整理物品时先保留日常会反复使用的部分，再决定是否增加新的收纳用品。
     source_label: 第8包虚构品牌资料
+    source_ref: fixture://package8/qinghe/material/calm-home-note
     authorization_code: current-material
     account_codes: [brand-account, store-account]
     observed_at: 2026-07-15T00:00:00Z
@@ -71,6 +74,7 @@ materials:
     title: 已过期的虚构门店照片记录
     text: 这条虚构照片说明已经过期，不得用于当前内容。
     source_label: 第8包撤回测试资料
+    source_ref: fixture://package8/qinghe/material/expired-store-photo
     authorization_code: expired-photo
     account_codes: [store-account]
     observed_at: 2025-06-01T00:00:00Z
@@ -82,6 +86,7 @@ facts:
     label: 虚构商品记录
     value: {product_name: 青禾实验收纳篮, sku: QH-LAB-001}
     source_label: 第8包虚构精确字段
+    source_ref: fixture://package8/qinghe/fact/basket-record
     authorization_code: current-material
     account_codes: [brand-account, store-account]
     effective_at: 2026-07-15T00:00:00Z
@@ -91,6 +96,7 @@ facts:
     label: 已过期虚构陈列日期
     value: {display_date: 2025-06-01, state: expired}
     source_label: 第8包过期字段
+    source_ref: fixture://package8/qinghe/fact/expired-display-date
     authorization_code: expired-photo
     account_codes: [store-account]
     effective_at: 2025-06-01T00:00:00Z

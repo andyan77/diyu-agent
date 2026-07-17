@@ -104,7 +104,7 @@ docker run --rm \
   --network "${PACKAGE7_DIFY_NETWORK}" \
   -e PYTHONPATH=/app/api \
   -e PACKAGE7_DSL_PATH=/state/dify-app.rendered.yaml \
-  -e PACKAGE7_FRAGMENTS_PATH=/repo/15_brand_retrieval/brand_fact_retrieval_001/data/retrieval_fragments.v1.jsonl \
+  -e PACKAGE8_DIFY_MATERIALIZATION_MANIFEST_PATH=/state/package8-materialization/dify_materialization_manifest.v1.json \
   -e PACKAGE7_STATE_PATH=/state/dify-state.json \
   -e PACKAGE7_APPROVED_DIFY_TENANT_ID="${PACKAGE7_APPROVED_DIFY_TENANT_ID:-}" \
   -e PACKAGE7_APPROVED_DIFY_OWNER_ACCOUNT_ID="${PACKAGE7_APPROVED_DIFY_OWNER_ACCOUNT_ID:-}" \

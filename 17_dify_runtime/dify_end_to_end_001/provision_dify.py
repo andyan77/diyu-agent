@@ -31,7 +31,11 @@ METADATA_FIELDS = {
     "valid_until": "time",
     "revocation_state": "string",
     "source_ref": "string",
+    "source_id": "string",
     "content_digest": "string",
+    "data_mode": "string",
+    "simulation_only": "string",
+    "test_fixture_only": "string",
 }
 
 
@@ -49,7 +53,11 @@ def _timestamp(value: str) -> float:
 
 
 def _read_fragments(path: Path) -> list[dict[str, Any]]:
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
 
 
 def _canonical_json(value: object) -> str:
@@ -60,6 +68,55 @@ def _canonical_json(value: object) -> str:
         separators=(",", ":"),
         default=lambda item: item.model_dump(mode="json"),
     )
+
+
+def resolve_materialized_fragments(manifest_path: Path) -> tuple[Path, dict[str, Any]]:
+    """Validate one Package 8 runtime projection before Dify consumes it."""
+
+    raw = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        raise RuntimeError("The Package 8 Dify materialization manifest is invalid")
+    manifest = dict(raw)
+    recorded_digest = manifest.pop("materialization_digest", None)
+    if (
+        manifest.get("schema_version") != "v1.0"
+        or manifest.get("materialization_kind") != "DIFY_NARRATIVE_IMPORT"
+        or manifest.get("source_kind") != "RUNTIME_POSTGRESQL_PROJECTION"
+        or manifest.get("real_dify_import_performed") is not False
+        or manifest.get("second_retrieval_truth_created") is not False
+        or not isinstance(recorded_digest, str)
+        or hashlib.sha256(_canonical_json(manifest).encode("utf-8")).hexdigest()
+        != recorded_digest
+    ):
+        raise RuntimeError("The Package 8 Dify materialization identity is invalid")
+    readiness = manifest.get("readiness")
+    if not isinstance(readiness, dict) or any(readiness.values()):
+        raise RuntimeError("The Package 8 Dify materialization unlocked readiness")
+    raw_document_path = manifest.get("document_file")
+    if not isinstance(raw_document_path, str) or not raw_document_path:
+        raise RuntimeError("The Package 8 Dify materialization document is missing")
+    relative = Path(raw_document_path)
+    if relative.is_absolute() or ".." in relative.parts or len(relative.parts) != 1:
+        raise RuntimeError("The Package 8 Dify materialization document path escaped")
+    document_path = manifest_path.parent / relative
+    if not document_path.is_file():
+        raise RuntimeError("The Package 8 Dify materialization document is missing")
+    digest = hashlib.sha256(document_path.read_bytes()).hexdigest()
+    fragments = _read_fragments(document_path)
+    if (
+        digest != manifest.get("document_sha256")
+        or len(fragments) != manifest.get("document_count")
+        or any(
+            row.get("publish_allowed") is not False
+            or row.get("status") != "ACTIVE"
+            or row.get("authorization_state") != "GRANTED"
+            or row.get("revocation_ref") is not None
+            for row in fragments
+        )
+    ):
+        raise RuntimeError("The Package 8 Dify materialization content is invalid")
+    manifest["materialization_digest"] = recorded_digest
+    return document_path, manifest
 
 
 def _workflow_payload(workflow: Any) -> tuple[object, ...]:
@@ -77,7 +134,12 @@ def _workflow_payload(workflow: Any) -> tuple[object, ...]:
 
 def main() -> int:
     dsl_path = Path(os.environ["PACKAGE7_DSL_PATH"])
-    fragments_path = Path(os.environ["PACKAGE7_FRAGMENTS_PATH"])
+    materialization_manifest_path = Path(
+        os.environ["PACKAGE8_DIFY_MATERIALIZATION_MANIFEST_PATH"]
+    )
+    fragments_path, materialization_manifest = resolve_materialized_fragments(
+        materialization_manifest_path
+    )
     state_path = Path(os.environ["PACKAGE7_STATE_PATH"])
 
     from app_factory import create_app
@@ -114,7 +176,11 @@ def main() -> int:
                 raise RuntimeError("The Package 7 Dify state is invalid")
             locked_state = parsed_state
         locked_app_id = locked_state.get("app_id")
-        existing_app = db.session.get(App, locked_app_id) if isinstance(locked_app_id, str) else None
+        existing_app = (
+            db.session.get(App, locked_app_id)
+            if isinstance(locked_app_id, str)
+            else None
+        )
         if locked_app_id is not None and (
             existing_app is None
             or existing_app.name != APP_NAME
@@ -125,7 +191,9 @@ def main() -> int:
             tenant_id = existing_app.tenant_id
             locked_owner_id = locked_state.get("owner_account_id")
             owner_account_id = (
-                locked_owner_id if isinstance(locked_owner_id, str) else existing_app.created_by
+                locked_owner_id
+                if isinstance(locked_owner_id, str)
+                else existing_app.created_by
             )
             owner_binding_source = (
                 "LOCKED_PACKAGE7_STATE"
@@ -133,12 +201,16 @@ def main() -> int:
                 else "CURRENT_PACKAGE7_APP_ONE_TIME_LOCK"
             )
             if str(existing_app.created_by) != str(owner_account_id):
-                raise RuntimeError("The locked Package 7 Dify application owner drifted")
+                raise RuntimeError(
+                    "The locked Package 7 Dify application owner drifted"
+                )
         else:
             tenant_id = os.environ.get("PACKAGE7_APPROVED_DIFY_TENANT_ID")
             owner_account_id = os.environ.get("PACKAGE7_APPROVED_DIFY_OWNER_ACCOUNT_ID")
             if not tenant_id or not owner_account_id:
-                raise RuntimeError("An explicit Package 7 Dify workspace and owner are required")
+                raise RuntimeError(
+                    "An explicit Package 7 Dify workspace and owner are required"
+                )
             matching_apps = list(
                 db.session.scalars(
                     select(App).where(App.tenant_id == tenant_id, App.name == APP_NAME)
@@ -147,8 +219,13 @@ def main() -> int:
             if len(matching_apps) > 1:
                 raise RuntimeError("Multiple Package 7 Dify applications exist")
             existing_app = matching_apps[0] if matching_apps else None
-            if existing_app is not None and str(existing_app.created_by) != owner_account_id:
-                raise RuntimeError("The approved Package 7 Dify owner does not own the existing app")
+            if (
+                existing_app is not None
+                and str(existing_app.created_by) != owner_account_id
+            ):
+                raise RuntimeError(
+                    "The approved Package 7 Dify owner does not own the existing app"
+                )
             owner_binding_source = "EXPLICIT_OPERATOR_APPROVAL"
         account = db.session.get(Account, owner_account_id)
         if account is None:
@@ -175,15 +252,23 @@ def main() -> int:
                 select(App).where(App.tenant_id == tenant_id, App.name == APP_NAME)
             ).all()
         )
-        if len(app_name_matches) != 1 or str(app_name_matches[0].id) != str(app_model.id):
+        if len(app_name_matches) != 1 or str(app_name_matches[0].id) != str(
+            app_model.id
+        ):
             raise RuntimeError("The Package 7 Dify application is not unique")
-        if not hasattr(app_model, "enable_site") or not hasattr(app_model, "enable_api"):
-            raise RuntimeError("This Dify version cannot enforce an API-only Package 7 app")
+        if not hasattr(app_model, "enable_site") or not hasattr(
+            app_model, "enable_api"
+        ):
+            raise RuntimeError(
+                "This Dify version cannot enforce an API-only Package 7 app"
+            )
         app_model.enable_site = False
         app_model.enable_api = True
         db.session.commit()
         workflow_service = WorkflowService()
-        draft_workflow = workflow_service.get_draft_workflow(app_model, session=db.session)
+        draft_workflow = workflow_service.get_draft_workflow(
+            app_model, session=db.session
+        )
         if draft_workflow is None:
             raise RuntimeError("Imported Dify app has no draft workflow")
         published_workflow = None
@@ -193,7 +278,9 @@ def main() -> int:
                 app_model.workflow_id,
                 session=db.session,
             )
-        if published_workflow is None or _workflow_payload(published_workflow) != _workflow_payload(draft_workflow):
+        if published_workflow is None or _workflow_payload(
+            published_workflow
+        ) != _workflow_payload(draft_workflow):
             published_workflow = workflow_service.publish_workflow(
                 session=db.session,
                 app_model=app_model,
@@ -237,7 +324,7 @@ def main() -> int:
             dataset = DatasetService.create_empty_dataset(
                 tenant_id=tenant_id,
                 name=DATASET_NAME,
-                description="Package 7 isolated narrative retrieval truth; simulation-only and non-production.",
+                description="Package 7 isolated authorized narrative projection; non-production.",
                 indexing_technique="economy",
                 account=account,
                 permission="only_me",
@@ -253,7 +340,9 @@ def main() -> int:
             )
             db.session.commit()
         if not hasattr(dataset, "enable_api"):
-            raise RuntimeError("This Dify version cannot enable the Package 7 dataset API")
+            raise RuntimeError(
+                "This Dify version cannot enable the Package 7 dataset API"
+            )
         dataset_name_matches = list(
             db.session.scalars(
                 select(Dataset).where(
@@ -262,7 +351,9 @@ def main() -> int:
                 )
             ).all()
         )
-        if len(dataset_name_matches) != 1 or str(dataset_name_matches[0].id) != str(dataset.id):
+        if len(dataset_name_matches) != 1 or str(dataset_name_matches[0].id) != str(
+            dataset.id
+        ):
             raise RuntimeError("The Package 7 Dify dataset is not unique")
         dataset.enable_api = True
         db.session.commit()
@@ -284,7 +375,9 @@ def main() -> int:
                 )
 
         fragments = _read_fragments(fragments_path)
-        fragment_by_id = {str(fragment["fragment_id"]): fragment for fragment in fragments}
+        fragment_by_id = {
+            str(fragment["fragment_id"]): fragment for fragment in fragments
+        }
         if len(fragment_by_id) != len(fragments):
             raise RuntimeError("Package 7 narrative fragments contain duplicate IDs")
         document_ids: dict[str, str] = {}
@@ -292,10 +385,17 @@ def main() -> int:
             fragment_id = str(fragment["fragment_id"])
             name = f"PKG7 {fragment_id}"
             document = db.session.scalar(
-                select(Document).where(Document.dataset_id == dataset.id, Document.name == name).limit(1)
+                select(Document)
+                .where(Document.dataset_id == dataset.id, Document.name == name)
+                .limit(1)
             )
             if document is None:
-                text = str(fragment["text"]).replace("\r\n", "\n").replace("\r", "\n").strip()
+                text = (
+                    str(fragment["text"])
+                    .replace("\r\n", "\n")
+                    .replace("\r", "\n")
+                    .strip()
+                )
                 upload = FileService(db.engine).upload_text(
                     text=text,
                     text_name=name,
@@ -358,9 +458,15 @@ def main() -> int:
                 "store_scope": _scope(fragment["applicable_store_ids"]),
                 "valid_from": _timestamp(str(fragment["observed_at"])),
                 "valid_until": _timestamp(str(fragment["valid_until"])),
-                "revocation_state": "CLEAR" if fragment.get("revocation_ref") is None else "REVOKED",
+                "revocation_state": "CLEAR"
+                if fragment.get("revocation_ref") is None
+                else "REVOKED",
                 "source_ref": str(fragment["source_ref"]),
+                "source_id": str(fragment["source_id"]),
                 "content_digest": str(fragment["fragment_sha256"]),
+                "data_mode": str(fragment["data_mode"]),
+                "simulation_only": str(bool(fragment["simulation_only"])).lower(),
+                "test_fixture_only": str(bool(fragment["test_fixture_only"])).lower(),
             }
             operation = DocumentMetadataOperation(
                 document_id=document.id,
@@ -394,14 +500,20 @@ def main() -> int:
             grouped: dict[str, list[Any]] = {}
             for segment in segments:
                 grouped.setdefault(str(segment.document_id), []).append(segment)
-            if all(len(grouped.get(document_id, [])) == 1 for document_id in document_ids.values()):
+            if all(
+                len(grouped.get(document_id, [])) == 1
+                for document_id in document_ids.values()
+            ):
                 segment_by_document = {
-                    document_id: grouped[document_id][0] for document_id in document_ids.values()
+                    document_id: grouped[document_id][0]
+                    for document_id in document_ids.values()
                 }
                 break
             time.sleep(1)
         if len(segment_by_document) != len(document_ids):
-            raise RuntimeError("Package 7 documents did not converge to one completed segment each")
+            raise RuntimeError(
+                "Package 7 documents did not converge to one completed segment each"
+            )
         mapping = {
             fragment_id: {
                 "document_id": document_id,
@@ -424,7 +536,9 @@ def main() -> int:
         }
 
         token = db.session.scalar(
-            select(ApiToken).where(ApiToken.app_id == app_model.id, ApiToken.type == ApiTokenType.APP).limit(1)
+            select(ApiToken)
+            .where(ApiToken.app_id == app_model.id, ApiToken.type == ApiTokenType.APP)
+            .limit(1)
         )
         if token is None:
             token = ApiToken(
@@ -466,12 +580,19 @@ def main() -> int:
             ).hexdigest(),
             "app_name": APP_NAME,
             "dataset_name": DATASET_NAME,
-            "simulation_only": True,
+            "materialization_digest": materialization_manifest[
+                "materialization_digest"
+            ],
+            "simulation_only": all(
+                fragment.get("simulation_only") is True for fragment in fragments
+            ),
             "production_ready": False,
             "public_webapp_enabled": False,
             "api_only": True,
         }
-        state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        state_path.write_text(
+            json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        )
         state_path.chmod(0o600)
         print(
             json.dumps(
@@ -479,7 +600,10 @@ def main() -> int:
                     "app_id": app_model.id,
                     "dataset_id": dataset.id,
                     "document_count": len(mapping),
-                    "simulation_only": True,
+                    "simulation_only": all(
+                        fragment.get("simulation_only") is True
+                        for fragment in fragments
+                    ),
                 },
                 sort_keys=True,
             )

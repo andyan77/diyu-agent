@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -56,6 +57,9 @@ def _parser() -> argparse.ArgumentParser:
     revoke.add_argument("--reason-ref", required=True)
     backup = subparsers.add_parser("backup")
     backup.add_argument("--output-directory", required=True, type=Path)
+    materialize = subparsers.add_parser("materialize-dify")
+    materialize.add_argument("--output-directory", required=True, type=Path)
+    materialize.add_argument("--as-of", required=True)
     restore = subparsers.add_parser("restore")
     restore.add_argument("--manifest", required=True, type=Path)
     rollback = subparsers.add_parser("rollback")
@@ -111,6 +115,16 @@ def execute(arguments: argparse.Namespace) -> dict[str, Any]:
             return operations.backup(
                 database_url=database_url,
                 output_directory=arguments.output_directory,
+            )
+        if arguments.command == "materialize-dify":
+            normalized = (
+                f"{arguments.as_of[:-1]}+00:00"
+                if arguments.as_of.endswith("Z")
+                else arguments.as_of
+            )
+            return operations.materialize_dify(
+                output_directory=arguments.output_directory,
+                as_of=datetime.fromisoformat(normalized),
             )
         if arguments.command == "rollback":
             return operations.rollback_brand(
