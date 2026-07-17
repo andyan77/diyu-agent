@@ -15,10 +15,10 @@
     "secret_scan": "SUCCESS"
   },
   "remote_candidate": {
-    "code_commit": "068eac4c9758f8c3e8029eedbe35f4c32d944dc5",
-    "code_tree": "e535c8284d64d5ceadbc6660782ff0510f8a263f",
-    "release_archive_sha256": "662822e11cced29e0d3c8a259b003026e36fa3c8e3723abc1842a691f7e956b6",
-    "release_source_file_count": 124,
+    "code_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+    "code_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc",
+    "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+    "release_source_file_count": 131,
     "release_count": 1,
     "dify_version": "1.15.0",
     "dify_application_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
@@ -87,7 +87,7 @@
     "target_conversation_message_count": 7
   },
   "post_restart_health": {
-    "observed_at": "2026-07-17T06:02:33.017445Z",
+    "observed_at": "2026-07-17T07:19:54Z",
     "dify_running_container_count": 12,
     "infra_running_container_count": 4,
     "bridge_running": true,
@@ -95,8 +95,8 @@
     "root_https_seconds": 0.8285,
     "apps_https_seconds": 0.0611,
     "bridge_recent_error_marker_count": 0,
-    "disk_free_bytes": 11870838784,
-    "memory_available_bytes": 3543662592,
+    "disk_free_bytes": 11663613952,
+    "memory_available_bytes": 3551727616,
     "pass": true
   },
   "exact_cleanup": {
@@ -126,6 +126,147 @@
     "forward_rls_table_count": 19,
     "final_state": "PACKAGE9_CANDIDATE",
     "rollback_and_forward_pass": true
+  },
+  "transition_record": {
+    "task_id": "DIYU_ECS_CUTOVER_001",
+    "actual_execution": true,
+    "bindings": {
+      "release_archive_sha256": "662822e11cced29e0d3c8a259b003026e36fa3c8e3723abc1842a691f7e956b6",
+      "pre_cutover_backup_manifest_sha256": "2281cee2add4c103428e37be57cf98293d478319bcbbb4633a27acff1a633f85",
+      "post_cutover_backup_manifest_sha256": "69e464cc92e2ccaf9fb03e543a6c65c7e1ab8b563123aa1813bdd46099d170e0",
+      "rollback_checkpoint_sha256": "cc33e48f5b44e3c3ed67f8d0df139d3e42dbfc2d7cf35a48c61b298f4fca1261",
+      "forward_result_sha256": "8779921d501e3d48d74aae29bef8130ebf5aa5cccee6feefaeb2056809d57c4f"
+    },
+    "rollback_phase": {
+      "observed_at": "2026-07-17T05:59:37.768182Z",
+      "actions": [
+        {
+          "action": "RESTORE_PRE_CUTOVER_NGINX",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint"
+        },
+        {
+          "action": "ROLLBACK_DATABASE_SECURITY",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint.roles_and_rls"
+        },
+        {
+          "action": "START_LEGACY_BRIDGE_FROM_BACKUP_IDENTITY",
+          "status": "PASS",
+          "evidence_ref": "encrypted_pre_cutover_legacy_container_metadata"
+        },
+        {
+          "action": "VERIFY_LEGACY_BRIDGE_HEALTH",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint.old_bridge_health"
+        },
+        {
+          "action": "VERIFY_DIFY_ROOT_HEALTH",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint.dify_root_health"
+        }
+      ]
+    },
+    "forward_phase": {
+      "observed_at": "2026-07-17T06:00:33.200927Z",
+      "actions": [
+        {
+          "action": "APPLY_DATABASE_SECURITY",
+          "status": "PASS",
+          "evidence_ref": "forward_result.entrypoint_state"
+        },
+        {
+          "action": "DEPLOY_FROZEN_RELEASE",
+          "status": "PASS",
+          "evidence_ref": "release_archive_sha256"
+        },
+        {
+          "action": "START_CURRENT_BRIDGE",
+          "status": "PASS",
+          "evidence_ref": "forward_result.new_bridge_health"
+        },
+        {
+          "action": "INSTALL_APPS_NGINX_ROUTE",
+          "status": "PASS",
+          "evidence_ref": "forward_result.apps_health"
+        },
+        {
+          "action": "VERIFY_ROOT_AND_APPS_HEALTH",
+          "status": "PASS",
+          "evidence_ref": "forward_result.root_and_apps_health"
+        },
+        {
+          "action": "VERIFY_FORCED_RLS_AND_RUNTIME_ROLE",
+          "status": "PASS",
+          "evidence_ref": "forward_result.roles_and_rls"
+        }
+      ]
+    },
+    "final_state": "PACKAGE9_CANDIDATE",
+    "rollback_and_forward_pass": true
+  },
+  "successor_deployment": {
+    "reason": "TARGETED_REVIEW_CLOSURE_WITHOUT_BUSINESS_SEMANTIC_CHANGE",
+    "previous_transition_release_archive_sha256": "662822e11cced29e0d3c8a259b003026e36fa3c8e3723abc1842a691f7e956b6",
+    "current_code_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+    "current_code_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc",
+    "current_release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+    "current_release_source_file_count": 131,
+    "server_external_backup_manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e",
+    "single_release_count": 1,
+    "minimal_release_scope": [
+      "11_product_foundation",
+      "12_expression_service",
+      "13_brand_data",
+      "14_dify_shell",
+      "15_brand_retrieval",
+      "16_composition_runtime",
+      "17_dify_runtime",
+      "18_deployment",
+      "19_cloud_cutover"
+    ],
+    "bridge_hardening": {
+      "read_only_root_filesystem": true,
+      "capabilities_dropped": [
+        "ALL"
+      ],
+      "no_new_privileges": true,
+      "loopback_only_publication": true,
+      "network_count": 2
+    },
+    "selected_account_scope_proof": {
+      "operation": "选择候选",
+      "http_status": 200,
+      "simulation_only": true,
+      "publish_allowed": false,
+      "response_sha256": "f67feed38d91ef3f663d4ff9e2db6d7817ad003844fca5183659f60325ecfc77",
+      "scope_dimensions": [
+        "tenant_id",
+        "brand_id",
+        "organization_id",
+        "store_id",
+        "content_account_id",
+        "principal_id"
+      ],
+      "selected_scope_visible_account_count": 1,
+      "selected_scope_candidate_count": 3,
+      "cross_account_candidate_count": 0,
+      "model_invocation_count_before": 92,
+      "model_invocation_count_after": 92
+    },
+    "post_deploy_health": {
+      "root_https_status": 200,
+      "apps_https_status": 200,
+      "forced_rls_table_count": 19,
+      "forced_rls_enabled_count": 19,
+      "runtime_counts": "2|13|31|24",
+      "dify_counts": "3|1|19|30",
+      "disk_free_bytes": 11663613952,
+      "memory_available_bytes": 3551727616,
+      "pass": true
+    },
+    "new_model_call_count": 0,
+    "business_semantics_changed": false
   },
   "real_customer_data_imported": false,
   "public_content_published": false,

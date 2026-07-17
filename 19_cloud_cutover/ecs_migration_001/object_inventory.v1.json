@@ -1,20 +1,21 @@
 {
   "schema": "diyu.package9.object_inventory.v1",
   "task_id": "DIYU_ECS_CUTOVER_001",
-  "observed_at": "2026-07-17T06:02:33.017445Z",
+  "observed_at": "2026-07-17T07:19:54Z",
   "inventory_policy": "LIVE_CLASSIFICATION_BEFORE_MUTATION_AND_POST_CUTOVER_RECONCILIATION",
   "source_candidate": {
-    "commit": "068eac4c9758f8c3e8029eedbe35f4c32d944dc5",
-    "tree": "e535c8284d64d5ceadbc6660782ff0510f8a263f",
-    "release_archive_sha256": "662822e11cced29e0d3c8a259b003026e36fa3c8e3723abc1842a691f7e956b6",
-    "release_source_file_count": 124
+    "commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+    "tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc",
+    "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+    "release_source_file_count": 131,
+    "server_external_backup_manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e"
   },
   "host_capacity": {
     "cpu_count": 2,
     "memory_total_gib_approx": 7.1,
-    "memory_available_bytes_after_cutover": 3543662592,
+    "memory_available_bytes_after_cutover": 3551727616,
     "root_disk_total_gib": 40,
-    "root_disk_free_bytes_after_cutover": 11870838784,
+    "root_disk_free_bytes_after_cutover": 11663613952,
     "capacity_class": "INTERNAL_CANDIDATE_ONLY"
   },
   "must_preserve": [
@@ -92,40 +93,54 @@
       "stable_id": "diyu-release-gate-capture-staging",
       "object_class": "LEGACY_APPLICATION_CONTAINER",
       "former_port": 18008,
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-release-gate-capture-staging",
       "backup_verified_before_delete": true
     },
     {
       "stable_id": "diyu-rag-sidecar-dryrun",
       "object_class": "LEGACY_APPLICATION_CONTAINER",
       "former_port": 8006,
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-rag-sidecar-dryrun",
       "backup_verified_before_delete": true
     },
     {
       "stable_id": "diyu-runtime-ledger-sidecar-dryrun-r6",
       "object_class": "LEGACY_APPLICATION_CONTAINER",
       "former_port": 8021,
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-runtime-ledger-sidecar-dryrun-r6",
       "backup_verified_before_delete": true
     },
     {
       "stable_id": "diyu-runtime-ledger-pg",
       "object_class": "LEGACY_DATABASE_CONTAINER",
       "former_port": 5433,
+      "dependency_check": "NO_CURRENT_DATABASE_CLIENT_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-runtime-ledger-pg",
       "backup_verified_before_delete": true
     },
     {
       "stable_id": "diyu-runtime-ledger-pgdata",
       "object_class": "LEGACY_DATABASE_VOLUME",
+      "dependency_check": "CONTAINER_REMOVED_AFTER_DATABASE_RESTORE_PROOF",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-runtime-ledger-pgdata",
       "backup_verified_before_delete": true
     },
     {
       "stable_id": "/opt/diyu/package7/source",
       "object_class": "SUPERSEDED_SOURCE_COPY",
+      "dependency_check": "CURRENT_BRIDGE_USES_FROZEN_PACKAGE9_RELEASE_PATH",
+      "backup_evidence_ref": "deletion_recovery_closure:/opt/diyu/package7/source",
       "backup_verified_before_delete": true
     },
     {
       "stable_id": "intermediate-package9-releases",
       "object_class": "SUPERSEDED_RELEASES",
       "remaining_release_count": 1,
+      "dependency_check": "ONLY_FINAL_RELEASE_REFERENCED_BY_CURRENT_BRIDGE",
+      "backup_evidence_ref": "deletion_recovery_closure:intermediate-package9-releases",
       "backup_verified_before_delete": true
     }
   ],

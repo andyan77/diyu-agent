@@ -31,7 +31,13 @@ PACKAGE_RELATIVE_ROOT = Path("19_cloud_cutover/ecs_migration_001")
 TASK_ID = "DIYU_ECS_CUTOVER_001"
 PACKAGE8_MERGE_COMMIT = "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d"
 PACKAGE8_REVIEWED_HEAD = "e048790034c9ab20c0e570627f4e4a20d1a48cc6"
-REMOTE_CODE_COMMIT = "068eac4c9758f8c3e8029eedbe35f4c32d944dc5"
+REMOTE_CODE_COMMIT = "06cc39a0ff1399d38bd749bc5bc074c3c3204b62"
+REMOTE_CODE_TREE = "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc"
+REMOTE_RELEASE_SHA256 = "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a"
+REMOTE_RELEASE_FILE_COUNT = 131
+CURRENT_BACKUP_MANIFEST_SHA256 = (
+    "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e"
+)
 RESULT_PATH = Path("result/ecs_cutover_result.v1.json")
 DELIVERY_PATH = Path("delivery/execution_review_request.v1.yaml")
 INVENTORY_PATH = Path("object_inventory.v1.json")
@@ -59,6 +65,7 @@ BASE_FILES = {
 }
 AUTHORIZED_P7_CHANGES = {
     Path("17_dify_runtime/dify_end_to_end_001/bridge_app.py"),
+    Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
     Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
     Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
     Path("17_dify_runtime/dify_end_to_end_001/portal.js"),
@@ -182,7 +189,20 @@ def validate_inventory(root: Path) -> None:
     require(data.get("task_id") == TASK_ID, "E_INVENTORY_TASK")
     source = data.get("source_candidate", {})
     require(source.get("commit") == REMOTE_CODE_COMMIT, "E_INVENTORY_COMMIT")
-    require(source.get("release_source_file_count") == 124, "E_RELEASE_FILES")
+    require(source.get("tree") == REMOTE_CODE_TREE, "E_INVENTORY_TREE")
+    require(
+        source.get("release_archive_sha256") == REMOTE_RELEASE_SHA256,
+        "E_INVENTORY_RELEASE",
+    )
+    require(
+        source.get("release_source_file_count") == REMOTE_RELEASE_FILE_COUNT,
+        "E_RELEASE_FILES",
+    )
+    require(
+        source.get("server_external_backup_manifest_sha256")
+        == CURRENT_BACKUP_MANIFEST_SHA256,
+        "E_INVENTORY_CURRENT_BACKUP",
+    )
     capacity = data.get("host_capacity", {})
     require(capacity.get("cpu_count") == 2, "E_CAPACITY_CPU")
     require(capacity.get("root_disk_free_bytes_after_cutover", 0) >= 10 * 1024**3, "E_CAPACITY_DISK")
@@ -229,13 +249,122 @@ def validate_backup(root: Path) -> None:
         require(item.get("plaintext_artifacts_persisted") is False, f"E_{label}_PLAINTEXT")
         require(item.get("isolated_restore", {}).get("network") == "NONE", f"E_{label}_RESTORE_NETWORK")
         require(item.get("isolated_restore", {}).get("pass") is True, f"E_{label}_RESTORE")
+        artifacts = item.get("artifacts", [])
+        require(
+            isinstance(artifacts, list)
+            and len(artifacts) == item.get("artifact_count"),
+            f"E_{label}_ARTIFACT_LIST",
+        )
+        names = [row.get("artifact") for row in artifacts]
+        require(
+            len(set(names)) == len(names)
+            and all(
+                isinstance(row.get("encrypted_sha256"), str)
+                and re.fullmatch(r"[0-9a-f]{64}", row["encrypted_sha256"])
+                and row.get("encrypted_size_bytes", 0) > 0
+                for row in artifacts
+            ),
+            f"E_{label}_ARTIFACT_BINDING",
+        )
     require(before.get("manifest_sha256") == "2281cee2add4c103428e37be57cf98293d478319bcbbb4633a27acff1a633f85", "E_PRE_MANIFEST")
     require(after.get("manifest_sha256") == "69e464cc92e2ccaf9fb03e543a6c65c7e1ab8b563123aa1813bdd46099d170e0", "E_POST_MANIFEST")
     runtime_counts = after.get("isolated_restore", {}).get("runtime_counts", {})
     require(runtime_counts == {"tenants": 2, "accounts": 13, "fragments": 31, "candidates": 24}, "E_RESTORE_RUNTIME_COUNTS")
+    current = data.get("post_repair_current_candidate", {})
+    require(
+        current.get("manifest_sha256") == CURRENT_BACKUP_MANIFEST_SHA256,
+        "E_CURRENT_BACKUP_MANIFEST",
+    )
+    require(
+        current.get("location_class")
+        == "SERVER_EXTERNAL_RESTRICTED_LOCAL_STORAGE"
+        and current.get("key_location_class")
+        == "SEPARATE_SERVER_EXTERNAL_RESTRICTED_KEY_STORE"
+        and current.get("encryption") == "GPG_SYMMETRIC_AES256"
+        and current.get("plaintext_artifacts_persisted") is False,
+        "E_CURRENT_BACKUP_BOUNDARY",
+    )
+    current_binding = current.get("candidate_binding", {})
+    require(
+        current_binding
+        == {
+            "code_commit": REMOTE_CODE_COMMIT,
+            "release_archive_sha256": REMOTE_RELEASE_SHA256,
+            "release_source_file_count": REMOTE_RELEASE_FILE_COUNT,
+        },
+        "E_CURRENT_BACKUP_CANDIDATE",
+    )
+    current_artifacts = current.get("artifacts", [])
+    require(
+        isinstance(current_artifacts, list)
+        and current.get("artifact_count") == 4
+        and len(current_artifacts) == 4
+        and {
+            item.get("source_class") for item in current_artifacts
+        }
+        == {
+            "CURRENT_CUTOVER_DATABASE",
+            "CURRENT_DIFY_PLATFORM",
+            "CURRENT_CUTOVER_RELEASE",
+            "CURRENT_DIFY_FILES_AND_VECTOR",
+        }
+        and all(
+            item.get("decryption_verified") is True
+            and item.get("isolated_restore_verified") is True
+            and isinstance(item.get("encrypted_sha256"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", item["encrypted_sha256"])
+            and isinstance(
+                item.get("plaintext_sha256_verified_after_decryption"), str
+            )
+            and re.fullmatch(
+                r"[0-9a-f]{64}",
+                item["plaintext_sha256_verified_after_decryption"],
+            )
+            and item.get("encrypted_size_bytes", 0) > 0
+            for item in current_artifacts
+        ),
+        "E_CURRENT_BACKUP_ARTIFACTS",
+    )
+    current_restore = current.get("isolated_restore", {})
+    require(
+        current_restore.get("network") == "NONE"
+        and current_restore.get("runtime_counts")
+        == {"tenants": 2, "accounts": 13, "fragments": 31, "candidates": 24}
+        and current_restore.get("dify_restored_table_count") == 133
+        and current_restore.get("release_and_state_objects_present") is True
+        and current_restore.get("dify_files_and_vector_objects_present") is True
+        and current_restore.get("temporary_restore_environment_removed") is True
+        and current_restore.get("pass") is True,
+        "E_CURRENT_BACKUP_RESTORE",
+    )
     require(data.get("corrupt_missing_or_version_mismatch_rejected") is True, "E_RESTORE_FAIL_CLOSED")
     require(data.get("backup_keys_in_repository") is False, "E_BACKUP_KEY")
     require(data.get("credentials_in_evidence") is False, "E_BACKUP_CREDENTIAL")
+    closure = data.get("deletion_recovery_closure", [])
+    inventory = read_json(root / INVENTORY_PATH)
+    deleted_ids = {
+        item["stable_id"] for item in inventory.get("confirmed_legacy_deleted", [])
+    }
+    pre_names = {item["artifact"] for item in before.get("artifacts", [])}
+    post_names = {item["artifact"] for item in after.get("artifacts", [])}
+    require(
+        isinstance(closure, list)
+        and {item.get("object_id") for item in closure} == deleted_ids,
+        "E_DELETE_RECOVERY_CLOSURE",
+    )
+    require(
+        all(
+            isinstance(item.get("dependency_check"), str)
+            and item.get("dependency_check")
+            and isinstance(item.get("isolated_restore_proof"), str)
+            and item.get("isolated_restore_proof")
+            and isinstance(item.get("backup_artifacts"), list)
+            and item.get("backup_artifacts")
+            and set(item["backup_artifacts"]) <= pre_names | post_names
+            for item in closure
+        ),
+        "E_DELETE_RECOVERY_BINDING",
+    )
 
 
 def validate_cutover(root: Path) -> None:
@@ -248,6 +377,15 @@ def validate_cutover(root: Path) -> None:
     require(merge.get("checker_compatibility") == "SUCCESS" and merge.get("secret_scan") == "SUCCESS", "E_P8_CI")
     candidate = data.get("remote_candidate", {})
     require(candidate.get("code_commit") == REMOTE_CODE_COMMIT, "E_REMOTE_COMMIT")
+    require(candidate.get("code_tree") == REMOTE_CODE_TREE, "E_REMOTE_TREE")
+    require(
+        candidate.get("release_archive_sha256") == REMOTE_RELEASE_SHA256,
+        "E_REMOTE_RELEASE",
+    )
+    require(
+        candidate.get("release_source_file_count") == REMOTE_RELEASE_FILE_COUNT,
+        "E_REMOTE_RELEASE_FILES",
+    )
     require(candidate.get("release_count") == 1, "E_RELEASE_COUNT")
     require(candidate.get("dify_version") == "1.15.0", "E_DIFY_VERSION")
     require(candidate.get("single_current_system") is True, "E_SINGLE_SYSTEM")
@@ -291,6 +429,138 @@ def validate_cutover(root: Path) -> None:
     require(rollback.get("rollback_and_forward_pass") is True, "E_ROLLBACK_FORWARD")
     require(rollback.get("forward_rls_table_count") == 19, "E_FORWARD_RLS")
     require(rollback.get("final_state") == "PACKAGE9_CANDIDATE", "E_FINAL_REMOTE_STATE")
+    transition = data.get("transition_record", {})
+    require(transition.get("task_id") == TASK_ID, "E_TRANSITION_TASK")
+    require(transition.get("actual_execution") is True, "E_TRANSITION_NOT_EXECUTED")
+    bindings = transition.get("bindings", {})
+    require(
+        isinstance(bindings, dict)
+        and all(
+            isinstance(bindings.get(field), str)
+            and re.fullmatch(r"[0-9a-f]{64}", bindings[field])
+            for field in (
+                "release_archive_sha256",
+                "pre_cutover_backup_manifest_sha256",
+                "post_cutover_backup_manifest_sha256",
+                "rollback_checkpoint_sha256",
+                "forward_result_sha256",
+            )
+        ),
+        "E_TRANSITION_BINDINGS",
+    )
+    expected_actions = {
+        "rollback_phase": (
+            "RESTORE_PRE_CUTOVER_NGINX",
+            "ROLLBACK_DATABASE_SECURITY",
+            "START_LEGACY_BRIDGE_FROM_BACKUP_IDENTITY",
+            "VERIFY_LEGACY_BRIDGE_HEALTH",
+            "VERIFY_DIFY_ROOT_HEALTH",
+        ),
+        "forward_phase": (
+            "APPLY_DATABASE_SECURITY",
+            "DEPLOY_FROZEN_RELEASE",
+            "START_CURRENT_BRIDGE",
+            "INSTALL_APPS_NGINX_ROUTE",
+            "VERIFY_ROOT_AND_APPS_HEALTH",
+            "VERIFY_FORCED_RLS_AND_RUNTIME_ROLE",
+        ),
+    }
+    for phase_name, actions in expected_actions.items():
+        phase_rows = transition.get(phase_name, {}).get("actions", [])
+        require(
+            tuple(row.get("action") for row in phase_rows) == actions
+            and all(
+                row.get("status") == "PASS"
+                and isinstance(row.get("evidence_ref"), str)
+                for row in phase_rows
+            ),
+            f"E_TRANSITION_ACTIONS:{phase_name}",
+        )
+    require(
+        transition.get("rollback_and_forward_pass") is True
+        and transition.get("final_state") == "PACKAGE9_CANDIDATE",
+        "E_TRANSITION_FINAL_STATE",
+    )
+    successor = data.get("successor_deployment", {})
+    require(
+        successor.get("reason")
+        == "TARGETED_REVIEW_CLOSURE_WITHOUT_BUSINESS_SEMANTIC_CHANGE"
+        and successor.get("previous_transition_release_archive_sha256")
+        == bindings.get("release_archive_sha256")
+        and successor.get("current_code_commit") == REMOTE_CODE_COMMIT
+        and successor.get("current_code_tree") == REMOTE_CODE_TREE
+        and successor.get("current_release_archive_sha256")
+        == REMOTE_RELEASE_SHA256
+        and successor.get("current_release_source_file_count")
+        == REMOTE_RELEASE_FILE_COUNT
+        and successor.get("server_external_backup_manifest_sha256")
+        == CURRENT_BACKUP_MANIFEST_SHA256
+        and successor.get("single_release_count") == 1
+        and successor.get("new_model_call_count") == 0
+        and successor.get("business_semantics_changed") is False,
+        "E_SUCCESSOR_BINDING",
+    )
+    require(
+        successor.get("minimal_release_scope")
+        == [
+            "11_product_foundation",
+            "12_expression_service",
+            "13_brand_data",
+            "14_dify_shell",
+            "15_brand_retrieval",
+            "16_composition_runtime",
+            "17_dify_runtime",
+            "18_deployment",
+            "19_cloud_cutover",
+        ],
+        "E_SUCCESSOR_RELEASE_SCOPE",
+    )
+    hardening = successor.get("bridge_hardening", {})
+    require(
+        hardening.get("read_only_root_filesystem") is True
+        and hardening.get("capabilities_dropped") == ["ALL"]
+        and hardening.get("no_new_privileges") is True
+        and hardening.get("loopback_only_publication") is True
+        and hardening.get("network_count") == 2,
+        "E_SUCCESSOR_HARDENING",
+    )
+    selected_scope = successor.get("selected_account_scope_proof", {})
+    require(
+        selected_scope.get("operation") == "选择候选"
+        and selected_scope.get("http_status") == 200
+        and selected_scope.get("simulation_only") is True
+        and selected_scope.get("publish_allowed") is False
+        and isinstance(selected_scope.get("response_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", selected_scope["response_sha256"])
+        and selected_scope.get("scope_dimensions")
+        == [
+            "tenant_id",
+            "brand_id",
+            "organization_id",
+            "store_id",
+            "content_account_id",
+            "principal_id",
+        ]
+        and selected_scope.get("selected_scope_visible_account_count") == 1
+        and selected_scope.get("selected_scope_candidate_count") == 3
+        and selected_scope.get("cross_account_candidate_count") == 0
+        and selected_scope.get("model_invocation_count_before") == 92
+        and selected_scope.get("model_invocation_count_after") == 92,
+        "E_SUCCESSOR_SELECTED_SCOPE",
+    )
+    successor_health = successor.get("post_deploy_health", {})
+    require(
+        successor_health.get("root_https_status") == 200
+        and successor_health.get("apps_https_status") == 200
+        and successor_health.get("forced_rls_table_count") == 19
+        and successor_health.get("forced_rls_enabled_count") == 19
+        and successor_health.get("runtime_counts") == "2|13|31|24"
+        and successor_health.get("dify_counts") == "3|1|19|30"
+        and successor_health.get("disk_free_bytes", 0) >= 10 * 1024**3
+        and successor_health.get("memory_available_bytes", 0) >= 1024**3
+        and successor_health.get("pass") is True,
+        "E_SUCCESSOR_HEALTH",
+    )
     require(data.get("real_customer_data_imported") is False, "E_REAL_CUSTOMER_DATA")
     require(data.get("public_content_published") is False, "E_PUBLICATION")
     require(data.get("secrets_included") is False, "E_CUTOVER_SECRET")
@@ -302,6 +572,34 @@ def validate_journeys(root: Path) -> None:
     require(data.get("journey_group_count") == 6, "E_JOURNEY_GROUPS")
     require(data.get("journey_action_count") == 15, "E_JOURNEY_ACTIONS")
     require(data.get("all_http_actions_succeeded") is True, "E_JOURNEY_HTTP")
+    action_audit = data.get("action_audit", [])
+    require(
+        isinstance(action_audit, list)
+        and len(action_audit) == 15
+        and [item.get("ordinal") for item in action_audit] == list(range(1, 16)),
+        "E_ACTION_AUDIT_COUNT",
+    )
+    require(
+        all(
+            item.get("http_status") == 200
+            and item.get("simulation_only") is True
+            and item.get("publish_allowed") is False
+            and isinstance(item.get("execution_path"), str)
+            and item.get("execution_path")
+            and all(
+                isinstance(item.get(field), str)
+                and re.fullmatch(r"[0-9a-f]{64}", item[field])
+                for field in (
+                    "account_scope_sha256",
+                    "request_sha256",
+                    "response_sha256",
+                    "answer_sha256",
+                )
+            )
+            for item in action_audit
+        ),
+        "E_ACTION_AUDIT_BINDING",
+    )
     journeys = data.get("journey_groups", [])
     require(isinstance(journeys, list) and len(journeys) == 6, "E_JOURNEY_LIST")
     require(all(item.get("status") == "PASS" for item in journeys), "E_JOURNEY_STATUS")
@@ -310,7 +608,32 @@ def validate_journeys(root: Path) -> None:
     require(distribution == {"total": 24, "short_video": 12, "article": 9, "display": 3}, "E_FORMAT_DISTRIBUTION")
     usage = data.get("model_usage", {})
     require(usage.get("package9_invocation_increment") == 13, "E_MODEL_CALLS")
+    require(
+        sum(item.get("model_invocation_count", -100) for item in action_audit) == 13,
+        "E_ACTION_MODEL_CALL_SUM",
+    )
+    require(
+        usage.get("invocation_audit_row_count") == 13
+        and usage.get("invocation_response_digest_count") == 13
+        and isinstance(usage.get("invocation_audit_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", usage["invocation_audit_sha256"]),
+        "E_MODEL_AUDIT_BINDING",
+    )
     require(usage.get("founder_authorized_call_limit") == 40, "E_MODEL_OVERRIDE")
+    authorization = usage.get("authorization_provenance", {})
+    require(
+        authorization
+        == {
+            "authority": "FOUNDER",
+            "scope": "PACKAGE9_MODEL_CALL_AUDIT_LIMIT",
+            "source_class": "IN_THREAD_SUPERSEDING_DIRECTIVE",
+            "directive": "预算审计40 次上界，不阻塞当前任务推进；如果需要可以再增加60此上界",
+            "directive_sha256": "1774b6fd45bc01fd87b00022e5eda988ba3f5c8a1cac2fd67d4b361e291cbf41",
+            "effective_limit_used": 40,
+            "additional_60_not_used": True,
+        },
+        "E_MODEL_OVERRIDE_PROVENANCE",
+    )
     require(usage.get("package9_invocation_increment", 1000) <= usage.get("founder_authorized_call_limit", -1), "E_MODEL_BUDGET")
     require(usage.get("observed_cost_cny", 1000) <= usage.get("cost_limit_cny", -1), "E_MODEL_COST")
     require(usage.get("new_model_calls_frozen") is True, "E_MODEL_NOT_FROZEN")
@@ -414,7 +737,11 @@ def validate_result_and_delivery(root: Path) -> bool:
     require(isinstance(delivery_reviews, list) and len(delivery_reviews) == 2, "E_DELIVERY_REVIEW_COUNT")
     require(all(item.get("score", 0) >= 90 and item.get("verdict") == "PASS" for item in result_reviews), "E_RESULT_REVIEW_SUMMARY")
     local = result.get("local_verification", {})
-    require(local.get("package7_test_count") == 55 and local.get("package9_test_count") == 8, "E_TEST_COUNTS")
+    require(
+        local.get("package7_test_count") == 56
+        and local.get("package9_test_count") == 9,
+        "E_TEST_COUNTS",
+    )
     for field in ("ruff_pass", "package9_checker_pass", "package9_selftest_pass", "optimized_mode_exit_2", "central_compatibility_pass", "secret_scan_pass"):
         require(local.get(field) is True, f"E_LOCAL_VERIFICATION:{field}")
     return True
@@ -526,8 +853,42 @@ def run_selftest() -> None:
             "E_PRE_BACKUP_COUNT",
         )
         expect_failure(
+            mutate_json(
+                BACKUP_PATH,
+                lambda value: value["deletion_recovery_closure"].pop(),
+            ),
+            "E_DELETE_RECOVERY_CLOSURE",
+        )
+        expect_failure(
+            mutate_json(
+                BACKUP_PATH,
+                lambda value: value["post_repair_current_candidate"].update(
+                    {"manifest_sha256": "0" * 64}
+                ),
+            ),
+            "E_CURRENT_BACKUP_MANIFEST",
+        )
+        expect_failure(
             mutate_json(CUTOVER_PATH, lambda value: value["database_security"].update({"cross_tenant_write_rejected": False})),
             "E_DATABASE_NEGATIVE",
+        )
+        expect_failure(
+            mutate_json(
+                CUTOVER_PATH,
+                lambda value: value["transition_record"]["forward_phase"][
+                    "actions"
+                ][1].update({"status": "SKIPPED"}),
+            ),
+            "E_TRANSITION_ACTIONS",
+        )
+        expect_failure(
+            mutate_json(
+                CUTOVER_PATH,
+                lambda value: value["successor_deployment"][
+                    "selected_account_scope_proof"
+                ].update({"cross_account_candidate_count": 1}),
+            ),
+            "E_SUCCESSOR_SELECTED_SCOPE",
         )
         expect_failure(
             mutate_json(INVENTORY_PATH, lambda value: value.update({"unknown_object_deleted_count": 1})),
@@ -540,6 +901,24 @@ def run_selftest() -> None:
         expect_failure(
             mutate_json(JOURNEY_PATH, lambda value: value["surface_safety"].update({"internal_identifier_leak_count": 1})),
             "E_IDENTIFIER_LEAK",
+        )
+        expect_failure(
+            mutate_json(
+                JOURNEY_PATH,
+                lambda value: value["action_audit"][0].update(
+                    {"request_sha256": "not-a-digest"}
+                ),
+            ),
+            "E_ACTION_AUDIT_BINDING",
+        )
+        expect_failure(
+            mutate_json(
+                JOURNEY_PATH,
+                lambda value: value["model_usage"].update(
+                    {"authorization_provenance": {}}
+                ),
+            ),
+            "E_MODEL_OVERRIDE_PROVENANCE",
         )
         expect_failure(
             mutate_json(RESULT_PATH, lambda value: value["readiness"].update({"production_ready": True})),
@@ -569,7 +948,7 @@ def run_selftest() -> None:
         finally:
             runbook.write_text(original_runbook, encoding="utf-8")
 
-    print(json.dumps({"status": "PASS", "selftests": 9}, sort_keys=True))
+    print(json.dumps({"status": "PASS", "selftests": 15}, sort_keys=True))
 
 
 def main() -> int:

@@ -11,6 +11,86 @@
     "all_artifact_digests_verified": true,
     "all_decryptions_verified": true,
     "plaintext_artifacts_persisted": false,
+    "artifacts": [
+      {
+        "artifact": "infra-postgres-globals.sql.gpg",
+        "source_class": "PRESERVED_INFRASTRUCTURE",
+        "encrypted_sha256": "86a43a3cf79db12d1b2d1790d1ecd8bbeb3a475195c06a94e11f49212ebf09a6",
+        "encrypted_size_bytes": 1301
+      },
+      {
+        "artifact": "infra-diyu.pgdump.gpg",
+        "source_class": "PRESERVED_INFRASTRUCTURE",
+        "encrypted_sha256": "bf5dbccb3e86a2a2d18bbf0013d5a294584b7ec335b30588856562cb4737e600",
+        "encrypted_size_bytes": 923
+      },
+      {
+        "artifact": "infra-diyu_brand_faye.pgdump.gpg",
+        "source_class": "LEGACY_RETAINED_PENDING_OWNERSHIP",
+        "encrypted_sha256": "153c3eb3a0db942844916cb7da93c46904beae39b0b962011b1ee56b9390fcf7",
+        "encrypted_size_bytes": 6885063
+      },
+      {
+        "artifact": "infra-diyu_pkg7_runtime.pgdump.gpg",
+        "source_class": "CURRENT_CANDIDATE",
+        "encrypted_sha256": "7bd36c2ee18c0c1ed0f12e8ffaf75e3dc9f1696a224371de8cbac7ef08d8f266",
+        "encrypted_size_bytes": 330247
+      },
+      {
+        "artifact": "dify-platform.pgdump.gpg",
+        "source_class": "FORBIDDEN_TO_DELETE_DIFY_PLATFORM",
+        "encrypted_sha256": "8cf4ca20a282a1c7f63ab3b802a972108ac03900e529419807b7c38f805533ef",
+        "encrypted_size_bytes": 4037712
+      },
+      {
+        "artifact": "legacy-runtime-ledger.pgdump.gpg",
+        "source_class": "CONFIRMED_LEGACY_DELETE_CANDIDATE",
+        "encrypted_sha256": "312dcc6a778b59a8961bfdd82d0590121db2a32e424d585effa59c7f0d61c6fb",
+        "encrypted_size_bytes": 19697
+      },
+      {
+        "artifact": "package7-candidate.tar.gz.gpg",
+        "source_class": "CURRENT_CANDIDATE",
+        "encrypted_sha256": "ab76819169448b84299d1b597ecd2a9fa652fa43ae3ae168ab01aa68515d4d41",
+        "encrypted_size_bytes": 354490
+      },
+      {
+        "artifact": "reverse-proxy-and-certificates.tar.gz.gpg",
+        "source_class": "PRESERVED_EDGE_CONFIGURATION",
+        "encrypted_sha256": "5716a365406bf24d89292641ef3e0a9896da6ef847a6525e0bd6845d76e5f28f",
+        "encrypted_size_bytes": 31571
+      },
+      {
+        "artifact": "legacy-diyu-rag.tar.gz.gpg",
+        "source_class": "CONFIRMED_LEGACY_DELETE_CANDIDATE",
+        "encrypted_sha256": "e42fec1f0f58f2f3fafae703698c1618f6f5e1a75c06b93fe775afb9563b2a7d",
+        "encrypted_size_bytes": 3241836
+      },
+      {
+        "artifact": "legacy-container-metadata.json.gpg",
+        "source_class": "CONFIRMED_LEGACY_DELETE_CANDIDATE",
+        "encrypted_sha256": "5f02c10cc66c455b8ba15a02e7d00c77ad062457b3ae857c7bd94144bd0995c3",
+        "encrypted_size_bytes": 32570
+      },
+      {
+        "artifact": "legacy-images.tar.gpg",
+        "source_class": "CONFIRMED_LEGACY_DELETE_CANDIDATE",
+        "encrypted_sha256": "bac78d1adf2f3dbb58fbaca9501810f1d7057f0bd06cf2cc8e7138c4bb61b621",
+        "encrypted_size_bytes": 197449867
+      },
+      {
+        "artifact": "dify-platform-filesystem.tar.gz.gpg",
+        "source_class": "FORBIDDEN_TO_DELETE_DIFY_PLATFORM",
+        "encrypted_sha256": "086873fba49fb0fcc1e923333dbc122672ceda42e4d987926a94a04b9c0d92a3",
+        "encrypted_size_bytes": 180709008
+      },
+      {
+        "artifact": "legacy-qdrant-collection.snapshot.gpg",
+        "source_class": "LEGACY_RETAINED_DUE_OTHER_APP_DEPENDENCY",
+        "encrypted_sha256": "e22fe5480912d2c70597facb00381c9118beff6b51a95d9ee4b91bf041414a8d",
+        "encrypted_size_bytes": 1220973
+      }
+    ],
     "isolated_restore": {
       "network": "NONE",
       "package7_candidate_counts": {
@@ -51,6 +131,36 @@
     "all_decryptions_verified": true,
     "all_isolated_restores_verified": true,
     "plaintext_artifacts_persisted": false,
+    "artifacts": [
+      {
+        "artifact": "runtime-database.pgdump.gpg",
+        "source_class": "CURRENT_CUTOVER_DATABASE",
+        "encrypted_sha256": "bbbe8bef8d45c189e2731215f76ed1c89e1fcf61ec56a7d07c43f42123816238",
+        "encrypted_size_bytes": 443246,
+        "isolated_restore_verified": true
+      },
+      {
+        "artifact": "dify-platform-database.pgdump.gpg",
+        "source_class": "CURRENT_DIFY_PLATFORM",
+        "encrypted_sha256": "1e4bd16fc51dbe6d6b3a9f46a16ac9b0cd50dd752618512392040e82625a49ea",
+        "encrypted_size_bytes": 4387418,
+        "isolated_restore_verified": true
+      },
+      {
+        "artifact": "package9-release-and-state.tar.gz.gpg",
+        "source_class": "CURRENT_CUTOVER_RELEASE",
+        "encrypted_sha256": "1da04f8706a557b723e3dcf12f09643b0090cb6169eb3a83be423cc0017f37ef",
+        "encrypted_size_bytes": 720773,
+        "isolated_restore_verified": true
+      },
+      {
+        "artifact": "dify-current-files-and-vector.tar.gz.gpg",
+        "source_class": "CURRENT_DIFY_FILES_AND_VECTOR",
+        "encrypted_sha256": "8853f218473848397c4abc756acb8efa54ccc5571c7334bbb018bfd43f72ffae",
+        "encrypted_size_bytes": 505995,
+        "isolated_restore_verified": true
+      }
+    ],
     "isolated_restore": {
       "network": "NONE",
       "runtime_counts": {
@@ -71,6 +181,139 @@
       "pass": true
     }
   },
+  "post_repair_current_candidate": {
+    "created_at": "2026-07-17T07:17:48.736762Z",
+    "location_class": "SERVER_EXTERNAL_RESTRICTED_LOCAL_STORAGE",
+    "key_location_class": "SEPARATE_SERVER_EXTERNAL_RESTRICTED_KEY_STORE",
+    "encryption": "GPG_SYMMETRIC_AES256",
+    "artifact_count": 4,
+    "manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e",
+    "all_artifact_digests_verified": true,
+    "all_decryptions_verified": true,
+    "all_isolated_restores_verified": true,
+    "plaintext_artifacts_persisted": false,
+    "candidate_binding": {
+      "code_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+      "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+      "release_source_file_count": 131
+    },
+    "artifacts": [
+      {
+        "artifact": "runtime-database.pgdump.gpg",
+        "source_class": "CURRENT_CUTOVER_DATABASE",
+        "encrypted_sha256": "2a9a6693c558ea565dd7eca468fbf9206cc3a92dc467f203fa191f90b01ddc7f",
+        "encrypted_size_bytes": 349807,
+        "plaintext_sha256_verified_after_decryption": "f519c4a2eecb1eba409ac556c4abca4a605f456ff605b9ce0f4fda143cd05a8d",
+        "decryption_verified": true,
+        "isolated_restore_verified": true
+      },
+      {
+        "artifact": "dify-platform-database.pgdump.gpg",
+        "source_class": "CURRENT_DIFY_PLATFORM",
+        "encrypted_sha256": "b26c61be6d6f58da2a97057a13e9ae1d21c11dbddbc8f54475f8f850c3eeb5e9",
+        "encrypted_size_bytes": 4078408,
+        "plaintext_sha256_verified_after_decryption": "86655418ac17648e610de345a96d7c8bca8e2974fa4a716a93d1ecbccb5e96cf",
+        "decryption_verified": true,
+        "isolated_restore_verified": true
+      },
+      {
+        "artifact": "package9-release-and-state.tar.gz.gpg",
+        "source_class": "CURRENT_CUTOVER_RELEASE",
+        "encrypted_sha256": "c5c6579b5b7c07bd085261c0bcd2149790e08f229857eaeb78065cf763d40b00",
+        "encrypted_size_bytes": 697758,
+        "plaintext_sha256_verified_after_decryption": "4150a884c3bd0cc10cc69a0b4e391b6aa10669c1fb2df49c91b0ab51f6768710",
+        "decryption_verified": true,
+        "isolated_restore_verified": true
+      },
+      {
+        "artifact": "dify-current-files-and-vector.tar.gz.gpg",
+        "source_class": "CURRENT_DIFY_FILES_AND_VECTOR",
+        "encrypted_sha256": "348baf344bca25233166f72adf66a1475c40f7713d57dfadc007187914553d81",
+        "encrypted_size_bytes": 505910,
+        "plaintext_sha256_verified_after_decryption": "f234efaac846d282fd8a04b8c33e6f283f158c0e56879b1be101dffe17b5280d",
+        "decryption_verified": true,
+        "isolated_restore_verified": true
+      }
+    ],
+    "isolated_restore": {
+      "network": "NONE",
+      "runtime_counts": {
+        "tenants": 2,
+        "accounts": 13,
+        "fragments": 31,
+        "candidates": 24
+      },
+      "dify_restored_table_count": 133,
+      "release_and_state_objects_present": true,
+      "dify_files_and_vector_objects_present": true,
+      "temporary_restore_environment_removed": true,
+      "pass": true
+    }
+  },
+  "deletion_recovery_closure": [
+    {
+      "object_id": "diyu-release-gate-capture-staging",
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_artifacts": [
+        "legacy-container-metadata.json.gpg",
+        "legacy-images.tar.gpg"
+      ],
+      "isolated_restore_proof": "LEGACY_CONTAINER_METADATA_AND_IMAGE_LOAD_VERIFIED"
+    },
+    {
+      "object_id": "diyu-rag-sidecar-dryrun",
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_artifacts": [
+        "legacy-container-metadata.json.gpg",
+        "legacy-images.tar.gpg",
+        "legacy-diyu-rag.tar.gz.gpg"
+      ],
+      "isolated_restore_proof": "LEGACY_RAG_STATE_AND_IMAGE_VERIFIED"
+    },
+    {
+      "object_id": "diyu-runtime-ledger-sidecar-dryrun-r6",
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_artifacts": [
+        "legacy-container-metadata.json.gpg",
+        "legacy-images.tar.gpg",
+        "legacy-runtime-ledger.pgdump.gpg"
+      ],
+      "isolated_restore_proof": "LEDGER_DATABASE_AND_CONTAINER_IDENTITY_VERIFIED"
+    },
+    {
+      "object_id": "diyu-runtime-ledger-pg",
+      "dependency_check": "NO_CURRENT_DATABASE_CLIENT_OR_ROUTE",
+      "backup_artifacts": [
+        "legacy-container-metadata.json.gpg",
+        "legacy-runtime-ledger.pgdump.gpg"
+      ],
+      "isolated_restore_proof": "LEDGER_DATABASE_COUNTS_44_18_8"
+    },
+    {
+      "object_id": "diyu-runtime-ledger-pgdata",
+      "dependency_check": "CONTAINER_REMOVED_AFTER_DATABASE_RESTORE_PROOF",
+      "backup_artifacts": [
+        "legacy-runtime-ledger.pgdump.gpg"
+      ],
+      "isolated_restore_proof": "LEDGER_DATABASE_COUNTS_44_18_8"
+    },
+    {
+      "object_id": "/opt/diyu/package7/source",
+      "dependency_check": "CURRENT_BRIDGE_USES_FROZEN_PACKAGE9_RELEASE_PATH",
+      "backup_artifacts": [
+        "package7-candidate.tar.gz.gpg"
+      ],
+      "isolated_restore_proof": "PACKAGE7_RELEASE_OBJECTS_PRESENT"
+    },
+    {
+      "object_id": "intermediate-package9-releases",
+      "dependency_check": "ONLY_FINAL_RELEASE_REFERENCED_BY_CURRENT_BRIDGE",
+      "backup_artifacts": [
+        "package9-release-and-state.tar.gz.gpg"
+      ],
+      "isolated_restore_proof": "FINAL_RELEASE_AND_STATE_OBJECTS_PRESENT"
+    }
+  ],
   "corrupt_missing_or_version_mismatch_rejected": true,
   "backup_keys_in_repository": false,
   "credentials_in_evidence": false,
