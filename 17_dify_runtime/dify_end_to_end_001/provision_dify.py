@@ -85,7 +85,7 @@ def _content_sha256(value: object) -> str:
 
 def _dify_import_text(value: object) -> str:
     """Project one optional outer Markdown heading into a plain-text import."""
-    return re.sub(r"\A# (?=\S)", "", _normalized_text(value), count=1)
+    return re.sub(r"\A#+\s(?=\S)", "", _normalized_text(value), count=1)
 
 
 def plan_document_reconciliation(

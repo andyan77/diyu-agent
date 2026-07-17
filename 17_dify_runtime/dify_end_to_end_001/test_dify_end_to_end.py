@@ -45,7 +45,7 @@ DSL_PATH = PACKAGE_ROOT / "dify_app.v1.yaml"
 
 class DifyMaterializationCompatibilityTests(unittest.TestCase):
     def test_dify_import_removes_only_the_outer_presentation_heading(self) -> None:
-        source = "# 资料范围\r\n字段A：保留。\r\n## 内部原文标题"
+        source = "## 资料范围\r\n字段A：保留。\r\n## 内部原文标题"
         self.assertEqual(
             _dify_import_text(source),
             "资料范围\n字段A：保留。\n## 内部原文标题",
