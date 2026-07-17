@@ -1,0 +1,239 @@
+{
+ "schema_version": "p7-core-interface-freeze-v1",
+ "milestone_id": "M3",
+ "capsule": "M3_C6_CORE_EXTRACTION",
+ "staging_root": "controlled_content_generator_v2_001/product_core_staging_001",
+ "extraction_manifest_digest": "a4543605b08c1cd9938893be59a9957345923b65fcc83f6593f38fc127883a1f",
+ "frozen_modules": {
+  "spine/adapters.py": {
+   "sha256": "596ef39d31365de6214e28655879aabe87ad43a6dcf8648e6a8c2fac330af85f",
+   "public_symbols": [
+    "adapt_v4_cost_event"
+   ]
+  },
+  "spine/calibration.py": {
+   "sha256": "985f287cdb0b44a53213347e6343167c03e57dac20dc007c3fa9760cbb17fe07",
+   "public_symbols": [
+    "CHAIN_ROLES",
+    "REQUIRED_FAMILIES",
+    "RISK_LEVELS",
+    "confusion_metrics",
+    "detection_metrics",
+    "family_coverage",
+    "one_sided_binomial_upper",
+    "per_label_metrics",
+    "qualify_claim_atomization",
+    "qualify_detection",
+    "qualify_disclosure_and_omission",
+    "qualify_end_to_end",
+    "qualify_entailment",
+    "qualify_reference_extraction",
+    "qualify_review_calibration",
+    "qualify_risk_classification",
+    "stratified_confusion",
+    "verify_chain_manifest"
+   ]
+  },
+  "spine/canonical.py": {
+   "sha256": "65429a16c9cc779aa579bc26c0b9cb486cbd935cbba5e668a62c016224be91a3",
+   "public_symbols": [
+    "canonical_json",
+    "canonical_jsonl",
+    "digest_json",
+    "digest_text",
+    "file_digest",
+    "read_jsonl",
+    "stable_id"
+   ]
+  },
+  "spine/contracts.py": {
+   "sha256": "15cf7fa071025be9a809db42031d6a28df29214793471af45c18fabb370274b7",
+   "public_symbols": [
+    "CASE_ORIGINS",
+    "ContractError",
+    "RELATION_LABELS",
+    "RISK_LEVELS",
+    "RUNTIME_ACTIONS",
+    "VISIBILITY_PARTITIONS",
+    "qualification_decision",
+    "require_fields",
+    "validate_cost_event",
+    "validate_dataset_rows",
+    "validate_gate1_test_assignment"
+   ]
+  },
+  "spine/cost.py": {
+   "sha256": "6d633434bbce76c01836f81a32e549b652f04c17527557fe11f7db60be967b0e",
+   "public_symbols": [
+    "BUDGET_CATEGORY_KEYS",
+    "FORECAST_AGGREGATE_KEYS",
+    "MAX_PRICE_SNAPSHOT_AGE_DAYS",
+    "PROJECTION_METRIC_KEYS",
+    "accounting_integrity_gate",
+    "build_scale_projection",
+    "metering_report",
+    "project_scale",
+    "validate_rate_card"
+   ]
+  },
+  "spine/disclosure.py": {
+   "sha256": "0c2447b52ad64eb2f410c0ebf3e0c6cc9519cb322f10ca370a4703a2affa1cbe",
+   "public_symbols": [
+    "check_required_disclosures",
+    "omission_risk_action"
+   ]
+  },
+  "spine/evidence_chain.py": {
+   "sha256": "659b56d4debe745e756fc2262fd5084f1654af599aeea6e8bfcc312c2a2218b8",
+   "public_symbols": [
+    "covered_claim_candidates",
+    "known_risk_findings",
+    "make_claim_atom",
+    "runtime_action"
+   ]
+  },
+  "spine/external_llm.py": {
+   "sha256": "4162c4ea86fb78fda901d3f933576262d17978575a94161cd88032e35d689e48",
+   "public_symbols": [
+    "DailyBudgetExceeded",
+    "DailySpendLedger",
+    "DeepSeekFormulaicJudge",
+    "ExternalJudgeError",
+    "load_env_value",
+    "load_external_budget",
+    "load_provider_rate_card",
+    "validate_external_budget",
+    "validate_formulaic_response",
+    "validate_provider_rate_card"
+   ]
+  },
+  "spine/formulaic.py": {
+   "sha256": "31af5ee45aef78c49eb6a1fcebd74b5292092d93d7638f142987e67092b22e8a",
+   "public_symbols": [
+    "AXES",
+    "BINARY",
+    "agreement_metrics",
+    "candidate_retrieval_metrics",
+    "canonical_pair_id",
+    "confirmed_item_rate",
+    "expand_group_to_pairs",
+    "qualify_formulaic_construct",
+    "verdict_from_axes",
+    "wilson_interval"
+   ]
+  },
+  "spine/m0.py": {
+   "sha256": "4ea2c718a15877fa43c4d7a5c3c2d1000760e523c27d85ec4a22e799d825606c",
+   "public_symbols": [
+    "AUDIT_INTEGRITY_GATES",
+    "DIGEST_RE",
+    "FROZEN_METHOD_PARAMETERS",
+    "INDEPENDENT_ADJUDICATION_GATES",
+    "METHOD_CONFIG_DIGESTS",
+    "MIN_RECORD_COUNTS",
+    "MODULE_GATE_KEYS",
+    "MODULE_RECORD_ROLE_MINIMUMS",
+    "MODULE_REPORT_REF",
+    "QUALIFICATION_CLASS_MINIMUMS",
+    "REQUIRED_MODULES",
+    "REQUIRED_REPORT_REFS",
+    "build_m0_decision",
+    "build_record_manifest",
+    "close_module_report",
+    "verify_audit_integrity_report",
+    "verify_independent_adjudication_report",
+    "verify_m0_decision",
+    "verify_module_report",
+    "verify_qualification_manifest",
+    "verify_record_manifest"
+   ]
+  },
+  "spine/manifest.py": {
+   "sha256": "88b0176dd2ab02975da6cef0b196a298f0cb9a612577428bbf9d74d29d7395e6",
+   "public_symbols": [
+    "DEFAULT_PREFIXES",
+    "build_candidate_manifest",
+    "verify_candidate_manifest"
+   ]
+  },
+  "spine/probabilistic_adapter.py": {
+   "sha256": "5c63cadb582de8f3ff515980a4793bf40cd85674d8ea3fcb6aa41f8ab5012a53",
+   "public_symbols": [
+    "AbstainingAdapter",
+    "EntailmentAdapter",
+    "ModelFinding",
+    "independent_claim_candidates"
+   ]
+  },
+  "spine/qualification_data.py": {
+   "sha256": "28d8b1812c78a700445bfcc8b02b2ec73dbf35a17829155cd1b1125b3fcdcccb",
+   "public_symbols": [
+    "DIGEST_RE",
+    "build_qualification_record_index",
+    "validate_qualification_records",
+    "verify_qualification_record_index"
+   ]
+  },
+  "spine/review_assignment.py": {
+   "sha256": "10102bb38b30fdb87741d17a4e7fadbaa706a79187c66810aa4d94887af8af10",
+   "public_symbols": [
+    "assignment_audit",
+    "balanced_cross_assign"
+   ]
+  },
+  "spine/runner.py": {
+   "sha256": "fb5aa0ec0f538ca5ade877b38ee19bfc08cbe60e9fc75f24ab1035a6540dc3ee",
+   "public_symbols": [
+    "integrity_snapshot",
+    "r5_shadow_audit"
+   ]
+  },
+  "spine/source_index.py": {
+   "sha256": "cb650841cb8f03b2d4adf63e42cbe5c54b1bdad225a97cd349dfb12fcfee5d75",
+   "public_symbols": [
+    "DIGEST_RE",
+    "REFERENCE_REVIEW_FIELDS",
+    "make_source_evidence_unit",
+    "validate_reference_assertions",
+    "verify_source_evidence_unit"
+   ]
+  },
+  "spine/stage_gate.py": {
+   "sha256": "7972edfd6548edf11e04213ec710292a019d2607cb1c8191afaaf31cd3e56997",
+   "public_symbols": [
+    "S3_SAFETY_KEYS",
+    "STAGE_GATE_KEYS",
+    "stage_decision",
+    "whole_batch_metrics"
+   ]
+  }
+ },
+ "adapter_interface": {
+  "adapters/corpus_adapter.py": {
+   "sha256": "9e0546a3375ce4c6f733d30138641d9c5dddd2223c480bfef0b021f1fe2059bc",
+   "public_symbols": [
+    "CorpusMount"
+   ]
+  }
+ },
+ "criteria": {
+  "core_starts_without_domain_private_reads": {
+   "verdict": true,
+   "evidence": "product_core_staging_001/CORE_BOOT_REPORT.v1.json criterion_1（audithook 全 open 记录，私有路径样式零命中）"
+  },
+  "test_corpus_mounted_via_adapter": {
+   "verdict": true,
+   "evidence": "CORE_BOOT_REPORT criterion_2（CorpusMount 显式注入路径挂载合成开发样例，family_coverage 端到端）"
+  },
+  "audit_events_free_of_gate1_private_paths": {
+   "verdict": true,
+   "evidence": "CORE_BOOT_REPORT criterion_3（演示证据对象文本私有路径标记零命中）"
+  }
+ },
+ "staged_test_summary": "42 passed, 3 deselected in 1.77s",
+ "core_boot_report_sha256": "66cc73866fa2c139a3ce1bd01c88c3a30055b79861a3520bda92e828657271e1",
+ "logical_core_separated": true,
+ "flag_registration": "LOGICAL_CORE_SEPARATED 于 M3 关闭 PASS 回执 qualification_flags 登记（MILESTONE_EXIT_CONTRACT M3 required_exit_keys 成员）",
+ "d0_boundary_note": "不建正式产品仓、不推远程（属 M5）；暂存零领域数据（DOMAIN_DATA_DENYLIST 类别零命中，见 EXTRACTION_MANIFEST 三态清单）",
+ "freeze_digest": "385583f90dceeaec4bd5ba50912ea6986dc98e4727d4d1e4ea06a7bf09c00c7e"
+}

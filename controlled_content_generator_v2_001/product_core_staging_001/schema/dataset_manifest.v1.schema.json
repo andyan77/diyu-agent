@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/dataset-manifest.v1.schema.json",
+  "title": "Eval Audit Spine Two-Axis Dataset Manifest Row v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "case_origin",
+    "visibility_partition",
+    "source_group_id",
+    "case_digest"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "minLength": 1},
+    "case_origin": {"enum": ["NATURAL", "CHALLENGE"]},
+    "visibility_partition": {"enum": ["DEVELOPMENT", "VALIDATION", "HIDDEN"]},
+    "source_group_id": {"type": "string", "minLength": 1},
+    "case_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

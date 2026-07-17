@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/evaluation.v1.schema.json",
+  "title": "Eval Audit Spine Evaluation Objects v1",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/formulaicCandidateEdge"
+    },
+    {
+      "$ref": "#/$defs/formulaicAdjudication"
+    },
+    {
+      "$ref": "#/$defs/disclosureFinding"
+    }
+  ],
+  "$defs": {
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringIdArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "axisValue": {
+      "enum": [
+        "SAME",
+        "DIFFERENT",
+        "UNCLEAR",
+        "NECESSARY_GRAMMAR"
+      ]
+    },
+    "formulaicAxes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "argument_spine",
+        "evidence_progression",
+        "limitation_function",
+        "viewpoint_anchor",
+        "closing_function",
+        "transformation_depth"
+      ],
+      "properties": {
+        "argument_spine": {
+          "$ref": "#/$defs/axisValue"
+        },
+        "evidence_progression": {
+          "$ref": "#/$defs/axisValue"
+        },
+        "limitation_function": {
+          "$ref": "#/$defs/axisValue"
+        },
+        "viewpoint_anchor": {
+          "$ref": "#/$defs/axisValue"
+        },
+        "closing_function": {
+          "$ref": "#/$defs/axisValue"
+        },
+        "transformation_depth": {
+          "enum": [
+            "SURFACE_ONLY",
+            "STRUCTURAL_CHANGE",
+            "UNCLEAR",
+            "NECESSARY_GRAMMAR"
+          ]
+        }
+      }
+    },
+    "formulaicCandidateEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "edge_id",
+        "output_id_a",
+        "output_id_b",
+        "profile_id_a",
+        "profile_id_b",
+        "candidate_reason_codes",
+        "machine_score",
+        "candidate_miner_version",
+        "comparison_scope",
+        "review_required",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-formulaic-candidate-edge-v1"
+        },
+        "edge_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "output_id_a": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "output_id_b": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "profile_id_a": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "profile_id_b": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "candidate_reason_codes": {
+          "$ref": "#/$defs/stringIdArray",
+          "minItems": 1
+        },
+        "machine_score": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "candidate_miner_version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "comparison_scope": {
+          "enum": [
+            "WITHIN_PROFILE",
+            "CROSS_PROFILE",
+            "RANDOM_RECALL_AUDIT"
+          ]
+        },
+        "review_required": {
+          "const": true
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "formulaicAdjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"formulaic_decision": {"const": "NECESSARY_GRAMMAR"}}, "required": ["formulaic_decision"]},
+          "then": {"properties": {"necessary_grammar_exception_id": {"$ref": "#/$defs/nonEmptyString"}}}
+        }
+      ],
+      "required": [
+        "schema_version",
+        "adjudication_id",
+        "edge_id",
+        "reviewer_id",
+        "rubric_version",
+        "axes",
+        "necessary_grammar_exception_id",
+        "formulaic_decision",
+        "near_duplicate",
+        "evidence",
+        "review_status",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-formulaic-adjudication-v1"
+        },
+        "adjudication_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "edge_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "reviewer_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "rubric_version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "axes": {
+          "$ref": "#/$defs/formulaicAxes"
+        },
+        "necessary_grammar_exception_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formulaic_decision": {
+          "enum": [
+            "FORMULAIC",
+            "NOT_FORMULAIC",
+            "NECESSARY_GRAMMAR",
+            "INDETERMINATE"
+          ]
+        },
+        "near_duplicate": {
+          "type": "boolean"
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "review_status": {
+          "enum": [
+            "FIRST_REVIEW",
+            "SECOND_REVIEW",
+            "ADJUDICATED"
+          ]
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    },
+    "disclosureFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"decision_layer": {"const": "PROBABILISTIC"}}, "required": ["decision_layer"]},
+          "then": {"properties": {"action": {"enum": ["NO_FINDING", "REVIEW_REQUIRED", "ABSTAIN"]}}}
+        },
+        {
+          "if": {"properties": {"action": {"const": "DETERMINISTIC_HARD"}}, "required": ["action"]},
+          "then": {"properties": {"decision_layer": {"const": "DETERMINISTIC"}}}
+        }
+      ],
+      "required": [
+        "schema_version",
+        "finding_id",
+        "output_id",
+        "obligation_id",
+        "surface_policy",
+        "decision_layer",
+        "trigger_evidence",
+        "omission_may_mislead",
+        "confidence",
+        "action",
+        "review_status",
+        "object_digest"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "eval-spine-disclosure-finding-v1"
+        },
+        "finding_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "output_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "obligation_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "surface_policy": {
+          "enum": [
+            "MUST_SURFACE",
+            "MAY_SURFACE",
+            "CONTROL_ONLY",
+            "BLOCK_OUTPUT"
+          ]
+        },
+        "decision_layer": {
+          "enum": [
+            "DETERMINISTIC",
+            "PROBABILISTIC",
+            "MIXED"
+          ]
+        },
+        "trigger_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "omission_may_mislead": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "action": {
+          "enum": [
+            "NO_FINDING",
+            "REVIEW_REQUIRED",
+            "ABSTAIN",
+            "DETERMINISTIC_HARD"
+          ]
+        },
+        "review_status": {
+          "enum": [
+            "UNREVIEWED",
+            "SINGLE_REVIEWED",
+            "DUAL_ADJUDICATED"
+          ]
+        },
+        "object_digest": {
+          "$ref": "#/$defs/digest"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": "eval-audit-spine-disclosure-obligation-matrix-v1",
+  "matrix_id": "EAS-DISCLOSURE-MATRIX-V1",
+  "current_status": "NOT_CALIBRATED",
+  "principles": [
+    "SYNTHETIC_IDENTITY_AND_NO_IMPERSONATION_REMAIN_DETERMINISTIC",
+    "CLAIM_SCOPE_DISCLOSURE_DEPENDS_ON_MATERIAL_RISK",
+    "CONTROL_ONLY_IS_NOT_ALLOWED_WHEN_OMISSION_WOULD_MISLEAD_A_REASONABLE_READER",
+    "PROBABILISTIC_OMISSION_DETECTOR_ONLY_QUEUES_REVIEW",
+    "NO_DISCLOSURE_EXCEPTION_MAY_BE_ADDED_POST_HOC_TO_CHANGE_A_FROZEN_BATCH"
+  ],
+  "surface_policies": [
+    "MUST_SURFACE",
+    "MAY_SURFACE",
+    "CONTROL_ONLY"
+  ],
+  "obligations": [
+    {
+      "obligation_id": "DISC_SYNTHETIC_IDENTITY",
+      "category": "SYNTHETIC_IDENTITY",
+      "trigger": "SYNTHETIC_TEST_CONTENT_PRESENT",
+      "required_policy": "MUST_SURFACE",
+      "decision_layer": "DETERMINISTIC",
+      "missing_action": "DETERMINISTIC_HARD",
+      "notes": "必须明确合成且测试或非真实，不得嵌入普通正文冒充真实经历"
+    },
+    {
+      "obligation_id": "DISC_NO_REAL_IDENTITY_IMPERSONATION",
+      "category": "IDENTITY_AND_AUTHORIZATION",
+      "trigger": "REAL_PERSON_BRAND_STORE_CUSTOMER_OR_EMPLOYEE_IDENTITY_NOT_AUTHORIZED",
+      "required_policy": "MUST_SURFACE_OR_BLOCK_OUTPUT",
+      "decision_layer": "DETERMINISTIC_WHEN_AUTHORIZATION_STATUS_IS_STRUCTURED",
+      "missing_action": "DETERMINISTIC_HARD_OR_REVIEW_REQUIRED",
+      "notes": "结构化授权明确不足时阻止；自然语言授权歧义进入复核"
+    },
+    {
+      "obligation_id": "DISC_PRIVACY_SCOPE",
+      "category": "PRIVACY",
+      "trigger": "PERSONAL_OR_SENSITIVE_INFORMATION_PRESENT",
+      "required_policy": "MUST_SURFACE_OR_ANONYMIZE_OR_BLOCK",
+      "decision_layer": "MIXED",
+      "missing_action": "REVIEW_REQUIRED",
+      "notes": "不能以反套路为由省略必要匿名化和授权边界"
+    },
+    {
+      "obligation_id": "DISC_MATERIAL_COMPOSITION_SCOPE",
+      "category": "MATERIAL_AND_COMPOSITION",
+      "trigger": "OUTPUT_MAY_IMPLY_UNVERIFIED_FIBER_FILLING_COATING_OR_COMPOSITION",
+      "required_policy": "MUST_SURFACE_OR_REMOVE_IMPLIED_CLAIM",
+      "decision_layer": "MIXED",
+      "missing_action": "REVIEW_REQUIRED",
+      "notes": "无材料支撑时不得通过文学化细节暗示成分"
+    },
+    {
+      "obligation_id": "DISC_PERFORMANCE_LIMIT",
+      "category": "PERFORMANCE_AND_DURABILITY",
+      "trigger": "OUTPUT_MAY_BE_READ_AS_DURABILITY_EFFECTIVENESS_OR_OUTCOME_PROMISE",
+      "required_policy": "MUST_SURFACE_OR_NARROW_CLAIM",
+      "decision_layer": "PROBABILISTIC_PLUS_REVIEW",
+      "missing_action": "REVIEW_REQUIRED",
+      "notes": "未测、未验或只观察一次时，不得省略到足以让读者理解为已证实"
+    },
+    {
+      "obligation_id": "DISC_SAMPLE_AND_GENERALIZATION",
+      "category": "SAMPLE_AND_GENERALIZATION",
+      "trigger": "INDIVIDUAL_QUESTION_OBSERVATION_OR_SMALL_SAMPLE_MAY_BE_READ_AS_GROUP_PREFERENCE",
+      "required_policy": "MUST_SURFACE_OR_NARROW_CLAIM",
+      "decision_layer": "PROBABILISTIC_PLUS_REVIEW",
+      "missing_action": "REVIEW_REQUIRED",
+      "notes": "询问次数不得自动扩大为人群偏好或全部指向同一结论"
+    },
+    {
+      "obligation_id": "DISC_TIME_AND_STATUS",
+      "category": "TIME_MODALITY_AND_STATUS",
+      "trigger": "PLANNED_POSSIBLE_PENDING_OR_ATTEMPTED_ACTION_MAY_BE_READ_AS_COMPLETED",
+      "required_policy": "MUST_SURFACE_OR_USE_CORRECT_MODALITY",
+      "decision_layer": "MIXED",
+      "missing_action": "REVIEW_REQUIRED_OR_DETERMINISTIC_HARD_WHEN_STRUCTURED_STATUS_CONTRADICTS",
+      "notes": "计划、待联系、空号、站内信和已回访必须保持渠道与完成态区别"
+    },
+    {
+      "obligation_id": "DISC_NONMATERIAL_DETAIL",
+      "category": "NONMATERIAL_LIMIT",
+      "trigger": "OMITTED_DETAIL_DOES_NOT_CHANGE_FACTUAL_SCOPE_AUTHORIZATION_OR_REASONABLE_READER_DECISION",
+      "required_policy": "MAY_SURFACE_OR_CONTROL_ONLY",
+      "decision_layer": "REVIEW_WHEN_DISPUTED",
+      "missing_action": "NO_FINDING",
+      "notes": "不影响理解与决策的非实质细节无需为了格式强制披露"
+    }
+  ],
+  "reasonable_reader_test": {
+    "question_1": "省略后，读者是否更可能相信一个材料未支持的成分、效果、状态、范围或授权？",
+    "question_2": "补回边界会不会实质改变读者的购买、信任、传播或风险判断？",
+    "question_3": "候选是否通过画面、声音、叙事因果或绝对量化产生文字未直说的过度主张？",
+    "positive_if": "ANY_QUESTION_YES_WITH_EVIDENCE",
+    "uncertain_action": "REVIEW_REQUIRED"
+  },
+  "qualification": {
+    "high_risk_cases_minimum": 100,
+    "nonmisleading_controls_minimum": 100,
+    "recall_minimum": 0.95,
+    "precision_minimum": 0.85,
+    "high_risk_false_negative_count_maximum": 0,
+    "two_independent_reviews_required": true,
+    "confidence_interval_required": true
+  },
+  "current_action": "MATRIX_MAY_GUIDE_GOLD_BUILDING_BUT_MAY_NOT_CLAIM_QUALIFIED_OMISSION_DETECTION"
+}
+

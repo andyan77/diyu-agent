@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diyu.example/schema/eval-audit-spine/external_judge.v1.schema.json",
+  "title": "External semantic judge receipts and spend ledger records",
+  "oneOf": [
+    {"$ref": "#/$defs/providerRateCard"},
+    {"$ref": "#/$defs/externalBudget"},
+    {"$ref": "#/$defs/judgeReceipt"},
+    {"$ref": "#/$defs/spendRecord"}
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "providerRateCard": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "provider", "base_url", "model_revision", "captured_at",
+        "currency", "input_cache_hit_per_million",
+        "input_cache_miss_per_million", "output_per_million",
+        "cny_per_usd_budget_conversion", "max_output_tokens_per_call",
+        "source_url", "rate_card_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-external-llm-rate-card-v1"},
+        "provider": {"const": "DEEPSEEK"},
+        "base_url": {"const": "https://api.deepseek.com"},
+        "model_revision": {"type": "string", "minLength": 1},
+        "captured_at": {"type": "string", "format": "date-time"},
+        "currency": {"const": "USD"},
+        "input_cache_hit_per_million": {"type": "number", "exclusiveMinimum": 0},
+        "input_cache_miss_per_million": {"type": "number", "exclusiveMinimum": 0},
+        "output_per_million": {"type": "number", "exclusiveMinimum": 0},
+        "cny_per_usd_budget_conversion": {"type": "number", "exclusiveMinimum": 0},
+        "max_output_tokens_per_call": {"type": "integer", "minimum": 1},
+        "source_url": {"type": "string", "minLength": 1},
+        "rate_card_digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "externalBudget": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "schema_version", "contract_id", "approval_status", "approved_by",
+        "approved_at", "currency", "daily_hard_ceiling_cny", "reset_timezone",
+        "call_count_limit", "allowed_scope", "prohibited_scope", "rate_card_digest",
+        "budget_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-external-llm-budget-v1"},
+        "contract_id": {"const": "EAS-DEEPSEEK-DAILY-BUDGET-V1"},
+        "approval_status": {"const": "APPROVED"},
+        "approved_by": {"type": "string", "minLength": 1},
+        "approved_at": {"type": "string", "format": "date-time"},
+        "currency": {"const": "CNY"},
+        "daily_hard_ceiling_cny": {"const": 30.0},
+        "reset_timezone": {"const": "UTC"},
+        "call_count_limit": {"type": "null"},
+        "allowed_scope": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "prohibited_scope": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "rate_card_digest": {"$ref": "#/$defs/digest"},
+        "budget_digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "axisCommon": {
+      "enum": ["SAME", "DIFFERENT", "UNCLEAR", "NECESSARY_GRAMMAR"]
+    },
+    "axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "argument_spine", "evidence_progression", "limitation_function",
+        "viewpoint_anchor", "closing_function", "transformation_depth"
+      ],
+      "properties": {
+        "argument_spine": {"$ref": "#/$defs/axisCommon"},
+        "evidence_progression": {"$ref": "#/$defs/axisCommon"},
+        "limitation_function": {"$ref": "#/$defs/axisCommon"},
+        "viewpoint_anchor": {"$ref": "#/$defs/axisCommon"},
+        "closing_function": {"$ref": "#/$defs/axisCommon"},
+        "transformation_depth": {
+          "enum": [
+            "SURFACE_ONLY", "STRUCTURAL_CHANGE", "UNCLEAR", "NECESSARY_GRAMMAR"
+          ]
+        }
+      }
+    },
+    "formulaicResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "axes", "necessary_grammar_exception_id", "evidence_notes",
+        "derived_verdict"
+      ],
+      "properties": {
+        "axes": {"$ref": "#/$defs/axes"},
+        "necessary_grammar_exception_id": {"type": ["string", "null"]},
+        "evidence_notes": {
+          "type": "array", "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "derived_verdict": {
+          "enum": [
+            "FORMULAIC", "NOT_FORMULAIC", "INDETERMINATE", "NECESSARY_GRAMMAR"
+          ]
+        }
+      }
+    },
+    "judgeReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "call_status", "validation_errors", "provider",
+        "provider_call_id", "model_revision", "reviewer_identity",
+        "prompt_revision", "prompt_digest", "request_digest", "response_digest",
+        "rate_card_digest", "budget_digest", "reservation_id", "usage", "cost_usd",
+        "cost_cny_budget_basis", "wall_clock_seconds", "formulaic_result",
+        "receipt_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-external-judge-receipt-v1"},
+        "call_status": {"enum": ["VALID", "INVALID_RESPONSE"]},
+        "validation_errors": {
+          "type": "array", "items": {"type": "string", "minLength": 1}
+        },
+        "provider": {"const": "DEEPSEEK"},
+        "provider_call_id": {"type": "string", "minLength": 1},
+        "model_revision": {"type": "string", "minLength": 1},
+        "reviewer_identity": {"type": "string", "minLength": 1},
+        "prompt_revision": {"type": "string", "minLength": 1},
+        "prompt_digest": {"$ref": "#/$defs/digest"},
+        "request_digest": {"$ref": "#/$defs/digest"},
+        "response_digest": {"$ref": "#/$defs/digest"},
+        "rate_card_digest": {"$ref": "#/$defs/digest"},
+        "budget_digest": {"$ref": "#/$defs/digest"},
+        "reservation_id": {"type": "string", "minLength": 1},
+        "usage": {
+          "type": "object",
+          "required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+          "properties": {
+            "prompt_tokens": {"type": "integer", "minimum": 0},
+            "completion_tokens": {"type": "integer", "minimum": 0},
+            "total_tokens": {"type": "integer", "minimum": 0},
+            "prompt_cache_hit_tokens": {"type": "integer", "minimum": 0},
+            "prompt_cache_miss_tokens": {"type": "integer", "minimum": 0}
+          }
+        },
+        "cost_usd": {"type": "number", "minimum": 0},
+        "cost_cny_budget_basis": {"type": "number", "minimum": 0},
+        "wall_clock_seconds": {"type": "number", "minimum": 0},
+        "formulaic_result": {
+          "oneOf": [{"$ref": "#/$defs/formulaicResult"}, {"type": "null"}]
+        },
+        "receipt_digest": {"$ref": "#/$defs/digest"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"call_status": {"const": "VALID"}}},
+          "then": {
+            "properties": {
+              "validation_errors": {"maxItems": 0},
+              "formulaic_result": {"$ref": "#/$defs/formulaicResult"}
+            }
+          },
+          "else": {
+            "properties": {
+              "validation_errors": {"minItems": 1},
+              "formulaic_result": {"type": "null"}
+            }
+          }
+        }
+      ]
+    },
+    "spendRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "record_type", "reservation_id", "utc_day",
+        "recorded_at", "request_digest", "reserved_cost_cny",
+        "actual_cost_cny", "provider_call_id", "record_digest"
+      ],
+      "properties": {
+        "schema_version": {"const": "eval-spine-spend-ledger-record-v1"},
+        "record_type": {"enum": ["RESERVATION", "SETTLEMENT"]},
+        "reservation_id": {"type": "string", "minLength": 1},
+        "utc_day": {"type": "string", "format": "date"},
+        "recorded_at": {"type": "string", "format": "date-time"},
+        "request_digest": {"$ref": "#/$defs/digest"},
+        "reserved_cost_cny": {"type": "number", "exclusiveMinimum": 0},
+        "actual_cost_cny": {"type": ["number", "null"], "minimum": 0},
+        "provider_call_id": {"type": ["string", "null"]},
+        "record_digest": {"$ref": "#/$defs/digest"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"record_type": {"const": "RESERVATION"}}},
+          "then": {"properties": {
+            "actual_cost_cny": {"type": "null"},
+            "provider_call_id": {"type": "null"}
+          }},
+          "else": {"properties": {
+            "actual_cost_cny": {"type": "number", "minimum": 0},
+            "provider_call_id": {"type": "string", "minLength": 1}
+          }}
+        }
+      ]
+    }
+  }
+}

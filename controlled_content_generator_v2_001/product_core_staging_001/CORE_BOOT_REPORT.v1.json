@@ -1,0 +1,60 @@
+{
+ "schema_version": "p7-core-boot-report-v1",
+ "criterion_1_no_private_dir_reads": {
+  "modules_imported": [
+   "spine",
+   "spine.adapters",
+   "spine.calibration",
+   "spine.canonical",
+   "spine.contracts",
+   "spine.cost",
+   "spine.disclosure",
+   "spine.evidence_chain",
+   "spine.external_llm",
+   "spine.formulaic",
+   "spine.m0",
+   "spine.manifest",
+   "spine.probabilistic_adapter",
+   "spine.qualification_data",
+   "spine.review_assignment",
+   "spine.runner",
+   "spine.source_index",
+   "spine.stage_gate"
+  ],
+  "private_path_opens": [],
+  "passed": true
+ },
+ "criterion_2_corpus_via_adapter": {
+  "mounted_path_injected_explicitly": true,
+  "rows_loaded": 5,
+  "coverage_passed": true,
+  "passed": true
+ },
+ "criterion_3_audit_events_path_free": {
+  "evidence_private_refs": [],
+  "passed": true
+ },
+ "outside_staging_opens_nonstdlib": [
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4",
+  "4"
+ ],
+ "logical_core_separated": true
+}

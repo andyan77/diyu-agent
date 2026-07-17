@@ -1,0 +1,276 @@
+{
+ "schema_version": "p7-core-extraction-manifest-v1",
+ "milestone_id": "M3",
+ "capsule": "M3_C6_CORE_EXTRACTION",
+ "source_package": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001",
+ "staging_root": "controlled_content_generator_v2_001/product_core_staging_001",
+ "allowlist_authority": "delivery_control_001/contracts/CORE_EXPORT_ALLOWLIST.v1.json",
+ "deselected_tests_in_staging": [
+  {
+   "test_id": "tests/test_eval_audit_spine.py::ContractTests::test_conditional_schemas_reject_semantic_contradictions",
+   "reason": "读源仓 calibration/qualification_manifest.v1.json（denylist 前缀，不随 core 出仓）"
+  },
+  {
+   "test_id": "tests/test_eval_audit_spine.py::LegacyShadowTests::test_r5_known_veto_shadow_is_read_only_and_not_qualification",
+   "reason": "读源仓 fixtures/r5_known_veto_regression.v1.jsonl + calibration/M0_STATUS（denylist 前缀）"
+  },
+  {
+   "test_id": "tests/test_eval_audit_spine.py::OperationsTests::test_candidate_manifest_is_recomputable",
+   "reason": "候选清单重建断言源仓树形（p7 .gitignore 等）；产品侧同类保证由 EXTRACTION_MANIFEST + M5 RELEASE_EQUIVALENCE 承载"
+  }
+ ],
+ "identical_count": 33,
+ "decoupled_count": 1,
+ "new_staging_only_count": 6,
+ "excluded_count": 2,
+ "entries": [
+  {
+   "path": "spine/__init__.py",
+   "status": "IDENTICAL",
+   "source_sha256": "e88ac802aedc80bef90f33e2ce1618011d959524c59a341d2362b9cbba6e271a",
+   "staged_sha256": "e88ac802aedc80bef90f33e2ce1618011d959524c59a341d2362b9cbba6e271a"
+  },
+  {
+   "path": "spine/adapters.py",
+   "status": "IDENTICAL",
+   "source_sha256": "596ef39d31365de6214e28655879aabe87ad43a6dcf8648e6a8c2fac330af85f",
+   "staged_sha256": "596ef39d31365de6214e28655879aabe87ad43a6dcf8648e6a8c2fac330af85f"
+  },
+  {
+   "path": "spine/calibration.py",
+   "status": "IDENTICAL",
+   "source_sha256": "985f287cdb0b44a53213347e6343167c03e57dac20dc007c3fa9760cbb17fe07",
+   "staged_sha256": "985f287cdb0b44a53213347e6343167c03e57dac20dc007c3fa9760cbb17fe07"
+  },
+  {
+   "path": "spine/canonical.py",
+   "status": "IDENTICAL",
+   "source_sha256": "65429a16c9cc779aa579bc26c0b9cb486cbd935cbba5e668a62c016224be91a3",
+   "staged_sha256": "65429a16c9cc779aa579bc26c0b9cb486cbd935cbba5e668a62c016224be91a3"
+  },
+  {
+   "path": "spine/contracts.py",
+   "status": "IDENTICAL",
+   "source_sha256": "15cf7fa071025be9a809db42031d6a28df29214793471af45c18fabb370274b7",
+   "staged_sha256": "15cf7fa071025be9a809db42031d6a28df29214793471af45c18fabb370274b7"
+  },
+  {
+   "path": "spine/cost.py",
+   "status": "IDENTICAL",
+   "source_sha256": "6d633434bbce76c01836f81a32e549b652f04c17527557fe11f7db60be967b0e",
+   "staged_sha256": "6d633434bbce76c01836f81a32e549b652f04c17527557fe11f7db60be967b0e"
+  },
+  {
+   "path": "spine/disclosure.py",
+   "status": "IDENTICAL",
+   "source_sha256": "0c2447b52ad64eb2f410c0ebf3e0c6cc9519cb322f10ca370a4703a2affa1cbe",
+   "staged_sha256": "0c2447b52ad64eb2f410c0ebf3e0c6cc9519cb322f10ca370a4703a2affa1cbe"
+  },
+  {
+   "path": "spine/evidence_chain.py",
+   "status": "IDENTICAL",
+   "source_sha256": "659b56d4debe745e756fc2262fd5084f1654af599aeea6e8bfcc312c2a2218b8",
+   "staged_sha256": "659b56d4debe745e756fc2262fd5084f1654af599aeea6e8bfcc312c2a2218b8"
+  },
+  {
+   "path": "spine/external_llm.py",
+   "status": "IDENTICAL",
+   "source_sha256": "4162c4ea86fb78fda901d3f933576262d17978575a94161cd88032e35d689e48",
+   "staged_sha256": "4162c4ea86fb78fda901d3f933576262d17978575a94161cd88032e35d689e48"
+  },
+  {
+   "path": "spine/formulaic.py",
+   "status": "IDENTICAL",
+   "source_sha256": "31af5ee45aef78c49eb6a1fcebd74b5292092d93d7638f142987e67092b22e8a",
+   "staged_sha256": "31af5ee45aef78c49eb6a1fcebd74b5292092d93d7638f142987e67092b22e8a"
+  },
+  {
+   "path": "spine/m0.py",
+   "status": "IDENTICAL",
+   "source_sha256": "4ea2c718a15877fa43c4d7a5c3c2d1000760e523c27d85ec4a22e799d825606c",
+   "staged_sha256": "4ea2c718a15877fa43c4d7a5c3c2d1000760e523c27d85ec4a22e799d825606c"
+  },
+  {
+   "path": "spine/manifest.py",
+   "status": "IDENTICAL",
+   "source_sha256": "88b0176dd2ab02975da6cef0b196a298f0cb9a612577428bbf9d74d29d7395e6",
+   "staged_sha256": "88b0176dd2ab02975da6cef0b196a298f0cb9a612577428bbf9d74d29d7395e6"
+  },
+  {
+   "path": "spine/probabilistic_adapter.py",
+   "status": "IDENTICAL",
+   "source_sha256": "5c63cadb582de8f3ff515980a4793bf40cd85674d8ea3fcb6aa41f8ab5012a53",
+   "staged_sha256": "5c63cadb582de8f3ff515980a4793bf40cd85674d8ea3fcb6aa41f8ab5012a53"
+  },
+  {
+   "path": "spine/qualification_data.py",
+   "status": "IDENTICAL",
+   "source_sha256": "28d8b1812c78a700445bfcc8b02b2ec73dbf35a17829155cd1b1125b3fcdcccb",
+   "staged_sha256": "28d8b1812c78a700445bfcc8b02b2ec73dbf35a17829155cd1b1125b3fcdcccb"
+  },
+  {
+   "path": "spine/review_assignment.py",
+   "status": "IDENTICAL",
+   "source_sha256": "10102bb38b30fdb87741d17a4e7fadbaa706a79187c66810aa4d94887af8af10",
+   "staged_sha256": "10102bb38b30fdb87741d17a4e7fadbaa706a79187c66810aa4d94887af8af10"
+  },
+  {
+   "path": "spine/runner.py",
+   "status": "DECOUPLED",
+   "reason": "混合体解耦（D0 allowlist：引用 denylist 路径不得原样导出，须先解耦）：integrity_snapshot 为纯 core 逻辑，从源文件逐字切片保留；_actual_m0_status（硬编码 p7 calibration 路径）删除；r5_shadow_audit（P7 私有只读诊断，内嵌 pkg1 路径）以声明式拒调桩保留符号——仅为自含测试套件导入闭包，调用即 NotImplementedError",
+   "source_sha256": "011c26c41a20a74d82d62b02ad8f7760ba90c3c3f05e27d367ed1418bdf30f7a",
+   "staged_sha256": "fb5aa0ec0f538ca5ade877b38ee19bfc08cbe60e9fc75f24ab1035a6540dc3ee"
+  },
+  {
+   "path": "spine/source_index.py",
+   "status": "IDENTICAL",
+   "source_sha256": "cb650841cb8f03b2d4adf63e42cbe5c54b1bdad225a97cd349dfb12fcfee5d75",
+   "staged_sha256": "cb650841cb8f03b2d4adf63e42cbe5c54b1bdad225a97cd349dfb12fcfee5d75"
+  },
+  {
+   "path": "spine/stage_gate.py",
+   "status": "IDENTICAL",
+   "source_sha256": "7972edfd6548edf11e04213ec710292a019d2607cb1c8191afaaf31cd3e56997",
+   "staged_sha256": "7972edfd6548edf11e04213ec710292a019d2607cb1c8191afaaf31cd3e56997"
+  },
+  {
+   "path": "schema/audit_run.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "1c1624974ca8333abf98b4df43842363f6ed99db209cc943bfc7627c9c97f923",
+   "staged_sha256": "1c1624974ca8333abf98b4df43842363f6ed99db209cc943bfc7627c9c97f923"
+  },
+  {
+   "path": "schema/control.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "b4ad164c2afeaf4f47b413ffb34caa0459aff2f7392d59eb434e82fb1ef7a75c",
+   "staged_sha256": "b4ad164c2afeaf4f47b413ffb34caa0459aff2f7392d59eb434e82fb1ef7a75c"
+  },
+  {
+   "path": "schema/cost.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "5a0189462497550c264a9df12aa019dc16d3c64f965471720abcc24148530377",
+   "staged_sha256": "5a0189462497550c264a9df12aa019dc16d3c64f965471720abcc24148530377"
+  },
+  {
+   "path": "schema/cost.v2.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "d6b0e40ebc22d4716b50fac8a28749e7a0030257f1d11cd11abe356b9bef8ab7",
+   "staged_sha256": "d6b0e40ebc22d4716b50fac8a28749e7a0030257f1d11cd11abe356b9bef8ab7"
+  },
+  {
+   "path": "schema/dataset_manifest.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "d38eba0030440c0bf21962845e3f25e6a78b550bf279e9b2ebbd2b7bd3daf24f",
+   "staged_sha256": "d38eba0030440c0bf21962845e3f25e6a78b550bf279e9b2ebbd2b7bd3daf24f"
+  },
+  {
+   "path": "schema/evaluation.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "c2271c0bd92f4040ee7c7128591272a54aa09cf95aaa592146563c0fef2ac0fc",
+   "staged_sha256": "c2271c0bd92f4040ee7c7128591272a54aa09cf95aaa592146563c0fef2ac0fc"
+  },
+  {
+   "path": "schema/evidence_chain.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "81e14af97940e488953c2d77118a502b559c82b5e0360ac42ea663af2dbbea9c",
+   "staged_sha256": "81e14af97940e488953c2d77118a502b559c82b5e0360ac42ea663af2dbbea9c"
+  },
+  {
+   "path": "schema/external_judge.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "7cf675fbdfdf3e63e11f2ff18362427f94c759a902039ea75961ade8e37dfefb",
+   "staged_sha256": "7cf675fbdfdf3e63e11f2ff18362427f94c759a902039ea75961ade8e37dfefb"
+  },
+  {
+   "path": "schema/independent_review.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "a946bf84ff9c5889892ab8245dd49453ef1a9d9251846a50b285a2b75d583334",
+   "staged_sha256": "a946bf84ff9c5889892ab8245dd49453ef1a9d9251846a50b285a2b75d583334"
+  },
+  {
+   "path": "schema/measurement_report.v1.schema.json",
+   "status": "IDENTICAL",
+   "source_sha256": "f7aa8f4e4c1c5f7a4370135f53698639fcf6b2533e5a0c18093a4465ec4bfd94",
+   "staged_sha256": "f7aa8f4e4c1c5f7a4370135f53698639fcf6b2533e5a0c18093a4465ec4bfd94"
+  },
+  {
+   "path": "rubric/disclosure_obligation_matrix.v1.json",
+   "status": "IDENTICAL",
+   "source_sha256": "e0b5964682a6d72b4322847fa038e374ecdecc50ee2ad05705058a4cbab42f07",
+   "staged_sha256": "e0b5964682a6d72b4322847fa038e374ecdecc50ee2ad05705058a4cbab42f07"
+  },
+  {
+   "path": "rubric/evidence_adjudication.v1.md",
+   "status": "IDENTICAL",
+   "source_sha256": "323ec1a0ba17e5862e112008a6aada6a7b5a9fbdfe1668a474b8558c4566959c",
+   "staged_sha256": "323ec1a0ba17e5862e112008a6aada6a7b5a9fbdfe1668a474b8558c4566959c"
+  },
+  {
+   "path": "rubric/formulaic_rubric.v1.md",
+   "status": "IDENTICAL",
+   "source_sha256": "533f34a0e8b4ea96c0fba13a6ba47b084d86805c871ec1ed78c7e50e969dfc72",
+   "staged_sha256": "533f34a0e8b4ea96c0fba13a6ba47b084d86805c871ec1ed78c7e50e969dfc72"
+  },
+  {
+   "path": "tests/test_cost_schema.py",
+   "status": "IDENTICAL",
+   "source_sha256": "85aaa0d6ad0d08082e0150a63f039f3a1f027437549066eeda0f62a9f4c7af88",
+   "staged_sha256": "85aaa0d6ad0d08082e0150a63f039f3a1f027437549066eeda0f62a9f4c7af88"
+  },
+  {
+   "path": "tests/test_eval_audit_spine.py",
+   "status": "IDENTICAL",
+   "source_sha256": "849ad37aff3b3bdefac620ab8b5cddfb7e7b235642fd242901e901f0445524d5",
+   "staged_sha256": "849ad37aff3b3bdefac620ab8b5cddfb7e7b235642fd242901e901f0445524d5"
+  },
+  {
+   "path": "tests/test_external_llm.py",
+   "status": "EXCLUDED",
+   "reason": "依赖 contract/deepseek_rate_card.v1.json——contract/ 不在 CORE_EXPORT_ALLOWLIST 前缀内（零字节出仓硬规则）；external_llm 模块本体仍在 core，其费率/密钥装载按 allowlist 注记于 M5 换产品配置层并配套产品侧测试",
+   "source_sha256": "38c9f906eb6812a5d2bbb8118677e5eda381797221844666619dc70d4a0b04ab"
+  },
+  {
+   "path": "tests/test_reference_review_closure.py",
+   "status": "IDENTICAL",
+   "source_sha256": "ee24b96ae8139b7804716f819695e3da8aeb93f755ca86ac6883e88b8741769f",
+   "staged_sha256": "ee24b96ae8139b7804716f819695e3da8aeb93f755ca86ac6883e88b8741769f"
+  },
+  {
+   "path": "tests/test_s0_anchor_gate.py",
+   "status": "EXCLUDED",
+   "reason": "模块级依赖 evidence/s0_m2_real_run_001 私有工具，无法自含",
+   "source_sha256": "1ec3866fb5c3f0b5a306980974440caed261a71249f5c91918b821c813e32b78"
+  },
+  {
+   "path": "pytest.ini",
+   "status": "NEW_STAGING_ONLY",
+   "staged_sha256": "b2eaa04049510bfca21c00e39b92e0667737cc4cd57286f41da70a07002d9dd4"
+  },
+  {
+   "path": "README.md",
+   "status": "NEW_STAGING_ONLY",
+   "staged_sha256": "9c38617bf67f8604a23c9666192b16d3c6d247fb06de7a5830ca88112eb8c5f4"
+  },
+  {
+   "path": "adapters/__init__.py",
+   "status": "NEW_STAGING_ONLY",
+   "staged_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "adapters/corpus_adapter.py",
+   "status": "NEW_STAGING_ONLY",
+   "staged_sha256": "9e0546a3375ce4c6f733d30138641d9c5dddd2223c480bfef0b021f1fe2059bc"
+  },
+  {
+   "path": "dev_samples/synthetic_dataset_rows.v1.jsonl",
+   "status": "NEW_STAGING_ONLY",
+   "staged_sha256": "477f157072f74ebd0f311439b27c0a25839cfc07f2f5495359b8e8d133ab10d8"
+  },
+  {
+   "path": "core_boot_check.py",
+   "status": "NEW_STAGING_ONLY",
+   "staged_sha256": "a166c9b5957c428c4e435f4f52942be0be971cc5bb7864b537bc865cdb4c5086"
+  }
+ ],
+ "manifest_digest": "a4543605b08c1cd9938893be59a9957345923b65fcc83f6593f38fc127883a1f"
+}
