@@ -367,6 +367,31 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
                     raise RuntimeError("Current simulation principal is unavailable")
                 principal_projection["username"] = principal.username
                 principal_projection["status"] = principal.status
+            grants_by_id = {
+                str(row["authorization_id"]): row
+                for row in identity["authorization_grants"]
+            }
+            for account_projection in identity["content_accounts"]:
+                account_id = str(account_projection["account_id"])
+                suffix = hashlib.sha256(account_id.encode("utf-8")).hexdigest()[
+                    :16
+                ].upper()
+                authorization_ref = f"PKG7-AUTH-TASK-CONFIRM-{suffix}"
+                authorization = grants_by_id.get(authorization_ref)
+                if (
+                    authorization is None
+                    or authorization.get("status") != "GRANTED"
+                    or authorization.get("authorization_kind")
+                    != "REQUIREMENT_CONFIRMATION"
+                    or authorization.get("permitted_content_account_ids")
+                    != [account_id]
+                ):
+                    raise RuntimeError(
+                        "Current account confirmation authorization is unavailable"
+                    )
+                account_projection["runtime_confirmation_authorization_ref"] = (
+                    authorization_ref
+                )
             profile = _setting(
                 session,
                 f"brand_expression_profile:{identity['tenant']['brand_id']}",
@@ -403,6 +428,7 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
                     "fragment_count": len(additions),
                     "source_content_mutated": False,
                     "operational_username_bound_from_current_runtime": True,
+                    "runtime_confirmation_refs_rebound_from_seed_policy": True,
                 },
                 "derived_source_refs": sorted(
                     {
