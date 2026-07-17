@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any, Callable, Mapping, cast
 
@@ -38,6 +39,41 @@ REMOTE_RELEASE_FILE_COUNT = 131
 CURRENT_BACKUP_MANIFEST_SHA256 = (
     "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e"
 )
+RUNTIME_LIMIT_SNAPSHOT_FILE_SHA256 = (
+    "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
+)
+MODEL_INVOCATION_AUDIT_FILE_SHA256 = (
+    "04f30324165e153555398701955a3a041c65a2f34623865c6416a8db160d48b7"
+)
+DISPLAY_EXPORT_RAW_SHA256 = (
+    "666ca78b8b5e3709b731d5768601f656d52b64aff50ad5be6f476013f9cb9902"
+)
+EXPECTED_ACTION_PHASES = {
+    1: ("AUTHOR",),
+    2: ("AUTHOR",),
+    3: ("AUTHOR",),
+    4: ("CLASSIFY",),
+    5: ("CLASSIFY", "AUTHOR"),
+    6: ("CLASSIFY", "AUTHOR"),
+    7: ("CLASSIFY", "AUTHOR"),
+    8: ("AUTHOR",),
+    9: ("CLASSIFY", "AUTHOR"),
+    **{ordinal: () for ordinal in range(10, 17)},
+}
+EXPECTED_JOURNEY_ACTIONS = {
+    "ORDINARY_CHAT_AND_CONTINUITY": (1, 2),
+    "INSPIRATION_AND_SCOPE_GUIDANCE": (3, 6, 7),
+    "ARTICLE_PACKAGE_AND_EXPORT": (9, 10, 11),
+    "SHORT_VIDEO_PACKAGE_REVIEW_EXPORT_AND_SOURCE_LOOKUP": (
+        8,
+        12,
+        13,
+        14,
+        15,
+    ),
+    "PRODUCT_FACT_DISPLAY_PACKAGE": (16,),
+    "MISSING_FACT_AND_SCOPE_REJECTION": (4, 5),
+}
 RESULT_PATH = Path("result/ecs_cutover_result.v1.json")
 DELIVERY_PATH = Path("delivery/execution_review_request.v1.yaml")
 INVENTORY_PATH = Path("object_inventory.v1.json")
@@ -424,6 +460,14 @@ def validate_cutover(root: Path) -> None:
     require(cleanup.get("removed_ports") == [5433, 8006, 8021, 18008], "E_CLEANUP_PORTS")
     require(cleanup.get("preserved_shared_port") == 18007, "E_SHARED_PORT")
     require(cleanup.get("unknown_object_deleted_count") == 0, "E_CLEANUP_UNKNOWN")
+    require(
+        cleanup.get("stale_release_archive_removed_count") == 2
+        and cleanup.get("current_release_directory_count") == 1
+        and cleanup.get("remote_release_archive_file_count") == 0
+        and cleanup.get("current_release_preserved_in_server_external_backup")
+        is True,
+        "E_CLEANUP_RELEASES",
+    )
     rollback = data.get("rollback", {})
     require(rollback.get("actual_rollback_executed") is True, "E_ROLLBACK_EXECUTED")
     require(rollback.get("rollback_and_forward_pass") is True, "E_ROLLBACK_FORWARD")
@@ -496,6 +540,10 @@ def validate_cutover(root: Path) -> None:
         and successor.get("server_external_backup_manifest_sha256")
         == CURRENT_BACKUP_MANIFEST_SHA256
         and successor.get("single_release_count") == 1
+        and successor.get("remote_release_directory_count") == 1
+        and successor.get("remote_release_archive_file_count") == 0
+        and successor.get("current_release_preserved_in_server_external_backup")
+        is True
         and successor.get("new_model_call_count") == 0
         and successor.get("business_semantics_changed") is False,
         "E_SUCCESSOR_BINDING",
@@ -523,6 +571,50 @@ def validate_cutover(root: Path) -> None:
         and hardening.get("loopback_only_publication") is True
         and hardening.get("network_count") == 2,
         "E_SUCCESSOR_HARDENING",
+    )
+    runtime_limit = successor.get("runtime_limit_snapshot", {})
+    require(
+        successor.get("runtime_limit_snapshot_file_sha256")
+        == RUNTIME_LIMIT_SNAPSHOT_FILE_SHA256
+        and runtime_limit.get("schema")
+        == "diyu.package9.runtime-limit-snapshot.v1"
+        and runtime_limit.get("container_name") == "diyu-package7-bridge"
+        and isinstance(runtime_limit.get("container_id_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", runtime_limit["container_id_sha256"])
+        and runtime_limit.get("image_tag") == "langgenius/dify-api:1.15.0"
+        and runtime_limit.get("source_commit") == REMOTE_CODE_COMMIT
+        and runtime_limit.get("source_tree") == REMOTE_CODE_TREE
+        and runtime_limit.get("source_file_count") == REMOTE_RELEASE_FILE_COUNT
+        and runtime_limit.get("release_archive_sha256") == REMOTE_RELEASE_SHA256
+        and runtime_limit.get("effective_model_call_limit") == 40
+        and runtime_limit.get("model_invocation_count_before") == 92
+        and runtime_limit.get("model_invocation_count_after") == 92
+        and runtime_limit.get("new_model_calls") == 0
+        and runtime_limit.get("root_https_status") == 200
+        and runtime_limit.get("apps_https_status") == 200
+        and runtime_limit.get("read_only_root_filesystem") is True
+        and runtime_limit.get("capabilities_dropped") == ["ALL"]
+        and runtime_limit.get("no_new_privileges") is True
+        and runtime_limit.get("loopback_only_publication") is True
+        and runtime_limit.get("network_names")
+        == ["dify-staging_default", "diyu-package7-runtime"],
+        "E_RUNTIME_LIMIT_SNAPSHOT",
+    )
+    runtime_role = runtime_limit.get("runtime_role", {})
+    legacy_role = runtime_limit.get("legacy_role", {})
+    require(
+        runtime_role.get("role_name_sha256")
+        == "557de74ede8f4d9eb058ddcd0b12691f8961afaafa0ccb2d1bd869d4d60caa4d"
+        and runtime_role.get("login") is True
+        and runtime_role.get("superuser") is False
+        and runtime_role.get("bypass_rls") is False
+        and runtime_role.get("create_database") is False
+        and runtime_role.get("create_role") is False
+        and legacy_role.get("role_name_sha256")
+        == "1999f02ff402919f8fe45b44da5ebd41b7ef42b12c2d05154d778bce0d19e440"
+        and legacy_role.get("login") is False
+        and legacy_role.get("bypass_rls") is False,
+        "E_RUNTIME_ROLE_SNAPSHOT",
     )
     selected_scope = successor.get("selected_account_scope_proof", {})
     require(
@@ -556,6 +648,8 @@ def validate_cutover(root: Path) -> None:
         and successor_health.get("forced_rls_enabled_count") == 19
         and successor_health.get("runtime_counts") == "2|13|31|24"
         and successor_health.get("dify_counts") == "3|1|19|30"
+        and successor_health.get("model_invocation_count") == 92
+        and successor_health.get("effective_model_call_limit") == 40
         and successor_health.get("disk_free_bytes", 0) >= 10 * 1024**3
         and successor_health.get("memory_available_bytes", 0) >= 1024**3
         and successor_health.get("pass") is True,
@@ -570,13 +664,13 @@ def validate_journeys(root: Path) -> None:
     data = read_json(root / JOURNEY_PATH)
     require(data.get("task_id") == TASK_ID, "E_JOURNEY_TASK")
     require(data.get("journey_group_count") == 6, "E_JOURNEY_GROUPS")
-    require(data.get("journey_action_count") == 15, "E_JOURNEY_ACTIONS")
+    require(data.get("journey_action_count") == 16, "E_JOURNEY_ACTIONS")
     require(data.get("all_http_actions_succeeded") is True, "E_JOURNEY_HTTP")
     action_audit = data.get("action_audit", [])
     require(
         isinstance(action_audit, list)
-        and len(action_audit) == 15
-        and [item.get("ordinal") for item in action_audit] == list(range(1, 16)),
+        and len(action_audit) == 16
+        and [item.get("ordinal") for item in action_audit] == list(range(1, 17)),
         "E_ACTION_AUDIT_COUNT",
     )
     require(
@@ -584,6 +678,17 @@ def validate_journeys(root: Path) -> None:
             item.get("http_status") == 200
             and item.get("simulation_only") is True
             and item.get("publish_allowed") is False
+            and isinstance(item.get("model_invocation_phases"), list)
+            and isinstance(item.get("model_invocation_bindings"), list)
+            and len(item["model_invocation_phases"])
+            == item.get("model_invocation_count")
+            and len(item["model_invocation_bindings"])
+            == item.get("model_invocation_count")
+            and all(
+                isinstance(binding, str)
+                and re.fullmatch(r"[0-9a-f]{64}", binding)
+                for binding in item["model_invocation_bindings"]
+            )
             and isinstance(item.get("execution_path"), str)
             and item.get("execution_path")
             and all(
@@ -603,21 +708,151 @@ def validate_journeys(root: Path) -> None:
     journeys = data.get("journey_groups", [])
     require(isinstance(journeys, list) and len(journeys) == 6, "E_JOURNEY_LIST")
     require(all(item.get("status") == "PASS" for item in journeys), "E_JOURNEY_STATUS")
-    require(sum(cast(int, item.get("action_count", 0)) for item in journeys) == 15, "E_JOURNEY_ACTION_SUM")
+    require(
+        {
+            item.get("journey"): tuple(item.get("action_ordinals", []))
+            for item in journeys
+        }
+        == EXPECTED_JOURNEY_ACTIONS
+        and all(
+            item.get("action_count") == len(item.get("action_ordinals", []))
+            for item in journeys
+        )
+        and sorted(
+            ordinal
+            for item in journeys
+            for ordinal in item.get("action_ordinals", [])
+        )
+        == list(range(1, 17)),
+        "E_JOURNEY_GROUP_PARTITION",
+    )
     distribution = data.get("persisted_candidate_distribution", {})
     require(distribution == {"total": 24, "short_video": 12, "article": 9, "display": 3}, "E_FORMAT_DISTRIBUTION")
+    display_action = action_audit[15]
+    require(
+        display_action.get("case") == "display_candidate_export"
+        and display_action.get("operation") == "导出"
+        and display_action.get("content_format") == "陈列搭配"
+        and display_action.get("model_invocation_count") == 0
+        and display_action.get("model_invocation_phases") == []
+        and display_action.get("model_invocation_bindings") == []
+        and display_action.get("execution_path")
+        == "PORTAL_DB_EXISTING_DIFY_MODEL_LINEAGE_DETERMINISTIC_EXPORT"
+        and display_action.get("candidate_ordinal") == 1
+        and display_action.get("selected_state_before_sha256")
+        == display_action.get("selected_state_after_sha256")
+        and isinstance(display_action.get("candidate_id_sha256"), str)
+        and re.fullmatch(
+            r"[0-9a-f]{64}", display_action["candidate_id_sha256"]
+        ),
+        "E_DISPLAY_JOURNEY",
+    )
     usage = data.get("model_usage", {})
     require(usage.get("package9_invocation_increment") == 13, "E_MODEL_CALLS")
     require(
         sum(item.get("model_invocation_count", -100) for item in action_audit) == 13,
         "E_ACTION_MODEL_CALL_SUM",
     )
+    audit = usage.get("sanitized_invocation_audit", {})
+    require(isinstance(audit, dict), "E_MODEL_AUDIT_OBJECT")
+    records = audit.get("records", [])
     require(
-        usage.get("invocation_audit_row_count") == 13
+        isinstance(records, list)
+        and len(records) == 13
+        and [record.get("sequence") for record in records]
+        == list(range(1, 14)),
+        "E_MODEL_AUDIT_ROWS",
+    )
+    prices: list[Decimal] = []
+    for record in records:
+        require(isinstance(record, dict), "E_MODEL_AUDIT_RECORD")
+        try:
+            price = Decimal(str(record.get("total_price")))
+        except (InvalidOperation, ValueError):
+            raise CheckFailure("E_MODEL_AUDIT_PRICE") from None
+        prices.append(price)
+        require(
+            record.get("action_ordinal") in EXPECTED_ACTION_PHASES
+            and record.get("phase") in {"AUTHOR", "CLASSIFY"}
+            and record.get("state") == "SUCCEEDED"
+            and record.get("model_call_upper_bound") == 1
+            and isinstance(record.get("prompt_tokens"), int)
+            and isinstance(record.get("completion_tokens"), int)
+            and isinstance(record.get("total_tokens"), int)
+            and record["prompt_tokens"] >= 0
+            and record["completion_tokens"] >= 0
+            and record["total_tokens"]
+            == record["prompt_tokens"] + record["completion_tokens"]
+            and price >= 0
+            and record.get("currency") == "RMB"
+            and isinstance(record.get("invocation_id_sha256"), str)
+            and re.fullmatch(
+                r"[0-9a-f]{64}", record["invocation_id_sha256"]
+            )
+            and isinstance(record.get("response_digest"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", record["response_digest"])
+            and isinstance(record.get("created_at_utc"), str)
+            and re.fullmatch(
+                r"2026-07-17T[0-9:.]+Z", record["created_at_utc"]
+            ),
+            "E_MODEL_AUDIT_RECORD",
+        )
+    invocation_ids = [record["invocation_id_sha256"] for record in records]
+    require(len(set(invocation_ids)) == 13, "E_MODEL_AUDIT_UNIQUE")
+    require(
+        [record["created_at_utc"] for record in records]
+        == sorted(record["created_at_utc"] for record in records),
+        "E_MODEL_AUDIT_ORDER",
+    )
+    require(
+        audit.get("schema")
+        == "diyu.package9.sanitized-model-invocation-audit.v1"
+        and audit.get("row_count") == 13
+        and audit.get("response_digest_count") == 13
+        and audit.get("total_model_call_upper_bound") == 13
+        and audit.get("total_prompt_tokens")
+        == sum(record["prompt_tokens"] for record in records)
+        and audit.get("total_completion_tokens")
+        == sum(record["completion_tokens"] for record in records)
+        and audit.get("total_tokens")
+        == sum(record["total_tokens"] for record in records)
+        and audit.get("total_price_cny") == "0.071796"
+        and sum(prices) == Decimal("0.071796")
+        and audit.get("records_sha256") == digest_json(records)
+        and usage.get("invocation_audit_sha256") == digest_json(records)
+        and usage.get("invocation_audit_row_count") == 13
         and usage.get("invocation_response_digest_count") == 13
-        and isinstance(usage.get("invocation_audit_sha256"), str)
-        and re.fullmatch(r"[0-9a-f]{64}", usage["invocation_audit_sha256"]),
+        and usage.get("observed_cost_cny") == 0.071796,
         "E_MODEL_AUDIT_BINDING",
+    )
+    for action in action_audit:
+        ordinal = cast(int, action["ordinal"])
+        action_records = [
+            record for record in records if record["action_ordinal"] == ordinal
+        ]
+        require(
+            tuple(action["model_invocation_phases"])
+            == EXPECTED_ACTION_PHASES[ordinal]
+            and action["model_invocation_bindings"]
+            == [record["invocation_id_sha256"] for record in action_records]
+            and action["model_invocation_count"]
+            == sum(record["model_call_upper_bound"] for record in action_records),
+            "E_ACTION_INVOCATION_BINDING",
+        )
+    runtime_limit = usage.get("runtime_limit_snapshot", {})
+    require(
+        usage.get("runtime_limit_snapshot_file_sha256")
+        == RUNTIME_LIMIT_SNAPSHOT_FILE_SHA256
+        and runtime_limit.get("schema")
+        == "diyu.package9.runtime-limit-snapshot.v1"
+        and runtime_limit.get("container_name") == "diyu-package7-bridge"
+        and runtime_limit.get("effective_model_call_limit") == 40
+        and runtime_limit.get("model_invocation_count_before") == 92
+        and runtime_limit.get("model_invocation_count_after") == 92
+        and runtime_limit.get("new_model_calls") == 0
+        and runtime_limit.get("source_commit") == REMOTE_CODE_COMMIT
+        and runtime_limit.get("source_tree") == REMOTE_CODE_TREE,
+        "E_JOURNEY_RUNTIME_LIMIT",
     )
     require(usage.get("founder_authorized_call_limit") == 40, "E_MODEL_OVERRIDE")
     authorization = usage.get("authorization_provenance", {})
@@ -650,6 +885,16 @@ def validate_journeys(root: Path) -> None:
     raw = data.get("raw_private_evidence", {})
     require(raw.get("committed_to_repository") is False, "E_RAW_PRIVATE_COMMITTED")
     require(raw.get("storage_class") == "REMOTE_ROOT_ONLY_RESTRICTED_STATE", "E_RAW_PRIVATE_STORAGE")
+    require(
+        isinstance(raw.get("journey_batch_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", raw["journey_batch_sha256"])
+        and raw.get("display_export_sha256") == DISPLAY_EXPORT_RAW_SHA256
+        and raw.get("sanitized_invocation_audit_file_sha256")
+        == MODEL_INVOCATION_AUDIT_FILE_SHA256
+        and raw.get("runtime_limit_snapshot_file_sha256")
+        == RUNTIME_LIMIT_SNAPSHOT_FILE_SHA256,
+        "E_RAW_PRIVATE_BINDING",
+    )
 
 
 def validate_review(path: Path, candidate: str, tree: str, snapshot: str) -> JsonObject:
@@ -800,6 +1045,13 @@ def validate_package(root: Path, live_git: bool) -> str:
     validate_backup(root)
     validate_cutover(root)
     validate_journeys(root)
+    cutover = read_json(root / CUTOVER_PATH)
+    journey = read_json(root / JOURNEY_PATH)
+    require(
+        cutover["successor_deployment"]["runtime_limit_snapshot"]
+        == journey["model_usage"]["runtime_limit_snapshot"],
+        "E_RUNTIME_LIMIT_CROSS_BINDING",
+    )
     validated_final = validate_result_and_delivery(root)
     require(validated_final == final, "E_FINAL_STATE_MISMATCH")
     validate_secret_surface(root)
@@ -914,6 +1166,64 @@ def run_selftest() -> None:
         expect_failure(
             mutate_json(
                 JOURNEY_PATH,
+                lambda value: value["action_audit"][15].update(
+                    {"content_format": "图文"}
+                ),
+            ),
+            "E_DISPLAY_JOURNEY",
+        )
+        expect_failure(
+            mutate_json(
+                JOURNEY_PATH,
+                lambda value: value["journey_groups"][0].update(
+                    {"action_ordinals": [1, 3]}
+                ),
+            ),
+            "E_JOURNEY_GROUP_PARTITION",
+        )
+        expect_failure(
+            mutate_json(
+                JOURNEY_PATH,
+                lambda value: value["action_audit"][0].update(
+                    {
+                        "model_invocation_bindings": value["action_audit"][1][
+                            "model_invocation_bindings"
+                        ]
+                    }
+                ),
+            ),
+            "E_ACTION_INVOCATION_BINDING",
+        )
+        expect_failure(
+            mutate_json(
+                JOURNEY_PATH,
+                lambda value: value["model_usage"]["runtime_limit_snapshot"].update(
+                    {"effective_model_call_limit": 100}
+                ),
+            ),
+            "E_JOURNEY_RUNTIME_LIMIT",
+        )
+        expect_failure(
+            mutate_json(
+                CUTOVER_PATH,
+                lambda value: value["successor_deployment"][
+                    "runtime_limit_snapshot"
+                ]["runtime_role"].update({"login": False}),
+            ),
+            "E_RUNTIME_ROLE_SNAPSHOT",
+        )
+        expect_failure(
+            mutate_json(
+                CUTOVER_PATH,
+                lambda value: value["exact_cleanup"].update(
+                    {"remote_release_archive_file_count": 1}
+                ),
+            ),
+            "E_CLEANUP_RELEASES",
+        )
+        expect_failure(
+            mutate_json(
+                JOURNEY_PATH,
                 lambda value: value["model_usage"].update(
                     {"authorization_provenance": {}}
                 ),
@@ -948,7 +1258,7 @@ def run_selftest() -> None:
         finally:
             runbook.write_text(original_runbook, encoding="utf-8")
 
-    print(json.dumps({"status": "PASS", "selftests": 15}, sort_keys=True))
+    print(json.dumps({"status": "PASS", "selftests": 21}, sort_keys=True))
 
 
 def main() -> int:

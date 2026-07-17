@@ -1,9 +1,9 @@
 {
   "schema": "diyu.package9.remote_journey_evidence.v1",
   "task_id": "DIYU_ECS_CUTOVER_001",
-  "observed_window_end": "2026-07-17T06:02:33.017445Z",
+  "observed_window_end": "2026-07-17T08:07:33.832832+00:00",
   "journey_group_count": 6,
-  "journey_action_count": 15,
+  "journey_action_count": 16,
   "all_http_actions_succeeded": true,
   "action_audit": [
     {
@@ -20,7 +20,13 @@
       "model_invocation_count": 1,
       "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_MODEL",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "b8705636265e37424dae0df8db30efe3cf1fed202d9f72d542e91d00c8d71177"
+      ]
     },
     {
       "ordinal": 2,
@@ -36,7 +42,13 @@
       "model_invocation_count": 1,
       "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_MODEL_REUSED_CONVERSATION",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "fdbb593753f1507d1b8ae7a0d55703fc470efb0d020c027a22f3e99163538a30"
+      ]
     },
     {
       "ordinal": 3,
@@ -52,7 +64,13 @@
       "model_invocation_count": 1,
       "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_MODEL",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "e14cfbb4262f5a6bc22820794050a07ff51246beffbb180530ed6c5ae76a9ed9"
+      ]
     },
     {
       "ordinal": 4,
@@ -65,10 +83,16 @@
       "response_sha256": "ae04a87f2cc7e08d9cec49601fc8b58b904102641026546f5d4196daf894da28",
       "answer_sha256": "1f35853c9f98566e5ec98ae6d6e5982e95a8287eae0e86d169f8dc87ca14fdae",
       "answer_length": 66,
-      "model_invocation_count": 2,
-      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_SAFE_ACTION_CARD",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY"
+      ],
+      "model_invocation_bindings": [
+        "45e7c8f743b00e2beab0121338e0002ca6ebadc7bd82e146e4294c7b309bae80"
+      ]
     },
     {
       "ordinal": 5,
@@ -81,10 +105,18 @@
       "response_sha256": "173be2809b0901054e299dd22605bfd4f587706b5cb9ae36ccb0424627596173",
       "answer_sha256": "2ee29ac828c403fa03b3775cb5d5e6b3860a8b9652efa25cde7844e20e827a80",
       "answer_length": 60,
-      "model_invocation_count": 0,
-      "execution_path": "PORTAL_DB_RETRIEVAL_SAFE_ACTION_CARD",
+      "model_invocation_count": 2,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "e61788c1a7c75124ef46fc1a84a9774e6fa586e92dad54ae8f0fed46c09a6d8e",
+        "568b36c5441599fedf072e5b639af8f45ba29d3e50c2c087c64e76b1ba3b294e"
+      ]
     },
     {
       "ordinal": 6,
@@ -100,7 +132,15 @@
       "model_invocation_count": 2,
       "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "3ab88afa7b86e44ccba5fad1248e13ca5b08c18bf70818597f4df377aab7addb",
+        "65e09b9129e39743431eab84d4b8b68d121bae8cb9b5d3738e0b298cac92bbf7"
+      ]
     },
     {
       "ordinal": 7,
@@ -116,7 +156,15 @@
       "model_invocation_count": 2,
       "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "cba75ede15ccfd95ffdf651d06fea7fc4c1b08ddc33805a211c9db68af822f09",
+        "00167e2acaaf02184a381ce0eb1fa23d3455e235b4b0d47fa8a4d9247ce2117e"
+      ]
     },
     {
       "ordinal": 8,
@@ -129,10 +177,16 @@
       "response_sha256": "36e70e7be2b34195baf5cfbd800a0735cff6e870480950d353f810f65b52fac5",
       "answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
       "answer_length": 58,
-      "model_invocation_count": 2,
-      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_EXISTING_CANDIDATE_DIFY_AUTHOR_MODEL",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "a1e1355cce066754c72cae12ab4433816582337f4b019d2174fc4e6e2853ee3e"
+      ]
     },
     {
       "ordinal": 9,
@@ -148,7 +202,15 @@
       "model_invocation_count": 2,
       "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "b57ae772a621ac95832a4a41bf8ec17019c83d55b5d271effd2582463238bf9e",
+        "b1ee79c1e9b8b61ca15d4b125f8fb9b73176dd967951853b0c0321dde78bfdd3"
+      ]
     },
     {
       "ordinal": 10,
@@ -164,7 +226,9 @@
       "model_invocation_count": 0,
       "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
     },
     {
       "ordinal": 11,
@@ -180,7 +244,9 @@
       "model_invocation_count": 0,
       "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
     },
     {
       "ordinal": 12,
@@ -196,7 +262,9 @@
       "model_invocation_count": 0,
       "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
     },
     {
       "ordinal": 13,
@@ -212,7 +280,9 @@
       "model_invocation_count": 0,
       "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
     },
     {
       "ordinal": 14,
@@ -228,7 +298,9 @@
       "model_invocation_count": 0,
       "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
       "simulation_only": true,
-      "publish_allowed": false
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
     },
     {
       "ordinal": 15,
@@ -244,6 +316,31 @@
       "model_invocation_count": 0,
       "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
       "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 16,
+      "case": "display_candidate_export",
+      "observed_at": "2026-07-17T08:07:33.832832+00:00",
+      "http_status": 200,
+      "operation": "导出",
+      "content_format": "陈列搭配",
+      "account_scope_sha256": "317db198fb273828af94ede1de3d84264b1f0bde3bbba96b2df6146c8faba914",
+      "request_sha256": "099ae00bd1778a0ec9e98eb48109a233cf6ce2bf389deef7e2735819759a0408",
+      "response_sha256": "b09b3574af8a099efcda619168fb0ebf7d59e06c172bc49b4dc46a92ba2c76c4",
+      "answer_sha256": "5140ae18487f42485efed578f01f1717934b55eeb97fb03606e015f985357aed",
+      "answer_length": 337,
+      "candidate_id_sha256": "5e694cc52ab0ec12235b9b17ffe1643d6f529b42bc9fd801b2191191487f97df",
+      "candidate_ordinal": 1,
+      "selected_state_before_sha256": "bd1ea9ee81bd5f07db4abff136352a4065caccddef1a856260c0d200ba6b7941",
+      "selected_state_after_sha256": "bd1ea9ee81bd5f07db4abff136352a4065caccddef1a856260c0d200ba6b7941",
+      "model_invocation_count": 0,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": [],
+      "execution_path": "PORTAL_DB_EXISTING_DIFY_MODEL_LINEAGE_DETERMINISTIC_EXPORT",
+      "simulation_only": true,
       "publish_allowed": false
     }
   ],
@@ -253,41 +350,69 @@
       "action_count": 2,
       "content_workflow_not_forced": true,
       "conversation_reuse_proven": true,
-      "status": "PASS"
+      "status": "PASS",
+      "action_ordinals": [
+        1,
+        2
+      ]
     },
     {
       "journey": "INSPIRATION_AND_SCOPE_GUIDANCE",
       "action_count": 3,
       "plain_language_guidance": true,
-      "status": "PASS"
+      "status": "PASS",
+      "action_ordinals": [
+        3,
+        6,
+        7
+      ]
     },
     {
       "journey": "ARTICLE_PACKAGE_AND_EXPORT",
       "action_count": 3,
       "existing_accepted_candidate_used": true,
       "new_failed_attempt_preserved": true,
-      "status": "PASS"
+      "status": "PASS",
+      "action_ordinals": [
+        9,
+        10,
+        11
+      ]
     },
     {
       "journey": "SHORT_VIDEO_PACKAGE_REVIEW_EXPORT_AND_SOURCE_LOOKUP",
-      "action_count": 4,
+      "action_count": 5,
       "existing_accepted_candidate_used": true,
       "source_lookup_available": true,
-      "status": "PASS"
+      "status": "PASS",
+      "action_ordinals": [
+        8,
+        12,
+        13,
+        14,
+        15
+      ]
     },
     {
       "journey": "PRODUCT_FACT_DISPLAY_PACKAGE",
       "action_count": 1,
       "existing_accepted_candidate_present": true,
       "explicit_product_facts_required": true,
-      "status": "PASS"
+      "status": "PASS",
+      "action_ordinals": [
+        16
+      ]
     },
     {
       "journey": "MISSING_FACT_AND_SCOPE_REJECTION",
       "action_count": 2,
       "missing_material_action_card": true,
       "unlisted_or_forged_scope_rejected": true,
-      "status": "PASS"
+      "status": "PASS",
+      "action_ordinals": [
+        4,
+        5
+      ]
     }
   ],
   "persisted_candidate_distribution": {
@@ -302,7 +427,7 @@
     "package9_invocation_increment": 13,
     "package9_succeeded_invocation_count": 13,
     "package9_failed_invocation_count": 0,
-    "invocation_audit_sha256": "f95599946f6181d8909735fdc355bf75dff67387227ce659f65bd1b63875c517",
+    "invocation_audit_sha256": "f634634fcc4955eb889ad171f8e795dca0ab85da9775ff9e3cc8bc5a146b581f",
     "invocation_audit_row_count": 13,
     "invocation_response_digest_count": 13,
     "founder_authorized_call_limit": 40,
@@ -321,7 +446,259 @@
     "observed_cost_cny": 0.071796,
     "cost_limit_cny": 10,
     "within_authorized_call_limit": true,
-    "within_cost_limit": true
+    "within_cost_limit": true,
+    "sanitized_invocation_audit": {
+      "records": [
+        {
+          "action_ordinal": 1,
+          "completion_tokens": 129,
+          "created_at_utc": "2026-07-17T05:20:32.369254Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "b8705636265e37424dae0df8db30efe3cf1fed202d9f72d542e91d00c8d71177",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 214,
+          "response_digest": "feaa5d142f27a6b4c2707865fb1d78cd779224e1aabfce9d4264658f13fd43ee",
+          "sequence": 1,
+          "state": "SUCCEEDED",
+          "total_price": "0.000472",
+          "total_tokens": 343
+        },
+        {
+          "action_ordinal": 2,
+          "completion_tokens": 166,
+          "created_at_utc": "2026-07-17T05:20:35.807993Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "fdbb593753f1507d1b8ae7a0d55703fc470efb0d020c027a22f3e99163538a30",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 344,
+          "response_digest": "8f8e1c9519bfdb7117564fc75cb700ce92def0384524e4236524ccb2a2274383",
+          "sequence": 2,
+          "state": "SUCCEEDED",
+          "total_price": "0.000676",
+          "total_tokens": 510
+        },
+        {
+          "action_ordinal": 3,
+          "completion_tokens": 429,
+          "created_at_utc": "2026-07-17T05:20:38.765664Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "e14cfbb4262f5a6bc22820794050a07ff51246beffbb180530ed6c5ae76a9ed9",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 439,
+          "response_digest": "701027d65a1e082616216285bca25bf534f4a6be6cb8dbfd563fe10dec529025",
+          "sequence": 3,
+          "state": "SUCCEEDED",
+          "total_price": "0.001297",
+          "total_tokens": 868
+        },
+        {
+          "action_ordinal": 4,
+          "completion_tokens": 304,
+          "created_at_utc": "2026-07-17T05:20:44.658066Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "45e7c8f743b00e2beab0121338e0002ca6ebadc7bd82e146e4294c7b309bae80",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 279,
+          "response_digest": "34480ccb4a114bab40509d7516c8f18738907ec13dc52ae0d56d9c3eac0b907e",
+          "sequence": 4,
+          "state": "SUCCEEDED",
+          "total_price": "0.000887",
+          "total_tokens": 583
+        },
+        {
+          "action_ordinal": 5,
+          "completion_tokens": 197,
+          "created_at_utc": "2026-07-17T05:20:48.335753Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "e61788c1a7c75124ef46fc1a84a9774e6fa586e92dad54ae8f0fed46c09a6d8e",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 275,
+          "response_digest": "fd82d03d62543d77c2a425d55dc87cfd834e4828ce644b13df35fcece7b5edd4",
+          "sequence": 5,
+          "state": "SUCCEEDED",
+          "total_price": "0.000669",
+          "total_tokens": 472
+        },
+        {
+          "action_ordinal": 5,
+          "completion_tokens": 126,
+          "created_at_utc": "2026-07-17T05:20:51.361803Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "568b36c5441599fedf072e5b639af8f45ba29d3e50c2c087c64e76b1ba3b294e",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 343,
+          "response_digest": "efff494bbb55d56bb93f759bbc40c3411d7f01fed043181af3b7140eada92f00",
+          "sequence": 6,
+          "state": "SUCCEEDED",
+          "total_price": "0.000595",
+          "total_tokens": 469
+        },
+        {
+          "action_ordinal": 6,
+          "completion_tokens": 154,
+          "created_at_utc": "2026-07-17T05:26:37.545526Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "3ab88afa7b86e44ccba5fad1248e13ca5b08c18bf70818597f4df377aab7addb",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 304,
+          "response_digest": "7e35c951cfd210042e5ceb5b2ef1465b026e9a58e009785f1dc063258284169e",
+          "sequence": 7,
+          "state": "SUCCEEDED",
+          "total_price": "0.000612",
+          "total_tokens": 458
+        },
+        {
+          "action_ordinal": 6,
+          "completion_tokens": 9042,
+          "created_at_utc": "2026-07-17T05:26:41.790450Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "65e09b9129e39743431eab84d4b8b68d121bae8cb9b5d3738e0b298cac92bbf7",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 6737,
+          "response_digest": "50b52120f94ed597f86bb89a520e02a14a2ef8ee99f112852042f6305fe0b581",
+          "sequence": 8,
+          "state": "SUCCEEDED",
+          "total_price": "0.024821",
+          "total_tokens": 15779
+        },
+        {
+          "action_ordinal": 7,
+          "completion_tokens": 96,
+          "created_at_utc": "2026-07-17T05:28:30.024201Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "cba75ede15ccfd95ffdf651d06fea7fc4c1b08ddc33805a211c9db68af822f09",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 304,
+          "response_digest": "1ab5221537f9d86eab13667a8d285c57d75af7278040f66d79f093374b0269e9",
+          "sequence": 9,
+          "state": "SUCCEEDED",
+          "total_price": "0.000496",
+          "total_tokens": 400
+        },
+        {
+          "action_ordinal": 7,
+          "completion_tokens": 5392,
+          "created_at_utc": "2026-07-17T05:28:31.815980Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "00167e2acaaf02184a381ce0eb1fa23d3455e235b4b0d47fa8a4d9247ce2117e",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 6744,
+          "response_digest": "3bffb2ebdd66da711228418686aca87864a1dffa8bf9a5e09dc232a13712be67",
+          "sequence": 10,
+          "state": "SUCCEEDED",
+          "total_price": "0.017528",
+          "total_tokens": 12136
+        },
+        {
+          "action_ordinal": 8,
+          "completion_tokens": 3046,
+          "created_at_utc": "2026-07-17T05:31:15.140283Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "a1e1355cce066754c72cae12ab4433816582337f4b019d2174fc4e6e2853ee3e",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 6472,
+          "response_digest": "d5bebfa7bb2560ca5e6bafae84e3b56483bc0046785273858c6c384acbbd3fe5",
+          "sequence": 11,
+          "state": "SUCCEEDED",
+          "total_price": "0.012564",
+          "total_tokens": 9518
+        },
+        {
+          "action_ordinal": 9,
+          "completion_tokens": 55,
+          "created_at_utc": "2026-07-17T05:36:32.415028Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "b57ae772a621ac95832a4a41bf8ec17019c83d55b5d271effd2582463238bf9e",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 361,
+          "response_digest": "f887db0042bc67264acf761ee2ff0dc1f7382412b6cc46a623305c0daf426c62",
+          "sequence": 12,
+          "state": "SUCCEEDED",
+          "total_price": "0.000471",
+          "total_tokens": 416
+        },
+        {
+          "action_ordinal": 9,
+          "completion_tokens": 3852,
+          "created_at_utc": "2026-07-17T05:36:33.928958Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "b1ee79c1e9b8b61ca15d4b125f8fb9b73176dd967951853b0c0321dde78bfdd3",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 3004,
+          "response_digest": "83123618fbc6582a1b4723095849b8b44c343e1e2bb01ad4cad9208a3dedab88",
+          "sequence": 13,
+          "state": "SUCCEEDED",
+          "total_price": "0.010708",
+          "total_tokens": 6856
+        }
+      ],
+      "records_sha256": "f634634fcc4955eb889ad171f8e795dca0ab85da9775ff9e3cc8bc5a146b581f",
+      "response_digest_count": 13,
+      "row_count": 13,
+      "schema": "diyu.package9.sanitized-model-invocation-audit.v1",
+      "total_completion_tokens": 22988,
+      "total_model_call_upper_bound": 13,
+      "total_price_cny": "0.071796",
+      "total_prompt_tokens": 25820,
+      "total_tokens": 48808
+    },
+    "runtime_limit_snapshot": {
+      "apps_https_status": 200,
+      "capabilities_dropped": [
+        "ALL"
+      ],
+      "container_id_sha256": "3e627cac2fbe95a2e47cbaab493ed00b658932a707d182e12e246346a9d80a10",
+      "container_name": "diyu-package7-bridge",
+      "effective_model_call_limit": 40,
+      "env_line_sha256": "377cca72f407f31822d11372c1e1d6e759b1f62f6f5dd9d3549c2d9722aa38cd",
+      "image_id": "sha256:c1712c50f27c9dfd31c5be77a9a03f30c464fc6983287eefd4a6a98376c70c24",
+      "image_tag": "langgenius/dify-api:1.15.0",
+      "legacy_role": {
+        "bypass_rls": false,
+        "login": false,
+        "role_name_sha256": "1999f02ff402919f8fe45b44da5ebd41b7ef42b12c2d05154d778bce0d19e440"
+      },
+      "loopback_only_publication": true,
+      "model_invocation_count_after": 92,
+      "model_invocation_count_before": 92,
+      "network_names": [
+        "dify-staging_default",
+        "diyu-package7-runtime"
+      ],
+      "new_model_calls": 0,
+      "no_new_privileges": true,
+      "observed_at": "2026-07-17T08:21:42.950744+00:00",
+      "read_only_root_filesystem": true,
+      "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+      "replaced_container_id_sha256": "07b54e6bc684f4f7a39e093f976c3d9eb46bcb79246e8f13dacbce2431bdbe5a",
+      "root_https_status": 200,
+      "runtime_role": {
+        "bypass_rls": false,
+        "create_database": false,
+        "create_role": false,
+        "login": true,
+        "role_name_sha256": "557de74ede8f4d9eb058ddcd0b12691f8961afaafa0ccb2d1bd869d4d60caa4d",
+        "superuser": false
+      },
+      "schema": "diyu.package9.runtime-limit-snapshot.v1",
+      "source_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+      "source_file_count": 131,
+      "source_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc"
+    },
+    "runtime_limit_snapshot_file_sha256": "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
   },
   "failure_integrity": {
     "failed_formal_attempts_preserved": true,
@@ -342,6 +719,9 @@
   "raw_private_evidence": {
     "storage_class": "REMOTE_ROOT_ONLY_RESTRICTED_STATE",
     "committed_to_repository": false,
-    "sha256": "6ef324da5fcfc9c5fd4255a6fdab20b152d5e0e297cd750aa07633bb965fe351"
+    "journey_batch_sha256": "6ef324da5fcfc9c5fd4255a6fdab20b152d5e0e297cd750aa07633bb965fe351",
+    "display_export_sha256": "666ca78b8b5e3709b731d5768601f656d52b64aff50ad5be6f476013f9cb9902",
+    "sanitized_invocation_audit_file_sha256": "04f30324165e153555398701955a3a041c65a2f34623865c6416a8db160d48b7",
+    "runtime_limit_snapshot_file_sha256": "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
   }
 }

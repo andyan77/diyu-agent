@@ -111,7 +111,11 @@
     "legacy_source_removed": true,
     "unshared_legacy_image_removed": true,
     "unknown_object_deleted_count": 0,
-    "preserved_services_healthy": true
+    "preserved_services_healthy": true,
+    "stale_release_archive_removed_count": 2,
+    "current_release_directory_count": 1,
+    "remote_release_archive_file_count": 0,
+    "current_release_preserved_in_server_external_backup": true
   },
   "rollback": {
     "actual_rollback_executed": true,
@@ -263,10 +267,59 @@
       "dify_counts": "3|1|19|30",
       "disk_free_bytes": 11663613952,
       "memory_available_bytes": 3551727616,
-      "pass": true
+      "pass": true,
+      "model_invocation_count": 92,
+      "effective_model_call_limit": 40
     },
     "new_model_call_count": 0,
-    "business_semantics_changed": false
+    "business_semantics_changed": false,
+    "remote_release_directory_count": 1,
+    "remote_release_archive_file_count": 0,
+    "current_release_preserved_in_server_external_backup": true,
+    "runtime_limit_snapshot": {
+      "apps_https_status": 200,
+      "capabilities_dropped": [
+        "ALL"
+      ],
+      "container_id_sha256": "3e627cac2fbe95a2e47cbaab493ed00b658932a707d182e12e246346a9d80a10",
+      "container_name": "diyu-package7-bridge",
+      "effective_model_call_limit": 40,
+      "env_line_sha256": "377cca72f407f31822d11372c1e1d6e759b1f62f6f5dd9d3549c2d9722aa38cd",
+      "image_id": "sha256:c1712c50f27c9dfd31c5be77a9a03f30c464fc6983287eefd4a6a98376c70c24",
+      "image_tag": "langgenius/dify-api:1.15.0",
+      "legacy_role": {
+        "bypass_rls": false,
+        "login": false,
+        "role_name_sha256": "1999f02ff402919f8fe45b44da5ebd41b7ef42b12c2d05154d778bce0d19e440"
+      },
+      "loopback_only_publication": true,
+      "model_invocation_count_after": 92,
+      "model_invocation_count_before": 92,
+      "network_names": [
+        "dify-staging_default",
+        "diyu-package7-runtime"
+      ],
+      "new_model_calls": 0,
+      "no_new_privileges": true,
+      "observed_at": "2026-07-17T08:21:42.950744+00:00",
+      "read_only_root_filesystem": true,
+      "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+      "replaced_container_id_sha256": "07b54e6bc684f4f7a39e093f976c3d9eb46bcb79246e8f13dacbce2431bdbe5a",
+      "root_https_status": 200,
+      "runtime_role": {
+        "bypass_rls": false,
+        "create_database": false,
+        "create_role": false,
+        "login": true,
+        "role_name_sha256": "557de74ede8f4d9eb058ddcd0b12691f8961afaafa0ccb2d1bd869d4d60caa4d",
+        "superuser": false
+      },
+      "schema": "diyu.package9.runtime-limit-snapshot.v1",
+      "source_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+      "source_file_count": 131,
+      "source_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc"
+    },
+    "runtime_limit_snapshot_file_sha256": "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
   },
   "real_customer_data_imported": false,
   "public_content_published": false,
