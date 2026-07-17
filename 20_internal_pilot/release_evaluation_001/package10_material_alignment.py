@@ -457,7 +457,7 @@ def main(argv: Iterable[str] | None = None) -> int:
     parser.add_argument(
         "--database-url", default=os.environ.get("DIYU_PKG9_ADMIN_DATABASE_URL")
     )
-    parser.add_argument("--namespace", default="diyu-hosted-operations")
+    parser.add_argument("--namespace", default="diyu-pkg8-package10")
     parser.add_argument("--apply", action="store_true")
     arguments = parser.parse_args(argv)
     if not arguments.database_url:
