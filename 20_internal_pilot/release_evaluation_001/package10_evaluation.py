@@ -18,12 +18,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
+import yaml
+
 
 JsonObject = dict[str, Any]
 PACKAGE_ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
 PACKAGE_7_ROOT = REPOSITORY_ROOT / "17_dify_runtime/dify_end_to_end_001"
 PLAN_PATH = PACKAGE_ROOT / "evaluation_plan.v1.json"
+CAPABILITY_MAPPING_PATH = PACKAGE_7_ROOT / "content_capability_mapping.v1.yaml"
 
 
 def canonical_json(value: object) -> str:
@@ -47,6 +50,13 @@ def load_plan(path: Path = PLAN_PATH) -> JsonObject:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
         raise ValueError("Package 10 plan must be one JSON object")
+    return value
+
+
+def load_capability_mapping() -> JsonObject:
+    value = yaml.safe_load(CAPABILITY_MAPPING_PATH.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("The public capability mapping must be one object")
     return value
 
 
@@ -82,6 +92,26 @@ def validate_plan(plan: JsonObject) -> JsonObject:
             raise ValueError(
                 f"Coverage drift for {name}: expected {expected}, got {len(values)}"
             )
+    mapping = load_capability_mapping()
+    public_topics = mapping.get("public_topics")
+    if not isinstance(public_topics, list):
+        raise ValueError("The public topic capability mapping is missing")
+    products_by_topic = {
+        row.get("display_name"): set(row.get("internal_product_ids", []))
+        for row in public_topics
+        if isinstance(row, dict)
+    }
+    incompatible_tasks = [
+        str(row.get("task_id"))
+        for row in tasks
+        if row.get("expected_internal_product_id")
+        not in products_by_topic.get(row.get("topic"), set())
+    ]
+    if incompatible_tasks:
+        raise ValueError(
+            "Public topic and internal product are incompatible: "
+            + ", ".join(incompatible_tasks)
+        )
     formats = dimensions["content_formats"]
     expected_formats = {
         "短视频",
@@ -114,6 +144,7 @@ def validate_plan(plan: JsonObject) -> JsonObject:
     return {
         "state": "PLAN_VALID",
         "plan_sha256": file_sha256(PLAN_PATH),
+        "capability_mapping_sha256": file_sha256(CAPABILITY_MAPPING_PATH),
         "task_count": len(tasks),
         "reference_count": len(references),
         "coverage_counts": {name: len(values) for name, values in dimensions.items()},
@@ -553,8 +584,21 @@ def selftest() -> JsonObject:
         readiness_tamper_rejected = True
     else:
         readiness_tamper_rejected = False
+    incompatible_topic = copy.deepcopy(plan)
+    incompatible_topic["chronological_tasks"][0]["topic"] = "商品为什么这样设计"
+    try:
+        validate_plan(incompatible_topic)
+    except ValueError:
+        topic_product_tamper_rejected = True
+    else:
+        topic_product_tamper_rejected = False
     if not all(
-        (budget_tamper_rejected, format_tamper_rejected, readiness_tamper_rejected)
+        (
+            budget_tamper_rejected,
+            format_tamper_rejected,
+            readiness_tamper_rejected,
+            topic_product_tamper_rejected,
+        )
     ):
         raise RuntimeError("Package 10 selftest did not fail closed")
     return {
@@ -563,6 +607,7 @@ def selftest() -> JsonObject:
         "budget_tamper_rejected": budget_tamper_rejected,
         "format_tamper_rejected": format_tamper_rejected,
         "readiness_tamper_rejected": readiness_tamper_rejected,
+        "topic_product_tamper_rejected": topic_product_tamper_rejected,
     }
 
 
