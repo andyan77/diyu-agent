@@ -11,6 +11,8 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import re
+import subprocess
 from pathlib import Path
 
 DC = Path(__file__).resolve().parents[1]
@@ -51,6 +53,26 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+def _bound_blob_matches(root: Path, manifest: dict, rel: str,
+                        expected_sha256: str) -> bool:
+    """普通条目的候选时点回退比对。
+
+    manifest 的绑定语义是 bound_candidate_commit 时点的树，而非活树；
+    关闭阶段按合同在双签后合法演进个别被钉扎的活体文件（如阶段登记后
+    重建的 spine 候选清单，见 M2 CLOSEOUT_REPORT「spine 候选清单闭环
+    重建」）。git 历史不可改写：条目摘要必须等于绑定提交处的 blob 才放行，
+    篡改活文件且不匹配候选 blob 依旧两路皆败 = fail-closed 不降。"""
+    bound = str(manifest.get("bound_candidate_commit", ""))
+    if not re.fullmatch(r"[0-9a-f]{40}", bound):
+        return False
+    proc = subprocess.run(
+        ["git", "-C", str(root), "show", f"{bound}:{rel}"],
+        capture_output=True)
+    if proc.returncode != 0:
+        return False
+    return hashlib.sha256(proc.stdout).hexdigest() == expected_sha256
 
 
 def _verify_manifest(root: Path, path: Path, self_rel: str) -> list[str]:
@@ -106,7 +128,11 @@ def _verify_manifest(root: Path, path: Path, self_rel: str) -> list[str]:
             errors.append(f"{path.name}: missing file {rel}")
             continue
         if sha256_file(target) != entry.get("sha256"):
-            errors.append(f"{path.name}: digest drift {rel}")
+            # 无快照的普通条目：活树不匹配时回退到绑定候选提交处的 blob
+            #（快照条目不回退——快照本身就是其冻结基准）
+            if snapshot_rel or not _bound_blob_matches(
+                    root, value, rel, str(entry.get("sha256", ""))):
+                errors.append(f"{path.name}: digest drift {rel}")
     digest = value.get("manifest_digest")
     if digest != receipts.canonical_digest(value, "manifest_digest"):
         errors.append(f"{path.name}: manifest_digest recompute mismatch")
