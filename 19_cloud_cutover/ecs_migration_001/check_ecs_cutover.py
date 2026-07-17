@@ -1085,6 +1085,10 @@ def run_selftest() -> None:
         shutil.copytree(PACKAGE_ROOT, root, ignore=shutil.ignore_patterns("__pycache__"))
         baseline = validate_package(root, live_git=False)
         require(baseline == validate_package(root, live_git=False), "E_SELFTEST_NONDETERMINISTIC")
+        baseline_final = (
+            read_json(root / RESULT_PATH).get("state")
+            == "PASS_REMOTE_CANDIDATE_PENDING_PACKAGE_10"
+        )
 
         def mutate_json(path: Path, mutation: Callable[[JsonObject], None]) -> Callable[[], None]:
             original = read_json(root / path)
@@ -1235,8 +1239,13 @@ def run_selftest() -> None:
             "E_READINESS_UNLOCKED",
         )
         expect_failure(
-            mutate_json(RESULT_PATH, lambda value: value.update({"package10_allowed": True})),
-            "E_PENDING_PACKAGE10",
+            mutate_json(
+                RESULT_PATH,
+                lambda value: value.update(
+                    {"package10_allowed": not baseline_final}
+                ),
+            ),
+            "E_FINAL_PACKAGE10" if baseline_final else "E_PENDING_PACKAGE10",
         )
 
         extra = root / "undeclared_state.json"
