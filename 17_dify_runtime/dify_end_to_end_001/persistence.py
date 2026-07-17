@@ -7,11 +7,27 @@ import copy
 import hashlib
 import json
 import sys
+from collections.abc import Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
-from sqlalchemy import Engine, MetaData, Table, UniqueConstraint, create_engine, inspect, select, text
+from sqlalchemy import (
+    Engine,
+    MetaData,
+    Table,
+    UniqueConstraint,
+    create_engine,
+    event,
+    func,
+    inspect,
+    select,
+    text,
+)
+from sqlalchemy.engine import Connection
 from sqlalchemy.schema import AddConstraint, DropConstraint
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -43,6 +59,63 @@ from runtime_models import (  # noqa: E402
     RuntimeSubjectConfirmation,
     RuntimeValidation,
 )
+
+
+@dataclass(frozen=True)
+class TrustedDatabaseScope:
+    """Server-confirmed database scope; browser fields never construct this value."""
+
+    tenant_id: str
+    brand_id: str | None = None
+    organization_id: str | None = None
+    store_id: str | None = None
+    account_id: str | None = None
+    principal_id: str | None = None
+
+
+_TRUSTED_DATABASE_SCOPE: ContextVar[TrustedDatabaseScope | None] = ContextVar(
+    "diyu_trusted_database_scope",
+    default=None,
+)
+
+
+@contextmanager
+def trusted_database_scope(scope: TrustedDatabaseScope) -> Iterator[None]:
+    """Apply one trusted scope to every transaction opened in this context."""
+
+    if not scope.tenant_id.strip():
+        raise ValueError("A trusted tenant scope is required")
+    token = _TRUSTED_DATABASE_SCOPE.set(scope)
+    try:
+        yield
+    finally:
+        _TRUSTED_DATABASE_SCOPE.reset(token)
+
+
+class _ScopedRuntimeSession(Session):
+    """Session class that installs transaction-local PostgreSQL RLS settings."""
+
+
+@event.listens_for(_ScopedRuntimeSession, "after_begin")
+def _install_trusted_scope(
+    session: Session,
+    transaction: Any,
+    connection: Connection,
+) -> None:
+    del session, transaction
+    if connection.dialect.name != "postgresql":
+        return
+    scope = _TRUSTED_DATABASE_SCOPE.get()
+    values = {
+        "app.tenant_id": None if scope is None else scope.tenant_id,
+        "app.brand_id": None if scope is None else scope.brand_id,
+        "app.organization_id": None if scope is None else scope.organization_id,
+        "app.store_id": None if scope is None else scope.store_id,
+        "app.account_id": None if scope is None else scope.account_id,
+        "app.principal_id": None if scope is None else scope.principal_id,
+    }
+    for name, value in values.items():
+        connection.execute(select(func.set_config(name, value or "", True)))
 
 
 def utc_now() -> datetime:
@@ -86,7 +159,12 @@ def create_runtime_engine(database_url: str) -> Engine:
 
 
 def create_session_factory(engine: Engine) -> sessionmaker[Session]:
-    return sessionmaker(bind=engine, expire_on_commit=False, future=True)
+    return sessionmaker(
+        bind=engine,
+        class_=_ScopedRuntimeSession,
+        expire_on_commit=False,
+        future=True,
+    )
 
 
 class SqlAlchemyPlanStore:
