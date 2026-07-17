@@ -1,0 +1,69 @@
+{
+  "blocking_semantics": "NONE_DIAGNOSTIC_ONLY（E0c：只要求完整、可复算，不作阻断门；预算阻断门复辟=停止线）",
+  "call_volume": {
+    "billable_cost_events": 12,
+    "cost_event_mix": {
+      "HUMAN_REVIEW": 9,
+      "MODEL_CALL": 3
+    },
+    "external_call_outcomes": {
+      "FAILED": 0,
+      "VALID": 3
+    },
+    "external_provider": "DEEPSEEK",
+    "external_provider_calls": 3,
+    "v4_telemetry_events": 17
+  },
+  "cost": {
+    "ceiling_utilization": 0.0001005,
+    "daily_ceiling_cny": 30.0,
+    "external_model_cost_cny_budget_basis_total": 0.0030150399999999996,
+    "external_model_cost_usd_total": 0.00037687999999999996,
+    "human_review_labor_cost_usd_total": 0.0,
+    "labor_rate_disclosure": "模型角色评审 0 USD/小时（真实劳务成本，非未知占位；推理资源披露见范围声明）",
+    "total_program_cost_to_date_usd": 0.00037687999999999996
+  },
+  "milestone_id": "M2",
+  "recompute_pointers": {
+    "accounting_decision_digest": "dfa74159d1a6b4315cd4f37a27f9320152e9d1aaecab8c34f4d207d253082b7b",
+    "metering_report_digest": "8a0652873ea1ef86602718d632b83c11ad5365a54ac78e1650d4c1fdc2fbe45e",
+    "rate_card_digest": "5045c7f02bf7fbe25167a0917c2519fa97e10ddb4915002db6dbaba23fe54dee",
+    "receipt_digests": [
+      "8c03822f22c003ad31052afdab6155c482da5fd80e28e47f11ee5cff69319c0c",
+      "0705e3a96e235b4cb1a9322ff31c59ee2dff2b065d62fc0e54c52481f9e90be4",
+      "a004af404858ed5b50fc38a8e7f9894a7c9e54985e0696b07260c0b0177538bd"
+    ],
+    "recompute_command": "python3 eval_audit_spine_001/evidence/s0_m2_real_run_001/tools/s0_run.py verify-all",
+    "telemetry_summary_digest": "94b9a15ffb733ff369ab9aab714d99a04d7b9ad52a12a6626bf304a13c9b14c7"
+  },
+  "record_digest": "250e2aa65ba7b6cd907b4c5ad2a328b64abf1c34c86bad6677ecde59eeb42176",
+  "run_id": "S0M2-RUN-001",
+  "schema_version": "p7-cost-throughput-telemetry-model-v1",
+  "throughput": {
+    "external_calls_per_hour_during_call_block": 577.09,
+    "items_authored": 4,
+    "items_per_hour_author_block": 127.43,
+    "items_per_hour_end_to_end": 19.33
+  },
+  "tokens": {
+    "external_cached_input_tokens": 0,
+    "external_input_tokens": 1348,
+    "external_output_tokens": 672,
+    "metering_totals_note": "metering_report 的 total_input/cached/output_tokens 覆盖 12 条计费事件（HUMAN_REVIEW 令牌字段=Null→合计不可用为诚实值）",
+    "session_inference_tokens": "UNAVAILABLE（Claude Code 会话/子代理推理不暴露令牌用量；范围披露见 plan/S0_RUN_PLAN.v1.md 成本账范围声明）"
+  },
+  "wall_clock": {
+    "author_block_seconds": 113.0,
+    "external_calls_seconds_total": 18.714468,
+    "p50_single_event_wall_clock_seconds": 20.256,
+    "p50_single_item_wall_clock_seconds": 39.396,
+    "p95_single_event_wall_clock_seconds": 42.846,
+    "p95_single_item_wall_clock_seconds": 63.102,
+    "review_track_seconds": {
+      "CONTENT_REVIEW": 171.381,
+      "FACT_REVIEW": 81.022,
+      "METRICS_AUDIT": 39.398
+    },
+    "run_end_to_end_seconds": 745.108324
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-07-17T04:50:53+00:00",
+  "checks": {
+    "checker_pre_review": {
+      "command": "python3 checker/p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "exit_code": 0,
+      "passed": true,
+      "tail": [
+        "RESULT[SHARED]: PASS (10 sections)",
+        "RESULT[A]: PASS (5 sections)",
+        "RESULT[B]: PASS (6 sections)",
+        "ARTIFACT_INTEGRITY: PASS",
+        "M0_QUALIFICATION: NOT_QUALIFIED"
+      ]
+    },
+    "negative_attack_battery": {
+      "command": "python3 -m pytest delivery_control_001/tests -q",
+      "passed": true,
+      "tail": [
+        "68 passed in 0.95s"
+      ]
+    },
+    "product_boundary_probes": {
+      "branch": "agent/gate1-v1-1-successor-longrun",
+      "github_workflows_untouched": true,
+      "no_staging_imports_in_spine_or_v4": true,
+      "on_task_branch": true,
+      "passed": true,
+      "product_core_staging_absent_until_M3": true,
+      "remotes": [
+        "origin"
+      ],
+      "single_origin_remote": true
+    },
+    "residual_scan": {
+      "active_violations": [],
+      "passed": true,
+      "report": "delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.M2.v1.json",
+      "report_sha256": "3ce7bba5d7a027bc04d99df091f1631f5a62847aac4574ab5c58a67ab5512268",
+      "tracked_files_scanned": 2863
+    },
+    "sealed_denylist_and_marker_scan": {
+      "denylist_size": 1,
+      "git_history_digest_hits": [],
+      "marker_data_hits": [],
+      "marker_literal_context_rule": "仅限：合成标记的定义工具/攻击测试源码、其 __pycache__ 字节码、M1 codex_review*events.jsonl 转录；此外任何命中一律违规",
+      "marker_literal_self_references": [
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/sealed_scan.py",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tools/__pycache__/sealed_scan.cpython-310.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r4_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r2_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r5_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M1/codex_review_r3_events.jsonl",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/test_negative_attacks.py",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/__pycache__/test_negative_attacks.cpython-310.pyc",
+        "/home/diyu/worktrees/gate1-longrun-001/controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/tests/__pycache__/test_negative_attacks.cpython-310-pytest-8.4.2.pyc"
+      ],
+      "passed": true,
+      "worktree_digest_hits": []
+    }
+  },
+  "definition_note": "BOUNDARY_SMOKE_PASS 为 M2 里程碑级出口键（v2.4 §四：不进冻结 S0 六键）；本报告=对 M1 交付的边界合同套件的现场冒烟——每项子检查即时实跑，非引用历史快照。",
+  "milestone_id": "M2",
+  "record_digest": "5150de39176c0726010541565d60c123636fb67d86d7c4f7f48835c37c26f867",
+  "schema_version": "p7-boundary-smoke-report-v1",
+  "verdict": "BOUNDARY_SMOKE_PASS"
+}
