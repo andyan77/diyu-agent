@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 140538,
+ "duration_api_ms": 140480,
+ "ttft_ms": 131328,
+ "ttft_stream_ms": 10765,
+ "time_to_request_ms": 28,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"PILOT-round5-G3-POS-CP11-003-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"选定左右各16厘米双开衩与取舍页及selected_option一致，属工艺决策过程描述\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP16-005-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"动作链与效果证据均载下端反开8厘米；功能演示会影响轮椅使用者购买判断\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP16-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"friction_evidence原文载第1件坐姿腹前堆3层，属观感描述，失实伤害轻\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP18-002-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"清空靠门层、按三种厚度补架有行动与日志证据支持，属陈列过程描述\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP18-002-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"时段日志对上六次袖口询问时点，记录性事实，未写成偏好或销售因果\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP19-004-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"洗样表载甲料两次超2%限值；缩水品质对比暗示可影响购买判断\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP19-004-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"乙料三次家洗均过2%限值有洗样表支持；缩水表现属效果暗示\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP19-004-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"放弃甲料价差毛利、定乙料与abandoned及selected一致，属经营取舍描述\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP19-006-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"让出200单潜在销量与constraint一致；失实即制造稀缺叙事误导购买\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP19-006-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"排产表与工坊确认四周上限300件；产能稀缺主张失实会诱导抢购\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "8ce715a8-d368-4fe4-bb1b-207dc8a48136",
+ "total_cost_usd": 0.9688140000000001,
+ "usage": {
+  "input_tokens": 3250,
+  "cache_creation_input_tokens": 20340,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 10236,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 20340,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3250,
+    "output_tokens": 10236,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 20340,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 20340
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3250,
+   "outputTokens": 10236,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 20340,
+   "webSearchRequests": 0,
+   "costUSD": 0.9688140000000001,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "b98aa8d3-9884-4503-87a0-ace789df2d5c"
+}

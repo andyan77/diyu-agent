@@ -1,0 +1,67 @@
+{
+ "schema_version": "p7-m3-pilot-receipt-v1",
+ "sample_ref": {
+  "cases_digest": "85db8cb7b92bdfccc0787995d3c19b1eabac8c4db79eed4e581c66b332b2ad59",
+  "case_count": 111,
+  "dev_assigned_groups": [
+   "G3-CUR-CP03-005",
+   "G3-CUR-CP05-012",
+   "G3-CUR-CP07-001",
+   "G3-CUR-CP07-006",
+   "G3-CUR-CP11-002",
+   "G3-CUR-CP11-003",
+   "G3-CUR-CP16-005",
+   "G3-CUR-CP18-002",
+   "G3-CUR-CP19-004",
+   "G3-CUR-CP19-006"
+  ]
+ },
+ "completion": {
+  "labeled_both_seats": 111,
+  "completion_rate": 1.0,
+  "unresolved": []
+ },
+ "agreement": {
+  "risk_raw": 0.8919,
+  "entailment_raw": 0.991,
+  "risk_kappa": 0.7748,
+  "entailment_kappa": 0.7956,
+  "dispute_rate": 0.1171,
+  "dispute_count": 13
+ },
+ "gold": {
+  "count": 111,
+  "risk_distribution": {
+   "HIGH": 7,
+   "LOW": 76,
+   "MEDIUM": 28
+  },
+  "entailment_distribution": {
+   "SUPPORTED": 108,
+   "UNKNOWN": 3
+  }
+ },
+ "natural_label_share": {
+  "definition": "entailment=SUPPORTED ∧ risk∈{LOW,MEDIUM} 占金标比例（供需 v2 表 0.59 阈值判定输入）",
+  "count": 101,
+  "share": 0.9099,
+  "per_family_share": {
+   "F1_PEOPLE_AND_REAL_SCENE": 1.0,
+   "F2_PROFESSIONAL_AND_SEARCH": 0.875,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 0.875,
+   "F4_STORE_LOCAL_AND_RETAIL": 0.8,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 1.0
+  },
+  "threshold": 0.59,
+  "meets_threshold": true
+ },
+ "cost": {
+  "total_usd": 29.1227,
+  "total_wall_clock_ms": 3771841,
+  "calls": 32,
+  "amortized_usd_per_case_both_seats": 0.2624
+ },
+ "protocol_ref": {
+  "path": "annotation/annotation_protocol.v1.json"
+ }
+}

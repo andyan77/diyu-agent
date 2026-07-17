@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 118618,
+ "duration_api_ms": 118562,
+ "ttft_ms": 111662,
+ "ttft_stream_ms": 3029,
+ "time_to_request_ms": 28,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"PILOT-round2-G3-POS-CP07-001-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"复用建议属过程描述，fit_conditions原文支持\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP07-001-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"容量结果暗示方案可行，实装视频证有剩余空间\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP07-001-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"涉防水性能边界，源明示防泼水鞋不是防水\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP07-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"穿脱分层为过程描述，与decision_state一致\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP07-006-CLAIM-02\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"性能界定主张，源记录外套无填充仅能挡风\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP07-006-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"查预报为一般提醒，顾问提醒原文支持\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP11-002-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"量化对比暗示取舍，记录载明平均多四秒\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP11-002-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"决策结果描述，修改单末页圈定七颗扣\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP11-002-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"证据覆盖边界主张，field_scope原文一致\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP11-003-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"决策结果描述，源明确最终双开衩各十六厘米\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "c963e359-b350-4625-86ae-9117e101620c",
+ "total_cost_usd": 0.960484,
+ "usage": {
+  "input_tokens": 3468,
+  "cache_creation_input_tokens": 23162,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 8897,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23162,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3468,
+    "output_tokens": 8897,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23162,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23162
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3468,
+   "outputTokens": 8897,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23162,
+   "webSearchRequests": 0,
+   "costUSD": 0.960484,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "5bb59852-e97e-4293-86df-c61778ed5e0b"
+}

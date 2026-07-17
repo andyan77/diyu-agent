@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 116868,
+ "duration_api_ms": 116809,
+ "ttft_ms": 109713,
+ "ttft_stream_ms": 4260,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round5-G3-POS-CP03-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"过程结果观察；终点状态与试穿门襟记录均支持\"},{\"case_id\":\"PILOT-round5-G3-POS-CP03-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工艺过程描述；定位针留活动量与工序事实逐字一致\"},{\"case_id\":\"PILOT-round5-G3-POS-CP05-012-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"人物阶段描述；prior_stage与时间标记直接支持\"},{\"case_id\":\"PILOT-round5-G3-POS-CP05-012-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"方法转变过程描述；recorded_change逐字支持\"},{\"case_id\":\"PILOT-round5-G3-POS-CP05-012-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"内部记录陈述；十八能确认两退回与核对表证据一致\"},{\"case_id\":\"PILOT-round5-G3-POS-CP05-012-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"承认无发布成交数据；与字段范围及岗位分工一致\"},{\"case_id\":\"PILOT-round5-G3-POS-CP05-012-CLAIM-05\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"技能状态描述；role_or_skill_state直接支持\"},{\"case_id\":\"PILOT-round5-G3-POS-CP07-001-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"复用建议属效果暗示，影响携装判断；条件内有源支持\"},{\"case_id\":\"PILOT-round5-G3-POS-CP07-001-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"数量够用为充分性暗示；fit_conditions明确支持\"},{\"case_id\":\"PILOT-round5-G3-POS-CP07-001-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"涉鞋类挡水效果表述；源明示防泼水并非防水\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "c0ee312e-a466-472e-ba75-4a4e3845b5d9",
+ "total_cost_usd": 0.945584,
+ "usage": {
+  "input_tokens": 3231,
+  "cache_creation_input_tokens": 23273,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 8602,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23273,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3231,
+    "output_tokens": 8602,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23273,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23273
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3231,
+   "outputTokens": 8602,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23273,
+   "webSearchRequests": 0,
+   "costUSD": 0.945584,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "f391169f-88e2-401b-aad6-459cbabd787e"
+}

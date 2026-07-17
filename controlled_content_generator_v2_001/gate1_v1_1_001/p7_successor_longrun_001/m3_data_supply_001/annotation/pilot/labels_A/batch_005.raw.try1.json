@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 115126,
+ "duration_api_ms": 115069,
+ "ttft_ms": 107882,
+ "ttft_stream_ms": 4475,
+ "time_to_request_ms": 29,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round2-G3-POS-CP19-006-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"交付时效关乎预售购买判断；源明言按期交付未验证，主张相符\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工艺设问无效果承诺；垫针缝扣工序有源支撑\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"过程描述；2毫米针、四孔双线六次与源逐项吻合\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"涉担保与真实性背书边界；担保范围与源证据边界一致\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"过程性设问；厚门襟需垫针留活动量有源支撑\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工作方法描述；与只写可见项、效果词留空的记录一致\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"过程叙述；源载开衫说明曾被整条退回\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"内部抽查结果描述；源载二十条中十八行标能确认\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"字段范围描述；源明言材质克重耐洗不在其栏\"},{\"case_id\":\"PILOT-round3-G3-POS-CP07-001-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"复用适用性暗示可影响判断；源载按任务复用可连穿三天\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "65627cf0-c424-4538-8610-22abfccca19b",
+ "total_cost_usd": 0.931284,
+ "usage": {
+  "input_tokens": 3468,
+  "cache_creation_input_tokens": 23587,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 8143,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23587,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3468,
+    "output_tokens": 8143,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23587,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23587
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3468,
+   "outputTokens": 8143,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23587,
+   "webSearchRequests": 0,
+   "costUSD": 0.931284,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "6516be21-fea3-4e95-9b2d-2ba85308793d"
+}

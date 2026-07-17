@@ -1,0 +1,431 @@
+[
+ {
+  "case_id": "PILOT-round1_top-G3-POS-CP03-005-CLAIM-02",
+  "claim_text": "垫着2毫米定位针穿孔、抽针后绕脚四圈，纽扣才能倾斜穿过厚门襟，而不是被缝死贴布",
+  "claim_boundary": "不能宣称纽扣拉力达到某标准、垫布已完全固定或该绕脚尺寸适合所有大衣厚度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这枚纽扣：现在能倾斜穿过厚门襟、绕脚四圈固定；能看到的只到这枚这次钉回、功能能用，拉力多大、垫布牢不牢这段不涉及。",
+   "continuity_breaks": "工序里有一处切换：六次穿孔后要先抽出定位针才能绕脚，这个抽针动作把穿孔和绕脚分成两段。",
+   "craft_input": "用到的是手缝针、双股线、一根2毫米定位针和一小片垫布，材料就是这件厚呢大衣。",
+   "judgment_point": "关键判断在留活动量——纽扣下垫一根2毫米定位针再穿孔，抽针后绕脚四圈，这样纽扣才能倾斜穿过厚门襟，而不是被缝死贴布。",
+   "ordered_step": "第一步拆掉旧线、确认面料没有撕裂、按相邻纽扣位置定位；第二步用双线交叉穿孔六次、纽扣下垫一根2毫米定位针留活动量；第三步抽出定位针后用余线绕脚四圈、再从反面打结加一小片垫布。",
+   "ordered_step_inventory": "整条工序共3步：拆旧定位、穿孔留量、绕脚打结加垫布；最后还差补一针没算完。",
+   "per_step_visible_action": "拆线时手指挑掉旧线；穿孔时双线在四孔间交叉穿六次；绕脚时余线在纽扣下绕四圈；打结时针从反面收线、压上一小片垫布。",
+   "per_step_visible_input": "每步可见用料：拆线器与旧线、双股线与四孔纽扣、2毫米定位针、垫布，全在门襟这一处。",
+   "per_step_visible_state": "拆完后纽扣位空出、面料完好；穿孔后纽扣下有定位针撑着活动量；绕脚打结后纽扣立起、反面多一片垫布。",
+   "process_end_or_unfinished_state": "终点停在纽扣能倾斜穿过厚门襟、绕脚四圈打好结；但反面垫布有一角没贴平，还要补一针。",
+   "process_start_state": "起点是纽扣松动、旧线还在、还没拆，面料看着完好。",
+   "step_to_capture_segment_map": "拍摄可分3段——第一段拆旧线与定位、第二段2毫米定位针加六次穿孔、第三段四圈绕脚打结加垫布角；声音有剪线和手缝穿过厚呢的闷响。",
+   "trigger_condition": "触发这道活的，是厚呢大衣门襟上一枚四孔纽扣松了，需要重新钉牢并留出穿过厚门襟的活动量。",
+   "unfinished_step_state": "没做完的是垫布补针——功能已经能用，只有反面垫布翘起的那一角要再补一针才算收尾。",
+   "visible_step_state": "拆旧定位、穿孔留量、绕脚打结这几步都做完可见；垫布补针这一步画面里停在反面翘起的一角。",
+   "work_object": "一件厚呢大衣，重点在门襟上一枚松动的四孔纽扣。"
+  },
+  "source_summary_a": "手部近景记录拆旧线、2毫米定位针、六次穿孔、四圈绕脚与垫布角。",
+  "source_summary_b": "工序便笺列明穿孔和绕脚次数、功能试穿过门襟及待补一针。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "judgment_point原文支持，工艺功能说明伤害轻"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "含功能效果与对比暗示，judgment_point逐字支持"
+  }
+ },
+ {
+  "case_id": "PILOT-round1_top-G3-POS-CP07-001-CLAIM-02",
+  "claim_text": "把三天的任务摊开：见客户日要一条压得住场的深色裤，仓库日图个好走动，小雨天住处只能晾不能洗。按任务复用，一条深灰直筒裤连穿三天，见客户配蓝灰衬衫加薄针织开衫，仓库日把衬衫换成短袖内搭，同一条裤子共用。",
+  "claim_boundary": "不保证这套数量适合不同天气、正式程度或个人换洗习惯，也不把防泼水鞋描述为防水。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是三天行李的衣物数量和复用方式，以及“怎么带不重复”这个问题。",
+   "alternative_basis_evidence": "支撑这套组合的证据是三日平铺组合画面和20升背包实装后仍有剩余空间的视频。",
+   "claim_boundary": "这套数量只对应给定的天气、场合和不能洗衣条件，换了正式程度或换洗习惯就不一定够，防泼水鞋也不是防水。",
+   "condition_evidence": "第一天见客户需深色长裤、第二天仓库走动、预报三天小雨、住宿可晾衣不能洗衣，这些任务和天气是搭配依据。",
+   "decision_state": "现在的判断是一条深灰直筒裤加蓝灰衬衫、薄针织开衫、带帽轻外层，外加一件短袖内搭，鞋只带一双；个人卫生频率留给用户自己拿主意。",
+   "exclusion_basis_evidence": "排除“每天各带一整套”的证据是那样实装后背包已装不下、且多件重复的对照。",
+   "fit_conditions": "如果按任务复用，一条深灰直筒裤能连穿三天：见客户日配可单穿的蓝灰衬衫加薄针织开衫，仓库日把衬衫换成内搭短袖，这种情况四件上装外层就够。",
+   "missing_condition_request": "顾问请用户自己想清楚能不能接受一条裤子连穿三天、以及晾衣一晚能不能干。",
+   "missing_conditions": "还缺的条件是个人换洗频率和对小雨的耐受，顾问没有替用户设定。",
+   "nonfit_conditions": "如果天气、正式程度或换洗习惯变了，比如需要正装或每天换裤，这种情况这套数量就不适合。",
+   "question_or_decision_context": "用户原话：“三天两夜坐火车出差，只想带一个20升背包，第一天见客户要穿深色裤，第二天在仓库走动，三天都有小雨还不能洗衣，我到底怎么带才不重复？”顾问按任务拆。",
+   "supported_alternative": "被支撑的方案是四件上装外层配一条深灰直筒裤的复用组合，已在桌面平铺演示过三日搭配。",
+   "supported_alternatives": "可选内部替换有两处：见客户日的衬衫加开衫、仓库日的短袖内搭，都共用同一条裤子。",
+   "trigger_condition": "触发问题的是三天两夜、20升背包、见客户与仓库两种场合、小雨、住宿不能洗衣这组硬约束。"
+  },
+  "source_summary_a": "三天日程卡、天气条件卡、衣物平铺组合和20升背包实装视频支持空间与复用关系。",
+  "source_summary_b": "顾问组合表记录每件衣物对应的场合、重复穿着位置、不能洗衣条件和鞋的既有试走状态。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "条件与fit_conditions逐字对应，条件化复用建议"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "含连穿三天可行性暗示，条件与fit_conditions一致支持"
+  }
+ },
+ {
+  "case_id": "PILOT-round1_top-G3-POS-CP07-006-CLAIM-02",
+  "claim_text": "你的原话是：车厢和办公室都开暖气，我又特别容易在室内出汗，这三件到底怎么穿脱才不闷？先看条件：清晨约8度、步行12分钟、室内有暖气、下午约14度、你易出汗。如果按可脱层来穿——清晨薄长袖加羊毛背心再加防风外套，进车厢先脱外套、还热再脱背心，就能跟着温差一层层减。",
+  "claim_boundary": "不能保证该组合对所有人的体感足够，也不能根据气温单独推断风力、降雨或保暖性能。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是这三件衣物在一天行程里的穿脱顺序，以及“穿多厚”这个问题。",
+   "alternative_basis_evidence": "支撑分层的证据是三件衣物厚薄与收纳体积、出门、站台、车厢三节点穿脱的模拟视频。",
+   "claim_boundary": "这只按给定气温和行程排穿脱，不保证对所有人体感都够，外套只是挡风层、不等于保暖棉服。",
+   "condition_evidence": "清晨8度、步行12分钟、暖气车厢和办公室、下午14度、易出汗，以及三件现有衣物，这些是穿脱安排的依据。",
+   "decision_state": "现在的判断是三件按“薄长袖—背心—防风外套”从内到外分层，进车厢脱外套、仍热脱背心，下午只留薄长袖和可开合外套。",
+   "exclusion_basis_evidence": "排除“一件厚外套穿到底”的证据是那样进暖气车厢后易出汗、又没法减层的对照。",
+   "fit_conditions": "如果按可脱层安排：清晨薄长袖加羊毛背心再加防风外套，进车厢先脱外套、仍热再脱背心，这种情况能随温差逐层减。",
+   "missing_condition_request": "顾问提醒用户出门前看一下风力和降雨预报，再定要不要另加防雨层。",
+   "missing_conditions": "还缺的条件是当天风力和降雨，单看气温推不出。",
+   "nonfit_conditions": "如果遇到大风、降雨或更低温，这种情况这件无填充外套只能挡风、挡不了这些，就不适用。",
+   "question_or_decision_context": "用户原话：“早上8度走12分钟到车站，可车厢和办公室都开暖气，我又特别容易在室内出汗，下午回来14度，这三件到底怎么穿脱才不闷？”顾问按行程节点回答。",
+   "supported_alternative": "被支撑的做法是可脱层：出门三层、车厢逐层减、下午两层。",
+   "supported_alternatives": "两个节点各有可减选项：进车厢先脱外套、仍热再脱背心，下午保留薄长袖和可开合外套。",
+   "trigger_condition": "触发问题的是清晨约8度步行12分钟、车厢与办公室有暖气、下午约14度、且用户易在室内出汗这组温差条件。"
+  },
+  "source_summary_a": "三件衣物的厚薄与收纳体积画面，以及出门、站台、车厢三节点模拟穿脱视频支持可执行性。",
+  "source_summary_b": "行程条件卡记录温度、步行时长、室内暖气、易出汗偏好和外套无填充事实。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "原话引用与fit_conditions一致，条件化穿法"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "含逐层减效果暗示，引语与条件、fit_conditions均支持"
+  }
+ },
+ {
+  "case_id": "PILOT-round1_top-G3-POS-CP16-005-CLAIM-02",
+  "claim_text": "顾客第2次就独立完成了对齐、上拉、反开和取侧袋",
+  "claim_boundary": "一次店内完成不能代表长期能力，也不能宣称适合所有轮椅与行动方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "actor_task_identity": "导购负责调镜、解释拉链结构，不在未被请求时触碰顾客或轮椅；这是对一次匿名轮椅使用者试穿服务的复盘。",
+   "customer_task_truth": "匿名轮椅使用者希望自己独立穿脱短外套，试穿时不接受代操作。",
+   "friction_evidence": "第1件下摆在坐姿腹前堆起3层，第2件第1次对齐插销时没对准，2处都影响独立操作。",
+   "handled_object": "上手的是2件短外套（下摆堆叠的第1件、前短后长的第2件）、轮椅，以及第2件的双向拉链和拉链绳。",
+   "identity_exclusion_map": "顾客正脸与身份不进画面，只拍手部、拉链和前摆；服务表不带可识别信息。",
+   "observed_action_chain": "动作链是试穿第1件看下摆堆3层，换第2件依次对齐插销、上拉、下端反开8厘米、取侧袋，第1次插销未对准、第2次完成。",
+   "service_action": "导购只转动镜子帮顾客看清插销位置、解释双向拉链结构，全程不代替顾客操作。",
+   "service_feedback_or_unfinished_state": "顾客购买第2件并要求保留原拉链绳，之后自己在家继续用，这是这次服务之后的跟进方向。",
+   "task_effect_evidence": "第2件前短后长、双向拉链下端可反开8厘米，顾客第2次就独立完成了对齐插销、上拉、反开和取侧袋。",
+   "visible_result_or_unfinished_state": "顾客买下第2件、保留原拉链绳，独立穿脱在店内完成了一次，长期使用还要在家里继续。"
+  },
+  "source_summary_a": "服务表记录下摆、拉链结构、动作和保留拉链绳要求。",
+  "source_summary_b": "正面近景连续拍双向拉链与前摆，保留拉链声和获准的动作反馈。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "任务效果证据逐字支持；涉轮椅顾客身体能力与真实性，失实伤害实质"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "效果证据原文支持单次完成；独立操作属效果暗示"
+  }
+ },
+ {
+  "case_id": "PILOT-round1_top-G3-POS-CP16-005-CLAIM-03",
+  "claim_text": "导购全程没上手",
+  "claim_boundary": "一次店内完成不能代表长期能力，也不能宣称适合所有轮椅与行动方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "actor_task_identity": "导购负责调镜、解释拉链结构，不在未被请求时触碰顾客或轮椅；这是对一次匿名轮椅使用者试穿服务的复盘。",
+   "customer_task_truth": "匿名轮椅使用者希望自己独立穿脱短外套，试穿时不接受代操作。",
+   "friction_evidence": "第1件下摆在坐姿腹前堆起3层，第2件第1次对齐插销时没对准，2处都影响独立操作。",
+   "handled_object": "上手的是2件短外套（下摆堆叠的第1件、前短后长的第2件）、轮椅，以及第2件的双向拉链和拉链绳。",
+   "identity_exclusion_map": "顾客正脸与身份不进画面，只拍手部、拉链和前摆；服务表不带可识别信息。",
+   "observed_action_chain": "动作链是试穿第1件看下摆堆3层，换第2件依次对齐插销、上拉、下端反开8厘米、取侧袋，第1次插销未对准、第2次完成。",
+   "service_action": "导购只转动镜子帮顾客看清插销位置、解释双向拉链结构，全程不代替顾客操作。",
+   "service_feedback_or_unfinished_state": "顾客购买第2件并要求保留原拉链绳，之后自己在家继续用，这是这次服务之后的跟进方向。",
+   "task_effect_evidence": "第2件前短后长、双向拉链下端可反开8厘米，顾客第2次就独立完成了对齐插销、上拉、反开和取侧袋。",
+   "visible_result_or_unfinished_state": "顾客买下第2件、保留原拉链绳，独立穿脱在店内完成了一次，长期使用还要在家里继续。"
+  },
+  "source_summary_a": "服务表记录下摆、拉链结构、动作和保留拉链绳要求。",
+  "source_summary_b": "正面近景连续拍双向拉链与前摆，保留拉链声和获准的动作反馈。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "明载全程不代替顾客操作；背书独立完成之真实性，失实伤害实质"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "服务记录载全程不代顾客操作，属过程描述"
+  }
+ },
+ {
+  "case_id": "PILOT-round2-G3-POS-CP16-005-CLAIM-03",
+  "claim_text": "她买下第二件，特意要求保留原来的拉链绳",
+  "claim_boundary": "一次店内完成不能代表长期能力，也不能宣称适合所有轮椅与行动方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "actor_task_identity": "导购负责调镜、解释拉链结构，不在未被请求时触碰顾客或轮椅；这是对一次匿名轮椅使用者试穿服务的复盘。",
+   "customer_task_truth": "匿名轮椅使用者希望自己独立穿脱短外套，试穿时不接受代操作。",
+   "friction_evidence": "第1件下摆在坐姿腹前堆起3层，第2件第1次对齐插销时没对准，2处都影响独立操作。",
+   "handled_object": "上手的是2件短外套（下摆堆叠的第1件、前短后长的第2件）、轮椅，以及第2件的双向拉链和拉链绳。",
+   "identity_exclusion_map": "顾客正脸与身份不进画面，只拍手部、拉链和前摆；服务表不带可识别信息。",
+   "observed_action_chain": "动作链是试穿第1件看下摆堆3层，换第2件依次对齐插销、上拉、下端反开8厘米、取侧袋，第1次插销未对准、第2次完成。",
+   "service_action": "导购只转动镜子帮顾客看清插销位置、解释双向拉链结构，全程不代替顾客操作。",
+   "service_feedback_or_unfinished_state": "顾客购买第2件并要求保留原拉链绳，之后自己在家继续用，这是这次服务之后的跟进方向。",
+   "task_effect_evidence": "第2件前短后长、双向拉链下端可反开8厘米，顾客第2次就独立完成了对齐插销、上拉、反开和取侧袋。",
+   "visible_result_or_unfinished_state": "顾客买下第2件、保留原拉链绳，独立穿脱在店内完成了一次，长期使用还要在家里继续。"
+  },
+  "source_summary_a": "服务表记录下摆、拉链结构、动作和保留拉链绳要求。",
+  "source_summary_b": "正面近景连续拍双向拉链与前摆，保留拉链声和获准的动作反馈。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "购买并保留拉链绳有据；顾客购买属真实性背书载荷"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "顾客购买行为属背书性叙事，失实可误导；服务表载购买并留拉链绳"
+  }
+ },
+ {
+  "case_id": "PILOT-round2-G3-POS-CP19-006-CLAIM-01",
+  "claim_text": "它们只是候补，不算订单",
+  "claim_boundary": "不能把候补算销量、制造稀缺叙事或保证准时。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "abandoned_option": "放弃多出的200个潜在订单，也放弃原先“持续开放”的素材。",
+   "cause_or_decision_trace_evidence": "排产表记录四周300件产能与外包工序来不及校准，是把上限压到300的依据。",
+   "constraint_or_cost": "代价是让出200个潜在订单这部分销量，并重做原先“持续开放”的素材。",
+   "current_evidence_boundary": "目前只有工坊四周产能与外包校准的判断，实际能否准时交付还没验证。",
+   "current_result_or_open_state": "预售关闭时有37条候补，不算订单，交付留到六周后复核。",
+   "decision_context": "工坊确认四周最多做300件，营销原拟开放500件、让后200件八周交，但外包工序来不及校准。",
+   "decision_domain": "这是一次绗缝外套的预售上限决策，牵动产能与订货规模。",
+   "field_scope_evidence": "这些字段只覆盖这批绗缝外套的产能与预售，不涉其他款。",
+   "options_considered": "团队权衡开放500件、开放但延后200件、只开300件三个方案。",
+   "record_field_evidence": "排产表、页面版本和候补计数分别列出300、500、200、37条字段。",
+   "result_state_evidence": "工序板、页面上限和候补界面配缝纫声，关闭时记录37条候补、不计为订单。",
+   "selected_option": "团队把预售上限设为300件。",
+   "unresolved_consequence": "让出的200个订单和37条候补会怎样、能否按期交付，都还没有结果。"
+  },
+  "source_summary_a": "排产表、页面版本和候补计数支持决策。",
+  "source_summary_b": "工序板、页面上限和候补界面配缝纫声。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "37条候补不算订单有据；涉销量口径与稀缺暗示"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "记录载37条候补不计订单，反稀缺免责陈述与源一致"
+  }
+ },
+ {
+  "case_id": "PILOT-round3-G3-POS-CP03-005-CLAIM-03",
+  "claim_text": "能担保的也就到镜头里这一格：这枚扣子这回钉回、能斜穿厚门襟、功能能用。至于它能拉多大力、垫布牢不牢，这一回没量、镜头也没带到；绕脚这个尺寸，也只有眼前这件厚呢大衣看得清，旁边别的大衣都虚在景深之外。",
+  "claim_boundary": "不能宣称纽扣拉力达到某标准、垫布已完全固定或该绕脚尺寸适合所有大衣厚度。",
+  "authorization_scope": "仅供 Gate 1 v1.1 合成资格与基线测试使用，不得发布或用于真实经营决策。",
+  "slot_facts": {
+   "affected_object_or_claim": "受影响的是这枚纽扣：现在能倾斜穿过厚门襟、绕脚四圈固定；能看到的只到这枚这次钉回、功能能用，拉力多大、垫布牢不牢这段不涉及。",
+   "continuity_breaks": "工序里有一处切换：六次穿孔后要先抽出定位针才能绕脚，这个抽针动作把穿孔和绕脚分成两段。",
+   "craft_input": "用到的是手缝针、双股线、一根2毫米定位针和一小片垫布，材料就是这件厚呢大衣。",
+   "judgment_point": "关键判断在留活动量——纽扣下垫一根2毫米定位针再穿孔，抽针后绕脚四圈，这样纽扣才能倾斜穿过厚门襟，而不是被缝死贴布。",
+   "ordered_step": "第一步拆掉旧线、确认面料没有撕裂、按相邻纽扣位置定位；第二步用双线交叉穿孔六次、纽扣下垫一根2毫米定位针留活动量；第三步抽出定位针后用余线绕脚四圈、再从反面打结加一小片垫布。",
+   "ordered_step_inventory": "整条工序共3步：拆旧定位、穿孔留量、绕脚打结加垫布；最后还差补一针没算完。",
+   "per_step_visible_action": "拆线时手指挑掉旧线；穿孔时双线在四孔间交叉穿六次；绕脚时余线在纽扣下绕四圈；打结时针从反面收线、压上一小片垫布。",
+   "per_step_visible_input": "每步可见用料：拆线器与旧线、双股线与四孔纽扣、2毫米定位针、垫布，全在门襟这一处。",
+   "per_step_visible_state": "拆完后纽扣位空出、面料完好；穿孔后纽扣下有定位针撑着活动量；绕脚打结后纽扣立起、反面多一片垫布。",
+   "process_end_or_unfinished_state": "终点停在纽扣能倾斜穿过厚门襟、绕脚四圈打好结；但反面垫布有一角没贴平，还要补一针。",
+   "process_start_state": "起点是纽扣松动、旧线还在、还没拆，面料看着完好。",
+   "step_to_capture_segment_map": "拍摄可分3段——第一段拆旧线与定位、第二段2毫米定位针加六次穿孔、第三段四圈绕脚打结加垫布角；声音有剪线和手缝穿过厚呢的闷响。",
+   "trigger_condition": "触发这道活的，是厚呢大衣门襟上一枚四孔纽扣松了，需要重新钉牢并留出穿过厚门襟的活动量。",
+   "unfinished_step_state": "没做完的是垫布补针——功能已经能用，只有反面垫布翘起的那一角要再补一针才算收尾。",
+   "visible_step_state": "拆旧定位、穿孔留量、绕脚打结这几步都做完可见；垫布补针这一步画面里停在反面翘起的一角。",
+   "work_object": "一件厚呢大衣，重点在门襟上一枚松动的四孔纽扣。"
+  },
+  "source_summary_a": "手部近景记录拆旧线、2毫米定位针、六次穿孔、四圈绕脚与垫布角。",
+  "source_summary_b": "工序便笺列明穿孔和绕脚次数、功能试穿过门襟及待补一针。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉担保与真实性背书边界；担保范围与源证据边界一致"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "边界声明式主张；功能试穿过门襟与未测拉力均见于源"
+  }
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-001-CLAIM-03",
+  "claim_text": "它离挡住水还差一整道工序",
+  "claim_boundary": "不保证这套数量适合不同天气、正式程度或个人换洗习惯，也不把防泼水鞋描述为防水。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是三天行李的衣物数量和复用方式，以及“怎么带不重复”这个问题。",
+   "alternative_basis_evidence": "支撑这套组合的证据是三日平铺组合画面和20升背包实装后仍有剩余空间的视频。",
+   "claim_boundary": "这套数量只对应给定的天气、场合和不能洗衣条件，换了正式程度或换洗习惯就不一定够，防泼水鞋也不是防水。",
+   "condition_evidence": "第一天见客户需深色长裤、第二天仓库走动、预报三天小雨、住宿可晾衣不能洗衣，这些任务和天气是搭配依据。",
+   "decision_state": "现在的判断是一条深灰直筒裤加蓝灰衬衫、薄针织开衫、带帽轻外层，外加一件短袖内搭，鞋只带一双；个人卫生频率留给用户自己拿主意。",
+   "exclusion_basis_evidence": "排除“每天各带一整套”的证据是那样实装后背包已装不下、且多件重复的对照。",
+   "fit_conditions": "如果按任务复用，一条深灰直筒裤能连穿三天：见客户日配可单穿的蓝灰衬衫加薄针织开衫，仓库日把衬衫换成内搭短袖，这种情况四件上装外层就够。",
+   "missing_condition_request": "顾问请用户自己想清楚能不能接受一条裤子连穿三天、以及晾衣一晚能不能干。",
+   "missing_conditions": "还缺的条件是个人换洗频率和对小雨的耐受，顾问没有替用户设定。",
+   "nonfit_conditions": "如果天气、正式程度或换洗习惯变了，比如需要正装或每天换裤，这种情况这套数量就不适合。",
+   "question_or_decision_context": "用户原话：“三天两夜坐火车出差，只想带一个20升背包，第一天见客户要穿深色裤，第二天在仓库走动，三天都有小雨还不能洗衣，我到底怎么带才不重复？”顾问按任务拆。",
+   "supported_alternative": "被支撑的方案是四件上装外层配一条深灰直筒裤的复用组合，已在桌面平铺演示过三日搭配。",
+   "supported_alternatives": "可选内部替换有两处：见客户日的衬衫加开衫、仓库日的短袖内搭，都共用同一条裤子。",
+   "trigger_condition": "触发问题的是三天两夜、20升背包、见客户与仓库两种场合、小雨、住宿不能洗衣这组硬约束。"
+  },
+  "source_summary_a": "三天日程卡、天气条件卡、衣物平铺组合和20升背包实装视频支持空间与复用关系。",
+  "source_summary_b": "顾问组合表记录每件衣物对应的场合、重复穿着位置、不能洗衣条件和鞋的既有试走状态。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "触及防水性能承诺边界，源明示防泼水非防水，方向一致"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "涉鞋类挡水效果表述；源明示防泼水并非防水"
+  }
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-006-CLAIM-03",
+  "claim_text": "它只挡得住风，别的扛不了，就不适用",
+  "claim_boundary": "不能保证该组合对所有人的体感足够，也不能根据气温单独推断风力、降雨或保暖性能。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与300条基线测试使用，不可发布或进入生产运行。",
+  "slot_facts": {
+   "affected_object_or_claim": "被判断的是这三件衣物在一天行程里的穿脱顺序，以及“穿多厚”这个问题。",
+   "alternative_basis_evidence": "支撑分层的证据是三件衣物厚薄与收纳体积、出门、站台、车厢三节点穿脱的模拟视频。",
+   "claim_boundary": "这只按给定气温和行程排穿脱，不保证对所有人体感都够，外套只是挡风层、不等于保暖棉服。",
+   "condition_evidence": "清晨8度、步行12分钟、暖气车厢和办公室、下午14度、易出汗，以及三件现有衣物，这些是穿脱安排的依据。",
+   "decision_state": "现在的判断是三件按“薄长袖—背心—防风外套”从内到外分层，进车厢脱外套、仍热脱背心，下午只留薄长袖和可开合外套。",
+   "exclusion_basis_evidence": "排除“一件厚外套穿到底”的证据是那样进暖气车厢后易出汗、又没法减层的对照。",
+   "fit_conditions": "如果按可脱层安排：清晨薄长袖加羊毛背心再加防风外套，进车厢先脱外套、仍热再脱背心，这种情况能随温差逐层减。",
+   "missing_condition_request": "顾问提醒用户出门前看一下风力和降雨预报，再定要不要另加防雨层。",
+   "missing_conditions": "还缺的条件是当天风力和降雨，单看气温推不出。",
+   "nonfit_conditions": "如果遇到大风、降雨或更低温，这种情况这件无填充外套只能挡风、挡不了这些，就不适用。",
+   "question_or_decision_context": "用户原话：“早上8度走12分钟到车站，可车厢和办公室都开暖气，我又特别容易在室内出汗，下午回来14度，这三件到底怎么穿脱才不闷？”顾问按行程节点回答。",
+   "supported_alternative": "被支撑的做法是可脱层：出门三层、车厢逐层减、下午两层。",
+   "supported_alternatives": "两个节点各有可减选项：进车厢先脱外套、仍热再脱背心，下午保留薄长袖和可开合外套。",
+   "trigger_condition": "触发问题的是清晨约8度步行12分钟、车厢与办公室有暖气、下午约14度、且用户易在室内出汗这组温差条件。"
+  },
+  "source_summary_a": "三件衣物的厚薄与收纳体积画面，以及出门、站台、车厢三节点模拟穿脱视频支持可执行性。",
+  "source_summary_b": "行程条件卡记录温度、步行时长、室内暖气、易出汗偏好和外套无填充事实。",
+  "label_jia": {
+   "risk": "HIGH",
+   "entailment": "SUPPORTED",
+   "rationale": "涉防风性能与适用边界断言；nonfit_conditions逐字支持"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "含挡风功能断言，源nonfit条件逐字支持其限定"
+  }
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-002-CLAIM-02",
+  "claim_text": "多出这一颗，扣合平均多四秒",
+  "claim_boundary": "不得把单件样衣的门襟状态外推为所有身形适配，也不得声称七颗扣更耐用；四秒差异只属于本次三轮计时的平均值。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "abandoned_option": "放弃在原六颗扣之间加两组暗按扣的方案，因为它内侧能看到两处加固贴。",
+   "authorization_scope_evidence": "针织工艺员只负责改扣眼与加固，试衣员只按站姿和坐姿完成动作，设计负责人只确定这次样衣的门襟方案，没有人给出耐用性结论。",
+   "constraint_or_cost": "选七颗扣的代价是多一颗扣，扣合时间平均多四秒。",
+   "current_evidence_boundary": "只有这一件米白色样衣的门襟状态和三轮计时，不能推到所有身形，四秒也只是本次三轮的平均值。",
+   "decision_context": "细针针织开衫试穿样在坐姿时第三与第四颗扣之间出现门襟张口，要决定怎么改门襟。",
+   "decision_domain": "针织开衫的门襟扣合方式与扣距设计。",
+   "decision_problem": "六颗扣坐姿时门襟张口，要在门襟平整、内侧观感和日常扣合效率之间取舍。",
+   "document_field_evidence": "样衣修改单记录两套扣合方案、扣距、二十次开合检查结果和三轮扣合计时，末页圈定七颗扣方案。",
+   "field_scope_evidence": "评估只覆盖这件样衣的门襟平整、内侧观感和扣合时间，不含耐用性或不同身形。",
+   "object_action_evidence": "同一件米白色开衫样衣先后试装七颗树脂扣、六颗扣加两组暗按扣，两方案各连续开合二十次。",
+   "options_considered": "考虑过三种：原六颗扣、增加到七颗扣、六颗扣之间加两组暗按扣。",
+   "record_field_evidence": "记录了两方案各二十次开合、七颗扣内侧整洁、暗按扣两处加固贴，以及扣合时间平均多四秒。",
+   "relation_evidence": "暗按扣让门襟更平却在内侧留两处加固贴，七颗扣内侧整洁但扣合平均多四秒；换成七颗扣的同时要缩短扣距。",
+   "selected_option": "最终选七颗扣并缩短扣距。"
+  },
+  "source_summary_a": "样衣修改单记录两套扣合方案、扣距、二十次开合检查结果和三轮扣合计时，末页圈定七颗扣方案。",
+  "source_summary_b": "近景素材包括粉笔扣位、暗按扣加固贴、坐姿门襟变化和手指逐颗扣合，声音以针织摩擦和扣子轻碰为主。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "量化对比暗示效率差；constraint_or_cost逐字支持"
+  },
+  "label_yi": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "多一颗扣平均多四秒与代价记录一致，限本次计时"
+  }
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-002-CLAIM-03",
+  "claim_text": "坐下时门襟贴着不再绷开",
+  "claim_boundary": "不得把单件样衣的门襟状态外推为所有身形适配，也不得声称七颗扣更耐用；四秒差异只属于本次三轮计时的平均值。",
+  "authorization_scope": "仅授权用于 Gate 1 v1.1 合成资格与300条基线测试；不可发布，不得作为真实品牌、门店、商品、员工、顾客或经营事实。",
+  "slot_facts": {
+   "abandoned_option": "放弃在原六颗扣之间加两组暗按扣的方案，因为它内侧能看到两处加固贴。",
+   "authorization_scope_evidence": "针织工艺员只负责改扣眼与加固，试衣员只按站姿和坐姿完成动作，设计负责人只确定这次样衣的门襟方案，没有人给出耐用性结论。",
+   "constraint_or_cost": "选七颗扣的代价是多一颗扣，扣合时间平均多四秒。",
+   "current_evidence_boundary": "只有这一件米白色样衣的门襟状态和三轮计时，不能推到所有身形，四秒也只是本次三轮的平均值。",
+   "decision_context": "细针针织开衫试穿样在坐姿时第三与第四颗扣之间出现门襟张口，要决定怎么改门襟。",
+   "decision_domain": "针织开衫的门襟扣合方式与扣距设计。",
+   "decision_problem": "六颗扣坐姿时门襟张口，要在门襟平整、内侧观感和日常扣合效率之间取舍。",
+   "document_field_evidence": "样衣修改单记录两套扣合方案、扣距、二十次开合检查结果和三轮扣合计时，末页圈定七颗扣方案。",
+   "field_scope_evidence": "评估只覆盖这件样衣的门襟平整、内侧观感和扣合时间，不含耐用性或不同身形。",
+   "object_action_evidence": "同一件米白色开衫样衣先后试装七颗树脂扣、六颗扣加两组暗按扣，两方案各连续开合二十次。",
+   "options_considered": "考虑过三种：原六颗扣、增加到七颗扣、六颗扣之间加两组暗按扣。",
+   "record_field_evidence": "记录了两方案各二十次开合、七颗扣内侧整洁、暗按扣两处加固贴，以及扣合时间平均多四秒。",
+   "relation_evidence": "暗按扣让门襟更平却在内侧留两处加固贴，七颗扣内侧整洁但扣合平均多四秒；换成七颗扣的同时要缩短扣距。",
+   "selected_option": "最终选七颗扣并缩短扣距。"
+  },
+  "source_summary_a": "样衣修改单记录两套扣合方案、扣距、二十次开合检查结果和三轮扣合计时，末页圈定七颗扣方案。",
+  "source_summary_b": "近景素材包括粉笔扣位、暗按扣加固贴、坐姿门襟变化和手指逐颗扣合，声音以针织摩擦和扣子轻碰为主。",
+  "label_jia": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "合体效果暗示；选案解决张口由决策链与坐姿素材支持"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "UNKNOWN",
+   "rationale": "合身效果暗示；源仅记内侧整洁与计时，未记坐姿结果"
+  }
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP16-005-CLAIM-01",
+  "claim_text": "把下端反开8厘米",
+  "claim_boundary": "一次店内完成不能代表长期能力，也不能宣称适合所有轮椅与行动方式。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "actor_task_identity": "导购负责调镜、解释拉链结构，不在未被请求时触碰顾客或轮椅；这是对一次匿名轮椅使用者试穿服务的复盘。",
+   "customer_task_truth": "匿名轮椅使用者希望自己独立穿脱短外套，试穿时不接受代操作。",
+   "friction_evidence": "第1件下摆在坐姿腹前堆起3层，第2件第1次对齐插销时没对准，2处都影响独立操作。",
+   "handled_object": "上手的是2件短外套（下摆堆叠的第1件、前短后长的第2件）、轮椅，以及第2件的双向拉链和拉链绳。",
+   "identity_exclusion_map": "顾客正脸与身份不进画面，只拍手部、拉链和前摆；服务表不带可识别信息。",
+   "observed_action_chain": "动作链是试穿第1件看下摆堆3层，换第2件依次对齐插销、上拉、下端反开8厘米、取侧袋，第1次插销未对准、第2次完成。",
+   "service_action": "导购只转动镜子帮顾客看清插销位置、解释双向拉链结构，全程不代替顾客操作。",
+   "service_feedback_or_unfinished_state": "顾客购买第2件并要求保留原拉链绳，之后自己在家继续用，这是这次服务之后的跟进方向。",
+   "task_effect_evidence": "第2件前短后长、双向拉链下端可反开8厘米，顾客第2次就独立完成了对齐插销、上拉、反开和取侧袋。",
+   "visible_result_or_unfinished_state": "顾客买下第2件、保留原拉链绳，独立穿脱在店内完成了一次，长期使用还要在家里继续。"
+  },
+  "source_summary_a": "服务表记录下摆、拉链结构、动作和保留拉链绳要求。",
+  "source_summary_b": "正面近景连续拍双向拉链与前摆，保留拉链声和获准的动作反馈。",
+  "label_jia": {
+   "risk": "LOW",
+   "entailment": "SUPPORTED",
+   "rationale": "动作链与效果证据均载下端反开8厘米；单次店内动作过程描述"
+  },
+  "label_yi": {
+   "risk": "MEDIUM",
+   "entailment": "SUPPORTED",
+   "rationale": "动作链与效果证据均载下端反开8厘米；功能演示会影响轮椅使用者购买判断"
+  }
+ }
+]

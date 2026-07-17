@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 184972,
+ "duration_api_ms": 184914,
+ "ttft_ms": 178210,
+ "ttft_stream_ms": 3434,
+ "time_to_request_ms": 29,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round1_top-G3-POS-CP11-002-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"放弃暗按扣与修改单及slot记录一致，属过程描述\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP11-002-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"四秒代价有计时记录支持；量化对比或影响购买判断\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP11-002-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"评估范围明载不含耐用性与身形，属诚实限度披露\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP11-003-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"取舍页明标三十厘米高开衩放弃，属过程决策事实\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP11-003-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"双开衩新增两道加固有记录，属工艺过程描述\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP11-003-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"范围明载不含不同身高与长期穿着，属限度披露\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP16-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"摩擦证据原文记载坐姿腹前堆3层，属观感描述\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP16-005-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"效果证据原文支持单次完成；独立操作属效果暗示\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP16-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"服务记录载全程不代顾客操作，属过程描述\"},{\"case_id\":\"PILOT-round1_top-G3-POS-CP18-002-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"日志载六次询问且未列销量，符合防销售因果边界\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "bbdde2e0-1bc0-43ab-aa59-1f30326646a4",
+ "total_cost_usd": 1.169344,
+ "usage": {
+  "input_tokens": 3477,
+  "cache_creation_input_tokens": 22068,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 13510,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 22068,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3477,
+    "output_tokens": 13510,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 22068,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 22068
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3477,
+   "outputTokens": 13510,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 22068,
+   "webSearchRequests": 0,
+   "costUSD": 1.169344,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "8eab5830-3720-41c2-b6ea-733726fd070d"
+}

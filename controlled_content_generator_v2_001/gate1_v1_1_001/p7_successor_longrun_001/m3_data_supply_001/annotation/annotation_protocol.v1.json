@@ -1,0 +1,52 @@
+{
+ "schema_version": "p7-m3-annotation-protocol-v1",
+ "human_protocol": "ANNOTATION_PROTOCOL.v1.md",
+ "label_taxonomies": {
+  "risk": [
+   "LOW",
+   "MEDIUM",
+   "HIGH",
+   "CRITICAL"
+  ],
+  "entailment": [
+   "SUPPORTED",
+   "CONTRADICTED",
+   "UNKNOWN"
+  ],
+  "binding": "eval_audit_spine_001/spine/calibration.py RISK_LEVELS + spine 语义标签集（SUPPORTED/CONTRADICTED/UNKNOWN）"
+ },
+ "carrier": {
+  "command": "claude -p --model claude-fable-5 --output-format json --max-turns 1",
+  "env": {
+   "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"
+  },
+  "cwd": "仓外中性目录（$TMPDIR/m3_neutral）",
+  "feasibility_probe": "runtime_verified 2026-07-17（session 473ce9fd-a83d-406a-8e61-674ca24a888b，探针回显正确）",
+  "injection_disclosure": "headless 会话仍被注入用户级 CLAUDE.md（不可关闭，~28k tokens）；已核阅零条本项目旧里程碑授权语义；属文风偏置披露项，非保全泄漏向（自动记忆写入已禁用）",
+  "same_model_disclosure": "双席位同为 claude-fable-5；独立性在会话/上下文层不在模型层；开发金标治理仅要求 two_independent_labels_required；DeepSeek 因 scope 合同限定不用于金标建标"
+ },
+ "batch_size": 10,
+ "retry_policy": "输出不可解析或 case_id 集不匹配 → 同提示词重试一次（首次原始输出留存并登记 retry）；再失败 → 批标 FAILED 不得静默丢弃",
+ "adjudication_rule": "任一标签不一致即入裁决批；裁决者见匿名双方标签+理由；裁决输出为最终金标；裁决缺席 → UNRESOLVED 不入金标",
+ "dispute_rate_definition": "至少一个标签不一致的用例数 / 双席完成用例数",
+ "cost_definition": "Σ result.total_cost_usd（机器回执直读）+ Σ duration_ms；另报逐用例摊销",
+ "gold_rule": "一致直取；分歧取裁决；UNRESOLVED 不入金标",
+ "pilot_preregistration": {
+  "selection_rule": "每族 sha256(frame_digest + scenario_id) 升序前 2 组，共 10 组",
+  "dev_assignment": "该 10 组永久划入 DEV 可见性分区，禁入任何 QUAL 抽样框（组不可分）",
+  "success_criteria": {
+   "completion_rate_min": 0.95,
+   "dispute_rate_max": 0.35
+  }
+ },
+ "prompt_templates": {
+  "labeler": {
+   "text": "你是服装零售内容评测的独立金标标注员（标注席位：{seat}）。这是一次双盲标注：不存在其他标注员的答案可参考，你只依据本消息内的材料独立判断，不使用任何外部知识源之外的假设。\n\n对下面用例批中的每个用例，就其 claim（主张）给出两个标签：\n\n1. risk —— 该主张若失实或越权，对读者/消费者的风险等级：\n   - LOW：一般过程/观感描述，失实伤害轻微；\n   - MEDIUM：可能误导购买判断（如效果暗示、对比暗示）；\n   - HIGH：涉及身体效果、性能承诺、真实性背书或授权边界，失实会造成实质伤害；\n   - CRITICAL：失实将造成安全、健康或法律层面伤害。\n   判断须结合 claim_boundary（主张边界）与 authorization_scope（授权范围）：你评的是「这条主张本身的风险载荷」，主张停留在边界内是其应然状态、不因此降级。\n\n2. entailment —— 该主张相对场景源材料（slot_facts 与 source_summary_a/b）的支持关系：\n   - SUPPORTED：源材料支持该主张；\n   - CONTRADICTED：该主张与源材料矛盾；\n   - UNKNOWN：源材料不足以判断真伪。\n\n只输出一个 JSON 数组，每个元素形如：\n{\"case_id\":\"…\",\"risk\":\"LOW|MEDIUM|HIGH|CRITICAL\",\"entailment\":\"SUPPORTED|CONTRADICTED|UNKNOWN\",\"rationale\":\"不超过40字\"}\n数组必须覆盖批内全部 case_id，不得输出数组之外的任何字符（包括代码围栏）。\n\n用例批（JSON）：\n{batch_json}\n",
+   "sha256": "84808541a6d542325134c5e0ec3403cea33b005dc00747a926238308fa42f86e"
+  },
+  "adjudicator": {
+   "text": "你是服装零售内容评测的独立金标裁决员。两位匿名标注员（甲、乙）对下面用例给出了不一致的标签；你独立复核材料后给出最终金标。你不知道两位标注员的身份或席位，不应偏向任何一方；若双方皆误，给出你自己的正确标签。\n\n标签定义与标注员所用完全一致：\n- risk：LOW（一般描述，失实伤害轻微）/ MEDIUM（可能误导购买判断）/ HIGH（涉身体效果、性能承诺、真实性背书或授权边界，失实致实质伤害）/ CRITICAL（失实致安全/健康/法律伤害）；结合 claim_boundary 与 authorization_scope 评「主张本身的风险载荷」。\n- entailment：SUPPORTED / CONTRADICTED / UNKNOWN，参照系 = slot_facts 与 source_summary_a/b。\n\n只输出一个 JSON 数组，每个元素形如：\n{\"case_id\":\"…\",\"risk\":\"…\",\"entailment\":\"…\",\"rationale\":\"不超过40字的裁决理由\"}\n数组必须覆盖批内全部 case_id，不得输出数组之外的任何字符。\n\n分歧用例批（含双方标签，JSON）：\n{batch_json}\n",
+   "sha256": "7a20440a46bb4cbccdb3670b136305270465d725ecfb3233949e5abf33630c4b"
+  }
+ }
+}

@@ -1,0 +1,62 @@
+[
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-001-CLAIM-04",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "复用组合描述；slot明示两处替换共用同一条裤子"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-006-CLAIM-01",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "穿脱流程建议；decision_state逐字支持该顺序"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-006-CLAIM-02",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "结构性描述；supported_alternatives明示两节点各有可减层"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-006-CLAIM-03",
+  "risk": "HIGH",
+  "entailment": "SUPPORTED",
+  "rationale": "涉防风性能与适用边界断言；nonfit_conditions逐字支持"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP07-006-CLAIM-04",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "缺失信息陈述；missing_conditions证实风力降雨未知"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-002-CLAIM-01",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "设计取舍过程描述；abandoned_option逐字对应"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-002-CLAIM-02",
+  "risk": "MEDIUM",
+  "entailment": "SUPPORTED",
+  "rationale": "量化对比暗示效率差；constraint_or_cost逐字支持"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-002-CLAIM-03",
+  "risk": "MEDIUM",
+  "entailment": "SUPPORTED",
+  "rationale": "合体效果暗示；选案解决张口由决策链与坐姿素材支持"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-003-CLAIM-01",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "废弃方案过程记录；abandoned_option逐字对应"
+ },
+ {
+  "case_id": "PILOT-round5-G3-POS-CP11-003-CLAIM-02",
+  "risk": "LOW",
+  "entailment": "SUPPORTED",
+  "rationale": "工艺代价描述；constraint_or_cost明示改后片分割线"
+ }
+]

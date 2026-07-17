@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 31287,
+ "duration_api_ms": 31232,
+ "ttft_ms": 30050,
+ "ttft_stream_ms": 12519,
+ "time_to_request_ms": 28,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round5-G3-POS-CP19-006-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"候补数是需求信号，失实可暗示稀缺误导购买；37条候补有记录与界面证据支持\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "7d90d51f-6c9b-4b30-aaf5-41add9ca2193",
+ "total_cost_usd": 0.35388400000000003,
+ "usage": {
+  "input_tokens": 3250,
+  "cache_creation_input_tokens": 11841,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 1337,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 11841,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3250,
+    "output_tokens": 1337,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 11841,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 11841
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3250,
+   "outputTokens": 1337,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 11841,
+   "webSearchRequests": 0,
+   "costUSD": 0.35388400000000003,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "6422cea0-c84d-4118-b3e9-e8e43666ed61"
+}

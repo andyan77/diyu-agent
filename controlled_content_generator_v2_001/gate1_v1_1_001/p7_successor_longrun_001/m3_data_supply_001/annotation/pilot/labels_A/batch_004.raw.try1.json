@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 136687,
+ "duration_api_ms": 136628,
+ "ttft_ms": 127293,
+ "ttft_stream_ms": 2510,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round2-G3-POS-CP11-003-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"两道加固工序与成本、记录证据一致，属过程描述\"},{\"case_id\":\"PILOT-round2-G3-POS-CP11-003-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三件样衣与步幅线、遮挡线范围有字段证据，边界内描述\"},{\"case_id\":\"PILOT-round2-G3-POS-CP16-005-CLAIM-01\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"第2次独立完成有动作链佐证；涉身体能力与效果载荷\"},{\"case_id\":\"PILOT-round2-G3-POS-CP16-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"腹前堆3层与摩擦证据一致，属观感描述\"},{\"case_id\":\"PILOT-round2-G3-POS-CP16-005-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"购买并保留拉链绳有据；顾客购买属真实性背书载荷\"},{\"case_id\":\"PILOT-round2-G3-POS-CP18-002-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"六次询问有时段日志对应，未涉销量因果，诚实记录\"},{\"case_id\":\"PILOT-round2-G3-POS-CP18-002-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"按三种厚度摆放与陈列证据一致，属过程描述\"},{\"case_id\":\"PILOT-round2-G3-POS-CP19-004-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"11元毛利取舍有报价洗样佐证；含品质取舍购买暗示\"},{\"case_id\":\"PILOT-round2-G3-POS-CP19-004-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"首批仅抽检、批次未验均有据，诚实边界陈述\"},{\"case_id\":\"PILOT-round2-G3-POS-CP19-006-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"37条候补不算订单有据；涉销量口径与稀缺暗示\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "6fd1aff6-cfa3-4c84-999b-5c3b4a3b1fce",
+ "total_cost_usd": 0.9616939999999999,
+ "usage": {
+  "input_tokens": 3471,
+  "cache_creation_input_tokens": 20726,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9895,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 20726,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3471,
+    "output_tokens": 9895,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 20726,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 20726
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3471,
+   "outputTokens": 9895,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 20726,
+   "webSearchRequests": 0,
+   "costUSD": 0.9616939999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "780107e6-6429-4961-b1b7-77a5e968a7f5"
+}

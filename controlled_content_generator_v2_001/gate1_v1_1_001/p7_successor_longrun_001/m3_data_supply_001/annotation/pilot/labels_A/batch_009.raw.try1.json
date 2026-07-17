@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 131918,
+ "duration_api_ms": 131854,
+ "ttft_ms": 123903,
+ "ttft_stream_ms": 3061,
+ "time_to_request_ms": 33,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-001-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"复用组合描述；slot明示两处替换共用同一条裤子\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"穿脱流程建议；decision_state逐字支持该顺序\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"结构性描述；supported_alternatives明示两节点各有可减层\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-006-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"涉防风性能与适用边界断言；nonfit_conditions逐字支持\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-006-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"缺失信息陈述；missing_conditions证实风力降雨未知\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP11-002-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"设计取舍过程描述；abandoned_option逐字对应\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP11-002-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"量化对比暗示效率差；constraint_or_cost逐字支持\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP11-002-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"合体效果暗示；选案解决张口由决策链与坐姿素材支持\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP11-003-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"废弃方案过程记录；abandoned_option逐字对应\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP11-003-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工艺代价描述；constraint_or_cost明示改后片分割线\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "8cc99e25-8817-44bd-9b81-27cc7794dfd5",
+ "total_cost_usd": 1.006264,
+ "usage": {
+  "input_tokens": 3241,
+  "cache_creation_input_tokens": 23167,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9856,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23167,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3241,
+    "output_tokens": 9856,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23167,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23167
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3241,
+   "outputTokens": 9856,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23167,
+   "webSearchRequests": 0,
+   "costUSD": 1.006264,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "5a0b3413-8057-4d4f-a553-512333770372"
+}

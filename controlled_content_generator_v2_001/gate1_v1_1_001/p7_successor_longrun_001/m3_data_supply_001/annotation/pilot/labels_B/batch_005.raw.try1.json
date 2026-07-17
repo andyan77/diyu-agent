@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 173039,
+ "duration_api_ms": 172973,
+ "ttft_ms": 165219,
+ "ttft_stream_ms": 3682,
+ "time_to_request_ms": 38,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round2-G3-POS-CP19-006-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"交付时效涉购买等待预期；源材料明言按期交付尚未验证\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工艺设问，预设的垫针工序与判断点事实一致\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工艺过程描述；2毫米垫针、双线六次穿孔均与工序吻合\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"边界声明式主张；功能试穿过门襟与未测拉力均见于源\"},{\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"口语设问复述垫针工序，属过程描述，源支持其预设\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工作方法描述，源逐字记载只留可见项、效果词留空\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"过程个案叙述；源载开衫说明因无可核细节整条退回\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"核对表二十条中十八行标能确认，与主张数字相符\"},{\"case_id\":\"PILOT-round3-G3-POS-CP05-012-CLAIM-04\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"字段范围描述，源明言材质克重耐洗不在其所写栏位\"},{\"case_id\":\"PILOT-round3-G3-POS-CP07-001-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"连穿三天含复用效果暗示可影响决策；源载条件化方案支持\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "e1aa0c29-5315-4f0a-9ff5-3263bb0779ac",
+ "total_cost_usd": 1.137254,
+ "usage": {
+  "input_tokens": 3461,
+  "cache_creation_input_tokens": 23594,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 12261,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23594,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3461,
+    "output_tokens": 12261,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23594,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23594
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3461,
+   "outputTokens": 12261,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23594,
+   "webSearchRequests": 0,
+   "costUSD": 1.137254,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "25df8f03-2ab9-4f1b-bf0c-4d9e781f08b9"
+}

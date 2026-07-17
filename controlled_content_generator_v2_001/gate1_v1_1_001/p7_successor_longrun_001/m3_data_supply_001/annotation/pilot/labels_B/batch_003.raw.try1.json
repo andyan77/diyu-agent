@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 96065,
+ "duration_api_ms": 96000,
+ "ttft_ms": 88662,
+ "ttft_stream_ms": 3783,
+ "time_to_request_ms": 36,
+ "num_turns": 1,
+ "result": "[{\"case_id\":\"PILOT-round2-G3-POS-CP07-001-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"复用穿搭过程描述，fit_conditions与决策明载，失实伤害轻微\"},{\"case_id\":\"PILOT-round2-G3-POS-CP07-001-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"容量效果暗示可影响装包决策；实装视频留空证据直接支持\"},{\"case_id\":\"PILOT-round2-G3-POS-CP07-001-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"载荷属防水性能边界，失实即性能误导；源明言防泼水非防水\"},{\"case_id\":\"PILOT-round2-G3-POS-CP07-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"三层穿脱顺序为过程描述，decision_state逐层一致\"},{\"case_id\":\"PILOT-round2-G3-POS-CP07-006-CLAIM-02\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"性能限定主张，失实致保暖防雨误判；源载无填充仅挡风\"},{\"case_id\":\"PILOT-round2-G3-POS-CP07-006-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"查预报属过程建议，顾问提醒原文支持，失实伤害轻微\"},{\"case_id\":\"PILOT-round2-G3-POS-CP11-002-CLAIM-01\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"量化对比暗示影响取舍判断；三轮计时平均四秒有记录\"},{\"case_id\":\"PILOT-round2-G3-POS-CP11-002-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"决策结果陈述，修改单末页圈定七颗扣，失实伤害轻微\"},{\"case_id\":\"PILOT-round2-G3-POS-CP11-002-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"证据覆盖范围声明属真实性背书边界；field_scope逐字支持\"},{\"case_id\":\"PILOT-round2-G3-POS-CP11-003-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"决策结果陈述，selected_option明载双开衩各十六厘米\"}]",
+ "stop_reason": "end_turn",
+ "session_id": "fb008808-b7dc-47ae-bd1d-09a721965f76",
+ "total_cost_usd": 0.8812739999999999,
+ "usage": {
+  "input_tokens": 3244,
+  "cache_creation_input_tokens": 23166,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 7356,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23166,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3244,
+    "output_tokens": 7356,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23166,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23166
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3244,
+   "outputTokens": 7356,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23166,
+   "webSearchRequests": 0,
+   "costUSD": 0.8812739999999999,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "864c39a9-d1f4-4aca-805c-fbc76e95b98e"
+}

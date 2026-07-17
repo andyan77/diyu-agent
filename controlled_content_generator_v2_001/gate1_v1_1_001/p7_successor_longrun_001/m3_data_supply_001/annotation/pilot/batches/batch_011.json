@@ -1,0 +1,30 @@
+[
+ {
+  "case_id": "PILOT-round5-G3-POS-CP19-006-CLAIM-03",
+  "scenario_id": "G3-CUR-CP19-006",
+  "family_id": "F5_ENTERPRISE_LONG_TERM_TRUST",
+  "round": "round5",
+  "item_title": "把预售上限摁到300件，放弃后面那200个订单",
+  "claim_id": "G3-POS-CP19-006-CLAIM-03",
+  "claim_text": "后台候补那一列停在37个名字上",
+  "claim_boundary": "不能把候补算销量、制造稀缺叙事或保证准时。",
+  "authorization_scope": "仅限 Gate 1 v1.1 合成资格与基线测试使用，不得发布、投放、进入正式内容资产或生产运行。",
+  "slot_facts": {
+   "abandoned_option": "放弃多出的200个潜在订单，也放弃原先“持续开放”的素材。",
+   "cause_or_decision_trace_evidence": "排产表记录四周300件产能与外包工序来不及校准，是把上限压到300的依据。",
+   "constraint_or_cost": "代价是让出200个潜在订单这部分销量，并重做原先“持续开放”的素材。",
+   "current_evidence_boundary": "目前只有工坊四周产能与外包校准的判断，实际能否准时交付还没验证。",
+   "current_result_or_open_state": "预售关闭时有37条候补，不算订单，交付留到六周后复核。",
+   "decision_context": "工坊确认四周最多做300件，营销原拟开放500件、让后200件八周交，但外包工序来不及校准。",
+   "decision_domain": "这是一次绗缝外套的预售上限决策，牵动产能与订货规模。",
+   "field_scope_evidence": "这些字段只覆盖这批绗缝外套的产能与预售，不涉其他款。",
+   "options_considered": "团队权衡开放500件、开放但延后200件、只开300件三个方案。",
+   "record_field_evidence": "排产表、页面版本和候补计数分别列出300、500、200、37条字段。",
+   "result_state_evidence": "工序板、页面上限和候补界面配缝纫声，关闭时记录37条候补、不计为订单。",
+   "selected_option": "团队把预售上限设为300件。",
+   "unresolved_consequence": "让出的200个订单和37条候补会怎样、能否按期交付，都还没有结果。"
+  },
+  "source_summary_a": "排产表、页面版本和候补计数支持决策。",
+  "source_summary_b": "工序板、页面上限和候补界面配缝纫声。"
+ }
+]

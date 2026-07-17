@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 165527,
+ "duration_api_ms": 165463,
+ "ttft_ms": 157663,
+ "ttft_stream_ms": 13393,
+ "time_to_request_ms": 30,
+ "num_turns": 1,
+ "result": "[\n {\"case_id\":\"PILOT-round1_top-G3-POS-CP03-005-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"judgment_point逐字支持；工艺功能描述无性能承诺，失实伤害轻\"},\n {\"case_id\":\"PILOT-round1_top-G3-POS-CP07-001-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"与fit_conditions逐字一致；条件化收纳建议，失实仅致不便\"},\n {\"case_id\":\"PILOT-round1_top-G3-POS-CP07-006-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"引语与条件均见于源；条件化穿脱安排，非性能承诺\"},\n {\"case_id\":\"PILOT-round1_top-G3-POS-CP16-005-CLAIM-02\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"task_effect_evidence逐字支持；涉轮椅顾客身体能力与真实性背书\"},\n {\"case_id\":\"PILOT-round1_top-G3-POS-CP16-005-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"source明载全程不代操作；系独立完成叙事的真实性担保，失实即编造\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP16-005-CLAIM-03\",\"risk\":\"HIGH\",\"entailment\":\"SUPPORTED\",\"rationale\":\"服务记录载购买并留拉链绳；真实顾客购买叙事属真实性背书载荷\"},\n {\"case_id\":\"PILOT-round2-G3-POS-CP19-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"源载37条候补不计订单；澄清口径的免责陈述，符合边界伤害轻\"},\n {\"case_id\":\"PILOT-round3-G3-POS-CP03-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"担保范围与源证据边界一致；自限式边界声明，未测项均明示未涉\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-001-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"源明示防泼水非防水，方向一致；涉鞋挡水性能表述可影响购买\"},\n {\"case_id\":\"PILOT-round5-G3-POS-CP07-006-CLAIM-03\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"nonfit_conditions逐字支持；含挡风功能断言，限定非承诺\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "9e1817b6-1621-4cb2-a30d-90ed04c61769",
+ "total_cost_usd": 1.1109939999999998,
+ "usage": {
+  "input_tokens": 3477,
+  "cache_creation_input_tokens": 23873,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 11621,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 23873,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3477,
+    "output_tokens": 11621,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 23873,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 23873
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3477,
+   "outputTokens": 11621,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 23873,
+   "webSearchRequests": 0,
+   "costUSD": 1.1109939999999998,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "c5057507-ef80-424a-999c-0d6fb635108c"
+}

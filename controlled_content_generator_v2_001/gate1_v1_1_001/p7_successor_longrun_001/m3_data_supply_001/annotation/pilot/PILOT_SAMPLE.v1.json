@@ -1,0 +1,50 @@
+{
+ "schema_version": "p7-m3-pilot-sample-v1",
+ "preregistered_rule": "每族 sha256(frame_digest + scenario_id) 升序前 2 组；该 10 组永久划入 DEV 可见性分区，禁入任何 QUAL 抽样框",
+ "frame_digest": "b20a9ae3fe6d8f45bd7f13aa8b00aa92fdba9f61de0cdd72b93e5cf3829f77d8",
+ "dev_assigned_groups": [
+  "G3-CUR-CP03-005",
+  "G3-CUR-CP05-012",
+  "G3-CUR-CP07-001",
+  "G3-CUR-CP07-006",
+  "G3-CUR-CP11-002",
+  "G3-CUR-CP11-003",
+  "G3-CUR-CP16-005",
+  "G3-CUR-CP18-002",
+  "G3-CUR-CP19-004",
+  "G3-CUR-CP19-006"
+ ],
+ "groups_per_family": {
+  "F1_PEOPLE_AND_REAL_SCENE": [
+   "G3-CUR-CP03-005",
+   "G3-CUR-CP05-012"
+  ],
+  "F2_PROFESSIONAL_AND_SEARCH": [
+   "G3-CUR-CP07-001",
+   "G3-CUR-CP07-006"
+  ],
+  "F3_PRODUCT_RELATION_AND_AESTHETIC": [
+   "G3-CUR-CP11-002",
+   "G3-CUR-CP11-003"
+  ],
+  "F4_STORE_LOCAL_AND_RETAIL": [
+   "G3-CUR-CP16-005",
+   "G3-CUR-CP18-002"
+  ],
+  "F5_ENTERPRISE_LONG_TERM_TRUST": [
+   "G3-CUR-CP19-004",
+   "G3-CUR-CP19-006"
+  ]
+ },
+ "case_count": 111,
+ "cases_per_family": {
+  "F1_PEOPLE_AND_REAL_SCENE": 25,
+  "F2_PROFESSIONAL_AND_SEARCH": 24,
+  "F3_PRODUCT_RELATION_AND_AESTHETIC": 24,
+  "F4_STORE_LOCAL_AND_RETAIL": 20,
+  "F5_ENTERPRISE_LONG_TERM_TRUST": 18
+ },
+ "batch_size": 10,
+ "batch_count": 12,
+ "cases_digest": "85db8cb7b92bdfccc0787995d3c19b1eabac8c4db79eed4e581c66b332b2ad59"
+}

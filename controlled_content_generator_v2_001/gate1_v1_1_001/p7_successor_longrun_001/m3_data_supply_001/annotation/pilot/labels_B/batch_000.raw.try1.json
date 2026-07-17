@@ -1,0 +1,62 @@
+{
+ "type": "result",
+ "subtype": "success",
+ "is_error": false,
+ "api_error_status": null,
+ "duration_ms": 132096,
+ "duration_api_ms": 132041,
+ "ttft_ms": 123847,
+ "ttft_stream_ms": 4262,
+ "time_to_request_ms": 27,
+ "num_turns": 1,
+ "result": "[\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP03-005-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工序步数清点，ordered_step_inventory逐字支持，失实伤害轻微\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP03-005-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"含功能效果与对比暗示，judgment_point逐字支持\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP03-005-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"限定范围声明，源材料明示证据仅及此枚此次，一致\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP05-012-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"工作方法描述，recorded_change逐字支持\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP05-012-CLAIM-02\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"栏位签署分工为记录性事实，relation_evidence逐字支持\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP05-012-CLAIM-03\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"否认发布与成交的限界声明，与核对表证据范围一致\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP07-001-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"清单与已演示事实描述，decision_state及平铺证据支持\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP07-001-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"含连穿三天可行性暗示，条件与fit_conditions一致支持\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP07-006-CLAIM-01\",\"risk\":\"LOW\",\"entailment\":\"SUPPORTED\",\"rationale\":\"穿脱顺序判断描述，decision_state与可减选项逐条支持\"},\n{\"case_id\":\"PILOT-round1_top-G3-POS-CP07-006-CLAIM-02\",\"risk\":\"MEDIUM\",\"entailment\":\"SUPPORTED\",\"rationale\":\"含逐层减效果暗示，引语与条件、fit_conditions均支持\"}\n]",
+ "stop_reason": "end_turn",
+ "session_id": "7fb42ffc-c2b6-4c79-94a2-89ba2e576b45",
+ "total_cost_usd": 1.028184,
+ "usage": {
+  "input_tokens": 3477,
+  "cache_creation_input_tokens": 24190,
+  "cache_read_input_tokens": 17714,
+  "output_tokens": 9838,
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 24190,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "not_available",
+  "iterations": [
+   {
+    "input_tokens": 3477,
+    "output_tokens": 9838,
+    "cache_read_input_tokens": 17714,
+    "cache_creation_input_tokens": 24190,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 24190
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard"
+ },
+ "modelUsage": {
+  "claude-fable-5": {
+   "inputTokens": 3477,
+   "outputTokens": 9838,
+   "cacheReadInputTokens": 17714,
+   "cacheCreationInputTokens": 24190,
+   "webSearchRequests": 0,
+   "costUSD": 1.028184,
+   "contextWindow": 1000000,
+   "maxOutputTokens": 64000
+  }
+ },
+ "permission_denials": [],
+ "terminal_reason": "completed",
+ "fast_mode_state": "off",
+ "uuid": "fc0d92e3-8212-4b15-b912-8444e59e2dd1"
+}
