@@ -196,6 +196,11 @@ RELEASE_OBJECT_SPECS: tuple[tuple[str, str, Path], ...] = (
     (
         "public_contract_dependency",
         "public-foundation-v1",
+        FOUNDATION_ROOT / "contract/public_foundation_contract.v1.yaml",
+    ),
+    (
+        "public_contract_dependency",
+        "public-foundation-v1",
         FOUNDATION_ROOT / "identity/simulation_tenant.v1.yaml",
     ),
     (
@@ -890,6 +895,7 @@ class HostedOperations:
             if (
                 authorization is None
                 or authorization.tenant_id != fragment.tenant_id
+                or authorization.payload.get("brand_id") != fragment.brand_id
                 or authorization.status != "GRANTED"
                 or not authorization.valid_from <= as_of_utc < authorization.valid_until
             ):
@@ -916,6 +922,23 @@ class HostedOperations:
                 or not isinstance(store_ids, list)
             ):
                 exclude("SCOPE_METADATA_INVALID")
+                continue
+            permitted_accounts = authorization.payload.get(
+                "permitted_content_account_ids"
+            )
+            permitted_organizations = authorization.payload.get(
+                "permitted_organization_ids"
+            )
+            permitted_stores = authorization.payload.get("permitted_store_ids")
+            if (
+                not isinstance(permitted_accounts, list)
+                or not isinstance(permitted_organizations, list)
+                or not isinstance(permitted_stores, list)
+                or not set(account_ids).issubset(set(permitted_accounts))
+                or not set(organization_ids).issubset(set(permitted_organizations))
+                or not set(store_ids).issubset(set(permitted_stores))
+            ):
+                exclude("AUTHORIZATION_SCOPE_MISMATCH")
                 continue
             scoped_accounts = [accounts.get(value) for value in account_ids]
             if any(

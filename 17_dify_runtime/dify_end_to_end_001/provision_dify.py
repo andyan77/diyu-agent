@@ -9,7 +9,7 @@ import os
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 from flask_login import login_user
 from sqlalchemy import select
@@ -37,6 +37,20 @@ METADATA_FIELDS = {
     "simulation_only": "string",
     "test_fixture_only": "string",
 }
+DOCUMENT_NAME_PREFIX = "PKG7 "
+
+
+class ReconciliationOperation(TypedDict):
+    action: str
+    document_id: str | None
+    fragment_id: str
+    name: str
+    source_content_sha256: str
+
+
+class DocumentReconciliation(TypedDict):
+    upserts: list[ReconciliationOperation]
+    delete_document_ids: list[str]
 
 
 def _token(value: object) -> str:
@@ -58,6 +72,75 @@ def _read_fragments(path: Path) -> list[dict[str, Any]]:
         for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+
+
+def _normalized_text(value: object) -> str:
+    return str(value).replace("\r\n", "\n").replace("\r", "\n").strip()
+
+
+def _content_sha256(value: object) -> str:
+    return hashlib.sha256(_normalized_text(value).encode("utf-8")).hexdigest()
+
+
+def plan_document_reconciliation(
+    existing_documents: list[dict[str, Any]],
+    fragments: list[dict[str, Any]],
+) -> DocumentReconciliation:
+    """Plan one convergent replacement of the Package 7 document namespace."""
+    existing_by_name: dict[str, dict[str, Any]] = {}
+    for row in existing_documents:
+        name = row.get("name")
+        document_id = row.get("document_id")
+        if not isinstance(name, str) or not isinstance(document_id, str):
+            raise RuntimeError("The existing Dify document inventory is invalid")
+        if not name.startswith(DOCUMENT_NAME_PREFIX):
+            continue
+        if name in existing_by_name:
+            raise RuntimeError("The Package 7 Dify document namespace is not unique")
+        existing_by_name[name] = dict(row)
+
+    desired_by_name: dict[str, dict[str, Any]] = {}
+    for fragment in fragments:
+        fragment_id = fragment.get("fragment_id")
+        if not isinstance(fragment_id, str) or not fragment_id:
+            raise RuntimeError("The materialized fragment ID is invalid")
+        name = f"{DOCUMENT_NAME_PREFIX}{fragment_id}"
+        if name in desired_by_name:
+            raise RuntimeError("The materialized Dify document namespace is not unique")
+        desired_by_name[name] = fragment
+
+    upserts: list[ReconciliationOperation] = []
+    for name in sorted(desired_by_name):
+        fragment = desired_by_name[name]
+        desired_digest = _content_sha256(fragment.get("text", ""))
+        existing = existing_by_name.get(name)
+        if existing is None:
+            action = "CREATE"
+            document_id = None
+        elif existing.get("index_content_sha256") == desired_digest:
+            action = "KEEP"
+            document_id = existing["document_id"]
+        else:
+            action = "REPLACE"
+            document_id = existing["document_id"]
+        upserts.append(
+            {
+                "action": action,
+                "document_id": document_id,
+                "fragment_id": fragment["fragment_id"],
+                "name": name,
+                "source_content_sha256": desired_digest,
+            }
+        )
+
+    delete_document_ids = [
+        str(existing_by_name[name]["document_id"])
+        for name in sorted(set(existing_by_name) - set(desired_by_name))
+    ]
+    return {
+        "upserts": upserts,
+        "delete_document_ids": delete_document_ids,
+    }
 
 
 def _canonical_json(value: object) -> str:
@@ -380,22 +463,72 @@ def main() -> int:
         }
         if len(fragment_by_id) != len(fragments):
             raise RuntimeError("Package 7 narrative fragments contain duplicate IDs")
-        document_ids: dict[str, str] = {}
-        for fragment in fragments:
-            fragment_id = str(fragment["fragment_id"])
-            name = f"PKG7 {fragment_id}"
-            document = db.session.scalar(
-                select(Document)
-                .where(Document.dataset_id == dataset.id, Document.name == name)
-                .limit(1)
-            )
-            if document is None:
-                text = (
-                    str(fragment["text"])
-                    .replace("\r\n", "\n")
-                    .replace("\r", "\n")
-                    .strip()
+        package_documents = list(
+            db.session.scalars(
+                select(Document).where(
+                    Document.dataset_id == dataset.id,
+                    Document.name.like(f"{DOCUMENT_NAME_PREFIX}%"),
                 )
+            ).all()
+        )
+        package_document_ids = [document.id for document in package_documents]
+        completed_segments = (
+            list(
+                db.session.scalars(
+                    select(DocumentSegment).where(
+                        DocumentSegment.document_id.in_(package_document_ids),
+                        DocumentSegment.enabled.is_(True),
+                        DocumentSegment.status == "completed",
+                    )
+                ).all()
+            )
+            if package_document_ids
+            else []
+        )
+        existing_segment_groups: dict[str, list[Any]] = {}
+        for segment in completed_segments:
+            existing_segment_groups.setdefault(str(segment.document_id), []).append(
+                segment
+            )
+        existing_inventory = [
+            {
+                "document_id": str(document.id),
+                "name": str(document.name),
+                "index_content_sha256": (
+                    _content_sha256(
+                        existing_segment_groups[str(document.id)][0].content
+                    )
+                    if len(existing_segment_groups.get(str(document.id), [])) == 1
+                    else None
+                ),
+            }
+            for document in package_documents
+        ]
+        reconciliation = plan_document_reconciliation(existing_inventory, fragments)
+        package_documents_by_id = {
+            str(document.id): document for document in package_documents
+        }
+        for stale_document_id in reconciliation["delete_document_ids"]:
+            document = package_documents_by_id.get(str(stale_document_id))
+            if document is None:
+                raise RuntimeError(
+                    "The stale Dify document disappeared during reconciliation"
+                )
+            DocumentService.delete_document(document)
+
+        document_ids: dict[str, str] = {}
+        for operation in reconciliation["upserts"]:
+            fragment_id = str(operation["fragment_id"])
+            fragment = fragment_by_id[fragment_id]
+            name = str(operation["name"])
+            existing_document_id = operation.get("document_id")
+            document = (
+                None
+                if existing_document_id is None
+                else package_documents_by_id.get(str(existing_document_id))
+            )
+            if operation["action"] != "KEEP":
+                text = _normalized_text(fragment["text"])
                 upload = FileService(db.engine).upload_text(
                     text=text,
                     text_name=name,
@@ -403,6 +536,9 @@ def main() -> int:
                     tenant_id=tenant_id,
                 )
                 config = KnowledgeConfig(
+                    original_document_id=(
+                        None if document is None else str(document.id)
+                    ),
                     indexing_technique="economy",
                     data_source=DataSource(
                         info_list=InfoList(
@@ -439,13 +575,23 @@ def main() -> int:
                     doc_language="Chinese",
                     name=name,
                 )
-                documents, _ = DocumentService.save_document_with_dataset_id(
-                    dataset,
-                    config,
-                    account,
-                    created_from="api",
-                )
-                document = documents[0]
+                if document is None:
+                    documents, _ = DocumentService.save_document_with_dataset_id(
+                        dataset,
+                        config,
+                        account,
+                        created_from="api",
+                    )
+                    document = documents[0]
+                else:
+                    document = DocumentService.update_document_with_dataset_id(
+                        dataset,
+                        config,
+                        account,
+                        created_from="api",
+                    )
+            if document is None:
+                raise RuntimeError("The Dify reconciliation plan lost a document")
             metadata_values: dict[str, str | float] = {
                 "fragment_id": fragment_id,
                 "tenant_id": str(fragment["tenant_id"]),
@@ -534,6 +680,26 @@ def main() -> int:
             }
             for fragment_id, document_id in document_ids.items()
         }
+        if any(
+            row["source_content_sha256"] != row["index_content_sha256"]
+            for row in mapping.values()
+        ):
+            raise RuntimeError(
+                "The Dify index content does not match runtime materialization"
+            )
+        managed_names = set(
+            db.session.scalars(
+                select(Document.name).where(
+                    Document.dataset_id == dataset.id,
+                    Document.name.like(f"{DOCUMENT_NAME_PREFIX}%"),
+                )
+            ).all()
+        )
+        expected_names = {
+            f"{DOCUMENT_NAME_PREFIX}{fragment_id}" for fragment_id in fragment_by_id
+        }
+        if managed_names != expected_names:
+            raise RuntimeError("The Dify document namespace did not converge")
 
         token = db.session.scalar(
             select(ApiToken)

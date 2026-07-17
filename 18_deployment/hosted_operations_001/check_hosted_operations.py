@@ -28,12 +28,12 @@ PACKAGE_RELATIVE_ROOT = Path("18_deployment/hosted_operations_001")
 BASELINE_COMMIT = "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031"
 TASK_ID = "DIYU_HOSTED_OPERATIONS_001"
 EXPECTED_ACCEPTANCE_RUN_DIGEST = (
-    "91fd614e2c78257bbb1c5398d410dcc4bebc3cd7de3f2ae2b1c270dc606cc435"
+    "3e106f9f409ded6de59cb1cde232a215e7a73ad448e2481d1945d1ba4aa36ed8"
 )
 EXPECTED_BACKUP_DUMP_SHA256 = (
-    "59c565abdc5c0cfefa1ff385cb27f89e67e31e2c83b6d4be6d4e45d8d2b90391"
+    "64541bf1dc2cf4252c7f792bd66379d1f0b32b3fe12458aa6e7ded1a2325f6ad"
 )
-EXPECTED_RELEASE_OBJECT_COUNT = 38
+EXPECTED_RELEASE_OBJECT_COUNT = 39
 RESULT_PATH = Path("result/hosted_operations_result.v1.json")
 DELIVERY_PATH = Path("delivery/execution_review_request.v1.yaml")
 REVIEW_PATHS = (
@@ -235,6 +235,8 @@ def validate_manifests(root: Path) -> None:
         == {
             "database_backup_plus_offline_release_bundle": True,
             "isolated_restore_rematerialization_verified": True,
+            "minimum_runtime_file_closure_included": True,
+            "offline_release_object_count": EXPECTED_RELEASE_OBJECT_COUNT,
             "release_object_digest_and_version_required": True,
         },
         "E_RELEASE_RECOVERY",
@@ -446,6 +448,11 @@ def validate_source_and_files() -> None:
     require(
         "PACKAGE8_DIFY_MATERIALIZATION_MANIFEST_PATH" in provision_source
         and "resolve_materialized_fragments" in provision_source
+        and "plan_document_reconciliation" in provision_source
+        and "update_document_with_dataset_id" in provision_source
+        and "delete_document" in provision_source
+        and "source_content_sha256" in provision_source
+        and "index_content_sha256" in provision_source
         and "PACKAGE7_FRAGMENTS_PATH" not in provision_source,
         "E_DIFY_RUNTIME_MATERIALIZATION_CONSUMER",
     )
@@ -509,7 +516,9 @@ def validate_acceptance_evidence(evidence: Mapping[str, Any]) -> None:
         "runtime_database_materialization_deterministic",
         "second_simulated_brand_materialized",
         "revoked_expired_inactive_unauthorized_excluded",
+        "authorization_scope_mismatch_excluded",
         "dify_import_consumes_runtime_materialization",
+        "dify_import_reconciliation_planner_pass",
         "release_bundle_inventory_complete",
         "release_bundle_missing_object_rejected",
         "release_bundle_damaged_object_rejected",

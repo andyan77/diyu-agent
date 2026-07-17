@@ -55,6 +55,7 @@ from test_dify_end_to_end import (  # type: ignore[import-not-found]  # noqa: E4
     Package7Tests as _Package7Tests,
 )
 from provision_dify import (  # type: ignore[import-not-found]  # noqa: E402
+    plan_document_reconciliation,
     resolve_materialized_fragments,
 )
 
@@ -181,6 +182,49 @@ def _encoded_envelope(material_refs: list[str]) -> str:
 
 
 class Package8UnitTests(unittest.TestCase):
+    def test_dify_document_reconciliation_replaces_and_removes_stale_rows(
+        self,
+    ) -> None:
+        fragments = [
+            {"fragment_id": "KEEP", "text": "保留正文"},
+            {"fragment_id": "REPLACE", "text": "更新正文"},
+            {"fragment_id": "CREATE", "text": "新增正文"},
+        ]
+        existing = [
+            {
+                "document_id": "DOC-KEEP",
+                "name": "PKG7 KEEP",
+                "index_content_sha256": hashlib.sha256(
+                    "保留正文".encode("utf-8")
+                ).hexdigest(),
+            },
+            {
+                "document_id": "DOC-REPLACE",
+                "name": "PKG7 REPLACE",
+                "index_content_sha256": hashlib.sha256(
+                    "过时正文".encode("utf-8")
+                ).hexdigest(),
+            },
+            {
+                "document_id": "DOC-STALE",
+                "name": "PKG7 REVOKED",
+                "index_content_sha256": "0" * 64,
+            },
+        ]
+        plan = plan_document_reconciliation(existing, fragments)
+        actions = {
+            str(row["fragment_id"]): str(row["action"])
+            for row in plan["upserts"]
+            if isinstance(row, dict)
+        }
+        self.assertEqual(
+            actions,
+            {"CREATE": "CREATE", "KEEP": "KEEP", "REPLACE": "REPLACE"},
+        )
+        self.assertEqual(plan["delete_document_ids"], ["DOC-STALE"])
+        with self.assertRaisesRegex(RuntimeError, "not unique"):
+            plan_document_reconciliation([*existing, copy.deepcopy(existing[0])], [])
+
     def test_brand_fixture_compiles_without_internal_user_inputs(self) -> None:
         document = load_brand_input(FIXTURE_PATH)
         bundle = compile_brand_bundle(document)
@@ -707,6 +751,34 @@ class Package8PostgresAcceptance(unittest.TestCase):
                     row = session.get(model, key)
                     self.assertIsNotNone(row)
                     setattr(row, field, original)
+            with sessions.begin() as session:
+                authorization = session.get(RuntimeAuthorization, authorization_id)
+                self.assertIsNotNone(authorization)
+                original_authorization_payload = copy.deepcopy(authorization.payload)
+                wrong_scope_payload = copy.deepcopy(authorization.payload)
+                wrong_scope_payload["permitted_content_account_ids"] = [
+                    "ACCOUNT-QINGHE-LAB--STORE-ACCOUNT"
+                ]
+                authorization.payload = wrong_scope_payload
+            wrong_scope_materialization = operations.materialize_dify(
+                output_directory=Path(temporary)
+                / "materialization-negative-authorization-scope",
+                as_of=materialization_as_of,
+            )
+            self.assertGreaterEqual(
+                wrong_scope_materialization["excluded_counts"].get(
+                    "AUTHORIZATION_SCOPE_MISMATCH", 0
+                ),
+                1,
+            )
+            self.assertLess(
+                wrong_scope_materialization["document_count"],
+                first_materialization["document_count"],
+            )
+            with sessions.begin() as session:
+                authorization = session.get(RuntimeAuthorization, authorization_id)
+                self.assertIsNotNone(authorization)
+                authorization.payload = original_authorization_payload
             with self.assertRaisesRegex(RuntimeError, "intentional"):
                 operations.upgrade(target_version=2, fail_after_write=True)
             self.assertEqual(operations.health()["schema_version"], 1)
@@ -985,6 +1057,8 @@ class Package8PostgresAcceptance(unittest.TestCase):
                     ),
                     "revoked_expired_inactive_unauthorized_excluded": True,
                     "dify_import_consumes_runtime_materialization": True,
+                    "dify_import_reconciliation_planner_pass": True,
+                    "authorization_scope_mismatch_excluded": True,
                     "release_bundle_inventory_complete": True,
                     "release_bundle_missing_object_rejected": True,
                     "release_bundle_damaged_object_rejected": True,
