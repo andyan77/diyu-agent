@@ -1,0 +1,65 @@
+{
+  "schema_version": "p7-session-identity-v1",
+  "milestone_id": "M2",
+  "prompt_id": "P2",
+  "session_kind": "TOP_LEVEL_FRESH",
+  "fork_or_resume": false,
+  "fork_or_resume_evidence": "会话以冻结 RENDERED_PROMPT.v2.md 路径 + 发起人授权语为首条输入开启；无 resume/fork/summary 标记；上下文无任何 M1 会话残留（M1 session_id f719e24e-* ≠ 本会话）",
+  "requested_model": "fable[1m]",
+  "requested_model_evidence": "用户会话内 /model fable[1m] 指令回执：Set model to Fable 5 for this session only",
+  "actual_model_id": "claude-fable-5",
+  "actual_model_display_name": "Fable 5",
+  "actual_model_evidence": "平台运行时 system 环境自报（You are powered by the model named Fable 5. The exact model ID is claude-fable-5）；/model 回显 Current model: Fable 5 (effort: xhigh)",
+  "model_family_confirmed_fable5": true,
+  "undeclared_model_fallback_detected": false,
+  "claude_code_version_cli": "2.1.197",
+  "claude_code_version_extension_binary": "2.1.210 (anthropic.claude-code-2.1.210-linux-x64)",
+  "entrypoint": "claude-vscode",
+  "session_id": "4d7e088b-945e-4903-844a-790379e740d2",
+  "session_id_evidence": "env CLAUDE_CODE_SESSION_ID 与 scratchpad 路径一致",
+  "run_id": "UNAVAILABLE",
+  "run_id_unavailable_reason": "Claude Code 未向会话暴露独立于 session_id 的 run 标识；会话可寻址身份即 session_id",
+  "run_id_evidence_ref": "本文件 environment_observations",
+  "launch_provenance": {
+    "contract_requirement": "FORMAL_MODEL_RUN_CONTRACT §1：M2–M7 启动只能由会话外监督器 tools/launcher.py 完成（LAUNCH_RECORD.v2 先于 spawn 原子落盘 + CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 注入）",
+    "actual_launch": "MANUAL_FOUNDER_LAUNCH：发起人在 VS Code 手动开启全新 Fable 5 顶层会话，粘贴冻结 Prompt 路径 + 授权语『授权启动落盘实现交付』；launcher.py --start M2 未运行",
+    "launch_record_absent_reason": "launch_record.v2.schema 将 record_written_before_spawn / auto_memory_disabled_before_spawn / launched_by=SESSION_EXTERNAL_SUPERVISOR 定为常量；对已启动会话事后补录任何 v2 记录必然含假字段 = 伪造。选择不伪造。",
+    "frozen_prompt_verified": "milestones/M2/RENDERED_PROMPT.v2.md sha256 = 6a8acac7b3e14f6118969211a8e567857d0a1ce36edaff2b59e81a30821f8a9e，与 READY_TO_START.v2.json 登记值逐字一致；五绑定值（input de83d92 / control f7250ac / receipt ecff2dcf / handoff e3a72ffd / acs d7265a18）对磁盘真源逐字复核通过",
+    "entry_validation_recomputed_in_session": "launcher dry-run 等价面只读复算全部通过：journal VALID(head CLOSED_PASS)、M1 八件套 8/8、typed PASS + 双签字摘要匹配、ready_set M2=READY、checker --milestone M2 --mode PRE_REVIEW 三域 PASS",
+    "founder_ruling": "发起人 2026-07-17 会话内 AskUserQuestion 三选一裁决：『裁决登记后本会话继续』；豁免仅限 M2 本次启动形态；M3+ 必须回到 launcher 启动（launcher 递延加固在本里程碑完成）",
+    "ruling_registered_at": [
+      "journal seq 18（capsule M2_OPEN_FOUNDER_MANUAL_LAUNCH_RULING，launch_ruling_facts 五条）",
+      "SUPERSESSION_LEDGER.v1.md §7"
+    ]
+  },
+  "environment_observations": {
+    "CLAUDE_CODE_CHILD_SESSION": "1 — 指 Bash 工具 shell 为 Claude Code 宿主的子进程，非会话 fork 证据（entrypoint=claude-vscode 下工具 shell 恒为 child）",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-opus-4-8 — 子代理默认模型为 Opus 4.8；本里程碑派工时逐个显式指定并登记 requested/actual model",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "会话启动时未设置（自动记忆已在 SessionStart 注入）；本会话内所有后续命令显式 export =1；正式审核者会话要求隔离声明"
+  },
+  "auto_memory_status": {
+    "loaded_at_session_start": true,
+    "registered_sources": [
+      "/home/faye/.claude/CLAUDE.md（用户级全局指令 v4.2）",
+      "/home/faye/.claude/projects/-home-diyu----------/memory/MEMORY.md（GKB 项目记忆索引）",
+      "SessionStart hook: /home/faye/.claude/claude-error-patterns-core.md（防幻觉/防假绿/防旧快照纠偏）"
+    ],
+    "old_rule_injection_review": "三个来源内容已逐一核阅：用户画像、GKB 知识库项目事实、通用错误模式纠偏；零条 v2.3/v2.4 旧里程碑授权语义（逐包点火/S0 专项授权/D0 待批）注入；不构成停止线『未登记持久记忆源持续注入旧规则』",
+    "unregistered_persistent_sources_detected": false,
+    "mitigation": "主会话命令级 export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；子代理 prompt 显式禁用记忆写入且不依赖记忆内容；正式审核者使用全新非 fork 会话并要求隔离声明（signer_receipt.v2 五键含 auto_memory_disabled_before_launch）"
+  },
+  "workspace": {
+    "repo_root": "/home/diyu/worktrees/gate1-longrun-001",
+    "branch": "agent/gate1-v1-1-successor-longrun",
+    "upstream": "origin/agent/gate1-v1-1-successor-longrun",
+    "origin_url": "https://github.com/andyan77/diyu-agent.git",
+    "head_at_start": "6b213487afb518c2c3513a4f2766f32015ff5eb4",
+    "input_commit": "de83d92cac695cd3e8c603e8817e875f3d567bfa",
+    "control_plane_commit": "f7250acda663ef007d46ce8f1ee26208659ae86e",
+    "baseline_match": true,
+    "baseline_note": "head_at_start 为 M1 关闭后锚链尾（f7250ac 之后两笔 M1 关闭纠正提交 d8fb887/6b21348）；输入提交与控制面提交按冻结 Prompt 绑定值核对一致"
+  },
+  "context_isolation_note": "M2 不读取真实密封载荷；本会话未读取 QUAL/隐藏材料/密封摘要/客户数据/.env* 任何一项",
+  "recorded_at": "2026-07-17T03:48:00+00:00",
+  "recorded_by_role": "M2_PRINCIPAL_ORCHESTRATOR"
+}

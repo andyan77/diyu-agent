@@ -48,3 +48,9 @@
 - 新增取代关系必须：新版本文件落盘 + 本账本行 + ACTIVE_CONTRACT_SET 成员更新，三者同提交。
 - 禁止：删除/改写被取代文件原文；在被取代文件内插入"已作废"标注（历史文件零改写）。
 - 校验：`tools/contract_set.py verify` 复算活跃成员摘要；checker `active_contract_set` 节消费。
+
+## 7. 启动协议例外层（发起人裁决，单次有效）
+
+| 被例外条款 | 例外内容 | 依据 | 范围与状态 |
+|---|---|---|---|
+| `FORMAL_MODEL_RUN_CONTRACT.v1.md` §1「启动只能由会话外监督器（tools/launcher.py）完成」+ launch_record.v2 先于 spawn 落盘 | M2 会话由发起人手动开启（全新 Fable 5 顶层会话 + 冻结 Prompt 逐字投放，digest 6a8acac7 与 READY_TO_START.v2 一致）；launcher --start 未运行，LAUNCH_RECORD.v2 缺位不补录（schema 常量使诚实补录不可能，伪造=假绿）；入口机械校验在会话内只读复算全部通过 | 发起人 2026-07-17 会话内 AskUserQuestion 三选一裁决『裁决登记后本会话继续』；journal seq 18 launch_ruling_facts；evidence/SESSION_IDENTITY.M2.v1.json launch_provenance | **仅限 M2 本次启动**；不修改合同文本、不降低 M3+ 要求；M3+ 仍须 launcher 启动（launcher 递延加固于 M2 完成）；生效 |
