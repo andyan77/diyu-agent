@@ -1,0 +1,111 @@
+{
+  "all_green": true,
+  "candidate_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
+  "milestone_id": "M2",
+  "note": "全电池在候选 v5 头（5ce595d）运行；17 确定性套件（三套测试 53+49+73、checker 自测+PRE_REVIEW、7 工具自测、contract_set/journal verify、s0 verify-all（锚点门已本地硬门控 label_changes==4）、范围 git diff --check）。",
+  "schema_version": "p7-verification-receipts-v1",
+  "suites": [
+    {
+      "exit_code": 0,
+      "name": "eval_spine_tests",
+      "passed": true,
+      "tail": "53 passed in 1.84s"
+    },
+    {
+      "exit_code": 0,
+      "name": "v4_recovery_tests",
+      "passed": true,
+      "tail": "49 passed in 0.49s"
+    },
+    {
+      "exit_code": 0,
+      "name": "delivery_control_tests",
+      "passed": true,
+      "tail": "73 passed in 0.95s"
+    },
+    {
+      "exit_code": 0,
+      "name": "checker_selftest",
+      "passed": true,
+      "tail": "SELFTEST: ALL_NEGATIVE_CASES_ENFORCED"
+    },
+    {
+      "exit_code": 0,
+      "name": "checker_m2_pre_review",
+      "passed": true,
+      "tail": "M0_QUALIFICATION: NOT_QUALIFIED"
+    },
+    {
+      "exit_code": 0,
+      "name": "launcher_selftest",
+      "passed": true,
+      "tail": "LAUNCHER_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "ready_set_selftest",
+      "passed": true,
+      "tail": "READY_SET_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "qual_order_selftest",
+      "passed": true,
+      "tail": "QUAL_ORDER_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "lift_chain_selftest",
+      "passed": true,
+      "tail": "LIFT_CHAIN_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "sealed_scan_selftest",
+      "passed": true,
+      "tail": "SEALED_SCAN_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "contract_set_selftest",
+      "passed": true,
+      "tail": "CONTRACT_SET_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "run_journal_selftest",
+      "passed": true,
+      "tail": "RUN_JOURNAL_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "closure_selftest",
+      "passed": true,
+      "tail": "CLOSURE_SELFTEST: ALL_PASS"
+    },
+    {
+      "exit_code": 0,
+      "name": "contract_set_verify",
+      "passed": true,
+      "tail": "}"
+    },
+    {
+      "exit_code": 0,
+      "name": "journal_verify",
+      "passed": true,
+      "tail": "}"
+    },
+    {
+      "exit_code": 0,
+      "name": "s0_verify_all",
+      "passed": true,
+      "tail": "{\"verify_all\": \"PASS\", \"problems\": [], \"s0_status\": \"PASS\", \"accounting_status\": \"PASS\", \"telemetry_complete\": false}"
+    },
+    {
+      "exit_code": 0,
+      "name": "git_diff_check",
+      "passed": true,
+      "tail": "<no stdout>"
+    }
+  ]
+}
