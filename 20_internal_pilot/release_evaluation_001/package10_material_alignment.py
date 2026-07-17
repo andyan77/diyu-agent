@@ -282,21 +282,49 @@ def _setting(session: Any, key: str) -> JsonObject:
     return copy.deepcopy(row.payload)
 
 
+def source08_authorization_id(account_id: str) -> str:
+    suffix = hashlib.sha256(account_id.encode("utf-8")).hexdigest()[:16].upper()
+    return f"PKG10-AUTH-SOURCE08-{suffix}"
+
+
+def source08_material_grant(identity: JsonObject, account: JsonObject) -> JsonObject:
+    account_id = str(account["account_id"])
+    return {
+        "authorization_id": source08_authorization_id(account_id),
+        "authorization_kind": "MATERIAL_AND_FACT_DISCLOSURE",
+        "tenant_id": identity["tenant"]["tenant_id"],
+        "brand_id": identity["tenant"]["brand_id"],
+        "source_organization_id": account["organization_id"],
+        "source_store_id": account.get("store_id"),
+        "permitted_organization_ids": [account["organization_id"]],
+        "permitted_store_ids": [account.get("store_id")],
+        "permitted_content_account_ids": [account_id],
+        "disclosure_scope": "CONTENT_ACCOUNT_ONLY",
+        "valid_from": OBSERVED_AT,
+        "valid_until": VALID_UNTIL,
+        "status": "GRANTED",
+        "derived_from_founder_authorized_package10_source08_alignment": True,
+        "simulation_only": True,
+        "test_fixture_only": True,
+        "publish_allowed": False,
+    }
+
+
 def authorization_for_account(identity: JsonObject, account_id: str) -> str:
+    account = next(
+        row
+        for row in identity["content_accounts"]
+        if row["account_id"] == account_id
+    )
+    expected = source08_material_grant(identity, account)
     candidates = [
         row
         for row in identity["authorization_grants"]
-        if row.get("status") == "GRANTED"
-        and row.get("disclosure_scope") == "CONTENT_ACCOUNT_ONLY"
-        and account_id in row.get("permitted_content_account_ids", [])
+        if row.get("authorization_id") == expected["authorization_id"]
     ]
-    if not candidates:
-        raise RuntimeError(f"No scoped disclosure grant for {account_id}")
-    return str(
-        sorted(candidates, key=lambda row: str(row["authorization_id"]))[0][
-            "authorization_id"
-        ]
-    )
+    if candidates != [expected]:
+        raise RuntimeError(f"Source 08 material grant drifted for {account_id}")
+    return str(expected["authorization_id"])
 
 
 def fragment_from_block(
@@ -392,6 +420,23 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
                 account_projection["runtime_confirmation_authorization_ref"] = (
                     authorization_ref
                 )
+                source08_grant = source08_material_grant(
+                    identity,
+                    account_projection,
+                )
+                existing_source08_grant = grants_by_id.get(
+                    str(source08_grant["authorization_id"])
+                )
+                if (
+                    existing_source08_grant is not None
+                    and existing_source08_grant != source08_grant
+                ):
+                    raise RuntimeError("Source 08 material grant identity drifted")
+                if existing_source08_grant is None:
+                    identity["authorization_grants"].append(source08_grant)
+            identity["authorization_grants"].sort(
+                key=lambda row: str(row["authorization_id"])
+            )
             profile = _setting(
                 session,
                 f"brand_expression_profile:{identity['tenant']['brand_id']}",
@@ -429,6 +474,9 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
                     "source_content_mutated": False,
                     "operational_username_bound_from_current_runtime": True,
                     "runtime_confirmation_refs_rebound_from_seed_policy": True,
+                    "simulation_material_grant_count": len(
+                        identity["content_accounts"]
+                    ),
                 },
                 "derived_source_refs": sorted(
                     {
