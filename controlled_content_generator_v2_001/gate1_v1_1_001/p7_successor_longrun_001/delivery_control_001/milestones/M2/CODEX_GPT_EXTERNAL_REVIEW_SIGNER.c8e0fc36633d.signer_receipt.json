@@ -1,0 +1,38 @@
+{
+  "actual_model_id": "GPT-5 (Codex)",
+  "call_receipt": "{\"events_file\": \"controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/codex_review_r3_events.jsonl\", \"events_sha256\": \"e1a7e862379ca1952647ded79194633c9bdab7159b27f6e49c017eb0539519fa\", \"last_message_sha256\": \"e47c831b39ee9b1850fd2d50a13cab7ba3f41d7ec024a4e4c9468096181fe16d\"}",
+  "config_digest": "codex exec -s read-only --json --output-last-message",
+  "evidence_manifest_digest": "86f70c7599b82aa228f5934fa95b457c55bf319a325b56702a033c22788a9611",
+  "exit_status": 0,
+  "findings_summary": [
+    "ADVISORY:residual_scan_count_2893_parent_tree_vs_candidate_2904_all_11_additions_DOCUMENTATION_verdict_unchanged",
+    "ADVISORY:telemetry_incomplete_nonblocking_honest_presentation"
+  ],
+  "input_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
+  "input_manifest_digest": "44612f0de6aa286d17979310359ac7718aae41626619e20e66dda22c454451f8",
+  "milestone_id": "M2",
+  "model_version": {
+    "evidence_ref": "codex_review_r3_last_message.json",
+    "unavailable_reason": "provider does not expose internal revision",
+    "value": "UNAVAILABLE"
+  },
+  "output_manifest_digest": "7fafe0441d5f3b0af5420c2a39176a7759b592638eacc8d42094ae9473974aba",
+  "output_report_digest": "e47c831b39ee9b1850fd2d50a13cab7ba3f41d7ec024a4e4c9468096181fe16d",
+  "product_scope": "SHARED",
+  "prompt_digest": "257aa53674633f9c9e8be1e1573c2001ca769522663c2258044b4db2c02a0981",
+  "provider": "openai",
+  "receipt_digest": "c8e0fc36633dd865e7f4b34f249a26b0549f9bd12f7fc9065bb7033c4b59f9de",
+  "reviewer_kind": "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+  "schema_version": "p7-signer-receipt-v2",
+  "session_isolation_attestation": {
+    "auto_memory_disabled_before_launch": true,
+    "auto_memory_disabled_or_not_applicable": true,
+    "did_not_author_reviewed_scope": true,
+    "fresh_session_not_fork_not_resume": true,
+    "isolation_evidence": "Fresh top-level Codex review session; no fork, resume or subagent. The managed repository was read-only to reviewer actions; original HEAD, tracked files and index remained unchanged. Two harness-owned untracked codex_review_r3 telemetry files were present from launch and were excluded from candidate evidence. Candidate executions and all mutations were confined to ephemeral /dev/shm copies. No automatic-memory facility or injected memory was available before launch or during review. read_only_no_repo_writes=true (per reviewer attestation)."
+  },
+  "signed_at": "2026-07-17T08:44:15.066358+00:00",
+  "task_thread_session_id": "019f6f24-80ec-75c1-a5bb-73da0b0d9787",
+  "tool_summary": "read-only recompute + adversarial probes in /dev/shm copies (zero repo writes attested)",
+  "verdict": "ACCEPT"
+}

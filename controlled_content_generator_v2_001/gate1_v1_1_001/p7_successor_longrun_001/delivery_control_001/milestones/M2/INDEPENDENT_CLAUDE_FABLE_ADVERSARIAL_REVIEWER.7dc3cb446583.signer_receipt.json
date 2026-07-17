@@ -1,0 +1,39 @@
+{
+  "actual_model_id": "claude-opus-4-8",
+  "call_receipt": "{\"agent_id\": \"aa4d76028c6715d2e\", \"review_pass\": {\"subagent_tokens\": 152108, \"tool_uses\": 47, \"wall_clock_ms\": 1243700}, \"attestation_clarification_pass\": {\"subagent_tokens\": 164966, \"tool_uses\": 1, \"wall_clock_ms\": 71262}}",
+  "config_digest": "Agent dispatch: subagent_type=general-purpose, requested model=fable (actual claude-opus-4-8), read-only discipline, /tmp experiments; carrier exemption per SUPERSESSION_LEDGER §7 row3; attestation single-key semantic clarification per FABLE_R3_ATTESTATION_CLARIFICATION.v1.md (verdict/findings/disclosure unchanged)",
+  "evidence_manifest_digest": "86f70c7599b82aa228f5934fa95b457c55bf319a325b56702a033c22788a9611",
+  "exit_status": 0,
+  "findings_summary": [
+    "ADVISORY:reviewer_carrier_model_opus_4_8_not_fable_honestly_disclosed",
+    "ADVISORY:evidence_manifest_lists_review_package_verification_receipts_v3_standard_pattern"
+  ],
+  "input_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
+  "input_manifest_digest": "44612f0de6aa286d17979310359ac7718aae41626619e20e66dda22c454451f8",
+  "milestone_id": "M2",
+  "model_version": {
+    "evidence_ref": "FABLE_R3_REVIEW.v1.json",
+    "unavailable_reason": "provider does not expose internal revision to agent runtime",
+    "value": "UNAVAILABLE"
+  },
+  "output_manifest_digest": "7fafe0441d5f3b0af5420c2a39176a7759b592638eacc8d42094ae9473974aba",
+  "output_report_digest": "9b5adf76a7e9dcacbbd7813cf75ad2963735414ca6ac1eae0c1aad9c2e916c00",
+  "product_scope": "SHARED",
+  "prompt_digest": "a6223530776146492aa2d88014b7d9fce70c6ac96caae5d5247f41f74b5299db",
+  "provider": "anthropic",
+  "receipt_digest": "7dc3cb4465839723449b2d2f775111f4a945616b6ba2ae4c1d9af1e9b8184fe6",
+  "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+  "schema_version": "p7-signer-receipt-v2.1",
+  "session_isolation_attestation": {
+    "auto_memory_disabled_before_launch": false,
+    "auto_memory_disabled_or_not_applicable": true,
+    "auto_memory_injection_disclosure": "The harness injected, at the start of my context, the user-level global CLAUDE.md (Faye v4.2: zero-guess/plain-language/security principles, working-pattern precedents, diyu infra reference table) and the project auto-memory index MEMORY.md (GKB project memory topic list). Source: SessionStart/subagent memory injection by the Claude Code harness, which per SUPERSESSION_LEDGER §7 row 3 cannot be disabled for a subagent carrier. Relationship to the reviewed object: the M2 candidate belongs to the same diyu gate1-p7 project family, but the injected material is general user/project preference and prior-milestone memory - it contains NO M2-specific technical claim, no author narrative about this candidate, and no authorization semantics for M2. Adoption: NOT adopted as evidence for any verdict input; every finding rests solely on candidate disk artifacts I read and recomputed myself.",
+    "did_not_author_reviewed_scope": true,
+    "fresh_session_not_fork_not_resume": true,
+    "isolation_evidence": "My context is a fresh subagent thread spawned for this review (Agent-spawn, not a fork of any parent conversation history and not a resume of a prior session); its content is the review task prompt plus the harness auto-memory injection disclosed above. I share the top-level session_id 4d7e088b-945e-4903-844a-790379e740d2 with the M2 authoring session (per SESSION_IDENTITY.M2), i.e. I am the sanctioned subagent carrier described in SUPERSESSION_LEDGER section 7 row 3, but I did not author any candidate file - my first actions were reads. My runtime model is claude-opus-4-8 (disclosed as an ADVISORY divergence from the requested Fable carrier). The repository was treated strictly read-only: all executable experiments and tamper probes ran on git-archive copies under /tmp/claude-1000 (working-tree copy m2rev with a read-only .git pointer to the shared object store for anchor git show, and candidate-tree copy m2cand), PYTHONDONTWRITEBYTECODE=1 throughout; the few mandatory commands run in the real repo (checker/pytest/verify-all) left it byte-identical to the opening snapshot."
+  },
+  "signed_at": "2026-07-17T08:42:14.853227+00:00",
+  "task_thread_session_id": "aa4d76028c6715d2e",
+  "tool_summary": "read-only recompute + adversarial probes in /tmp copies (zero repo writes attested by opening==closing git status)",
+  "verdict": "ACCEPT"
+}

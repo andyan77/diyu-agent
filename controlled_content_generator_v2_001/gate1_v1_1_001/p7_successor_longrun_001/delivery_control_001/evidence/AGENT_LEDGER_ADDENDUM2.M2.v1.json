@@ -1,0 +1,20 @@
+{
+  "schema_version": "p7-agent-ledger-v1",
+  "kind": "ADDENDUM",
+  "milestone_id": "M2",
+  "note": "候选 5ce595d（v5）评审期派工补遗 2；基表与补遗 1 已随 EVIDENCE 清单钉扎不改写。",
+  "agents": [
+    {
+      "agent_id": "aa4d76028c6715d2e",
+      "role": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER（正式签字载体=子代理，发起人 2026-07-17 豁免裁决，signer_receipt.v2.1 诚实披露）",
+      "requested_model": "fable",
+      "actual_model": "claude-opus-4-8（诚实自报，回执 ADVISORY 披露）",
+      "read_scope": "仓库只读 + /tmp/claude-1000 实验副本；零仓库写入（开==闭 git status 自证）",
+      "forbidden_resource_touched_by_subagent": false,
+      "report_file": "delivery_control_001/milestones/M2/FABLE_R3_REVIEW.v1.json",
+      "verdict_summary": "ACCEPT + 2 ADVISORY（16 项复核 + 5 项对抗探针；三 manifest/锚点门/边界白名单独立复算）",
+      "wall_clock_ms": 1243700,
+      "attestation_clarification": "单键析取语义澄清（auto_memory_disabled_or_not_applicable），审查者自行核验 schema 后出具 true；见 FABLE_R3_ATTESTATION_CLARIFICATION.v1.md"
+    }
+  ]
+}

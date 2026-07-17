@@ -1,0 +1,159 @@
+{
+  "verdict": "ACCEPT",
+  "candidate_commit_verified": "5ce595de7eb48fcf04178651f84400b0411134be",
+  "input_manifest_digest_verified": "44612f0de6aa286d17979310359ac7718aae41626619e20e66dda22c454451f8",
+  "output_manifest_digest_verified": "7fafe0441d5f3b0af5420c2a39176a7759b592638eacc8d42094ae9473974aba",
+  "evidence_manifest_digest_verified": "86f70c7599b82aa228f5934fa95b457c55bf319a325b56702a033c22788a9611",
+  "checks_performed": [
+    {
+      "name": "candidate_tree_and_ancestry",
+      "command_or_method": "git log --format=%H -1; git merge-base --is-ancestor 5ce595d HEAD; isolated detached candidate checkouts in /dev/shm",
+      "result": "PASS: workspace HEAD b9e7c52 descends from candidate 5ce595d; candidate recomputation used the exact detached candidate tree.",
+      "exit_code": 0
+    },
+    {
+      "name": "m2_pre_review_master_check",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 checker/p7_master_check.py --milestone M2 --mode PRE_REVIEW",
+      "result": "PASS: SHARED 10, A 5, B 6, ARTIFACT_INTEGRITY PASS; M0 remains NOT_QUALIFIED.",
+      "exit_code": 0
+    },
+    {
+      "name": "eval_audit_spine_tests",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest eval_audit_spine_001/tests -q -p no:cacheprovider",
+      "result": "PASS: 53 tests, including four test_s0_anchor_gate cases.",
+      "exit_code": 0
+    },
+    {
+      "name": "v4_recovery_tests",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest generator_v3_successor_001/v4_recovery/tests -q -p no:cacheprovider",
+      "result": "PASS: 49 tests.",
+      "exit_code": 0
+    },
+    {
+      "name": "delivery_control_tests",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 -m pytest delivery_control_001/tests -q -p no:cacheprovider",
+      "result": "PASS: 73 tests.",
+      "exit_code": 0
+    },
+    {
+      "name": "s0_full_chain_recompute",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 eval_audit_spine_001/evidence/s0_m2_real_run_001/tools/s0_run.py verify-all",
+      "result": "PASS: verify_all, S0 and accounting PASS; telemetry_complete=false retained honestly.",
+      "exit_code": 0
+    },
+    {
+      "name": "contract_set_verify",
+      "command_or_method": "PYTHONDONTWRITEBYTECODE=1 python3 delivery_control_001/tools/contract_set.py verify",
+      "result": "PASS: drift=[]",
+      "exit_code": 0
+    },
+    {
+      "name": "manifest_v3_independent_recompute",
+      "command_or_method": "Reviewer-written read-only Python: canonical JSON SHA-256 excluding manifest_digest; entry-by-entry candidate/package hashes; c3 frozen snapshots dual-checked against candidate blobs",
+      "result": "PASS: INPUT 11/11 digest 44612f0d; OUTPUT 50/50 digest 7fafe044 with two snapshot/candidate dual checks; EVIDENCE 19/19 digest 86f70c75 with one dual check and the post-candidate VERIFICATION_RECEIPTS.M2.v3 package artifact verified.",
+      "exit_code": 0
+    },
+    {
+      "name": "anchor_history_and_local_gate",
+      "command_or_method": "git ancestry plus independent recursive JSON diff of 1c4f8153 and candidate raw blob; direct local label-reversion probe",
+      "result": "PASS: 1c4f8153 precedes 4fcb568 and candidate; exactly four differences, all attempts[0..3].schema_version, and all current labels equal gate1-v4-author-raw-v1. Local stage-gate rejects a one-label reversion.",
+      "exit_code": 0
+    },
+    {
+      "name": "boundary_smoke_v3_recompute",
+      "command_or_method": "Candidate-fixed exact marker scan with fnmatch classification; denylist worktree/history scan; residual_scan.py --root candidate; sealed_scan selftest; product-boundary probes; BOUNDARY record_digest recompute",
+      "result": "PASS with advisory: 10 tracked marker-hit files and all 51 transcript occurrences classify as source/test or command/review self-reference; marker_data_hits, worktree digest hits and history digest hits are empty; current residual scan covers 2904 files and PASSes. Stored report count 2893 is stale but the 11 omitted additions all classify DOCUMENTATION and current outcome is unchanged.",
+      "exit_code": 0
+    },
+    {
+      "name": "deepseek_arithmetic_and_spend_ledger",
+      "command_or_method": "Independent Decimal usage-times-rate calculation, receipt canonical-digest check, and .runtime/deepseek_spend.jsonl settlement lookup",
+      "result": "PASS: calls 37cdc04b, 5c341cc0 and 06df0805 recompute to USD 0.00013510, 0.00012544 and 0.00011634; CNY 0.00108080, 0.00100352 and 0.00093072; exactly one matching settlement each; all 15 ledger record digests valid.",
+      "exit_code": 0
+    },
+    {
+      "name": "startup_exception_and_journal",
+      "command_or_method": "Three-way comparison of SUPERSESSION_LEDGER section 7, journal seq18/seq26 and SESSION_IDENTITY.M2; launch_record.v2 constants; run_journal.py verify",
+      "result": "PASS: manual-founder launch exception is consistently M2-only, M3+ remains launcher-required, honest retroactive launch_record.v2 is impossible, journal is VALID with 26 records, and seq26 records Codex R2 REJECT plus the repair plan.",
+      "exit_code": 0
+    },
+    {
+      "name": "honest_baseline_and_telemetry_semantics",
+      "command_or_method": "Independent metrics/review comparison against stage_and_kill.v2 and M2 exit mirror; residual budget-gate scan",
+      "result": "PASS: first_acceptance_rate=0.0, formulaic_rate=1.0, all four content reviews remain unapproved grade C, S0 has only the six hygiene exits, blocking_semantics is NONE_DIAGNOSTIC_ONLY, and telemetry_complete=false is not upgraded.",
+      "exit_code": 0
+    },
+    {
+      "name": "m1_entry_and_binding_evolution",
+      "command_or_method": "M1 closeout.py and ready_set.py at historical entry HEAD 6b21348; AST mapping of the three M2-aware test bindings; independent 80-entry spine candidate-manifest recompute",
+      "result": "PASS: M1 eight pieces, typed PASS, two distinct signer bindings and M2 READY all validate at the entry head; M1 STATE_EXPECTATION remains frozen; the three live tests bind legally to M2; candidate manifest has 80 valid entries including test_s0_anchor_gate.py and digest 0c8459c1.",
+      "exit_code": 0
+    },
+    {
+      "name": "r3_archive_and_pointer_fixes",
+      "command_or_method": "Static and canonical-digest verification of REVIEW_REQUEST.v3, FABLE_R2_REVIEW, its v2.1 receipt, Codex R2 output, v3 evidence note and journal seq26",
+      "result": "PASS: request points to v3 manifests; Fable R2 ACCEPT and Codex R2 REJECT remain honestly bound to old candidate 0065887 and are archived, not reused as current signatures; v2.1 receipt canonical digest and disclosure validate.",
+      "exit_code": 0
+    },
+    {
+      "name": "security_layer_port_diff_guards",
+      "command_or_method": "diyu review code/security checks plus independent added-line secret/raw-SQL/direct-LLM/eval/pickle scan and git diff --check over 0065887..5ce595d",
+      "result": "PASS: no security pattern, layer reversal, Port bypass, src/ports change, or whitespace error; RLS check not applicable because alembic/versions is absent.",
+      "exit_code": 0
+    },
+    {
+      "name": "workspace_and_readiness_audit",
+      "command_or_method": "Final rev-parse, ancestry, git diff --exit-code, git diff --cached --exit-code, status and M0/V1.1 state check",
+      "result": "PASS: HEAD remains b9e7c52, tracked/index diffs are empty; two harness-owned untracked R3 telemetry files were present and excluded from candidate evidence. M0 and V1.1 remain NOT_QUALIFIED; no readiness transition is authorized and all nine readiness flags remain false.",
+      "exit_code": 0
+    },
+    {
+      "name": "final_json_schema_validation",
+      "command_or_method": "jsonschema.validate(final output, codex_review_output.schema.v2.json)",
+      "result": "PASS",
+      "exit_code": 0
+    }
+  ],
+  "adversarial_probes": [
+    {
+      "probe": "Injected a canonical-digest-bearing forged thirteenth cost event in an isolated candidate copy.",
+      "outcome": "Expected rejection: verify-all exit 1 with cost events recompute mismatch and metering report recompute mismatch."
+    },
+    {
+      "probe": "Changed stored stage_decision single_assignment to false and recomputed its record_digest in an isolated copy.",
+      "outcome": "Expected rejection: verify-all exit 1 with six-gate recompute mismatch."
+    },
+    {
+      "probe": "Reverted one of four raw schema labels to gate1-v4-raw-output-v1 in an isolated copy.",
+      "outcome": "Expected local rejection: stage-gate exit 1; first_response_retained=false and stage status FAIL, without relying on downstream E_V4_RAW_SCHEMA."
+    },
+    {
+      "probe": "Tampered journal seq18 capsule text without closing the hash chain.",
+      "outcome": "Expected rejection: run_journal verify exit 1, INVALID at line 18 due record_digest recompute mismatch."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/BOUNDARY_SMOKE_REPORT.v3.json",
+      "description": "The stored residual-scan coverage count is from the parent tracked set, not the final candidate tracked set.",
+      "evidence": "BOUNDARY_SMOKE_REPORT.v3 and RESIDUAL_SCAN_REPORT.M2.v3 record tracked_files_scanned=2893, exactly git tree 4d36204; candidate 5ce595d has 2904. The 11 candidate additions were therefore untracked when that child scan ran. Current candidate recomputation scans 2904 and exits 0; all 11 omitted paths classify DOCUMENTATION, so the boundary verdict is unchanged. Future candidate reports should stage the complete final tree before the tracked-file scan or record a candidate-tree replay."
+    },
+    {
+      "severity": "ADVISORY",
+      "file": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/telemetry/telemetry_summary.v1.json",
+      "description": "Telemetry is intentionally nonblocking but remains incomplete.",
+      "evidence": "verify-all reports telemetry_complete=false and the summary retains nonempty unavailable_paths. cost_throughput_model.blocking_semantics is NONE_DIAGNOSTIC_ONLY, so this does not block M2 and must not be described as complete."
+    }
+  ],
+  "history_tamper_check": "PASS: candidate ancestry and 1c4f8153 -> 4fcb568 order verified; the historical raw blob differs from the candidate only at four declared schema_version labels. The 26-record journal chain validates, and an isolated seq18 mutation is rejected INVALID with exit 1. No history rewrite or candidate-tree substitution was used.",
+  "actual_model_self_report": "OpenAI Codex based on GPT-5; exact serving snapshot/build identifier is not exposed.",
+  "isolation_attestation": {
+    "fresh_session_not_fork_not_resume": true,
+    "did_not_author_reviewed_scope": true,
+    "read_only_no_repo_writes": true,
+    "auto_memory_disabled_or_not_applicable": true,
+    "auto_memory_disabled_before_launch": true,
+    "isolation_evidence": "Fresh top-level Codex review session; no fork, resume or subagent. The managed repository was read-only to reviewer actions; original HEAD, tracked files and index remained unchanged. Two harness-owned untracked codex_review_r3 telemetry files were present from launch and were excluded from candidate evidence. Candidate executions and all mutations were confined to ephemeral /dev/shm copies. No automatic-memory facility or injected memory was available before launch or during review."
+  }
+}

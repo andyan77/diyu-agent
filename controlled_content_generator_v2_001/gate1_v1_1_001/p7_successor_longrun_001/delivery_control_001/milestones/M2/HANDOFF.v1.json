@@ -1,0 +1,36 @@
+{
+  "schema_version": "p7-handoff-v2",
+  "from_milestone": "M2",
+  "to_milestone": [
+    "M3"
+  ],
+  "accepted_candidate_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
+  "active_contract_set_digest": "d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4",
+  "input_manifest_digest": "44612f0de6aa286d17979310359ac7718aae41626619e20e66dda22c454451f8",
+  "output_manifest_digest": "7fafe0441d5f3b0af5420c2a39176a7759b592638eacc8d42094ae9473974aba",
+  "evidence_manifest_digest": "86f70c7599b82aa228f5934fa95b457c55bf319a325b56702a033c22788a9611",
+  "exit_evidence_digest": "546b3b9f8856ed226db01a42203f521481904fe19fe858abc427eff1c32c4b04",
+  "last_green_test_summary": "VERIFICATION_RECEIPTS.M2.v3.json: 17/17 green at candidate head 5ce595d (three suites 53+49+73, checker selftest + PRE_REVIEW three-domain PASS, 8 tool selftests, contract_set/journal verify, s0 verify-all with local anchor hard gate, git diff --check)",
+  "review_receipt_bindings": [
+    {
+      "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.7dc3cb446583.signer_receipt.json",
+      "receipt_digest": "cea336f170cdbc725fd774fc48d5f059dd28dd946db48458725a0f61a65f1991",
+      "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+      "verdict": "ACCEPT"
+    },
+    {
+      "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.c8e0fc36633d.signer_receipt.json",
+      "receipt_digest": "62233ef45b48ab72127bd7a3b15367cb0cee3630d293a3a68dffdc090bfa1b88",
+      "reviewer_kind": "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+      "verdict": "ACCEPT"
+    }
+  ],
+  "qualification_flags": {},
+  "route_binding": null,
+  "next_entry_contract": "delivery_control_001/prompts/P3.M3.template.md + PROMPT_REGISTRY P3 entry",
+  "next_prompt_template_digest": "7cc0bbfa34ec8e29991c5a653dae88ac9701689be10deaeaa03974ef2360290c",
+  "ready_set_result_digest": "94a56cd628426786cdb3dc4a5ea52336ac3897b15f4e0d800f409cac8c0cf116",
+  "closure_rule": "关闭提交不自指：由 ORIGIN_ANCHOR.v2 锚定——锚提交的第一父提交必须等于锚文件内记录的 closeout_commit；tools/closure.py verify_closure 从分支头零外部知识机械重建 anchor→closeout→candidate 全链",
+  "issued_at": "2026-07-17T08:51:28.014581+00:00",
+  "handoff_digest": "21ca688ed1de476ad5952c1c6fb61d217885f2cdf41450bea82802cc009f57d6"
+}

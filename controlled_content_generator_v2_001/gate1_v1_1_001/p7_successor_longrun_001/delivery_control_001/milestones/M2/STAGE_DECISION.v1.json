@@ -1,0 +1,37 @@
+{
+  "schema_version": "p7-typed-receipt-v1",
+  "milestone_id": "M2",
+  "product_scope": "SHARED",
+  "result": "PASS",
+  "terminal": true,
+  "qualification_flags": {},
+  "candidate_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
+  "output_manifest_digest": "7fafe0441d5f3b0af5420c2a39176a7759b592638eacc8d42094ae9473974aba",
+  "evidence_manifest_digest": "86f70c7599b82aa228f5934fa95b457c55bf319a325b56702a033c22788a9611",
+  "review_bindings": [
+    {
+      "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.7dc3cb446583.signer_receipt.json",
+      "receipt_digest": "cea336f170cdbc725fd774fc48d5f059dd28dd946db48458725a0f61a65f1991",
+      "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+      "verdict": "ACCEPT"
+    },
+    {
+      "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.c8e0fc36633d.signer_receipt.json",
+      "receipt_digest": "62233ef45b48ab72127bd7a3b15367cb0cee3630d293a3a68dffdc090bfa1b88",
+      "reviewer_kind": "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+      "verdict": "ACCEPT"
+    }
+  ],
+  "session_id": "4d7e088b-945e-4903-844a-790379e740d2",
+  "issued_by_role": "M2_PRINCIPAL_ORCHESTRATOR",
+  "stop_code": null,
+  "notes": [
+    "审核轮次：R1(Fable载体三形态受阻→发起人载体豁免裁决 / Codex REJECT 2B) → R2(Fable ACCEPT / Codex REJECT 1B: 候选内边界报告过期) → R3(双 ACCEPT @5ce595d)",
+    "真实 S0 运行 S0M2-RUN-001：六卫生门 PASS、记账门 PASS（12 事件、DeepSeek 三回执算术复算）、telemetry_complete=false 如实保留（NONE_DIAGNOSTIC_ONLY）",
+    "诚实基线：first_acceptance_rate=0.0 / formulaic_rate=1.0 未洗绿；M0_REMAINS_HONESTLY_NOT_QUALIFIED=true；V1_1_REMAINS_HONESTLY_NOT_QUALIFIED=true",
+    "锚点门本地硬门控（label_changes==4 且全合同标签）+ 边界冒烟 v3 模式级白名单为 Codex R2 修复项；R2 双判决按 M1 先例归档"
+  ],
+  "receipt_kind": "STAGE_DECISION",
+  "issued_at": "2026-07-17T08:50:15.041315+00:00",
+  "receipt_digest": "03b8130b48430bed18e3f9acdc986fff50e573253e1e1c2f093bfb1f5978bcd8"
+}

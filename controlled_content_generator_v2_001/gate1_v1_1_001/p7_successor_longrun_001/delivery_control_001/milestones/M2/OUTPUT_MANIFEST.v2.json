@@ -1,5 +1,5 @@
 {
-  "bound_candidate_commit": "0065887d0b2f8424d32d235707f2afc35ed258fc",
+  "bound_candidate_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
   "entries": [
     {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/checker/v25_state_checks.py",
@@ -22,6 +22,14 @@
       "sha256": "3ce7bba5d7a027bc04d99df091f1631f5a62847aac4574ab5c58a67ab5512268"
     },
     {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.M2.v2.json",
+      "sha256": "b8408a3e9596b89ead37dfc4c2a6c1feced9fef106c82b4b1020d461eac309fe"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/RESIDUAL_SCAN_REPORT.M2.v3.json",
+      "sha256": "b8408a3e9596b89ead37dfc4c2a6c1feced9fef106c82b4b1020d461eac309fe"
+    },
+    {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/SESSION_IDENTITY.M2.v1.json",
       "sha256": "101525b4b29753c9a99ecbf1399f607650dac30fa8cad4501e28310615c737e7"
     },
@@ -30,9 +38,13 @@
       "sha256": "61c2f65d736e23fb7ba080db7c3ed2e6fac809a5c587c013155b2fee56011122"
     },
     {
-      "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/snapshots/c2/RUN_JOURNAL.v1.jsonl",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/VERIFICATION_RECEIPTS.M2.v2.json",
+      "sha256": "ef488242116614f62569dc456019f032d015942947b30e3f527095d464d2773f"
+    },
+    {
+      "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/snapshots/c3/RUN_JOURNAL.v1.jsonl",
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/journal/RUN_JOURNAL.v1.jsonl",
-      "sha256": "4ec95316a17f6f3d4a3aa5cbbb8956348a24503c9dd1969cfe318d16a206eaae"
+      "sha256": "ff8a4b9d8794c96d48af9d8d184a51d2a6c71c7d9731ff0095fc81e3e8b9c75b"
     },
     {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/schema/launch_outcome.v1.schema.json",
@@ -67,7 +79,7 @@
       "sha256": "27861af2ccad7562de2c6a1fe4486dbca8c1e2447e3cc956cbef1ef3704b3513"
     },
     {
-      "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/snapshots/c2/stage_actual_state.v1.json",
+      "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M2/snapshots/c3/stage_actual_state.v1.json",
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/calibration/stage_actual_state.v1.json",
       "sha256": "d95c1256c295e2ca27617223024e7def82aee9d66be8e364759d4f7c116691e7"
     },
@@ -157,7 +169,7 @@
     },
     {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/s0/stage_decision.v1.json",
-      "sha256": "4d3991e49cf83e7545c2a441efdb01bed0b11863276b909a54692d5124644c19"
+      "sha256": "7ef406d29894ce60816ac6e2b5ed1b46637a76ec73185a02b43219c7c4a3a7cb"
     },
     {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/telemetry/cost_throughput_model.v1.json",
@@ -181,15 +193,19 @@
     },
     {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/evidence/s0_m2_real_run_001/tools/s0_run.py",
-      "sha256": "3e1fabd2a2c9a92a027e5d1cfc0e84bfffb7d4d32ab491a1acc9d5003d5fe727"
+      "sha256": "a94772bb8c8ead809f3d55429af6043154cf16af6f6b367b4166d3453ba692c4"
     },
     {
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/release/candidate_manifest.v1.json",
-      "sha256": "555f88019ffdc10c6558ee4e70a514417497458b685d6d3fd203d37f251cadaa"
+      "sha256": "eca0bb6e8d0a8a2c64c33085fe20d99d5f24b627d6cd9967485f3e645ce91fc2"
+    },
+    {
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/tests/test_s0_anchor_gate.py",
+      "sha256": "1ec3866fb5c3f0b5a306980974440caed261a71249f5c91918b821c813e32b78"
     }
   ],
-  "entry_count": 46,
-  "manifest_digest": "1d8e09036b36f64e8d7273e20f6fef45b32dae7e545c188bdbf65cd6b5549270",
-  "note": "R2 输出清单：会话基线 6b21348 → 候选 0065887 全部变更（本里程碑关闭工件除外）；含 R1 双审修复与载体豁免落地（signer v2.1/receipts/checker/s0 锚门/测试）；journal 与 stage_actual_state 经 snapshots/c2 冻结（关闭阶段合法追加/登记）",
+  "entry_count": 50,
+  "manifest_digest": "7fafe0441d5f3b0af5420c2a39176a7759b592638eacc8d42094ae9473974aba",
+  "note": "R3 输出清单：会话基线 6b21348 → 候选 5ce595d 全部变更（本里程碑关闭工件除外）；含 Codex R2 阻断修复（BOUNDARY_SMOKE v3 模式级白名单）、锚点门本地硬门控（label_changes==4 + 4 条 spine 负测试）、RESIDUAL v2/v3、R2 双审归档；journal 与 stage_actual_state 经 snapshots/c3 冻结（关闭阶段合法追加/登记）",
   "schema_version": "p7-milestone-manifest-v1"
 }
