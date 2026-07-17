@@ -137,7 +137,7 @@ values = {
     "DIYU_DIFY_APP_ID": state["app_id"],
     "DIYU_DIFY_DATASET_ID": state["dataset_id"],
     "DIYU_DIFY_STATE_PATH": "/state/dify-state.json",
-    "DIYU_PKG7_MAX_MODEL_CALLS": os.environ.get("PACKAGE7_MAX_MODEL_CALLS", "40"),
+    "DIYU_PKG7_MAX_MODEL_CALLS": os.environ.get("PACKAGE7_MAX_MODEL_CALLS", "12"),
     "DIYU_COOKIE_SECURE": "false",
     "PYTHONDONTWRITEBYTECODE": "1",
 }

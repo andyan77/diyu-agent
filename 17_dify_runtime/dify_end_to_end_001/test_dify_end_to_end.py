@@ -16,7 +16,7 @@ from typing import Any
 from unittest.mock import patch
 
 from contracts import BridgePrepareRequest, ModelEnvelope, PortalTaskRequest
-from bridge_app import _selected_product, create_app
+from bridge_app import _selected_product, create_app, selected_account_database_scope
 from brand_import import BrandImportBundle, load_simulation_bundle, preflight_brand_bundle
 from dify_chat import DifyChatClient
 from dify_knowledge import DifyKnowledgeClient
@@ -26,6 +26,7 @@ from persistence import (
     create_runtime_engine,
     create_session_factory,
 )
+from provision_dify import _content_sha256, _dify_import_text
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import Package7Runtime, protected_detail_is_supported
 from security import hash_password, issue_session, verify_password, verify_session
@@ -40,6 +41,23 @@ P6_CASES = (
     / "16_composition_runtime/fact_aware_plan_adapter_001/fixtures/integration_cases.v1.jsonl"
 )
 DSL_PATH = PACKAGE_ROOT / "dify_app.v1.yaml"
+
+
+class DifyMaterializationCompatibilityTests(unittest.TestCase):
+    def test_dify_import_removes_only_the_outer_presentation_heading(self) -> None:
+        source = "## 资料范围\r\n字段A：保留。\r\n## 内部原文标题"
+        self.assertEqual(
+            _dify_import_text(source),
+            "资料范围\n字段A：保留。\n## 内部原文标题",
+        )
+
+    def test_dify_import_does_not_hide_semantic_mutation(self) -> None:
+        source = "# 资料范围\n字段A：保留。"
+        mutated = "# 资料范围\n字段A：改变。"
+        self.assertNotEqual(
+            _content_sha256(_dify_import_text(source)),
+            _content_sha256(_dify_import_text(mutated)),
+        )
 
 
 class FakeKnowledgeClient:
@@ -176,6 +194,29 @@ class Package7Tests(unittest.TestCase):
         self.assertEqual(second["created_or_updated"], 0)
         self.assertEqual(second["content_account_count"], 11)
         self.assertTrue(all(row.dify_document_id for row in self._fragment_rows()))
+
+    def test_selected_account_installs_all_database_scope_dimensions(self) -> None:
+        _, account = self.repository.require_active_scope(
+            self.principal_id,
+            "ACCOUNT-DIYU-HQ-OFFICIAL",
+        )
+        scope = selected_account_database_scope(
+            trusted_tenant_id="TENANT-DIYU-SIM-001",
+            principal_id=self.principal_id,
+            account=account,
+        )
+        self.assertEqual(scope.tenant_id, account.tenant_id)
+        self.assertEqual(scope.brand_id, account.brand_id)
+        self.assertEqual(scope.organization_id, account.organization_id)
+        self.assertEqual(scope.store_id, account.store_id)
+        self.assertEqual(scope.account_id, account.account_id)
+        self.assertEqual(scope.principal_id, self.principal_id)
+        with self.assertRaisesRegex(ValueError, "outside the trusted tenant"):
+            selected_account_database_scope(
+                trusted_tenant_id="TENANT-OTHER",
+                principal_id=self.principal_id,
+                account=account,
+            )
 
     def test_password_and_signed_session_fail_closed(self) -> None:
         encoded = hash_password("a-secure-package7-password", salt=b"fixed-test-salt-01")
@@ -1590,6 +1631,28 @@ class Package7Tests(unittest.TestCase):
         )
         self.assertEqual(refreshed.content_digest, original_digest)
         self.assertEqual(refreshed.index_content_digest, original_index_digest)
+
+    def test_dify_binding_clears_fragments_outside_the_current_projection(self) -> None:
+        first, second = self._fragment_rows()[:2]
+        self.repository.bind_dify_documents(
+            {
+                first.payload["fragment_id"]: {
+                    "document_id": first.dify_document_id,
+                    "source_content_sha256": first.content_digest,
+                    "index_content_sha256": first.index_content_digest,
+                }
+            }
+        )
+        refreshed = {
+            row.payload["fragment_id"]: row for row in self._fragment_rows()
+        }
+        self.assertIsNotNone(
+            refreshed[first.payload["fragment_id"]].dify_document_id
+        )
+        self.assertIsNone(refreshed[second.payload["fragment_id"]].dify_document_id)
+        self.assertIsNone(
+            refreshed[second.payload["fragment_id"]].index_content_digest
+        )
 
     def test_revoked_principal_is_rechecked_before_portal_model_invocation(self) -> None:
         from runtime_models import RuntimePrincipal

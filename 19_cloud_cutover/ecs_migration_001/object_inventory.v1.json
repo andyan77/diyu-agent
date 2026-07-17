@@ -1,0 +1,184 @@
+{
+  "schema": "diyu.package9.object_inventory.v1",
+  "task_id": "DIYU_ECS_CUTOVER_001",
+  "observed_at": "2026-07-17T07:19:54Z",
+  "inventory_policy": "LIVE_CLASSIFICATION_BEFORE_MUTATION_AND_POST_CUTOVER_RECONCILIATION",
+  "source_candidate": {
+    "commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+    "tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc",
+    "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+    "release_source_file_count": 131,
+    "server_external_backup_manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e"
+  },
+  "host_capacity": {
+    "cpu_count": 2,
+    "memory_total_gib_approx": 7.1,
+    "memory_available_bytes_after_cutover": 3551727616,
+    "root_disk_total_gib": 40,
+    "root_disk_free_bytes_after_cutover": 11663613952,
+    "capacity_class": "INTERNAL_CANDIDATE_ONLY"
+  },
+  "must_preserve": [
+    {
+      "object_class": "DIFY_PLATFORM",
+      "stable_id": "dify-staging",
+      "owner": "DIFY_PLATFORM",
+      "running_container_count": 12,
+      "version": "1.15.0",
+      "health": "PASS"
+    },
+    {
+      "object_class": "DIFY_PLATFORM_STATE",
+      "stable_id": "dify-postgresql-redis-weaviate-plugin-files",
+      "owner": "DIFY_PLATFORM",
+      "health": "PASS"
+    },
+    {
+      "object_class": "SHARED_INFRASTRUCTURE",
+      "stable_id": "diyu-infra",
+      "owner": "SHARED_INFRASTRUCTURE",
+      "running_container_count": 4,
+      "services": [
+        "postgresql",
+        "qdrant",
+        "redis",
+        "minio"
+      ],
+      "health": "PASS"
+    },
+    {
+      "object_class": "EDGE",
+      "stable_id": "dify.diyuai.cc",
+      "owner": "SHARED_EDGE",
+      "https": true,
+      "certificate_preserved": true,
+      "health": "PASS"
+    }
+  ],
+  "adopted_current_system": [
+    {
+      "object_class": "DIFY_APPLICATION",
+      "stable_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+      "count": 1
+    },
+    {
+      "object_class": "DIFY_DATASET",
+      "stable_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b",
+      "count": 1,
+      "current_document_count": 30
+    },
+    {
+      "object_class": "RUNTIME_DATABASE",
+      "stable_id": "diyu_pkg7_runtime",
+      "count": 1,
+      "table_count": 23,
+      "forced_rls_table_count": 19
+    },
+    {
+      "object_class": "THIN_BRIDGE",
+      "stable_id": "diyu-package7-bridge",
+      "count": 1,
+      "loopback_port": 18471,
+      "health": "PASS"
+    },
+    {
+      "object_class": "USER_ENTRY",
+      "stable_id": "https://dify.diyuai.cc/apps",
+      "count": 1,
+      "health": "PASS"
+    }
+  ],
+  "confirmed_legacy_deleted": [
+    {
+      "stable_id": "diyu-release-gate-capture-staging",
+      "object_class": "LEGACY_APPLICATION_CONTAINER",
+      "former_port": 18008,
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-release-gate-capture-staging",
+      "backup_verified_before_delete": true
+    },
+    {
+      "stable_id": "diyu-rag-sidecar-dryrun",
+      "object_class": "LEGACY_APPLICATION_CONTAINER",
+      "former_port": 8006,
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-rag-sidecar-dryrun",
+      "backup_verified_before_delete": true
+    },
+    {
+      "stable_id": "diyu-runtime-ledger-sidecar-dryrun-r6",
+      "object_class": "LEGACY_APPLICATION_CONTAINER",
+      "former_port": 8021,
+      "dependency_check": "NO_CURRENT_DEPENDENT_CONTAINER_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-runtime-ledger-sidecar-dryrun-r6",
+      "backup_verified_before_delete": true
+    },
+    {
+      "stable_id": "diyu-runtime-ledger-pg",
+      "object_class": "LEGACY_DATABASE_CONTAINER",
+      "former_port": 5433,
+      "dependency_check": "NO_CURRENT_DATABASE_CLIENT_OR_ROUTE",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-runtime-ledger-pg",
+      "backup_verified_before_delete": true
+    },
+    {
+      "stable_id": "diyu-runtime-ledger-pgdata",
+      "object_class": "LEGACY_DATABASE_VOLUME",
+      "dependency_check": "CONTAINER_REMOVED_AFTER_DATABASE_RESTORE_PROOF",
+      "backup_evidence_ref": "deletion_recovery_closure:diyu-runtime-ledger-pgdata",
+      "backup_verified_before_delete": true
+    },
+    {
+      "stable_id": "/opt/diyu/package7/source",
+      "object_class": "SUPERSEDED_SOURCE_COPY",
+      "dependency_check": "CURRENT_BRIDGE_USES_FROZEN_PACKAGE9_RELEASE_PATH",
+      "backup_evidence_ref": "deletion_recovery_closure:/opt/diyu/package7/source",
+      "backup_verified_before_delete": true
+    },
+    {
+      "stable_id": "intermediate-package9-releases",
+      "object_class": "SUPERSEDED_RELEASES",
+      "remaining_release_count": 1,
+      "dependency_check": "ONLY_FINAL_RELEASE_REFERENCED_BY_CURRENT_BRIDGE",
+      "backup_evidence_ref": "deletion_recovery_closure:intermediate-package9-releases",
+      "backup_verified_before_delete": true
+    }
+  ],
+  "ownership_unknown_or_shared_preserved": [
+    {
+      "stable_id": "diyu-routed-retrieve-staging",
+      "object_class": "SHARED_RETRIEVAL_CONTAINER",
+      "port": 18007,
+      "reason": "SHARED_OR_NONBLOCKING_DEPENDENCY"
+    },
+    {
+      "stable_id": "legacy-qdrant-collection",
+      "object_class": "LEGACY_VECTOR_COLLECTION",
+      "point_count": 89,
+      "reason": "OTHER_APPLICATION_DEPENDENCY_NOT_DISPROVEN"
+    },
+    {
+      "stable_id": "diyu_brand_faye",
+      "object_class": "LEGACY_DATABASE",
+      "reason": "OWNERSHIP_NOT_EXCLUSIVE_TO_CURRENT_CUTOVER"
+    }
+  ],
+  "post_cutover_counts": {
+    "dify_applications_total": 3,
+    "dify_candidate_applications": 1,
+    "dify_datasets_total": 1,
+    "dify_candidate_datasets": 1,
+    "dify_workflows_total": 19,
+    "dify_documents_current_dataset": 30,
+    "runtime_databases": 1,
+    "runtime_bridges": 1,
+    "retrieval_truths": 1,
+    "simulation_tenants": 2,
+    "content_accounts_total": 13,
+    "primary_content_accounts": 11
+  },
+  "forbidden_object_mutation_count": 0,
+  "unknown_object_deleted_count": 0,
+  "parallel_diyu_system_created_count": 0,
+  "secrets_included": false
+}

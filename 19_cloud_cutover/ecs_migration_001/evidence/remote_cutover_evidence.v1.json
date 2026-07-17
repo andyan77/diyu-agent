@@ -1,0 +1,327 @@
+{
+  "schema": "diyu.package9.remote_cutover_evidence.v1",
+  "task_id": "DIYU_ECS_CUTOVER_001",
+  "package8_merge": {
+    "reviewed_head": "e048790034c9ab20c0e570627f4e4a20d1a48cc6",
+    "merge_commit": "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
+    "parents": [
+      "f046ec6e3d1a34345c97292e9ab1f5a13a2bd031",
+      "e048790034c9ab20c0e570627f4e4a20d1a48cc6"
+    ],
+    "tree": "30cd38fc5ee4a6e4afca2560397460bf19fb54cf",
+    "merge_method": "MERGE_COMMIT_WITHOUT_BYPASS",
+    "master_ci_run": "https://github.com/andyan77/diyu-agent/actions/runs/29550118708",
+    "checker_compatibility": "SUCCESS",
+    "secret_scan": "SUCCESS"
+  },
+  "remote_candidate": {
+    "code_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+    "code_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc",
+    "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+    "release_source_file_count": 131,
+    "release_count": 1,
+    "dify_version": "1.15.0",
+    "dify_application_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "dify_dataset_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b",
+    "runtime_database": "diyu_pkg7_runtime",
+    "runtime_bridge": "diyu-package7-bridge",
+    "entry_url": "https://dify.diyuai.cc/apps",
+    "single_current_system": true
+  },
+  "database_security": {
+    "schema_sha256": "d167f3fdb2ee80792f9d759dfc98e2f7ac03716b9c6dffee650c10a2a95c9efa",
+    "table_count": 23,
+    "forced_rls_table_count": 19,
+    "migration_role_separate": true,
+    "runtime_role_login": true,
+    "runtime_role_bypass_rls": false,
+    "legacy_role_login": false,
+    "trusted_scope_set_server_side": true,
+    "no_scope_visible_account_count": 0,
+    "primary_scope_account_counts": [
+      11,
+      0
+    ],
+    "second_scope_account_counts": [
+      2,
+      0,
+      1
+    ],
+    "cross_tenant_write_rejected": true,
+    "migration_only_read_rejected": true,
+    "row_security_off_rejected": true
+  },
+  "runtime_data": {
+    "tenant_count": 2,
+    "account_count": 13,
+    "primary_account_count": 11,
+    "second_simulated_brand_account_count": 2,
+    "fragment_count": 31,
+    "dify_bound_fragment_count": 30,
+    "cleared_revoked_fragment_count": 1,
+    "candidate_count": 24,
+    "persisted_conversation_count": 6
+  },
+  "dify_materialization": {
+    "source_kind": "RUNTIME_POSTGRESQL_PROJECTION",
+    "document_count": 30,
+    "document_sha256": "5a6031a221cddec3cc4e6d8b8fbdb61e8710a74657ce530263658d6e8733e4f6",
+    "materialization_digest": "bd8b488601a47849dce95c5717ab109cdba60b5f8b9e682bd92d5a8d63f5245a",
+    "runtime_source_digest": "3f1ba96b3cdbe089023538719b0c2f965e50221b7f39226724898ba6eba613cc",
+    "tenant_count": 2,
+    "brand_count": 2,
+    "excluded_revoked_expired_or_inactive_count": 1,
+    "second_retrieval_truth_created": false,
+    "reconciled_to_single_dataset": true
+  },
+  "user_entry": {
+    "root_https_status": 200,
+    "apps_https_status": 200,
+    "login_status": 200,
+    "login_account_count": 11,
+    "topic_count": 8,
+    "technical_token_required_by_user": false,
+    "dify_admin_exposed": false,
+    "conversation_id_persisted_per_user_scope": true,
+    "target_conversation_scope_count": 1,
+    "target_conversation_message_count": 7
+  },
+  "post_restart_health": {
+    "observed_at": "2026-07-17T07:19:54Z",
+    "dify_running_container_count": 12,
+    "infra_running_container_count": 4,
+    "bridge_running": true,
+    "preserved_retrieval_running": true,
+    "root_https_seconds": 0.8285,
+    "apps_https_seconds": 0.0611,
+    "bridge_recent_error_marker_count": 0,
+    "disk_free_bytes": 11663613952,
+    "memory_available_bytes": 3551727616,
+    "pass": true
+  },
+  "exact_cleanup": {
+    "removed_ports": [
+      5433,
+      8006,
+      8021,
+      18008
+    ],
+    "preserved_shared_port": 18007,
+    "legacy_volume_removed": true,
+    "legacy_source_removed": true,
+    "unshared_legacy_image_removed": true,
+    "unknown_object_deleted_count": 0,
+    "preserved_services_healthy": true,
+    "stale_release_archive_removed_count": 2,
+    "current_release_directory_count": 1,
+    "remote_release_archive_file_count": 0,
+    "current_release_preserved_in_server_external_backup": true
+  },
+  "rollback": {
+    "actual_rollback_executed": true,
+    "rollback_old_bridge_health": true,
+    "rollback_dify_root_health": true,
+    "rollback_rls_table_count": 0,
+    "rollback_legacy_role_login": true,
+    "forward_entrypoint_state": "DATABASE_SECURITY_APPLIED",
+    "forward_new_bridge_health": true,
+    "forward_root_health": true,
+    "forward_apps_health": true,
+    "forward_rls_table_count": 19,
+    "final_state": "PACKAGE9_CANDIDATE",
+    "rollback_and_forward_pass": true
+  },
+  "transition_record": {
+    "task_id": "DIYU_ECS_CUTOVER_001",
+    "actual_execution": true,
+    "bindings": {
+      "release_archive_sha256": "662822e11cced29e0d3c8a259b003026e36fa3c8e3723abc1842a691f7e956b6",
+      "pre_cutover_backup_manifest_sha256": "2281cee2add4c103428e37be57cf98293d478319bcbbb4633a27acff1a633f85",
+      "post_cutover_backup_manifest_sha256": "69e464cc92e2ccaf9fb03e543a6c65c7e1ab8b563123aa1813bdd46099d170e0",
+      "rollback_checkpoint_sha256": "cc33e48f5b44e3c3ed67f8d0df139d3e42dbfc2d7cf35a48c61b298f4fca1261",
+      "forward_result_sha256": "8779921d501e3d48d74aae29bef8130ebf5aa5cccee6feefaeb2056809d57c4f"
+    },
+    "rollback_phase": {
+      "observed_at": "2026-07-17T05:59:37.768182Z",
+      "actions": [
+        {
+          "action": "RESTORE_PRE_CUTOVER_NGINX",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint"
+        },
+        {
+          "action": "ROLLBACK_DATABASE_SECURITY",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint.roles_and_rls"
+        },
+        {
+          "action": "START_LEGACY_BRIDGE_FROM_BACKUP_IDENTITY",
+          "status": "PASS",
+          "evidence_ref": "encrypted_pre_cutover_legacy_container_metadata"
+        },
+        {
+          "action": "VERIFY_LEGACY_BRIDGE_HEALTH",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint.old_bridge_health"
+        },
+        {
+          "action": "VERIFY_DIFY_ROOT_HEALTH",
+          "status": "PASS",
+          "evidence_ref": "rollback_checkpoint.dify_root_health"
+        }
+      ]
+    },
+    "forward_phase": {
+      "observed_at": "2026-07-17T06:00:33.200927Z",
+      "actions": [
+        {
+          "action": "APPLY_DATABASE_SECURITY",
+          "status": "PASS",
+          "evidence_ref": "forward_result.entrypoint_state"
+        },
+        {
+          "action": "DEPLOY_FROZEN_RELEASE",
+          "status": "PASS",
+          "evidence_ref": "release_archive_sha256"
+        },
+        {
+          "action": "START_CURRENT_BRIDGE",
+          "status": "PASS",
+          "evidence_ref": "forward_result.new_bridge_health"
+        },
+        {
+          "action": "INSTALL_APPS_NGINX_ROUTE",
+          "status": "PASS",
+          "evidence_ref": "forward_result.apps_health"
+        },
+        {
+          "action": "VERIFY_ROOT_AND_APPS_HEALTH",
+          "status": "PASS",
+          "evidence_ref": "forward_result.root_and_apps_health"
+        },
+        {
+          "action": "VERIFY_FORCED_RLS_AND_RUNTIME_ROLE",
+          "status": "PASS",
+          "evidence_ref": "forward_result.roles_and_rls"
+        }
+      ]
+    },
+    "final_state": "PACKAGE9_CANDIDATE",
+    "rollback_and_forward_pass": true
+  },
+  "successor_deployment": {
+    "reason": "TARGETED_REVIEW_CLOSURE_WITHOUT_BUSINESS_SEMANTIC_CHANGE",
+    "previous_transition_release_archive_sha256": "662822e11cced29e0d3c8a259b003026e36fa3c8e3723abc1842a691f7e956b6",
+    "current_code_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+    "current_code_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc",
+    "current_release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+    "current_release_source_file_count": 131,
+    "server_external_backup_manifest_sha256": "cfec007f60d7696f367b34b0b23b38e92ad6de54ed1a77019618749758dcd05e",
+    "single_release_count": 1,
+    "minimal_release_scope": [
+      "11_product_foundation",
+      "12_expression_service",
+      "13_brand_data",
+      "14_dify_shell",
+      "15_brand_retrieval",
+      "16_composition_runtime",
+      "17_dify_runtime",
+      "18_deployment",
+      "19_cloud_cutover"
+    ],
+    "bridge_hardening": {
+      "read_only_root_filesystem": true,
+      "capabilities_dropped": [
+        "ALL"
+      ],
+      "no_new_privileges": true,
+      "loopback_only_publication": true,
+      "network_count": 2
+    },
+    "selected_account_scope_proof": {
+      "operation": "选择候选",
+      "http_status": 200,
+      "simulation_only": true,
+      "publish_allowed": false,
+      "response_sha256": "f67feed38d91ef3f663d4ff9e2db6d7817ad003844fca5183659f60325ecfc77",
+      "scope_dimensions": [
+        "tenant_id",
+        "brand_id",
+        "organization_id",
+        "store_id",
+        "content_account_id",
+        "principal_id"
+      ],
+      "selected_scope_visible_account_count": 1,
+      "selected_scope_candidate_count": 3,
+      "cross_account_candidate_count": 0,
+      "model_invocation_count_before": 92,
+      "model_invocation_count_after": 92
+    },
+    "post_deploy_health": {
+      "root_https_status": 200,
+      "apps_https_status": 200,
+      "forced_rls_table_count": 19,
+      "forced_rls_enabled_count": 19,
+      "runtime_counts": "2|13|31|24",
+      "dify_counts": "3|1|19|30",
+      "disk_free_bytes": 11663613952,
+      "memory_available_bytes": 3551727616,
+      "pass": true,
+      "model_invocation_count": 92,
+      "effective_model_call_limit": 40
+    },
+    "new_model_call_count": 0,
+    "business_semantics_changed": false,
+    "remote_release_directory_count": 1,
+    "remote_release_archive_file_count": 0,
+    "current_release_preserved_in_server_external_backup": true,
+    "runtime_limit_snapshot": {
+      "apps_https_status": 200,
+      "capabilities_dropped": [
+        "ALL"
+      ],
+      "container_id_sha256": "3e627cac2fbe95a2e47cbaab493ed00b658932a707d182e12e246346a9d80a10",
+      "container_name": "diyu-package7-bridge",
+      "effective_model_call_limit": 40,
+      "env_line_sha256": "377cca72f407f31822d11372c1e1d6e759b1f62f6f5dd9d3549c2d9722aa38cd",
+      "image_id": "sha256:c1712c50f27c9dfd31c5be77a9a03f30c464fc6983287eefd4a6a98376c70c24",
+      "image_tag": "langgenius/dify-api:1.15.0",
+      "legacy_role": {
+        "bypass_rls": false,
+        "login": false,
+        "role_name_sha256": "1999f02ff402919f8fe45b44da5ebd41b7ef42b12c2d05154d778bce0d19e440"
+      },
+      "loopback_only_publication": true,
+      "model_invocation_count_after": 92,
+      "model_invocation_count_before": 92,
+      "network_names": [
+        "dify-staging_default",
+        "diyu-package7-runtime"
+      ],
+      "new_model_calls": 0,
+      "no_new_privileges": true,
+      "observed_at": "2026-07-17T08:21:42.950744+00:00",
+      "read_only_root_filesystem": true,
+      "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+      "replaced_container_id_sha256": "07b54e6bc684f4f7a39e093f976c3d9eb46bcb79246e8f13dacbce2431bdbe5a",
+      "root_https_status": 200,
+      "runtime_role": {
+        "bypass_rls": false,
+        "create_database": false,
+        "create_role": false,
+        "login": true,
+        "role_name_sha256": "557de74ede8f4d9eb058ddcd0b12691f8961afaafa0ccb2d1bd869d4d60caa4d",
+        "superuser": false
+      },
+      "schema": "diyu.package9.runtime-limit-snapshot.v1",
+      "source_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+      "source_file_count": 131,
+      "source_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc"
+    },
+    "runtime_limit_snapshot_file_sha256": "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
+  },
+  "real_customer_data_imported": false,
+  "public_content_published": false,
+  "secrets_included": false
+}

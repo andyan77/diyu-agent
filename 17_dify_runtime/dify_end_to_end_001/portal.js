@@ -10,6 +10,11 @@ const candidateFields = document.querySelector("#candidate-fields");
 const advancedFields = document.querySelector("#advanced-fields");
 const quickPrompts = document.querySelector("#quick-prompts");
 let options = null;
+const portalBase = window.location.pathname.startsWith("/apps") ? "/apps" : "";
+
+function endpoint(path) {
+  return `${portalBase}${path}`;
+}
 
 const operationLabels = [
   "随便聊聊", "找点灵感", "直接做内容", "把已有内容改好", "继续一个系列",
@@ -89,7 +94,7 @@ function activateWorkbench(value) {
 document.querySelector("#login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
-  const response = await fetch("/login", {
+  const response = await fetch(endpoint("/login"), {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     credentials: "same-origin",
@@ -120,7 +125,7 @@ taskForm.addEventListener("submit", async (event) => {
     if (!body[key]) body[key] = null;
   }
   try {
-    const response = await fetch("/v1/portal/chat", {
+    const response = await fetch(endpoint("/v1/portal/chat"), {
       method: "POST",
       headers: {"Content-Type": "application/json", "X-Diyu-Portal": "same-origin-v1"},
       credentials: "same-origin",
@@ -134,6 +139,6 @@ taskForm.addEventListener("submit", async (event) => {
 });
 
 document.querySelector("#logout").addEventListener("click", async () => {
-  await fetch("/logout", {method: "POST", headers: {"X-Diyu-Portal": "same-origin-v1"}, credentials: "same-origin"});
+  await fetch(endpoint("/logout"), {method: "POST", headers: {"X-Diyu-Portal": "same-origin-v1"}, credentials: "same-origin"});
   window.location.reload();
 });

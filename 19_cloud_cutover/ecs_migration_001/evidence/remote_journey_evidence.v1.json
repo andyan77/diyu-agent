@@ -1,0 +1,727 @@
+{
+  "schema": "diyu.package9.remote_journey_evidence.v1",
+  "task_id": "DIYU_ECS_CUTOVER_001",
+  "observed_window_end": "2026-07-17T08:07:33.832832+00:00",
+  "journey_group_count": 6,
+  "journey_action_count": 16,
+  "all_http_actions_succeeded": true,
+  "action_audit": [
+    {
+      "ordinal": 1,
+      "case": "chat_1",
+      "http_status": 200,
+      "operation": "随便聊聊",
+      "content_format": "短视频",
+      "account_scope_sha256": "031ee0f500644bd94e5cd86b85b1dee3cc1580d05231a0e7230fee4de0a2c2a0",
+      "request_sha256": "5a4bb7326281261b2f8570e159aa7aebf3ac197bfe7531864cbdb3a78c564a21",
+      "response_sha256": "7d9c48b2bf2a0f7700757dff29689f92b59ff1c51ed051538c9e650d454ea6f5",
+      "answer_sha256": "25344ec297e8fad406720721b068859542d833ff12862d7d2e86298c68de318f",
+      "answer_length": 70,
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_MODEL",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "b8705636265e37424dae0df8db30efe3cf1fed202d9f72d542e91d00c8d71177"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "case": "chat_2",
+      "http_status": 200,
+      "operation": "随便聊聊",
+      "content_format": "短视频",
+      "account_scope_sha256": "031ee0f500644bd94e5cd86b85b1dee3cc1580d05231a0e7230fee4de0a2c2a0",
+      "request_sha256": "7b3cc4d0e34d0f3be14ca70d38daa19628fa5c84e995a077b55a3ccc2fe685fe",
+      "response_sha256": "adb1f6199c29576a02b49c35431c7854000c867dfa3f223fd0f7f8abcc69711d",
+      "answer_sha256": "065a6204c8a9e6fc67f73d94eb1b3e790a563a638d3726726c3d8ae3d627d1cc",
+      "answer_length": 17,
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_MODEL_REUSED_CONVERSATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "fdbb593753f1507d1b8ae7a0d55703fc470efb0d020c027a22f3e99163538a30"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "case": "inspiration",
+      "http_status": 200,
+      "operation": "找点灵感",
+      "content_format": "短视频",
+      "account_scope_sha256": "031ee0f500644bd94e5cd86b85b1dee3cc1580d05231a0e7230fee4de0a2c2a0",
+      "request_sha256": "ee4313cf98e06542f4862f35e31516752da03525528cc3f671a99e462d3b1dab",
+      "response_sha256": "238403fa2d829bed9f78e71a0b0c34914a36a101caa352cbd2011b571bf2aa61",
+      "answer_sha256": "68cf26291a0ab61404dcbdff2e47b9a52338b1d3484764c38f7e614148e28f21",
+      "answer_length": 60,
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_MODEL",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "e14cfbb4262f5a6bc22820794050a07ff51246beffbb180530ed6c5ae76a9ed9"
+      ]
+    },
+    {
+      "ordinal": 4,
+      "case": "formal",
+      "http_status": 200,
+      "operation": "直接做内容",
+      "content_format": "短视频",
+      "account_scope_sha256": "031ee0f500644bd94e5cd86b85b1dee3cc1580d05231a0e7230fee4de0a2c2a0",
+      "request_sha256": "a2980b1275745542473d7fe617cdddbd40fbe6ebfca603fa7435a8eb8467619d",
+      "response_sha256": "ae04a87f2cc7e08d9cec49601fc8b58b904102641026546f5d4196daf894da28",
+      "answer_sha256": "1f35853c9f98566e5ec98ae6d6e5982e95a8287eae0e86d169f8dc87ca14fdae",
+      "answer_length": 66,
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_SAFE_ACTION_CARD",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY"
+      ],
+      "model_invocation_bindings": [
+        "45e7c8f743b00e2beab0121338e0002ca6ebadc7bd82e146e4294c7b309bae80"
+      ]
+    },
+    {
+      "ordinal": 5,
+      "case": "missing_event",
+      "http_status": 200,
+      "operation": "直接做内容",
+      "content_format": "短视频",
+      "account_scope_sha256": "1052d4f04484550bbe25fb95a68e69d28733bdfa428127c708d43c028aca5135",
+      "request_sha256": "40f15100408a4ffc4af4a79957f6b7b9eb73a4d085433ba4fd17951d3af9beb3",
+      "response_sha256": "173be2809b0901054e299dd22605bfd4f587706b5cb9ae36ccb0424627596173",
+      "answer_sha256": "2ee29ac828c403fa03b3775cb5d5e6b3860a8b9652efa25cde7844e20e827a80",
+      "answer_length": 60,
+      "model_invocation_count": 2,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "e61788c1a7c75124ef46fc1a84a9774e6fa586e92dad54ae8f0fed46c09a6d8e",
+        "568b36c5441599fedf072e5b639af8f45ba29d3e50c2c087c64e76b1ba3b294e"
+      ]
+    },
+    {
+      "ordinal": 6,
+      "case": "formal_scope_intro",
+      "http_status": 200,
+      "operation": "直接做内容",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "79eb24442143997597c22613abbbb2b4a36adf54f5d65899c2d43aaf03056664",
+      "response_sha256": "36e70e7be2b34195baf5cfbd800a0735cff6e870480950d353f810f65b52fac5",
+      "answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "answer_length": 58,
+      "model_invocation_count": 2,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "3ab88afa7b86e44ccba5fad1248e13ca5b08c18bf70818597f4df377aab7addb",
+        "65e09b9129e39743431eab84d4b8b68d121bae8cb9b5d3738e0b298cac92bbf7"
+      ]
+    },
+    {
+      "ordinal": 7,
+      "case": "formal_scope_intro",
+      "http_status": 200,
+      "operation": "直接做内容",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "79eb24442143997597c22613abbbb2b4a36adf54f5d65899c2d43aaf03056664",
+      "response_sha256": "36e70e7be2b34195baf5cfbd800a0735cff6e870480950d353f810f65b52fac5",
+      "answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "answer_length": 58,
+      "model_invocation_count": 2,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "cba75ede15ccfd95ffdf651d06fea7fc4c1b08ddc33805a211c9db68af822f09",
+        "00167e2acaaf02184a381ce0eb1fa23d3455e235b4b0d47fa8a4d9247ce2117e"
+      ]
+    },
+    {
+      "ordinal": 8,
+      "case": "formal_existing_candidate_revision",
+      "http_status": 200,
+      "operation": "把已有内容改好",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "cae866dbc2911a5a2cd65f0bf8e7f379f98838c71b92894aab6624b3a6534e66",
+      "response_sha256": "36e70e7be2b34195baf5cfbd800a0735cff6e870480950d353f810f65b52fac5",
+      "answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "answer_length": 58,
+      "model_invocation_count": 1,
+      "execution_path": "PORTAL_DB_EXISTING_CANDIDATE_DIFY_AUTHOR_MODEL",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "a1e1355cce066754c72cae12ab4433816582337f4b019d2174fc4e6e2853ee3e"
+      ]
+    },
+    {
+      "ordinal": 9,
+      "case": "formal_regional_account_boundary",
+      "http_status": 200,
+      "operation": "直接做内容",
+      "content_format": "图文",
+      "account_scope_sha256": "5e6e9dc24f49ee5b568fd075bae55aeceefc4ab3379aff4e349d441596c1d30e",
+      "request_sha256": "e344131f8d1afb1d7924440f65c940f3aa92b2236fd5360a97d5fef9fe60e16b",
+      "response_sha256": "36e70e7be2b34195baf5cfbd800a0735cff6e870480950d353f810f65b52fac5",
+      "answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "answer_length": 58,
+      "model_invocation_count": 2,
+      "execution_path": "PORTAL_DB_RETRIEVAL_DIFY_CLASSIFIER_AND_AUTHOR_MODELS",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [
+        "CLASSIFY",
+        "AUTHOR"
+      ],
+      "model_invocation_bindings": [
+        "b57ae772a621ac95832a4a41bf8ec17019c83d55b5d271effd2582463238bf9e",
+        "b1ee79c1e9b8b61ca15d4b125f8fb9b73176dd967951853b0c0321dde78bfdd3"
+      ]
+    },
+    {
+      "ordinal": 10,
+      "case": "formal_candidate_select",
+      "http_status": 200,
+      "operation": "选择候选",
+      "content_format": "图文",
+      "account_scope_sha256": "5e6e9dc24f49ee5b568fd075bae55aeceefc4ab3379aff4e349d441596c1d30e",
+      "request_sha256": "06de7c8c93aa2f5f97c325963e4ec98564b4e979ef24a8174395581c355cd166",
+      "response_sha256": "a890143bc823c9ab6aaaf438333bf8769af7f63cdece222ff72d0cfe94a9717e",
+      "answer_sha256": "be43a43f0fea26e85ad1867c0b530c7ebe81d616a5899a6d5f1ebf43b5dbe2e0",
+      "answer_length": 23,
+      "model_invocation_count": 0,
+      "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 11,
+      "case": "formal_candidate_export",
+      "http_status": 200,
+      "operation": "导出",
+      "content_format": "图文",
+      "account_scope_sha256": "5e6e9dc24f49ee5b568fd075bae55aeceefc4ab3379aff4e349d441596c1d30e",
+      "request_sha256": "c6884fd4a2e69db3cf280dfacfd647b99f2991cfa40b7ac76babd6d30d617f23",
+      "response_sha256": "bc38a5df20bb7369fda0c7d367113f4cf7bdc9fe14b3c91e6540b66eb86a59f4",
+      "answer_sha256": "8d3d467a3942744483b5d26a56cd72a6084309eb8514ec915b91040c1c35e1fb",
+      "answer_length": 372,
+      "model_invocation_count": 0,
+      "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 12,
+      "case": "short_video_select",
+      "http_status": 200,
+      "operation": "选择候选",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "db00f493d3aecd54baae7fc47bd9e11f277bc4c122c685cc28c34be8fb6a2c10",
+      "response_sha256": "a890143bc823c9ab6aaaf438333bf8769af7f63cdece222ff72d0cfe94a9717e",
+      "answer_sha256": "be43a43f0fea26e85ad1867c0b530c7ebe81d616a5899a6d5f1ebf43b5dbe2e0",
+      "answer_length": 23,
+      "model_invocation_count": 0,
+      "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 13,
+      "case": "short_video_review",
+      "http_status": 200,
+      "operation": "审核",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "44b531cabfc400ea2ab5fe4b7632894831afc5505c445998e0789d3fbffb5985",
+      "response_sha256": "88fe806b4e498063ff89b2871a9abc0edb1cfc3ac69177d4021aed99a507e5ac",
+      "answer_sha256": "2b0660f6a4a1027a5fde7555eb1d10f2cacf465fdbe36bf6491dc644267e7de5",
+      "answer_length": 63,
+      "model_invocation_count": 0,
+      "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 14,
+      "case": "short_video_export",
+      "http_status": 200,
+      "operation": "导出",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "b76737b8990de7ee2fda8be1d9866530fd781f730cd0dc5c40feaa8494c582b0",
+      "response_sha256": "2cc23f2cc5b8821f17481be681bc97661171837e0c7725480675be61b3029bcb",
+      "answer_sha256": "14608d4a15273394eca46abff09e0573d6f8b8a63c5982d1bf26d1c3fe848a75",
+      "answer_length": 376,
+      "model_invocation_count": 0,
+      "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 15,
+      "case": "short_video_source_lookup",
+      "http_status": 200,
+      "operation": "查看来源",
+      "content_format": "短视频",
+      "account_scope_sha256": "b91954d54dc1e2178f1e259ddf4372d101aec9a85a2f8b408afed71279a51545",
+      "request_sha256": "6e47aa88c22968a08fe54bc765184d4ec90924d48fbdd9fa9535a1f852d3255a",
+      "response_sha256": "c8e9d345d88d2afe13fca1f3ecb6e5868696daa31ba08d6cbc7fd2713f3a6784",
+      "answer_sha256": "da72ab2c78bac6caa3803e68ed954e3f4ac5a578350773826936be7185ecc245",
+      "answer_length": 36,
+      "model_invocation_count": 0,
+      "execution_path": "PORTAL_DB_DETERMINISTIC_CANDIDATE_OPERATION",
+      "simulation_only": true,
+      "publish_allowed": false,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": []
+    },
+    {
+      "ordinal": 16,
+      "case": "display_candidate_export",
+      "observed_at": "2026-07-17T08:07:33.832832+00:00",
+      "http_status": 200,
+      "operation": "导出",
+      "content_format": "陈列搭配",
+      "account_scope_sha256": "317db198fb273828af94ede1de3d84264b1f0bde3bbba96b2df6146c8faba914",
+      "request_sha256": "099ae00bd1778a0ec9e98eb48109a233cf6ce2bf389deef7e2735819759a0408",
+      "response_sha256": "b09b3574af8a099efcda619168fb0ebf7d59e06c172bc49b4dc46a92ba2c76c4",
+      "answer_sha256": "5140ae18487f42485efed578f01f1717934b55eeb97fb03606e015f985357aed",
+      "answer_length": 337,
+      "candidate_id_sha256": "5e694cc52ab0ec12235b9b17ffe1643d6f529b42bc9fd801b2191191487f97df",
+      "candidate_ordinal": 1,
+      "selected_state_before_sha256": "bd1ea9ee81bd5f07db4abff136352a4065caccddef1a856260c0d200ba6b7941",
+      "selected_state_after_sha256": "bd1ea9ee81bd5f07db4abff136352a4065caccddef1a856260c0d200ba6b7941",
+      "model_invocation_count": 0,
+      "model_invocation_phases": [],
+      "model_invocation_bindings": [],
+      "execution_path": "PORTAL_DB_EXISTING_DIFY_MODEL_LINEAGE_DETERMINISTIC_EXPORT",
+      "simulation_only": true,
+      "publish_allowed": false
+    }
+  ],
+  "journey_groups": [
+    {
+      "journey": "ORDINARY_CHAT_AND_CONTINUITY",
+      "action_count": 2,
+      "content_workflow_not_forced": true,
+      "conversation_reuse_proven": true,
+      "status": "PASS",
+      "action_ordinals": [
+        1,
+        2
+      ]
+    },
+    {
+      "journey": "INSPIRATION_AND_SCOPE_GUIDANCE",
+      "action_count": 3,
+      "plain_language_guidance": true,
+      "status": "PASS",
+      "action_ordinals": [
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "journey": "ARTICLE_PACKAGE_AND_EXPORT",
+      "action_count": 3,
+      "existing_accepted_candidate_used": true,
+      "new_failed_attempt_preserved": true,
+      "status": "PASS",
+      "action_ordinals": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "journey": "SHORT_VIDEO_PACKAGE_REVIEW_EXPORT_AND_SOURCE_LOOKUP",
+      "action_count": 5,
+      "existing_accepted_candidate_used": true,
+      "source_lookup_available": true,
+      "status": "PASS",
+      "action_ordinals": [
+        8,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "journey": "PRODUCT_FACT_DISPLAY_PACKAGE",
+      "action_count": 1,
+      "existing_accepted_candidate_present": true,
+      "explicit_product_facts_required": true,
+      "status": "PASS",
+      "action_ordinals": [
+        16
+      ]
+    },
+    {
+      "journey": "MISSING_FACT_AND_SCOPE_REJECTION",
+      "action_count": 2,
+      "missing_material_action_card": true,
+      "unlisted_or_forged_scope_rejected": true,
+      "status": "PASS",
+      "action_ordinals": [
+        4,
+        5
+      ]
+    }
+  ],
+  "persisted_candidate_distribution": {
+    "total": 24,
+    "short_video": 12,
+    "article": 9,
+    "display": 3
+  },
+  "model_usage": {
+    "baseline_invocation_count": 79,
+    "final_invocation_count": 92,
+    "package9_invocation_increment": 13,
+    "package9_succeeded_invocation_count": 13,
+    "package9_failed_invocation_count": 0,
+    "invocation_audit_sha256": "f634634fcc4955eb889ad171f8e795dca0ab85da9775ff9e3cc8bc5a146b581f",
+    "invocation_audit_row_count": 13,
+    "invocation_response_digest_count": 13,
+    "founder_authorized_call_limit": 40,
+    "task_original_call_limit": 12,
+    "authorized_override_recorded": true,
+    "authorization_provenance": {
+      "authority": "FOUNDER",
+      "scope": "PACKAGE9_MODEL_CALL_AUDIT_LIMIT",
+      "source_class": "IN_THREAD_SUPERSEDING_DIRECTIVE",
+      "directive": "预算审计40 次上界，不阻塞当前任务推进；如果需要可以再增加60此上界",
+      "directive_sha256": "1774b6fd45bc01fd87b00022e5eda988ba3f5c8a1cac2fd67d4b361e291cbf41",
+      "effective_limit_used": 40,
+      "additional_60_not_used": true
+    },
+    "new_model_calls_frozen": true,
+    "observed_cost_cny": 0.071796,
+    "cost_limit_cny": 10,
+    "within_authorized_call_limit": true,
+    "within_cost_limit": true,
+    "sanitized_invocation_audit": {
+      "records": [
+        {
+          "action_ordinal": 1,
+          "completion_tokens": 129,
+          "created_at_utc": "2026-07-17T05:20:32.369254Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "b8705636265e37424dae0df8db30efe3cf1fed202d9f72d542e91d00c8d71177",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 214,
+          "response_digest": "feaa5d142f27a6b4c2707865fb1d78cd779224e1aabfce9d4264658f13fd43ee",
+          "sequence": 1,
+          "state": "SUCCEEDED",
+          "total_price": "0.000472",
+          "total_tokens": 343
+        },
+        {
+          "action_ordinal": 2,
+          "completion_tokens": 166,
+          "created_at_utc": "2026-07-17T05:20:35.807993Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "fdbb593753f1507d1b8ae7a0d55703fc470efb0d020c027a22f3e99163538a30",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 344,
+          "response_digest": "8f8e1c9519bfdb7117564fc75cb700ce92def0384524e4236524ccb2a2274383",
+          "sequence": 2,
+          "state": "SUCCEEDED",
+          "total_price": "0.000676",
+          "total_tokens": 510
+        },
+        {
+          "action_ordinal": 3,
+          "completion_tokens": 429,
+          "created_at_utc": "2026-07-17T05:20:38.765664Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "e14cfbb4262f5a6bc22820794050a07ff51246beffbb180530ed6c5ae76a9ed9",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 439,
+          "response_digest": "701027d65a1e082616216285bca25bf534f4a6be6cb8dbfd563fe10dec529025",
+          "sequence": 3,
+          "state": "SUCCEEDED",
+          "total_price": "0.001297",
+          "total_tokens": 868
+        },
+        {
+          "action_ordinal": 4,
+          "completion_tokens": 304,
+          "created_at_utc": "2026-07-17T05:20:44.658066Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "45e7c8f743b00e2beab0121338e0002ca6ebadc7bd82e146e4294c7b309bae80",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 279,
+          "response_digest": "34480ccb4a114bab40509d7516c8f18738907ec13dc52ae0d56d9c3eac0b907e",
+          "sequence": 4,
+          "state": "SUCCEEDED",
+          "total_price": "0.000887",
+          "total_tokens": 583
+        },
+        {
+          "action_ordinal": 5,
+          "completion_tokens": 197,
+          "created_at_utc": "2026-07-17T05:20:48.335753Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "e61788c1a7c75124ef46fc1a84a9774e6fa586e92dad54ae8f0fed46c09a6d8e",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 275,
+          "response_digest": "fd82d03d62543d77c2a425d55dc87cfd834e4828ce644b13df35fcece7b5edd4",
+          "sequence": 5,
+          "state": "SUCCEEDED",
+          "total_price": "0.000669",
+          "total_tokens": 472
+        },
+        {
+          "action_ordinal": 5,
+          "completion_tokens": 126,
+          "created_at_utc": "2026-07-17T05:20:51.361803Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "568b36c5441599fedf072e5b639af8f45ba29d3e50c2c087c64e76b1ba3b294e",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 343,
+          "response_digest": "efff494bbb55d56bb93f759bbc40c3411d7f01fed043181af3b7140eada92f00",
+          "sequence": 6,
+          "state": "SUCCEEDED",
+          "total_price": "0.000595",
+          "total_tokens": 469
+        },
+        {
+          "action_ordinal": 6,
+          "completion_tokens": 154,
+          "created_at_utc": "2026-07-17T05:26:37.545526Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "3ab88afa7b86e44ccba5fad1248e13ca5b08c18bf70818597f4df377aab7addb",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 304,
+          "response_digest": "7e35c951cfd210042e5ceb5b2ef1465b026e9a58e009785f1dc063258284169e",
+          "sequence": 7,
+          "state": "SUCCEEDED",
+          "total_price": "0.000612",
+          "total_tokens": 458
+        },
+        {
+          "action_ordinal": 6,
+          "completion_tokens": 9042,
+          "created_at_utc": "2026-07-17T05:26:41.790450Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "65e09b9129e39743431eab84d4b8b68d121bae8cb9b5d3738e0b298cac92bbf7",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 6737,
+          "response_digest": "50b52120f94ed597f86bb89a520e02a14a2ef8ee99f112852042f6305fe0b581",
+          "sequence": 8,
+          "state": "SUCCEEDED",
+          "total_price": "0.024821",
+          "total_tokens": 15779
+        },
+        {
+          "action_ordinal": 7,
+          "completion_tokens": 96,
+          "created_at_utc": "2026-07-17T05:28:30.024201Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "cba75ede15ccfd95ffdf651d06fea7fc4c1b08ddc33805a211c9db68af822f09",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 304,
+          "response_digest": "1ab5221537f9d86eab13667a8d285c57d75af7278040f66d79f093374b0269e9",
+          "sequence": 9,
+          "state": "SUCCEEDED",
+          "total_price": "0.000496",
+          "total_tokens": 400
+        },
+        {
+          "action_ordinal": 7,
+          "completion_tokens": 5392,
+          "created_at_utc": "2026-07-17T05:28:31.815980Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "00167e2acaaf02184a381ce0eb1fa23d3455e235b4b0d47fa8a4d9247ce2117e",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 6744,
+          "response_digest": "3bffb2ebdd66da711228418686aca87864a1dffa8bf9a5e09dc232a13712be67",
+          "sequence": 10,
+          "state": "SUCCEEDED",
+          "total_price": "0.017528",
+          "total_tokens": 12136
+        },
+        {
+          "action_ordinal": 8,
+          "completion_tokens": 3046,
+          "created_at_utc": "2026-07-17T05:31:15.140283Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "a1e1355cce066754c72cae12ab4433816582337f4b019d2174fc4e6e2853ee3e",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 6472,
+          "response_digest": "d5bebfa7bb2560ca5e6bafae84e3b56483bc0046785273858c6c384acbbd3fe5",
+          "sequence": 11,
+          "state": "SUCCEEDED",
+          "total_price": "0.012564",
+          "total_tokens": 9518
+        },
+        {
+          "action_ordinal": 9,
+          "completion_tokens": 55,
+          "created_at_utc": "2026-07-17T05:36:32.415028Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "b57ae772a621ac95832a4a41bf8ec17019c83d55b5d271effd2582463238bf9e",
+          "model_call_upper_bound": 1,
+          "phase": "CLASSIFY",
+          "prompt_tokens": 361,
+          "response_digest": "f887db0042bc67264acf761ee2ff0dc1f7382412b6cc46a623305c0daf426c62",
+          "sequence": 12,
+          "state": "SUCCEEDED",
+          "total_price": "0.000471",
+          "total_tokens": 416
+        },
+        {
+          "action_ordinal": 9,
+          "completion_tokens": 3852,
+          "created_at_utc": "2026-07-17T05:36:33.928958Z",
+          "currency": "RMB",
+          "invocation_id_sha256": "b1ee79c1e9b8b61ca15d4b125f8fb9b73176dd967951853b0c0321dde78bfdd3",
+          "model_call_upper_bound": 1,
+          "phase": "AUTHOR",
+          "prompt_tokens": 3004,
+          "response_digest": "83123618fbc6582a1b4723095849b8b44c343e1e2bb01ad4cad9208a3dedab88",
+          "sequence": 13,
+          "state": "SUCCEEDED",
+          "total_price": "0.010708",
+          "total_tokens": 6856
+        }
+      ],
+      "records_sha256": "f634634fcc4955eb889ad171f8e795dca0ab85da9775ff9e3cc8bc5a146b581f",
+      "response_digest_count": 13,
+      "row_count": 13,
+      "schema": "diyu.package9.sanitized-model-invocation-audit.v1",
+      "total_completion_tokens": 22988,
+      "total_model_call_upper_bound": 13,
+      "total_price_cny": "0.071796",
+      "total_prompt_tokens": 25820,
+      "total_tokens": 48808
+    },
+    "runtime_limit_snapshot": {
+      "apps_https_status": 200,
+      "capabilities_dropped": [
+        "ALL"
+      ],
+      "container_id_sha256": "3e627cac2fbe95a2e47cbaab493ed00b658932a707d182e12e246346a9d80a10",
+      "container_name": "diyu-package7-bridge",
+      "effective_model_call_limit": 40,
+      "env_line_sha256": "377cca72f407f31822d11372c1e1d6e759b1f62f6f5dd9d3549c2d9722aa38cd",
+      "image_id": "sha256:c1712c50f27c9dfd31c5be77a9a03f30c464fc6983287eefd4a6a98376c70c24",
+      "image_tag": "langgenius/dify-api:1.15.0",
+      "legacy_role": {
+        "bypass_rls": false,
+        "login": false,
+        "role_name_sha256": "1999f02ff402919f8fe45b44da5ebd41b7ef42b12c2d05154d778bce0d19e440"
+      },
+      "loopback_only_publication": true,
+      "model_invocation_count_after": 92,
+      "model_invocation_count_before": 92,
+      "network_names": [
+        "dify-staging_default",
+        "diyu-package7-runtime"
+      ],
+      "new_model_calls": 0,
+      "no_new_privileges": true,
+      "observed_at": "2026-07-17T08:21:42.950744+00:00",
+      "read_only_root_filesystem": true,
+      "release_archive_sha256": "7adb1aece4db2dfaf102e772042a9f498733fb2cb78d9d03a95c70057520ef0a",
+      "replaced_container_id_sha256": "07b54e6bc684f4f7a39e093f976c3d9eb46bcb79246e8f13dacbce2431bdbe5a",
+      "root_https_status": 200,
+      "runtime_role": {
+        "bypass_rls": false,
+        "create_database": false,
+        "create_role": false,
+        "login": true,
+        "role_name_sha256": "557de74ede8f4d9eb058ddcd0b12691f8961afaafa0ccb2d1bd869d4d60caa4d",
+        "superuser": false
+      },
+      "schema": "diyu.package9.runtime-limit-snapshot.v1",
+      "source_commit": "06cc39a0ff1399d38bd749bc5bc074c3c3204b62",
+      "source_file_count": 131,
+      "source_tree": "7ccc165d68faebbccf0e4dd0c7f8c545e0e0c5cc"
+    },
+    "runtime_limit_snapshot_file_sha256": "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
+  },
+  "failure_integrity": {
+    "failed_formal_attempts_preserved": true,
+    "failed_samples_deleted": false,
+    "replacement_sample_used": false,
+    "reroll_to_green_used": false,
+    "cloud_prompt_tuning_used": false
+  },
+  "surface_safety": {
+    "internal_identifier_leak_count": 0,
+    "technical_token_exposed_count": 0,
+    "automatic_publication_count": 0,
+    "simulation_only": true,
+    "publish_allowed": false,
+    "explicit_fact_and_authorization_boundaries_preserved": true,
+    "ordinary_creative_surface_requires_per_sentence_evidence": false
+  },
+  "raw_private_evidence": {
+    "storage_class": "REMOTE_ROOT_ONLY_RESTRICTED_STATE",
+    "committed_to_repository": false,
+    "journey_batch_sha256": "6ef324da5fcfc9c5fd4255a6fdab20b152d5e0e297cd750aa07633bb965fe351",
+    "display_export_sha256": "666ca78b8b5e3709b731d5768601f656d52b64aff50ad5be6f476013f9cb9902",
+    "sanitized_invocation_audit_file_sha256": "04f30324165e153555398701955a3a041c65a2f34623865c6416a8db160d48b7",
+    "runtime_limit_snapshot_file_sha256": "8036e461b3b52829b6e7bd6485cb7f8e4174247fb1b68df0c8487b7fe1de514e"
+  }
+}
