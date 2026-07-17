@@ -36,6 +36,7 @@ from persistence import create_runtime_engine, create_session_factory, digest_ob
 from runtime_models import (  # noqa: E402
     RuntimeNarrativeFragment,
     RuntimePreciseFact,
+    RuntimePrincipal,
     RuntimeSetting,
 )
 
@@ -357,6 +358,15 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
     try:
         with sessions() as session:
             identity = _setting(session, f"identity_authority:{TENANT_ID}")
+            for principal_projection in identity["login_principals"]:
+                principal = session.get(
+                    RuntimePrincipal,
+                    str(principal_projection["principal_id"]),
+                )
+                if principal is None or principal.tenant_id != TENANT_ID:
+                    raise RuntimeError("Current simulation principal is unavailable")
+                principal_projection["username"] = principal.username
+                principal_projection["status"] = principal.status
             profile = _setting(
                 session,
                 f"brand_expression_profile:{identity['tenant']['brand_id']}",
@@ -392,6 +402,7 @@ def build_aligned_bundle(database_url: str) -> tuple[BrandImportBundle, JsonObje
                     "sha256": source_sha256,
                     "fragment_count": len(additions),
                     "source_content_mutated": False,
+                    "operational_username_bound_from_current_runtime": True,
                 },
                 "derived_source_refs": sorted(
                     {
